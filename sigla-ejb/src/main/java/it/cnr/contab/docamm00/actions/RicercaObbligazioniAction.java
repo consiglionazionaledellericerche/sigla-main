@@ -167,7 +167,7 @@ private Forward doOnFlChange(ActionContext context, String flName) {
 				filtro.setFornitore(null);
 		} else if ("fl_importo".equalsIgnoreCase(flName)) {
 			if (filtro.getIm_importo() == null)
-				filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		} else if ("fl_data_scadenziario".equalsIgnoreCase(flName)) {
 			if (filtro.getData_scadenziario() == null)
 				filtro.setData_scadenziario(filtro.getCurrentDate());
@@ -284,7 +284,7 @@ public Forward doOpenObbligazioniWindow(ActionContext context) {
 
 		obbligazione.setFl_calcolo_automatico(Boolean.TRUE);
 		if (filtro.getIm_importo()==null)
-			filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		obbligazione.setIm_obbligazione(filtro.getIm_importo());
 		if (filtro.getElemento_voce() != null)
 			obbligazione.getElemento_voce().setCd_elemento_voce(filtro.getElemento_voce().getCd_elemento_voce());

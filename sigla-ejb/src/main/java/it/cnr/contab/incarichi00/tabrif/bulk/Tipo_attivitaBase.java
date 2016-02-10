@@ -14,6 +14,12 @@ public class Tipo_attivitaBase extends Tipo_attivitaKey implements Keyed {
 //    FL_PUBBLICA_CONTRATTO CHAR(1) NOT NULL
 	private java.lang.Boolean fl_pubblica_contratto;
 
+//    TIPO_ASSOCIAZIONE VARCHAR(3) NOT NULL
+	private java.lang.String tipo_associazione;
+
+//  TIPOLOGIA CHAR(3) NOT NULL
+	private java.lang.String tipologia;
+
 	public Tipo_attivitaBase() {
 		super();
 	}
@@ -37,5 +43,17 @@ public class Tipo_attivitaBase extends Tipo_attivitaKey implements Keyed {
 	}
 	public void setFl_pubblica_contratto(java.lang.Boolean fl_pubblica_contratto) {
 		this.fl_pubblica_contratto = fl_pubblica_contratto;
+	}
+	public java.lang.String getTipo_associazione() {
+		return tipo_associazione;
+	}
+	public void setTipo_associazione(java.lang.String tipo_associazione) {
+		this.tipo_associazione = tipo_associazione;
+	}
+	public java.lang.String getTipologia() {
+		return tipologia;
+	}
+	public void setTipologia(java.lang.String tipologia) {
+		this.tipologia = tipologia;
 	}
 }

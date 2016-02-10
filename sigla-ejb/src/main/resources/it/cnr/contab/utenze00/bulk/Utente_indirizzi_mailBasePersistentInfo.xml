@@ -34,6 +34,28 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
 		<columnMapping
+			columnName="FL_ESITO_NEG_FATT_ELETTR"
+			propertyName="flEsitoNegFattElettr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_ESITO_POS_FATT_ELETTR"
+			propertyName="flEsitoPosFattElettr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_FEP_NOTIFICA_RICEZIONE"
+			propertyName="flFepNotificaRicezione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		
+		<columnMapping
 			columnName="UTUV"
 			propertyName="utuv"
 			sqlTypeName="VARCHAR"
@@ -72,6 +94,12 @@
 		name="fl_err_appr_var_bil_cnr_comp" />
 	<persistentProperty
 		name="fl_com_app_var_stanz_comp" />		
+	<persistentProperty
+		name="flEsitoNegFattElettr" />		
+	<persistentProperty
+		name="flEsitoPosFattElettr" />		
+	<persistentProperty
+		name="flFepNotificaRicezione" />
 	<persistentProperty
 		name="utuv" />
 	<persistentProperty

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		longDescription="Consultazione scadenzario accertamenti">
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdS" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Esercizio Origine" />
+	<fieldProperty
+		name="pg_acc"
+		property="pg_acc"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Prog. Accertamento" />
+	<fieldProperty
+		name="pg_acc_scad"
+		property="pg_acc_scad"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Prog. Scadenzario" />	
+	<fieldProperty
+		name="voce_bilancio"
+		property="voce_bilancio"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce di Bilancio" />	
+	<fieldProperty
+		name="data_scad"
+		property="data_scad"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Scadenza" />
+	<fieldProperty
+		name="ds_scad"
+		property="ds_scad"
+		inputType="TEXT"
+		maxLength="300"
+		inputSize="50"
+		label="Descrizione"/>	
+	<fieldProperty
+		name="im_scad"
+		property="im_scad"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		maxLength="16"
+		inputSize="16"
+		label="Importo Scadenza" />
+	<fieldProperty
+		name="im_ass_doc_amm"
+		property="im_ass_doc_amm"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		maxLength="16"
+		inputSize="16"
+		label="Importo Associato a Doc. Amm." />
+	<fieldProperty
+		name="imp_ass_doc_cont"
+		property="imp_ass_doc_cont"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		maxLength="16"
+		inputSize="16"
+		label="Importo Associato a Doc. Cont." />
+	<fieldProperty
+		name="debitore"
+		property="debitore"
+		inputType="TEXT"
+		maxLength="300"
+		inputSize="50"
+		label="Denominazione"/>
+		
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_acc" />
+	<formFieldProperty
+		name="pg_acc_scad" />
+	<formFieldProperty
+		name="voce_bilancio" />
+	<formFieldProperty
+		name="data_scad" />
+	<formFieldProperty
+		name="ds_scad" />
+	<formFieldProperty
+		name="im_scad" />
+	<formFieldProperty
+		name="im_ass_doc_amm" />
+	<formFieldProperty
+		name="imp_ass_doc_cont" />
+	<formFieldProperty
+		name="debitore" />
+		
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_acc" />
+	<findFieldProperty
+		name="pg_acc_scad" />
+	<findFieldProperty
+		name="voce_bilancio" />
+	<findFieldProperty
+		name="data_scad" />
+	<findFieldProperty
+		name="ds_scad" />
+	<findFieldProperty
+		name="im_scad" />
+	<findFieldProperty
+		name="im_ass_doc_amm" />
+	<findFieldProperty
+		name="imp_ass_doc_cont" />
+	<findFieldProperty
+		name="debitore" />	
+		
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizio_originale" />
+	<columnFieldProperty
+		name="pg_acc" />
+	<columnFieldProperty
+		name="pg_acc_scad" />
+	<columnFieldProperty
+		name="voce_bilancio" />
+	<columnFieldProperty
+		name="data_scad" />
+	<columnFieldProperty
+		name="ds_scad" />
+	<columnFieldProperty
+		name="im_scad" />
+	<columnFieldProperty
+		name="im_ass_doc_amm" />
+	<columnFieldProperty
+		name="imp_ass_doc_cont" />
+	<columnFieldProperty
+		name="debitore" />
+</bulkInfo>

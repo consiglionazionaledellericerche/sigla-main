@@ -87,6 +87,10 @@ public class ConsPDGPFoComponent extends CRUDComponent {
 				addColumnMOD(sql,tabAlias,livelloDestinazione.equals(ConsPDGPFoBP.LIVELLO_MOD),true);
 				addColumnMOD(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsPDGPFoBP.LIVELLO_MOD),false);
 			}
+			if (pathDestinazione.indexOf(ConsPDGPFoBP.LIVELLO_PRG)>=0){
+				addColumnPRG(sql,tabAlias,livelloDestinazione.equals(ConsPDGPFoBP.LIVELLO_PRG),true);
+				addColumnPRG(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsPDGPFoBP.LIVELLO_PRG),false);
+			}
 			if (pathDestinazione.indexOf(ConsPDGPFoBP.LIVELLO_LIV1)>=0){
 				addColumnLIV1(sql,tabAlias,livelloDestinazione.equals(ConsPDGPFoBP.LIVELLO_LIV1),true,pathDestinazione,context);
 				addColumnLIV1(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsPDGPFoBP.LIVELLO_LIV1),false,pathDestinazione,context);
@@ -283,6 +287,22 @@ public class ConsPDGPFoComponent extends CRUDComponent {
 			addSQLGroupBy(sql,tabAlias.toLowerCase().concat("ds_modulo"),isBaseSQL&&addDescrizione);
 		}
 		/**
+		 * Aggiunge nell'SQLBuilder <sql> le colonne Progettp
+		 *
+		 * @param sql l'SQLBuilder da aggiornare
+		 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
+		 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
+		 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
+		 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+		 */
+		private void addColumnPRG(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
+			tabAlias = getAlias(tabAlias);
+			addColumn(sql,tabAlias.concat("CD_COMMESSA"),true);
+			addColumn(sql,tabAlias.concat("DS_COMMESSA"),addDescrizione);
+			addSQLGroupBy(sql,tabAlias.toLowerCase().concat("cd_commessa"),isBaseSQL);
+			addSQLGroupBy(sql,tabAlias.toLowerCase().concat("ds_commessa"),isBaseSQL&&addDescrizione);
+		}
+		/**
 		 * Aggiunge nell'SQLBuilder <sql> le colonne del primo livello della classificazione.
 		 *
 		 * @param sql l'SQLBuilder da aggiornare
@@ -341,7 +361,9 @@ public class ConsPDGPFoComponent extends CRUDComponent {
 												"   And PROGETTO.PG_PROGETTO = PDG_MODULO_COSTI.PG_PROGETTO "+
 												"   And PROGETTO.CD_TIPO_PROGETTO = V_CONS_PDG_SPE_BIL_IST_DIP_FO.CD_TIPO_MODULO ").concat(")"),null,null,"0").concat(" IM_COSTI_GENERALI"), true);
 																			  
-			}else if (tabAlias.indexOf("V_CONS_PDG_SPE_BIL_IST_DIP_FO")>=0 && livello_arrivo.endsWith(ConsPDGPFoBP.LIVELLO_MOD.concat(ConsPDGPFoBP.LIVELLO_LIV1)) &&isBaseSQL){
+			}else if (tabAlias.indexOf("V_CONS_PDG_SPE_BIL_IST_DIP_FO")>=0 && 
+					(livello_arrivo.endsWith(ConsPDGPFoBP.LIVELLO_MOD.concat(ConsPDGPFoBP.LIVELLO_LIV1)) || 
+					 livello_arrivo.endsWith(ConsPDGPFoBP.LIVELLO_PRG.concat(ConsPDGPFoBP.LIVELLO_LIV1))) &&isBaseSQL){
 						BulkHome home;
 						home = getHome(context, Pdg_modulo_costiBulk.class);
 						SQLBuilder sqlsum = home.createSQLBuilder();

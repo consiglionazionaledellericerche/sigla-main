@@ -401,4 +401,23 @@ public void Inserimento_BLOB(UserContext param0,it.cnr.jada.bulk.OggettoBulk par
 		}
 	}
 }
+public List findListaGAEFEWS(UserContext userContext, String cdr, Integer modulo)
+		throws ComponentException, RemoteException {
+	try {
+		return (java.util.List)invoke("findListaGAEFEWS",new Object[] {
+				userContext,
+				cdr,
+				modulo});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }

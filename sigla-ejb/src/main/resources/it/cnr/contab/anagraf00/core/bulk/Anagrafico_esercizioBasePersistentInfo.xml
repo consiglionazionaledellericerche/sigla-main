@@ -97,7 +97,14 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
-			nullable="false"/>									
+			nullable="false"/>		
+		<columnMapping
+			columnName="FL_NO_CREDITO_IRPEF"
+			propertyName="fl_no_credito_irpef"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
+			nullable="false"/>								
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_notaxarea" />
@@ -126,5 +133,7 @@
 	<persistentProperty
 		name="im_reddito_abitaz_princ" />			
 	<persistentProperty
-		name="fl_applica_detr_pers_max" />					
+		name="fl_applica_detr_pers_max" />	
+	<persistentProperty
+		name="fl_no_credito_irpef" />						
 </SQLPersistentInfo>

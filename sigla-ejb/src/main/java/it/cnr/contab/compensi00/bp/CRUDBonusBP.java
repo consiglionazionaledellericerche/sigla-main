@@ -384,9 +384,9 @@ public class CRUDBonusBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		    			  // totali
 			    		  if(mod==1){
 				    		  bw.append("BS007004");
-				    		  bw.append(Formatta((bonus.getIm_reddito_nucleo_f().setScale(0,java.math.BigDecimal.ROUND_HALF_EVEN)).toString(),"D",16," "));
+				    		  bw.append(Formatta((bonus.getIm_reddito_nucleo_f().setScale(0,java.math.BigDecimal.ROUND_HALF_UP)).toString(),"D",16," "));
 				    		  bw.append("BS008001");
-				    		  bw.append(Formatta((bonus.getIm_bonus().setScale(0,java.math.BigDecimal.ROUND_HALF_EVEN)).toString(),"D",16," "));
+				    		  bw.append(Formatta((bonus.getIm_bonus().setScale(0,java.math.BigDecimal.ROUND_HALF_UP)).toString(),"D",16," "));
 			    		  }
 			    		  completaRiga(bw,prog,altro,mod);
 			    		  mod=mod+1;
@@ -411,7 +411,7 @@ public class CRUDBonusBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				    	  if(mod==1){
 				    		  bw.append("BS001004");
 				    		  //?? arrotondamenti ???
-				    		  bw.append(Formatta((bonus.getIm_reddito().setScale(0,java.math.BigDecimal.ROUND_HALF_EVEN)).toString(),"D",16," "));
+				    		  bw.append(Formatta((bonus.getIm_reddito().setScale(0,java.math.BigDecimal.ROUND_HALF_UP)).toString(),"D",16," "));
 				    	  }
 			    	  }  
 			    	  if(prog==1 && dettaglio.getTipo_componente_nucleo().compareTo(Bonus_nucleo_famBulk.CONIUGE)==0){
@@ -420,7 +420,7 @@ public class CRUDBonusBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			    		  bw.append("BS002003");
 			    		  bw.append(Formatta(dettaglio.getCf_componente_nucleo(),"S",16," "));
 			    		  bw.append("BS002004");
-			    		  bw.append(Formatta((dettaglio.getIm_reddito_componente().setScale(0,java.math.BigDecimal.ROUND_HALF_EVEN)).toString(),"D",16," "));
+			    		  bw.append(Formatta((dettaglio.getIm_reddito_componente().setScale(0,java.math.BigDecimal.ROUND_HALF_UP)).toString(),"D",16," "));
 			    	  }
 			    	  else if(prog==1 && dettaglio.getTipo_componente_nucleo().compareTo(Bonus_nucleo_famBulk.CONIUGE)!=0){
 			    		  prog=prog+1;
@@ -433,7 +433,7 @@ public class CRUDBonusBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			    		  bw.append("BS00"+(prog+1)+"003");
 			    		  bw.append(Formatta(dettaglio.getCf_componente_nucleo(),"S",16," "));
 			    		  bw.append("BS00"+(prog+1)+"004");
-			    		  bw.append(Formatta((dettaglio.getIm_reddito_componente().setScale(0,java.math.BigDecimal.ROUND_HALF_EVEN)).toString(),"D",16," "));			    		  
+			    		  bw.append(Formatta((dettaglio.getIm_reddito_componente().setScale(0,java.math.BigDecimal.ROUND_HALF_UP)).toString(),"D",16," "));			    		  
 			    	  }
 			    	}
 			      
@@ -443,9 +443,9 @@ public class CRUDBonusBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		    	   // totali
 		    	  if(mod==1){
 		    		  bw.append("BS007004");
-		    		  bw.append(Formatta((bonus.getIm_reddito_nucleo_f().setScale(0,java.math.BigDecimal.ROUND_HALF_EVEN)).toString(),"D",16," "));
+		    		  bw.append(Formatta((bonus.getIm_reddito_nucleo_f().setScale(0,java.math.BigDecimal.ROUND_HALF_UP)).toString(),"D",16," "));
 		    		  bw.append("BS008001");
-		    		  bw.append(Formatta((bonus.getIm_bonus().setScale(0,java.math.BigDecimal.ROUND_HALF_EVEN)).toString(),"D",16," "));
+		    		  bw.append(Formatta((bonus.getIm_bonus().setScale(0,java.math.BigDecimal.ROUND_HALF_UP)).toString(),"D",16," "));
 		    	  }  
 	    		  completaRiga(bw,prog,altro,mod);
 	    		  bw.append(Formatta(null,"S",8," "));

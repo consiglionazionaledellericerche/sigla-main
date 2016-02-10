@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		label="Codice CdS"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		/>
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputSize="20"
+		inputType="ROTEXT" />
+
+	<fieldProperty
+		name="cd_uo"
+		property="uo.cd_unita_organizzativa"
+		label="Codice UO"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		/>
+	<fieldProperty
+		name="ds_uo"
+		property="uo.ds_unita_organizzativa"
+		inputSize="20"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="pg_trovato"
+		property="pg_trovato"
+		label="Trovato"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		/>
+	<fieldProperty
+		name="titolo"
+		property="titolo"
+		label="Titolo"
+		inputType="TEXT"
+		maxLength="10000"
+		inputSize="10000"
+		/>
+
+	<findFieldProperty 
+		name="titolo"
+		/>
+		
+	<formFieldProperty
+		name="pg_trovato"
+		/>
+	<formFieldProperty
+		name="titolo"
+		/>
+
+	<columnFieldProperty
+		name="pg_trovato"
+		/>
+	<columnFieldProperty
+		name="titolo"
+		/>
+
+</bulkInfo>

@@ -22,7 +22,7 @@ public interface ElaboraFileIntraComponentSession extends it.cnr.jada.ejb.CRUDCo
 	List SezioneTreVendite(UserContext uc, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 	List SezioneQuattroVendite(UserContext uc, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 	List EstraiListaIntra12(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
-	Integer recuperoMaxProt(UserContext userContext)throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 	void confermaElaborazione(UserContext userContext, VIntrastatBulk bulk)throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 	java.util.Date recuperoMaxDtPagamentoLiq(UserContext uc, OggettoBulk bulk) throws ComponentException ,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
+	List EstraiBlacklist(UserContext userContext, OggettoBulk model, OggettoBulk terzo)throws ComponentException ,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 }

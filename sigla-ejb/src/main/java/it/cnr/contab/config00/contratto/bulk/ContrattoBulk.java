@@ -3,20 +3,24 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
+import javax.persistence.Transient;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.blob.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
+import it.cnr.contab.cmis.annotation.CMISPolicy;
+import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
-import it.cnr.jada.action.ActionContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+@CMISType(name="F:sigla_contratti:appalti")
 public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamente{
 	
 	private static final java.util.Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -56,12 +60,25 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private OrganoBulk organo_annullamento;
 	private Unita_organizzativaBulk unita_organizzativa;
 	private Procedure_amministrativeBulk procedura_amministrativa;
+	private Tipo_norma_perlaBulk tipoNormaPerla;
+	private V_persona_fisicaBulk direttore;
+	private CigBulk cig;
+	private CupBulk cup;
+	
 	
 	private BulkList associazioneUO = new BulkList();
 	private BulkList associazioneUODisponibili = new BulkList();
+	@Transient
+	private BulkList<AllegatoContrattoDocumentBulk> archivioAllegati = new BulkList();
 	
 	private java.math.BigDecimal tot_doc_cont_spe;
 	private java.math.BigDecimal tot_doc_cont_etr;
+
+	private java.math.BigDecimal tot_docamm_cont_spe;
+	private java.math.BigDecimal tot_docamm_cont_etr;
+	
+	private java.math.BigDecimal tot_doccont_cont_spe;
+	private java.math.BigDecimal tot_doccont_cont_etr;
 	
 	public ContrattoBulk() {
 		super();
@@ -70,10 +87,11 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		super(esercizio, stato, pg_contratto);
 	}
 	public boolean isProvvisorio(){
-		return getStato().equals(ContrattoBulk.STATO_PROVVISORIO);
+		return ContrattoBulk.STATO_PROVVISORIO.equals(getStato());
+		
 	}
 	public boolean isDefinitivo(){
-		return getStato().equals(ContrattoBulk.STATO_DEFINITIVO);
+		return ContrattoBulk.STATO_DEFINITIVO.equals(getStato());
 	}
 	public boolean isRODefinitivo(){
 		return getStato()!=null && isDefinitivo();
@@ -99,11 +117,24 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	public boolean isAttivo(){
 		return (getNatura_contabile() != null && getNatura_contabile().equals(NATURA_CONTABILE_ATTIVO));
 	}
+	
+	public boolean isSenzaFlussiFinanziari(){
+		return (getNatura_contabile() != null && getNatura_contabile().equals(NATURA_CONTABILE_SENZA_FLUSSI_FINANZIARI));
+	}
+
 	public boolean isPassivo(){
 		return (getNatura_contabile() != null && getNatura_contabile().equals(NATURA_CONTABILE_PASSIVO));
 	}
 	public boolean isAttivo_e_Passivo(){
 		return (getNatura_contabile() != null && getNatura_contabile().equals(NATURA_CONTABILE_ATTIVO_E_PASSIVO));
+	}
+	
+	public boolean isCIGVisible(){
+		if (getTipo_contratto() == null)
+			return false;
+		if (getTipo_contratto().getFl_cig() == null || !getTipo_contratto().getFl_cig())
+			return false;
+		return true;
 	}
 
 	/**
@@ -161,7 +192,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	 */
 	public final java.util.Dictionary getTi_natura_contabileKeys() {
 		return ti_natura_contabileKeys;
-	}			
+	}		
+	
+	@CMISProperty(name="sigla_contratti:natura_contabile")
+	public String getDescrizioneNaturaContabile(){
+		return (String) ti_natura_contabileKeys.get(getNatura_contabile());
+	}
 	/**
 	 * @return
 	 */
@@ -358,7 +394,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {getAssociazioneUO(),getAssociazioneUODisponibili()};
+		return new it.cnr.jada.bulk.BulkCollection[] {getAssociazioneUO(),getAssociazioneUODisponibili(),getArchivioAllegati()};
 	}
 	public Ass_contratto_uoBulk removeFromAssociazioneUO(int index) {
 		Ass_contratto_uoBulk dett = (Ass_contratto_uoBulk)getAssociazioneUO().remove(index);
@@ -575,9 +611,6 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	 *  (non-Javadoc)
 	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#getCd_unita_organizzativa()
 	 */
-	public java.lang.String getCd_unita_organizzativa() {
-		return getUnita_organizzativa().getCd_unita_organizzativa();
-	}
 	/*
 	 *  (non-Javadoc)
 	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#setCd_unita_organizzativa(java.lang.String)
@@ -613,5 +646,181 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	public void setAssociazioneUODisponibili(BulkList list) {
 		associazioneUODisponibili = list;
 	}
+	
+	public Tipo_norma_perlaBulk getTipoNormaPerla() {
+		return tipoNormaPerla;
+	}
+	public void setTipoNormaPerla(Tipo_norma_perlaBulk tipoNormaPerla) {
+		this.tipoNormaPerla = tipoNormaPerla;
+	}
+	public V_persona_fisicaBulk getDirettore() {
+		return direttore;
+	}
+	public void setDirettore(V_persona_fisicaBulk direttore) {
+		this.direttore = direttore;
+	}
+	public CigBulk getCig() {
+		return cig;
+	}
+	public void setCig(CigBulk cig) {
+		this.cig = cig;
+	}
+	public java.math.BigDecimal getTot_docamm_cont_spe() {
+		return tot_docamm_cont_spe;
+	}
+	public void setTot_docamm_cont_spe(java.math.BigDecimal tot_docamm_cont_spe) {
+		this.tot_docamm_cont_spe = tot_docamm_cont_spe;
+	}
+	public java.math.BigDecimal getTot_docamm_cont_etr() {
+		return tot_docamm_cont_etr;
+	}
+	public void setTot_docamm_cont_etr(java.math.BigDecimal tot_docamm_cont_etr) {
+		this.tot_docamm_cont_etr = tot_docamm_cont_etr;
+	}
+	public java.math.BigDecimal getTot_doccont_cont_spe() {
+		return tot_doccont_cont_spe;
+	}
+	public void setTot_doccont_cont_spe(java.math.BigDecimal tot_doccont_cont_spe) {
+		this.tot_doccont_cont_spe = tot_doccont_cont_spe;
+	}
+	public java.math.BigDecimal getTot_doccont_cont_etr() {
+		return tot_doccont_cont_etr;
+	}
+	public void setTot_doccont_cont_etr(java.math.BigDecimal tot_doccont_cont_etr) {
+		this.tot_doccont_cont_etr = tot_doccont_cont_etr;
+	}
 
+
+	public BulkList<AllegatoContrattoDocumentBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+
+	public void setArchivioAllegati(
+			BulkList<AllegatoContrattoDocumentBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	
+	public int addToArchivioAllegati(AllegatoContrattoDocumentBulk dett) {
+		dett.setContrattoBulk(this);
+		getArchivioAllegati().add(dett);
+		return getArchivioAllegati().size()-1;
+	}	
+	public AllegatoContrattoDocumentBulk removeFromArchivioAllegati(int index) {
+		AllegatoContrattoDocumentBulk dett = (AllegatoContrattoDocumentBulk)getArchivioAllegati().remove(index);
+		return dett;
+	}
+	@CMISProperty(name="cmis:name")
+	public String getCMISFolderName(){
+		return "Contratto ".concat(String.valueOf(getEsercizio())).concat(getStato()).concat(Utility.lpad(getPg_contratto(), 9, '0'));
+	}
+	
+	public boolean isAllegatoContrattoPresent(){
+		for (AllegatoContrattoDocumentBulk allegato : getArchivioAllegati()) {
+			if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO))
+				return true;
+		}
+		return false;
+	}
+	
+	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:codice"))
+	public String getCd_cds(){
+		return getUnita_organizzativa().getUnita_padre().getCd_unita_organizzativa();
+	}
+
+	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:descrizione"))
+	public String getDs_cds(){
+		return getUnita_organizzativa().getUnita_padre().getDs_unita_organizzativa();
+	}
+	
+	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:codice"))
+	public String getCd_unita_organizzativa(){
+		return getUnita_organizzativa().getCd_unita_organizzativa();
+	}
+
+	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:descrizione"))
+	public String getDs_unita_organizzativa(){
+		return getUnita_organizzativa().getDs_unita_organizzativa();
+	}
+	
+	@CMISProperty(name="sigla_contratti:fig_giu_esterna_codice")
+	public Integer getFig_giu_esterna_codice(){
+		if (getFigura_giuridica_esterna() == null)
+			return null;
+		return getFigura_giuridica_esterna().getCd_terzo();
+	}
+
+	@CMISProperty(name="sigla_contratti:fig_giu_esterna_denominazione")
+	public String getFig_giu_esterna_denominazione(){
+		if (getFigura_giuridica_esterna() == null)
+			return null;
+		return getFigura_giuridica_esterna().getDenominazione_sede();
+	}
+
+	@CMISProperty(name="sigla_contratti:fig_giu_esterna_codfis")
+	public String getFig_giu_esterna_codfis(){
+		if (getFigura_giuridica_esterna() == null)
+			return null;
+		return getFigura_giuridica_esterna().getAnagrafico().getCodice_fiscale();
+	}
+
+	@CMISProperty(name="sigla_contratti:fig_giu_esterna_pariva")
+	public String getFig_giu_esterna_pariva(){
+		if (getFigura_giuridica_esterna() == null)
+			return null;
+		return getFigura_giuridica_esterna().getAnagrafico().getPartita_iva();
+	}
+
+	@CMISProperty(name="sigla_contratti:tipo_norma")
+	public String getTipo_norma(){
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
+		Tipo_norma_perlaBulk perla = getTipoNormaPerla();
+		if (perla != null && perla.getDs_tipo_norma() != null)
+			return perla.getDs_tipo_norma().concat(" ").concat(perla.getNumero_tipo_norma()).
+				concat(" ").concat(formatter.format(perla.getDt_tipo_norma())).
+				concat(" ").concat(perla.getArticolo_tipo_norma()).
+				concat(" ").concat(perla.getComma_tipo_norma());
+		return null;
+	}
+
+	@CMISProperty(name="sigla_contratti:responsabile_codice")
+	public Integer getCodiceResponsabile(){
+		if (getDirettore() == null)
+			return null;
+		return getDirettore().getCd_terzo();
+	}
+
+	@CMISProperty(name="sigla_contratti:responsabile_denominazione")
+	public String getDenominazioneResponsabile(){
+		if (getDirettore() == null)
+			return null;
+		return getDirettore().getDenominazione_sede();
+	}
+
+	@CMISProperty(name="sigla_contratti:responsabile_procedimento_codice")
+	public Integer getCodiceResponsabileProcedimento(){
+		if (getResponsabile() == null)
+			return null;
+		return getResponsabile().getCd_terzo();
+	}
+
+	@CMISProperty(name="sigla_contratti:responsabile_procedimento_denominazione")
+	public String getDenominazioneResponsabileProcedimento(){
+		if (getResponsabile() == null)
+			return null;
+		return getResponsabile().getDenominazione_sede();
+	}
+	
+	@CMISProperty(name="sigla_contratti:mod_individuazione_beneficiario")
+	public String getModIndividuazioneBeneficiario(){
+		if (getProcedura_amministrativa() == null)
+			return null;
+		return getProcedura_amministrativa().getDs_proc_amm();
+	}
+	public CupBulk getCup() {
+		return cup;
+	}
+	public void setCup(CupBulk cup) {
+		this.cup = cup;
+	}
+	
 }

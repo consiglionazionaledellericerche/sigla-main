@@ -6,9 +6,11 @@
  */
 package it.cnr.contab.pdg01.bp;
 
-import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
+import java.rmi.RemoteException;
+import java.util.List;
+
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_speBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
@@ -17,17 +19,11 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.sql.HomeCache;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.List;
 
 /**
  * @author rpagano
@@ -39,6 +35,7 @@ public class CRUDPdgModuloSpeseGestBP extends SimpleCRUDBP {
 	private V_cons_pdgp_pdgg_speBulk vConsPdgpPdggSpe;
 	private String uoScrivania;
 	private String labelDesctool_classificazione;
+	private boolean flNuovoPdg = false;
 
 	private SimpleDetailCRUDController crudDettagliGestionali = new SimpleDetailCRUDController( "DettagliGestionali", Pdg_modulo_spese_gestBulk.class, "dettagli_gestionali", this){
 		protected void setModel(ActionContext actioncontext,OggettoBulk oggettobulk) {
@@ -119,6 +116,8 @@ public class CRUDPdgModuloSpeseGestBP extends SimpleCRUDBP {
 																	Elemento_voceHome.GESTIONE_SPESE,
 																	((Pdg_modulo_speseBulk)getModel()).getClassificazione().getNr_livello()));
 			setStatus(EDIT);
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
+			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 		} catch (ComponentException e) {
 			throw new BusinessProcessException(e);
 		} catch (RemoteException e) {
@@ -181,5 +180,11 @@ public class CRUDPdgModuloSpeseGestBP extends SimpleCRUDBP {
 	}
 	public void setLabelDesctool_classificazione(String string) {
 		labelDesctool_classificazione = string;
+	}
+	public void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
 	}
 }

@@ -2441,6 +2441,8 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
 {
 	try
 	{
+		EnteBulk ente = (EnteBulk) getHome( aUC, EnteBulk.class ).findAll().get(0);
+		
 		if ( sospeso.isToBeCreated() )
 		{
 			Timestamp lastDayOfTheYear = DateServices.getLastDayOfYear( sospeso.getEsercizio().intValue());
@@ -2449,7 +2451,13 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
 			if ( today.after(lastDayOfTheYear ) &&
 				  sospeso.getDt_registrazione().compareTo( lastDayOfTheYear) != 0 )
 				throw  new ApplicationException( "La data di registrazione deve essere " +
-   									java.text.DateFormat.getDateInstance().format( lastDayOfTheYear ));					
+   									java.text.DateFormat.getDateInstance().format( lastDayOfTheYear ));
+			// Rospuc 08/05/2014 
+			if( sospeso.TI_RISCONTRO.equals( sospeso.getTi_sospeso_riscontro()) ){
+				// Prefisso di numerazione automatica dei riscontri effettuati via interfaccia cassiere
+				if(sospeso.getCd_sospeso()!=null && sospeso.getCd_sospeso().toUpperCase().startsWith("XSRC")) 
+					throw  new ApplicationException( "Il campo codice può iniziare con XSRC solo per gli inserimenti automatici.");
+			}
 		}
 
 		java.math.BigDecimal totDettagli;
@@ -2479,11 +2487,17 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
 						if (!((SospesoBulk) result.get(0)).getTi_cc_bi().equals( sospeso.getTi_cc_bi() ))
 							throw handleException( new ApplicationException( "Attenzione! Non è possibile creare un riscontro su " + sospeso.getTi_cc_biKeys().get(sospeso.getTi_cc_bi()) + " per la Reversale " + sospeso.getV_man_rev().getPg_documento_cont()));
 					}
-				}	
-				if ( sospeso.getV_man_rev().getTi_cc_bi() != null &&
-					  !sospeso.getV_man_rev().getTi_cc_bi().equals( sospeso.getTi_cc_bi()) )
-					throw new ApplicationException( "Una reversale con sospesi di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getV_man_rev().getTi_cc_bi()) +
-						   " non può essere associata ad un riscontro di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getTi_cc_bi()));
+				}
+				//poichè in V_MANDATO_REVERSALE il TI_CC_BI = 'C' sempre (non si sa il motivo!!!!!!!)
+				//per le reversali di liquidazione tramite F24EP non deve essere effettuato il controllo successivo
+				if (!(sospeso.getV_man_rev().getCd_cds().equals( ente.getCd_unita_organizzativa()) &&
+					  sospeso.getV_man_rev().getCd_cds().equals( sospeso.getV_man_rev().getCd_cds_origine())))
+				{
+					if ( sospeso.getV_man_rev().getTi_cc_bi() != null &&
+							  !sospeso.getV_man_rev().getTi_cc_bi().equals( sospeso.getTi_cc_bi()) )
+							throw new ApplicationException( "Una reversale con sospesi di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getV_man_rev().getTi_cc_bi()) +
+								   " non può essere associata ad un riscontro di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getTi_cc_bi()));
+				}
 				verificaRiscontroEntrataCNR( aUC, sospeso );	
 			}
 			else if( (sospeso.getTi_entrata_spesa() != null) && sospeso.TIPO_SPESA.equals( sospeso.getTi_entrata_spesa()) )

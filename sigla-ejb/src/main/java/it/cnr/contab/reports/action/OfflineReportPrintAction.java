@@ -3,11 +3,15 @@ package it.cnr.contab.reports.action;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import it.cnr.contab.gestiva00.core.bulk.Liquid_iva_interfBulk;
 import it.cnr.contab.reports.bp.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.PrintFieldProperty;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.util.action.OptionBP;
 
 public class OfflineReportPrintAction extends it.cnr.jada.util.action.FormAction {
 /**
@@ -53,21 +57,57 @@ public Forward doPrint(ActionContext context) {
 		//} catch(Throwable e) {
 			//return handleException(context,e);
 		//}
-		bp.createComponentSession().addJob(
-			context.getUserContext(),
-			bp.getModel(),
-			bp.getPrintSpoolerParam());
+		
+		if (bp.createComponentSession().controllaStampeInCoda(context.getUserContext(), bp.getModel())){
+			String message = "Attenzione esiste già la stessa stampa in coda o in esecuzione. Vuoi continuare?";
+			return openConfirm(context,message,OptionBP.CONFIRM_YES_NO,"doConfermaStampaInCoda");
+		}
+		
+				bp.createComponentSession().addJob(
+						context.getUserContext(),
+						bp.getModel(),
+						bp.getPrintSpoolerParam());
+		
 		boolean requiresCommit = bp.getUserTransaction() != null;
 		Forward forward = context.closeBusinessProcess();
+		
 		if (requiresCommit)
 			context.getBusinessProcess().commitUserTransaction();
 		PrintSpoolerBP printSpoolerBP = (PrintSpoolerBP)context.createBusinessProcess("PrintSpoolerBP");
-		printSpoolerBP.setMessage("Stampa accodata con successo");
+		printSpoolerBP.setMessage("Stampa accodata con successo");	
 		return context.addBusinessProcess(printSpoolerBP);
+
 	} catch(Throwable e) {
 		return handleException(context,e);
 	} 
 }
+
+
+public Forward doConfermaStampaInCoda(ActionContext context,int option) throws java.rmi.RemoteException {
+	try
+	{
+		if (option == OptionBP.NO_BUTTON) {
+			PrintSpoolerBP printSpoolerBP = (PrintSpoolerBP)context.createBusinessProcess("PrintSpoolerBP");
+			printSpoolerBP.setMessage("La stampa non è stata accodata");
+			return context.addBusinessProcess(printSpoolerBP);
+		}
+		else {
+			OfflineReportPrintBP bp = (OfflineReportPrintBP)context.getBusinessProcess();
+			bp.createComponentSession().addJob(context.getUserContext(),bp.getModel(),bp.getPrintSpoolerParam());
+			PrintSpoolerBP printSpoolerBP = (PrintSpoolerBP)context.createBusinessProcess("PrintSpoolerBP");
+			boolean requiresCommit = bp.getUserTransaction() != null;
+			Forward forward = context.closeBusinessProcess();
+			if (requiresCommit)
+				context.getBusinessProcess().commitUserTransaction();		
+			printSpoolerBP.setMessage("Stampa accodata con successo");	
+			return context.addBusinessProcess(printSpoolerBP);
+		}
+						
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+
 protected Forward handleException(ActionContext context, Throwable ex) {
 	try {
 		throw ex;
@@ -87,4 +127,6 @@ protected Forward handleException(ActionContext context, Throwable ex) {
 		return super.handleException(context,e);
 	}
 }
+
+
 }

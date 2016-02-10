@@ -111,6 +111,11 @@
 			propertyName="cd_attivita_commerciale"
 			sqlTypeName="VARCHAR"
 			columnSize="10" />
+		<columnMapping
+			columnName="ORDINA"
+			propertyName="ordina"
+			sqlTypeName="DECIMAL"
+			columnSize="3" />	
 	<columnMapping
 			columnName="FL_SERVIZI_NON_RESIDENTI"
 			propertyName="fl_servizi_non_residenti"
@@ -154,5 +159,7 @@
 	<persistentProperty
 		name="cd_attivita_commerciale" />
 	<persistentProperty
-		name="fl_servizi_non_residenti" />	
+		name="fl_servizi_non_residenti" />
+	<persistentProperty
+		name="ordina" />		
 </SQLPersistentInfo>

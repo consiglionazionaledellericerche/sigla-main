@@ -1,7 +1,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_ds_tipo_sezionale"
 		property="cd_ds_tipo_sezionale"
@@ -180,7 +180,12 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="Servizi non residenti" />
-			
+	<fieldProperty
+		name="ordina"
+		property="ordina"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		nullable="true" />		
 	<formFieldProperty
 		name="cd_tipo_sezionale" />	
 	<formFieldProperty
@@ -218,7 +223,10 @@
 	<formFieldProperty
 		name="ti_bene_servizioForSearch" />	
 	<formFieldProperty
-		name="fl_servizi_non_residenti" />		
+		name="fl_servizi_non_residenti" />
+	<formFieldProperty
+		name="ordina" />		
+				
 	<columnFieldProperty
 		name="cd_tipo_sezionale" />
 	<columnFieldProperty

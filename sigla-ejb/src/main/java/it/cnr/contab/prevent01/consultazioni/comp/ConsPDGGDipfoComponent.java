@@ -248,7 +248,7 @@ public class ConsPDGGDipfoComponent extends CRUDComponent {
 			addSQLGroupBy(sql,tabAlias.toLowerCase().concat("pg_progetto"),true);
 			addSQLGroupBy(sql,tabAlias.toLowerCase().concat("ds_progetto"),true);
 		}
-		else {
+		else  if (!(pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_DET)>=0 && pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_TIP)>=0)){
 			addColumn(sql,"NULL PG_PROGETTO",true);
 			addColumn(sql,"NULL CD_PROGETTO",true);
 			addColumn(sql,"NULL DS_PROGETTO",true);
@@ -269,7 +269,7 @@ public class ConsPDGGDipfoComponent extends CRUDComponent {
 		   addSQLGroupBy(sql,tabAlias.toLowerCase().concat("cd_commessa"),true);
 		   addSQLGroupBy(sql,tabAlias.toLowerCase().concat("ds_commessa"),true);
 	   }
-	   else {
+	   else  if (!(pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_DET)>=0 && pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_TIP)>=0)){
 		   addColumn(sql,"NULL CD_COMMESSA",true);
 		   addColumn(sql,"NULL DS_COMMESSA",true);
 	   }
@@ -381,7 +381,7 @@ public class ConsPDGGDipfoComponent extends CRUDComponent {
 	}
 	private void addColumnLIN(SQLBuilder sql, String tabAlias, String pathDestinazione, String tipo){ 
 		tabAlias = getAlias(tabAlias);
-	    if (pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_MOD)>=0) {
+	    if (pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_LIN)>=0) {
 			addColumn(sql,tabAlias.concat("CD_LINEA_ATTIVITA"),true);
 			addColumn(sql,tabAlias.concat("DS_LINEA"),true);
 			addSQLGroupBy(sql,tabAlias.toLowerCase().concat("cd_linea_attivita"),true);
@@ -394,7 +394,7 @@ public class ConsPDGGDipfoComponent extends CRUDComponent {
 	}
 	private void addColumnVOC(SQLBuilder sql, String tabAlias, String pathDestinazione, String tipo){ 
 		tabAlias = getAlias(tabAlias);
-	    if (pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_MOD)>=0) {
+	    if (pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_VOC)>=0) {
 			addColumn(sql,tabAlias.concat("CD_ELEMENTO_VOCE"),true);
 			addColumn(sql,tabAlias.concat("DS_ELEMENTO_VOCE"),true);
 			addSQLGroupBy(sql,tabAlias.toLowerCase().concat("cd_elemento_voce"),true);
@@ -432,7 +432,7 @@ public class ConsPDGGDipfoComponent extends CRUDComponent {
 				addColumn(sql,"NULL DS_DETTAGLIO",true);
 			}
 		}
-		if (pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_TIP)>=0)
+		if (pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_DET)>=0 && pathDestinazione.indexOf(ConsPDGGDipFoBP.LIVELLO_TIP)>=0)
 		{
 			addColumn(sql,tabAlias.concat("PG_PROGETTO"),true);
 			addColumn(sql,tabAlias.concat("CD_PROGETTO"),true);

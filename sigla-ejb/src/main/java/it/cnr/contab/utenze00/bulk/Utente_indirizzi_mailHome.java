@@ -3,6 +3,9 @@
 * Date 23/02/2006
 */
 package it.cnr.contab.utenze00.bulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -59,4 +62,39 @@ public class Utente_indirizzi_mailHome extends BulkHome {
 		sql.addSQLExistsClause("AND",sqlUtente);
 		return fetchAll(sql);
 	}
+	
+	public java.util.Collection findUtenteNotificaRicezioneFatturaElettronica(Unita_organizzativaBulk bulk) throws IntrospectionException, PersistencyException 
+	{
+		return findUtenteNotificaRicezioneFatturaElettronica(bulk.getCd_unita_organizzativa());
+	}	
+
+	private java.util.Collection findUtenteNotificaRicezioneFatturaElettronica(String codiceUo) throws IntrospectionException, PersistencyException 
+	{
+		SQLBuilder sql = createSQLBuilder();
+		sql.addClause("AND","flFepNotificaRicezione",SQLBuilder.EQUALS,Boolean.TRUE);
+			return findUtente(codiceUo, sql);
+	}
+	public java.util.Collection findUtenteNotificaOkInvioFatturaElettronicaAttiva(String codiceUo) throws IntrospectionException, PersistencyException 
+	{
+		SQLBuilder sql = createSQLBuilder();
+		sql.addClause("AND","flEsitoPosFattElettr",SQLBuilder.EQUALS,Boolean.TRUE);
+			return findUtente(codiceUo, sql);
+	}
+	public java.util.Collection findUtenteNotificaKoInvioFatturaElettronicaAttiva(String codiceUo) throws IntrospectionException, PersistencyException 
+	{
+		SQLBuilder sql = createSQLBuilder();
+		sql.addClause("AND","flEsitoNegFattElettr",SQLBuilder.EQUALS,Boolean.TRUE);
+			return findUtente(codiceUo, sql);
+	}
+	private java.util.Collection findUtente(String codiceUo, SQLBuilder sql)
+			throws PersistencyException {
+		SQLBuilder sqlUtente = getHomeCache().getHome(UtenteBulk.class).createSQLBuilder();
+			SQLBuilder sqlCdR = ((CdrHome)getHomeCache().getHome(CdrBulk.class)).createSQLBuilderEsteso();
+			sqlCdR.addClause("AND","cd_unita_organizzativa",SQLBuilder.EQUALS, codiceUo);
+			sqlCdR.addSQLJoin("CDR.CD_CENTRO_RESPONSABILITA","UTENTE.CD_CDR");
+			sqlUtente.addSQLExistsClause("AND",sqlCdR);
+			sqlUtente.addSQLJoin("UTENTE.CD_UTENTE","UTENTE_INDIRIZZI_MAIL.CD_UTENTE");				
+		sql.addSQLExistsClause("AND",sqlUtente);
+		return fetchAll(sql);
+	}	
 }

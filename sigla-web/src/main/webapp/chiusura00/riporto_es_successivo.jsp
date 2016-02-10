@@ -91,7 +91,17 @@
 		<tr>
 			<td align="center">
 				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocDaRiportare')",null); %>
-			</td>		
+			</td>
+			<% if (!bp.isRiaccertamentoChiuso()) {%>		
+				<td align="center">
+					<% JSPUtils.button(out,bp.encodePath("img/log24.gif"),bp.encodePath("Elenco Residui Attivi da Riaccertare"), "javascript:submitForm('doCercaResiduiForRiaccertamento')",null); %>
+				</td>
+			<% } %>		
+			<% if (!bp.isGaeCollegateProgetti()) {%>		
+				<td align="center">
+					<% JSPUtils.button(out,bp.encodePath("img/log24.gif"),bp.encodePath("Elenco Documenti con Gae senza Progetto"), "javascript:submitForm('doCercaGaeSenzaProgettiForRibaltamento')",null); %>
+				</td>		
+			<% } %>		
 		</tr>
 	</table>
 

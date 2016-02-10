@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBase"
+	keyClassName="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeKey"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeHome">
+	<defaultColumnMap
+		tableName="V_CONS_OBBLIGAZIONI_GAE">
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cdCdsOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_OBBLIGAZIONE"
+			propertyName="dsObbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cdUoOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cdElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="tiAppartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="tiGestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PGIRO"
+			propertyName="flPgiro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_SCADENZA_COMP"
+			propertyName="imScadenzaComp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SCADENZA_RES"
+			propertyName="imScadenzaRes"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_AMM_COMP"
+			propertyName="imAssociatoDocAmmComp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_AMM_RES"
+			propertyName="imAssociatoDocAmmRes"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_PAGATO_COMP"
+			propertyName="imPagatoComp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_PAGATO_RES"
+			propertyName="imPagatoRes"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdUnitaOrganizzativa" />
+	<persistentProperty
+		name="cdCdsOrigine" />
+	<persistentProperty
+		name="dsObbligazione" />
+	<persistentProperty
+		name="cdUoOrigine" />
+	<persistentProperty
+		name="cdElementoVoce" />
+	<persistentProperty
+		name="tiAppartenenza" />
+	<persistentProperty
+		name="tiGestione" />
+	<persistentProperty
+		name="flPgiro" />
+	<persistentProperty
+		name="imScadenzaComp" />
+	<persistentProperty
+		name="imScadenzaRes" />
+	<persistentProperty
+		name="imAssociatoDocAmmComp" />
+	<persistentProperty
+		name="imAssociatoDocAmmRes" />
+	<persistentProperty
+		name="imPagatoComp" />
+	<persistentProperty
+		name="imPagatoRes" />
+</SQLPersistentInfo>

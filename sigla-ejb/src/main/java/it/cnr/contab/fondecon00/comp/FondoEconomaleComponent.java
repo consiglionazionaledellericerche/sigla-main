@@ -1,6 +1,8 @@
 package it.cnr.contab.fondecon00.comp;
 
 import java.util.Calendar;
+
+import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.fondecon00.views.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -15,8 +17,6 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.fondecon00.core.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoHome;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -55,7 +55,7 @@ public void associaTutteSpese(
 	Obbligazione_scadenzarioBulk obbScad)
 	throws  it.cnr.jada.comp.ComponentException {
 
-		PreparedStatement ps = null;
+	LoggableStatement ps = null;
 		try {
 			lockBulk(context, testata);
 			Fondo_spesaHome spesaHome = (Fondo_spesaHome)getHome(context, Fondo_spesaBulk.class);
@@ -147,12 +147,12 @@ public java.math.BigDecimal calcolaTotaleSpese(
 	Obbligazione_scadenzarioBulk scadenza)
 	throws  it.cnr.jada.comp.ComponentException {
 
-	java.math.BigDecimal tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	Fondo_spesaHome home = (Fondo_spesaHome)getHome(userContext,Fondo_spesaBulk.class,"V_ASS_OBBSCAD_FONDO_SPESA");
 	SQLBuilder sql = home.getTotaleSpese(fondo, scadenza);
 	try {
 		java.sql.ResultSet rs = null;
-		PreparedStatement ps = null;
+		LoggableStatement ps = null;
 		try {
 			ps = sql.prepareStatement(getConnection(userContext));
 			try {
@@ -171,7 +171,7 @@ public java.math.BigDecimal calcolaTotaleSpese(
 		throw handleException(ex);
 	}	
 	if (tot == null)
-		tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 	return tot;
 }
@@ -432,8 +432,8 @@ public RemoteIterator cercaSospesiDiChiusuraFondo(
 
 	//Errore segnalato. Il controllo sull'importo è rimanadato 
 	//alla reversale di chiusura 03/12/2003
-	//sql.addSQLClause("AND", "(IM_SOSPESO - IM_ASSOCIATO)", sql.GREATER_EQUALS, fondo.getIm_residuo_fondo());
-	
+	sql.addSQLClause("AND", "(IM_SOSPESO - IM_ASSOCIATO)", sql.GREATER_EQUALS, fondo.getIm_residuo_fondo().subtract(fondo.getIm_totale_netto_spese()));
+	// r.p. 12/02/2013 la condizione precedente era commentata
 	sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
 	sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
 	sql.addClause("AND", "cd_cds", sql.EQUALS, fondo.getCd_cds());
@@ -744,7 +744,7 @@ public void dissociaTutteSpese(
 	Obbligazione_scadenzarioBulk obbScad)
 	throws  it.cnr.jada.comp.ComponentException {
 
-	PreparedStatement ps = null;
+	LoggableStatement ps = null;
 		try {
 			lockBulk(context, testata);
 			Fondo_spesaHome spesaHome = (Fondo_spesaHome)getHome(context, Fondo_spesaBulk.class);
@@ -1012,10 +1012,10 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext, Oggett
 
 	fondo.resetImporti();
 
-	fondo.setIm_max_gg_spesa_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	fondo.setIm_max_gg_spesa_non_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	fondo.setIm_max_mm_spesa_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	fondo.setIm_max_mm_spesa_non_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	fondo.setIm_max_gg_spesa_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	fondo.setIm_max_gg_spesa_non_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	fondo.setIm_max_mm_spesa_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	fondo.setIm_max_mm_spesa_non_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 
 	return bulk;
 }
@@ -1273,13 +1273,6 @@ public Fondo_economaleBulk reintegraSpese(
 			}
 			
 			fondo = (Fondo_economaleBulk)getHome(userContext, fondo).findByPrimaryKey(fondo);
-			MandatoHome mandatoHome = (MandatoHome) getHome( userContext, MandatoIBulk.class );
-			for (Object assoc : fondo.getAssociazioni_mandati()) {
-				Ass_fondo_eco_mandatoBulk ass_fondo_eco_mandato = (Ass_fondo_eco_mandatoBulk)assoc;
-				if (mandatoHome.isAvvisoDiPagamentoMandatoReintegroFondo(userContext, ass_fondo_eco_mandato.getMandato())){
-					mandatoHome.sendAvvisoDiPagamentoPerBonifico(userContext, ass_fondo_eco_mandato.getMandato());
-				}
-			}
 			
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw handleException(fondo, e);
@@ -1415,7 +1408,7 @@ public SQLBuilder selectMandatoByClause(
 	sql.addSQLClause("AND", "V_ASS_MANDATO_FONDO_ECO.CD_CODICE_FONDO", sql.ISNULL, null);
 	//deve avere un importo pagato diverso da 0
 	sql.openParenthesis("AND");
-	sql.addSQLClause("OR", "V_ASS_MANDATO_FONDO_ECO.IM_PAGATO", sql.NOT_EQUALS, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	sql.addSQLClause("OR", "V_ASS_MANDATO_FONDO_ECO.IM_PAGATO", sql.NOT_EQUALS, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	sql.addSQLClause("AND", "V_ASS_MANDATO_FONDO_ECO.IM_PAGATO", sql.ISNOTNULL, null);
 	sql.addSQLClause("AND", "V_ASS_MANDATO_FONDO_ECO.TI_APERTURA_INCREMENTO", sql.ISNULL, null);
 	sql.closeParenthesis();
@@ -1470,7 +1463,7 @@ public SQLBuilder selectScadenza_ricercaByClause(
 	sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM <> ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NOT NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 
 	if (scadenza.getObbligazione().getCreditore() != null)
 		sql.addSQLClause("AND","OBBLIGAZIONE.CD_TERZO",sql.EQUALS, scadenza.getObbligazione().getCreditore().getCd_terzo());
@@ -1521,6 +1514,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 
 	try{
 		java.sql.Timestamp dataOdierna = getDataOdierna(userContext);
+		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 
 		if (stampa.getFondoForPrint() == null || stampa.getFondoForPrint().getCd_codice_fondo() == null){
 			throw new ValidationException("Attenzione: indicare un Fondo Economale.");	
@@ -1538,9 +1532,9 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException("Attenzione: la DATA INIZIO non può essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		if (stampa.getDataFine().compareTo(dataOdierna)>0){
+		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("Attenzione: la DATA di FINE PERIODO non può essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("Attenzione: la DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		//Calendar cal_da = Calendar.getInstance();

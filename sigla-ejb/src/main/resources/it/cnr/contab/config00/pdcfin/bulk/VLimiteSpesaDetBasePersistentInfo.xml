@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.VLimiteSpesaDetBase"
+	keyClassName="it.cnr.contab.config00.pdcfin.bulk.VLimiteSpesaDetKey"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.VLimiteSpesaDetHome">
+	<defaultColumnMap
+		tableName="V_LIMITE_SPESA_DET">
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_LIMITE"
+			propertyName="importo_limite"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPEGNI_ASSUNTI"
+			propertyName="impegni_assunti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_DISPONIBILE"
+			propertyName="importo_disponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="importo_limite" />
+	<persistentProperty
+		name="impegni_assunti" />
+	<persistentProperty
+		name="importo_disponibile" />
+</SQLPersistentInfo>

@@ -2,10 +2,17 @@ package it.cnr.contab.doccont00.comp;
 
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
+import it.cnr.contab.docamm00.views.bulk.V_stm_paramin_ft_attivaBulk;
+import it.cnr.contab.docamm00.views.bulk.V_stm_paramin_ft_attivaHome;
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.config00.pdcfin.bulk.*;
@@ -14,15 +21,36 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.doccont00.tabrif.bulk.*;
 import it.cnr.contab.config00.sto.bulk.*;
+
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.*;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 import java.util.*;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.reports.bp.OfflineReportPrintBP;
+import it.cnr.contab.reports.bp.ReportPrintBP;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.*;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -905,7 +933,7 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
 		BigDecimal totdettagli = ((Sospeso_det_etrHome)getHome( userContext, Sospeso_det_etrBulk.class )).calcolaTotDettagli( new V_mandato_reversaleBulk( reversale.getEsercizio(), reversale.getCd_tipo_documento_cont(),reversale.getCd_cds(), reversale.getPg_reversale() ));	
 		if ( totdettagli.compareTo( new BigDecimal(0)) > 0 )			
 			throw new ApplicationException( "Annullamento impossibile! La reversale e' già stata associata ad un riscontro");
-
+		
 //		verificaReversale( userContext, reversale, true );
 		Sospeso_det_etrBulk sde;
 		for ( Iterator i = reversale.getSospeso_det_etrColl().iterator(); i.hasNext(); )
@@ -915,7 +943,10 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
 			   throw new ApplicationException( "Annullamento impossibile! Sono state fatte delle modifiche ai sospesi che devono essere ancora salvate");
 		}
 		
-		checkAnnullabilita( userContext, reversale );			
+		checkAnnullabilita( userContext, reversale );	
+		if(!isAnnullabile(userContext,reversale))
+			throw new ApplicationException(
+					"Verificare lo stato di trasmissione della reversale. Annullamento impossibile!");
 
 		lockBulk( userContext, reversale );
 
@@ -1076,7 +1107,8 @@ public void annullaReversaleDiTrasferimento(UserContext userContext, ReversaleBu
 			dRiga = (Documento_generico_rigaBulk) i.next();
 			accertamento = new AccertamentoCdsBulk( dRiga.getAccertamento_scadenziario().getCd_cds(), dRiga.getAccertamento_scadenziario().getEsercizio(), dRiga.getAccertamento_scadenziario().getEsercizio_originale(), dRiga.getAccertamento_scadenziario().getPg_accertamento());
 			accertamento = (AccertamentoCdsBulk) acrSession.inizializzaBulkPerModifica( userContext, accertamento );
-			acrSession.eliminaConBulk( userContext, accertamento );
+			acrSession.annullaAccertamento(userContext, accertamento );
+			//acrSession.eliminaConBulk( userContext, accertamento );
 		}	
 		
 	}
@@ -2492,14 +2524,34 @@ public Documento_generico_rigaBulk docGenerico_creaDocumentoGenericoRiga (UserCo
 		riga.setCd_modalita_pag_uo_cds( mp.getCd_modalita_pag());
 		riga.setModalita_pagamento_uo_cds( new Rif_modalita_pagamentoBulk( mp.getCd_modalita_pag()) );
 
-		//banca
-		sql = getHome( userContext, BancaBulk.class ).createSQLBuilder();
-		sql.addClause( "AND", "cd_terzo", sql.EQUALS, terzo_uo.getCd_terzo());
-		sql.addClause( "AND", "ti_pagamento", sql.EQUALS, Rif_modalita_pagamentoBulk.BANCARIO);
-		sql.addClause( "AND", "fl_cancellato", sql.EQUALS, Boolean.FALSE);
-		sql.addSQLClause( "AND", "cd_terzo_delegato", sql.ISNULL, null);	
-		sql.addOrderBy( "FL_CC_CDS DESC");
-//		sql.addClause( "AND", "fl_cc_cds", sql.EQUALS, Boolean.TRUE);		
+		 sql = getHome(userContext, BancaBulk.class).createSQLBuilder();
+		 sql.addClause( "AND", "cd_terzo", sql.EQUALS, terzo_uo.getCd_terzo());
+		 sql.addClause( "AND", "ti_pagamento", sql.EQUALS, Rif_modalita_pagamentoBulk.BANCARIO);
+		 sql.addClause( "AND", "fl_cancellato", sql.EQUALS, Boolean.FALSE);
+		 sql.addSQLClause("AND","CODICE_IBAN",sql.ISNOTNULL,null);
+		 sql.addSQLClause( "AND", "cd_terzo_delegato", sql.ISNULL, null);	
+			
+		try {
+			if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,CNRUserContext.getEsercizio(userContext)).getFl_tesoreria_unica().booleanValue())	
+				sql.addSQLClause("AND", "BANCA.FL_CC_CDS",sql.EQUALS, "Y");
+			else{
+				Configurazione_cnrBulk config = new Configurazione_cnrBulk(
+						"CONTO_CORRENTE_SPECIALE",
+						"ENTE", 
+						"*", 
+						new Integer(0));
+				it.cnr.contab.config00.bulk.Configurazione_cnrHome home = (it.cnr.contab.config00.bulk.Configurazione_cnrHome)getHome(userContext, config);
+				List configurazioni = home.find(config);
+				if ((configurazioni != null) && (configurazioni.size() == 1)) {
+					Configurazione_cnrBulk configBanca = (Configurazione_cnrBulk)configurazioni.get(0);
+					sql.addSQLClause("AND", "BANCA.ABI",sql.EQUALS,configBanca.getVal01());
+					sql.addSQLClause("AND", "BANCA.CAB",sql.EQUALS,configBanca.getVal02());
+					sql.addSQLClause("AND", "BANCA.NUMERO_CONTO",sql.CONTAINS, configBanca.getVal03());			       
+				}
+			}
+		} catch (Exception e) {
+			throw handleException(e);
+		}	
 		result = getHome( userContext, BancaBulk.class ).fetchAll( sql );
 		if ( result == null || result.size() == 0 )
 				throw handleException( new ApplicationException(" Impossibile emettere la reversale: l'unità organizzativa " + documento.getCd_unita_organizzativa() + " non ha coordinate bancarie associate"));
@@ -2854,9 +2906,34 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				riga.setReversale_siopeColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCollegatiSIOPE(aUC, riga)));
 				setCodiciSIOPECollegabili(aUC, riga);
 			}
-			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue()) {
-				riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
-			}			
+			
+			
+//			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue() &&
+//					Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope_cup().booleanValue()){
+//				Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, "DATA_LIMITE_CUP_SIOPE_CUP");
+//				if(reversale.getDt_emissione().after(dataLimite)){
+//					for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext();){
+//						Reversale_siopeIBulk rigaSiope = (Reversale_siopeIBulk)j.next();
+//						rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome( aUC,Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+//					}
+//				}else
+//				{
+//					riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+//				}
+//				
+//			}else{
+				if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue()) {
+					riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+				}else{
+					if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope_cup().booleanValue()) {
+						for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext();){
+							Reversale_siopeIBulk rigaSiope = (Reversale_siopeIBulk)j.next();
+							rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome( aUC,Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+						}
+					}
+				}
+//			}
+						
 			inizializzaTi_fattura( aUC, riga );
   		    ((Reversale_rigaHome)getHome( aUC, riga.getClass())).initializeElemento_voce(aUC, riga );
 		}
@@ -3847,8 +3924,9 @@ public java.lang.Boolean isCollegamentoSiopeCompleto (UserContext userContext, R
 {
 	try
 	{
+		ReversaleHome reversaleHome  = (ReversaleHome)getHome(userContext, reversale.getClass());
+		reversale = (ReversaleBulk) reversaleHome.findByPrimaryKey(reversale);
 		if (reversale.isRequiredSiope()) {
-			ReversaleHome reversaleHome  = (ReversaleHome)getHome(userContext, reversale.getClass());
 	
 			for (Iterator i = reversaleHome.findReversale_riga(userContext, reversale).iterator(); i.hasNext();){
 				if (!this.isCollegamentoSiopeCompleto(userContext, (Reversale_rigaBulk)i.next())) return Boolean.FALSE;
@@ -3890,4 +3968,144 @@ public SQLBuilder selectCupByClause(UserContext userContext, ReversaleCupIBulk r
 	sql.addClause(clauses);
 	return sql;
 }
+
+private java.sql.Timestamp getFirstDayOfYear(int year) {
+
+	java.util.Calendar calendar = java.util.GregorianCalendar.getInstance();
+	calendar.set(java.util.Calendar.DAY_OF_MONTH, 1);
+	calendar.set(java.util.Calendar.MONTH, 0);
+	calendar.set(java.util.Calendar.YEAR, year);
+	calendar.set(java.util.Calendar.HOUR, 0);
+	calendar.set(java.util.Calendar.MINUTE, 0);
+	calendar.set(java.util.Calendar.SECOND, 0);
+	calendar.set(java.util.Calendar.MILLISECOND, 0);
+	calendar.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
+	return new java.sql.Timestamp(calendar.getTime().getTime());
+}
+public SQLBuilder selectCupByClause(UserContext userContext, ReversaleSiopeCupIBulk bulk, CupBulk cup, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+{
+	SQLBuilder sql = getHome( userContext, CupBulk.class ).createSQLBuilder();
+	sql.openParenthesis("AND");
+ 	sql.addClause("AND", "dt_canc", sql.ISNULL, null);
+	sql.addClause("OR","dt_canc",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+	sql.closeParenthesis();
+	sql.addClause(clauses);
+	return sql;
+}
+
+public static java.sql.Timestamp getLastDayOfYear(int year){
+
+	java.util.Calendar calendar = java.util.GregorianCalendar.getInstance();
+	calendar.set(java.util.Calendar.DAY_OF_MONTH, 31);
+	calendar.set(java.util.Calendar.MONTH, 11);
+	calendar.set(java.util.Calendar.YEAR, year);
+	calendar.set(java.util.Calendar.HOUR, 0);
+	calendar.set(java.util.Calendar.MINUTE, 0);
+	calendar.set(java.util.Calendar.SECOND, 0);
+	calendar.set(java.util.Calendar.MILLISECOND, 0);
+	calendar.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
+	return new java.sql.Timestamp(calendar.getTime().getTime());
+}
+
+public byte[] lanciaStampa(UserContext userContext,String cds,Integer esercizio,Long pgReversale) 
+		throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException, ParseException {
+	    
+	ReversaleIHome home = (ReversaleIHome) getHome(userContext, ReversaleIBulk.class);
+	SQLBuilder sql =  home.createSQLBuilder();
+	String cdsEnte = "999";
+	String tipoReversaleSospeso = "S"; // S = Sospeso. Reversale a regolamento di sospeso
+	String statoIncassato ="P"; // P = Incassata. La reversale risulta incassata
+	sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
+	sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, cdsEnte);
+	sql.addSQLClause("AND", "PG_REVERSALE", sql.EQUALS, pgReversale);
+	sql.addSQLClause("AND", "CD_CDS_ORIGINE", sql.EQUALS, cds);
+	sql.addSQLClause("AND", "TI_REVERSALE", sql.EQUALS, tipoReversaleSospeso);
+	sql.addSQLClause("AND", "STATO", sql.EQUALS, statoIncassato);
+	
+	java.util.List list = home.fetchAll(sql);
+	if(list.isEmpty())
+		throw new FatturaNonTrovataException("Reversale non trovata");
+	
+try {
+	
+	java.sql.Timestamp dataInizio =  getFirstDayOfYear(esercizio);
+	Timestamp dataFine = getLastDayOfYear(esercizio);
+	
+      File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("vpg_reversale.jasper",cds,esercizio,pgReversale));
+  	
+      Print_spoolerBulk print = new Print_spoolerBulk();
+      Print_spooler_paramBulk printparam = new Print_spooler_paramBulk();
+      print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+      print.setFlEmail(false);
+      print.setReport("/doccont/doccont/vpg_reversale.jasper");
+      print.setNomeFile(getOutputFileName("vpg_reversale.jasper", cds, esercizio, pgReversale));
+      print.setUtcr(userContext.getUser());
+      
+      print.addParam("aCd_cds",cdsEnte, String.class);
+      print.addParam("aEs",esercizio, Integer.class);
+      print.addParam("aPg_da",pgReversale, Long.class);
+      print.addParam("aPg_a",pgReversale, Long.class);
+      
+      printparam = new Print_spooler_paramBulk();
+      printparam.setNomeParam("aDt_da");
+      printparam.setValoreParam(new SimpleDateFormat("yyyy/MM/dd").format(dataInizio));
+      printparam.setParamType("java.util.Date");
+      print.addParam(printparam);
+      
+      printparam = new Print_spooler_paramBulk();
+      printparam.setNomeParam("aDt_a");
+      printparam.setValoreParam(new SimpleDateFormat("yyyy/MM/dd").format(dataFine));
+      printparam.setParamType("java.util.Date");
+      print.addParam(printparam);
+      print.addParam("aCd_terzo","%", String.class);
+      
+      Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
+      
+      FileOutputStream f = new FileOutputStream(output);
+      f.write(report.getBytes());
+      f.flush();
+	  f.close();
+	  
+      return report.getBytes();
+	}  catch (IOException e) {
+		throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
+	}
+}      
+
+private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
+private String getOutputFileName(String reportName, String cds,Integer esercizio,Long pgReversale)
+	{
+		String fileName = reportName;
+		fileName = fileName.replace('/', '_');
+		fileName = fileName.replace('\\', '_');
+		if(fileName.startsWith("_"))
+		    fileName = fileName.substring(1);
+		if(fileName.endsWith(".jasper"))
+		    fileName = fileName.substring(0, fileName.length() - 7);
+		fileName = fileName + ".pdf";
+		fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fileName + '_' + esercizio + '_' + cds + '_' + pgReversale;
+		return fileName;
+	}
+public boolean isAnnullabile(
+		UserContext userContext, ReversaleBulk reversale)
+		throws ComponentException {
+	try {
+		  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(reversale.getEsercizio()));
+		     if (parametriCnr.getFl_tesoreria_unica()){
+		    	 UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
+				if (utente.isSupervisore()) {
+					return Boolean.TRUE;
+				}else
+					if(reversale.getStato_trasmissione().compareTo(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)==0)
+						return Boolean.TRUE;
+					else
+						return Boolean.FALSE;
+		     }
+		return Boolean.TRUE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
+
 }

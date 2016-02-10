@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 /******************** TAB. TESTATA **********************/
 	<fieldProperty
@@ -25,7 +25,7 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="SELECT"		
-		label="Tipo missione"
+		label="Ambito missione"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"				
 		/>
@@ -35,7 +35,7 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
-		label="Tipo missione"
+		label="Ambito missione"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		/>		
@@ -287,7 +287,7 @@
 		name="via_fiscale"
 		property="v_terzo.terzo.via_sede"
 		maxLength="20"
-		inputSize="10"
+		inputSize="20"
 		inputType="ROTEXT"
 		label="Via/P.za"
 		/>
@@ -630,6 +630,17 @@
 		formatName = "it.cnr.contab.util.EuroFormat"		
 		inputType="ROTEXT"
 		label="diaria esente" 
+		/>	
+	<fieldProperty
+		name="im_rimborso"
+		property="im_rimborso"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		inputType="TEXT"
+		label="rimborso"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"										
 		/>													
 /******************** fine TAB. CONSUNTIVO **********************/
 
@@ -897,6 +908,14 @@
 		label="Banca"
 		maxLength="10"
 		inputSize="20"	/>
+	<fieldProperty
+		name="stato_liquidazione"
+		property="stato_liquidazione"
+		inputType="SELECT"
+		label="Stato liquidazione"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="stato_liquidazioneKeys" />	
 
 /******************** TAB. TESTATA **********************/		
 	<formFieldProperty name="esercizio" />
@@ -955,6 +974,7 @@
 	<formFieldProperty name="totale_spese_del_giorno" />
 	<formFieldProperty name="totale_netto_diaria_del_giorno" />
 	<formFieldProperty name="totale_esente_diaria_del_giorno" />
+	<formFieldProperty name="im_rimborso" />
 /******************** TAB. FONDO + OBBLIGAZIONE + ANTICIPO + COMPENSO**********************/
 	<formFieldProperty name="dt_pagamento_fondo_eco" />	
 	<formFieldProperty name="stato_pagamento_fondo_eco" />
@@ -976,7 +996,8 @@
 	<formFieldProperty name="cd_cds_anticipo" />
 	<formFieldProperty name="cd_uo_anticipo" />
 	<formFieldProperty name="esercizio_anticipo" />	
-	<formFieldProperty name="im_anticipo" />	
+	<formFieldProperty name="im_anticipo" />
+	<formFieldProperty name="stato_liquidazione"/>			
 
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="cd_cds" />
@@ -999,7 +1020,8 @@
 	<columnFieldProperty name="stato_cofi" />
 	<columnFieldProperty name="stato_coge" />		
 	<columnFieldProperty name="stato_coan" />
-	<columnFieldProperty name="ti_associato_manrev" />					
+	<columnFieldProperty name="ti_associato_manrev" />
+	<columnFieldProperty name="stato_liquidazione"/>							
 
 	<findFieldProperty name="esercizio" />		
 	<findFieldProperty name="cd_tipo_missione" />	
@@ -1033,5 +1055,6 @@
 	<findFieldProperty name="pg_obbligazione" />
 	<findFieldProperty name="pg_obbligazione_scadenzario" />
 	<findFieldProperty name="pg_anticipo" />
-	<findFieldProperty name="fl_associato_compenso" />				
+	<findFieldProperty name="fl_associato_compenso" />	
+	<findFieldProperty name="stato_liquidazione"/>					
 </bulkInfo>

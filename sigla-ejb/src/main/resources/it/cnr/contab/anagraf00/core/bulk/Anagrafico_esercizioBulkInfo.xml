@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="fl_notaxarea"
@@ -58,7 +58,12 @@
 		name="fl_applica_detr_pers_max"
 		property="fl_applica_detr_pers_max"
 		inputType="CHECKBOX"
-		label="Applica Detrazione personale massima" />			
+		label="Applica Detrazione personale massima" />		
+	<fieldProperty
+		name="fl_no_credito_irpef"
+		property="fl_no_credito_irpef"
+		inputType="CHECKBOX"
+		label="No Credito Irpef" />		
 	<formFieldProperty
 		name="fl_notaxarea" />
 	<formFieldProperty
@@ -80,7 +85,9 @@
 	<formFieldProperty
 		name="im_reddito_abitaz_princ" />		
 	<formFieldProperty
-		name="fl_applica_detr_pers_max" />						
+		name="fl_applica_detr_pers_max" />
+	<formFieldProperty
+		name="fl_no_credito_irpef" />									
 	<columnFieldProperty
 		name="fl_notaxarea" />
 	<columnFieldProperty
@@ -102,7 +109,9 @@
 	<columnFieldProperty
 		name="im_reddito_abitaz_princ" />		
 	<columnFieldProperty
-		name="fl_applica_detr_pers_max" />						
+		name="fl_applica_detr_pers_max" />	
+	<columnFieldProperty
+		name="fl_no_credito_irpef" />							
 	<findFieldProperty
 		name="fl_notaxarea" />
 	<findFieldProperty
@@ -120,5 +129,7 @@
 	<findFieldProperty
 		name="im_reddito_abitaz_princ" />
 	<findFieldProperty
-		name="fl_applica_detr_pers_max" />				
+		name="fl_applica_detr_pers_max" />
+	<findFieldProperty
+		name="fl_no_credito_irpef" />							
 </bulkInfo>

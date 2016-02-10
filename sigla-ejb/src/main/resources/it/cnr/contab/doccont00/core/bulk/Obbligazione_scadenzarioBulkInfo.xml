@@ -1,7 +1,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="cd_cds"
@@ -114,7 +114,12 @@
 		label="im_associato_doc_contabile"
 		inputType="TEXT"
 		/>
-		
+	<fieldProperty
+		name="cd_cig"
+		property="cd_cig"
+		label="cig"
+		inputType="TEXT"
+		/>	
 	<columnFieldProperty
 		name="esercizio"
 		/>
@@ -147,7 +152,12 @@
 		property="obbligazione.cd_terzo"
 		/>
 		
-
+	<columnFieldProperty
+		name="cd_cig"
+		label="Cig"
+		property="obbligazione.contratto.cig.cdCig"
+		/>
+		
 	<columnSet
 		name="obbligazione">
 	<columnFieldProperty

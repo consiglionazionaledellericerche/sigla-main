@@ -1,21 +1,33 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoCupBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoCupIBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupIBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_siopeBulk;
+import it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
-
-import java.math.BigDecimal;
-import java.util.*;
-
-import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Mandato
@@ -33,8 +45,15 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
 			validateCupCollegati(context,model);
 		}
 	};
+	private final SimpleDetailCRUDController siopeCupCollegati = new SimpleDetailCRUDController("siopeCupCollegati",MandatoSiopeCupIBulk.class,"mandatoSiopeCupColl",codiciSiopeCollegati){
+		public void validate(ActionContext context,OggettoBulk model) throws ValidationException {			
+			validateSiopeCupCollegati(context,model);
+		}
+	};
 	private boolean siope_attiva = false;
 	private boolean cup_attivo =false;
+	private boolean siope_cup_attivo =false;
+	private boolean tesoreria_unica =false;
 public CRUDMandatoBP() {
 	super();
 	setTab("tab","tabMandato");
@@ -159,7 +178,7 @@ public void create(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.
  */
 
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-	Button[] toolbar = new Button[7];
+	Button[] toolbar = new Button[8];
 	int i = 0;
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.search");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
@@ -167,7 +186,8 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.new");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.save");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.delete");
-	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.print");	
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.print");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.contabile");
 	return toolbar;
 }
 /**
@@ -281,10 +301,24 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getCodiciSiopeCo
 }
 protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
 	super.initialize(actioncontext);
-
 	try {
 		setSiope_attiva(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope().booleanValue());
-		setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
+		
+//		if (Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), ((MandatoBulk)this.getModel()).getEsercizio()).getFl_cup().booleanValue() &&
+//				Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),  ((MandatoBulk)this.getModel()).getEsercizio()).getFl_siope_cup().booleanValue()){
+//			
+//			 if (((MandatoBulk)this.getModel()).getDt_emissione()!=null){
+//					Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(actioncontext.getUserContext(), "DATA_LIMITE_CUP_SIOPE_CUP");
+//					if( ((MandatoBulk)this.getModel()).getDt_emissione().after(dataLimite))
+//						setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
+//					else
+//						setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
+//			 }
+//		}else{
+			setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
+			setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
+			setTesoreria_unica(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_tesoreria_unica().booleanValue());
+//		}
 	}
     catch(Throwable throwable)
     {
@@ -360,11 +394,23 @@ public SimpleDetailCRUDController getCupCollegati() {
 	return cupCollegati;
 }
 private void validateCupCollegati(ActionContext context, OggettoBulk model) throws ValidationException {
+	try {
+		if (getCupCollegati() != null && getCupCollegati().getModel() != null){
+			getCupCollegati().getModel().validate(getModel());
+		   completeSearchTools(context, this);
+		}
+	} catch (BusinessProcessException e) {
+		handleException(e);
+	} 
+	
    MandatoCupBulk bulk =(MandatoCupBulk)model;
    BigDecimal tot_col=BigDecimal.ZERO;
    if (bulk!=null && bulk.getMandato_riga()!=null && bulk.getMandato_riga().getMandatoCupColl()!=null && !bulk.getMandato_riga().getMandatoCupColl().isEmpty()){
 	if(bulk.getCdCup()==null)
 	   throw new ValidationException("Attenzione. Il codice Cup è obbligatorio");
+	if(bulk.getImporto()==null)
+		   throw new ValidationException("Attenzione. L'importo associato al codice Cup è obbligatorio");
+		
 	BulkList list=bulk.getMandato_riga().getMandatoCupColl();
 	for (Iterator i = list.iterator(); i.hasNext();){
 		MandatoCupBulk l=(MandatoCupBulk)i.next();
@@ -378,6 +424,37 @@ private void validateCupCollegati(ActionContext context, OggettoBulk model) thro
 		throw new ValidationException("Attenzione. Il totale associato al CUP è superiore all'importo della riga del mandato.");
    }
 	
+}
+private void validateSiopeCupCollegati(ActionContext context, OggettoBulk model) throws ValidationException {
+	try {
+		if (getSiopeCupCollegati() != null && getSiopeCupCollegati().getModel() != null){
+			getSiopeCupCollegati().getModel().validate(getModel());
+		   completeSearchTools(context, this);
+		}
+	} catch (BusinessProcessException e) {
+		handleException(e);
+	} 
+	
+   MandatoSiopeCupBulk bulk =(MandatoSiopeCupBulk)model;
+   BigDecimal tot_col=BigDecimal.ZERO;
+   if (bulk!=null && bulk.getMandatoSiope()!=null && bulk.getMandatoSiope().getMandatoSiopeCupColl()!=null && !bulk.getMandatoSiope().getMandatoSiopeCupColl().isEmpty()){
+	if(bulk.getCdCup()==null)
+	   throw new ValidationException("Attenzione. Il codice Cup è obbligatorio");
+	if(bulk.getImporto()==null)
+		   throw new ValidationException("Attenzione. L'importo associato al codice Cup è obbligatorio");
+		
+	BulkList list=bulk.getMandatoSiope().getMandatoSiopeCupColl();
+	for (Iterator i = list.iterator(); i.hasNext();){
+		MandatoSiopeCupBulk l=(MandatoSiopeCupBulk)i.next();
+		if(l.getCdCup()!=null){
+			if(bulk!=l && bulk.getCdCup().compareTo(l.getCdCup())==0)
+				throw new ValidationException("Attenzione. Ogni Cup può essere utilizzato una sola volta per ogni riga di mandato/siope. ");
+			tot_col=tot_col.add(l.getImporto());
+		}
+	}
+	if(tot_col.compareTo(bulk.getMandatoSiope().getImporto())>0)
+		throw new ValidationException("Attenzione. Il totale associato al CUP è superiore all'importo della riga del mandato associato al siope.");
+   }
 }
 
 public boolean isCup_attivo() {
@@ -401,6 +478,7 @@ public boolean isNewButtonEnabled()
 public boolean isDeleteButtonEnabled() 
 {
 	if (((MandatoBulk)getModel()).getUnita_organizzativa().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0 &&
+			((MandatoBulk)getModel()).getCd_uo_origine()!=null && (((MandatoBulk)getModel()).getCd_uo_origine().compareTo(((MandatoBulk)getModel()).getCd_unita_organizzativa())==0) &&
 			(((MandatoBulk)getModel()).getTi_mandato()==null||
 			 !((MandatoBulk)getModel()).getTi_mandato().equals(((MandatoBulk)getModel()).TIPO_REGOLARIZZAZIONE)))
 		return false;
@@ -420,4 +498,26 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
     	resetForSearch(context);
 	}	
 }
+
+public boolean isSiope_cup_attivo() {
+	return siope_cup_attivo;
+}
+
+public void setSiope_cup_attivo(boolean siope_cup_attivo) {
+	this.siope_cup_attivo = siope_cup_attivo;
+}
+
+public SimpleDetailCRUDController getSiopeCupCollegati() {
+	return siopeCupCollegati;
+}
+
+public boolean isTesoreria_unica() {
+	return tesoreria_unica;
+}
+
+public void setTesoreria_unica(boolean tesoreria_unica) {
+	this.tesoreria_unica = tesoreria_unica;
+}
+
+
 }

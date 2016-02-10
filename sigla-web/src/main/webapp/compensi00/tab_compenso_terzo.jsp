@@ -97,19 +97,29 @@
  	<td><% bp.getController().writeFormLabel(out,"tipoTrattamento");%></td>
 	<td><% bp.getController().writeFormInput(out,null,"tipoTrattamento",false,null,"onChange=\"submitForm('doOnTipoTrattamentoChange')\""); %></td>
   </tr>
-  <% if (compenso!=null && compenso.getTerzo()!=null && compenso.getTerzo().isStudioAssociato()) { %>
+  <% if (bp.isSearching() || (compenso!=null && compenso.isPrestazioneCompensoEnabled())) { %>
   <tr>
- 	<td><% bp.getController().writeFormLabel(out,"ti_prestazione");%></td>
-	<td><% bp.getController().writeFormInput(out,"ti_prestazione"); %></td>
+ 	<td><% bp.getController().writeFormLabel(out,"tipoPrestazioneCompenso");%></td>
+	<td><% bp.getController().writeFormInput(out,null,"tipoPrestazioneCompenso",false,null,"onChange=\"submitForm('doOnTipoPrestazioneCompensoChange')\""); %></td>
   </tr>
-  <% } %>
+ <% } %>
 </table>
 </div>
 
-<% if (bp.isGestioneIncarichiEnabled() && (bp.isSearching() || (compenso!=null && compenso.isIncaricoEnabled()))) { %>
+<% if (bp.isGestioneIncarichiEnabled() && (compenso!=null && compenso.isPrestazioneCompensoEnabled()) && (bp.isSearching() || (compenso!=null && compenso.isIncaricoEnabled()))) { %>
 <div class="Group" style="width:100%">
 <fieldset class="fieldset">
-<legend class="GroupLabel">Incarico</legend>
+
+<% if (compenso!=null && compenso.getCd_tipo_rapporto()!=null && compenso.getCd_tipo_rapporto().equals(new String ("BORS"))) { %>
+<legend class="GroupLabel">Borsa di studio</legend>
+<% } else { %>
+	<% if (compenso!=null && compenso.getCd_tipo_rapporto()!=null && compenso.getCd_tipo_rapporto().equals(new String ("ASS"))) { %>
+	<legend class="GroupLabel">Assegno di ricerca</legend>
+	<% } else {%>
+		<legend class="GroupLabel">Incarico</legend>
+	<% } %>
+<% } %>
+
 <table>
   <tr>
   	<td><% bp.getController().writeFormLabel(out,"incarichi_repertorio_anno"); %></td>
@@ -130,6 +140,50 @@
 </div>
 <% } %>
 
+<% if ((compenso!=null && compenso.isPrestazioneCompensoEnabled()) && (bp.isSearching() || (compenso!=null && compenso.isContrattoEnabled()))) { %>
+<div class="Group" style="width:100%">
+<fieldset class="fieldset">
+<legend class="GroupLabel">Repertorio Contratto</legend>
+<table>
+  <tr>
+  	<td><% bp.getController().writeFormLabel(out,"contratto"); %></td>
+ 	<td colspan="3"><% bp.getController().writeFormInput(out,"contratto"); %></td>
+  </tr>
+  <tr>         
+    <td><% bp.getController().writeFormLabel(out,"oggetto_contratto");%></td>
+    <td colspan="3"><% bp.getController().writeFormInput(out,"oggetto_contratto");%></td>
+  </tr>
+</table>
+</fieldset>
+</div>
+<% } %>
+
+
+<% if (compenso.isVisualizzaPignorato()) { %>
+	<div class="Group" style="width:100%">
+	<fieldset class="fieldset">
+	<legend class="GroupLabel">Pignorato</legend>
+	<table>
+	  <tr>
+	   <td><% bp.getController().writeFormLabel( out, "cd_terzo_pignorato"); %></td>
+	   <td colspan=2>
+		<% bp.getController().writeFormInput( out, "cd_terzo_pignorato"); %>
+		<% bp.getController().writeFormInput( out, "ds_pignorato"); %>
+		<% bp.getController().writeFormInput( out, "find_pignorato"); %>
+	   </td>
+	  </tr>
+	  <tr>
+	   <td>	<% bp.getController().writeFormLabel( out, "codice_fiscale_pignorato"); %></td>
+	   <td>	<% bp.getController().writeFormInput( out, "codice_fiscale_pignorato"); %></td>
+	   <td>
+            <% bp.getController().writeFormLabel( out, "partita_iva_pignorato"); %>
+	        <% bp.getController().writeFormInput( out, "partita_iva_pignorato"); %>	        
+	   </td>
+	  </tr>
+	</table>
+	</fieldset>	
+    </div>
+<% } %>
 <% if (compenso.isVisualizzaCodici_rapporti_inps()) { %>
 <div class="Group" style="width:100%">
 <table>

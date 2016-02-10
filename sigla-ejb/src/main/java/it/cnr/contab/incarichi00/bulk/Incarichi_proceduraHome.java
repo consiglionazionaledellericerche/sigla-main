@@ -22,7 +22,7 @@ public class Incarichi_proceduraHome extends BulkHome {
 	public Incarichi_proceduraHome(Connection conn, PersistentCache persistentCache) {
 		super(Incarichi_proceduraBulk.class, conn, persistentCache);
 	}
-	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException {
+	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException, it.cnr.jada.comp.ComponentException {
 		try {
 			((Incarichi_proceduraBulk)bulk).setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 			((Incarichi_proceduraBulk)bulk).setPg_procedura(
@@ -31,7 +31,7 @@ public class Incarichi_proceduraHome extends BulkHome {
 				)
 			);
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
-			throw new PersistencyException(e);
+			 throw new it.cnr.jada.comp.ApplicationException("Operazione effettuata al momento da un'altro utente, riprovare successivamente.");
 		}
 	}
 	public java.util.List findIncarichi_procedura_annoList( it.cnr.jada.UserContext userContext,Incarichi_proceduraBulk procedura ) throws IntrospectionException,PersistencyException 

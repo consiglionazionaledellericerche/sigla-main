@@ -1,12 +1,19 @@
 package it.cnr.contab.config00.ejb;
 
+import java.rmi.RemoteException;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
 import it.cnr.contab.config00.comp.ContrattoComponent;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.RemoteIterator;
 
 /**
  * Bean implementation class for Enterprise Bean: CNRCONFIG00_EJB_ContrattoComponentSession
@@ -288,5 +295,50 @@ public class ContrattoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
 		}
+	}
+	public RemoteIterator findListaContrattiElenco(UserContext userContext,
+			String query, String dominio, Integer anno, String cdCds,
+			String order, String strRicerca) throws ComponentException,
+			RemoteException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			RemoteIterator result = ((ContrattoComponent)componentObj).
+					findListaContrattiElenco(userContext, query, dominio, anno, cdCds, order, strRicerca);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+	
+	public RemoteIterator findContrattoByCig(UserContext userContext,
+			ContrattoBulk contratto, CigBulk cig) throws ComponentException,
+			RemoteException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			RemoteIterator result = ((ContrattoComponent)componentObj).
+					findContrattoByCig(userContext, contratto, cig);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
 	}	
+	
 }

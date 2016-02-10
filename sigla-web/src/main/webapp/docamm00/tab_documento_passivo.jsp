@@ -52,7 +52,17 @@
 		      	</td>      	
 		     	<td>
 		      		<% bp.getController().writeFormInput(out,null,"stato_pagamento_fondo_eco",false,null,"onChange=\"submitForm('doDefault')\"");%>
-		      	</td>
+		      	</td>  
+		      	<% if (documento.getTipo_documento()!=null && documento.getTipo_documento().getCd_tipo_documento_amm()!=null && documento.getTipo_documento().getCd_tipo_documento_amm().compareTo(documento.GENERICO_S)==0) { %>
+		      		<td>
+				   		<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
+				   		<% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
+				   	</td>
+				   	<td> 
+				   		<% bp.getController().writeFormLabel(out,"causale");%>
+				   		<% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
+				   	</td>
+				<% } %>	   	   	
 			</tr>
 		<% } else { %>
 			<tr>
@@ -88,6 +98,15 @@
 		     	<td>
 		      		<% bp.getController().writeFormInput(out,null,"stato_pagamento_fondo_ecoForSearch", isInSpesaMode,null,""); %>
 		      	</td>
+		      	   	 
+		      		<td> 
+				   		<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
+				   		<% bp.getController().writeFormInput(out,null,"stato_liquidazione",isInSpesaMode,null,"onChange=\"submitForm('doDefault')\"");%>
+				   	</td>
+				   	<td> 
+				   		<% bp.getController().writeFormLabel(out,"causale");%>
+				   		<% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doDefault')\"");%>
+				   	</td>
 			</tr>
 		<% } %>
 	</table>

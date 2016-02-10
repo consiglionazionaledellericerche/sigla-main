@@ -18,13 +18,12 @@ public class Pdg_modulo_spese_gestBulk extends Pdg_modulo_spese_gestBase impleme
 	private CdrBulk cdr_assegnatario;
 	private WorkpackageBulk linea_attivita;
 	private Elemento_voceBulk elemento_voce;
-
 	public Pdg_modulo_spese_gestBulk() {
 		super();
 	}
-	public Pdg_modulo_spese_gestBulk(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area, java.lang.String cd_cdr_assegnatario, java.lang.String cd_linea_attivita, java.lang.String ti_appartenenza, java.lang.String ti_gestione, java.lang.String cd_elemento_voce) {
-		super(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area, cd_cdr_assegnatario, cd_linea_attivita, ti_appartenenza, ti_gestione, cd_elemento_voce);
-		setPdg_modulo_spese(new Pdg_modulo_speseBulk(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area));
+	public Pdg_modulo_spese_gestBulk(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area, java.lang.String cd_cdr_assegnatario, java.lang.String cd_linea_attivita, java.lang.String ti_appartenenza, java.lang.String ti_gestione, java.lang.String cd_elemento_voce,Integer pg_dettaglio) {
+		super(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area, cd_cdr_assegnatario, cd_linea_attivita, ti_appartenenza, ti_gestione, cd_elemento_voce,pg_dettaglio);
+		setPdg_modulo_spese(new Pdg_modulo_speseBulk(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area,pg_dettaglio));
 		setLinea_attivita(new WorkpackageBulk(cd_cdr_assegnatario,cd_linea_attivita));
 		setElemento_voce(new Elemento_voceBulk(cd_elemento_voce,esercizio,ti_appartenenza, ti_gestione));
 	}
@@ -187,4 +186,12 @@ public class Pdg_modulo_spese_gestBulk extends Pdg_modulo_spese_gestBase impleme
 				    getPdg_modulo_spese().isGestioneAccentrataRipartoDisable());
 		return true;
 	}
+	public void setPg_dettaglio(java.lang.Integer pg_dettaglio)  {
+		getPdg_modulo_spese().setPg_dettaglio(pg_dettaglio);
+	}
+	public java.lang.Integer getPg_dettaglio() {
+		if (getPdg_modulo_spese() == null) return null;
+		return getPdg_modulo_spese().getPg_dettaglio();
+	}
+	
 }

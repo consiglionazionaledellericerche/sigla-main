@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rendicontazione"
+	longDescription="Rendicontazione">
+	<fieldProperty
+		name="tipodocumento"
+		property="tipodocumento"
+		inputType="TEXT"
+		inputSize="18"
+		maxLength="18"
+		enabledOnEdit="false"
+		label="tipo Documento" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Uo" />
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Terzo" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="101"
+		enabledOnEdit="false"
+		label="denominazione" />
+	<fieldProperty
+		name="partitaIva"
+		property="partitaIva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="partita Iva" />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codice Fiscale" />
+	<fieldProperty
+		name="nrFatturaFornitore"
+		property="nrFatturaFornitore"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="nr. Fattura Forn." />
+	<fieldProperty
+		name="dtFatturaFornitore"
+		property="dtFatturaFornitore"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data Fattura Forn." />
+	<fieldProperty
+		name="tiporapporto"
+		property="tiporapporto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="tipo rapporto" />
+	<fieldProperty
+		name="matricola"
+		property="matricola"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="matricola" />
+	<fieldProperty
+		name="dsDocumento"
+		property="dsDocumento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="4000"
+		enabledOnEdit="false"
+		label="desc. Documento" />
+	<fieldProperty
+		name="imTotale"
+		property="imTotale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Totale" />
+	<fieldProperty
+		name="pgDocumento"
+		property="pgDocumento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="n°Documento" />
+	<fieldProperty
+		name="dtInizioComp"
+		property="dtInizioComp"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data Inizio Comp." />
+	<fieldProperty
+		name="dtFineComp"
+		property="dtFineComp"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data Fine Comp." />
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Elemento Voce" />
+	<fieldProperty
+		name="dsElementoVoce"
+		property="dsElementoVoce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="desc. Elemento Voce" />
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdr" />
+	<fieldProperty
+		name="gae"
+		property="gae"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="gae" />
+	<fieldProperty
+		name="dsGae"
+		property="dsGae"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="desc. Gae" />
+	<fieldProperty
+		name="dtPagamento"
+		property="dtPagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data Pagamento" />
+	<fieldProperty
+		name="nrMandato"
+		property="nrMandato"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="nr° Mandato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="tipodocumento" />
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="pgDocumento" />
+	<formFieldProperty
+		name="dtInizioComp" />
+	<formFieldProperty
+		name="dtFineComp" />
+	<formFieldProperty
+		name="dsDocumento" />	
+	<formFieldProperty
+		name="cdElementoVoce" />
+	<formFieldProperty
+		name="dsElementoVoce" />
+	<formFieldProperty
+		name="cdr" />
+	<formFieldProperty
+		name="gae" />
+	<formFieldProperty
+		name="dsGae" />
+	<formFieldProperty
+		name="imTotale" />	
+	<formFieldProperty
+		name="dtPagamento" />
+	<formFieldProperty
+		name="nrMandato" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="denominazione" />
+	<formFieldProperty
+		name="partitaIva" />
+	<formFieldProperty
+		name="codiceFiscale" />
+	<formFieldProperty
+		name="nrFatturaFornitore" />
+	<formFieldProperty
+		name="dtFatturaFornitore" />
+	<formFieldProperty
+		name="tiporapporto" />
+	<formFieldProperty
+		name="matricola" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="tipodocumento" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="pgDocumento" />
+	<findFieldProperty
+		name="dtInizioComp" />
+	<findFieldProperty
+		name="dtFineComp" />
+	<findFieldProperty
+		name="dsDocumento" />	
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="dsElementoVoce" />
+	<findFieldProperty
+		name="cdr" />
+	<findFieldProperty
+		name="gae" />
+	<findFieldProperty
+		name="dsGae" />
+	<findFieldProperty
+		name="imTotale" />	
+	<findFieldProperty
+		name="dtPagamento" />
+	<findFieldProperty
+		name="nrMandato" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="denominazione" />
+	<findFieldProperty
+		name="partitaIva" />
+	<findFieldProperty
+		name="codiceFiscale" />
+	<findFieldProperty
+		name="nrFatturaFornitore" />
+	<findFieldProperty
+		name="dtFatturaFornitore" />
+	<findFieldProperty
+		name="tiporapporto" />
+	<findFieldProperty
+		name="matricola" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="tipodocumento" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="pgDocumento" />
+	<columnFieldProperty
+		name="dtInizioComp" />
+	<columnFieldProperty
+		name="dtFineComp" />
+	<columnFieldProperty
+		name="dsDocumento" />	
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="dsElementoVoce" />
+	<columnFieldProperty
+		name="cdr" />
+	<columnFieldProperty
+		name="gae" />
+	<columnFieldProperty
+		name="dsGae" />
+	<columnFieldProperty
+		name="imTotale" />	
+	<columnFieldProperty
+		name="dtPagamento" />
+	<columnFieldProperty
+		name="nrMandato" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="denominazione" />
+	<columnFieldProperty
+		name="partitaIva" />
+	<columnFieldProperty
+		name="codiceFiscale" />
+	<columnFieldProperty
+		name="nrFatturaFornitore" />
+	<columnFieldProperty
+		name="dtFatturaFornitore" />
+	<columnFieldProperty
+		name="tiporapporto" />
+	<columnFieldProperty
+		name="matricola" />
+</bulkInfo>

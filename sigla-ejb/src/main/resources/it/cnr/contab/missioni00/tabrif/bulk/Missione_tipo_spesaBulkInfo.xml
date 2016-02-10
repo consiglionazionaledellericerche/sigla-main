@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="cd_ti_spesa"
@@ -163,6 +163,7 @@
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		enabledOnInsert="true"
 		enabledOnEdit="true"
 		enabledOnSearch="true"
@@ -244,6 +245,13 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
 		/>
+	<fieldProperty
+		name="fl_ammissibile_con_rimborso"
+		property="fl_ammissibile_con_rimborso"
+		inputType="CHECKBOX"
+		label="Ammissibile con rimborso"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true" />		
 /**************************/			
 
 	<formFieldProperty name="cd_ti_spesa" />
@@ -266,7 +274,8 @@
 	<formFieldProperty name="percentuale_maggiorazione" />
 	<formFieldProperty name="dataFineValidita" />
 	<formFieldProperty name="dt_cancellazione" />
-	<formFieldProperty name="tipoSpeseRadioGroup" />	
+	<formFieldProperty name="tipoSpeseRadioGroup" />
+	<formFieldProperty name="fl_ammissibile_con_rimborso" />
 
 	<columnFieldProperty name="cd_ti_spesa" />
 	<columnFieldProperty name="ds_ti_spesa" />
@@ -286,6 +295,7 @@
 	<columnFieldProperty name="percentuale_maggiorazione" />
 	<columnFieldProperty name="limite_max_spesa" />
 	<columnFieldProperty name="dt_cancellazione" />
+	<columnFieldProperty name="fl_ammissibile_con_rimborso" />
 
 	<findFieldProperty name="cd_ti_spesa" />
 	<findFieldProperty name="ds_ti_spesa" />
@@ -303,5 +313,6 @@
 	<findFieldProperty name="fl_trasporto" />
 	<findFieldProperty name="fl_rimborso_km" />
 	<findFieldProperty name="fl_alloggio" />
+	<findFieldProperty name="fl_ammissibile_con_rimborso" />
 
 </bulkInfo>

@@ -59,7 +59,7 @@ public class Fattura_attiva_intraBase extends Fattura_attiva_intraKey implements
 //    CD_MODALITA_EROGAZIONE CHAR(1)
 	private java.lang.String cd_modalita_erogazione;
  
-	private java.lang.Integer nr_protocollo;
+	private java.lang.String nr_protocollo;
 	private java.lang.Integer nr_progressivo;
 	
 	private java.lang.Boolean fl_inviato;
@@ -184,10 +184,10 @@ public class Fattura_attiva_intraBase extends Fattura_attiva_intraKey implements
 	public void setFl_inviato(java.lang.Boolean fl_inviato) {
 		this.fl_inviato = fl_inviato;
 	}
-	public java.lang.Integer getNr_protocollo() {
+	public java.lang.String getNr_protocollo() {
 		return nr_protocollo;
 	}
-	public void setNr_protocollo(java.lang.Integer nr_protocollo) {
+	public void setNr_protocollo(java.lang.String nr_protocollo) {
 		this.nr_protocollo = nr_protocollo;
 	}
 	public java.lang.Integer getNr_progressivo() {

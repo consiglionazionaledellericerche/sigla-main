@@ -80,7 +80,7 @@ public abstract class Stampa_registri_ivaVBulk extends it.cnr.jada.bulk.OggettoB
         TIPI_SEZIONALE_KEYS = new it.cnr.jada.util.OrderedHashtable();
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_COMMERCIALI, "Tutti i sezionali commerciali");
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_SAN_MARINO_SENZA_IVA, "Sezionali per San. Marino senza Iva");
-        TIPI_SEZIONALE_KEYS.put(SEZIONALI_BENI_INTRA_UE, "Sezionali Beni Intra UE");
+        TIPI_SEZIONALE_KEYS.put(SEZIONALI_BENI_INTRA_UE, "Sezionali Beni non residenti");
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_SERVIZI_NON_RESIDENTI, "Sezionali Servizi non residenti");
 	}
     static {

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Limiti Spesa"
+    longDescription="Limiti Spesa">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		label="cds" />
+	<fieldProperty
+		name="fonte"
+		property="fonte"
+		keysProperty="fonteKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		nullable="false"
+		label="fonte" />
+	<fieldProperty
+		name="importoLimite"
+		property="importoLimite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="importo Limite" />
+	<fieldProperty
+		name="importoPrevisto"
+		property="importoPrevisto"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="importo Previsto" />
+	<fieldProperty
+		name="importoDisponibile"
+		property="importoDisponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="importo Disponibile" />
+	<fieldProperty
+		name="cdClassificazione"
+		property="cdClassificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="34"
+		enabledOnEdit="false"
+		label="classificazione" />
+	<fieldProperty
+		name="idClassificazione"
+		property="idClassificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="false"
+		nullable="false"
+		label="idClassificazione" />
+	<fieldProperty
+		name="cdArea"
+		property="cdArea"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="area" />
+	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdArea" />	
+	<formFieldProperty
+		name="fonte" />
+	<formFieldProperty
+		name="importoLimite" />
+	<formFieldProperty
+		name="importoPrevisto" />
+	<formFieldProperty
+		name="importoDisponibile" />
+	<formFieldProperty
+		name="cdClassificazione" />
+	<formFieldProperty
+		name="idClassificazione" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdArea" />	
+	<findFieldProperty
+		name="fonte" />
+	<findFieldProperty
+		name="importoLimite" />
+	<findFieldProperty
+		name="importoPrevisto" />
+	<findFieldProperty
+		name="importoDisponibile" />
+	<findFieldProperty
+		name="cdClassificazione" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdArea" />
+	<columnFieldProperty
+		name="fonte" />
+	<columnFieldProperty
+		name="importoLimite" />
+	<columnFieldProperty
+		name="importoPrevisto" />
+	<columnFieldProperty
+		name="importoDisponibile" />
+	<columnFieldProperty
+		name="cdClassificazione" />
+
+</bulkInfo>

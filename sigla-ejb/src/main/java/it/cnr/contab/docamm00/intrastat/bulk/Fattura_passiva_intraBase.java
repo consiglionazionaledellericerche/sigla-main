@@ -56,7 +56,7 @@ public class Fattura_passiva_intraBase extends Fattura_passiva_intraKey implemen
 	
 	private java.lang.Boolean fl_inviato;
 	
-	private java.lang.Integer nr_protocollo;
+	private java.lang.String nr_protocollo;
 	private java.lang.Integer nr_progressivo;
 	
 
@@ -241,10 +241,10 @@ public java.lang.Boolean getFl_inviato() {
 public void setFl_inviato(java.lang.Boolean fl_inviato) {
 	this.fl_inviato = fl_inviato;
 }
-public java.lang.Integer getNr_protocollo() {
+public java.lang.String getNr_protocollo() {
 	return nr_protocollo;
 }
-public void setNr_protocollo(java.lang.Integer nr_protocollo) {
+public void setNr_protocollo(java.lang.String nr_protocollo) {
 	this.nr_protocollo = nr_protocollo;
 }
 public java.lang.Integer getNr_progressivo() {

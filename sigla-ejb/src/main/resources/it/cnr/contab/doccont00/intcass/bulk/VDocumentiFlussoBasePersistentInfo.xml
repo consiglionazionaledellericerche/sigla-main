@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBase"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome">
+	<defaultColumnMap
+		tableName="V_DOCUMENTI_FLUSSO">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_DOCUMENTO"
+			propertyName="pgDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cdCdsOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cdUoOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cdTipoDocumentoCont"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="tiDocumento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_COMPETENZA_RESIDUO"
+			propertyName="tiCompetenzaResiduo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DOCUMENTO"
+			propertyName="dsDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="1200"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dtEmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE"
+			propertyName="dtTrasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dtPagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ANNULLAMENTO"
+			propertyName="dtAnnullamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DOCUMENTO"
+			propertyName="imDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_PAGATO"
+			propertyName="imPagato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_TRASMISSIONE"
+			propertyName="statoTrasmissione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_RITRASMISSIONE"
+			propertyName="dtRitrasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cdAnag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazioneSede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="VIA_SEDE"
+			propertyName="viaSede"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_COMUNE_SEDE"
+			propertyName="capComuneSede"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMUNE"
+			propertyName="dsComune"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROVINCIA"
+			propertyName="cdProvincia"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codiceFiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_IBAN"
+			propertyName="codiceIban"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />	
+		<columnMapping
+			columnName="NUMERO_CONTO"
+			propertyName="numeroConto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CAB"
+			propertyName="cab"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />		
+		<columnMapping
+			columnName="CIN"
+			propertyName="cin"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />	
+		<columnMapping
+			columnName="BIC"
+			propertyName="bic"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_ISO"
+			propertyName="cdIso"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSOGGETTAMENTO_BOLLO"
+			propertyName="assoggettamentoBollo"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CAUSALE_BOLLO"
+			propertyName="causaleBollo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping 
+		  columnName="MODALITA_PAGAMENTO"
+		  propertyName="modalitaPagamento"
+		  sqlTypeName="VARCHAR"
+		  columnSize="10"
+		  nullable="true"/>			
+	</defaultColumnMap>
+	
+	<columnMap 
+		name="CLASSIFICAZIONE"
+		tableName="V_DOCUMENTI_FLUSSO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_DOCUMENTO"
+			propertyName="pgDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="cdSiope"
+			sqlTypeName="VARCHAR"
+			columnSize="45"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cdCup"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />	
+		<columnMapping
+			columnName="IMPORTO_CGE"
+			propertyName="importoCge"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_CUP"
+			propertyName="importoCup"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DOCUMENTO"
+			propertyName="imDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cdTipoDocumentoAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pgDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />			
+	</columnMap>
+	<columnMap 
+		name="SOSPESO"
+		tableName="V_DOCUMENTI_FLUSSO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_DOCUMENTO"
+			propertyName="pgDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_REGISTRAZIONE_SOSP"
+			propertyName="dtRegistrazioneSosp"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="tiEntrataSpesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cdSospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SOSPESO"
+			propertyName="imSospeso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO"
+			propertyName="imAssociato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+	</columnMap>
+	<persistentProperty
+		name="cdCds" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pgDocumento" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa" />
+	<persistentProperty
+		name="cdCdsOrigine" />
+	<persistentProperty
+		name="cdUoOrigine" />
+	<persistentProperty
+		name="cdTipoDocumentoCont" />
+	<persistentProperty
+		name="tiDocumento" />
+	<persistentProperty
+		name="tiCompetenzaResiduo" />
+	<persistentProperty
+		name="dsDocumento" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="dtEmissione" />
+	<persistentProperty
+		name="dtTrasmissione" />
+	<persistentProperty
+		name="dtPagamento" />
+	<persistentProperty
+		name="dtAnnullamento" />
+	<persistentProperty
+		name="imDocumento" />
+	<persistentProperty
+		name="imPagato" />
+	<persistentProperty
+		name="statoTrasmissione" />
+	<persistentProperty
+		name="dtRitrasmissione" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="cdAnag" />
+	<persistentProperty
+		name="denominazioneSede" />
+	<persistentProperty
+		name="cdSiope" />
+	<persistentProperty
+		name="cdCup" />
+	<persistentProperty
+		name="dtRegistrazioneSosp" />
+	<persistentProperty
+		name="tiEntrataSpesa" />
+	<persistentProperty
+		name="cdSospeso" />
+	<persistentProperty
+		name="imSospeso" />
+	<persistentProperty
+		name="viaSede" />
+	<persistentProperty
+		name="capComuneSede" />
+	<persistentProperty
+		name="dsComune" />
+	<persistentProperty
+		name="cdProvincia" />
+	<persistentProperty
+		name="codiceFiscale" />
+	<persistentProperty
+		name="numeroConto" />
+	<persistentProperty
+		name="codiceIban" />
+	<persistentProperty
+		name="abi" />
+	<persistentProperty
+		name="cab" />
+	<persistentProperty
+		name="cin" />				
+	<persistentProperty
+		name="bic" />	
+	<persistentProperty
+		name="cdIso" />
+	<persistentProperty
+		name="imAssociato" />
+	<persistentProperty
+		name="importoCge" />
+	<persistentProperty
+		name="importoCup" />
+	<persistentProperty
+		name="assoggettamentoBollo" />
+	<persistentProperty
+		name="causaleBollo" />
+	<persistentProperty
+		name="cdTipoDocumentoAmm" />
+	<persistentProperty
+		name="pgDocAmm" />	
+	<persistentProperty
+		name ="modalitaPagamento" />
+</SQLPersistentInfo>

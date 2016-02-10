@@ -11,7 +11,11 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -64,14 +68,24 @@ public class AccertamentoModificaComponent extends it.cnr.jada.comp.CRUDComponen
 				// riempiamo le descrizioni
 				for (Iterator it = accMod.getAccertamento_mod_voceColl().iterator();it.hasNext();) {
 					Accertamento_mod_voceBulk accModVoce = (Accertamento_mod_voceBulk) it.next();
-					Voce_fBulk voce =
-						new Voce_fBulk(
+
+					IVoceBilancioBulk voce = null; 
+					if (((Parametri_cnrHome)getHome(usercontext, Parametri_cnrBulk.class)).isNuovoPdg(usercontext)) {
+						voce = new Elemento_voceBulk(
 								accModVoce.getCd_voce(),
 								accModVoce.getEsercizio(),
 								accModVoce.getTi_appartenenza(),
 								accModVoce.getTi_gestione());
-					voce = (Voce_fBulk) getHome(usercontext, voce).findByPrimaryKey(voce);
-					accModVoce.setVoce_f(voce);
+						voce = (Elemento_voceBulk) getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(voce);
+					} else {
+						voce = new Voce_fBulk(
+								accModVoce.getCd_voce(),
+								accModVoce.getEsercizio(),
+								accModVoce.getTi_appartenenza(),
+								accModVoce.getTi_gestione());
+						voce = (Voce_fBulk) getHome(usercontext, Voce_fBulk.class).findByPrimaryKey(voce);
+					}
+					accModVoce.setVoce(voce);
 					WorkpackageBulk linea =
 						new WorkpackageBulk(
 								accModVoce.getCd_centro_responsabilita(),
@@ -152,14 +166,25 @@ public class AccertamentoModificaComponent extends it.cnr.jada.comp.CRUDComponen
 								accertamento.getCapitolo().getCd_voce(),
 								key.getCd_centro_responsabilita(),
 								key.getCd_linea_attivita());
-					Voce_fBulk voce =
+
+					IVoceBilancioBulk voce = null;
+					if (((Parametri_cnrHome)getHome(aUC, Parametri_cnrBulk.class)).isNuovoPdg(aUC)) {
+						voce = new Elemento_voceBulk(
+								accertamento.getCapitolo().getCd_voce(),
+								accMod.getEsercizio(),
+								accertamento.getCapitolo().getTi_appartenenza(),
+								accertamento.getCapitolo().getTi_gestione());
+						voce = (Elemento_voceBulk) getHome(aUC, Elemento_voceBulk.class).findByPrimaryKey(voce);
+					} else {
 						new Voce_fBulk(
 								accertamento.getCapitolo().getCd_voce(),
 								accMod.getEsercizio(),
 								accertamento.getCapitolo().getTi_appartenenza(),
 								accertamento.getCapitolo().getTi_gestione());
-					voce = (Voce_fBulk) getHome(aUC, voce).findByPrimaryKey(voce);
-					accModVoce.setVoce_f(voce);
+						voce = (Voce_fBulk) getHome(aUC, Voce_fBulk.class).findByPrimaryKey(voce);
+					}
+					accModVoce.setVoce(voce);
+
 					WorkpackageBulk linea =
 						new WorkpackageBulk(
 								key.getCd_centro_responsabilita(),

@@ -1,7 +1,9 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.doccont00.ejb.NumTempDocContComponentSession;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.*;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -10,6 +12,7 @@ import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.pdg00.bulk.*;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
@@ -691,6 +694,9 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
  */
 public SQLBuilder selectCapitoloByClause(AccertamentoBulk bulk, V_voce_f_partita_giroHome home, V_voce_f_partita_giroBulk voce_f, CompoundFindClause clause) throws IntrospectionException, PersistencyException, ApplicationException, SQLException 
 {
+	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
+
 	/* simona 7.5.2002 : modificato il filtro da UO-Cds a Uo di scrivania 
     java.util.List listUoCds = findUoCds(bulk);
     if(listUoCds.size() == 0)
@@ -706,13 +712,23 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk bulk, V_voce_f_partita
 
     // Ricerco tutti i capitolo di Entrata Cnr non in partita di giro
     // la cui natura non e' nulla nella tabella ASS_EV_EV
-    
+    if(bulk instanceof AccertamentoOrdBulk )
+    	sql.addSQLClause( "AND", "fl_solo_residuo", sql.EQUALS, "N"); 
+    if (bulk instanceof AccertamentoResiduoBulk)
+    	sql.addSQLClause( "AND", "fl_solo_competenza", sql.EQUALS, "N");
 	sql.addClause( clause );
+	sql.openParenthesis( "AND");		
+	sql.openParenthesis( "AND");
 	sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
+	sql.addSQLClause( "OR", "cd_unita_organizzativa", sql.ISNULL,null);
+	sql.closeParenthesis();
+	sql.closeParenthesis();
+	
 	sql.addSQLClause( "AND", "esercizio", sql.EQUALS, bulk.getEsercizio());
 	sql.addSQLClause( "AND", "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CNR);
 	sql.addSQLClause( "AND", "ti_gestione", sql.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
-	sql.addSQLClause( "AND", "ti_voce", sql.EQUALS, Elemento_voceHome.TIPO_ARTICOLO);
+	if (!parCNR.getFl_nuovo_pdg())
+		sql.addSQLClause( "AND", "ti_voce", sql.EQUALS, Elemento_voceHome.TIPO_ARTICOLO);
 	sql.addSQLClause( "AND", "fl_partita_giro", sql.EQUALS, "N");
 	if ( bulk.getCd_cds_origine() != null && bulk.getCd_cds_origine().equals( cd_cdsSAC) )
 		sql.addSQLClause( "AND", "fl_voce_sac", sql.NOT_EQUALS, "X");
@@ -1028,9 +1044,9 @@ public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento 
 	Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
 
 	PersistentHome cdrHome = getHomeCache().getHome(CdrBulk.class);
-
+ 
 	SQLBuilder sql = cdrHome.createSQLBuilder();
-	sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, capitolo.getCd_unita_organizzativa());
+	sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, accertamento.getCd_uo_origine());//capitolo.getCd_unita_organizzativa());
 
 	return cdrHome.fetchAll(sql);
 }
@@ -1278,10 +1294,10 @@ public AccertamentoBulk refreshNuoveLineeAttivitaColl( AccertamentoBulk accertam
 				if ( osv.getAccertamento_scadenzario().getIm_scadenza().compareTo( new BigDecimal(0)) == 0 )
 				{
 					double nrDettagli = scadenza.getAccertamento_scad_voceColl().size();
-					nuovaLatt.setPrcImputazioneFin( new BigDecimal(100).divide( new BigDecimal( nrDettagli), 2, BigDecimal.ROUND_HALF_EVEN) );	
+					nuovaLatt.setPrcImputazioneFin( new BigDecimal(100).divide( new BigDecimal( nrDettagli), 2, BigDecimal.ROUND_HALF_UP) );	
 				}		
 				else
-					nuovaLatt.setPrcImputazioneFin( osv.getIm_voce().multiply( new BigDecimal(100)).divide( osv.getAccertamento_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN ));
+					nuovaLatt.setPrcImputazioneFin( osv.getIm_voce().multiply( new BigDecimal(100)).divide( osv.getAccertamento_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP ));
 				nuovaLatt.setAccertamento( accertamento );
 				nuoveLineeAttivitaColl.add( nuovaLatt );
 			}			
@@ -1319,5 +1335,4 @@ public java.util.List findCapitoliDiEntrataCds( AccertamentoBulk accertamento ) 
 	sql.addClause("AND","cd_voce",sql.EQUALS,accertamento.getCd_voce());
 	return evHome.fetchAll(sql);	
 }
-
 }

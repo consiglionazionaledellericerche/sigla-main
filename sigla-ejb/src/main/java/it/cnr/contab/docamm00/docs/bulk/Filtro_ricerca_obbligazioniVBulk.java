@@ -213,7 +213,7 @@ public Filtro_ricerca_obbligazioniVBulk initializeForSearch(
 	it.cnr.jada.action.ActionContext context) {
 
 	setData_scadenziario(getCurrentDate());
-	setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	setFl_data_scadenziario(Boolean.TRUE);
 	setFl_fornitore(Boolean.TRUE);
 	setFl_importo(Boolean.TRUE);

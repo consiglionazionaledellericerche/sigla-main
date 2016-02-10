@@ -140,6 +140,7 @@ protected void initializePrintBP(AbstractPrintBP bp)
 	printbp.initCdServizioPEC(PrintSpoolerBP.PEC_BILANCIO);
 	// impostazone della descrizione del documento, utile all'invio della PEC
 	printbp.initDsOggettoPEC("Variazione di Bilancio "+var_bilancio.getEsercizio()+"/"+var_bilancio.getCd_cds()+"/"+var_bilancio.getPg_variazione()+", "+var_bilancio.getDs_variazione());
+	printbp.initDsNumregPEC(var_bilancio.getPg_variazione()+"-"+var_bilancio.getEsercizio());
 
 	Print_spooler_paramBulk param;
 	param = new Print_spooler_paramBulk();

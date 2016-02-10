@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<SQLPersistentInfo
-	persistentClassName="it.cnr.contab.config00.geco.bulk.Geco_dipartimentoBulk"
-	homeClassName="it.cnr.contab.config00.geco.bulk.Geco_dipartimentoHome">
-	<defaultColumnMap
-		tableName="dipartimento">
-	</defaultColumnMap>
-</SQLPersistentInfo>

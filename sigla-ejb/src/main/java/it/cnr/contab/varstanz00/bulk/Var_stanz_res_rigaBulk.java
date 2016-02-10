@@ -9,18 +9,23 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDBP;
 public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
+	private static final long serialVersionUID = 1L;
+
 	private Voce_fBulk voce_f;
 	private WorkpackageBulk linea_di_attivita;
 	private Var_stanz_resBulk var_stanz_res; 
 	private Elemento_voceBulk elemento_voce;
 	private CdrBulk centroTestata;
 	private BigDecimal disponibilita_stanz_res;
+	private ProgettoBulk progetto = new ProgettoBulk();
+	
 	public Var_stanz_res_rigaBulk() {
 		super();
 	}
@@ -149,8 +154,11 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#setCd_voce(java.lang.String)
 	 */
 	public void setCd_voce(String cd_voce) {
-		getVoce_f().setCd_voce(cd_voce);
-	}
+		if (getVoce_f()!=null)
+			getVoce_f().setCd_voce(cd_voce);
+		else
+			super.setCd_voce(cd_voce);
+	}	
     /* (non-Javadoc)
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#getEsercizio_voce()
 	 */
@@ -173,7 +181,9 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#getCd_voce()
 	 */
 	public String getCd_voce() {
-		return getVoce_f().getCd_voce();
+		if (this.getVoce_f()!=null)
+			return getVoce_f().getCd_voce();
+		return super.getCd_voce();
 	}
 	/**
 	 * @return
@@ -198,7 +208,10 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#getCd_elemento_voce()
 	 */
 	public String getCd_elemento_voce() {
-		return getElemento_voce().getCd_elemento_voce();
+		if(this.getElemento_voce()!=null)
+			return getElemento_voce().getCd_elemento_voce();
+		else
+			return null;
 	}
 
 
@@ -231,10 +244,34 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	}
 	public void validate(OggettoBulk oggettoBulk) throws ValidationException {		
 		if (getVar_stanz_res().getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_ECO)){
-			if(getIm_variazione() != null && getIm_variazione().compareTo(Utility.ZERO) > 0)
+			if(getIm_variazione() != null && getIm_variazione().compareTo(Utility.ZERO) > 0) 
 			  throw new ValidationException("L'importo delle righe di variazione deve essere negativo per le Economie.");
 		}
+		if(this.getElemento_voce()!=null && this.getElemento_voce().getFl_azzera_residui()!=null && this.getElemento_voce().getFl_azzera_residui() &&  this.getIm_variazione()!=null && this.getIm_variazione().compareTo(BigDecimal.ZERO)>0)
+			throw new ValidationException ("Attenzione non può essere predisposta una variazione positiva sulla voce "+this.getElemento_voce().getCd_elemento_voce());
+		 
+		for (java.util.Iterator i = var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
+			Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
+			if (!riga.equals(this) &&
+					this.getEsercizio()!= null && riga.getEsercizio().compareTo(this.getEsercizio())==0 &&
+					this.getEsercizio_res()!= null && riga.getEsercizio_res().compareTo(this.getEsercizio_res())==0 &&
+					this.getLinea_di_attivita()!= null && riga.getLinea_di_attivita()!= null &&
+					this.getCd_cdr()!= null &&  riga.getCd_cdr()!= null &&
+					riga.getCd_cdr().compareTo(this.getCd_cdr())==0 &&
+					this.getCd_linea_attivita()!= null && riga.getCd_linea_attivita()!=null && 
+					riga.getCd_linea_attivita().compareTo(this.getCd_linea_attivita())==0 &&
+					this.getCd_elemento_voce()!= null && riga.getCd_elemento_voce()!=null && 
+					riga.getCd_elemento_voce().compareTo(this.getCd_elemento_voce())==0)
+				throw new ValidationException ("Attenzione: combinazione Esercizio/Esercizio residuo/CdR/G.A.E./Voce già inserita!");
+			}
 		super.validate();
 	}
 
+	public ProgettoBulk getProgetto() {
+		return progetto;
+	}
+	
+	public void setProgetto(ProgettoBulk progetto) {
+		this.progetto = progetto;
+	}
 }

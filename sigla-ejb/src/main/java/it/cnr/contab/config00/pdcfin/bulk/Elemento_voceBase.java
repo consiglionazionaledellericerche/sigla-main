@@ -1,10 +1,21 @@
 package it.cnr.contab.config00.pdcfin.bulk;
 
+import java.math.BigDecimal;
+
 import it.cnr.jada.persistency.*;
 
 public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	// CD_CAPOCONTO_FIN VARCHAR(10) 
 	private java.lang.String cd_capoconto_fin;
+
+	// ESERCIZIO_ELEMENTO_PADRE DECIMAL(4,0) 
+	private java.lang.Integer esercizio_elemento_padre;
+
+	// TI_GESTIONE_ELEMENTO_PADRE CHAR(1)
+	private java.lang.String ti_gestione_elemento_padre;
+
+	// TI_APPARTENENZA_ELEMENTO_PADRE CHAR(1)
+	private java.lang.String ti_appartenenza_elemento_padre;
 
 	// CD_ELEMENTO_PADRE VARCHAR(20)
 	private java.lang.String cd_elemento_padre;
@@ -64,6 +75,19 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	private java.lang.Boolean fl_check_terzo_siope;
 
 	private java.lang.Boolean fl_inv_beni_comp;
+	
+	private java.lang.Boolean fl_limite_spesa;
+	
+	private java.lang.Boolean fl_prelievo;
+	private java.lang.Boolean fl_soggetto_prelievo;
+	private java.lang.Boolean fl_solo_residuo;
+	private java.lang.Boolean fl_solo_competenza;
+	private java.lang.Boolean fl_azzera_residui;
+	
+	private BigDecimal perc_prelievo_pdgp_entrate;
+	
+	// FL_TROVATO CHAR(1) NOT NULL
+	private String fl_trovato;
 public Elemento_voceBase() {
 	super();
 }
@@ -75,6 +99,24 @@ public Elemento_voceBase(java.lang.String cd_elemento_voce,java.lang.Integer ese
  */
 public java.lang.String getCd_capoconto_fin() {
 	return cd_capoconto_fin;
+}
+/* 
+ * Getter dell'attributo esercizio_elemento_padre
+ */
+public java.lang.Integer getEsercizio_elemento_padre() {
+	return esercizio_elemento_padre;
+}
+/* 
+ * Getter dell'attributo ti_gestione_elemento_padre
+ */
+public java.lang.String getTi_gestione_elemento_padre() {
+	return ti_gestione_elemento_padre;
+}
+/* 
+ * Getter dell'attributo ti_appartenenza_elemento_padre
+ */
+public java.lang.String getTi_appartenenza_elemento_padre() {
+	return ti_appartenenza_elemento_padre;
 }
 /* 
  * Getter dell'attributo cd_elemento_padre
@@ -141,6 +183,24 @@ public java.lang.String getTi_elemento_voce() {
  */
 public void setCd_capoconto_fin(java.lang.String cd_capoconto_fin) {
 	this.cd_capoconto_fin = cd_capoconto_fin;
+}
+/* 
+ * Setter dell'attributo esercizio_elemento_padre
+ */
+public void setEsercizio_elemento_padre(java.lang.Integer esercizio_elemento_padre) {
+	this.esercizio_elemento_padre = esercizio_elemento_padre;
+}
+/* 
+ * Setter dell'attributo ti_gestione_elemento_padre
+ */
+public void setTi_gestione_elemento_padre(java.lang.String ti_gestione_elemento_padre) {
+	this.ti_gestione_elemento_padre = ti_gestione_elemento_padre;
+}
+/* 
+ * Setter dell'attributo ti_appartenenza_elemento_padre
+ */
+public void setTi_appartenenza_elemento_padre(java.lang.String ti_appartenenza_elemento_padre) {
+	this.ti_appartenenza_elemento_padre = ti_appartenenza_elemento_padre;
 }
 /* 
  * Setter dell'attributo cd_elemento_padre
@@ -313,5 +373,53 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	}
 	public void setFl_inv_beni_comp(java.lang.Boolean fl_inv_beni_comp) {
 		this.fl_inv_beni_comp = fl_inv_beni_comp;
+	}
+	public java.lang.Boolean getFl_limite_spesa() {
+		return fl_limite_spesa;
+	}
+	public void setFl_limite_spesa(java.lang.Boolean fl_limite_spesa) {
+		this.fl_limite_spesa = fl_limite_spesa;
+	}
+	public java.lang.Boolean getFl_prelievo() {
+		return fl_prelievo;
+	}
+	public void setFl_prelievo(java.lang.Boolean fl_prelievo) {
+		this.fl_prelievo = fl_prelievo;
+	}
+	public java.lang.Boolean getFl_soggetto_prelievo() {
+		return fl_soggetto_prelievo;
+	}
+	public void setFl_soggetto_prelievo(java.lang.Boolean fl_soggetto_prelievo) {
+		this.fl_soggetto_prelievo = fl_soggetto_prelievo;
+	}
+	public BigDecimal getPerc_prelievo_pdgp_entrate() {
+		return perc_prelievo_pdgp_entrate;
+	} 
+	public void setPerc_prelievo_pdgp_entrate(BigDecimal perc_prelievo_pdgp_entrate) {
+		this.perc_prelievo_pdgp_entrate = perc_prelievo_pdgp_entrate;
+	}
+	public java.lang.Boolean getFl_solo_residuo() {
+		return fl_solo_residuo;
+	}
+	public void setFl_solo_residuo(java.lang.Boolean fl_solo_residuo) {
+		this.fl_solo_residuo = fl_solo_residuo;
+	}
+	public java.lang.Boolean getFl_solo_competenza() {
+		return fl_solo_competenza;
+	}
+	public void setFl_solo_competenza(java.lang.Boolean fl_solo_competenza) {
+		this.fl_solo_competenza = fl_solo_competenza;
+	}
+	public void setFl_trovato(String fl_trovato) {
+		this.fl_trovato = fl_trovato;
+	}
+	public String getFl_trovato() {
+		return fl_trovato;
+	}
+	public java.lang.Boolean getFl_azzera_residui() {
+		return fl_azzera_residui;
+	}
+	public void setFl_azzera_residui(java.lang.Boolean fl_azzera_residui) {
+		this.fl_azzera_residui = fl_azzera_residui;
 	}
 }

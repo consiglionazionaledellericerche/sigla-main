@@ -138,6 +138,56 @@ public class Incarichi_parametriBase extends Incarichi_parametriKey implements K
 			nullable=false,
 			label="Codice Gruppo File")
 	private java.lang.String cd_gruppo_file;
+	
+//  ALLEGA_CURRICULUM_VITAE CHAR(1)
+	@FieldPropertyAnnotation(name="allega_curriculum_vitae",
+			inputType=InputType.TEXT,
+			enabledOnSearch=true,
+			enabledOnInsert=false,
+			enabledOnEdit=false,
+			nullable=false,
+			label="Allega Curriculum Vitae")
+	private java.lang.String allega_curriculum_vitae;
+	
+//  ALLEGA_DICH_CONTRAENTE CHAR(1)
+	@FieldPropertyAnnotation(name="allega_dich_contraente",
+			inputType=InputType.TEXT,
+			enabledOnSearch=true,
+			enabledOnInsert=false,
+			enabledOnEdit=false,
+			nullable=false,
+			label="Allega Dichiarazione Contraente")
+	private java.lang.String allega_dich_contraente;
+
+//  ALLEGA_PROGETTO CHAR(1)
+	@FieldPropertyAnnotation(name="allega_progetto",
+			inputType=InputType.TEXT,
+			enabledOnSearch=true,
+			enabledOnInsert=false,
+			enabledOnEdit=false,
+			nullable=false,
+			label="Allega Progetto")
+	private java.lang.String allega_progetto;
+
+//  INDICA_URL_PROGETTO CHAR(1)
+	@FieldPropertyAnnotation(name="indica_url_progetto",
+			inputType=InputType.TEXT,
+			enabledOnSearch=true,
+			enabledOnInsert=false,
+			enabledOnEdit=false,
+			nullable=false,
+			label="Indica Url Progetto")
+	private java.lang.String indica_url_progetto;
+
+//  FL_INVIO_FP CHAR(1)
+	@FieldPropertyAnnotation(name="fl_invio_fp",
+			inputType=InputType.TEXT,
+			enabledOnSearch=true,
+			enabledOnInsert=false,
+			enabledOnEdit=false,
+			nullable=false,
+			label="Invio alla funzione pubblica")
+	private java.lang.String fl_invio_fp;
 
 	public Incarichi_parametriBase() {
 		super();
@@ -229,4 +279,40 @@ public class Incarichi_parametriBase extends Incarichi_parametriKey implements K
 	public void setCd_gruppo_file(java.lang.String cd_gruppo_file) {
 		this.cd_gruppo_file = cd_gruppo_file;
 	}
+
+	public java.lang.String getAllega_curriculum_vitae() {
+		return allega_curriculum_vitae;
+	}
+	public void setAllega_curriculum_vitae(java.lang.String allega_curriculum_vitae) {
+		this.allega_curriculum_vitae = allega_curriculum_vitae;
+	}
+
+	public java.lang.String getAllega_dich_contraente() {
+		return allega_dich_contraente;
+	}
+	public void setAllega_dich_contraente(java.lang.String allega_dich_contraente) {
+		this.allega_dich_contraente = allega_dich_contraente;
+	}
+
+	public java.lang.String getAllega_progetto() {
+		return allega_progetto;
+	}
+	public void setAllega_progetto(java.lang.String allega_progetto) {
+		this.allega_progetto = allega_progetto;
+	}
+
+	public java.lang.String getIndica_url_progetto() {
+		return indica_url_progetto;
+	}
+	public void setIndica_url_progetto(java.lang.String indica_url_progetto) {
+		this.indica_url_progetto = indica_url_progetto;
+	}
+
+	public java.lang.String getFl_invio_fp() {
+		return fl_invio_fp;
+	}
+	public void setFl_invio_fp(java.lang.String fl_invio_fp) {
+		this.fl_invio_fp = fl_invio_fp;
+	}
+	
 }

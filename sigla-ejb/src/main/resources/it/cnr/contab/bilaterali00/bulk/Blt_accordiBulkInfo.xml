@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription="Accordi Bilaterali"
+        longDescription="Accordi Bilaterali">
+	<fieldProperty
+		name="cd_accordo"
+		property="cd_accordo"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_accordo"
+		property="ds_accordo"
+		inputType="ROTEXT"
+		label="Descrizione"
+		inputSize="80" />
+	<fieldProperty
+		name="nome_ente_str"
+		property="nome_ente_str"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="80"
+		nullable="false"
+		label="Ente Straniero" />
+	<fieldProperty
+		name="acronimo_ente_str"
+		property="acronimo_ente_str"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Acronimo Ente Straniero" />
+	<fieldProperty
+		name="nazioneStr"
+		property="nazioneStr"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		label="Nazione Ente Straniero" />
+	<fieldProperty
+		name="data_firma_accordo"
+		property="data_firma_accordo"
+		label="Data Firma Accordo"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="data_firma_addendum"
+		property="data_firma_addendum"
+		label="Data Firma Addendum"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="find_responsabile_ita"
+		property="responsabileIta"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		label="Responsabile Italiano"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_respons_ita"
+		property="responsabileIta.cd_terzo"
+		label="Responsabile Italiano"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="ds_respons_ita"
+		property="responsabileIta.denominazione_sede"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="email_respons_ita"
+		property="email_respons_ita"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		label="Email Responsabile Italiano" />
+	<fieldProperty
+		name="telef_respons_ita"
+		property="telef_respons_ita"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="50"
+		label="Telefono Responsabile Italiano" />
+	<fieldProperty
+		name="fax_respons_ita"
+		property="fax_respons_ita"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="50"
+		label="Fax Responsabile Italiano" />
+	<fieldProperty
+		name="cognome_respons_str"
+		property="cognome_respons_str"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="30"
+		nullable="false"
+		label="Cognome Responsabile Straniero" />
+	<fieldProperty
+		name="nome_respons_str"
+		property="nome_respons_str"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="30"
+		nullable="false"
+		label="Nome Responsabile Straniero" />
+	<fieldProperty
+		name="email_respons_str"
+		property="email_respons_str"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		label="Email Responsabile Straniero" />
+	<fieldProperty
+		name="telef_respons_str"
+		property="telef_respons_str"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="50"
+		label="Telefono Responsabile Straniero" />
+	<fieldProperty
+		name="fax_respons_str"
+		property="fax_respons_str"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="50"
+		label="Fax Responsabile Straniero" />
+	<fieldProperty
+		name="importo_diaria_ita"
+		property="importo_diaria_ita"
+		label="Importo Diaria Italiani"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="importo_mensile_ita"
+		property="importo_mensile_ita"
+		label="Importo Mensile Italiani"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="diaria_lungo_periodo"
+		property="diaria_lungo_periodo"
+		label="Diaria gg. lungo periodo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="importo_diaria_str"
+		property="importo_diaria_str"
+		label="Importo Diaria Stranieri"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="importo_mensile_str"
+		property="importo_mensile_str"
+		label="Importo Mensile Stranieri"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="spese_viaggio_ita"
+		property="spese_viaggio_ita"
+		label="Spese Viaggio Italiani"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="fl_rimborso_treno"
+		property="fl_rimborso_treno"
+		label="Spese rimborso treno"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="fl_spese_visto"
+		property="fl_spese_visto"
+		label="Spese visto"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="fl_conv_fiscale"
+		property="fl_conv_fiscale"
+		label="Convenzione Fiscale"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="fl_salta_convenzione"
+		property="fl_salta_convenzione"
+		label="AV-MT"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="fl_pagamento_ente"
+		property="fl_pagamento_ente"
+		label="Pagamento a Ente Straniero"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="find_terzo_ente"
+		property="terzoEnte"
+		inputType="SEARCHTOOL"
+		label="Terzo Ente Straniero"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_terzo_ente"
+		property="terzoEnte.cd_terzo"
+		label="Terzo Ente Straniero"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		nullable="true" />
+	<fieldProperty
+		name="ds_terzo_ente"
+		property="terzoEnte.denominazione_sede"
+		inputSize="50"
+		inputType="ROTEXT" 
+		label="Descrizione Terzo" />
+	<fieldProperty
+		name="num_articolo_conv_fiscale"
+		property="num_articolo_conv_fiscale"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Numero Articolo Convenzione Fiscale" />
+	<fieldProperty
+		name="num_articolo_prop_intel"
+		property="num_articolo_prop_intel"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Numero Articolo Proprietà Intellettuale" />
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano"
+		nullable="false"
+		enabledOnSearch="true"
+		completeOnSave="false" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		label="Voce del piano"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		nullable="false" />
+	<fieldProperty
+		name="cd_elemento_voceRO"
+		property="elemento_voce.cd_elemento_voce"
+		label="Voce del piano"
+		inputType="ROTEXT"
+		maxLength="20"
+		inputSize="10" />		
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="60" />
+	<fieldProperty
+		name="num_prot_dec_contr"
+		property="num_prot_dec_contr"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Numero Protocollo Decisione a Contrattare" />
+	<fieldProperty
+		name="data_prot_dec_contr"
+		property="data_prot_dec_contr"
+		label="Data Protocollo Decisione a Contrattare"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="prc_oneri_fiscali"
+		property="prc_oneri_fiscali"
+		label="Percentuale Incremento Fiscale"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="prc_oneri_contributivi"
+		property="prc_oneri_contributivi"
+		label="Percentuale Incremento Contributivo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="prc_anticipo"
+		property="prc_anticipo"
+		label="Percentuale Anticipo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="importo_max_anticipo"
+		property="importo_max_anticipo"
+		label="Importo Massimo Anticipo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="num_prot_parere_commissione"
+		property="num_prot_parere_commissione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Numero Protocollo Parere Commissione" />
+	<fieldProperty
+		name="dt_prot_parere_commissione"
+		property="dt_prot_parere_commissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Data Protocollo Parere Commissione" />
+	<fieldProperty
+		name="num_prot_lista_congiunta"
+		property="num_prot_lista_congiunta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Numero Protocollo Lista Congiunta" />
+	<fieldProperty
+		name="dt_prot_lista_congiunta"
+		property="dt_prot_lista_congiunta"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Data Protocollo Lista Congiunta" />
+	<fieldProperty
+		name="fl_viaggi_interni"
+		property="fl_viaggi_interni"
+		label="Viaggi Interni a carico CNR"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="fl_lettera_invito"
+		property="fl_lettera_invito"
+		label="Lettera Invito"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="fl_atti_amministrativi"
+		property="fl_atti_amministrativi"
+		label="Atti Amministrativi"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="ds_nazione_eng"
+		property="ds_nazione_eng"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="40"
+		label="Descrizione Inglese Nazione" 
+		nullable="false" />
+	<fieldProperty
+		name="ds_aggettivo_nazional"
+		property="ds_aggettivo_nazional"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="60"
+		label="Descrizione Aggettivo Nazionalità" 
+		nullable="false" />
+	<fieldProperty
+		name="indirizzo_ente_str"
+		property="indirizzo_ente_str"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="60"
+		label="Indirizzo Ente Straniero" 
+		nullable="false" />
+	<fieldProperty
+		name="citta_ente_str"
+		property="citta_ente_str"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="40"
+		label="Città Ente Straniero" 
+		nullable="false" />
+	<fieldProperty
+		name="email_trasmissione_passaporto"
+		property="email_trasmissione_passaporto"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="40"
+		label="Indirizzo email trasmissione passaporto" />
+	<fieldProperty
+		name="importo_commissione_bonifico"
+		property="importo_commissione_bonifico"
+		label="Importo Commissione Bonifico"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="anno_ini"
+		property="anno_ini"
+		label="Anno Iniziale"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		nullable="false" />
+	<fieldProperty
+		name="anno_fin"
+		property="anno_fin"
+		label="Anno Finale"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		nullable="false" />
+
+/*********************************/
+/*********** DIVISA **************/
+/*********************************/
+	<fieldProperty
+		name="cd_divisa_ita"
+		property="divisaIta.cd_divisa"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice divisa pagamento" />
+	<fieldProperty
+		name="ds_divisa_ita"
+		property="divisaIta.ds_divisa"
+		inputSize="70"
+		maxLength="70"
+		inputType="ROTEXT"
+		label="Descrizione divisa pagamento" />
+	<fieldProperty
+		name="find_divisa_ita"
+		property="divisaIta"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Divisa Pagamento" />
+	<fieldProperty
+		name="im_diaria_contrib_sogg_ita"
+		property="im_diaria_contrib_sogg_ita"
+		label="Contributo Soggiorno Diaria PAN"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="true"/>
+	<fieldProperty
+		name="im_mensile_contrib_sogg_ita"
+		property="im_mensile_contrib_sogg_ita"
+		label="Contributo Soggiorno Mensile PAN"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"/>
+		
+	<formFieldProperty
+		name="cd_accordo" />
+	<formFieldProperty
+		name="ds_accordo" />
+	<formFieldProperty
+		name="nome_ente_str"
+		label="Nome" />
+	<formFieldProperty
+		name="acronimo_ente_str" 
+		label="Acronimo" />
+	<formFieldProperty
+		name="nazioneStr" 
+		label="Nazione" />
+	<formFieldProperty
+		name="data_firma_accordo" />
+	<formFieldProperty
+		name="data_firma_addendum" />
+	<formFieldProperty
+		name="find_responsabile_ita" />
+	<formFieldProperty
+		name="cd_respons_ita"
+		label="Codice Terzo"/>
+	<formFieldProperty
+		name="ds_respons_ita" />
+	<formFieldProperty
+		name="email_respons_ita"
+		label="Email"/>
+	<formFieldProperty
+		name="telef_respons_ita"
+		label="Telefono"/>
+	<formFieldProperty
+		name="fax_respons_ita"
+		label="Fax"/>
+	<formFieldProperty
+		name="cognome_respons_str" 
+		label="Cognome"/>
+	<formFieldProperty
+		name="nome_respons_str"
+		label="Nome" />
+	<formFieldProperty
+		name="email_respons_str" 
+		label="Email"/>
+	<formFieldProperty
+		name="telef_respons_str" 
+		label="Telefono"/>
+	<formFieldProperty
+		name="fax_respons_str" 
+		label="Fax"/>
+	<formFieldProperty
+		name="importo_diaria_ita" 
+		label="Diaria"/>
+	<formFieldProperty
+		name="importo_mensile_ita" 
+		label="Importo Mensile" />
+	<formFieldProperty
+		name="importo_diaria_str"
+		label="Diaria" />
+	<formFieldProperty
+		name="importo_mensile_str" 
+		label="Importo Mensile" />
+	<formFieldProperty
+		name="diaria_lungo_periodo" 
+		label="Diaria gg. lungo periodo" />
+	<formFieldProperty
+		name="spese_viaggio_ita" 
+		label="Spese Viaggio Presunte" />
+	<formFieldProperty
+		name="fl_rimborso_treno" />
+	<formFieldProperty
+		name="fl_spese_visto" />
+	<formFieldProperty
+		name="fl_conv_fiscale" />
+	<formFieldProperty
+		name="fl_salta_convenzione" />
+	<formFieldProperty
+		name="fl_pagamento_ente"
+		label="Pagamento&lt;BR&gt;a Ente Straniero" />
+	<formFieldProperty
+		name="find_terzo_ente" 
+		label="Terzo&lt;BR&gt;Ente Straniero"/>
+	<formFieldProperty
+		name="cd_terzo_ente" 
+		label="Terzo&lt;BR&gt;Ente Straniero"/>
+	<formFieldProperty
+		name="ds_terzo_ente" />
+	<formFieldProperty
+		name="num_articolo_conv_fiscale"
+		label="Numero Articolo&lt;BR&gt;Convenzione Fiscale"/>
+	<formFieldProperty
+		name="num_articolo_prop_intel"
+		label="Numero Articolo&lt;BR&gt;Proprietà Intellettuale"/>
+	<formFieldProperty
+		name="find_elemento_voce" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="cd_elemento_voceRO" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="num_prot_dec_contr" 
+		label="Numero Protocollo&lt;BR&gt;Decisione a Contrattare"/>
+	<formFieldProperty
+		name="data_prot_dec_contr"
+		label="Data Protocollo&lt;BR&gt;Decisione a Contrattare"/>
+	<formFieldProperty
+		name="prc_oneri_fiscali" 
+		label="Percentuale&lt;BR&gt;Oneri Fiscali"/>
+	<formFieldProperty
+		name="prc_oneri_contributivi" 
+		label="Percentuale&lt;BR&gt;Oneri Contributivi"/>
+	<formFieldProperty
+		name="prc_anticipo"
+		label="Percentuale&lt;BR&gt;Anticipo"/>
+	<formFieldProperty
+		name="importo_max_anticipo" 
+		label="Importo Massimo&lt;BR&gt;Anticipo"/>
+	<formFieldProperty
+		name="num_prot_parere_commissione" 
+		label="Numero Protocollo&lt;br&gt;Parere Commissione" />
+	<formFieldProperty
+		name="dt_prot_parere_commissione"
+		label="Data Protocollo&lt;br&gt;Parere Commissione" />
+	<formFieldProperty
+		name="num_prot_lista_congiunta"
+		label="Numero Protocollo&lt;br&gt;Lista Congiunta" />
+	<formFieldProperty
+		name="dt_prot_lista_congiunta"
+		label="Data Protocollo&lt;br&gt;Lista Congiunta" />
+	<formFieldProperty
+		name="fl_viaggi_interni" />
+	<formFieldProperty
+		name="fl_comunicazione_passaporto" />
+	<formFieldProperty
+		name="fl_lettera_invito" />
+	<formFieldProperty
+		name="fl_atti_amministrativi" />
+	<formFieldProperty
+		name="fl_parere_commissione" />
+	<formFieldProperty
+		name="fl_lista_congiunta" />
+	<formFieldProperty
+		name="ds_nazione_eng"
+		label="Nazione&lt;br&gt;in Inglese"	/>
+	<formFieldProperty
+		name="ds_aggettivo_nazional" 
+		label="Nazionalità&lt;br&gt;in Inglese"	/>
+	<formFieldProperty
+		name="indirizzo_ente_str" 
+		label="Indirizzo" />
+	<formFieldProperty
+		name="citta_ente_str" 
+		label="Città" />
+	<formFieldProperty
+		name="email_trasmissione_passaporto" 
+		label="Email Trasmissione Passaporto"/>
+	<formFieldProperty
+		name="importo_commissione_bonifico" />
+	<formFieldProperty
+		name="cd_divisa_ita" />
+	<formFieldProperty
+		name="ds_divisa_ita" />
+	<formFieldProperty
+		name="find_divisa_ita" />
+	<formFieldProperty
+		name="anno_ini" />
+	<formFieldProperty
+		name="anno_fin" />
+	<formFieldProperty
+		name="im_diaria_contrib_sogg_ita" />
+	<formFieldProperty
+		name="im_mensile_contrib_sogg_ita" />
+		
+	<columnFieldProperty
+		name="cd_accordo" />
+	<columnFieldProperty
+		name="ds_accordo" />
+	<columnFieldProperty
+		name="nome_ente_str" />
+	<columnFieldProperty
+		name="acronimo_ente_str" />
+		
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cd_accordo" />
+		<formFieldProperty
+			name="ds_accordo" />
+	</form>
+
+	<findFieldProperty
+		name="cd_accordo" />
+	<findFieldProperty
+		name="ds_accordo" />
+	<findFieldProperty
+		name="nome_ente_str"
+		label="Nome" />
+	<findFieldProperty
+		name="acronimo_ente_str" 
+		label="Acronimo" />
+	<findFieldProperty
+		name="nazioneStr" 
+		label="Nazione" />
+	<findFieldProperty
+		name="data_firma_accordo" />
+	<findFieldProperty
+		name="data_firma_addendum" />
+	<findFieldProperty
+		name="find_responsabile_ita" />
+	<findFieldProperty
+		name="cd_respons_ita"
+		label="Codice Terzo"/>
+	<findFieldProperty
+		name="ds_respons_ita" />
+	<findFieldProperty
+		name="email_respons_ita"
+		label="Email"/>
+	<findFieldProperty
+		name="telef_respons_ita"
+		label="Telefono"/>
+	<findFieldProperty
+		name="fax_respons_ita"
+		label="Fax"/>
+	<findFieldProperty
+		name="cognome_respons_str" 
+		label="Cognome"/>
+	<findFieldProperty
+		name="nome_respons_str"
+		label="Nome" />
+	<findFieldProperty
+		name="email_respons_str" 
+		label="Email"/>
+	<findFieldProperty
+		name="telef_respons_str" 
+		label="Telefono"/>
+	<findFieldProperty
+		name="fax_respons_str" 
+		label="Fax"/>
+	<findFieldProperty
+		name="importo_diaria_ita" 
+		label="Diaria"/>
+	<findFieldProperty
+		name="importo_mensile_ita" 
+		label="Importo Mensile" />
+	<findFieldProperty
+		name="diaria_lungo_periodo" 
+		label="Diaria gg. lungo periodo" />
+	<findFieldProperty
+		name="importo_diaria_str"
+		label="Diaria" />
+	<findFieldProperty
+		name="importo_mensile_str" 
+		label="Importo Mensile" />
+	<findFieldProperty
+		name="spese_viaggio_ita" 
+		label="Spese Viaggio Presunte" />
+	<findFieldProperty
+		name="fl_rimborso_treno" />
+	<findFieldProperty
+		name="fl_spese_visto" />
+	<findFieldProperty
+		name="fl_conv_fiscale" />
+	<findFieldProperty
+		name="fl_salta_convenzione" />
+	<findFieldProperty
+		name="num_articolo_conv_fiscale"
+		label="Numero Articolo&lt;BR&gt;Convenzione Fiscale"/>
+	<findFieldProperty
+		name="num_articolo_prop_intel"
+		label="Numero Articolo&lt;BR&gt;Proprietà Intellettuale"/>
+	<findFieldProperty
+		name="find_elemento_voce" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_elemento_voceRO" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="num_prot_dec_contr" 
+		label="Numero Protocollo&lt;BR&gt;Decisione a Contrattare"/>
+	<findFieldProperty
+		name="data_prot_dec_contr"
+		label="Data Protocollo&lt;BR&gt;Decisione a Contrattare"/>
+	<findFieldProperty
+		name="num_prot_parere_commissione" />
+	<findFieldProperty
+		name="dt_prot_parere_commissione" />
+	<findFieldProperty
+		name="num_prot_lista_congiunta" />
+	<findFieldProperty
+		name="dt_prot_lista_congiunta" />
+	<findFieldProperty
+		name="fl_viaggi_interni" />
+	<findFieldProperty
+		name="fl_comunicazione_passaporto" />
+	<findFieldProperty
+		name="fl_lettera_invito" />
+	<findFieldProperty
+		name="fl_atti_amministrativi" />
+	<findFieldProperty
+		name="fl_parere_commissione" />
+	<findFieldProperty
+		name="fl_lista_congiunta" />
+	<findFieldProperty
+		name="ds_nazione_eng" />
+	<findFieldProperty
+		name="ds_aggettivo_nazional" />
+	<findFieldProperty
+		name="indirizzo_ente_str" />
+	<findFieldProperty
+		name="citta_ente_str" />
+	<findFieldProperty
+		name="email_trasmissione_passaporto" />
+	<findFieldProperty
+		name="importo_commissione_bonifico" />
+	<findFieldProperty
+		name="anno_ini" />
+	<findFieldProperty
+		name="anno_fin" />
+	<findFieldProperty
+		name="im_diaria_contrib_sogg_ita" />
+	<findFieldProperty
+		name="im_mensile_contrib_sogg_ita" />
+
+</bulkInfo>

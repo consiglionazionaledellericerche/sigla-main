@@ -1,32 +1,45 @@
 package it.cnr.contab.compensi00.actions;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.compensi00.tabrif.bulk.*;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
-import it.cnr.contab.anagraf00.tabter.bulk.*;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.compensi00.bp.*;
-import it.cnr.contab.compensi00.ejb.*;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.docamm00.bp.*;
+import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
+import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenuta_detBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.bp.CRUDMandatoBP;
+import it.cnr.contab.doccont00.bp.CRUDReversaleBP;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.BulkBP;
+import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormBP;
+import it.cnr.jada.util.action.OptionBP;
+
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Insert the type's description here.
@@ -51,6 +64,7 @@ public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obb
 
 		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 		TerzoBulk creditore = scadenza.getObbligazione().getCreditore();
+//        compenso.setCollegatoCapitoloPerTrovato(scadenza.getObbligazione().getElemento_voce().isVocePerTrovati());
 		if (!compenso.getTerzo().equalsByPrimaryKey(creditore) &&
 			!AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
 			setMessage(context, FormBP.ERROR_MESSAGE, "La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore del compenso!");
@@ -135,6 +149,37 @@ private Forward basicDoEliminaCompenso(ActionContext context) {
 		return handleException(context, ex);
 	}
 }
+public Forward doVerificaEsistenzaTrovato(ActionContext context) {
+	
+	try {
+		fillModel( context );
+		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
+		bp.ricercaDatiTrovato(context);
+	} catch (Exception e) {
+		return handleException(context, e);
+	}
+	return context.findDefaultForward();
+//	try {
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+//		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+//		java.sql.Timestamp dataEmissione = fattura.getDt_fattura_fornitore();
+//		try	{
+//			fillModel( context );
+//			if (!bp.isSearching())
+//				fattura.validateDate();
+//			creaEsercizioPerFatturaFornitore(context, fattura);
+//			
+//			return context.findDefaultForward();
+//		} catch(Throwable e) {
+//			fattura.setDt_fattura_fornitore(dataEmissione);
+//			bp.setModel(context,fattura);
+//			throw e;
+//		}
+//	} catch(Throwable e) {
+//		return handleException(context, e);
+//	}
+}
+
 private Forward basicDoLoadDocContAssociati(ActionContext context) throws BusinessProcessException{
 
 	CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
@@ -249,6 +294,8 @@ private void doAzzeraTipoTrattamento(ActionContext context, CompensoBulk compens
 	if (compenso!=null){
 		compenso.setTipiTrattamento(null);
 		compenso.setTipoTrattamento(null);
+		compenso.setTipiPrestazioneCompenso(null);
+		compenso.setTipoPrestazioneCompenso(null);
 		compenso.resetDatiLiquidazione();
 	}
 }
@@ -287,6 +334,7 @@ public Forward doBlankSearchFind_terzo(ActionContext context, CompensoBulk compe
 		compenso.setTipoRapporto(null);
 		compenso.setTipiTrattamento(null);
 		compenso.setTipoTrattamento(null);
+		compenso.setTipoPrestazioneCompenso(null);
 		compenso.setCodici_rapporti_inps(null);
 		compenso.setVisualizzaCodici_rapporti_inps(false);
 		compenso.setCodici_attivita_inps(null);
@@ -295,8 +343,11 @@ public Forward doBlankSearchFind_terzo(ActionContext context, CompensoBulk compe
 		compenso.setVisualizzaCodici_altra_forma_ass_inps(false);
 		compenso.setComune_inps(null);
 		compenso.setIncarichi_repertorio_anno(null);
-		compenso.setTi_prestazione(null);
-		//compenso.setIncarichi_oggetto(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
+		
+		compenso.setPignorato(null);
+		compenso.setVisualizzaPignorato(false);
 
 		compenso.setStatoCompensoToEseguiCalcolo();
 	}
@@ -434,6 +485,7 @@ public Forward doBringBackSearchFind_voce_iva(ActionContext context, CompensoBul
  public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,InstantiationException,javax.ejb.RemoveException {
 
 	CRUDCompensoBP bp = (CRUDCompensoBP)context.getBusinessProcess();
+
 	if (bp instanceof IDocumentoAmministrativoSpesaBP && ((IDocumentoAmministrativoSpesaBP)bp).isSpesaBP())
 		return basicDoCerca(context);
 	return super.doCerca(context);
@@ -602,9 +654,15 @@ public Forward doContabilizzaCompensoCOFI(ActionContext context){
 
 		if (bp.isIncaricoRequired(context, compenso) && (compenso.getIncarichi_repertorio_anno()==null || compenso.getIncarichi_repertorio_anno().getCrudStatus()== OggettoBulk.UNDEFINED))
 		{
-			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire l'incarico.");
+			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire il contratto.");
 			return context.findDefaultForward();			
-		}			
+		}
+		
+		if (compenso.isContrattoEnabled() && (compenso.getContratto()==null || compenso.getContratto().getCrudStatus()== OggettoBulk.UNDEFINED))
+		{
+			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire il contratto.");
+			return context.findDefaultForward();			
+		}
 		
 		if (!compenso.getFl_compenso_conguaglio())
 		{
@@ -907,6 +965,26 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			throw e;
 		}
 		
+		int errorCodeTerzo = bp.validaTerzo(context, false);
+		if (errorCodeTerzo==6){
+			String msg = null;
+			switch (errorCodeTerzo) {
+				case 6: {
+					msg = "Il tipo rapporto selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					break;
+				}
+			}
+				
+			OptionBP option = openConfirm(context, msg , OptionBP.CONFIRM_YES_NO,"doConfermaModificaDataCompetenzaCoge");
+			option.addAttribute("oldDataCompCoge", oldDataCompCoge);
+			option.addAttribute("errorCodeTerzo", new Integer(errorCodeTerzo));
+			return option;
+		}
+
+		((CompensoBulk)bp.getModel()).setStatoCompensoToEseguiCalcolo();
+		bp.findTipiRapporto(context);
+		bp.ripristinaSelezioneTipoRapporto();
+		
 			java.sql.Timestamp CompetenzaA = compenso.getDt_a_competenza_coge();
 			java.util.GregorianCalendar tsOdiernoGregorian = new GregorianCalendar();
 			tsOdiernoGregorian.setTime(new Date(CompetenzaA.getTime()));
@@ -1006,14 +1084,15 @@ public Forward doOnDtRegistrazioneChange(ActionContext context) {
 		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
 		java.sql.Timestamp oldDataReg = ((CompensoBulk)bp.getModel()).getDt_registrazione();
 		fillModel(context);
+		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 
 		if (bp.isSearching())
 			return context.findDefaultForward();
 
 		try{
-			((CompensoBulk)bp.getModel()).validaDate();
+			compenso.validaDate();
 		} catch(it.cnr.jada.comp.ApplicationException e) {
-			((CompensoBulk)bp.getModel()).setDt_registrazione(oldDataReg);
+			compenso.setDt_registrazione(oldDataReg);
 			throw e;
 		}
 
@@ -1036,7 +1115,10 @@ public Forward doOnDtRegistrazioneChange(ActionContext context) {
 			return option;
 		}
 
-		((CompensoBulk)bp.getModel()).setStatoCompensoToEseguiCalcolo();
+		compenso.setStatoCompensoToEseguiCalcolo();
+		bp.valorizzaInfoDocEle(context, compenso);
+		compenso.resetDatiFattura();
+		doAzzeraTipoTrattamento(context, compenso);
 		bp.findTipiTrattamento(context);
 		bp.ripristinaSelezioneTipoTrattamento(context);
 
@@ -1060,7 +1142,8 @@ public Forward doOnFlSenzaCalcoliChange(ActionContext context) {
 		doAzzeraTipoTrattamento(context, compenso);
 		bp.findTipiTrattamento(context);
 		compenso.setIncarichi_repertorio_anno(null);
-		//compenso.setIncarichi_oggetto(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
 		compenso.resetDatiFattura();
 
 		// Puo' valere TRUE solo se il compenso è senza calcoli
@@ -1094,7 +1177,8 @@ public Forward doOnFlLiquidazioneDifferitaChange(ActionContext context){
 		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 		if(compenso.getFl_liquidazione_differita() && compenso.getDt_fattura_fornitore()!=null){
 			java.sql.Timestamp data_limite = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getDt01(context.getUserContext(), new Integer(0), "*", "COSTANTI", "LIMITE_CREAZIONE_FATT_PASS_ES_DIF");
-			if(compenso.getDt_fattura_fornitore().compareTo(data_limite)<0){
+			java.sql.Timestamp data_limite_sup = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getDt02(context.getUserContext(), new Integer(0), "*", "COSTANTI", "LIMITE_CREAZIONE_FATT_PASS_ES_DIF");
+			if(compenso.getDt_fattura_fornitore().compareTo(data_limite)<0||compenso.getDt_fattura_fornitore().compareTo(data_limite_sup)>0){
 				compenso.setFl_liquidazione_differita(false);
 				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Non è possibile indicare la liquidazione differita con la data fattura fornitore indicata.");
 			}
@@ -1283,7 +1367,8 @@ public Forward doOnTipoIstituzCommercChange(ActionContext context) {
 		doAzzeraTipoTrattamento(context, compenso);
 		bp.findTipiTrattamento(context);
 		compenso.setIncarichi_repertorio_anno(null);
-		//compenso.setIncarichi_oggetto(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
 		return context.findDefaultForward();
 
 	}catch (Throwable ex) {
@@ -1333,9 +1418,69 @@ public Forward doOnTipoTrattamentoChange(ActionContext context) {
 		fillModel(context);
 		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
 
+		CompensoBulk compenso = (CompensoBulk)bp.getModel();
+		if(!compenso.getTipoTrattamento().getFl_visibile_a_tutti()&& !UtenteBulk.isAbilitatoAllTrattamenti(context.getUserContext()))
+		{
+			doAzzeraTipoTrattamento(context, compenso);
+			bp.findTipiTrattamento(context);
+			throw new it.cnr.jada.comp.ApplicationException(
+		    "Utente non abilitato all'utilizzo del trattamento selezionato!");
+		}	
+		
+		compenso.setTipoPrestazioneCompenso(null);
+		compenso.setIncarichi_repertorio_anno(null);
+		compenso.setImporto_utilizzato(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
+		bp.findTipiPrestazioneCompenso(context);
+		
+		if (compenso.getTipoTrattamento()!=null && compenso.getTipoTrattamento().getFl_pignorato_obbl())
+		{
+			compenso.setVisualizzaPignorato(true);
+		    compenso.setPignorato(new TerzoBulk());
+		}
+		else
+		{
+			compenso.setPignorato(null);
+			compenso.setVisualizzaPignorato(false);
+		}
+		
 		bp.onTipoTrattamentoChange(context);
+		
 		((CompensoBulk)bp.getModel()).setStatoCompensoToEseguiCalcolo();
 
+		return context.findDefaultForward();
+
+	}catch (Throwable ex) {
+		return handleException(context, ex);
+	}
+}
+public Forward doOnTipoPrestazioneCompensoChange(ActionContext context) {
+
+	try {
+		fillModel(context);
+		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
+
+		CompensoBulk compenso = (CompensoBulk)bp.getModel();
+		if(compenso.getTipoPrestazioneCompenso()== null) 
+		{
+			compenso.setIncarichi_repertorio_anno(null);
+			compenso.setImporto_utilizzato(null);
+			compenso.setContratto(null);
+			compenso.setOggetto_contratto(null);
+		} 
+	    if (compenso.getTipoPrestazioneCompenso()!= null && !compenso.getTipoPrestazioneCompenso().getFl_incarico())
+		{
+		compenso.setIncarichi_repertorio_anno(null);
+		compenso.setImporto_utilizzato(null);
+		}
+		
+		if (compenso.getTipoPrestazioneCompenso()!= null && !compenso.getTipoPrestazioneCompenso().getFl_contratto())
+		{
+			compenso.setContratto(null);
+			compenso.setOggetto_contratto(null);
+		}
+		
 		return context.findDefaultForward();
 
 	}catch (Throwable ex) {
@@ -1652,7 +1797,7 @@ public Forward doBringBackSearchIncarichi_repertorio_anno(ActionContext context,
 				//compenso.setIncarichi_oggetto(incarico_anno.getIncarichi_repertorio().getOggetto());
 				compenso.setImporto_utilizzato(bp.prendiUtilizzato(context, compenso, incarico_anno));
 				if (compenso.getImporto_utilizzato().compareTo(compenso.getImporto_complessivo())>=0)
-					setMessage(context, FormBP.ERROR_MESSAGE, "Incarico già completamente utilizzato. Non sarà possibile completare la registrazione del compenso.");
+					setMessage(context, FormBP.ERROR_MESSAGE, "Contratto già completamente utilizzato. Non sarà possibile completare la registrazione del compenso.");
 
 				//bp.completaIncarico(context, compenso,incarico_anno);
 				bp.setDirty(true);
@@ -1678,8 +1823,11 @@ public void PostTipoRapportoChange(ActionContext context) {
         	
 		doAzzeraTipoTrattamento(context, compenso);
 		bp.findTipiTrattamento(context);
+		compenso.setTipiPrestazioneCompenso(null);
+		compenso.setTipoPrestazioneCompenso(null);
 		compenso.setIncarichi_repertorio_anno(null);
-		//compenso.setIncarichi_oggetto(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
 		//P.R. Reinizializzo l'oggetto perchè il metodo precedente ha risettato
 		//     il model
 		compenso = (CompensoBulk)bp.getModel();
@@ -1693,6 +1841,9 @@ public void PostTipoRapportoChange(ActionContext context) {
 		compenso.setCodici_altra_forma_ass_inps(null);
 		compenso.setVisualizzaCodici_altra_forma_ass_inps(false);
 		compenso.setComune_inps(null);
+		
+		compenso.setPignorato(null);
+		compenso.setVisualizzaPignorato(false);
 
 	}catch (Throwable ex) {
 		handleException(context, ex);
@@ -1732,5 +1883,61 @@ public Forward doOnImNettoDaTrattenereChange(ActionContext context) {
 	} catch(Throwable e) {
 		return handleException(context, e);
 	}
+}
+public Forward doOnStatoLiquidazioneChange(ActionContext context) {
+	 try {
+		 CRUDCompensoBP bp = (CRUDCompensoBP) getBusinessProcess(context);
+		 CompensoBulk compenso = (CompensoBulk)bp.getModel();
+		 fillModel(context);
+		 if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.LIQ)){
+	       	if(compenso.getCausale()!=null){ 
+	       		compenso.setCausale(null);
+	       	}
+	     }else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.SOSP)){
+	        	compenso.setCausale(compenso.ATTLIQ);
+	     } else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.NOLIQ)){
+	        	compenso.setCausale(compenso.CONT);
+	     }
+	     bp.setModel(context, compenso);
+	   } catch (Throwable t) {
+	        return handleException(context, t);
+	  }
+return context.findDefaultForward();
+}
+public Forward doOnCausaleChange(ActionContext context) {
+	try {
+		 CRUDCompensoBP bp = (CRUDCompensoBP) getBusinessProcess(context);
+		 CompensoBulk compenso = (CompensoBulk)bp.getModel();
+		    String oldCausale=compenso.getCausale();
+	        fillModel(context);
+	         if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.LIQ)){
+	        	if(compenso.getCausale()!=null){ 
+	        		compenso.setCausale(null);
+	        		throw new it.cnr.jada.comp.ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	         }else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.NOLIQ)){
+	        	
+	        	if (compenso.getCausale()!= null && !compenso.getCausale().equals(compenso.CONT)){
+	        		if(oldCausale!=null)
+	        			compenso.setCausale(oldCausale);
+	        		else
+	        			compenso.setCausale(null);
+	        		throw new it.cnr.jada.comp.ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	         }else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.SOSP)){
+	        	if (compenso.getCausale()!= null && (!compenso.getCausale().equals(compenso.ATTLIQ) &&!compenso.getCausale().equals(compenso.CONT))){
+	        		if(oldCausale!=null )
+	        			compenso.setCausale(oldCausale);
+	        		else
+	        			compenso.setCausale(null);
+        		  throw new it.cnr.jada.comp.ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	        }
+	 	       
+	        bp.setModel(context, compenso);
+	  } catch (Throwable t) {
+	      return handleException(context, t);
+	  }
+	 return context.findDefaultForward();
 }
 }

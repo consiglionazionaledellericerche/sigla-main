@@ -44,6 +44,8 @@ private void addSQLTipoTrattamento(SQLBuilder sql, Filtro_trattamentoBulk filtro
 	sql.addClause("AND","fl_tassazione_separata",sql.EQUALS, filtro.getFlTassazioneSeparata());
 	sql.addClause("AND","fl_agevolazioni_cervelli",sql.EQUALS, filtro.getFlAgevolazioniCervelli());
 	sql.addClause("AND","fl_incarico",sql.EQUALS, filtro.getFlIncarico());
+	sql.addClause("AND","fl_tipo_prestazione_obbl",sql.EQUALS, filtro.getFlTipoPrestazioneObbl());
+	sql.addClause("AND","fl_agevolazioni_rientro_lav",sql.EQUALS, filtro.getFlAgevolazioniRientroLav());	
 	if (filtro.getCdTipoRapporto() != null && filtro.getCdTipoRapporto().equals("DIP"))
 	{   
 		sql.addClause("AND (","fl_anno_prec",sql.ISNULL,null);
@@ -54,7 +56,7 @@ private void addSQLTipoTrattamento(SQLBuilder sql, Filtro_trattamentoBulk filtro
 		sql.addClause("OR","tipo_rapp_impiego",sql.EQUALS, filtro.getTipoRappImpiego());
 		sql.closeParenthesis();
 	}
-	
+	sql.addOrderBy("TIPO_TRATTAMENTO.DS_TI_TRATTAMENTO");
 }
 public java.util.List caricaIntervalli(Tipo_trattamentoBulk tratt) throws PersistencyException{
 
@@ -148,7 +150,7 @@ private SQLBuilder selectTipoTrattamento(Filtro_trattamentoBulk filtro) {
 			sql.closeParenthesis();
 		}
 	addSQLTipoTrattamento(sql, filtro);
-	if (filtro.getFlBonus()==null || !filtro.getFlBonus()){ 
+	if (filtro.getFlBonus()==null || !filtro.getFlBonus()){  
 		SQLBuilder sql_not = createSQLBuilder();
 		sql_not.resetColumns();
 		sql_not.addTableToHeader("TIPO_RAPPORTO");
@@ -160,6 +162,7 @@ private SQLBuilder selectTipoTrattamento(Filtro_trattamentoBulk filtro) {
 		//sql.addSQLNotExistsClause("AND", sql_not);
 		sql.addSQLNOTINClause("AND", "TIPO_TRATTAMENTO.CD_TRATTAMENTO",sql_not);
 	}
+	sql.addOrderBy("TIPO_TRATTAMENTO.DS_TI_TRATTAMENTO");
 	return sql;
 }
 /**

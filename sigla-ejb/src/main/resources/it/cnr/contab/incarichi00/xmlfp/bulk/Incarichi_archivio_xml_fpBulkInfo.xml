@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://contab.cnr.it/schema/SIGLA" 
-	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	xmlns="https://contab.cnr.it/schema/SIGLA" 
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
 	shortDescription="Archivio File Funzione Pubblica"
 	longDescription="Archivio File Incarichi Funzione Pubblica" >
 	<fieldProperty
@@ -48,6 +48,23 @@
 		caseSensitiveSearch="false"
 		label="Nome del File Ricevuto" />
 	<fieldProperty
+		name="fl_perla"
+		property="fl_perla"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		nullable="false"
+		label="File PERLA PA" />
+	<fieldProperty
+		name="fl_merge_perla"
+		property="fl_merge_perla"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		nullable="false"
+		command="doDefault"
+		label="Merge con PERLA PA" />
+	<fieldProperty
 		name="esercizio"
 		property="esercizio"
 		inputType="TEXT"
@@ -65,6 +82,23 @@
 		nullable="false"
 		label="Periodo" />
 	<fieldProperty
+		name="esercizio_inizio"
+		property="esercizio_inizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		readonlyProperty="ROSelezione"
+		nullable="false"
+		label="Anno di inizio selezione" />
+	<fieldProperty
+		name="semestre_inizio"
+		property="semestre_inizio"
+		keysProperty="ti_semestriKeys"
+		inputType="SELECT"
+		readonlyProperty="ROSelezione"
+		nullable="false"
+		label="Periodo di inizio selezione" />
+	<fieldProperty
 		name="dt_calcolo"
 		property="dt_calcolo"
 		keysProperty="ti_dataCalcoloKeys"
@@ -73,12 +107,28 @@
 		nullable="false"
 		label="Data da utilizzare per estrazione" />
 	<fieldProperty
+		name="fl_crea_file_modifiche"
+		property="fl_crea_file_modifiche"
+		inputType="CHECKBOX"
+		readonlyProperty="ROSelezione"
+		command="doDefault"
+		nullable="false"
+		label="Crea File Modifiche" />
+	<fieldProperty
 		name="fl_crea_file_per_tipologia"
 		property="fl_crea_file_per_tipologia"
 		inputType="CHECKBOX"
 		readonlyProperty="ROSelezione"
 		nullable="false"
 		label="Crea File Diversi per Tipologia" />
+	<fieldProperty
+		name="fl_crea_file_perla"
+		property="fl_crea_file_perla"
+		inputType="CHECKBOX"
+		readonlyProperty="ROSelezione"
+		command="doDefault"
+		nullable="false"
+		label="Crea File Sistema PERLA PA" />
 	<fieldProperty
 		name="fl_crea_file_da_file"
 		property="fl_crea_file_da_file"
@@ -312,13 +362,25 @@
 		name="nome_file_ric" 
 		label="File Ricevuto" />
 	<formFieldProperty
+		name="fl_perla" />
+	<formFieldProperty
+		name="fl_merge_perla" />
+	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
 		name="semestre" />
 	<formFieldProperty
+		name="esercizio_inizio" />
+	<formFieldProperty
+		name="semestre_inizio" />
+	<formFieldProperty
+		name="fl_crea_file_modifiche"  />
+	<formFieldProperty
 		name="dt_calcolo" />
 	<formFieldProperty
 		name="fl_crea_file_per_tipologia"  />
+	<formFieldProperty
+		name="fl_crea_file_perla" />
 	<formFieldProperty
 		name="fl_crea_file_da_file"  />
 	<formFieldProperty
@@ -410,9 +472,17 @@
 		name="id_archivio" />
 	<columnFieldProperty
 		name="ds_archivio" />
+	<columnFieldProperty
+		name="fl_perla" />
+	<columnFieldProperty
+		name="fl_merge_perla" />
 
 	<findFieldProperty
 		name="id_archivio" />
 	<findFieldProperty
 		name="ds_archivio" />
+	<findFieldProperty
+		name="fl_perla" />
+	<findFieldProperty
+		name="fl_merge_perla" />
 </bulkInfo>

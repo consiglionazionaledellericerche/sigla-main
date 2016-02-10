@@ -68,8 +68,8 @@
 			columnName="RIFERIMENTI"
 			propertyName="riferimenti"
 			sqlTypeName="VARCHAR"
-			columnSize="200"
-			nullable="true" />
+			columnSize="500"
+			nullable="false" />
 		<columnMapping
 			columnName="CD_CAUSALE_RESPINTA"
 			propertyName="cd_causale_respinta"
@@ -80,7 +80,7 @@
 			columnName="DS_CAUSALE_RESPINTA"
 			propertyName="ds_causale_respinta"
 			sqlTypeName="VARCHAR"
-			columnSize="200"
+			columnSize="500"
 			nullable="true" />
 		<columnMapping
 			columnName="DT_APP_FORMALE"
@@ -143,9 +143,19 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+			columnName="STATO_INVIO"
+			propertyName="stato_invio"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />	
+		 <columnMapping
+			columnName="DT_FIRMA"
+			propertyName="dt_firma"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" /> 	
 	</defaultColumnMap>
-	
-	
 		
 	<persistentProperty
 		name="cd_centro_responsabilita"/>	
@@ -193,4 +203,8 @@
 		name="utuv" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+		name="stato_invio" />	
+	<persistentProperty
+		name="dt_firma" /> 		
 </SQLPersistentInfo>

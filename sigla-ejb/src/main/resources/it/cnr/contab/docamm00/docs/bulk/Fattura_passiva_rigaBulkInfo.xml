@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_cds"
 		property="cd_cds"
@@ -186,7 +186,7 @@
 		property="prezzo_unitario"
 		inputType="TEXT"
 		nullable="false"
-		formatName="it.cnr.contab.util.GenericPrezzoUnitarioFormat"
+		formatName="it.cnr.contab.util.Importo6CifreFormat"
 		readonlyProperty="ROdetail"
 		label="Prezzo Unitario" />
 	<fieldProperty
@@ -317,7 +317,27 @@
 		property="data_esigibilita_iva"
 		inputType="TEXT"
 		label="data_esigibilita_iva" />
-		
+	<fieldProperty
+		name="pg_trovato"
+		property="trovato.pg_trovato"
+		inputType="TEXT"
+		inputSize="10"
+		label="Identificativo del Trovato"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="titoloTrovato"
+		property="trovato.titolo"
+		maxLength="500"
+		inputSize="48"
+		inputType="ROTEXT"
+		label="Titolo del Trovato"/>
+	<fieldProperty
+		name="inventoreTrovato"
+		property="trovato.inventore"
+		maxLength="500"
+		inputSize="48"
+		inputType="ROTEXT"
+		label="Inventore del Trovato"/>
 	<formFieldProperty
 		name="voce_iva" />
 	<formFieldProperty
@@ -333,7 +353,6 @@
 		name="cd_bene_servizio" />
 	<formFieldProperty
 		name="ds_bene_servizio" />
-		
 	<formFieldProperty
 		name="ds_riga_fattura" />
 	<formFieldProperty
@@ -342,11 +361,9 @@
 	<formFieldProperty
 		name="dt_a_competenza_coge"
 		label="al" />
-		
 	<formFieldProperty
 		name="im_iva" 
 		command="doForzaIVA" />
-		
 	<formFieldProperty
 		name="ti_istituz_commerc" />
 	<formFieldProperty
@@ -397,6 +414,13 @@
 	<formFieldProperty
 		name="data_esigibilita_iva" />
 	
+	<formFieldProperty
+		name="pg_trovato" 
+		command="doVerificaEsistenzaTrovato" />
+	<formFieldProperty
+		name="titoloTrovato" />
+	<formFieldProperty
+		name="inventoreTrovato" />
 	<columnFieldProperty
 		name="cd_cds" />
 	<columnFieldProperty
@@ -435,6 +459,8 @@
 		name="modalita_pagamento" />	
 	<columnFieldProperty
 		name="data_esigibilita_iva" />
+	<columnFieldProperty
+		name="pg_trovato" />
 
 	<columnSet
 		name="righiSet">

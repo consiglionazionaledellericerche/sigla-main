@@ -1,10 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.persistency.IntrospectionException;
-import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -127,11 +123,5 @@ public void updateFondoEconomale(
 	} catch(java.sql.SQLException e) {
 		throw it.cnr.jada.persistency.sql.SQLExceptionHandler.getInstance().handleSQLException(e,spesa);
 	}
-}
-public Boolean archiviaStampa(UserContext userContext,
-		MandatoBulk mandato,
-		IDocumentoAmministrativoSpesaBulk docAmm)
-		throws IntrospectionException, PersistencyException {
-	return Boolean.FALSE;
 }
 }

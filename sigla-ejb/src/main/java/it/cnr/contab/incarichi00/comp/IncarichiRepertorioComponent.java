@@ -1,9 +1,6 @@
 package it.cnr.contab.incarichi00.comp;
 
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
@@ -11,9 +8,6 @@ import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
-import it.cnr.contab.compensi00.tabrif.bulk.Filtro_trattamentoBulk;
-import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
-import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
 import it.cnr.contab.config00.file.bulk.Gruppo_fileBulk;
 import it.cnr.contab.config00.file.bulk.Gruppo_fileHome;
 import it.cnr.contab.config00.file.bulk.Tipo_fileBulk;
@@ -24,6 +18,7 @@ import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
 import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoHome;
+import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraHome;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
@@ -32,8 +27,12 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioHome;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
+import it.cnr.contab.incarichi00.cmis.CMISContrattiAspect;
+import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -58,10 +57,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 
 public class IncarichiRepertorioComponent extends CRUDComponent {
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
@@ -112,13 +113,13 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 			if (oggettobulk instanceof Incarichi_repertorioBulk) {
 				Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)oggettobulk;
 				
-				incarico.setTipiTrattamento(findTipiTrattamento(usercontext, ((Incarichi_repertorioBulk)oggettobulk)));
-
 				Incarichi_repertorioHome incHome = (Incarichi_repertorioHome) getHome( usercontext, Incarichi_repertorioBulk.class );
 				incarico.setIncarichi_repertorio_annoColl( new BulkList( incHome.findIncarichi_repertorio_annoList(usercontext, incarico ) ));
 				incarico.setArchivioAllegati( new BulkList( incHome.findArchivioAllegati( incarico ) ));
 				incarico.setIncarichi_repertorio_varColl( new BulkList( incHome.findIncarichi_repertorio_varList(usercontext, incarico ) ));
-				
+				incarico.setIncarichi_repertorio_rappColl( new BulkList( incHome.findIncarichi_repertorio_rappList(usercontext, incarico ) ));
+				incarico.setIncarichi_repertorio_rapp_detColl( new BulkList( incHome.findIncarichi_repertorio_rapp_detList(usercontext, incarico ) ));
+
 				if (incarico != null && incarico.getPg_repertorio() != null) {
 					incarico.setAssociazioneUO(new it.cnr.jada.bulk.BulkList(incHome.findAssociazioneUO(incarico)));
 					if (UtenteBulk.isSuperUtenteFunzioniIncarichi(usercontext))
@@ -221,139 +222,6 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		}
 	}
 
-	/**
-	  * Viene richiesta la lista dei Tipi di Trattamento legati
-	  * al Tipo di Rapporto selezionato
-	  *
-	  * Pre-post-conditions:
-	  *
-	  * Nome: Tipo di Rapporto NON selezionato
-	  * Pre: Non è stato selezionato il tipo di rapporto
-	  * Post: Non vengono caricati i Tipi Trattamento
-	  *
-	  * Nome: Terzo selezionato
-	  * Pre: E' stato selezionato un tipo di rapporto valido per il conguaglio
-	  * Post: Viene restituita la lista dei Tipi di Trattamento
-	  *		  legati al Tipo di rapporto selezionato
-	  *
-	  * @param	userContext	lo UserContext che ha generato la richiesta
-	  * @param	bulk l'OggettoBulk da completare
-	  * @return	La lista dei Tipi di Trattamento associati al Tipo Rapporto selezionato
-	  *
-	**/
-	public java.util.Collection findTipiTrattamento(UserContext userContext, Incarichi_repertorioBulk incarico) throws ComponentException{
-
-		try{
-			if (incarico.getTipo_rapporto() == null)
-				return null;
-
-				Tipo_trattamentoHome trattHome = (Tipo_trattamentoHome)getHome(userContext,Tipo_trattamentoBulk.class);
-
-				Filtro_trattamentoBulk filtro = new Filtro_trattamentoBulk();
-				filtro.setCdTipoRapporto(incarico.getCd_tipo_rapporto());
-				filtro.setTipoAnagrafico(Tipo_rapportoBulk.ALTRO);
-				if (incarico.getDt_proroga()!=null)
-					filtro.setDataValidita(incarico.getDt_proroga());
-				else
-					filtro.setDataValidita(incarico.getDt_fine_validita());
-				filtro.setFlSenzaCalcoli(false);
-				filtro.setFlDefaultCongualio(false);
-				filtro.setTiIstituzionaleCommerciale(incarico.getTi_istituz_commerc());
-				filtro.setFlIncarico(true);
-
-				if (incarico.getDt_inizio_validita()!=null && incarico.getDt_fine_validita()!=null)
-				{
-					GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
-					GregorianCalendar data_a = (GregorianCalendar) GregorianCalendar.getInstance();
-				
-					data_da.setTime(incarico.getDt_inizio_validita());
-
-					if (incarico.getDt_proroga()!=null)
-						data_a.setTime(incarico.getDt_proroga());
-					else
-						data_a.setTime(incarico.getDt_fine_validita());
-				
-					/*
-					 * Controllo uguaglianza date rimosso perchè gli incarichi sono su più anni ed i compensi 
-					 * provvedono a fare il controllo
-					 **/
-					TerzoHome tHome = (TerzoHome) getHomeCache(userContext).getHome( TerzoBulk.class );
-					TerzoBulk tKey = new TerzoBulk(incarico.getCd_terzo());
-					TerzoBulk t = (TerzoBulk)tHome.findByPrimaryKey(tKey);
-				 
-					AnagraficoHome aHome = (AnagraficoHome) getHomeCache(userContext).getHome( AnagraficoBulk.class );
-					AnagraficoBulk aKey = new AnagraficoBulk(t.getCd_anag());
-					AnagraficoBulk a = (AnagraficoBulk)aHome.findByPrimaryKey(aKey);
-					
-					if (a.getFl_cervellone()&& 
-						!(new Integer(data_da.get(GregorianCalendar.YEAR)).compareTo(a.getAnno_inizio_res_fis().intValue()) < 0) &&
-						!(new Integer(data_da.get(GregorianCalendar.YEAR)).compareTo(a.getAnno_fine_agevolazioni().intValue()) > 0))
-					{
-						filtro.setFlAgevolazioniCervelli(new Boolean(a.getFl_cervellone()));
-					}
-					else
-						filtro.setFlAgevolazioniCervelli(new Boolean(false));
-				}
-				
-				java.util.Collection trattColl = new LinkedList();
-				for (Iterator i=trattHome.findTipiTrattamento(filtro).iterator();i.hasNext();) {
-					Tipo_trattamentoBulk tipoTratt = (Tipo_trattamentoBulk)i.next();
-					boolean trovato = false;
-					for (Iterator j=trattColl.iterator();j.hasNext();) {
-						Tipo_trattamentoBulk tipoTrattColl = (Tipo_trattamentoBulk)j.next();
-						if (tipoTratt.getDs_ti_trattamento().equals(tipoTrattColl.getDs_ti_trattamento()))
-							trovato = trovato;
-						if (tipoTratt.getCd_trattamento().equals("T040")||tipoTratt.getCd_trattamento().equals("T041"))
-							trovato = trovato;
-						
-						if (tipoTratt.getCd_trattamento().equals(tipoTrattColl.getCd_trattamento())) {
-							trovato = true;
-							if (tipoTratt.getDt_ini_validita().after(tipoTrattColl.getDt_ini_validita())) {
-								trattColl.remove(tipoTrattColl);
-								trattColl.add(tipoTratt);
-								break;
-							}
-						}
-					}
-					if (!trovato)
-						trattColl.add(tipoTratt);
-				}
-					
-//				return trattHome.findTipiTrattamento(filtro);
-				return trattColl;
-
-		}catch (it.cnr.jada.persistency.PersistencyException ex){
-			throw handleException(incarico, ex);
-		}
-	}
-	/**
-	  *	Viene caricato da db il TIPO TRATTAMENTO associato alla richiesta di incarico
-	  * e valido in Data Registrazione del conguaglio
-	  *
-	**/
-	private void loadTipoTrattamento(UserContext userContext, Incarichi_repertorioBulk incarico) throws ComponentException {
-
-		try {
-
-			Tipo_trattamentoHome trattHome = (Tipo_trattamentoHome)getHome(userContext, Tipo_trattamentoBulk.class);
-
-			Filtro_trattamentoBulk filtro = new Filtro_trattamentoBulk();
-			filtro.setCdTipoTrattamento(incarico.getCd_trattamento());
-			filtro.setTipoAnagrafico(AnagraficoBulk.ALTRO);
-			if (incarico.getDt_proroga()!=null)
-				filtro.setDataValidita(incarico.getDt_proroga());
-			else
-				filtro.setDataValidita(incarico.getDt_fine_validita());
-			filtro.setFlSenzaCalcoli(false);
-			filtro.setFlDefaultCongualio(false);
-			filtro.setTiIstituzionaleCommerciale(incarico.getTi_istituz_commerc());
-			filtro.setFlIncarico(true);
-			incarico.setTipo_trattamento(trattHome.findTipoTrattamentoValido(filtro));
-
-		}catch(it.cnr.jada.persistency.PersistencyException ex){
-			throw handleException(ex);
-		}
-	}
 	public it.cnr.jada.persistency.sql.SQLBuilder selectUnita_organizzativaByClause(UserContext userContext, Incarichi_repertorioBulk incarico, Unita_organizzativaBulk uo, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
 		SQLBuilder sqlStruttura = getHome(userContext, V_struttura_organizzativaBulk.class).createSQLBuilder();
@@ -488,11 +356,6 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 			if (incarico.getCd_terzo()!=null) {
 				incarico.setV_terzo(loadVTerzo(userContext,incarico));
 				completaTerzo(userContext, incarico);
-			}
-
-			if (incarico.getCd_trattamento()!=null) {
-				incarico.setTipiTrattamento(findTipiTrattamento(userContext, incarico));
-				loadTipoTrattamento(userContext, incarico);
 			}
 			getHomeCache(userContext).fetchAll(userContext);
 		}
@@ -788,7 +651,9 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 				Incarichi_proceduraHome proceduraHome = (Incarichi_proceduraHome)getHome(usercontext, Incarichi_proceduraBulk.class);
 			    Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)proceduraHome.findByPrimaryKey(incarico.getIncarichi_procedura());
 
-			    Incarichi_parametriBulk parametri = Utility.createIncarichiProceduraComponentSession().getIncarichiParametri(usercontext, procedura);
+				getHomeCache(usercontext).fetchAll(usercontext);
+
+				Incarichi_parametriBulk parametri = Utility.createIncarichiProceduraComponentSession().getIncarichiParametri(usercontext, procedura);
 
 			    if (incarico.getDt_stipula()==null)
 					throw handleException( new ApplicationException( "Non \350 possibile effettuare l'operazione perchè non risulta inserita la data di stipula del contratto.") );
@@ -825,6 +690,20 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 					}
 				}
 
+				if (incarico.getCurriculumVincitore()==null) {
+					if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) { 
+						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+							//Istanzio la classe per riempire tipo_archivioKeys
+							new Incarichi_procedura_archivioBulk(); 
+						}
+	
+						if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CURRICULUM_VINCITORE).toString()+"\".");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CURRICULUM_VINCITORE).toString()+"\".");
+					}
+				}
+
 				if (incarico.getDecretoDiNomina()==null) {
 					if (parametri!=null && parametri.getAllega_decreto_nomina()!=null && parametri.getAllega_decreto_nomina().equals("Y")) { 
 						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
@@ -854,19 +733,62 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 				procedura.setArchivioAllegati(new BulkList(proceduraHome.findArchivioAllegati(procedura)));
 				
 			    if (procedura.getDecisioneAContrattare()==null) {
+					if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+						//Istanzio la classe per riempire tipo_archivioKeys
+						new Incarichi_procedura_archivioBulk(); 
+					}
 					if (parametri==null || parametri.getAllega_decisione_ctr()==null || parametri.getAllega_decisione_ctr().equals("Y")) 
 						throw new it.cnr.jada.comp.ApplicationException("Allegare alla \"Procedura di conferimento incarico\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_DECISIONE_A_CONTRATTARE).toString()+"\".");
 			    }
 
-			    incarico.setStato(isDaInviareCorteConti?Incarichi_repertorioBulk.STATO_INVIATO:Incarichi_repertorioBulk.STATO_DEFINITIVO);
+			    if (procedura.isDichiarazioneContraenteRequired()) {
+				    //Controllo che sia stata inserita la dichiarazione del contraente....almeno quella del primo anno di validità dell'incarico 
+				    boolean existRapportoAnnoStipula = false;
+					GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
+					data_da.setTime(incarico.getDt_stipula());
+					if (incarico.getIncarichi_repertorio_rappColl()!=null && !incarico.getIncarichi_repertorio_rappColl().isEmpty()) {
+						for (Iterator i = incarico.getIncarichi_repertorio_rappColl().iterator(); i.hasNext();) {
+							Incarichi_repertorio_rappBulk rapporto = (Incarichi_repertorio_rappBulk) i.next();
+							if (!rapporto.isAnnullato() && rapporto.getAnno_competenza().equals(data_da.get(java.util.Calendar.YEAR)))
+								existRapportoAnnoStipula = true;
+						}
+					}
+					if (!existRapportoAnnoStipula) {
+						if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+							throw new it.cnr.jada.comp.ApplicationException("Inserire la dichiarazione dell'anno "+data_da.get(java.util.Calendar.YEAR)+", anno di stipula del contratto, resa dal terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" sui rapporti stipulati con altri enti.");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Inserire la dichiarazione dell'anno "+data_da.get(java.util.Calendar.YEAR)+", anno di stipula del contratto, resa dal terzo sui rapporti stipulati con altri enti.");
+					}
+				}
+
+				if (procedura.getTipo_attivita_fp()==null && procedura.isProceduraForIncarichi())
+					throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione 'Dati Perla', l'attività economica dell'incarico necessaria per la comunicazione dei dati al sistema informativo PERLA del Ministero della Funzione Pubblica.");
+				if (procedura.getFl_applicazione_norma()==null)
+					throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione '"+
+							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', se l'incarico è stato conferito in applicazione di una specifica norma.");
+				if (procedura.isApplicazioneNormaAttiva()){
+					if (procedura.getCd_tipo_norma_perla()==null)
+						throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione '"+
+							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', il tipo di norma in base al quale è stato conferito l'incarico.");
+					else if (procedura.getCd_tipo_norma_perla().equals("999") && procedura.getDs_libera_norma_perla()==null)
+						throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione '"+
+							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', una breve descrizione della norma in base al quale è stato conferito l'incarico.");
+				}
+				if (procedura.getProcedura_amministrativa_beneficiario()==null || procedura.getProcedura_amministrativa_beneficiario().getCd_proc_amm()==null)
+					throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione '"+
+							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', la modalità di individuazione del beneficiario.");
+					
+				incarico.setStato(isDaInviareCorteConti?Incarichi_repertorioBulk.STATO_INVIATO:Incarichi_repertorioBulk.STATO_DEFINITIVO);
 			    incarico.setToBeUpdated();
 			    updateBulk(usercontext, incarico);
+
+			    salvaDefinitivoCMIS(usercontext, incarico);
 				
 			    procedura.setIncarichi_repertorioColl(new BulkList( proceduraHome.findIncarichi_repertorioList(usercontext, procedura) ));
 		    	Integer contadef = 0, containv = 0;
 				for (Iterator i=procedura.getIncarichi_repertorioColl().iterator();i.hasNext();) {
 					Incarichi_repertorioBulk incaricoColl = (Incarichi_repertorioBulk)i.next();
-		    		if ( incaricoColl.isIncaricoDefinitivo() || incaricoColl.isIncaricoChiuso() ) 
+		    		if ( incaricoColl.isIncaricoDefinitivo() || incaricoColl.isIncaricoChiuso() )
 		    			contadef=contadef+1;
 		    		if ( incaricoColl.isIncaricoInviatoCorteConti() ) 
 		    			containv=containv+1;
@@ -876,6 +798,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 						procedura.setStato(Incarichi_proceduraBulk.STATO_DEFINITIVO);
 						procedura.setToBeUpdated();
 						updateBulk(usercontext, procedura);
+						Utility.createIncarichiProceduraComponentSession().salvaDefinitivoCMIS(usercontext, procedura);
 					}
 				} else if (procedura.getNr_contratti().equals(contadef+containv)) {
 					if (!procedura.isProceduraInviataCorteConti()) { 
@@ -946,6 +869,8 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 				incarico.setToBeUpdated();
 				updateBulk(usercontext, incarico);
 				
+				annullaDefinitivoCMIS(usercontext, incarico);
+				
 				Incarichi_proceduraHome proceduraHome = (Incarichi_proceduraHome)getHome(usercontext, Incarichi_proceduraBulk.class);
 			    Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)proceduraHome.findByPrimaryKey(incarico.getIncarichi_procedura());
 				if (procedura.isProceduraDefinitiva()) {
@@ -955,6 +880,8 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 						procedura.setStato(Incarichi_proceduraBulk.STATO_PUBBLICATA);
 				    procedura.setToBeUpdated();
 				    updateBulk(usercontext, procedura);
+
+					Utility.createIncarichiProceduraComponentSession().annullaDefinitivoCMIS(usercontext, procedura);
 				}
 			}
 			else
@@ -1061,5 +988,88 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		} catch (SQLException e) {
 			throw new ComponentException(e);
 		}
-	}	
+	}
+	public void salvaDefinitivoCMIS(UserContext userContext, Incarichi_repertorioBulk incarico_repertorio) throws ComponentException{
+		List<CmisObject> nodeAddAspect = new ArrayList<CmisObject>();
+		List<CmisObject> nodeAddConsumer = new ArrayList<CmisObject>();
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		try{
+			CmisObject nodeIncarico = contrattiService.getNodeByPath(incarico_repertorio.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeIncarico!=null && !contrattiService.hasAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				contrattiService.addAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				contrattiService.addConsumerToEveryone(nodeIncarico);
+				nodeAddAspect.add(nodeIncarico);
+				nodeAddConsumer.add(nodeIncarico);
+	
+				CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_repertorio.getIncarichi_procedura().getCMISFolder().getCMISPath(contrattiService));
+				if (nodeProcedura!=null)
+					contrattiService.addConsumerToEveryone(nodeProcedura);
+			}
+			
+			BulkList listArchiviFile = new BulkList();
+			listArchiviFile.addAll(incarico_repertorio.getArchivioAllegati());
+			listArchiviFile.addAll(incarico_repertorio.getIncarichi_repertorio_varColl());
+			listArchiviFile.addAll(incarico_repertorio.getIncarichi_repertorio_rappColl());
+			
+			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
+				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
+				if (allegato.getCms_node_ref()!=null) {
+					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && !contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()) &&
+						!contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+						contrattiService.addAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+						nodeAddAspect.add(nodeAllegato);
+					}
+				}
+			}
+		}
+		catch( Exception e )
+		{
+			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+			for (CmisObject node : nodeAddAspect)
+				contrattiService.removeAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			for (CmisObject node : nodeAddConsumer)
+				contrattiService.removeConsumerToEveryone(node);
+			throw new ApplicationException(e.getMessage());
+		}		
+	}
+	public void annullaDefinitivoCMIS(UserContext userContext, Incarichi_repertorioBulk incarico_repertorio) throws ComponentException{
+		List<CmisObject> nodeRemoveAspect = new ArrayList<CmisObject>();
+		List<CmisObject> nodeRemoveConsumer = new ArrayList<CmisObject>();
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		try{
+			CmisObject nodeIncarico = contrattiService.getNodeByPath(incarico_repertorio.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeIncarico!=null && contrattiService.hasAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				contrattiService.removeAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				contrattiService.removeConsumerToEveryone(nodeIncarico);
+				nodeRemoveAspect.add(nodeIncarico);
+				nodeRemoveConsumer.add(nodeIncarico);
+			}
+			
+			BulkList listArchiviFile = new BulkList();
+			listArchiviFile.addAll(incarico_repertorio.getArchivioAllegati());
+			listArchiviFile.addAll(incarico_repertorio.getIncarichi_repertorio_varColl());
+			listArchiviFile.addAll(incarico_repertorio.getIncarichi_repertorio_rappColl());
+			
+			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
+				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
+				if (allegato.getCms_node_ref()!=null) {
+					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+						contrattiService.removeAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+						nodeRemoveAspect.add(nodeIncarico);
+					}
+				}
+			}
+		}
+		catch( Exception e )
+		{
+			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+			for (CmisObject node : nodeRemoveAspect)
+				contrattiService.addAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			for (CmisObject node : nodeRemoveConsumer)
+				contrattiService.addConsumerToEveryone(node);
+			throw new ApplicationException(e.getMessage());
+		}		
+	}
 }

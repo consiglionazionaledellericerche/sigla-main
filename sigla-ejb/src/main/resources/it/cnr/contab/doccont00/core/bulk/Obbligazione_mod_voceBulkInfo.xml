@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_cds"
 		property="obbligazione_modifica.cd_cds"
@@ -20,35 +20,30 @@
 		label="Numero Modifica" />
 	<fieldProperty
 		name="ti_gestione"
-		property="voce_f.ti_gestione"
+		property="ti_gestione"
 		maxLength="1"
 		inputSize="1"
 		inputType="TEXT"
 		label="Tipo Gestione" />
 	<fieldProperty
 		name="ti_appartenenza"
-		property="voce_f.ti_appartenenza"
+		property="ti_appartenenza"
 		maxLength="1"
 		inputSize="1"
 		inputType="TEXT"
 		label="Tipo Appartenenza" />
 	<fieldProperty
 		name="cd_voce"
-		property="voce_f.cd_voce"
+		property="cd_voce"
 		inputType="ROTEXT"
 		label="Capitolo" />
 	<fieldProperty
 		name="ds_voce"
-		property="voce_f.ds_voce"
+		property="ds_voce"
 		maxLength="100"
 		inputSize="70"
 		inputType="ROTEXT"
 		label="Descrizione Voce" />
-	<fieldProperty
-		name="find_voce"
-		property="voce_f"
-		inputType="SEARCHTOOL"
-		label="Voce" />
 	<fieldProperty
 		name="cd_centro_responsabilita"
 		property="linea_attivita.cd_centro_responsabilita"
@@ -98,8 +93,6 @@
 		name="cd_voce" />
 	<formFieldProperty
 		name="ds_voce" />
-	<formFieldProperty
-		name="find_voce" />
 	<formFieldProperty
 		name="cd_centro_responsabilita" />
 	<formFieldProperty

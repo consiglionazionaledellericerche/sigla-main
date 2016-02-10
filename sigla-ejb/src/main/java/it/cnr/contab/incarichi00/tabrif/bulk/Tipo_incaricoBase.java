@@ -20,6 +20,9 @@ public class Tipo_incaricoBase extends Tipo_incaricoKey implements Keyed {
 //    CD_TIPO_RAPPORTO VARCHAR(10) NOT NULL
 	private java.lang.String cd_tipo_rapporto;
 
+//    TIPO_ASSOCIAZIONE VARCHAR(3) NOT NULL
+	private java.lang.String tipo_associazione;
+
 	public Tipo_incaricoBase() {
 		super();
 	}
@@ -49,6 +52,12 @@ public class Tipo_incaricoBase extends Tipo_incaricoKey implements Keyed {
 	}
 	public void setCd_tipo_rapporto(java.lang.String cd_tipo_rapporto) {
 		this.cd_tipo_rapporto = cd_tipo_rapporto;
+	}
+	public java.lang.String getTipo_associazione() {
+		return tipo_associazione;
+	}
+	public void setTipo_associazione(java.lang.String tipo_associazione) {
+		this.tipo_associazione = tipo_associazione;
 	}
 	public java.math.BigDecimal getPrc_incremento_var() {
 		return prc_incremento_var;

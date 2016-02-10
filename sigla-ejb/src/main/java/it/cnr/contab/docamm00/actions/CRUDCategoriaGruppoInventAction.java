@@ -18,26 +18,7 @@ public class CRUDCategoriaGruppoInventAction extends it.cnr.jada.util.action.CRU
 public CRUDCategoriaGruppoInventAction() {
 	super();
 }
-/**
-* Inizializza i valori per una ricerca dell'elemento voce
-*
-* @param context it.cnr.jada.action.ActionContext
-* @param model it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk
-*
-* @return it.cnr.jada.action.Forward
-*/
-public Forward doBlankSearchVoce_f(ActionContext context, Categoria_gruppo_inventBulk model) {
-	
-	model.setVoce_f(new Elemento_voceBulk());
-	//appartenenza CDS
-	model.setAss_voce_f(new Categoria_gruppo_voceBulk());
-	model.getAss_voce_f().setVoce_f(new Elemento_voceBulk());
-	model.getAss_voce_f().setTi_appartenenza("D");
-	model.getAss_voce_f().setTi_gestione("S");
-	model.getAss_voce_f().setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
 
-	return context.findDefaultForward();
-}
 /**
 * Controllo effettuato dopo la selezione del nodo padre (categoria)
 * Creation date: (27/11/2001 17.04.56)
@@ -74,16 +55,6 @@ public it.cnr.jada.action.Forward doBringBackSearchFind_nodo_padre(ActionContext
             cgi.setNodoPadre(cgiPadre);
             //----cgi.setVoce_f(cgiPadre.getVoce_f());
 
-            //cerca la voce_f dall'associativa
-            CRUDCategoriaGruppoInventBP bp= (CRUDCategoriaGruppoInventBP) getBusinessProcess(context);
-            try {
-                CategoriaGruppoInventComponentSession comp= (CategoriaGruppoInventComponentSession) bp.createComponentSession();
-                cgi.setVoce_f(comp.findElementoVoce(context.getUserContext(), cgi));
-            } catch (it.cnr.jada.comp.ComponentException e) {
-                bp.handleException(e);
-            } catch (BusinessProcessException e) {
-                bp.handleException(e);
-            }
         }
 
         return context.findDefaultForward();

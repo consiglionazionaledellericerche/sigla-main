@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_programma_visiteKey">
+	<defaultColumnMap
+		tableName="BLT_PROGRAMMA_VISITE">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="cdAccordo"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cdProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_RECORD"
+			propertyName="pgRecord"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdAccordo"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdProgetto"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgRecord"
+		partOfOid="true" />
+</SQLPersistentInfo>

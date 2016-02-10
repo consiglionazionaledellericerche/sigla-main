@@ -14,7 +14,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Tipo Missione</title>
+<title>Ambito Missione</title>
 </head>
 <body class="Form">
 
@@ -31,6 +31,10 @@
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"ds_tipo_missione"); %></td>
 	<td><% bp.getController().writeFormInput(out,"ds_tipo_missione"); %></td>
+  </tr>
+   <tr>
+	<td><% bp.getController().writeFormLabel(out,"fl_valido"); %></td>
+	<td><% bp.getController().writeFormInput(out,"fl_valido"); %></td>
   </tr>
 </table>
 

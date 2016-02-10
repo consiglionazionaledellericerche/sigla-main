@@ -3,11 +3,12 @@
  * Date 05/11/2007
  */
 package it.cnr.contab.incarichi00.bulk;
-import java.util.List;
-
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
+
+import java.util.List;
 public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 //    ESERCIZIO DECIMAL(4,0) NOT NULL
 	private java.lang.Integer esercizio;
@@ -15,6 +16,9 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 //    PG_REPERTORIO DECIMAL(10,0) NOT NULL
 	private java.lang.Long pg_repertorio;
  
+//    CD_TIPO_ATTIVITA VARCHAR(5) NOT NULL
+	private java.lang.String cd_tipo_attivita;
+
 //    CD_CDS VARCHAR(30) NOT NULL
 	private java.lang.String cd_cds;
  
@@ -30,9 +34,21 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 //  non esiste su DB, verrà riempito con la Sede del CDS
 	private java.lang.String sede;
 
-//    nominativo VARCHAR(100)
-	private java.lang.String nominativo;
- 
+//    terzo_codice_fiscale VARCHAR(20) NULL
+	private java.lang.String benef_codice_fiscale;
+
+//    terzo_partita_iva VARCHAR(20) NULL
+	private java.lang.String benef_partita_iva;
+	
+//    benef_denominazione_sede VARCHAR(100)
+	private java.lang.String benef_denominazione_sede;
+
+//    resp_denominazione_sede VARCHAR(100)
+	private java.lang.String resp_denominazione_sede;
+
+//    firm_denominazione_sede VARCHAR(100)
+	private java.lang.String firm_denominazione_sede;
+
 //    OGGETTO VARCHAR(1000) NOT NULL
 	private java.lang.String oggetto;
  
@@ -63,6 +79,12 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 //    PG_PROCEDURA DECIMAL(10,0) NOT NULL
 	private java.lang.Long pg_procedura;
 
+//    DS_TIPO_NORMA VARCHAR NULL
+	private java.lang.String ds_tipo_norma;
+
+//    DS_PROC_AMM VARCHAR NULL
+	private java.lang.String ds_proc_amm;
+
 //    non esiste su DB, contiene l'anagrafica del terzo dell'incarico
 	private AnagraficoBulk anagraficoTerzo;
 
@@ -74,6 +96,9 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 
 //  non esiste su DB, contiene l'ultima variazione valida dell'incarico
 	private Incarichi_repertorio_varBulk incaricoVariazione;
+
+//  non esiste su DB, contiene i dettagli degli altri rapporti avuto dal contraente con altre PA
+	private BulkList incarichi_repertorio_rapp_detColl = new BulkList();
 
 	public java.lang.Integer getEsercizio() {
 		return esercizio;
@@ -134,12 +159,6 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 	}
 	public void setDt_fine_validita(java.sql.Timestamp dt_fine_validita)  {
 		this.dt_fine_validita=dt_fine_validita;
-	}
-	public java.lang.String getNominativo() {
-		return nominativo;
-	}
-	public void setNominativo(java.lang.String nominativo) {
-		this.nominativo = nominativo;
 	}
 	public java.lang.String getSede() {
 		return sede;
@@ -214,5 +233,59 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 	}
 	public void setIncaricoRepertorio(Incarichi_repertorioBulk incaricoRepertorio) {
 		this.incaricoRepertorio = incaricoRepertorio;
+	}
+	public BulkList getIncarichi_repertorio_rapp_detColl() {
+		return incarichi_repertorio_rapp_detColl;
+	}
+	public void setIncarichi_repertorio_rapp_detColl(BulkList incarichi_repertorio_rapp_detColl) {
+		this.incarichi_repertorio_rapp_detColl = incarichi_repertorio_rapp_detColl;
+	}
+	public java.lang.String getBenef_codice_fiscale() {
+		return benef_codice_fiscale;
+	}
+	public void setBenef_codice_fiscale(java.lang.String benef_codice_fiscale) {
+		this.benef_codice_fiscale = benef_codice_fiscale;
+	}
+	public java.lang.String getBenef_partita_iva() {
+		return benef_partita_iva;
+	}
+	public void setBenef_partita_iva(java.lang.String benef_partita_iva) {
+		this.benef_partita_iva = benef_partita_iva;
+	}
+	public java.lang.String getBenef_denominazione_sede() {
+		return benef_denominazione_sede;
+	}
+	public void setBenef_denominazione_sede(java.lang.String benef_denominazione_sede) {
+		this.benef_denominazione_sede = benef_denominazione_sede;
+	}
+	public java.lang.String getResp_denominazione_sede() {
+		return resp_denominazione_sede;
+	}
+	public void setResp_denominazione_sede(java.lang.String resp_denominazione_sede) {
+		this.resp_denominazione_sede = resp_denominazione_sede;
+	}
+	public java.lang.String getFirm_denominazione_sede() {
+		return firm_denominazione_sede;
+	}
+	public void setFirm_denominazione_sede(java.lang.String firm_denominazione_sede) {
+		this.firm_denominazione_sede = firm_denominazione_sede;
+	}
+	public java.lang.String getDs_tipo_norma() {
+		return ds_tipo_norma;
+	}
+	public void setDs_tipo_norma(java.lang.String ds_tipo_norma) {
+		this.ds_tipo_norma = ds_tipo_norma;
+	}
+	public java.lang.String getDs_proc_amm() {
+		return ds_proc_amm;
+	}
+	public void setDs_proc_amm(java.lang.String ds_proc_amm) {
+		this.ds_proc_amm = ds_proc_amm;
+	}
+	public java.lang.String getCd_tipo_attivita() {
+		return cd_tipo_attivita;
+	}
+	public void setCd_tipo_attivita(java.lang.String cd_tipo_attivita) {
+		this.cd_tipo_attivita = cd_tipo_attivita;
 	}
 }

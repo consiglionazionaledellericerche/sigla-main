@@ -1,5 +1,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+
 /**
  * Insert the type's description here.
  * Creation date: (23/01/2003 11.57.08)
@@ -17,7 +19,6 @@ public class Stampa_registro_annotazione_entrate_pgiroBulk extends AccertamentoB
 
 	private boolean isUOForPrintEnabled;
 	private boolean isCdsForPrintEnabled;
-
 	private boolean stampa_cds;
 	private boolean stampa_cnr;
 /**
@@ -36,6 +37,7 @@ public Stampa_registro_annotazione_entrate_pgiroBulk() {
 public Stampa_registro_annotazione_entrate_pgiroBulk(String cd_cds, Integer esercizio, Integer esercizio_originale, Long pg_accertamento) {
 	super(cd_cds, esercizio, esercizio_originale, pg_accertamento);
 }
+
 /**
  * Insert the method's description here.
  * Creation date: (20/01/2003 16.50.12)
@@ -43,7 +45,7 @@ public Stampa_registro_annotazione_entrate_pgiroBulk(String cd_cds, Integer eser
  */
 public String getCdCdsForPrint() {
 
-	return "999";
+	return getCdsEnte().getCd_unita_organizzativa();
 }
 /**
  * Insert the method's description here.

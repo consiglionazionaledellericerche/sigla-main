@@ -13,7 +13,10 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaHome;
@@ -59,14 +62,24 @@ public class ObbligazioneModificaComponent extends it.cnr.jada.comp.CRUDComponen
 				// riempiamo le descrizioni
 				for (Iterator it = obbMod.getObbligazione_mod_voceColl().iterator();it.hasNext();) {
 					Obbligazione_mod_voceBulk obbModVoce = (Obbligazione_mod_voceBulk) it.next();
-					Voce_fBulk voce =
-						new Voce_fBulk(
-								obbModVoce.getCd_voce(),
-								obbModVoce.getEsercizio(),
-								obbModVoce.getTi_appartenenza(),
-								obbModVoce.getTi_gestione());
-					voce = (Voce_fBulk) getHome(usercontext, voce).findByPrimaryKey(voce);
-					obbModVoce.setVoce_f(voce);
+					IVoceBilancioBulk voce = null; 
+					if (((Parametri_cnrHome)getHome(usercontext, Parametri_cnrBulk.class)).isNuovoPdg(usercontext)) {
+						voce = new Elemento_voceBulk(
+										obbModVoce.getCd_voce(),
+										obbModVoce.getEsercizio(),
+										obbModVoce.getTi_appartenenza(),
+										obbModVoce.getTi_gestione());
+						voce = (Elemento_voceBulk) getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(voce);
+					} else {
+						voce = new Voce_fBulk(
+									obbModVoce.getCd_voce(),
+									obbModVoce.getEsercizio(),
+									obbModVoce.getTi_appartenenza(),
+									obbModVoce.getTi_gestione());
+						voce = (Voce_fBulk) getHome(usercontext, Voce_fBulk.class).findByPrimaryKey(voce);
+					}
+					obbModVoce.setVoce(voce);
+
 					WorkpackageBulk linea =
 						new WorkpackageBulk(
 								obbModVoce.getCd_centro_responsabilita(),
@@ -74,7 +87,6 @@ public class ObbligazioneModificaComponent extends it.cnr.jada.comp.CRUDComponen
 					linea = (WorkpackageBulk) getHome(usercontext, linea).findByPrimaryKey(linea);
 					obbModVoce.setLinea_attivita(linea);
 				}
-					
 			}
 			return oggettobulk;
 		} catch( Exception e ) {
@@ -147,14 +159,24 @@ public class ObbligazioneModificaComponent extends it.cnr.jada.comp.CRUDComponen
 								key.getCd_voce(),
 								key.getCd_centro_responsabilita(),
 								key.getCd_linea_attivita());
-					Voce_fBulk voce =
-						new Voce_fBulk(
+
+					IVoceBilancioBulk voce = null;
+					if (((Parametri_cnrHome)getHome(aUC, Parametri_cnrBulk.class)).isNuovoPdg(aUC)) {
+						voce = new Elemento_voceBulk(
 								key.getCd_voce(),
 								obbMod.getEsercizio(),
 								key.getTi_appartenenza(),
 								key.getTi_gestione());
-					voce = (Voce_fBulk) getHome(aUC, voce).findByPrimaryKey(voce);
-					obbModVoce.setVoce_f(voce);
+						voce = (Elemento_voceBulk) getHome(aUC, Elemento_voceBulk.class).findByPrimaryKey(voce);
+					} else {
+						voce = new Voce_fBulk(
+								key.getCd_voce(),
+								obbMod.getEsercizio(),
+								key.getTi_appartenenza(),
+								key.getTi_gestione());
+						voce = (Voce_fBulk) getHome(aUC, Voce_fBulk.class).findByPrimaryKey(voce);
+					}
+					obbModVoce.setVoce(voce);
 					WorkpackageBulk linea =
 						new WorkpackageBulk(
 								key.getCd_centro_responsabilita(),

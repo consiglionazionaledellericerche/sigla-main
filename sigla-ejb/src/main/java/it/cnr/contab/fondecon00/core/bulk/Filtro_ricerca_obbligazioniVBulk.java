@@ -1,6 +1,10 @@
 package it.cnr.contab.fondecon00.core.bulk;
 
+import java.util.Dictionary;
+
 import it.cnr.contab.config00.pdcfin.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 
 public class Filtro_ricerca_obbligazioniVBulk extends it.cnr.jada.bulk.OggettoBulk {
 
@@ -17,6 +21,16 @@ public class Filtro_ricerca_obbligazioniVBulk extends it.cnr.jada.bulk.OggettoBu
 	private java.lang.String cd_unita_organizzativa;
 	private java.lang.Boolean fl_associate = null;
 	private Fondo_economaleBulk fondo = null;
+	private java.lang.String tipo_obbligazione;
+	public java.lang.String getTipo_obbligazione() {
+		return tipo_obbligazione;
+	}
+
+	public void setTipo_obbligazione(java.lang.String tipo_obbligazione) {
+		this.tipo_obbligazione = tipo_obbligazione;
+	}
+
+	public final static Dictionary competenzaResiduoKeys = ObbligazioneBulk.competenzaResiduoKeys;
 	/**
 	 * Filtro_ricerca_obbligazioniVBulk constructor comment.
 	 */
@@ -113,9 +127,10 @@ public java.lang.Long getNr_scadenza() {
 		setUser(context.getUserInfo().getUserid());
 		setCd_unita_organizzativa(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
 		setData_scadenziario(getCurrentDate());
-		setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		setEsercizio_ori_obbligazione(null);
 		setNr_obbligazione(null);
+		
 		return this;
 	}
 

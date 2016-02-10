@@ -1,14 +1,22 @@
 package it.cnr.contab.doccont00.ejb;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.comp.DistintaCassiereComponent;
+import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
+import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_logsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.contab.doccont00.intcass.xmlbnl.*;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.RemoteIterator;
 @Stateless(name="CNRDOCCONT00_EJB_DistintaCassiereComponentSession")
 public class DistintaCassiereComponentSessionBean extends it.cnr.jada.ejb.CRUDDetailComponentSessionBean implements DistintaCassiereComponentSession {
@@ -237,6 +245,155 @@ public void caricaFile(UserContext param0, java.io.File param1) throws Component
 	try {
 		((DistintaCassiereComponent)componentObj).caricaFile(param0,param1);
 		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public ExtCassiereCdsBulk recuperaCodiciCdsCassiere(UserContext param0,
+		Distinta_cassiereBulk param1) throws ComponentException,
+		PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk result = ((DistintaCassiereComponent)componentObj).recuperaCodiciCdsCassiere(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public BancaBulk recuperaIbanUo (UserContext param0,Unita_organizzativaBulk param1) throws ComponentException,PersistencyException {
+	try {
+		BancaBulk result = ((DistintaCassiereComponent)componentObj).recuperaIbanUo(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+	
+}
+public Reversale recuperaDatiReversaleFlusso(UserContext param0,V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException{ 
+	try {
+		Reversale result = ((DistintaCassiereComponent)componentObj).recuperaDatiReversaleFlusso(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public Mandato recuperaDatiMandatoFlusso(UserContext param0,V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException{ 
+	try {
+		Mandato result = ((DistintaCassiereComponent)componentObj).recuperaDatiMandatoFlusso(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public List dettagliDistinta(UserContext param0,
+		Distinta_cassiereBulk param1, String param2)
+		throws PersistencyException, ComponentException, RemoteException {
+	try {
+		List result = ((DistintaCassiereComponent)componentObj).dettagliDistinta(param0,param1,param2);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public Distinta_cassiereBulk inviaDistinta(UserContext param0,
+		Distinta_cassiereBulk param1) throws ComponentException,
+		RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		Distinta_cassiereBulk result=((DistintaCassiereComponent)componentObj).inviaDistinta(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public List<V_mandato_reversaleBulk> findMandatiCollegati(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		List<V_mandato_reversaleBulk> result = ((DistintaCassiereComponent)componentObj).findMandatiCollegati(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public List<V_mandato_reversaleBulk> findReversaliCollegate(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		List<V_mandato_reversaleBulk> result = ((DistintaCassiereComponent)componentObj).findReversaliCollegate(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;

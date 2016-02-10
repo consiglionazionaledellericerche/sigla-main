@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="cd_ti_pasto"
@@ -81,6 +81,35 @@
 		inputType="ROTEXT"
 		label="Nazione" />
 /***********************************/
+/************ AREA ESTERA **************/
+	<fieldProperty
+		name="find_area_estera"
+		property="rifAreePaesiEsteri"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFindRifAreePaesiEsteri"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Area Estera" />
+	<fieldProperty
+		name="cd_area_estera"
+		property="cd_area_estera"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Area Estera" />
+	<fieldProperty
+		name="ds_area_estera"
+		property="rifAreePaesiEsteri.ds_area_estera"
+		inputSize="100"
+		inputType="ROTEXT"
+		label="Descrizione Area estera" />		
 /************* DIVISA **************/
 	<fieldProperty
 		name="find_divisa"
@@ -98,6 +127,7 @@
 		inputSize="10"
 		inputType="TEXT"
 		nullable="false"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		readonlyProperty="RODivisa"
 		enabledOnInsert="true"
 		enabledOnEdit="true"
@@ -166,6 +196,9 @@
 	<formFieldProperty name="limite_max_pasto" />
 	<formFieldProperty name="dataFineValidita" />
 	<formFieldProperty name="dt_cancellazione" />
+	<formFieldProperty name="cd_area_estera" />
+	<formFieldProperty name="ds_area_estera" />
+	<formFieldProperty name="find_area_estera" />
  
 	<columnFieldProperty name="cd_ti_pasto" />
 	<columnFieldProperty name="rif_inquadramento" />
@@ -178,6 +211,8 @@
 	<columnFieldProperty name="dt_inizio_validita" />
 	<columnFieldProperty name="dataFineValidita" />
 	<columnFieldProperty name="dt_cancellazione" />
+	<columnFieldProperty name="cd_area_estera" />
+	<columnFieldProperty name="ds_area_estera" />
 
 	<findFieldProperty name="cd_ti_pasto" />
 	<findFieldProperty name="rif_inquadramento" />
@@ -188,5 +223,6 @@
 	<findFieldProperty name="dt_inizio_validita" />
 	<findFieldProperty name="dt_fine_validita" />
 	<findFieldProperty name="dt_cancellazione" />
+	<findFieldProperty name="cd_area_estera" />	
 
 </bulkInfo>

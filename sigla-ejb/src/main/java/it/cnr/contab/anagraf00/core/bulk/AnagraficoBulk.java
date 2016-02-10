@@ -31,6 +31,7 @@ public class AnagraficoBulk extends AnagraficoBase {
 	public final static Dictionary SESSO;
 	public final static Dictionary ti_titoloStudioKeys;
 
+	private boolean notGestoreIstat;
 	private ComuneBulk  comune_fiscale;
 	private ComuneBulk  comune_nascita;
 	private NazioneBulk nazionalita;
@@ -873,6 +874,9 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 			throw new ValidationException("La Data di nascita non può essere antecedente alla data odierna");
 		if (getFl_cervellone() == true && getDt_inizio_res_italia()==null)
 			throw new ValidationException("Inserire la Data di Inizio residenza/domicilio in italia");
+		if (getFl_abilita_diaria_miss_est() == true && (getDt_inizio_diaria_miss_est()==null || getDt_fine_diaria_miss_est()==null))
+			throw new ValidationException("Inserire la Data di inizio e fine autorizzazione ad avere la diaria per particolari missioni estere");
+		
 	}
 	
 	public void setTipologia_istat(it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatBulk newTipologia_istat) {
@@ -955,5 +959,11 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 	}
 	public Dictionary getTi_titoloStudioKeys() {
 		return ti_titoloStudioKeys;
+	}
+	public boolean isNotGestoreIstat() {
+		return notGestoreIstat;
+	}
+	public void setNotGestoreIstat(boolean notGestoreIstat) {
+		this.notGestoreIstat = notGestoreIstat;
 	}
 }

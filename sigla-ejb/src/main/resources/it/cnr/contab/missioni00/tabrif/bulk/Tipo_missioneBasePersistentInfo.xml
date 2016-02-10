@@ -12,6 +12,13 @@
 			columnSize="100"
 			nullable="false" />
 		<columnMapping
+			columnName="FL_VALIDO"
+			propertyName="fl_valido"
+		  sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
 			sqlTypeName="DECIMAL"
@@ -44,6 +51,8 @@
 	</defaultColumnMap>
 	<persistentProperty
 		name="ds_tipo_missione" />
+	<persistentProperty
+		name="fl_valido" />	
 	<persistentProperty
 		name="pg_ver_rec" />
 	<persistentProperty

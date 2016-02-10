@@ -45,7 +45,7 @@ public SQLBuilder selectBancaFor(
 	Integer codiceTerzo) {
 
 	SQLBuilder sql = createSQLBuilder();
-
+	sql.setOrderBy("pg_banca",it.cnr.jada.util.OrderConstants.ORDER_DESC);
 	sql.addSQLClause("AND", "BANCA.CD_TERZO", sql.EQUALS, codiceTerzo);
 	sql.addSQLClause("AND", "BANCA.TI_PAGAMENTO", sql.EQUALS, rifModPag.getTi_pagamento());
 	sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", sql.EQUALS, "N");
@@ -55,8 +55,9 @@ public SQLBuilder selectBancaFor(
 
 		sql.addTableToHeader("MODALITA_PAGAMENTO");
 		sql.addSQLJoin("BANCA.CD_TERZO","MODALITA_PAGAMENTO.CD_TERZO");
-		sql.addSQLJoin("BANCA.CD_TERZO_DELEGATO","MODALITA_PAGAMENTO.CD_TERZO_DELEGATO");
-
+		// RP. 17/04/2013 commentato perchè possono essere + delegati attivi contemporaneamente
+		//sql.addSQLJoin("BANCA.CD_TERZO_DELEGATO","MODALITA_PAGAMENTO.CD_TERZO_DELEGATO");
+		sql.addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", sql.ISNOTNULL, null);
 		sql.addSQLClause("AND", "MODALITA_PAGAMENTO.CD_MODALITA_PAG", sql.EQUALS, rifModPag.getCd_modalita_pag());
 	} else
 		sql.addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", sql.ISNULL, null);

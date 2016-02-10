@@ -516,7 +516,49 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
-			nullable="true" />						
+			nullable="true" />	
+		<columnMapping
+			columnName="FL_NO_DETRAZIONI_ALTRE"
+			propertyName="fl_no_detrazioni_altre"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_NO_DETRAZIONI_FAMILY"
+			propertyName="fl_no_detrazioni_family"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_DETRAZIONI_ALTRI_TIPI"
+			propertyName="fl_detrazioni_altri_tipi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_NO_CREDITO_IRPEF"
+			propertyName="fl_no_credito_irpef"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="IM_CREDITO_IRPEF_GODUTO"
+			propertyName="im_credito_irpef_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_CREDITO_IRPEF_DOVUTO"
+			propertyName="im_credito_irpef_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -679,5 +721,17 @@
 	<persistentProperty
 		name="pg_comune_addcom_esterno" />	
 	<persistentProperty
-		name="im_cori_sospeso" />		
+		name="im_cori_sospeso" />	
+	<persistentProperty
+		name="fl_no_detrazioni_altre" />			
+	<persistentProperty
+		name="fl_no_detrazioni_family" />			
+	<persistentProperty
+		name="fl_detrazioni_altri_tipi" />			
+	<persistentProperty
+		name="fl_no_credito_irpef" />			
+	<persistentProperty
+		name="im_credito_irpef_goduto" />	
+	<persistentProperty
+		name="im_credito_irpef_dovuto" />			
 </SQLPersistentInfo>

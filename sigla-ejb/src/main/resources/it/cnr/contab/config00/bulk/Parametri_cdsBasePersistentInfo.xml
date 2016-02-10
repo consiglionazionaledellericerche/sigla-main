@@ -187,7 +187,17 @@
 			columnSize="1"
 			nullable="true"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />						
-			
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />			
+		<columnMapping
+			columnName="FL_RIACCERTAMENTO"
+			propertyName="fl_riaccertamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />						
 	</defaultColumnMap>
 	<persistentProperty
 		name="blocco_impegni_cdr_gae" />	
@@ -227,7 +237,7 @@
 		name="im_soglia_contratto_e" />
 	<persistentProperty
 		name="im_soglia_consumo_residuo" />
-  <persistentProperty
+    <persistentProperty
 		name="fl_riporta_avanti" />
 	<persistentProperty
 		name="fl_riporta_indietro" />
@@ -247,4 +257,8 @@
 		name="fl_blocco_iban" />
 	<persistentProperty
 		name="fl_kit_firma_digitale" />	
+	<persistentProperty
+		name="cd_dipartimento" />
+	<persistentProperty
+		name="fl_riaccertamento" />
 </SQLPersistentInfo>

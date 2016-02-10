@@ -81,7 +81,7 @@ public void completeFrom(it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva
 	setDt_scadenza(dtScadenza);
 
 	java.math.BigDecimal imTotaleDettaglio = dettaglio.getIm_imponibile().add(dettaglio.getIm_iva());
-	imTotaleDettaglio = imTotaleDettaglio.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	imTotaleDettaglio = imTotaleDettaglio.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	setIm_associato_doc_amm(imTotaleDettaglio);
 	setIm_scadenza(imTotaleDettaglio);
 }
@@ -308,11 +308,12 @@ public void validate() throws ValidationException {
 	// controllo su campo DATA SCADENZA
 	if ( getDt_scadenza() == null || getDt_scadenza().equals("") )
 		throw new ValidationException( "Il campo DATA SCADENZA è obbligatorio." );
+
 	if ( //  data obbligazione != data scadenza && data_obbligazione >= data_scadenza
 		!(obbligazione.getDt_registrazione().after( getDt_scadenza() ) && obbligazione.getDt_registrazione().before( getDt_scadenza() )) &&
 		  obbligazione.getDt_registrazione().after( getDt_scadenza() ))
 		throw new ValidationException( "Non è possibile inserire una scadenza con data antecedente a quella di registrazione dell'impegno." );
-		
+
 	java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 	gc.setTime(getDt_scadenza());
 	if (gc.get(java.util.GregorianCalendar.YEAR) < obbligazione.getEsercizio_competenza().intValue())

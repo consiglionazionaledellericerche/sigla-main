@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaKey">
+	<defaultColumnMap
+		tableName="TIPO_NORMA_PERLA">
+		<columnMapping
+			columnName="CD_TIPO_NORMA"
+			propertyName="cd_tipo_norma"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_norma"
+		partOfOid="true" />
+</SQLPersistentInfo>

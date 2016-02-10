@@ -119,6 +119,12 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_FIRMA"
+			propertyName="dt_firma"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+				
 	</defaultColumnMap>
 	
 	<persistentProperty
@@ -165,4 +171,6 @@
 		name="ti_cc_bi" />
 	<persistentProperty
 		name="versamento_cori" />
+	<persistentProperty
+		name="dt_firma" />	
 </SQLPersistentInfo>

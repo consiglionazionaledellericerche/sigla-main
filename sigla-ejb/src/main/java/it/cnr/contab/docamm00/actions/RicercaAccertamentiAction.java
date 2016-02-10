@@ -156,7 +156,7 @@ private Forward doOnFlChange(ActionContext context, String flName) {
 				filtro.setCliente(null);
 		} else if ("fl_importo".equalsIgnoreCase(flName)) {
 			if (filtro.getIm_importo() == null)
-				filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		} else if ("fl_data_scadenziario".equalsIgnoreCase(flName)) {
 			if (filtro.getData_scadenziario() == null)
 				filtro.setData_scadenziario(filtro.getCurrentDate());

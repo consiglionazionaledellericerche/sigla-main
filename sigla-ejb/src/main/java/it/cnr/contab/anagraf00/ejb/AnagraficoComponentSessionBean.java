@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import it.cnr.contab.anagraf00.comp.AnagraficoComponent;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk;
 import it.cnr.contab.compensi00.comp.CompensoComponent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.ValidationException;
@@ -412,6 +413,61 @@ public class AnagraficoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponen
 			boolean result = ((AnagraficoComponent)componentObj).verificaStrutturaPiva(param0,anagrafico);
 			component_invocation_succes(param0,componentObj);
 			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public void checkCaricoAlreadyExistFor(UserContext param0,
+			AnagraficoBulk param1, Carico_familiare_anagBulk param2)
+			throws ComponentException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((AnagraficoComponent)componentObj).checkCaricoAlreadyExistFor(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+		
+	}
+	public boolean isGestitoCreditoIrpef(UserContext param0)
+			throws ComponentException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			boolean result = ((AnagraficoComponent)componentObj).isGestitoCreditoIrpef(param0);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public void controllaUnicitaCaricoInAnnoImposta(it.cnr.jada.UserContext param0,it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk param1, it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {	pre_component_invocation(param0,componentObj);
+		try {
+			((AnagraficoComponent)componentObj).controllaUnicitaCaricoInAnnoImposta(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0,componentObj);
 			throw e;

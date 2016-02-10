@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="tipoVar"
+		property="tipoVar"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Tipo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="numVar"
+		property="numVar"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Numero" />
+	<fieldProperty
+		name="riferimentiDescVariazione"
+		property="riferimentiDescVariazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="4000"
+		enabledOnEdit="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="descVariazione"
+		property="descVariazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Riferimenti" />
+	<fieldProperty
+		name="cdrProponente"
+		property="cdrProponente"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="CdR Proponente" />
+	<fieldProperty
+		name="descCdrProponente"
+		property="descCdrProponente"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="Desc. CdR Proponente" />
+	<fieldProperty
+		name="esResiduo"
+		property="esResiduo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Esercizio Residuo" />
+	<fieldProperty
+		name="cdrAssegn"
+		property="cdrAssegn"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="CdR Assegnatario" />
+	<fieldProperty
+		name="descCdrAssegn"
+		property="descCdrAssegn"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="Desc. CdR Assegnatario" />
+	<fieldProperty
+		name="dsTipoVariazione"
+		property="dsTipoVariazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Tipo Variazione" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Stato" />
+	<fieldProperty
+		name="fonte"
+		property="fonte"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Fonte" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Importo" />
+	<fieldProperty
+		name="imDecInt"
+		property="imDecInt"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Spese Decentrate Interne" />
+	<fieldProperty
+		name="imDecEst"
+		property="imDecEst"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Spese Decentrate Esterne" />
+	<fieldProperty
+		name="imAccInt"
+		property="imAccInt"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Spese Accentrate Interne" />
+	<fieldProperty
+		name="imAccEst"
+		property="imAccEst"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Spese Accentrate Esterne" />
+	<fieldProperty
+		name="gae"
+		property="gae"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="GAE" />
+	<fieldProperty
+		name="voceDelPiano"
+		property="voceDelPiano"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Voce del Piano" />
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="tipoVar" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="numVar" />
+	<formFieldProperty
+		name="riferimentiDescVariazione" />
+	<formFieldProperty
+		name="descVariazione" />
+	<formFieldProperty
+		name="cdrProponente" />
+	<formFieldProperty
+		name="descCdrProponente" />
+	<formFieldProperty
+		name="esResiduo" />
+	<formFieldProperty
+		name="cdrAssegn" />
+	<formFieldProperty
+		name="descCdrAssegn" />
+	<formFieldProperty
+		name="dsTipoVariazione" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="fonte" />
+	<formFieldProperty
+		name="importo" />
+	<formFieldProperty
+		name="imDecInt" />
+	<formFieldProperty
+		name="imDecEst" />
+	<formFieldProperty
+		name="imAccInt" />
+	<formFieldProperty
+		name="imAccEst" />
+	<formFieldProperty
+		name="gae" />
+	<formFieldProperty
+		name="voceDelPiano" />
+	<findFieldProperty
+		name="tipoVar" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="numVar" />
+	<findFieldProperty
+		name="riferimentiDescVariazione" />
+	<findFieldProperty
+		name="descVariazione" />
+	<findFieldProperty
+		name="cdrProponente" />
+	<findFieldProperty
+		name="descCdrProponente" />
+	<findFieldProperty
+		name="esResiduo" />
+	<findFieldProperty
+		name="cdrAssegn" />
+	<findFieldProperty
+		name="descCdrAssegn" />
+	<findFieldProperty
+		name="dsTipoVariazione" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="fonte" />
+	<findFieldProperty
+		name="importo" />
+	<findFieldProperty
+		name="imDecInt" />
+	<findFieldProperty
+		name="imDecEst" />
+	<findFieldProperty
+		name="imAccInt" />
+	<findFieldProperty
+		name="imAccEst" />
+	<findFieldProperty
+		name="gae" />
+	<findFieldProperty
+		name="voceDelPiano" />
+	<columnFieldProperty
+		name="tipoVar" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="numVar" />
+	<columnFieldProperty
+		name="riferimentiDescVariazione" />
+	<columnFieldProperty
+		name="descVariazione" />
+	<columnFieldProperty
+		name="cdrProponente" />
+	<columnFieldProperty
+		name="descCdrProponente" />
+	<columnFieldProperty
+		name="esResiduo" />
+	<columnFieldProperty
+		name="cdrAssegn" />
+	<columnFieldProperty
+		name="descCdrAssegn" />
+	<columnFieldProperty
+		name="dsTipoVariazione" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="fonte" />
+	<columnFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="imDecInt" />
+	<columnFieldProperty
+		name="imDecEst" />
+	<columnFieldProperty
+		name="imAccInt" />
+	<columnFieldProperty
+		name="imAccEst" />
+	<columnFieldProperty
+		name="gae" />
+	<columnFieldProperty
+		name="voceDelPiano" />
+</bulkInfo>

@@ -44,6 +44,7 @@ public class Tipo_sezionaleBase extends Tipo_sezionaleKey implements Keyed {
 	
 	private java.lang.Boolean fl_servizi_non_residenti;
 
+	private Integer ordina;
 public Tipo_sezionaleBase() {
 	super();
 }
@@ -200,5 +201,11 @@ public java.lang.Boolean getFl_servizi_non_residenti() {
 public void setFl_servizi_non_residenti(
 		java.lang.Boolean fl_servizi_non_residenti) {
 	this.fl_servizi_non_residenti = fl_servizi_non_residenti;
+}
+public Integer getOrdina() {
+	return ordina;
+}
+public void setOrdina(Integer ordina) {
+	this.ordina = ordina;
 }
 }

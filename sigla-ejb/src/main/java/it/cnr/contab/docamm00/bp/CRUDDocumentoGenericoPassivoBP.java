@@ -474,7 +474,9 @@ public boolean isSaveButtonEnabled() {
 			!doc.isPagata() && */
 			(    (isAnnoDiCompetenza() && !doc.isRiportata())
 			 ||  carryingThrough
-			); //||
+			// Consentire salvataggio 		
+			 ||(!doc.isEditable()&&doc.getCrudStatus()!=5)
+			 ); //||
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato DA UN ES. PRECEDENTE a quello di scrivania.				
 			// (doc.COMPLETAMENTE_RIPORTATO.equals(doc.getRiportataInScrivania()) && !isAnnoDiCompetenza()));
@@ -809,5 +811,32 @@ public boolean isBeni_collButtonEnabled() {
 }
 public boolean isBeni_collButtonHidden() {
 	return isSearching() || isDeleting();
+}
+/**
+ * Il metodo è stato sovrascritto per consentire all'utente di modificare lo stato della liquidazione
+ * quando il documento non risulta essere modificabile
+ *  
+ */
+public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String s1,boolean flag,String s2,String s3) throws java.io.IOException {
+	Documento_genericoBulk doc=null;
+	if(getModel()!=null)
+		doc = (Documento_genericoBulk)getModel();
+	if (doc!=null &&
+		doc.isRiportataInScrivania()&&
+		!doc.isPagata()&&
+		isInputReadonly()&& 
+		s1.equals("stato_liquidazione")){ 
+		getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnStatoLiquidazioneChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+	}
+	else
+		if (doc!=null &&
+			doc.isRiportataInScrivania()&&
+			!doc.isPagata()&& 
+			isInputReadonly()&& 
+			s1.equals("causale")){ 
+				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnCausaleChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+		}
+	else
+		super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
 }
 }

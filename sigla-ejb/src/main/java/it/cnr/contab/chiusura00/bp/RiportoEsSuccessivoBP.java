@@ -1,21 +1,16 @@
 package it.cnr.contab.chiusura00.bp;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBException;
-
-import it.cnr.contab.chiusura00.ejb.*;
-import it.cnr.contab.chiusura00.bulk.*;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.ejb.CDRComponentSession;
+import it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk;
+import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.ejb.*;
-import it.cnr.jada.util.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkInfo;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.ejb.RicercaComponentSession;
+import it.cnr.jada.util.RemoteIterator;
 
 /**
  * BP che gestisce il riporto avanti massivo di documenti contabili all'esercizio successivo;
@@ -33,7 +28,8 @@ public class RiportoEsSuccessivoBP extends it.cnr.jada.util.action.BulkBP implem
 	private boolean ribaltato;
 	private boolean confRibaltato;
 	private Unita_organizzativaBulk uoSrivania;
-	
+	private boolean isRiaccertamentoChiuso = true;
+	private boolean isGaeCollegateProgetti = true;
 	
 public RiportoEsSuccessivoBP() {
 		super("Tn");
@@ -56,6 +52,7 @@ public it.cnr.jada.util.RemoteIterator cercaDocDaRiportare(ActionContext context
 {
 	try 
 	{
+		validaRibaltamento(context);
 		RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
 		return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,sessione.cercaPerRiportaAvanti(context.getUserContext(),model));
 	} catch(Exception e) {
@@ -87,13 +84,8 @@ public void confermaRiporto(ActionContext context) throws it.cnr.jada.action.Bus
 {
 	try 
 	{
+		validaRibaltamento(context);
 		RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
-		if (!sessione.isRicosResiduiChiusa(context.getUserContext())) {
-			throw new ApplicationException("Impossibile procedere al ribaltamento. Non è stata chiusa l'attività di ricostruzione dei residui per tutti i CdR del CdS "+CNRUserContext.getCd_cds((CNRUserContext)context.getUserContext())+".");
-		}
-		if (sessione.isSfondataDispCdS(context.getUserContext())) {
-			throw new ApplicationException("Impossibile procedere al ribaltamento. La somma degli impegni, per alcuni GAE/Voce, è superiore alla disponibiltà ad impegnare.");
-		}
 		sessione.callRiportoNextEsDocCont(context.getUserContext(), ((V_obb_acc_xxxBulk)getModel()).getPg_call());
 	} catch(Exception e) {
 		throw handleException(e);
@@ -436,6 +428,67 @@ public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws i
 		{
 			RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
 			sessione.updateParametriCds(context.getUserContext());
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+	
+	private void validaRibaltamento(ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		try 
+		{
+			RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
+			if (!sessione.isRicosResiduiChiusa(context.getUserContext())) {
+				throw new ApplicationException("Impossibile procedere al ribaltamento. Non è stata chiusa l'attività di ricostruzione dei residui per tutti i CdR del CdS "+CNRUserContext.getCd_cds((CNRUserContext)context.getUserContext())+".");
+			}
+			if (sessione.isSfondataDispCdS(context.getUserContext())) {
+				throw new ApplicationException("Impossibile procedere al ribaltamento. La somma degli impegni, per alcuni GAE/Voce, è superiore alla disponibilità ad impegnare.");
+			}
+			setRiaccertamentoChiuso(sessione.isRiaccertamentoChiuso(context.getUserContext()));
+			setGaeCollegateProgetti(sessione.isGaeCollegateProgetti(context.getUserContext()));
+			
+			if (!isRiaccertamentoChiuso() && !isGaeCollegateProgetti()) 
+				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono anomalie da verificare.");
+			if (!isRiaccertamentoChiuso())
+				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono accertamenti residui da ribaltare privi dello stato.");
+			if (!isGaeCollegateProgetti())
+				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono GAE su impegni e/o accertamenti da ribaltare prive dell''indicazione del progetto nell''anno del ribaltamento.");
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+	
+	private void setRiaccertamentoChiuso(boolean isRiaccertamentoChiuso) {
+		this.isRiaccertamentoChiuso = isRiaccertamentoChiuso;
+	}
+	public boolean isRiaccertamentoChiuso() {
+		return isRiaccertamentoChiuso;
+	}
+	
+	private void setGaeCollegateProgetti(boolean isGaeCollegateProgetti) {
+		this.isGaeCollegateProgetti = isGaeCollegateProgetti;
+	}
+	public boolean isGaeCollegateProgetti() {
+		return isGaeCollegateProgetti;
+	}
+
+	public it.cnr.jada.util.RemoteIterator cercaResiduiForRiaccertamento(ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		try 
+		{
+			RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
+			return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,sessione.cercaResiduiForRiaccertamento(context.getUserContext()));
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	public it.cnr.jada.util.RemoteIterator cercaGaeSenzaProgettiForRibaltamento(ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		try 
+		{
+			RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
+			return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,sessione.cercaGaeSenzaProgettiForRibaltamento(context.getUserContext()));
 		} catch(Exception e) {
 			throw handleException(e);
 		}

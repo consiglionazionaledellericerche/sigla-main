@@ -3,13 +3,21 @@
  * Date 26/07/2007
  */
 package it.cnr.contab.incarichi00.bulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Ass_incarico_attivitaBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
@@ -23,7 +31,7 @@ public class Incarichi_repertorioHome extends BulkHome {
 	public Incarichi_repertorioHome(Connection conn, PersistentCache persistentCache) {
 		super(Incarichi_repertorioBulk.class, conn, persistentCache);
 	}
-	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException {
+	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException, it.cnr.jada.comp.ComponentException {
 		try {
 			((Incarichi_repertorioBulk)bulk).setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 			((Incarichi_repertorioBulk)bulk).setPg_repertorio(
@@ -32,7 +40,7 @@ public class Incarichi_repertorioHome extends BulkHome {
 				)
 			);
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
-			throw new PersistencyException(e);
+			 throw new it.cnr.jada.comp.ApplicationException("Operazione effettuata al momento da un'altro utente, riprovare successivamente.");
 		}
 	}
 	public java.util.List findIncarichi_repertorio_annoList( it.cnr.jada.UserContext userContext,Incarichi_repertorioBulk increp ) throws IntrospectionException,PersistencyException 
@@ -156,5 +164,55 @@ public class Incarichi_repertorioHome extends BulkHome {
 		}
 		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
 		return dettHome.fetchAll(sql);
+	}
+
+	public java.util.List findIncarichi_repertorio_rappList( it.cnr.jada.UserContext userContext,Incarichi_repertorioBulk increp ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome incHome = getHomeCache().getHome(Incarichi_repertorio_rappBulk.class );
+		SQLBuilder sql = incHome.createSQLBuilder();
+		if (increp.getEsercizio()==null)
+			sql.addClause("AND","esercizio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS, increp.getEsercizio());
+		
+		if (increp.getPg_repertorio()==null)
+			sql.addClause("AND","pg_repertorio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","pg_repertorio",SQLBuilder.EQUALS, increp.getPg_repertorio());
+		
+		sql.addOrderBy("ANNO_COMPETENZA");
+		return incHome.fetchAll(sql);
+	}
+
+	public java.util.List findIncarichi_repertorio_rapp_detList( it.cnr.jada.UserContext userContext,Incarichi_repertorioBulk increp ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome incHome = getHomeCache().getHome(Incarichi_repertorio_rapp_detBulk.class );
+		SQLBuilder sql = incHome.createSQLBuilder();
+		if (increp.getEsercizio()==null)
+			sql.addClause("AND","esercizio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS, increp.getEsercizio());
+		
+		if (increp.getPg_repertorio()==null)
+			sql.addClause("AND","pg_repertorio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","pg_repertorio",SQLBuilder.EQUALS, increp.getPg_repertorio());
+		
+		sql.addOrderBy("PROGRESSIVO_RIGA");
+		return incHome.fetchAll(sql);
+	}
+
+	public Persistent completeBulkRowByRow(UserContext userContext, Persistent persistent) throws PersistencyException {
+		if (persistent instanceof Incarichi_repertorioBulk) {
+			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)persistent;
+			try {
+				if (((Incarichi_repertorioBulk)persistent).getCd_terzo()!=null) { 
+					V_terzo_per_compensoHome home = (V_terzo_per_compensoHome)getHomeCache().getHome(V_terzo_per_compensoBulk.class, "DISTINCT_TERZO");
+					V_terzo_per_compensoBulk bulk = home.loadVTerzo(userContext,Tipo_rapportoBulk.ALTRO, incarico.getCd_terzo(), incarico.getDt_inizio_validita(), incarico.getDt_inizio_validita());
+					incarico.setV_terzo(bulk);
+				}
+			} catch (Exception e) {}
+		}
+		return persistent;
 	}
 }

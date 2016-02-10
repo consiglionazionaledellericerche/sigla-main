@@ -7,6 +7,7 @@ import javax.ejb.RemoveException;
 import it.cnr.contab.pdg00.bp.ArchiviaStampaPdgVariazioneBP;
 import it.cnr.contab.pdg00.bp.FirmaDigitalePdgVariazioniBP;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.BulkInfo;
@@ -23,8 +24,12 @@ public class ArchiviaStampaPdgVariazioneAction extends CRUDAction {
 	        fillModel(actioncontext);
 	        CRUDBP crudbp = getBusinessProcess(actioncontext);
 	        OggettoBulk oggettobulk = crudbp.getModel();
+	        if(Utility.createCdrComponentSession().isEnte(actioncontext.getUserContext()))
+	        	((ArchiviaStampaPdgVariazioneBulk)oggettobulk).setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED);
+	        
 	        RemoteIterator remoteiterator = crudbp.find(actioncontext, null, oggettobulk);
-	        if(remoteiterator == null || remoteiterator.countElements() == 0){
+	        if(!(Utility.createCdrComponentSession().isEnte(actioncontext.getUserContext()))&&
+	        		(remoteiterator == null || remoteiterator.countElements() == 0)){
 	            EJBCommonServices.closeRemoteIterator(remoteiterator);
 	            crudbp.setMessage("La ricerca non ha fornito alcun risultato.");
 	            return actioncontext.findDefaultForward();
@@ -41,7 +46,10 @@ public class ArchiviaStampaPdgVariazioneAction extends CRUDAction {
 	            selezionatorelistabp.setBulkInfo(BulkInfo.getBulkInfo(ArchiviaStampaPdgVariazioneBulk.class));
 	            selezionatorelistabp.setColumns(getBusinessProcess(actioncontext).getSearchResultColumns());
 	    		ArchiviaStampaPdgVariazioneBulk bulk = new ArchiviaStampaPdgVariazioneBulk();
-	    		bulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_ALL);
+	    		if(Utility.createCdrComponentSession().isEnte(actioncontext.getUserContext()))
+	    			bulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED);
+	    		else
+	    			bulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_ALL);
 	            selezionatorelistabp.setModel(actioncontext, bulk);
 	            actioncontext.addHookForward("seleziona", this, "doRiportaSelezione");
 	            return actioncontext.addBusinessProcess(selezionatorelistabp);

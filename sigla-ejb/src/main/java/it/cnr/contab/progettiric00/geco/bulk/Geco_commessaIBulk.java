@@ -8,7 +8,7 @@ public interface Geco_commessaIBulk{
 	public abstract java.lang.String getFase();
 	public abstract java.lang.String getCod_comm();
 	public abstract java.lang.String getDescr_comm();
-	public abstract java.lang.Long getId_prog();
+	public abstract java.lang.Long getId_prog_padre();
 	public abstract java.lang.String getCds();
 	public abstract java.lang.String getSede_svol_uo();
 	public abstract java.sql.Timestamp getData_inizio_attivita();

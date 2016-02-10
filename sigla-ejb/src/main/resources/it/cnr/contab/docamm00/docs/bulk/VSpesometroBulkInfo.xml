@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="quadro"
+		property="quadro"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="quadro" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="SELECT"
+		inputSize="7"
+		maxLength="7"
+		keysProperty="tipofatturaKeys"
+		enabledOnEdit="false"
+		label="tipo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="esercizio" />
+	<fieldProperty
+		name="partitaIva"
+		property="partitaIva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="partitaIva" />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codiceFiscale" />
+	<fieldProperty
+		name="tiBeneServizio"
+		property="tiBeneServizio"
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		keysProperty="beneservizioKeys"
+		enabledOnEdit="false"
+		label="tiBeneServizio" />
+	<fieldProperty
+		name="tipoFiscalita"
+		property="tipoFiscalita"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="tipoFiscalita" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		inputType="SELECT"
+		inputSize="22"
+		maxLength="22"
+		keysProperty="meseKeys"
+		enabledOnEdit="false"
+		label="mese" />
+	<fieldProperty
+		name="nrAttive"
+		property="nrAttive"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="nrAttive" />
+	<fieldProperty
+		name="nrPassive"
+		property="nrPassive"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="nrPassive" />
+	<fieldProperty
+		name="imponibileFa"
+		property="imponibileFa"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imponibileFa" />
+	<fieldProperty
+		name="ivaFa"
+		property="ivaFa"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="ivaFa" />
+	<fieldProperty
+		name="imponibileNdFa"
+		property="imponibileNdFa"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imponibileNdFa" />
+	<fieldProperty
+		name="ivaNdFa"
+		property="ivaNdFa"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="ivaNdFa" />
+	<fieldProperty
+		name="imponibileFp"
+		property="imponibileFp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imponibileFp" />
+	<fieldProperty
+		name="ivaFp"
+		property="ivaFp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="ivaFp" />
+	<fieldProperty
+		name="imponibileNdFp"
+		property="imponibileNdFp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imponibileNdFp" />
+	<fieldProperty
+		name="ivaNdFp"
+		property="ivaNdFp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="ivaNdFp" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cognome" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="nome" />
+	<fieldProperty
+		name="dtNascita"
+		property="dtNascita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtNascita" />
+	<fieldProperty
+		name="statoNascita"
+		property="statoNascita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="statoNascita" />
+	<fieldProperty
+		name="provincia"
+		property="provincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="provincia" />
+	<fieldProperty
+		name="codiceStatoEstero"
+		property="codiceStatoEstero"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="codiceStatoEstero" />
+	<fieldProperty
+		name="ragioneSociale"
+		property="ragioneSociale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="ragioneSociale" />
+	<fieldProperty
+		name="indirizzoSede"
+		property="indirizzoSede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="106"
+		enabledOnEdit="false"
+		label="indirizzoSede" />
+	<fieldProperty
+		name="comuneSede"
+		property="comuneSede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="comuneSede" />
+	<fieldProperty
+		name="prog"
+		property="prog"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="prog" />
+	<fieldProperty
+		name="comunicazionePoliv"
+		property="comunicazionePoliv"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="comunicazione Polivalente aggregata" />	
+	<fieldProperty
+		name="flBlacklist"
+		property="flBlacklist"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="blacklist" />	
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="quadro" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="partitaIva" />
+	<formFieldProperty
+		name="codiceFiscale" />
+	<formFieldProperty
+		name="tiBeneServizio" />
+	<formFieldProperty
+		name="tipoFiscalita" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="nrAttive" />
+	<formFieldProperty
+		name="nrPassive" />
+	<formFieldProperty
+		name="imponibileFa" />
+	<formFieldProperty
+		name="ivaFa" />
+	<formFieldProperty
+		name="imponibileNdFa" />
+	<formFieldProperty
+		name="ivaNdFa" />
+	<formFieldProperty
+		name="imponibileFp" />
+	<formFieldProperty
+		name="ivaFp" />
+	<formFieldProperty
+		name="imponibileNdFp" />
+	<formFieldProperty
+		name="ivaNdFp" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="dtNascita" />
+	<formFieldProperty
+		name="statoNascita" />
+	<formFieldProperty
+		name="provincia" />
+	<formFieldProperty
+		name="codiceStatoEstero" />
+	<formFieldProperty
+		name="ragioneSociale" />
+	<formFieldProperty
+		name="indirizzoSede" />
+	<formFieldProperty
+		name="comuneSede" />
+	<formFieldProperty
+		name="prog" />
+	<formFieldProperty
+		name="flBlacklist" />
+	<formFieldProperty
+		name="comunicazionePoliv" />		
+	<findFieldProperty
+		name="quadro" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="partitaIva" />
+	<findFieldProperty
+		name="codiceFiscale" />
+	<findFieldProperty
+		name="tiBeneServizio" />
+	<findFieldProperty
+		name="tipoFiscalita" />
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="nrAttive" />
+	<findFieldProperty
+		name="nrPassive" />
+	<findFieldProperty
+		name="imponibileFa" />
+	<findFieldProperty
+		name="ivaFa" />
+	<findFieldProperty
+		name="imponibileNdFa" />
+	<findFieldProperty
+		name="ivaNdFa" />
+	<findFieldProperty
+		name="imponibileFp" />
+	<findFieldProperty
+		name="ivaFp" />
+	<findFieldProperty
+		name="imponibileNdFp" />
+	<findFieldProperty
+		name="ivaNdFp" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="dtNascita" />
+	<findFieldProperty
+		name="statoNascita" />
+	<findFieldProperty
+		name="provincia" />
+	<findFieldProperty
+		name="codiceStatoEstero" />
+	<findFieldProperty
+		name="ragioneSociale" />
+	<findFieldProperty
+		name="indirizzoSede" />
+	<findFieldProperty
+		name="comuneSede" />
+	<findFieldProperty
+		name="prog" />
+	<columnFieldProperty
+		name="quadro" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="partitaIva" />
+	<columnFieldProperty
+		name="codiceFiscale" />
+	<columnFieldProperty
+		name="tiBeneServizio" />
+	<columnFieldProperty
+		name="tipoFiscalita" />
+	<columnFieldProperty
+		name="mese" />
+	<columnFieldProperty
+		name="nrAttive" />
+	<columnFieldProperty
+		name="nrPassive" />
+	<columnFieldProperty
+		name="imponibileFa" />
+	<columnFieldProperty
+		name="ivaFa" />
+	<columnFieldProperty
+		name="imponibileNdFa" />
+	<columnFieldProperty
+		name="ivaNdFa" />
+	<columnFieldProperty
+		name="imponibileFp" />
+	<columnFieldProperty
+		name="ivaFp" />
+	<columnFieldProperty
+		name="imponibileNdFp" />
+	<columnFieldProperty
+		name="ivaNdFp" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="dtNascita" />
+	<columnFieldProperty
+		name="statoNascita" />
+	<columnFieldProperty
+		name="provincia" />
+	<columnFieldProperty
+		name="codiceStatoEstero" />
+	<columnFieldProperty
+		name="ragioneSociale" />
+	<columnFieldProperty
+		name="indirizzoSede" />
+	<columnFieldProperty
+		name="comuneSede" />
+	<columnFieldProperty
+		name="prog" />
+</bulkInfo>

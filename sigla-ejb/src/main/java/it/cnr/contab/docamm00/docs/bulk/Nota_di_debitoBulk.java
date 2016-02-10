@@ -64,6 +64,7 @@ public void copyFrom(
 	// Gennaro Borriello/Farinella (09/11/2004 16.12.05)
 	//	Aggiunta gestione dell'es di scrivania per il controllo sullo stato riportato/Anno di competenza
 	setEsercizioInScrivania(fattura_passiva.getEsercizioInScrivania());
+	setDataInizioFatturaElettronica(fattura_passiva.getDataInizioFatturaElettronica());
 	
 	try {
 		java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
@@ -96,6 +97,7 @@ public void copyFrom(
 	setFl_autofattura(fattura_passiva.getFl_autofattura());
 	setTi_bene_servizio(fattura_passiva.getTi_bene_servizio());
 	setFl_merce_extra_ue(fattura_passiva.getFl_merce_extra_ue());
+	setFl_merce_intra_ue(fattura_passiva.getFl_merce_intra_ue());
 	setDs_fattura_passiva(fattura_passiva.getDs_fattura_passiva());
 	//setDt_fattura_fornitore(fattura_passiva.getDt_fattura_fornitore());
 	//setDt_scadenza(fattura_passiva.getDt_scadenza());
@@ -120,8 +122,8 @@ public void copyFrom(
 	setCessionario(fattura_passiva.getCessionario());
 	setBanca(fattura_passiva.getBanca());
 	
-	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setIm_totale_imponibile_divisa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	setIm_totale_imponibile_divisa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	setFl_liquidazione_differita(fattura_passiva.getFl_liquidazione_differita());
 	setModalita_trasportoColl(fattura_passiva.getModalita_trasportoColl());
 	setCondizione_consegnaColl(fattura_passiva.getCondizione_consegnaColl());

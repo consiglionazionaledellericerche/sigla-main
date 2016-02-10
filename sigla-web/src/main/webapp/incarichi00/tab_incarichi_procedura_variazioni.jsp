@@ -33,11 +33,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-   larghFinestra=5;
-   altezFinestra=5;
-   sinistra=(screen.width)/2;
-   alto=(screen.height)/2;
-   window.open("<%= (variazione==null?null:variazione.getDownloadUrl()) %>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
+	doPrint('<%=(variazione==null?null:variazione.getDownloadUrl())%>');
 }
 </script>
 

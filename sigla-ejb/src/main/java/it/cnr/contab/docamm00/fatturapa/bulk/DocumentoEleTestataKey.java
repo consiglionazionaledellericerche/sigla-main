@@ -1,0 +1,101 @@
+/*
+ * Created by BulkGenerator 2.0 [07/12/2009]
+ * Date 25/02/2015
+ */
+package it.cnr.contab.docamm00.fatturapa.bulk;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.persistency.KeyedPersistent;
+public class DocumentoEleTestataKey extends OggettoBulk implements KeyedPersistent {
+	private java.lang.String idPaese;
+	private java.lang.String idCodice;
+	private java.lang.Long identificativoSdi;
+	private java.lang.Long progressivo;
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Table name: DOCUMENTO_ELE_TESTATA
+	 **/
+	public DocumentoEleTestataKey() {
+		super();
+	}
+	public DocumentoEleTestataKey(java.lang.String idPaese, java.lang.String idCodice, java.lang.Long identificativoSdi, java.lang.Long progressivo) {
+		super();
+		this.idPaese=idPaese;
+		this.idCodice=idCodice;
+		this.identificativoSdi=identificativoSdi;
+		this.progressivo=progressivo;
+	}
+	public boolean equalsByPrimaryKey(Object o) {
+		if (this== o) return true;
+		if (!(o instanceof DocumentoEleTestataKey)) return false;
+		DocumentoEleTestataKey k = (DocumentoEleTestataKey) o;
+		if (!compareKey(getIdPaese(), k.getIdPaese())) return false;
+		if (!compareKey(getIdCodice(), k.getIdCodice())) return false;
+		if (!compareKey(getIdentificativoSdi(), k.getIdentificativoSdi())) return false;
+		if (!compareKey(getProgressivo(), k.getProgressivo())) return false;
+		return true;
+	}
+	public int primaryKeyHashCode() {
+		int i = 0;
+		i = i + calculateKeyHashCode(getIdPaese());
+		i = i + calculateKeyHashCode(getIdCodice());
+		i = i + calculateKeyHashCode(getIdentificativoSdi());
+		i = i + calculateKeyHashCode(getProgressivo());
+		return i;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [idPaese]
+	 **/
+	public void setIdPaese(java.lang.String idPaese)  {
+		this.idPaese=idPaese;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [idPaese]
+	 **/
+	public java.lang.String getIdPaese() {
+		return idPaese;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [idCodice]
+	 **/
+	public void setIdCodice(java.lang.String idCodice)  {
+		this.idCodice=idCodice;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [idCodice]
+	 **/
+	public java.lang.String getIdCodice() {
+		return idCodice;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [identificativoSdi]
+	 **/
+	public void setIdentificativoSdi(java.lang.Long identificativoSdi)  {
+		this.identificativoSdi=identificativoSdi;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [identificativoSdi]
+	 **/
+	public java.lang.Long getIdentificativoSdi() {
+		return identificativoSdi;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [progressivo]
+	 **/
+	public void setProgressivo(java.lang.Long progressivo)  {
+		this.progressivo=progressivo;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [progressivo]
+	 **/
+	public java.lang.Long getProgressivo() {
+		return progressivo;
+	}
+}

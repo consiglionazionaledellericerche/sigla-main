@@ -212,6 +212,13 @@
 			propertyName="cd_ti_pasto"
 			sqlTypeName="VARCHAR"
 			columnSize="20" />
+		<columnMapping
+			columnName="IM_RIMBORSO"
+			propertyName="im_rimborso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -281,4 +288,6 @@
 		name="cd_ti_pasto" />
 	<persistentProperty
 		name="im_quota_esente" />
+	<persistentProperty
+		name="im_rimborso" />	
 </SQLPersistentInfo>

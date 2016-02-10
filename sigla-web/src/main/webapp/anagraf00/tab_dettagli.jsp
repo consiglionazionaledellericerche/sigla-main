@@ -121,6 +121,12 @@
 			<td colspan="4"><% bp.getController().writeFormInput(out,"im_deduzione_family_area");%></td>
 		  </tr>
 		<% } %>  
+		  <% if(bp.isGestitoCreditoIrpef(uc)) {%>
+          <tr>
+			<td><% bp.getController().writeFormLabel(out,"fl_no_credito_irpef");%></td>
+			<td colspan="2"><% bp.getController().writeFormInput(out,"fl_no_credito_irpef");%></td>
+		  </tr>	
+		<% } %>  
 	<% } %>
 	
 </table>

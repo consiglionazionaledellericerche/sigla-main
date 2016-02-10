@@ -30,6 +30,8 @@ public class Anagrafico_esercizioBase extends Anagrafico_esercizioKey implements
 	
 	private Boolean fl_applica_detr_pers_max;
 	
+	private Boolean fl_no_credito_irpef;
+	
 public Anagrafico_esercizioBase() {
 	super();
 }
@@ -118,6 +120,12 @@ public void setIm_detrazione_personale_anag(java.math.BigDecimal im_detrazione_p
 	public void setIm_reddito_abitaz_princ(
 			java.math.BigDecimal im_reddito_abitaz_princ) {
 		this.im_reddito_abitaz_princ = im_reddito_abitaz_princ;
+	}
+	public Boolean getFl_no_credito_irpef() {
+		return fl_no_credito_irpef;
+	}
+	public void setFl_no_credito_irpef(Boolean fl_no_credito_irpef) {
+		this.fl_no_credito_irpef = fl_no_credito_irpef;
 	}
 
 }

@@ -1,7 +1,5 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -21,12 +19,9 @@ public class Documento_genericoBase extends Documento_genericoKey implements Key
 	private java.lang.String cd_uo_origine;
 
 	// DATA_REGISTRAZIONE TIMESTAMP NOT NULL
-	@CMISProperty(name="emppay:datDoc",converterBeanName="cmis.converter.timestampToCalendarConverter")	
 	private java.sql.Timestamp data_registrazione;
 
 	// DS_DOCUMENTO_GENERICO VARCHAR(300)
-	@CMISPolicy(name="P:cm:titled", property=@CMISProperty(name="cm:description"))
-	@CMISProperty(name="emppay:descDoc")	
 	private java.lang.String ds_documento_generico;
 
 	// DT_A_COMPETENZA_COGE TIMESTAMP NOT NULL
@@ -48,7 +43,6 @@ public class Documento_genericoBase extends Documento_genericoKey implements Key
 	private java.lang.Integer esercizio_lettera;
 
 	// IM_TOTALE DECIMAL(15,2) NOT NULL
-	@CMISProperty(name="emppay:impNetto")
 	private java.math.BigDecimal im_totale;
 
 	// PG_LETTERA DECIMAL(10,0)
@@ -71,6 +65,10 @@ public class Documento_genericoBase extends Documento_genericoKey implements Key
 
 	// TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
 	private java.lang.String ti_istituz_commerc;
+	
+	private java.lang.String stato_liquidazione;
+	
+	private java.lang.String causale;
 
 public Documento_genericoBase() {
 	super();
@@ -317,5 +315,17 @@ public void setTi_associato_manrev(java.lang.String ti_associato_manrev) {
  */
 public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	this.ti_istituz_commerc = ti_istituz_commerc;
+}
+public java.lang.String getStato_liquidazione() {
+	return stato_liquidazione;
+}
+public void setStato_liquidazione(java.lang.String stato_liquidazione) {
+	this.stato_liquidazione = stato_liquidazione;
+}
+public java.lang.String getCausale() {
+	return causale;
+}
+public void setCausale(java.lang.String causale) {
+	this.causale = causale;
 }
 }

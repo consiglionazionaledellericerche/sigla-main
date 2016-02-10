@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="gruppo_iva"
@@ -46,6 +46,7 @@
 		maxLength="300"
 		inputSize="300"
 		inputType="TEXTAREA"
+		enabledOnSearch="true"
 		label="Descrizione"
 		nullable="false"
 	 	caseSensitiveSearch="false" />
@@ -101,7 +102,27 @@
 		label="Esente"
 		enabledOnFreeSearch="false"
 		enabledOnSearch="false"/>
-		
+	<fieldProperty
+		name="naturaOperNonImpSdi"
+		property="naturaOperNonImpSdi"
+		keysProperty="naturaOperazioniNonImponibiliKeys"
+		label="Natura Operazioni non imponibili per invio SDI"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="rifNormOperNonImpSdi"
+		property="rifNormOperNonImpSdi"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnInsert="true"				
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true" 
+	 	label="Riferimento Normativo Operazioni non imponibili per invio SDI" />
 	<fieldProperty
 		name="ti_applicazione"
 		property="ti_applicazione"
@@ -136,7 +157,38 @@
 		label="Iva recuperabile"
 		enabledOnFreeSearch="false"
 		enabledOnSearch="false"/>	
-
+	<fieldProperty
+		name="fl_autofattura"
+		property="fl_autofattura"
+		inputType="CHECKBOX"
+		label="Autofattura"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>	
+	<fieldProperty
+		name="ti_bene_servizio"
+		property="ti_bene_servizio"
+		keysProperty="ti_bene_servizioKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+	 	label="Servizio/Bene"/>
+	 <fieldProperty
+		name="fl_solo_italia"
+		property="fl_solo_italia"
+		inputType="CHECKBOX" 
+		label="Solo in Italia"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>		
+	 <fieldProperty
+		name="fl_obb_dichiarazione_intento"
+		property="fl_obb_dichiarazione_intento"
+		inputType="CHECKBOX" 
+		label="Obb. Dichiarazione Intento"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>		
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -164,6 +216,10 @@
 	<formFieldProperty
 		name="ti_applicazione" />
 	<formFieldProperty
+		name="naturaOperNonImpSdi" />
+	<formFieldProperty
+		name="rifNormOperNonImpSdi" />
+	<formFieldProperty
 		name="percentuale_detraibilita" />
 	<formFieldProperty
 		name="fl_non_imponibile" />
@@ -183,7 +239,14 @@
 		name="fl_default_istituzionale" />
 	<formFieldProperty
 		name="fl_iva_non_recuperabile" />	
-
+	<formFieldProperty
+		name="fl_autofattura" />		
+	<formFieldProperty
+		name="fl_solo_italia" />	
+	<formFieldProperty
+		name="ti_bene_servizio" />	
+	<formFieldProperty
+		name="fl_obb_dichiarazione_intento" />		
 	<columnFieldProperty
 		name="cd_voce_iva" />
 	<columnFieldProperty
@@ -212,10 +275,20 @@
 		name="fl_default_istituzionale" />
 	<columnFieldProperty
 		name="fl_iva_non_recuperabile" />
-		
+	<columnFieldProperty
+		name="fl_autofattura" />	
+	<columnFieldProperty
+		name="naturaOperNonImpSdi" />
+	<columnFieldProperty
+		name="rifNormOperNonImpSdi" />
+	<columnFieldProperty
+		name="fl_solo_italia" />	
+	<columnFieldProperty
+		name="ti_bene_servizio" />	
+	<columnFieldProperty
+		name="fl_obb_dichiarazione_intento" />			
 	<findFieldProperty
 		name="cd_voce_iva" />	
-
 	<findFieldProperty
 		name="ds_voce_iva" />
 	<findFieldProperty
@@ -225,5 +298,5 @@
 	<findFieldProperty
 		name="percentuale" />
 	<findFieldProperty
-		name="dt_inizio_validita" />
+		name="dt_inizio_validita" />			
 </bulkInfo>

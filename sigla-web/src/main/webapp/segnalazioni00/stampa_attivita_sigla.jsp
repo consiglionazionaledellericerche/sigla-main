@@ -67,6 +67,10 @@
 		<td><% bp.getController().writeFormLabel(out,"stato_rilasciato"); %></td>
 		<td><% bp.getController().writeFormInput(out,"stato_rilasciato"); %></td>
 	  </tr>
+	  <tr>
+		<td><% bp.getController().writeFormLabel(out,"stato_differito"); %></td>
+		<td><% bp.getController().writeFormInput(out,"stato_differito"); %></td>
+	  </tr>
 	  
 	 </table>
 	 <table> 

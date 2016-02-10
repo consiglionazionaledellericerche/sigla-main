@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_autorizzatiBulk"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_autorizzatiHome">
+	<defaultColumnMap
+		tableName="BLT_AUTORIZZATI">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="bltProgetti.bltAccordo.cd_accordo"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="bltProgetti.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_CDR_TERZO"
+			propertyName="cdrTerzo.cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_COMUNE_ENTE_DI_APPARTENENZA"
+			propertyName="comuneEnteDiAppartenenza.pg_comune"  />
+	</defaultColumnMap>
+	<persistentProperty
+		name="bltProgetti"
+		partOfOid="true" />
+	<persistentProperty
+		name="terzo" 
+		partOfOid="true" />
+	<persistentProperty
+		name="cdrTerzo" />
+	<persistentProperty
+		name="comuneEnteDiAppartenenza" />
+</SQLPersistentInfo>

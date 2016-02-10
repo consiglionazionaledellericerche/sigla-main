@@ -5,19 +5,29 @@ import java.util.Dictionary;
 
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.*;
 
-public class Elemento_voceBulk extends Elemento_voceBase {
+public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilancioBulk {
 	private java.util.Hashtable ti_appartenenzaKeys;
 	private java.util.Hashtable ti_gestioneKeys; 
 	private java.util.Hashtable ti_elemento_voceKeys;
 	private java.util.Hashtable associazioni = new java.util.Hashtable();
+
+	public static final String INDICAZIONE_TROVATO_BLOCCANTE ="E";
+	public static final String INDICAZIONE_TROVATO_NON_BLOCCANTE ="W";
+	public static final String INDICAZIONE_TROVATO_NESSUNA ="N";
+	
+	public final static Dictionary indicazioneTrovatoKeys;
+	static {
+		indicazioneTrovatoKeys = new it.cnr.jada.util.OrderedHashtable();
+		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_BLOCCANTE,"Sì - Bloccante");
+		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_NON_BLOCCANTE,"Sì - Non Bloccante");
+		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_NESSUNA,"No");	
+    };
 
 	protected Elemento_voceBulk elemento_padre;
 	protected Capoconto_finBulk capoconto_fin = new Capoconto_finBulk();
@@ -53,6 +63,27 @@ public Capoconto_finBulk getCapoconto_fin() {
  */
 public String getCd_ds_elemento_voce() {
 	return getCd_elemento_voce() + " - " + getDs_elemento_voce();
+}
+@Override
+public Integer getEsercizio_elemento_padre() {
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_padre = this.getElemento_padre();
+	if (elemento_padre == null)
+		return null;
+	return elemento_padre.getEsercizio();
+}
+@Override
+public String getTi_gestione_elemento_padre() {
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_padre = this.getElemento_padre();
+	if (elemento_padre == null)
+		return null;
+	return elemento_padre.getTi_gestione();
+}
+@Override
+public String getTi_appartenenza_elemento_padre() {
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_padre = this.getElemento_padre();
+	if (elemento_padre == null)
+		return null;
+	return elemento_padre.getTi_appartenenza();
 }
 public java.lang.String getCd_elemento_padre() {
 	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_padre = this.getElemento_padre();
@@ -99,6 +130,14 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_voce_fondo(new Boolean( false ) );
 	setFl_check_terzo_siope(new Boolean( false ));
 	setFl_inv_beni_comp(new Boolean(false));
+	setFl_limite_spesa(new Boolean(false));
+	setFl_soggetto_prelievo(new Boolean(false));
+	setPerc_prelievo_pdgp_entrate(Utility.ZERO);
+	setFl_prelievo(new Boolean(false));
+	setFl_solo_competenza(new Boolean(false));
+	setFl_solo_residuo(new Boolean(false));
+	setFl_trovato( INDICAZIONE_TROVATO_NESSUNA );
+	setFl_azzera_residui(new Boolean(false)); 
 	return this;
 }
 /**
@@ -135,8 +174,21 @@ public boolean isROElemento_padre() {
 public void setCapoconto_fin(Capoconto_finBulk newCapoconto_fin) {
 	capoconto_fin = newCapoconto_fin;
 }
+public void setEsercizio_elemento_padre(Integer esercizio_elemento_padre) {
+	if (this.getElemento_padre()!=null)
+		this.getElemento_padre().setEsercizio(esercizio_elemento_padre);
+}
+public void setTi_gestione_elemento_padre(String ti_gestione_elemento_padre) {
+	if (this.getElemento_padre()!=null)
+		this.getElemento_padre().setTi_gestione(ti_gestione_elemento_padre);
+}
+public void setTi_appartenenza_elemento_padre(String ti_appartenenza_elemento_padre) {
+	if (this.getElemento_padre()!=null)
+		this.getElemento_padre().setTi_appartenenza(ti_appartenenza_elemento_padre);
+}
 public void setCd_elemento_padre(java.lang.String cd_elemento_padre) {
-	this.getElemento_padre().setCd_elemento_voce(cd_elemento_padre);
+	if (this.getElemento_padre()!=null)
+		this.getElemento_padre().setCd_elemento_voce(cd_elemento_padre);
 }
 /**
  * @param newElemento_padre it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk
@@ -176,7 +228,7 @@ public void validate() throws ValidationException
 		throw new ValidationException( "Il campo ESERCIZIO deve essere di quattro cifre. " );
 	if ( getDs_elemento_voce() == null  )
 		throw new ValidationException( "Il campo DESCRIZIONE è obbligatorio." );
-	if ( !isNullOrEmpty( getCd_proprio_elemento() ) )
+	/*if ( !isNullOrEmpty( getCd_proprio_elemento() ) )
 	{
 		long cdLong;
 		try
@@ -189,7 +241,7 @@ public void validate() throws ValidationException
 		}
 		if ( cdLong < 0 )
 			throw new ValidationException( "Il campo CODICE deve essere maggiore di 0. " );			
-	}		
+	}*/		
 		
 }
 
@@ -295,5 +347,36 @@ public void setCod_cla_e(java.lang.String v_cod_cla_e) {
     		setGestoreIstat(UtenteBulk.isGestoreIstatSiope(context));
 			return isGestoreIstat;		
 		
+	}
+	
+	public boolean isObbligatoriaIndicazioneTrovato() {
+		if (getFl_trovato() == null)
+			return false;
+		return getFl_trovato().equals(INDICAZIONE_TROVATO_BLOCCANTE);		
+	}
+	public boolean isFacoltativaIndicazioneTrovato() {
+		if (getFl_trovato() == null)
+			return false;
+		return getFl_trovato().equals(INDICAZIONE_TROVATO_NON_BLOCCANTE);		
+	}
+	public boolean isInibitaIndicazioneTrovato() {
+		if (getFl_trovato() == null)
+			return true;
+		return getFl_trovato().equals(INDICAZIONE_TROVATO_NESSUNA);		
+	}
+	public boolean isVocePerTrovati() {
+		return isObbligatoriaIndicazioneTrovato() || isFacoltativaIndicazioneTrovato();
+	}
+
+	public String getCd_voce() {
+		return getCd_elemento_voce();
+	}
+	
+	public String getCd_titolo_capitolo() {
+		return getCd_elemento_voce();
+	}
+	
+	public String getCd_funzione() {
+		return String.valueOf("01");
 	}
 }

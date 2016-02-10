@@ -11,11 +11,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resRigaBP;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
 import it.cnr.jada.util.action.CRUDAction;
 
 /**
@@ -25,12 +21,24 @@ import it.cnr.jada.util.action.CRUDAction;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CRUDVar_stanz_resRigaAction extends CRUDAction {
+	private static final long serialVersionUID = 1L;
+
 	public it.cnr.jada.action.Forward doBlankSearchLinea_di_attivita(it.cnr.jada.action.ActionContext context, Var_stanz_res_rigaBulk var_stanz_res_riga) {
 		try {
 			fillModel(context);
 			var_stanz_res_riga.setLinea_di_attivita(new WorkpackageBulk());
-			var_stanz_res_riga.setVoce_f(new Voce_fBulk());
+			var_stanz_res_riga.setElemento_voce(null);
+
+			CRUDVar_stanz_resRigaBP bp = (CRUDVar_stanz_resRigaBP)getBusinessProcess(context);
+			if (bp.getParametriCnr()==null || !bp.getParametriCnr().getFl_nuovo_pdg())
+				var_stanz_res_riga.setVoce_f(new Voce_fBulk());
+			else {
+				var_stanz_res_riga.setVoce_f(null);
+				var_stanz_res_riga.setCd_voce(null);
+			}
+			
 			var_stanz_res_riga.setDisponibilita_stanz_res(Utility.ZERO);
+			var_stanz_res_riga.setProgetto(null);
 			return context.findDefaultForward();
 		}catch(Throwable ex){
 			return handleException(context, ex);
@@ -40,7 +48,15 @@ public class CRUDVar_stanz_resRigaAction extends CRUDAction {
 		try {
 			fillModel(context);
 			var_stanz_res_riga.setElemento_voce(new Elemento_voceBulk());
-			var_stanz_res_riga.setVoce_f(new Voce_fBulk());
+
+			CRUDVar_stanz_resRigaBP bp = (CRUDVar_stanz_resRigaBP)getBusinessProcess(context);
+			if (bp.getParametriCnr()==null || !bp.getParametriCnr().getFl_nuovo_pdg())
+				var_stanz_res_riga.setVoce_f(new Voce_fBulk());
+			else {
+				var_stanz_res_riga.setVoce_f(null);
+				var_stanz_res_riga.setCd_voce(null);
+			}
+
 			var_stanz_res_riga.setDisponibilita_stanz_res(Utility.ZERO);
 			return context.findDefaultForward();
 		}catch(Throwable ex){
@@ -53,7 +69,8 @@ public class CRUDVar_stanz_resRigaAction extends CRUDAction {
 			CRUDVar_stanz_resRigaBP bp = (CRUDVar_stanz_resRigaBP)getBusinessProcess(context);
 			var_stanz_res_riga.setLinea_di_attivita(linea_di_attivita);
 			bp.valorizzaVoceLunga(context,var_stanz_res_riga);	
-			bp.valorizzaDisponibilita_stanz_res(context,var_stanz_res_riga);		
+			bp.valorizzaDisponibilita_stanz_res(context,var_stanz_res_riga);
+			bp.valorizzaProgettoLineaAttivita(context,var_stanz_res_riga);
 			return context.findDefaultForward();
 		}catch(Throwable ex){
 			return handleException(context, ex);

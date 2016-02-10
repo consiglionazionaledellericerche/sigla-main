@@ -1,0 +1,38 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="userNameOTP"
+		property="userName"
+		label="Username"
+		inputType="TEXT"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="passwordOTP"
+		property="password"
+		label="Password"
+		inputType="PASSWORD"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="otp"
+		property="otp"
+		label="OTP"
+		inputType="TEXT"
+		nullable="false"		
+		/>
+
+	<formFieldProperty
+		name="userNameOTP"
+		/>
+	<formFieldProperty
+		name="passwordOTP"
+		/>
+	<formFieldProperty
+		name="otp"
+		/>
+
+</bulkInfo>

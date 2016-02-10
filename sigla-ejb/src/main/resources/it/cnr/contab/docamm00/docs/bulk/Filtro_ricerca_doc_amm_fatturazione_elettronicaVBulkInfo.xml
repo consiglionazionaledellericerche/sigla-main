@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<!-- ************************ FIELD PROPERTY ************************* -->
+	<fieldProperty
+		name="codiceUnivocoUfficioIpa"
+		property="codiceUnivocoUfficioIpa"
+		maxLength="6"
+		inputSize="6"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"		
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		label="Codice IPA"/>	
+
+	<fieldProperty
+		name="optionStatoFirmaFattElett"
+		property="optionStatoFirmaFattElett"
+		keysProperty="optionsStatoFirmaFattElett"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fatturazione Elettronica"
+		caseSensitiveSearch="false" />
+
+	<!-- ************************ FORM FIELD PROPERTY ******************** -->
+	<formFieldProperty name="codiceUnivocoUfficioIpa" />
+	<formFieldProperty name="optionStatoFirmaFattElett" />
+
+
+	<!-- ************************ FIND FIELD PROPERTY ******************** -->
+	<findFieldProperty name="codiceUnivocoUfficioIpa" enabledOnFreeSearch="true"/>
+	<findFieldProperty name="optionStatoFirmaFattElett" />
+
+	<columnFieldProperty name="codiceUnivocoUfficioIpa"	label="Codice IPA" />
+	
+</bulkInfo>

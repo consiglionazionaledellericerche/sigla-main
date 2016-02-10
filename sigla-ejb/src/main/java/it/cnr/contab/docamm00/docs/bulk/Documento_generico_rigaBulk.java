@@ -91,7 +91,7 @@ public int addToRiferimenti_bancari( Documento_generico_rigaBulk os )
  */
 public void calcolaCampiDiRiga() {
 
-    //setIm_riga(getIm_riga_divisa().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+    //setIm_riga(getIm_riga_divisa().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
     java.math.BigDecimal change = getDocumento_generico().getCambio();
     if (getIm_riga_divisa() != null
         && getIm_riga_divisa() != new java.math.BigDecimal(0))
@@ -101,8 +101,8 @@ public void calcolaCampiDiRiga() {
                     == Documento_genericoBulk.MOLTIPLICA)
                     ? getIm_riga_divisa().multiply(change)
                     : getIm_riga_divisa()
-                        .divide(change, java.math.BigDecimal.ROUND_HALF_EVEN)
-                        .setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                        .divide(change, java.math.BigDecimal.ROUND_HALF_UP)
+                        .setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
         else {
             setIm_riga(java.math.BigDecimal.valueOf(0));
             setIm_riga_divisa(java.math.BigDecimal.valueOf(0));

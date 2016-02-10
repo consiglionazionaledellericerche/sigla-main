@@ -1,5 +1,4 @@
 /*
- * Created by Aurelio's BulkGenerator 1.0
  * Date 03/04/2008
  */
 package it.cnr.contab.incarichi00.bulk;
@@ -12,19 +11,24 @@ import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderProcedura;
+import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivita_fpBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_prestazioneBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.persistency.Persister;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Iterator;
-import java.util.List;
+
 public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 
 	public final static Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -33,6 +37,10 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	private boolean utenteCollegatoUoEnte = Boolean.FALSE;
 	private boolean utenteCollegatoSuperUtente = Boolean.FALSE;
 	private String statoProcedura;
+
+	public final static Dictionary applicazioneNormaFlags  = new it.cnr.jada.util.OrderedHashtable();;
+	final public static String APPLICAZIONE_NORMA_YES = "Y";
+	final public static String APPLICAZIONE_NORMA_NO = "N";
 	
 	final public static Integer FASE_INSERIMENTO_INCARICO = new Integer(0);
 	final public static Integer FASE_PUBBLICAZIONE = new Integer(1);
@@ -65,6 +73,9 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		ti_statoKeys.put(STATO_INVIATO,"Inviata Corte Conti");
 		ti_statoKeys.put(STATO_SCADUTA,"Scaduta");
 		ti_statoKeys.put(STATO_CHIUSO,"Chiusa");
+
+		applicazioneNormaFlags.put(APPLICAZIONE_NORMA_YES, "Si");
+		applicazioneNormaFlags.put(APPLICAZIONE_NORMA_NO, "No");
 	}
 
 	public final static Dictionary ti_natura_contabileKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -81,12 +92,20 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	private V_persona_fisicaBulk firmatario;
 	private Tipo_atto_amministrativoBulk atto;
 	private Procedure_amministrativeBulk procedura_amministrativa;
+	private Procedure_amministrativeBulk procedura_amministrativa_beneficiario;
 	private ComuneBulk citta;
 	private Tipo_incaricoBulk tipo_incarico;
 	private Tipo_attivitaBulk tipo_attivita;
+	private Tipo_attivita_fpBulk tipo_attivita_fp, tipo_attivita_fp0, tipo_attivita_fp1, tipo_attivita_fp_orig;
+	private Tipo_prestazioneBulk tipo_prestazione, tipo_prestazione_orig;
 	private Incarichi_proceduraBulk incarichi_procedura_padre; 
 	private V_terzo_per_compensoBulk v_terzoForSearch = new V_terzo_per_compensoBulk();
-
+	private Incarichi_repertorioBulk incaricoRepertorioForSearch = new Incarichi_repertorioBulk();
+	
+	protected java.util.Collection tipologie_prestazioni;
+	private Tipo_norma_perlaBulk tipo_norma_perla, tipo_norma_perla_orig;
+	protected java.util.Collection tipologie_norma_perla;
+	private String fl_applicazione_norma_orig;
 	private Integer faseProcesso;
 
 	public Incarichi_proceduraBulk() {
@@ -242,6 +261,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	public void setIncarichi_richiesta(Incarichi_richiestaBulk incarichi_richiesta) {
 		this.incarichi_richiesta = incarichi_richiesta;
 	}
+
 	public Integer getEsercizio_richiesta() {
 		if (this.getIncarichi_richiesta() == null)
 			return null;
@@ -251,6 +271,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		if (this.getIncarichi_richiesta() != null)
 			this.getIncarichi_richiesta().setEsercizio(setEsercizio_richiesta);
 	}	
+
 	public Long getPg_richiesta() {
 		if (this.getIncarichi_richiesta() == null)
 			return null;
@@ -279,6 +300,23 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 			this.getProcedura_amministrativa().setCd_proc_amm(cd_proc_amm);
 	}
 	
+// Procedura Amministrativa	Identificazione Beneficiario
+	public Procedure_amministrativeBulk getProcedura_amministrativa_beneficiario() {
+		return procedura_amministrativa_beneficiario;
+	}
+	public void setProcedura_amministrativa_beneficiario(Procedure_amministrativeBulk procedura_amministrativa_beneficiario) {
+		this.procedura_amministrativa_beneficiario = procedura_amministrativa_beneficiario;
+	}
+	public String getCd_proc_amm_benef() {
+		if (this.getProcedura_amministrativa_beneficiario() == null)
+			return null;
+		return this.getProcedura_amministrativa_beneficiario().getCd_proc_amm();
+	}
+	public void setCd_proc_amm_benef(String cd_proc_amm_benef) {
+		if (this.getProcedura_amministrativa_beneficiario() != null)
+			this.getProcedura_amministrativa_beneficiario().setCd_proc_amm(cd_proc_amm_benef);
+	}
+
 // Tipo Attività Richiesta
 	public Tipo_attivitaBulk getTipo_attivita() {
 		return tipo_attivita;
@@ -313,6 +351,23 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 			this.getTipo_incarico().setCd_tipo_incarico(cd_tipo_incarico);
 	}
 
+//Tipo Prestazione
+	public Tipo_prestazioneBulk getTipo_prestazione() {
+		return tipo_prestazione;
+	}
+	public void setTipo_prestazione(Tipo_prestazioneBulk tipo_prestazione) {
+		this.tipo_prestazione = tipo_prestazione;
+	}
+	public String getCd_tipo_prestazione() {
+		if (this.getTipo_prestazione() == null)
+			return null;
+		return this.getTipo_prestazione().getCd_tipo_prestazione();
+	}
+	public void setCd_tipo_prestazione(String cd_tipo_prestazione) {
+		if (this.getTipo_prestazione() != null)
+			this.getTipo_prestazione().setCd_tipo_prestazione(cd_tipo_prestazione);
+	}
+	
 	/**
 	 * Restituisce il valore della proprietà 'ds_firmatario'
 	 *
@@ -639,22 +694,14 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		}
 		return null;
 	}
-	public String getDownloadUrlBando()
-	{
-		Incarichi_procedura_archivioBulk bandoUrl = this.getBando();
-		if (bandoUrl!=null)
-			return bandoUrl.getDownloadUrl();
-		return null;
-	}
-	public List<String> getDownloadUrlAllegati()
-	{
-		List<String> listAllegati = new ArrayList<String>();
+	public Incarichi_procedura_archivioBulk getProgetto(){
 		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
 			Incarichi_procedura_archivioBulk allegato = (Incarichi_procedura_archivioBulk)i.next();
-			if (!allegato.isAllegatoDaPubblicare()) 
-				listAllegati.add(allegato.getDownloadUrl());
+			if (allegato.isProgetto()) {
+				return allegato;
+			}
 		}
-		return listAllegati;
+		return null;
 	}
 	public boolean isProceduraDaPubblicare() {
 		return this != null &&
@@ -819,7 +866,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 				if (!i.hasNext() && this.getImporto_complessivo().subtract(dett.getIm_complessivo_ripartito()).compareTo(Utility.ZERO)!=0)
 					repertorioAnno.setImporto_iniziale(this.getImporto_complessivo().subtract(dett.getIm_complessivo_ripartito()));
 				else
-					repertorioAnno.setImporto_iniziale(proceduraAnno.getImporto_iniziale().divide(new BigDecimal(this.getNr_contratti()),2,java.math.BigDecimal.ROUND_HALF_EVEN));
+					repertorioAnno.setImporto_iniziale(proceduraAnno.getImporto_iniziale().divide(new BigDecimal(this.getNr_contratti()),2,java.math.BigDecimal.ROUND_HALF_UP));
 				repertorioAnno.setImporto_complessivo(repertorioAnno.getImporto_iniziale());
 				repertorioAnno.setAnniList(proceduraAnno.getAnniList());
 			}
@@ -874,6 +921,33 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     		   this.getTipo_incarico().getTipoRapporto()!=null &&
     		   this.getTipo_incarico().getTipoRapporto().getFl_inquadramento()!=null &&
     		   !this.getTipo_incarico().getTipoRapporto().getFl_inquadramento().booleanValue();
+    }
+    public boolean isProceduraForBorseStudio(){
+    	return this.getTipo_incarico()!=null &&
+    		   this.getTipo_incarico().getTipo_associazione()!=null &&
+    		   this.getTipo_incarico().getTipo_associazione().equals(Tipo_incaricoBulk.ASS_BORSE_STUDIO) &&
+    		   this.getTipo_attivita()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione().equals(Tipo_attivitaBulk.ASS_BORSE_STUDIO);
+    }
+    public boolean isProceduraForAssegniRicerca(){
+    	return this.getTipo_incarico()!=null &&
+     		   this.getTipo_incarico().getTipo_associazione()!=null &&
+    		   this.getTipo_incarico().getTipo_associazione().equals(Tipo_incaricoBulk.ASS_ASSEGNI_RICERCA) &&
+    		   this.getTipo_attivita()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione().equals(Tipo_attivitaBulk.ASS_ASSEGNI_RICERCA);
+    }
+    public boolean isProceduraForIncarichi(){
+    	return this.getTipo_incarico()!=null &&
+     		   this.getTipo_incarico().getTipo_associazione()!=null &&
+    		   this.getTipo_incarico().getTipo_associazione().equals(Tipo_incaricoBulk.ASS_INCARICHI) &&
+    		   this.getTipo_attivita()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione().equals(Tipo_attivitaBulk.ASS_INCARICHI);
+    }
+    public boolean isDichiarazioneContraenteRequired(){
+    	return this.isProceduraForIncarichi() && !this.isProceduraForOccasionali();
     }
     public boolean isProceduraMultiIncarico(){
     	return getNr_contratti()!=null &&
@@ -967,5 +1041,245 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	public Incarichi_procedura_noteBulk removeFromIncarichi_procedura_noteColl(int index) {
 		Incarichi_procedura_noteBulk dett = (Incarichi_procedura_noteBulk)getIncarichi_procedura_noteColl().remove(index);
 		return dett;
+	}
+    public java.util.Collection getTipologie_prestazioni() {
+    	return tipologie_prestazioni;
+    }
+    public void setTipologie_prestazioni(java.util.Collection tipologie_prestazioni) {
+		this.tipologie_prestazioni = tipologie_prestazioni;
+	}
+	public Tipo_attivita_fpBulk getTipo_attivita_fp() {
+		return tipo_attivita_fp;
+	}
+	public void setTipo_attivita_fp(Tipo_attivita_fpBulk tipo_attivita_fp) {
+		this.tipo_attivita_fp = tipo_attivita_fp;
+	}
+	@Override
+	public String getCd_tipo_attivita_fp() {
+		if (this.getTipo_attivita_fp() == null)
+			return null;
+		return this.getTipo_attivita_fp().getCd_tipo_attivita();
+	}
+	public void setCd_tipo_attivita_fp(java.lang.String cd_tipo_attivita_fp) {
+		if (this.getTipo_attivita_fp() != null)
+			this.getTipo_attivita_fp().setCd_tipo_attivita(cd_tipo_attivita_fp);
+	}
+	public Tipo_attivita_fpBulk getTipo_attivita_fp0() {
+		return tipo_attivita_fp0;
+	}
+	public void setTipo_attivita_fp0(Tipo_attivita_fpBulk tipo_attivita_fp0) {
+		this.tipo_attivita_fp0 = tipo_attivita_fp0;
+	}
+	public Tipo_attivita_fpBulk getTipo_attivita_fp1() {
+		return tipo_attivita_fp1;
+	}
+	public void setTipo_attivita_fp1(Tipo_attivita_fpBulk tipo_attivita_fp1) {
+		this.tipo_attivita_fp1 = tipo_attivita_fp1;
+	}
+	public Tipo_prestazioneBulk getTipo_prestazione_orig() {
+		return tipo_prestazione_orig;
+	}
+	public void setTipo_prestazione_orig(Tipo_prestazioneBulk tipo_prestazione_orig) {
+		this.tipo_prestazione_orig = tipo_prestazione_orig;
+	}
+    public Tipo_attivita_fpBulk getTipo_attivita_fp_orig() {
+		return tipo_attivita_fp_orig;
+	}
+    public void setTipo_attivita_fp_orig(Tipo_attivita_fpBulk tipo_attivita_fp_orig) {
+		this.tipo_attivita_fp_orig = tipo_attivita_fp_orig;
+	}
+	public boolean isROTipoAttivitaFp(){
+		return getTipo_attivita_fp_orig()!=null?isROTipoAttivita():false;
+	}
+	public boolean isROTipoPrestazione(){
+		return getTipo_prestazione_orig()!=null?isROTipoAttivita():false;
+	}
+	public Tipo_norma_perlaBulk getTipo_norma_perla() {
+		return tipo_norma_perla;
+	}
+	public void setTipo_norma_perla(Tipo_norma_perlaBulk tipo_norma_perla) {
+		this.tipo_norma_perla = tipo_norma_perla;
+	}
+	public String getCd_tipo_norma_perla() {
+		if (this.getTipo_norma_perla() == null)
+			return null;
+		return this.getTipo_norma_perla().getCd_tipo_norma();
+	}
+	public void setCd_tipo_norma_perla(String cd_tipo_norma_perla) {
+		if (this.getTipo_norma_perla() != null)
+			this.getTipo_norma_perla().setCd_tipo_norma(cd_tipo_norma_perla);
+	}
+	public Tipo_norma_perlaBulk getTipo_norma_perla_orig() {
+		return tipo_norma_perla_orig;
+	}
+	public void setTipo_norma_perla_orig(Tipo_norma_perlaBulk tipo_norma_perla_orig) {
+		this.tipo_norma_perla_orig = tipo_norma_perla_orig;
+	}
+	public java.util.Collection getTipologie_norma_perla() {
+		return tipologie_norma_perla;
+	}
+	public void setTipologie_norma_perla(java.util.Collection tipologie_norma_perla) {
+		this.tipologie_norma_perla = tipologie_norma_perla;
+	}
+	public boolean isROTipoNormaPerla(){
+		if (isROFlApplicazioneNorma()) return true;
+		if (!isApplicazioneNormaAttiva()) return true;
+		if (getTipo_norma_perla_orig()!=null) return isROTipoAttivita();
+		return false;
+	}
+	public String getFl_applicazione_norma_orig() {
+		return fl_applicazione_norma_orig;
+	}
+	public void setFl_applicazione_norma_orig(String fl_applicazione_norma_orig) {
+		this.fl_applicazione_norma_orig = fl_applicazione_norma_orig;
+	}
+	public boolean isROFlApplicazioneNorma(){
+		return getFl_applicazione_norma_orig()!=null?isROTipoAttivita():false;
+	}
+	public boolean isApplicazioneNormaAttiva(){
+		return getFl_applicazione_norma()!=null &&
+			   getFl_applicazione_norma().equals(APPLICAZIONE_NORMA_YES);
+	}
+	
+	private class Incarichi_parametriLink implements Serializable{
+		private Incarichi_parametriBulk incarichiParametri;
+		private String cdProcAmm, cdTipoAtt, cdTipoInc, tipoNatura; 
+		private boolean flMeraOcc=false, flArt51=false;
+
+		public Incarichi_parametriBulk getIncarichiParametri() {
+			return incarichiParametri;
+		}
+
+		public void setIncarichiParametri(Incarichi_parametriBulk parametri) {
+			this.incarichiParametri = parametri;
+		}
+
+		private String getCdProcAmm() {
+			return cdProcAmm;
+		}
+
+		private void setCdProcAmm(String cdProcAmm) {
+			this.cdProcAmm = cdProcAmm;
+		}
+
+		private String getCdTipoAtt() {
+			return cdTipoAtt;
+		}
+
+		private void setCdTipoAtt(String cdTipoAtt) {
+			this.cdTipoAtt = cdTipoAtt;
+		}
+
+		private String getCdTipoInc() {
+			return cdTipoInc;
+		}
+
+		private void setCdTipoInc(String cdTipoInc) {
+			this.cdTipoInc = cdTipoInc;
+		}
+
+		private String getTipoNatura() {
+			return tipoNatura;
+		}
+
+		private void setTipoNatura(String tipoNatura) {
+			this.tipoNatura = tipoNatura;
+		}
+
+		private boolean isFlMeraOcc() {
+			return flMeraOcc;
+		}
+
+		private void setFlMeraOcc(boolean flMeraOcc) {
+			this.flMeraOcc = flMeraOcc;
+		}
+
+		private boolean isFlArt51() {
+			return flArt51;
+		}
+
+		private void setFlArt51(boolean flArt51) {
+			this.flArt51 = flArt51;
+		}
+		
+		public boolean isEqualsFieldParameter(Incarichi_proceduraBulk procedura) {
+			String cdProcAmmNew = procedura.getProcedura_amministrativa()!=null?procedura.getProcedura_amministrativa().getCd_proc_amm():null;
+			String cdTipoAttNew = procedura.getTipo_attivita()!=null?procedura.getTipo_attivita().getCd_tipo_attivita():null;
+			String cdTipoIncNew = procedura.getTipo_incarico()!=null?procedura.getTipo_incarico().getCd_tipo_incarico():null;
+			String tipoNaturaNew = procedura.getTipo_natura();
+			boolean isFlMeraOccNew = procedura.getFl_meramente_occasionale()==null?false:procedura.getFl_meramente_occasionale();
+			boolean isFlArt51New = procedura.getFl_art51()==null?false:procedura.getFl_art51();
+
+			if ((getCdProcAmm()==null && cdProcAmmNew!=null)||(getCdProcAmm()!=null && cdProcAmmNew==null)||
+				(getCdProcAmm()!=null && cdProcAmmNew!=null && !getCdProcAmm().equals(cdProcAmmNew)) ||
+				(getCdTipoAtt()==null && cdTipoAttNew!=null)||(getCdTipoAtt()!=null && cdTipoAttNew==null)||
+				(getCdTipoAtt()!=null && cdTipoAttNew!=null && !getCdTipoAtt().equals(cdTipoAttNew)) ||			
+				(getCdTipoInc()==null && cdTipoIncNew!=null)||(getCdTipoInc()!=null && cdTipoIncNew==null)||
+				(getCdTipoInc()!=null && cdTipoIncNew!=null && !getCdTipoInc().equals(cdTipoIncNew)) ||			
+				(getTipoNatura()==null && tipoNaturaNew!=null)||(getTipoNatura()!=null && tipoNaturaNew==null)||
+				(getTipoNatura()!=null && tipoNaturaNew!=null && !getTipoNatura().equals(tipoNaturaNew)) ||			
+				isFlMeraOcc()!=isFlMeraOccNew || isFlArt51()!=isFlArt51New)
+				return false;
+			else
+				return true;
+		}
+		
+		public void initIncarichiParametri(Incarichi_proceduraBulk procedura, Incarichi_parametriBulk incarichiParametri) {
+			String cdProcAmmNew = procedura.getProcedura_amministrativa()!=null?procedura.getProcedura_amministrativa().getCd_proc_amm():null;
+			String cdTipoAttNew = procedura.getTipo_attivita()!=null?procedura.getTipo_attivita().getCd_tipo_attivita():null;
+			String cdTipoIncNew = procedura.getTipo_incarico()!=null?procedura.getTipo_incarico().getCd_tipo_incarico():null;
+			String tipoNaturaNew = procedura.getTipo_natura();
+			boolean isFlMeraOccNew = procedura.getFl_meramente_occasionale()==null?false:procedura.getFl_meramente_occasionale();
+			boolean isFlArt51New = procedura.getFl_art51()==null?false:procedura.getFl_art51();
+
+			setCdProcAmm(cdProcAmmNew);
+			setCdTipoAtt(cdTipoAttNew);
+			setCdTipoInc(cdTipoIncNew);
+			setTipoNatura(tipoNaturaNew);
+			setFlMeraOcc(isFlMeraOccNew);
+			setFlArt51(isFlArt51New);
+
+			setIncarichiParametri(incarichiParametri);
+		}
+			
+	}
+
+	private Incarichi_parametriLink incarichi_parametriLink;
+	
+	private Incarichi_parametriLink getIncarichi_parametriLink() {
+		return incarichi_parametriLink;
+	}
+	private void setIncarichi_parametriLink(Incarichi_parametriLink incarichi_parametriLink) {
+		this.incarichi_parametriLink = incarichi_parametriLink;
+	}
+
+	public CMISFolderProcedura getCMISFolder() {
+		return new CMISFolderProcedura(this);
+	}
+	
+	public boolean isEqualsFieldParameter() {
+		if (this.getIncarichi_parametriLink()==null)
+			return false;
+		return this.getIncarichi_parametriLink().isEqualsFieldParameter(this);
+	}
+
+	public void initIncarichiParametri(Incarichi_parametriBulk incarichiParametri) {
+		if (getIncarichi_parametriLink()==null)
+			setIncarichi_parametriLink(new Incarichi_parametriLink());
+		getIncarichi_parametriLink().initIncarichiParametri(this, incarichiParametri);
+	}
+
+	public Incarichi_parametriBulk getIncarichiParametri() {
+		if (getIncarichi_parametriLink()==null)
+			return null;
+		return getIncarichi_parametriLink().getIncarichiParametri();
+	}
+	
+	public Incarichi_repertorioBulk getIncaricoRepertorioForSearch() {
+		return incaricoRepertorioForSearch;
+	}
+	
+	public void setIncaricoRepertorioForSearch(Incarichi_repertorioBulk incaricoRepertorioForSearch) {
+		this.incaricoRepertorioForSearch = incaricoRepertorioForSearch;
 	}
 }

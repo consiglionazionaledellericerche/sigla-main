@@ -68,6 +68,10 @@
 		<td>
 				<% bp.getController().writeFormLabel(out,"targa"); %>
 				<% bp.getController().writeFormInput(out,null,"targa"); %>
+		</td>	
+		<td>
+				<% bp.getController().writeFormLabel(out,"seriale"); %>
+				<% bp.getController().writeFormInput(out,null,"seriale",((bene!=null && bene.isROseriale())),null,null); %>
 		</td>		
 	  <tr>
 		<td>

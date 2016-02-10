@@ -1,9 +1,6 @@
 package it.cnr.contab.pdg00.cdip.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Persistent;
 
 public class V_cdp_matricolaBase extends V_cdp_matricolaKey implements Persistent {
 	// CD_LIVELLO_1 VARCHAR(3)
@@ -72,6 +69,9 @@ public class V_cdp_matricolaBase extends V_cdp_matricolaKey implements Persisten
 	// ORIGINE_FONTI VARCHAR(3) NULL
 	private java.lang.String origine_fonti;
 	
+	// FL_RAPPORTO13 VARCHAR(1) NOT NULL
+	private java.lang.Boolean fl_rapporto13;
+
 public V_cdp_matricolaBase() {
 	super();
 }
@@ -332,5 +332,11 @@ public java.lang.String getOrigine_fonti() {
 }
 public void setOrigine_fonti(java.lang.String origine_fonti) {
 	this.origine_fonti = origine_fonti;
+}
+public java.lang.Boolean getFl_rapporto13() {
+	return fl_rapporto13;
+}
+public void setFl_rapporto13(java.lang.Boolean fl_rapporto13) {
+	this.fl_rapporto13 = fl_rapporto13;
 }
 }

@@ -1,7 +1,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="cd_modalita_pag"
@@ -28,6 +28,13 @@
 		keysProperty="ti_pagamentoKeys"
 		inputType="SELECT"  
 		nullable="false" />
+	<fieldProperty
+		name="tipoPagamentoSdi"
+		property="tipoPagamentoSdi"
+		label="Tipo pagamento per SDI"
+		keysProperty="tipoPagamentoSdiKeys"
+		inputType="SELECT"  
+		nullable="true" />
 	<fieldProperty
 		name="fl_per_cessione"
 		property="fl_per_cessione"
@@ -65,6 +72,9 @@
 		name="ti_pagamento"
 		/>
 	<columnFieldProperty
+		name="tipoPagamentoSdi"
+		/>
+	<columnFieldProperty
 		name="fl_per_cessione"
 		/>
 	<columnFieldProperty
@@ -86,6 +96,9 @@
 	<formFieldProperty
 		name="ti_pagamento"		
 		command="doDefault"
+		/>
+	<formFieldProperty
+		name="tipoPagamentoSdi"		
 		/>
 	<formFieldProperty
 		name="fl_per_cessione"

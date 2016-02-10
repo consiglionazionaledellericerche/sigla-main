@@ -405,6 +405,75 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_MERCE_INTRA_UE"
+			propertyName="fl_merce_intra_ue"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="DATA_PROTOCOLLO"
+			propertyName="data_protocollo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"/>	
+		<columnMapping
+			columnName="PROGR_UNIVOCO"
+			propertyName="progr_univoco"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />		
+		<columnMapping
+			columnName="STATO_LIQUIDAZIONE"
+			propertyName="stato_liquidazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>
+		<columnMapping
+			columnName="CDS_COMPENSO"
+			propertyName="cds_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="UO_COMPENSO"
+			propertyName="uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		
+		<columnMapping
+			columnName="ID_PAESE"
+			propertyName="idPaese"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="ID_CODICE"
+			propertyName="idCodice"
+			sqlTypeName="VARCHAR"
+			columnSize="28"/>
+		<columnMapping
+			columnName="IDENTIFICATIVO_SDI"
+			propertyName="identificativoSdi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"/>
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"/>				
+					
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -542,4 +611,32 @@
 		name="fl_merce_extra_ue" />	
 	<persistentProperty
 		name="fl_liquidazione_differita" />		
+	<persistentProperty
+		name="fl_merce_intra_ue" />		
+	<persistentProperty
+		name="data_protocollo" />
+	<persistentProperty
+		name="progr_univoco" />	
+	<persistentProperty
+		name="stato_liquidazione" />
+	<persistentProperty
+		name="causale" />	
+	<persistentProperty
+		name="cds_compenso" />
+	<persistentProperty
+		name="pg_compenso" />
+	<persistentProperty
+		name="uo_compenso" />
+	<persistentProperty
+		name="esercizio_compenso" />
+	
+	<persistentProperty
+		name="idPaese" />
+	<persistentProperty
+		name="idCodice" />
+	<persistentProperty
+		name="identificativoSdi" />
+	<persistentProperty
+		name="progressivo" />		
+				
 </SQLPersistentInfo>

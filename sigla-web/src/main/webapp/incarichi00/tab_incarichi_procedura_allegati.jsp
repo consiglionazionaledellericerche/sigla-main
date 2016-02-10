@@ -34,7 +34,8 @@
     
 	boolean isRODettaglio = false;
 	if (allegato!=null && ((allegato.isContratto() && (bp.isSuperUtente() || bp.isUtenteAbilitatoModificaAllegatoContratto())) ||
-						   (allegato.isAllegatoGenerico() && bp.isSuperUtente()))) {
+						   (allegato.isAllegatoGenerico() && bp.isSuperUtente()) ||
+						   (allegato.isCurriculumVincitore() || allegato.isProgetto()))) {
 		isRODettaglio = procedura==null||allegato==null||!allegato.isToBeCreated()||
 						!allegato.isAllegatoValido()||
 						procedura.getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_PUBBLICAZIONE)==0||
@@ -50,16 +51,14 @@
 						(procedura.isProceduraInviataCorteConti() && 
 		 				!allegato.isAttoEsitoControllo() && !allegato.isAllegatoGenerico());
 	}
-;
+
+	boolean isFileDaAllegare = allegato!=null && allegato.isFileRequired();
+	boolean isUrlDaIndicare = allegato!=null && allegato.isUrlRequired();
 %>
 
 <script language="JavaScript">
 function doScaricaFile() {	
-   larghFinestra=5;
-   altezFinestra=5;
-   sinistra=(screen.width)/2;
-   alto=(screen.height)/2;
-   window.open("<%= (allegato==null?null:allegato.getDownloadUrl()) %>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
+	doPrint('<%=(allegato==null?null:allegato.getDownloadUrl())%>');
 }
 </script>
 
@@ -70,11 +69,11 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isBando() || allegato.isContratto() || allegato.isAllegatoDaPubblicare())) {%>
+	    	  (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group"><table>
-				<% if (allegato.isContratto()) { %>
+				<% if (allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
@@ -88,7 +87,7 @@ function doScaricaFile() {
 					</span>
 				</td></tr>
 				<% } %>
- 				<% if (allegato.isBando() || allegato.isContratto() || allegato.isAllegatoDaPubblicare()) { %>
+ 				<% if (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
@@ -104,24 +103,32 @@ function doScaricaFile() {
 		</tr>
 		<% } %>
 
-		<% if (!bp.isSearching() && !isRODettaglio) { %>
-		<tr>
-	        <td><% controller.writeFormLabel(out,"default","blob"); %></td>
-	        <td colspan=4><% controller.writeFormInput(out,"default","blob"); %></td>
-	    </tr>
+		<% if (!bp.isSearching() && !isRODettaglio && isFileDaAllegare) { %>
+			<tr>
+		        <td><% controller.writeFormLabel(out,"default","blob"); %></td>
+		        <td colspan=4><% controller.writeFormInput(out,"default","blob"); %></td>
+		    </tr>
 		<% } %>
 		<tr>
 	        <td><% controller.writeFormLabel(out,"default","ds_file"); %></td>
 	        <td colspan=4><% controller.writeFormInput(out,"default","ds_file", isRODettaglio,"FormInput",null); %></td>
 		</tr>
-		<tr>
-	        <td><% controller.writeFormLabel(out,"default","nome_file"); %></td>
-	        <td><% controller.writeFormInput(out,"default","nome_file"); %>
-		<% if (allegato!=null && !allegato.isToBeCreated()) {
-				controller.writeFormField(out,"default","attivaFile_blob");
-		 } %>
-			</td>
-		</tr>
+		<% if (isFileDaAllegare) { %>
+			<tr>
+		        <td><% controller.writeFormLabel(out,"default","nome_file"); %></td>
+		        <td><% controller.writeFormInput(out,"default","nome_file"); %>
+			<% if (allegato!=null && !allegato.isToBeCreated()) {
+					controller.writeFormField(out,"default","attivaFile_blob");
+			 } %>
+				</td>
+			</tr>
+		<% } %>
+		<% if (isUrlDaIndicare) { %>
+			<tr>
+		        <td><% controller.writeFormLabel(out,"default","url_file"); %></td>
+		        <td colspan=4><% controller.writeFormInput(out,"default","url_file", isRODettaglio,"FormInput",null); %></td>
+			</tr>
+		<% } %>
 		<tr>
 	  	    <td><% controller.writeFormLabel(out,"default","utcr"); %></td>
 			<td colspan=4><% controller.writeFormInput(out,"default","utcr",true,"FormInput",null); %></td>
