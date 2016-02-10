@@ -50,7 +50,7 @@ public class Utente_gestoreBulk extends Utente_gestoreBase {
 		gestore = newGestore;
 	}
 	public void setCd_gestore(String cd_gestore) {
-		this.getUtente().setCd_gestore(cd_gestore);
+		this.getGestore().setCd_gestore(cd_gestore);
 	}
 	
 	public static java.sql.Timestamp getDataOdierna() throws it.cnr.jada.action.BusinessProcessException

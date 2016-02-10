@@ -19,10 +19,10 @@ public NazioneHome(java.sql.Connection conn,PersistentCache persistentCache) {
  * Inutile negli altri casi
 */
 public NazioneBulk findNazione(String tipoNazione) throws PersistencyException{
-	
-	SQLBuilder sql = createSQLBuilder();
+	 
+	SQLBuilder sql = createSQLBuilder(); 
 	sql.addClause("AND", "ti_nazione", sql.EQUALS, tipoNazione);
-
+    sql.addOrderBy("pg_nazione"); 
 	NazioneBulk nazione = null;
 
 	Broker broker = createBroker(sql);

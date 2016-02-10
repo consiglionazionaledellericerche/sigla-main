@@ -1,7 +1,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Gruppo di Azioni Elementari"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Gruppo di Azioni Elementari"
           longDescription="Gruppo di Azioni Elementari">
 
 	<fieldProperty
@@ -246,7 +246,70 @@
 		CRUDBusinessProcessName="ModuloAttivitaBP"
 		/>
 
+
+	<fieldProperty
+		name="find_nodo_padre_2015"
+		property="modulo2015"
+		inputType="SEARCHTOOL"
+		readonlyProperty="utilizzata2015"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"
+		label="Commessa"/>
+	<fieldProperty
+		name="cd_modulo2015"
+		property="modulo2015.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROmodulo2015"
+		label="Codice Modulo di Attivita'"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="ds_modulo2015"
+		property="modulo2015.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>	
+
+	<fieldProperty
+		name="find_nodo_padre_2016"
+		property="progetto2016"
+		inputType="SEARCHTOOL"
+		readonlyProperty="utilizzata2016"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"
+		label="Area Progettuale"/>
+	<fieldProperty
+		name="cd_progetto2016"
+		property="progetto2016.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROprogetto2016"
+		label="Progetto"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="ds_progetto2016"
+		property="progetto2016.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>	
 	/*********************************************************/
+	
     <fieldProperty
 		name="cd_responsabile_terzo"
 		property="responsabile.cd_terzo"
@@ -271,7 +334,64 @@
 		enabledOnInsert="false"		
 		inputType="CHECKBOX"
 		/>
-		
+	<fieldProperty
+		name="cofog"
+		property="cofog"
+		label="Cofog"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		readonlyPropertyOnEdit="ROCofog"/>
+	<fieldProperty
+		name="cd_cofog"
+		property="cofog.cd_cofog"
+		label="cofog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="pdgProgramma"
+		property="pdgProgramma"
+		label="Programma"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_programma"
+		property="pdgProgramma.cd_programma"
+		label="Programma"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="pdgMissione"
+		property="pdgMissione"
+		label="Missione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_missione"
+		property="pdgMissione.cd_missione"
+		label="Missione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnFreeSearch="true" />	
+
+
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		label="Pg Progetto"/>
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -367,7 +487,31 @@
 		name="crea_modulo" />
 	<formFieldProperty
 		name="fl_limite_ass_obblig"/>
-				
+	<formFieldProperty
+		name="cd_cofog"/>	
+	<formFieldProperty
+		name="cofog"/>
+	<formFieldProperty
+		name="pdgProgramma"/>	
+	<formFieldProperty
+		name="cd_programma"/>
+	<formFieldProperty
+		name="pdgMissione"/>
+	<formFieldProperty
+		name="cd_missione"/>
+	<formFieldProperty
+		name="find_nodo_padre_2015"/>
+	<formFieldProperty
+		name="cd_modulo2015"/>
+	<formFieldProperty
+		name="ds_modulo2015"/>
+	<formFieldProperty
+		name="find_nodo_padre_2016"/>
+	<formFieldProperty
+		name="cd_progetto2016"/>
+	<formFieldProperty
+		name="ds_progetto2016"/>
+							
 	<columnFieldProperty
 		name="cd_linea_attivita"
 		label="Cod." />
@@ -405,6 +549,55 @@
 		name="cd_responsabile_terzo" />		
 	<columnFieldProperty
 		name="fl_limite_ass_obblig"/>
+	<columnFieldProperty
+		name="cd_cofog"/>
+
+	<columnSet	name="prg_liv2">
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			label="Cod." />
+		<columnFieldProperty
+			name="cd_progetto" 
+			label="Progetto"/>		
+		<columnFieldProperty
+			name="cd_progetto_padre"		
+			label="Area Progettuale"/>		
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			label="CDR" />
+		<columnFieldProperty
+			name="ds_linea_attivita"
+			label="Descrizione" />
+		<columnFieldProperty
+			name="cd_funzione"
+			label="Funzione" />
+		<columnFieldProperty
+			name="cd_natura"
+			label="Natura" />
+		<columnFieldProperty
+			name="denominazione" />
+		<columnFieldProperty
+			name="esercizio_fine" />
+		<columnFieldProperty
+			name="ti_gestione" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />		
+		<columnFieldProperty
+			name="cd_cofog"/>
+		<columnFieldProperty
+			name="cd_programma"/>
+		<columnFieldProperty
+			name="cd_missione"/>
+	</columnSet>
+		
+	<columnSet	name="restService">
+		<columnFieldProperty name="cd_linea_attivita"/>
+		<columnFieldProperty name="ds_linea_attivita"/>
+		<columnFieldProperty name="cd_centro_responsabilita"/>	
+		<columnFieldProperty name="pg_progetto"/>	
+		<columnFieldProperty name="esercizio_inizio"/>	
+		<columnFieldProperty name="esercizio_fine"/>	
+	</columnSet>
 
 	<columnSet name="columnSetPerAccertamento">
 		<columnFieldProperty name="cd_centro_responsabilita" label="CDR" />	
@@ -477,5 +670,15 @@
 		name="cd_responsabile_terzo" />		
 	<findFieldProperty
 		name="fl_limite_ass_obblig"/>
+	<findFieldProperty
+		name="cd_cofog"/>
+	<findFieldProperty
+		name="cd_programma"/>
+	<findFieldProperty
+		name="cd_missione"/>
+	<findFieldProperty
+		name="cd_modulo2015" />		
+	<findFieldProperty
+		name="cd_progetto2016" />		
 		
 </bulkInfo>

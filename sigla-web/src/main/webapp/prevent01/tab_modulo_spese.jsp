@@ -9,16 +9,17 @@
 <%
 	CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)BusinessProcess.getBusinessProcess(request);
 %>
-
-<%	bp.getCrudDettagliSpese().writeHTMLTable(pageContext,"default",true,false,true,"100%","100px"); %>
+<% bp.getCrudDettagliSpese().writeHTMLTable(pageContext,(bp.isFlNuovoPdg()?"without_area":"default"),true,false,true,"100%","100px"); 
+%>
 <table border="0" cellspacing="0" cellpadding="2">	
 <tr>
  <td align=left>
   <table border="0" cellspacing="0" cellpadding="2">	
 	<tr>
   	  <td NOWRAP><% bp.getCrudDettagliSpese().writeFormLabel(out,"classificazione");%></td>
-	  <td><% bp.getCrudDettagliSpese().writeFormInput(out,"classificazione");%></td>
+	  <td><% bp.getCrudDettagliSpese().writeFormInput(out,"classificazione");%>
 	</tr>
+	<br>
 	<tr>
 	  <td NOWRAP><% bp.getCrudDettagliSpese().writeFormLabel(out,"label_gestione_decentrata");%></td>
 	</tr>	
@@ -61,9 +62,16 @@
 	  <td NOWRAP><% bp.getCrudDettagliSpese().writeFormLabel(out,"im_spese_a3");%></td>
 	  <td><% bp.getCrudDettagliSpese().writeFormInput(out,"im_spese_a3");%></td>
 	</tr>	
+ <% if (!bp.isFlNuovoPdg()){%>
 	<tr>
 	  <% bp.getCrudDettagliSpese().writeFormField(out,"area");%>
 	</tr>
+ <% } %>
+ <% if (bp.isCofogObb()){%>
+	<tr>
+	  <% bp.getCrudDettagliSpese().writeFormField(out,"cofog");%>
+	</tr>
+ <% } %>
   </table>
  </td>
  <td align=right valign=top>

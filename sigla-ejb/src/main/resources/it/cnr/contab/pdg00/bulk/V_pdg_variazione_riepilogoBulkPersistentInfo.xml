@@ -50,7 +50,8 @@
 			columnName="IM_TOTALE"
 			propertyName="im_totale"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty

@@ -64,7 +64,10 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 public void deselectAll(it.cnr.jada.action.ActionContext context) {}
 public it.cnr.jada.util.RemoteIterator find(ActionContext context,it.cnr.jada.persistency.sql.CompoundFindClause clauses,OggettoBulk model) throws it.cnr.jada.action.BusinessProcessException {
 	try {
-		return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator( context ,((DistintaCassiereComponentSession)createComponentSession()).cercaMandatiEReversali(context.getUserContext(),clauses, (V_mandato_reversaleBulk)model, null));
+		CRUDDistintaCassiereBP bpp = (CRUDDistintaCassiereBP) this.getParent();
+		Distinta_cassiereBulk bulk=(Distinta_cassiereBulk)bpp.getModel();
+		bulk.setFl_flusso(bpp.isFlusso());
+		return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator( context ,((DistintaCassiereComponentSession)createComponentSession()).cercaMandatiEReversali(context.getUserContext(),clauses, (V_mandato_reversaleBulk)model, bulk));
 	} catch(Exception e) {
 		throw handleException(e);
 	}

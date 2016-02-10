@@ -3,12 +3,15 @@ package it.cnr.contab.util00.comp;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -38,6 +41,7 @@ public void aggiornaApprovazioneFormale(UserContext userContext, List list) thro
 		while(it.hasNext()) {
 			var = (Pdg_variazioneBulk)it.next();
 			var.setStato(Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			var.setDt_app_formale(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
 			try {
 				updateBulk(userContext, var);
 			} catch (it.cnr.jada.persistency.PersistencyException e){
@@ -62,9 +66,10 @@ public void aggiornaApprovazioneFormale(UserContext userContext, CompoundFindCla
 		sql.addClause(clause);
 		java.util.List list = getHome(userContext,Pdg_variazioneBulk.class).fetchAll(sql);
 		Iterator it = list.iterator();
-		while(it.hasNext()) {
+		while(it.hasNext()) { 
 			var = (Pdg_variazioneBulk)it.next();
 			var.setStato(Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			var.setDt_app_formale(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
 			updateBulk(userContext, var);
 		}
 	} catch (PersistencyException e) {

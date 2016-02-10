@@ -3,17 +3,18 @@ package it.cnr.contab.pdg00.bulk.cmis;
 import java.io.File;
 import java.util.StringTokenizer;
 
-import it.cnr.cmisdl.model.Node;
+import org.apache.chemistry.opencmis.client.api.Document;
+
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.bulk.OggettoBulk;
 @CMISType(name="cmis:document")
 public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 	private static final long serialVersionUID = 1L;
-	private Node node;
+	private Document node;
 	private File file;
 	private String contentType;
 	private String nome;
@@ -24,11 +25,11 @@ public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 		super();
 	}
 
-	public static AllegatoPdGVariazioneDocumentBulk construct(Node node){
+	public static AllegatoPdGVariazioneDocumentBulk construct(Document node){
 		return new AllegatoPdGVariazioneDocumentBulk(node);
 	}
 	
-	public AllegatoPdGVariazioneDocumentBulk(Node node) {
+	public AllegatoPdGVariazioneDocumentBulk(Document node) {
 		super();
 		this.node = node;
 	}
@@ -40,8 +41,8 @@ public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 		while (fileName.hasMoreTokens()){
 			newFileName = fileName.nextToken();   	
 		}
-		CMISService cmisService = SpringUtil.getBean("cmisService",
-				CMISService.class);		
+		SiglaCMISService cmisService = SpringUtil.getBean("cmisService",
+				SiglaCMISService.class);		
 
 		if (newFileName != null){
 			return cmisService.sanitizeFilename(newFileName);
@@ -50,10 +51,10 @@ public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 	}
 	
 	public boolean isNodePresent(){
-		return getNode() == null;
+		return getDocument() == null;
 	}
 	
-	public Node getNode() {
+	public Document getDocument() {
 		return node;
 	}
 

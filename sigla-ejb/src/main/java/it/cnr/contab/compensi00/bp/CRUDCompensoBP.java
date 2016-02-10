@@ -1,36 +1,43 @@
 package it.cnr.contab.compensi00.bp;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.Iterator;
-
-import it.cnr.contab.reports.bp.*;
-import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.contab.util.Utility;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.compensi00.tabrif.bulk.*;
-import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.compensi00.ejb.*;
-import it.cnr.contab.compensi00.comp.CompensoComponent;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.docamm00.bp.*;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.jada.*;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.bp.IValidaDocContBP;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
+import it.cnr.contab.reports.bp.OfflineReportPrintBP;
+import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bp.GestioneUtenteBP;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 
 /**
  * Insert the type's description here.
@@ -75,6 +82,8 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 	private boolean nocompenso = true;
 	private Boolean isGestioneIncarichiEnabled=null; 
 	
+	//private Boolean isGestionePrestazioneCompensoEnabled = null;
+	
 /**
  * CRUDCompensoBP constructor comment.
  */
@@ -98,6 +107,7 @@ public CRUDCompensoBP(String function) {
 private void aggiornaStatoBP() {
 
 	CompensoBulk compenso = (CompensoBulk)getModel();
+
 	if (!isViewing())
 	{
 		if (Boolean.TRUE.equals(compenso.getFl_compenso_stipendi()))
@@ -437,6 +447,28 @@ public void findTipiTrattamento(ActionContext context) throws BusinessProcessExc
 		throw handleException(ex);
 	}
 }
+public void findTipiPrestazioneCompenso(ActionContext context) throws BusinessProcessException{
+
+	try{
+		CompensoBulk compenso = (CompensoBulk)getModel();
+		if (compenso.getTipoRapporto()!= null) {
+			CompensoComponentSession component = (CompensoComponentSession)createComponentSession();
+			java.util.Collection coll = component.findTipiPrestazioneCompenso(context.getUserContext(), compenso);
+			compenso.setTipiPrestazioneCompenso(coll);
+
+			if((coll == null || coll.isEmpty()) && compenso.isPrestazioneCompensoEnabled()){
+				compenso.setTipoPrestazioneCompenso(null);
+				throw new it.cnr.jada.comp.ApplicationException("Non esistono Tipi di prestazione associati al Tipo di Rapporto selezionato");
+			}
+		}else
+			compenso.setTipoPrestazioneCompenso(null);
+			
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
 /**
  * Insert the method's description here.
  * Creation date: (27/05/2002 14.40.04)
@@ -556,6 +588,15 @@ protected void init(Config config, ActionContext context) throws BusinessProcess
 
 	try {
 		setGestioneIncarichiEnabled(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getFl_incarico());
+/*
+		String attivaPrestazione = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getVal01(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()), "*", "GESTIONE_COMPENSI", "ATTIVA_PRESTAZIONE");
+		if (attivaPrestazione==null)
+			throw new ApplicationException("Configurazione CNR: non sono stati impostati i valori per GESTIONE_COMPENSI - ATTIVA_PRESTAZIONE");
+		if (attivaPrestazione.compareTo(new String("Y"))==0)
+		    setGestionePrestazioneCompensoEnabled(true);
+		else
+			setGestionePrestazioneCompensoEnabled(false);
+*/
 	}catch(it.cnr.jada.comp.ComponentException ex){
 		throw handleException(ex);
 	}catch(java.rmi.RemoteException ex){
@@ -834,7 +875,8 @@ public boolean isDeleteButtonEnabled()
 					!compenso.isStatoCompensoEseguiCalcolo() &&
 					!isInputReadonly() &&
 					!isSearching() &&
-					!isInserting();
+					!isInserting() &&
+					!compenso.isDaFatturaPassiva();
 
 	//	Chiusura : se carico un compenso con esercizio precedente a quello solare :
 	//	- esercizio scrivania != anno solare e obbligazione riportata --> disabilito
@@ -1511,10 +1553,10 @@ public void validaIncaricoAnno(ActionContext context, Incarichi_repertorio_annoB
 	try {
 		if (incAnno!=null){
 			if (Utility.createIncarichiRepertorioComponentSession().hasVariazioneIntegrazioneIncaricoProvvisoria(context.getUserContext(), incAnno.getIncarichi_repertorio())) {
-				throw new it.cnr.jada.bulk.ValidationException("Incarico "+incAnno.getEsercizio()+"-"+incAnno.getPg_repertorio()+
+				throw new it.cnr.jada.bulk.ValidationException("Contratto "+incAnno.getEsercizio()+"-"+incAnno.getPg_repertorio()+
 						" non utilizzabile in quanto risulta associata una variazione di " +
 						"tipo \n\"Periodo transitorio - Adeguamento alla durata del progetto\" in stato \"Provvisorio\".\n"+
-						"Rendere \"Definitiva\" la variazione dell'incarico e successivamente registrare il compenso.");
+						"Rendere \"Definitiva\" la variazione del contratto e successivamente registrare il compenso.");
 			}
 		}
 	}catch(it.cnr.jada.comp.ComponentException ex){
@@ -1534,4 +1576,47 @@ public boolean isSospensioneIrpefOkPerContabil(UserContext userContext, Compenso
 		throw handleException(ex);
 	}
 }
+
+public void ricercaDatiTrovato(ActionContext context)  throws Exception {
+	FatturaPassivaComponentSession h;
+	CompensoBulk riga = (CompensoBulk)getModel();
+	try {
+		h = (FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class) ;
+		TrovatoBulk trovato = h.ricercaDatiTrovatoValido(context.getUserContext(), riga.getPg_trovato());
+		riga.setTrovato(trovato);
+	} catch (java.rmi.RemoteException e) {
+		riga.setTrovato(new TrovatoBulk());
+		handleException(e);
+	} catch (BusinessProcessException e) {
+		riga.setTrovato(new TrovatoBulk());
+		handleException(e);
+	} catch (Exception e) {
+		riga.setTrovato(new TrovatoBulk());
+		throw e;
+	}
+}
+/*
+public Boolean isGestionePrestazioneCompensoEnabled() {
+	return isGestionePrestazioneCompensoEnabled;
+}
+private void setGestionePrestazioneCompensoEnabled(Boolean isGestionePrestazioneCompensoEnabled) {
+	this.isGestionePrestazioneCompensoEnabled = isGestionePrestazioneCompensoEnabled;
+}
+*/
+public void valorizzaInfoDocEle(ActionContext context, CompensoBulk compenso) throws BusinessProcessException {
+
+	try {
+
+		CompensoComponentSession comp = (CompensoComponentSession)createComponentSession();
+		compenso = comp.valorizzaInfoDocEle(context.getUserContext(), compenso);
+
+		setModel(context, compenso);
+
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
+
 }

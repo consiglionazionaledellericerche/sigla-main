@@ -3,11 +3,7 @@ package it.cnr.contab.doccont00.intcass.bulk;
 import java.math.*;
 import java.sql.*;
 import java.util.*;
-
 import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
-import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaHome;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.*;
@@ -35,7 +31,7 @@ public BigDecimal calcolaTotMandati( Distinta_cassiereBulk distinta) throws SQLE
 			"B.PG_DISTINTA = ? AND " +
 			"B.PG_MANDATO IS NOT NULL AND " +						
 			"A.DT_ANNULLAMENTO IS NULL AND " +
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -67,6 +63,7 @@ public BigDecimal calcolaTotMandati( Distinta_cassiereBulk distinta) throws SQLE
 		try{ps.close();}catch( java.sql.SQLException e ){};
 	}	
 }
+
 public BigDecimal calcolaTotMandatiAccreditamento( Distinta_cassiereBulk distinta) throws SQLException
 {
 	BigDecimal totale = new BigDecimal(0);
@@ -233,7 +230,7 @@ public BigDecimal calcolaTotMandatiAnnullati( Distinta_cassiereBulk distinta) th
 			"(A.DT_TRASMISSIONE IS NULL OR " +
 			"(A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO < DT_TRASMISSIONE)) AND " +									
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -281,7 +278,7 @@ public BigDecimal calcolaTotMandatiAnnullatiRitrasmessi( Distinta_cassiereBulk d
 			"A.DT_ANNULLAMENTO IS NOT NULL AND " +
 			"A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO > DT_TRASMISSIONE AND " +									
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -328,7 +325,7 @@ public BigDecimal calcolaTotMandatiPagamento( Distinta_cassiereBulk distinta) th
 			"B.PG_MANDATO IS NOT NULL AND " +						
 			"A.DT_ANNULLAMENTO IS NULL AND " +
 			"A.TI_MANDATO = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -379,7 +376,7 @@ public BigDecimal calcolaTotMandatiPagamentoAnnullati( Distinta_cassiereBulk dis
 			"(A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO < DT_TRASMISSIONE)) AND " +									
 			"A.TI_MANDATO = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -429,7 +426,7 @@ public BigDecimal calcolaTotMandatiPagamentoAnnullatiRitrasmessi( Distinta_cassi
 			"A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO > DT_TRASMISSIONE AND " +									
 			"A.TI_MANDATO = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -477,7 +474,7 @@ public BigDecimal calcolaTotMandatiRegSospeso( Distinta_cassiereBulk distinta) t
 			"B.PG_MANDATO IS NOT NULL AND " +						
 			"A.DT_ANNULLAMENTO IS NULL AND " +
 			"A.TI_MANDATO = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -528,7 +525,7 @@ public BigDecimal calcolaTotMandatiRegSospesoAnnullati( Distinta_cassiereBulk di
 			"(A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO < DT_TRASMISSIONE)) AND " +									
 			"A.TI_MANDATO = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -578,7 +575,7 @@ public BigDecimal calcolaTotMandatiRegSospesoAnnullatiRitrasmessi( Distinta_cass
 			"A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO > DT_TRASMISSIONE AND " +									
 			"A.TI_MANDATO = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_MANDATO = B.PG_MANDATO ",true,this.getClass());
 
@@ -620,12 +617,12 @@ public BigDecimal calcolaTotReversali( Distinta_cassiereBulk distinta) throws SQ
 			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 
 			"REVERSALE A, DISTINTA_CASSIERE_DET B " +
 			"WHERE B.ESERCIZIO = ? AND " +
-			"B.CD_CDS = ? AND " +
+			"B.CD_CDS = ? AND " + 
 			"B.CD_UNITA_ORGANIZZATIVA = ? AND " +						
 			"B.PG_DISTINTA = ? AND " +
 			"B.PG_REVERSALE IS NOT NULL AND " +						
 			"A.DT_ANNULLAMENTO IS NULL AND " +
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_REVERSALE = B.PG_REVERSALE ",true ,this.getClass());
 	
@@ -693,7 +690,7 @@ public BigDecimal calcolaTotReversaliAnnullate( Distinta_cassiereBulk distinta) 
 			"(A.DT_TRASMISSIONE IS NULL OR " +
 			"(A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO < DT_TRASMISSIONE)) AND " +									
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_REVERSALE = B.PG_REVERSALE ",true ,this.getClass());
 	
@@ -762,7 +759,7 @@ public BigDecimal calcolaTotReversaliAnnullateRitrasmesse( Distinta_cassiereBulk
 		"A.DT_ANNULLAMENTO IS NOT NULL AND " +
 		"A.DT_TRASMISSIONE IS NOT NULL AND " +
 		"A.DT_ANNULLAMENTO > DT_TRASMISSIONE AND " +									
-		"A.CD_CDS = B.CD_CDS AND " +
+		"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 		"A.ESERCIZIO = B.ESERCIZIO AND " +
 		"A.PG_DOCUMENTO_CONT = B.PG_REVERSALE ",true ,this.getClass());							
 	
@@ -1273,7 +1270,7 @@ public BigDecimal calcolaTotReversaliRitenute( Distinta_cassiereBulk distinta) t
 			"B.PG_REVERSALE IS NOT NULL AND " +						
 			"A.DT_ANNULLAMENTO IS NULL AND " +
 			"A.TI_REVERSALE = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_REVERSALE = B.PG_REVERSALE ",true,this.getClass());						
 /*
@@ -1360,7 +1357,7 @@ public BigDecimal calcolaTotReversaliRitenuteAnnullate( Distinta_cassiereBulk di
 			"(A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO < DT_TRASMISSIONE)) AND " +									
 			"A.TI_REVERSALE = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_REVERSALE = B.PG_REVERSALE " ,true,this.getClass());						
 	
@@ -1411,7 +1408,7 @@ public BigDecimal calcolaTotReversaliRitenuteAnnullateRitrasmesse( Distinta_cass
 			"A.DT_TRASMISSIONE IS NOT NULL AND " +
 			"A.DT_ANNULLAMENTO > DT_TRASMISSIONE AND " +									
 			"A.TI_REVERSALE = ? AND " +												
-			"A.CD_CDS = B.CD_CDS AND " +
+			"A.CD_CDS = B.CD_CDS_ORIGINE AND " +
 			"A.ESERCIZIO = B.ESERCIZIO AND " +
 			"A.PG_REVERSALE = B.PG_REVERSALE " ,true,this.getClass());						
 /*
@@ -1843,48 +1840,5 @@ public java.util.List findDistintaCasserieDettagli( Distinta_cassiereBulk distin
 	sql.addClause("AND","cd_unita_organizzativa",SQLBuilder.EQUALS, distinta.getCd_unita_organizzativa());
 	sql.addClause("AND","pg_distinta",SQLBuilder.EQUALS, distinta.getPg_distinta());
 	return home.fetchAll(sql);
-}
-/**
- * 
- * @param userContext
- * @param distinta
- * @throws ComponentException
- */
-@SuppressWarnings("unchecked")
-public void avvisoDiPagamentoDipendenti(UserContext userContext, Distinta_cassiereBulk distinta) throws ComponentException{
-	try {
-		Fondo_spesaHome fondo_spesaHome = (Fondo_spesaHome) getHomeCache().getHome( Fondo_spesaBulk.class );
-		Distinta_cassiere_detHome distintaDetHome =  (Distinta_cassiere_detHome) getHomeCache().getHome( Distinta_cassiere_detBulk.class );
-		SQLBuilder sql = distintaDetHome.createSQLBuilder();
-		sql.addTableToHeader("MANDATO", "man");
-		sql.addClause(FindClause.AND, "distinta", SQLBuilder.EQUALS, distinta);
-		sql.addSQLJoin("distinta_cassiere_det.esercizio", "man.esercizio");
-		sql.addSQLJoin("distinta_cassiere_det.cd_cds", "man.cd_cds");
-		sql.addSQLJoin("distinta_cassiere_det.pg_mandato", "man.pg_mandato");
-		sql.openParenthesis(FindClause.AND);
-		sql.addClause(FindClause.AND, "man.ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_PAGAMENTO);
-		sql.addClause(FindClause.OR, "man.ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_REGOLAM_SOSPESO);
-		sql.closeParenthesis();
-		SQLBuilder sqlFondoSpesa = fondo_spesaHome.createSQLBuilder();
-		sqlFondoSpesa.addSQLJoin("fondo_spesa.esercizio_mandato", "man.esercizio");
-		sqlFondoSpesa.addSQLJoin("fondo_spesa.cd_cds_mandato", "man.cd_cds");
-		sqlFondoSpesa.addSQLJoin("fondo_spesa.pg_mandato", "man.pg_mandato");
-		sql.addSQLNotExistsClause(FindClause.AND, sqlFondoSpesa);
-		List<Distinta_cassiere_detBulk> dettagliDistinta =  distintaDetHome.fetchAll(sql);
-		for (Distinta_cassiere_detBulk dettaglioDistinta : dettagliDistinta) {
-			if (dettaglioDistinta.getPg_mandato() != null){
-				MandatoHome mandatoHome = (MandatoHome) getHomeCache().getHome(MandatoIBulk.class);
-				MandatoBulk mandato = new MandatoBulk(dettaglioDistinta.getCd_cds(), 
-													dettaglioDistinta.getEsercizio(), 
-													dettaglioDistinta.getPg_mandato());
-				mandato = (MandatoBulk) mandatoHome.findByPrimaryKey(mandato);
-				if (mandatoHome.isAvvisoDiPagamentoMandato(userContext, mandato, Boolean.FALSE)){
-					mandatoHome.sendAvvisoDiPagamento(userContext, mandato);
-				}
-			}
-		}
-	} catch (Exception e) {
-		throw new ComponentException( e );
-	}
 }
 }

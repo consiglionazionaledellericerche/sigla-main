@@ -1,14 +1,22 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
 import java.util.*;
+
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
-
-public class Distinta_cassiereBulk extends Distinta_cassiereBase {
+@CMISType(name="D:doccont:document")
+public class Distinta_cassiereBulk extends Distinta_cassiereBase{ 
 	private CdsBulk cds = new CdsBulk();
 	private Unita_organizzativaBulk unita_organizzativa = new Unita_organizzativaBulk();
 	private String cd_cds_ente;
@@ -27,6 +35,11 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase {
 	private java.math.BigDecimal totStoricoReversaliTrasferimentoTrasmesse = new java.math.BigDecimal(0);
 	private java.math.BigDecimal totStoricoReversaliRitenuteTrasmesse = new java.math.BigDecimal(0);	
 
+
+	@CMISProperty(name="doccont:tipo")
+	public String getCd_tipo_documento_cont() {
+	  return "DISTINTA";
+	 }
 
 
 
@@ -58,6 +71,7 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase {
 	private java.math.BigDecimal totReversaliRegSospesoBIAnnullateRitrasmesse = new java.math.BigDecimal(0);
 	private java.math.BigDecimal totReversaliRitenuteAnnullateRitrasmesse = new java.math.BigDecimal(0);			
 	private java.math.BigDecimal totReversaliTrasferimentoAnnullateRitrasmesse = new java.math.BigDecimal(0);
+	
 
 public Distinta_cassiereBulk() {
 	super();
@@ -318,6 +332,8 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	
 	setEsercizio( it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context) );
 	setUnita_organizzativa( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
+	setFl_flusso(Boolean.FALSE);
+	setFl_sepa(Boolean.FALSE);
 	return this;
 }
 /**
@@ -578,6 +594,29 @@ public boolean isCheckIbanEseguito() {
 }
 public void setCheckIbanEseguito(boolean checkIbanEseguito) {
 	this.checkIbanEseguito = checkIbanEseguito;
+}
+public String getCMISFolderName() {
+	String suffix = "Distinta n.";
+	suffix = suffix.concat(String.valueOf(getPg_distinta_def()));
+	return suffix;
+}
+
+@Override
+public String toString() {
+	return getCMISFolderName();
+}
+
+public  CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException {
+	CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR",CMISPath.class);
+	cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCd_unita_organizzativa(), 
+			getCd_unita_organizzativa(), 
+			getCd_unita_organizzativa());
+	cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Distinte" ,null, null);
+	cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getEsercizio().toString(), null, null);		
+	cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCMISFolderName(), 
+			null, 
+			null);
+	return cmisPath;		
 }
 
 }

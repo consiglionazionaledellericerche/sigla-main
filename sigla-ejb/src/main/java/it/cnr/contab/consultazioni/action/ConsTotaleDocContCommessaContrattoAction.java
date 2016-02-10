@@ -40,7 +40,7 @@ public class ConsTotaleDocContCommessaContrattoAction
 				//clauses.addClause("AND","tipo",SQLBuilder.EQUALS,"ETR");
 				java.math.BigDecimal tot_doc_cont = null;
 				if (bp.getSelection() != null && bp.getSelection().size() != bp.getElementsCount()){
-					tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+					tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					bp.setSelection(context);
 	
 					if ( bp.getSelectedElements(context) == null )
@@ -59,7 +59,7 @@ public class ConsTotaleDocContCommessaContrattoAction
 						tot_doc_cont = tot_doc_cont.add(wpb.getTotale_entrate());
 					}
 				}
-				if(tot_doc_cont != null && tot_doc_cont.compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN))==0){
+				if(tot_doc_cont != null && tot_doc_cont.compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP))==0){
 					bp.setMessage("Non ci sono Accertamenti da visualizzare.");
 					return bp.findDefaultForward();
 				}							
@@ -92,7 +92,7 @@ public class ConsTotaleDocContCommessaContrattoAction
 				//clauses.addClause("AND","tipo",SQLBuilder.EQUALS,"SPE");
 				java.math.BigDecimal tot_doc_cont = null;
 				if (bp.getSelection() != null && bp.getSelection().size() != bp.getElementsCount()){
-					tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+					tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					bp.setSelection(context);
 	
 					if ( bp.getSelectedElements(context) == null )
@@ -111,7 +111,7 @@ public class ConsTotaleDocContCommessaContrattoAction
 						tot_doc_cont = tot_doc_cont.add(wpb.getTotale_spese());
 					}
 				}
-				if(tot_doc_cont != null && tot_doc_cont.compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN))==0){
+				if(tot_doc_cont != null && tot_doc_cont.compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP))==0){
 					bp.setMessage("Non ci sono Obbligazioni da visualizzare.");
 					return bp.findDefaultForward();
 				}				

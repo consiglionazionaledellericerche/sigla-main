@@ -66,6 +66,7 @@ public class Pdg_moduloBulk extends Pdg_moduloBase {
 
 		statiKeys_CG = new it.cnr.jada.util.OrderedHashtable();
 		statiKeys_CG.put(STATO_CG,statiKeys.get(STATO_CG));
+		statiKeys_CG.put(STATO_AG,statiKeys.get(STATO_AG));
 	}
 
 	private java.lang.String cambia_stato;

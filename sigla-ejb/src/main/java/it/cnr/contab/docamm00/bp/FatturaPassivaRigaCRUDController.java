@@ -3,6 +3,7 @@ package it.cnr.contab.docamm00.bp;
 import java.util.List;
 
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.jada.action.*;
@@ -135,5 +136,21 @@ public void writeHTMLToolbar(
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDFatturaPassivaBP)getParentController()).isSearching())? command : null,
 			true,
 			"Contabilizza");
+		
+		if (getParentController() instanceof CRUDFatturaPassivaIBP) {
+			CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getParentController();
+			boolean enabled = bp.isDetailDoubleable() && 
+							  (!(isInputReadonly() || getDetails().isEmpty() || bp.isSearching() || bp.isViewing()) ||
+	                            bp.isManualModify()); 
+	
+			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)getModel();
+			enabled = enabled && !(riga==null || riga.getTi_associato_manrev() != null && riga.ASSOCIATO_A_MANDATO.equalsIgnoreCase(riga.getTi_associato_manrev()));
+
+			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+					context,
+					"img/bookmarks16.gif",
+					enabled ? "javascript:submitForm('doSdoppiaDettaglio');" : null,
+					true,"Sdoppia");
+		}
 }
 }

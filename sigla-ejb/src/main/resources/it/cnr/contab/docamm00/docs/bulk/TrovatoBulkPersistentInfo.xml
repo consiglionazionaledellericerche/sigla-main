@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo>
+	<defaultColumnMap >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa"
+			/>
+		<columnMapping
+			columnName="CD_UO"
+			propertyName="uo.cd_unita_organizzativa"
+			/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="uo" />
+</SQLPersistentInfo>

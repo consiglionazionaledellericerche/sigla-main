@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_programma_visiteBulk"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_programma_visiteHome">
+	<defaultColumnMap
+		tableName="BLT_PROGRAMMA_VISITE">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="bltProgetti.bltAccordo.cd_accordo" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="bltProgetti.cd_progetto" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="bltProgetti"
+		partOfOid="true" />
+</SQLPersistentInfo>

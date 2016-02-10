@@ -11,14 +11,17 @@ public class Dichiarazione_intentoKey extends OggettoBulk implements KeyedPersis
 
 	// ESERCIZIO DECIMAL(4,0) NOT NULL (PK)
 	private java.lang.Integer esercizio;
+	
+	private java.lang.Integer progr;
 
 public Dichiarazione_intentoKey() {
 	super();
 }
-public Dichiarazione_intentoKey(java.lang.Integer cd_anag,java.lang.Integer esercizio) {
+public Dichiarazione_intentoKey(java.lang.Integer cd_anag,java.lang.Integer esercizio,java.lang.Integer progr) {
 	super();
 	this.cd_anag = cd_anag;
 	this.esercizio = esercizio;
+	this.progr = progr;
 }
 public boolean equalsByPrimaryKey(Object o) {
 	if (this == o) return true;
@@ -26,6 +29,7 @@ public boolean equalsByPrimaryKey(Object o) {
 	Dichiarazione_intentoKey k = (Dichiarazione_intentoKey)o;
 	if(!compareKey(getCd_anag(),k.getCd_anag())) return false;
 	if(!compareKey(getEsercizio(),k.getEsercizio())) return false;
+	if(!compareKey(getProgr(),k.getProgr())) return false;
 	return true;
 }
 /* 
@@ -43,7 +47,8 @@ public java.lang.Integer getEsercizio() {
 public int primaryKeyHashCode() {
 	return
 		calculateKeyHashCode(getCd_anag())+
-		calculateKeyHashCode(getEsercizio());
+		calculateKeyHashCode(getEsercizio())+
+		calculateKeyHashCode(getProgr());
 }
 /* 
  * Setter dell'attributo cd_anag
@@ -57,4 +62,11 @@ public void setCd_anag(java.lang.Integer cd_anag) {
 public void setEsercizio(java.lang.Integer esercizio) {
 	this.esercizio = esercizio;
 }
+public java.lang.Integer getProgr() {
+	return progr;
+}
+public void setProgr(java.lang.Integer progr) {
+	this.progr = progr;
+}
+
 }

@@ -7,13 +7,14 @@
 			it.cnr.contab.pdg00.bp.FirmaDigitalePdgVariazioniBP"
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
 <head>
 <% JSPUtils.printBaseUrl(pageContext); %>
 <title>Risultato ricerca</title>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
 <script language="javascript" src="scripts/Ellips-sign.js"></script>
-<script language="javascript" src="scripts/applet_sign.js"></script>
+<script language="javascript" src="scripts/applet_sign_actalis.js"></script>
 </head>
 
 <body class="Form">

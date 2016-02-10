@@ -3,11 +3,6 @@
  * Date 26/07/2007
  */
 package it.cnr.contab.incarichi00.xmlfp.bulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -15,7 +10,6 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.sql.Connection;
@@ -29,11 +23,13 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 	}
 	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException {
 		try {
-			((Incarichi_comunicati_fpBulk)bulk).setPg_record(
-					new Long(
-					((Long)findAndLockMax( bulk, "pg_record", new Long(0) )).longValue()+1
-				)
-			);
+			if (((Incarichi_comunicati_fpBulk)bulk).getPg_record()==null) {
+				((Incarichi_comunicati_fpBulk)bulk).setPg_record(
+						new Long(
+						((Long)findAndLockMax( bulk, "pg_record", new Long(0) )).longValue()+1
+					)
+				);
+			}
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
 			throw new PersistencyException(e);
 		}
@@ -56,7 +52,7 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 			}
 	
 			sql.addClause(FindClause.AND, "tipo_record", SQLBuilder.EQUALS, Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
-			sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, Long.decode("1"));
+			sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, Incarichi_comunicati_fpBulk.PG_RECORD_PRINCIPALE);
 			
 			if (incComunicato.getId_incarico()!=null)
 				sql.addClause(FindClause.AND, "id_incarico", SQLBuilder.EQUALS, incComunicato.getId_incarico());
@@ -89,7 +85,7 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 			sql.addClause(FindClause.AND, "anno_riferimento", SQLBuilder.EQUALS, esercizio);
 			sql.addClause(FindClause.AND, "semestre_riferimento", SQLBuilder.EQUALS, semestre);
 			sql.addClause(FindClause.AND, "tipo_record", SQLBuilder.EQUALS, Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
-			sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, Long.decode("1"));
+			sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, Incarichi_comunicati_fpBulk.PG_RECORD_PRINCIPALE);
 			sql.addClause(FindClause.AND, "id_incarico", SQLBuilder.ISNOTNULL, null);
 			
 			
@@ -106,7 +102,6 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 			throw new PersistencyException( e );
 		}
 	}	
-
 	/**
 	 * Metodo per cercare i record di dettaglio collegati al record indicato
 	 *
@@ -125,7 +120,7 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 			sql.addClause(FindClause.AND, "pg_repertorio", SQLBuilder.EQUALS, incaricoComunicato.getPg_repertorio());
 			sql.addClause(FindClause.AND, "tipo_record", SQLBuilder.EQUALS, incaricoComunicato.getTipo_record());
 			sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, incaricoComunicato.getPg_record());
-			
+
 			return home.fetchAll(sql);	
 		}
 		catch( Exception e )

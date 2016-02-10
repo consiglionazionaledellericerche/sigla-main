@@ -29,6 +29,9 @@
 			columnName="CD_PROC_AMM"
 			propertyName="procedura_amministrativa.cd_proc_amm" />
 		<columnMapping
+			columnName="CD_PROC_AMM_BENEF"
+			propertyName="procedura_amministrativa_beneficiario.cd_proc_amm" />
+		<columnMapping
 			columnName="CD_TIPO_ATTO"
 			propertyName="atto.cd_tipo_atto" />
 		<columnMapping
@@ -38,11 +41,20 @@
 			columnName="CD_TIPO_ATTIVITA"
 			propertyName="tipo_attivita.cd_tipo_attivita" />
 		<columnMapping
+			columnName="CD_TIPO_PRESTAZIONE"
+			propertyName="tipo_prestazione.cd_tipo_prestazione" />
+		<columnMapping
 			columnName="ESERCIZIO_PADRE"
 			propertyName="incarichi_procedura_padre.esercizio" />
 		<columnMapping
 			columnName="PG_PROCEDURA_PADRE"
 			propertyName="incarichi_procedura_padre.pg_procedura" />
+		<columnMapping
+			columnName="CD_TIPO_ATTIVITA_FP"
+			propertyName="tipo_attivita_fp.cd_tipo_attivita" />
+		<columnMapping
+			columnName="CD_TIPO_NORMA_PERLA"
+			propertyName="tipo_norma_perla.cd_tipo_norma" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cds" />
@@ -59,11 +71,19 @@
 	<persistentProperty
 		name="procedura_amministrativa" />
 	<persistentProperty
+		name="procedura_amministrativa_beneficiario" />
+	<persistentProperty
 		name="atto" />
 	<persistentProperty
 		name="tipo_incarico" />
 	<persistentProperty
 		name="tipo_attivita" />
 	<persistentProperty
+		name="tipo_prestazione" />
+	<persistentProperty
 		name="incarichi_procedura_padre" />
+	<persistentProperty
+		name="tipo_attivita_fp" />
+	<persistentProperty
+		name="tipo_norma_perla" />
 </SQLPersistentInfo>

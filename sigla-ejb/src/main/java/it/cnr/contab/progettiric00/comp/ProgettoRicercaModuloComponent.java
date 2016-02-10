@@ -1,33 +1,39 @@
 package it.cnr.contab.progettiric00.comp;
 
 import java.math.BigDecimal;
-import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Ass_ev_evBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.blob.bulk.PostItHome;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
-import it.cnr.contab.progettiric00.core.bulk.*;
-import it.cnr.contab.progettiric00.tabrif.bulk.*;
-import it.cnr.contab.progettiric00.bp.*;
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.blob.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Stampa_anag_progettiVBulk;
+import it.cnr.contab.progettiric00.core.bulk.Stampa_progettiVBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.RemoteIterator;
 public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDComponent implements IProgettoRicercaMgr {
 	public static final String TIPO_PROGETTO = "M";
 /**
@@ -692,25 +698,40 @@ public DipartimentoBulk getDipartimentoModulo(UserContext userContext, ProgettoB
 		DipartimentoHome dipartimentohome = (DipartimentoHome)getHome(userContext, DipartimentoBulk.class);
 		SQLBuilder sql = dipartimentohome.createSQLBuilder();
 	
-	    ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+		ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
         SQLBuilder sqlProgetto = progettohome.createSQLBuilder();
-		sqlProgetto.addClause("AND", "esercizio", SQLBuilder.EQUALS, modulo.getEsercizio());
-		sqlProgetto.addClause("AND", "pg_progetto", SQLBuilder.EQUALS, modulo.getPg_progetto());
-		sqlProgetto.addClause("AND", "tipo_fase", SQLBuilder.EQUALS, modulo.getTipo_fase());
-		sqlProgetto.addClause("AND", "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
 
-		//Aggiungo in Join le commesse
-	    sqlProgetto.addTableToHeader("PROGETTO A");
-	    sqlProgetto.addSQLJoin("PROGETTO.ESERCIZIO_PROGETTO_PADRE","A.ESERCIZIO");
-	    sqlProgetto.addSQLJoin("PROGETTO.PG_PROGETTO_PADRE","A.PG_PROGETTO");
-	    sqlProgetto.addSQLJoin("PROGETTO.TIPO_FASE_PROGETTO_PADRE","A.TIPO_FASE");
-
-		//Aggiungo in Join i progetti
-	    sqlProgetto.addTableToHeader("PROGETTO B");
-	    sqlProgetto.addSQLJoin("A.ESERCIZIO_PROGETTO_PADRE","B.ESERCIZIO");
-	    sqlProgetto.addSQLJoin("A.PG_PROGETTO_PADRE","B.PG_PROGETTO");
-	    sqlProgetto.addSQLJoin("A.TIPO_FASE_PROGETTO_PADRE","B.TIPO_FASE");
-		sqlProgetto.addSQLJoin("B.CD_DIPARTIMENTO", "DIPARTIMENTO.CD_DIPARTIMENTO");
+        if (ProgettoBulk.LIVELLO_PROGETTO_SECONDO.equals(modulo.getLivello())) {
+			sqlProgetto.addClause("AND", "esercizio", SQLBuilder.EQUALS, modulo.getEsercizio());
+			sqlProgetto.addClause("AND", "pg_progetto", SQLBuilder.EQUALS, modulo.getPg_progetto());
+			sqlProgetto.addClause("AND", "tipo_fase", SQLBuilder.EQUALS, modulo.getTipo_fase());
+			sqlProgetto.addClause("AND", "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+	    	
+			//Aggiungo in Join le Aree Progettuali
+		    sqlProgetto.addTableToHeader("PROGETTO A");
+		    sqlProgetto.addSQLJoin("PROGETTO.ESERCIZIO_PROGETTO_PADRE","A.ESERCIZIO");
+		    sqlProgetto.addSQLJoin("PROGETTO.PG_PROGETTO_PADRE","A.PG_PROGETTO");
+		    sqlProgetto.addSQLJoin("PROGETTO.TIPO_FASE_PROGETTO_PADRE","A.TIPO_FASE");
+			sqlProgetto.addSQLJoin("A.CD_DIPARTIMENTO", "DIPARTIMENTO.CD_DIPARTIMENTO");
+	    } else {
+			sqlProgetto.addClause("AND", "esercizio", SQLBuilder.EQUALS, modulo.getEsercizio());
+			sqlProgetto.addClause("AND", "pg_progetto", SQLBuilder.EQUALS, modulo.getPg_progetto());
+			sqlProgetto.addClause("AND", "tipo_fase", SQLBuilder.EQUALS, modulo.getTipo_fase());
+			sqlProgetto.addClause("AND", "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+	
+			//Aggiungo in Join le commesse
+		    sqlProgetto.addTableToHeader("PROGETTO A");
+		    sqlProgetto.addSQLJoin("PROGETTO.ESERCIZIO_PROGETTO_PADRE","A.ESERCIZIO");
+		    sqlProgetto.addSQLJoin("PROGETTO.PG_PROGETTO_PADRE","A.PG_PROGETTO");
+		    sqlProgetto.addSQLJoin("PROGETTO.TIPO_FASE_PROGETTO_PADRE","A.TIPO_FASE");
+	
+			//Aggiungo in Join i progetti
+		    sqlProgetto.addTableToHeader("PROGETTO B");
+		    sqlProgetto.addSQLJoin("A.ESERCIZIO_PROGETTO_PADRE","B.ESERCIZIO");
+		    sqlProgetto.addSQLJoin("A.PG_PROGETTO_PADRE","B.PG_PROGETTO");
+		    sqlProgetto.addSQLJoin("A.TIPO_FASE_PROGETTO_PADRE","B.TIPO_FASE");
+			sqlProgetto.addSQLJoin("B.CD_DIPARTIMENTO", "DIPARTIMENTO.CD_DIPARTIMENTO");
+	    }
 	    
 	    sql.addSQLExistsClause("AND", sqlProgetto);	
 	

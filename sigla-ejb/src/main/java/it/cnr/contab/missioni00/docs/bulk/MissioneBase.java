@@ -33,7 +33,7 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.lang.String cd_uo_anticipo;
 
 	// CODICE_FISCALE VARCHAR(20)
-	@CMISPolicy(name="P:emp:cf", property=@CMISProperty(name="emp:cfcodice"))
+	@CMISPolicy(name="P:emp:cf", property=@CMISProperty(name="emp:codice"))
 	private java.lang.String codice_fiscale;
 
 	// COGNOME VARCHAR(50)
@@ -162,7 +162,12 @@ public class MissioneBase extends MissioneKey implements Keyed {
 
 	// TI_PROVVISORIO_DEFINITIVO CHAR(1) NOT NULL
 	private java.lang.String ti_provvisorio_definitivo;
+	
+	// IM_RIMBORSO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal im_rimborso;
 
+	private java.lang.String stato_liquidazione;
+	
 public MissioneBase() {
 	super();
 }
@@ -780,5 +785,17 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
  */
 public void setTi_provvisorio_definitivo(java.lang.String ti_provvisorio_definitivo) {
 	this.ti_provvisorio_definitivo = ti_provvisorio_definitivo;
+}
+public java.math.BigDecimal getIm_rimborso() {
+	return im_rimborso;
+}
+public void setIm_rimborso(java.math.BigDecimal im_rimborso) {
+	this.im_rimborso = im_rimborso;
+}
+public java.lang.String getStato_liquidazione() {
+	return stato_liquidazione;
+}
+public void setStato_liquidazione(java.lang.String stato_liquidazione) {
+	this.stato_liquidazione = stato_liquidazione;
 }
 }

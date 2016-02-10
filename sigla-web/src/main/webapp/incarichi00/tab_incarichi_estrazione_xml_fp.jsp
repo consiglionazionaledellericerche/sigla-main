@@ -49,9 +49,30 @@ function doScaricaFile(path) {
 	<td><% bp.getController().writeFormInput( out, "num_max_file_record"); %></td>
 	</tr>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "fl_crea_file_per_tipologia"); %></td>
-	<td><% bp.getController().writeFormInput( out, "fl_crea_file_per_tipologia"); %></td>
+	<td><% bp.getController().writeFormLabel( out, "fl_crea_file_modifiche"); %></td>
+	<td><% bp.getController().writeFormInput( out, "fl_crea_file_modifiche"); %></td>
 	</tr>
+    <% if (bulk!=null && !bulk.isROSelezione() && bulk.isFl_crea_file_modifiche()) { %> 
+		<tr>
+		<td><% bp.getController().writeFormLabel( out, "esercizio_inizio"); %></td>
+		<td><% bp.getController().writeFormInput( out, "esercizio_inizio"); %></td>
+		</tr>
+		<tr>
+		<td><% bp.getController().writeFormLabel( out, "semestre_inizio"); %></td>
+		<td><% bp.getController().writeFormInput( out, "semestre_inizio"); %></td>
+		</tr>
+	<% } %>
+	<tr>
+	<td><% bp.getController().writeFormLabel( out, "fl_crea_file_perla"); %></td>
+	<td><% bp.getController().writeFormInput( out, "fl_crea_file_perla"); %></td>
+	</tr>
+    <% if (bulk!=null && !bulk.isFl_crea_file_perla()) { %>
+		<tr>
+		<td><% bp.getController().writeFormLabel( out, "fl_crea_file_per_tipologia"); %></td>
+		<td><% bp.getController().writeFormInput( out, "fl_crea_file_per_tipologia"); %></td>
+		</tr>
+	<% } %>
+		
     <% if (bulk!=null && !bulk.isROSelezione()) { %> 
 		<tr>
 		<td><% bp.getController().writeFormLabel( out, "fl_crea_file_da_file"); %></td>

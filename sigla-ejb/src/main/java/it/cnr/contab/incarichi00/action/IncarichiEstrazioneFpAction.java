@@ -62,8 +62,10 @@ public class IncarichiEstrazioneFpAction extends it.cnr.jada.util.action.CRUDAct
 			CRUDIncarichiEstrazioneFpBP bp = (CRUDIncarichiEstrazioneFpBP)context.getBusinessProcess();
 			HookForward hook = (HookForward)context.getCaller();
 			List arraylist = (List)hook.getParameter("selectedElements");
-			bp.generaXML(context,arraylist);
-
+			if (((Incarichi_archivio_xml_fpBulk)bp.getModel()).isFl_crea_file_perla())
+				bp.generaXMLPerla(context, arraylist);
+			else
+				bp.generaXML(context, arraylist);
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 			return handleException(context,e);
@@ -74,7 +76,8 @@ public class IncarichiEstrazioneFpAction extends it.cnr.jada.util.action.CRUDAct
 		try {
 			fillModel(context);
 			CRUDIncarichiEstrazioneFpBP bp = (CRUDIncarichiEstrazioneFpBP)context.getBusinessProcess();
-			bp.clearSelection(context);
+			if (bp.getModel() instanceof Incarichi_archivio_xml_fpBulk)
+				bp.clearSelection(context, (Incarichi_archivio_xml_fpBulk)bp.getModel());
 
 			return context.findDefaultForward();
 		} catch(Throwable e) {

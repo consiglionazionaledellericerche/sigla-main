@@ -1,3 +1,4 @@
+<%@page import="it.cnr.contab.doccont00.bp.StampaElencoProgettiBP"%>
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,
 			it.cnr.jada.action.*,
@@ -12,11 +13,11 @@
 <% JSPUtils.printBaseUrl(pageContext);%>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Elenco Gruppo di Azioni Elementari per Progetto / Commessa / Modulo </title>
+<title>Stampa elenco Gruppo di Azioni Elementari</title>
 </head>
 <body class="Form">
 
-<%	BulkBP bp = (BulkBP)BusinessProcess.getBusinessProcess(request);
+<%	StampaElencoProgettiBP bp = (StampaElencoProgettiBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext);  %>
 <div class="Group" style="width:100%">
 <table>
@@ -24,18 +25,22 @@
 	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
 	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
   </tr>
+   
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"findProgettoForPrint"); %></td>
 	<td><% bp.getController().writeFormInput(out,"findProgettoForPrint"); %></td>
   </tr>
+ 
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"findCommessaForPrint"); %></td>
 	<td><% bp.getController().writeFormInput(out,"findCommessaForPrint"); %></td>
   </tr>
+ 	<% if (bp.getParametriCnr()!=null && !bp.getParametriCnr().getFl_nuovo_pdg()) { %>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"findModuloForPrint"); %></td>
 	<td><% bp.getController().writeFormInput(out,"findModuloForPrint"); %></td>
   </tr>
+   <%}%>
 </table> 
 <table> 
   <tr>

@@ -17,6 +17,12 @@
 			columnSize="10"
 			nullable="false" />
 		<columnMapping
+			columnName="CD_TIPO_ATTIVITA"
+			propertyName="cd_tipo_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
 			columnName="CD_CDS"
 			propertyName="cd_cds"
 			sqlTypeName="VARCHAR"
@@ -41,10 +47,34 @@
 			columnSize="300"
 			nullable="false" />
 		<columnMapping
-			columnName="NOMINATIVO"
-			propertyName="nominativo"
+			columnName="BENEF_CODICE_FISCALE"
+			propertyName="benef_codice_fiscale"
 			sqlTypeName="VARCHAR"
-			columnSize="100"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="BENEF_PARTITA_IVA"
+			propertyName="benef_partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="BENEF_DENOMINAZIONE_SEDE"
+			propertyName="benef_denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="RESP_DENOMINAZIONE_SEDE"
+			propertyName="resp_denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="FIRM_DENOMINAZIONE_SEDE"
+			propertyName="firm_denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
 			nullable="true" />
 		<columnMapping
 			columnName="OGGETTO"
@@ -95,12 +125,26 @@
 			sqlTypeName="DECIMAL"
 			columnSize="10"
 			nullable="false"/>
+		<columnMapping
+			columnName="DS_TIPO_NORMA"
+			propertyName="ds_tipo_norma"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROC_AMM"
+			propertyName="ds_proc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
 	</defaultColumnMap>
 
 	<persistentProperty
 		name="esercizio" />
 	<persistentProperty
 		name="pg_repertorio" />
+	<persistentProperty
+		name="cd_tipo_attivita" />
 	<persistentProperty
 		name="cd_cds" />
 	<persistentProperty
@@ -110,7 +154,15 @@
 	<persistentProperty
 		name="ds_unita_organizzativa" />
 	<persistentProperty
-		name="nominativo" />
+		name="benef_codice_fiscale" />
+	<persistentProperty
+		name="benef_partita_iva" />
+	<persistentProperty
+		name="benef_denominazione_sede" />
+	<persistentProperty
+		name="resp_denominazione_sede" />
+	<persistentProperty
+		name="firm_denominazione_sede" />
 	<persistentProperty
 		name="oggetto" />
 	<persistentProperty
@@ -127,4 +179,8 @@
 		name="esercizio_procedura" />
 	<persistentProperty
 		name="pg_procedura" />
+	<persistentProperty
+		name="ds_tipo_norma" />
+	<persistentProperty
+		name="ds_proc_amm" />
 </SQLPersistentInfo>

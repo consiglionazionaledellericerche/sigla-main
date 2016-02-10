@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.ReversaleSiopeCupIBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.ReversaleSiopeCupIHome" >
+	<defaultColumnMap
+		tableName="REVERSALE_SIOPE_CUP" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="reversale_siopeI.reversale_rigaI.reversaleI.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="reversale_siopeI.reversale_rigaI.reversaleI.esercizio" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="reversale_siopeI.reversale_rigaI.reversaleI.pg_reversale" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="reversale_siopeI.reversale_rigaI.esercizio_accertamento" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="reversale_siopeI.reversale_rigaI.esercizio_ori_accertamento" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="reversale_siopeI.reversale_rigaI.pg_accertamento" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="reversale_siopeI.reversale_rigaI.pg_accertamento_scadenzario" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="reversale_siopeI.reversale_rigaI.cd_cds_doc_amm" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="reversale_siopeI.reversale_rigaI.cd_uo_doc_amm" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="reversale_siopeI.reversale_rigaI.esercizio_doc_amm" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="reversale_siopeI.reversale_rigaI.cd_tipo_documento_amm" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="reversale_siopeI.reversale_rigaI.pg_doc_amm" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="reversale_siopeI.codice_siope.esercizio" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="reversale_siopeI.codice_siope.ti_gestione" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="reversale_siopeI.codice_siope.cd_siope" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="reversale_siopeI"
+		partOfOid="true" />
+</SQLPersistentInfo>

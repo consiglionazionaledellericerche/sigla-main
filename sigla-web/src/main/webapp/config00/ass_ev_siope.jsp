@@ -27,8 +27,8 @@
 
 	<table class="Panel">
 	<tr>
-		<td><% bp.getController().writeFormLabel( out, "esercizio_scrivania"); %></td>
-		<td><% bp.getController().writeFormInputByStatus( out, "esercizio_scrivania"); %></td>
+		<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
+		<td><% bp.getController().writeFormInputByStatus( out, "esercizio"); %></td>
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "ti_appartenenza"); %></td>

@@ -43,6 +43,9 @@
 		<columnMapping
 			columnName="PG_REPERTORIO"
 			propertyName="incarichi_repertorio.pg_repertorio" />
+		<columnMapping
+			columnName="TI_PRESTAZIONE"
+			propertyName="tipoPrestazioneCompenso.cd_ti_prestazione" />
 
 	</defaultColumnMap>		
 
@@ -58,4 +61,6 @@
 		name="minicarriera_origine" />
 	<persistentProperty
 		name="incarichi_repertorio" />
+	<persistentProperty
+		name="tipoPrestazioneCompenso" />			
 </SQLPersistentInfo>

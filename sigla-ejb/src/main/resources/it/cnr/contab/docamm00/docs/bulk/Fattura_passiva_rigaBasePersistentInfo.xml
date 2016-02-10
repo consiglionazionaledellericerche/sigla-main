@@ -268,6 +268,11 @@
 			propertyName="data_esigibilita_iva"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />			
+		<columnMapping
+			columnName="PG_TROVATO"
+			propertyName="pg_trovato"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_uo_assncna_eco" />
@@ -363,4 +368,6 @@
 		name="cd_terzo_cessionario" />	
 	<persistentProperty
 		name="data_esigibilita_iva" />			
+	<persistentProperty
+		name="pg_trovato" />		
 </SQLPersistentInfo>

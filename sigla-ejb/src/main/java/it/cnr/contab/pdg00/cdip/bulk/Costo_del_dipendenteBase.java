@@ -66,6 +66,9 @@ public class Costo_del_dipendenteBase extends Costo_del_dipendenteKey implements
 	// ORIGINE_FONTI VARCHAR(3) NULL
 	private java.lang.String origine_fonti;
 	
+	// FL_RAPPORTO13 VARCHAR(1) NOT NULL
+	private java.lang.Boolean fl_rapporto13;
+
 public Costo_del_dipendenteBase() {
 	super();
 }
@@ -305,5 +308,11 @@ public java.lang.String getOrigine_fonti() {
 }
 public void setOrigine_fonti(java.lang.String origine_fonti) {
 	this.origine_fonti = origine_fonti;
+}
+public java.lang.Boolean getFl_rapporto13() {
+	return fl_rapporto13;
+}
+public void setFl_rapporto13(java.lang.Boolean fl_rapporto13) {
+	this.fl_rapporto13 = fl_rapporto13;
 }
 }

@@ -9,6 +9,7 @@ public class Tipo_missioneBase extends Tipo_missioneKey implements Keyed {
 	// DS_TIPO_MISSIONE VARCHAR(100) NOT NULL
 	private java.lang.String ds_tipo_missione;
 
+private java.lang.Boolean fl_valido;
 public Tipo_missioneBase() {
 	super();
 }
@@ -26,5 +27,11 @@ public java.lang.String getDs_tipo_missione() {
  */
 public void setDs_tipo_missione(java.lang.String ds_tipo_missione) {
 	this.ds_tipo_missione = ds_tipo_missione;
+}
+public java.lang.Boolean getFl_valido() {
+	return fl_valido;
+}
+public void setFl_valido(java.lang.Boolean fl_valido) {
+	this.fl_valido = fl_valido;
 }
 }

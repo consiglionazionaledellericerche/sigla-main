@@ -8,13 +8,16 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.ws.WebFault;
-@WebService( name="StampaComponentWS",targetNamespace="http://contab.cnr.it/SIGLA")
+@WebService( name="StampaComponentWS",targetNamespace="http://contab.cnr.it/sigla")
 @Remote
 
 @SOAPBinding(style=Style.RPC, use=SOAPBinding.Use.LITERAL)
 public interface StampaComponentSessionWS {
 	  
-	 @WebMethod @WebResult(name="result") byte[] DownloadFattura(
+	 @WebMethod @WebResult(targetNamespace="http://contab.cnr.it/sigla",name="result") byte[] DownloadFattura(
+			 @WebParam (name="user") String user,
+			 @WebParam (name="pg_stampa") Long pg_stampa) ;
+	 @WebMethod @WebResult(targetNamespace="http://contab.cnr.it/sigla",name="result") Long inserisciDatiPerStampa(
 			 @WebParam (name="user") String user,
 			 @WebParam (name="esercizio") String esercizio,
 			 @WebParam (name="cds") String cds,

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="codAmm"
+		property="codAmm"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="codAmm" />
+	<fieldProperty
+		name="codOu"
+		property="codOu"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="codOu" />
+	<fieldProperty
+		name="codUniOu"
+		property="codUniOu"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="codUniOu" />
+	<fieldProperty
+		name="cf"
+		property="cf"
+		inputType="TEXT"
+		inputSize="11"
+		maxLength="11"
+		enabledOnEdit="false"
+		label="cf" />
+	<fieldProperty
+		name="dataAvvioSfe"
+		property="dataAvvioSfe"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataAvvioSfe" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="codAmm" />
+		<formFieldProperty
+			name="codOu" />
+	</form>
+	<formFieldProperty
+		name="codAmm" />
+	<formFieldProperty
+		name="codOu" />
+	<formFieldProperty
+		name="codUniOu" />
+	<formFieldProperty
+		name="cf" />
+	<formFieldProperty
+		name="dataAvvioSfe" />
+	<findFieldProperty
+		name="codAmm" />
+	<findFieldProperty
+		name="codOu" />
+	<findFieldProperty
+		name="codUniOu" />
+	<findFieldProperty
+		name="cf" />
+	<findFieldProperty
+		name="dataAvvioSfe" />
+	<columnFieldProperty
+		name="codAmm" />
+	<columnFieldProperty
+		name="codOu" />
+	<columnFieldProperty
+		name="codUniOu" />
+	<columnFieldProperty
+		name="cf" />
+	<columnFieldProperty
+		name="dataAvvioSfe" />
+</bulkInfo>

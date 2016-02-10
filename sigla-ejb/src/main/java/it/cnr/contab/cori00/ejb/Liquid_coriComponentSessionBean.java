@@ -1,9 +1,14 @@
 package it.cnr.contab.cori00.ejb;
+import java.rmi.RemoteException;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.cori00.comp.Liquid_coriComponent;
+import it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRCORI00_EJB_Liquid_coriComponentSession")
 public class Liquid_coriComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Liquid_coriComponentSession {
 @PostConstruct
@@ -423,5 +428,42 @@ public String getSedeInpdapF24(it.cnr.jada.UserContext param0) throws it.cnr.jad
 	} catch(Error e) {
 		throw uncaughtError(param0,componentObj,e);
 	}
+}
+public String getSedeInpgiF24(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		String result = ((Liquid_coriComponent)componentObj).getSedeInpgiF24(param0);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public void eliminaPendenti_f24Tot(UserContext param0) throws ComponentException,
+		RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((Liquid_coriComponent)componentObj).eliminaPendenti_f24Tot(param0);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+	
 }
 }

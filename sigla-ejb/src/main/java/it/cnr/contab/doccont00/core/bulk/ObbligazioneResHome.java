@@ -87,12 +87,15 @@ public class ObbligazioneResHome extends ObbligazioneHome {
 		if ( size == 0 )
 			return Collections.EMPTY_LIST;
 			
-		Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+		IVoceBilancioBulk capitolo = (IVoceBilancioBulk) capitoliList.iterator().next();
 
 		PersistentHome cdrHome = getHomeCache().getHome(CdrBulk.class);
 
 		SQLBuilder sql = cdrHome.createSQLBuilder();
-		sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, capitolo.getCd_unita_organizzativa());
+		if (capitolo instanceof Voce_fBulk)
+			sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, ((Voce_fBulk)capitolo).getCd_unita_organizzativa());
+		else
+			sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, obbligazione.getCd_unita_organizzativa());
 
 		return cdrHome.fetchAll(sql);
 	}

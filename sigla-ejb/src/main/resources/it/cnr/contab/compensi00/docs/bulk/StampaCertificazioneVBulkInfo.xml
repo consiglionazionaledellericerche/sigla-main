@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="tc"
@@ -51,6 +51,24 @@
 		inputSize="30" 
 		label="Ragione sociale" />
 	<fieldProperty
+		name="cognome"
+		property="anagraficoForPrint.cognome"
+		inputType="ROTEXT"
+		inputSize="50" 
+		label="Cognome" />
+	<fieldProperty
+		name="nome"
+		property="anagraficoForPrint.nome"
+		inputType="ROTEXT"
+		inputSize="50" 
+		label="Nome" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="ROTEXT"
+		inputSize="100" 
+		label="Denominazione" />		
+	<fieldProperty
 		name="note"
 		property="note"
 		inputType="TEXTAREA"
@@ -66,7 +84,7 @@
 	<formFieldProperty name="ti_cert" />
 	<formFieldProperty name="cd_anag" />
 	<formFieldProperty name="findAnagraficoForPrint" />
-	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="denominazione" />
 	<formFieldProperty name="note" />
 	
 	<form
@@ -128,6 +146,15 @@
 			parameterType="STRING"
 			paramNameJR="nota"
 			paramTypeJR="java.lang.String"  />
+	</printForm>
+		<printForm
+		name="/docamm/docamm/certificazione_comunicaz_pignorato.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
 	</printForm>
 
 </bulkInfo>

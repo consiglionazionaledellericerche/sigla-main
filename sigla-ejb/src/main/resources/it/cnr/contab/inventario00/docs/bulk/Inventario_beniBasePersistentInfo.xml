@@ -186,7 +186,12 @@
 			columnName="TARGA"
 			propertyName="targa"
 			sqlTypeName="VARCHAR"
-			columnSize="8" />			
+			columnSize="8" />		
+		<columnMapping
+			columnName="SERIALE"
+			propertyName="seriale"
+			sqlTypeName="VARCHAR"
+			columnSize="25" />				
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -250,4 +255,6 @@
 		name="cd_barre" />
 	<persistentProperty
 		name="targa" />	
+	<persistentProperty
+		name="seriale" />		
 </SQLPersistentInfo>

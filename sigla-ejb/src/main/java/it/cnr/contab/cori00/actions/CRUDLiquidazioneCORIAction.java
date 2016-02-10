@@ -126,12 +126,10 @@ public Forward doDettaglioGruppiLocaliFor(ActionContext context) {
 	Liquid_coriBulk liquid_cori = (Liquid_coriBulk)bp.getModel();
 	Liquid_gruppoCoriCRUDController gruppi_controller = (Liquid_gruppoCoriCRUDController)bp.getGruppi();
 	Liquid_gruppo_coriIBulk selected = (Liquid_gruppo_coriIBulk)gruppi_controller.getModel();
-
 	try {
-		Unita_organizzativaBulk uoOrigineSelected = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(context.getUserContext(),selected.getCd_uo_origine());
-	
 		if (selected == null)
 			return handleException(context, new it.cnr.jada.comp.ApplicationException("Selezionare un Gruppo."));
+		Unita_organizzativaBulk uoOrigineSelected = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(context.getUserContext(),selected.getCd_uo_origine());
 		
 		if (selected != null 
 				//&& selected.getCd_cds().compareTo(selected.getCd_cds_origine())!=0){
@@ -233,31 +231,50 @@ public Forward doConfermaF24(ActionContext context,int option) {
 }		
 
 public Forward doSelezionaF24(ActionContext context) {
-
 	try {
 	fillModel(context);
-
-	CRUDLiquidazioneCORIBP bp = (CRUDLiquidazioneCORIBP)context.getBusinessProcess();
-
-	bp.SelezionaF24(context);
-	    return context.findDefaultForward();
-	} catch (FillException e) {
-	return handleException(context, e);
-}
-	}	
-public Forward doSelezionaF24Prev(ActionContext context) {
-
-	try {
+	return openConfirm(context,"Si vuole selezionare anche i gruppi negativi?",OptionBP.CONFIRM_YES_NO,"doConfirmSelezionaF24");
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}	
+public Forward doConfirmSelezionaF24(ActionContext context,int option) {
+	try
+	{
 		fillModel(context);
-	
 		CRUDLiquidazioneCORIBP bp = (CRUDLiquidazioneCORIBP)context.getBusinessProcess();
-	
-		bp.SelezionaF24Prev(context);
-	    return context.findDefaultForward();
-	} catch (FillException e) {
-	return handleException(context, e);
+		if (option == OptionBP.YES_BUTTON) 
+			bp.SelezionaF24(context,true);
+		else
+			bp.SelezionaF24(context,false);
+	return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
 }
-	}	
+	
+public Forward doSelezionaF24Prev(ActionContext context) {
+try {
+		fillModel(context);
+		return openConfirm(context,"Si vuole selezionare anche i gruppi negativi?",OptionBP.CONFIRM_YES_NO,"doConfirmSelezionaF24Prev");
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}	
+public Forward doConfirmSelezionaF24Prev(ActionContext context,int option) {
+try
+	{
+		fillModel(context);
+		CRUDLiquidazioneCORIBP bp = (CRUDLiquidazioneCORIBP)context.getBusinessProcess();
+		if (option == OptionBP.YES_BUTTON) 
+			bp.SelezionaF24Prev(context,true);
+		else
+			bp.SelezionaF24Prev(context,false);
+	return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
 public Forward doF24EPTot(ActionContext context) {
 	try {
 		CRUDBP bp = getBusinessProcess(context);

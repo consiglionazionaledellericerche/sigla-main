@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.IpaAmministrazioniKey">
+	<defaultColumnMap
+		tableName="IPA_AMMINISTRAZIONI">
+		<columnMapping
+			columnName="COD_AMM"
+			propertyName="codAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="codAmm"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -21,8 +21,8 @@ public class Missione_tipo_pastoBase extends Missione_tipo_pastoKey implements K
 public Missione_tipo_pastoBase() {
 	super();
 }
-public Missione_tipo_pastoBase(java.lang.String cd_ti_pasto,java.sql.Timestamp dt_inizio_validita,java.lang.Long pg_nazione,java.lang.Long pg_rif_inquadramento,java.lang.String ti_area_geografica) {
-	super(cd_ti_pasto,dt_inizio_validita,pg_nazione,pg_rif_inquadramento,ti_area_geografica);
+public Missione_tipo_pastoBase(java.lang.String cd_ti_pasto,java.sql.Timestamp dt_inizio_validita,java.lang.Long pg_nazione,java.lang.Long pg_rif_inquadramento,java.lang.String ti_area_geografica,java.lang.String cd_area_estera) {
+	super(cd_ti_pasto,dt_inizio_validita,pg_nazione,pg_rif_inquadramento,ti_area_geografica,cd_area_estera);
 }
 /* 
  * Getter dell'attributo cd_divisa

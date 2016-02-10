@@ -95,5 +95,14 @@
 	<td><% bp.getController().writeFormLabel( out, "im_diaria_lorda"); %></td>
 	<td><% bp.getController().writeFormInput( out, "im_diaria_lorda"); %></td>
 	</tr>	
+	
+	<tr>
+	<td><span>TOTALE QUOTA RIMBORSO :  </span></td>
+	<td></td>
+	<td><% bp.getController().writeFormLabel( out, "im_rimborso"); %></td>
+	<td><% bp.getController().writeFormInput( out, "im_rimborso"); %></td>
+	<td><% bp.getController().writeFormLabel( out, "im_quota_esente"); %></td>
+	<td><% bp.getController().writeFormInput( out, "im_quota_esente"); %></td>
+	</tr>
 </table>
 </div>

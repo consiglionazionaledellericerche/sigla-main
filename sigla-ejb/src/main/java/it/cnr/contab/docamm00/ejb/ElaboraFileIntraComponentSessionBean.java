@@ -209,25 +209,6 @@ IntrospectionException, RemoteException {
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public Integer recuperoMaxProt(UserContext param0)
-		throws ComponentException, PersistencyException,
-		IntrospectionException, RemoteException {
-	pre_component_invocation(param0,componentObj);
-	try {
-		Integer result = ((ElaboraFileIntraComponent)componentObj).recuperoMaxProt(param0);
-		component_invocation_succes(param0,componentObj);
-		return result;
-	
-	} catch(it.cnr.jada.comp.ComponentException e) {
-		component_invocation_failure(param0,componentObj);
-		throw e;
-	} catch(RuntimeException e) {
-		throw uncaughtRuntimeException(param0,componentObj,e);
-	} catch(Error e) {
-		throw uncaughtError(param0,componentObj,e);
-	}
-}
-
 public void confermaElaborazione(UserContext param0,VIntrastatBulk bulk)
 		throws ComponentException, PersistencyException,
 		IntrospectionException, RemoteException {
@@ -260,5 +241,23 @@ throw uncaughtRuntimeException(param0,componentObj,e);
 } catch(Error e) {
 throw uncaughtError(param0,componentObj,e);
 }
-}	
+}
+public List EstraiBlacklist(UserContext param0, OggettoBulk param1,OggettoBulk param2)		
+	throws ComponentException, 
+	IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).EstraiBlacklist(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
 }

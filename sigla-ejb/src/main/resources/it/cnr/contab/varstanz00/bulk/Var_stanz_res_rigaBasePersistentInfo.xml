@@ -46,7 +46,7 @@
 			propertyName="cd_voce"
 			sqlTypeName="VARCHAR"
 			columnSize="50"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="CD_ELEMENTO_VOCE"
 			propertyName="cd_elemento_voce"

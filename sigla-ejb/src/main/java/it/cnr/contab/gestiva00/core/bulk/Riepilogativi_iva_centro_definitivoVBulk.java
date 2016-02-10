@@ -3,6 +3,7 @@ package it.cnr.contab.gestiva00.core.bulk;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.*;
 
 /**
@@ -11,7 +12,13 @@ import it.cnr.jada.util.*;
  * @author: Ardire Alfonso
  */
 public class Riepilogativi_iva_centro_definitivoVBulk extends Riepilogativi_iva_centroVBulk {
-
+	private Boolean intero_anno;
+	public Boolean getIntero_anno() {
+			return intero_anno;
+		}
+	public void setIntero_anno(Boolean interoAnno) {
+		intero_anno = interoAnno;
+	}
 /**
  * Filtro_ricerca_obbligazioniVBulk constructor comment.
  */
@@ -40,5 +47,17 @@ public it.cnr.jada.bulk.OggettoBulk initializeForSearch(
  */
 public boolean isPageNumberRequired() {
 	return true;
+}
+public void validate() throws ValidationException {
+	// TODO Auto-generated method stub
+	
+	if (getTipo_sezionale() == null && !isStarSezionali())
+		throw new ValidationException("Selezionare un tipo sezionale");
+	if (getMese() == null && getData_da() == null && getData_a() == null && !isRistampa())
+		throw new ValidationException("Selezionare un mese o l'intero anno");
+	if (getPageNumber() == null)
+		throw new ValidationException("Specificare il numero di pagina da cui iniziare la stampa!");
+	if (getPageNumber().intValue() < 1)
+		throw new ValidationException("Il numero di pagina da cui iniziare la stampa deve essere maggiore o uguale a 1!");
 }
 }

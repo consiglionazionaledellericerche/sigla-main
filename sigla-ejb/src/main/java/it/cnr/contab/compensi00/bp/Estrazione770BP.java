@@ -2,6 +2,7 @@ package it.cnr.contab.compensi00.bp;
 
 import it.cnr.contab.compensi00.ejb.*;
 import it.cnr.contab.compensi00.docs.bulk.Estrazione770Bulk;
+import it.cnr.contab.compensi00.docs.bulk.EstrazioneCUDBulk;
 import it.cnr.jada.action.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.util.action.*;
@@ -39,6 +40,11 @@ public void doElabora770(ActionContext context) throws BusinessProcessException 
 
 		Estrazione770Bulk e770 = (Estrazione770Bulk)getModel();
 		
+		if(e770.getQuadri_770() == null || e770.getQuadri_770().getCd_quadro()==null)
+			throw new it.cnr.jada.comp.ApplicationException("Prima di procedere all'estrazione del file è necessario scegliere il Quadro.");
+		if(e770.getQuadri_770() == null || e770.getQuadri_770().getTi_modello()==null)
+			throw new it.cnr.jada.comp.ApplicationException("Prima di procedere all'estrazione del file è necessario validare il Quadro.");
+		
 		CompensoComponentSession sess = (CompensoComponentSession)createComponentSession();
 		sess.doElabora770(context.getUserContext(), e770);
 
@@ -58,6 +64,7 @@ protected void init(Config config,ActionContext context) throws BusinessProcessE
 	try {
 		Estrazione770Bulk e770 = new Estrazione770Bulk();		
 		e770.setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
+		e770.setQuadri_770(null);//  setAnagrafico(new it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk());
 	
 		setModel(context, e770);
 	} catch(Throwable e) {

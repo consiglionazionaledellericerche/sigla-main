@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_prestazione"
+		property="cd_tipo_prestazione"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tipo_prestazione"
+		property="ds_tipo_prestazione"
+		inputType="TEXTAREA"
+		maxLength="200"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="tipo_classificazione"
+		property="tipo_classificazione"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		optionsProperty="tipologie_variazione"
+		inputType="SELECT"		
+		label="Classificazione" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Eliminato" />
+
+	<formFieldProperty
+		name="cd_tipo_prestazione" />
+	<formFieldProperty
+		name="ds_tipo_prestazione" />
+	<formFieldProperty
+		name="tipo_classificazione" />
+	<formFieldProperty
+		name="fl_cancellato" />
+
+	<columnFieldProperty
+		name="cd_tipo_prestazione" />
+	<columnFieldProperty
+		name="ds_tipo_prestazione" />
+	<columnFieldProperty
+		name="tipo_classificazione" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+
+	<findFieldProperty
+		name="cd_tipo_prestazione" />
+	<findFieldProperty
+		name="ds_tipo_prestazione" />
+	<findFieldProperty
+		name="tipo_classificazione" />
+	<findFieldProperty
+		name="fl_cancellato" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tipo_prestazione" />
+		<formFieldProperty
+			name="ds_tipo_prestazione"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+</bulkInfo>

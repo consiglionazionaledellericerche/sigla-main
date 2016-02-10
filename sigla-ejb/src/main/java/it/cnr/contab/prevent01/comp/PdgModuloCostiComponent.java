@@ -13,8 +13,12 @@ import java.util.Iterator;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
+import it.cnr.contab.config00.latt.bulk.CofogBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk;
+import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaHome;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
@@ -200,7 +204,8 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 				sql.closeParenthesis();  		      
 			sql.closeParenthesis();
 		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.ESERCIZIO", sql.EQUALS, dett.getEsercizio());
-		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.TI_GESTIONE", sql.EQUALS, Elemento_voceHome.GESTIONE_SPESE);		    
+		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.TI_GESTIONE", sql.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_SOLO_GESTIONE", sql.EQUALS,"N");
 			if (clause != null) 
 			  sql.addClause(clause);
 			return sql;
@@ -209,7 +214,7 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 		BigDecimal totale = Utility.ZERO;
 		try {
 			java.sql.ResultSet rs = null;
-			PreparedStatement ps = null;
+			LoggableStatement ps = null;
 			try {
 				ps = sql.prepareStatement(getConnection(userContext));
 				try {
@@ -265,10 +270,86 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 	public Pdg_modulo_speseBulk getPdgModuloSpeseBulk(it.cnr.jada.UserContext userContext, V_cons_pdgp_pdgg_speBulk consPdg) throws ComponentException {
 		try {
 			Pdg_modulo_speseHome pdgSpehome = (Pdg_modulo_speseHome)getHome(userContext, Pdg_modulo_speseBulk.class);
-			Pdg_modulo_speseBulk pdgSpeBulk = (Pdg_modulo_speseBulk)pdgSpehome.findByPrimaryKey(new Pdg_modulo_speseBulk(consPdg.getEsercizio(),consPdg.getCd_centro_responsabilita(),consPdg.getPg_progetto(),consPdg.getId_classificazione(),consPdg.getCd_cds_area()));
+			Pdg_modulo_speseBulk pdgSpeBulk = (Pdg_modulo_speseBulk)pdgSpehome.findByPrimaryKey(new Pdg_modulo_speseBulk(consPdg.getEsercizio(),consPdg.getCd_centro_responsabilita(),consPdg.getPg_progetto(),consPdg.getId_classificazione(),consPdg.getCd_cds_area(),consPdg.getPg_dettaglio()));
 			return pdgSpeBulk;
 		} catch(Throwable e) {
 			throw handleException(e);
 		}
+	}
+	public boolean soggettaLimite(UserContext usercontext,Pdg_modulo_speseBulk pdg_modulo_spese,String fonte)throws ComponentException {
+		try {
+			if (pdg_modulo_spese!=null && pdg_modulo_spese.getId_classificazione()!=null){
+				SQLBuilder sql = ((Elemento_voceHome)getHome(usercontext, Elemento_voceBulk.class)).createSQLBuilder();
+				sql.addSQLClause("AND","ID_CLASSIFICAZIONE" ,SQLBuilder.EQUALS,pdg_modulo_spese.getId_classificazione());
+				sql.addSQLClause("AND","FL_LIMITE_SPESA",SQLBuilder.EQUALS,"Y");
+				if (sql.executeExistsQuery(getConnection(usercontext))){
+					Elemento_voceHome home_voce =(Elemento_voceHome)getHome(usercontext,Elemento_voceBulk.class);
+					java.util.List voci=home_voce.fetchAll(sql);
+					for(Iterator i=voci.iterator();i.hasNext();){
+						Elemento_voceBulk voceBulk = (Elemento_voceBulk)i.next();
+						SQLBuilder sql2 = ((LimiteSpesaHome)getHome(usercontext, LimiteSpesaBulk.class)).createSQLBuilder();
+						sql2.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,voceBulk.getEsercizio());
+						sql2.addSQLClause("AND","TI_APPARTENENZA",SQLBuilder.EQUALS,voceBulk.getTi_appartenenza());
+						sql2.addSQLClause("AND","TI_GESTIONE",SQLBuilder.EQUALS,voceBulk.getTi_gestione());
+						sql2.addSQLClause("AND","CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceBulk.getCd_elemento_voce());
+						sql2.openParenthesis("AND");
+						sql2.addSQLClause("AND","FONTE",SQLBuilder.EQUALS,fonte);
+						sql2.addSQLClause("OR","FONTE",SQLBuilder.EQUALS,LimiteSpesaBulk.FONTE_INTERNA_E_ESTERNA);
+						sql2.closeParenthesis();
+						if(sql2.executeExistsQuery(getConnection(usercontext)))
+								return true;
+					}
+				}
+			}
+			return false;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}	
+	}
+	public SQLBuilder selectCofogByClause(UserContext userContext, Pdg_modulo_speseBulk dettaglio, CofogBulk cofog, CompoundFindClause clauses) 
+			throws ComponentException, EJBException, RemoteException
+	{		
+		    CdsBulk cds = Utility.createParametriEnteComponentSession().getCds(userContext,CNRUserContext.getCd_cds(userContext));
+			SQLBuilder sql = getHome(userContext, CofogBulk.class).createSQLBuilder();
+			sql.addClause( clauses );	
+			sql.addTableToHeader("PARAMETRI_CNR"); 
+			sql.addSQLClause("AND","PARAMETRI_CNR.ESERCIZIO",SQLBuilder.EQUALS,dettaglio.getEsercizio());
+			sql.addSQLJoin("COFOG.NR_LIVELLO","PARAMETRI_CNR.LIVELLO_PDG_COFOG");
+			if(cds.getCd_tipo_unita().compareTo(Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0){
+				sql.openParenthesis("AND");
+				sql.addSQLClause("AND", "COFOG.FL_ACCENTRATO", sql.EQUALS, "Y");
+				sql.addSQLClause("OR", "COFOG.FL_DECENTRATO", sql.EQUALS, "Y");
+				sql.closeParenthesis();
+			} 
+			else{
+				sql.addSQLClause("AND", "COFOG.FL_DECENTRATO", sql.EQUALS, "Y");
+			}
+		    sql.openParenthesis("AND");
+			sql.addSQLClause("AND", "COFOG.DT_CANCELLAZIONE", sql.ISNULL, null);
+			sql.addSQLClause("OR","COFOG.DT_CANCELLAZIONE",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+			sql.closeParenthesis(); 
+			return sql;
+	}
+	
+	@Override
+	protected void validaCreaModificaConBulk(UserContext usercontext,
+			OggettoBulk oggettobulk) throws ComponentException {
+		Pdg_modulo_costiBulk bulk =null;
+		
+		boolean cofog_obb=false;
+		try {
+			cofog_obb=(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(usercontext));
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
+		if (oggettobulk instanceof Pdg_modulo_costiBulk){
+			 bulk= (Pdg_modulo_costiBulk) oggettobulk;
+			for (Iterator i=bulk.getDettagliSpese().iterator();i.hasNext();){
+				 Pdg_modulo_speseBulk pdg_modulo_spese = (Pdg_modulo_speseBulk)i.next();
+			 if (pdg_modulo_spese!=null && cofog_obb && (pdg_modulo_spese.getCofog()==null||pdg_modulo_spese.getCd_cofog()==null)) 
+				 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la classificazione Cofog.");
+			}
+		}
+		super.validaCreaModificaConBulk(usercontext, oggettobulk);	
 	}
 }

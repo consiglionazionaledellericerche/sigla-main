@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.VRendicontazioneBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.VRendicontazioneHome">
+	<defaultColumnMap
+		tableName="V_RENDICONTAZIONE">
+		<columnMapping
+			columnName="TIPODOCUMENTO"
+			propertyName="tipodocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="18"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="101"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partitaIva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codiceFiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nrFatturaFornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dtFatturaFornitore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPORAPPORTO"
+			propertyName="tiporapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="MATRICOLA"
+			propertyName="matricola"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DOCUMENTO"
+			propertyName="dsDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_TOTALE"
+			propertyName="imTotale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_DOCUMENTO"
+			propertyName="pgDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INIZIO_COMP"
+			propertyName="dtInizioComp"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_COMP"
+			propertyName="dtFineComp"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cdElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="dsElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="GAE"
+			propertyName="gae"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_GAE"
+			propertyName="dsGae"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dtPagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_MANDATO"
+			propertyName="nrMandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipodocumento" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cdCds" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="denominazione" />
+	<persistentProperty
+		name="partitaIva" />
+	<persistentProperty
+		name="codiceFiscale" />
+	<persistentProperty
+		name="nrFatturaFornitore" />
+	<persistentProperty
+		name="dtFatturaFornitore" />
+	<persistentProperty
+		name="tiporapporto" />
+	<persistentProperty
+		name="matricola" />
+	<persistentProperty
+		name="dsDocumento" />
+	<persistentProperty
+		name="imTotale" />
+	<persistentProperty
+		name="pgDocumento" />
+	<persistentProperty
+		name="dtInizioComp" />
+	<persistentProperty
+		name="dtFineComp" />
+	<persistentProperty
+		name="cdElementoVoce" />
+	<persistentProperty
+		name="dsElementoVoce" />
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="gae" />
+	<persistentProperty
+		name="dsGae" />
+	<persistentProperty
+		name="dtPagamento" />
+	<persistentProperty
+		name="nrMandato" />
+</SQLPersistentInfo>

@@ -12,6 +12,9 @@
 		<columnMapping
 			columnName="CAB"
 			propertyName="abi_cab.cab" />
+			<columnMapping
+			columnName="CD_TERZO_DELEGATO"
+			propertyName="terzo_delegato.cd_terzo" />	
 	</defaultColumnMap>  
 	
 	<columnMap
@@ -23,6 +26,8 @@
 	<persistentProperty
 		name="terzo"
 		partOfOid="true" />
+	<persistentProperty
+		name="terzo_delegato" />	
 	<persistentProperty
 		name="abi_cab"
 		/>

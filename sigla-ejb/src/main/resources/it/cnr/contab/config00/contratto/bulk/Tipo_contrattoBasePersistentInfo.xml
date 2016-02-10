@@ -25,6 +25,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_CIG"
+			propertyName="fl_cig"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -61,6 +68,8 @@
 		name="natura_contabile" />
 	<persistentProperty
 		name="fl_cancellato" />
+	<persistentProperty
+		name="fl_cig" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

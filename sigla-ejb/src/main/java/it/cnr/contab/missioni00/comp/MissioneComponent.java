@@ -2,6 +2,8 @@ package it.cnr.contab.missioni00.comp;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.*;
 import java.io.Serializable;
 
@@ -22,6 +24,8 @@ import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import java.util.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
@@ -488,6 +492,35 @@ public MissioneBulk cancellaDiariaPhisically(it.cnr.jada.UserContext userContext
 		throw new it.cnr.jada.persistency.PersistencyException(e);
     }
 }
+public MissioneBulk cancellaRimborsoPhisically(it.cnr.jada.UserContext userContext, MissioneBulk missione) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+{
+    try 
+    {
+    	LoggableStatement ps =new LoggableStatement(getConnection(userContext),
+	                    "DELETE FROM " +
+	                    it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+						"Missione_dettaglio " +
+						" where pg_missione = ?" +
+						" and  esercizio = ?" +
+						" and  cd_cds = ?" +
+						" and  cd_unita_organizzativa = ?" +
+						" and  ti_spesa_diaria = 'R'" ,true,this.getClass());
+	
+        ps.setObject(1, missione.getPg_missione());
+        ps.setObject(2, missione.getEsercizio());
+	    ps.setString(3, missione.getCd_cds());
+        ps.setString(4, missione.getCd_unita_organizzativa());
+ 
+        ps.executeQuery();
+        
+        return missione;
+	} 
+    catch (java.sql.SQLException e) 
+    {
+		throw new it.cnr.jada.persistency.PersistencyException(e);
+    }
+}
+
 /**
  * Cancellazione fisica Tappe
  *
@@ -558,7 +591,8 @@ private void caricaDettagliMissione(UserContext aUC, MissioneBulk missione) thro
 
 		if(aDettaglio.getTi_spesa_diaria().equals(Missione_dettaglioBulk.TIPO_DIARIA))
 			missione.getDiariaMissioneColl().add(aDettaglio);
-			
+		if(aDettaglio.getTi_spesa_diaria().equals(Missione_dettaglioBulk.TIPO_RIMBORSO))
+			missione.getRimborsoMissioneColl().add(aDettaglio);
 		if(aDettaglio.getTi_spesa_diaria().equals(Missione_dettaglioBulk.TIPO_SPESA))
 		{
 			// Carico gli attributi esterni
@@ -804,9 +838,9 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 	sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS, filtro.getCd_unita_organizzativa());
 	sql.addSQLClause("AND","OBBLIGAZIONE.RIPORTATO",sql.EQUALS, "N");
 	
@@ -1043,7 +1077,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 	    if (missioneTemp.getDefferredSaldi() != null)
 			missioneTemp.getDefferredSaldi().putAll(aTempDiffSaldi);
 		aggiornaCogeCoanDocAmm(userContext, missioneTemp);
-		archiviaMissioneConAnticipo(userContext, missioneTemp);
+		
         if (!verificaStatoEsercizio(userContext, new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk(missioneTemp.getCd_cds(), ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio())))
             throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare un documento per un esercizio non aperto!");
             
@@ -1054,6 +1088,33 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 		throw handleException(e);
 	} 	
 }
+
+private void controlloTrovato(UserContext aUC,
+		Obbligazione_scadenzarioBulk scadenza) throws ComponentException,
+		ApplicationException {
+	Elemento_voceHome evHome=(Elemento_voceHome)getHome(aUC,Elemento_voceBulk.class);
+	SQLBuilder sql= evHome.createSQLBuilder();
+	
+	sql.addSQLClause("AND","esercizio",SQLBuilder.EQUALS,scadenza.getObbligazione().getEsercizio());
+	sql.addSQLClause("AND","ti_appartenenza",SQLBuilder.EQUALS,scadenza.getObbligazione().getTi_appartenenza());
+	sql.addSQLClause("AND","ti_gestione",SQLBuilder.EQUALS,scadenza.getObbligazione().getTi_gestione());
+	sql.addSQLClause("AND","cd_elemento_voce",SQLBuilder.EQUALS,scadenza.getObbligazione().getCd_elemento_voce());
+
+	try {
+		List voce=evHome.fetchAll(sql);
+		if (!voce.isEmpty()){
+			Elemento_voceBulk elementoVoce = (Elemento_voceBulk)voce.get(0);
+			if (elementoVoce.isVocePerTrovati()){
+	            throw new it.cnr.jada.comp.ApplicationException(
+	                    "Non è possibile selezionare per missioni obbligazioni su capitoli collegati a Brevetti/Trovati.");
+			}
+		}
+		
+	} catch (PersistencyException ex) {
+		throw handleException(ex);
+	}
+}
+
 /**
  * Cancellazione logica missione
  *
@@ -1382,6 +1443,7 @@ private NazioneBulk findNazioneItalia(UserContext userContext) throws ComponentE
 
 	SQLBuilder sql = nazHome.createSQLBuilder();
 	sql.addSQLClause("AND","TI_NAZIONE", sql.EQUALS, NazioneBulk.ITALIA);
+	sql.addOrderBy("PG_NAZIONE");
 
 	SQLBroker broker = nazHome.createBroker(sql);
 	if (broker.next())
@@ -1750,6 +1812,49 @@ public MissioneBulk generaDiaria (UserContext aUC, MissioneBulk missione) throws
 		throw handleException(missione, e);
 	}
 }
+public MissioneBulk generaRimborso (UserContext aUC, MissioneBulk missione) throws ComponentException
+{
+	LoggableStatement cs = null;
+	try
+	{
+		//missione.calcolaConsuntivi();
+		try
+		{
+			if (missione.getCd_trattamento()!=null)
+			{	
+				cs = new LoggableStatement(getConnection(aUC), "{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+						+"CNRCTB505.elaboraMissioneRimborso(?,?,?,?,?)}",false,this.getClass());
+				cs.setObject( 1, missione.getCd_cds()                 );		
+				cs.setObject( 2, missione.getCd_unita_organizzativa() );		
+				cs.setObject( 3, missione.getEsercizio()              );
+				cs.setObject( 4, missione.getPg_missione()            );
+				cs.setObject( 5, missione.getCd_trattamento()         );
+				cs.executeQuery();
+			}
+			else
+			{	
+				cs = new LoggableStatement(getConnection(aUC), "{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+						+"CNRCTB505.elaboraMissioneRimborso(?,?,?,?)}",false,this.getClass());
+				cs.setObject( 1, missione.getCd_cds()                 );		
+				cs.setObject( 2, missione.getCd_unita_organizzativa() );		
+				cs.setObject( 3, missione.getEsercizio()              );
+				cs.setObject( 4, missione.getPg_missione()            );
+				cs.executeQuery();
+			}	
+		}
+		finally 
+		{
+		    cs.close();
+		}
+		missione = ritornaRimborsoGenerato(aUC, missione);		
+		return missione;
+	}
+	catch (java.sql.SQLException e)
+	{
+		throw handleException(missione, e);
+	}
+}
+
 /**
  * Carica i dati relativi alla divisa di default
  *
@@ -1862,10 +1967,10 @@ private BigDecimal getMassimaleEuro(UserContext aUC, Missione_dettaglioBulk spes
 		}	
 
 		// Converto massimale in Euro
-		importoMassimale = importoMassimale.setScale(2, BigDecimal.ROUND_HALF_EVEN);				
+		importoMassimale = importoMassimale.setScale(2, BigDecimal.ROUND_HALF_UP);				
 			
 		if(divisaMassimale.getFl_calcola_con_diviso().booleanValue())
-			importoMassimaleEuro = importoMassimale.divide(cambioMassimale.getCambio(), BigDecimal.ROUND_HALF_EVEN);
+			importoMassimaleEuro = importoMassimale.divide(cambioMassimale.getCambio(), BigDecimal.ROUND_HALF_UP);
 		else
 			importoMassimaleEuro = importoMassimale.multiply(cambioMassimale.getCambio());		
 
@@ -2635,9 +2740,8 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
 		   !missione.getAnticipoClone().equalsByPrimaryKey(missione.getAnticipo()))		
 			aggiornaAnticipo(userContext, missione.getAnticipoClone(), new Boolean(false));		
 
-		// Aggiornamento dell'anticipo che ho legato dalla missione			
-		if(missione.getPg_anticipo() != null && 
-		   !missione.getAnticipo().equalsByPrimaryKey(missione.getAnticipoClone()))
+		// Aggiornamento dell'anticipo che ho legato alla missione			
+		if(missione.getPg_anticipo() != null /*&& !missione.getAnticipo().equalsByPrimaryKey(missione.getAnticipoClone())*/)
 			aggiornaAnticipo(userContext, missione.getAnticipo(), new Boolean(true));
 
 		// Se ho modificato una missione gia' contabilizzata in Coge o Coan
@@ -2666,7 +2770,7 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
 	}
 
 	aggiornaObbligazione(userContext, missione, status);
-	archiviaMissioneConAnticipo(userContext, missione);
+
 	missione = (MissioneBulk) super.modificaConBulk(userContext, missione);
 
 	
@@ -2729,6 +2833,40 @@ private MissioneBulk ritornaDiariaGenerata(UserContext aUC, MissioneBulk mission
 		throw handleException(missione, e);
 	}
 }
+private MissioneBulk ritornaRimborsoGenerato(UserContext aUC, MissioneBulk missione) throws ComponentException
+{
+	try
+	{
+		Missione_dettaglioHome dettaglioHome = (Missione_dettaglioHome)getHome( aUC, Missione_dettaglioBulk.class );
+		SQLBuilder sql = dettaglioHome.createSQLBuilder();
+	
+		sql.addSQLClause( "AND", "cd_cds", sql.EQUALS, missione.getCd_cds());
+		sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, missione.getCd_unita_organizzativa());
+		sql.addSQLClause("AND","esercizio",sql.EQUALS,missione.getEsercizio());
+		sql.addSQLClause("AND","pg_missione",sql.EQUALS,missione.getPg_missione());
+		sql.addSQLClause("AND","ti_spesa_diaria",sql.EQUALS, Missione_dettaglioBulk.TIPO_RIMBORSO);		
+
+		it.cnr.jada.bulk.BulkList dettagliRimborso = new it.cnr.jada.bulk.BulkList(dettaglioHome.fetchAll( sql ));
+	
+		if((dettagliRimborso == null) || (dettagliRimborso.isEmpty()))
+			throw new it.cnr.jada.comp.ApplicationException("Problemi nella creazione del rimborso !");
+
+		missione.setRimborsoMissioneColl(dettagliRimborso);
+
+		for ( Iterator i = missione.getRimborsoMissioneColl().iterator(); i.hasNext(); )
+		{
+			Missione_dettaglioBulk aRimborso = (Missione_dettaglioBulk)i.next();
+			aRimborso.setMissione(missione);
+		}
+					
+		return missione;
+	} 
+	catch (Throwable e) 
+	{
+		throw handleException(missione, e);
+	}
+}
+
 /**
  * Annulla le modifiche apportate alla missione e ritorna al savepoint impostato in precedenza
  *
@@ -2991,9 +3129,9 @@ public SQLBuilder selectObbligazione_scadenzarioByClause(UserContext aUC, Missio
 
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA",sql.GREATER_EQUALS, dataRegistrazione);	
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 
 	if(clauses != null)
 		sql.addClause(clauses);
@@ -3143,6 +3281,7 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBul
 
 	sql.addClause("AND","cd_ti_pasto",sql.EQUALS, dettaglioSpesa.getCd_ti_pasto());
 
+	sql.addClause("AND","cd_area_estera",sql.EQUALS,tappa.getNazione().getCd_area_estera());
 
 	sql.addSQLClause("AND","(cd_ti_pasto || ti_area_geografica || pg_nazione || pg_rif_inquadramento || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('02', cd_ti_pasto, ?, ?, ?, ?)");
@@ -3229,8 +3368,11 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC,Missione_dettaglioBul
 	sql.addClause("OR","pg_rif_inquadramento",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 	
+	if (tappa.getFl_rimborso())
+	    sql.addClause("AND","fl_ammissibile_con_rimborso",sql.EQUALS, tappa.getFl_rimborso());	
+
 	sql.addClause("AND","cd_ti_spesa",sql.EQUALS, dettaglioSpesa.getCd_ti_spesa());					
-		
+
 	sql.addSQLClause("AND","(cd_ti_spesa || ti_area_geografica || pg_nazione || pg_rif_inquadramento || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('01', cd_ti_spesa, ?, ?, ?, ?)");
 
@@ -3591,9 +3733,9 @@ private Missione_dettaglioBulk validaMassimaleTipoSpesa(UserContext aUC, Mission
 		throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Spesa selezionato (€"+massimaleSpesaEuro+")");
 		
 	spesa.setIm_spesa_max(massimaleSpesaEuro);
-	spesa.setIm_spesa_max(spesa.getIm_spesa_max().setScale(2, BigDecimal.ROUND_HALF_EVEN));	
+	spesa.setIm_spesa_max(spesa.getIm_spesa_max().setScale(2, BigDecimal.ROUND_HALF_UP));	
 	spesa.setIm_spesa_max_divisa(spesa.getTipo_spesa().getLimite_max_spesa());
-	spesa.setIm_spesa_max_divisa(spesa.getIm_spesa_max_divisa().setScale(2, BigDecimal.ROUND_HALF_EVEN));	
+	spesa.setIm_spesa_max_divisa(spesa.getIm_spesa_max_divisa().setScale(2, BigDecimal.ROUND_HALF_UP));	
 	
 	return spesa;
 }
@@ -3670,12 +3812,12 @@ public MissioneBulk validaMassimaliSpesa(UserContext aUC, MissioneBulk missione,
 		spesa.calcolaMaggiorazioneTrasporto();
 		spesa.convertiMaggiorazioneInEuro(divisaDefault);
 		spesa.setIm_totale_spesa(spesa.getIm_maggiorazione_euro().add(spesa.getIm_spesa_euro()));
-		spesa.setIm_totale_spesa(spesa.getIm_totale_spesa().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));		
+		spesa.setIm_totale_spesa(spesa.getIm_totale_spesa().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));		
 	}	
 	else
 	{
 		spesa.setIm_totale_spesa(spesa.getIm_spesa_euro());
-		spesa.setIm_totale_spesa(spesa.getIm_totale_spesa().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));			
+		spesa.setIm_totale_spesa(spesa.getIm_totale_spesa().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));			
 	}	
 	return missione;
 }
@@ -3747,6 +3889,7 @@ public void validaObbligazione(UserContext userContext, Obbligazione_scadenzario
 		throw new it.cnr.jada.comp.ApplicationException("La data della scadenza dell'impegno deve essere successiva alla data di registrazione della missione!");
 		
 	validaTerzoObbligazione(userContext, missione, obbligazione);
+	controlloTrovato(userContext, scadenza);
 }
 /**
  * stampaConBulk method comment.
@@ -4104,7 +4247,14 @@ public boolean isDiariaEditable(UserContext context, Missione_tappaBulk tappa) t
 	}
 	if (tappa.getFl_comune_estero().booleanValue())
 	{
-		if (!(tappa.getDt_inizio_tappa().compareTo(data_fine_diaria_miss_estero)>0))
+		if ((!(tappa.getDt_inizio_tappa().compareTo(data_fine_diaria_miss_estero)>0))||
+			  (tappa.getMissione().getTerzo().getAnagrafico().getFl_abilita_diaria_miss_est().booleanValue() 
+				&& 
+				!(tappa.getMissione().getDt_inizio_missione().compareTo(tappa.getMissione().getTerzo().getAnagrafico().getDt_inizio_diaria_miss_est())<0)
+				&& 
+				!(tappa.getMissione().getDt_fine_missione().compareTo(tappa.getMissione().getTerzo().getAnagrafico().getDt_fine_diaria_miss_est())>0)
+			  )
+			)
 		{
 			return true;
 		}
@@ -4248,21 +4398,65 @@ public java.util.List findListaMissioniSIP(UserContext userContext,String query,
 		throw handleException(ex);
 	}
 }
-	private void archiviaMissioneConAnticipo(UserContext userContext, MissioneBulk missione) throws ComponentException{
-		if (missione.getAnticipo() != null && missione.getTi_provvisorio_definitivo().equalsIgnoreCase("D")){
-			if (missione.getIm_netto_pecepiente().equals(missione.getAnticipo().getIm_anticipo())){
-				MissioneHome missioneHome = (MissioneHome) getHome(userContext, MissioneBulk.class);
-				MandatoHome mandatohome = (MandatoHome)getHome(userContext, MandatoBulk.class);
-				try {
-					missioneHome.archiviaStampa(userContext, 
-							mandatohome.findMandato(userContext, missione), 
-							missione);
-				} catch (IntrospectionException e) {
-					handleException(e);
-				} catch (PersistencyException e) {
-					handleException(e);
-				}
+public void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, MissioneBulk missioneBulk, Integer... years) throws ComponentException{
+	MissioneHome missioneHome = (MissioneHome) getHome(userContext, MissioneBulk.class);
+	CompoundFindClause clauses = new CompoundFindClause();
+	CompoundFindClause clausesYear = new CompoundFindClause();
+	if (fromDate != null)
+		clauses.addClause(FindClause.AND, "dt_inizio_missione", SQLBuilder.GREATER_EQUALS, new Timestamp(fromDate.getTime()));
+	if (untilDate != null)
+		clauses.addClause(FindClause.AND, "dt_fine_missione", SQLBuilder.LESS_EQUALS, new Timestamp(untilDate.getTime()));
+	clauses.addClause(FindClause.AND, "ti_provvisorio_definitivo", SQLBuilder.EQUALS, "D");
+	for (Integer year : years) {
+		clausesYear.addClause(FindClause.OR, "esercizio", SQLBuilder.EQUALS, year);
+	}
+	clauses = CompoundFindClause.and(clauses, clausesYear);
+	try {
+		RemoteIterator missioni = cerca(userContext, clauses, missioneBulk);
+		while(missioni.hasMoreElements()){
+			MissioneBulk missione = (MissioneBulk) missioni.nextElement();
+			try{
+				missione = (MissioneBulk) inizializzaBulkPerModifica(userContext, missione);
+				missioneHome.archiviaStampa(userContext, missione);
+			}catch(Exception ex){
+				System.err.println("Missione:"+missione + " - "+ex);
+				continue;
 			}
 		}
+	}catch (RemoteException e) {
+		throw handleException(e);
 	}
+}
+
+public BigDecimal calcolaMinutiTappa (UserContext aUC, Missione_tappaBulk tappa) throws ComponentException
+{
+	LoggableStatement cs = null;
+	java.sql.ResultSet rs;
+	BigDecimal ore = new BigDecimal("0");
+	try
+	{
+		try
+		{
+			cs = new LoggableStatement(getConnection(aUC), "{?=call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+					+"CNRCTB500.calcolaMinutiTappa(?,?)}",false,this.getClass());
+			cs.registerOutParameter( 1, java.sql.Types.DECIMAL);
+			cs.setObject( 2, tappa.getDt_inizio_tappa()           );		
+			cs.setObject( 3, tappa.getDt_fine_tappa()             );		
+			cs.executeQuery();
+			ore = cs.getBigDecimal(1);
+			
+		}
+		finally 
+		{
+		    cs.close();
+		}
+		return ore;		
+	}
+
+	catch (java.sql.SQLException e)
+	{
+		throw handleException(tappa, e);
+	}
+}
+
 }

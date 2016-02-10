@@ -1,19 +1,22 @@
 package it.cnr.contab.doccont00.bp;
 
+
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.bp.*;
 
-import java.math.*;
-
 import java.util.*;
+
 import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
-import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
-import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -23,11 +26,11 @@ import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.jsp.Button;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Accertamento
@@ -44,6 +47,7 @@ public class CRUDAccertamentoBP extends CRUDVirtualAccertamentoBP {
 	// "editingScadenza" viene messo a True solo quando si modifica una scadenza (bottone "editing scadenza")
 	private boolean editingScadenza = false;
 	private boolean siope_attiva = false;
+	private boolean enableVoceNext = false;
 
 public CRUDAccertamentoBP() {
 	super();
@@ -294,7 +298,7 @@ public OggettoBulk getBringBackModel() {
                             "Non è possibile modificare la scadenza associata al documento, perché esso ha degli addebiti o degli storni associati! Selezionare la scadenza \"" + scadCorrente.getDs_scadenza() + "\".",
                             ERROR_MESSAGE);
                     if (scadenzaSelezionata.getIm_associato_doc_amm() != null
-                        && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0
+                        && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0
                         && !fatturaAttivaBP.isDeleting()) {
 							if (!new Fattura_attiva_IBulk(
 									scadenzaSelezionata.getAccertamento().getCd_cds_origine(),
@@ -310,7 +314,7 @@ public OggettoBulk getBringBackModel() {
 	                CRUDDocumentoGenericoAttivoBP docGenAttivoBP= (CRUDDocumentoGenericoAttivoBP) docAmmBP;
 	                Documento_genericoBulk docGenAttivo = (Documento_genericoBulk) docGenAttivoBP.getModel();
                     if (scadenzaSelezionata.getIm_associato_doc_amm() != null
-                        && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0) {
+                        && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0) {
 	                        String cd_cds_doc_gen = (docGenAttivo.isFlagEnte()) ? 
 	                        										docGenAttivo.getCd_cds() : 
 	                        										scadenzaSelezionata.getAccertamento().getCd_cds_origine();
@@ -329,7 +333,7 @@ public OggettoBulk getBringBackModel() {
                 }
             }
             if (getParent() instanceof CRUDFatturaAttivaIBP || getParent() instanceof CRUDDocumentoGenericoAttivoBP) {
-                if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
+                if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
                     throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.", ERROR_MESSAGE);
             }
         }
@@ -891,7 +895,14 @@ public boolean isROImporto() {
 protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
 	super.initialize(actioncontext);
 	try {
-		setSiope_attiva(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope().booleanValue());
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
+		setSiope_attiva(parCnr.getFl_siope().booleanValue());
+
+		if (parCnr.isEnableVoceNext()) {
+			Parametri_cnrBulk parCnrNewAnno = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())+1); 
+			setEnableVoceNext(parCnrNewAnno!=null);
+		}
+		cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
 	}
     catch(Throwable throwable)
     {
@@ -915,5 +926,18 @@ public boolean isROFindCapitolo() {
 	if (isSiope_attiva())
 		return accertamento.isAssociataADocCont();
 	return accertamento.isROCapitolo();
+}
+
+public boolean isEnableVoceNext() {
+	return enableVoceNext;
+}
+
+private void setEnableVoceNext(boolean enableVoceNext) {
+	this.enableVoceNext = enableVoceNext;
+}
+
+public boolean isElementoVoceNewVisible() {
+	return this.isEnableVoceNext() && getModel()!=null && 
+			((AccertamentoBulk)getModel()).isEnableVoceNext();
 }
 }

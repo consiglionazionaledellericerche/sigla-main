@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Configurazione interfaccia cassiere"
+	longDescription="Configurazione interfaccia cassiere">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="codiceProto"
+		property="codiceProto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		nullable="false"
+		label="codice Proteo" />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cds" />
+	<fieldProperty
+		name="codiceSia"
+		property="codiceSia"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="true"
+		label="codice Sia" />
+	<fieldProperty
+		name="codiceCuc"
+		property="codiceCuc"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="true"
+		label="codice Cuc" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="codiceProto" />
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdCds" />	
+	<formFieldProperty
+		name="codiceProto" />
+	<formFieldProperty
+		name="codiceSia" />
+	<formFieldProperty
+		name="codiceCuc" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="codiceProto" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="codiceSia" />
+	<findFieldProperty
+		name="codiceCuc" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="codiceProto" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="codiceSia" />
+	<columnFieldProperty
+		name="codiceCuc" />
+</bulkInfo>

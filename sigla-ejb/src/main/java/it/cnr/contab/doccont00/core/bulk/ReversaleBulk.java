@@ -1,8 +1,6 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.math.*;
-
-
 import java.util.*;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -35,6 +33,8 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
 	public final static String STATO_TRASMISSIONE_NON_INSERITO	= "N";
 	public final static String STATO_TRASMISSIONE_INSERITO		= "I";
 	public final static String STATO_TRASMISSIONE_TRASMESSO		= "T";
+	public final static String STATO_TRASMISSIONE_PREDISPOSTO	= "P";
+	public final static String STATO_TRASMISSIONE_PRIMA_FIRMA	= "F";
 
 	public final static Dictionary stato_trasmissioneKeys;
 
@@ -43,6 +43,8 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
 		stato_trasmissioneKeys = new it.cnr.jada.util.OrderedHashtable();
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_NON_INSERITO,	"Non inserita in distinta");
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_INSERITO,		"Inserita in distinta");
+		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_PREDISPOSTO,	"Predisposto alla Firma");
+		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_PRIMA_FIRMA,	"Prima Firma");				
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_TRASMESSO,	"Trasmessa");
 	};
 

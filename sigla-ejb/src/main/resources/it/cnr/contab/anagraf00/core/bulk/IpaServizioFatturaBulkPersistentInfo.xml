@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.IpaServizioFatturaBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.IpaServizioFatturaHome">
+	<defaultColumnMap
+		tableName="IPA_SERVIZIO_FATTURA">
+	</defaultColumnMap>
+</SQLPersistentInfo>

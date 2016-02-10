@@ -13,8 +13,13 @@ public class StampaCertificazioneBP extends it.cnr.contab.reports.bp.ParametricP
 	private boolean stampaTit_imposta;
 	private boolean stampaTit_imposta_cc;	
 	private boolean stampaRit_contrib;
+	private boolean stampaTit_imposta_pc;
+	private boolean stampaRit_acconto_ppt;
 	
 	private boolean editingTi_cert;
+	
+	private String reportNameComunicazione;
+
 /**
  * StampaCertificazioneBP constructor comment.
  */
@@ -40,6 +45,10 @@ public String getJSPTitle(){
 		return "Stampa Certificazione a Titolo d'Imposta - Co.Co.Co.";
 	else if (isStampaRit_contrib())
 		return "Stampa Certificazione per Contributi corrisposti ad imprese";
+	else if (isStampaTit_imposta_pc())
+		return "Stampa Certificazione a Titolo d'Imposta - Premi per concorsi";
+	else if (isStampaRit_acconto_ppt())
+		return "Stampa Certificazione a Ritenuta d'Acconto su somme liquidate a seguito di pignoramenti presso terzi";
 	return "Stampa Certificazione";
 }
 /**
@@ -47,7 +56,15 @@ public String getJSPTitle(){
  *
  * @param context <code>ActionContext</code>
  */
+public it.cnr.jada.util.jsp.Button[] createToolbar() {
 
+	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[3];
+	int i = 0;
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.print");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.printComunicazione");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.close");
+	return toolbar;
+}
 protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 	
 	super.init(config,context);
@@ -75,6 +92,16 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 		stampa.setStampaTit_imposta_cc(true);
 		stampa.setTi_cert(stampa.TI_IMPOSTA_CC);
 		setEditingTi_cert(false);
+	} else if (type != null && type.equals(stampa.TI_IMPOSTA_PC)){
+		setStampaTit_imposta_pc(true);
+		stampa.setStampaTit_imposta_pc(true);
+		stampa.setTi_cert(stampa.TI_IMPOSTA_PC);
+		setEditingTi_cert(false);	
+	} else if (type != null && type.equals(stampa.TI_ACCONTO_PPT)){
+		setStampaRit_acconto_ppt(true);
+		stampa.setStampaRit_acconto_ppt(true);
+		stampa.setTi_cert(stampa.TI_ACCONTO_PPT);
+		setEditingTi_cert(false);		
 	} else {
 		setStampaRit_acconto(true);
 		stampa.setStampaRit_acconto(true);
@@ -82,6 +109,7 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 		setEditingTi_cert(true);
 	}
 	setModel(context,stampa);
+	setReportNameComunicazione(new String("/docamm/docamm/certificazione_comunicaz_pignorato.jasper"));
 }
 /**
  * Insert the method's description here.
@@ -166,5 +194,37 @@ public void setStampaTit_imposta(boolean newStampaTit_imposta) {
 	 */
 	public void setEditingTi_cert(boolean editingTi_cert) {
 		this.editingTi_cert = editingTi_cert;
+	}
+	/**
+	 * @return
+	 */
+	public boolean isStampaTit_imposta_pc() {
+		return stampaTit_imposta_pc;
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setStampaTit_imposta_pc(boolean b) {
+		stampaTit_imposta_pc = b;
+	}
+	
+	public boolean isStampaRit_acconto_ppt() {
+		return stampaRit_acconto_ppt;
+	}
+	public void setStampaRit_acconto_ppt(boolean stampaRit_acconto_ppt) {
+		this.stampaRit_acconto_ppt = stampaRit_acconto_ppt;
+	}
+	public String getReportNameComunicazione() {
+		return reportNameComunicazione;
+	}
+	public void setReportNameComunicazione(String reportNameComunicazione) {
+		this.reportNameComunicazione = reportNameComunicazione;
+	}
+	public boolean isPrintComButtonHidden() {
+		if(isStampaRit_acconto_ppt())
+			return false;
+		else
+			return true;
 	}
 }

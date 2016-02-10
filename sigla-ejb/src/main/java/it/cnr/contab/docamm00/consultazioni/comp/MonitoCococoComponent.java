@@ -226,9 +226,9 @@ public class MonitoCococoComponent extends CRUDComponent {
 						//per l'effettivo numero di giorni del compenso nel periodo di riferimento
 						// CALCOLO IL DIVISORE considerando che potrebbe essere a cavallo fra due anni
 						divisore = DateUtils.daysBetweenDates(compenso.getDt_da_competenza_coge(), compenso.getDt_a_competenza_coge()) + 1;
-						//tot_compensi_periodo_compenso= (compenso.getIm_totale_compenso().divide(new BigDecimal((getGregorianCalendar(compenso.getDt_a_competenza_coge()).get(java.util.GregorianCalendar.DAY_OF_YEAR) - getGregorianCalendar(compenso.getDt_da_competenza_coge()).get(java.util.GregorianCalendar.DAY_OF_YEAR)) + 1),5,java.math.BigDecimal.ROUND_HALF_EVEN)).multiply(new BigDecimal(moltiplicatore_importi));
-						tot_compensi_periodo_compenso= (compenso.getIm_totale_compenso().divide(new BigDecimal(divisore),5,java.math.BigDecimal.ROUND_HALF_EVEN)).multiply(new BigDecimal(moltiplicatore_importi));
-						tot_compensi_periodo_terzo = tot_compensi_periodo_terzo.add(tot_compensi_periodo_compenso.setScale(2,java.math.BigDecimal.ROUND_HALF_EVEN));														
+						//tot_compensi_periodo_compenso= (compenso.getIm_totale_compenso().divide(new BigDecimal((getGregorianCalendar(compenso.getDt_a_competenza_coge()).get(java.util.GregorianCalendar.DAY_OF_YEAR) - getGregorianCalendar(compenso.getDt_da_competenza_coge()).get(java.util.GregorianCalendar.DAY_OF_YEAR)) + 1),5,java.math.BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(moltiplicatore_importi));
+						tot_compensi_periodo_compenso= (compenso.getIm_totale_compenso().divide(new BigDecimal(divisore),5,java.math.BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(moltiplicatore_importi));
+						tot_compensi_periodo_terzo = tot_compensi_periodo_terzo.add(tot_compensi_periodo_compenso.setScale(2,java.math.BigDecimal.ROUND_HALF_UP));														
 						/* eventualmente per la riga totale   
 						tot_compensi := tot_compensi + rec_compensi.im_totale_compenso;     
 						tot_lordo_perc := tot_lordo_perc + rec_compensi.im_lordo_percipiente;     

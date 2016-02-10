@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="dataRegistrazioneA"
+		property="dataRegistrazioneA"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Data fine selezione" />
+	<formFieldProperty
+		name="dataRegistrazioneA" />
+	<columnFieldProperty
+		name="dataRegistrazioneA" />
+</bulkInfo>

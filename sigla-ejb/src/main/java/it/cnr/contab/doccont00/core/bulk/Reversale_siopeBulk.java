@@ -3,11 +3,19 @@
  * Date 14/05/2007
  */
 package it.cnr.contab.doccont00.core.bulk;
+import java.math.BigDecimal;
+import java.util.Iterator;
+
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
 
 public abstract class Reversale_siopeBulk extends Reversale_siopeBase {
 
 	Codici_siopeBulk  codice_siope  = new Codici_siopeBulk();
+	
+	protected BulkList reversaleSiopeCupColl = new BulkList();
 
 	public Reversale_siopeBulk() {
 		super();
@@ -198,5 +206,56 @@ public abstract class Reversale_siopeBulk extends Reversale_siopeBase {
 	public void setCd_siope(String cd_siope) {
 		it.cnr.contab.config00.bulk.Codici_siopeBulk codice_siope = this.getCodice_siope();
 		if (codice_siope != null) this.getCodice_siope().setCd_siope(cd_siope);
+	}
+	public BulkList getReversaleSiopeCupColl() {
+		return reversaleSiopeCupColl;
+	}
+	public void setReversaleSiopeCupColl(BulkList reversaleSiopeCupColl) {
+		this.reversaleSiopeCupColl = reversaleSiopeCupColl;
+	}
+	
+	public int addToReversaleSiopeCupColl( ReversaleSiopeCupBulk reversale_siope_cup ) 
+	{
+		reversaleSiopeCupColl.add(reversale_siope_cup);
+		reversale_siope_cup.setReversaleSiope(this); 
+		if (reversale_siope_cup.getImporto()==null && reversaleSiopeCupColl.size()==1) 
+			reversale_siope_cup.setImporto(this.getImporto());
+		else
+			reversale_siope_cup.setImporto(BigDecimal.ZERO);
+		return reversaleSiopeCupColl.size()-1;
+	}
+	public ReversaleSiopeCupBulk removeFromReversaleSiopeCupColl(int index) 
+	{
+		ReversaleSiopeCupBulk reversale_siope_cup = (ReversaleSiopeCupBulk)reversaleSiopeCupColl.remove(index);
+		
+		return reversale_siope_cup;
+	}
+	public BigDecimal getIm_associato_cup(){
+		BigDecimal totale = Utility.ZERO;
+		for (Iterator i = getReversaleSiopeCupColl().iterator(); i.hasNext();) totale = totale.add(((ReversaleSiopeCupBulk)i.next()).getImporto());
+		return Utility.nvl(totale);
+	}
+	public BigDecimal getIm_da_associare_cup(){
+		return Utility.nvl(getImporto()).subtract(Utility.nvl(getIm_associato_cup()));
+	}
+	/*
+	 * Ritorna l'informazione circa la totale o parziale associazione della
+	 * riga a codici CUP.
+	 * 
+	 * return
+	 * 	"T" = SIOPE_TOTALMENTE_ASSOCIATO
+	 *  "P" = SIOPE_PARZIALMENTE_ASSOCIATO
+	 *  "N" = SIOPE_NON_ASSOCIATO
+	 * 		
+	 */
+	public String getTipoAssociazioneCup() {
+		BigDecimal totCup = getIm_associato_cup();
+		if (getIm_da_associare_cup().compareTo(Utility.ZERO)==0) return Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO;
+		if (totCup.compareTo(Utility.ZERO)==0) return Mandato_rigaBulk.SIOPE_NON_ASSOCIATO;
+		return Mandato_rigaBulk.SIOPE_PARZIALMENTE_ASSOCIATO;
+	}
+	public BulkCollection[] getBulkLists() {
+		 return new it.cnr.jada.bulk.BulkCollection[] { reversaleSiopeCupColl};
+
 	}
 }

@@ -1,22 +1,20 @@
 package it.cnr.contab.config00.action;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.ejb.*;
-import it.cnr.contab.config00.comp.*;
-import it.cnr.contab.config00.bp.*;
-import it.cnr.contab.config00.latt.bulk.*;
-import it.cnr.contab.progettiric00.core.bulk.*;
-import it.cnr.contab.progettiric00.bp.*;
-import it.cnr.contab.config00.blob.bulk.*;
-import it.cnr.jada.action.*;
+import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.bp.CRUDWorkpackageBP;
+import it.cnr.contab.config00.ejb.Linea_attivitaComponentSession;
+import it.cnr.contab.config00.latt.bulk.Insieme_laBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.FieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.upload.UploadedFile;
-
-import java.io.*;
 /**
  * <!-- @TODO: da completare -->
  */
@@ -40,6 +38,7 @@ public Forward doBlankSearchCentro_responsabilita(ActionContext context,Workpack
 	try {
 		linea_attivita.setCentro_responsabilita(new CdrBulk());
 		linea_attivita.setInsieme_la(null);
+		linea_attivita.setPdgMissione(null);
 		CRUDWorkpackageBP bp = (CRUDWorkpackageBP)context.getBusinessProcess();
 		bp.setModel(context,
 			((Linea_attivitaComponentSession)bp.createComponentSession()).inizializzaNaturaPerInsieme(
@@ -159,6 +158,79 @@ public Forward doFreeSearchFind_nodo_padre(ActionContext context) {
 		return handleException(context, e);
 	}		
 }
+
+public Forward doFreeSearchFind_nodo_padre_2015(ActionContext context) {
+	try{
+		CRUDWorkpackageBP bpLinea = (CRUDWorkpackageBP)context.getBusinessProcess();
+		WorkpackageBulk gae = (WorkpackageBulk)bpLinea.getModel();
+		if (gae.getProgetto2016()!=null && gae.getProgetto2016().getPg_progetto()!=null && 
+				(gae.getPdgProgramma()==null||gae.getPdgProgramma().getCd_programma()==null)) {
+			setErrorMessage(context,"Attenzione: non risulta valorizzato il programma nonostante la presenza del progetto. Aprire una segnalazione HelpDesk!");
+			return context.findDefaultForward();
+		}
+		ProgettoBulk progetto = new ProgettoBulk();
+		progetto.setProgettopadre(new ProgettoBulk());	
+		return freeSearch(context, getFormField(context, "main.find_nodo_padre_2015"), progetto);
+	} catch(Throwable e){
+		return handleException(context, e);
+	}		
+}
+
+public Forward doFreeSearchFind_nodo_padre_2016(ActionContext context) {
+	try{
+		CRUDWorkpackageBP bpLinea = (CRUDWorkpackageBP)context.getBusinessProcess();
+		WorkpackageBulk gae = (WorkpackageBulk)bpLinea.getModel();
+		if (gae.getEsercizio_fine()!=null && gae.getEsercizio_fine().compareTo(Integer.valueOf(2016))==-1) {
+			setErrorMessage(context,"Attenzione: il GAE termina prima dell''anno 2016. Inserimento non possibile!");
+			return context.findDefaultForward();
+		} 
+		if (gae.getModulo2015()!=null && gae.getModulo2015().getPg_progetto()!=null && 
+				(gae.getPdgProgramma()==null||gae.getPdgProgramma().getCd_programma()==null)) {
+			setErrorMessage(context,"Attenzione: non risulta valorizzato il programma nonostante la presenza del modulo di attività. Aprire una segnalazione HelpDesk!");
+			return context.findDefaultForward();
+		}
+		ProgettoBulk progetto = new ProgettoBulk();
+		progetto.setProgettopadre(new ProgettoBulk());	
+		return freeSearch(context, getFormField(context, "main.find_nodo_padre_2016"), progetto);
+	} catch(Throwable e){
+		return handleException(context, e);
+	}		
+}
+
+public Forward doSearchFind_nodo_padre_2016(ActionContext context) {
+	try{
+		CRUDWorkpackageBP bpLinea = (CRUDWorkpackageBP)context.getBusinessProcess();
+		WorkpackageBulk gae = (WorkpackageBulk)bpLinea.getModel();
+		if (gae.getEsercizio_fine()!=null && gae.getEsercizio_fine().compareTo(Integer.valueOf(2016))==-1) {
+			setErrorMessage(context,"Attenzione: il GAE termina prima dell''anno 2016. Inserimento non possibile!");
+			return context.findDefaultForward();
+		} 
+		if (gae.getModulo2015()!=null && gae.getModulo2015().getPg_progetto()!=null && 
+				(gae.getPdgProgramma()==null||gae.getPdgProgramma().getCd_programma()==null)) {
+			setErrorMessage(context,"Attenzione: non risulta valorizzato il programma nonostante la presenza del modulo di attività. Aprire una segnalazione HelpDesk!");
+			return context.findDefaultForward();
+		}
+		return search(context, getFormField(context, "main.find_nodo_padre_2016"),"nuovoPdg");
+	} catch(Throwable e){
+		return handleException(context, e);
+	}		
+}
+
+public Forward doSearchFind_nodo_padre_2015(ActionContext context) {
+	try{
+		CRUDWorkpackageBP bpLinea = (CRUDWorkpackageBP)context.getBusinessProcess();
+		WorkpackageBulk gae = (WorkpackageBulk)bpLinea.getModel();
+		if (gae.getProgetto2016()!=null && gae.getProgetto2016().getPg_progetto()!=null && 
+				(gae.getPdgProgramma()==null||gae.getPdgProgramma().getCd_programma()==null)) {
+			setErrorMessage(context,"Attenzione: non risulta valorizzato il programma nonostante la presenza del progetto. Aprire una segnalazione HelpDesk!");
+			return context.findDefaultForward();
+		}
+		return search(context, getFormField(context, "main.find_nodo_padre_2015"),null);
+	} catch(Throwable e){
+		return handleException(context, e);
+	}		
+}
+
 /**
   *  E' stata generata la richiesta di cercare un Progetto che sia padre della Progetto
   *	che si sta creando.
@@ -216,6 +288,27 @@ public Forward doFreeSearchFind_nodo_padre(ActionContext context) {
 	}
 }
 */
+
+public it.cnr.jada.action.Forward doBlankSearchFind_nodo_padre(it.cnr.jada.action.ActionContext context,it.cnr.contab.config00.latt.bulk.WorkpackageBulk linea_attivita) {
+	linea_attivita.setProgetto(new ProgettoBulk());
+	linea_attivita.setPdgProgramma(null);
+	return context.findDefaultForward();
+}
+
+public it.cnr.jada.action.Forward doBlankSearchFind_nodo_padre_2015(it.cnr.jada.action.ActionContext context,it.cnr.contab.config00.latt.bulk.WorkpackageBulk linea_attivita) {
+	linea_attivita.setModulo2015(new ProgettoBulk());
+	if (linea_attivita.getProgetto2016()==null || linea_attivita.getProgetto2016().getCd_progetto()==null)
+		linea_attivita.setPdgProgramma(null);
+	return context.findDefaultForward();
+}
+
+public it.cnr.jada.action.Forward doBlankSearchFind_nodo_padre_2016(it.cnr.jada.action.ActionContext context,it.cnr.contab.config00.latt.bulk.WorkpackageBulk linea_attivita) {
+	linea_attivita.setProgetto2016(new ProgettoBulk());
+	if (linea_attivita.getModulo2015()==null || linea_attivita.getModulo2015().getCd_progetto()==null)
+		linea_attivita.setPdgProgramma(null);
+	return context.findDefaultForward();
+}
+
 /**
   *  E' stata generata la richiesta di cercare un Progetto che sia padre del Progetto
   *	che si sta creando.
@@ -230,24 +323,28 @@ public Forward doFreeSearchFind_nodo_padre(ActionContext context) {
 **/
  
 public it.cnr.jada.action.Forward doBringBackSearchFind_nodo_padre(ActionContext context, WorkpackageBulk linea, ProgettoBulk progetto) throws java.rmi.RemoteException {
-
-	// valore di default nel caso non fose valorizzato
-	String columnDescription="Codice Modulo di Attività";
-	// nome del campo nel file xml
-	final String propName="cd_progetto";
-    FieldProperty property = BulkInfo.getBulkInfo(linea.getClass()).getFieldProperty(propName);
-    if (property != null)
-    	columnDescription = property.getLabel();
-
-
-	if (progetto!=null) {
-		if (progetto.getLivello()==null || !progetto.getLivello().equals(new Integer("3"))) {
-			setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" non è valido!");
-			return context.findDefaultForward();
+	try{
+		// valore di default nel caso non fose valorizzato
+		String columnDescription="Codice Modulo di Attività";
+		// nome del campo nel file xml
+		final String propName="cd_progetto";
+	    FieldProperty property = BulkInfo.getBulkInfo(linea.getClass()).getFieldProperty(propName);
+	    if (property != null)
+	    	columnDescription = property.getLabel();
+	
+	
+		if (progetto!=null) {
+			if (progetto.getLivello()==null || !progetto.getLivello().equals(new Integer("3"))) {
+				setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" non è valido!");
+				return context.findDefaultForward();
+			}
 		}
+		linea.setProgetto(progetto);
+		CRUDWorkpackageBP bp = (CRUDWorkpackageBP)context.getBusinessProcess();
+		return context.findDefaultForward();
+	} catch(Throwable e){
+		return handleException(context, e);
 	}
-	linea.setProgetto(progetto);
-	return context.findDefaultForward();
 }
 
 public Forward doSalva(ActionContext context) {
@@ -316,4 +413,84 @@ public Forward doSalva(ActionContext context) {
          
 }
 
+	public Forward doSearchPdgMissione(ActionContext context) {
+		WorkpackageBulk linea_attivita = (WorkpackageBulk)getBusinessProcess(context).getModel();
+		if (linea_attivita==null || linea_attivita.getCentro_responsabilita()==null|| linea_attivita.getCentro_responsabilita().getUnita_padre()==null ||
+				linea_attivita.getCentro_responsabilita().getUnita_padre().getCd_tipo_unita()==null)
+			throw new MessageToUser("Ricerca Missione non possibile! Centro di Responsabilità non selezionato e/o errore nell'individuazione del tipo di CDR!");
+		return search(context, getFormField(context, "main.pdgMissione"), null);
+	}
+	
+	public it.cnr.jada.action.Forward doBringBackSearchFind_nodo_padre_2015(ActionContext context, WorkpackageBulk linea, ProgettoBulk progetto) throws java.rmi.RemoteException {
+		try{
+			// valore di default nel caso non fose valorizzato
+			String columnDescription="Codice Modulo di Attività";
+			// nome del campo nel file xml
+			final String propName="cd_modulo2015";
+		    FieldProperty property = BulkInfo.getBulkInfo(linea.getClass()).getFieldProperty(propName);
+		    if (property != null)
+		    	columnDescription = property.getLabel();
+		
+			if (progetto!=null) {
+				if (progetto.getLivello()==null || !progetto.getLivello().equals(new Integer("3"))) {
+					setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" non è valido!");
+					return context.findDefaultForward();
+				}
+			}
+			CRUDWorkpackageBP bp = (CRUDWorkpackageBP)context.getBusinessProcess();
+			if (linea!=null && linea.getPdgProgramma()!=null && linea.getPdgProgramma().getCd_programma()!=null && 
+				progetto!=null && progetto.getProgettopadre()!=null && progetto.getProgettopadre().getProgettopadre()!=null && 
+				!linea.getPdgProgramma().getCd_programma().equals(progetto.getProgettopadre().getProgettopadre().getCd_dipartimento())) {
+				setErrorMessage(context,"Attenzione: il modulo di attivita', appartenente al dipartimento con codice "+progetto.getProgettopadre().getProgettopadre().getCd_dipartimento()+
+						" non è coerente con il programma indicato sulla GAE!");
+				return context.findDefaultForward();
+			} else if (linea!=null && (linea.getPdgProgramma()==null || linea.getPdgProgramma().getCd_programma()==null) && 
+					progetto!=null && progetto.getProgettopadre()!=null && progetto.getProgettopadre().getProgettopadre()!=null &&
+					progetto.getProgettopadre().getProgettopadre().getCd_dipartimento()!=null) {
+				linea.setPdgProgramma((Pdg_programmaBulk)bp.createComponentSession().findByPrimaryKey(context.getUserContext(), new Pdg_programmaBulk(progetto.getProgettopadre().getProgettopadre().getCd_dipartimento())));
+			}				
+			linea.setModulo2015(progetto);
+			return context.findDefaultForward();
+		} catch(Throwable e){
+			return handleException(context, e);
+		}
+	}
+	
+	public it.cnr.jada.action.Forward doBringBackSearchFind_nodo_padre_2016(ActionContext context, WorkpackageBulk linea, ProgettoBulk progetto) throws java.rmi.RemoteException {
+		try{
+			// valore di default nel caso non fose valorizzato
+			String columnDescription="Codice Progetto";
+			// nome del campo nel file xml
+			final String propName="cd_progetto2016";
+		    FieldProperty property = BulkInfo.getBulkInfo(linea.getClass()).getFieldProperty(propName);
+		    if (property != null)
+		    	columnDescription = property.getLabel();
+		
+			if (progetto!=null) {
+				if (progetto.getLivello()==null || !progetto.getLivello().equals(new Integer("2"))) {
+					setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" non è valido!");
+					return context.findDefaultForward();
+				}
+			}
+			CRUDWorkpackageBP bp = (CRUDWorkpackageBP)context.getBusinessProcess();
+			if (progetto!=null) {
+				progetto.setProgettopadre((ProgettoBulk)bp.createComponentSession().findByPrimaryKey(context.getUserContext(), 
+						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+			}
+			if (linea!=null && linea.getPdgProgramma()!=null && linea.getPdgProgramma().getCd_programma()!=null && 
+				progetto!=null && progetto.getProgettopadre()!=null && 
+				!linea.getPdgProgramma().getCd_programma().equals(progetto.getProgettopadre().getCd_dipartimento())) {
+				setErrorMessage(context,"Attenzione: il progetto, appartenente al dipartimento con codice "+progetto.getProgettopadre().getCd_dipartimento()+
+						" non è coerente con il programma indicato sulla GAE!");
+				return context.findDefaultForward();
+			} else if (linea!=null && (linea.getPdgProgramma()==null || linea.getPdgProgramma().getCd_programma()==null) && 
+					progetto!=null && progetto.getProgettopadre()!=null && progetto.getProgettopadre().getCd_dipartimento()!=null) {
+				linea.setPdgProgramma((Pdg_programmaBulk)bp.createComponentSession().findByPrimaryKey(context.getUserContext(), new Pdg_programmaBulk(progetto.getProgettopadre().getCd_dipartimento())));
+			}				
+			linea.setProgetto2016(progetto);
+			return context.findDefaultForward();
+		} catch(Throwable e){
+			return handleException(context, e);
+		}
+	}
 }

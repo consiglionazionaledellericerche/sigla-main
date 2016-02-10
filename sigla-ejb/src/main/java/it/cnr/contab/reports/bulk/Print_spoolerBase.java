@@ -80,13 +80,16 @@ public class Print_spoolerBase extends Print_spoolerKey implements Keyed {
 //	  DT_PROSSIMA_ESECUZIONE DATE
 	private Timestamp dtProssimaEsecuzione;
 
-	// SERVER VARCHAR(20)
+	// CD_SERVIZIO_PEC VARCHAR(20)
 	private java.lang.String cd_servizio_pec;
 
-	// SERVER VARCHAR(100)
+	// DS_SERVIZIO_PEC VARCHAR(500)
 	private java.lang.String ds_oggetto_pec;
 
-public Print_spoolerBase() {
+	// DS_NUMREG_PEC VARCHAR(500)
+	private java.lang.String ds_numreg_pec;
+
+	public Print_spoolerBase() {
 	super();
 }
 public Print_spoolerBase(java.lang.Long pg_stampa) {
@@ -333,5 +336,11 @@ public void setDs_oggetto_pec(java.lang.String ds_oggetto_pec) {
 }
 public java.lang.String getDs_oggetto_pec() {
 	return ds_oggetto_pec;
+}
+public void setDs_numreg_pec(java.lang.String ds_numreg_pec) {
+	this.ds_numreg_pec = ds_numreg_pec;
+}
+public java.lang.String getDs_numreg_pec() {
+	return ds_numreg_pec;
 }
 }

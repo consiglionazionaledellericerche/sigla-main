@@ -28,7 +28,7 @@ public class V_stipendi_cofi_dettBulk extends V_stipendi_cofi_dettBase {
 	public static final int NOVEMBRE = 11;
 	public static final int TREDICESIMA = 12;
 	public static final int DICEMBRE = 13;
-	public static final int RECUPERO_ADD = 14;
+	public static final int RECUPERO_ADD = 15;
 
 	static {
 		meseKeys.put(new Integer(GENNAIO),"Gennaio");

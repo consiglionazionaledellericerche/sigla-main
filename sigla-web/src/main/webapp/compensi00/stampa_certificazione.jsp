@@ -41,7 +41,7 @@
 	<td><% bp.getController().writeFormLabel(out,"findAnagraficoForPrint"); %></td>
 	<td>
 		<% bp.getController().writeFormInput(out,"cd_anag"); %>
-		<% bp.getController().writeFormInput(out,"ragione_sociale"); %>
+		<% bp.getController().writeFormInput(out,"denominazione"); %>
 		<% bp.getController().writeFormInput(out,"findAnagraficoForPrint"); %>
 	</td>
   </tr>

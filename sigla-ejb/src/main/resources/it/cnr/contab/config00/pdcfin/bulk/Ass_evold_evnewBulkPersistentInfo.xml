@@ -1,0 +1,53 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome" >
+	<defaultColumnMap
+		tableName="ASS_EVOLD_EVNEW" >
+		<columnMapping
+			columnName="ESERCIZIO_OLD"
+			propertyName="elemento_voce_old.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_OLD"
+			propertyName="elemento_voce_old.ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE_OLD"
+			propertyName="elemento_voce_old.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_OLD"
+			propertyName="elemento_voce_old.cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="ESERCIZIO_NEW"
+			propertyName="elemento_voce_new.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_NEW"
+			propertyName="elemento_voce_new.ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE_NEW"
+			propertyName="elemento_voce_new.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_NEW"
+			propertyName="elemento_voce_new.cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="elemento_voce_old"
+		partOfOid="true" />
+	<persistentProperty
+		name="elemento_voce_new"
+		partOfOid="true" />
+</SQLPersistentInfo>

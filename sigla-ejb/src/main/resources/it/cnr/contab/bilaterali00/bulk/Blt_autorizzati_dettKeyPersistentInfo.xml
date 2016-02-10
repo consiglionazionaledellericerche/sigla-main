@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_autorizzati_dettKey">
+	<defaultColumnMap
+		tableName="BLT_AUTORIZZATI_DETT">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="cdAccordo"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cdProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_AUTORIZZAZIONE"
+			propertyName="pgAutorizzazione"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdAccordo"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdProgetto"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdTerzo"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgAutorizzazione"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -3,24 +3,31 @@ package it.cnr.contab.doccont00.comp;
 import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+
 import java.math.*;
+import java.rmi.RemoteException;
 import java.util.*;
 
 import it.cnr.contab.doccont00.core.bulk.*;
 import java.io.Serializable;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
 
@@ -93,7 +100,7 @@ public Voce_f_saldi_cmpBulk aggiornaMandatiReversali(UserContext userContext, Vo
 		else
 			saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
         if (saldo != null){
-			saldo.setIm_mandati_reversali( saldo.getIm_mandati_reversali().add( importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			saldo.setIm_mandati_reversali( saldo.getIm_mandati_reversali().add( importo.setScale(2, importo.ROUND_HALF_UP) ));
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 			updateBulk( userContext, saldo );
 		}		
@@ -175,7 +182,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
 		else
 			saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
 		if (saldo != null){			
-			importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+			importo = importo.setScale(2, importo.ROUND_HALF_UP);
 			saldo.setIm_obblig_imp_acr( saldo.getIm_obblig_imp_acr().add( importo) );
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 	
@@ -188,7 +195,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
 					
 			updateBulk( userContext, saldo );
 		}			
-		importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+		importo = importo.setScale(2, importo.ROUND_HALF_UP);
 		return saldo;
 	}
 	catch 	(Exception e )
@@ -236,7 +243,7 @@ public Voce_f_saldi_cmpBulk aggiornaPagamentiIncassi(UserContext userContext, Vo
 	{
 		Voce_f_saldi_cmpBulk saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
 		if (saldo != null){
-			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_UP) ));
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 			updateBulk( userContext, saldo );
 		}			
@@ -449,7 +456,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk findAndLock(UserContex
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la ricerca del saldo
   *   
 */
-private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res) throws ComponentException
+private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res) throws ComponentException
 {
 	try
 	{
@@ -465,7 +472,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext
 	}
 
 }
-private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce) throws ComponentException
+private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException
 {
 	return find(userContext,cd_cdr,cd_linea_attivita,voce,voce.getEsercizio());
 }	
@@ -489,7 +496,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la ricerca del saldo
   *   
 */
-private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(UserContext userContext, Integer esercizio, Integer esercizio_res, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce) throws ComponentException{
+private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(UserContext userContext, Integer esercizio, Integer esercizio_res, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException{
 	try
 	{
 		return (Voce_f_saldi_cdr_lineaBulk) getHome( userContext,Voce_f_saldi_cdr_lineaBulk.class ).findAndLock( new Voce_f_saldi_cdr_lineaBulk( esercizio, esercizio_res, cd_cdr, cd_linea_attivita, voce.getTi_appartenenza(), voce.getTi_gestione(),voce.getCd_voce()));
@@ -505,7 +512,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(User
 	
 }
 
-private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce) throws ComponentException
+private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException
 {
 	return findAndLock(userContext,voce.getEsercizio(),voce.getEsercizio(), cd_cdr,cd_linea_attivita,voce);
 }
@@ -525,7 +532,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(User
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
   *  
 */
-public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo) throws ComponentException
 {
 	return aggiornaMandatiReversali( userContext, cd_cdr, cd_linea_attivita, voce, esercizio_res, importo, tipo_residuo, false );
 }	
@@ -567,7 +574,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   *        voce del piano
 */
 
-public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo, boolean checkDisponibilitaCassa  ) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo, boolean checkDisponibilitaCassa  ) throws ComponentException
 {
 	try
 	{
@@ -587,9 +594,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
 		}
 		if (saldo != null){
 			if (tipo_residuo.equals(Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO))
-			  saldo.setIm_mandati_reversali_imp( saldo.getIm_mandati_reversali_imp().add( importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			  saldo.setIm_mandati_reversali_imp( saldo.getIm_mandati_reversali_imp().add( importo.setScale(2, importo.ROUND_HALF_UP) ));
 			else if (tipo_residuo.equals(Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_PROPRIO)||tipo_residuo.equals(Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA))
-			  saldo.setIm_mandati_reversali_pro( saldo.getIm_mandati_reversali_pro().add( importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			  saldo.setIm_mandati_reversali_pro( saldo.getIm_mandati_reversali_pro().add( importo.setScale(2, importo.ROUND_HALF_UP) ));
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 			saldo.setToBeUpdated();
 			updateBulk( userContext, saldo );
@@ -623,7 +630,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilità di cassa
   * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilità di cassa
 */
-public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, BigDecimal importo ) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, BigDecimal importo ) throws ComponentException
 {
 	try
 	{
@@ -643,7 +650,7 @@ public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext use
 		throw handleException(  e );
 	}	
 }
-public String checkDispObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, String tipo_imp, String tipo_messaggio) throws ComponentException
+public String checkDispObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_imp, String tipo_messaggio) throws ComponentException
 {
 	try
 	{
@@ -687,14 +694,16 @@ public String checkDispObbligazioniAccertamenti(UserContext userContext, String 
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
 */
 
-public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo, String tipo_doc_cont) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo, String tipo_doc_cont) throws ComponentException
 {
 	try
 	{
 		Voce_f_saldi_cdr_lineaBulk saldo;
 		saldo = findAndLock( userContext,voce.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
 		if (saldo == null){
-			voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+   	        Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(voce.getEsercizio()));
+            if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
+               voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
 																  new Voce_fBulk(voce.getCd_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
 																  );
 			Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
@@ -724,7 +733,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext u
 			}
 		}
 		if (saldo != null) {	
-			importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+			importo = importo.setScale(2, importo.ROUND_HALF_UP);
 			if (voce.getEsercizio().compareTo(esercizio_res) == 0){
 			   saldo.setIm_obbl_acc_comp( saldo.getIm_obbl_acc_comp().add( importo) );
 			}else{
@@ -754,14 +763,16 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext u
 	}	
 
 }
-public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo) throws ComponentException
 {
 	try
 	{
 		Voce_f_saldi_cdr_lineaBulk saldo;
 		saldo = findAndLock( userContext,voce.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
 		if (saldo == null){
-			voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+			  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(voce.getEsercizio()));
+			     if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
+			    	 voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
 																  new Voce_fBulk(voce.getCd_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
 																  );
 			Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
@@ -776,7 +787,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext use
 			saldo.setToBeCreated();
 			insertBulk(userContext, saldo);	
 		}
-		importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+		importo = importo.setScale(2, importo.ROUND_HALF_UP);
 		if(importo.compareTo(Utility.ZERO)==1)
 		  saldo.setVariazioni_piu(saldo.getVariazioni_piu().add(importo));
 		else  
@@ -785,6 +796,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext use
 		saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 		saldo.setToBeUpdated();
 		updateBulk( userContext, saldo );
+		
 		/**
 		 * @author mspasiano
 		 * Aggiorno i saldi negli anni successivi aperti
@@ -807,9 +819,9 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 		if (saldoNew == null) 
 			return "";
 	
-		Voce_fBulk voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(new Voce_fBulk(saldoNew.getCd_voce(), saldoNew.getEsercizio(), saldoNew.getTi_appartenenza(), saldoNew.getTi_gestione()));                	
+		//Voce_fBulk voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(new Voce_fBulk(saldoNew.getCd_voce(), saldoNew.getEsercizio(), saldoNew.getTi_appartenenza(), saldoNew.getTi_gestione()));                	
 		Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-															  new Elemento_voceBulk(voce.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
+															  new Elemento_voceBulk(saldoNew.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
 		WorkpackageBulk workpackage = (WorkpackageBulk)getHome(userContext,WorkpackageBulk.class).findByPrimaryKey(
 										new WorkpackageBulk(saldo.getCd_centro_responsabilita(),saldo.getCd_linea_attivita()));           
 															  
@@ -824,7 +836,7 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 				return "Impossibile effettuare l'operazione !\n"+
 	                   "Nell'esercizio "+saldo.getEsercizio()+
 	                   " e per il CdR "+saldo.getCd_centro_responsabilita()+", "+
-	                   " Voce "+voce.getCd_voce()+
+	                   " Voce "+saldoNew.getCd_voce()+
 	                   " e GAE "+saldo.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
 	                   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldoNew.getDispAdImpResiduoImproprio().abs())+")";
 			if (saldoNew.getEsercizio().compareTo(saldoNew.getEsercizio_res())==0 &&
@@ -832,7 +844,7 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 				return "Impossibile effettuare l'operazione !\n"+
 	                   "Nell'esercizio "+saldo.getEsercizio()+
 	                   " e per il CdR "+saldo.getCd_centro_responsabilita()+", "+
-	                   " Voce "+voce.getCd_voce()+
+	                   " Voce "+saldoNew.getCd_voce()+
 	                   " e GAE "+saldo.getCd_linea_attivita()+" lo stanziamento di Competenza "+
 	                   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldoNew.getDispAdImpCompetenza().abs())+")";
 		}
@@ -845,30 +857,114 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 		throw handleException( e );
 	}
 }
-public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo, Voce_f_saldi_cdr_lineaBulk saldoOld) throws ComponentException
+public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo, Voce_f_saldi_cdr_lineaBulk saldoOld) throws ComponentException
 {
 	Voce_f_saldi_cdr_lineaBulk saldoNew;
 		try {
+			Ass_evold_evnewHome ass_evold_evnewHome = (Ass_evold_evnewHome) getHome( userContext, Ass_evold_evnewBulk.class);
 			CdrHome cdrHome = (CdrHome)getHome(userContext,CdrBulk.class);
 			CdrBulk cdr = (CdrBulk)cdrHome.findByPrimaryKey(new CdrBulk(cd_cdr));
 			getHomeCache(userContext).fetchAll(userContext,cdrHome);
 			if (((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext,cdr.getCd_cds())){
+				//RECUPERO L'ELEMENTO DELL'ANNO IN CORSO
 				for (Iterator esercizi = ((EsercizioHome)getHome(userContext,EsercizioBulk.class)).findEserciziSuccessivi(new EsercizioBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext))).iterator();esercizi.hasNext();){
 					EsercizioBulk esercizio = (EsercizioBulk)esercizi.next();
-					String codiceVoce = voce.getCd_voce();
-					voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
-																		  new Voce_fBulk(voce.getCd_voce(),esercizio.getEsercizio(),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
-																		  );
+					
+					String codiceVoce = voce.getCd_voce(), codiceVoceForSaldoNew = null;
+					//recupero la voce di ribaltamento
+					Elemento_voceBulk elemento_voce = null;
+					if (voce instanceof Voce_fBulk) {
+						if (!((Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class)).isNuovoPdg(userContext, esercizio.getEsercizio())) {
+							voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+									  new Voce_fBulk(voce.getCd_voce(),esercizio.getEsercizio(),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
+									  );
+							
+							getHomeCache(userContext).fetchAll(userContext);
+
+							if (voce == null)
+								throw new ApplicationException("La voce: "+ codiceVoce +" non è presente nell'esercizio: "+esercizio.getEsercizio());
+							
+							saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
+							codiceVoceForSaldoNew = voce.getCd_voce();
+							
+							elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+									  new Elemento_voceBulk(voce.getCd_elemento_voce(),esercizio.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
+									  );
+						} else {
+							//recupero la voce di ribaltamento
+							Voce_fBulk voceOld = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+									  new Voce_fBulk(voce.getCd_voce(),CNRUserContext.getEsercizio(userContext),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
+									  );
+
+							getHomeCache(userContext).fetchAll(userContext);
+
+							if (voceOld == null)
+								throw new ApplicationException("La voce: "+ voce.getCd_voce() +" non è presente nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+							
+							Elemento_voceBulk elementoVoceOld = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+									  new Elemento_voceBulk(voceOld.getCd_elemento_voce(),voceOld.getEsercizio(),voceOld.getTi_appartenenza(),voceOld.getTi_gestione())
+									  );
+							
+							if (elementoVoceOld == null)
+							  throw new ApplicationException("Elemento voce non trovato per la Voce: "+ voceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+
+							//cerco la voce del nuovo anno
+							List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(elementoVoceOld);
+							if (!listVociNew.isEmpty()) {
+								if (listVociNew.size()>1)
+									throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci più elementi voce nel nuovo anno per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+								elemento_voce = (Elemento_voceBulk)listVociNew.get(0);
+							} else {
+								elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+									  new Elemento_voceBulk(elementoVoceOld.getCd_elemento_voce(),esercizio.getEsercizio(),elementoVoceOld.getTi_appartenenza(),elementoVoceOld.getTi_gestione())
+								  );
+							}
+							
+							if (elemento_voce == null || elemento_voce.getEsercizio().compareTo(esercizio.getEsercizio())!=0)
+								  throw new ApplicationException("Elemento voce non trovato o associato ad una voce di anno differente rispetto a quello di ribaltamento per la Voce: "+ voceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+
+							saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, elemento_voce);
+							codiceVoceForSaldoNew = elemento_voce.getCd_voce();
+						}
+					} else {
+						//recupero la voce di ribaltamento
+						Elemento_voceBulk elementoVoceOld = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+								  new Elemento_voceBulk(voce.getCd_elemento_voce(),CNRUserContext.getEsercizio(userContext),voce.getTi_appartenenza(),voce.getTi_gestione())
+								  );
+
+						if (elementoVoceOld == null)
+							  throw new ApplicationException("Elemento voce non trovato per la Voce: "+ voce.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+
+						getHomeCache(userContext).fetchAll(userContext);
+
+						//cerco la voce del nuovo anno
+						List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(elementoVoceOld);
+						if (!listVociNew.isEmpty()) {
+							if (listVociNew.size()>1)
+								throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci più elementi voce nel nuovo anno per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+							elemento_voce = (Elemento_voceBulk)listVociNew.get(0);
+						} else {
+							elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+									  new Elemento_voceBulk(elementoVoceOld.getCd_elemento_voce(),esercizio.getEsercizio(),elementoVoceOld.getTi_appartenenza(),elementoVoceOld.getTi_gestione())
+									  );
+						}
+
+						if (elemento_voce == null || elemento_voce.getEsercizio().compareTo(esercizio.getEsercizio())!=0)
+							  throw new ApplicationException("Elemento voce non trovato o associato ad una voce di anno differente rispetto a quello di ribaltamento per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+
+						saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, elemento_voce);
+						codiceVoceForSaldoNew = elemento_voce.getCd_voce();
+					}
 					getHomeCache(userContext).fetchAll(userContext);
-					if (voce == null)
-						throw new ApplicationException("La voce: "+ codiceVoce +" non è presente nell'esercizio: "+esercizio.getEsercizio());
-					saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
-					Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-																		  new Elemento_voceBulk(voce.getCd_elemento_voce(),esercizio.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
-																		  );
+					
 					WorkpackageBulk workpackage = (WorkpackageBulk)getHome(userContext,WorkpackageBulk.class).findByPrimaryKey(
 													new WorkpackageBulk(cd_cdr,cd_linea_attivita)
-													);           
+													);
+					 // Obbligatorio cofog sulle GAE 
+					Parametri_cnrBulk par = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey( new Parametri_cnrBulk(esercizio.getEsercizio()));
+					if (par != null && par.getLivello_pdg_cofog()!=0)
+						if( (workpackage.getTi_gestione().compareTo(CostantiTi_gestione.TI_GESTIONE_SPESE)==0) && workpackage.getCd_cofog()==null)
+							throw new ApplicationException("Non è possibile utilizzare GAE di spesa in cui non è indicata la classificazione Cofog.");
 																		  
 					getHomeCache(userContext).fetchAll(userContext);																		  
 
@@ -876,7 +972,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 						if (elemento_voce == null)
 						  throw new ApplicationException("Elemento voce non trovato per la Voce: "+ voce.getCd_voce() +" nell'esercizio: "+esercizio.getEsercizio());
 
-						saldoNew = new Voce_f_saldi_cdr_lineaBulk( esercizio.getEsercizio(), esercizio_res, cd_cdr, cd_linea_attivita, voce.getTi_appartenenza(), voce.getTi_gestione(),voce.getCd_voce());
+						saldoNew = new Voce_f_saldi_cdr_lineaBulk( esercizio.getEsercizio(), esercizio_res, cd_cdr, cd_linea_attivita, voce.getTi_appartenenza(), voce.getTi_gestione(),codiceVoceForSaldoNew);
 						saldoNew.setCd_elemento_voce(elemento_voce.getCd_elemento_voce());
 						saldoNew.inizializzaSommeAZero();
 						saldoNew.setToBeCreated();
@@ -944,7 +1040,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
 */
 
-public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo ) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo ) throws ComponentException
 {
 	try
 	{
@@ -955,7 +1051,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userConte
 													   " CDR: " + cd_cdr + " GAE: " + cd_linea_attivita + " Voce: " + voce.getCd_voce() ));
 		}		
 		if (saldo != null) {
-			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_UP) ));
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 			saldo.setToBeUpdated();
 			updateBulk( userContext, saldo );
@@ -978,7 +1074,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userConte
  * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo dei residui
  * @param cd_voce il codice della voce del piano per cui ricercare il saldo dei residui 
 */
-public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce) throws ComponentException
+public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException
 {
 	try
 	{
@@ -999,7 +1095,7 @@ public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, Strin
 		throw handleException(  e );
 	}	
 }
-public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo) throws ComponentException
 {
 	try
 	{
@@ -1008,7 +1104,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userC
 		if (saldo == null){
 			  throw new ApplicationException("Saldo non trovato per la Voce/CdR/GAE: "+ voce.getCd_voce()+"/"+cd_cdr+"/"+cd_linea_attivita);
 		}
-		importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+		importo = importo.setScale(2, importo.ROUND_HALF_UP);
 		if ((saldo.getAssestatoResiduoImproprio().subtract(saldo.getIm_obbl_res_imp())).subtract(importo).compareTo(Utility.ZERO)<0)
 			  throw new ApplicationException(
 				"Impossibile effettuare l'operazione !\n"+
@@ -1041,7 +1137,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userC
 	}	
 
 }
-public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo) throws ComponentException
 {
 	try
 	{
@@ -1050,7 +1146,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		if (saldo == null){
 			  throw new ApplicationException("Saldo non trovato per la Voce/CdR/GAE: "+ voce.getCd_voce()+"/"+cd_cdr+"/"+cd_linea_attivita);
 		}
-		importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+		importo = importo.setScale(2, importo.ROUND_HALF_UP);
 		if (importo.compareTo(Utility.ZERO)>0)
 			saldo.setVar_piu_obbl_res_pro( saldo.getVar_piu_obbl_res_pro().add( importo.abs()) );
 		else

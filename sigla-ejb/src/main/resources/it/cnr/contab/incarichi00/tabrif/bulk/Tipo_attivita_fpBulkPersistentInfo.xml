@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivita_fpBulk"
+	homeClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivita_fpHome">
+	<defaultColumnMap
+		tableName="TIPO_ATTIVITA_FP">
+		<columnMapping
+			columnName="CD_TIPO_ATTIVITA_PADRE"
+			propertyName="tipo_attivita_fp_padre.cd_tipo_attivita" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo_attivita_fp_padre" />
+</SQLPersistentInfo>

@@ -98,6 +98,7 @@ private SQLBuilder selectTipiSezionali(
 			}
 		}
 	}
+sql.addOrderBy("ORDINA");
 	return sql;
 }
 public SQLBuilder selectTipo_sezionale_venditaByClause(Tipo_sezionaleBulk tipo_sezionale,Tipo_sezionaleHome tipo_sezionaleHome,Tipo_sezionaleBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException,PersistencyException,IntrospectionException {

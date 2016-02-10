@@ -10,10 +10,14 @@
       path="/CRUDConfigUOAction" actionClass="it.cnr.contab.config00.action.CRUDUnita_organizzativaAction">
   </action>
 
-	  <action 
+	<action 
       path="/CRUDConfigPdCAction" actionClass="it.cnr.jada.util.action.CRUDAction">
   </action>
 	
+  <action 
+      path="/CRUDConfigPdCCNREntrateCapitoloAction" actionClass="it.cnr.contab.config00.action.CRUDConfigPdCCNREntrateCapitoloAction">
+  </action>
+
   <action 
       path="/CRUDServizioPecAction" actionClass="it.cnr.jada.util.action.CRUDAction">
   </action>
@@ -59,11 +63,11 @@
   </businessProcess>
 	
   <businessProcess
-      name="CRUDConfigPdcCNREntrateCapitoloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+      name="CRUDConfigPdcCNREntrateCapitoloBP" className="it.cnr.contab.config00.bp.CRUDConfigPdcCNREntrateCapitoloBP">
     <forward name="default" path="/config00/pdc_fin_cnr_entrate_capitolo.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.EV_cnr_entrate_capitoloBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_PDCFinComponentSession" />								
-		<init-param name="defaultAction" value="CRUDConfigPdCAction" />
+		<init-param name="defaultAction" value="CRUDConfigPdCCNREntrateCapitoloAction" />
   </businessProcess>
 
   <businessProcess
@@ -83,7 +87,7 @@
   </businessProcess>
 
   <businessProcess
-      name="CRUDConfigPdcCDSSpeseBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+      name="CRUDConfigPdcCDSSpeseBP" className="it.cnr.contab.config00.bp.CRUDConfigPdcCDSSpeseBP">
     <forward name="default" path="/config00/pdc_fin_cds_spese.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.EV_cds_spese_capitoloBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_PDCFinComponentSession" />								
@@ -217,6 +221,14 @@
 		<init-param name="defaultAction" value="CRUDConfigContrattoAction" />
   </businessProcess>  
 
+  <businessProcess
+      name="CRUDConfigAnagContrattoMasterBP" className="it.cnr.contab.config00.bp.CRUDConfigAnagContrattoMasterBP">
+    <forward name="default" path="/config00/contratti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.contratto.bulk.ContrattoBulk" />
+		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_ContrattoComponentSession" />								
+		<init-param name="defaultAction" value="CRUDConfigContrattoAction" />
+  </businessProcess>  
+
   <action 
       path="/CRUDClassificazioneVociAction" actionClass="it.cnr.contab.config00.action.CRUDClassificazioneVociAction">
   </action>
@@ -273,11 +285,24 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 		<init-param name="defaultAction" value="CRUDCodiciSiopeAction" />
   </businessProcess>  
+
+  <action 
+      path="/CRUDCodiciCIGAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+  </action>
+
+  <businessProcess
+      name="CRUDCodiciCIGBP" className="it.cnr.contab.config00.bp.CRUDCodiciCIGBP">
+    <forward name="default" path="/util/form.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.bulk.CigBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+		<init-param name="defaultAction" value="CRUDCodiciCIGAction" />
+  </businessProcess>  
+  
    <action 
       path="/RicercaUOAction" actionClass="it.cnr.contab.config00.action.RicercaUOAction"
       needExistingSession="false">
  </action>
-  
+
   <businessProcess
         name="RicercaUOBP" className="it.cnr.contab.config00.bp.RicercaUOBP">
     <forward name="default" path="/config00/responseXML.jsp"/>
@@ -324,5 +349,16 @@
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.bulk.ServizioPecBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 		<init-param name="defaultAction" value="CRUDServizioPecAction" />
+  </businessProcess>
+   <action 
+      path="/CRUDLimiteSpesaAction" actionClass="it.cnr.contab.config00.action.CRUDLimiteSpesaAction">
+  </action>
+
+  <businessProcess
+      name="CRUDLimiteSpesaBP" className="it.cnr.contab.config00.bp.CRUDLimiteSpesaBP">
+    <forward name="default" path="/config00/limite_spesa.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk" />
+		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_LimiteSpesaComponentSession" />
+		<init-param name="defaultAction" value="CRUDLimiteSpesaAction" />
   </businessProcess>
 </action-mappings>

@@ -59,17 +59,24 @@
 		        <td><% controller.writeFormInput(out,"linea_di_attivita"); %></td>
 			</tr>
 			<tr>
-		        <td><% controller.writeFormLabel(out,"modulo_di_attivita"); %></td>
-		        <td><% controller.writeFormInput(out,"modulo_di_attivita"); %></td>
+				<% if (!bp.getParametriCnr().getFl_nuovo_pdg()) { %> 	
+		        	<td><% controller.writeFormLabel(out,"modulo_di_attivita"); %></td>
+		        	<td><% controller.writeFormInput(out,"modulo_di_attivita"); %></td>
+		        <% } else { %>
+		        	<td><% controller.writeFormLabel(out,"progetto_liv2"); %></td>
+		        	<td><% controller.writeFormInput(out,"progetto_liv2"); %></td>
+				<% } %>
 			</tr>
 			<tr>
 				<td><% controller.writeFormLabel(out,"elemento_voce"); %></td>
 				<td><% controller.writeFormInput(out,"elemento_voce"); %></td>
 			</tr>
+			<%	if (!bp.getParametriCnr().getFl_nuovo_pdg()) { %> 
 			<tr>
 				<td><% controller.writeFormLabel(out,"voce_f"); %></td>
 				<td><% controller.writeFormInput(out,"voce_f"); %></td>
 			</tr>
+			<% } %>
 			<tr>
 				<td><% controller.writeFormLabel(out,"disponibilita_stanz_res"); %></td>
 				<td><% controller.writeFormInput(out,"disponibilita_stanz_res"); %></td>

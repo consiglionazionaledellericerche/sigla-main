@@ -1,5 +1,7 @@
 package it.cnr.contab.fondecon00.action;
 
+import java.rmi.RemoteException;
+
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
@@ -13,6 +15,7 @@ import it.cnr.contab.fondecon00.bp.*;
 import it.cnr.contab.fondecon00.core.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.util.action.BulkBP;
@@ -43,10 +46,11 @@ private it.cnr.jada.action.Forward basicDoConfermaChiudiFondo(
 	try {
 		fondo.setSospeso_di_chiusura(sospesoDiChiusura);
 		fondo.setToBeUpdated();
-		FondoEconomaleComponentSession session = (FondoEconomaleComponentSession)bp.createComponentSession();
-		fondo = session.chiudeFondo(context.getUserContext(), fondo);
-		bp.commitUserTransaction();
-		bp.edit(context, fondo);
+		setErrorMessage(context, "Per confermare la chiusura del fondo è necessario effettuare il salvataggio!");
+//		FondoEconomaleComponentSession session = (FondoEconomaleComponentSession)bp.createComponentSession();
+//		fondo = session.chiudeFondo(context.getUserContext(), fondo);
+//		bp.commitUserTransaction();
+//		bp.edit(context, fondo);
 		return context.findDefaultForward();
 	} catch(Throwable e) {
 		try {
@@ -67,7 +71,7 @@ private java.math.BigDecimal calcolaTotaleSpesePer(
 	it.cnr.jada.action.ActionContext context, 
 	java.util.List spese) {
 
-	java.math.BigDecimal somma = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal somma = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	if (spese != null && !spese.isEmpty())
 		for (java.util.Iterator i = spese.iterator(); i.hasNext();)
 			somma = somma.add(((Fondo_spesaBulk)i.next()).getIm_ammontare_spesa());
@@ -323,7 +327,7 @@ public Forward doBlankSearchScadenza_ricerca(
 		//tb.setAnagrafico(new AnagraficoBulk());
 		obbl.setCreditore(null);
 		obbl.setCd_cds(fondo.getCd_cds());
-		obbl.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_OBB);
+		//obbl.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_OBB);
 		obbl.setEsercizio(fondo.getEsercizio());
 		scadenza.setObbligazione(obbl);
 		fondo.setScadenza_ricerca(scadenza);
@@ -472,9 +476,9 @@ public Forward doBringBackSearchMandato(ActionContext context,
 				fondo.setIm_ammontare_fondo(importo);
 				fondo.setIm_ammontare_iniziale(importo);
 				fondo.setIm_residuo_fondo(importo);
-				fondo.setIm_totale_reintegri(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-				fondo.setIm_totale_spese(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-				fondo.setIm_totale_netto_spese(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				fondo.setIm_totale_reintegri(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+				fondo.setIm_totale_spese(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+				fondo.setIm_totale_netto_spese(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			} else
 				fondo.setMandato(mandatoTrovato);
 		} 
@@ -532,7 +536,7 @@ public it.cnr.jada.action.Forward doCalcolaTotaleSpesePerObblig(it.cnr.jada.acti
 											context.getUserContext(),
 											fondo,
 											fondo.getScadenza_ricerca());
-		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(tot) != 0) {
+		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(tot) != 0) {
 			if (fondo.getScadenza_ricerca().getIm_scadenza().compareTo(tot) != 0)
 				fondo.setSquared(Boolean.FALSE);
 			else
@@ -1034,11 +1038,46 @@ private void resetRicercaSpese(
 	Fondo_economaleBulk fondo) {
 
 	if (fondo != null) {
-		java.math.BigDecimal tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		java.math.BigDecimal tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 		fondo.setImporto_totale_scadenze_non_doc(tot);
 		fondo.setSpesaReintegrata(fondo.IGNORA);
 		fondo.setSpesaDocumentata(fondo.IGNORA);
 	}
 }
-	
+public Forward doSalva(ActionContext context)
+        throws RemoteException
+    {
+	FondoEconomaleBP bp = (FondoEconomaleBP)getBusinessProcess(context);
+	Fondo_economaleBulk fondo = (Fondo_economaleBulk)bp.getModel();
+	if (fondo.getCd_sospeso()!=null && fondo.isReversaleNecessaria()){
+        	try {
+			return openConfirm(
+							context,
+							"Sei sicuro di voler chiudere il fondo economale con un sospeso "+fondo.getSospeso_di_chiusura().getEsercizio()+"?",
+							it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaSalvaChiudiFondo");
+			} catch (BusinessProcessException e) {
+				return super.handleException(context,e);
+			}
+        }
+        return super.doSalva(context);
+    }
+
+public it.cnr.jada.action.Forward doConfermaSalvaChiudiFondo(
+		it.cnr.jada.action.ActionContext context,
+		int option) {
+		FondoEconomaleBP bp = (FondoEconomaleBP)getBusinessProcess(context);
+		Fondo_economaleBulk fondo = (Fondo_economaleBulk)bp.getModel();
+		if (option == it.cnr.jada.util.action.OptionBP.YES_BUTTON) {
+			try {
+				FondoEconomaleComponentSession session = (FondoEconomaleComponentSession)bp.createComponentSession();
+				fondo = session.chiudeFondo(context.getUserContext(), fondo);
+				bp.commitUserTransaction();
+				bp.edit(context, fondo);
+			} catch(Throwable e) {
+				return super.handleException(context,e);
+			}
+		}
+		return context.findDefaultForward();
+	}
+
 }

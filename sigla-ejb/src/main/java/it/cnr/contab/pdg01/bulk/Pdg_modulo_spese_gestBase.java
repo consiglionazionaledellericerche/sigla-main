@@ -49,12 +49,13 @@ public class Pdg_modulo_spese_gestBase extends Pdg_modulo_spese_gestKey implemen
  
 //    PG_VARIAZIONE_PDG DECIMAL(10,0)
 	private java.lang.Long pg_variazione_pdg;
- 
+	
+	 
 	public Pdg_modulo_spese_gestBase() {
 		super();
 	}
-	public Pdg_modulo_spese_gestBase(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area, java.lang.String cd_cdr_assegnatario, java.lang.String cd_linea_attivita, java.lang.String ti_appartenenza, java.lang.String ti_gestione, java.lang.String cd_elemento_voce) {
-		super(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area, cd_cdr_assegnatario, cd_linea_attivita, ti_appartenenza, ti_gestione, cd_elemento_voce);
+	public Pdg_modulo_spese_gestBase(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area, java.lang.String cd_cdr_assegnatario, java.lang.String cd_linea_attivita, java.lang.String ti_appartenenza, java.lang.String ti_gestione, java.lang.String cd_elemento_voce,Integer pg_dettaglio) {
+		super(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area, cd_cdr_assegnatario, cd_linea_attivita, ti_appartenenza, ti_gestione, cd_elemento_voce,pg_dettaglio);
 	}
 	public java.sql.Timestamp getDt_registrazione () {
 		return dt_registrazione;

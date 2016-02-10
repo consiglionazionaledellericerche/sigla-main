@@ -177,7 +177,7 @@ private void lockMatricola(UserContext userContext,String id_matricola,Integer m
 		sql.addSQLClause("AND","ID_MATRICOLA",sql.EQUALS,id_matricola);
 		sql.addSQLClause("AND","MESE",sql.EQUALS,mese);
 		sql.setForUpdate(true);
-		PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+		LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 		try {
 			java.sql.ResultSet rs = stm.executeQuery();
 			while (rs.next());

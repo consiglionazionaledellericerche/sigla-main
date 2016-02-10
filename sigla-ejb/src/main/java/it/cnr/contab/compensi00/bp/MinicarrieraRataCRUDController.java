@@ -70,7 +70,7 @@ public void validate(ActionContext context,OggettoBulk model) throws ValidationE
 	Minicarriera_rataBulk rata = (Minicarriera_rataBulk)model;
 	if (rata.getIm_rata() == null)
 		throw new ValidationException("Specificare l'importo della rata \"" + rata.getPg_rata().longValue() + "\".");
-	if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(rata.getIm_rata()) == 0)
+	if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(rata.getIm_rata()) == 0)
 		throw new ValidationException("L'importo della rata \"" + rata.getPg_rata().longValue() + "\" non è valido.");
 
 	if (rata.getDt_inizio_rata() == null || rata.getDt_fine_rata() == null)

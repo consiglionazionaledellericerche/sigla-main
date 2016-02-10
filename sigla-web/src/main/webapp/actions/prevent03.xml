@@ -49,4 +49,28 @@
 		<init-param name="defaultAction" value="OfflineReportPrintAction"/>
 	    <init-param name="componentSessionName" value="BREPORTS_EJB_OfflineReportComponentSession" />
     </businessProcess>
+
+  <action 
+      path="/CRUDAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+  </action>
+
+  <action 
+      path="/CRUDPdgMissioneAction" actionClass="it.cnr.contab.prevent01.action.CRUDPdgMissioneAction">
+  </action>
+
+  <businessProcess
+      name="CRUDPdgProgrammaBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/util/form.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Pdg_programmaBulk" />
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />               
+    <init-param name="defaultAction" value="CRUDAction" />
+  </businessProcess>  
+
+  <businessProcess
+      name="CRUDPdgMissioneBP" className="it.cnr.contab.prevent01.bp.CRUDPdgMissioneBP">
+    <forward name="default" path="/prevent01/pdg_missione.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Pdg_missioneBulk" />
+    <init-param name="componentSessionName" value="CNRPREVENT01_EJB_PdgMissioneComponentSession" />               
+    <init-param name="defaultAction" value="CRUDPdgMissioneAction" />
+  </businessProcess>  
 </action-mappings>

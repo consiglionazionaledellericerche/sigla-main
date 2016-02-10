@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_progettiBase"
+	keyClassName="it.cnr.contab.bilaterali00.bulk.Blt_progettiKey"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_progettiHome">
+	<defaultColumnMap
+		tableName="BLT_PROGETTI">
+		<columnMapping
+			columnName="DS_PROGETTO_ITA"
+			propertyName="ds_progetto_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_PROGETTO_ENG"
+			propertyName="ds_progetto_eng"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_RESPONS_ITA"
+			propertyName="cd_respons_ita"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDR_RESPONS_ITA"
+			propertyName="cd_cdr_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="EMAIL_RESPONS_ITA"
+			propertyName="email_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TELEF_RESPONS_ITA"
+			propertyName="telef_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="FAX_RESPONS_ITA"
+			propertyName="fax_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_RESPONS_STR"
+			propertyName="cd_respons_str"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="EMAIL_RESPONS_STR"
+			propertyName="email_respons_str"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TELEF_RESPONS_STR"
+			propertyName="telef_respons_str"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="FAX_RESPONS_STR"
+			propertyName="fax_respons_str"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME_ISTITUZIONE_STR"
+			propertyName="nome_istituzione_str"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="SEDE_ISTITUZIONE_STR"
+			propertyName="sede_istituzione_str"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_ASSOCIATO_RESPONS_ITA"
+			propertyName="fl_associato_respons_ita"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ENTE_RESPONS_ITA"
+			propertyName="ente_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO_ENTE_RESPONS_ITA"
+			propertyName="indirizzo_ente_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_COMUNE_ENTE_RESPONS_ITA"
+			propertyName="pg_comune_ente_respons_ita"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_ENTE_RESPONS_ITA"
+			propertyName="cap_ente_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_progetto_ita" />
+	<persistentProperty
+		name="ds_progetto_eng" />
+	<persistentProperty
+		name="cd_respons_ita" />
+	<persistentProperty
+		name="cd_cdr_respons_ita" />
+	<persistentProperty
+		name="email_respons_ita" />
+	<persistentProperty
+		name="telef_respons_ita" />
+	<persistentProperty
+		name="fax_respons_ita" />
+	<persistentProperty
+		name="cd_respons_str" />
+	<persistentProperty
+		name="email_respons_str" />
+	<persistentProperty
+		name="telef_respons_str" />
+	<persistentProperty
+		name="fax_respons_str" />
+	<persistentProperty
+		name="nome_istituzione_str" />
+	<persistentProperty
+		name="sede_istituzione_str"/>
+	<persistentProperty
+		name="fl_associato_respons_ita"/>
+	<persistentProperty
+		name="ente_respons_ita"/>
+	<persistentProperty
+		name="indirizzo_ente_respons_ita"/>
+	<persistentProperty
+		name="pg_comune_ente_respons_ita"/>
+	<persistentProperty
+		name="cap_ente_respons_ita" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

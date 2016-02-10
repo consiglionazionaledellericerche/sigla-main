@@ -4,11 +4,17 @@
  */
 package it.cnr.contab.utenze00.bulk;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBulk;
+import it.cnr.contab.pdg00.cdip.bulk.V_dipendenteHome;
+import it.cnr.contab.pdg00.consultazioni.bulk.Param_cons_costi_personaleBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.PersistencyException;
@@ -24,30 +30,38 @@ public class Utente_gestoreHome extends BulkHome {
 	}
 	
 	/* Seleziona gli utenti CDS */
-	public SQLBuilder selectUtenteByClause(Utente_gestoreBulk utentegest,  UtenteHome home, UtenteBulk utente, CompoundFindClause clause) throws ComponentException, BusinessProcessException, PersistencyException {
+	public SQLBuilder selectUtenteByClause(Utente_gestoreBulk utentegest,UtenteHome home,UtenteBulk bulk,CompoundFindClause clause) throws PersistencyException, SQLException, ValidationException,ComponentException {
 
-//		Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext);
-//		UtenteHome home = (UtenteHome)getHome(userContext, utente);
 		SQLBuilder sql = home.createSQLBuilder();
-
-	    sql.addClause("AND","ti_utente",SQLBuilder.EQUALS,utente.UTENTE_AMMINISTRATORE_KEY);
-		sql.addClause("AND","fl_autenticazione_ldap",SQLBuilder.EQUALS,Boolean.FALSE);
-		sql.addClause("AND","dt_fine_validita",SQLBuilder.LESS_EQUALS,utentegest.getDataOdierna());
+		sql.addClause(bulk.buildFindClauses(true));
+	    sql.addClause("AND","ti_utente",SQLBuilder.EQUALS,bulk.UTENTE_AMMINISTRATORE_KEY);
+//		sql.addClause("AND","fl_autenticazione_ldap",SQLBuilder.EQUALS,Boolean.FALSE);
+		try {
+			sql.addClause("AND","dt_fine_validita",SQLBuilder.LESS_EQUALS,utentegest.getDataOdierna());
+		} catch (BusinessProcessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sql.addClause(clause);
 		return sql;
 	}
 
 	/* Seleziona gli utenti AMM */
-	public SQLBuilder selectGestoreByClause(Utente_gestoreBulk utentegest, UtenteHome home, UtenteBulk utente, CompoundFindClause clause) throws ComponentException, BusinessProcessException, PersistencyException {
+	public SQLBuilder selectGestoreByClause(Utente_gestoreBulk utentegest,UtenteHome home,UtenteBulk bulk,CompoundFindClause clause) throws PersistencyException, SQLException, ValidationException,ComponentException {
 
-//		Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext);
-//		UtenteHome home = (UtenteHome)getHome(userContext, utente);
 		SQLBuilder sql = home.createSQLBuilder();
-
-	    sql.addClause("AND","ti_utente",SQLBuilder.EQUALS,utente.UTENTE_AMMINISTRATORE_KEY);
+		sql.addClause(bulk.buildFindClauses(true));
+	    sql.addClause("AND","ti_utente",SQLBuilder.EQUALS,bulk.UTENTE_AMMINISTRATORE_KEY);
 		sql.addClause("AND","fl_autenticazione_ldap",SQLBuilder.EQUALS,Boolean.TRUE);
-		sql.addClause("AND","dt_fine_validita",SQLBuilder.GREATER_EQUALS,utentegest.getDataOdierna());
+		try {
+			sql.addClause("AND","dt_fine_validita",SQLBuilder.GREATER_EQUALS,utentegest.getDataOdierna());
+		} catch (BusinessProcessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sql.addClause(clause);
 		return sql;
 	}
-
+	
 
 }

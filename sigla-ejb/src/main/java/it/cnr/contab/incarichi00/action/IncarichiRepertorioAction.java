@@ -1,19 +1,19 @@
 package it.cnr.contab.incarichi00.action;
 
-import java.rmi.RemoteException;
-import java.util.Calendar;
-
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
-import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
 import it.cnr.contab.incarichi00.bp.CRUDIncarichiRepertorioBP;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.jada.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.rmi.RemoteException;
 
 public class IncarichiRepertorioAction extends it.cnr.jada.util.action.CRUDAction{
 public IncarichiRepertorioAction() {
@@ -48,52 +48,11 @@ public Forward doBlankSearchTerzo(ActionContext context, Incarichi_repertorioBul
 
 		incarico.setTipiRapporto(null);
 		incarico.setTipo_rapporto(null);
-		incarico.setTipiTrattamento(null);
-		incarico.setTipo_trattamento(null);
 	}
 	return context.findDefaultForward();
 }
 public Forward doBlankSearchTerzoSearch(ActionContext context, Incarichi_repertorioBulk incarico) {
 	return doBlankSearchTerzo(context, incarico);
-}
-/**
- * Alla selezione del Tipo Rapporto vengono caricati i relativi tipi trattamento
- */  
-
-public Forward doOnTipoRapportoChange(ActionContext context) {
-
-	try {
-		fillModel(context);
-		CRUDIncarichiRepertorioBP bp = (CRUDIncarichiRepertorioBP)getBusinessProcess(context);
-		Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)bp.getModel();
-		
-		doAzzeraTipoTrattamento(context, incarico);
-		bp.findTipiTrattamento(context);
-
-		return context.findDefaultForward();
-
-	}catch (Throwable ex) {
-		return handleException(context, ex);
-	}
-}
-public Forward doOnTipoIstituzCommercChange(ActionContext context) {
-
-	try {
-		fillModel(context);
-		CRUDIncarichiRepertorioBP bp = (CRUDIncarichiRepertorioBP)getBusinessProcess(context);
-		Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)bp.getModel();
-
-		if (bp.isSearching())
-			return context.findDefaultForward();
-
-		doAzzeraTipoTrattamento(context, incarico);
-		bp.findTipiTrattamento(context);
-
-		return context.findDefaultForward();
-
-	}catch (Throwable ex) {
-		return handleException(context, ex);
-	}
 }
 public Forward doOnDtInizioValiditaChange(ActionContext context) {
 	CRUDIncarichiRepertorioBP bp = (CRUDIncarichiRepertorioBP)getBusinessProcess(context);
@@ -151,12 +110,6 @@ public Forward doOnDtFineValiditaChange(ActionContext context) {
 		{
 			return handleException(context, e);
 		}
-	}
-}
-private void doAzzeraTipoTrattamento(ActionContext context, Incarichi_repertorioBulk incarico) {
-	if (incarico!=null){
-		incarico.setTipiTrattamento(null);
-		incarico.setTipo_trattamento(null);
 	}
 }
 public Forward doElimina(ActionContext actioncontext) throws RemoteException {

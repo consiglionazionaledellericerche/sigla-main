@@ -50,6 +50,9 @@
 				<%}%>
 				<TD><%bp.getController().writeFormField(out,"fl_esterna_da_quadrare_sac"); %></TD>
 			</TR>
+			<TR>
+				<TD><%bp.getController().writeFormField(out,"ti_classificazione"); %></TD>
+			</TR>
 		</table>
 		<% if (bp.getModel() instanceof Classificazione_voci_speBulk) { %>
 		<div class="Group" style="width:100%">

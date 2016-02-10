@@ -6,6 +6,12 @@
  */
 package it.cnr.contab.pdg01.bp;
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
+
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
@@ -20,13 +26,10 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-
-import java.util.Iterator;
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author rpagano
@@ -35,6 +38,7 @@ import java.util.List;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
+	private Parametri_cnrBulk parametriCnr;
 	private it.cnr.contab.config00.sto.bulk.CdrBulk centro_responsabilita;
 	private Pdg_variazioneBulk pdg_variazione;
 	private DipartimentoBulk dipartimentoSrivania;	
@@ -85,6 +89,10 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 						true,"Apponi Visto");
 				}
 		}
+		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {	
+            Pdg_variazione_riga_gestBulk dett=(Pdg_variazione_riga_gestBulk)oggettobulk;
+            validaRiga(actioncontext,dett);
+		} 
 	};
 
 	private SimpleDetailCRUDController righeVariazioneSpeGest = new SimpleDetailCRUDController( "RigheVariazioneSpeGest", Pdg_variazione_riga_spesa_gestBulk.class, "righeVariazioneSpeGest", this){
@@ -132,7 +140,8 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 				}
 		}
           protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {	
-             Pdg_variazione_riga_gestBulk dett=(Pdg_variazione_riga_gestBulk)oggettobulk;							 
+             Pdg_variazione_riga_gestBulk dett=(Pdg_variazione_riga_gestBulk)oggettobulk;
+             validaRiga(actioncontext,dett); 
                 if(dett!=null && dett.getIm_spese_gest_accentrata_int()!=null && dett.getIm_spese_gest_decentrata_int()!=null &&				   
                    dett.getIm_spese_gest_accentrata_int().compareTo(BigDecimal.ZERO)!=0 && dett.getIm_spese_gest_decentrata_int().compareTo(BigDecimal.ZERO)!=0 )
        	                throw new ValidationException("Non è possibile indicare sulla stessa riga di variazione sia le spese Decentrate Esterne che le spese Accentrate Esterne, inserire un nuovo dettaglio.");				
@@ -169,7 +178,51 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 	public CRUDPdgVariazioneRigaGestBP() {
 		super();
 	}
-
+	protected void validaRiga(ActionContext actioncontext,
+			Pdg_variazione_riga_gestBulk oggettobulk) throws ValidationException {
+		for (java.util.Iterator i = ((Ass_pdg_variazione_cdrBulk)this.getModel()).getRigheVariazioneEtrGest().iterator();i.hasNext();) {
+			Pdg_variazione_riga_gestBulk riga = (Pdg_variazione_riga_gestBulk)i.next();
+			if (!riga.equals(oggettobulk) &&
+					riga.getEsercizio().compareTo(oggettobulk.getEsercizio())==0 &&
+					riga.getCd_cdr_assegnatario().compareTo(oggettobulk.getCd_cdr_assegnatario())==0 &&
+					((
+					(riga.getCd_cds_area()!= null && oggettobulk.getCd_cds_area()!=null ) &&
+					(riga.getCd_cds_area().compareTo(oggettobulk.getCd_cds_area())==0))|| 
+					(riga.getCd_cds_area()== null && oggettobulk.getCd_cds_area()==null ) ||
+					(riga.getCd_cds_area()!=null && riga.getCd_cds_area().compareTo(riga.getCdr_assegnatario().getCd_cds())==0 &&
+							oggettobulk.getCd_cds_area()==null )||		
+					(oggettobulk.getCd_cds_area()!=null && oggettobulk.getCd_cds_area().compareTo(oggettobulk.getCdr_assegnatario().getCd_cds())==0 &&
+							riga.getCd_cds_area()==null)) &&
+					oggettobulk.getLinea_attivita()!=null && riga.getLinea_attivita()!=null &&
+					oggettobulk.getCd_linea_attivita()!=null && riga.getCd_linea_attivita()!=null &&
+				    riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
+				    riga.getCd_elemento_voce()!=null && oggettobulk.getCd_elemento_voce()!=null &&
+				    riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
+				throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
+			}
+	
+	for (java.util.Iterator i =  ((Ass_pdg_variazione_cdrBulk)this.getModel()).getRigheVariazioneSpeGest().iterator();i.hasNext();) {
+		Pdg_variazione_riga_gestBulk riga = (Pdg_variazione_riga_gestBulk)i.next();
+		if (!riga.equals(oggettobulk) &&
+				riga.getEsercizio().compareTo(oggettobulk.getEsercizio())==0 &&
+				riga.getCd_cdr_assegnatario().compareTo(oggettobulk.getCd_cdr_assegnatario())==0 &&
+				((
+				(riga.getCd_cds_area()!= null && oggettobulk.getCd_cds_area()!=null ) &&
+				(riga.getCd_cds_area().compareTo(oggettobulk.getCd_cds_area())==0))|| 
+				(riga.getCd_cds_area()== null && oggettobulk.getCd_cds_area()==null ) ||
+				(riga.getCd_cds_area()!=null && riga.getCd_cds_area().compareTo(riga.getCdr_assegnatario().getCd_cds())==0 &&
+						oggettobulk.getCd_cds_area()==null )||		
+				(oggettobulk.getCd_cds_area()!=null && oggettobulk.getCd_cds_area().compareTo(oggettobulk.getCdr_assegnatario().getCd_cds())==0 &&
+						riga.getCd_cds_area()==null)) &&
+				oggettobulk.getLinea_attivita()!=null && riga.getLinea_attivita()!=null &&
+				oggettobulk.getCd_linea_attivita()!=null && riga.getCd_linea_attivita()!=null &&
+			    riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
+			    riga.getCd_elemento_voce()!=null && oggettobulk.getCd_elemento_voce()!=null &&
+			    riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
+			throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
+	}
+}
+	
 	public CRUDPdgVariazioneRigaGestBP(String function) {
 		super(function);
 	}
@@ -220,6 +273,13 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 		setUoScrivania(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
 		if (it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(actioncontext)!=null)
 			setDipartimentoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(actioncontext));
+		try {
+			setParametriCnr(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())));
+		} catch (ComponentException e1) {
+			throw handleException(e1);
+		} catch (RemoteException e1) {
+			throw handleException(e1);
+		}
 	}
 
 	public Pdg_variazioneBulk getPdg_variazione() {
@@ -338,5 +398,13 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 		}catch(java.rmi.RemoteException ex){
 			throw handleException(ex);
 		}
+	}
+
+	private void setParametriCnr(Parametri_cnrBulk parametriCnr) {
+		this.parametriCnr = parametriCnr;
+	}
+	
+	public Parametri_cnrBulk getParametriCnr() {
+		return parametriCnr;
 	}
 }

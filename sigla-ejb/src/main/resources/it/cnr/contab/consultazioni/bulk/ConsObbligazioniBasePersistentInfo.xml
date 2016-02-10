@@ -92,6 +92,11 @@
 			columnSize="15"
 			columnScale="2"/>
 		<columnMapping
+			columnName="ESERCIZIO_DOCAMM"
+			propertyName="esercizio_docamm"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />		
+		<columnMapping
 			columnName="PG_DOC_AMM"
 			propertyName="pg_doc_amm"
 			sqlTypeName="VARCHAR"
@@ -116,7 +121,7 @@
 			propertyName="ti_fattura"
 			sqlTypeName="VARCHAR"
 			columnSize="1"/>
-			<columnMapping
+		<columnMapping
 			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
 			propertyName="pg_obbligazione_scadenzario"
 			sqlTypeName="DECIMAL"
@@ -151,6 +156,12 @@
 			propertyName="pg_mandato"
 			sqlTypeName="VARCHAR"
 			columnSize="40"/>
+		<columnMapping
+			columnName="TIPO_DOC_AMM"
+			propertyName="tipo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>
+		
 	</defaultColumnMap>	
 	<persistentProperty
 		name="pg_obbligazione_scadenzario" />
@@ -200,6 +211,8 @@
 		name="im_scadenza" />
 	<persistentProperty
 		name="im_voce" />
+	<persistentProperty 
+		name="esercizio_docamm" />	
 	<persistentProperty
 		name="pg_doc_amm" />
 	<persistentProperty
@@ -210,4 +223,6 @@
 		name="denominazione_sede" />
 	<persistentProperty
 		name="ti_fattura" />
+	<persistentProperty
+		name="tipo_doc_amm" />	
 </SQLPersistentInfo>

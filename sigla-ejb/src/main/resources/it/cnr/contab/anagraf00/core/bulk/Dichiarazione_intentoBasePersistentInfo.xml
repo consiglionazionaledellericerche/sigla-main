@@ -1,31 +1,94 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Dichiarazione_intentoBase"
-	keyClassName="it.cnr.contab.anagraf00.core.bulk.Dichiarazione_intentoKey"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.Dichiarazione_intentoKey" 
 	homeClassName="it.cnr.contab.anagraf00.core.bulk.Dichiarazione_intentoHome" >
 	<defaultColumnMap
 		tableName="DICHIARAZIONE_INTENTO" >
 		<columnMapping
-			columnName="DT_COMUNICAZIONE_REV"
-			propertyName="dt_comunicazione_rev"
+			columnName="ANNO_DICH"
+			propertyName="anno_dich"
+			sqlTypeName="DECIMAL"
+			nullable="false"
+			columnSize="4" />
+		<columnMapping
+			columnName="NUM_DICH"
+			propertyName="num_dich"
+			sqlTypeName="DECIMAL"
+			nullable="false"
+			columnSize="4" />
+		<columnMapping
+			columnName="FL_ACQUISTI"
+			propertyName="fl_acquisti"
+			sqlTypeName="CHAR"
+			columnSize="1" 
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_IMPORTAZIONI"
+			propertyName="fl_importazioni"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="ANNO_RIF"
+			propertyName="anno_rif"
+			sqlTypeName="DECIMAL"
+			nullable="false"
+			columnSize="4" />
+		<columnMapping
+			columnName="DT_COMUNICAZIONE_DIC"
+			propertyName="dt_comunicazione_dic"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" 
+			nullable="false"/>	
+		<columnMapping
+			columnName="DT_INI_VALIDITA"
+			propertyName="dt_ini_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />	
+		<columnMapping
+			columnName="DT_FIN_VALIDITA"
+			propertyName="dt_fin_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />	
+		<columnMapping
+			columnName="DT_INIZIO_VAL_DICH"
+			propertyName="dt_inizio_val_dich"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
+		<columnMapping
+			columnName="DT_FINE_VAL_DICH"
+			propertyName="dt_fine_val_dich"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="IM_LIMITE_SING_OP"
+			propertyName="im_limite_sing_op"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IM_LIMITE_OP"
+			propertyName="im_limite_op"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="ID_DICHIARAZIONE"
+			propertyName="id_dichiarazione"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
 		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
-		<columnMapping
-			columnName="DT_INSERIMENTO_REGISTRO"
-			propertyName="dt_inserimento_registro"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="DT_COMUNICAZIONE_DIC"
-			propertyName="dt_comunicazione_dic"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
 		<columnMapping
 			columnName="UTCR"
 			propertyName="utcr"
@@ -39,31 +102,8 @@
 			columnSize="7"
 			nullable="false" />
 		<columnMapping
-			columnName="DT_FIN_VALIDITA"
-			propertyName="dt_fin_validita"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
 			columnName="DUVA"
 			propertyName="duva"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_REVOCA_REGISTRO"
-			propertyName="dt_revoca_registro"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="ID_DICHIARAZIONE"
-			propertyName="id_dichiarazione"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_INI_VALIDITA"
-			propertyName="dt_ini_validita"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="false" />
@@ -74,28 +114,41 @@
 			columnSize="20"
 			nullable="false" />
 	</defaultColumnMap>
+	
 	<persistentProperty
-		name="dt_comunicazione_rev" />
+		name="anno_dich" />
 	<persistentProperty
-		name="pg_ver_rec" />
+		name="num_dich" />
 	<persistentProperty
-		name="dt_inserimento_registro" />
+		name="fl_acquisti" />
+	<persistentProperty
+		name="fl_importazioni" />
+	<persistentProperty
+		name="anno_rif" />	
 	<persistentProperty
 		name="dt_comunicazione_dic" />
+	<persistentProperty
+		name="dt_ini_validita" />
+	<persistentProperty
+		name="dt_fin_validita" />
+	<persistentProperty
+		name="dt_inizio_val_dich" />
+	<persistentProperty
+		name="dt_fine_val_dich" />			
+	<persistentProperty
+		name="im_limite_sing_op" />
+	<persistentProperty
+		name="im_limite_op" />
+	<persistentProperty
+		name="id_dichiarazione" />
+	<persistentProperty
+		name="pg_ver_rec" />
 	<persistentProperty
 		name="utcr" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty
-		name="dt_fin_validita" />
-	<persistentProperty
 		name="duva" />
-	<persistentProperty
-		name="dt_revoca_registro" />
-	<persistentProperty
-		name="id_dichiarazione" />
-	<persistentProperty
-		name="dt_ini_validita" />
 	<persistentProperty
 		name="utuv" />
 </SQLPersistentInfo>

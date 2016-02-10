@@ -2,28 +2,20 @@
 package it.cnr.contab.prevent01.consultazioni.bp;
 
 import java.rmi.RemoteException;
-import java.util.Enumeration;
 import java.util.Iterator;
 
-import javax.ejb.EJBException;
-
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociHome;
-import it.cnr.contab.config00.pdcfin.cla.bulk.Parametri_livelliBulk;
 import it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_foBulk;
 import it.cnr.contab.prevent01.consultazioni.ejb.ConsPDGPFoComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.BulkInfo;
-import it.cnr.jada.bulk.ColumnFieldProperty;
-import it.cnr.jada.bulk.FieldProperty;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -37,6 +29,7 @@ public class ConsPDGPFoBP extends ConsultazioniBP {
 	public static final String LIVELLO_CDR= "CDR";
 	public static final String LIVELLO_TIP= "TIP";
 	public static final String LIVELLO_MOD= "MOD";
+	public static final String LIVELLO_PRG= "PRG";
 	public static final String LIVELLO_LIV1= "LIV1";
 	public static final String LIVELLO_LIV2= "LIV2";
 	public static final String LIVELLO_LIV3= "LIV3";
@@ -48,6 +41,9 @@ public class ConsPDGPFoBP extends ConsultazioniBP {
 	private String ds_livello2;
 	private String ds_livello3;
 	private String anno_corrente,anno_successivo,anno_successivo_successivo;
+
+	private boolean flNuovoPdg = false;
+
 	public ConsPDGPFoComponentSession createPdgpFoComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		
 		   return (ConsPDGPFoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPREVENT01_EJB_ConsPDGPFoComponentSession", ConsPDGPFoComponentSession.class);
@@ -58,26 +54,34 @@ public class ConsPDGPFoBP extends ConsultazioniBP {
 	   }
 
 	   protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-		   Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+		   try {
+			   Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+			   Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), esercizio); 
+			   setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+				
+			   CompoundFindClause clauses = new CompoundFindClause();
+			   clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+			   setBaseclause(clauses);
 			
-		   CompoundFindClause clauses = new CompoundFindClause();
-		   clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-		   setBaseclause(clauses);
-		
-		   if (getPathConsultazione()==null) {
-				if (this instanceof ConsPDGPFoEtrBP){
-					setPathConsultazione(this.LIVELLO_ETRTIP);					
-					setLivelloConsultazione(this.LIVELLO_ETRTIP);
-				} 
-				else
-				{
-					setPathConsultazione(this.LIVELLO_SPETIP);					
-					setLivelloConsultazione(this.LIVELLO_SPETIP);
-				} 
-			
-				super.init(config,context);
-				initVariabili(context, null,getPathConsultazione());   
-		   }	 		
+			   if (getPathConsultazione()==null) {
+					if (this instanceof ConsPDGPFoEtrBP){
+						setPathConsultazione(this.LIVELLO_ETRTIP);					
+						setLivelloConsultazione(this.LIVELLO_ETRTIP);
+					} 
+					else
+					{
+						setPathConsultazione(this.LIVELLO_SPETIP);					
+						setLivelloConsultazione(this.LIVELLO_SPETIP);
+					} 
+				
+					super.init(config,context);
+					initVariabili(context, null,getPathConsultazione());   
+			   }	 		
+			} catch (ComponentException e) {
+				throw new BusinessProcessException(e);
+			} catch (RemoteException e) {
+				throw new BusinessProcessException(e);
+			} 
 	   }
 	   public void initVariabili(it.cnr.jada.action.ActionContext context, String pathProvenienza, String livello_destinazione) throws it.cnr.jada.action.BusinessProcessException {
 		   try {
@@ -94,8 +98,13 @@ public class ConsPDGPFoBP extends ConsultazioniBP {
 			   }
 			   else
 			   {
-				   setPathConsultazione(pathProvenienza.concat(livello_destinazione));
-				   setLivelloConsultazione(livello_destinazione);
+				   if (this.isFlNuovoPdg() && "ETRTIPLIV1LIV2LIV3".equals(pathProvenienza) && "DET".equals(livello_destinazione)) {
+					   setPathConsultazione(pathProvenienza.concat(livello_destinazione).concat("NEW"));
+					   setLivelloConsultazione(livello_destinazione.concat("NEW"));
+				   } else {
+					   setPathConsultazione(pathProvenienza.concat(livello_destinazione));
+					   setLivelloConsultazione(livello_destinazione);
+				   }
 			   }
 		
 			   setSearchResultColumnSet(getPathConsultazione());
@@ -130,11 +139,15 @@ public class ConsPDGPFoBP extends ConsultazioniBP {
 			   	listButton.addElement(button2);
 		   }
 			if (getLivelloConsultazione().equals(this.LIVELLO_CDR)) {
-					   Button button = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.modulo");
-					   button.setSeparator(true);
-					   listButton.addElement(button);
+			   Button button = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.modulo");
+			   if (this.isFlNuovoPdg()) {
+				   button.setTitle(ProgettoBulk.LABEL_PROGETTO);
+				   button.setLabel(ProgettoBulk.LABEL_PROGETTO);
+			   }
+			   button.setSeparator(true);
+			   listButton.addElement(button);
 			}
-		   	if (getLivelloConsultazione().equals(this.LIVELLO_MOD)) {
+		   	if (getLivelloConsultazione().equals(this.LIVELLO_MOD) || getLivelloConsultazione().equals(this.LIVELLO_PRG)) {
 			   Button button = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.livello1");
 			   button.setLabel(getDs_livello1());
 			   button.setSeparator(true);
@@ -194,6 +207,9 @@ public class ConsPDGPFoBP extends ConsultazioniBP {
 	   public boolean isPresenteMOD() {
 		   return getPathConsultazione().indexOf(LIVELLO_MOD)>=0;
 	   }
+	   public boolean isPresentePRG() {
+		   return getPathConsultazione().indexOf(LIVELLO_PRG)>=0;
+	   }
 	   public boolean isPresenteDET() {
 		   return getPathConsultazione().indexOf(LIVELLO_DET)>=0;
 	   }
@@ -211,8 +227,9 @@ public class ConsPDGPFoBP extends ConsultazioniBP {
 			if (isPresenteTIP()) title = title.concat(" - Funz.Obiettivo");
 			if (isPresenteCDR()) title = title.concat("\\CdR");
 			if (isPresenteMOD()) title = title.concat("\\Modulo");
-			if (isPresenteLIV1()) title = title.concat("\\Titolo");
-			if (isPresenteLIV2()) title = title.concat("\\Categoria");
+			if (isPresentePRG()) title = title.concat("\\").concat(ProgettoBulk.LABEL_PROGETTO);
+			if (isPresenteLIV1()) title = title.concat("\\").concat(getDs_livello1());
+			if (isPresenteLIV2()) title = title.concat("\\").concat(getDs_livello2());
 			if (isPresenteLIV3()) title = title.concat("\\").concat(getDs_livello3());
 			if (isPresenteDET()) title = title.concat("\\Dettagli");
 		   getBulkInfo().setShortDescription(title);
@@ -310,6 +327,8 @@ public class ConsPDGPFoBP extends ConsultazioniBP {
 					  parzclause.addClause("AND","cd_livello3",SQLBuilder.EQUALS,wpb.getCd_livello3());	   
 				   if (isPresenteMOD()) 
 					   parzclause.addClause("AND","cd_modulo",SQLBuilder.EQUALS,wpb.getCd_modulo());
+				   if (isPresentePRG()) 
+					   parzclause.addClause("AND","cd_commessa",SQLBuilder.EQUALS,wpb.getCd_modulo());
 				   if (isPresenteDET()) 
 					   parzclause.addClause("AND","cd_classificazione",SQLBuilder.EQUALS,wpb.getCd_classificazione());
 	
@@ -485,5 +504,82 @@ public String getHeaderLabelIm_costi_generali(){
 	public String getColumnLabelCd_livello3(){
 			return ds_livello3;
 	}
-	
- }
+	public void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
+	}
+	public String getColumnLabelCd_progetto(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_AREA_PROGETTUALE;
+		else
+			return ProgettoBulk.LABEL_PROGETTO;
+	}	
+	public String getFindLabelCd_progetto(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_AREA_PROGETTUALE;
+		else
+			return ProgettoBulk.LABEL_PROGETTO;
+	}	
+	public String getColumnLabelCd_commessa(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_PROGETTO;
+		else
+			return ProgettoBulk.LABEL_COMMESSA;
+	}	
+	public String getFindLabelCd_commessa(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_PROGETTO;
+		else
+			return ProgettoBulk.LABEL_COMMESSA;
+	}	
+	public String getColumnLabelDs_progetto(){
+		if (this.isFlNuovoPdg())
+			return "Desc. ".concat(ProgettoBulk.LABEL_AREA_PROGETTUALE);
+		else
+			return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+	}	
+	public String getFindLabelDs_progetto(){
+		if (this.isFlNuovoPdg())
+			return "Desc. ".concat(ProgettoBulk.LABEL_AREA_PROGETTUALE);
+		else
+			return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+	}	
+	public String getColumnLabelDs_commessa(){
+		if (this.isFlNuovoPdg())
+			return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+		else
+			return "Desc. ".concat(ProgettoBulk.LABEL_COMMESSA);
+	}	
+	public String getFindLabelDs_commessa(){
+		if (this.isFlNuovoPdg())
+			return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+		else
+			return "Desc. ".concat(ProgettoBulk.LABEL_COMMESSA);
+	}	
+	public String getColumnLabelDs_tipo_modulo(){
+		if (this.isFlNuovoPdg())
+			return "Desc. Tipo ".concat(ProgettoBulk.LABEL_PROGETTO);
+		else
+			return "Desc. Tipo ".concat(ProgettoBulk.LABEL_COMMESSA);
+	}	
+	public String getFindLabelDs_tipo_modulo(){
+		if (this.isFlNuovoPdg())
+			return "Desc. Tipo ".concat(ProgettoBulk.LABEL_PROGETTO);
+		else
+			return "Desc. Tipo ".concat(ProgettoBulk.LABEL_COMMESSA);
+	}	
+	public String getColumnLabelCd_tipo_modulo(){
+		if (this.isFlNuovoPdg())
+			return "Tipo ".concat(ProgettoBulk.LABEL_PROGETTO);
+		else
+			return "Tipo ".concat(ProgettoBulk.LABEL_COMMESSA);
+	}
+	public String getFindLabelCd_tipo_modulo(){
+		if (this.isFlNuovoPdg())
+			return "Tipo ".concat(ProgettoBulk.LABEL_PROGETTO);
+		else
+			return "Tipo ".concat(ProgettoBulk.LABEL_COMMESSA);
+	}
+}

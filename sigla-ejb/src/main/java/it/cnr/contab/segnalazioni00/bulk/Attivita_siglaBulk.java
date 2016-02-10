@@ -24,6 +24,7 @@ public class Attivita_siglaBulk extends Attivita_siglaBase {
 	public final static String SVILUPPO ="S";
 	public final static String TEST ="T";
 	public final static String RILASCIATA ="R";
+	public final static String DIFFERITO ="D";
 
 	public final static String UNO ="1";
 	public final static String DUE ="2";
@@ -52,6 +53,7 @@ public class Attivita_siglaBulk extends Attivita_siglaBase {
 		STATO.put(SVILUPPO, 		 "Sviluppo");
 		STATO.put(TEST, 		 "Test");
 		STATO.put(RILASCIATA, 		 "Rilasciata/Chiusa");
+		STATO.put(DIFFERITO, 		 "Sospeso/Differito");
 	}
 	static{
 		TIPO_ATTIVITA = new it.cnr.jada.util.OrderedHashtable();

@@ -51,4 +51,15 @@
 	<init-param name="componentSessionName" value="CNRCONFIG00_EJB_Linea_attivitaComponentSession" />
 	<init-param name="defaultAction" value="RicercaGAEAction" />
   </businessProcess>
+  <action 
+      path="/RicercaGAEFEAction" actionClass="it.cnr.contab.config00.action.RicercaGAEFEAction"
+      needExistingSession="false">
+ </action>
+  
+  <businessProcess
+        name="RicercaGAEFEBP" className="it.cnr.contab.config00.bp.RicercaGAEFEBP">
+    <forward name="default" path="/config00/responseXML.jsp"/>
+	<init-param name="componentSessionName" value="CNRCONFIG00_EJB_Linea_attivitaComponentSession" />
+	<init-param name="defaultAction" value="RicercaGAEFEAction" />
+  </businessProcess>
 </action-mappings>

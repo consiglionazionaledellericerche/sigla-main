@@ -4,25 +4,35 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Iterator;
-import java.util.List;
-
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.cmis.annotation.CMISPolicy;
+import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderAssegniRicerca;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderBorseStudio;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderContrattiModel;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderIncarico;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderProcedura;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Dictionary;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
 
 public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	public final static Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -58,18 +68,21 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	private BulkList incarichi_repertorio_annoColl = new BulkList();
 	private BulkList archivioAllegati = new BulkList();
 	private BulkList incarichi_repertorio_varColl = new BulkList();
+	private BulkList incarichi_repertorio_rappColl = new BulkList();
+	private BulkList incarichi_repertorio_rapp_detColl = new BulkList();
 	private Unita_organizzativaBulk unita_organizzativa;
 	private Incarichi_proceduraBulk incarichi_procedura;
 	private V_terzo_per_compensoBulk v_terzo = new V_terzo_per_compensoBulk();
 	private TerzoBulk terzoForColumnMap;
 	private Tipo_rapportoBulk tipo_rapporto;
 	private Tipo_trattamentoBulk tipo_trattamento = new Tipo_trattamentoBulk();
-	private java.util.Collection tipiTrattamento;
 	private java.util.Collection tipiRapporto;
 
 	private BulkList associazioneUO = new BulkList();
 	private BulkList associazioneUODisponibili = new BulkList();
 
+	private java.sql.Timestamp dt_efficacia_orig;
+	
 	public Incarichi_repertorioBulk() {
 		super();
 	}
@@ -179,13 +192,6 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		this.getTipo_rapporto().setCd_tipo_rapporto(cd_tipo_rapporto);
 	}
 	
-// Tipo Trattamento
-	public java.util.Collection getTipiTrattamento() {
-		return tipiTrattamento;
-	}
-	public void setTipiTrattamento(java.util.Collection newTipiTrattamento) {
-		tipiTrattamento = newTipiTrattamento;
-	}
 	public it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk getTipo_trattamento() {
 		return tipo_trattamento;
 	}
@@ -238,7 +244,8 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		return new it.cnr.jada.bulk.BulkCollection[] { 
 				getIncarichi_repertorio_annoColl(), getArchivioAllegati(), 
 				getIncarichi_repertorio_varColl(), getAssociazioneUO(),
-				getAssociazioneUODisponibili() };
+				getAssociazioneUODisponibili(), getIncarichi_repertorio_rappColl(),
+				getIncarichi_repertorio_rapp_detColl()};
 	}
 	public int addToIncarichi_repertorio_annoColl(Incarichi_repertorio_annoBulk dett) {
 		dett.setIncarichi_repertorio(this);
@@ -422,6 +429,15 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		}
 		return null;
 	}
+	public Incarichi_repertorio_archivioBulk getCurriculumVincitore(){
+		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
+			Incarichi_repertorio_archivioBulk allegato = (Incarichi_repertorio_archivioBulk)i.next();
+			if (allegato.isCurriculumVincitore()) {
+				return allegato;
+			}
+		}
+		return null;
+	}
 	public Incarichi_repertorio_archivioBulk getDecretoDiNomina(){
 		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
 			Incarichi_repertorio_archivioBulk allegato = (Incarichi_repertorio_archivioBulk)i.next();
@@ -440,16 +456,6 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		}
 		return null;
 	}
-	public List<String> getDownloadUrlAllegati()
-	{
-		List<String> listAllegati = new ArrayList<String>();
-		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
-			Incarichi_repertorio_archivioBulk allegato = (Incarichi_repertorio_archivioBulk)i.next();
-			if (!allegato.isAllegatoDaPubblicare()) 
-				listAllegati.add(allegato.getDownloadUrl());
-		}
-		return listAllegati;
-	}
 	public void validaDateContratto() throws ValidationException {
 //		if (this.getDt_stipula()!=null && this.getDt_provv()==null) 
 //		    throw new ValidationException( "Non \350 possibile indicare la \"Data di stipula\" senza indicare la \"Data di protocollo\" del provvedimento di nomina.");
@@ -465,14 +471,19 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		if (this.getFl_inviato_corte_conti()) {
 			if (this.getDt_stipula()==null && this.getDt_invio_corte_conti()!=null)
 			    throw new ValidationException( "Non \350 possibile indicare la \"Data di ricezione Corte dei Conti\" senza indicare la \"Data di stipula\".");
-			if (this.getDt_invio_corte_conti()==null && this.getDt_inizio_validita()!=null)
-			    throw new ValidationException( "Non \350 possibile indicare la \"Data di inizio validit\340\" senza indicare la \"Data di ricezione Corte dei Conti\".");
+			if (this.getDt_invio_corte_conti()==null && this.getDt_efficacia()!=null) 
+			    throw new ValidationException( "Non \350 possibile indicare la \"Data di efficacia\" senza indicare la \"Data di ricezione Corte dei Conti\".");
+			if (this.getDt_efficacia()==null && this.getDt_inizio_validita()!=null) 
+			    throw new ValidationException( "Non \350 possibile indicare la \"Data di inizio validit\340\" senza indicare la \"Data efficacia\".");
 			if (this.getDt_stipula()!=null && this.getDt_invio_corte_conti()!=null && 
 				this.getDt_stipula().after(this.getDt_invio_corte_conti())) 
 				throw new ValidationException( "La \"Data di ricezione Corte dei Conti\" deve essere uguale o superiore alla \"Data di stipula\".");
-			if (this.getDt_invio_corte_conti()!=null && this.getDt_inizio_validita()!=null && 
-				this.getDt_invio_corte_conti().after(this.getDt_inizio_validita())) 
-				throw new ValidationException( "La \"Data di inizio validit\340\" del contratto deve essere uguale o superiore alla \"Data di ricezione Corte dei Conti\".");
+			if (this.getDt_invio_corte_conti()!=null && this.getDt_efficacia()!=null && 
+				this.getDt_invio_corte_conti().after(this.getDt_efficacia())) 
+				throw new ValidationException( "La \"Data di efficacia\" del contratto deve essere uguale o superiore alla \"Data di ricezione Corte dei Conti\".");
+			if (this.getDt_efficacia()!=null && this.getDt_inizio_validita()!=null && 
+				this.getDt_efficacia().after(this.getDt_inizio_validita())) 
+				throw new ValidationException( "La \"Data di inizio validit\340\" del contratto deve essere uguale o superiore alla \"Data di efficacia\".");
 		}
 		if (this.getDt_stipula()==null && this.getDt_inizio_validita()!=null)
 		    throw new ValidationException( "Non \350 possibile indicare la \"Data di inizio validit\340\" senza indicare la \"Data di stipula\".");
@@ -512,12 +523,11 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 			totale = totale.add( ((Incarichi_repertorio_annoBulk)i.next()).getImporto_utilizzato());
 		return totale;
 	}
+	
 	public BulkList getIncarichi_repertorio_varColl() {
 		return incarichi_repertorio_varColl;
 	}
-	
-	public void setIncarichi_repertorio_varColl(
-			BulkList incarichi_repertorio_varColl) {
+	public void setIncarichi_repertorio_varColl(BulkList incarichi_repertorio_varColl) {
 		this.incarichi_repertorio_varColl = incarichi_repertorio_varColl;
 	}
 	public int addToIncarichi_repertorio_varColl(Incarichi_repertorio_varBulk dett) {
@@ -622,4 +632,63 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		}
 		return false;
 	}
+	public java.sql.Timestamp getDt_efficacia_orig() {
+		return dt_efficacia_orig;
+	}
+	public void setDt_efficacia_orig(java.sql.Timestamp dt_efficacia_orig) {
+		this.dt_efficacia_orig = dt_efficacia_orig;
+	}
+	public boolean isRODataEfficacia(){
+		return getDt_efficacia_orig()!=null?isRODataStipula():false;
+	}
+
+	public BulkList getIncarichi_repertorio_rappColl() {
+		return incarichi_repertorio_rappColl;
+	}
+	public void setIncarichi_repertorio_rappColl(BulkList incarichi_repertorio_rappColl) {
+		this.incarichi_repertorio_rappColl = incarichi_repertorio_rappColl;
+	}
+	public int addToIncarichi_repertorio_rappColl(Incarichi_repertorio_rappBulk dett) {
+		dett.setIncarichi_repertorio(this);
+		if (this.getDt_stipula()!=null) {
+			GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
+			data_da.setTime(this.getDt_stipula());
+			dett.setAnno_competenza(data_da.get(java.util.Calendar.YEAR));
+		}
+		dett.setTipo_archivio(Incarichi_archivioBulk.TIPO_GENERICO);
+		dett.setStato(Incarichi_archivioBulk.STATO_VALIDO);
+		getIncarichi_repertorio_rappColl().add(dett);
+		return getIncarichi_repertorio_rappColl().size()-1;
+	}	
+	public Incarichi_repertorio_rappBulk removeFromIncarichi_repertorio_rappColl(int index) {
+		Incarichi_repertorio_rappBulk dett = (Incarichi_repertorio_rappBulk)getIncarichi_repertorio_rappColl().remove(index);
+		return dett;
+	}
+
+	public BulkList getIncarichi_repertorio_rapp_detColl() {
+		return incarichi_repertorio_rapp_detColl;
+	}
+	public void setIncarichi_repertorio_rapp_detColl(BulkList incarichi_repertorio_rapp_detColl) {
+		this.incarichi_repertorio_rapp_detColl = incarichi_repertorio_rapp_detColl;
+	}
+	public int addToIncarichi_repertorio_rapp_detColl(Incarichi_repertorio_rapp_detBulk dett) {
+		dett.setIncarichi_repertorio(this);
+		dett.setStato(Incarichi_archivioBulk.STATO_VALIDO);
+		getIncarichi_repertorio_rapp_detColl().add(dett);
+		return getIncarichi_repertorio_rapp_detColl().size()-1;
+	}	
+	public Incarichi_repertorio_rapp_detBulk removeFromIncarichi_repertorio_rapp_detColl(int index) {
+		Incarichi_repertorio_rapp_detBulk dett = (Incarichi_repertorio_rapp_detBulk)getIncarichi_repertorio_rapp_detColl().remove(index);
+		return dett;
+	}
+
+	public CMISFolderContrattiModel getCMISFolder() {
+		if (this.getIncarichi_procedura().isProceduraForBorseStudio()) 
+			return new CMISFolderBorseStudio(this);
+		else if (this.getIncarichi_procedura().isProceduraForAssegniRicerca()) 
+			return new CMISFolderAssegniRicerca(this);
+		else
+			return new CMISFolderIncarico(this);
+	}
+
 }

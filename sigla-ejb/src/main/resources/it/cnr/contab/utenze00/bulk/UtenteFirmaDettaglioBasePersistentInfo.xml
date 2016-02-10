@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBase"
+	keyClassName="it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioKey"
+	homeClassName="it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioHome">
+	<defaultColumnMap
+		tableName="UTENTE_FIRMA_DETTAGLIO">
+		<columnMapping
+			columnName="DA_DATA"
+			propertyName="daData"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="A_DATA"
+			propertyName="a_data"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FUNZIONI_ABILITATE"
+			propertyName="funzioniAbilitate"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true"
+			converterClassName="it.cnr.contab.util.LISTToStringConverter" />
+		<columnMapping
+			columnName="TITOLO_FIRMA"
+			propertyName="titoloFirma"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="DELEGATO_DA"
+			propertyName="delegatoDa"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="daData" />
+	<persistentProperty
+		name="a_data" />
+	<persistentProperty
+		name="funzioniAbilitate" />
+	<persistentProperty
+		name="titoloFirma" />
+	<persistentProperty
+		name="delegatoDa" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

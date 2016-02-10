@@ -9,6 +9,9 @@
   	<action 
   		path="/CRUDMissioneDiariaAction" actionClass="it.cnr.contab.missioni00.actions.CRUDMissioneDiariaAction">
 	</action>
+	  	<action 
+  		path="/CRUDMissioneQuotaRimborsoAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+	</action>
 
 	<businessProcess
 		name="CRUDMissioneTipoSpesaBP" className="it.cnr.contab.missioni00.bp.CRUDMissioneTipoSpesaBP">
@@ -34,4 +37,11 @@
 		<init-param name="defaultAction" value="CRUDMissioneDiariaAction"/>
 	</businessProcess>    
 
+	<businessProcess
+		name="CRUDMissioneQuotaRimborsoBP" className="it.cnr.contab.missioni00.bp.CRUDMissioneQuotaRimborsoBP">
+	 	<forward name="default" path="/missioni00/missione_quota_rimborso.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.tabrif.bulk.MissioneQuotaRimborsoBulk"/>	
+		<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneQuotaRimborsoComponentSession"/>
+		<init-param name="defaultAction" value="CRUDMissioneQuotaRimborsoAction"/>
+	</businessProcess>
 </action-mappings>

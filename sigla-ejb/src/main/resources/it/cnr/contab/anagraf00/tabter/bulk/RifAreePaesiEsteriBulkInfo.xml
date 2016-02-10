@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Classificazione delle Aree dei paesi esteri."
+	longDescription="Classificazione delle Aree dei paesi esteri.">
+	<fieldProperty
+		name="cd_area_estera"
+		property="cd_area_estera"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Codice Area" />
+	<fieldProperty
+		name="ds_area_estera"
+		property="ds_area_estera"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="ti_italia_estero"
+		property="ti_italia_estero"
+		keysProperty="ti_italia_esteroKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Italia/Estero" />
+		
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cd_area_estera" />
+	</form>
+	<formFieldProperty
+		name="cd_area_estera" />
+	<formFieldProperty
+		name="ds_area_estera" />
+	<formFieldProperty
+		name="ti_italia_estero" />
+		
+	<findFieldProperty
+		name="cd_area_estera" />
+	<findFieldProperty
+		name="ds_area_estera" />
+	<findFieldProperty
+		name="ti_italia_estero" />
+		
+	<columnFieldProperty
+		name="cd_area_estera" />
+	<columnFieldProperty
+		name="ds_area_estera" />
+	<columnFieldProperty
+		name="ti_italia_estero" />
+</bulkInfo>

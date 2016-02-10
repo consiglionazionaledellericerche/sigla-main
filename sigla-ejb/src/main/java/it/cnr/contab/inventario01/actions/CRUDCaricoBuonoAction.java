@@ -129,7 +129,9 @@ public Forward doCalcolaValoreTotaleBene(ActionContext context) {
 	Buono_carico_scarico_dettBulk riga = null;
 	if (bp.isBy_fattura()){
 		riga = (Buono_carico_scarico_dettBulk)bp.getRigheInventarioDaFattura().getModel();
-	} else {
+	} else if (bp.isBy_documento()){
+		riga = (Buono_carico_scarico_dettBulk)bp.getRigheInventarioDaDocumento().getModel();
+	} else{
 		riga = (Buono_carico_scarico_dettBulk)bp.getDettaglio().getModel();
 	}		
 	
@@ -144,7 +146,7 @@ public Forward doCalcolaValoreTotaleBene(ActionContext context) {
 		}
 	
 		riga.CalcolaTotaleBene();
-		riga.getBene().setImponibile_ammortamento(riga.getValore_unitario().setScale(2,java.math.BigDecimal.ROUND_HALF_EVEN));		
+		riga.getBene().setImponibile_ammortamento(riga.getValore_unitario().setScale(2,java.math.BigDecimal.ROUND_HALF_UP));		
 	}
 	catch (Throwable e){
 		riga.setQuantita(qta);
@@ -285,6 +287,9 @@ public Forward doBringBackSearchFind_categoria_bene(ActionContext context, Buono
 			if (dettaglio.getBene().getCategoria_Bene()!=null &&  dettaglio.getBene().getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					!dettaglio.getBene().getCategoria_Bene().getFl_gestione_targa() && dettaglio.getBene().getTarga()!=null)
 				dettaglio.getBene().setTarga(null);
+			if (dettaglio.getBene().getCategoria_Bene()!=null &&  dettaglio.getBene().getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+					!dettaglio.getBene().getCategoria_Bene().getFl_gestione_seriale() && dettaglio.getBene().getSeriale()!=null)
+				dettaglio.getBene().setSeriale(null); 
 			
 		}
 		return context.findDefaultForward();
@@ -992,10 +997,10 @@ public Forward doCreaGruppi(ActionContext context) {
 		// Assegna il Prezzo unitario: il prezzo è diverso a seconda che il dettaglio della Fattura sia ISTITUZIONALE o COMMERCIALE
 		if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE)){
 			valore_unitario = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
-			valore_unitario = valore_unitario.divide(riga_fattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_EVEN);
+			valore_unitario = valore_unitario.divide(riga_fattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_UP);
 			nuovoRigoInventario.setValore_unitario(valore_unitario);
 		} else {
-			valore_unitario = riga_fattura.getIm_imponibile().divide(riga_fattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_EVEN);
+			valore_unitario = riga_fattura.getIm_imponibile().divide(riga_fattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_UP);
 			nuovoRigoInventario.setValore_unitario(valore_unitario);
 		}
 		
@@ -1299,10 +1304,10 @@ public Forward doOnData_registrazioneChange(ActionContext context)  {
 				bp.setIsQuantitaEnabled(true);
 			}		
 			// 
-			nuovoRigoInventario.setValore_unitario(riga.getIm_riga().divide(new BigDecimal(gruppi),2,BigDecimal.ROUND_HALF_EVEN));
+			nuovoRigoInventario.setValore_unitario(riga.getIm_riga().divide(new BigDecimal(gruppi),2,BigDecimal.ROUND_HALF_UP));
 			
 			nuovoBene.setDs_bene(riga.getDs_riga());
-			nuovoBene.setValore_iniziale(nuovoRigoInventario.getValore_unitario().divide(new BigDecimal(gruppi),2,BigDecimal.ROUND_HALF_EVEN));
+			nuovoBene.setValore_iniziale(nuovoRigoInventario.getValore_unitario().divide(new BigDecimal(gruppi),2,BigDecimal.ROUND_HALF_UP));
 			nuovoBene.setTi_commerciale_istituzionale(riga.getDocumento_generico().getTi_istituz_commerc());
 			nuovoBene.setUbicazione(new Ubicazione_beneBulk());
 			nuovoBene.setAssegnatario(new it.cnr.contab.anagraf00.core.bulk.TerzoBulk());

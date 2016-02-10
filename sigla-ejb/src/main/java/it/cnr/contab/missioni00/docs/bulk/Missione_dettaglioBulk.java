@@ -15,6 +15,7 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 {
 	public final static String TIPO_DIARIA = "D";
 	public final static String TIPO_SPESA = "S";		
+	public final static String TIPO_RIMBORSO = "R";
 	protected MissioneBulk missione;
 
 /********************* SPESA *****************************/	
@@ -59,7 +60,7 @@ public void calcolaImportoRimborsoKm()
 {
 	java.math.BigDecimal importoTotaleAuto = getChilometri().multiply(getIndennita_chilometrica());
 	
-	importoTotaleAuto = importoTotaleAuto.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importoTotaleAuto = importoTotaleAuto.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	setIm_spesa_divisa(importoTotaleAuto);
 	setIm_spesa_euro(importoTotaleAuto);
 	setIm_totale_spesa(importoTotaleAuto);
@@ -76,8 +77,8 @@ public void calcolaMaggiorazioneTrasporto()
 	if(getIm_base_maggiorazione() == null)
 		setIm_base_maggiorazione(new java.math.BigDecimal(0));
 
-	setIm_maggiorazione(getPercentuale_maggiorazione().multiply(getIm_base_maggiorazione()).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setIm_maggiorazione(getIm_maggiorazione().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_maggiorazione(getPercentuale_maggiorazione().multiply(getIm_base_maggiorazione()).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_UP));
+	setIm_maggiorazione(getIm_maggiorazione().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 
 	return;
 }	
@@ -91,11 +92,11 @@ public void convertiMaggiorazioneInEuro(DivisaBulk divisaDefault)
 	{
 		// Converto l'importo della maggiorazione da valuta straniera (CD_DIVISA) a EURO
 		if(getDivisa_spesa().getFl_calcola_con_diviso().booleanValue())
-			setIm_maggiorazione_euro(getIm_maggiorazione().divide(getCambio_spesa(), 2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			setIm_maggiorazione_euro(getIm_maggiorazione().divide(getCambio_spesa(), 2, java.math.BigDecimal.ROUND_HALF_UP));
 		else 
 			setIm_maggiorazione_euro(getIm_maggiorazione().multiply(getCambio_spesa()));
 	}
-	setIm_maggiorazione_euro(getIm_maggiorazione_euro().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_maggiorazione_euro(getIm_maggiorazione_euro().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	return ;
 }
 public java.lang.String getCd_divisa_spesa() {
@@ -129,14 +130,14 @@ public java.math.BigDecimal getImportoSpesaEuro(DivisaBulk divisaDefault)
 	else
 	{
 		// Converto l'importo della spesa inserito da valuta straniera a euro
-		setIm_spesa_divisa(getIm_spesa_divisa().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		setIm_spesa_divisa(getIm_spesa_divisa().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			
 		if(getDivisa_spesa().getFl_calcola_con_diviso().booleanValue())
-			importoSpesaEuro = getIm_spesa_divisa().divide(getCambio_spesa(), java.math.BigDecimal.ROUND_HALF_EVEN);
+			importoSpesaEuro = getIm_spesa_divisa().divide(getCambio_spesa(), java.math.BigDecimal.ROUND_HALF_UP);
 		else 
 			importoSpesaEuro = getIm_spesa_divisa().multiply(getCambio_spesa());
 	}
-	importoSpesaEuro = importoSpesaEuro.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importoSpesaEuro = importoSpesaEuro.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importoSpesaEuro;
 }
 public java.math.BigDecimal getIndennita_chilometrica()

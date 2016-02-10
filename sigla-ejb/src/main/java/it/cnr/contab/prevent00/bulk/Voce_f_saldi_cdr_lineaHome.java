@@ -52,7 +52,7 @@ public java.util.List cercaCdsEnte(Voce_f_saldi_cdr_lineaBulk dettaglio) throws 
 }
 public SQLBuilder createSQLBuilder() {
 	SQLBuilder sql = super.createSQLBuilder();
-	sql.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.ESERCIZIO",SQLBuilder.EQUALS,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES");
+	//sql.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.ESERCIZIO",SQLBuilder.EQUALS,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES");
 	return sql;
 }
 public Persistent findByElementoVoce(Voce_f_saldi_cdr_lineaBulk saldo) throws PersistencyException {

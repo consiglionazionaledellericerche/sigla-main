@@ -249,6 +249,30 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_EV_NEXT"
+			propertyName="esercizio_ev_next"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_EV_NEXT"
+			propertyName="ti_appartenenza_ev_next"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE_EV_NEXT"
+			propertyName="ti_gestione_ev_next"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_NEXT"
+			propertyName="cd_elemento_voce_next"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -335,4 +359,12 @@
 		name="fl_gara_in_corso" />
 	<persistentProperty
 		name="ds_gara_in_corso" />
+	<persistentProperty
+		name="esercizio_ev_next" />
+	<persistentProperty
+		name="ti_appartenenza_ev_next" />
+	<persistentProperty
+		name="ti_gestione_ev_next" />
+	<persistentProperty
+		name="cd_elemento_voce_next" />
 </SQLPersistentInfo>

@@ -195,7 +195,7 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 			{
 				key = (Obbligazione_scad_voceBulk)e.nextElement();
 				totaleScad = (BigDecimal) prcImputazioneFinanziariaTable.get( key );			
-				percentuale = totaleScad.multiply(new BigDecimal(100)).divide(obbligazione.getIm_obbligazione(), 100, BigDecimal.ROUND_HALF_EVEN);
+				percentuale = totaleScad.multiply(new BigDecimal(100)).divide(obbligazione.getIm_obbligazione(), 100, BigDecimal.ROUND_HALF_UP);
 	
 				for ( Iterator s = obbligazione.getObbligazione_scadenzarioColl().iterator(); s.hasNext(); )
 				{
@@ -208,7 +208,7 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 							key.getCd_linea_attivita().equals(osv.getCd_linea_attivita()) &&
 							key.getCd_voce().equals(osv.getCd_voce())) {
 							osv.setToBeUpdated(); 
-							osv.setIm_voce(osv.getObbligazione_scadenzario().getIm_scadenza().multiply(percentuale).divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_EVEN));
+							osv.setIm_voce(osv.getObbligazione_scadenzario().getIm_scadenza().multiply(percentuale).divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 							break;
 						}
 					}

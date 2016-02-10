@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_programmaKey">
+	<defaultColumnMap
+		tableName="PDG_PROGRAMMA">
+		<columnMapping
+			columnName="CD_PROGRAMMA"
+			propertyName="cd_programma"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_programma"
+		partOfOid="true" />
+</SQLPersistentInfo>

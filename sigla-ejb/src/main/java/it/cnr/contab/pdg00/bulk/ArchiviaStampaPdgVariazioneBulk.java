@@ -6,6 +6,8 @@
  */
 package it.cnr.contab.pdg00.bulk;
 
+import java.sql.Timestamp;
+
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
@@ -30,22 +32,22 @@ public class ArchiviaStampaPdgVariazioneBulk extends OggettoBulk {
 	private boolean pdg_variazioneForPrintEnabled;
 	private PdgVariazioneDocument pdgVariazioneDocument; 
 	private String tiSigned;
+	private Timestamp dt_firma;
 	private BulkList<AllegatoPdGVariazioneDocumentBulk> archivioAllegati = new BulkList<AllegatoPdGVariazioneDocumentBulk>();
 	private static final java.util.Dictionary ti_signedKeys = new it.cnr.jada.util.OrderedHashtable();	
 	private static final java.util.Dictionary<String,String> ti_signedTextKeys = new it.cnr.jada.util.OrderedHashtable();	
-	
 	final public static String VIEW_ALL = "ALL";
 	final public static String VIEW_SIGNED = "SIGNED";
 	final public static String VIEW_NOT_SIGNED = "NOT_SIGNED";
+	final public static String VIEW_APPROVED = "APPROVED";
 
 	static {
 		ti_signedKeys.put(VIEW_ALL,"Tutte");
 		ti_signedKeys.put(VIEW_SIGNED,"Firmate");
 		ti_signedKeys.put(VIEW_NOT_SIGNED,"Da Firmare");
-
-		ti_signedTextKeys.put(VIEW_SIGNED,"Variazione su cui è stata apposta la Firma Digitale");
+		ti_signedKeys.put(VIEW_APPROVED,"Approvate");
+		ti_signedTextKeys.put(VIEW_SIGNED,"Variazione Firmata Digitalmente");
 		ti_signedTextKeys.put(VIEW_NOT_SIGNED,"In attesa di Firma Digitale");
-
 	}
 
 	public ArchiviaStampaPdgVariazioneBulk() {
@@ -191,6 +193,14 @@ public class ArchiviaStampaPdgVariazioneBulk extends OggettoBulk {
 	public AllegatoPdGVariazioneDocumentBulk removeFromArchivioAllegati(int index) {
 		AllegatoPdGVariazioneDocumentBulk dett = (AllegatoPdGVariazioneDocumentBulk)getArchivioAllegati().remove(index);
 		return dett;
+	}
+
+	public Timestamp getDt_firma() {
+		return pdg_variazioneForPrint.getDt_firma();
+	}
+
+	public void setDt_firma(Timestamp dt_firma) {
+		this.pdg_variazioneForPrint.setDt_firma( dt_firma);
 	}
 	
 }

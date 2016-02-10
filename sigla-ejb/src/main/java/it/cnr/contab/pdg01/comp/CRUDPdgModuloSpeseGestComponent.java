@@ -174,12 +174,22 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 													WorkpackageBulk latt, 
 													CompoundFindClause clause) throws ComponentException, PersistencyException {	
 		SQLBuilder sql = getHome(userContext, latt, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
-
+ 
 		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,dett.getCd_cdr_assegnatario());
 		sql.addClause("AND","pg_progetto",sql.EQUALS,dett.getPg_progetto());
 		sql.addClause("AND","ti_gestione",sql.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+		
+		if(dett.getPdg_modulo_spese()!=null && dett.getPdg_modulo_spese().getCd_cofog()!=null )
+			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_COFOG",sql.EQUALS,dett.getPdg_modulo_spese().getCd_cofog());
 
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if (parCnrBulk!=null && parCnrBulk.getFl_nuovo_pdg()) {
+			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
+			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
+		}
+		
 		sql.addTableToHeader("NATURA");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
 		sql.addSQLClause("AND", "NATURA.FL_SPESA",sql.EQUALS,"Y");
@@ -254,11 +264,12 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
 		sql.closeParenthesis();
-
+		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_RESIDUO", sql.EQUALS, "N");
 		if (dett.getLinea_attivita() != null)
 			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,dett.getLinea_attivita().getCd_funzione());
-		if (dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr() != null)
-			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr().getUnita_padre().getCd_tipo_unita());
+		if(!parCnrBulk.getFl_nuovo_pdg())
+			if (dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr() != null)
+				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr().getUnita_padre().getCd_tipo_unita());
 
 		if (clause != null) sql.addClause(clause);
 
@@ -269,7 +280,7 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 		BigDecimal totale = Utility.ZERO;
 		try {
 			java.sql.ResultSet rs = null;
-			PreparedStatement ps = null;
+			LoggableStatement ps = null;
 			try {
 				ps = sql.prepareStatement(getConnection(userContext));
 				try {

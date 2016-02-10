@@ -72,7 +72,7 @@ public void completeFrom(Nota_di_credito_rigaBulk dettaglio) {
 	setDt_scadenza_incasso(dtScadenza);
 
 	java.math.BigDecimal imTotaleDettaglio = dettaglio.getIm_imponibile().add(dettaglio.getIm_iva());
-	imTotaleDettaglio = imTotaleDettaglio.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	imTotaleDettaglio = imTotaleDettaglio.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	setIm_associato_doc_amm(imTotaleDettaglio);
 	setIm_scadenza(imTotaleDettaglio);
 }

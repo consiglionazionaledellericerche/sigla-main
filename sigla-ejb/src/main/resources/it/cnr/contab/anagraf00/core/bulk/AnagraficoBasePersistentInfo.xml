@@ -314,6 +314,34 @@
 			propertyName="titolo_studio"
 			sqlTypeName="VARCHAR"
 			columnSize="6" />
+		<columnMapping
+			columnName="CODICE_AMMINISTRAZIONE_IPA"
+			propertyName="codiceAmministrazioneIpa"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="DATA_AVVIO_FATT_ELETTR"
+			propertyName="dataAvvioFattElettr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="FL_ABILITA_DIARIA_MISS_EST"
+			propertyName="fl_abilita_diaria_miss_est"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="DT_INIZIO_DIARIA_MISS_EST"
+			propertyName="dt_inizio_diaria_miss_est"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />	
+		<columnMapping
+			columnName="DT_FINE_DIARIA_MISS_EST"
+			propertyName="dt_fine_diaria_miss_est"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+				
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_nazione_nazionalita" />
@@ -429,4 +457,14 @@
 		name ="fl_sospensione_irpef" />
 	<persistentProperty
 		name ="titolo_studio"	/>		
+	<persistentProperty
+		name ="codiceAmministrazioneIpa"	/>		
+	<persistentProperty
+		name ="dataAvvioFattElettr"	/>	
+	<persistentProperty
+		name="fl_abilita_diaria_miss_est" />
+	<persistentProperty
+		name="dt_inizio_diaria_miss_est" />
+	<persistentProperty
+		name="dt_fine_diaria_miss_est" />		
 </SQLPersistentInfo>

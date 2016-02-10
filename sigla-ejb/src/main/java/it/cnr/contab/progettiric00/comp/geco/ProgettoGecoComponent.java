@@ -3,19 +3,18 @@ package it.cnr.contab.progettiric00.comp.geco;
 import java.sql.Connection;
 import java.util.List;
 
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoBulk;
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoIBulk;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentiBulk;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentiIBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
-import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
-import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaIBulk;
-import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloIBulk;
-import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoIBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_attivitaBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaIBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloIBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoIBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_operativoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -23,10 +22,12 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class ProgettoGecoComponent extends CRUDComponent {
+	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unchecked")
 	public List<Geco_progettoIBulk> cercaProgettiGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
@@ -68,7 +69,14 @@ public class ProgettoGecoComponent extends CRUDComponent {
 			}
 			sql.addClause(gecoCommessaDummy.buildFindClauses(new Boolean(true)));
 			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-			sql.addClause("AND","cds",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(userContext)); 
+			if (!bulkClass.equals(Geco_progetto_operativoBulk.class))
+				sql.addClause("AND","cds",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(userContext));
+			else {
+				BulkHome home = getHome(userContext, Geco_attivitaBulk.class);
+				SQLBuilder sqlExists = getSqlModuliGeco(userContext,oggettoBulk,home);
+				sqlExists.addSQLJoin("attivita.id_prog","progetto_operativo.id_prog");
+				sql.addSQLExistsClause(FindClause.AND, sqlExists);
+			}
 			return (List<Geco_commessaIBulk>)gecoCommessaHome.fetchAll(sql);
 		} catch (PersistencyException e) {
 			throw handleException(e);
@@ -78,32 +86,38 @@ public class ProgettoGecoComponent extends CRUDComponent {
 	@SuppressWarnings("unchecked")
 	public List<Geco_moduloIBulk> cercaModuliGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
 		try {
-			ProgettoBulk progetto = (ProgettoBulk)oggettoBulk;
 			BulkHome gecoModuloHome = getHome(userContext, bulkClass);
-			Geco_moduloBulk gecoModuloDummy = new Geco_moduloBulk();
-			SQLBuilder sql = gecoModuloHome.createSQLBuilder();
-			if (progetto!=null){
-				if (progetto.getEsercizio() != null)
-					gecoModuloDummy.setEsercizio(new Long(progetto.getEsercizio()));
-				if (progetto.getPg_progetto() != null)
-					gecoModuloDummy.setId_mod(new Long(progetto.getPg_progetto()));
-				if (progetto.getTipo_fase() != null)
-					gecoModuloDummy.setFase(progetto.getTipo_fase());
-			}
-			sql.addClause(gecoModuloDummy.buildFindClauses(new Boolean(true)));
-			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-			sql.addClause("AND","cds_esec",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(userContext));
+			SQLBuilder sql = getSqlModuliGeco(userContext,oggettoBulk,gecoModuloHome);
 			return (List<Geco_moduloIBulk>)gecoModuloHome.fetchAll(sql);
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
 	}
+
+	private SQLBuilder getSqlModuliGeco(UserContext userContext, OggettoBulk oggettoBulk, BulkHome home) throws ComponentException{
+		ProgettoBulk progetto = (ProgettoBulk)oggettoBulk;
+		Geco_moduloBulk gecoModuloDummy = new Geco_moduloBulk();
+		SQLBuilder sql = home.createSQLBuilder();
+		if (progetto!=null){
+			if (progetto.getEsercizio() != null)
+				gecoModuloDummy.setEsercizio(new Long(progetto.getEsercizio()));
+			if (progetto.getPg_progetto() != null)
+				gecoModuloDummy.setId_mod(new Long(progetto.getPg_progetto()));
+			if (progetto.getTipo_fase() != null)
+				gecoModuloDummy.setFase(progetto.getTipo_fase());
+		}
+		sql.addClause(gecoModuloDummy.buildFindClauses(new Boolean(true)));
+		sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addClause("AND","cds_esec",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(userContext));
+		return sql;
+	}
+	
 	@SuppressWarnings("unchecked")
-	public List<Geco_dipartimentoIBulk> cercaDipartimentiGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
+	public List<Geco_dipartimentiIBulk> cercaDipartimentiGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
 		try {
 			DipartimentoBulk dipartimento = (DipartimentoBulk)oggettoBulk;
 			BulkHome gecoDipartimentoHome = getHome(userContext, bulkClass);
-			Geco_dipartimentoBulk gecoDipartimentoDummy = new Geco_dipartimentoBulk();
+			Geco_dipartimentiBulk gecoDipartimentoDummy = new Geco_dipartimentiBulk();
 			SQLBuilder sql = gecoDipartimentoHome.createSQLBuilder();
 			if (dipartimento!=null){
 				if (dipartimento.getCd_dipartimento() != null)
@@ -111,7 +125,7 @@ public class ProgettoGecoComponent extends CRUDComponent {
 			}
 			sql.addClause(gecoDipartimentoDummy.buildFindClauses(new Boolean(true)));
 			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-			return (List<Geco_dipartimentoIBulk>)gecoDipartimentoHome.fetchAll(sql);
+			return (List<Geco_dipartimentiIBulk>)gecoDipartimentoHome.fetchAll(sql);
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}

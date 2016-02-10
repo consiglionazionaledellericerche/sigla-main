@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_centro_responsabilita"
 		property="cdr.cd_centro_responsabilita"
@@ -103,6 +103,14 @@
 		label="Codice Dipartimento" />
 
 	<fieldProperty
+		name="cd_programma"
+		property="progettopadre.cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Programma" />
+
+	<fieldProperty
 		name="find_progetto"
 		property="progetto"
 		inputType="SEARCHTOOL"
@@ -148,6 +156,15 @@
 		formName="form_searchtool_progetto"
 		label="Modulo di attivit&#224;"
 		/>
+
+	<fieldProperty
+		name="searchtool_progetto_liv2"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROprogetto"
+		formName="form_searchtool_progetto"
+		label="Progetto" />
+				
 <!-- r.p. campi per la visualizzazione della testata nella mappa di dettaglio-->
 	<fieldProperty
 		name="esercizio_ro"
@@ -185,7 +202,7 @@
 		enabledOnInsert="false"
 		maxLength="25"
 		inputSize="10"
-		label="Dipartimento" />		
+		label="Programma" />		
 	<fieldProperty
 		name="progetto"
 		property="progetto.progettopadre.progettopadre.cd_progetto"
@@ -217,12 +234,49 @@
 		maxLength="30"
 		label="Modulo di Commessa" />	
 	<fieldProperty
+		name="cd_progetto_liv1"
+		property="progetto.progettopadre.cd_progetto"
+		descProperty="progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="25"
+		label="Area Progettuale" />
+	<fieldProperty
+		name="cd_progetto_liv2"
+		property="progetto.cd_progetto"
+		descProperty="progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="25"
+		label="Progetto" />
+	<fieldProperty
+		name="cd_dipartimento_liv2"
+		property="progetto.progettopadre.cd_dipartimento"
+		descProperty="progetto.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		maxLength="25"
+		inputSize="10"
+		label="Programma" />
+	<fieldProperty
 		name="importo_totale"
 		property="importo_progetto"
 		inputType="ROTEXT"
 		maxLength="50"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Tot.Risorse per&lt;BR&gt;Modulo di Commessa" />				
+	<fieldProperty
+		name="importo_totale_liv2"
+		property="importo_progetto"
+		inputType="ROTEXT"
+		maxLength="50"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Tot.Risorse per&lt;BR&gt;Progetto" />				
 	<formFieldProperty
 		name="esercizio_ro" />
 	<formFieldProperty
@@ -254,7 +308,13 @@
 	<formFieldProperty
 		name="modulo" />	
 	<formFieldProperty
-		name="importo_totale" />	
+		name="cd_progetto_liv1" />
+	<formFieldProperty
+		name="cd_progetto_liv2" />
+	<formFieldProperty
+		name="cd_dipartimento_liv2" />
+	<formFieldProperty
+		name="importo_totale_liv2" />				
 					
 <!-- fine r.p.-->		
 	<formFieldProperty
@@ -271,7 +331,8 @@
 		name="cambia_stato" />
 	<formFieldProperty
 		name="searchtool_progetto" />
-
+	<formFieldProperty
+		name="searchtool_progetto_liv2" />
 
 	<findFieldProperty
 		name="esercizio" />
@@ -281,6 +342,10 @@
 		name="pg_progetto" />
 	<findFieldProperty
 		name="stato" />
+	<findFieldProperty
+		name="searchtool_progetto" />
+	<findFieldProperty
+		name="searchtool_progetto_liv2" />
 
 	<columnFieldProperty
 		name="cd_progetto"
@@ -302,4 +367,21 @@
 		name="stato"
 		label="Stato attuale" />
 
+	<columnSet name="prg_liv2">
+		<columnFieldProperty
+			name="cd_progetto"
+			headerStyle="width: 160px"
+			label="Progetto" />
+		<columnFieldProperty
+			name="cd_progetto_padre"
+			headerStyle="width: 160px"
+			label="Area Progettuale" />
+		<columnFieldProperty
+			name="cd_programma"
+			headerStyle="width: 100px"
+			label="Programma" />
+		<columnFieldProperty
+			name="stato"
+			label="Stato attuale" />
+	</columnSet>
 </bulkInfo>

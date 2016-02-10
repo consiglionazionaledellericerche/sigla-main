@@ -1,5 +1,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+
 /**
  * Insert the type's description here.
  * Creation date: (27/01/2003 17.08.02)
@@ -15,7 +17,6 @@ public class Stampa_scadenzario_accertamentiBulk extends AccertamentoBulk {
 	
 	private String riporto;
 
-	
 	private boolean isUOForPrintEnabled;
 	private boolean isCdsForPrintEnabled;
 
@@ -46,6 +47,7 @@ public Stampa_scadenzario_accertamentiBulk() {
 public Stampa_scadenzario_accertamentiBulk(String cd_cds, Integer esercizio, Integer esercizio_originale, Long pg_accertamento) {
 	super(cd_cds, esercizio, esercizio_originale, pg_accertamento);
 }
+
 /**
  * Insert the method's description here.
  * Creation date: (20/01/2003 16.50.12)
@@ -53,7 +55,7 @@ public Stampa_scadenzario_accertamentiBulk(String cd_cds, Integer esercizio, Int
  */
 public String getCdCdsCRForPrint() {
 
-	return "999";
+	return getCdsEnte().getCd_unita_organizzativa();
 }
 /**
  * Insert the method's description here.

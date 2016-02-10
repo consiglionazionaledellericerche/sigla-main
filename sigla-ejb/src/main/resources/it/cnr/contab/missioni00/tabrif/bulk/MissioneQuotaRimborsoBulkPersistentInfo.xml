@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.MissioneQuotaRimborsoBulk"
+	homeClassName="it.cnr.contab.missioni00.tabrif.bulk.MissioneQuotaRimborsoHome">
+	<defaultColumnMap
+		tableName="MISSIONE_QUOTA_RIMBORSO">
+		<columnMapping
+			columnName="CD_AREA_ESTERA"
+			propertyName="rifAreePaesiEsteri.cd_area_estera" />
+		<columnMapping
+			columnName="CD_GRUPPO_INQUADRAMENTO"
+			propertyName="gruppoInquadramento.cd_gruppo_inquadramento" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="rifAreePaesiEsteri"
+		partOfOid="true" />
+	<persistentProperty
+		name="gruppoInquadramento"
+		partOfOid="true" />
+</SQLPersistentInfo>

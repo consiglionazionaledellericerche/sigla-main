@@ -78,7 +78,7 @@ public void copyFrom(Fattura_attiva_rigaIBulk dettaglio)
 	setRiga_fattura_associata(dettaglio);
 
 	calcolaCampiDiRiga();
-	java.math.BigDecimal vecchioTotale = new java.math.BigDecimal(0).setScale(0, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal vecchioTotale = new java.math.BigDecimal(0).setScale(0, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal totaleDiRiga = getIm_imponibile().add(getIm_iva());
 	java.math.BigDecimal nuovoImportoDisponibile = dettaglio.getIm_diponibile_nc().add(totaleDiRiga.subtract(vecchioTotale));
 	if (nuovoImportoDisponibile.signum() < 0 || (nuovoImportoDisponibile.signum() == 0 && zeroNotValid)) {
@@ -87,7 +87,7 @@ public void copyFrom(Fattura_attiva_rigaIBulk dettaglio)
 		else 
 			throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile per \"" + dettaglio.getDs_riga_fattura() + "\" è di " + dettaglio.getIm_diponibile_nc() + " EUR!");
 	}
-	dettaglio.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	dettaglio.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 }
 public IDocumentoAmministrativoRigaBulk getAssociatedDetail() {
 

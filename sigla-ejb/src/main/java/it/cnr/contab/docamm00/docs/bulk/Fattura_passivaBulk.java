@@ -1,16 +1,23 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoOrdBulk;
 import it.cnr.jada.bulk.*;
@@ -22,7 +29,8 @@ public abstract class Fattura_passivaBulk
 	extends Fattura_passivaBase 
 	implements	IDocumentoAmministrativoBulk, 
 				Voidable,
-				IDefferUpdateSaldi {
+				IDefferUpdateSaldi,
+				AllegatoParentBulk{
 
 	protected Tipo_sezionaleBulk tipo_sezionale;
 	protected DivisaBulk valuta;
@@ -34,6 +42,7 @@ public abstract class Fattura_passivaBulk
 	protected BancaBulk banca;
 	protected Rif_modalita_pagamentoBulk modalita_pagamento;
 	protected Rif_termini_pagamentoBulk termini_pagamento;
+	protected DocumentoEleTestataBulk documentoEleTestata;
 
 	private BulkList fattura_passiva_dettColl = new BulkList();
 	private BulkList fattura_passiva_intrastatColl = new BulkList();
@@ -49,6 +58,14 @@ public abstract class Fattura_passivaBulk
 	private char changeOperation = MOLTIPLICA;
 	private java.sql.Timestamp inizio_validita_valuta;
 	private java.sql.Timestamp fine_validita_valuta;
+	/*
+	 * Le variabili isDetailDoubled e isDocumentoModificabile servono per gestire il caso in cui l'utente
+	 * non potendo modificare il documento procede solo a sdoppiare la riga di dettaglio. In tal caso la 
+	 * procedura provvede a non rieffettuare la ricontabilizzazione in COAN e COGE.
+	 *    
+	 */
+	private boolean isDetailDoubled = false; //serve per sapere se è stata sdoppiata una riga di dettaglio 
+	private boolean isDocumentoModificabile = true; //serve per sapere se il documento è modificabile o meno
 					
 	private java.math.BigDecimal im_totale_fattura_calcolato = new java.math.BigDecimal(0);
 
@@ -112,6 +129,7 @@ public abstract class Fattura_passivaBulk
 	public final static String FATTURA_DI_BENI = Bene_servizioBulk.BENE;
 		
 	public final static Dictionary TIPO;
+	
 	public final static Dictionary STATO;
 	public final static Dictionary STATO_COGE;
 	public final static Dictionary STATO_COAN;
@@ -120,6 +138,9 @@ public abstract class Fattura_passivaBulk
 	public final static Dictionary SEZIONALI_FLAG_KEYS;
 	public final static Dictionary FATTURA_BENI_SERVIZI;
 	public final static Dictionary STATI_RIPORTO;
+		
+	public final static Dictionary STATO_LIQUIDAZIONE;
+	public final static Dictionary CAUSALE;
 	private Boolean ha_beniColl;
 	private Boolean eseguito=new Boolean(false);
 	static{
@@ -127,7 +148,7 @@ public abstract class Fattura_passivaBulk
 		TIPO.put(COMMERCIALE,"Commerciale");
 		TIPO.put(ISTITUZIONALE,"Istituzionale");
 		TIPO.put(PROMISCUA,"Promiscua");
-
+		
 		STATO = new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INIZIALE,"Iniziale");
 		STATO.put(STATO_CONTABILIZZATO,"Contabilizzato");
@@ -172,6 +193,16 @@ public abstract class Fattura_passivaBulk
 		FATTURA_BENI_SERVIZI = new it.cnr.jada.util.OrderedHashtable();
 		FATTURA_BENI_SERVIZI.put(FATTURA_DI_BENI,"Fattura di beni");
 		FATTURA_BENI_SERVIZI.put(FATTURA_DI_SERVIZI,"Fattura di servizi");
+		
+		STATO_LIQUIDAZIONE = new it.cnr.jada.util.OrderedHashtable();
+		STATO_LIQUIDAZIONE.put(LIQ, "Liquidabile");
+		STATO_LIQUIDAZIONE.put(NOLIQ, "Non Liquidabile");
+		STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
+		
+		CAUSALE= new it.cnr.jada.util.OrderedHashtable();
+		CAUSALE.put(ATTLIQ,"In attesa di liquidazione");
+		CAUSALE.put(CONT,"Contenzioso");
+		CAUSALE.put(ATTNC,"In attesa di nota credito");
 	}
 	
 	private java.math.BigDecimal importoTotalePerObbligazione = new java.math.BigDecimal(0);
@@ -191,6 +222,16 @@ public abstract class Fattura_passivaBulk
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
 	private Integer esercizioInScrivania;
 	private boolean isIvaRecuperabile=true;
+	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
+	private java.sql.Timestamp dataInizioFatturaElettronica;
+	
+	private CompensoBulk compenso = null;
+	
+	private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+	public final static java.util.Dictionary ti_bonifico_mezzoKeys = Lettera_pagam_esteroBulk.ti_bonifico_mezzoKeys, 
+			ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys, ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys;
+	
 public Fattura_passivaBulk() {
 	super();
 }
@@ -390,7 +431,7 @@ public void addToFattura_passiva_obbligazioniHash(
 	if (righeAssociate == null) {
 		righeAssociate = new Vector();
 		//fattura_passiva_obbligazioniHash.put(obbligazione, righeAssociate);
-		addToFattura_passiva_ass_totaliMap(obbligazione, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		addToFattura_passiva_ass_totaliMap(obbligazione, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	}
 	if (rigaFattura != null && !righeAssociate.contains(rigaFattura)) {
 		righeAssociate.add(rigaFattura);
@@ -418,13 +459,13 @@ public int addToRiferimenti_bancari( Fattura_passiva_rigaBulk os )
 public void aggiornaImportiTotali() {
 
 	java.math.BigDecimal imp = new java.math.BigDecimal(0);
-	imp = imp.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	imp = imp.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal iva = new java.math.BigDecimal(0);
-	iva = iva.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	iva = iva.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal totale = new java.math.BigDecimal(0);
-	totale = totale.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	totale = totale.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal totaleImponibileDivisa = new java.math.BigDecimal(0);
-	totaleImponibileDivisa = totaleImponibileDivisa.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	totaleImponibileDivisa = totaleImponibileDivisa.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 	if (getFattura_passiva_dettColl() != null)
 		for (Iterator i = getFattura_passiva_dettColl().iterator(); i.hasNext();) {
@@ -456,14 +497,14 @@ public void calcolaTotaleFatturaFornitoreInEur() {
 	else {
 		java.math.BigDecimal cambioImpostato = getCambio();
 		if (cambioImpostato == null) {
-			cambioImpostato = new java.math.BigDecimal(0).setScale(0, java.math.BigDecimal.ROUND_HALF_EVEN);
+			cambioImpostato = new java.math.BigDecimal(0).setScale(0, java.math.BigDecimal.ROUND_HALF_UP);
 			setCambio(cambioImpostato);
 		}
 		importoTotale = (getChangeOperation() == MOLTIPLICA) ?
 						importoTotale.multiply(cambioImpostato) :
-						importoTotale.divide(cambioImpostato, java.math.BigDecimal.ROUND_HALF_EVEN);
+						importoTotale.divide(cambioImpostato, java.math.BigDecimal.ROUND_HALF_UP);
 	}
-	importoTotale = importoTotale.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importoTotale = importoTotale.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	setIm_importo_totale_fattura_fornitore_euro(importoTotale);
 }
 public boolean existARowToBeInventoried() {
@@ -471,7 +512,20 @@ public boolean existARowToBeInventoried() {
 	if (getFattura_passiva_dettColl() != null) {
 		Iterator dettagli = getFattura_passiva_dettColl().iterator();
 		while (dettagli.hasNext()) {
-			if (((Fattura_passiva_rigaBulk)dettagli.next()).getBene_servizio().getFl_gestione_inventario().booleanValue())
+			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)dettagli.next();
+			if (riga.getBene_servizio() !=null && 
+				riga.getBene_servizio().getFl_gestione_inventario() != null &&
+				riga.getBene_servizio().getFl_gestione_inventario().booleanValue())
+				return true;
+		}
+	}
+	return false;
+}
+public boolean existARowInventoried() {
+	if (getFattura_passiva_dettColl() != null) {
+		Iterator dettagli = getFattura_passiva_dettColl().iterator();
+		while (dettagli.hasNext()) {
+			if (((Fattura_passiva_rigaBulk)dettagli.next()).isInventariato())
 				return true;
 		}
 	}
@@ -547,7 +601,8 @@ public BulkCollection[] getBulkLists() {
 	 return new it.cnr.jada.bulk.BulkCollection[] { 
 			fattura_passiva_dettColl,
 			fattura_passiva_intrastatColl,
-			riferimenti_bancari
+			riferimenti_bancari, 
+			docEleAllegatiColl
 		};
 }
 /**
@@ -719,6 +774,19 @@ public java.util.Vector getDettagliNonContabilizzati() {
 		}
 	}
 	return dettagliNonContabilizzati;
+}
+
+public java.util.Vector getDettagliContabilizzati() {
+
+	Vector dettagliContabilizzati = new Vector();
+	if (getFattura_passiva_dettColl() != null) {
+		for (Iterator i = getFattura_passiva_dettColl().iterator(); i.hasNext();) {
+			Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
+			if (dettaglio.STATO_CONTABILIZZATO.equals(dettaglio.getStato_cofi()))
+				dettagliContabilizzati.add(dettaglio);
+		}
+	}
+	return dettagliContabilizzati;
 }
 /**
  * Insert the method's description here.
@@ -982,17 +1050,20 @@ public String getSezionaliFlag() {
 		    getTi_bene_servizio() != null && FATTURA_DI_BENI.equalsIgnoreCase(getTi_bene_servizio()) &&
 			getFl_merce_extra_ue() != null && getFl_merce_extra_ue()){
 			setFl_merce_extra_ue(Boolean.TRUE);
+			setFl_merce_intra_ue(Boolean.FALSE);
 			setFl_autofattura(Boolean.FALSE);
 			setAutoFatturaNeeded(true);
 		}
 		else if(getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
 			    getTi_bene_servizio() != null && FATTURA_DI_SERVIZI.equalsIgnoreCase(getTi_bene_servizio())){
 			setFl_merce_extra_ue(Boolean.FALSE);
+			setFl_merce_intra_ue(Boolean.FALSE);
 			//setFl_autofattura(Boolean.TRUE);
 			setAutoFatturaNeeded(false);
 		}
 		else{
 				setFl_merce_extra_ue(Boolean.FALSE);
+				setFl_merce_intra_ue(Boolean.FALSE);
 				boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
 				setAutoFatturaNeeded(autoFatt);
 				if (autoFatt)
@@ -1002,17 +1073,29 @@ public String getSezionaliFlag() {
 			((Fattura_passiva_IBulk)this).setFattura_estera(null);
 
 		sezionaliFlag = SEZIONALI_FLAGS_IUE;
-	} else if (getFl_extra_ue() != null && getFl_extra_ue().booleanValue()) {
+	} else if (getFl_extra_ue() != null && getFl_extra_ue().booleanValue()){
 		setFl_intra_ue(Boolean.FALSE);
 		setFl_san_marino_con_iva(Boolean.FALSE);
 		setFl_san_marino_senza_iva(Boolean.FALSE);
 		setFl_bolla_doganale(Boolean.FALSE);
 		setFl_spedizioniere(Boolean.FALSE);
 		setFl_merce_extra_ue(Boolean.FALSE);
+		//??? solo commerciale
+		if( getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
+			   getTi_bene_servizio() != null && FATTURA_DI_BENI.equalsIgnoreCase(getTi_bene_servizio()) &&
+			   getFl_merce_intra_ue() != null && getFl_merce_intra_ue()){
+				boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+				setAutoFatturaNeeded(autoFatt);
+				if (autoFatt)
+					setFl_autofattura(Boolean.TRUE);
+				
+		}else{
+				if (isAutoFatturaNeeded())
+					setFl_autofattura(isFatturaDiServizi()? Boolean.TRUE : Boolean.FALSE);
+		}	
 		if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 			((Fattura_passiva_IBulk)this).setFattura_estera(null);
-		if (isAutoFatturaNeeded())
-			setFl_autofattura(isFatturaDiServizi()? Boolean.TRUE : Boolean.FALSE);
+			
 		//setAutoFatturaNeeded(isFatturaDiServizi());
 		sezionaliFlag = SEZIONALI_FLAGS_EUE;
 	} else if (getFl_san_marino_con_iva() != null && getFl_san_marino_con_iva().booleanValue()) {
@@ -1022,6 +1105,7 @@ public String getSezionaliFlag() {
 		setFl_bolla_doganale(Boolean.FALSE);
 		setFl_spedizioniere(Boolean.FALSE);
 		setFl_merce_extra_ue(Boolean.FALSE);
+		setFl_merce_intra_ue(Boolean.FALSE);
 		if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 			((Fattura_passiva_IBulk)this).setFattura_estera(null);
 		if (isAutoFatturaNeeded())
@@ -1035,6 +1119,7 @@ public String getSezionaliFlag() {
 		setFl_bolla_doganale(Boolean.FALSE);
 		setFl_spedizioniere(Boolean.FALSE);
 		setFl_merce_extra_ue(Boolean.FALSE);
+		setFl_merce_intra_ue(Boolean.FALSE);
 		if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 			((Fattura_passiva_IBulk)this).setFattura_estera(null);
 		boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
@@ -1200,6 +1285,16 @@ public Dictionary getTi_bene_servizioKeys() {
 	 */
 
 	public Dictionary getTi_istituz_commercKeys() {
+		OrderedHashtable d = (OrderedHashtable)getTi_istituz_commercKeysForSearch();
+		if (d == null) return null;
+        	OrderedHashtable clone = (OrderedHashtable)d.clone();
+        	if ((getStato_cofi()!=null && getStato_cofi().compareTo(STATO_INIZIALE) ==0)||!isNotAbledToModifyTipoIstCom()) 
+        		clone.remove(PROMISCUA);
+		return clone;
+			
+	}
+	
+	public Dictionary getTi_istituz_commercKeysForSearch() {
 		return TIPO;
 	}
 /**
@@ -1261,6 +1356,11 @@ public boolean hasDettagliNonContabilizzati() {
 
 	return !getDettagliNonContabilizzati().isEmpty();
 }
+
+public boolean hasDettagliContabilizzati() {
+
+	return !getDettagliContabilizzati().isEmpty();
+}
 /**
  * Insert the method's description here.
  * Creation date: (2/15/2002 2:28:51 PM)
@@ -1285,6 +1385,7 @@ public OggettoBulk initialize(CRUDBP bp,it.cnr.jada.action.ActionContext context
 	setFl_spedizioniere(Boolean.FALSE);
 	setFl_autofattura(Boolean.FALSE);
 	setFl_merce_extra_ue(Boolean.FALSE);
+	setFl_merce_intra_ue(Boolean.FALSE);
 	setFl_liquidazione_differita(Boolean.FALSE);
 	return this;
 }
@@ -1337,7 +1438,8 @@ public boolean isAbledToDeleteLettera() {
 	
 	return	getLettera_pagamento_estero() == null ||
 			isPagata() ||
-			isPagataParzialmente();
+			isPagataParzialmente()||
+			isROStatoTrasmissioneLettera();
 }
 /**
  * Insert the method's description here.
@@ -1387,8 +1489,10 @@ public boolean isAbledToModifyTipoFattura() {
 				(fattura_passiva_dettColl != null &&
 				fattura_passiva_dettColl.isEmpty() &&
 				fattura_passiva_intrastatColl != null &&
-				fattura_passiva_intrastatColl.isEmpty()));
+				fattura_passiva_intrastatColl.isEmpty()) ||
+				isElettronica() && getPg_fattura_passiva()==null);
 }
+
 /**
  * Insert the method's description here.
  * Creation date: (2/15/2002 2:28:51 PM)
@@ -1484,6 +1588,14 @@ public boolean isEstera() {
 	//if (getFl_extra_ue() == null) return false;
 	//return getFl_extra_ue().booleanValue();
 }
+
+public boolean isSanMarinoSenzaIVA() {
+
+	if ((getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue()))
+		return true;
+		
+	return false;
+}
 /**
  * Insert the method's description here.
  * Creation date: (2/15/2002 2:28:51 PM)
@@ -1534,7 +1646,8 @@ public boolean isPagata() {
 
 	return STATO_PAGATO.equalsIgnoreCase(getStato_cofi()) || 
 			REGISTRATO_IN_FONDO_ECO.equalsIgnoreCase(getStato_pagamento_fondo_eco()) ||
-			isGenerataDaCompenso();
+			//&& isGenerataDaCompenso()
+			(!isGestione_doc_ele() && isGenerataDaCompenso() && getPg_fattura_passiva()!=null);
 }
 /**
  * Insert the method's description here.
@@ -1588,8 +1701,14 @@ public boolean isROCambio() {
  */
 public boolean isRODateCompetenzaCOGE() {
 
-	return getFattura_passiva_dettColl() != null &&
-			!getFattura_passiva_dettColl().isEmpty();
+	if ((isElettronica() && getPg_fattura_passiva()!=null)
+		||
+		(!isElettronica() && getFattura_passiva_dettColl() != null &&
+					!getFattura_passiva_dettColl().isEmpty())
+		)
+		 return true;
+	
+	return false;
 }
 /**
  * Insert the method's description here.
@@ -1598,7 +1717,7 @@ public boolean isRODateCompetenzaCOGE() {
  */
 public boolean isRODt_registrazione() {
 
-	return isStampataSuRegistroIVA();
+	return isStampataSuRegistroIVA() || getProgr_univoco()!=null;
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1607,7 +1726,7 @@ public boolean isRODt_registrazione() {
  */
  
 public boolean isROFl_bolla_doganale() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return (isAbledToModifyFlagsTipoFattura()&&!(isElettronica()) || isPromiscua()  ||(isElettronica() && getPg_fattura_passiva()!=null));
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1616,7 +1735,7 @@ public boolean isROFl_bolla_doganale() {
  */
  
 public boolean isROFl_extra_ue() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return isAbledToModifyFlagsTipoFattura() || isPromiscua()|| isElettronica();
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1625,7 +1744,7 @@ public boolean isROFl_extra_ue() {
  */
  
 public boolean isROFl_intra_ue() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return isAbledToModifyFlagsTipoFattura() || isPromiscua() || isElettronica();
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1634,7 +1753,7 @@ public boolean isROFl_intra_ue() {
  */
  
 public boolean isROFl_san_marino_senza_iva() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return isAbledToModifyFlagsTipoFattura() || isPromiscua() || isElettronica();
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1643,7 +1762,7 @@ public boolean isROFl_san_marino_senza_iva() {
  */
  
 public boolean isROFl_spedizioniere() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return (isAbledToModifyFlagsTipoFattura()&&!(isElettronica()) || isPromiscua()  ||(isElettronica() && getPg_fattura_passiva()!=null));
 }
 /**
  * Insert the method's description here.
@@ -1685,8 +1804,10 @@ public boolean isROFornitoreSearchTool() {
 			(fattura_passiva_intrastatColl != null && 
 			!fattura_passiva_intrastatColl.isEmpty()) ||
 			(fattura_passiva_dettColl != null && 
-			!fattura_passiva_dettColl.isEmpty()) ||
-			isStampataSuRegistroIVA();
+			!fattura_passiva_dettColl.isEmpty()) &&
+			!(isElettronica() && getPg_fattura_passiva()==null)	||
+			isStampataSuRegistroIVA() ||
+			getProgr_univoco()!=null;
 }
 /**
  * Insert the method's description here.
@@ -1697,6 +1818,7 @@ public boolean isROIm_totale_quadratura() {
 	
 	return	isPagata() ||
 			isStampataSuRegistroIVA() ||
+			getProgr_univoco()!=null ||
 			isAnnullato() ||
 			isDefaultValuta();
 }
@@ -1786,7 +1908,8 @@ public boolean isStampataSuRegistroIVA() {
 	return	STATO_IVA_B.equalsIgnoreCase(getStatoIVA()) ||
 			STATO_IVA_C.equalsIgnoreCase(getStatoIVA()) ||
 			//A seguito dell'errore segnalato 569 (dovuto alla richiesta 423)
-			(getAutofattura() != null && getAutofattura().isStampataSuRegistroIVA());
+			(getAutofattura() != null && getAutofattura().isStampataSuRegistroIVA());//||
+			//(getProgr_univoco()!=null);  
 }
 /**
  * Insert the method's description here.
@@ -1818,7 +1941,9 @@ public boolean quadraturaInDeroga() {
 				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())||
 				// quadratura in deroga per commerciali
 				//(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue()) ||
-				(getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue()) 
+				(getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue()) ||
+				(getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()) && getFl_autofattura().booleanValue()
+				  && getFl_merce_intra_ue()!=null && getFl_merce_intra_ue().booleanValue())
 			);
 }
 /**
@@ -1828,7 +1953,9 @@ public boolean quadraturaInDeroga1210() {
 	return ((isIstituzionale() && (
 				(getFl_intra_ue() != null && getFl_intra_ue().booleanValue()) ||
 				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue())) &&
-				isFatturaDiBeni()) || (getTipo_sezionale()!=null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue()));
+				isFatturaDiBeni()) || (getTipo_sezionale()!=null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())||
+				(isIstituzionale() && getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()) 
+						  && getFl_merce_intra_ue()!=null && getFl_merce_intra_ue().booleanValue()));
 }
 public void removeFromAssociazioniInventarioHash(
 	Ass_inv_bene_fatturaBulk ass,
@@ -2304,6 +2431,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2319,6 +2447,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2335,6 +2464,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
@@ -2349,6 +2479,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2364,6 +2495,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2380,6 +2512,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
@@ -2394,6 +2527,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2454,7 +2588,9 @@ public void validaDateCompetenza()
 		throw new ValidationException("Inserire la data di \"competenza da\" per la testata documento.");
 	if (getDt_a_competenza_coge() == null)
 		throw new ValidationException("Inserire la data di \"competenza a\" per la testata documento.");
-
+	if (getStato_cofi().compareTo(STATO_INIZIALE)==0 && getDt_scadenza() == null) 
+		throw new ValidationException("La data di scadenza non può essere nulla!");
+	
 	Calendar competenzaDa = getDateCalendar(getDt_da_competenza_coge());
 	Calendar competenzaA = getDateCalendar(getDt_a_competenza_coge());
 	
@@ -2516,7 +2652,21 @@ public void validate() throws ValidationException {
 
 	validateDate();
 	validaDateCompetenza();
-	
+	// campi obbligatori dal 01/07/2014
+	// controllo eliminato per nuova gestione del protocollo unico 
+	//  if (getDt_registrazione().after(dataInizioObbligoRegistroUnico) && getDt_fattura_fornitore().before(dataInizioFatturaElettronica)){
+	//	if(getData_protocollo()== null)
+	//		throw new ValidationException("Inserire la data di protocollo di entrata.");
+	//	if(getNumero_protocollo()== null)
+	//		throw new ValidationException("Inserire il numero di protocollo di entrata!");
+	//}
+	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)){		
+		if(getStato_liquidazione()==null)
+			throw new ValidationException("Inserire lo stato della liquidazione!");
+		if(getStato_liquidazione()!=null && getStato_liquidazione().compareTo(this.LIQ)!=0 && getCausale()==null)
+			throw new ValidationException("Inserire la causale.");
+	}	
+
 	if (getLettera_pagamento_estero() != null)
 		getLettera_pagamento_estero().validate();
 }
@@ -2560,7 +2710,6 @@ public void validateDate() throws ValidationException {
 		if(dataRegistrazione.before(dataEmissioneFattura) &&
 			!dataRegistrazione.equals(dataEmissioneFattura))
 			throw new ValidationException("La data di registrazione  non può essere precedente alla data di emissione del documento del fornitore!");
-
 		if (getDt_scadenza() != null) {
 			java.util.Calendar dataScadenzaFattura = getDateCalendar(getDt_scadenza());
 
@@ -2568,6 +2717,11 @@ public void validateDate() throws ValidationException {
 				!dataEmissioneFattura.equals(dataScadenzaFattura))
 				throw new ValidationException("La data di scadenza non può essere precedente alla data di emissione del documento del fornitore!");
 		}
+		if(getData_protocollo()!= null && getData_protocollo().before(getDt_fattura_fornitore()))
+			throw new ValidationException("La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");
+		if(getData_protocollo()!=null && getData_protocollo().after(getDt_registrazione()))
+			throw new ValidationException(
+					"La data protocollo di entrata non può essere superiore alla data registrazione");
 	}
 }
 	/**
@@ -2602,6 +2756,7 @@ public void validateDate() throws ValidationException {
 	public boolean isROFl_liquidazione_differita() {
 		
 		return  isStampataSuRegistroIVA()||
+				getProgr_univoco()!=null ||
 			   !isConsentitaEsigibilitaDifferita();
 	}
 	public boolean isConsentitaEsigibilitaDifferita() {
@@ -2639,5 +2794,245 @@ public void validateDate() throws ValidationException {
 		}	
 		return false;
 	}
+	public boolean isDetailDoubled() {
+		return isDetailDoubled;
+	}
+	public void setDetailDoubled(boolean isDetailDoubled) {
+		this.isDetailDoubled = isDetailDoubled;
+	}
+	public boolean isDocumentoModificabile() {
+		return isDocumentoModificabile;
+	}
+	public void setDocumentoModificabile(boolean isDocumentoModificabile) {
+		this.isDocumentoModificabile = isDocumentoModificabile;
+	}
+	public java.sql.Timestamp getDataInizioObbligoRegistroUnico() {
+		return dataInizioObbligoRegistroUnico;
+	}
+	public void setDataInizioObbligoRegistroUnico(
+			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
+		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
+	}
+	public DocumentoEleTestataBulk getDocumentoEleTestata() {
+		return documentoEleTestata;
+	}
 
+	public void setDocumentoEleTestata(
+			DocumentoEleTestataBulk documentoEleTestata) {
+		this.documentoEleTestata = documentoEleTestata;
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Restituisce il valore di:
+	 * [idPaese]
+	 **/
+	public java.lang.String getIdPaese() {
+		DocumentoEleTestataBulk documentoEleTestata = this
+				.getDocumentoEleTestata();
+		if (documentoEleTestata == null)
+			return null;
+		return getDocumentoEleTestata().getIdPaese();
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Setta il valore di: [idPaese]
+	 **/
+	public void setIdPaese(java.lang.String idPaese) {
+		this.getDocumentoEleTestata().setIdPaese(idPaese);
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Restituisce il valore di:
+	 * [idCodice]
+	 **/
+	public java.lang.String getIdCodice() {
+		DocumentoEleTestataBulk documentoEleTestata = this
+				.getDocumentoEleTestata();
+		if (documentoEleTestata == null)
+			return null;
+		return getDocumentoEleTestata().getIdCodice();
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Setta il valore di: [idCodice]
+	 **/
+	public void setIdCodice(java.lang.String idCodice) {
+		this.getDocumentoEleTestata().setIdCodice(idCodice);
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Restituisce il valore di:
+	 * [identificativoSdi]
+	 **/
+	public java.lang.Long getIdentificativoSdi() {
+		DocumentoEleTestataBulk documentoEleTestata = this
+				.getDocumentoEleTestata();
+		if (documentoEleTestata == null)
+			return 	 super.getIdentificativoSdi();
+		return getDocumentoEleTestata().getIdentificativoSdi();
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Setta il valore di:
+	 * [identificativoSdi]
+	 **/
+	public void setIdentificativoSdi(java.lang.Long identificativoSdi) {
+		if(this.getDocumentoEleTestata()!=null)
+			this.getDocumentoEleTestata().setIdentificativoSdi(identificativoSdi);
+		else
+			super.setIdentificativoSdi(identificativoSdi);
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Restituisce il valore di:
+	 * [progressivo]
+	 **/
+	public java.lang.Long getProgressivo() {
+		DocumentoEleTestataBulk documentoEleTestata = this
+				.getDocumentoEleTestata();
+		if (documentoEleTestata == null)
+			return super.getProgressivo();
+		return getDocumentoEleTestata().getProgressivo();
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Setta il valore di:
+	 * [progressivo]
+	 **/
+	public void setProgressivo(java.lang.Long progressivo) {
+		if(this.getDocumentoEleTestata()!=null)
+			this.getDocumentoEleTestata().setProgressivo(progressivo);
+		else 
+			super.setProgressivo(progressivo);
+	}
+	
+	public Dictionary getStato_liquidazioneKeys() {
+		return STATO_LIQUIDAZIONE;
+	}
+	public Dictionary getCausaleKeys(){
+		return CAUSALE;
+	}
+	public void setDocEleAllegatiColl(
+			BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl) {
+		this.docEleAllegatiColl = docEleAllegatiColl;
+	}
+	
+	public BulkList<DocumentoEleAllegatiBulk> getDocEleAllegatiColl() {
+		return docEleAllegatiColl;
+	}	
+	public int addToDocEleAllegatiColl( DocumentoEleAllegatiBulk doc ) {
+		docEleAllegatiColl.add(doc);
+		doc.setDocumentoEleTestata(this.getDocumentoEleTestata());		
+		return docEleAllegatiColl.size()-1;
+	}	
+	
+	public CompensoBulk getCompenso() {
+		return compenso;
+	}
+	public java.lang.String getCds_compenso() {
+		it.cnr.contab.compensi00.docs.bulk.CompensoBulk compenso = this.getCompenso();
+		if (compenso == null)
+			return null;
+		return compenso.getCd_cds();
+	}
+	public java.lang.String getUo_compenso() {
+		it.cnr.contab.compensi00.docs.bulk.CompensoBulk compenso = this.getCompenso();
+		if (compenso == null)
+			return null;
+		return compenso.getCd_unita_organizzativa();
+	}
+	public java.lang.Integer getEsercizio_compenso() {
+		it.cnr.contab.compensi00.docs.bulk.CompensoBulk compenso = this.getCompenso();
+		if (compenso == null)
+			return null;
+		return compenso.getEsercizio();
+	}
+	public java.lang.Long getPg_compenso() {
+		it.cnr.contab.compensi00.docs.bulk.CompensoBulk compenso = this.getCompenso();
+		if (compenso == null)
+			return null;
+		return compenso.getPg_compenso();
+	}
+
+	public void setCompenso(CompensoBulk newCompenso) {
+		compenso = newCompenso;
+	}
+	public void setCds_compenso(java.lang.String cd_cds_compenso) {
+		this.getCompenso().setCd_cds(cd_cds_compenso);
+	}
+	public void setUo_compenso(java.lang.String cd_uo_compenso) {
+		this.getCompenso().setCd_unita_organizzativa(cd_uo_compenso);
+	}
+	public void setEsercizio_compenso(java.lang.Integer esercizio_compenso) {
+		this.getCompenso().setEsercizio(esercizio_compenso);
+	}
+	public void setPg_compenso(java.lang.Long pg_compenso) {
+		this.getCompenso().setPg_compenso(pg_compenso);
+	}
+	public java.sql.Timestamp getDataInizioFatturaElettronica() {
+		return dataInizioFatturaElettronica;
+	}
+	public void setDataInizioFatturaElettronica(
+			java.sql.Timestamp dataInizioFatturaElettronica) {
+		this.dataInizioFatturaElettronica = dataInizioFatturaElettronica;
+	}
+	public boolean isGestione_doc_ele() {
+		if(this.getDt_registrazione() != null && this.getDataInizioFatturaElettronica() != null)
+		{
+			if ((this.getDt_registrazione().compareTo(this.getDataInizioFatturaElettronica())<0))
+				return false;
+			else
+				return true;
+		}
+		return true;  //non dovrebbe mai verificarsi
+	}
+
+	public boolean isElettronica() {
+
+		if(getDocumentoEleTestata() != null || getIdentificativoSdi() != null)
+			return true;
+		return	false;
+	}
+	public boolean isROFl_fattura_compenso() {
+		if(isStampataSuRegistroIVA() ||
+		   isAnnullato() ||
+		   !isGestione_doc_ele() || 
+		   isElettronica()||
+		   getCompenso()!=null) 
+			  return true;
+
+		return false;
+	}
+	public boolean isROStato_liquidazione() {
+		return (isGenerataDaCompenso() && getCompenso()!=null);
+	}
+	
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	public boolean isNotAbledToModifyTipoIstCom(){
+		return (hasDettagliPagati() ||  
+				existARowInventoried() ||
+				isEstera()|| isSanMarinoSenzaIVA()||isSanMarinoSenzaIVA()
+				||(isGenerataDaCompenso()&& getPg_fattura_passiva()!=null)
+				||isStampataSuRegistroIVA()); 
+	}
+	public boolean isROStatoTrasmissioneLettera() {
+		if (lettera_pagamento_estero == null)
+			return true;
+		if (!lettera_pagamento_estero.getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO))
+			return true;
+		return false;
+	}	
 }

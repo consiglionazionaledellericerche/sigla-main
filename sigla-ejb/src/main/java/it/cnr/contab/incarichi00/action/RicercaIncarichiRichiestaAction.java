@@ -12,6 +12,7 @@ import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.action.AbstractAction;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;
@@ -37,6 +38,15 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=s           * solo incarichi di collaborazione scadute (e quelle non ancora attive)
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=c&anno=2008 * solo incarichi di collaborazione in corso pubblicate nel 2008
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=s&anno=2008 * solo incarichi di collaborazione scadute (e quelle non ancora attive) pubblicate nel 2008
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=1                  * Incarichi di collaborazione relativi ad attività di consulenza con tipo attività 3 e 7
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=2                  * Incarichi di collaborazione relativi ad altre tipologie di attività con tipo attività 1,2,4,5,6 e 8
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=3                  * Assegni di ricerca con tipo attività 10
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=4                  * Borse di studio con tipo attività 11
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=5                  * Tirocini con tipo attività 12
+
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=4                                * elenco contratti conferiti
+
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=5                                * elenco incarichi per art.18
 	*/
 			 
 	public RicercaIncarichiRichiestaAction() {
@@ -60,6 +70,7 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"order");
 			valorizzaParametri(actioncontext,bp,"strRic");			
 			valorizzaParametri(actioncontext,bp,"cdCds");
+			valorizzaParametri(actioncontext,bp,"tipoInc");
 			
 			if (bp.getUser()!= null)
 				user = bp.getUser();
@@ -76,6 +87,7 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null));
 			bp.eseguiRicerca(actioncontext);
 		} catch (Exception e) {
+			e.printStackTrace();
 			bp.setCodiceErrore(Constants.ERRORE_INC_100);
 		}
 		return actioncontext.findDefaultForward();

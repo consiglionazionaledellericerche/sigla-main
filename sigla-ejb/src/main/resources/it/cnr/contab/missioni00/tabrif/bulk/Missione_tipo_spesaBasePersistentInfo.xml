@@ -107,6 +107,13 @@
 			columnSize="5"
 			columnScale="2"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_AMMISSIBILE_CON_RIMBORSO"
+			propertyName="fl_ammissibile_con_rimborso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_rimborso_km" />
@@ -140,4 +147,6 @@
 		name="ds_ti_spesa" />
 	<persistentProperty
 		name="percentuale_maggiorazione" />
+	<persistentProperty
+		name="fl_ammissibile_con_rimborso" />		
 </SQLPersistentInfo>

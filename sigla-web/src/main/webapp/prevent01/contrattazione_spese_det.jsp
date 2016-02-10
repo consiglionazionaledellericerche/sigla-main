@@ -20,15 +20,20 @@
 			<td><% controller_tes.writeFormInput(out,"cd_dipartimento");%></td>
 			<td><% controller_tes.writeFormInput(out,"ds_dipartimento");%></td>
 		</tr>
+		<% if (!bp.isFlNuovoPdg()) { %>
 		<tr>
 	  		<td><% controller_tes.writeFormLabel(out,"cd_cds_area");%></td>
 			<td><% controller_tes.writeFormInput(out,"cd_cds_area");%></td>
 			<td><% controller_tes.writeFormInput(out,"ds_cds_area");%></td>
 		</tr>
+		<% } %>
 	</table>
 </div>
 <%
-  controller_det.writeHTMLTable(pageContext,(bp.getLivelloContrattazione().compareTo(new Integer(0))==0)?"csContrattazioneSenzaVoce":null,true,false,true,"100%","180px");
+	if (!bp.isFlNuovoPdg()) 
+	  controller_det.writeHTMLTable(pageContext,(bp.getLivelloContrattazione().compareTo(new Integer(0))==0)?"csContrattazioneSenzaVoce":null,true,false,true,"100%","180px");
+	else
+	  controller_det.writeHTMLTable(pageContext,(bp.getLivelloContrattazione().compareTo(new Integer(0))==0)?"csContrattazioneSenzaVoceNuovoPdg":null,true,false,true,"100%","180px");
 %>
 <div class="Group">
 	<table class="Panel" cellspacing="2">
@@ -38,10 +43,18 @@
 			<td><% controller_det.writeFormInput(out,"classificazione");%></td>
 		</tr>
 		<%}%> 
-		<tr>
-	  		<td><% controller_det.writeFormLabel(out,"searchtool_progetto");%></td>
-			<td><% controller_det.writeFormInput(out,"searchtool_progetto");%></td>
-		</tr>
+		<% if (!bp.isFlNuovoPdg()) { %>
+			<tr>
+		  		<td><% controller_det.writeFormLabel(out,"searchtool_progetto");%></td>
+				<td><% controller_det.writeFormInput(out,"searchtool_progetto");%></td>
+			</tr>
+		<% } else { %>
+			<tr>
+		  		<td><% controller_det.writeFormLabel(out,"searchtool_progetto_liv2");%></td>
+				<td><% controller_det.writeFormInput(out,"searchtool_progetto_liv2");%></td>
+			</tr>
+		<% } %>
+		
 		<tr>
 	  		<td><% controller_det.writeFormLabel(out,"cdr");%></td>
 			<td><% controller_det.writeFormInput(out,"cdr");%></td>

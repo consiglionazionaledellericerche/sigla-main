@@ -9,7 +9,7 @@
 			columnName="CD_CAPOCONTO_FIN"
 			propertyName="cd_capoconto_fin"
 			sqlTypeName="VARCHAR"
-			columnSize="10" />
+			columnSize="10" /> 
 		<columnMapping
 			columnName="FL_PARTITA_GIRO"
 			propertyName="fl_partita_giro"
@@ -58,6 +58,21 @@
 			propertyName="ds_elemento_voce"
 			sqlTypeName="VARCHAR"
 			columnSize="100" />
+		<columnMapping
+			columnName="ESERCIZIO_ELEMENTO_PADRE"
+			propertyName="esercizio_elemento_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_GESTIONE_ELEMENTO_PADRE"
+			propertyName="ti_gestione_elemento_padre"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_ELEMENTO_PADRE"
+			propertyName="ti_appartenenza_elemento_padre"
+			sqlTypeName="CHAR"
+			columnSize="1" />
 		<columnMapping
 			columnName="CD_ELEMENTO_PADRE"
 			propertyName="cd_elemento_padre"
@@ -159,6 +174,61 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_LIMITE_SPESA"
+			propertyName="fl_limite_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="FL_PRELIEVO"
+			propertyName="fl_prelievo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_SOGGETTO_PRELIEVO"
+			propertyName="fl_soggetto_prelievo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="PERC_PRELIEVO_PDGP_ENTRATE"
+			propertyName="perc_prelievo_pdgp_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />	
+		<columnMapping
+			columnName="FL_SOLO_RESIDUO"
+			propertyName="fl_solo_residuo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_SOLO_COMPETENZA"
+			propertyName="fl_solo_competenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_AZZERA_RESIDUI"
+			propertyName="fl_azzera_residui"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_TROVATO"
+			propertyName="fl_trovato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"/>
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -179,6 +249,12 @@
 		name="duva" />
 	<persistentProperty
 		name="ds_elemento_voce" />
+	<persistentProperty
+		name="esercizio_elemento_padre" />
+	<persistentProperty
+		name="ti_gestione_elemento_padre" />
+	<persistentProperty
+		name="ti_appartenenza_elemento_padre" />
 	<persistentProperty
 		name="cd_elemento_padre" />
 	<persistentProperty
@@ -213,4 +289,20 @@
 		name="fl_check_terzo_siope" />
 	<persistentProperty
 		name="fl_inv_beni_comp" />	
+	<persistentProperty
+		name="fl_limite_spesa" />	
+	<persistentProperty
+		name="fl_prelievo" />
+	<persistentProperty
+		name="fl_soggetto_prelievo" />
+	<persistentProperty 
+		name ="perc_prelievo_pdgp_entrate"/>	
+	<persistentProperty
+		name="fl_solo_residuo" />	
+	<persistentProperty
+		name="fl_solo_competenza" />
+	<persistentProperty
+		name="fl_azzera_residui" />		
+	<persistentProperty
+		name="fl_trovato" />
 </SQLPersistentInfo>

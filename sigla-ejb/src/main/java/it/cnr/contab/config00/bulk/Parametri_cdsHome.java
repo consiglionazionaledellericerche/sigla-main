@@ -64,10 +64,20 @@ public class Parametri_cdsHome extends BulkHome {
 	public boolean isRibaltato(it.cnr.jada.UserContext userContext, String cd_cds) throws PersistencyException
 	{
 		Parametri_cdsBulk parametri = (Parametri_cdsBulk)findByPrimaryKey( new Parametri_cdsBulk(cd_cds,CNRUserContext.getEsercizio(userContext)));
+		return isRibaltato(parametri);  
+	
+	}
+	private boolean isRibaltato(Parametri_cdsBulk parametri) {
 		if (parametri == null)
 		  return true;
 		else
-		  return parametri.getFl_ribaltato().booleanValue();  
+		  return parametri.getFl_ribaltato().booleanValue();
+	}	
+
+	public boolean isRibaltato(it.cnr.jada.UserContext userContext, String cd_cds, Integer esercizio) throws PersistencyException
+	{
+		Parametri_cdsBulk parametri = (Parametri_cdsBulk)findByPrimaryKey( new Parametri_cdsBulk(cd_cds,esercizio));
+		return isRibaltato(parametri);  
 	
 	}	
 

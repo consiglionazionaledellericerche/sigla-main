@@ -5,6 +5,7 @@
 package it.cnr.contab.config00.esercizio.bulk;
 import java.util.Collection;
 
+import it.cnr.contab.pdg00.cdip.bulk.Stampa_ripartizione_costiVBulk;
 import it.cnr.contab.segnalazioni00.bulk.Stampa_attivita_siglaBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -33,4 +34,18 @@ public Collection findEsercizi(Stampa_attivita_siglaBulk bulk) throws Introspect
 	SQLBuilder sql = this.selectEserciziByClause(bulk);
 		return  fetchAll(sql);
 	}
+
+public Collection findEsercizi(Stampa_ripartizione_costiVBulk bulk) throws IntrospectionException, PersistencyException {
+	SQLBuilder sql = this.selectEserciziByClause(bulk);
+		return  fetchAll(sql);
+	}
+
+public SQLBuilder selectEserciziByClause(Stampa_ripartizione_costiVBulk bulk) throws PersistencyException
+	{
+	PersistentHome pHome = getHomeCache().getHome(Esercizio_baseBulk.class);
+	SQLBuilder sql = pHome.createSQLBuilder();
+	sql.setOrderBy("esercizio",it.cnr.jada.util.OrderConstants.ORDER_DESC);
+	return sql;
+	}	
+
 }

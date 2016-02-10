@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_progettiBulk"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_progettiHome">
+	<defaultColumnMap
+		tableName="BLT_PROGETTI">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="bltAccordo.cd_accordo"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_RESPONS_ITA"
+			propertyName="responsabileIta.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_CDR_RESPONS_ITA"
+			propertyName="centro_responsabilitaIta.cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_RESPONS_STR"
+			propertyName="responsabileStr.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="PG_COMUNE_ENTE_RESPONS_ITA"
+			propertyName="comuneEnteResponsIta.pg_comune"  />
+	</defaultColumnMap>
+	<persistentProperty
+		name="bltAccordo"
+		partOfOid="true" />
+	<persistentProperty
+		name="responsabileIta" />
+	<persistentProperty
+		name="centro_responsabilitaIta" />
+	<persistentProperty
+		name="responsabileStr" />
+	<persistentProperty
+		name="comuneEnteResponsIta" />
+</SQLPersistentInfo>

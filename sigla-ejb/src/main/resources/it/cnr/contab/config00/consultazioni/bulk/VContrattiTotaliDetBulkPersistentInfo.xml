@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk"
+	homeClassName="it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetHome">
+	<defaultColumnMap
+		tableName="V_CONTRATTI_TOTALI_DET">
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizioOriginale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="TERZO"
+			propertyName="terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cdElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="esercizioContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="pgContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="statoContratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="OGGETTO"
+			propertyName="oggetto"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_INIZIO"
+			propertyName="dataInizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_FINE"
+			propertyName="dataFine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA"
+			propertyName="linea"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBB_ACR"
+			propertyName="esercizioObbAcr"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_ACCERTAMENTO"
+			propertyName="pgObbligazioneAccertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_MAN_REV"
+			propertyName="esercizioManRev"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MAN_REV"
+			propertyName="pgManRev"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ES_DOC_AMM"
+			propertyName="esDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pgDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_DOC"
+			propertyName="tipoDoc"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO_PADRE"
+			propertyName="esercizioContrattoPadre"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_CONTRATTO_PADRE"
+			propertyName="pgContrattoPadre"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO_PADRE"
+			propertyName="statoContrattoPadre"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />	
+		<columnMapping
+			columnName="DESC_VOCE"
+			propertyName="descVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_TERZO"
+			propertyName="descTerzo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_GAE"
+			propertyName="descGae"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_ENTRATE"
+			propertyName="totaleEntrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="TOTALE_SPESE"
+			propertyName="totaleSpese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="LIQUIDATO_ENTRATE"
+			propertyName="liquidatoEntrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="LIQUIDATO_SPESE"
+			propertyName="liquidatoSpese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_REVERSALI"
+			propertyName="totaleReversali"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_MANDATI"
+			propertyName="totaleMandati"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_ENTRATE_CONTRATTO"
+			propertyName="totaleEntrateContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="TOTALE_SPESE_CONTRATTO"
+			propertyName="totaleSpeseContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+		<columnMapping
+			columnName="TIPO_CONTRATTO"
+			propertyName="tipoContratto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="esercizioOriginale" />
+	<persistentProperty
+		name="terzo" />
+	<persistentProperty
+		name="cdElementoVoce" />
+	<persistentProperty
+		name="esercizioContratto" />
+	<persistentProperty
+		name="pgContratto" />
+	<persistentProperty
+		name="statoContratto" />
+	<persistentProperty
+		name="oggetto" />
+	<persistentProperty
+		name="dataInizio" />
+	<persistentProperty
+		name="dataFine" />
+	<persistentProperty
+		name="linea" />
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="esercizioObbAcr" />
+	<persistentProperty
+		name="pgObbligazioneAccertamento" />
+	<persistentProperty
+		name="esercizioManRev" />
+	<persistentProperty
+		name="pgManRev" />
+	<persistentProperty
+		name="esDocAmm" />
+	<persistentProperty
+		name="pgDocAmm" />
+	<persistentProperty
+		name="tipoDoc" />
+	<persistentProperty
+		name="descVoce" />
+	<persistentProperty
+		name="descTerzo" />
+	<persistentProperty
+		name="descGae" />
+	<persistentProperty
+		name="totaleEntrate" />
+	<persistentProperty
+		name="totaleSpese" />
+	<persistentProperty
+		name="liquidatoEntrate" />
+	<persistentProperty
+		name="liquidatoSpese" />
+	<persistentProperty
+		name="totaleReversali" />
+	<persistentProperty
+		name="totaleMandati" />
+	<persistentProperty
+		name="esercizioContrattoPadre" />
+	<persistentProperty
+		name="pgContrattoPadre" />
+	<persistentProperty
+		name="statoContrattoPadre" />	
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="tipoContratto" />
+	<persistentProperty
+		name="totaleEntrateContratto" />	
+	<persistentProperty
+		name="totaleSpeseContratto" />	
+</SQLPersistentInfo>

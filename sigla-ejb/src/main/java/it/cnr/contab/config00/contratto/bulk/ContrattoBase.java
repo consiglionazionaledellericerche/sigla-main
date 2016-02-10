@@ -3,8 +3,7 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.jada.persistency.Keyed;
 public class ContrattoBase extends ContrattoKey implements Keyed {
 //    ESERCIZIO_PADRE DECIMAL(4,0)
@@ -43,6 +42,9 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 //    CD_TIPO_CONTRATTO VARCHAR(5) NOT NULL
 	private java.lang.String cd_tipo_contratto;
  
+//  CD_CIG_FATTURA_ATTIVA VARCHAR(10) NOT NULL
+	private java.lang.String cdCigFatturaAttiva;
+
 //    PROC_AMM VARCHAR(5) NOT NULL
 	private java.lang.String cd_proc_amm;
  
@@ -53,22 +55,27 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	private java.lang.String cd_protocollo;
  
 //    DT_STIPULA TIMESTAMP(7)
+	@CMISProperty(name="sigla_contratti:data_stipula")
 	private java.sql.Timestamp dt_stipula;
  
 //    DT_INIZIO_VALIDITA TIMESTAMP(7)
+	@CMISProperty(name="sigla_contratti:data_inizio")
 	private java.sql.Timestamp dt_inizio_validita;
  
 //    DT_FINE_VALIDITA TIMESTAMP(7)
+	@CMISProperty(name="sigla_contratti:data_fine")
 	private java.sql.Timestamp dt_fine_validita;
 
 //	  DT_PROROGA TIMESTAMP(7)
     private java.sql.Timestamp dt_proroga;
  
 //    IM_CONTRATTO_ATTIVO DECIMAL(15,2)
+	@CMISProperty(name="sigla_contratti:importo_attivo_appalto")
 	private java.math.BigDecimal im_contratto_attivo;
 
 //	  IM_CONTRATTO_PASSIVO DECIMAL(15,2)
-    private java.math.BigDecimal im_contratto_passivo;
+	@CMISProperty(name="sigla_contratti:importo_passivo_appalto")    
+	private java.math.BigDecimal im_contratto_passivo;
  
 //	CD_TIPO_ATTO VARCHAR(5)
 	private java.lang.String cd_tipo_atto;
@@ -114,7 +121,13 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
     
 //	FL_ART82 CHAR(1) NOT NULL
 	private java.lang.Boolean fl_art82;
-	     
+
+//	FL_MEPA CHAR(1) 
+	private java.lang.Boolean fl_mepa;
+
+//	FL_PUBBLICA_CONTRATTO CHAR(1)
+	private java.lang.Boolean fl_pubblica_contratto;
+	
 	public ContrattoBase() {
 		super();
 	}
@@ -229,257 +242,280 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	public void setDs_annullamento(java.lang.String ds_annullamento)  {
 		this.ds_annullamento=ds_annullamento;
 	}
-/**
- * @return
- */
-public java.lang.String getCd_protocollo_generale() {
-	return cd_protocollo_generale;
-}
 
-/**
- * @return
- */
-public java.lang.String getCd_organo() {
-	return cd_organo;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getCd_protocollo_generale() {
+		return cd_protocollo_generale;
+	}
 
-/**
- * @return
- */
-public java.lang.String getCd_organo_ann() {
-	return cd_organo_ann;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getCd_organo() {
+		return cd_organo;
+	}
 
-/**
- * @return
- */
-public java.lang.String getCd_tipo_atto() {
-	return cd_tipo_atto;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getCd_organo_ann() {
+		return cd_organo_ann;
+	}
 
-/**
- * @return
- */
-public java.lang.String getCd_tipo_atto_ann() {
-	return cd_tipo_atto_ann;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getCd_tipo_atto() {
+		return cd_tipo_atto;
+	}
 
-/**
- * @return
- */
-public java.lang.Integer getEsercizio_protocollo() {
-	return esercizio_protocollo;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getCd_tipo_atto_ann() {
+		return cd_tipo_atto_ann;
+	}
 
+	/**
+	 * @return
+	 */
+	public java.lang.Integer getEsercizio_protocollo() {
+		return esercizio_protocollo;
+	}
 
-/**
- * @param string
- */
-public void setCd_protocollo_generale(java.lang.String string) {
-	cd_protocollo_generale = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setCd_protocollo_generale(java.lang.String string) {
+		cd_protocollo_generale = string;
+	}
 
-/**
- * @param string
- */
-public void setCd_organo(java.lang.String string) {
-	cd_organo = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setCd_organo(java.lang.String string) {
+		cd_organo = string;
+	}
 
-/**
- * @param string
- */
-public void setCd_organo_ann(java.lang.String string) {
-	cd_organo_ann = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setCd_organo_ann(java.lang.String string) {
+		cd_organo_ann = string;
+	}
 
-/**
- * @param string
- */
-public void setCd_tipo_atto(java.lang.String string) {
-	cd_tipo_atto = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setCd_tipo_atto(java.lang.String string) {
+		cd_tipo_atto = string;
+	}
 
-/**
- * @param string
- */
-public void setCd_tipo_atto_ann(java.lang.String string) {
-	cd_tipo_atto_ann = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setCd_tipo_atto_ann(java.lang.String string) {
+		cd_tipo_atto_ann = string;
+	}
 
-/**
- * @param integer
- */
-public void setEsercizio_protocollo(java.lang.Integer integer) {
-	esercizio_protocollo = integer;
-}
+	/**
+	 * @param integer
+	 */
+	public void setEsercizio_protocollo(java.lang.Integer integer) {
+		esercizio_protocollo = integer;
+	}
 
-/**
- * @return
- */
-public java.lang.String getCd_unita_organizzativa() {
-	return cd_unita_organizzativa;
-}
-/**
- * 
- * @param cd_unita_organizzativa
- */
-public void setCd_unita_organizzativa(java.lang.String string) {
-	cd_unita_organizzativa = string;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getCd_unita_organizzativa() {
+		return cd_unita_organizzativa;
+	}
 
-/**
- * @return
- */
-public java.lang.Integer getCd_terzo_firmatario() {
-	return cd_terzo_firmatario;
-}
+	/**
+	 * 
+	 * @param cd_unita_organizzativa
+	 */
+	public void setCd_unita_organizzativa(java.lang.String string) {
+		cd_unita_organizzativa = string;
+	}
 
-/**
- * @param integer
- */
-public void setCd_terzo_firmatario(java.lang.Integer integer) {
-	cd_terzo_firmatario = integer;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.Integer getCd_terzo_firmatario() {
+		return cd_terzo_firmatario;
+	}
 
-/**
- * @return
- */
-public java.sql.Timestamp getDt_proroga() {
-	return dt_proroga;
-}
+	/**
+	 * @param integer
+	 */
+	public void setCd_terzo_firmatario(java.lang.Integer integer) {
+		cd_terzo_firmatario = integer;
+	}
 
-/**
- * @param timestamp
- */
-public void setDt_proroga(java.sql.Timestamp timestamp) {
-	dt_proroga = timestamp;
-}
+	/**
+	 * @return
+	 */
+	public java.sql.Timestamp getDt_proroga() {
+		return dt_proroga;
+	}
 
-/**
- * @return
- */
-public java.lang.String getDs_atto() {
-	return ds_atto;
-}
+	/**
+	 * @param timestamp
+	 */
+	public void setDt_proroga(java.sql.Timestamp timestamp) {
+		dt_proroga = timestamp;
+	}
 
-/**
- * @return
- */
-public java.lang.String getDs_atto_non_definito() {
-	return ds_atto_non_definito;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getDs_atto() {
+		return ds_atto;
+	}
 
-/**
- * @param string
- */
-public void setDs_atto(java.lang.String string) {
-	ds_atto = string;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getDs_atto_non_definito() {
+		return ds_atto_non_definito;
+	}
 
-/**
- * @param string
- */
-public void setDs_atto_non_definito(java.lang.String string) {
-	ds_atto_non_definito = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setDs_atto(java.lang.String string) {
+		ds_atto = string;
+	}
 
-/**
- * @return
- */
-public java.lang.String getDs_atto_ann() {
-	return ds_atto_ann;
-}
+	/**
+	 * @param string
+	 */
+	public void setDs_atto_non_definito(java.lang.String string) {
+		ds_atto_non_definito = string;
+	}
 
-/**
- * @return
- */
-public java.lang.String getDs_atto_ann_non_definito() {
-	return ds_atto_ann_non_definito;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getDs_atto_ann() {
+		return ds_atto_ann;
+	}
 
-/**
- * @return
- */
-public java.lang.String getDs_organo_ann_non_definito() {
-	return ds_organo_ann_non_definito;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getDs_atto_ann_non_definito() {
+		return ds_atto_ann_non_definito;
+	}
 
-/**
- * @return
- */
-public java.lang.String getDs_organo_non_definito() {
-	return ds_organo_non_definito;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getDs_organo_ann_non_definito() {
+		return ds_organo_ann_non_definito;
+	}
 
-/**
- * @return
- */
-public java.lang.Boolean getFl_art82() {
-	return fl_art82;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getDs_organo_non_definito() {
+		return ds_organo_non_definito;
+	}
 
-/**
- * @param string
- */
-public void setDs_atto_ann(java.lang.String string) {
-	ds_atto_ann = string;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.Boolean getFl_art82() {
+		return fl_art82;
+	}
 
-/**
- * @param string
- */
-public void setDs_atto_ann_non_definito(java.lang.String string) {
-	ds_atto_ann_non_definito = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setDs_atto_ann(java.lang.String string) {
+		ds_atto_ann = string;
+	}
 
-/**
- * @param string
- */
-public void setDs_organo_ann_non_definito(java.lang.String string) {
-	ds_organo_ann_non_definito = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setDs_atto_ann_non_definito(java.lang.String string) {
+		ds_atto_ann_non_definito = string;
+	}
 
-/**
- * @param string
- */
-public void setDs_organo_non_definito(java.lang.String string) {
-	ds_organo_non_definito = string;
-}
+	/**
+	 * @param string
+	 */
+	public void setDs_organo_ann_non_definito(java.lang.String string) {
+		ds_organo_ann_non_definito = string;
+	}
 
-/**
- * @param boolean1
- */
-public void setFl_art82(java.lang.Boolean boolean1) {
-	fl_art82 = boolean1;
-}
+	/**
+	 * @param string
+	 */
+	public void setDs_organo_non_definito(java.lang.String string) {
+		ds_organo_non_definito = string;
+	}
 
-/**
- * @return
- */
-public java.math.BigDecimal getIm_contratto_passivo() {
-	return im_contratto_passivo;
-}
+	/**
+	 * @param boolean1
+	 */
+	public void setFl_art82(java.lang.Boolean boolean1) {
+		fl_art82 = boolean1;
+	}
 
-/**
- * @param decimal
- */
-public void setIm_contratto_passivo(java.math.BigDecimal decimal) {
-	im_contratto_passivo = decimal;
-}
+	/**
+	 * @return
+	 */
+	public java.math.BigDecimal getIm_contratto_passivo() {
+		return im_contratto_passivo;
+	}
 
-/**
- * @return
- */
-public java.lang.Long getStato_padre() {
-	return stato_padre;
-}
+	/**
+	 * @param decimal
+	 */
+	public void setIm_contratto_passivo(java.math.BigDecimal decimal) {
+		im_contratto_passivo = decimal;
+	}
 
-/**
- * @param long1
- */
-public void setStato_padre(java.lang.Long long1) {
-	stato_padre = long1;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.Long getStato_padre() {
+		return stato_padre;
+	}
 
+	/**
+	 * @param long1
+	 */
+	public void setStato_padre(java.lang.Long long1) {
+		stato_padre = long1;
+	}
+
+	public java.lang.Boolean getFl_mepa() {
+		return fl_mepa;
+	}
+
+	public void setFl_mepa(java.lang.Boolean fl_mepa) {
+		this.fl_mepa = fl_mepa;
+	}
+
+	public java.lang.Boolean getFl_pubblica_contratto() {
+		return fl_pubblica_contratto;
+	}
+
+	public void setFl_pubblica_contratto(java.lang.Boolean fl_pubblica_contratto) {
+		this.fl_pubblica_contratto = fl_pubblica_contratto;
+	}
+	
+	public java.lang.String getCdCigFatturaAttiva() {
+		return cdCigFatturaAttiva;
+	}
+	public void setCdCigFatturaAttiva(java.lang.String cdCigFatturaAttiva) {
+		this.cdCigFatturaAttiva = cdCigFatturaAttiva;
+	}
 }

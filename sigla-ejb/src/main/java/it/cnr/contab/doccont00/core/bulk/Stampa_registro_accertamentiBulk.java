@@ -1,5 +1,9 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+
+
+
 /**
  * Insert the type's description here.
  * Creation date: (23/01/2003 16.02.55)
@@ -13,7 +17,7 @@ public class Stampa_registro_accertamentiBulk extends AccertamentoBulk {
 	private java.lang.Long pgInizio;
 	private java.lang.Long pgFine;
 	private String riporto;
-
+	
 	// Stati
 	public final static String TIPO_TUTTI = "*";
 	public final static java.util.Dictionary tipoCompetenzaResiduoKeys;
@@ -31,6 +35,7 @@ public class Stampa_registro_accertamentiBulk extends AccertamentoBulk {
 		tipoCompetenzaResiduoKeys.put(Numerazione_doc_contBulk.TIPO_ACR_RES, "Residuo");
 		tipoCompetenzaResiduoKeys.put(TIPO_TUTTI, "Tutti");
 	};
+	
 /**
  * Stampa_obbligazioniBulk constructor comment.
  */
@@ -53,7 +58,6 @@ public Stampa_registro_accertamentiBulk(String cd_cds, Integer esercizio, Intege
  * @return java.sql.Timestamp
  */
 public String getCdCdsCRForPrint() {
-	
 	//if (getCds_origine()==null)
 		//return "*";
 	//if (getCds_origine().getCd_unita_organizzativa()==null)
@@ -61,7 +65,7 @@ public String getCdCdsCRForPrint() {
 
 	//return getCds_origine().getCd_unita_organizzativa().toString();
 
-	return "999";
+	return getCdsEnte().getCd_unita_organizzativa();
 }
 /**
  * Insert the method's description here.

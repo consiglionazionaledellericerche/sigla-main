@@ -71,7 +71,7 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP
 			super.init(config,context);
 			CompoundFindClause clauses = new CompoundFindClause();
 			
-//			clauses.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bulk.CNRUserInfo)context.getUserInfo()).getCdr().getCd_centro_responsabilita());
+			//clauses.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bulk.CNRUserInfo)context.getUserInfo()).getCdr().getCd_centro_responsabilita());
 			clauses.addClause("AND", "esercizio_inizio", SQLBuilder.LESS_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
 			clauses.addClause("AND", "esercizio_fine", SQLBuilder.GREATER_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
 //			if ((getName().equalsIgnoreCase("StampaSituazioneSinteticaDispGAEBP")||getName().equalsIgnoreCase("StampaSituazioneSinteticaRendGAEBP")) ){
@@ -217,16 +217,16 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP
 		it.cnr.jada.util.RemoteIterator ri;
 		try {
 			clauses = CompoundFindClause.and(clauses,getBaseclause());
-			if ((getName().equalsIgnoreCase("StampaSituazioneSinteticaDispGAEBP")||getName().equalsIgnoreCase("StampaSituazioneSinteticaRendGAEBP")) ){
+//			if ((getName().equalsIgnoreCase("StampaSituazioneSinteticaDispGAEBP")||getName().equalsIgnoreCase("StampaSituazioneSinteticaRendGAEBP")) ){
 				 ri = ((StampaSituazioneSinteticaGAEComponentSession)EJBCommonServices.createEJB(
 						"CNRPDG00_EJB_StampaSituazioneSinteticaGAEComponentSession",
 						StampaSituazioneSinteticaGAEComponentSession.class)).selezionaGae( context.getUserContext(), clauses);
-			}
+	/*		}
 			else{
 			 ri =
 				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator
 				(context, createComponentSession().cerca(context.getUserContext(),clauses,model));
-			}
+			}*/
 			return ri;			
 		} catch(Exception e) {
 			throw handleException(e);

@@ -36,4 +36,16 @@
 	<td colspan=2><% bp.getCrudUtente_indirizzi_mail().writeFormLabel( out, "fl_com_app_var_stanz_comp"); %>
 	              <% bp.getCrudUtente_indirizzi_mail().writeFormInput( out, "fl_com_app_var_stanz_comp"); %></td>
 	</tr>
+	<tr>
+	<td colspan=2><% bp.getCrudUtente_indirizzi_mail().writeFormLabel( out, "flEsitoPosFattElettr"); %>
+	              <% bp.getCrudUtente_indirizzi_mail().writeFormInput( out, "flEsitoPosFattElettr"); %></td>
+	</tr>
+	<tr>
+	<td colspan=2><% bp.getCrudUtente_indirizzi_mail().writeFormLabel( out, "flEsitoNegFattElettr"); %>
+	              <% bp.getCrudUtente_indirizzi_mail().writeFormInput( out, "flEsitoNegFattElettr"); %></td>
+	</tr>
+	<tr>
+	<td colspan=2><% bp.getCrudUtente_indirizzi_mail().writeFormLabel( out, "flFepNotificaRicezione"); %>
+	              <% bp.getCrudUtente_indirizzi_mail().writeFormInput( out, "flFepNotificaRicezione"); %></td>
+	</tr>
 	</table>

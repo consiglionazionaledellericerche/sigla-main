@@ -1,10 +1,18 @@
 package it.cnr.contab.config00.pdcfin.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.util.*;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
 
-import java.util.*;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkMap;
+import it.cnr.jada.bulk.FieldValidationMap;
+import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.OrderedHashtable;
 /**
  * Elemento_voceBulk che rappresenta i capitoli di spesa del CDS
  */
@@ -156,17 +164,7 @@ public void setFunzioni(it.cnr.jada.util.OrderedHashtable newFunzioni) {
 public void setTipiCds(it.cnr.jada.util.OrderedHashtable newTipiCds) {
 	tipiCds = newTipiCds;
 }
-/**
- * Esegue la validazione formale dei campi di input
- */
 
-public void validate() throws ValidationException 
-{
-	super.validate();
-	if ( elemento_padre == null || isNullOrEmpty( elemento_padre.getCd_elemento_voce() ))
-		throw new ValidationException( "Inserire il codice titolo. " );
-		
-}
 private void writeCheckBox(javax.servlet.jsp.JspWriter out, String key, boolean value ) throws java.io.IOException, PersistencyException , it.cnr.jada.comp.ApplicationException, IntrospectionException
 {
 

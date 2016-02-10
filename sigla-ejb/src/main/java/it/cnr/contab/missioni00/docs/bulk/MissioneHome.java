@@ -1,20 +1,17 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.cmis.acl.ACLType;
 import it.cnr.contab.cmis.acl.Permission;
 import it.cnr.contab.cmis.acl.SIGLAGroups;
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaHome;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.ejb.NumerazioneTempDocAmmComponentSession;
-import it.cnr.contab.docamm00.service.DocAmmCMISService;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
@@ -36,8 +33,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.UUID;
-
-import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 
 public class MissioneHome extends BulkHome implements
 		IDocumentoAmministrativoSpesaHome {
@@ -283,6 +278,8 @@ public class MissioneHome extends BulkHome implements
 				.getCd_unita_organizzativa());
 		sql.addSQLClause("AND", "PG_ANTICIPO", sql.EQUALS, anticipo
 				.getPg_anticipo());
+		sql.addSQLClause("AND", "STATO_COFI", sql.NOT_EQUALS,MissioneBulk.STATO_ANNULLATO);
+		
 
 		MissioneBulk missione = null;
 		Broker broker = createBroker(sql);
@@ -357,20 +354,16 @@ public class MissioneHome extends BulkHome implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public Boolean archiviaStampa(UserContext userContext, MandatoBulk mandato, IDocumentoAmministrativoSpesaBulk docAmm)
+	public void archiviaStampa(UserContext userContext, MissioneBulk missione)
 			throws IntrospectionException, PersistencyException {
-		MissioneBulk missione = (MissioneBulk)docAmm;
 		Boolean isDipendente = Boolean.FALSE;
-		TerzoBulk terzo = (TerzoBulk) getHomeCache().getHome(TerzoBulk.class).
-							findByPrimaryKey(new TerzoBulk(missione.getCd_terzo()));
-		if (terzo == null || terzo.getAnagrafico() == null)
-			return Boolean.FALSE;
 		Integer matricola = null;
 		String stato_pagamento_fondo_eco = missione.getStato_pagamento_fondo_eco();
 		Timestamp dt_pagamento_fondo_eco = missione.getDt_pagamento_fondo_eco();
 		if (missione.getTi_provvisorio_definitivo().equalsIgnoreCase("D")) {
 			Collection<RapportoBulk> rapporti = ((AnagraficoHome) getHomeCache()
-					.getHome(AnagraficoBulk.class)).findRapporti(terzo.getAnagrafico());
+					.getHome(AnagraficoBulk.class)).findRapporti(missione
+					.getTerzo().getAnagrafico());
 			for (RapportoBulk rapporto : rapporti) {
 				if (rapporto.getMatricola_dipendente() != null) {
 					isDipendente = Boolean.TRUE;
@@ -384,77 +377,67 @@ public class MissioneHome extends BulkHome implements
 			dt_pagamento_fondo_eco = missione.getCompenso().getDt_pagamento_fondo_eco();
 		}
 		if (isDipendente && missione.getTipo_rapporto().isDipendente() ) {
-			Print_spoolerBulk print = new Print_spoolerBulk();
-			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-			print.setFlEmail(false);
-			print.setReport("/docamm/docamm/vpg_missione.jasper");
-			print.setNomeFile("Missione n. "
-					+ missione.getPg_missione()
-					+ " della UO "
-					+ missione.getCd_unita_organizzativa()
-					+ " del "
-					+ new SimpleDateFormat("dd-MM-yyyy").format(missione
-							.getDt_inizio_missione()) + ".pdf");
-			print.setUtcr(userContext.getUser());
-			print.addParam("aCd_cds", missione.getCd_cds(), String.class);
-			print.addParam("aCd_uo", missione.getCd_unita_organizzativa(),
-					String.class);
-			print.addParam("aEs", missione.getEsercizio(), Integer.class);
-			print.addParam("aPg_da", missione.getPg_missione(), Long.class);
-			print.addParam("aPg_a", missione.getPg_missione(), Long.class);
-			print.addParam("aCd_terzo", String.valueOf(missione
-					.getCd_terzo()), String.class);
+			if ((missione.getAnticipo() != null
+					&& missione.getAnticipo().getIm_anticipo().compareTo(
+							missione.getIm_netto_pecepiente()) > 0) ||
+				(stato_pagamento_fondo_eco.equals(MissioneBulk.REGISTRATO_IN_FONDO_ECO) &&
+						dt_pagamento_fondo_eco != null)) {
+				Print_spoolerBulk print = new Print_spoolerBulk();
+				print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+				print.setFlEmail(false);
+				print.setReport("/docamm/docamm/vpg_missione.jasper");
+				print.setNomeFile("Missione n. "
+						+ missione.getPg_missione()
+						+ " della UO "
+						+ missione.getCd_unita_organizzativa()
+						+ " del "
+						+ new SimpleDateFormat("dd-MM-yyyy").format(missione
+								.getDt_inizio_missione()) + ".pdf");
+				print.setUtcr(userContext.getUser());
+				print.addParam("aCd_cds", missione.getCd_cds(), String.class);
+				print.addParam("aCd_uo", missione.getCd_unita_organizzativa(),
+						String.class);
+				print.addParam("aEs", missione.getEsercizio(), Integer.class);
+				print.addParam("aPg_da", missione.getPg_missione(), Long.class);
+				print.addParam("aPg_a", missione.getPg_missione(), Long.class);
+				print.addParam("aCd_terzo", String.valueOf(missione
+						.getCd_terzo()), String.class);
 
-			try {
-				missione
-						.setUnitaOrganizzativa((Unita_organizzativaBulk) getHomeCache()
-								.getHome(Unita_organizzativaBulk.class)
-								.findByPrimaryKey(
-										new Unita_organizzativaBulk(
-												missione
-														.getCd_unita_organizzativa())));
-				missione.setMandatoPagamento(mandato);
-				String beanName;
-				String typePayment;
-				if (missione.getFl_associato_compenso()){
-					beanName = "cmisPathConcFormazReddito";
-					typePayment = "ConcFormazReddito";
-				}else{
-					beanName = "cmisPathNonConcFormazReddito";
-					typePayment = "NonConcFormazReddito";
+				try {
+					missione
+							.setUnitaOrganizzativa((Unita_organizzativaBulk) getHomeCache()
+									.getHome(Unita_organizzativaBulk.class)
+									.findByPrimaryKey(
+											new Unita_organizzativaBulk(
+													missione
+															.getCd_unita_organizzativa())));
+					CMISPath cmisPath;
+					if (missione.getFl_associato_compenso())
+						cmisPath = SpringUtil
+						.getBean("cmisPathConcFormazReddito",
+								CMISPath.class);
+					else
+						cmisPath = SpringUtil
+						.getBean("cmisPathNonConcFormazReddito",
+								CMISPath.class);
+					
+					SiglaCMISService cmisService = SpringUtil.getBean("cmisService",
+							SiglaCMISService.class);
+					LDAPService ldapService = SpringUtil.getBean("ldapService",
+							LDAPService.class);
+					String[] uidMail = ldapService.getLdapUserFromMatricola(
+							userContext, matricola);
+
+					Report report = SpringUtil.getBean("printService",
+							PrintService.class).executeReport(userContext,
+							print);
+					cmisService.storePrintDocument(missione, report, cmisPath, 
+							Permission.construct(uidMail[0], ACLType.Consumer),
+							Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), ACLType.Coordinator));
+				} catch (Exception e) {
+					throw new PersistencyException(e);
 				}
-				missione.setTypePayment(typePayment);
-				LDAPService ldapService = SpringUtil.getBean("ldapService",
-						LDAPService.class);
-				String[] uidMail = ldapService.getLdapUserFromMatricola(
-						userContext, matricola);
-
-				CMISPath cmisPath = SpringUtil.getBean(beanName,CMISPath.class);
-				DocAmmCMISService docAmmCMISService = SpringUtil.getBean("docAmmCMISService",
-						DocAmmCMISService.class);
-				cmisPath = docAmmCMISService.createFolderIfNotPresent(cmisPath, String.valueOf(mandato.getEsercizio()), 
-						"Esercizio "+mandato.getEsercizio(), "Esercizio "+mandato.getEsercizio());
-				cmisPath = docAmmCMISService.createFolderIfNotPresent(cmisPath, "Dipendenti", 
-						"Dipendenti", "Dipendenti");
-				cmisPath = docAmmCMISService.createFolderIfNotPresent(cmisPath, "Matricola "+matricola, 
-						uidMail[0], uidMail[0]);
-
-				Report report = SpringUtil.getBean("printService",
-						PrintService.class).executeReport(userContext,
-						print);
-				Node node = docAmmCMISService.storePrintDocument(missione, report, cmisPath, 
-						Permission.construct(uidMail[0], docAmmCMISService.getRoleConsumer()),
-						Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), docAmmCMISService.getRoleCoordinator()));
-				/**
-				 * Add another parent to Node
-				 */
-				docAmmCMISService.addAnotherParentToNode(mandato, docAmm, uidMail[0], node, beanName);
-			}catch (CmisConstraintException e) {
-				throw new PersistencyException(e);
-			}catch (Exception e) {
-				throw new PersistencyException(e);
 			}
 		}
-		return Boolean.TRUE;
 	}
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription = "Associazione U.O./Aree di Ricerca"
+		  longDescription = "Associazione Missione Pdg-Tipo Unità Organizzative">
+	<fieldProperty
+		name="cd_missione"
+		property="pdgMissione.cd_missione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true"				
+		label="Codice Missione" />
+	<fieldProperty
+		name="cd_tipo_unita"
+		property="tipoUnitaOrganizzativa.cd_tipo_unita"
+		label="Tipo Unità Organizzativa"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="6"
+        enabledOnEdit="true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_tipo_unita"
+		property="tipoUnitaOrganizzativa.ds_tipo_unita"
+		label="Descrizione Tipo Unità Organizzativa"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="6"
+        enabledOnEdit="false"
+		enabledOnSearch="true" />
+
+	<formFieldProperty
+		name="cd_missione" />
+	<formFieldProperty
+		name="cd_tipo_unita" />
+	<formFieldProperty
+		name="ds_tipo_unita" />
+
+	<findFieldProperty
+		name="cd_missione" />
+	<findFieldProperty
+		name="cd_tipo_unita" />
+	<findFieldProperty
+		name="ds_tipo_unita" />
+
+	<columnSet name="csAssPdgMissione">
+		<columnFieldProperty name="cd_tipo_unita" label="Codice"/>
+		<columnFieldProperty name="ds_tipo_unita" label="Descrizione"/>
+	</columnSet>	
+</bulkInfo>

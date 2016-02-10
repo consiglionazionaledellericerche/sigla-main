@@ -395,9 +395,9 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 	sql.addSQLClause("AND","OBBLIGAZIONE.FL_PGIRO",sql.NOT_EQUALS, "Y");		
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS, filtro.getCd_unita_organizzativa());
 	sql.addSQLClause("AND","OBBLIGAZIONE.RIPORTATO",sql.EQUALS, "N");
 	
@@ -1844,9 +1844,9 @@ public SQLBuilder selectScadenza_obbligazioneByClause(UserContext aUC, AnticipoB
 
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA",sql.GREATER_EQUALS, dataRegistrazione);	
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 
 	if(clauses != null)
 		sql.addClause(clauses);
@@ -1877,7 +1877,7 @@ public SQLBuilder selectV_terzoByClause(UserContext aUC,AnticipoBulk anticipo, V
 	//	quanti sono i tipi rapporto
 	
 	SQLBuilder sql = getHome(aUC,V_terzo_per_compensoBulk.class,"DISTINCT_TERZO").createSQLBuilder();
-
+	sql.addClause(clauses);
 	sql.setDistinctClause(true);
 	sql.addSQLClause("AND","TI_DIPENDENTE_ALTRO",sql.EQUALS,anticipo.getTi_anagrafico());
 	sql.addSQLClause("AND","CD_TERZO",sql.EQUALS, anticipo.getCd_terzo());
@@ -1886,7 +1886,7 @@ public SQLBuilder selectV_terzoByClause(UserContext aUC,AnticipoBulk anticipo, V
 	CompoundFindClause clause = CompoundFindClause.or(
 		new SimpleFindClause("dt_fine_validita_terzo",sql.GREATER_EQUALS, anticipo.getDt_registrazione()),
 		new SimpleFindClause("dt_fine_validita_terzo",sql.ISNULL, null));
-	sql.addClause(clauses);
+	sql.addClause(clause);
 		
 	return sql;
 }

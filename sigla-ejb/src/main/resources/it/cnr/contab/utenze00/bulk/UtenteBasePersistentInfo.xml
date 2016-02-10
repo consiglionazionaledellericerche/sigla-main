@@ -150,6 +150,12 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ATTIVA_BLOCCO"
+			propertyName="fl_attiva_blocco"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="password" />
@@ -205,4 +211,6 @@
 		name="cd_ruolo_supervisore" />		
 	<persistentProperty
 		name="fl_altra_proc" />		
+	<persistentProperty
+		name="fl_attiva_blocco" />
 </SQLPersistentInfo>

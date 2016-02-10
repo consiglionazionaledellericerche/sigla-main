@@ -111,12 +111,12 @@ public class Pdg_variazioneHome extends BulkHome {
 		sql.addSQLClause("AND","PG_VARIAZIONE_PDG",sql.EQUALS,testata.getPg_variazione_pdg());
 		return dettHome.fetchAll(sql);
 	}
-	public Dictionary loadCausaliMancataApprovazione() throws PersistencyException, IntrospectionException {
+	public Dictionary loadCausaliMancataApprovazione(it.cnr.jada.UserContext userContext) throws PersistencyException, IntrospectionException {
 		java.util.Dictionary list = new it.cnr.jada.util.OrderedHashtable();
 
 		PersistentHome dettHome = getHomeCache().getHome(Configurazione_cnrBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
-		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,"0");
+		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addSQLClause("AND","CD_UNITA_FUNZIONALE",sql.EQUALS,"*");		
 		sql.addSQLClause("AND","CD_CHIAVE_PRIMARIA",sql.EQUALS,"PDG_VARIAZIONE");
 
@@ -210,4 +210,35 @@ public class Pdg_variazioneHome extends BulkHome {
 		sql.addSQLClause("AND","TI_GESTIONE",sql.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
 		return dettHome.fetchAll(sql);
 	}	
+	public java.util.Collection findDettagliSpesaVariazioneGestionalePrelievo(Pdg_variazioneBulk testata) throws PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Pdg_variazione_riga_gestBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addTableToHeader("ELEMENTO_VOCE");
+		sql.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+		sql.addSQLJoin("ELEMENTO_VOCE.TI_GESTIONE","PDG_VARIAZIONE_RIGA_GEST.TI_GESTIONE");
+		sql.addSQLJoin("ELEMENTO_VOCE.TI_APPARTENENZA","PDG_VARIAZIONE_RIGA_GEST.TI_APPARTENENZA");
+		sql.addSQLJoin("ELEMENTO_VOCE.CD_ELEMENTO_VOCE","PDG_VARIAZIONE_RIGA_GEST.CD_ELEMENTO_VOCE");
+		sql.addSQLClause("AND","FL_PRELIEVO",sql.EQUALS,"Y");
+		sql.addSQLClause("AND","PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO",sql.EQUALS,testata.getEsercizio());
+		sql.addSQLClause("AND","PG_VARIAZIONE_PDG",sql.EQUALS,testata.getPg_variazione_pdg());
+		sql.addSQLClause("AND","PDG_VARIAZIONE_RIGA_GEST.TI_GESTIONE",sql.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+
+		return dettHome.fetchAll(sql);
+	}
+	public java.util.Collection findDettagliEntrateVariazioneGestionaleSoggettePrelievo(Pdg_variazioneBulk testata) throws PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Pdg_variazione_riga_gestBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addTableToHeader("ELEMENTO_VOCE");
+		sql.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+		sql.addSQLJoin("ELEMENTO_VOCE.TI_GESTIONE","PDG_VARIAZIONE_RIGA_GEST.TI_GESTIONE");
+		sql.addSQLJoin("ELEMENTO_VOCE.TI_APPARTENENZA","PDG_VARIAZIONE_RIGA_GEST.TI_APPARTENENZA");
+		sql.addSQLJoin("ELEMENTO_VOCE.CD_ELEMENTO_VOCE","PDG_VARIAZIONE_RIGA_GEST.CD_ELEMENTO_VOCE");
+		sql.addSQLClause("AND","FL_SOGGETTO_PRELIEVO",sql.EQUALS,"Y");
+		sql.addSQLClause("AND","PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO",sql.EQUALS,testata.getEsercizio());
+		sql.addSQLClause("AND","PG_VARIAZIONE_PDG",sql.EQUALS,testata.getPg_variazione_pdg());
+		sql.addSQLClause("AND","PDG_VARIAZIONE_RIGA_GEST.TI_GESTIONE",sql.EQUALS,Elemento_voceHome.GESTIONE_ENTRATE);
+
+		return dettHome.fetchAll(sql);
+	}	
+
 }

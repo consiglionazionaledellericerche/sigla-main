@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -496,7 +496,6 @@
 		<columnFieldProperty name="tot_inc_ist_a1" />
 		<columnFieldProperty name="tot_inc_aree_a1"/>
 		<columnFieldProperty name="tot_inc_a1"/>
-		
 	</columnSet>
 	
 	<columnSet name="ETRCDRISTPRO">
@@ -510,7 +509,6 @@
 		<columnFieldProperty name="tot_inc_ist_a1" />
 		<columnFieldProperty name="tot_inc_aree_a1"/>
 		<columnFieldProperty name="tot_inc_a1"/>
-		
 	</columnSet>
 	
 	<columnSet name="ETRCDRISTPROCOM">
@@ -525,7 +523,6 @@
 		<columnFieldProperty name="tot_inc_ist_a1" />
 		<columnFieldProperty name="tot_inc_aree_a1"/>
 		<columnFieldProperty name="tot_inc_a1"/>
-		
 	</columnSet>
 	
 	<columnSet name="ETRCDRISTPROCOMMOD">
@@ -541,9 +538,7 @@
 		<columnFieldProperty name="tot_inc_ist_a1" />
 		<columnFieldProperty name="tot_inc_aree_a1"/>
 		<columnFieldProperty name="tot_inc_a1"/>
-		
 	</columnSet>
-	
 	
 	<columnSet name="ETRCDRISTPROCOMMODLIV1">
 		<columnFieldProperty name="cd_centro_responsabilita" />
@@ -658,6 +653,123 @@
 		<columnFieldProperty name="tot_inc_a1"/>
 		
 	</columnSet>
+
+<!-- Column Set per gestione Aree Progettuali -->
+	<columnSet name="ETRCDR2">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+
+	<columnSet name="ETRCDR2IST">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="ds_dipartimento" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+	
+	<columnSet name="ETRCDR2ISTPRO">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+	
+	<columnSet name="ETRCDR2ISTPROCOM">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="ds_commessa" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+	
+	<columnSet name="ETRCDR2ISTPROCOMLIV1">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+	
+	<columnSet name="ETRCDR2ISTPROCOMLIV1LIV2">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+
+	<columnSet name="ETRCDR2ISTPROCOMLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+
+	<columnSet name="ETRCDR2ISTPROCOMLIV1LIV2LIV3LIN">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="ds_linea" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+
+	<columnSet name="ETRCDR2ISTPROCOMLIV1LIV2LIV3LINVOC">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="ds_elemento_voce" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
+
+	<columnSet name="ETRCDR2ISTPROCOMLIV1LIV2LIV3LINVOCDET">
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="ds_dettaglio" />
+		<columnFieldProperty name="tot_ent_ist_a1" />
+		<columnFieldProperty name="tot_inc_ist_a1" />
+	</columnSet>
 	
 	
 	<columnSet name="SPECDR">
@@ -676,7 +788,6 @@
 		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
 		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
 		<columnFieldProperty name="im_pagamenti" />
-		
 	</columnSet>
 	
 	<columnSet name="SPECDRIST">
@@ -912,6 +1023,209 @@
 		<columnFieldProperty name="im_pagamenti" />
 	</columnSet>
 	
+<!-- Column Set per gestione Aree Progettuali -->
+	<columnSet name="SPECDR2">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="ds_cdr_assegnatario" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+	</columnSet>
+	
+	<columnSet name="SPECDR2IST">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="ds_dipartimento" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+		
+	</columnSet>
+	
+	<columnSet name="SPECDR2ISTPRO">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+	</columnSet>
+	
+	<columnSet name="SPECDR2ISTPROCOM">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="ds_commessa" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+	</columnSet>
+	
+	<columnSet name="SPECDR2ISTPROCOMMOD">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_modulo" />
+		<columnFieldProperty name="ds_modulo" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+	</columnSet>
+
+	<columnSet name="SPECDR2ISTPROCOMLIV1">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+</columnSet>
+	
+	<columnSet name="SPECDR2ISTPROCOMLIV1LIV2">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+	</columnSet>
+	<columnSet name="SPECDR2ISTPROCOMLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+
+	</columnSet>
+	<columnSet name="SPECDR2ISTPROCOMLIV1LIV2LIV3LIN">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="ds_linea" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+	</columnSet>
+	<columnSet name="SPECDR2ISTPROCOMLIV1LIV2LIV3LINVOC">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="ds_elemento_voce" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+	</columnSet>
+	<columnSet name="SPECDR2ISTPROCOMLIV1LIV2LIV3LINVOCDET">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_elemento_voce" />		
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />
+	</columnSet>
+
+
 	<freeSearchSet name="ETRCDR">
 		<findFieldProperty name="cd_centro_responsabilita" />
 		<findFieldProperty name="ds_cdr" />
@@ -1083,6 +1397,150 @@
 		<findFieldProperty name="tot_inc_a1"/>	
 	</freeSearchSet>
 	
+<!-- freeSearchSet per gestione Aree Progettuali -->
+	<freeSearchSet name="ETRCDR2">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="ds_cdr" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>
+	</freeSearchSet>
+
+	<freeSearchSet name="ETRCDR2IST">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="ds_dipartimento" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+	
+	<freeSearchSet name="ETRCDR2ISTPRO">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="ds_progetto" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+	<freeSearchSet name="ETRCDR2ISTPROCOM">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="ds_commessa" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+	<freeSearchSet name="ETRCDR2ISTPROCOMMOD">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="ds_modulo" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+	<freeSearchSet name="ETRCDR2ISTPROCOMLIV1">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+	
+	<freeSearchSet name="ETRCDR2ISTPROCOMLIV1LIV2">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+	<freeSearchSet name="ETRCDR2ISTPROCOMLIV1LIV2LIV3">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3"  label="Capitolo"/>
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+	<freeSearchSet name="ETRCDR2ISTPROCOMLIV1LIV2LIV3LIN">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3"  label="Capitolo"/>
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="ds_linea" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+		<freeSearchSet name="ETRCDR2ISTPROCOMLIV1LIV2LIV3LINVOC">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_elemento_voce" />
+		<findFieldProperty name="ds_elemento_voce" />	
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3"  label="Capitolo"/>
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+	<freeSearchSet name="ETRCDR2ISTPROCOMLIV1LIV2LIV3LINVOCDET">
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_elemento_voce" />		
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3"  label="Capitolo"/>
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="cd_classificazione" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="ds_dettaglio" />
+		<findFieldProperty name="tot_ent_ist_a1" />
+		<findFieldProperty name="tot_ent_a1" />
+		<findFieldProperty name="tot_inc_ist_a1" />
+		<findFieldProperty name="tot_inc_a1"/>	
+	</freeSearchSet>
+
+
 	<freeSearchSet name="SPECDR">
 		<findFieldProperty name="cd_cdr_assegnatario" />
 		<findFieldProperty name="ds_cdr_assegnatario" />
@@ -1275,4 +1733,151 @@
 		<findFieldProperty name="im_pagamenti" />
 	</freeSearchSet>
 	
+<!-- Column Set per gestione Aree Progettuali -->
+	<freeSearchSet name="SPECDR2">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="ds_cdr_assegnatario" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />
+	</freeSearchSet>
+	<freeSearchSet name="SPECDR2IST">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="ds_dipartimento" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />
+	</freeSearchSet>
+	<freeSearchSet name="SPECDR2ISTPRO">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="ds_progetto" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />
+	</freeSearchSet>
+	
+	<freeSearchSet name="SPECDR2ISTPROCOM">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="ds_commessa" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />	
+	</freeSearchSet>
+	<freeSearchSet name="SPECDR2ISTPROCOMLIV1">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />	
+	</freeSearchSet>
+	<freeSearchSet name="SPECDR2ISTPROCOMLIV1LIV2">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />
+	</freeSearchSet>
+	<freeSearchSet name="SPECDR2ISTPROCOMLIV1LIV2LIV3">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Sottocategoria"/>
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />
+	</freeSearchSet>
+	<freeSearchSet name="SPECDR2ISTPROCOMLIV1LIV2LIV3LIN">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Sottocategoria"/>
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="ds_linea" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />	
+	</freeSearchSet>
+	<freeSearchSet name="SPECDR2ISTPROCOMLIV1LIV2LIV3LINVOC">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_elemento_voce" />
+		<findFieldProperty name="ds_elemento_voce" />		
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Sottocategoria"/>
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />	
+	</freeSearchSet>
+	<freeSearchSet name="SPECDR2ISTPROCOMLIV1LIV2LIV3LINVOCDET">
+		<findFieldProperty name="cd_cdr_assegnatario" />
+		<findFieldProperty name="cd_dipartimento" />
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_elemento_voce" />		
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Sottocategoria"/>
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="cd_classificazione" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_ist_int" />
+		<findFieldProperty name="im_dec_ist_est" />
+		<findFieldProperty name="tratt_econ_est" />
+		<findFieldProperty name="tratt_econ_int" />			
+		<findFieldProperty name="im_acc_altre_sp_int" />
+		<findFieldProperty name="im_pagamenti" />
+	</freeSearchSet>
 </bulkInfo>

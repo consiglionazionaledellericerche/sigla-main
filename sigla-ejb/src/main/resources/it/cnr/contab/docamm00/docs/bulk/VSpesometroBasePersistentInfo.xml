@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.VSpesometroBase"
+	keyClassName="it.cnr.contab.docamm00.docs.bulk.VSpesometroKey"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.VSpesometroHome">
+	<defaultColumnMap
+		tableName="V_SPESOMETRO">
+		<columnMapping
+			columnName="QUADRO"
+			propertyName="quadro"
+			sqlTypeName="CHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partitaIva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codiceFiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_BENE_SERVIZIO"
+			propertyName="tiBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_FISCALITA"
+			propertyName="tipoFiscalita"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_ATTIVE"
+			propertyName="nrAttive"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_PASSIVE"
+			propertyName="nrPassive"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE_FA"
+			propertyName="imponibileFa"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IVA_FA"
+			propertyName="ivaFa"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE_ND_FA"
+			propertyName="imponibileNdFa"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IVA_ND_FA"
+			propertyName="ivaNdFa"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE_FP"
+			propertyName="imponibileFp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IVA_FP"
+			propertyName="ivaFp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE_ND_FP"
+			propertyName="imponibileNdFp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IVA_ND_FP"
+			propertyName="ivaNdFp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_NASCITA"
+			propertyName="dtNascita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_NASCITA"
+			propertyName="statoNascita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIA"
+			propertyName="provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_STATO_ESTERO"
+			propertyName="codiceStatoEstero"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragioneSociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO_SEDE"
+			propertyName="indirizzoSede"
+			sqlTypeName="VARCHAR"
+			columnSize="106"
+			nullable="true" />
+		<columnMapping
+			columnName="COMUNE_SEDE"
+			propertyName="comuneSede"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="quadro" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="partitaIva" />
+	<persistentProperty
+		name="codiceFiscale" />
+	<persistentProperty
+		name="tiBeneServizio" />
+	<persistentProperty
+		name="tipoFiscalita" />
+	<persistentProperty
+		name="mese" />
+	<persistentProperty
+		name="nrAttive" />
+	<persistentProperty
+		name="nrPassive" />
+	<persistentProperty
+		name="imponibileFa" />
+	<persistentProperty
+		name="ivaFa" />
+	<persistentProperty
+		name="imponibileNdFa" />
+	<persistentProperty
+		name="ivaNdFa" />
+	<persistentProperty
+		name="imponibileFp" />
+	<persistentProperty
+		name="ivaFp" />
+	<persistentProperty
+		name="imponibileNdFp" />
+	<persistentProperty
+		name="ivaNdFp" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="dtNascita" />
+	<persistentProperty
+		name="statoNascita" />
+	<persistentProperty
+		name="provincia" />
+	<persistentProperty
+		name="codiceStatoEstero" />
+	<persistentProperty
+		name="ragioneSociale" />
+	<persistentProperty
+		name="indirizzoSede" />
+	<persistentProperty
+		name="comuneSede" />
+</SQLPersistentInfo>

@@ -1,11 +1,8 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
-import java.util.Collection;
-import java.util.Date;
-
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
@@ -239,7 +236,7 @@ public SQLBuilder selectRif_modalita_pagamento(TerzoBulk terzo, Boolean flPerCes
 	sql.addTableToHeader("MODALITA_PAGAMENTO");
 	sql.addSQLJoin("MODALITA_PAGAMENTO.CD_MODALITA_PAG","RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
 	sql.addSQLClause("AND","MODALITA_PAGAMENTO.CD_TERZO",sql.EQUALS,terzo.getCd_terzo());
-
+	
 	sql.addClause("AND","fl_per_cessione", sql.EQUALS, flPerCessione);
 	return sql;
 }
@@ -251,27 +248,33 @@ public SQLBuilder selectRif_termini_pagamento(TerzoBulk terzo) throws Persistenc
 	sql.addSQLClause("AND","TERMINI_PAGAMENTO.CD_TERZO",sql.EQUALS,terzo.getCd_terzo());
 	return sql;
 }
-	/**
-	 * Cerca la matricola di un eventuale dipendente, la cui data di inizio del rapporto non è successiva
-	 * alla data di competenza del documento
-	 * @param userContext
-	 * @param terzo
-	 * @param dataCompetenzaDocumento
-	 * @return se il terzo passato non è un dipendente ritorna null
-	 * @throws PersistencyException
-	 * @throws IntrospectionException
-	 */
-	@SuppressWarnings("unchecked")
-	public Integer findMatricolaDipendente(UserContext userContext, TerzoBulk terzo, Date dataCompetenzaDocumento)throws PersistencyException,IntrospectionException {
-		Integer matricola = null;
-		Collection<RapportoBulk> rapporti = ((AnagraficoHome) getHomeCache().getHome(AnagraficoBulk.class)).findRapporti(terzo.getAnagrafico());
-		for (RapportoBulk rapporto : rapporti) {
-			if (rapporto.getMatricola_dipendente() != null && rapporto.getDt_ini_validita().before(dataCompetenzaDocumento)
-					&& rapporto.getDt_fin_validita().after(dataCompetenzaDocumento)) {
-				matricola = rapporto.getMatricola_dipendente();
-				break;
-			}
-		}
-		return matricola;
+
+public SQLBuilder selectTerzoPerCompensi(Integer codiceTerzo, CompoundFindClause clauses) throws PersistencyException{
+
+	SQLBuilder sql = createSQLBuilder();
+	sql.addSQLClause("AND","CD_TERZO",sql.EQUALS,codiceTerzo);
+	SQLBuilder sql2 = getHomeCache().getHome(V_terzo_per_compensoBulk.class).createSQLBuilder();
+	sql2.addClause("AND","cd_terzo",sql.EQUALS,codiceTerzo);
+	sql2.addSQLJoin("TERZO.CD_TERZO","V_TERZO_PER_COMPENSO.CD_TERZO");
+
+	sql.addSQLExistsClause("AND",sql2);
+	
+	sql.addClause(clauses);
+
+	return sql;
+}
+public java.util.List<TerzoBulk> findTerzi(AnagraficoBulk anagrafico) throws IntrospectionException, PersistencyException {
+	SQLBuilder sql = createSQLBuilder();
+	sql.addSQLClause("AND", "CD_ANAG", SQLBuilder.EQUALS, anagrafico.getCd_anag());
+	return fetchAll(sql);
+}
+
+@Override
+public SQLBuilder selectByClause(CompoundFindClause compoundfindclause)
+		throws PersistencyException {
+		PersistentHome home = getHomeCache().getHome(TerzoBulk.class,"V_TERZO_CF_PI");
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(compoundfindclause);
+		return sql;
 	}
 }

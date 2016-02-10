@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Tabella di dettaglio dei limite di spesa per elemento voce - fonte ed importo limite suddivisa per CDS"
+	longDescription="Tabella di dettaglio dei limite di spesa per elemento voce - fonte ed importo limite suddivisa per CDS">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="30"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cds" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="250"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"/>	
+	<fieldProperty
+		name="findCds"
+		property="cds"
+		inputType="SEARCHTOOL"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		label="Cds" />		
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="gestione" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="elemento voce" />
+	<fieldProperty
+		name="fonte"
+		property="fonte"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="fonte" />
+	<fieldProperty
+		name="importo_limite"
+		property="importo_limite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		command="doOnImportoLimiteChange"
+		enabledOnEdit="true"
+		nullable="false"
+		label="importo limite" />
+	<fieldProperty
+		name="impegni_assunti"
+		property="impegni_assunti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="impegni assunti" />
+	<formFieldProperty
+			name="esercizio" />
+	<formFieldProperty
+			name="cd_cds" />
+	<formFieldProperty
+			name="ds_cds" />	
+	<formFieldProperty
+			name="findCds" />		
+	<formFieldProperty
+			name="ti_appartenenza" />
+	<formFieldProperty
+			name="ti_gestione" />
+	<formFieldProperty
+			name="cd_elemento_voce" />
+	<formFieldProperty
+			name="importo_limite" />
+	<formFieldProperty
+			name="impegni_assunti" />
+	<formFieldProperty
+			name="fonte" />
+	
+	<columnSet name="dettagli">	
+		<columnFieldProperty
+			name="cd_cds"/>
+		<columnFieldProperty
+			name="importo_limite" />
+		<columnFieldProperty
+			name="impegni_assunti"/>			
+	</columnSet>
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="ti_appartenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="fonte" />
+	<findFieldProperty
+		name="importo_limite" />
+	<findFieldProperty
+		name="impegni_assunti" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="ti_appartenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="fonte" />
+	<columnFieldProperty
+		name="importo_limite" />
+	<columnFieldProperty
+		name="impegni_assunti" />
+</bulkInfo>

@@ -6,8 +6,6 @@ import java.util.Iterator;
 import it.cnr.contab.compensi00.bp.CRUDAddizionaliBP;
 import it.cnr.contab.compensi00.tabrif.bulk.AddizionaliBulk;
 import it.cnr.contab.inventario00.bp.CRUDInventarioBeniBP;
-import it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioBulk;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -49,11 +47,17 @@ public class CRUDAddizionaliAction  extends it.cnr.jada.util.action.CRUDAction {
 		
 		CRUDAddizionaliBP bp = (CRUDAddizionaliBP)getBusinessProcess(actioncontext);
 		try {
-			if (bp.getDettagliCRUDController().countDetails()!=0){
-				bp.Aggiornamento_scaglione(actioncontext.getUserContext(), (AddizionaliBulk)bp.getModel());
-				bp.getDettagliCRUDController().removeAll(actioncontext);
-			}else
-				throw new it.cnr.jada.comp.ApplicationException("Non ci sono dati da salvare.");
+		if (bp.getDettagliCRUDController().countDetails()!=0){
+			for(Iterator i=bp.getDettagliCRUDController().getDetails().iterator();i.hasNext();){
+				AddizionaliBulk nuova=(AddizionaliBulk)i.next();
+				if (nuova.getNota() !=null) 
+					throw new it.cnr.jada.comp.ApplicationException("Esistono note valorizzate, verificare prima di procedere al salvataggio.");
+			}
+			bp.Aggiornamento_scaglione(actioncontext.getUserContext(), (AddizionaliBulk)bp.getModel());
+			bp.getDettagliCRUDController().removeAll(actioncontext);
+		}else
+			throw new it.cnr.jada.comp.ApplicationException("Non ci sono dati da salvare.");
+		
 		} catch (ComponentException e) {
 			handleException(actioncontext,e);	
 		}catch (BusinessProcessException e) {

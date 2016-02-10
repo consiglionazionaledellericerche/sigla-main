@@ -8,9 +8,7 @@ package it.cnr.contab.varstanz00.comp;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.CallableStatement;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Enumeration;
@@ -22,17 +20,15 @@ import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseHome;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
@@ -45,14 +41,11 @@ import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdrKey;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.CdsHome;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -65,7 +58,11 @@ import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.utenze00.bulk.UtenteHome;
+import it.cnr.contab.utenze00.bulk.UtenteKey;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -76,16 +73,17 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.DefaultSQLExceptionHandler;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SQLExceptionHandler;
@@ -148,6 +146,21 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			throw new ComponentException(e);
 		}		
 	}
+	public ProgettoBulk getProgettoLineaAttivita(UserContext usercontext, Var_stanz_res_rigaBulk varRiga) throws ComponentException{
+		try {
+			PersistentHome laHome = getHome(usercontext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+			SQLBuilder sql = laHome.createSQLBuilder();
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,varRiga.getEsercizio());
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varRiga.getCd_cdr());
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,varRiga.getCd_linea_attivita());
+			List list = laHome.fetchAll(sql);
+			if (list.size()==1)
+				return ((WorkpackageBulk)list.get(0)).getProgetto();
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		return null;
+	}
 	public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext,OggettoBulk oggettobulk)throws ComponentException {
 		try {
 			CdrBulk cdr = ((Var_stanz_resBulk)oggettobulk).getCdr();
@@ -160,10 +173,12 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			var_stanz_res.setRigaVariazione(new it.cnr.jada.bulk.BulkList(testataHome.findVariazioniRiga(var_stanz_res)));
             inizializzaSommeCDR(usercontext,var_stanz_res);
 			var_stanz_res.setTotale_righe_variazione(Utility.ZERO);
+			PersistentHome laHome = getHome(usercontext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
 			for (Iterator righeVar=var_stanz_res.getRigaVariazione().iterator();righeVar.hasNext();){
 				Var_stanz_res_rigaBulk varRiga = (Var_stanz_res_rigaBulk)righeVar.next();
 				var_stanz_res.setTotale_righe_variazione(Utility.nvl(var_stanz_res.getTotale_righe_variazione()).add(Utility.nvl(varRiga.getIm_variazione())));
 				varRiga.setDisponibilita_stanz_res(calcolaDisponibilita_stanz_res(usercontext,varRiga));
+				varRiga.setProgetto(getProgettoLineaAttivita(usercontext, varRiga));
 			}					
 			if (var_stanz_res.getStato().equalsIgnoreCase(Var_stanz_resBulk.STATO_APPROVATA)){
 				var_stanz_res.setVar_bilancio(((Var_bilancioHome)getHome(usercontext, Var_bilancioBulk.class)).findByVar_stanz_res(var_stanz_res));
@@ -185,7 +200,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			                                                                  varRiga.getCd_linea_attivita(), 
 			                                                                  varRiga.getElemento_voce().getTi_appartenenza(), 
 			                                                                  varRiga.getElemento_voce().getTi_gestione(), 
-			                                                                  varRiga.getCd_voce());
+			                                                                  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
 			saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(usercontext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldi);
 			if (saldi != null)
 			  totale = saldi.getDispAdImpResiduoImproprio();
@@ -206,9 +221,16 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	**/
 	public void eliminaConBulk(UserContext userContext, OggettoBulk bulk) throws ComponentException{
 		try {		
+			String stato_prec=null;
+			Var_stanz_resBulk var = (Var_stanz_resBulk) bulk;
+			if (var.getStato().compareTo(Var_stanz_resBulk.STATO_PROPOSTA_DEFINITIVA)==0)
+				stato_prec=Var_stanz_resBulk.STATO_PROPOSTA_DEFINITIVA;
+			
 			if (bulk instanceof ICancellatoLogicamente){
 				((ICancellatoLogicamente)bulk).cancellaLogicamente();
 				updateBulk(userContext, bulk);
+				if(stato_prec!=null)		
+					aggiornaLimiteSpesa(userContext, var);
 			}else{
 				super.eliminaConBulk(userContext, bulk);				
 			}
@@ -273,27 +295,62 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			}
 			sql.closeParenthesis();
 		}
-		return sql;
-	}
-	public SQLBuilder selectElemento_voceByClause (UserContext userContext,Var_stanz_res_rigaBulk var_stanz_res_riga, Elemento_voceBulk elemento_voce, CompoundFindClause clause) throws ComponentException, PersistencyException{	
-		SQLBuilder sql = getHome(userContext, Elemento_voceBulk.class).createSQLBuilder();
-		sql.addClause( clause );
-		sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
-		sql.addSQLClause("AND", "TI_GESTIONE", SQLBuilder.EQUALS, CostantiTi_gestione.TI_GESTIONE_SPESE);		
-		sql.addSQLClause("AND", "TI_APPARTENENZA", SQLBuilder.NOT_EQUALS, "C");
-		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
-		try {
-			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
+		 // Obbligatorio cofog sulle GAE
+		try{
+			if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+				sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+		
 		} catch (RemoteException e) {
 			throw new ComponentException(e);
 		} catch (EJBException e) {
 			throw new ComponentException(e);
 		}
-		if (config != null && var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()!=null){
-			if( var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita().compareTo(config.getVal01())!=0)
-				sql.addSQLClause("AND", "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
-		}
 		return sql;
+	}
+	public SQLBuilder selectElemento_voceByClause (UserContext userContext,Var_stanz_res_rigaBulk var_stanz_res_riga, Elemento_voceBulk elemento_voce, CompoundFindClause clause) throws ComponentException, PersistencyException{
+		
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+
+		if (clause == null) clause = ((OggettoBulk)elemento_voce).buildFindClauses(null);
+
+		SQLBuilder sql = getHome(userContext, elemento_voce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
+
+			if(clause != null) sql.addClause(clause);
+			sql.addSQLClause("AND", "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+			
+			sql.addTableToHeader("PARAMETRI_LIVELLI");
+			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+
+			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
+			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+			sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
+
+			sql.openParenthesis("AND");
+			sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
+			sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
+			sql.closeParenthesis();
+			sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_COMPETENZA", sql.EQUALS, "N");
+			if (var_stanz_res_riga.getLinea_di_attivita() != null)
+				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,var_stanz_res_riga.getLinea_di_attivita().getCd_funzione());
+			
+			if(!parCnrBulk.getFl_nuovo_pdg())
+				if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita() != null)
+					sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita());
+			
+			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+			try {
+				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
+			} catch (RemoteException e) {
+				throw new ComponentException(e);
+			} catch (EJBException e) {
+				throw new ComponentException(e);
+			}
+			if (config != null && var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()!=null){
+				if( var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita().compareTo(config.getVal01())!=0)
+					sql.addSQLClause("AND", "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
+			}
+			return sql;
 	}
 	public SQLBuilder selectAssestatoResiduoByClause (UserContext userContext,Var_stanz_resBulk var_stanz_res, V_assestato_residuoBulk assestato_residuo, CompoundFindClause clause) throws ComponentException, PersistencyException{	
 		SQLBuilder sql = getHome(userContext, V_assestato_residuoBulk.class).createSQLBuilder();
@@ -308,8 +365,23 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			sql.addSQLJoin("V_ASSESTATO_RESIDUO.CD_LINEA_ATTIVITA","LINEA_ATTIVITA.CD_LINEA_ATTIVITA");
 			sql.addSQLJoin("V_ASSESTATO_RESIDUO.CD_CENTRO_RESPONSABILITA","LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
 			sql.addSQLJoin("LINEA_ATTIVITA.CD_NATURA","NATURA.CD_NATURA");
-			sql.addSQLClause("AND","NATURA.TIPO",SQLBuilder.EQUALS,var_stanz_res.getTipologia_fin());			
-		}		
+			sql.addSQLClause("AND","NATURA.TIPO",SQLBuilder.EQUALS,var_stanz_res.getTipologia_fin());	
+		}else{
+			sql.addTableToHeader("LINEA_ATTIVITA");  
+			sql.addSQLJoin("V_ASSESTATO_RESIDUO.CD_LINEA_ATTIVITA","LINEA_ATTIVITA.CD_LINEA_ATTIVITA");
+			sql.addSQLJoin("V_ASSESTATO_RESIDUO.CD_CENTRO_RESPONSABILITA","LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
+			
+		}
+		 // Obbligatorio cofog sulle GAE
+		try{
+			if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+				sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+		
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
 		if (var_stanz_res.getCdr() != null){
 			sql.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, var_stanz_res.getCdr().getCd_centro_responsabilita());		
 		}else{
@@ -375,12 +447,13 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
 	
 				if (ass_cdrHome.findDettagliSpesa(ass_cdr).isEmpty()) { 
-						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilitï¿½ " + ass_cdr.getCd_centro_responsabilita());
+						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilitïà " + ass_cdr.getCd_centro_responsabilita());
 				}
 				if (ass_cdr.getSpesa_diff().compareTo(Utility.ZERO) != 0)
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_cdr.getSpesa_diff())+")"+
-												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " ï¿½ diversa da zero. ");
+												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " è diversa da zero. ");
 			}
+			aggiornaLimiteSpesa(userContext, var_stanz_res);
 		} catch (IntrospectionException e) {
 			throw new ComponentException(e);
 		}catch (PersistencyException e) {
@@ -440,7 +513,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 																				  varRiga.getCd_linea_attivita(), 
 																				  varRiga.getElemento_voce().getTi_appartenenza(), 
 																				  varRiga.getElemento_voce().getTi_gestione(), 
-																				  varRiga.getCd_voce());
+																				  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
 				Voce_f_saldi_cdr_lineaBulk saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldo);
 				if (saldi == null){
 					saldo.setToBeCreated();
@@ -456,7 +529,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
 												   "Nell'esercizio residuo "+ varRiga.getEsercizio_res()+
 												   " e per il CdR "+varRiga.getCd_cdr()+", "+
-												   " Voce "+varRiga.getCd_voce()+
+												   " Voce "+(varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce())+
 												   " e GAE "+varRiga.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
 												   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldi.getDispAdImpResiduoImproprio().abs())+")");					
 				}
@@ -464,7 +537,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				Utility.createSaldoComponentSession().aggiornaSaldiAnniSuccessivi(userContext,
 						                                                          saldi.getCd_centro_responsabilita(),
 						                                                          saldi.getCd_linea_attivita(),
-						                                                          saldi.getVoce(),
+						                                                          new Voce_fBulk( saldi.getCd_voce(), saldi.getEsercizio(), saldi.getTi_appartenenza(), saldi.getTi_gestione()),
 						                                                          saldi.getEsercizio_res(),
 						                                                          varRiga.getIm_variazione().negate(),
 						                                                          saldi);
@@ -473,7 +546,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			generaVariazioneBilancio(userContext, var_stanz_res);
 			if (var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
 				var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_ECO)){
-				String soggetto = "E' stata approvata la Variazione allo stanziamento residuo nï¿½ "+var_stanz_res.getPg_variazione();
+				String soggetto = "E' stata approvata la Variazione allo stanziamento residuo n° "+var_stanz_res.getPg_variazione();
 				generaEMAIL(userContext, var_stanz_res,soggetto,soggetto +" del "+var_stanz_res.getEsercizio()+"<BR>",null, "APP");			    	
 			}						
 		} catch (IntrospectionException e) {
@@ -646,6 +719,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 //		var_stanz_res.setDt_chiusura(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
 		var_stanz_res.setToBeUpdated();
 		var_stanz_res = (Var_stanz_resBulk)super.modificaConBulk(userContext, var_stanz_res);
+		aggiornaLimiteSpesa(userContext, var_stanz_res);
 		return var_stanz_res;
 	}
 	public it.cnr.jada.bulk.OggettoBulk statoPrecedente(UserContext userContext, it.cnr.jada.bulk.OggettoBulk ogettoBulk) throws ComponentException{
@@ -654,7 +728,31 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		var_stanz_res.setDt_chiusura(null);
 		var_stanz_res.setToBeUpdated();
 		var_stanz_res = (Var_stanz_resBulk)super.modificaConBulk(userContext, var_stanz_res);
+		aggiornaLimiteSpesa(userContext, var_stanz_res);
 		return var_stanz_res;
+	}
+	private void aggiornaLimiteSpesa(UserContext userContext,Var_stanz_resBulk pdg) throws ComponentException {
+
+		try {
+			LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
+				"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
+				+ "CNRCTB053.aggiornaLimiteSpesaVar(?,?,?,?)}",false,this.getClass());
+			cs.setObject( 1, pdg.getEsercizio() );
+			cs.setObject( 2, pdg.getPg_variazione());
+			cs.setObject( 3,"R"); //competenza 
+			cs.setObject( 4, userContext.getUser());
+			try {
+				lockBulk(userContext,pdg);
+				cs.executeQuery();
+			} catch (Throwable e) {
+				throw handleException(pdg,e);
+			} finally {
+				cs.close();
+			}	
+		} catch (java.sql.SQLException e) {
+			// Gestisce eccezioni SQL specifiche (errori di lock,...)
+			throw handleSQLException(e);
+		}
 	}
 	private void inizializzaSommeAZero(Var_stanz_resBulk var_stanz_res){
 		for (java.util.Iterator j=var_stanz_res.getAssociazioneCDR().iterator();j.hasNext();){			
@@ -769,11 +867,11 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		MessaggioBulk messaggio = inizializzaMessaggio(userContext, utente);
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if (tipo == null){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - ï¿½ stata aperta una nuova Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - è stata aperta una nuova Variazione allo Stanziamento residuo");
 		}else if (tipo.equals(Var_stanz_resBulk.STATO_APPROVATA)){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - ï¿½ stata approvata la Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - è stata approvata la Variazione allo Stanziamento residuo");
 		}else if (tipo.equals(Var_stanz_resBulk.STATO_RESPINTA)){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - ï¿½ stata respinta la Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - è stata respinta la Variazione allo Stanziamento residuo");
 		}
 		messaggio.setCorpo("Numero variazione:"+var_stanz_res.getPg_variazione());
 		messaggio.setCorpo(messaggio.getCorpo() + "\n" + "CdR proponente:"+var_stanz_res.getCentroDiResponsabilita().getCd_ds_cdr());	
@@ -784,7 +882,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	private MessaggioBulk generaMessaggioCopertura(UserContext userContext, UtenteBulk utente, Var_stanz_resBulk var_stanz_res, Ass_var_stanz_res_cdrBulk ass_var) throws ComponentException, PersistencyException{
 		MessaggioBulk messaggio = inizializzaMessaggio(userContext, utente);
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - ï¿½ stata raggiunta la quota di Spesa assegnata alla Variazione");
+		messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - è stata raggiunta la quota di Spesa assegnata alla Variazione");
 		messaggio.setCorpo("Numero variazione:"+var_stanz_res.getPg_variazione());
 		messaggio.setCorpo(messaggio.getCorpo() + "\n" + "Il CdR :"+ass_var.getCentro_di_responsabilita().getCd_ds_cdr()+" ha coperto la quota assegnata.");
 		messaggio.setSoggetto(messaggio.getDs_messaggio());
@@ -842,7 +940,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			} catch (IntrospectionException e) {
 				throw new ComponentException(e);
 		}
-		cercaProgettiResidui(usercontext,var_stanz_res);	
+		//cercaProgettiResidui(usercontext,var_stanz_res);	
 		return super.modificaConBulk(usercontext, var_stanz_res);
 	}
 	public OggettoBulk creaConBulk(UserContext usercontext, OggettoBulk oggettobulk)throws ComponentException {
@@ -866,7 +964,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			} catch (IntrospectionException e) {
 				throw new ComponentException(e);
 		}
-		cercaProgettiResidui(usercontext,var_stanz_res);
+		//cercaProgettiResidui(usercontext,var_stanz_res);
 		return var_stanz_res;
 	}
 	public void cercaProgettiResidui(UserContext usercontext, OggettoBulk oggettobulk){
@@ -962,10 +1060,28 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			Var_stanz_res_rigaBulk var_stanz_res_riga = new Var_stanz_res_rigaBulk();
 			var_stanz_res_riga.setEsercizio_res(saldo.getEsercizio_res());
 			var_stanz_res_riga.setVar_stanz_res(var_stanz_res);			
-			var_stanz_res_riga.setVoce_f(new Voce_fBulk(saldo.getCd_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
 			var_stanz_res_riga.setLinea_di_attivita(new WorkpackageBulk(saldo.getCd_centro_responsabilita(),saldo.getCd_linea_attivita()));
-			var_stanz_res_riga.setElemento_voce(new Elemento_voceBulk(saldo.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
+			var_stanz_res_riga.setElemento_voce((Elemento_voceBulk)getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(new Elemento_voceBulk(saldo.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione())));
+			
+			if (!((Parametri_cnrHome)getHome(usercontext, Parametri_cnrBulk.class)).isNuovoPdg(usercontext, var_stanz_res.getEsercizio()))
+				var_stanz_res_riga.setVoce_f(new Voce_fBulk(saldo.getCd_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
+			else {
+				var_stanz_res_riga.setVoce_f(null);
+				var_stanz_res_riga.setCd_voce(var_stanz_res_riga.getCd_elemento_voce());
+			}
+
 			var_stanz_res_riga.setIm_variazione(saldo.getImp_da_assegnare());
+			Var_stanz_resHome testataHome = (Var_stanz_resHome)getHome(usercontext, Var_stanz_resBulk.class);
+			try {
+				var_stanz_res.setRigaVariazione(new it.cnr.jada.bulk.BulkList(testataHome.findVariazioniRiga(var_stanz_res)));
+			} catch (IntrospectionException e1) {
+				throw new ComponentException(e1);
+			}
+			try {
+				var_stanz_res_riga.validate(var_stanz_res_riga);
+			} catch (ValidationException e) {
+				throw new ApplicationException(e.getMessage()); 
+			}
 			var_stanz_res_riga.setToBeCreated();
 			super.creaConBulk(usercontext,var_stanz_res_riga);
 		} catch (PersistencyException e) {
@@ -1028,13 +1144,13 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				try {
 					SQLExceptionHandler sqlException = SQLExceptionHandler.getInstance();
 					PersistencyException eccezione = sqlException.handleSQLException(e, var_stanz_res);
-					String soggetto = "Si ï¿½ verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil();
+					String soggetto = "Si è verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil();
 					
-					String preText = "Si ï¿½ verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil() + 
-					                 "<BR>" + "generata in automatico a seguito della Variazione allo stanziamento residuo nï¿½"+var_stanz_res.getPg_variazione()+
+					String preText = "Si è verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil() + 
+					                 "<BR>" + "generata in automatico a seguito della Variazione allo stanziamento residuo num. "+var_stanz_res.getPg_variazione()+
 					                 " del "+  var_stanz_res.getEsercizio()+".<BR><BR>"+
 									 "<b>"+eccezione.getMessage()+"</b><BR><BR>"+
-					                 "La Variazione al bilancio dell'Ente rimarrï¿½ pertanto PROVVISORIA.<BR>";
+					                 "La Variazione al bilancio dell'Ente rimarrà pertanto PROVVISORIA.<BR>";
 					generaEMAIL(userContext, var_stanz_res, soggetto, preText, null,"ERR");
 					var_stanz_res.setErroreEsitaVariazioneBilancio(true);
 				}catch (IntrospectionException e1) {

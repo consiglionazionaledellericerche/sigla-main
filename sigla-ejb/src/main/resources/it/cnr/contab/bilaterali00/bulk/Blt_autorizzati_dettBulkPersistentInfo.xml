@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_autorizzati_dettBulk"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_autorizzati_dettHome">
+	<defaultColumnMap
+		tableName="BLT_AUTORIZZATI_DETT">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="bltAutorizzati.bltProgetti.bltAccordo.cd_accordo" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="bltAutorizzati.bltProgetti.cd_progetto" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="bltAutorizzati.terzo.cd_terzo" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="bltAutorizzati"
+		partOfOid="true" />
+</SQLPersistentInfo>

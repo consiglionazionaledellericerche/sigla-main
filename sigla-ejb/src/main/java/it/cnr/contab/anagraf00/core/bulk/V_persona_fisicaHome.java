@@ -26,8 +26,9 @@ public V_persona_fisicaHome(java.sql.Connection conn, it.cnr.jada.persistency.Pe
  * Ritorna un SQLBuilder con la columnMap del ricevente
  */
 public SQLBuilder createSQLBuilder() {
-	SQLBuilder sql = super.createSQLBuilder();
+	SQLBuilder sql = super.createSQLBuilder(); 
 	sql.addClause( "AND" , "ti_entita", SQLBuilder.EQUALS, AnagraficoBulk.FISICA );
+	sql.addClause( "AND" , "dt_fine_rapporto", SQLBuilder.ISNULL, null );
 	return sql;
 }
 }

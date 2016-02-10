@@ -125,6 +125,9 @@ public class Liquidazione_ivaBase extends Liquidazione_ivaKey implements Keyed {
 
 	// VAR_IMP_PER_PREC DECIMAL(15,2)
 	private java.math.BigDecimal var_imp_per_prec;
+	
+	private java.math.BigDecimal iva_liq_esterna;
+	
 
 public Liquidazione_ivaBase() {
 	super();
@@ -614,5 +617,11 @@ public void setStato(java.lang.String stato) {
  */
 public void setVar_imp_per_prec(java.math.BigDecimal var_imp_per_prec) {
 	this.var_imp_per_prec = var_imp_per_prec;
+}
+public java.math.BigDecimal getIva_liq_esterna() {
+	return iva_liq_esterna;
+}
+public void setIva_liq_esterna(java.math.BigDecimal iva_liq_esterna) {
+	this.iva_liq_esterna = iva_liq_esterna;
 }
 }

@@ -10,16 +10,22 @@
 CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)BusinessProcess.getBusinessProcess(request);
 SimpleDetailCRUDController controller = bp.getIncarichiColl();
 Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)controller.getModel(); 
+Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)bp.getModel(); 
 boolean multiContratto = false;
 String widthTable="width=100%";
 if (bp.getModel()!=null &&
-    ((Incarichi_proceduraBulk)bp.getModel()).getNr_contratti().compareTo(new Integer(1))==1){
+    procedura.getNr_contratti().compareTo(new Integer(1))==1){
 	multiContratto = true;
 	widthTable="width=70%";
 }
 
 %>
 <table class="Panel" <%if (multiContratto){%>width=90%<%} else {%>width=100%<%}%>>
+<%if (procedura!=null && 
+	  procedura.getProcedura_amministrativa()!=null && procedura.getProcedura_amministrativa().getCd_proc_amm()!=null &&
+	  procedura.getTipo_attivita()!=null && procedura.getTipo_attivita().getCd_tipo_attivita()!=null &&
+	  procedura.getTipo_incarico()!=null && procedura.getTipo_incarico().getCd_tipo_incarico()!=null &&
+	  procedura.getTipo_natura()!=null) {%>
 	  <%if (!multiContratto) {%>
 	      <tr><td colspan=4>
 	      <div class="Group"><table width=70%>
@@ -28,7 +34,8 @@ if (bp.getModel()!=null &&
 		    <td><% controller.writeFormInput(out,"pg_repertorio");%></td>
 		    <%if (controller.countDetails()==0) {%>
 	          	<td><%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Carica Contratto", "if (disableDblClick()) javascript:submitForm('doAddToCRUD(main.IncarichiColl)')", null, true);%></td>
-            <% } else { %>
+            <% } else if (bp.getIncarichiParametri()==null || bp.getIncarichiParametri().getFl_invio_fp()==null || 
+            		  bp.getIncarichiParametri().getFl_invio_fp().equals("Y")) {%>
 		        <td><% controller.writeFormLabel(out,"fl_inviato_corte_conti");%></td>
 		        <td><% controller.writeFormInput(out,"fl_inviato_corte_conti");%></td>
             <% } %>
@@ -44,6 +51,7 @@ if (bp.getModel()!=null &&
 	      </table></div>
 	      </td></tr>
       <% } %>
+<% } %>      
 	  <% if (incarico!=null && incarico.getFl_inviato_corte_conti().booleanValue()) {%>
 	      <tr><td colspan=4>
 	      <div class="Group"><table <%=widthTable%>>
@@ -56,6 +64,8 @@ if (bp.getModel()!=null &&
 			  <tr>
 		        <td><% controller.writeFormLabel(out,"esito_corte_conti");%></td>
 		        <td><% controller.writeFormInput(out,"esito_corte_conti");%></td>
+		        <td><% controller.writeFormLabel(out,"dt_efficacia");%></td>
+		        <td><% controller.writeFormInput(out,"dt_efficacia");%></td>
 		      </tr>
 	      </table></div>
 	      </td></tr>
@@ -174,11 +184,11 @@ if (bp.getModel()!=null &&
 	      <div class="Group"><table>
 			  <tr>
 				<td><% controller.writeFormLabel(out,"ti_istituz_commerc"); %></td>
-				<td><% controller.writeFormInput(out,null,"ti_istituz_commerc",false,null,"onChange=\"submitForm('doOnTipoIstituzCommercChange')\"");%></td>
+				<td><% controller.writeFormInput(out,"ti_istituz_commerc");%></td>
 			  </tr>
 			  <tr>
 			 	<td><% controller.writeFormLabel(out,"tipo_rapporto");%></td>
-				<td><% controller.writeFormInput(out,null,"tipo_rapporto",false,null,"onChange=\"submitForm('doOnTipoRapportoChange')\""); %></td>
+				<td><% controller.writeFormInput(out,"tipo_rapporto"); %></td>
 			  </tr>
 	      </table></div>
 	      </td></tr>

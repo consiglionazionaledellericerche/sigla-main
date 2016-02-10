@@ -70,6 +70,95 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="false" />
+		<columnMapping
+			columnName="STATO_TRASMISSIONE"
+			propertyName="stato_trasmissione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FIRMA"
+			propertyName="dt_firma"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />		
+			
+		<columnMapping
+			columnName="BONIFICO_MEZZO"
+			propertyName="bonifico_mezzo"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="DIVISA"
+			propertyName="divisa"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="BENEFICIARIO"
+			propertyName="beneficiario"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="NUM_CONTO_BEN"
+			propertyName="num_conto_ben"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="IBAN"
+			propertyName="iban"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="INDIRIZZO"
+			propertyName="indirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="INDIRIZZO_SWIFT"
+			propertyName="indirizzo_swift"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="MOTIVO_PAG"
+			propertyName="motivo_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="AMMONTARE_DEBITO"
+			propertyName="ammontare_debito"
+			sqlTypeName="CHAR"
+			columnSize="1"/>
+		<columnMapping
+			columnName="CONTO_DEBITO"
+			propertyName="conto_debito"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="COMMISSIONI_SPESE"
+			propertyName="commissioni_spese"
+			sqlTypeName="CHAR"
+			columnSize="1"/>
+		<columnMapping
+			columnName="COMMISSIONI_SPESE_ESTERE"
+			propertyName="commissioni_spese_estere"
+			sqlTypeName="CHAR"
+			columnSize="1"/>
+		<columnMapping
+			columnName="ESERCIZIO_DISTINTA"
+			propertyName="esercizio_distinta"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_DISTINTA"
+			propertyName="pg_distinta"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="FL_SECONDA_FIRMA_APPOSTA"
+			propertyName="fl_seconda_firma_apposta"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+																																		
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -93,4 +182,38 @@
 		name="ti_sospeso_riscontro" />
 	<persistentProperty
 		name="dt_registrazione" />
+	<persistentProperty
+		name="stato_trasmissione" />
+	<persistentProperty
+		name="dt_firma" />
+	<persistentProperty
+		name="esercizio_distinta" />
+	<persistentProperty
+		name="pg_distinta" />
+	<persistentProperty
+		name="fl_seconda_firma_apposta" />				
+	<persistentProperty
+		name="bonifico_mezzo"/>	
+	<persistentProperty
+		name="divisa"/>
+	<persistentProperty
+		name="beneficiario"/>
+	<persistentProperty
+		name="num_conto_ben"/>
+	<persistentProperty
+		name="iban"/>
+	<persistentProperty
+		name="indirizzo"/>
+	<persistentProperty
+		name="indirizzo_swift"/>
+	<persistentProperty
+		name="motivo_pag"/>
+	<persistentProperty
+		name="ammontare_debito"/>
+	<persistentProperty
+		name="conto_debito"/>	
+	<persistentProperty
+		name="commissioni_spese"/>
+	<persistentProperty
+		name="commissioni_spese_estere"/>
 </SQLPersistentInfo>

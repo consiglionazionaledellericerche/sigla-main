@@ -82,7 +82,7 @@
 	<%} %>
 		<tr>
 			<td colspan="2" align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/properties24.gif"),bp.encodePath("img/properties24.gif"),bp.encodePath("Abilitazone accesso in SIGLA"), "javascript:submitForm('doVerificaAbilitazioneUtenteLdap')",bulk!=null && bulk.getCd_utente_uid()!=null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/properties24.gif"),bp.encodePath("img/properties24.gif"),bp.encodePath("Abilitazione accesso in SIGLA"), "javascript:submitForm('doVerificaAbilitazioneUtenteLdap')",bulk!=null && bulk.getCd_utente_uid()!=null); %>
 			</td>		
 		</tr>
 	</table>

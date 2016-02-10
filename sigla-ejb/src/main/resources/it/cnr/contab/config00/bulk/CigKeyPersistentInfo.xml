@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.bulk.CigKey">
+	<defaultColumnMap
+		tableName="CIG">
+		<columnMapping
+			columnName="CD_CIG"
+			propertyName="cdCig"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCig"
+		partOfOid="true" />
+</SQLPersistentInfo>

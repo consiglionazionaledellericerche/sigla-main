@@ -33,12 +33,12 @@ protected Forward basicDoCerca(
 		String message=null;
 		if (bulk.getTipoImpegnoFlag().equals(bulk.IMPEGNI_RESIDUO))
 		{
-			 message = "Si è scelto di generare impegni a Residuo."
+			 message = "Si è scelto di generare movimentazioni a Residuo."
 					+ "Si desidera continuare?";
 		}
 		else
 		{
-			 message = "Si è scelto di generare impegni a Competenza."
+			 message = "Si è scelto di generare movimentazioni a Competenza."
 					+ "Si desidera continuare?";
 		}
 	    return openConfirm(context,message,it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaCerca");

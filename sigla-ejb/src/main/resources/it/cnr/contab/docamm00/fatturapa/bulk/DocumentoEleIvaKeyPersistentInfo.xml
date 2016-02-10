@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaKey">
+	<defaultColumnMap
+		tableName="DOCUMENTO_ELE_IVA">
+		<columnMapping
+			columnName="ID_PAESE"
+			propertyName="idPaese"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ID_CODICE"
+			propertyName="idCodice"
+			sqlTypeName="VARCHAR"
+			columnSize="28"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="IDENTIFICATIVO_SDI"
+			propertyName="identificativoSdi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />				
+		<columnMapping
+			columnName="PROGRESSIVO_IVA"
+			propertyName="progressivoIva"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />						
+	</defaultColumnMap>
+	<persistentProperty
+		name="idPaese"
+		partOfOid="true" />
+	<persistentProperty
+		name="idCodice"
+		partOfOid="true" />
+	<persistentProperty
+		name="identificativoSdi"
+		partOfOid="true" />
+	<persistentProperty
+		name="progressivo"
+		partOfOid="true" />		
+	<persistentProperty
+		name="progressivoIva"
+		partOfOid="true" />			
+</SQLPersistentInfo>

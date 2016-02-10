@@ -171,20 +171,19 @@ public java.util.Hashtable getLunghezzeChiavi()
 {
 	if ( lunghezzeChiavi == null )
 	{
-
-				
+			
 		java.util.Hashtable lungCnrEntrate  = new java.util.Hashtable();
 		lungCnrEntrate.put( TIPO_CATEGORIA, new Integer( 2 ));
-		lungCnrEntrate.put( TIPO_CAPITOLO, new Integer( 3 ));						
+		lungCnrEntrate.put( TIPO_CAPITOLO, new Integer( 12 ));						
 				
 		java.util.Hashtable lungCnrSpese    = new java.util.Hashtable();
-		lungCnrSpese.put( TIPO_CAPITOLO, new Integer( 3 ));
+		lungCnrSpese.put( TIPO_CAPITOLO, new Integer( 3 )); 
 		
 		java.util.Hashtable lungCdsEntrate  = new java.util.Hashtable();
 		lungCdsEntrate.put( TIPO_CAPITOLO, new Integer( 3 ));
 			
 		java.util.Hashtable lungCdsSpese    = new java.util.Hashtable();
-		lungCdsSpese.put( TIPO_CAPITOLO, new Integer( 3 ));
+		lungCdsSpese.put( TIPO_CAPITOLO, new Integer( 15 ));
 
 
 		lunghezzeChiavi = new java.util.Hashtable();
@@ -197,7 +196,6 @@ public java.util.Hashtable getLunghezzeChiavi()
 		tmp.put( GESTIONE_ENTRATE, lungCdsEntrate );
 		tmp.put( GESTIONE_SPESE, lungCdsSpese);
 		lunghezzeChiavi.put( APPARTENENZA_CDS, tmp );
-			
 	}	
 	return lunghezzeChiavi;
 }

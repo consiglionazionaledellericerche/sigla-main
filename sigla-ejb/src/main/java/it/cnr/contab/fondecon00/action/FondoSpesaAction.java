@@ -305,8 +305,8 @@ public it.cnr.jada.action.Forward doOnFlSpesaDocumentataChange(it.cnr.jada.actio
 		Fondo_spesaBulk spesa = (Fondo_spesaBulk)bp.getModel();
 		fillModel(context);
 		if (spesa.getFl_documentata() != null) {
-			spesa.setIm_ammontare_spesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-			spesa.setImportoNettoSpesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			spesa.setIm_ammontare_spesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+			spesa.setImportoNettoSpesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			spesa.setDs_spesa(null);
 			spesa.setFornitore(null);
 			spesa.setDocumento(null);

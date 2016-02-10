@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Quota di rimborso massima."
+	longDescription="Definizione dell'importo di quota di rimborso massima (per 24 ore) valida per missioni estere.">
+	<fieldProperty
+		name="area_estera"
+		property="rifAreePaesiEsteri"
+		printProperty="ds_area_estera"
+		optionsProperty="areePaesiEsteri"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Area" />
+	<fieldProperty
+		name="gruppo_inquadramento"
+		property="gruppoInquadramento"
+		printProperty="ds_gruppo_inquadramento"
+		optionsProperty="gruppiInquadramento"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Gruppo Inquadramento" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Data inizio validità" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data fine validità" />
+	<fieldProperty
+		name="dtFineValidita"
+		property="dataFineValidita"
+		inputType="TEXT"
+		formatName="date_short"					
+		label="Data Fine Validita"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />		
+	<fieldProperty
+		name="im_rimborso"
+		property="im_rimborso"
+		inputType="TEXT"
+		formatName="it.jada.stone.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Quota Rimborso" />
+	
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="area_estera" />
+		<formFieldProperty
+			name="gruppo_inquadramento" />
+		<formFieldProperty
+			name="dt_inizio_validita" />
+	</form>
+	
+	<formFieldProperty
+		name="area_estera" />
+	<formFieldProperty
+		name="gruppo_inquadramento" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="dt_fine_validita" />
+	<formFieldProperty 
+	    name="dtFineValidita" />		
+	<formFieldProperty
+		name="im_rimborso" />
+		
+	<findFieldProperty
+		name="area_estera" />
+	<findFieldProperty
+		name="gruppo_inquadramento" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+	<findFieldProperty
+		name="dt_fine_validita" />
+	<findFieldProperty
+		name="im_rimborso" />
+		
+	<columnFieldProperty
+		name="area_estera" />
+	<columnFieldProperty
+		name="gruppo_inquadramento" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="dt_fine_validita" />
+	<columnFieldProperty 
+	    name="dtFineValidita" />		
+	<columnFieldProperty
+		name="im_rimborso" />
+</bulkInfo>

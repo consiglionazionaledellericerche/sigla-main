@@ -4,9 +4,17 @@ import java.sql.Timestamp;
 import java.util.List;
 
 
+
+
+
+import it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.ejb.*;
@@ -971,5 +979,211 @@ public java.util.List findManRevRigaCollegati(UserContext param0, Fattura_passiv
 		}
 	}
 }
+public OggettoBulk rebuildDocumento(UserContext param0, OggettoBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (OggettoBulk)invoke("rebuildDocumento",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public Fattura_passivaBulk ricercaFatturaTrovato(it.cnr.jada.UserContext userContext,
+		Long esercizio, String cd_cds, String cd_unita_organizzativa,
+		Long pg_fattura) throws ComponentException, RemoteException {
+	try {
+		return (Fattura_passivaBulk)invoke("ricercaFatturaTrovato",new Object[] {
+				userContext,
+				esercizio,
+				cd_cds,
+				cd_unita_organizzativa,
+				pg_fattura});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public Fattura_passivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext userContext,
+		Long esercizio, String cd_cds, String cd_unita_organizzativa,
+		Long pg_fattura) throws ComponentException, RemoteException {
+	try {
+		return (Fattura_passivaBulk)invoke("ricercaFatturaByKey",new Object[] {
+				userContext,
+				esercizio,
+				cd_cds,
+				cd_unita_organizzativa,
+				pg_fattura});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext userContext,
+		Long trovato) throws ComponentException, RemoteException {
+	try {
+		return (java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk>)invoke("ricercaFattureTrovato",new Object[] {
+				userContext,
+				trovato});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+
+public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	try {
+		return (TrovatoBulk)invoke("ricercaDatiTrovato",new Object[] {userContext,trovato});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	try {
+		return (TrovatoBulk)invoke("ricercaDatiTrovatoValido",new Object[] {userContext,trovato});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public void inserisciProgUnivoco(UserContext userContext,
+		ElaboraNumUnicoFatturaPBulk lancio) throws ComponentException,
+		RemoteException, PersistencyException {
+	try {
+		invoke("inserisciProgUnivoco",new Object[] {userContext,lancio});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+	
+}
+public it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk caricaAllegatiBulk(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk)invoke("caricaAllegatiBulk",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public void validaFatturaPerCompenso(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		invoke("validaFatturaPerCompenso",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk valorizzaInfoDocEle(
+		it.cnr.jada.UserContext param0,
+		it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1)
+		throws RemoteException, it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk) invoke(
+				"valorizzaInfoDocEle", new Object[] { param0, param1 });
+	} catch (java.rmi.RemoteException e) {
+		throw e;
+	} catch (java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch (it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch (Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception", ex);
+		}
+	}
+}
+
+public void aggiornaObblSuCancPerCompenso(UserContext param0,
+		Fattura_passivaBulk param1, java.util.Vector param2,
+		OptionRequestParameter param3)
+		throws ComponentException, RemoteException {
+	try {
+		invoke("aggiornaObblSuCancPerCompenso",new Object[] {
+			param0,
+			param1,
+			param2,
+			param3});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+
 }
 

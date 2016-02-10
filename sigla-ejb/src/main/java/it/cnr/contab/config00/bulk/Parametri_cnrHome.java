@@ -1,6 +1,9 @@
 package it.cnr.contab.config00.bulk;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 
 /**
@@ -28,4 +31,21 @@ public class Parametri_cnrHome extends BulkHome {
 		PersistentCache persistentCache) {
 		super(Parametri_cnrBulk.class, conn, persistentCache);
 	}
+	public Integer livelloCofogObbligatorio(it.cnr.jada.UserContext userContext) throws PersistencyException
+	{
+		Parametri_cnrBulk parametri = (Parametri_cnrBulk)findByPrimaryKey( new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)));
+		if (parametri == null||parametri.getLivello_pdg_cofog()==null)
+		  return 0;
+		else
+		  return parametri.getLivello_pdg_cofog();  
+	
+	}
+	public boolean isNuovoPdg(UserContext userContext) throws PersistencyException{
+		return isNuovoPdg(userContext, CNRUserContext.getEsercizio(userContext));
+	}
+
+	public boolean isNuovoPdg(UserContext userContext, int esercizio) throws PersistencyException{
+        Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)findByPrimaryKey(new Parametri_cnrBulk(esercizio));
+        return parametriCnr!=null && parametriCnr.getFl_nuovo_pdg();
+	}	
 }

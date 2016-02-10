@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="codAmm"
+		property="codAmm"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="codAmm" />
+	<fieldProperty
+		name="codOu"
+		property="codOu"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="codOu" />
+	<fieldProperty
+		name="codUniOu"
+		property="codUniOu"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="codUniOu" />
+	<fieldProperty
+		name="desOu"
+		property="desOu"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		enabledOnEdit="false"
+		label="desOu" />
+	<fieldProperty
+		name="regione"
+		property="regione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="regione" />
+	<fieldProperty
+		name="provincia"
+		property="provincia"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="provincia" />
+	<fieldProperty
+		name="comune"
+		property="comune"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="comune" />
+	<fieldProperty
+		name="indirizzo"
+		property="indirizzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="indirizzo" />
+	<fieldProperty
+		name="cap"
+		property="cap"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="cap" />
+	<fieldProperty
+		name="cf"
+		property="cf"
+		inputType="TEXT"
+		inputSize="11"
+		maxLength="11"
+		enabledOnEdit="false"
+		label="cf" />
+	<fieldProperty
+		name="dtVerificaCf"
+		property="dtVerificaCf"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtVerificaCf" />
+	<fieldProperty
+		name="dataAvvioSfe"
+		property="dataAvvioSfe"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataAvvioSfe" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="codAmm" />
+		<formFieldProperty
+			name="codOu" />
+	</form>
+	<formFieldProperty
+		name="codAmm" />
+	<formFieldProperty
+		name="codOu" />
+	<formFieldProperty
+		name="codUniOu" />
+	<formFieldProperty
+		name="desOu" />
+	<formFieldProperty
+		name="regione" />
+	<formFieldProperty
+		name="provincia" />
+	<formFieldProperty
+		name="comune" />
+	<formFieldProperty
+		name="indirizzo" />
+	<formFieldProperty
+		name="cap" />
+	<formFieldProperty
+		name="cf" />
+	<formFieldProperty
+		name="dtVerificaCf" />
+	<formFieldProperty
+		name="dataAvvioSfe" />
+	<findFieldProperty
+		name="codAmm" />
+	<findFieldProperty
+		name="codOu" />
+	<findFieldProperty
+		name="codUniOu" />
+	<findFieldProperty
+		name="desOu" />
+	<findFieldProperty
+		name="regione" />
+	<findFieldProperty
+		name="provincia" />
+	<findFieldProperty
+		name="comune" />
+	<findFieldProperty
+		name="indirizzo" />
+	<findFieldProperty
+		name="cap" />
+	<findFieldProperty
+		name="cf" />
+	<findFieldProperty
+		name="dtVerificaCf" />
+	<findFieldProperty
+		name="dataAvvioSfe" />
+	<columnFieldProperty
+		name="codAmm" />
+	<columnFieldProperty
+		name="codOu" />
+	<columnFieldProperty
+		name="codUniOu" />
+	<columnFieldProperty
+		name="desOu" />
+	<columnFieldProperty
+		name="regione" />
+	<columnFieldProperty
+		name="provincia" />
+	<columnFieldProperty
+		name="comune" />
+	<columnFieldProperty
+		name="indirizzo" />
+	<columnFieldProperty
+		name="cap" />
+	<columnFieldProperty
+		name="cf" />
+	<columnFieldProperty
+		name="dtVerificaCf" />
+	<columnFieldProperty
+		name="dataAvvioSfe" />
+</bulkInfo>

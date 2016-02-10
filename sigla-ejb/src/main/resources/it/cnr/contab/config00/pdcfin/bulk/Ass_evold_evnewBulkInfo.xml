@@ -1,0 +1,140 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="esercizio_old"
+		property="elemento_voce_old.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_appartenenza_old"
+		property="elemento_voce_old.ti_appartenenza"
+		inputType="ROTEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />
+	<fieldProperty
+		name="ti_gestione_old"
+		property="elemento_voce_old.ti_gestione"
+		keysProperty="ti_gestioneKeys"
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="cd_elemento_voce_old"
+		property="elemento_voce_old.cd_elemento_voce"
+		inputType="TEXT"
+		readonlyProperty="ROElementoVoce"
+		enabledOnEdit="false"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		label="Elemento voce"/>
+	<fieldProperty
+		name="ds_elemento_voce_old"
+		property="elemento_voce_old.ds_elemento_voce"
+		label="Descrizione"
+		inputType="ROTEXT"
+		inputSize="80"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="find_elemento_voce_old"
+		property="elemento_voce_old"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROElementoVoce"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Elemento voce"/>
+
+	<fieldProperty
+		name="esercizio_new"
+		property="elemento_voce_new.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_appartenenza_new"
+		property="elemento_voce_new.ti_appartenenza"
+		inputType="ROTEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />
+	<fieldProperty
+		name="ti_gestione_new"
+		property="elemento_voce_new.ti_gestione"
+		keysProperty="ti_gestioneKeys"
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="cd_elemento_voce_new"
+		property="elemento_voce_new.cd_elemento_voce"
+		inputType="TEXT"
+		readonlyProperty="ROElementoVoce"
+		enabledOnEdit="false"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		label="Elemento voce"/>
+	<fieldProperty
+		name="ds_elemento_voce_new"
+		property="elemento_voce_new.ds_elemento_voce"
+		label="Descrizione"
+		inputType="ROTEXT"
+		inputSize="80"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="find_elemento_voce_new"
+		property="elemento_voce_new"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROElementoVoce"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Elemento voce"/>
+	<fieldProperty
+		name="ti_gestione_search"
+		property="ti_gestione_search"
+		keysProperty="ti_gestioneKeys"
+		inputType="SELECT"
+		command="doOnTipoGestioneSearchChange"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+
+	<formFieldProperty name="esercizio_old"/>
+	<formFieldProperty name="ti_gestione_old"/>
+	<formFieldProperty name="cd_elemento_voce_old"/>
+	<formFieldProperty name="ds_elemento_voce_old"/>
+	<formFieldProperty name="find_elemento_voce_old"/>
+	<formFieldProperty name="esercizio_new"/>
+	<formFieldProperty name="ti_gestione_new"/>
+	<formFieldProperty name="cd_elemento_voce_new"/>
+	<formFieldProperty name="ds_elemento_voce_new"/>
+	<formFieldProperty name="find_elemento_voce_new"/>
+	<formFieldProperty name="ti_gestione_search"/>	
+	
+	<columnFieldProperty name="ti_gestione_old"/>
+	<columnFieldProperty name="cd_elemento_voce_old"/>
+	<columnFieldProperty name="ds_elemento_voce_old"/>
+	<columnFieldProperty name="cd_elemento_voce_new"/>
+	<columnFieldProperty name="ds_elemento_voce_new"/>
+		
+	<findFieldProperty name="esercizio_old"/>
+	<findFieldProperty name="ti_gestione_old"/>
+	<findFieldProperty name="cd_elemento_voce_old"/>
+	<findFieldProperty name="ds_elemento_voce_old"/>
+	<findFieldProperty name="esercizio_new"/>
+	<findFieldProperty name="ti_gestione_new"/>
+	<findFieldProperty name="cd_elemento_voce_new"/>
+	<findFieldProperty name="ds_elemento_voce_new"/>
+</bulkInfo>

@@ -1,8 +1,11 @@
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
@@ -19,10 +22,29 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
  * @author: Roberto Peli
  */
 public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocumentoAmministrativoSpesaBP {
+	
+	public final static String SAVE_POINT_NAME = "FATTURAP_SP";
 
 	private final FatturaPassivaRigaCRUDController dettaglio = new FatturaPassivaRigaCRUDController(
-		"Dettaglio",Fattura_passiva_rigaIBulk.class,"fattura_passiva_dettColl", this);
+		"Dettaglio",Fattura_passiva_rigaIBulk.class,"fattura_passiva_dettColl", this){
 
+			/**
+			 * Il metodo � stato sovrascritto per consentire all'utente di modificare la descrizione di una riga
+			 * che � stata sdoppiata quando il documento non risulta essere modificabile
+			 *  
+			 */
+			public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String s1,boolean flag,String s2,String s3) throws java.io.IOException {
+				if (isInputReadonly()&&
+					s1.equals("ds_riga_fattura") && 
+					getModel()!=null && 
+					getModel().isToBeCreated()&&
+					!((Fattura_passiva_rigaIBulk)getModel()).getFattura_passivaI().isDocumentoModificabile()&&
+					((Fattura_passiva_rigaIBulk)getModel()).getFattura_passivaI().isDetailDoubled()) 
+			        getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, s3, getInputPrefix(), getStatus(), getFieldValidationMap());
+				else
+					super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
+			}
+		};
 /**
  * CRUDFatturaPassivaIBP constructor comment.
  */
@@ -71,16 +93,18 @@ protected it.cnr.jada.util.jsp.Button[] createFPInventarioToolbar() {
 }
 protected it.cnr.jada.util.jsp.Button[] createFPToolbar() {
 
-	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[4];
+	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[6];
 	int i = 0;
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.generaNdC");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.apriNdC");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.generaNdD");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.apriNdD");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.generaCompenso");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.apriCompenso");
 	return toolbar;
 }
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[11];
+	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[12];
 	int i = 0;
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.search");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.startSearch");
@@ -93,7 +117,8 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.print");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.riportaIndietro");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.riportaAvanti");
-
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.download");
+	toolbar[i - 1].setSeparator(true);
 	return toolbar;
 }
 /**
@@ -166,12 +191,13 @@ public boolean isGeneraNdCButtonEnabled() {
 			!fp.isByFondoEconomale() &&
 			!fp.isGenerataDaCompenso() &&
 			!fp.isBollaDoganale() &&
-			!fp.isSpedizioniere() && 	// RP 16/03/2010 Da commentare per generare NC di anni precedenti
-			((isAnnoDiCompetenza() && !fp.isRiportata()) || 				
+			!fp.isSpedizioniere() && 
+			((isAnnoDiCompetenza() && !fp.isRiportata())   				
+			// RP 16/03/2010 Da commentare per generare NC di anni precedenti
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato
 				//	DA UN ES. PRECEDENTE a quello di scrivania. 
-				(!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())));
+					 ||(!isAnnoDiCompetenza() && (fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())|| fp.PARZIALMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()))));
 }
 public boolean isGeneraNdCButtonHidden() {
 	
@@ -247,7 +273,7 @@ public void writeFormFieldDoc1210(javax.servlet.jsp.JspWriter out,String name) t
 
 	boolean isReadonly = isInputReadonly();
 
-	if (!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO.equals(fp.getRiportataInScrivania())){
+	if (fp.COMPLETAMENTE_RIPORTATO.equals(fp.getRiportataInScrivania())){
 			isReadonly = super.isInputReadonlyDoc1210() 
 						|| isDeleting() 
 						|| isModelVoided() 
@@ -314,4 +340,54 @@ public void writeToolbar(javax.servlet.jsp.JspWriter writer) throws java.io.IOEx
 	writeFPToolbar(writer);
 	writeFPInventarioToolbar(writer);
 }
+public boolean isCreaCompensoButtonEnabled() {
+
+	Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)getModel();
+	return 	/*isEditing()*/fp != null &&
+			/*fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&*/
+			fp.isGestione_doc_ele() &&		
+			fp.isGenerataDaCompenso() &&
+			fp.getCompenso() == null && 
+			((fp.isElettronica() &&  isInserting())||(!fp.isElettronica()&& !fp.isStampataSuRegistroIVA())) &&
+			!fp.isAnnullato() &&
+			!fp.isCongelata() &&
+			!fp.isBollaDoganale() &&
+			!fp.isSpedizioniere() && 
+			!fp.isRiportata();
+				 
+}
+public boolean isCreaCompensoButtonHidden() {
+	
+	return isSearching() || isDeleting();
+}
+public boolean isApriCompensoButtonEnabled() {
+
+	Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)getModel();
+	return  !isInserting() && !isSearching() && fp != null &&
+			fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
+			fp.isGenerataDaCompenso() &&
+			fp.getCompenso() != null;
+}
+public boolean isApriCompensoButtonHidden() {
+	
+	return isSearching() || isDeleting();
+}
+public void validaFatturaPerCompenso(ActionContext context) throws BusinessProcessException {
+
+	try {
+
+		Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+		
+		FatturaPassivaComponentSession sess = (FatturaPassivaComponentSession)createComponentSession();
+		sess.validaFatturaPerCompenso(context.getUserContext(), fp);
+
+		setModel(context, fp);
+
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
+
 }
