@@ -44,6 +44,7 @@ import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneHome;
 import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
@@ -2883,5 +2884,73 @@ public void aggiornaDataFirma(UserContext userContext, Integer esercizio,
 		}
 
 	}
+
+public boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext userContext, Pdg_variazioneBulk variazione) throws ComponentException{
+	/**
+	 * Recupero la linea di attività dell'IVA C20
+	 */
+	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+	try {
+		if (variazione.isApprovata()){
+			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+			Pdg_variazioneHome testataHome = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
+
+			for (java.util.Iterator dett = testataHome.findDettagliVariazioneGestionale(variazione).iterator();dett.hasNext();){
+				Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
+				if (rigaVar.getCd_linea_attivita() != null && rigaVar.getCd_linea_attivita().equals(config.getVal01())){
+					return true;
+				}
+			}
+		}
+	} catch (RemoteException e) {
+		throw new ComponentException(e);
+	} catch (PersistencyException e) {
+		throw new ComponentException(e);
+	} catch (EJBException e) {
+		throw new ComponentException(e);
+	}
+	return false;
+}
+public Pdg_variazione_riga_spesa_gestBulk recuperoRigaLiquidazioneIva(UserContext userContext, Ass_pdg_variazione_cdrBulk ass) throws ComponentException{
+	/**
+	 * Recupero la linea di attività dell'IVA C20
+	 */
+	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+	try {
+		config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+		Ass_pdg_variazione_cdrHome home = (Ass_pdg_variazione_cdrHome) getHome(userContext, Ass_pdg_variazione_cdrBulk.class);
+		for (Iterator dett = home.findDettagliSpesaVariazioneGestionale(ass).iterator(); dett.hasNext();){
+			Pdg_variazione_riga_spesa_gestBulk spe_det = (Pdg_variazione_riga_spesa_gestBulk) dett.next();
+			if (spe_det.getCd_linea_attivita() != null && spe_det.getCd_linea_attivita().equals(config.getVal01())){
+				return spe_det;
+			}
+
+		}
+	} catch (RemoteException e) {
+		throw new ComponentException(e);
+	} catch (PersistencyException e) {
+		throw new ComponentException(e);
+	} catch (EJBException e) {
+		throw new ComponentException(e);
+	}
+	return null;
+}
+public boolean isRigaLiquidazioneIva(UserContext userContext, Pdg_variazione_riga_gestBulk riga) throws ComponentException{
+	/**
+	 * Recupero la linea di attività dell'IVA C20
+	 */
+	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+	try {
+		config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+		if (riga.getCd_linea_attivita() != null && riga.getCd_linea_attivita().equals(config.getVal01())){
+			return true;
+		}
+	} catch (RemoteException e) {
+		throw new ComponentException(e);
+	} catch (EJBException e) {
+		throw new ComponentException(e);
+	}
+	return false;
+}
 }
 	

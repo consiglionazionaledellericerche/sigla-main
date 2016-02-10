@@ -68,8 +68,13 @@
 				<% } %>
 			</tr>
 			<tr>
+			<%	if (bp.isVariazioneApprovata()) { %> 
+				<td><% controller.writeFormLabel(out,"elemento_voce_vis"); %></td>
+				<td><% controller.writeFormInput(out,"elemento_voce_vis"); %></td>
+			<% } else {%>
 				<td><% controller.writeFormLabel(out,"elemento_voce"); %></td>
 				<td><% controller.writeFormInput(out,"elemento_voce"); %></td>
+			<% } %>
 			</tr>
 			<%	if (!bp.getParametriCnr().getFl_nuovo_pdg()) { %> 
 			<tr>

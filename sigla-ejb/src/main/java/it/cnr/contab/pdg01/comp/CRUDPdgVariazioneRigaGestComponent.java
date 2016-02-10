@@ -1,14 +1,7 @@
 package it.cnr.contab.pdg01.comp;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Iterator;
-
-import javax.ejb.EJBException;
-
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
@@ -18,41 +11,42 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.CdsHome;
-import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
+import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
+import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
+import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
-import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
-import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
+import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
 import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -62,10 +56,22 @@ import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
+import javax.ejb.EJBException;
+
+import org.apache.chemistry.opencmis.client.api.Document;
+
 public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDComponent {
 	/**
 	  * CRUDPdgVariazioneRigaGestComponent constructor comment.
 	  */
+	private SiglaCMISService cmisService;
 	public CRUDPdgVariazioneRigaGestComponent() {
 		super();
 	}
@@ -226,13 +232,99 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 				}											
 			}
 
-			return super.modificaConBulk(userContext, oggettobulk);	
+			BigDecimal totaleImportoRiga = BigDecimal.ZERO;
+			Ass_pdg_variazione_cdrBulk ass = (Ass_pdg_variazione_cdrBulk)oggettobulk;
+			if (ass.getPdg_variazione().isApprovata()){
+				for (java.util.Iterator i =  ass.getRigheVariazioneSpeGest().iterator();i.hasNext();) {
+					Pdg_variazione_riga_gestBulk riga = (Pdg_variazione_riga_gestBulk)i.next();
+					PdGVariazioniComponentSession comp = Utility.createPdGVariazioniComponentSession();
+					try {
+						if (comp.isRigaLiquidazioneIva(userContext, riga)){
+							throw new ApplicationException ("Attenzione: Non è possibile inserire salvare la variazione contenente la GAE di default della liquidazione IVA!");
+						} else {
+							totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
+						}
+					} catch (ComponentException e) {
+						throw new ApplicationException (e.getMessage());
+					}
+				}
+				if (ass.getPdg_variazione().isApprovata() && Utility.nvl(ass.getIm_spesa()).compareTo(totaleImportoRiga) != 0){
+					throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass.getIm_spesa())+" sul centro di responsabilità!");
+				}
+				CRUDPdgVariazioneGestionaleComponentSession varSession = (CRUDPdgVariazioneGestionaleComponentSession)createComponentSessionVariazioneGestionale();
+				try {
+					varSession.allineaSaldiVariazioneApprovata(userContext, ass);
+				} catch (ComponentException e) {
+					throw handleException(e);
+				} catch (RemoteException e) {
+					throw handleException(e);
+				}
+			}
+
+			OggettoBulk assPdg = super.modificaConBulk(userContext, oggettobulk);	
+			createDocumentForVariazioneLiquidazioneIVA(userContext, ass.getPdg_variazione());
+			return assPdg;
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		} catch(Exception e) {
 			throw handleException(e);
 		}	
 	}
+
+	private void createDocumentForVariazioneLiquidazioneIVA(UserContext userContext, Pdg_variazioneBulk variazione)
+			throws ComponentException {
+		try {
+			cmisService = SpringUtil.getBean("cmisService",SiglaCMISService.class);		
+			ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = new ArchiviaStampaPdgVariazioneBulk();
+			archiviaStampaPdgVariazioneBulk.setPdg_variazioneForPrint(variazione);
+			archiviaStampaPdgVariazioneBulk.setCentro_responsabilita(variazione.getCentro_responsabilita());
+			archiviaStampaPdgVariazioneBulk.setDs_variazione(variazione.getDs_variazione());
+			archiviaStampaPdgVariazioneBulk.setPg_variazione_pdg(variazione.getPg_variazione_pdg());
+			
+			Print_spoolerBulk print = new Print_spoolerBulk();
+			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+			print.setFlEmail(false);
+			print.setReport("/cnrpreventivo/pdg/stampa_variazioni_pdg.jasper");
+			print.setNomeFile("Variazione al PdG n. "
+					+ archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg()
+					+ " CdR proponente "
+					+ archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita() + ".pdf");
+			print.setUtcr(userContext.getUser());
+			print.addParam("Esercizio", archiviaStampaPdgVariazioneBulk.getPdg_variazioneForPrint().getEsercizio(), Integer.class);
+			print.addParam("Variazione", archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg().intValue(), Integer.class);
+			Report report = SpringUtil.getBean("printService",
+					PrintService.class).executeReport(userContext,
+					print);
+			CMISPath cmisPath = getCMISPath(archiviaStampaPdgVariazioneBulk);
+			Document node = cmisService.storePrintDocument(archiviaStampaPdgVariazioneBulk, report, cmisPath);
+			archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(PdgVariazioneDocument.construct(node));
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (IOException e) {
+			throw handleException(e);
+		}
+		
+	}
+
+	private CMISPath getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws ApplicationException{
+		CMISPath cmisPath = SpringUtil.getBean("cmisPathVariazioniAlPianoDiGestione",CMISPath.class);
+		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, archiviaStampaPdgVariazioneBulk.getEsercizio().toString(), 
+				"Esercizio :"+archiviaStampaPdgVariazioneBulk.getEsercizio().toString(), 
+				"Esercizio :"+archiviaStampaPdgVariazioneBulk.getEsercizio().toString());
+		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, archiviaStampaPdgVariazioneBulk.getCd_cds()+" - "+archiviaStampaPdgVariazioneBulk.getDs_cds(), 
+				archiviaStampaPdgVariazioneBulk.getDs_cds(), 
+				archiviaStampaPdgVariazioneBulk.getDs_cds());
+		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, 
+				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
+				" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0'), 
+				null, 
+				null);
+		return cmisPath;
+	}
+	
+	public CRUDComponentSession createComponentSessionVariazioneGestionale() throws javax.ejb.EJBException {
+		return (CRUDPdgVariazioneGestionaleComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPDG01_EJB_CRUDPdgVariazioneGestionaleComponentSession",CRUDPdgVariazioneGestionaleComponentSession.class);
+}
 
 	/**
 	 * Aggiunge delle clausole a tutte le operazioni di ricerca eseguite su WorkpackageBulk 

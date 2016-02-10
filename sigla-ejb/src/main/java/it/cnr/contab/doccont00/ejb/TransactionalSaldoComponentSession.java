@@ -1,4 +1,7 @@
 package it.cnr.contab.doccont00.ejb;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.jada.comp.ComponentException;
+
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
@@ -264,6 +267,29 @@ public String checkDispObbligazioniAccertamenti(it.cnr.jada.UserContext param0, 
 			param4,
 			param5,
 			param6});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, String param5, java.math.BigDecimal param6, Boolean param7) throws RemoteException,ComponentException{
+	try {
+		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("aggiornaVariazioneStanziamento",new Object[] {
+			param0,
+			param1,
+			param2,
+			param3,
+			param4,
+			param5,
+			param6,
+			param7});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {

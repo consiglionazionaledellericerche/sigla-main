@@ -146,7 +146,9 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 				return openContinuePrompt(context, tipoVoce.equals(it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome.GESTIONE_ENTRATE)?"doDettagliEtrPdG":"doDettagliSpePdG");
 			Pdg_variazioneBulk pdg_variazione = (Pdg_variazioneBulk)bp.getModel();
 			Ass_pdg_variazione_cdrBulk ass_pdg_variazione = (Ass_pdg_variazione_cdrBulk)(pdg_variazione.getAssociazioneCDR().get(bp.getCrudAssCDR().getSelection().getFocus()));
-			boolean tipoView = bp.getStatus() == bp.VIEW || !(ass_pdg_variazione.getCentro_responsabilita().equalsByPrimaryKey(bp.getCentro_responsabilita_scrivania())&&pdg_variazione.isPropostaProvvisoria());
+			boolean tipoView = bp.getStatus() == bp.VIEW  
+					|| !ass_pdg_variazione.getCentro_responsabilita().equalsByPrimaryKey(bp.getCentro_responsabilita_scrivania())
+					||(!pdg_variazione.isPropostaProvvisoria() && !isVariazioneFromLiquidazioneIvaDaModificare(context, tipoVoce, bp, pdg_variazione, ass_pdg_variazione));
 			BulkBP nbp = (BulkBP)context.getUserInfo().createBusinessProcess(
 							context,
 							bpName,
@@ -164,6 +166,19 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 			return handleException(context,e);
 		}
 	}	
+	
+	private boolean isVariazioneFromLiquidazioneIvaDaModificare(
+			it.cnr.jada.action.ActionContext context, String tipoVoce,
+			PdGVariazioneBP bp, Pdg_variazioneBulk pdg_variazione,
+			Ass_pdg_variazione_cdrBulk ass_pdg_variazione)
+			throws BusinessProcessException {
+		boolean variazioneFromLiquidazioneIva = false;
+		if (ass_pdg_variazione.getCentro_responsabilita().equalsByPrimaryKey(bp.getCentro_responsabilita_scrivania()) && tipoVoce.equals(it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome.GESTIONE_SPESE)){
+			variazioneFromLiquidazioneIva = bp.isVariazioneFromLiquidazioneIvaDaModificare(context, pdg_variazione);
+		}
+		return variazioneFromLiquidazioneIva;
+	}	
+
 	public Forward doBringBackOpenDettagliPdGWindow(ActionContext context) {
 		try {
 			fillModel(context);
