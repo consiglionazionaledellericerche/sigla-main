@@ -765,6 +765,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext u
 }
 public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo) throws ComponentException
 {
+	return aggiornaVariazioneStanziamento(userContext, cd_cdr, cd_linea_attivita, voce, esercizio_res, tipo_residuo, importo, false);
+}
+public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo, Boolean sottraiImportoDaVariazioneEsistente) throws ComponentException
+{
 	try
 	{
 		Voce_f_saldi_cdr_lineaBulk saldo;
@@ -788,10 +792,17 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext use
 			insertBulk(userContext, saldo);	
 		}
 		importo = importo.setScale(2, importo.ROUND_HALF_UP);
-		if(importo.compareTo(Utility.ZERO)==1)
-		  saldo.setVariazioni_piu(saldo.getVariazioni_piu().add(importo));
-		else  
-		  saldo.setVariazioni_meno(saldo.getVariazioni_meno().add(importo.abs()));
+		if (sottraiImportoDaVariazioneEsistente){
+			if(importo.compareTo(Utility.ZERO)==1)
+				  saldo.setVariazioni_meno(saldo.getVariazioni_meno().subtract(importo.abs()));
+				else  
+				  saldo.setVariazioni_piu(saldo.getVariazioni_piu().subtract(importo));
+		} else {
+			if(importo.compareTo(Utility.ZERO)==1)
+				  saldo.setVariazioni_piu(saldo.getVariazioni_piu().add(importo));
+				else  
+				  saldo.setVariazioni_meno(saldo.getVariazioni_meno().add(importo.abs()));
+		}
 		  
 		saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 		saldo.setToBeUpdated();

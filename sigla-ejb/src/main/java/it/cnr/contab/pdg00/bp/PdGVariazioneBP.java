@@ -18,6 +18,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -626,6 +627,14 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		try {
 			PdGVariazioniComponentSession comp = (PdGVariazioniComponentSession)createComponentSession();
 			comp.archiviaVariazioneDocumentale(context.getUserContext(), bulk);
+		} catch (Throwable e) {
+			throw new BusinessProcessException(e.getMessage());
+		}
+	}
+	public boolean isVariazioneFromLiquidazioneIvaDaModificare(ActionContext context, Pdg_variazioneBulk variazione) throws BusinessProcessException{
+		try {
+			PdGVariazioniComponentSession comp = (PdGVariazioniComponentSession)createComponentSession();
+			return comp.isVariazioneFromLiquidazioneIvaDaModificare(context.getUserContext(), variazione);
 		} catch (Throwable e) {
 			throw new BusinessProcessException(e.getMessage());
 		}

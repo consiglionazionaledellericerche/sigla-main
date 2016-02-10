@@ -6,10 +6,8 @@
  */
 package it.cnr.contab.varstanz00.bp;
 
-import java.rmi.RemoteException;
-import java.util.Iterator;
-
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -25,6 +23,9 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
+import java.rmi.RemoteException;
+import java.util.Iterator;
 
 /**
  * @author mspasiano
@@ -42,7 +43,29 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
 			validaRiga(actioncontext,(Var_stanz_res_rigaBulk)oggettobulk);
 			super.validate(actioncontext,oggettobulk);
-		};
+		}
+
+		@Override
+		public void add(ActionContext actioncontext, OggettoBulk oggettobulk)
+				throws BusinessProcessException {
+			super.add(actioncontext, oggettobulk);
+			Var_stanz_res_rigaBulk bulk = (Var_stanz_res_rigaBulk)oggettobulk;
+			if (isVariazioneApprovata()){
+				VariazioniStanziamentoResiduoComponentSession comp = ((VariazioniStanziamentoResiduoComponentSession)createComponentSession());
+				try {
+					Var_stanz_res_rigaBulk rigaDB = comp.recuperoRigaLiquidazioneIva(actioncontext.getUserContext(), var_stanz_res);
+					if (rigaDB != null){
+			    		Elemento_voceBulk elementoVoce = (Elemento_voceBulk)createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+								new Elemento_voceBulk(rigaDB.getElemento_voce().getCd_elemento_voce(), rigaDB.getElemento_voce().getEsercizio(), rigaDB.getElemento_voce().getTi_appartenenza(), rigaDB.getElemento_voce().getTi_gestione()));
+						bulk.setElemento_voce(elementoVoce);
+					}
+				} catch (ComponentException e1) {
+					throw handleException(e1);
+				} catch (RemoteException e) {
+					throw handleException(e);
+				}
+			}
+		}
 	};
 	/**
 	 * 
@@ -126,21 +149,22 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 		}		
 		return var_stanz_res;
 	}
+
 	protected void initialize(ActionContext actioncontext)throws BusinessProcessException {
 		setModel(actioncontext,initializeModelForEdit(actioncontext,var_stanz_res));
 		if (isEditable())		
 		  setStatus(EDIT);
-		if (getStatus()!=VIEW){
-			if (var_stanz_res!=null && var_stanz_res.isCancellatoLogicamente() || 
-					var_stanz_res.isPropostaDefinitiva() || 
-					var_stanz_res.isApprovata() || 
-					var_stanz_res.isRespinta()) 
-				setStatus(VIEW);
-			}	
-//		else  
-		if (!isEditable())	
-		  setStatus(VIEW);	
 		try {
+			if (getStatus()!=VIEW){
+				if (var_stanz_res!=null && var_stanz_res.isCancellatoLogicamente() || 
+						var_stanz_res.isPropostaDefinitiva() || 
+						(var_stanz_res.isApprovata() && !((VariazioniStanziamentoResiduoComponentSession)createComponentSession()).isVariazioneFromLiquidazioneIvaDaModificare(actioncontext.getUserContext(), var_stanz_res))|| 
+						var_stanz_res.isRespinta()) 
+					setStatus(VIEW);
+			}	
+			//		else  
+			if (!isEditable())	
+				setStatus(VIEW);	
 			setParametriCnr(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())));
 		} catch (ComponentException e) {
 			throw handleException(e);
@@ -185,6 +209,14 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 			var_stanz_res_riga.setCd_voce(null);
 		}
     }
+
+    public void save(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException,ValidationException {
+		super.save(context);
+		if (isVariazioneApprovata()){
+			setStatus(VIEW);
+		}
+	}
+
 	public void valorizzaDisponibilita_stanz_res(ActionContext actioncontext, Var_stanz_res_rigaBulk var_stanz_res_riga) throws BusinessProcessException{
 		try {
 			if (var_stanz_res_riga.getLinea_di_attivita() != null && var_stanz_res_riga.getLinea_di_attivita().getCd_linea_attivita() != null &&
@@ -223,4 +255,11 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 	public Parametri_cnrBulk getParametriCnr() {
 		return parametriCnr;
 	}
+	public boolean isVariazioneApprovata() {
+		if (var_stanz_res != null && var_stanz_res.isApprovata()){
+			return true;
+		}
+		return false;
+	}
+
 }
