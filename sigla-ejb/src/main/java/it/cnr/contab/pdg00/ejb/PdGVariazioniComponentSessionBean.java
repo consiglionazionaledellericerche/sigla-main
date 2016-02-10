@@ -2,7 +2,12 @@ package it.cnr.contab.pdg00.ejb;
 import java.rmi.RemoteException;
 
 import it.cnr.contab.doccont00.comp.ReversaleComponent;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.comp.PdGVariazioniComponent;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -94,6 +99,26 @@ public void controllaBilancioPreventivoCdsApprovato(it.cnr.jada.UserContext para
 	try {
 		((PdGVariazioniComponent)componentObj).controllaBilancioPreventivoCdsApprovato(param0,param1);
 		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+
+public Pdg_variazione_riga_spesa_gestBulk recuperoRigaLiquidazioneIva(it.cnr.jada.UserContext param0,Ass_pdg_variazione_cdrBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		Pdg_variazione_riga_spesa_gestBulk result = ((PdGVariazioniComponent)componentObj).recuperoRigaLiquidazioneIva(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;
@@ -235,6 +260,43 @@ public boolean isCdsAbilitatoAdApprovare(it.cnr.jada.UserContext param0,String p
 	pre_component_invocation(param0,componentObj);
 	try {
 		boolean result = ((PdGVariazioniComponent)componentObj).isCdsAbilitatoAdApprovare(param0,param1,param2);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+public boolean isRigaLiquidazioneIva(UserContext param0, Pdg_variazione_riga_gestBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		boolean result = ((PdGVariazioniComponent)componentObj).isRigaLiquidazioneIva(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext param0, Pdg_variazioneBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		boolean result = ((PdGVariazioniComponent)componentObj).isVariazioneFromLiquidazioneIvaDaModificare(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {

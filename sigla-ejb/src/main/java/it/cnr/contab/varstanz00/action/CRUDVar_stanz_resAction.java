@@ -12,7 +12,9 @@ import it.cnr.contab.anagraf00.bp.CRUDAbiCabBP;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.doccont00.bp.CRUDAccertamentoBP;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resRigaBP;
 import it.cnr.contab.varstanz00.bp.SelezionatoreAssestatoResiduoBP;
@@ -175,6 +177,11 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 			    !ass_var_stanz_res_cdr.getCentro_di_responsabilita().getCd_cds().equalsIgnoreCase(testataBP.getCentro_responsabilita_scrivania().getCd_cds())
 			  :!isCdrDiScrivania			
 			:!isCdrDiScrivania;
+			if (tipoView){
+				if (isVariazioneFromLiquidazioneIvaDaModificare(context, isCdrDiScrivania, testataBP, var_stanz_res, ass_var_stanz_res_cdr)){
+					tipoView = false;
+				}
+			}
 			String trStatus = "";
 			if (testataBP.isDaAccertamentoModifica())
 				trStatus = "RSWTh";
@@ -189,6 +196,18 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 		} catch(Throwable e) {
 			return handleException(context,e);
 		}
+	}	
+
+	private boolean isVariazioneFromLiquidazioneIvaDaModificare(
+			it.cnr.jada.action.ActionContext context,boolean isCdrDiScrivania, 
+			CRUDVar_stanz_resBP bp, Var_stanz_resBulk pdg_variazione,
+			Ass_var_stanz_res_cdrBulk ass_pdg_variazione)
+			throws BusinessProcessException {
+		boolean variazioneFromLiquidazioneIva = false;
+		if (ass_pdg_variazione.getCentro_di_responsabilita().getCd_cds().equalsIgnoreCase(bp.getCentro_responsabilita_scrivania().getCd_cds()) && isCdrDiScrivania){
+			variazioneFromLiquidazioneIva = bp.isVariazioneFromLiquidazioneIvaDaModificare(context, pdg_variazione);
+		}
+		return variazioneFromLiquidazioneIva;
 	}	
 
 	public Forward doBringBackDettagliWindow(ActionContext context) {
