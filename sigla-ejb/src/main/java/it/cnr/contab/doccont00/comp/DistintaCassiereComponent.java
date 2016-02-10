@@ -4463,7 +4463,7 @@ public class DistintaCassiereComponent extends
 							if(oldDoc!=null &&oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 ){// && (oldDoc.getCdTipoDocumentoAmm().compareTo(doc.getCdTipoDocumentoAmm())!=0|| oldDoc.getPgDocAmm().compareTo(doc.getPgDocAmm())!=0)){ 
 								if( doc.getCdCup()==null){
 									totAssSiope=totAssSiope.add(doc.getImportoCge());
-									salta=true;
+									salta=false;
 								}
 								if(doc.getImDocumento().compareTo(totAssSiope)!=0){
 									totAssSiope=totAssSiope.add(doc.getImDocumento().subtract(totAssSiope));
