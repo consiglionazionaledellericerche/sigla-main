@@ -26,10 +26,12 @@ public class CRUDVar_stanz_resRigaAction extends CRUDAction {
 	public it.cnr.jada.action.Forward doBlankSearchLinea_di_attivita(it.cnr.jada.action.ActionContext context, Var_stanz_res_rigaBulk var_stanz_res_riga) {
 		try {
 			fillModel(context);
-			var_stanz_res_riga.setLinea_di_attivita(new WorkpackageBulk());
-			var_stanz_res_riga.setElemento_voce(null);
-
 			CRUDVar_stanz_resRigaBP bp = (CRUDVar_stanz_resRigaBP)getBusinessProcess(context);
+			var_stanz_res_riga.setLinea_di_attivita(new WorkpackageBulk());
+			if (!bp.isVariazioneApprovata()){
+				var_stanz_res_riga.setElemento_voce(null);
+			}
+
 			if (bp.getParametriCnr()==null || !bp.getParametriCnr().getFl_nuovo_pdg())
 				var_stanz_res_riga.setVoce_f(new Voce_fBulk());
 			else {
