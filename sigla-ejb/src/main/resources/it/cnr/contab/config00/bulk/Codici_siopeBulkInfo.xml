@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" 
 		label="Esercizio" />
 	<fieldProperty
 		name="ti_gestione"

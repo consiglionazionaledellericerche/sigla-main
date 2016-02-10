@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_spe_totBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_spe_totHome">
+	<defaultColumnMap
+		tableName="V_CONS_CONFRONTO_ENT_SPE_TOT">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A1"
+			propertyName="im_stanz_iniziale_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_PIU"
+			propertyName="variazioni_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO"
+			propertyName="variazioni_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_COMP"
+			propertyName="assestato_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_COMP_ETR"
+			propertyName="assestato_comp_etr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_COMP_SPE"
+			propertyName="assestato_comp_spe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP"
+			propertyName="im_obbl_acc_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP_ETR"
+			propertyName="im_obbl_acc_comp_etr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP_SPE"
+			propertyName="im_obbl_acc_comp_spe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM_SPE"
+			propertyName="im_ass_doc_amm_spe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM_ETR"
+			propertyName="im_ass_doc_amm_etr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM"
+			propertyName="im_ass_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO_ETR"
+			propertyName="im_mandati_reversali_pro_etr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO_SPE"
+			propertyName="im_mandati_reversali_pro_spe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="denominazione" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="cd_modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="im_stanz_iniziale_a1" />
+	<persistentProperty
+		name="variazioni_piu" />
+	<persistentProperty
+		name="variazioni_meno" />
+	<persistentProperty
+		name="assestato_comp" />
+	<persistentProperty
+		name="assestato_comp_etr" />
+	<persistentProperty
+		name="assestato_comp_spe" />
+	<persistentProperty
+		name="im_obbl_acc_comp" />
+	<persistentProperty
+		name="im_obbl_acc_comp_etr" />
+	<persistentProperty
+		name="im_obbl_acc_comp_spe" />
+	<persistentProperty
+		name="im_ass_doc_amm_spe" />
+	<persistentProperty
+		name="im_ass_doc_amm_etr" />
+	<persistentProperty
+		name="im_ass_doc_amm" />
+	<persistentProperty
+		name="im_mandati_reversali_pro" />
+	<persistentProperty
+		name="im_mandati_reversali_pro_etr" />
+	<persistentProperty
+		name="im_mandati_reversali_pro_spe" />	
+	<columnMap 
+		name="BASE"
+		tableName="V_CONS_CONFRONTO_ENT_SPE_TOT">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_COMP_ETR"
+			propertyName="assestato_comp_etr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP_ETR"
+			propertyName="im_obbl_acc_comp_etr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM_ETR"
+			propertyName="im_ass_doc_amm_etr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO_ETR"
+			propertyName="im_mandati_reversali_pro_etr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />			
+		<columnMapping
+			columnName="ASSESTATO_COMP_SPE"
+			propertyName="assestato_comp_spe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP_spe"
+			propertyName="im_obbl_acc_comp_spe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM_SPE"
+			propertyName="im_ass_doc_amm_spe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO_SPE"
+			propertyName="im_mandati_reversali_pro_spe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="BASEMOD"
+		tableName="V_CONS_CONFRONTO_ENT_SPE_TOT"
+		extends="BASE" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="BASEMODGAE"
+		tableName="V_CONS_CONFRONTO_ENT_SPE_TOT">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+			
+				
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+			
+			
+		<columnMapping
+			columnName="ASSESTATO_COMP"
+			propertyName="assestato_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP"
+			propertyName="im_obbl_acc_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM"
+			propertyName="im_ass_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />		
+	</columnMap>
+	
+	<columnMap 
+		name="BASEMODGAEVOCE"
+		tableName="V_CONS_CONFRONTO_ENT_SPE_TOT"
+		extends="BASEMODGAE" >
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+	</columnMap>
+	
+</SQLPersistentInfo>

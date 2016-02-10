@@ -1,0 +1,24 @@
+<SQLPersistentInfo
+	 persistentClassName="it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk"
+	 homeClassName="it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioHome" >
+	<defaultColumnMap
+		tableName="ASS_LINEA_ATTIVITA_ESERCIZIO" >
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="linea_attivita.cd_linea_attivita"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="progetto.pg_progetto"
+			fetchOnly="false" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="linea_attivita" />
+	<persistentProperty
+		name="progetto" />
+</SQLPersistentInfo>

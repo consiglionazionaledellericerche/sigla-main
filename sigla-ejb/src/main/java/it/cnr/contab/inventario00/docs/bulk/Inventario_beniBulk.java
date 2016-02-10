@@ -547,6 +547,16 @@ public boolean isROtarga(){
 		return false;
 	return true;
 }
+public boolean isROseriale(){
+	if ((getCategoria_Bene() != null)&&  getCategoria_Bene().getFl_gestione_seriale()!=null )
+		if(getCategoria_Bene().getFl_gestione_seriale() && getSeriale()!=null)
+			return true;
+		else
+			return !getCategoria_Bene().getFl_gestione_seriale().booleanValue();
+	else if (getCrudStatus()== OggettoBulk.UNDEFINED)
+		return false;
+	return true;
+}
 /**
  * Insert the method's description here.
  * Creation date: (10/02/2002 10:33:00 AM)

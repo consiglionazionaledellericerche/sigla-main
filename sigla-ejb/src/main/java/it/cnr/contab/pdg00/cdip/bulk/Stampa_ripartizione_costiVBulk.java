@@ -5,12 +5,21 @@ package it.cnr.contab.pdg00.cdip.bulk;
  * Creation date: (08/06/2004 15.09.42)
  * @author: Gennaro Borriello
  */
+
 import it.cnr.contab.progettiric00.core.bulk.*;
 public class Stampa_ripartizione_costiVBulk extends it.cnr.jada.bulk.OggettoBulk {
 
 	private Integer esercizio;
-	private String cd_cds;
+	public Integer getEsercizio() {
+		return esercizio;
+	}
+	public void setEsercizio(Integer esercizio) {
+		this.esercizio = esercizio;
+	}
 
+
+	private String cd_cds;
+	
 	
 	private it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uoForPrint;
 	private ProgettoBulk commessaForPrint;
@@ -129,9 +138,9 @@ public String getIdDipendenteCRForPrint() {
  * Creation date: (08/06/2004 15.23.28)
  * @return java.lang.Integer
  */
-public java.lang.Integer getEsercizio() {
-	return esercizio;
-}
+//public java.lang.Integer getEsercizio() {
+//	return esercizio;
+//}
 /**
  * Insert the method's description here.
  * Creation date: (08/06/2004 15.30.08)
@@ -197,9 +206,9 @@ public void setCd_cds(java.lang.String newCd_cds) {
  * Creation date: (08/06/2004 15.23.28)
  * @param newEsercizio java.lang.Integer
  */
-public void setEsercizio(java.lang.Integer newEsercizio) {
-	esercizio = newEsercizio;
-}
+//public void setEsercizio(java.lang.Integer newEsercizio) {
+//	esercizio = newEsercizio;
+//}
 /**
  * Insert the method's description here.
  * Creation date: (08/06/2004 16.24.19)
@@ -234,6 +243,9 @@ public void validate() throws it.cnr.jada.bulk.ValidationException {
 	// controllo su campo MESE
 	if ( getMese() == null )
 		throw new it.cnr.jada.bulk.ValidationException( "Attenzione: indicare un Mese." );
+//	// controllo su campo ESERCIZIO
+//	if ( getEsercizio_base() == null )
+//		throw new it.cnr.jada.bulk.ValidationException( "Attenzione: indicare un Esercizio." );
 }
 	/**
 	 * @return
@@ -276,5 +288,9 @@ public void validate() throws it.cnr.jada.bulk.ValidationException {
 	public void setDipendenteForPrint(V_dipendenteBulk bulk) {
 		dipendenteForPrint = bulk;
 	}
-
+		
+	public String getEsercizioForPrint() {
+		  	return this.getEsercizio().toString();
+	}
+	
 }

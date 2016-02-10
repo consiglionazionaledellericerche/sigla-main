@@ -66,10 +66,12 @@ public void initializePrimaryKeyForInsert(UserContext usercontext,OggettoBulk og
  * @return List lista di AccessoBulk
  */
 
-public java.util.List findAccessi_disponibili(UtenteTemplateBulk utente) throws IntrospectionException, PersistencyException 
+public java.util.List findAccessi_disponibili(UtenteTemplateBulk utente, CompoundFindClause compoundfindclause) throws IntrospectionException, PersistencyException 
 {
 	PersistentHome accessoHome = getHomeCache().getHome( AccessoBulk.class);
 	SQLBuilder sql = accessoHome.createSQLBuilder();
+	if (compoundfindclause != null)
+		sql.addClause(compoundfindclause);
 	if ( !utente.getGestore().getCd_cds_configuratore().equals("*"))
 		sql.addSQLClause("AND","TI_ACCESSO",sql.NOT_EQUALS,AccessoBulk.TIPO_RISERVATO_CNR);
 	sql.addSQLClause("AND","TI_ACCESSO",sql.NOT_EQUALS,AccessoBulk.TIPO_SUPERUTENTE);
@@ -109,7 +111,7 @@ public java.util.Collection findUO_accessi_propri(UtenteTemplateBulk utente) thr
 	sql.setHeader("SELECT DISTINCT CD_UNITA_ORGANIZZATIVA");
 	sql.addTableToHeader("UTENTE_UNITA_ACCESSO");
 	sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
-	PreparedStatement stm = sql.prepareStatement(getConnection());
+	LoggableStatement stm = sql.prepareStatement(getConnection());
 	try {
 		java.sql.ResultSet rs = stm.executeQuery();
 		java.util.ArrayList aAL =  new java.util.ArrayList();
@@ -137,7 +139,7 @@ public java.util.Collection findUO_ruoli_propri(UtenteTemplateBulk utente) throw
 	sql.setHeader("SELECT DISTINCT CD_UNITA_ORGANIZZATIVA");
 	sql.addTableToHeader("UTENTE_UNITA_RUOLO");
 	sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
-	PreparedStatement stm = sql.prepareStatement(getConnection());
+	LoggableStatement stm = sql.prepareStatement(getConnection());
 	try {
 		java.sql.ResultSet rs = stm.executeQuery();
 		java.util.ArrayList aAL =  new java.util.ArrayList();

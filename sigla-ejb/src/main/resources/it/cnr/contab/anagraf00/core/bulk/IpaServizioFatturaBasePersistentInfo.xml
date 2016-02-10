@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.IpaServizioFatturaBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.IpaServizioFatturaKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.IpaServizioFatturaHome">
+	<defaultColumnMap
+		tableName="IPA_SERVIZIO_FATTURA">
+		<columnMapping
+			columnName="COD_UNI_OU"
+			propertyName="codUniOu"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CF"
+			propertyName="cf"
+			sqlTypeName="VARCHAR"
+			columnSize="11"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_AVVIO_SFE"
+			propertyName="dataAvvioSfe"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="codUniOu" />
+	<persistentProperty
+		name="cf" />
+	<persistentProperty
+		name="dataAvvioSfe" />
+</SQLPersistentInfo>

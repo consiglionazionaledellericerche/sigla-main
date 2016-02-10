@@ -1,7 +1,10 @@
 package it.cnr.contab.docamm00.actions;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.comp.DocumentoAmministrativoComponentSession;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
@@ -28,6 +31,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
 import it.cnr.contab.doccont00.bp.CRUDVirtualAccertamentoBP;
@@ -51,6 +55,7 @@ public class CRUDNotaDiCreditoAction extends CRUDFatturaPassivaAction {
 /**
  * CRUDNotaDiCreditoAction constructor comment.
  */
+
 public CRUDNotaDiCreditoAction() {
 	super();
 }
@@ -67,7 +72,7 @@ protected void basicCalcolaImportoDisponibileNC(
 	Nota_di_credito_rigaBulk rigaND = (Nota_di_credito_rigaBulk)riga;
 	if (rigaND.getQuantita() == null) rigaND.setQuantita(new java.math.BigDecimal(1));
 	if (rigaND.getPrezzo_unitario() == null) rigaND.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (rigaND.getIm_iva() == null) rigaND.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (rigaND.getIm_iva() == null) rigaND.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 
 	rigaND.calcolaCampiDiRiga();
 	java.math.BigDecimal totaleDiRiga = rigaND.getIm_imponibile().add(rigaND.getIm_iva());
@@ -75,7 +80,7 @@ protected void basicCalcolaImportoDisponibileNC(
 	java.math.BigDecimal nuovoImportoDisponibile = rigaFP.getIm_diponibile_nc().subtract(totaleDiRiga.subtract(vecchioTotale));
 	if (nuovoImportoDisponibile.signum() < 0)
 		throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile è di " + rigaFP.getIm_diponibile_nc() + " EUR!");
-	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 }
 /**
  * Gestisce l'associazione della scadenza riportata con il documento amm.
@@ -116,7 +121,7 @@ protected void basicDoCalcolaTotaliDiRiga(
 
 	if (rigaNC.getQuantita() == null) rigaNC.setQuantita(new java.math.BigDecimal(1));
 	if (rigaNC.getPrezzo_unitario() == null) rigaNC.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (rigaNC.getIm_iva() == null) rigaNC.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (rigaNC.getIm_iva() == null) rigaNC.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 
 	rigaNC.setFl_iva_forzata(Boolean.FALSE);
 	rigaNC.calcolaCampiDiRiga();
@@ -125,7 +130,7 @@ protected void basicDoCalcolaTotaliDiRiga(
 	java.math.BigDecimal nuovoImportoDisponibile = rigaFP.getIm_diponibile_nc().subtract(totaleDiRiga.subtract(vecchioTotale));
 	if (nuovoImportoDisponibile.signum() < 0)
 		throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile è di " + rigaFP.getIm_diponibile_nc() + " EUR!");
-	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	doSelectObbligazioni(context);
 	doSelectAccertamenti(context);
 }
@@ -160,7 +165,7 @@ private Forward basicDoModificaScadenzaAccertamentoInAutomatico(ActionContext co
 		java.math.BigDecimal importoAttuale = notaDiCredito.getImportoTotalePerAccertamenti();
 		java.math.BigDecimal importoOriginale = (java.math.BigDecimal)notaDiCredito.getFattura_passiva_ass_totaliMap().get(scadenza);
 		java.math.BigDecimal delta = importoOriginale.subtract(importoAttuale);
-		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(delta) == 0)
+		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(delta) == 0)
 			throw new it.cnr.jada.comp.ApplicationException("La modifica in automatico non è disponibile!");
 		try {
 			scadenza = (Accertamento_scadenzarioBulk)h.modificaScadenzaInAutomatico(
@@ -227,7 +232,7 @@ private Forward basicDoModificaScadenzaObbligazioneInAutomatico(ActionContext co
 		java.math.BigDecimal importoAttuale = notaDiCredito.getImportoTotalePerObbligazione();
 		java.math.BigDecimal importoOriginale = (java.math.BigDecimal)notaDiCredito.getFattura_passiva_ass_totaliMap().get(scadenza);
 		java.math.BigDecimal delta = importoOriginale.subtract(importoAttuale);
-		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(delta) == 0)
+		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(delta) == 0)
 			throw new it.cnr.jada.comp.ApplicationException("La modifica in automatico non è disponibile!");
 		try {
 			scadenza = (Obbligazione_scadenzarioBulk)h.modificaScadenzaInAutomatico(
@@ -720,10 +725,10 @@ public Forward doCalcolaTotalePerAccertamento(ActionContext context, Accertament
 							(java.util.List)ndC.getAccertamentiHash().get(accertamento),
 							ndC.quadraturaInDeroga()));
 			} catch (it.cnr.jada.comp.ApplicationException e) {
-				ndC.setImportoTotalePerAccertamenti(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				ndC.setImportoTotalePerAccertamenti(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			}
 		else
-			ndC.setImportoTotalePerAccertamenti(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			ndC.setImportoTotalePerAccertamenti(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 
 	}
 	return context.findDefaultForward();	
@@ -936,7 +941,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
 				notaDiCredito.setEnte(fpcs.findTerzoUO(context.getUserContext(), notaDiCredito.getEsercizio()));
 			java.util.List coll = (java.util.List)fpcs.findListabancheuo(context.getUserContext(), notaDiCredito);
 //			notaDiCredito.setBanca_uo((coll == null || coll.isEmpty()) ? null : (BancaBulk)new java.util.Vector(coll).firstElement());
-
+			bp.setContoEnte(false);
             if (coll==null || coll.isEmpty())
 	            notaDiCredito.setBanca_uo(null);
             else if (coll.size() == 1)
@@ -944,8 +949,10 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
             else {
 				if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(notaDiCredito.getModalita_pagamento_uo().getTi_pagamento()))
 	            	notaDiCredito.setBanca_uo((BancaBulk) new java.util.Vector(coll).firstElement());
-	            else
+	            else{
 		        	notaDiCredito = fpcs.setContoEnteIn(context.getUserContext(), notaDiCredito, coll);
+		        	bp.setContoEnte(true);
+	            }
             }
 		} else {
 			notaDiCredito.setBanca_uo(null);
@@ -1552,7 +1559,7 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 				Fattura_passiva_rigaIBulk dettaglio = (Fattura_passiva_rigaIBulk)i.next();
 				
 				if (dettaglio.getIm_diponibile_nc() == null || 
-					dettaglio.getIm_diponibile_nc().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0) {
+					dettaglio.getIm_diponibile_nc().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0) {
 					Nota_di_credito_rigaBulk rigaNdC = new Nota_di_credito_rigaBulk();
 					Nota_di_creditoBulk notaDiCredito = (Nota_di_creditoBulk)bp.getModel();
 					notaDiCredito.addToFattura_passiva_dettColl(rigaNdC);
@@ -1640,8 +1647,9 @@ public Forward doStornaDettagli(ActionContext context) {
 		else {
 			Nota_di_creditoBulk ndc = (Nota_di_creditoBulk)bp.getModel();
 			controllaSelezionePerContabilizzazione(context, models.iterator(ndc.getFattura_passiva_dettColl()));
-			controllaSelezionePerTitoloCapitolo(context, models.iterator(ndc.getFattura_passiva_dettColl()));
-		
+			//controllaSelezionePerTitoloCapitolo(context, models.iterator(ndc.getFattura_passiva_dettColl()));
+			List titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, models.iterator(ndc.getFattura_passiva_dettColl()));
+			
 			forward = basicDoStornaDettagli(context, models);
 			ndc = (Nota_di_creditoBulk)bp.getModel();
 			
@@ -1727,7 +1735,7 @@ private void resyncAccertamentoScadenzario(
 			scollegaDettagliDaAccertamento(context, clone);
 		else
 			notaDiCredito.getAccertamenti_scadenzarioHash().remove(oldScadenza);
-		oldScadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		oldScadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		newScadenza.setIm_associato_doc_amm(newScadenza.getIm_scadenza());
 	}
 

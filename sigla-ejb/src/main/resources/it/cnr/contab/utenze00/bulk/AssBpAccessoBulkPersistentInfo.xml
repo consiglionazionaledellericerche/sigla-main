@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.AssBpAccessoBulk"
+	homeClassName="it.cnr.contab.utenze00.bulk.AssBpAccessoHome">
+	<defaultColumnMap
+		tableName="ASS_BP_ACCESSO">
+		<columnMapping
+			columnName="CD_ACCESSO"
+			propertyName="accesso.cd_accesso" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="accesso"
+		partOfOid="true" />
+</SQLPersistentInfo>

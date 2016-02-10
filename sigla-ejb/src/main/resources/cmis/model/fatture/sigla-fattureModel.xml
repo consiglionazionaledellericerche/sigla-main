@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="sigla_fatture:sigla_fattureModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>SIGLA extension Content Model - Fatture</description>
+	<author>Gianfranco Gasparro</author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<import uri="http://www.cnr.it/str/org/1.0/" prefix="strorg" />
+		<import uri="http://www.cnr.it/model/sigla/commons_aspect/" prefix="sigla_commons_aspect" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/sigla/fatture/cmis" prefix="sigla_fatture" />
+	</namespaces>
+
+	<types>
+		<type name="sigla_fatture:main">
+			<title>Dati Generali Fatture</title>
+			<description>Dati Generali Fatture</description>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="sigla_fatture:esercizio">
+					<title>Esercizio</title>
+					<type>d:int</type>
+				</property>
+				<property name="sigla_fatture:pg_fattura">
+					<title>Progressivo fattura</title>
+					<type>d:long</type>
+				</property>
+				<property name="sigla_fatture:prot_iva">
+					<title>Protocollo IVA</title>
+					<type>d:long</type>
+				</property>
+				<property name="sigla_fatture:prot_gen">
+					<title>Protocollo Generale</title>
+					<type>d:long</type>
+				</property>
+				<property name="sigla_fatture:data_reg">
+					<title>Data Registrazione</title>
+					<type>d:datetime</type>
+				</property>
+				<property name="sigla_fatture:descrizione">
+					<title>Descrizione</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:imponibile">
+					<title>Imponibile</title>
+					<type>d:double</type>
+				</property>
+				<property name="sigla_fatture:iva">
+					<title>Iva</title>
+					<type>d:double</type>
+				</property>
+				<property name="sigla_fatture:importo_totale">
+					<title>Importo Totale</title>
+					<type>d:double</type>
+				</property>
+				<property name="sigla_fatture:divisa">
+					<title>Divisa</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:cambio">
+					<title>Cambio</title>
+					<type>d:double</type>
+				</property>
+				<property name="sigla_fatture:dt_competenza_dal">
+					<title>Data Competenza dal</title>
+					<type>d:datetime</type>
+				</property>
+				<property name="sigla_fatture:dt_competenza_al">
+					<title>Data Competenza al</title>
+					<type>d:datetime</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>strorg:cds</aspect>
+				<aspect>strorg:uo</aspect>
+				<aspect>sigla_commons_aspect:terzi</aspect>
+				<aspect>sigla_commons_aspect:utente_applicativo_sigla</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="sigla_fatture:fatture_passive">
+			<title>Fatture Passive</title>
+			<description>Fatture Passive</description>
+			<parent>sigla_fatture:main</parent>
+			<properties>
+				<property name="sigla_fatture:identificativoSdI">
+					<title>Identificativo SdI</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</type>
+		<type name="sigla_fatture:fatture_attive">
+			<title>Fatture Attive</title>
+			<description>Fatture Attive</description>
+			<parent>sigla_fatture:main</parent>
+			<properties>
+				<property name="sigla_fatture:data_emissione">
+					<title>Data Emissione</title>
+					<description>Data Emissione</description>
+					<type>d:datetime</type>
+				</property>
+				<property name="sigla_fatture:codice_ipa">
+					<title>Codice IPA</title>
+					<description>Codice IPA</description>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:codice_invio_sdi">
+					<title>Codice Invio SDI</title>
+					<description>Codice Invio SDI</description>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:stato_invio_sdi">
+					<title>Stato Invio SDI</title>
+					<description>Stato Invio SDI</description>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:note_invio_sdi">
+					<title>Note Invio SDI</title>
+					<description>Note Invio SDI</description>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:data_consegna_sdi">
+					<title>Data Consegna SDI</title>
+					<description>Data Consegna SDI</description>
+					<type>d:datetime</type>
+				</property>
+				<property name="sigla_fatture:modalita_incasso">
+					<title>Modalità Incasso</title>
+					<description>Modalità Incasso</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		<type name="sigla_fatture:note_credito_attive">
+			<title>Note Credito</title>
+			<description>Note Credito</description>
+			<parent>sigla_fatture:fatture_attive</parent>
+			<properties>
+				<property name="sigla_fatture:nc_aut_annullo_sdi">
+					<title>Nota Credito Automatica annullo SDI</title>
+					<description>Nota Credito Automatica annullo SDI</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+	</types>
+</model>

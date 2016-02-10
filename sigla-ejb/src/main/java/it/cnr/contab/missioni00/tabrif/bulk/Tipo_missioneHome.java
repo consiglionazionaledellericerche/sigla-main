@@ -12,4 +12,11 @@ public Tipo_missioneHome(java.sql.Connection conn) {
 public Tipo_missioneHome(java.sql.Connection conn,PersistentCache persistentCache) {
 	super(Tipo_missioneBulk.class,conn,persistentCache);
 }
+@Override
+public SQLBuilder createSQLBuilder() {
+ 
+	SQLBuilder sql = super.createSQLBuilder();
+	sql.addClause("AND", "fl_valido", sql.EQUALS,Boolean.TRUE);
+	return sql;
+}
 }

@@ -168,12 +168,12 @@ public class RicercaCompensoBP extends BusinessProcess implements ResponseXMLBP{
 		elementCompenso.appendChild(element);
 
 		element = xmldoc.createElement("totalemensile");
-		node = xmldoc.createTextNode(comp.getIm_totale_compenso().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).divide(new BigDecimal(mesi),2, java.math.BigDecimal.ROUND_HALF_EVEN).toString());//new it.cnr.contab.util.EuroFormat().format(comp.getIm_totale_compenso().divide(new BigDecimal(mesi),2, java.math.BigDecimal.ROUND_HALF_EVEN)));
+		node = xmldoc.createTextNode(comp.getIm_totale_compenso().setScale(2, java.math.BigDecimal.ROUND_HALF_UP).divide(new BigDecimal(mesi),2, java.math.BigDecimal.ROUND_HALF_UP).toString());//new it.cnr.contab.util.EuroFormat().format(comp.getIm_totale_compenso().divide(new BigDecimal(mesi),2, java.math.BigDecimal.ROUND_HALF_UP)));
 		element.appendChild(node);
 		elementCompenso.appendChild(element);
 		
         element = xmldoc.createElement("totalecompenso");
-        node = xmldoc.createTextNode(comp.getIm_totale_compenso()==null?"": comp.getIm_totale_compenso().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).toString());//new it.cnr.contab.util.EuroFormat().format(comp.getIm_totale_compenso()));
+        node = xmldoc.createTextNode(comp.getIm_totale_compenso()==null?"": comp.getIm_totale_compenso().setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString());//new it.cnr.contab.util.EuroFormat().format(comp.getIm_totale_compenso()));
 		element.appendChild(node);
 		elementCompenso.appendChild(element);
 	

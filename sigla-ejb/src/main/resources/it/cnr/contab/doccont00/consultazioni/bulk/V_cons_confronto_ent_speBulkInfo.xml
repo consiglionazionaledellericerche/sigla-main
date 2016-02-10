@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -434,8 +434,8 @@
 			<columnFieldProperty name="im_obbl_acc_comp_spe" headerLabel="Spese"/>
 			<columnFieldProperty name="im_ass_doc_amm_spe" headerLabel="Spese"/>
 			<columnFieldProperty name="im_mandati_reversali_pro_spe" headerLabel="Spese"/>
-			<columnFieldProperty name="tratt_econ_int" headerLabel="Gest. Acc. Tratt. Economico"/>
-			<columnFieldProperty name="tratt_econ_est" headerLabel="Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_int" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_est" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
 	</columnSet>
 			
 	<columnSet name="BASEMOD">
@@ -450,8 +450,8 @@
 			<columnFieldProperty name="im_obbl_acc_comp_spe" headerLabel="Spese"/>
 			<columnFieldProperty name="im_ass_doc_amm_spe" headerLabel="Spese"/>
 			<columnFieldProperty name="im_mandati_reversali_pro_spe" headerLabel="Spese"/>
-			<columnFieldProperty name="tratt_econ_int" headerLabel="Gest. Acc. Tratt. Economico"/>
-			<columnFieldProperty name="tratt_econ_est" headerLabel="Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_int" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_est" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
 	</columnSet>
 	
 	<columnSet name="BASEMODGAE">
@@ -466,8 +466,8 @@
 			<columnFieldProperty name="im_obbl_acc_comp"/>
 			<columnFieldProperty name="im_ass_doc_amm"/>
 			<columnFieldProperty name="im_mandati_reversali_pro"/>
-			<columnFieldProperty name="tratt_econ_int" headerLabel="Gest. Acc. Tratt. Economico"/>
-			<columnFieldProperty name="tratt_econ_est" headerLabel="Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_int" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_est" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
 	</columnSet>
 	
 	<columnSet name="BASEMODGAEVOCE">
@@ -483,8 +483,8 @@
 			<columnFieldProperty name="im_obbl_acc_comp"/>
 			<columnFieldProperty name="im_ass_doc_amm"/>
 			<columnFieldProperty name="im_mandati_reversali_pro"/>
-			<columnFieldProperty name="tratt_econ_int" headerLabel="Gest. Acc. Tratt. Economico"/>
-			<columnFieldProperty name="tratt_econ_est" headerLabel="Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_int" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_est" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
 	</columnSet>
 	
 	

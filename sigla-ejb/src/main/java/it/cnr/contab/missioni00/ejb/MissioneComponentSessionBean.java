@@ -77,6 +77,33 @@ public class MissioneComponentSessionBean extends
 			throw uncaughtError(param0, componentObj, e);
 		}
 	}
+	public it.cnr.contab.missioni00.docs.bulk.MissioneBulk cancellaRimborsoPhisically(
+			it.cnr.jada.UserContext param0,
+			it.cnr.contab.missioni00.docs.bulk.MissioneBulk param1)
+			throws it.cnr.jada.comp.ComponentException,
+			it.cnr.jada.persistency.PersistencyException,
+			javax.ejb.EJBException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			it.cnr.contab.missioni00.docs.bulk.MissioneBulk result = ((MissioneComponent) componentObj)
+					.cancellaRimborsoPhisically(param0, param1);
+			component_invocation_succes(param0, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (it.cnr.jada.persistency.PersistencyException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
 
 	public it.cnr.contab.missioni00.docs.bulk.MissioneBulk cancellaTappePhisically(
 			it.cnr.jada.UserContext param0,
@@ -331,6 +358,28 @@ public class MissioneComponentSessionBean extends
 		try {
 			it.cnr.contab.missioni00.docs.bulk.MissioneBulk result = ((MissioneComponent) componentObj)
 					.generaDiaria(param0, param1);
+			component_invocation_succes(param0, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
+	public it.cnr.contab.missioni00.docs.bulk.MissioneBulk generaRimborso(
+			it.cnr.jada.UserContext param0,
+			it.cnr.contab.missioni00.docs.bulk.MissioneBulk param1)
+			throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			it.cnr.contab.missioni00.docs.bulk.MissioneBulk result = ((MissioneComponent) componentObj)
+					.generaRimborso(param0, param1);
 			component_invocation_succes(param0, componentObj);
 			return result;
 		} catch (it.cnr.jada.comp.NoRollbackException e) {
@@ -821,6 +870,25 @@ public class MissioneComponentSessionBean extends
 		}
 	}
 
+	public void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, MissioneBulk missioneBulk, Integer... years)throws ComponentException,
+	javax.ejb.EJBException {
+		pre_component_invocation(userContext, componentObj);
+		try {
+			((MissioneComponent) componentObj).archiviaStampa(userContext, fromDate, untilDate, missioneBulk, years);
+			component_invocation_succes(userContext, componentObj);
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(userContext, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(userContext, componentObj, e);
+		}
+		
+	}
 public it.cnr.contab.config00.bulk.Parametri_cnrBulk parametriCnr(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException{
 	pre_component_invocation(param0,componentObj);
 	try {
@@ -838,6 +906,27 @@ public it.cnr.contab.config00.bulk.Parametri_cnrBulk parametriCnr(it.cnr.jada.Us
 		throw e;
 	} catch(Error e) {
 		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public java.math.BigDecimal calcolaMinutiTappa(it.cnr.jada.UserContext param0,
+		it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk param1) throws it.cnr.jada.comp.ComponentException,
+		javax.ejb.EJBException {
+	pre_component_invocation(param0, componentObj);
+	try {
+		java.math.BigDecimal result = ((MissioneComponent) componentObj).calcolaMinutiTappa(param0,
+				param1);
+		component_invocation_succes(param0, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(param0, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(param0, componentObj, e);
 	}
 }
 }

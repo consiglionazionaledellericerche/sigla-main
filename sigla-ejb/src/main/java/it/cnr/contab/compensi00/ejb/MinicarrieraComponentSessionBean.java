@@ -199,6 +199,29 @@ public class MinicarrieraComponentSessionBean extends it.cnr.jada.ejb.CRUDCompon
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
+	public java.util.Collection findTipiPrestazioneCompenso(
+			it.cnr.jada.UserContext param0,
+			it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk param1)
+			throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			java.util.Collection result = ((MinicarrieraComponent) componentObj)
+					.findTipiPrestazioneCompenso(param0, param1);
+			component_invocation_succes(param0, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
+
 	public it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk generaRate(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk param1,boolean param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
@@ -361,4 +384,24 @@ public class MinicarrieraComponentSessionBean extends it.cnr.jada.ejb.CRUDCompon
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
+	/*
+	public boolean isGestitePrestazioni(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			boolean result = ((MinicarrieraComponent)componentObj).isGestitePrestazioni(param0);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
+	*/
 }

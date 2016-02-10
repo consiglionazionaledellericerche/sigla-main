@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<!-- ************************** FORNITORE **************************** -->
 	<fieldProperty
@@ -142,6 +142,15 @@
 		enabledOnSearch="true"
 		label="Abilita filtro" />
 	<fieldProperty
+		name="tipo_obbligazione"
+		property="tipo_obbligazione"
+        keysProperty="competenzaResiduoKeys"		
+        inputType="SELECT"
+		readonlyProperty="ROnrobbligazione"
+		label="Tipo impegno"	
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"/>	
+	<fieldProperty
 		name="fl_nr_obbligazione"
 		property="fl_nr_obbligazione"
 		inputType="CHECKBOX"
@@ -167,6 +176,7 @@
 	<formFieldProperty name="data_scadenziario" />
 	<formFieldProperty name="nr_obbligazione" />
 	<formFieldProperty name="nr_scadenza" />
+	<formFieldProperty name="tipo_obbligazione" />
 	<formFieldProperty name="fl_fornitore" />
 	<formFieldProperty name="fl_importo" />
 	<formFieldProperty name="fl_data_scadenziario" />
@@ -181,6 +191,7 @@
 	<findFieldProperty name="codice_fiscale" />
 	<findFieldProperty name="partita_iva" />
 	<findFieldProperty name="im_importo" />
+	<findFieldProperty name="tipo_obbligazione" />
 	<findFieldProperty name="data_scadenziario" />
 	<findFieldProperty name="nr_obbligazione" />
 	<findFieldProperty name="nr_scadenza" />

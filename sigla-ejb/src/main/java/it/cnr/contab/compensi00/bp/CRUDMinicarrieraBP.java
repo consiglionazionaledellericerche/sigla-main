@@ -215,6 +215,28 @@ public void findTipiTrattamento(ActionContext context) throws BusinessProcessExc
 		throw handleException(ex);
 	}
 }
+public void findTipiPrestazioneCompenso(ActionContext context) throws BusinessProcessException{
+
+	try{
+		MinicarrieraBulk carriera = (MinicarrieraBulk)getModel();
+		if (carriera.getTipo_rapporto()!= null) {
+			MinicarrieraComponentSession component = (MinicarrieraComponentSession)createComponentSession();
+			java.util.Collection coll = component.findTipiPrestazioneCompenso(context.getUserContext(), carriera);
+			carriera.setTipiPrestazioneCompenso(coll);
+
+			if(coll == null || coll.isEmpty()){
+				carriera.setTipoPrestazioneCompenso(null);
+				throw new it.cnr.jada.comp.ApplicationException("Non esistono Tipi di prestazione associati al Tipo di Rapporto selezionato");
+			}
+		}else
+			carriera.setTipoPrestazioneCompenso(null);
+			
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
 /**
  * Genera le rate chiamando il metodo relativo sulla component
  */
@@ -470,4 +492,16 @@ public void completaIncarico(ActionContext context, MinicarrieraBulk carriera, I
 		throw handleException(ex);
 	}
 }
+/*
+public boolean isGestitePrestazioni(UserContext userContext) throws BusinessProcessException {
+	try{
+		MinicarrieraComponentSession sess = (MinicarrieraComponentSession)createComponentSession();
+		return sess.isGestitePrestazioni(userContext);
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
+*/
 }

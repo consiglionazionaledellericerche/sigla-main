@@ -1,0 +1,1230 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documento elettronico di trasmissione"
+	longDescription="Documento elettronico di trasmissione">
+	<fieldProperty
+		name="idPaese"
+		property="idPaese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nazione Trasmittente" />
+	<fieldProperty
+		name="idCodice"
+		property="idCodice"
+		inputType="TEXT"
+		inputSize="28"
+		maxLength="28"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo Fiscale Trasmittente" />
+	<fieldProperty
+		name="identificativoSdi"
+		property="identificativoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo SDI" />
+	<fieldProperty
+		name="progressivoInvio"
+		property="progressivoInvio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Prog. Trasmittente" />
+	<fieldProperty
+		name="formatoTrasmissione"
+		property="formatoTrasmissione"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Formato Trasmissione" />
+	<fieldProperty
+		name="codiceDestinatario"
+		property="codiceDestinatario"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="CUU Destinatario (UO)" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="trasmittenteTelefono"
+		property="trasmittenteTelefono"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		label="Telefono Trasmittente" />
+	<fieldProperty
+		name="trasmittenteEmail"
+		property="trasmittenteEmail"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Email Trasmittente" />
+	<fieldProperty
+		name="prestatorePaese"
+		property="prestatorePaese"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione Prestatore" />
+	<fieldProperty
+		name="prestatoreCodice"
+		property="prestatoreCodice"
+		inputType="TEXT"
+		inputSize="22"
+		enabledOnEdit="false"
+		label="Identificativo Fiscale Prestatore" />
+	<fieldProperty
+		name="prestatoreCodicefiscale"
+		property="prestatoreCodicefiscale"
+		inputType="TEXT"
+		inputSize="22"
+		enabledOnEdit="false"
+		label="Codice Fiscale Prestatore" />
+	<fieldProperty
+		name="prestatoreDenominazione"
+		property="prestatoreDenominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Denominazione Prestatore (Pers. Giuridica)" />
+	<fieldProperty
+		name="prestatoreNome"
+		property="prestatoreNome"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nome Prestatore (Persona Fisica)" />
+	<fieldProperty
+		name="prestatoreCognome"
+		property="prestatoreCognome"
+		inputType="TEXT"
+		inputSize="22"
+		enabledOnEdit="false"
+		label="Cognome Prestatore (Persona Fisica)" />
+	<fieldProperty
+		name="prestatoreTitolo"
+		property="prestatoreTitolo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Titolo Onorifico" />
+	<fieldProperty
+		name="prestatoreCodeori"
+		property="prestatoreCodeori"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice EORI" />
+	<fieldProperty
+		name="alboprofessionale"
+		property="alboprofessionale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Albo Professionale" />
+	<fieldProperty
+		name="provinciaalbo"
+		property="provinciaalbo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Provincia Albo" />
+	<fieldProperty
+		name="numeroalbo"
+		property="numeroalbo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero Iscrizione Albo" />
+	<fieldProperty
+		name="dataiscrizionealbo"
+		property="dataiscrizionealbo"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Iscrizione Albo" />
+	<fieldProperty
+		name="regimefiscale"
+		property="regimefiscale"
+		inputType="SELECT"
+		keysProperty="regimefiscaleKeys"
+		maxLength="256" 
+		enabledOnEdit="false"
+		label="Regime Fiscale" />
+	<fieldProperty
+		name="prestatoreIndirizzo"
+		property="prestatoreIndirizzo"
+		inputType="TEXT"
+		inputSize="50"
+		enabledOnEdit="false"
+		label="Indirizzo Sede" />
+	<fieldProperty
+		name="prestatoreNumerocivico"
+		property="prestatoreNumerocivico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero Civico Sede" />
+	<fieldProperty
+		name="prestatoreCap"
+		property="prestatoreCap"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="CAP" />
+	<fieldProperty
+		name="prestatoreComune"
+		property="prestatoreComune"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Comune Sede" />
+	<fieldProperty
+		name="prestatoreProvincia"
+		property="prestatoreProvincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Provoncia Sede" />
+	<fieldProperty
+		name="prestatoreNazione"
+		property="prestatoreNazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione" />
+	<fieldProperty
+		name="prestatoreCdTerzo"
+		property="prestatoreCdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="prestatoreCdAnag"
+		property="prestatoreCdAnag"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Anagrafica Terzo" />
+	<fieldProperty
+		name="prestatore"
+		property="prestatore"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="true"
+		label="Cedente/Prestatore" />
+
+	<fieldProperty
+		name="stabileorgIndirizzo"
+		property="stabileorgIndirizzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Indirizzo Stabile Org." />
+	<fieldProperty
+		name="stabileorgNumerocivico"
+		property="stabileorgNumerocivico"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero Civico Stabile Org." />
+	<fieldProperty
+		name="stabileorgCap"
+		property="stabileorgCap"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="CAP Stabile Org." />
+	<fieldProperty
+		name="stabileorgComune"
+		property="stabileorgComune"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Comune Stabile Org." />
+	<fieldProperty
+		name="stabileorgProvincia"
+		property="stabileorgProvincia"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Provincia Stabile Org." />
+	<fieldProperty
+		name="stabileorgNazione"
+		property="stabileorgNazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione Stabile Org." />
+	<fieldProperty
+		name="reaUfficio"
+		property="reaUfficio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Provincia Uff. REA" />
+	<fieldProperty
+		name="reaNumerorea"
+		property="reaNumerorea"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero REA" />
+	<fieldProperty
+		name="reaCapitalesociale"
+		property="reaCapitalesociale"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Capitale Sociale Societ\E0" />
+	<fieldProperty
+		name="reaSociounico"
+		property="reaSociounico"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Socio Unico" />
+	<fieldProperty
+		name="reaStatoliquidazione"
+		property="reaStatoliquidazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Stato Liquidazione Societ\E0" />
+	<fieldProperty
+		name="prestatoreTelefono"
+		property="prestatoreTelefono"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero Telefonico" />
+	<fieldProperty
+		name="prestatoreFax"
+		property="prestatoreFax"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero FAX" />
+	<fieldProperty
+		name="prestatoreEmail"
+		property="prestatoreEmail"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Email" />
+	<fieldProperty
+		name="riferimentoAmministrazione"
+		property="riferimentoAmministrazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice Amministrativo Prestatore" />
+	<fieldProperty
+		name="rappresentantePaese"
+		property="rappresentantePaese"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteCodice"
+		property="rappresentanteCodice"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Identificativo Fiscale Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteCodicefiscale"
+		property="rappresentanteCodicefiscale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice Fiscale Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteDenominazione"
+		property="rappresentanteDenominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Denominazione Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteNome"
+		property="rappresentanteNome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nome Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteCognome"
+		property="rappresentanteCognome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Cognome Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteTitolo"
+		property="rappresentanteTitolo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Titolo onorifico Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteCodeori"
+		property="rappresentanteCodeori"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice EORI Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteCdTerzo"
+		property="rappresentanteCdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Codice Terzo Rappresentante F." />
+	<fieldProperty
+		name="rappresentanteCdAnag"
+		property="rappresentanteCdAnag"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Anagrafica Rappresentante F." />
+	<fieldProperty
+		name="committentePaese"
+		property="committentePaese"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione Committente" />
+	<fieldProperty
+		name="committenteCodice"
+		property="committenteCodice"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Identificativo Fiscale Committente" />
+	<fieldProperty
+		name="committenteCodicefiscale"
+		property="committenteCodicefiscale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice Fiscale Committente" />
+	<fieldProperty
+		name="committenteDenominazione"
+		property="committenteDenominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="3"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Denominazione Committente" />
+	<fieldProperty
+		name="committenteNome"
+		property="committenteNome"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nome Committente" />
+	<fieldProperty
+		name="committenteCognome"
+		property="committenteCognome"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Cognome Committente" />
+	<fieldProperty
+		name="committenteTitolo"
+		property="committenteTitolo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Titolo Onorifico Committente" />
+	<fieldProperty
+		name="committenteCodeori"
+		property="committenteCodeori"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice EORI Committente" />
+	<fieldProperty
+		name="committenteIndirizzo"
+		property="committenteIndirizzo"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Indirizzo Committente" />
+	<fieldProperty
+		name="committenteNumerocivico"
+		property="committenteNumerocivico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero Civico Committente" />
+	<fieldProperty
+		name="committenteCap"
+		property="committenteCap"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="CAP" />
+	<fieldProperty
+		name="committenteComune"
+		property="committenteComune"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Comune Committente" />
+	<fieldProperty
+		name="committenteProvincia"
+		property="committenteProvincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Provincia Committente" />
+	<fieldProperty
+		name="committenteNazione"
+		property="committenteNazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione" />
+	<fieldProperty
+		name="committenteCdTerzo"
+		property="committenteCdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="null" />
+	<fieldProperty
+		name="intermediarioPaese"
+		property="intermediarioPaese"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione Intermediario" />
+	<fieldProperty
+		name="intermediarioCodice"
+		property="intermediarioCodice"
+		inputType="TEXT"
+		inputSize="22"
+		enabledOnEdit="false"
+		label="Identificativo Fiscale Intermediario" />
+	<fieldProperty
+		name="intermediarioCodicefiscale"
+		property="intermediarioCodicefiscale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice Fiscale Intermediario" />
+	<fieldProperty
+		name="intermediarioDenominazione"
+		property="intermediarioDenominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Denominazione Intermediario" />
+	<fieldProperty
+		name="intermediarioNome"
+		property="intermediarioNome"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nome Intermediario" />
+	<fieldProperty
+		name="intermediarioCognome"
+		property="intermediarioCognome"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Cognome Intermediario" />
+	<fieldProperty
+		name="intermediarioTitolo"
+		property="intermediarioTitolo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Titolo Onorifico Intermediario" />
+	<fieldProperty
+		name="intermediarioCodeori"
+		property="intermediarioCodeori"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice EORI Intermediario" />
+	<fieldProperty
+		name="intermediarioCdTerzo"
+		property="intermediarioCdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Codice Terzo Intermediario" />
+	<fieldProperty
+		name="intermediarioCdAnag"
+		property="intermediarioCdAnag"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Anagrafica Intermediario" />
+	<fieldProperty
+		name="soggettoEmittente"
+		property="soggettoEmittente"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Soggetto Emittente" />
+	<fieldProperty
+		name="codiceUnivocoSdi"
+		property="codiceUnivocoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Codice Univoco SDI" />
+	<fieldProperty
+		name="dataRicezione"
+		property="dataRicezione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Data Ricezione" />
+	<fieldProperty
+		name="anomalieRicezione"
+		property="anomalieRicezione"
+		inputType="TEXTAREA"
+		cols="90"
+		rows="3"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Segnalazioni da verificare" />
+		
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="idPaese" />
+		<formFieldProperty
+			name="idCodice" />
+		<formFieldProperty
+			name="identificativoSdi" />
+	</form>
+	<formFieldProperty
+		name="idPaese" />
+	<formFieldProperty
+		name="idCodice" />
+	<formFieldProperty
+		name="identificativoSdi" />
+	<formFieldProperty
+		name="progressivoInvio" />
+	<formFieldProperty
+		name="formatoTrasmissione" />
+	<formFieldProperty
+		name="codiceDestinatario" />
+	<formFieldProperty
+		name="trasmittenteTelefono" />
+	<formFieldProperty
+		name="trasmittenteEmail" />
+	<formFieldProperty
+		name="prestatorePaese" />
+	<formFieldProperty
+		name="prestatoreCodice" />
+	<formFieldProperty
+		name="prestatoreCodicefiscale" />
+	<formFieldProperty
+		name="prestatoreDenominazione" />
+	<formFieldProperty
+		name="prestatoreNome" />
+	<formFieldProperty
+		name="prestatoreCognome" />
+	<formFieldProperty
+		name="prestatoreTitolo" />
+	<formFieldProperty
+		name="prestatoreCodeori" />
+	<formFieldProperty
+		name="alboprofessionale" />
+	<formFieldProperty
+		name="provinciaalbo" />
+	<formFieldProperty
+		name="numeroalbo" />
+	<formFieldProperty
+		name="dataiscrizionealbo" />
+	<formFieldProperty
+		name="regimefiscale" />
+	<formFieldProperty
+		name="prestatoreIndirizzo" />
+	<formFieldProperty
+		name="prestatoreNumerocivico" />
+	<formFieldProperty
+		name="prestatoreCap" />
+	<formFieldProperty
+		name="prestatoreComune" />
+	<formFieldProperty
+		name="prestatoreProvincia" />
+	<formFieldProperty
+		name="prestatoreNazione" />
+	<formFieldProperty
+		name="prestatore" />	
+	<formFieldProperty
+		name="stabileorgIndirizzo" />
+	<formFieldProperty
+		name="stabileorgNumerocivico" />
+	<formFieldProperty
+		name="stabileorgCap" />
+	<formFieldProperty
+		name="stabileorgComune" />
+	<formFieldProperty
+		name="stabileorgProvincia" />
+	<formFieldProperty
+		name="stabileorgNazione" />
+	<formFieldProperty
+		name="reaUfficio" />
+	<formFieldProperty
+		name="reaNumerorea" />
+	<formFieldProperty
+		name="reaCapitalesociale" />
+	<formFieldProperty
+		name="reaSociounico" />
+	<formFieldProperty
+		name="reaStatoliquidazione" />
+	<formFieldProperty
+		name="prestatoreTelefono" />
+	<formFieldProperty
+		name="prestatoreFax" />
+	<formFieldProperty
+		name="prestatoreEmail" />
+	<formFieldProperty
+		name="riferimentoAmministrazione" />
+	<formFieldProperty
+		name="rappresentantePaese" />
+	<formFieldProperty
+		name="rappresentanteCodice" />
+	<formFieldProperty
+		name="rappresentanteCodicefiscale" />
+	<formFieldProperty
+		name="rappresentanteDenominazione" />
+	<formFieldProperty
+		name="rappresentanteNome" />
+	<formFieldProperty
+		name="rappresentanteCognome" />
+	<formFieldProperty
+		name="rappresentanteTitolo" />
+	<formFieldProperty
+		name="rappresentanteCodeori" />
+	<formFieldProperty
+		name="committentePaese" />
+	<formFieldProperty
+		name="committenteCodice" />
+	<formFieldProperty
+		name="committenteCodicefiscale" />
+	<formFieldProperty
+		name="committenteDenominazione" />
+	<formFieldProperty
+		name="committenteNome" />
+	<formFieldProperty
+		name="committenteCognome" />
+	<formFieldProperty
+		name="committenteTitolo" />
+	<formFieldProperty
+		name="committenteCodeori" />
+	<formFieldProperty
+		name="committenteIndirizzo" />
+	<formFieldProperty
+		name="committenteNumerocivico" />
+	<formFieldProperty
+		name="committenteCap" />
+	<formFieldProperty
+		name="committenteComune" />
+	<formFieldProperty
+		name="committenteProvincia" />
+	<formFieldProperty
+		name="committenteNazione" />
+	<formFieldProperty
+		name="intermediarioPaese" />
+	<formFieldProperty
+		name="intermediarioCodice" />
+	<formFieldProperty
+		name="intermediarioCodicefiscale" />
+	<formFieldProperty
+		name="intermediarioDenominazione" />
+	<formFieldProperty
+		name="intermediarioNome" />
+	<formFieldProperty
+		name="intermediarioCognome" />
+	<formFieldProperty
+		name="intermediarioTitolo" />
+	<formFieldProperty
+		name="intermediarioCodeori" />
+	<formFieldProperty
+		name="soggettoEmittente" />
+	<formFieldProperty
+		name="codiceUnivocoSdi" />
+	<formFieldProperty
+		name="dataRicezione" />
+	<formFieldProperty
+		name="anomalieRicezione" />
+	<findFieldProperty
+		name="idPaese" />
+	<findFieldProperty
+		name="idCodice" />
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="progressivoInvio" />
+	<findFieldProperty
+		name="formatoTrasmissione" />
+	<findFieldProperty
+		name="codiceDestinatario" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="trasmittenteTelefono" />
+	<findFieldProperty
+		name="trasmittenteEmail" />
+	<findFieldProperty
+		name="prestatorePaese" />
+	<findFieldProperty
+		name="prestatoreCodice" />
+	<findFieldProperty
+		name="prestatoreCodicefiscale" />
+	<findFieldProperty
+		name="prestatoreDenominazione" />
+	<findFieldProperty
+		name="prestatoreNome" />
+	<findFieldProperty
+		name="prestatoreCognome" />
+	<findFieldProperty
+		name="prestatoreTitolo" />
+	<findFieldProperty
+		name="prestatoreCodeori" />
+	<findFieldProperty
+		name="alboprofessionale" />
+	<findFieldProperty
+		name="provinciaalbo" />
+	<findFieldProperty
+		name="numeroalbo" />
+	<findFieldProperty
+		name="dataiscrizionealbo" />
+	<findFieldProperty
+		name="regimefiscale" />
+	<findFieldProperty
+		name="prestatoreIndirizzo" />
+	<findFieldProperty
+		name="prestatoreNumerocivico" />
+	<findFieldProperty
+		name="prestatoreCap" />
+	<findFieldProperty
+		name="prestatoreComune" />
+	<findFieldProperty
+		name="prestatoreProvincia" />
+	<findFieldProperty
+		name="prestatoreNazione" />
+	<findFieldProperty
+		name="prestatoreCdTerzo" />
+	<findFieldProperty
+		name="prestatoreCdAnag" />
+	<findFieldProperty
+		name="stabileorgIndirizzo" />
+	<findFieldProperty
+		name="stabileorgNumerocivico" />
+	<findFieldProperty
+		name="stabileorgCap" />
+	<findFieldProperty
+		name="stabileorgComune" />
+	<findFieldProperty
+		name="stabileorgProvincia" />
+	<findFieldProperty
+		name="stabileorgNazione" />
+	<findFieldProperty
+		name="reaUfficio" />
+	<findFieldProperty
+		name="reaNumerorea" />
+	<findFieldProperty
+		name="reaCapitalesociale" />
+	<findFieldProperty
+		name="reaSociounico" />
+	<findFieldProperty
+		name="reaStatoliquidazione" />
+	<findFieldProperty
+		name="prestatoreTelefono" />
+	<findFieldProperty
+		name="prestatoreFax" />
+	<findFieldProperty
+		name="prestatoreEmail" />
+	<findFieldProperty
+		name="riferimentoAmministrazione" />
+	<findFieldProperty
+		name="rappresentantePaese" />
+	<findFieldProperty
+		name="rappresentanteCodice" />
+	<findFieldProperty
+		name="rappresentanteCodicefiscale" />
+	<findFieldProperty
+		name="rappresentanteDenominazione" />
+	<findFieldProperty
+		name="rappresentanteNome" />
+	<findFieldProperty
+		name="rappresentanteCognome" />
+	<findFieldProperty
+		name="rappresentanteTitolo" />
+	<findFieldProperty
+		name="rappresentanteCodeori" />
+	<findFieldProperty
+		name="rappresentanteCdTerzo" />
+	<findFieldProperty
+		name="rappresentanteCdAnag" />
+	<findFieldProperty
+		name="committentePaese" />
+	<findFieldProperty
+		name="committenteCodice" />
+	<findFieldProperty
+		name="committenteCodicefiscale" />
+	<findFieldProperty
+		name="committenteDenominazione" />
+	<findFieldProperty
+		name="committenteNome" />
+	<findFieldProperty
+		name="committenteCognome" />
+	<findFieldProperty
+		name="committenteTitolo" />
+	<findFieldProperty
+		name="committenteCodeori" />
+	<findFieldProperty
+		name="committenteIndirizzo" />
+	<findFieldProperty
+		name="committenteNumerocivico" />
+	<findFieldProperty
+		name="committenteCap" />
+	<findFieldProperty
+		name="committenteComune" />
+	<findFieldProperty
+		name="committenteProvincia" />
+	<findFieldProperty
+		name="committenteNazione" />
+	<findFieldProperty
+		name="committenteCdTerzo" />
+	<findFieldProperty
+		name="intermediarioPaese" />
+	<findFieldProperty
+		name="intermediarioCodice" />
+	<findFieldProperty
+		name="intermediarioCodicefiscale" />
+	<findFieldProperty
+		name="intermediarioDenominazione" />
+	<findFieldProperty
+		name="intermediarioNome" />
+	<findFieldProperty
+		name="intermediarioCognome" />
+	<findFieldProperty
+		name="intermediarioTitolo" />
+	<findFieldProperty
+		name="intermediarioCodeori" />
+	<findFieldProperty
+		name="intermediarioCdTerzo" />
+	<findFieldProperty
+		name="intermediarioCdAnag" />
+	<findFieldProperty
+		name="soggettoEmittente" />
+	<findFieldProperty
+		name="codiceUnivocoSdi" />
+	<findFieldProperty
+		name="dataRicezione" />
+	<findFieldProperty
+		name="anomalieRicezione" />
+	<columnFieldProperty
+		name="idPaese" />
+	<columnFieldProperty
+		name="idCodice" />
+	<columnFieldProperty
+		name="identificativoSdi" />
+	<columnFieldProperty
+		name="progressivoInvio" />
+	<columnFieldProperty
+		name="formatoTrasmissione" />
+	<columnFieldProperty
+		name="codiceDestinatario" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="trasmittenteTelefono" />
+	<columnFieldProperty
+		name="trasmittenteEmail" />
+	<columnFieldProperty
+		name="prestatorePaese" />
+	<columnFieldProperty
+		name="prestatoreCodice" />
+	<columnFieldProperty
+		name="prestatoreCodicefiscale" />
+	<columnFieldProperty
+		name="prestatoreDenominazione" />
+	<columnFieldProperty
+		name="prestatoreNome" />
+	<columnFieldProperty
+		name="prestatoreCognome" />
+	<columnFieldProperty
+		name="prestatoreTitolo" />
+	<columnFieldProperty
+		name="prestatoreCodeori" />
+	<columnFieldProperty
+		name="alboprofessionale" />
+	<columnFieldProperty
+		name="provinciaalbo" />
+	<columnFieldProperty
+		name="numeroalbo" />
+	<columnFieldProperty
+		name="dataiscrizionealbo" />
+	<columnFieldProperty
+		name="regimefiscale" />
+	<columnFieldProperty
+		name="prestatoreIndirizzo" />
+	<columnFieldProperty
+		name="prestatoreNumerocivico" />
+	<columnFieldProperty
+		name="prestatoreCap" />
+	<columnFieldProperty
+		name="prestatoreComune" />
+	<columnFieldProperty
+		name="prestatoreProvincia" />
+	<columnFieldProperty
+		name="prestatoreNazione" />
+	<columnFieldProperty
+		name="prestatoreCdTerzo" />
+	<columnFieldProperty
+		name="prestatoreCdAnag" />
+	<columnFieldProperty
+		name="stabileorgIndirizzo" />
+	<columnFieldProperty
+		name="stabileorgNumerocivico" />
+	<columnFieldProperty
+		name="stabileorgCap" />
+	<columnFieldProperty
+		name="stabileorgComune" />
+	<columnFieldProperty
+		name="stabileorgProvincia" />
+	<columnFieldProperty
+		name="stabileorgNazione" />
+	<columnFieldProperty
+		name="reaUfficio" />
+	<columnFieldProperty
+		name="reaNumerorea" />
+	<columnFieldProperty
+		name="reaCapitalesociale" />
+	<columnFieldProperty
+		name="reaSociounico" />
+	<columnFieldProperty
+		name="reaStatoliquidazione" />
+	<columnFieldProperty
+		name="prestatoreTelefono" />
+	<columnFieldProperty
+		name="prestatoreFax" />
+	<columnFieldProperty
+		name="prestatoreEmail" />
+	<columnFieldProperty
+		name="riferimentoAmministrazione" />
+	<columnFieldProperty
+		name="rappresentantePaese" />
+	<columnFieldProperty
+		name="rappresentanteCodice" />
+	<columnFieldProperty
+		name="rappresentanteCodicefiscale" />
+	<columnFieldProperty
+		name="rappresentanteDenominazione" />
+	<columnFieldProperty
+		name="rappresentanteNome" />
+	<columnFieldProperty
+		name="rappresentanteCognome" />
+	<columnFieldProperty
+		name="rappresentanteTitolo" />
+	<columnFieldProperty
+		name="rappresentanteCodeori" />
+	<columnFieldProperty
+		name="rappresentanteCdTerzo" />
+	<columnFieldProperty
+		name="rappresentanteCdAnag" />
+	<columnFieldProperty
+		name="committentePaese" />
+	<columnFieldProperty
+		name="committenteCodice" />
+	<columnFieldProperty
+		name="committenteCodicefiscale" />
+	<columnFieldProperty
+		name="committenteDenominazione" />
+	<columnFieldProperty
+		name="committenteNome" />
+	<columnFieldProperty
+		name="committenteCognome" />
+	<columnFieldProperty
+		name="committenteTitolo" />
+	<columnFieldProperty
+		name="committenteCodeori" />
+	<columnFieldProperty
+		name="committenteIndirizzo" />
+	<columnFieldProperty
+		name="committenteNumerocivico" />
+	<columnFieldProperty
+		name="committenteCap" />
+	<columnFieldProperty
+		name="committenteComune" />
+	<columnFieldProperty
+		name="committenteProvincia" />
+	<columnFieldProperty
+		name="committenteNazione" />
+	<columnFieldProperty
+		name="committenteCdTerzo" />
+	<columnFieldProperty
+		name="intermediarioPaese" />
+	<columnFieldProperty
+		name="intermediarioCodice" />
+	<columnFieldProperty
+		name="intermediarioCodicefiscale" />
+	<columnFieldProperty
+		name="intermediarioDenominazione" />
+	<columnFieldProperty
+		name="intermediarioNome" />
+	<columnFieldProperty
+		name="intermediarioCognome" />
+	<columnFieldProperty
+		name="intermediarioTitolo" />
+	<columnFieldProperty
+		name="intermediarioCodeori" />
+	<columnFieldProperty
+		name="intermediarioCdTerzo" />
+	<columnFieldProperty
+		name="intermediarioCdAnag" />
+	<columnFieldProperty
+		name="soggettoEmittente" />
+	<columnFieldProperty
+		name="codiceUnivocoSdi" />
+	<columnFieldProperty
+		name="dataRicezione" />
+	<columnFieldProperty
+		name="anomalieRicezione" />
+</bulkInfo>

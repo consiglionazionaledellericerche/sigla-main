@@ -71,4 +71,13 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="CRUDUtenteGestoreAction" />		
   	</businessProcess>	
+  	
+  	<businessProcess
+      name="CRUDUtenteFirmaBP" className="it.cnr.contab.utenze00.bp.CRUDUtenteFirmaBP">
+    	<forward name="default" path="/utenze00/gestione_utente_firma.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="CRUDAction" />		
+  	</businessProcess>	
+  	
 </action-mappings>

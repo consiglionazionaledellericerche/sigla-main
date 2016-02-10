@@ -1,12 +1,11 @@
 package it.cnr.contab.anagraf00.ejb;
-import java.rmi.*;
-import java.sql.Timestamp;
-import java.util.Date;
-
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.ejb.*;
+
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class TransactionalTerzoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements TerzoComponentSession {
 public it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext param0,it.cnr.jada.persistency.sql.CompoundFindClause param1,it.cnr.jada.bulk.OggettoBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
@@ -392,6 +391,23 @@ public Integer findMatricolaDipendente(UserContext userContext, TerzoBulk terzo,
 				userContext,
 				terzo,
 				dataCompetenzaDocumento});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public it.cnr.contab.anagraf00.core.bulk.TerzoBulk completaTerzo(it.cnr.jada.UserContext param0,it.cnr.contab.anagraf00.core.bulk.TerzoBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.anagraf00.core.bulk.TerzoBulk)invoke("completaTerzo",new Object[] {
+			param0,
+			param1 });
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {

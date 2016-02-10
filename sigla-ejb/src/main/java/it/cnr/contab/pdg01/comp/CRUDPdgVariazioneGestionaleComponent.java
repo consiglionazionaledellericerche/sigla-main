@@ -21,6 +21,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -114,6 +115,7 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 			if (!pdg.isStorno() && !pdg.getTipo_variazione().isMovimentoSuFondi())
 				controllaQuadraturaImportiAree(userContext, pdg);
 			
+			aggiornaLimiteSpesa(userContext, pdg);
 			/*
 			 * Verifico che l'assestato di tutte le combinazioni scelte sia positivo in modo da avvertire
 			 * l'utente del problema di approvazione che avrebbe  
@@ -125,6 +127,31 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		return pdg;
 	}
 	
+
+private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg) throws ComponentException {
+
+	try {
+		LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
+			"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
+			+ "CNRCTB053.aggiornaLimiteSpesaVar(?,?,?,?)}",false,this.getClass());
+		cs.setObject( 1, pdg.getEsercizio() );
+		cs.setObject( 2, pdg.getPg_variazione_pdg() );
+		cs.setObject( 3,"C"); //competenza 
+		cs.setObject( 4, userContext.getUser());
+		try {
+			lockBulk(userContext,pdg);
+			cs.executeQuery();
+		} catch (Throwable e) {
+			throw handleException(pdg,e);
+		} finally {
+			cs.close();
+		}	
+	} catch (java.sql.SQLException e) {
+		// Gestisce eccezioni SQL specifiche (errori di lock,...)
+		throw handleSQLException(e);
+	}
+}
+
 	protected Voce_f_saldi_cdr_lineaBulk trovaSaldo(UserContext userContext, Pdg_variazione_riga_gestBulk pdg_det,Voce_fBulk voce) throws PersistencyException, ComponentException{
 		Voce_f_saldi_cdr_lineaBulk saldo = (Voce_f_saldi_cdr_lineaBulk)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(
 		   new Voce_f_saldi_cdr_lineaBulk(pdg_det.getEsercizio(),
@@ -294,8 +321,10 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 			throw new ComponentException(e);
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
-		}	
-		return (Pdg_variazioneBulk)super.modificaConBulk(userContext, pdg);
+		}
+		super.modificaConBulk(userContext, pdg);
+		aggiornaLimiteSpesa(userContext, pdg);
+		return pdg;
 	}		
 
 	/**
@@ -310,9 +339,16 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 	**/
 	public void eliminaConBulk(UserContext userContext, OggettoBulk bulk) throws ComponentException{
 		try {		
+			String stato_prec=null;
+			Pdg_variazioneBulk var = (Pdg_variazioneBulk) bulk;
+			if (var.getStato().compareTo(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA)==0)
+				stato_prec=Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA;
+			
 			if (bulk instanceof ICancellatoLogicamente){
 					((ICancellatoLogicamente)bulk).cancellaLogicamente();
 					updateBulk(userContext, bulk);
+				if(stato_prec!=null)		
+					aggiornaLimiteSpesa(userContext, var);
 			}else{
 				super.eliminaConBulk(userContext, bulk);				
 			}
@@ -434,6 +470,8 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 			BigDecimal totImportoSpesaNegativo = Utility.ZERO;
 			BigDecimal totSommaEntrata = Utility.ZERO;
 			BigDecimal totSommaSpesa = Utility.ZERO;
+			BigDecimal impTotaleEntrateDaPrel = Utility.ZERO;
+			BigDecimal impTotaleSpesePrel = Utility.ZERO;
 			int contaRigheEntrata = Utility.ZERO.intValue();
 			int contaRigheSpesa = Utility.ZERO.intValue();
 
@@ -532,9 +570,37 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 				if (contaRigheSpesa==Utility.ZERO.intValue()|| contaRigheEntrata==Utility.ZERO.intValue())
 					throw new ApplicationException("E' necessario inserire sia dettagli di spesa che di entrata in un variazione di tipo 'Variazione Positiva'");
 				if (totImportoSpesaNegativo.compareTo(Utility.ZERO)!=0 || totImportoEntrataNegativo.compareTo(Utility.ZERO)!=0)
-					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' non è possibile inserire dettagli di entrata/spesa con importi negativi.");
-				if (totSommaEntrata.compareTo(totSommaSpesa)!=0)
-					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' il totale delle variazioni di spesa ("+
+					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' non è possibile inserire dettagli di entrata/spesa con importi negativi.");			
+								CdrBulk cdr_prel=null;
+								Pdg_variazioneHome pdgHome = (Pdg_variazioneHome)getHome(usercontext, Pdg_variazioneBulk.class);
+								//Calcolo il totale delle entrate 
+								for (java.util.Iterator entrate = pdgHome.findDettagliEntrateVariazioneGestionaleSoggettePrelievo(pdg).iterator();entrate.hasNext();){
+									Pdg_variazione_riga_gestBulk etr_det = (Pdg_variazione_riga_gestBulk)entrate.next();
+									Elemento_voceBulk ev = (Elemento_voceBulk)getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(etr_det.getElemento_voce());
+									if(etr_det.getElemento_voce()!=null &&etr_det.getElemento_voce().getPerc_prelievo_pdgp_entrate().compareTo(ZERO)!=0){
+										CdrBulk cdr = (CdrBulk)getHome(usercontext, CdrBulk.class).findByPrimaryKey(etr_det.getCdr_assegnatario());
+										cdr.setUnita_padre((Unita_organizzativaBulk)getHome(usercontext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
+										if(!etr_det.getCdr_assegnatario().isCdrSAC()){
+											impTotaleEntrateDaPrel = impTotaleEntrateDaPrel.add(etr_det.getIm_entrata().multiply(ev.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN));
+										    cdr_prel=etr_det.getCdr_assegnatario();
+										}
+									}
+								}
+								//Calcolo il totale delle spese 
+								for (java.util.Iterator spese = pdgHome.findDettagliSpesaVariazioneGestionalePrelievo(pdg).iterator();spese.hasNext();){
+									Pdg_variazione_riga_gestBulk spesa_det = (Pdg_variazione_riga_gestBulk)spese.next();
+									if(cdr_prel!= null && cdr_prel.getCd_centro_responsabilita()!=null && spesa_det.getCdr_assegnatario().getCd_centro_responsabilita().compareTo(cdr_prel.getCd_centro_responsabilita())==0)
+										impTotaleSpesePrel = impTotaleSpesePrel.add(spesa_det.getIm_spese_gest_accentrata_est()).add(spesa_det.getIm_spese_gest_decentrata_est());
+								}
+							if (impTotaleEntrateDaPrel.compareTo(ZERO)!=0){
+								//if(impTotaleSpesePrel.compareTo(ZERO)!=0){
+									if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
+										throw new ApplicationException("Il contributo per l'attività ordinaria per il cdr "+cdr_prel.getCd_centro_responsabilita()+" è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+											". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
+								//}		
+							}
+						if (totSommaEntrata.compareTo(totSommaSpesa)!=0)
+								throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' il totale delle variazioni di spesa ("+
 											   new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)+")"+
 											   "\n" + "deve essere uguale al totale delle variazioni di entrata ("+
 											   new it.cnr.contab.util.EuroFormat().format(totSommaEntrata)+")");
@@ -556,6 +622,7 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		}					
 	}
 
+	
 	public void inizializzaSommeCdR(UserContext userContext, Pdg_variazioneBulk pdg) throws ComponentException{
 		try {		
 			Ass_pdg_variazione_cdrHome testataHome = (Ass_pdg_variazione_cdrHome)getHome(userContext, Ass_pdg_variazione_cdrBulk.class);
@@ -938,7 +1005,7 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 																    rigaVar.getTi_gestione(),
 																    rigaVar.getCd_elemento_voce()));
 	
-				if (assestato.getAssestato_finale().compareTo(Utility.ZERO) == -1)
+				if (assestato==null || assestato.getAssestato_finale().compareTo(Utility.ZERO) == -1)
 					messaggio = ((messaggio==null)?"Attenzione!":(messaggio + "<BR>")) + 
 					     "Al momento la disponibilità del CdR "+rigaVar.getCd_cdr_assegnatario()+
 					     " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() + 
@@ -992,7 +1059,7 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 			BigDecimal impEtr = Utility.ZERO;
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sql.prepareStatement(getConnection(userContext));
 					try {
@@ -1131,4 +1198,15 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		}
 	  return null;
 	}	
+	public it.cnr.jada.bulk.OggettoBulk statoPrecedente(
+			UserContext userContext, it.cnr.jada.bulk.OggettoBulk oggettoBulk)
+			throws ComponentException {
+		Pdg_variazioneBulk var = (Pdg_variazioneBulk) oggettoBulk;
+		var.setStato(Pdg_variazioneBulk.STATO_PROPOSTA_PROVVISORIA);
+		var.setDt_chiusura(null);
+		var.setToBeUpdated(); 
+		var = (Pdg_variazioneBulk) super.modificaConBulk(userContext, var);
+		aggiornaLimiteSpesa(userContext, var);
+		return var;
+	}
 }

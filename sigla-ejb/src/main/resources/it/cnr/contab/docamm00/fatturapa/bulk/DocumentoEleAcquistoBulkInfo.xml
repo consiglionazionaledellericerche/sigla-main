@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documento elettronico di trasmissione acquisto"
+	longDescription="Documento elettronico di trasmissione acquisto">
+	<fieldProperty
+		name="idPaese"
+		property="documentoEleTestata.idPaese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nazione Trasmittente" />
+	<fieldProperty
+		name="idCodice"
+		property="documentoEleTestata.idCodice"
+		inputType="TEXT"
+		inputSize="28"
+		maxLength="28"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo Fiscale Trasmittente" />
+	<fieldProperty
+		name="identificativoSdi"
+		property="documentoEleTestata.identificativoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo SDI" />
+	<fieldProperty
+		name="progressivo"
+		property="documentoEleTestata.progressivo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="progressivoAcquisto"
+		property="progressivoAcquisto"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Progressivo Riga Acquisto" />
+	<fieldProperty
+		name="numeroLinea"
+		property="numeroLinea"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Numero Riga Acquisto" />
+	<fieldProperty
+		name="tipoRifacquisto"
+		property="tipoRifacquisto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Tipo Riferimento Acquisto" />
+	<fieldProperty
+		name="acquistoDocumento"
+		property="acquistoDocumento"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Documento Riferimento Acquisto" />
+	<fieldProperty
+		name="acquistoData"
+		property="acquistoData"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Riferimento Acquisto" />
+	<fieldProperty
+		name="acquistoNumitem"
+		property="acquistoNumitem"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Prog Riga Riferimento Acquisto" />
+	<fieldProperty
+		name="acquistoCommessa"
+		property="acquistoCommessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Commessa" />
+	<fieldProperty
+		name="acquistoCup"
+		property="acquistoCup"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		label="CUP" />
+	<fieldProperty
+		name="acquistoCig"
+		property="acquistoCig"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		label="CIG" />
+	<fieldProperty
+		name="anomalie"
+		property="anomalie"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Segnalazioni da verificare" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="idPaese" />
+		<formFieldProperty
+			name="idCodice" />
+		<formFieldProperty
+			name="identificativoSdi" />
+		<formFieldProperty
+			name="progressivo" />
+		<formFieldProperty
+			name="progressivoAcquisto" />
+	</form>
+	<formFieldProperty
+		name="numeroLinea" />
+	<formFieldProperty
+		name="tipoRifacquisto" />
+	<formFieldProperty
+		name="acquistoDocumento" />
+	<formFieldProperty
+		name="acquistoData" />
+	<formFieldProperty
+		name="acquistoNumitem" />
+	<formFieldProperty
+		name="acquistoCommessa" />
+	<formFieldProperty
+		name="acquistoCup" />
+	<formFieldProperty
+		name="acquistoCig" />
+	<formFieldProperty
+		name="anomalie" />
+	<findFieldProperty
+		name="idPaese" />
+	<findFieldProperty
+		name="idCodice" />
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="progressivoAcquisto" />
+	<findFieldProperty
+		name="numeroLinea" />
+	<findFieldProperty
+		name="tipoRifacquisto" />
+	<findFieldProperty
+		name="acquistoDocumento" />
+	<findFieldProperty
+		name="acquistoData" />
+	<findFieldProperty
+		name="acquistoNumitem" />
+	<findFieldProperty
+		name="acquistoCommessa" />
+	<findFieldProperty
+		name="acquistoCup" />
+	<findFieldProperty
+		name="acquistoCig" />
+	<findFieldProperty
+		name="anomalie" />
+	<columnFieldProperty
+		name="progressivoAcquisto" />
+	<columnFieldProperty
+		name="numeroLinea" />
+	<columnFieldProperty
+		name="tipoRifacquisto" />
+	<columnFieldProperty
+		name="acquistoDocumento" />
+	<columnFieldProperty
+		name="acquistoData" />
+	<columnFieldProperty
+		name="acquistoNumitem" />
+	<columnFieldProperty
+		name="acquistoCommessa" />
+	<columnFieldProperty
+		name="acquistoCup" />
+	<columnFieldProperty
+		name="acquistoCig" />
+	<columnFieldProperty
+		name="anomalie" />
+</bulkInfo>

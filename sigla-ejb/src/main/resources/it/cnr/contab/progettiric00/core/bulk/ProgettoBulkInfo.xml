@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_unita_organizzativa"
 		property="unita_organizzativa.cd_unita_organizzativa"
@@ -118,6 +118,14 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		label="Codice Responsabile" />
+	<fieldProperty
+		name="codice_fiscale_responsabile"
+		property="responsabile.anagrafico.codice_fiscale"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Fiscale"
+		nullable="true"		
+		/>
 	<fieldProperty
 		name="responsabile"
 		property="responsabile"
@@ -262,6 +270,16 @@
 		name="livello"
 		property="livello"
 		keysProperty="livello_progettoKeys"
+		label="Livello"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="livello2016"
+		property="livello"
+		keysProperty="livello_progetto2016Keys"
 		label="Livello"
 		inputType="ROTEXT"
 		enabledOnEdit="true"
@@ -517,6 +535,14 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		layout="HORIZONTAL" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		label="Pg Progetto"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"/>
 
 	<form
 		name="searchtool" >
@@ -582,7 +608,9 @@
 	<formFieldProperty
 		name="ds_progetto_padre" />		
 	<formFieldProperty
-		name="livello" />				
+		name="livello" />
+	<formFieldProperty
+		name="livello2016" />
 	<formFieldProperty
 		name="livello_padre" />
 	<formFieldProperty
@@ -662,6 +690,9 @@
 	<columnFieldProperty
 		name="cd_responsabile_terzo" />
 	<columnFieldProperty
+		name="cd_responsabile_denominazione"
+		property="responsabile.denominazione_sede" />
+	<columnFieldProperty
 		name="dt_inizio" />
 	<columnFieldProperty
 		name="dt_fine" />
@@ -673,6 +704,63 @@
 		name="durata_progetto" />
 	<columnFieldProperty
 		name="note" />
+
+	<columnSet name="nuovoPdg">
+		<columnFieldProperty
+			name="livello2016" />
+		<columnFieldProperty
+			name="cd_progetto" />
+		<columnFieldProperty
+			name="cd_progetto_padre" 
+			label="Area Progettuale"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="ds_unita_organizzativa" />
+		<columnFieldProperty
+			name="importo_progetto" />
+		<columnFieldProperty
+			name="importo_divisa" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="cd_divisa" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="cd_responsabile_denominazione"
+			property="responsabile.denominazione_sede" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
+	</columnSet>
+	
+	<columnSet	name="restService">
+		<columnFieldProperty name="cd_progetto"/>
+		<columnFieldProperty name="pg_progetto"/>
+		<columnFieldProperty name="tipo_fase" />
+		<columnFieldProperty name="dt_proroga" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="cd_responsabile_terzo" />
+		<columnFieldProperty name="cd_responsabile_denominazione" />
+		<columnFieldProperty name="codice_fiscale_responsabile" />
+		<columnFieldProperty name="dt_inizio" />
+		<columnFieldProperty name="dt_fine" />
+		<columnFieldProperty name="stato" />
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cd_unita_organizzativa" />
+	</columnSet>
 
 	<columnSet
 		name="filtro_ricerca_moduli">
@@ -731,6 +819,65 @@
 		name="dt_proroga" />
 	<columnFieldProperty
 		name="cd_divisa" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	<columnFieldProperty
+		name="dt_fine" />
+	<columnFieldProperty
+		name="cd_tipo_progetto" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="durata_progetto" />
+	<columnFieldProperty
+		name="note" />
+	</columnSet>
+
+<columnSet
+		name="filtro_ricerca_aree">
+	<columnFieldProperty
+		name="cd_progetto"
+		label="Area Progettuale" />
+	<columnFieldProperty
+		name="tipo_fase" />
+	<columnFieldProperty
+		name="dt_proroga" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	<columnFieldProperty
+		name="dt_fine" />
+	<columnFieldProperty
+		name="cd_tipo_progetto" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="durata_progetto" />
+	<columnFieldProperty
+		name="note" />
+	</columnSet>
+	
+	<columnSet
+		name="filtro_ricerca_prog2">
+	<columnFieldProperty
+		name="cd_progetto"
+		label="Progetto" />
+	<columnFieldProperty
+		name="cd_progetto_padre"
+		label="Area progettuale" />
+	<columnFieldProperty
+		name="tipo_fase" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="dt_proroga" />
 	<columnFieldProperty
 		name="ds_progetto" />
 	<columnFieldProperty
@@ -933,6 +1080,64 @@
 		name="note" />
 	</freeSearchSet>		
 
+<freeSearchSet
+		name="filtro_ricerca_aree">
+	<findFieldProperty
+		name="cd_progetto"
+		label="Area Progettuale" />
+	<findFieldProperty
+		name="tipo_fase" />
+	<findFieldProperty
+		name="dt_proroga" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />
+	<findFieldProperty
+		name="dt_inizio" />
+	<findFieldProperty
+		name="dt_fine" />
+	<findFieldProperty
+		name="cd_tipo_progetto" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="durata_progetto" />
+	<findFieldProperty
+		name="note" />
+	</freeSearchSet>
+	
+	<freeSearchSet
+		name="filtro_ricerca_prog2">
+	<findFieldProperty
+		name="cd_progetto"
+		label="Progetto" />
+	<findFieldProperty
+		name="cd_progetto_padre"
+		label="Area progettuale" />
+	<findFieldProperty
+		name="tipo_fase" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="dt_proroga" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />
+	<findFieldProperty
+		name="dt_inizio" />
+	<findFieldProperty
+		name="dt_fine" />
+	<findFieldProperty
+		name="cd_tipo_progetto" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="durata_progetto" />
+	<findFieldProperty
+		name="note" />
+	</freeSearchSet>
 	<form
 		name="form_searchtool_progetto" >
 		<formFieldProperty

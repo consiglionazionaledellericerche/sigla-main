@@ -58,6 +58,7 @@ public class TerzoBulk extends TerzoBase {
 	public final static Integer TERZO_NULLO = new Integer(0);	
 	private boolean terzo_speciale;
 	private boolean dipendente;
+	private boolean notGestoreIstat;
 	public static String ACCESSO_PER_CANCELLAZIONE_BANCA = "CFGANAGCFCOREDELBANM";
 	
 	
@@ -884,6 +885,10 @@ public void setTerzo_speciale(boolean newTerzo_speciale) {
 	public void setPartita_iva_anagrafico(java.lang.String partitaIvaAnagrafico) {
 		this.getAnagrafico().setPartita_iva(partitaIvaAnagrafico);
 	}
-
-
+	public boolean isNotGestoreIstat() {
+		return notGestoreIstat;
+	}
+	public void setNotGestoreIstat(boolean notGestoreIstat) {
+		this.notGestoreIstat = notGestoreIstat;
+	}
 }

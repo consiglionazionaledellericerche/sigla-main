@@ -76,7 +76,7 @@
       	</td>   
 		<td>
 			<% 	if (notaDiCredito.getBanca_uo() != null) {
-					bp.getController().writeFormInput(out, null, "listabancheuo", false, null, "");
+					bp.getController().writeFormInput(out, null, "listabancheuo", bp.isROBank(), null, "");
 				} %>
    		</td>
       </tr>

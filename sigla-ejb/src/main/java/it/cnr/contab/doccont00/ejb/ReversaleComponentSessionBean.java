@@ -1,9 +1,17 @@
 package it.cnr.contab.doccont00.ejb;
+import java.rmi.RemoteException;
+import java.sql.Date;
+import java.text.ParseException;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.doccont00.comp.MandatoComponent;
 import it.cnr.contab.doccont00.comp.ReversaleComponent;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRDOCCONT00_EJB_ReversaleComponentSession")
 public class ReversaleComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ReversaleComponentSession {
 @PostConstruct
@@ -314,6 +322,42 @@ public it.cnr.contab.doccont00.core.bulk.ReversaleBulk setCodiciSIOPECollegabili
 		throw uncaughtRuntimeException(param0,componentObj,e);
 	} catch(Error e) {
 		throw uncaughtError(param0,componentObj,e);
+	}
+}
+//public  String lanciaStampa( it.cnr.jada.UserContext userContext, String cds, Integer esercizio , Long pgReversale) throws PersistencyException, ComponentException, RemoteException{
+//	pre_component_invocation(userContext,componentObj);
+//	try {
+//		String result=((ReversaleComponent)componentObj).lanciaStampa(userContext,cds,esercizio,pgReversale);
+//		component_invocation_succes(userContext,componentObj);
+//		return result;
+//	} catch(it.cnr.jada.comp.NoRollbackException e) {
+//		component_invocation_succes(userContext,componentObj);
+//		throw e;
+//	} catch(it.cnr.jada.comp.ComponentException e) {
+//		component_invocation_failure(userContext,componentObj);
+//		throw e;
+//	} catch(RuntimeException e) {
+//		throw uncaughtRuntimeException(userContext,componentObj,e);
+//	} catch(Error e) {
+//		throw uncaughtError(userContext,componentObj,e);
+//	}
+//}
+public  byte[] lanciaStampa( it.cnr.jada.UserContext userContext, String cds, Integer esercizio , Long pgReversale) throws PersistencyException, ComponentException, RemoteException, ParseException{
+	pre_component_invocation(userContext,componentObj);
+	try {
+		byte[] result=((ReversaleComponent)componentObj).lanciaStampa(userContext,cds,esercizio,pgReversale);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
 	}
 }
 }

@@ -39,6 +39,9 @@ public class Missione_tipo_spesaBase extends Missione_tipo_spesaKey implements K
 	// PERCENTUALE_MAGGIORAZIONE DECIMAL(5,2) NOT NULL
 	private java.math.BigDecimal percentuale_maggiorazione;
 
+	// FL_AMMISSIBILE_CON_RIMBORSO CHAR(1) NOT NULL
+	private java.lang.Boolean fl_ammissibile_con_rimborso;
+	
 public Missione_tipo_spesaBase() {
 	super();
 }
@@ -176,5 +179,12 @@ public void setLimite_max_spesa(java.math.BigDecimal limite_max_spesa) {
  */
 public void setPercentuale_maggiorazione(java.math.BigDecimal percentuale_maggiorazione) {
 	this.percentuale_maggiorazione = percentuale_maggiorazione;
+}
+public java.lang.Boolean getFl_ammissibile_con_rimborso() {
+	return fl_ammissibile_con_rimborso;
+}
+public void setFl_ammissibile_con_rimborso(
+		java.lang.Boolean fl_ammissibile_con_rimborso) {
+	this.fl_ammissibile_con_rimborso = fl_ammissibile_con_rimborso;
 }
 }

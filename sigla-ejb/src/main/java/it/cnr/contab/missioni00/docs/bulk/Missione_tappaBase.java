@@ -47,6 +47,9 @@ public class Missione_tappaBase extends Missione_tappaKey implements Keyed {
 
 	// PG_NAZIONE DECIMAL(10,0) NOT NULL
 	private java.lang.Long pg_nazione;
+	
+	// FL_RIMBORSO CHAR(1) NOT NULL
+	private java.lang.Boolean fl_rimborso;
 
 public Missione_tappaBase() {
 	super();
@@ -221,5 +224,11 @@ public void setFl_vitto_gratuito(java.lang.Boolean fl_vitto_gratuito) {
  */
 public void setPg_nazione(java.lang.Long pg_nazione) {
 	this.pg_nazione = pg_nazione;
+}
+public java.lang.Boolean getFl_rimborso() {
+	return fl_rimborso;
+}
+public void setFl_rimborso(java.lang.Boolean fl_rimborso) {
+	this.fl_rimborso = fl_rimborso;
 }
 }

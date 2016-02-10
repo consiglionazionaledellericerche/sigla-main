@@ -58,7 +58,7 @@ public void calcolaGiorni_la(int i,java.math.BigDecimal giorni_lavorativi) {
 			java.math.BigDecimal.valueOf(0) : 
 			getPrc_la(i).multiply(
 				giorni_lavorativi).divide(
-				java.math.BigDecimal.valueOf(100),2,java.math.BigDecimal.ROUND_HALF_EVEN));
+				java.math.BigDecimal.valueOf(100),2,java.math.BigDecimal.ROUND_HALF_UP));
 }
 /**
  * Calcola i giorni lavorativi in funzione della percentuale di ripartizione su linea di attività
@@ -83,7 +83,7 @@ public void calcolaPrc_la(int i,java.math.BigDecimal giorni_lavorativi) {
 					java.math.BigDecimal.valueOf(0) :
 			    getGiorni_la(i).multiply(
 			    	java.math.BigDecimal.valueOf(100)).divide(
-			    		giorni_lavorativi,2,java.math.BigDecimal.ROUND_HALF_EVEN));
+			    		giorni_lavorativi,2,java.math.BigDecimal.ROUND_HALF_UP));
 	else
 		setPrc_la(i,BigDecimal.ZERO);
 }

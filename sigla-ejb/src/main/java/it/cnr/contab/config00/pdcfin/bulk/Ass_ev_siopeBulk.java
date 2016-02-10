@@ -17,7 +17,6 @@ public class Ass_ev_siopeBulk extends Ass_ev_siopeBase {
 	private Elemento_voceHome elemento_home;
 	private Codici_siopeBulk codici_siope = new Codici_siopeBulk();
 	
-	private Integer esercizio_scrivania;
 	private boolean gia_associato = false;
 	
 	public final static String TI_GESTIONE_ENTRATE = "E" ;
@@ -74,7 +73,7 @@ public class Ass_ev_siopeBulk extends Ass_ev_siopeBase {
 	 * @return OggettoBulk this Oggetto bulk <code>EsercizioBulk</code>.
 	 */
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
-		setEsercizio_scrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
+		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
 		return this;
 	}
 	/**
@@ -84,7 +83,7 @@ public class Ass_ev_siopeBulk extends Ass_ev_siopeBase {
 	 * @return OggettoBulk this Oggetto bulk <code>EsercizioBulk</code>.
 	 */
 	public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
-		setEsercizio_scrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
+		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
 		return this;
 	}
 	
@@ -181,11 +180,5 @@ public class Ass_ev_siopeBulk extends Ass_ev_siopeBase {
 			throw new ValidationException( "Il campo gestione è obbligatorio." );
 		if ( codici_siope.getCd_siope() == null || codici_siope.getCd_siope().equals(""))
 			throw new ValidationException( "Il campo codice siope è obbligatorio." );
-	}
-	public Integer getEsercizio_scrivania() {
-		return esercizio_scrivania;
-	}
-	public void setEsercizio_scrivania(Integer esercizio_scrivania) {
-		this.esercizio_scrivania = esercizio_scrivania;
 	}
 }

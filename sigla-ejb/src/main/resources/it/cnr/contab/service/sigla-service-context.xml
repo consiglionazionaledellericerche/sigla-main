@@ -1,15 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:jee="http://www.springframework.org/schema/jee"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
-						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<context:annotation-config />
-						
-    <import resource="classpath*:it/cnr/contab/cmis/service/cmis-service-context.xml"/>
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+    
 
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:META-INF/spring/*.properties</value>
+				<value>classpath*:*props/axis2.properties</value>
+				<value>classpath*:*/extension/repository.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>    
+    <import resource="classpath*:it/cnr/contab/cmis/service/cmis-service-context.xml"/>
+    <import resource="classpath*:it/cnr/contab/service/sdi-client-service-context.xml"/>
+    
 	<jee:jndi-lookup id="offlineReportComponent"
    			jndi-name="SIGLA/BREPORTS_EJB_OfflineReportComponentSession/remote"
    			resource-ref="false">
@@ -18,84 +27,136 @@
    			jndi-name="SIGLA/CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession/remote"
    			resource-ref="false">
    	</jee:jndi-lookup>
-
-	<jee:jndi-lookup id="mandatoComponent"
-   			jndi-name="SIGLA/CNRDOCCONT00_EJB_MandatoComponentSession/remote"
-   			resource-ref="false">
-   	</jee:jndi-lookup>
-
-	<jee:jndi-lookup id="mailSession"
-   			jndi-name="java:mail/MailSession"
-   			resource-ref="false">
-   	</jee:jndi-lookup>
-
-	<bean id="testMode" class="java.lang.Boolean">
-		<constructor-arg value="true"/>
+	<jee:jndi-lookup id="ricezioneFattureService"
+   			jndi-name="SIGLA/RicezioneFatture/local"
+   			resource-ref="false"/>   	
+	<jee:jndi-lookup id="trasmissioneFattureService"
+   			jndi-name="SIGLA/TrasmissioneFatture/local"
+   			resource-ref="false"/>   	
+	<jee:jndi-lookup id="fatturaElettronicaPassivaComponentSession"
+   			jndi-name="SIGLA/CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession/remote"
+   			resource-ref="false"/>	
+	<jee:jndi-lookup id="ricercaDocContComponentSession"
+   			jndi-name="SIGLA/CNRCHIUSURA00_EJB_RicercaDocContComponentSession/remote"
+   			resource-ref="false"/>	
+	<jee:jndi-lookup id="docAmmFatturazioneElettronicaComponentSession"
+   			jndi-name="SIGLA/CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession/remote"
+   			resource-ref="false"/>	
+	<bean id="trovatoProperties" class="it.cnr.contab.docamm00.client.TrovatoProperties">
+		<property name="trovatoTargetEndpoint" value="${TrovatoTargetEndpoint}" />
+		<property name="trovatoSiglaWSClientPassword" value="${TrovatoSiglaWSClientPassword}" />
 	</bean>
 
-    <bean id="printService" class="it.cnr.contab.reports.service.PrintService">
+	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
+		<constructor-arg>
+			<bean class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager"></bean>
+		</constructor-arg>
+	</bean>
+	<bean id="gson" class="com.google.gson.Gson"/>
+
+	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
     	<property name="offlineReportComponent" ref="offlineReportComponent"/>
-    	<property name="gson" ref="gson"/>
     	<property name="httpClient" ref="httpClient"/>
+    	<property name="gson" ref="gson"/>
     </bean>
 
     <bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService">
     	<property name="gestioneLoginComponent" ref="gestioneLoginComponent"/>
     </bean>
-    <!-- Bean per ottenere una istanza di IDocumentoAmministrativoSpesaBulk -->
-    <bean id="ANTICIPO" class="it.cnr.contab.missioni00.docs.bulk.AnticipoBulk"/>
-    <bean id="COMPENSO" class="it.cnr.contab.compensi00.docs.bulk.CompensoBulk"/>    
-	<bean id="GENERICO_S" class="it.cnr.contab.docamm00.docs.bulk.Documento_generico_passivoBulk"/>
-	<bean id="MISSIONE" class="it.cnr.contab.missioni00.docs.bulk.MissioneBulk"/>
     
-    <bean id="propertyPlaceholderHelper" class="org.springframework.util.PropertyPlaceholderHelper">
-    	<constructor-arg>
-    		<value>${</value>
-    	</constructor-arg>
-    	<constructor-arg>
-    		<value>}</value>
-    	</constructor-arg>
-    </bean>
-    <bean id="dateShortFormat" class="java.text.SimpleDateFormat">
-		<constructor-arg> 
-			<value>dd/MM/yyyy</value>
-		</constructor-arg>						
-    </bean>
-    <bean id="timeShortFormat" class="java.text.SimpleDateFormat">
-		<constructor-arg> 
-			<value>HH:mm:ss</value>
-		</constructor-arg>						
-    </bean>
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-    	<property name="session" ref="mailSession"/>
+    
+	<bean id="fatturaPassivaElettronicaService" class="it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService">
+		<property name="fatturaElettronicaPassivaComponentSession" ref="fatturaElettronicaPassivaComponentSession"/>
+		<property name="docAmmFatturazioneElettronicaComponentSession" ref="docAmmFatturazioneElettronicaComponentSession"/>
+		<property name="ricercaDocContComponentSession" ref="ricercaDocContComponentSession"/>
+		<property name="ricezioneFattureService" ref="ricezioneFattureService"/>
+		<property name="trasmissioneFattureService" ref="trasmissioneFattureService"/>
+		<property name="fatturazioneElettronicaClient" ref="fatturazioneElettronicaClient"/>
+		<property name="pecScanDisable" value="${pec.scan.disable}"/>
+		<property name="pecHostName" value="${pec.host.name}"/>
+
+		<property name="pecURLName" value="${pec.url.name}"/>
+		<property name="pecHostAddress" value="${pec.host.address}"/>
+		<property name="pecHostAddressReturn" value="${pec.host.address.return}"/>
+		<property name="pecSDIAddress" value="${pec.sdi.address}"/>
+		<property name="pecSDIFromStringTerm" value="${pec.sdi.from.string.term}"/>
+		<property name="pecSDISubjectRiceviFattureTerm" value="${pec.sdi.subject.ricevi.fatture.term}"/>
+		<property name="pecScanFolderName" value="${pec.scan.folder.name}"/>
+		<property name="pecScanReceiptFolderName" value="${pec.scan.receipt.folder.name}"/>
+										
+		<property name="pecSDISubjectFatturaAttivaRicevutaConsegnaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.ricevutaConsegna.term}"/>
+		<property name="pecSDISubjectFatturaAttivaNotificaScartoTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.scarto.term}"/>
+		<property name="pecSDISubjectFatturaAttivaMancataConsegnaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.mancataConsegna.term}"/>
+		<property name="pecSDISubjectNotificaEsitoTerm" value="${pec.sdi.subject.notifica.esito.term}"/>
+		<property name="pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.decorrenzaTermini.term}"/>
+		<property name="pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.attestazioneTrasmissioneFattura.term}"/>
+		<property name="pecSDISubjectFatturaAttivaInvioTerm" value="${pec.sdi.subject.fatturaAttiva.invio.term}"/>
+		<property name="pecSDISubjectNotificaPecTerm" value="${pec.sdi.subject.notificaPec.term}"/>
+		<property name="pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm" value="${pec.sdi.subject.fatturaPassiva.notifica.scartoEsito.term}"/>
+
+		<property name="pecMailConf">
+		    <props>
+		      <prop key="mail.imap.host">${pec.mail.imap.host}</prop>
+		      <prop key="mail.imap.auth">${pec.mail.imap.auth}</prop>
+		      <prop key="mail.imap.ssl.enable">${pec.mail.imap.ssl.enable}</prop>
+		      <prop key="mail.imap.port">${pec.mail.imap.port}</prop>
+		      <prop key="mail.imap.socketFactory.class">${pec.mail.imap.socketFactory.class}</prop>
+		      <prop key="mail.imap.connectiontimeout">${pec.mail.imap.connectiontimeout}</prop>
+		      <prop key="mail.imap.timeout">${pec.mail.imap.timeout}</prop>
+		    </props>
+		  </property>		
 	</bean>
-	<bean id="fromAddress" class="java.lang.String">
-		<constructor-arg> 
-			<value>sigla@cnr.it</value>
-		</constructor-arg>						
+	<!-- quartz stuff below -->
+
+	<!-- UpdaterOnScheduleJobDetail defines a bean that points to
+       	UpdaterOnScheduleExecutor and says to call its execute()
+       	method when the trigger is fired -->
+	<bean id="PECCronTriggerBeanDetail"
+	  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="fatturaPassivaElettronicaService"/>
+	  <property name="targetMethod" value="execute"/>
+	  <property name="concurrent" value="false"/>
 	</bean>
-	<bean id="defaultToTestMode" class="java.util.LinkedList">
-		<constructor-arg>
-			<list>
-				<value>sigla@cnr.it</value>
-			</list>
-		</constructor-arg>
+	<bean id="AllineaNotificheCronTriggerBeanDetail"
+	  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="fatturaPassivaElettronicaService"/>
+	  <property name="targetMethod" value="allineaNotificheExecute"/>
+	  <property name="concurrent" value="false"/>
+	</bean>
+	
+	<!-- here's where we use the Cron like scheduling expression
+	      to define when the bean is run. -->
+	<bean id="PECCronTriggerBean"
+	  class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="PECCronTriggerBeanDetail" />
+	  <property name="cronExpression" value="${pec.cron.expression}"/>
+	</bean>
+	<bean id="AllineaNotificheCronTriggerBean"
+	  class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="AllineaNotificheCronTriggerBeanDetail" />
+	  <property name="cronExpression" value="${allinea.notifiche.cron.expression}"/>
+	</bean>
+	
+	<!-- the scheduler factory is what does the work to setup
+       the triggers -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	  <property name="triggers">
+	      <list>
+	          <ref bean="PECCronTriggerBean" />
+	          <ref bean="AllineaNotificheCronTriggerBean" />
+	      </list>
+	  </property>
+	</bean>
+	<bean name="props-aruba" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	    <property name="properties">
+	        <value>
+	            arubaRemoteSignService.certId=${arubaRemoteSignService.certId}
+	            arubaRemoteSignService.typeOtpAuth=${arubaRemoteSignService.typeOtpAuth}
+	            arubaRemoteSignService.url=${arubaRemoteSignService.url}
+	        </value>
+	    </property>
 	</bean>	
-    <bean id="mailService" class="it.cnr.contab.util.service.MailService">
-    	<property name="toTestModeList" ref="defaultToTestMode"/>
-    </bean>
-	<bean id="mailMessageFooter" class="java.lang.String">
-		<constructor-arg> 
-			<value><![CDATA[<HR>Spedito da:
-<BR>Sistema Informativo per la Gestione delle linee di Attività (<strong>SIGLA</strong>) il ${date.current.short} alle ${time.current.short}
-<BR>  
-<BR><strong>NOTA</strong>: Il presente messaggio è stato inviato da un processo automatico.
-<BR>L'indirizzo utilizzato non è abilitato a ricevere posta. Si prega di non rispondere.
-]]>
-			</value>
-		</constructor-arg>						
-	</bean>
-    
-	<import resource="classpath*:it/cnr/contab/*/service/*-context.xml" />
-	<import resource="classpath*:sigla/extension/sigla-*-context.xml" />
+	<bean id="arubaSignServiceClient" class="it.cnr.jada.firma.arss.ArubaSignServiceClient">
+	  <property name="props" ref="props-aruba"></property>	  
+	</bean>    
 </beans>

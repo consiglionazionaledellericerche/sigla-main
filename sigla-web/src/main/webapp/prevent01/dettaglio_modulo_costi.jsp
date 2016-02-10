@@ -36,14 +36,23 @@
 			</td>
 		</tr>
 		<tr>
-			<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_modulo"); %></td>	
-			<td><% bp.getController().writeFormInput( out, "cd_modulo"); %></td>
-			<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_commessa"); %></td>	
-			<td><% bp.getController().writeFormInput( out, "cd_commessa"); %></td>
-			<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_progetto"); %></td>	
-			<td><% bp.getController().writeFormInput( out, "cd_progetto"); %></td>
-			<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_dipartimento"); %></td>	
-			<td><% bp.getController().writeFormInput( out, "cd_dipartimento"); %></td>
+			<% if (bp.isFlNuovoPdg()) { %>
+				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_progetto_liv1"); %></td>	
+				<td><% bp.getController().writeFormInput( out, "cd_progetto_liv1"); %></td>
+				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_progetto_liv2"); %></td>	
+				<td><% bp.getController().writeFormInput( out, "cd_progetto_liv2"); %></td>
+				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_dipartimento_liv2"); %></td>	
+				<td><% bp.getController().writeFormInput( out, "cd_dipartimento_liv2"); %></td>
+			<% } else { %>
+				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_modulo"); %></td>	
+				<td><% bp.getController().writeFormInput( out, "cd_modulo"); %></td>
+				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_commessa"); %></td>	
+				<td><% bp.getController().writeFormInput( out, "cd_commessa"); %></td>
+				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_progetto"); %></td>	
+				<td><% bp.getController().writeFormInput( out, "cd_progetto"); %></td>
+				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_dipartimento"); %></td>	
+				<td><% bp.getController().writeFormInput( out, "cd_dipartimento"); %></td>
+			<% } %>
 		</tr>
 	</table>		
 </div>

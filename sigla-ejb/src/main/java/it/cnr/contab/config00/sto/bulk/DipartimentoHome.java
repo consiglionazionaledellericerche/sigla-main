@@ -4,18 +4,15 @@
 */
 package it.cnr.contab.config00.sto.bulk;
 import java.sql.Connection;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJBException;
 
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoBulk;
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoHome;
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoIBulk;
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimento_rstlBulk;
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimento_rstlHome;
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimento_sacBulk;
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimento_sacHome;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentiBulk;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentiHome;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentiIBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoIBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -26,6 +23,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -60,18 +58,16 @@ public class DipartimentoHome extends BulkHome {
 	}
 	public void aggiornaDipartimenti(UserContext userContext,DipartimentoBulk dipartimento){
 		try {
-			verificaDipartimenti(userContext,dipartimento, Geco_dipartimentoBulk.class);
-			verificaDipartimenti(userContext,dipartimento, Geco_dipartimento_sacBulk.class);
-			verificaDipartimenti(userContext,dipartimento, Geco_dipartimento_rstlBulk.class);
+			verificaDipartimenti(userContext,dipartimento, Geco_dipartimentiBulk.class);
 		} catch (Exception e) {
 			handleExceptionMail(userContext, e);
 		}
 		
 	}
 	private void verificaDipartimenti(UserContext userContext, DipartimentoBulk dipartimento, Class<? extends OggettoBulk> bulkClass) throws PersistencyException, ComponentException, EJBException {
-		List<Geco_dipartimentoIBulk> dipartimentiGeco = Utility.createProgettoGecoComponentSession().cercaDipartimentiGeco(userContext, dipartimento, bulkClass);
-		for (Iterator<Geco_dipartimentoIBulk> iterator = dipartimentiGeco.iterator(); iterator.hasNext();) {
-			Geco_dipartimentoIBulk geco_dipartimento = iterator.next();
+		List<Geco_dipartimentiIBulk> dipartimentiGeco = Utility.createProgettoGecoComponentSession().cercaDipartimentiGeco(userContext, dipartimento, bulkClass);
+		for (Iterator<Geco_dipartimentiIBulk> iterator = dipartimentiGeco.iterator(); iterator.hasNext();) {
+			Geco_dipartimentiIBulk geco_dipartimento = iterator.next();
 			DipartimentoHome dipartimento_home =  (DipartimentoHome)getHomeCache().getHome(DipartimentoBulk.class);
 			DipartimentoBulk dipartimento_new = (DipartimentoBulk)dipartimento_home.findByPrimaryKey(new DipartimentoBulk(geco_dipartimento.getCod_dip()));
 			if (dipartimento_new != null){
@@ -90,6 +86,31 @@ public class DipartimentoHome extends BulkHome {
 				insert(dipartimento_new, userContext);
 			}
 		}
-	}
+	} 
 	
+	@Override
+	public SQLBuilder selectByClause(CompoundFindClause compoundfindclause)
+			throws PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+		
+		//java.sql.Timestamp firstDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(usercontext));
+		//java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(usercontext));
+	 	sql.addClause("AND", "dt_istituzione", sql.LESS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.openParenthesis("AND");
+		sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS,  it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
+		sql.closeParenthesis();
+		return sql;
+	}
+	public SQLBuilder selectByClause(UserContext uc,CompoundFindClause compoundfindclause)
+			throws PersistencyException {
+		SQLBuilder sql = createSQLBuilder(); 
+		java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(uc));
+	 	sql.addClause("AND", "dt_istituzione", sql.LESS, lastDayOfYear);
+		sql.openParenthesis("AND");
+		sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS,  lastDayOfYear);
+		sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
+		sql.closeParenthesis();
+		return sql;
+	}
 }

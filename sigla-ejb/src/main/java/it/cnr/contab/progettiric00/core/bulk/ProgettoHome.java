@@ -1,32 +1,53 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
-import java.sql.Connection;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJBException;
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.naming.NamingException;
 
-import it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.blob.bulk.*;
-import it.cnr.contab.progettiric00.geco.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
+import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_area_progBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_attivitaBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaIBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessa_pbBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessa_rstlBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessa_sacBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloIBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_pbBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_rstlBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_sacBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoIBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_operativoBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_pbBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_rstlBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_sacBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.SendMail;
-import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.persistency.FetchException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.ObjectNotFoundException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class ProgettoHome extends BulkHome {
 	public ProgettoHome(java.sql.Connection conn) {
@@ -267,6 +288,7 @@ public class ProgettoHome extends BulkHome {
 		sql.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_MODULO","V_PROGETTO_PADRE.TIPO_FASE");
 		return sql;    	
 	}
+
 	public SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC,String campo) throws PersistencyException{
 		SQLBuilder sql = abilitazioni(aUC);    	
 		sql.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO",campo);
@@ -282,17 +304,22 @@ public class ProgettoHome extends BulkHome {
 		sql.openParenthesis("AND");		  
 		sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
 		if (uo.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0){
-			SQLBuilder sqlArea = getHomeCache().getHome(Ass_uo_areaBulk.class).createSQLBuilder();
-			sqlArea.addTableToHeader("UNITA_ORGANIZZATIVA UO");
-			sqlArea.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", "UO.CD_UNITA_PADRE");
-			sqlArea.addSQLJoin("ASS_UO_AREA.CD_UNITA_ORGANIZZATIVA", "UO.CD_UNITA_ORGANIZZATIVA");
-			sqlArea.addSQLClause("AND","ASS_UO_AREA.CD_AREA_RICERCA",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
-			sqlArea.addSQLClause("AND","ASS_UO_AREA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
-			sql.addSQLExistsClause("OR",sqlArea);
+			PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+			Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(aUC)));
+			if (!parCNR.getFl_nuovo_pdg()) {
+				SQLBuilder sqlArea = getHomeCache().getHome(Ass_uo_areaBulk.class).createSQLBuilder();
+				sqlArea.addTableToHeader("UNITA_ORGANIZZATIVA UO");
+				sqlArea.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", "UO.CD_UNITA_PADRE");
+				sqlArea.addSQLJoin("ASS_UO_AREA.CD_UNITA_ORGANIZZATIVA", "UO.CD_UNITA_ORGANIZZATIVA");
+				sqlArea.addSQLClause("AND","ASS_UO_AREA.CD_AREA_RICERCA",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
+				sqlArea.addSQLClause("AND","ASS_UO_AREA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
+				sql.addSQLExistsClause("OR",sqlArea);
+			}
 		}
 		sql.closeParenthesis();
 		return sql;    	
 	}
+
     public Persistent findByPrimaryKey(UserContext userContext,Object persistent) throws PersistencyException {
     	return findByPrimaryKey(userContext,(Persistent)persistent);
     }
@@ -307,6 +334,22 @@ public class ProgettoHome extends BulkHome {
     }
 	
 	public void aggiornaGeco(UserContext userContext,ProgettoBulk progetto){
+		if (CNRUserContext.getEsercizio(userContext) ==null )
+			return;
+		try {
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+
+			if (parCnr == null) return;
+			if (!parCnr.getFl_nuovo_pdg())
+				aggiornaGecoOldPdg(userContext, progetto);
+			else
+				aggiornaGecoNewPdg(userContext, progetto);
+		} catch (Exception e) {
+			handleExceptionMail(userContext, e);
+		}
+	}
+	
+	private void aggiornaGecoOldPdg(UserContext userContext,ProgettoBulk progetto){
 		if (progetto != null && !progetto.getTipo_fase().equals(ProgettoBulk.TIPO_FASE_NON_DEFINITA)){
 			try {
 				progetto = (ProgettoBulk) super.findByPrimaryKey(progetto);
@@ -327,7 +370,29 @@ public class ProgettoHome extends BulkHome {
 			aggiornaModuli(userContext,progetto);
 		}	
 	}
-	
+
+	private void aggiornaGecoNewPdg(UserContext userContext,ProgettoBulk progetto){
+		if (progetto != null && !progetto.getTipo_fase().equals(ProgettoBulk.TIPO_FASE_NON_DEFINITA)){
+			try {
+				progetto = (ProgettoBulk) super.findByPrimaryKey(progetto);
+			} catch (PersistencyException e) {
+				handleExceptionMail(userContext, e);
+			}
+			if (progetto != null && !progetto.getTipo_fase().equals(ProgettoBulk.TIPO_FASE_NON_DEFINITA)){
+				if (progetto.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_PRIMO))
+					aggiornaProgettiNuovoPdg(userContext,progetto);
+				else if (progetto.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_SECONDO))
+					aggiornaCommesseNuovoPdg(userContext,progetto);
+				else if (progetto.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_TERZO))
+					aggiornaModuliNuovoPdg(userContext,progetto);
+			}
+		}else{
+			aggiornaProgettiNuovoPdg(userContext,progetto);
+			aggiornaCommesseNuovoPdg(userContext,progetto);
+			aggiornaModuliNuovoPdg(userContext,progetto);
+		}	
+	}
+
 	private void handleExceptionMail(UserContext userContext, Exception e){
 	}
 	
@@ -344,6 +409,11 @@ public class ProgettoHome extends BulkHome {
 		}
 		try {
 			verificaProgetti(userContext,progetto, Geco_progetto_rstlBulk.class);
+		}catch (Exception e) {
+			handleExceptionMail(userContext, e);
+		}
+		try {
+			verificaProgetti(userContext,progetto, Geco_progetto_pbBulk.class);
 		}catch (Exception e) {
 			handleExceptionMail(userContext, e);
 		}
@@ -364,6 +434,11 @@ public class ProgettoHome extends BulkHome {
 		} catch (Exception e) {
 			handleExceptionMail(userContext, e);
 		}
+		try {
+			verificaCommesse(userContext, progetto, Geco_commessa_pbBulk.class);
+		} catch (Exception e) {
+			handleExceptionMail(userContext, e);
+		}
 	}	
 	public void aggiornaModuli(UserContext userContext,ProgettoBulk progetto){
 		try {
@@ -381,7 +456,33 @@ public class ProgettoHome extends BulkHome {
 		}catch (Exception e) {
 			handleExceptionMail(userContext, e);
 		}
+		try {
+			verificaModuli(userContext, progetto, Geco_modulo_pbBulk.class);
+		}catch (Exception e) {
+			handleExceptionMail(userContext, e);
+		}
 	}	
+	public void aggiornaProgettiNuovoPdg(UserContext userContext,ProgettoBulk progetto){
+		try {
+			verificaProgetti(userContext, progetto, Geco_area_progBulk.class);
+		}catch (Exception e) {
+			handleExceptionMail(userContext, e);
+		}
+	}
+	public void aggiornaCommesseNuovoPdg(UserContext userContext,ProgettoBulk progetto){
+		try {
+			verificaCommesse(userContext,progetto,Geco_progetto_operativoBulk.class);
+		}catch (Exception e) {
+			handleExceptionMail(userContext, e);
+		}
+	}	
+	public void aggiornaModuliNuovoPdg(UserContext userContext,ProgettoBulk progetto){
+		try {
+			verificaModuli(userContext, progetto, Geco_attivitaBulk.class);
+		}catch (Exception e) {
+			handleExceptionMail(userContext, e);
+		}
+	}
 	public void verificaProgetti(UserContext userContext, ProgettoBulk progetto, Class<? extends OggettoBulk> bulkClass) throws FetchException, PersistencyException, ComponentException, EJBException{
 		List<Geco_progettoIBulk> progettiGeco = Utility.createProgettoGecoComponentSession().cercaProgettiGeco(userContext, progetto, bulkClass);
 		for (Iterator<Geco_progettoIBulk> iterator = progettiGeco.iterator(); iterator.hasNext();) {
@@ -406,6 +507,7 @@ public class ProgettoHome extends BulkHome {
 				progetto_sip.setFl_utilizzabile(Boolean.TRUE);
 				progetto_sip.setLivello(ProgettoBulk.LIVELLO_PROGETTO_PRIMO);
 				progetto_sip.setUser(CNRUserContext.getUser(userContext));
+				geco_progetto.aggiornaProgettoSIP(progetto_sip);				
 				progetto_sip.setToBeCreated();
 				progetto_sip_home.insert(progetto_sip, userContext);
 			}
@@ -418,7 +520,7 @@ public class ProgettoHome extends BulkHome {
 			Progetto_sipHome progetto_sip_home =  (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
 			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_comm().intValue()),geco_commessa.getFase()));
 			if (progetto_sip != null){
-				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_prog().intValue()),geco_commessa.getFase())));
+				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_prog_padre().intValue()),geco_commessa.getFase())));
 				geco_commessa.aggiornaProgettoSIP(progetto_sip);				
 				if (progetto_sip.isToBeUpdated()){
 					progetto_sip.setUser(CNRUserContext.getUser(userContext));
@@ -426,7 +528,7 @@ public class ProgettoHome extends BulkHome {
 				}
 			}else{
 				progetto_sip = new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_comm().intValue()),geco_commessa.getFase());
-				progetto_sip.setProgettopadre(new Progetto_sipBulk(geco_commessa.getEsercizio().intValue(),geco_commessa.getId_prog().intValue(),geco_commessa.getFase()));
+				progetto_sip.setProgettopadre(new Progetto_sipBulk(geco_commessa.getEsercizio().intValue(),geco_commessa.getId_prog_padre().intValue(),geco_commessa.getFase()));
 				progetto_sip.setCd_progetto(geco_commessa.getCod_comm());
 				progetto_sip.setDs_progetto(geco_commessa.getDescr_comm());
 				progetto_sip.setUnita_organizzativa((Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(geco_commessa.getCds()+"."+geco_commessa.getSede_svol_uo())));
@@ -443,6 +545,7 @@ public class ProgettoHome extends BulkHome {
 				progetto_sip.setLivello(ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 				progetto_sip.setFl_utilizzabile(Boolean.TRUE);
 				progetto_sip.setUser(CNRUserContext.getUser(userContext));
+				geco_commessa.aggiornaProgettoSIP(progetto_sip);
 				progetto_sip.setToBeCreated();
 				progetto_sip_home.insert(progetto_sip, userContext);
 			}
@@ -486,6 +589,7 @@ public class ProgettoHome extends BulkHome {
 				else
 					progetto_sip.setFl_utilizzabile(Boolean.TRUE);
 				progetto_sip.setUser(CNRUserContext.getUser(userContext));
+				geco_modulo.aggiornaProgettoSIP(progetto_sip);				
 				progetto_sip.setToBeCreated();
 				progetto_sip_home.insert(progetto_sip, userContext);
 			}

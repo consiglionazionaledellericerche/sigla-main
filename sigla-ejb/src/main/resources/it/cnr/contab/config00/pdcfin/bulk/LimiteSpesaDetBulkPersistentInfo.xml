@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaDetBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaDetHome">
+	<defaultColumnMap
+		tableName="LIMITE_SPESA_DET">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="limiteSpesa.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="limiteSpesa.elementoVoce.esercizio" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="limiteSpesa.elementoVoce.ti_appartenenza" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="limiteSpesa.elementoVoce.ti_gestione" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="limiteSpesa.elementoVoce.cd_elemento_voce" />
+		<columnMapping
+			columnName="FONTE"
+			propertyName="limiteSpesa.fonte" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="limiteSpesa"
+		partOfOid="true" />
+	<persistentProperty
+		name="cds"
+		partOfOid="true" />
+</SQLPersistentInfo>

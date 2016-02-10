@@ -1,39 +1,54 @@
 package it.cnr.contab.doccont00.bp;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.missioni00.docs.bulk.*;
-import it.cnr.contab.docamm00.bp.RicercaObbligazioniBP;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
-
-import java.util.*;
-
-import it.cnr.contab.missioni00.bp.*;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
-import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
-import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.ejb.CDRComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.docamm00.bp.CRUDDocumentoGenericoPassivoBP;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoAttivaBP;
 import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP;
 import it.cnr.contab.docamm00.bp.CRUDNotaDiDebitoBP;
-import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoAttivaBP;
-import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
-import it.cnr.contab.docamm00.bp.CRUDDocumentoGenericoPassivoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.RicercaObbligazioniBP;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.ApplicationException;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
+import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voce_aggregatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.V_pdg_obbligazione_speBulk;
+import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
+import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.missioni00.bp.CRUDAnticipoBP;
+import it.cnr.contab.missioni00.bp.CRUDMissioneBP;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.MessageToUser;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 
@@ -58,6 +73,8 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP
 	private java.util.List vociSelezionate; 
 	private boolean siope_attiva = false;
 	private boolean incarichi_repertorio_attiva = false;
+	private boolean flNuovoPdg = false;
+	private boolean enableVoceNext = false;
 	
 	private byte[] bringBackClone = null;
 public CRUDObbligazioneBP() {
@@ -249,17 +266,32 @@ public void caricaCentriDiResponsabilita(it.cnr.jada.action.ActionContext contex
 {
 	try 
 	{
-		annullaImputazioneFinanziariaCapitoli( context );		
-		ObbligazioneBulk obbligazione = ((ObbligazioneComponentSession)createComponentSession()).listaCapitoliPerCdsVoce( context.getUserContext(), (ObbligazioneBulk) getModel());
-		annullaImputazioneFinanziariaCdr( context );
-		Vector capitoli =  new Vector(obbligazione.getCapitoliDiSpesaCdsColl());
-		
-		if ( capitoli.size() == 0 )
-			throw new MessageToUser("Nessun capitolo selezionato");			
-		obbligazione = ((ObbligazioneBulk)getModel());
-		obbligazione.setCapitoliDiSpesaCdsSelezionatiColl( capitoli );
-		Vector cdr = ((ObbligazioneComponentSession)createComponentSession()).listaCdrPerCapitoli( context.getUserContext(), obbligazione );
-		obbligazione.setCdrColl( cdr );
+		annullaImputazioneFinanziariaCapitoli( context );
+		ObbligazioneBulk obbligazione = (ObbligazioneBulk) getModel();
+		if (this.isFlNuovoPdg()) {
+			annullaImputazioneFinanziariaCdr( context );
+			obbligazione.setCapitoliDiSpesaCdsSelezionatiColl( Arrays.asList(obbligazione.getElemento_voce()) );
+			CDRComponentSession sessCDR = (CDRComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_CDRComponentSession", CDRComponentSession.class);
+			List<V_assestatoBulk> listaAssestato = ((ObbligazioneComponentSession)createComponentSession()).listaAssestatoSpese(context.getUserContext(), obbligazione );
+			if (!listaAssestato.isEmpty()) {
+				obbligazione.setCdrColl(new ArrayList<CdrBulk>());
+				for (V_assestatoBulk v_assestatoBulk : listaAssestato) {
+					CdrBulk cdrBulk = (CdrBulk)sessCDR.findByPrimaryKey(context.getUserContext(), new CdrBulk(v_assestatoBulk.getCd_centro_responsabilita()));
+					if (!obbligazione.getCdrColl().contains(cdrBulk))
+						obbligazione.getCdrColl().add(cdrBulk);
+				}
+			}
+		} else {
+			obbligazione = ((ObbligazioneComponentSession)createComponentSession()).listaCapitoliPerCdsVoce( context.getUserContext(), obbligazione);
+			annullaImputazioneFinanziariaCdr( context );
+			Vector capitoli =  new Vector(obbligazione.getCapitoliDiSpesaCdsColl());
+			if ( capitoli.size() == 0 )
+				throw new MessageToUser("Nessun capitolo selezionato");			
+			obbligazione = ((ObbligazioneBulk)getModel());
+			obbligazione.setCapitoliDiSpesaCdsSelezionatiColl( capitoli );
+			Vector cdr = ((ObbligazioneComponentSession)createComponentSession()).listaCdrPerCapitoli( context.getUserContext(), obbligazione );
+			obbligazione.setCdrColl( cdr );
+		}
 		obbligazione.setLineeAttivitaColl( Collections.EMPTY_LIST );				
 //		setModel( obbligazione );
 		obbligazione.setInternalStatus( ObbligazioneBulk.INT_STATO_CAPITOLI_CONFERMATI );
@@ -288,7 +320,7 @@ public void caricaLineeAttivita(it.cnr.jada.action.ActionContext context) throws
 		obbligazione.setCdrSelezionatiColl( cdr );
 		Vector lineeAttivita = ((ObbligazioneComponentSession)createComponentSession()).listaLineeAttivitaPerCapitoliCdr( context.getUserContext(), obbligazione );
 		obbligazione.setLineeAttivitaColl( lineeAttivita );
-		obbligazione.setInternalStatus( ObbligazioneBulk.INT_STATO_CDR_CONFERMATI );		
+		obbligazione.setInternalStatus( ObbligazioneBulk.INT_STATO_CDR_CONFERMATI );
 //		setModel( obbligazione );
 		resyncChildren( context );
 	} catch(Exception e) {
@@ -527,7 +559,7 @@ public OggettoBulk getBringBackModel() {
 						if (fatturaPassiva.hasStorni() || fatturaPassiva.hasAddebiti() || fatturaPassivaBP.isDeleting())
 							throw new MessageToUser("Non è possibile selezionare una diversa scadenza da quella associata al documento amministrativo, perché esso ha degli addebiti o degli storni associati! Selezionare la scadenza \"" + scadCorrente.getDs_scadenza() + "\".",ERROR_MESSAGE);
 						if (scadenzaSelezionata.getIm_associato_doc_amm() != null &&
-							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0 &&
+							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0 &&
 							!fatturaPassivaBP.isDeleting()) {
 								if (!new Fattura_passiva_IBulk(
 										scadenzaSelezionata.getCd_cds(),
@@ -542,7 +574,7 @@ public OggettoBulk getBringBackModel() {
 					CRUDNotaDiCreditoAttivaBP ncaBP = (CRUDNotaDiCreditoAttivaBP)docAmmBP;
 					Nota_di_credito_attivaBulk nca = (Nota_di_credito_attivaBulk)ncaBP.getModel();
 						if (scadenzaSelezionata.getIm_associato_doc_amm() != null &&
-							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0 &&
+							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0 &&
 							!ncaBP.isDeleting()) {
 								if (!new Nota_di_credito_attivaBulk(
 										scadenzaSelezionata.getCd_cds(),
@@ -559,7 +591,7 @@ public OggettoBulk getBringBackModel() {
 		                CRUDDocumentoGenericoPassivoBP docGenPassivoBP= (CRUDDocumentoGenericoPassivoBP) docAmmBP;
 		                Documento_genericoBulk docGenPassivo = (Documento_genericoBulk) docGenPassivoBP.getModel();
 						if (scadenzaSelezionata.getIm_associato_doc_amm() != null &&
-							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0) {
+							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0) {
 	                        String cd_cds_doc_gen = (docGenPassivo.isFlagEnte()) ? 
 	                        										docGenPassivo.getCd_cds() : 
 	                        										scadenzaSelezionata.getObbligazione().getCd_cds_origine();
@@ -580,19 +612,19 @@ public OggettoBulk getBringBackModel() {
 			}
 		}
 		if (getParent() instanceof CRUDFatturaPassivaIBP || getParent() instanceof CRUDDocumentoGenericoPassivoBP ) {
-			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
+			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
 				throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
 		}
 		if (getParent() instanceof RicercaObbligazioniBP) {
 			RicercaObbligazioniBP ricercaBP = (RicercaObbligazioniBP)getParent();
 			if (ricercaBP.getParent() != null && ricercaBP.getParent() instanceof CRUDFatturaPassivaIBP &&
-				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
+				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
 					throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
 		}
 
 		if(	getParent() instanceof IDocumentoAmministrativoBP &&
 			scadenzaSelezionata.getIm_associato_doc_amm() != null &&
-			scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0)
+			scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0)
 		{
 			IDocumentoAmministrativoBP docAmmBP = (IDocumentoAmministrativoBP)getParent();		
 			if(	docAmmBP instanceof CRUDMissioneBP)
@@ -1027,6 +1059,11 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 		setSiope_attiva(parCnr.getFl_siope().booleanValue());
 		setIncarichi_repertorio_attiva(true);
+		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+		if (parCnr.isEnableVoceNext()) {
+			Parametri_cnrBulk parCnrNewAnno = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())+1); 
+			setEnableVoceNext(parCnrNewAnno!=null);
+		}
 	}
     catch(Throwable throwable)
     {
@@ -1039,6 +1076,12 @@ private boolean isSiope_attiva() {
 private void setSiope_attiva(boolean siope_attiva) {
 	this.siope_attiva = siope_attiva;
 }
+private boolean isFlNuovoPdg() {
+	return flNuovoPdg;
+}
+public void setFlNuovoPdg(boolean flNuovoPdg) {
+	this.flNuovoPdg = flNuovoPdg;
+}
 public boolean isROElemento_voce() {
 	ObbligazioneBulk obbligazione = (ObbligazioneBulk)getModel();
 	if (isSiope_attiva())
@@ -1049,6 +1092,15 @@ public boolean isROFindElemento_voce() {
 	ObbligazioneBulk obbligazione = (ObbligazioneBulk)getModel();
 	if (isSiope_attiva())
 		return obbligazione.isAssociataADocCont();
+	return false;
+} 
+public boolean isRoCampiResiduoProprio(){
+	ObbligazioneBulk obbligazione = (ObbligazioneBulk)getModel();
+	if (obbligazione == null ||(obbligazione!=null &&!obbligazione.isObbligazioneResiduo()) || this.getStatus()==SEARCH)
+		return false;
+	if (obbligazione!=null && obbligazione.isObbligazioneResiduo() &&  this.getStatus()!= INSERT) {
+		return true; 
+	}
 	return false;
 }
 public boolean isIncarichi_repertorio_attiva() {
@@ -1087,5 +1139,18 @@ public void caricaTerzoDiversi(it.cnr.jada.action.ActionContext context) throws 
 	{
 		throw handleException(e);
 	} 
+}
+
+public boolean isEnableVoceNext() {
+	return enableVoceNext;
+}
+
+private void setEnableVoceNext(boolean enableVoceNext) {
+	this.enableVoceNext = enableVoceNext;
+}
+
+public boolean isElementoVoceNewVisible() {
+	return this.isEnableVoceNext() && getModel()!=null && 
+			((ObbligazioneBulk)getModel()).isEnableVoceNext();
 }
 }

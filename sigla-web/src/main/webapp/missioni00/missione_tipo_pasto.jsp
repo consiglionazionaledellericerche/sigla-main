@@ -40,6 +40,12 @@
 		<% bp.getController().writeFormInput( out, "find_nazione"); %></td>				 
   </tr>
   <tr>
+	<td><% bp.getController().writeFormLabel( out, "cd_area_estera"); %></td>
+	<td colspan="3"><% bp.getController().writeFormInput( out, "cd_area_estera"); %>
+	    <% bp.getController().writeFormInput( out, "ds_area_estera"); %>
+		<% bp.getController().writeFormInput( out, "find_area_estera"); %></td>				 
+  </tr>  
+  <tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_divisa"); %></td>
 	<td colspan="3"><% bp.getController().writeFormInput( out, "cd_divisa"); %>
 		<% bp.getController().writeFormInput( out, "ds_divisa"); %>

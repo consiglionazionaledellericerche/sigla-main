@@ -21,6 +21,7 @@ public class Gruppo_crBulk extends Gruppo_crBase {
 	public final static String ENTI_LOCALI = "S";
 	public final static String INAIL = "N";
 	public final static String INPDAP = "Q";
+	public final static String INPGI = "P";
 	public final static String FONDI_PENSIONE = "W";
 	
 	static
@@ -32,6 +33,7 @@ public class Gruppo_crBulk extends Gruppo_crBase {
 		TIPO_RIGA_F24.put(ENTI_LOCALI, "Enti Locali");
 		TIPO_RIGA_F24.put(INAIL, "Inail");
 		TIPO_RIGA_F24.put(INPDAP, "Inpdap");
+		TIPO_RIGA_F24.put(INPGI, "Inpgi");
 		TIPO_RIGA_F24.put(FONDI_PENSIONE, "Contr. Fondi Pensione T.AA.");
 	}
 public Gruppo_crBulk() {

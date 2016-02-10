@@ -1,7 +1,5 @@
 package it.cnr.contab.missioni00.docs.bulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
-
-import java.sql.Timestamp;
 import java.util.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -1474,10 +1472,6 @@ public void validate() throws ValidationException
 
 	// 	La validazione della scadenza di obbligazione legata all'anticipo viene fatta nel modificaConBulk
 	//	e nell creaConBulk
-}
-
-public Timestamp getDt_documento() {
-	return getDt_registrazione();
 }
 
 }

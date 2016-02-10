@@ -103,6 +103,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="false" />
+		<columnMapping
+			columnName="CD_AREA_ESTERA"
+			propertyName="cd_area_estera"
+			sqlTypeName="CHAR"
+			columnSize="2"
+			nullable="false" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="nazionalita" />
@@ -138,4 +144,6 @@
 		name="struttura_piva" />	
 	<persistentProperty
 		name="utuv" />
+	<persistentProperty
+		name="cd_area_estera" />		
 </SQLPersistentInfo>

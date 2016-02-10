@@ -7,29 +7,25 @@
 package it.cnr.contab.prevent01.bp;
 
 import java.rmi.RemoteException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
-import javax.ejb.EJBException;
 import javax.ejb.RemoveException;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.logs.ejb.BatchControlComponentSession;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.SendMail;
@@ -45,6 +41,7 @@ import it.cnr.jada.util.jsp.Button;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+	private Parametri_cnrBulk parametriCnr;
 	private Unita_organizzativaBulk uoScrivania;
 	private CdrBulk cdrFromUserContext;
 	private Integer pgModulo;
@@ -65,8 +62,8 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 			return super.isReadonly() && !isUtenteAbilitato() && !isCdrPdGPUtilizzabile();
 		}
 		public boolean isGrowable()
-		{
-			return super.isGrowable() && isUtenteAbilitato() && isCdrPdGPUtilizzabile();	
+		{	// r.p. 05/06/2014 Equiparato al controllo che viene da fatto da PDGP! aggiunto isModuloInseribile()
+			return super.isGrowable() && isUtenteAbilitato() && isCdrPdGPUtilizzabile() && isModuloInseribile();	
 		}
 		public boolean isShrinkable()
 		{
@@ -106,6 +103,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 		super.initialize(context);
 		setUoScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
 		try {
+			setParametriCnr(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())));
 			if (UtenteBulk.isAbilitatoApprovazioneBilancio(context.getUserContext()))
 				setUtenteDirettore(true);
 			else
@@ -157,7 +155,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
     protected Button[] createToolbar()
 	{
-		Button abutton[] = new Button[12];
+		Button abutton[] = new Button[13];
 		int i = 0;
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.search");
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.startSearch");
@@ -168,12 +166,18 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.bringBack");
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.print");
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.undoBringBack");
-		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.inserisciModuli");
+
+		if (this.getParametriCnr()!=null && this.getParametriCnr().getFl_nuovo_pdg())
+			abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.inserisciProgetti");
+		else
+			abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.inserisciModuli");
 		abutton[i-1].setSeparator(true);
 
 		it.cnr.jada.util.jsp.Button button = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.consultazionePianoRiparto");
 		button.setSeparator(true);
 		abutton[i++] = button;
+		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.consultazioneLimitiSpesa");
+		abutton[i-1].setSeparator(true);
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.scaricaCostiPersonale");
 		abutton[i-1].setSeparator(true);
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.annullaScaricaCostiPersonale");
@@ -347,7 +351,11 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (!isEditable())
 			return false;
 		else
-			return true;
+			// r.p. 05/06/2014 Equiparato al controllo che viene da fatto da PDGP!
+			//if(isGestionaleAccessibile()) 
+			if (isModuloInseribile())
+				return true;
+			return false;
 	}
 	
 	public boolean isScaricaDipEnabled() {
@@ -458,5 +466,13 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 			return true;
 		else
 			return false;
+	}
+
+	private void setParametriCnr(Parametri_cnrBulk parametriCnr) {
+		this.parametriCnr = parametriCnr;
+	}
+	
+	public Parametri_cnrBulk getParametriCnr() {
+		return parametriCnr;
 	}
 }

@@ -38,6 +38,13 @@
 			columnSize="20"
 			nullable="false"
 			primary="true" />
+		<columnMapping
+			columnName="CD_AREA_ESTERA"
+			propertyName="cd_area_estera"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false"
+			primary="true" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_rif_inquadramento"
@@ -54,4 +61,7 @@
 	<persistentProperty
 		name="cd_ti_pasto"
 		partOfOid="true" />
+	<persistentProperty
+		name="cd_area_estera"
+		partOfOid="true" />		
 </SQLPersistentInfo>

@@ -78,6 +78,8 @@ public class RicercaTerziAction extends AbstractAction {
 				bp.eseguiRicerca(actioncontext);
 			else if (bp.getServizio()!= null && bp.getServizio().equalsIgnoreCase("rendicontazione"))
 				  bp.eseguiRicerca_rendicontazione(actioncontext);
+			else if (bp.getServizio()!= null && bp.getServizio().equalsIgnoreCase("cercacompleta"))
+				  bp.eseguiRicerca(actioncontext);
 			else if (bp.getServizio()!= null && bp.getServizio().equalsIgnoreCase("inserimento")){
 				bp.inserisciTerzo(actioncontext);
 			}else if (bp.getServizio()!= null && bp.getServizio().equalsIgnoreCase("elimina")){

@@ -6,22 +6,19 @@
 		<columnMapping
 			columnName="CD_ELEMENTO_PADRE"
 			propertyName="elemento_padre.cd_elemento_voce"
-			/>
+			fetchOnly="false" />
 		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="elemento_padre.esercizio"
-			fetchOnly="true"
-			/>
-			<columnMapping
-			columnName="TI_APPARTENENZA"
-			propertyName="elemento_padre.ti_appartenenza"
-			fetchOnly="true"			
-			/>		
-			<columnMapping
-			columnName="TI_GESTIONE"
-			propertyName="elemento_padre.ti_gestione"
-			fetchOnly="true"			 
-			/>
+			columnName="ESERCIZIO_ELEMENTO_PADRE"
+			propertyName="elemento_padre.esercizio" 
+			fetchOnly="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_ELEMENTO_PADRE"
+			propertyName="elemento_padre.ti_appartenenza" 
+			fetchOnly="false" />		
+		<columnMapping
+			columnName="TI_GESTIONE_ELEMENTO_PADRE"
+			propertyName="elemento_padre.ti_gestione" 
+			fetchOnly="false" />
 		<columnMapping
 			columnName="CD_CAPOCONTO_FIN"
 			propertyName="capoconto_fin.cd_capoconto_fin"/>

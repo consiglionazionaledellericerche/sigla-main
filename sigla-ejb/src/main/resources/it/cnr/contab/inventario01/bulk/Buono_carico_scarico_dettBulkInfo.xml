@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="pg_inventario"
 		property="buono_cs.inventario.pg_inventario"
@@ -359,6 +359,14 @@
 		inputSize="8"
 		label="Targa"/>	
 	<fieldProperty
+		name="seriale"
+		property="bene.seriale"
+		inputType="TEXT"
+		readonlyProperty="bene.ROseriale"	
+		maxLength="25"
+		inputSize="25"
+		label="Seriale"/>		
+	<fieldProperty
 		name="ds_buono"
 		property="buono_cs.ds_buono_carico_scarico"
 		inputType="TEXT"
@@ -491,7 +499,9 @@
 	<formFieldProperty
 		name="cd_barre" />
 	<formFieldProperty
-		name="targa" />	
+		name="targa" />
+	<formFieldProperty
+		name="seriale" />			
 	<formFieldProperty
 		name="ds_buono" />	
 	<formFieldProperty
@@ -526,7 +536,9 @@
 		style="width:250px"/>
 	<columnFieldProperty
 		name="valore_unitario" />
-	
+	<columnFieldProperty
+		name="seriale" />
+		
 	<columnSet name="righeSet">			
 		<columnFieldProperty
 			name="ds_bene" 
@@ -576,8 +588,10 @@
 	<columnSet
 		name="righeDaScarico">	
 		<columnFieldProperty
-			name="codiceCompleto"
+			name="nr_inventario"
 			style="width:80px" />	
+		<columnFieldProperty
+			name="progressivo" />		
 		<columnFieldProperty
 			name="ds_bene"
 			style="width:300px" />

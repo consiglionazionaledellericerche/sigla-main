@@ -40,7 +40,7 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 			sql.setHeader("SELECT MAX(PG_RISULTATO)");
 			sql.addClause("AND","cd_linea_attivita",sql.EQUALS,risultato.getLinea_attivita().getCd_linea_attivita());
 			sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,risultato.getLinea_attivita().getCentro_responsabilita().getCd_centro_responsabilita());
-			PreparedStatement stm = sql.prepareStatement(getConnection());
+			LoggableStatement stm = sql.prepareStatement(getConnection());
 			try {
 				java.sql.ResultSet rs = stm.executeQuery();
 	            java.math.BigDecimal aMaxVal;

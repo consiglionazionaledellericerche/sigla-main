@@ -239,6 +239,25 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
 			}
 		}
 	}
+	public java.lang.Boolean isBPEnableForUser(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1,java.lang.String param2,java.lang.String param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (java.lang.Boolean)invoke("isBPEnableForUser",new Object[] {
+				param0,
+				param1,
+				param2,
+				param3 });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}	
 	public it.cnr.contab.utenze00.bulk.Albero_mainBulk validaNodoPerUtente(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1,java.lang.String param2,java.lang.String param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
 			return (it.cnr.contab.utenze00.bulk.Albero_mainBulk)invoke("validaNodoPerUtente",new Object[] {
@@ -344,11 +363,12 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
 			}
 		}
 	}
-	public boolean isUtenteAbilitatoLdap(it.cnr.jada.UserContext param0,String param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	public boolean isUtenteAbilitatoLdap(it.cnr.jada.UserContext param0,String param1,boolean param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
 			return (Boolean)invoke("isUtenteAbilitatoLdap",new Object[] {
 				param0,
-				param1 });
+				param1,
+				param2 });
 		} catch(java.rmi.RemoteException e) {
 			throw e;
 		} catch(java.lang.reflect.InvocationTargetException e) {

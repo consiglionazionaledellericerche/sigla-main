@@ -42,17 +42,20 @@ public class V_cons_partite_giroAction extends ConsultazioniAction {
 			}
 
 			CompoundFindClause clauses = null;
-
-			for (Iterator i = bp.getSelectedElements(context).iterator();i.hasNext();) 
-			{
-				V_cons_partite_giroBulk wpb = (V_cons_partite_giroBulk) i.next();
+			if (bp.getElementsCount()!=selectElements){
 				
-				CompoundFindClause parzclause = new CompoundFindClause();
-				parzclause.addClause("AND","cd_cds_origine_obb",SQLBuilder.EQUALS,wpb.getCd_cds_origine_obb());
-				parzclause.addClause("AND","cd_uo_origine_obb",SQLBuilder.EQUALS,wpb.getCd_uo_origine_obb());
-				parzclause.addClause("AND","cd_elemento_voce_obb",SQLBuilder.EQUALS,wpb.getCd_elemento_voce_obb());
-				parzclause.addClause("AND","cd_elemento_voce_acr",SQLBuilder.EQUALS,wpb.getCd_elemento_voce_acr());
-				clauses = clauses.or(clauses, parzclause);
+				for (Iterator i = bp.getSelectedElements(context).iterator();i.hasNext();) 
+				{
+					V_cons_partite_giroBulk wpb = (V_cons_partite_giroBulk) i.next();
+					
+					CompoundFindClause parzclause = new CompoundFindClause();
+					parzclause.addClause("AND","cd_cds_origine_obb",SQLBuilder.EQUALS,wpb.getCd_cds_origine_obb());
+					parzclause.addClause("AND","cd_uo_origine_obb",SQLBuilder.EQUALS,wpb.getCd_uo_origine_obb());
+					parzclause.addClause("AND","cd_elemento_voce_obb",SQLBuilder.EQUALS,wpb.getCd_elemento_voce_obb());
+					parzclause.addClause("AND","cd_elemento_voce_acr",SQLBuilder.EQUALS,wpb.getCd_elemento_voce_acr());
+				
+					clauses = clauses.or(clauses, parzclause);
+				}
 			}
 			CompoundFindClause findclause = bp.getFindclause();
 			if (findclause==null)

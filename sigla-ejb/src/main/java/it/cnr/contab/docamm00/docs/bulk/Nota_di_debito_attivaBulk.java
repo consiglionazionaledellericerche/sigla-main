@@ -81,6 +81,7 @@ public void copyFrom(
 
 	//setFl_cliente_occasionale(fattura_attiva.getFl_cliente_occasionale());
 	setFl_liquidazione_differita(fattura_attiva.getFl_liquidazione_differita());
+	setAttivoSplitPayment(fattura_attiva.isAttivoSplitPayment());
 	//setProtocollo_iva(fattura_attiva.getProtocollo_iva());
 	//setProtocollo_iva_generale(fattura_attiva.getProtocollo_iva_generale());
 	
@@ -117,13 +118,14 @@ public void copyFrom(
 
 	setBanca_uo(fattura_attiva.getBanca_uo());
 	
-	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	setFl_stampa(Boolean.FALSE);
 	setModalita_trasportoColl(fattura_attiva.getModalita_trasportoColl());
 	setCondizione_consegnaColl(fattura_attiva.getCondizione_consegnaColl());
 	setModalita_incassoColl(fattura_attiva.getModalita_incassoColl());
 	setModalita_erogazioneColl(fattura_attiva.getModalita_erogazioneColl());
 	setTi_bene_servizio(fattura_attiva.getTi_bene_servizio());
+	setFl_pagamento_anticipato(fattura_attiva.getFl_pagamento_anticipato());
 }
 public java.lang.Class getChildClass() {
 	return Nota_di_debito_attiva_rigaBulk.class;

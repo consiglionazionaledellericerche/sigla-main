@@ -1,5 +1,7 @@
 package it.cnr.contab.utenze00.bp;
 
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 
@@ -23,6 +25,8 @@ public class LdapLogin {
 	private static final String UID_ATTRIBUTE = "uid";
 	private static final String MATRICOLA_ATTRIBUTE = "matricola";
 	private static final String MAIL_ATTRIBUTE = "mail";
+	private static final String CODICEFISCALE_ATTRIBUTE = "codicefiscale";
+	
 
 	private String appName; // = "cnrapp1";
 	private String baseDN; // = "o=cnr,c=it";
@@ -62,9 +66,9 @@ public class LdapLogin {
 	 * @throws Exception
 	 * @throws LDAPException
 	 */
-	public void validaUtente(String userID, String userPassword,
+	public void validaUtente(UtenteBulk utenteReale,
 			java.util.Calendar calNow) throws Exception, LDAPException {
-		validaUtente(userID, userPassword, calNow, false);
+		validaUtente(utenteReale, calNow, false);
 	}
 
 	/**
@@ -82,9 +86,12 @@ public class LdapLogin {
 	 * @throws Exception
 	 * @throws LDAPException
 	 */
-	public void validaUtente(String userID, String userPassword,
+	public void validaUtente(UtenteBulk utenteReale,
 			java.util.Calendar calNow, boolean abilita) throws Exception,
 			LDAPException {
+		String userID = utenteReale.getCd_utente_uid();
+		String userPassword = utenteReale.getLdap_password();
+		
 		if (userID == null)
 			throw new Exception("Valorizzare il codice utente.");
 		if (userPassword == null)
@@ -133,12 +140,13 @@ public class LdapLogin {
 			}
 			userDN = nextEntry.getDN();
 
-			String returnAttrs[] = { appName, attrDataPw };
+			String returnAttrs[] = { appName, attrDataPw, CODICEFISCALE_ATTRIBUTE };
 
 			LDAPEntry apps = lc.read(userDN, returnAttrs);
 			LDAPAttribute sigla = apps.getAttribute(appName);
 			LDAPAttribute dataPw = apps.getAttribute(attrDataPw);
-
+			utenteReale.setCodiceFiscaleLDAP(apps.getAttribute(CODICEFISCALE_ATTRIBUTE).getStringValue());
+			
 			// vecchio metodo per semplice confronto
 			// non tiene conto delle password cifrate
 			/*

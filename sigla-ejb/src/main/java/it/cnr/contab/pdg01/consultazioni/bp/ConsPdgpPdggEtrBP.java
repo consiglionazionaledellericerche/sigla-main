@@ -9,8 +9,8 @@ package it.cnr.contab.pdg01.consultazioni.bp;
 import java.rmi.RemoteException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
@@ -27,7 +27,10 @@ import it.cnr.jada.util.jsp.Button;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class ConsPdgpPdggEtrBP extends ConsultazioniBP {
+	private static final long serialVersionUID = 1L;
+
 	private String labelCd_classificazione;
+	private boolean flNuovoPdg = false;
 
 	public ConsPdgpPdggEtrBP(String s) {
 		super(s);
@@ -41,13 +44,15 @@ public class ConsPdgpPdggEtrBP extends ConsultazioniBP {
 		try{
 			super.init(config, context);
 			
-			Parametri_cnrBulk par = ((Parametri_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).getParametriCnr(context.getUserContext(),CNRUserContext.getEsercizio(context.getUserContext()));
-			
+ 		    Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+		    Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), esercizio); 
+
 			setLabelCd_classificazione(Utility.createClassificazioneVociComponentSession(). 
 									   getDsLivelloClassificazione(context.getUserContext(),
 																   CNRUserContext.getEsercizio(context.getUserContext()),
 																   Elemento_voceHome.GESTIONE_ENTRATE,
-																   par.getLivello_pdg_decis_etr()));
+																   parCnr.getLivello_pdg_decis_etr()));
+ 		    setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 		} catch (ComponentException e) {
 			throw new BusinessProcessException(e);
 		} catch (RemoteException e) {
@@ -63,10 +68,27 @@ public class ConsPdgpPdggEtrBP extends ConsultazioniBP {
 
 		return listButton;
 	}
+
+	public void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+	
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
+	}
+	
 	public String getLabelCd_classificazione() {
 		return labelCd_classificazione;
 	}
+	
 	public void setLabelCd_classificazione(String string) {
 		labelCd_classificazione = string;
 	}
+	
+	public String getLabelCd_progetto(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_PROGETTO;
+		else
+			return "Modulo di Attività";
+	}	
 }

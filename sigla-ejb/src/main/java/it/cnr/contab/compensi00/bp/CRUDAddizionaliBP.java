@@ -107,7 +107,7 @@ public class CRUDAddizionaliBP extends SimpleCRUDBP{
 				  if (c.getCellType()==1)
 					  ali=c.getStringCellValue();	
 				  else if (c.getCellType()==0)
-					  ali_num=new BigDecimal(c.getNumericCellValue()).setScale(2,java.math.BigDecimal.ROUND_HALF_EVEN);
+					  ali_num=new BigDecimal(c.getNumericCellValue()).setScale(2,java.math.BigDecimal.ROUND_HALF_UP);
 				  if (!((codcat!=null && comune!=null && prov!=null &&(ali!=null || ali_num!=null))||
 						  (codcat==null && comune==null && prov==null &&(ali==null || ali_num==null)))) 	  
 				  throw new ApplicationException("Formato file non valido!");		  
@@ -133,10 +133,12 @@ public class CRUDAddizionaliBP extends SimpleCRUDBP{
 				  if (c.getCellType()==1)
 					  ali=c.getStringCellValue();
 				  else if (c.getCellType()==0)
-					  ali_num=new BigDecimal(c.getNumericCellValue()).setScale(2,java.math.BigDecimal.ROUND_HALF_EVEN);
+					  ali_num=new BigDecimal(c.getNumericCellValue()).setScale(2,java.math.BigDecimal.ROUND_HALF_UP);
 				  
 			  if(ali!= null && ali.compareTo("0*")==0)
-				  ali=null;
+				  //  ali= null;
+				  // 04/02/2016 dal 2016 lo 0* significa che non esiste delebera e quindi l'aliquota è 0
+				  ali= "0";
 			  if(ali==null && ali_num!=null)
 				  ali=ali_num.toString();
 			  if(ali!=null){

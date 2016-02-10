@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty 
 		name="find_elemento_padre"
 		property="elemento_padre"
-		optionsProperty="elemento_padre"
 		inputType="SEARCHTOOL"
 		enabledOnSearch="true"
 		/>
@@ -34,7 +33,7 @@
 		label="Codice completo"
 		inputType="ROTEXT"
 		maxLength="30"
-		inputSize="6"
+		inputSize="30"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
@@ -52,7 +51,7 @@
 		label="Codice proprio"
 		inputType="TEXT"
 		maxLength="30"
-		inputSize="6"
+		inputSize="20"
 		enabledOnSearch="true"
 		/>
 
@@ -280,6 +279,79 @@
 		inputType="CHECKBOX"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="fl_limite_spesa"
+		property="fl_limite_spesa"
+		label="Soggetto a limite spesa"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="fl_soggetto_prelievo"
+		property="fl_soggetto_prelievo"
+		label="Soggetto a prelievo"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="fl_prelievo"
+		property="fl_prelievo"
+		label="Utilizzato per prelievo"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="perc_prelievo_pdgp_entrate"
+		property="perc_prelievo_pdgp_entrate"
+		label="Percentuale di prelievo" 
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		nullable="true" />			
+	<fieldProperty
+		name="fl_solo_competenza"
+		property="fl_solo_competenza"
+		label="Solo competenza"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="fl_solo_residuo"
+		property="fl_solo_residuo"
+		label="Solo residuo"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />		
+	<fieldProperty
+		name="fl_azzera_residui"
+		property="fl_azzera_residui"
+		label="Azzera residuo"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />			
+	<fieldProperty
+		name="fl_trovato"
+		property="fl_trovato"
+		keysProperty="indicazioneTrovatoKeys"
+		label="Capitolo per documenti amministrativi collegati con Brevetti/Trovati"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -345,6 +417,40 @@
 		name="fl_inv_beni_patr" />
 	<columnFieldProperty
 		name="fl_check_terzo_siope" />	
+ 	<columnFieldProperty
+		name="fl_limite_spesa" />
+	<columnFieldProperty
+		name="fl_soggetto_prelievo" />
+	<columnFieldProperty
+		name="fl_prelievo" />		
+	<columnFieldProperty
+		name="perc_prelievo_pdgp_entrate"/>		
+	<columnFieldProperty
+		name="fl_solo_competenza" />		
+	<columnFieldProperty
+		name="fl_solo_residuo"/>
+	<columnFieldProperty
+		name="fl_azzera_residui"/>			
+	<columnFieldProperty
+		name="fl_trovato" />					
+
+<columnSet
+	name="restService">
+		
+	<columnFieldProperty
+		name="esercizio"
+		/>
+	<columnFieldProperty
+		name="cd_elemento_voce"
+		label = "Codice"
+		/>
+	<columnFieldProperty
+		name="ds_elemento_voce"
+		/>
+	<columnFieldProperty
+		name="fl_solo_residuo"
+		/>
+</columnSet>	
 
 <columnSet
 	name="impegnoPGiro">
@@ -465,7 +571,21 @@
    <formFieldProperty
 		name="fl_inv_beni_patr" />
    <formFieldProperty
-		name="fl_check_terzo_siope" />
+		name="fl_limite_spesa" />
+	<formFieldProperty
+		name="fl_soggetto_prelievo" />
+	<formFieldProperty
+		name="fl_prelievo" />
+	<formFieldProperty
+		name="perc_prelievo_pdgp_entrate"/>		
+	<formFieldProperty
+		name="fl_solo_competenza" />		
+	<formFieldProperty
+		name="fl_solo_residuo"/>		
+	<formFieldProperty
+		name="fl_azzera_residui"/>		
+	<formFieldProperty
+		name="fl_trovato" />
 
 	<findFieldProperty
 		name="esercizio"
@@ -502,7 +622,21 @@
 	<findFieldProperty
 		name="fl_voce_fondo" />
 	<findFieldProperty
-		name="fl_check_terzo_siope" />
+		name="fl_limite_spesa" />
+	<findFieldProperty
+		name="fl_soggetto_prelievo" />
+	<findFieldProperty
+		name="fl_prelievo" />	
+	<findFieldProperty
+		name="fl_solo_competenza" />		
+	<findFieldProperty
+		name="fl_solo_residuo"/>		
+	<findFieldProperty
+		name="fl_azzera_residui"/>			
+	<findFieldProperty
+		name="fl_trovato" />
+	<findFieldProperty
+		name="ti_gestione" />
 
 	<form
 		name="searchtool_x_var_stanz_res" >

@@ -2,6 +2,7 @@ package it.cnr.contab.config00.comp;
 
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPBulk;
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPHome;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
@@ -17,6 +18,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
@@ -59,17 +61,24 @@ public class PDCFinComponent extends it.cnr.jada.comp.CRUDComponent implements I
  */	
 
 public it.cnr.jada.util.RemoteIterator cerca(UserContext userContext,it.cnr.jada.persistency.sql.CompoundFindClause clausole,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-	Elemento_voceBulk ev = (Elemento_voceBulk) bulk;
-	Elemento_voceHome evHome = (Elemento_voceHome) getHomeCache(userContext).getHome( ev.getClass());
+		Elemento_voceBulk ev = (Elemento_voceBulk) bulk;
+		Elemento_voceHome evHome = (Elemento_voceHome) getHomeCache(userContext).getHome( ev.getClass());
+		
+		try {
+			if (!((Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_nuovo_pdg().booleanValue())
+				ev.setCd_proprio_elemento( evHome.formatKey( ev.getCd_proprio_elemento(), ev.getTi_appartenenza(), ev.getTi_gestione(), ev.getTi_elemento_voce() ));
+			else
+				ev.setCd_parte(null);
+		} catch (PersistencyException e) {
+			throw handleException(bulk,e);
+		}
 	
- 	ev.setCd_proprio_elemento( evHome.formatKey( ev.getCd_proprio_elemento(), ev.getTi_appartenenza(), ev.getTi_gestione(), ev.getTi_elemento_voce() ));
-
- 	/* DA FARE se si vuole permettere una ricerca impostando il titolo padre 
-	if ( ev instanceof EV_cnr_spese_capitoloBulk )
-		return leggiCnrSpeseCapitoloBulk ( (EV_cnr_spese_capitoloBulk) ev );
-	*/
-	
-	return super.cerca(userContext,clausole, bulk );
+	 	/* DA FARE se si vuole permettere una ricerca impostando il titolo padre 
+		if ( ev instanceof EV_cnr_spese_capitoloBulk )
+			return leggiCnrSpeseCapitoloBulk ( (EV_cnr_spese_capitoloBulk) ev );
+		*/
+		
+		return super.cerca(userContext,clausole, bulk );
 }
 /**
  * Esegue una operazione di creazione di un capitolo di spesa del CNR. Come elemento padre viene assegnata la categoria
@@ -187,27 +196,43 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	Elemento_voceHome subEvHome = (Elemento_voceHome) getHome(userContext,evBulk);
 	try
 	{
-
-		if ( evBulk instanceof EV_cnr_spese_capitoloBulk )
+	
+		if (evBulk.getFl_prelievo().booleanValue() && findElementoVocePrelievo(userContext) != null)
+			throw new  it.cnr.jada.comp.ApplicationException("Attenzione: esiste già un elemento voce di prelievo per l'esercizio.");
+		
+	
+		if (!((Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_nuovo_pdg().booleanValue()) {
+			if ( evBulk instanceof EV_cnr_spese_capitoloBulk )
 				return creaCnrSpeseCapitoloBulk( userContext,(EV_cnr_spese_capitoloBulk)evBulk );
 
+			if (evBulk instanceof EV_cds_spese_capitoloBulk && evBulk.getElemento_padre() == null || OggettoBulk.isNullOrEmpty( evBulk.getElemento_padre().getCd_elemento_voce() ))
+				throw new it.cnr.jada.comp.ApplicationException( "Inserire il codice titolo.");
 	
-	//lock sul padre
-		lockBulk( userContext,evBulk.getElemento_padre() );
-		
-	//generazione e formattazione del codice
-		if ( evBulk.getCd_proprio_elemento() == null || evBulk.getCd_proprio_elemento().equals(""))
-		{
-			String codice = subEvHome.creaNuovoCodice( evBulk );
-			evBulk.setCd_proprio_elemento( subEvHome.formatKey( codice, evBulk.getTi_appartenenza(), evBulk.getTi_gestione(), evBulk.getTi_elemento_voce() ));	
-		}	
-		else
-		 	evBulk.setCd_proprio_elemento( subEvHome.formatKey( evBulk.getCd_proprio_elemento(), evBulk.getTi_appartenenza(), evBulk.getTi_gestione(), evBulk.getTi_elemento_voce() ));
-		
-		evBulk.setCd_elemento_voce( evBulk.getElemento_padre().getCd_elemento_voce().concat(".").concat( evBulk.getCd_proprio_elemento() ));
+			if (evBulk instanceof EV_cnr_entrate_capitoloBulk && evBulk.getElemento_padre() == null || OggettoBulk.isNullOrEmpty( evBulk.getElemento_padre().getCd_elemento_voce() ))
+				throw new it.cnr.jada.comp.ApplicationException( "Inserire il codice categoria.");
 
-		if ( evBulk instanceof EV_cds_spese_capitoloBulk )
-			inizializzaCdsSpeseCapitoloBulk( (EV_cds_spese_capitoloBulk)evBulk );				
+			//lock sul padre
+			lockBulk( userContext,evBulk.getElemento_padre() );
+	
+			//generazione e formattazione del codice
+			if ( evBulk.getCd_proprio_elemento() == null || evBulk.getCd_proprio_elemento().equals(""))
+			{
+				String codice = subEvHome.creaNuovoCodice( evBulk );
+				evBulk.setCd_proprio_elemento( subEvHome.formatKey( codice, evBulk.getTi_appartenenza(), evBulk.getTi_gestione(), evBulk.getTi_elemento_voce() ));	
+			}	
+			else
+			 	evBulk.setCd_proprio_elemento( subEvHome.formatKey( evBulk.getCd_proprio_elemento(), evBulk.getTi_appartenenza(), evBulk.getTi_gestione(), evBulk.getTi_elemento_voce() ));
+	
+			evBulk.setCd_elemento_voce( evBulk.getElemento_padre().getCd_elemento_voce().concat(".").concat( evBulk.getCd_proprio_elemento() ));
+			
+			if ( evBulk instanceof EV_cds_spese_capitoloBulk )
+				inizializzaCdsSpeseCapitoloBulk( (EV_cds_spese_capitoloBulk)evBulk );				
+		} else {
+			if ( evBulk.getCd_proprio_elemento() == null || evBulk.getCd_proprio_elemento().equals(""))
+				throw new  it.cnr.jada.comp.ApplicationException( "Inserire il campo Codice Proprio." );
+			
+			evBulk.setCd_elemento_voce( evBulk.getCd_proprio_elemento());			
+		}
 
 		makeBulkPersistent( userContext,evBulk );
 	
@@ -520,7 +545,13 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
 		throw new ApplicationException("Non è possibile modificare voci ad esercizio chiuso.");
-	
+	try{
+		Elemento_voceBulk evBulk = (Elemento_voceBulk) bulk;
+		if (evBulk.getFl_prelievo().booleanValue() && findElementoVocePrelievo(userContext) != null)
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste già un elemento voce di prelievo per l'esercizio.");
+	} catch (it.cnr.jada.persistency.PersistencyException pe){
+		throw handleException(pe);
+	}
 	return super.modificaConBulk(userContext,bulk);
 }
 
@@ -717,7 +748,14 @@ public java.util.List findListaVociWS(UserContext userContext,String uo,String t
 			 	sql = (SQLBuilder)super.select( userContext,null,new V_voce_f_partita_giroBulk());
 			 	sql.addTableToHeader("ELEMENTO_VOCE");
 				sql.addSQLClause("AND","V_VOCE_F_PARTITA_GIRO.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.cd_unita_organizzativa", sql.EQUALS, u_org.getCd_unita_organizzativa());
+				sql.openParenthesis( "AND");		
+				sql.openParenthesis( "AND");
+				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.cd_unita_organizzativa", sql.EQUALS,u_org.getCd_unita_organizzativa());
+				sql.addSQLClause( "OR", "V_VOCE_F_PARTITA_GIRO.cd_unita_organizzativa", sql.ISNULL,null);
+				sql.closeParenthesis();
+				sql.closeParenthesis();
+				
+				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.FL_SOLO_RESIDUO", sql.EQUALS,  "N");
 				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CNR);
 				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.ti_gestione", sql.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
 				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.ti_voce", sql.EQUALS, Elemento_voceHome.TIPO_ARTICOLO);
@@ -839,5 +877,15 @@ public OggettoBulk stampaConBulk(UserContext userContext, V_stampa_pdc_fin_ent_s
 			throw new ApplicationException( "Il campo ESERCIZIO e' obbligatorio");
 	return stampa;
 }	
-	
+private Elemento_voceBulk findElementoVocePrelievo(UserContext userContext) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+	Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
+	SQLBuilder sql = home.createSQLBuilder();
+	sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+	sql.addSQLClause("AND","FL_PRELIEVO",sql.EQUALS,	"Y");	
+	it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
+	if (!broker.next())
+	    return null;	
+
+    return (Elemento_voceBulk)broker.fetch(Elemento_voceBulk.class);	
+}	
 }

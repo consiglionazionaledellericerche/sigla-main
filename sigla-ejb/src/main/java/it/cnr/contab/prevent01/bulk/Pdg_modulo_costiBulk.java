@@ -298,6 +298,22 @@ public class Pdg_modulo_costiBulk extends Pdg_modulo_costiBase {
 	}
 
 	/**
+	 * @return
+	 */
+	public BigDecimal getTotale_spese_da_fonti_interne_accentrate() {
+		return Utility.nvl(getSpese_accentrate_fonti_interne_istituto()).add(
+			   Utility.nvl(getSpese_accentrate_fonti_interne_aree()));
+	}
+
+	/**
+	 * @return
+	 */
+	public BigDecimal getTotale_spese_da_fonti_interne_decentrate() {
+		return Utility.nvl(getSpese_decentrate_fonti_interne_istituto()).add(
+			   Utility.nvl(getSpese_decentrate_fonti_interne_aree()));
+	}
+
+	/**
 	 * @param decimal
 	 */
 	public void setSpese_accentrate_fonti_interne_aree(BigDecimal decimal) {

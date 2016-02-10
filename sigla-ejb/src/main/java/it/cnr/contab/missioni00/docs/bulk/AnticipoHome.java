@@ -2,9 +2,7 @@ package it.cnr.contab.missioni00.docs.bulk;
 
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -110,11 +108,5 @@ public void updateFondoEconomale(it.cnr.contab.fondecon00.core.bulk.Fondo_spesaB
 	{
 		throw it.cnr.jada.persistency.sql.SQLExceptionHandler.getInstance().handleSQLException(e,spesa);
 	}
-}
-public Boolean archiviaStampa(UserContext userContext,
-		MandatoBulk mandato,
-		IDocumentoAmministrativoSpesaBulk docAmm)
-		throws IntrospectionException, PersistencyException {
-	return Boolean.FALSE;
 }
 }

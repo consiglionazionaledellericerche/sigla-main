@@ -247,12 +247,15 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	{
 		if (!isAbilitatoModificaDescVariazioni() && ((Pdg_variazioneBulk)getModel()).isApprovata())
 			return false;
+		else if (isUoEnte() && this.abilitatoModificaDescVariazioni &&((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva()) 
+			return true;
 		else
-		return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte());
+			return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) &&!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
 	}	
 	public boolean isDeleteButtonEnabled()
 	{
-		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !((Pdg_variazioneBulk)getModel()).isApprovata();
+		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && 
+		!((Pdg_variazioneBulk)getModel()).isApprovata() &&!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
 	}
 	/**
 	 * Metodo utilizzato per creare una toolbar applicativa personalizzata.
@@ -290,7 +293,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		return (isSaveButtonEnabled()||(super.isSaveButtonEnabled()&&((Pdg_variazioneBulk)getModel()).isPropostaProvvisoria()))&& 
 		        ((Pdg_variazioneBulk)getModel()).isPropostaProvvisoria() && 
 		        ((Pdg_variazioneBulk)getModel()).isNotNew() &&
-	 		    (getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea())&&
+	 		    (getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea()||isUoSac())&&
 		        ((Pdg_variazioneBulk)getModel()).getCentro_responsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 	}
 	/**
@@ -321,19 +324,22 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	 */
 	public boolean isNonApprovaButtonEnabled() {
 
-		return isSaveButtonEnabled() && ((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva() && isUoEnte();
+		return  super.isSaveButtonEnabled() && ((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva() && isUoEnte();
 	}
 	/**
 	 * Gestione del salvataggio come definitiva di una variazione
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @throws BusinessProcessException	
+	 * @throws ValidationException 
 	 */
-	public void salvaDefinitivo(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
+	public void salvaDefinitivo(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException{
 		try {
 
 			PdGVariazioniComponentSession comp = (PdGVariazioniComponentSession)createComponentSession();
-			Pdg_variazioneBulk pdg = comp.salvaDefinitivo(context.getUserContext(), (Pdg_variazioneBulk)getModel());
+			Pdg_variazioneBulk pdg=(Pdg_variazioneBulk)getModel();
+			pdg.validate();
+			pdg = comp.salvaDefinitivo(context.getUserContext(), (Pdg_variazioneBulk)getModel());
 			edit(context,pdg);
 		}catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
@@ -420,6 +426,9 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
     }
 	public boolean isUoArea(){
 		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0);
+	}
+	public boolean isUoSac(){
+		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0);
 	}
 	/**
 	 * @return
@@ -514,7 +523,8 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			return (isSaveButtonEnabled()||(((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva()))&& 
 					((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva() && 
 					((Pdg_variazioneBulk)getModel()).isNotNew() &&
-					(getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea())&&
+					((Pdg_variazioneBulk)getModel()).getStatoDocumentale()==null &&
+					(getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea() ||isUoSac())&&
 					((Pdg_variazioneBulk)getModel()).getCentro_responsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 		}catch(NullPointerException e){
 			return false;

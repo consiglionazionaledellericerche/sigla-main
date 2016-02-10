@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.consultazioni.bulk.VGaeTotaleStoricoSpeBase"
+	homeClassName="it.cnr.contab.consultazioni.bulk.VGaeTotaleStoricoSpeHome">
+	<defaultColumnMap
+		tableName="V_GAE_TOTALE_STORICO_SPE">
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cdLineaAttivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_RESPONSABILE_TERZO"
+			propertyName="cdResponsabileTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_TERZO"
+			propertyName="dsTerzo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cdModulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="dsModulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pgProgetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cdElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="STANZIAMENTO_ASSESTATO_TOT"
+			propertyName="stanziamentoAssestatoTot"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPEGNATO"
+			propertyName="impegnato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DISPONIBILITA_IMPEGNARE"
+			propertyName="disponibilitaImpegnare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PAGATO"
+			propertyName="pagato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DA_PAGARE"
+			propertyName="daPagare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="cdLineaAttivita" />
+	<persistentProperty
+		name="denominazione" />
+	<persistentProperty
+		name="cdResponsabileTerzo" />
+	<persistentProperty
+		name="dsTerzo" />
+	<persistentProperty
+		name="cdModulo" />
+	<persistentProperty
+		name="dsModulo" />
+	<persistentProperty
+		name="pgProgetto" />
+	<persistentProperty
+		name="cdElementoVoce" />
+	<persistentProperty
+		name="stanziamentoAssestatoTot" />
+	<persistentProperty
+		name="impegnato" />
+	<persistentProperty
+		name="disponibilitaImpegnare" />
+	<persistentProperty
+		name="pagato" />
+	<persistentProperty
+		name="daPagare" />
+</SQLPersistentInfo>

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.doccont00.comp.DateServices;
 /**
  * Insert the type's description here.
  * Creation date: (07/05/2002 17.44.39)
@@ -611,34 +612,35 @@ public OggettoBulk inizializzaBulkPerRicerca (UserContext aUC,OggettoBulk bulk) 
  * inizializzaBulkPerStampa method comment.
  */
 private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_inventarioVBulk stampa) throws ComponentException{
-
-	String cd_cds_scrivania = CNRUserContext.getCd_cds(userContext);
-	
-    /* 22/12/2004
-     * Se in scrivania ho il 999 non valorizzo il CDS
-     * in modo da stampare tutti i CDS
-     * e non solo il 999.000
-     * 
-     * 27/12/2004
-     * Ripristinata situazione precedente. Sulla mappa in
-     * questo modo verrà visualizzato il CDS di appartnnenza.
-     * Nel Bulk è stato effettuato il test se CDS = 999
-     * 
-     * */
-	//if (!cd_cds_scrivania.equals("999"))	
-
-	stampa.setCd_cds(cd_cds_scrivania);
-
-	stampa.setDataInizio(it.cnr.contab.doccont00.comp.DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue()));
-	stampa.setDataFine(getDataOdierna(userContext));
-
-	stampa.setCategoriaForPrint(new Categoria_gruppo_inventBulk());
-	stampa.setGruppoForPrint(new Categoria_gruppo_inventBulk());
-
-	stampa.setNrInventarioFrom(new Long(0));
-	stampa.setNrInventarioTo(new Long("9999999999"));
-	
 	try{
+		String cd_cds_scrivania = CNRUserContext.getCd_cds(userContext);
+		
+	    /* 22/12/2004
+	     * Se in scrivania ho il 999 non valorizzo il CDS
+	     * in modo da stampare tutti i CDS
+	     * e non solo il 999.000
+	     * 
+	     * 27/12/2004
+	     * Ripristinata situazione precedente. Sulla mappa in
+	     * questo modo verrà visualizzato il CDS di appartnnenza.
+	     * Nel Bulk è stato effettuato il test se CDS = 999
+	     * 
+	     * */
+		//if (!cd_cds_scrivania.equals("999"))	
+		EnteBulk ente = (EnteBulk) getHome(userContext, EnteBulk.class).findAll().get(0);
+		stampa.setCdsEnte(ente);
+		stampa.setCd_cds(cd_cds_scrivania);
+	
+		stampa.setDataInizio(it.cnr.contab.doccont00.comp.DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue()));
+		stampa.setDataFine(getDataOdierna(userContext));
+	
+		stampa.setCategoriaForPrint(new Categoria_gruppo_inventBulk());
+		stampa.setGruppoForPrint(new Categoria_gruppo_inventBulk());
+	
+		stampa.setNrInventarioFrom(new Long(0));
+		stampa.setNrInventarioTo(new Long("9999999999"));
+	
+
 		Tipo_carico_scaricoHome tipo_carico_scaricoHome = (Tipo_carico_scaricoHome)getHome(userContext, it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoBulk.class);
 		java.util.Collection tipo_carico_scarico = tipo_carico_scaricoHome.findAll();
 		stampa.setTipoMovimento(new Tipo_carico_scaricoBulk());
@@ -851,6 +853,10 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 				!bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()!=null)
 			bene.setTarga(null);
+		
+		if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+			!bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()!=null)
+			bene.setSeriale(null);
 		
 		
 		validaUtilizzatori(aUC, bene);
@@ -1194,9 +1200,20 @@ public SQLBuilder selectUbicazioneByClause(UserContext userContext, Inventario_b
 		sql.addSQLClause("AND","CD_CDS",sql.EQUALS, cds_scrivania);
 		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, uo_scrivania);
 		
-		// Aggiunge alle Ubicazioni della UO di scrivania, quelle fittizie.
-		sql.addSQLClause("OR","CD_CDS",sql.EQUALS, Ubicazione_beneBulk.CD_CDS_FITTIZIO);
-		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, Ubicazione_beneBulk.CD_UO_FITTIZIO);
+//		public static final String CD_CDS_FITTIZIO = "999";
+//		public static final String CD_UO_FITTIZIO = "999.000";
+//		// Aggiunge alle Ubicazioni della UO di scrivania, quelle fittizie.
+//		sql.addSQLClause("OR","CD_CDS",sql.EQUALS, Ubicazione_beneBulk.CD_CDS_FITTIZIO);
+//		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, Ubicazione_beneBulk.CD_UO_FITTIZIO);
+//		sql.closeParenthesis();
+
+		try {
+			Unita_organizzativa_enteBulk uoEnte=(Unita_organizzativa_enteBulk)(Utility.createUnita_organizzativaComponentSession().getUoEnte(userContext));
+			sql.addSQLClause("OR","CD_CDS",sql.EQUALS, uoEnte.getCd_unita_padre());
+			sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, uoEnte.getCd_unita_organizzativa());
+		} catch (Exception e) {
+			throw handleException(e);
+		}
 		sql.closeParenthesis();
 		sql.addOrderBy("LIVELLO");
 		sql.addOrderBy("CD_UBICAZIONE");
@@ -1354,6 +1371,9 @@ private void validaBene (UserContext aUC, Inventario_beniBulk bene)
 		if (!bene.isBeneAccessorio() && bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 				bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()==null)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare la targa per questa Categoria");
+//		if (!bene.isBeneAccessorio() && bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+//				bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()==null)
+//			throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare il seriale per questa Categoria");
 		// CONTROLLA CHE SIA STATA SPECIFICATA UNA DESCRIZIONE PER IL BENE
 		if (bene.getDs_bene()==null)
 			throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare la Descrizione del Bene ");					
@@ -1407,6 +1427,7 @@ private void validaBene (UserContext aUC, Inventario_beniBulk bene)
 private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_beni_senza_utilizVBulk stampa) throws ComponentException{
 	try{
 		Timestamp dataOdierna = getDataOdierna(userContext);
+		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio()==null)
 			throw new ValidationException("Il campo DATA INIZIO PERIODO è obbligatorio");
 		if (stampa.getDataFine()==null)
@@ -1418,9 +1439,9 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_be
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		if (stampa.getDataFine().compareTo(dataOdierna)>0){
+		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
 		}
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);

@@ -79,11 +79,11 @@ CRUDIncarichiRepertorioBP bp = (CRUDIncarichiRepertorioBP)BusinessProcess.getBus
       <div class="Group"><table>
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"ti_istituz_commerc"); %></td>
-		<td><% bp.getController().writeFormInput(out,null,"ti_istituz_commerc",false,null,"onChange=\"submitForm('doOnTipoIstituzCommercChange')\"");%></td>
+		<td><% bp.getController().writeFormInput(out,"ti_istituz_commerc"); %></td>
 	  </tr>
 	  <tr>
 	 	<td><% bp.getController().writeFormLabel(out,"tipo_rapporto");%></td>
-		<td><% bp.getController().writeFormInput(out,null,"tipo_rapporto",false,null,"onChange=\"submitForm('doOnTipoRapportoChange')\""); %></td>
+		<td><% bp.getController().writeFormInput(out,"tipo_rapporto");%></td>
 	  </tr>
       </table></div>
       </td></tr>

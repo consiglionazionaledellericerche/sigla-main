@@ -33,6 +33,17 @@
 			</tr>
 			<tr>
 				<td>
+					<% bp.getDettaglio().writeFormLabel(out,"iva_liq_esterna");%>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"variazioni_imposta_esterna_deb",false,null,"");%>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"variazioni_imposta_esterna_cre",false,null,"");%>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<% bp.getDettaglio().writeFormLabel(out,"iva_non_vers_per_prec");%>
 				</td>
 				<td>

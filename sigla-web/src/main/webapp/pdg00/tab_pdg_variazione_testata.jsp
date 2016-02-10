@@ -33,8 +33,10 @@
   </TR>  
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"stato");%></TD>
-   <TD colspan=5><% bp.getController().writeFormInput(out,"default","stato",isFieldEnabled,null,null);%></TD>
-  </TR>
+   <TD colspan=2><% bp.getController().writeFormInput(out,"default","stato",isFieldEnabled,null,null);%></TD>
+    <TD colspan=3><% bp.getController().writeFormLabel(out,"stato_invio");%>  
+    	<% bp.getController().writeFormInput(out,"default","stato_invio",!(bp.isUoEnte()&&(bk.isPropostaDefinitiva()||bp.isSearching())),null,null);%></TD>
+   </TR> 
 <% if (bp instanceof CRUDPdgVariazioneGestionaleBP) {  %>
   	<TR>
    	  <TD><% bp.getController().writeFormLabel(out,"tipo_variazione");%></TD>

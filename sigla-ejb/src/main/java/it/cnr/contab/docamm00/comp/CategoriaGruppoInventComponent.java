@@ -1,14 +1,20 @@
 package it.cnr.contab.docamm00.comp;
 
+
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
+import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
+import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  * Insert the type's description here.
@@ -63,23 +69,7 @@ public CategoriaGruppoInventComponent() {
 public Bene_servizioBulk completaElementoVoceOf(UserContext userContext, Bene_servizioBulk beneServizio) throws it.cnr.jada.comp.ComponentException {
 
 	if (beneServizio == null) return null;
-	Categoria_gruppo_inventBulk categoriaGruppo = beneServizio.getCategoria_gruppo();
-	//it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk ev = new it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk(
-									//categoriaGruppo.getAss_voce_f().getCd_voce(),
-									//it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext),
-									//categoriaGruppo.getAss_voce_f().getTi_appartenenza(),
-									//categoriaGruppo.getAss_voce_f().getTi_gestione());
-	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk ev = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk(
-									categoriaGruppo.getAss_voce_f().getCd_voce(),
-									it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext),
-									categoriaGruppo.getAss_voce_f().getTi_appartenenza(),
-									categoriaGruppo.getAss_voce_f().getTi_gestione());
-	
-	try {
-		categoriaGruppo.setVoce_f((it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk)getHome(userContext, ev).findByPrimaryKey(ev));
-	} catch (it.cnr.jada.persistency.PersistencyException e) {
-		throw handleException(beneServizio, e);
-	}
+		
 	return beneServizio;
 }
 /** 
@@ -93,56 +83,10 @@ public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk bulk) throws
 
     Categoria_gruppo_inventBulk cgi= (Categoria_gruppo_inventBulk) bulk;
     cgi= (Categoria_gruppo_inventBulk) validaCgi(userContext, cgi);
-    //cgi.getAss_voce_f().setCd_voce(cgi.getVoce_f().getCd_voce());
-    cgi.getAss_voce_f().setVoce_f(cgi.getVoce_f());
-    cgi.getAss_voce_f().setCd_voce(cgi.getVoce_f().getCd_elemento_voce());
-    cgi.getAss_voce_f().setCategoria_gruppo(cgi);
-    cgi.getAss_voce_f().setCd_categoria_gruppo(cgi.getCd_categoria_gruppo());
-    cgi.getAss_voce_f().setTi_appartenenza("D");
-    cgi.getAss_voce_f().setTi_gestione("S");
-    cgi.getAss_voce_f().setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-
-    cgi= (Categoria_gruppo_inventBulk) super.creaConBulk(userContext, bulk);
-    cgi.getAss_voce_f().setUser(bulk.getUser());
-    cgi.getAss_voce_f().setUtcr(bulk.getUtcr());
-    cgi.getAss_voce_f().setUtuv(bulk.getUtuv());
-
-    try {
-        insertBulk(userContext, cgi.getAss_voce_f());
-    } catch (it.cnr.jada.persistency.PersistencyException ex) {
-        throw new it.cnr.jada.comp.ApplicationException("Impossibile creare l'associazione con la voce del piano");
-    }
-
-
+    super.creaConBulk(userContext, cgi);
     return cgi;
 }
-private Categoria_gruppo_voceBulk findAssVoceF(UserContext aUC,Categoria_gruppo_inventBulk cgi) throws ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException {
 
-	//if (cgi == null || cgi.getVoce_f()==null) return null;
-	it.cnr.jada.bulk.BulkHome home = getHome(aUC, Categoria_gruppo_voceBulk.class);
-	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-
-	if (cgi.getNodoPadre()!=null){
-		sql.addClause("AND", "cd_categoria_gruppo", sql.EQUALS, cgi.getNodoPadre().getCd_categoria_gruppo());
-		sql.addClause("AND", "ti_appartenenza", sql.EQUALS,"D");
-		sql.addClause("AND", "ti_gestione", sql.EQUALS,"S");
-		sql.addClause("AND", "esercizio", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));	
-	}else{
-		sql.addClause("AND", "cd_categoria_gruppo", sql.EQUALS, cgi.getCd_categoria_gruppo());
-		sql.addClause("AND", "ti_appartenenza", sql.EQUALS,"D");
-		sql.addClause("AND", "ti_gestione", sql.EQUALS,"S");
-		sql.addClause("AND", "esercizio", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
-	}
-	it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
-        if (!broker.next())
-            return null;
- 
-	Categoria_gruppo_voceBulk cgv=(Categoria_gruppo_voceBulk) broker.fetch(Categoria_gruppo_voceBulk.class);
-	broker.close();
-
-	return cgv;
-	
-}
 /**
  * Recupera la voce del piano finanziario corrispondente alla categoria/gruppo in processo (cgi)
  *
@@ -157,53 +101,8 @@ private Categoria_gruppo_voceBulk findAssVoceF(UserContext aUC,Categoria_gruppo_
  * @return	un'istanza di Elemento_voceBulk
  */
 public Elemento_voceBulk findElementoVoce(UserContext aUC, Categoria_gruppo_inventBulk cgi)
-    throws it.cnr.jada.comp.ComponentException {
-
-    //if (cgi == null) return null;
-    //if (cgi.getVoce_f()== null ) return null;
-    //Elemento_voceBulk ev = new Elemento_voceBulk(
-    //cgi.getVoce_f().getCd_elemento_voce(),
-    //cgi.getAss_voce_f().getEsercizio(),
-    //cgi.getAss_voce_f().getTi_appartenenza(),
-    //cgi.getAss_voce_f().getTi_gestione());
-    //try{
-    //ev=(Elemento_voceBulk)getHome(userContext, ev).findByPrimaryKey(ev);
-    //} catch (it.cnr.jada.persistency.PersistencyException e) {
-    //throw handleException(cgi, e);
-    //}
-    //return ev;
-
-    try {
-        //cgi.setAss_voce_f(findAssVoceF(aUC, cgi));
-        
-        //cgi.getAss_voce_f().setTi_appartenenza("D");
-        //cgi.getAss_voce_f().setTi_gestione("S");
-        //cgi.getAss_voce_f().setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
-		cgi.setAss_voce_f(findAssVoceF(aUC, cgi));
-		if(cgi.getAss_voce_f()==null )
-		throw new ApplicationException("Non esiste l'associazione categoria/gruppo/voce per l'anno di scrivania");
-        it.cnr.jada.bulk.BulkHome homeVoce = getHome(aUC, Elemento_voceBulk.class);
-        it.cnr.jada.persistency.sql.SQLBuilder sqlVoce = homeVoce.createSQLBuilder();
-
-        sqlVoce.addClause("AND", "cd_elemento_voce", sqlVoce.EQUALS, cgi.getVoce_f().getCd_elemento_voce());
-        sqlVoce.addClause("AND", "ti_appartenenza", sqlVoce.EQUALS, cgi.getVoce_f().getTi_appartenenza());
-        sqlVoce.addClause("AND", "ti_gestione", sqlVoce.EQUALS, cgi.getVoce_f().getTi_gestione());
-        sqlVoce.addClause("AND", "esercizio", sqlVoce.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
-
-        it.cnr.jada.persistency.Broker brokerVoce = homeVoce.createBroker(sqlVoce);
-        if (!brokerVoce.next())
-            return null;
-
-        Elemento_voceBulk voce = (Elemento_voceBulk) brokerVoce.fetch(Elemento_voceBulk.class);
-        brokerVoce.close();
-
-        return voce;        
-    } catch (it.cnr.jada.persistency.PersistencyException e){
-	    throw handleException(cgi,e);
-    } catch (it.cnr.jada.persistency.IntrospectionException e){
-	    throw handleException(cgi,e);
-    }
-    
+		throws it.cnr.jada.comp.ComponentException {
+	return null;
 }
 /**
  * Recupera il capitolo/articolo finanziario associato alla categoria/gruppo in processo
@@ -220,31 +119,7 @@ public Elemento_voceBulk findElementoVoce(UserContext aUC, Categoria_gruppo_inve
  * @return	il capitolo/articolo
  */
 public Voce_fBulk findVoce_f(UserContext aUC,Categoria_gruppo_inventBulk cgi) throws ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException {
-
-	//if (cgi == null || cgi.getVoce_f()==null) return null;
-
-	cgi.setAss_voce_f(findAssVoceF(aUC,cgi));
-	cgi.getAss_voce_f().setTi_appartenenza("D");
-    cgi.getAss_voce_f().setTi_gestione("S");
-    cgi.getAss_voce_f().setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
-	
-	it.cnr.jada.bulk.BulkHome homeVoce = getHome(aUC, Voce_fBulk.class);
-	it.cnr.jada.persistency.sql.SQLBuilder sqlVoce = homeVoce.createSQLBuilder();
-
-	sqlVoce.addClause("AND", "cd_voce", sqlVoce.EQUALS, cgi.getAss_voce_f().getVoce_f().getCd_elemento_voce());
-	sqlVoce.addClause("AND", "ti_appartenenza", sqlVoce.EQUALS, cgi.getAss_voce_f().getVoce_f().getTi_appartenenza());
-	sqlVoce.addClause("AND", "ti_gestione", sqlVoce.EQUALS, cgi.getAss_voce_f().getVoce_f().getTi_gestione());
-	sqlVoce.addClause("AND", "esercizio", sqlVoce.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));	
-
-	it.cnr.jada.persistency.Broker brokerVoce = homeVoce.createBroker(sqlVoce);
-        if (!brokerVoce.next())
-            return null;
- 
-	Voce_fBulk voce=(Voce_fBulk) brokerVoce.fetch(Voce_fBulk.class);
-	brokerVoce.close();
-
-
-	return voce;
+	return null;
 }
 /**
  * Recupera i figli della categoria gruppo corrente
@@ -337,18 +212,7 @@ private boolean hasChildren(UserContext context, OggettoBulk bulk) throws Compon
  * @return	l'OggettoBulk preparato
  */	
 public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-
 	Categoria_gruppo_inventBulk cgi = (Categoria_gruppo_inventBulk) super.inizializzaBulkPerInserimento(userContext, bulk);
-
-	cgi.setVoce_f(new Elemento_voceBulk());
-	//appartenenza CDS
-	cgi.setAss_voce_f(new Categoria_gruppo_voceBulk());
-	cgi.getAss_voce_f().setVoce_f(new Elemento_voceBulk());
-	cgi.getAss_voce_f().setTi_appartenenza("D");
-	cgi.getAss_voce_f().setTi_gestione("S");
-	cgi.getAss_voce_f().setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-	
-	
 	return cgi;
 }
 /**
@@ -370,22 +234,23 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBu
     throws it.cnr.jada.comp.ComponentException {
 
     Categoria_gruppo_inventBulk cgi = (Categoria_gruppo_inventBulk) super.inizializzaBulkPerModifica(userContext, bulk);
-    //cgi.setVoce_f(new Voce_fBulk());
-    ////appartenenza CDS
-    //cgi.setAss_voce_f(new Categoria_gruppo_voceBulk());
-    //cgi.getAss_voce_f().setVoce_f(cgi.getVoce_f());
-    //try {
-
-        
-        cgi.setVoce_f(findElementoVoce(userContext,cgi));
-
-    //} catch (it.cnr.jada.persistency.PersistencyException e) {
-        //throw handleException(cgi, e);
-    //} catch (it.cnr.jada.persistency.IntrospectionException e) {
-        //throw handleException(cgi, e);
-    //}
-
-    return cgi;
+    Categoria_gruppo_inventHome catHome = (Categoria_gruppo_inventHome)getHome(userContext, Categoria_gruppo_inventBulk.class);
+	try {
+		cgi.setAssociazioneVoci(new  it.cnr.jada.bulk.BulkList(catHome.findAssociazioneVoci(userContext, cgi)));
+		
+		 for (Iterator dett = cgi.getAssociazioneVoci().iterator();dett.hasNext();){
+			 Categoria_gruppo_voceBulk dettaglio = (Categoria_gruppo_voceBulk)dett.next();
+			 dettaglio =(Categoria_gruppo_voceBulk)getHome(userContext,Categoria_gruppo_voceBulk.class).findByPrimaryKey(dettaglio);
+		 }	    
+		 getHomeCache(userContext).fetchAll(userContext,catHome);
+	} catch (IntrospectionException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (PersistencyException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	    return cgi;
 }
 /**
  * Controllo che il bulk specificato rappresenta una categoria gruppo di ultimo livello.
@@ -419,55 +284,32 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 		cgi.setFl_ammortamento(Boolean.FALSE);
 
 	cgi= (Categoria_gruppo_inventBulk) super.modificaConBulk(userContext, bulk);
-    cgi.getAss_voce_f().setUser(bulk.getUser());
-    cgi.getAss_voce_f().setUtcr(bulk.getUtcr());
-    cgi.getAss_voce_f().setUtuv(bulk.getUtuv());
-
-    try {
-        updateBulk(userContext, cgi.getAss_voce_f());
-    } catch (it.cnr.jada.persistency.PersistencyException ex) {
-        throw new it.cnr.jada.comp.ApplicationException("Impossibile creare l'associazione con la voce del piano");
-    }
-
-
     return cgi;
 }
-public it.cnr.jada.persistency.sql.SQLBuilder selectNodo_padreByClause(UserContext aUC,Categoria_gruppo_inventBulk cgi, Categoria_gruppo_inventBulk padre, it.cnr.jada.persistency.sql.CompoundFindClause clauses) 
+
+public it.cnr.jada.persistency.sql.SQLBuilder selectElemento_voceByClause(UserContext aUC,Categoria_gruppo_voceBulk cgi, Elemento_voceBulk voce, it.cnr.jada.persistency.sql.CompoundFindClause clauses) 
 	throws ComponentException {
-	it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,padre).createSQLBuilder();
-
-
-	sql.addTableToHeader("CATEGORIA_GRUPPO_VOCE");
-    sql.addSQLJoin("CATEGORIA_GRUPPO_VOCE.CD_CATEGORIA_GRUPPO", "CATEGORIA_GRUPPO_INVENT.CD_CATEGORIA_GRUPPO");
-	sql.addClause("AND", "CATEGORIA_GRUPPO_VOCE.ti_appartenenza", sql.EQUALS, cgi.getAss_voce_f().getTi_appartenenza());
-	sql.addClause("AND", "CATEGORIA_GRUPPO_VOCE.ti_gestione", sql.EQUALS, cgi.getAss_voce_f().getTi_gestione());
-	sql.addClause("AND", "CATEGORIA_GRUPPO_VOCE.esercizio", sql.EQUALS, cgi.getAss_voce_f().getEsercizio());	
-	sql.addClause("AND", "CATEGORIA_GRUPPO_VOCE.cd_voce_f", sql.EQUALS, cgi.getAss_voce_f().getCd_voce());	
-	
+	it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,voce).createSQLBuilder();
+	sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
+	sql.openParenthesis("AND");
+	sql.addClause("AND", "ti_appartenenza", sql.EQUALS, cgi.getTi_appartenenza());
+	sql.addClause("AND", "ti_gestione", sql.EQUALS, cgi.getTi_gestione());
+	sql.addClause("AND","fl_inv_beni_patr",sql.EQUALS,Boolean.TRUE);
+	sql.addClause("OR","fl_inv_beni_comp",sql.EQUALS,Boolean.TRUE);
+	sql.closeParenthesis();
 	sql.addClause(clauses);
 	return sql;
 }
-public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_fByClause(UserContext aUC,Categoria_gruppo_inventBulk cgi, Elemento_voceBulk voce, it.cnr.jada.persistency.sql.CompoundFindClause clauses) 
+public it.cnr.jada.persistency.sql.SQLBuilder selectElemento_voceByClause(UserContext aUC,Categoria_gruppo_voceBulk cgi, Voce_fBulk voce, it.cnr.jada.persistency.sql.CompoundFindClause clauses) 
 	throws ComponentException {
 	it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,voce).createSQLBuilder();
 
 
-	sql.addClause("AND", "ti_appartenenza", sql.EQUALS, cgi.getAss_voce_f().getTi_appartenenza());
-	sql.addClause("AND", "ti_gestione", sql.EQUALS, cgi.getAss_voce_f().getTi_gestione());
-	sql.addClause("AND", "esercizio", sql.EQUALS, cgi.getAss_voce_f().getEsercizio());	
-	
-	sql.addClause(clauses);
-	return sql;
-}
-public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_fByClause(UserContext aUC,Categoria_gruppo_inventBulk cgi, Voce_fBulk voce, it.cnr.jada.persistency.sql.CompoundFindClause clauses) 
-	throws ComponentException {
-	it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,voce).createSQLBuilder();
-
-
-	sql.addClause("AND", "ti_appartenenza", sql.EQUALS, cgi.getAss_voce_f().getTi_appartenenza());
-	sql.addClause("AND", "ti_gestione", sql.EQUALS, cgi.getAss_voce_f().getTi_gestione());
-	sql.addClause("AND", "esercizio", sql.EQUALS, cgi.getAss_voce_f().getEsercizio());	
-	
+	sql.addClause("AND", "ti_appartenenza", sql.EQUALS, cgi.getTi_appartenenza());
+	sql.addClause("AND", "ti_gestione", sql.EQUALS, cgi.getTi_gestione());
+	sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
+	sql.addClause("AND","fl_inv_beni_patr",sql.EQUALS,Boolean.TRUE);
+	sql.addClause("OR","fl_inv_beni_comp",sql.EQUALS,Boolean.TRUE);
 	sql.addClause(clauses);
 	return sql;
 }
@@ -493,5 +335,19 @@ private OggettoBulk validaCgi(UserContext userContext,OggettoBulk bulk) throws i
 		cgi.setFl_ammortamento(Boolean.FALSE);
 	//+ per i figli...
 	return cgi;
+}
+
+public java.util.List findAssVoceFList(UserContext aUC,Categoria_gruppo_inventBulk cgi) throws ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException {
+
+	if (cgi == null ) return null;
+	it.cnr.jada.bulk.BulkHome home = getHome(aUC, Categoria_gruppo_voceBulk.class);
+	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
+
+	sql.addClause("AND", "cd_categoria_gruppo", sql.EQUALS, cgi.getCd_categoria_gruppo());
+	sql.addClause("AND", "ti_appartenenza", sql.EQUALS,"D");
+	sql.addClause("AND", "ti_gestione", sql.EQUALS,"S");
+	sql.addClause("AND", "esercizio", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
+	
+	return  home.fetchAll(sql);
 }
 }

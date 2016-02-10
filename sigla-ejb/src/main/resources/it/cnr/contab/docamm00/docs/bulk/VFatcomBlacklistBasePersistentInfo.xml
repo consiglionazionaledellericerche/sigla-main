@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistBase"
+	keyClassName="it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistKey"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistHome">
+	<defaultColumnMap
+		tableName="V_FATCOM_BLACKLIST">
+		<columnMapping
+			columnName="IMPONIBILE"
+			propertyName="imponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IVA"
+			propertyName="iva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMP_ESENTE"
+			propertyName="imp_esente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMP_NON_IMP"
+			propertyName="imp_non_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMP_NON_SOGGETTO"
+			propertyName="imp_non_soggetto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_NAZIONE"
+			propertyName="ds_nazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NAZIONE"
+			propertyName="cd_nazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_FISCALE_ESTERO"
+			propertyName="id_fiscale_estero"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PERSONA"
+			propertyName="persona"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="COMUNE_NASCITA"
+			propertyName="comune_nascita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_NASCITA"
+			propertyName="dt_nascita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROVINCIA"
+			propertyName="cd_provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ITALIANO_ESTERO"
+			propertyName="italiano_estero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_NASCITA"
+			propertyName="stato_nascita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO_SEDE"
+			propertyName="indirizzo_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="120"
+			nullable="true" />
+		<columnMapping
+			columnName="COMUNE_SEDE"
+			propertyName="comune_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="imponibile" />
+	<persistentProperty
+		name="iva" />
+	<persistentProperty
+		name="imp_esente" />
+	<persistentProperty
+		name="imp_non_imp" />
+	<persistentProperty
+		name="imp_non_soggetto" />
+	<persistentProperty
+		name="ds_nazione" />
+	<persistentProperty
+		name="cd_nazione" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="id_fiscale_estero" />
+	<persistentProperty
+		name="persona" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+		name="comune_nascita" />
+	<persistentProperty
+		name="dt_nascita" />
+	<persistentProperty
+		name="cd_provincia" />
+	<persistentProperty
+		name="italiano_estero" />
+	<persistentProperty
+		name="stato_nascita" />
+	<persistentProperty
+		name="indirizzo_sede" />
+	<persistentProperty
+		name="comune_sede" />
+</SQLPersistentInfo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.AssBpAccessoBase"
+	keyClassName="it.cnr.contab.utenze00.bulk.AssBpAccessoKey"
+	homeClassName="it.cnr.contab.utenze00.bulk.AssBpAccessoHome">
+	<defaultColumnMap
+		tableName="ASS_BP_ACCESSO">
+		<columnMapping
+			columnName="TI_FUNZIONE"
+			propertyName="tiFunzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_INIZIO_VALIDITA"
+			propertyName="esercizioInizioValidita"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_FINE_VALIDITA"
+			propertyName="esercizioFineValidita"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tiFunzione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="esercizioInizioValidita" />
+	<persistentProperty
+		name="esercizioFineValidita" />
+</SQLPersistentInfo>

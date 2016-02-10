@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_trattamento"
 		property="cd_trattamento"
-		maxLength="5"
+		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
 		label="Codice"
@@ -18,7 +18,7 @@
 	<fieldProperty
 		name="cd_trattamentoForSearch"
 		property="cd_trattamento"
-		maxLength="5"
+		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
 		label="Codice"
@@ -194,7 +194,39 @@
 		enabledOnSearch="false"
 		enabledOnEdit="true"
 		enabledOnInsert="true" />
-
+	<fieldProperty
+		name="fl_visibile_a_tutti"
+		property="fl_visibile_a_tutti"
+		inputType="CHECKBOX"
+		label="Visibile a tutti"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_pignorato_obbl"
+		property="fl_pignorato_obbl"
+		inputType="CHECKBOX"
+		label="Terzo pignorato obbligatorio"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_tipo_prestazione_obbl"
+		property="fl_tipo_prestazione_obbl"
+		inputType="CHECKBOX"
+		label="Tipo prestazione obbligatorio"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />	
+	<fieldProperty
+		name="fl_agevolazioni_rientro_lav"
+		property="fl_agevolazioni_rientro_lav"
+		inputType="CHECKBOX"
+		label="'Rientro dei lavoratori'"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />			
+		
 	<formFieldProperty
 		name="cd_trattamento"
 		command="doCaricaIntervalli" />
@@ -218,7 +250,11 @@
 	<formFieldProperty name="fl_utilizzabile_art35" />	
 	<formFieldProperty name="fl_anno_prec" />	
 	<formFieldProperty name="fl_detrazioni_altre" />		
-	<formFieldProperty name="fl_incarico" />			
+	<formFieldProperty name="fl_incarico" />	
+	<formFieldProperty name="fl_visibile_a_tutti" />	
+	<formFieldProperty name="fl_pignorato_obbl" />
+	<formFieldProperty name="fl_tipo_prestazione_obbl" />
+	<formFieldProperty name="fl_agevolazioni_rientro_lav" />	
 
 	<columnFieldProperty name="cd_trattamento" />
 	<columnFieldProperty name="ds_ti_trattamento" />
@@ -239,7 +275,11 @@
 	<columnFieldProperty name="fl_utilizzabile_art35" />		
 	<columnFieldProperty name="fl_anno_prec" />			
 	<columnFieldProperty name="fl_detrazioni_altre" />				
-	<columnFieldProperty name="fl_incarico" />					
+	<columnFieldProperty name="fl_incarico" />		
+	<columnFieldProperty name="fl_visibile_a_tutti" />	
+	<columnFieldProperty name="fl_pignorato_obbl" />	
+	<columnFieldProperty name="fl_tipo_prestazione_obbl" />		
+	<columnFieldProperty name="fl_agevolazioni_rientro_lav" />					
 
 	<columnSet name="cd_ds_trattamento">
 		<columnFieldProperty name="cd_trattamento" />
@@ -268,4 +308,8 @@
 	<findFieldProperty name="fl_anno_prec" />		
 	<findFieldProperty name="fl_detrazioni_altre" />			
 	<findFieldProperty name="fl_incarico" />				
+	<findFieldProperty name="fl_visibile_a_tutti" />	
+	<findFieldProperty name="fl_pignorato_obbl" />	
+	<findFieldProperty name="fl_tipo_prestazione_obbl" />	
+	<findFieldProperty name="fl_agevolazioni_rientro_lav" />		
 </bulkInfo>

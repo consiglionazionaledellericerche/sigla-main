@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Anagrafica dei Quadri di riferimento nel Modello 770"
+	longDescription="Anagrafica dei Quadri di riferimento nel Modello 770">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_quadro"
+		property="cd_quadro"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Quadro" />
+	<fieldProperty
+		name="ds_quadro"
+		property="ds_quadro"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="ti_modello"
+		property="ti_modello"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="ti_modello" />
+
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cd_quadro" />
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_quadro" />
+	<formFieldProperty
+		name="ds_quadro" />
+	<formFieldProperty
+		name="ti_modello" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_quadro" />
+	<findFieldProperty
+		name="ds_quadro" />
+	<findFieldProperty
+		name="ti_modello" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_quadro" />
+	<columnFieldProperty
+		name="ds_quadro" />
+	<columnFieldProperty
+		name="ti_modello" />
+</bulkInfo>

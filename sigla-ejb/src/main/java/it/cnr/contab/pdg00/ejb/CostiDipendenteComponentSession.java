@@ -13,8 +13,8 @@ it.cnr.jada.bulk.OggettoBulk copiaRipartizione(it.cnr.jada.UserContext param0,it
 void generaScritturaAnalitica(it.cnr.jada.UserContext param0,int param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.jada.util.RemoteIterator listaCdp_analitica(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.jada.util.RemoteIterator listaCdr(it.cnr.jada.UserContext param0,String param1,int param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(it.cnr.jada.UserContext param0,it.cnr.contab.config00.sto.bulk.CdrBulk param1,int param2, String param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-java.util.List listaLinea_attivitaPerRipartizioneResidui(it.cnr.jada.UserContext param0,String param1,String param2,int param3, String param4) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(it.cnr.jada.UserContext param0,it.cnr.contab.config00.sto.bulk.CdrBulk param1,int param2, String param3, boolean param4) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+java.util.List listaLinea_attivitaPerRipartizioneResidui(it.cnr.jada.UserContext param0,String param1,String param2,int param3, String param4, boolean param5) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.jada.util.RemoteIterator listaStipendi_cofi(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.jada.util.RemoteIterator listaUnita_organizzativa(it.cnr.jada.UserContext param0,String param1,int param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void ripartizioneResidui(it.cnr.jada.UserContext param0,String param1,String param2,int param3,java.util.Collection param4) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;

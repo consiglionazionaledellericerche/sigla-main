@@ -155,6 +155,18 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="true" />
+		<columnMapping
+			columnName="PG_DETTAGLIO"
+			propertyName="pg_dettaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />	
+		<columnMapping
+			columnName="CD_COFOG"
+			propertyName="cd_cofog"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio" />
@@ -202,4 +214,8 @@
 		name="im_spese_gest_acc_int_da_rip" />
 	<persistentProperty
 		name="im_spese_gest_acc_est_da_rip" />
+	<persistentProperty
+		name="pg_dettaglio" />	
+	<persistentProperty
+		name="cd_cofog" />		
 </SQLPersistentInfo>

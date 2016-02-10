@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="cd_cds"
@@ -463,6 +463,13 @@
 		enabledOnSearch="true"
 		label="Merce da paesi extra U.E." />	
 	<fieldProperty
+		name="fl_merce_intra_ue"
+		property="fl_merce_intra_ue"
+		inputType="CHECKBOX"
+		readonlyProperty="ROFl_intra_ue"
+		enabledOnSearch="true"
+		label="Merce da paesi intra U.E." />	
+	<fieldProperty
 		name="protocollo_iva"
 		property="protocollo_iva"
 		maxLength="10"
@@ -632,7 +639,7 @@
 		name="cambio"
 		property="cambio"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"
 		nullable="false"
 		enabledOnEdit="true"
 		enabledOnSearch="false"
@@ -643,7 +650,7 @@
 		name="ti_istituz_commerc"
 		property="ti_istituz_commerc"
 		inputType="SELECT"
-		readonlyProperty="abledToModifyTipoFattura"
+		readonlyProperty="notAbledToModifyTipoIstCom"
 		label="Tipo"
 		nullable="false"
 		enabledOnSearch="true"
@@ -655,7 +662,7 @@
 		label="Tipo"
 		nullable="true"
 		enabledOnSearch="true"
-		keysProperty="ti_istituz_commercKeys" />
+		keysProperty="ti_istituz_commercKeysForSearch" />
 	<fieldProperty
 		name="pg_fattura_passiva"
 		property="pg_fattura_passiva"
@@ -702,11 +709,9 @@
 		property="fl_fattura_compenso"
 		inputType="CHECKBOX"
 		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
+		readonlyProperty="ROFl_fattura_compenso"
 		enabledOnFreeSearch="true"
-		label="Generata da compenso" />
+		label="Associata a compenso" />
 	<fieldProperty
 		name="fl_congelata"
 		property="fl_congelata"
@@ -791,7 +796,8 @@
 	<fieldProperty
 		name="im_pagamento"
 		property="lettera_pagamento_estero.im_pagamento"
-		inputType="ROTEXT"
+		inputType="TEXT"
+		readonlyProperty="ROStatoTrasmissioneLettera"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		nullable="false"
 		label="Importo" />
@@ -861,14 +867,252 @@
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
 		label="Sospeso"/>
+
+	<fieldProperty
+		name="displayStatoTrasmissione"
+		property="lettera_pagamento_estero.displayStatoTrasmissione"
+		inputType="LABEL"
+		labelStyle="font-style:italic; font-size:x-large"/>
+			
+	<fieldProperty
+		name="bonifico_mezzo"
+		property="lettera_pagamento_estero.bonifico_mezzo"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		keysProperty="ti_bonifico_mezzoKeys"
+		label="Vi preghiamo disporre il seguente bonifico&lt;br&gt;per nostro ordine e conto a mezzo:"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		nullable="false"
+		layout="VERTICAL"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="divisa"
+		property="lettera_pagamento_estero.divisa"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		inputType="TEXT"
+		nullable="false"
+		label="Divisa"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="beneficiario"
+		property="lettera_pagamento_estero.beneficiario"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="300"
+		inputSize="300"
+		nullable="false"
+		inputType="TEXTAREA"
+		cols="75"
+		rows="2"
+		label="Beneficiario"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="num_conto_ben"
+		property="lettera_pagamento_estero.num_conto_ben"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="Conto n°"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="iban"
+		property="lettera_pagamento_estero.iban"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="IBAN"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="indirizzo"
+		property="lettera_pagamento_estero.indirizzo"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="Presso/tramite"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="indirizzo_swift"
+		property="lettera_pagamento_estero.indirizzo_swift"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="Indirizzo - SWIFT/BIC"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="motivo_pag"
+		property="lettera_pagamento_estero.motivo_pag"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="MOTIVO DEL PAGAMENTO"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="ammontare_debito"
+		property="lettera_pagamento_estero.ammontare_debito"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		keysProperty="ti_ammontare_debitoKeys"
+		label="Del relativo ammontare/controvalore&lt;br&gt;ci darete debito nel"
+		nullable="false"
+		layout="VERTICAL"
+		enabledOnEdit="false"		
+		enabledOnInsert="false"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="conto_debito"
+		property="lettera_pagamento_estero.conto_debito"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="Numero Conto"
+		enabledOnEdit="false"		
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="commissioni_spese"
+		property="lettera_pagamento_estero.commissioni_spese"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		keysProperty="ti_commissione_speseKeys"
+		label="Vostre commissioni e spese:"
+		nullable="false"
+		layout="VERTICAL"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="commissioni_spese_estere"
+		property="lettera_pagamento_estero.commissioni_spese_estere"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		keysProperty="ti_commissione_speseKeys"
+		label="Eventuali commissioni e spese&lt;br&gt;della Vostra Corrispondente estera:"
+		nullable="false"
+		layout="VERTICAL"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
+		
 	<fieldProperty
 		name="fl_liquidazione_differita"
 		property="fl_liquidazione_differita"
 		inputType="CHECKBOX"
 		readonlyProperty="ROFl_liquidazione_differita"
-		label="Liquidazione Differita" 
-		/>		
-		
+		label="Liquidazione Differita" />		
+	<fieldProperty
+		name="data_protocollo"
+		property="data_protocollo"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data protocollo/ricezione"
+		command="doCambiaDataScadenzaFatturaFornitore"/>
+	<fieldProperty
+		name="progr_univoco"
+		property="progr_univoco"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+        label="Progressivo univoco" />			
+	<fieldProperty
+		name="stato_liquidazione"
+		property="stato_liquidazione"
+		inputType="SELECT"
+		label="Stato liquidazione"
+		readonlyProperty="ROStato_liquidazione"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="stato_liquidazioneKeys" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="SELECT"
+		label="causale"
+		readonlyProperty="ROStato_liquidazione"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="causaleKeys" />	
+	<fieldProperty
+		name="cds_compenso"
+		property="cds_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS Compenso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="uo_compenso"
+		property="uo_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO Compenso"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		label="Esercizio compenso" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		label="N. Compenso" />			
+	<fieldProperty
+		name="identificativoSdi"
+		property="identificativoSdi"
+		maxLength="22"
+		inputSize="22"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+        label="Identificativo SDI"/>	
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		maxLength="22"
+		inputSize="22"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+		label="progressivo SDI"/>		
+							
 	<findFieldProperty name="esercizio"/>
 	<findFieldProperty name="esercizio_fattura_fornitore"/>
 	<findFieldProperty name="cd_cds"/>
@@ -879,6 +1123,7 @@
 	<findFieldProperty name="ds_fattura_passiva"/>
 	<findFieldProperty name="nr_fattura_fornitore" />
 	<findFieldProperty name="dt_fattura_fornitore" />
+	<findFieldProperty name="dt_scadenza" />
 	<findFieldProperty name="dt_registrazione" />
 	<findFieldProperty name="ti_istituz_commercSearch" />
 	<findFieldProperty name="sezionale" />
@@ -911,7 +1156,23 @@
 	<findFieldProperty name="fl_fattura_compenso" />
 	<findFieldProperty name="fl_congelata" />
 	<findFieldProperty name="fl_liquidazione_differita"/>
-
+	<findFieldProperty name="stato_liquidazione"/>
+	<findFieldProperty name="causale"/>
+	<findFieldProperty name="cds_compenso" />
+	<findFieldProperty name="uo_compenso" />
+	<findFieldProperty name="esercizio_compenso" />
+	<findFieldProperty name="pg_compenso" />
+	<findFieldProperty name="progr_univoco" />
+	<findFieldProperty name="identificativoSdi" />	
+	<findFieldProperty name="progressivo" />
+	<findFieldProperty
+		name="esercizio_lettera"
+		inputType="TEXT"
+		label="Esercizio lettera" />
+	<findFieldProperty
+		name="pg_lettera"
+		inputType="TEXT"/>	
+			
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -937,7 +1198,8 @@
 	<formFieldProperty 
 		name="esercizio_fattura_fornitore"/>
 	<formFieldProperty
-		name="fl_fattura_compenso" />
+		name="fl_fattura_compenso" 
+		command="doOnFlFatturaCompensoChange" />
 	<formFieldProperty
 		name="riportata" />
 		
@@ -1005,7 +1267,10 @@
 	<formFieldProperty
 		name="fl_merce_extra_ue"
 		command="doOnFlMerceExtraUEChange" />
-		
+	<formFieldProperty
+		name="fl_merce_intra_ue"
+		command="doOnFlMerceIntraUEChange" />
+			
 	<formFieldProperty
 		name="fl_congelata" />
 	<formFieldProperty
@@ -1115,9 +1380,55 @@
 	<formFieldProperty
 		name="sospeso" />
 	<formFieldProperty
+		name="bonifico_mezzo" />
+	<formFieldProperty
+		name="divisa" />
+	<formFieldProperty
+		name="beneficiario" />
+	<formFieldProperty
+		name="num_conto_ben" />
+	<formFieldProperty
+		name="iban"/>		
+	<formFieldProperty
+		name="indirizzo"/>		
+	<formFieldProperty
+		name="indirizzo_swift"/>		
+	<formFieldProperty
+		name="motivo_pag"/>		
+	<formFieldProperty
+		name="ammontare_debito"/>
+	<formFieldProperty
+		name="conto_debito"/>		
+	<formFieldProperty
+		name="commissioni_spese"/>
+	<formFieldProperty
+		name="commissioni_spese_estere"/>
+	<formFieldProperty
+		name="displayStatoTrasmissione"/>
+		
+	<formFieldProperty
 		name="fl_liquidazione_differita" 
 		command="doOnLiquidazioneDifferitaChange"/>	
-	
+	<formFieldProperty
+		name="data_protocollo" />
+	<formFieldProperty
+		name="progr_univoco" />
+	<formFieldProperty 
+		name="stato_liquidazione"/>		
+	<formFieldProperty 
+		name="causale"/>
+	<formFieldProperty
+		name="cds_compenso" />
+	<formFieldProperty
+		name="uo_compenso" />
+	<formFieldProperty
+		name="esercizio_compenso" />
+	<formFieldProperty
+		name="pg_compenso" />
+	<formFieldProperty name="progr_univoco" />
+	<formFieldProperty name="identificativoSdi" />	
+	<formFieldProperty name="progressivo" />
+			
 	<columnFieldProperty 
 		name="esercizio"/>
 	<columnFieldProperty
@@ -1125,9 +1436,13 @@
 	<columnFieldProperty
 		name="numero_protocollo" />
 	<columnFieldProperty
+		name="data_protocollo" />	
+	<columnFieldProperty
 		name="protocollo_iva" />
 	<columnFieldProperty
 		name="protocollo_iva_generale" />
+	<columnFieldProperty
+		name="progr_univoco" />		
 	<columnFieldProperty
 		name="ds_fattura_passiva" />
 	<columnFieldProperty
@@ -1140,6 +1455,8 @@
 		name="nr_fattura_fornitore" />
 	<columnFieldProperty
 		name="dt_fattura_fornitore" />
+	<columnFieldProperty
+		name="dt_scadenza" />	
 	<columnFieldProperty
 		name="cd_fornitore" />
 	<columnFieldProperty
@@ -1158,7 +1475,13 @@
 		name="stato_cofi" />
 	<columnFieldProperty
 		name="ti_associato_manrev" />
-
+	<columnFieldProperty 
+		name="stato_liquidazione"/>			
+	<columnFieldProperty 
+		name="causale"/>	
+	<columnFieldProperty name="progr_univoco" />
+	<columnFieldProperty name="identificativoSdi" />	
+	<columnFieldProperty name="progressivo" />
 	<form
 		name="documentoSearchtool" >
 		<formFieldProperty

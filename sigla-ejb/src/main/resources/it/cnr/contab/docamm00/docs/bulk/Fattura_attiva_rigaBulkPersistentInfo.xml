@@ -26,6 +26,9 @@
 		<columnMapping
 			columnName="CD_BENE_SERVIZIO"
 			propertyName="bene_servizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="PG_TROVATO"
+			propertyName="trovato.pg_trovato" />
 	</defaultColumnMap>		
 
 	<fetchPolicy
@@ -40,4 +43,6 @@
 		name="accertamento_scadenzario" />
 	<persistentProperty
 		name="bene_servizio" />	
+	<persistentProperty
+		name="trovato" />	
 </SQLPersistentInfo>

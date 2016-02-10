@@ -10,10 +10,7 @@ import java.util.Iterator;
 
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
-import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneRigaGestBP;
-import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
@@ -75,38 +72,35 @@ public class CRUDPdgVariazioneRigaGestAction extends it.cnr.jada.util.action.CRU
 	 */
 	public it.cnr.jada.action.Forward doBlankSearchSearchtool_progetto(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk) {
 		CRUDPdgVariazioneRigaGestBP bp = ((CRUDPdgVariazioneRigaGestBP)getBusinessProcess( context ));
+		bulk.setProgetto(new ProgettoBulk());
 		bulk.setLinea_attivita(new WorkpackageBulk());
 		bulk.getLinea_attivita().setProgetto(new ProgettoBulk());
-		if (bp.isUoArea()) {
-			bulk.setElemento_voce(null);
-			bulk.setIm_entrata(Utility.ZERO);
-			bulk.setIm_spese_gest_accentrata_est(Utility.ZERO);
-			bulk.setIm_spese_gest_decentrata_est(Utility.ZERO);
-			bulk.setIm_spese_gest_accentrata_int(Utility.ZERO);
-			bulk.setIm_spese_gest_decentrata_int(Utility.ZERO);
-		}
+		//Reinserito il codice in quanto la scelta della voce dipende anche dalla natura della GAE
+		//Quindi se viene annullata la GAE deve essere annullata anchhe la Voce
+		bulk.setElemento_voce(null);
+		bulk.setIm_entrata(Utility.ZERO);
+		bulk.setIm_spese_gest_accentrata_est(Utility.ZERO);
+		bulk.setIm_spese_gest_decentrata_est(Utility.ZERO);
+		bulk.setIm_spese_gest_accentrata_int(Utility.ZERO);
+		bulk.setIm_spese_gest_decentrata_int(Utility.ZERO);
 		return context.findDefaultForward();
+	}
+
+	public it.cnr.jada.action.Forward doBlankSearchSearchtool_progetto_liv2(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk) {
+		return doBlankSearchSearchtool_progetto(context, bulk);
 	}
 
 	public it.cnr.jada.action.Forward doBlankSearchFind_linea_attivita(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk) {
 		CRUDPdgVariazioneRigaGestBP bp = ((CRUDPdgVariazioneRigaGestBP)getBusinessProcess( context ));
-/*		
-		ProgettoBulk prg;
-		if (bulk.getLinea_attivita()!=null && bulk.getLinea_attivita().getProgetto()!=null)
-			prg = bulk.getLinea_attivita().getProgetto();
-		else
-			prg = new ProgettoBulk();
-*/			
 		bulk.setLinea_attivita(new WorkpackageBulk());
-//		bulk.getLinea_attivita().setProgetto(prg);
-		if (bp.isUoArea()) {
-			bulk.setElemento_voce(null);
-			bulk.setIm_entrata(Utility.ZERO);
-			bulk.setIm_spese_gest_accentrata_est(Utility.ZERO);
-			bulk.setIm_spese_gest_decentrata_est(Utility.ZERO);
-			bulk.setIm_spese_gest_accentrata_int(Utility.ZERO);
-			bulk.setIm_spese_gest_decentrata_int(Utility.ZERO);
-		}
+		//Reinserito il codice in quanto la scelta della voce dipende anche dalla natura della GAE
+		//Quindi se viene annullata la GAE deve essere annullata anchhe la Voce
+		bulk.setElemento_voce(null);
+		bulk.setIm_entrata(Utility.ZERO);
+		bulk.setIm_spese_gest_accentrata_est(Utility.ZERO);
+		bulk.setIm_spese_gest_decentrata_est(Utility.ZERO);
+		bulk.setIm_spese_gest_accentrata_int(Utility.ZERO);
+		bulk.setIm_spese_gest_decentrata_int(Utility.ZERO);
 		return context.findDefaultForward();
 	}
 
@@ -118,6 +112,7 @@ public class CRUDPdgVariazioneRigaGestAction extends it.cnr.jada.util.action.CRU
 		bulk.setIm_spese_gest_decentrata_est(Utility.ZERO);
 		bulk.setIm_spese_gest_accentrata_int(Utility.ZERO);
 		bulk.setIm_spese_gest_decentrata_int(Utility.ZERO);
+		bulk.setArea(null);
 		return context.findDefaultForward();
 	}
 

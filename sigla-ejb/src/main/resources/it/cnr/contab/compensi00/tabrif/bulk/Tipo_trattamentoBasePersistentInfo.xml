@@ -163,18 +163,33 @@
 			columnSize="3"
 			nullable="true" />
 		<columnMapping
-			columnName="FL_STRALCIO_DIP"
-			propertyName="fl_stralcio_dip"
+			columnName="FL_VISIBILE_A_TUTTI"
+			propertyName="fl_visibile_a_tutti"
 			sqlTypeName="CHAR"
 			columnSize="1"
+			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="FL_TFR"
-			propertyName="fl_tfr"
+			columnName="FL_PIGNORATO_OBBL"
+			propertyName="fl_pignorato_obbl"
 			sqlTypeName="CHAR"
 			columnSize="1"
+			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-
+		<columnMapping
+			columnName="FL_TIPO_PRESTAZIONE_OBBL"
+			propertyName="fl_tipo_prestazione_obbl"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_AGEVOLAZIONI_RIENTRO_LAV"
+			propertyName="fl_agevolazioni_rientro_lav"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />					
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_detrazioni_dipendente" />
@@ -225,8 +240,11 @@
 	<persistentProperty
 		name="tipo_rapp_impiego" />
 	<persistentProperty
-		name="fl_stralcio_dip" />
+		name="fl_visibile_a_tutti" />	
 	<persistentProperty
-		name="fl_tfr" />
-		
+		name="fl_pignorato_obbl" />
+	<persistentProperty
+		name="fl_tipo_prestazione_obbl" />
+<persistentProperty
+		name="fl_agevolazioni_rientro_lav" />		
 </SQLPersistentInfo>

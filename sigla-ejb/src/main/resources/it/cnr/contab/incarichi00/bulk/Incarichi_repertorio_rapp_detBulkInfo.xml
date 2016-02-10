@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="incarichi_repertorio.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Anno" />
+	<fieldProperty
+		name="pg_repertorio"
+		property="incarichi_repertorio.pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo Incarico" />
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Prog." />
+	<fieldProperty
+		name="conferente_rapporto"
+		property="conferente_rapporto"
+		inputType="TEXTAREA"
+		maxLength="1000"
+		cols="90"
+		rows="2"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Soggetto Conferente" />
+	<fieldProperty
+		name="natura_rapporto"
+		property="natura_rapporto"
+		inputType="SELECT"		
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		keysProperty="tipoRapportoKeys"
+		enabledOnSearch="true"
+		label="Natura Rapporto" />
+	<fieldProperty
+		name="dt_ini_rapporto"
+		property="dt_ini_rapporto"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Data di conferimento" />
+	<fieldProperty
+		name="importo_rapporto"
+		property="importo_rapporto"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Importo Lordo" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		inputType="SELECT"
+		inputSize="50"
+		maxLength="50"
+		label="Stato"/>
+	<fieldProperty
+		name="dt_annullamento"
+		property="dt_annullamento"
+		inputType="ROTEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Data di annullamento" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_repertorio" />
+	<formFieldProperty
+		name="progressivo_riga" />
+	<formFieldProperty
+		name="conferente_rapporto" />
+	<formFieldProperty
+		name="natura_rapporto" />
+	<formFieldProperty
+		name="dt_ini_rapporto" />
+	<formFieldProperty
+		name="importo_rapporto" />
+	<formFieldProperty
+		name="dt_annullamento" />
+	<formFieldProperty
+		name="stato" />
+
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="conferente_rapporto" />
+	<columnFieldProperty
+		name="natura_rapporto" />
+	<columnFieldProperty
+		name="dt_ini_rapporto" />
+	<columnFieldProperty
+		name="importo_rapporto" />
+	<columnFieldProperty
+		name="stato" />
+
+	<findFieldProperty
+		name="progressivo_riga" />
+	<findFieldProperty
+		name="conferente_rapporto" />
+	<findFieldProperty
+		name="natura_rapporto" />
+	<findFieldProperty
+		name="dt_ini_rapporto" />
+	<findFieldProperty
+		name="importo_rapporto" />
+	<findFieldProperty
+		name="stato" />
+</bulkInfo>

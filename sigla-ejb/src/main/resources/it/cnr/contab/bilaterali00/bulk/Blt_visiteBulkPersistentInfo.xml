@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_visiteBulk"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_visiteHome">
+	<defaultColumnMap
+		tableName="BLT_VISITE">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="bltAutorizzatiDett.bltAutorizzati.bltProgetti.bltAccordo.cd_accordo" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="bltAutorizzatiDett.bltAutorizzati.bltProgetti.cd_progetto" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="bltAutorizzatiDett.bltAutorizzati.terzo.cd_terzo" />
+		<columnMapping
+			columnName="PG_AUTORIZZAZIONE"
+			propertyName="bltAutorizzatiDett.pgAutorizzazione" />
+		<columnMapping
+			columnName="CD_ACCORDO_PRG"
+			propertyName="bltProgrammaVisite.bltProgetti.bltAccordo.cd_accordo" />
+		<columnMapping
+			columnName="CD_PROGETTO_PRG"
+			propertyName="bltProgrammaVisite.bltProgetti.cd_progetto" />
+		<columnMapping
+			columnName="PG_RECORD_PRG"
+			propertyName="bltProgrammaVisite.pgRecord" />
+		<columnMapping
+			columnName="ESERCIZIO_REPERTORIO"
+			propertyName="incaricoRepertorio.esercizio" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="incaricoRepertorio.pg_repertorio" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIG"
+			propertyName="obbligazioneScadenzario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIG"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIG"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio_originale"/>
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
+		<columnMapping
+			columnName="CD_TERZO_BANCA_ANT"
+			propertyName="bancaAnticipo.terzo.cd_terzo" />
+		<columnMapping
+			columnName="PG_BANCA_ANT"
+			propertyName="bancaAnticipo.pg_banca" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG_ANT"
+			propertyName="modalitaPagamentoAnticipo.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERZO_BANCA"
+			propertyName="banca.terzo.cd_terzo" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalitaPagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERZO_ENTE"
+			propertyName="terzoEnte.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+	
+	</defaultColumnMap>
+	<persistentProperty
+		name="bltAutorizzatiDett"
+		partOfOid="true" />
+	<persistentProperty
+		name="bltProgrammaVisite" />
+	<persistentProperty
+		name="incaricoRepertorio" />
+	<persistentProperty
+		name="obbligazioneScadenzario" />
+	<persistentProperty
+		name="bancaAnticipo" />
+	<persistentProperty
+		name="modalitaPagamentoAnticipo" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="modalitaPagamento" />
+	<persistentProperty
+		name="terzoEnte" />
+	</SQLPersistentInfo>

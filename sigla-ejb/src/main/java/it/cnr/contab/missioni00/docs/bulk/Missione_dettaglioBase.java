@@ -93,6 +93,9 @@ public class Missione_dettaglioBase extends Missione_dettaglioKey implements Key
 	// TI_SPESA_DIARIA CHAR(1) NOT NULL
 	private java.lang.String ti_spesa_diaria;
 
+	// IM_DIARIA_NETTO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal im_rimborso;
+	
 public Missione_dettaglioBase() {
 	super();
 }
@@ -446,5 +449,11 @@ public void setTi_cd_ti_spesa(java.lang.String ti_cd_ti_spesa) {
  */
 public void setTi_spesa_diaria(java.lang.String ti_spesa_diaria) {
 	this.ti_spesa_diaria = ti_spesa_diaria;
+}
+public java.math.BigDecimal getIm_rimborso() {
+	return im_rimborso;
+}
+public void setIm_rimborso(java.math.BigDecimal im_rimborso) {
+	this.im_rimborso = im_rimborso;
 }
 }

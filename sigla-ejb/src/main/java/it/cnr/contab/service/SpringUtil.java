@@ -12,19 +12,8 @@ public final class SpringUtil {
 		beanFactory =  (BeanFactory) appContext;		
 	}
 	
-	/**
-	 * Metodo di utilità per caricare il contesto di Spring 
-	 */
-	public static void init(){
-	}
-	
 	public static <T extends Object> T getBean(String beanName, Class<T> clazz){
 		return (T) beanFactory.getBean(beanName, clazz);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <T extends Object> T getBean(String beanName, Class<T> clazz, Object...constructorArgs){
-		return (T) beanFactory.getBean(beanName, constructorArgs);
 	}
 	
 }

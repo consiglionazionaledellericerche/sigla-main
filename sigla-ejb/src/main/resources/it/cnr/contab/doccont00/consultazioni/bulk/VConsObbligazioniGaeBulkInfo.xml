@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUnitaOrganizzativa" />
+	<fieldProperty
+		name="esercizioOriginale"
+		property="esercizioOriginale"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizioOriginale" />
+	<fieldProperty
+		name="cdCdsOrigine"
+		property="cdCdsOrigine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCdsOrigine" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgObbligazione" />
+	<fieldProperty
+		name="dsObbligazione"
+		property="dsObbligazione"
+		inputType="TEXT"
+		inputSize="300"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dsObbligazione" />
+	<fieldProperty
+		name="cdUoOrigine"
+		property="cdUoOrigine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUoOrigine" />
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdElementoVoce" />
+	<fieldProperty
+		name="tiAppartenenza"
+		property="tiAppartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tiAppartenenza" />
+	<fieldProperty
+		name="tiGestione"
+		property="tiGestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tiGestione" />
+	<fieldProperty
+		name="flPgiro"
+		property="flPgiro"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="flPgiro" />
+	<fieldProperty
+		name="imScadenzaComp"
+		property="imScadenzaComp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imScadenzaComp" />
+	<fieldProperty
+		name="imScadenzaRes"
+		property="imScadenzaRes"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imScadenzaRes" />
+	<fieldProperty
+		name="imAssociatoDocAmmComp"
+		property="imAssociatoDocAmmComp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imAssociatoDocAmmComp" />
+	<fieldProperty
+		name="imAssociatoDocAmmRes"
+		property="imAssociatoDocAmmRes"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imAssociatoDocAmmRes" />
+	<fieldProperty
+		name="imPagatoComp"
+		property="imPagatoComp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imPagatoComp" />
+	<fieldProperty
+		name="imPagatoRes"
+		property="imPagatoRes"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imPagatoRes" />
+	<fieldProperty
+		name="cdLineaAttivita"
+		property="cdLineaAttivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice GAE"
+		caseSensitiveSearch="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="esercizioOriginale" />
+		<formFieldProperty
+			name="pgObbligazione" />
+		<formFieldProperty
+			name="cdLineaAttivita" />
+	</form>
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdLineaAttivita" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="esercizioOriginale" />
+	<formFieldProperty
+		name="cdCdsOrigine" />
+	<formFieldProperty
+		name="pgObbligazione" />
+	<formFieldProperty
+		name="dsObbligazione" />
+	<formFieldProperty
+		name="cdUoOrigine" />
+	<formFieldProperty
+		name="cdElementoVoce" />
+	<formFieldProperty
+		name="tiAppartenenza" />
+	<formFieldProperty
+		name="tiGestione" />
+	<formFieldProperty
+		name="flPgiro" />
+	<formFieldProperty
+		name="imScadenzaComp" />
+	<formFieldProperty
+		name="imScadenzaRes" />
+	<formFieldProperty
+		name="imAssociatoDocAmmComp" />
+	<formFieldProperty
+		name="imAssociatoDocAmmRes" />
+	<formFieldProperty
+		name="imPagatoComp" />
+	<formFieldProperty
+		name="imPagatoRes" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdLineaAttivita" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="esercizioOriginale" />
+	<findFieldProperty
+		name="cdCdsOrigine" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="dsObbligazione" />
+	<findFieldProperty
+		name="cdUoOrigine" />
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="tiAppartenenza" />
+	<findFieldProperty
+		name="tiGestione" />
+	<findFieldProperty
+		name="flPgiro" />
+	<findFieldProperty
+		name="imScadenzaComp" />
+	<findFieldProperty
+		name="imScadenzaRes" />
+	<findFieldProperty
+		name="imAssociatoDocAmmComp" />
+	<findFieldProperty
+		name="imAssociatoDocAmmRes" />
+	<findFieldProperty
+		name="imPagatoComp" />
+	<findFieldProperty
+		name="imPagatoRes" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdLineaAttivita" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizioOriginale" />
+	<columnFieldProperty
+		name="cdCdsOrigine" />
+	<columnFieldProperty
+		name="pgObbligazione" />
+	<columnFieldProperty
+		name="dsObbligazione" />
+	<columnFieldProperty
+		name="cdUoOrigine" />
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="tiAppartenenza" />
+	<columnFieldProperty
+		name="tiGestione" />
+	<columnFieldProperty
+		name="flPgiro" />
+	<columnFieldProperty
+		name="imScadenzaComp" />
+	<columnFieldProperty
+		name="imScadenzaRes" />
+	<columnFieldProperty
+		name="imAssociatoDocAmmComp" />
+	<columnFieldProperty
+		name="imAssociatoDocAmmRes" />
+	<columnFieldProperty
+		name="imPagatoComp" />
+	<columnFieldProperty
+		name="imPagatoRes" />
+</bulkInfo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_regole_diariaKey">
+	<defaultColumnMap
+		tableName="BLT_REGOLE_DIARIA">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="cdAccordo"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_REGOLA"
+			propertyName="pgRegola"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdAccordo"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgRegola"
+		partOfOid="true" />
+</SQLPersistentInfo>

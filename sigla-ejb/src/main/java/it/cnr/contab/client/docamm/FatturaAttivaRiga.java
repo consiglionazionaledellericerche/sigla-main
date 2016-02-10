@@ -10,6 +10,7 @@ public class FatturaAttivaRiga {
 	private String cd_tariffario;
 	private String cd_voce_iva;
 	private java.math.BigDecimal prezzo_unitario;
+	private java.math.BigDecimal im_iva;
 	private java.math.BigDecimal quantita;
 	private Integer esercizio_contratto;
 	private Long pg_contratto;
@@ -182,5 +183,12 @@ public class FatturaAttivaRiga {
 
 	public void setCd_bene_servizio(String cd_bene_servizio) {
 		this.cd_bene_servizio = cd_bene_servizio;
+	}
+	public java.math.BigDecimal getIm_iva() {
+		return im_iva;
+	}
+
+	public void setIm_iva(java.math.BigDecimal im_iva) {
+		this.im_iva = im_iva;
 	}
 }

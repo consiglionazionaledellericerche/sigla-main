@@ -1,52 +1,93 @@
 package it.cnr.contab.docamm00.actions;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-import javax.ejb.EJBException;
-
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
+import it.cnr.contab.compensi00.bp.CRUDMinicarrieraBP;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
+import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.ejb.MinicarrieraComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiDebitoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.bp.RisultatoEliminazioneBP;
+import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
+import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
+import it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario00.bp.AssBeneFatturaBP;
-import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
-import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
+import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
-import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
-
-/**
- * <!-- @TODO: da completare -->
- */
-
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.bp.*;
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
+import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.FormField;
+import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import javax.ejb.EJBException;
 
 public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction {	
 public CRUDFatturaPassivaAction() {
@@ -106,9 +147,9 @@ private java.util.Vector basicAddDetailsTo(
 			//java.math.BigDecimal totNdC = notaDiCredito.getIm_totale_fattura().add(calcolaTotaleSelezionati(addedElements));
 			//notaDiCredito.setIm_totale_fattura(totNdC);
 		//} catch (it.cnr.jada.comp.ApplicationException e) {
-			//notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			//notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		//}
-		notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		notaDiCredito.calcolaTotaleFatturaFornitoreInEur();
 	}
 	return addedElements;
@@ -166,9 +207,9 @@ private java.util.Vector basicAddDetailsTo(ActionContext context, CRUDNotaDiDebi
 			//java.math.BigDecimal totNdD = notaDiDebito.getIm_totale_fattura().add(calcolaTotaleSelezionati(addedElements));
 			//notaDiDebito.setIm_totale_fattura(totNdD);
 		//} catch (it.cnr.jada.comp.ApplicationException e) {
-			//notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			//notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		//}
-		notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 		notaDiDebito.calcolaTotaleFatturaFornitoreInEur();
 	}
 	return addedElements;
@@ -192,7 +233,7 @@ protected void basicCalcolaImportoDisponibileNC(
 	
 	if (rigaFP.getQuantita() == null) rigaFP.setQuantita(new java.math.BigDecimal(1));
 	if (rigaFP.getPrezzo_unitario() == null) rigaFP.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (rigaFP.getIm_iva() == null) rigaFP.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (rigaFP.getIm_iva() == null) rigaFP.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 
 	java.math.BigDecimal nuovoTotale = rigaFP.getIm_imponibile().add(rigaFP.getIm_iva()).add(rigaFP.getIm_totale_addebiti());
 	java.util.HashMap storni = rigaFP.getFattura_passivaI().getStorniHashMap();
@@ -308,19 +349,28 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 		if (!fp.getFornitore().equalsByPrimaryKey(creditore) &&
 			!AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
 			throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore della fattura!");
-
+/* 	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
+   	SOSPESO PER ESERCIZIO 2015	*/
 		if (fp instanceof Fattura_passiva_IBulk) {
 			java.util.List dettagliDaContabilizzare = (java.util.List)fp.getObbligazioniHash().get(newObblig);
 			if (dettagliDaContabilizzare != null && !dettagliDaContabilizzare.isEmpty()) {
-				Elemento_voceBulk titoloCapitoloValido = controllaSelezionePerTitoloCapitolo(context, dettagliDaContabilizzare.iterator());
+				List titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
 				Elemento_voceBulk titoloCapitoloObbligazione = newObblig.getObbligazione().getElemento_voce();
 				//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
-				if (titoloCapitoloValido != null &&
-					!(titoloCapitoloObbligazione.getCd_elemento_voce().startsWith(titoloCapitoloValido.getCd_elemento_voce()) ||
-					titoloCapitoloValido.getCd_elemento_voce().startsWith(titoloCapitoloObbligazione.getCd_elemento_voce())))
-					throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+				Boolean compatibile=null;
+				if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
+					for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
+						Categoria_gruppo_voceBulk bulk=(Categoria_gruppo_voceBulk)i.next();
+						if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
+							compatibile=new Boolean(true);
+						else
+							compatibile=new Boolean(false);
+					}
+				   if (compatibile!= null && !compatibile)
+					throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			}
 		}
+	
 		Obbligazione_scadenzarioBulk obbligazione = (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel();
 		if (obbligazione != null) {
 			resyncObbligazione(context, obbligazione, newObblig);
@@ -363,7 +413,7 @@ protected void basicDoCalcolaTotaliDiRiga(
 
 	if (riga.getQuantita() == null) riga.setQuantita(new java.math.BigDecimal(1));
 	if (riga.getPrezzo_unitario() == null) riga.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (riga.getIm_iva() == null) riga.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (riga.getIm_iva() == null) riga.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 
 	riga.setFl_iva_forzata(Boolean.FALSE);
 	riga.calcolaCampiDiRiga();
@@ -432,7 +482,7 @@ private void basicDoContabilizza(
 			if (dettagliContabilizzati != null && !dettagliContabilizzati.isEmpty())
 				dettagliDaContabilizzare.addAll(dettagliContabilizzati);
 		}
-		Elemento_voceBulk titoloCapitoloValido = controllaSelezionePerTitoloCapitolo(context, dettagliDaContabilizzare.iterator());
+		//Elemento_voceBulk titoloCapitoloValido = controllaSelezionePerTitoloCapitolo(context, dettagliDaContabilizzare.iterator());
 		Elemento_voceBulk titoloCapitoloObbligazione = obbligazione.getObbligazione().getElemento_voce();
 
 		// MI - controllo se l'obbligazione ha voce coerente con il tipo di bene
@@ -450,13 +500,41 @@ private void basicDoContabilizza(
 				}
 			}
 		}
-
+		try {
+		List titoloCapitoloValidolist;
+		if(dettagliDaContabilizzare!=null && !dettagliDaContabilizzare.isEmpty()){
+			titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
+			
+		//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
+		Boolean compatibile=null;
+		if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
+			for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
+				Categoria_gruppo_voceBulk bulk=(Categoria_gruppo_voceBulk)i.next();
+				if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
+					compatibile=new Boolean(true);
+				else
+					compatibile=new Boolean(false);
+			}
+		   if (compatibile!=null && !compatibile)
+			throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+		}
+		} catch (PersistencyException e1) {
+			bp.handleException(e1);
+		} catch (IntrospectionException e1) {
+			bp.handleException(e1);
+		} catch (RemoteException e1) {
+			bp.handleException(e1);
+		} catch (BusinessProcessException e1) {
+			bp.handleException(e1);
+		}
+		/*	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
+		    SOSPESO PER ESERCIZIO 2015
 		//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
 		if (titoloCapitoloValido != null &&
 			!(titoloCapitoloObbligazione.getCd_elemento_voce().startsWith(titoloCapitoloValido.getCd_elemento_voce()) ||
 			titoloCapitoloValido.getCd_elemento_voce().startsWith(titoloCapitoloObbligazione.getCd_elemento_voce())))
 			throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
-
+		 */
 		try {
 			FatturaPassivaComponentSession h = (FatturaPassivaComponentSession)bp.createComponentSession();
 			Fattura_passivaBulk fattura = h.contabilizzaDettagliSelezionati(
@@ -498,8 +576,8 @@ private Forward basicDoGeneraNotaDiCredito(ActionContext context)
 		// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato 
 		//	riportato DA UN ES. PRECEDENTE a quello di scrivania.
 	// RP 16/03/2010 Da commentare per generare NC di fatture di anni precedenti
-	else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
-		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
+	//else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
+		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
 
 	//if (fp.isRiportata() && !fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportata()))
 		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non riportate completamente!");
@@ -748,10 +826,23 @@ private void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fatt
 			fattura.setTipo_sezionale((Tipo_sezionaleBulk)sezionali.firstElement());
 		else
 			fattura.setTipo_sezionale(null);
+
+		if (fattura.getFattura_passiva_dettColl() != null) {
+			Iterator dettagli = fattura.getFattura_passiva_dettColl().iterator();
+			while (dettagli.hasNext()) {
+				Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)dettagli.next();
+				
+				if (riga.getTi_istituz_commerc()!=null && fattura.getTi_istituz_commerc()!= null && !riga.getTi_istituz_commerc().equals(fattura.getTi_istituz_commerc())){
+					riga.setTi_istituz_commerc(fattura.getTi_istituz_commerc());
+					riga.setToBeUpdated();
+				}
+			}
+		}
+		/*commentato perchè da problemi con la fatturazione elettronica che trova già il fornitore caricato
 		if (fattura.getFornitore() != null && fattura.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL) {
 			doBlankSearchFornitore(context, fattura);
 			((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setMessage("Attenzione: il fornitore non è più valido. Selezionare un altro fornitore!");
-		}
+		}*/
 	} catch (Throwable t) {
 		throw new it.cnr.jada.comp.ComponentException(t);
 	}
@@ -784,10 +875,13 @@ private Forward basicDoRicercaObbligazione(
 			filtro.setFl_importo(Boolean.FALSE);
 		else {
 			Fattura_passiva_rigaBulk firstRow = (Fattura_passiva_rigaBulk)models.get(0);
-			if (firstRow.getBene_servizio().getFl_gestione_inventario().booleanValue()) {
-				Elemento_voceBulk ev = getElementoVoce(context, firstRow.getBene_servizio().getCategoria_gruppo());
-				filtro.setElemento_voce(ev);
-			}
+			
+		//	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
+	    //SOSPESO PER ESERCIZIO 2015
+//			if (firstRow.getBene_servizio().getFl_gestione_inventario().booleanValue()) {
+//				Elemento_voceBulk ev = getElementoVoce(context, firstRow.getBene_servizio().getCategoria_gruppo());
+//				filtro.setElemento_voce(ev);
+//			}
 		}
 
 		BulkBP robp = (BulkBP)context.getUserInfo().createBusinessProcess(context,"RicercaObbligazioniBP", new Object[] { "MRSWTh" });
@@ -851,15 +945,26 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(
 	throws it.cnr.jada.comp.ApplicationException {
 
 	java.math.BigDecimal importo = new java.math.BigDecimal(0);
-		
+	boolean escludiIVAInt=false;
+	boolean escludiIVAOld=escludiIVA;
 	if (selectedModels != null) {
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
+			escludiIVA=escludiIVAOld;
 			Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)i.next();
+			//RP 20/03/2015
+			if (!escludiIVA && rigaSelected.getVoce_iva().getFl_autofattura())
+				escludiIVAInt=true;
+			else if (!escludiIVA && !rigaSelected.getVoce_iva().getFl_autofattura())
+				escludiIVAInt=false;
+			if(escludiIVAInt)
+				escludiIVA=escludiIVAInt;
+				
+			// fine RP 20/03/2015
 			java.math.BigDecimal imTotale = (escludiIVA) ?
 													rigaSelected.getIm_imponibile() :
 													rigaSelected.getIm_imponibile().add(rigaSelected.getIm_iva());
-			java.math.BigDecimal imStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-			java.math.BigDecimal imAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			java.math.BigDecimal imStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
+			java.math.BigDecimal imAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 			if (rigaSelected instanceof Fattura_passiva_rigaIBulk) {
 				Fattura_passiva_rigaIBulk dettaglioFatturaPassiva = (Fattura_passiva_rigaIBulk)rigaSelected;
 				java.math.BigDecimal impStorniDiRiga = (escludiIVA) ?
@@ -875,7 +980,7 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 	return importo;
 }
 /**
@@ -1013,56 +1118,6 @@ protected void controllaSelezionePerContabilizzazione(ActionContext context, jav
 	}
 }
 /**
- * Controlla che i dettagli inventariabili selezionati per la contabilizzazione 
- * siano congruenti allo stesso titolo capitolo
- */
- 
-protected Elemento_voceBulk controllaSelezionePerTitoloCapitolo(ActionContext context, java.util.Iterator selectedModels)
-	throws it.cnr.jada.comp.ApplicationException {
-
-	if (selectedModels != null) {
-		java.util.Vector soggettiAInventario = new java.util.Vector();
-		java.util.Vector titoliCapitoli = new java.util.Vector();
-		int count = 0;
-		while(selectedModels.hasNext()) {
-			count += 1;
-			Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)selectedModels.next();
-			Bene_servizioBulk beneServizio = rigaSelected.getBene_servizio();
-			if (beneServizio == null)
-				throw new it.cnr.jada.comp.ApplicationException("Valorizzare il bene/servizio per il dettaglio " + ((rigaSelected.getDs_riga_fattura() == null) ? "" : "\"" + rigaSelected.getDs_riga_fattura() + "\"") + "! Operazione interrotta.");
-			if (beneServizio.getFl_gestione_inventario()!=null && beneServizio.getFl_gestione_inventario().booleanValue()) {
-				soggettiAInventario.add(rigaSelected);
-				if (beneServizio.getCategoria_gruppo() == null)
-					throw new it.cnr.jada.comp.ApplicationException("Il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non ha definito alcuna categoria di appartenenza! Operazione interrotta.");
-				it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk titoloCapitolo = getElementoVoce(context, beneServizio.getCategoria_gruppo());
-				if (titoloCapitolo == null)
-					throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non è stato attribuito ad alcuna categoria gruppo per l'inventario!");
-
-				if (titoliCapitoli.isEmpty())
-					titoliCapitoli.add(titoloCapitolo);
-				else
-					for (java.util.Iterator i = ((java.util.Vector)titoliCapitoli.clone()).iterator(); i.hasNext();) {
-						Elemento_voceBulk ev = (Elemento_voceBulk)i.next();
-						if (!(ev.getCd_elemento_voce().startsWith(titoloCapitolo.getCd_elemento_voce()) ||
-								titoloCapitolo.getCd_elemento_voce().startsWith(ev.getCd_elemento_voce())))
-							if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(titoliCapitoli, titoloCapitolo))
-								titoliCapitoli.add(titoloCapitolo);
-					}
-			}
-		}
-		int size = soggettiAInventario.size();
-		if (size != 0) {
-			if (size != count)
-				throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli non inventariabili o solo dettagli inventariabili");
-			else if (titoliCapitoli.size() != 1)
-				throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli inventariabili con stesso titolo capitolo!");
-		}
-		if (!titoliCapitoli.isEmpty())
-			return (Elemento_voceBulk)titoliCapitoli.firstElement();
-	}
-	return null;
-}
-/**
  * In base alla data fattura fornitore di testata calcola e imposta l'esercizio
  * di validità del fornitore
  *
@@ -1126,6 +1181,9 @@ public Forward doAddToCRUDMain_Obbligazioni(ActionContext context) {
 		fillModel(context);
 		Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel();
 
+		if (fatturaPassiva.isGestione_doc_ele() && fatturaPassiva.isGenerataDaCompenso())
+			throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verrà fatta direttamente nel compenso!");
+		
 		if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
 			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario selezionare un fornitore!");
 		return basicDoRicercaObbligazione(context, fatturaPassiva, null);
@@ -1391,7 +1449,7 @@ public Forward doBlankSearchSospeso(ActionContext context,
 		sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
 		sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
 		lettera.setSospeso(sospeso);
-		java.math.BigDecimal zero = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		java.math.BigDecimal zero = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 		lettera.setIm_pagamento(zero);
 		//lettera.setIm_commissioni(zero);
 		//lettera.setDt_registrazione(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -1597,13 +1655,14 @@ public Forward doBringBackSearchBene_servizio(ActionContext context,
 		if (beneTrovato!=null) {
 			
 			fattura_passiva_riga.setBene_servizio(beneTrovato);
-			fattura_passiva_riga.setDs_riga_fattura(beneTrovato.getDs_bene_servizio());
+			if(fattura_passiva_riga.getDs_riga_fattura()==null)
+				fattura_passiva_riga.setDs_riga_fattura(beneTrovato.getDs_bene_servizio());
 			fattura_passiva_riga.setInventariato(false);
 			Fattura_passivaBulk fatturaPassiva = fattura_passiva_riga.getFattura_passiva();
 			if (fatturaPassiva.ISTITUZIONALE.equalsIgnoreCase(fatturaPassiva.getTi_istituz_commerc())) {
 				voceIvaB = caricaVoceIVADefault(context);
-				if (voceIvaB == null)
-					((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setErrorMessage("Attenzione: non è stata caricata una voce IVA di default per le fatture istituzionali!");
+				//if (voceIvaB == null)
+					//((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setErrorMessage("Attenzione: non è stata caricata una voce IVA di default per le fatture istituzionali!");
 			}
 			else
 				voceIvaB = beneTrovato.getVoce_iva();
@@ -1758,10 +1817,10 @@ public Forward doCalcolaTotalePerObbligazione(ActionContext context, Obbligazion
 							(java.util.List)fatt.getFattura_passiva_obbligazioniHash().get(obbligazione),
 							fatt.quadraturaInDeroga()));
 			} catch (it.cnr.jada.comp.ApplicationException e) {
-				fatt.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				fatt.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 			}
 		} else
-			fatt.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			fatt.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 	}
 	return context.findDefaultForward();	
 }
@@ -1796,6 +1855,41 @@ public Forward doCalcolaTotaliDiRiga(ActionContext context) {
 	return context.findDefaultForward();
 }
 /**
+ * Viene richiamato nel momento in cui viene inserito/cambiato il trovato
+ * nel dettaglio della fattura.
+ */
+ 
+public Forward doVerificaEsistenzaTrovato(ActionContext context) {
+	
+	try {
+		fillModel( context );
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		bp.ricercaDatiTrovato(context);
+	} catch (Exception e) {
+		return handleException(context, e);
+	}
+	return context.findDefaultForward();
+//	try {
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+//		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+//		java.sql.Timestamp dataEmissione = fattura.getDt_fattura_fornitore();
+//		try	{
+//			fillModel( context );
+//			if (!bp.isSearching())
+//				fattura.validateDate();
+//			creaEsercizioPerFatturaFornitore(context, fattura);
+//			
+//			return context.findDefaultForward();
+//		} catch(Throwable e) {
+//			fattura.setDt_fattura_fornitore(dataEmissione);
+//			bp.setModel(context,fattura);
+//			throw e;
+//		}
+//	} catch(Throwable e) {
+//		return handleException(context, e);
+//	}
+}
+/**
  * Viene richiamato nel momento in cui viene cambiata la data di emissione
  * fattura fornitore nella testata della fattura.
  */
@@ -1809,7 +1903,17 @@ public Forward doCambiaDataEmissioneFattura(ActionContext context) {
 		try	{
 			fillModel( context );
 			if (!bp.isSearching())
-				fattura.validateDate();
+				if (fattura.isGestione_doc_ele() && 
+						(fattura.getDt_fattura_fornitore() != null &&!(fattura.getDt_fattura_fornitore().compareTo(fattura.getDataInizioFatturaElettronica())<0) )&&
+						!fattura.isElettronica() &&
+						!fattura.isEstera() &&
+						!fattura.isSanMarinoSenzaIVA() &&
+						!fattura.isBollaDoganale()){    
+						java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+							throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+					}
+
+			fattura.validateDate();
 			//NON ELIMINARE QUESTO COMMENTO: POSSIBILE VARIAZIONE IN FUTURO
 			//java.sql.Timestamp dataFatturaFornitore = fattura.getDt_fattura_fornitore();
 			//java.sql.Timestamp dataInizioValuta = fattura.getInizio_validita_valuta();
@@ -1827,7 +1931,8 @@ public Forward doCambiaDataEmissioneFattura(ActionContext context) {
 					//return doSelezionaValuta(context);
 				//}
 			//}
-
+			if (fattura instanceof Nota_di_creditoBulk && fattura.getDt_scadenza()==null)
+				fattura.setDt_scadenza(fattura.getDt_fattura_fornitore());
 			creaEsercizioPerFatturaFornitore(context, fattura);
 			
 			return context.findDefaultForward();
@@ -1839,8 +1944,6 @@ public Forward doCambiaDataEmissioneFattura(ActionContext context) {
 	} catch(Throwable e) {
 		return handleException(context, e);
 	}
-
-	
 }
 /**
  * Viene richiamato nel momento in cui viene cambiata la data di registrazione
@@ -1869,7 +1972,7 @@ public Forward doCambiaDataRegistrazione(ActionContext context) {
 					//return doSelezionaValuta(context);
 				//}
 			//}
-
+			//bp.valorizzaInfoDocEle(context, fattura);
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 			fattura.setDt_registrazione(dataRegistrazione);
@@ -1887,15 +1990,27 @@ public Forward doCambiaDataRegistrazione(ActionContext context) {
  * Richiesta la validazione delle date
  */
 public Forward doCambiaDataScadenzaFatturaFornitore(ActionContext context) {
-	
+// viene richiamato anche la cambiamento della data protocollo indicato come command 
 	try {
 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
 		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
 		java.sql.Timestamp dataScadenza = fattura.getDt_scadenza();
 		try	{
 			fillModel( context );
-			if (!bp.isSearching())
+			if (!bp.isSearching()){
 				fattura.validateDate();
+				java.util.Calendar  cal = Calendar.getInstance();
+				if (fattura.getData_protocollo()!=null)
+					cal.setTime(fattura.getData_protocollo());
+				else 
+					throw new ValidationException("La data di protocollo/ricezione non può essere nulla!");
+				cal.add(Calendar.DAY_OF_MONTH, 45);
+				
+				if(fattura.getDt_scadenza()!=null && fattura.getDt_scadenza().after(cal.getTime())){
+					OptionBP optionBP = openConfirm(context,"Attenzione: la data di scadenza indicata è superiore a quanto previsto dalla normativa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmDtScadenza");
+					return optionBP;			
+				}
+			}
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 			fattura.setDt_scadenza(dataScadenza);
@@ -2064,6 +2179,7 @@ public Forward doContabilizza(ActionContext context) {
 		bp.getDettaglio().getSelection().clearSelection();
 	} catch (Throwable e) {
 	}
+	
 	if (obblig != null) {
 		try {
 			Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
@@ -2426,7 +2542,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
 																				context,
 																				scadenza,
 																				fatturaPassiva,
-																				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)),
+																				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)),
 														false);
 			bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk().addToDefferredSaldi(
 										scadenza.getObbligazione(), 
@@ -2474,7 +2590,7 @@ public Forward doOnChangeModified(ActionContext context)
 			java.math.BigDecimal cambioAttuale = fp.getCambio();
 			if (cambioAttuale == null)
 				fp.setCambio((cambioAttuale = new java.math.BigDecimal(0)));
-        	cambioAttuale = cambioAttuale.setScale(3,java.math.BigDecimal.ROUND_HALF_EVEN);
+        	cambioAttuale = cambioAttuale.setScale(4,java.math.BigDecimal.ROUND_HALF_UP);
         	fp.setCambio(cambioAttuale);
 	        if (cambioAttuale.compareTo(new java.math.BigDecimal(0))==0){
 	        	fp.setCambio(vecchioCambio);
@@ -2491,7 +2607,7 @@ public Forward doOnChangeModified(ActionContext context)
 				if (dettaglio instanceof Fattura_passiva_rigaIBulk) {
 					java.math.BigDecimal vecchioTotale = (java.math.BigDecimal)vecchiTotali.get(dettaglio);
 					if (vecchioTotale == null)
-						vecchioTotale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+						vecchioTotale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					basicCalcolaImportoDisponibileNC(context, (Fattura_passiva_rigaIBulk)dettaglio, vecchioTotale);
 				}
 			}
@@ -2708,9 +2824,19 @@ public Forward doOnFlBollaDoganaleChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
-		fillModel( context );		
+		fillModel( context );	
 		try	{
+			if (fattura.isGestione_doc_ele() && 
+				(fattura.getDt_fattura_fornitore() != null &&!(fattura.getDt_fattura_fornitore().compareTo(fattura.getDataInizioFatturaElettronica())<0) )&&
+				!fattura.isElettronica() &&
+				!fattura.isEstera() &&
+				!fattura.isSanMarinoSenzaIVA()&&
+				!fattura.isBollaDoganale()){    
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+					throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+			}
 			if (Boolean.TRUE.equals(fattura.getFl_bolla_doganale())) {
 				fattura.setFl_intra_ue(Boolean.FALSE);
 				fattura.setFl_extra_ue(Boolean.FALSE);
@@ -2721,6 +2847,7 @@ public Forward doOnFlBollaDoganaleChange(ActionContext context) {
 				//fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_autofattura(Boolean.FALSE);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setAutoFatturaNeeded(false);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
 				if (fattura instanceof Fattura_passiva_IBulk)
@@ -2728,7 +2855,7 @@ public Forward doOnFlBollaDoganaleChange(ActionContext context) {
 				if (!fattura.isDefaultValuta())
 					fattura = doSelezionaValutaDefault(context, fattura);
 			} else if (fattura instanceof Fattura_passiva_IBulk)
-				((Fattura_passiva_IBulk)fattura).setFattura_estera(null);
+				((Fattura_passiva_IBulk)fattura).setFattura_estera(null);	
 			fattura.setTi_bene_servizio(null);
 			basicDoOnIstituzionaleCommercialeChange(context, fattura);
 			bp.setModel(context,fattura);
@@ -2744,6 +2871,7 @@ public Forward doOnFlBollaDoganaleChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
  			bp.setModel(context,fattura);
 			throw e;
@@ -2774,9 +2902,21 @@ public Forward doOnFlExtraUEChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
-		fillModel( context );		
+		fillModel( context );
+		
 		try	{
+			if (fattura.isGestione_doc_ele() && 
+					(fattura.getDt_fattura_fornitore() != null &&!(fattura.getDt_fattura_fornitore().compareTo(fattura.getDataInizioFatturaElettronica())<0) )&&
+					!fattura.isElettronica() &&
+					!fattura.isEstera() &&
+					!fattura.isSanMarinoSenzaIVA()&&
+					!fattura.isBollaDoganale()){    
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+						throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+				}
+
 			if (Boolean.TRUE.equals(fattura.getFl_extra_ue())) {
 				fattura.setFl_intra_ue(Boolean.FALSE);
 				fattura.setFl_san_marino_con_iva(Boolean.FALSE);
@@ -2785,6 +2925,7 @@ public Forward doOnFlExtraUEChange(ActionContext context) {
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
 				if (!fattura.isPromiscua())
 					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
@@ -2814,6 +2955,7 @@ public Forward doOnFlExtraUEChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -2844,9 +2986,21 @@ public Forward doOnFlIntraUEChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
+		
 		try	{
+			if (fattura.isGestione_doc_ele() && 
+				(fattura.getDt_fattura_fornitore() != null &&!(fattura.getDt_fattura_fornitore().compareTo(fattura.getDataInizioFatturaElettronica())<0) )&&
+				!fattura.isElettronica() &&
+				!fattura.isEstera() &&
+				!fattura.isSanMarinoSenzaIVA()&&
+				!fattura.isBollaDoganale()){    
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+					throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+			}
+			
 			if (Boolean.TRUE.equals(fattura.getFl_intra_ue())) {
 				fattura.setFl_extra_ue(Boolean.FALSE);
 				fattura.setFl_san_marino_con_iva(Boolean.FALSE);
@@ -2854,6 +3008,7 @@ public Forward doOnFlIntraUEChange(ActionContext context) {
 				fattura.setFl_bolla_doganale(Boolean.FALSE);
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
 				if (!fattura.isPromiscua())
@@ -2885,6 +3040,7 @@ public Forward doOnFlIntraUEChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -2915,6 +3071,7 @@ public Forward doOnFlSanMarinoConIVAChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
@@ -2926,6 +3083,7 @@ public Forward doOnFlSanMarinoConIVAChange(ActionContext context) {
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setFl_autofattura(Boolean.FALSE);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setAutoFatturaNeeded(false);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
@@ -2948,6 +3106,7 @@ public Forward doOnFlSanMarinoConIVAChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -2978,9 +3137,21 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
-		fillModel( context );		
+		fillModel( context );	
+		
 		try	{
+			if (fattura.isGestione_doc_ele() && 
+					(fattura.getDt_fattura_fornitore() != null &&!(fattura.getDt_fattura_fornitore().compareTo(fattura.getDataInizioFatturaElettronica())<0) )&&
+					!fattura.isElettronica() &&
+					!fattura.isEstera() &&
+					!fattura.isSanMarinoSenzaIVA()&&
+					!fattura.isBollaDoganale()){    
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+						throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+				}
+
 			if (Boolean.TRUE.equals(fattura.getFl_san_marino_senza_iva())) {
 				fattura.setFl_intra_ue(Boolean.FALSE);
 				fattura.setFl_extra_ue(Boolean.FALSE);
@@ -2988,6 +3159,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 				fattura.setFl_bolla_doganale(Boolean.FALSE);
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
 				if (!fattura.isPromiscua())
@@ -3019,6 +3191,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -3049,6 +3222,7 @@ public Forward doOnFlSpedizioniereChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		fillModel( context );		
 		try	{
 			if (Boolean.TRUE.equals(fattura.getFl_spedizioniere())) {
@@ -3062,6 +3236,7 @@ public Forward doOnFlSpedizioniereChange(ActionContext context) {
 				fattura.setFl_autofattura(Boolean.FALSE);
 				fattura.setAutoFatturaNeeded(false);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				if (fattura instanceof Fattura_passiva_IBulk)
 					doBlankSearchFatturaEstera(context, (Fattura_passiva_IBulk)fattura);
 				if (!fattura.isDefaultValuta())
@@ -3084,6 +3259,7 @@ public Forward doOnFlSpedizioniereChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			bp.setModel(context,fattura);
 			throw e;
 		}
@@ -3099,10 +3275,13 @@ public Forward doOnFlSpedizioniereChange(ActionContext context) {
  */
  
 public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
-	
 	try {
 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
 		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+
+		if (fattura.existARowInventoried())
+			throw new it.cnr.jada.comp.ApplicationException("Alcuni dettagli sono già stati associati all'inventario. Modifica non possibile!");
+
 		java.util.Collection sezionaliOld = fattura.getSezionali();
 		Boolean intraUE = fattura.getFl_intra_ue();
 		Boolean extraUE = fattura.getFl_extra_ue();
@@ -3113,6 +3292,7 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
@@ -3126,6 +3306,7 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 			fattura.setAutoFatturaNeeded(false);
 			fattura.setTi_bene_servizio(null);
 			fattura.setFl_merce_extra_ue(Boolean.FALSE);
+			fattura.setFl_merce_intra_ue(Boolean.FALSE);
 			fattura.setFl_liquidazione_differita(Boolean.FALSE);
 			if (fattura instanceof Fattura_passiva_IBulk)
 				((Fattura_passiva_IBulk)fattura).setFattura_estera(null);
@@ -3143,6 +3324,7 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -3170,13 +3352,15 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
 		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
 		//se c'è almeno un dettaglio non faccio più modificare la modalità di pagamento
+		//commentato perchè per le fatture elettroniche hanno già i dettagli caricati
+		/*
 		if(fattura.getFattura_passiva_dettColl().size()>0)
 		{
 			if (old_modalita!=null)
 			   fattura.setModalita_pagamento(old_modalita);
 			throw new it.cnr.jada.comp.ApplicationException("Esiste almeno un dettaglio e quindi la Modalità di pagamento deve essere cambiata sul dettaglio stesso.");			
 		}
-				
+		*/		
 		if (fattura.getModalita_pagamento() != null) {
 			FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
 			java.util.Collection coll = fpcs.findListabanche(context.getUserContext(), fattura);
@@ -3205,36 +3389,8 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 	}
 	return context.findDefaultForward();
 }
- /**
-  * Gestisce il cambiamento delle modalità di pagamento del fornitore
-  *
-  * @param context	L'ActionContext della richiesta
-  * @return Il Forward alla pagina di risposta
-  */
-  
-public Forward doOnModalitaPagamentoDetChange(ActionContext context) {
 
- 	try {
- 		fillModel(context);
- 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
- 		Fattura_passiva_rigaBulk fattura_riga = (Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
- 		if (fattura_riga.getModalita_pagamento() != null) {
- 			FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
- 			java.util.Collection coll = fpcs.findListabanchedett(context.getUserContext(), fattura_riga);
- 			
- 			fattura_riga.setBanca((coll == null || coll.isEmpty()) ? null : (BancaBulk)new java.util.Vector(coll).firstElement());
- 			fattura_riga.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura_riga));
- 		} else {
- 			fattura_riga.setBanca(null);
- 			fattura_riga.setCessionario(null);
- 		}
- 		bp.setModel(context,fattura_riga.getFattura_passiva());
- 	} catch (Throwable t) {
- 		return handleException(context, t);
- 	}
- 	return context.findDefaultForward();
- } 
-/**
+ /**
  * Gestisce il cambiamento della quantità del dettaglio
  *
  * @param context	L'ActionContext della richiesta
@@ -3270,6 +3426,35 @@ public Forward doOnQuantitaChange(ActionContext context) {
 	
 	return context.findDefaultForward();
 }
+/**
+  * Gestisce il cambiamento delle modalità di pagamento del fornitore
+  *
+  * @param context	L'ActionContext della richiesta
+  * @return Il Forward alla pagina di risposta
+  */
+  
+public Forward doOnModalitaPagamentoDetChange(ActionContext context) {
+
+ 	try {
+ 		fillModel(context);
+ 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+ 		Fattura_passiva_rigaBulk fattura_riga = (Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
+ 		if (fattura_riga.getModalita_pagamento() != null) {
+ 			FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
+ 			java.util.Collection coll = fpcs.findListabanchedett(context.getUserContext(), fattura_riga);
+ 			
+ 			fattura_riga.setBanca((coll == null || coll.isEmpty()) ? null : (BancaBulk)new java.util.Vector(coll).firstElement());
+ 			 fattura_riga.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura_riga));
+ 		} else {
+ 			fattura_riga.setBanca(null);
+ 			fattura_riga.setCessionario(null);
+ 		}
+ 		bp.setModel(context,fattura_riga.getFattura_passiva());
+ 	} catch (Throwable t) {
+ 		return handleException(context, t);
+ 	}
+ 	return context.findDefaultForward();
+ } 
 /**
  * Gestisce il cambiamento del sezionale
  *
@@ -3318,15 +3503,19 @@ public Forward doOnTiBeneServizioChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
-
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		fillModel( context );		
 		try	{
 			if (fattura.getFl_extra_ue() != null && 
 				fattura.getFl_extra_ue().booleanValue()) {
-				if (fattura.isFatturaDiServizi()) {
-					fattura.setFl_autofattura(Boolean.TRUE);
-					//fattura.setAutoFatturaNeeded(true);
-				} else {
+				if (fattura.getTi_bene_servizio() != null && 
+						Bene_servizioBulk.SERVIZIO.equalsIgnoreCase(fattura.getTi_bene_servizio())) {
+					fattura.setFl_merce_intra_ue(Boolean.FALSE);
+					if(fattura.isCommerciale()){
+						fattura.setFl_autofattura(Boolean.TRUE);
+						fattura.setAutoFatturaNeeded(false);
+					}
+				} else { 
 					fattura.setFl_autofattura(Boolean.FALSE);
 					//fattura.setAutoFatturaNeeded(false);
 				}
@@ -3336,6 +3525,7 @@ public Forward doOnTiBeneServizioChange(ActionContext context) {
 					if (fattura.isFatturaDiServizi()) {
 						fattura.setFl_autofattura(Boolean.TRUE);
 						fattura.setAutoFatturaNeeded(false);
+				  		fattura.setFl_merce_extra_ue(Boolean.FALSE);
 					} else {
 						fattura.setFl_autofattura(Boolean.TRUE);
 						fattura.setAutoFatturaNeeded(true);
@@ -3365,6 +3555,7 @@ public Forward doOnTiBeneServizioChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			bp.setModel(context,fattura);
 			throw e;
 		}
@@ -3688,12 +3879,17 @@ public Forward doRicercaObbligazione(ActionContext context) {
 			bp.setErrorMessage("Per procedere, selezionare i dettagli da contabilizzare!");
 		else {
 			Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel();
+			if (fatturaPassiva.isGestione_doc_ele() && fatturaPassiva.isGenerataDaCompenso())
+				throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verrà fatta direttamente nel compenso!");
 			if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
 				throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario impostare un fornitore!");
 
 			controllaSelezionePerContabilizzazione(context, models.iterator());
-			controllaSelezionePerTitoloCapitolo(context, models.iterator());
-			
+			try{
+			controllaSelezionePerTitoloCapitoloLista(context, models.iterator());
+			} catch(ApplicationException e) {
+				throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+			}		
 			forward = basicDoRicercaObbligazione(context, fatturaPassiva, models);
 		}
 		return forward;
@@ -3847,7 +4043,7 @@ public Forward doSelezionaValuta(ActionContext context)
 					if (dettaglio instanceof Fattura_passiva_rigaIBulk) {
 						java.math.BigDecimal vecchioTotale = (java.math.BigDecimal)vecchiTotali.get(dettaglio);
 						if (vecchioTotale == null)
-							vecchioTotale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+							vecchioTotale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 						basicCalcolaImportoDisponibileNC(context, (Fattura_passiva_rigaIBulk)dettaglio, vecchioTotale);
 					}
 				}
@@ -4027,33 +4223,6 @@ protected java.util.List getDettagliInStato(
 		}
 	}
 	return coll;
-}
-/**
- * Ricerca l'elemento voce assocaita alla cetegoria inventario 'cgi'
- */
-private Elemento_voceBulk getElementoVoce(ActionContext context, Categoria_gruppo_inventBulk cgi)
-	throws it.cnr.jada.comp.ApplicationException {
-
-	if (cgi == null)
-		return null;
-		
-	try {
-		if (cgi.getVoce_f() == null ||
-			cgi.getVoce_f().getCd_elemento_voce() == null) {
-			CategoriaGruppoInventComponentSession h = (CategoriaGruppoInventComponentSession)
-							context.getBusinessProcess().createComponentSession(
-										"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
-										CategoriaGruppoInventComponentSession.class);
-			cgi = (Categoria_gruppo_inventBulk)h.inizializzaBulkPerModifica(context.getUserContext(), cgi);
-		}
-		if (cgi.getVoce_f() == null ||
-			cgi.getVoce_f().getCd_elemento_voce() == null)
-			return null;
-			
-		return cgi.getVoce_f();
-	} catch (Throwable e) {
-		throw new it.cnr.jada.comp.ApplicationException("Errore nel caricamento del titolo/capitolo per il gruppo inventerio \"" + cgi.getDs_categoria_gruppo() + "\"!");
-	}
 }
 /**
  * Restituisce l'importo che deve assumere la scadenza nel caso di modifica automatica
@@ -4292,6 +4461,7 @@ public Forward doOnFlMerceExtraUEChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		fillModel( context );		
 		try	{
 			if (Boolean.TRUE.equals(fattura.getFl_merce_extra_ue())) {
@@ -4301,6 +4471,7 @@ public Forward doOnFlMerceExtraUEChange(ActionContext context) {
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				if (!fattura.isPromiscua())
 					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
 				fattura.setFl_autofattura(Boolean.FALSE);
@@ -4330,6 +4501,7 @@ public Forward doOnFlMerceExtraUEChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			bp.setModel(context,fattura);
 			throw e;
 		}
@@ -4388,17 +4560,589 @@ public Forward doOnStatoFondoEconChange(ActionContext context) {
     }
     return context.findDefaultForward();
 }
-public Forward doBringBackSearchNomenclatura_combinata(ActionContext context,
-		Fattura_passiva_intraBulk fattura_passiva_intra,
-		it.cnr.contab.docamm00.intrastat.bulk.Nomenclatura_combinataBulk trovato) 
-		throws java.rmi.RemoteException {
-		try {			
-			if (trovato!=null){
-				fattura_passiva_intra.setNomenclatura_combinata(trovato);
+public Forward doOnFlMerceIntraUEChange(ActionContext context) {
+	
+	try {
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+		Boolean intraUE = fattura.getFl_intra_ue();
+		Boolean extraUE = fattura.getFl_extra_ue();
+		Boolean sanMarinoCI = fattura.getFl_san_marino_con_iva();
+		Boolean sanMarinoSI = fattura.getFl_san_marino_senza_iva();
+		Boolean spedizioniere = fattura.getFl_spedizioniere();
+		Boolean bollaDoganale = fattura.getFl_bolla_doganale();
+		String spesa = fattura.getStato_pagamento_fondo_eco();
+		Boolean autof = fattura.getFl_autofattura();
+		String fattServizi = fattura.getTi_bene_servizio();
+		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
+		fillModel( context );		
+		try	{
+			if (Boolean.TRUE.equals(fattura.getFl_merce_intra_ue())) {
+				fattura.setFl_san_marino_con_iva(Boolean.FALSE);
+				fattura.setFl_san_marino_senza_iva(Boolean.FALSE);
+				fattura.setFl_bolla_doganale(Boolean.FALSE);
+				fattura.setFl_spedizioniere(Boolean.FALSE);
+				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
+				fattura.setFl_intra_ue(Boolean.FALSE);
+				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				if (!fattura.isPromiscua())
+					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
+				if(fattura.isCommerciale() ){
+					fattura.setFl_autofattura(Boolean.TRUE);
+					fattura.setAutoFatturaNeeded(true);
+				}
+			} else {
+				fattura.setTi_bene_servizio(null);
+				fattura.setFl_extra_ue(Boolean.FALSE);
+				fattura.setFl_autofattura(Boolean.FALSE);
+				fattura.setAutoFatturaNeeded(false);
+				if (!fattura.isDefaultValuta())
+					fattura = doSelezionaValutaDefault(context, fattura);
+			}
+
+			if (fattura instanceof Fattura_passiva_IBulk)
+				((Fattura_passiva_IBulk)fattura).setFattura_estera(null);
+			basicDoOnIstituzionaleCommercialeChange(context, fattura);
+			bp.setModel(context,fattura);
+			return context.findDefaultForward();
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			fattura.setFl_intra_ue(intraUE);
+			fattura.setFl_extra_ue(extraUE);
+			fattura.setFl_san_marino_con_iva(sanMarinoCI);
+			fattura.setFl_san_marino_senza_iva(sanMarinoSI);
+			fattura.setFl_bolla_doganale(bollaDoganale);
+			fattura.setFl_spedizioniere(spedizioniere);
+			fattura.setStato_pagamento_fondo_eco(spesa);
+			fattura.setFl_autofattura(autof);
+			fattura.setTi_bene_servizio(fattServizi);
+			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
+			bp.setModel(context,fattura);
+			throw e;
+		}
+	} catch (Throwable t) {
+		return handleException(context, t);
+	}
+}
+
+//public Forward doSearchFind_trovato(ActionContext context) 
+//{
+//	try{
+//		fillModel(context);
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)context.getBusinessProcess();
+//
+//		BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(context);
+//		
+//		it.cnr.jada.util.action.SelezionatoreListaBP slbp=null;
+//		if (!listaTrovati.isEmpty()) {
+//			slbp = (it.cnr.jada.util.action.SelezionatoreListaBP) select(
+//					context,
+//					new it.cnr.jada.util.ListRemoteIterator((java.util.List)listaTrovati),
+//					it.cnr.jada.bulk.BulkInfo.getBulkInfo(TrovatoBulk.class),
+//					null,
+//					"doBringBackSearchFind_trovato");
+//
+//			slbp.setMultiSelection(false);
+//		} else
+//			bp.setMessage("La ricerca non ha fornito alcun risultato.");
+//		return slbp;
+//	}catch (Throwable ex) {
+//		return handleException(context, ex);
+//	}
+//}
+
+/**
+ * Gestisce lo sdoppiamento della riga di dettaglio
+ * 
+ *
+ * @param context	L'ActionContext della richiesta
+ * @return Il Forward alla pagina di risposta
+ */
+public Forward doSdoppiaDettaglio(ActionContext context) {
+   try {
+	    CRUDFatturaPassivaBP bp= (CRUDFatturaPassivaBP) getBusinessProcess(context);
+        fillModel(context);
+        Fattura_passiva_rigaIBulk riga= (Fattura_passiva_rigaIBulk)bp.getDettaglio().getModel();
+        Forward forward= context.findDefaultForward();
+        if (riga == null)
+            bp.setErrorMessage("Per procedere, selezionare il dettaglio da sdoppiare!");
+        else {
+        	riga.setIm_riga_sdoppia(Utility.ZERO);
+            bp.setDetailDoubling(true);
+        }
+        return forward;
+    } catch (Throwable e) {
+        return handleException(context, e);
+    }
+}
+/**
+ * Gestisce lo sdoppiamento della riga di dettaglio
+ *
+ * @param context	L'ActionContext della richiesta
+ * @return Il Forward alla pagina di risposta
+ */
+public Forward doConfirmSdoppiaDettaglio(ActionContext context) {
+    try {
+    	CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+        fillModel(context);
+        
+        bp.sdoppiaDettaglioInAutomatico(context);
+
+		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+
+        if (fattura != null) {
+        	for (Iterator s = fattura.getFattura_passiva_dettColl().iterator(); s.hasNext(); ) {
+				Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk)s.next();
+        		if ((riga.isToBeCreated() || riga.isToBeUpdated()) && riga.getObbligazione_scadenziario()!=null)
+    				basicDoBringBackOpenObbligazioniWindow(context, riga.getObbligazione_scadenziario());
+        	}
+        }
+
+        bp.setDirty(true);
+   		return context.findDefaultForward();
+    } catch (Throwable e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBringBackSearchListabanchedett(ActionContext context,Fattura_passiva_rigaBulk riga,BancaBulk banca){
+	try{
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
+		
+		if(banca!=null ){
+			riga.setBanca(banca);
+			if(banca.getCd_terzo_delegato()!=null)
+				riga.setCessionario(fpcs.findCessionario(context.getUserContext(), riga));
+		}
+		return context.findDefaultForward();
+	} catch (Throwable e) {
+	    return handleException(context, e);
+	}
+}
+	public Forward doBringBackSearchListabanche(ActionContext context,Fattura_passivaBulk fattura,BancaBulk banca){
+		try{
+			CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+			FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
+			
+			if(banca!=null ){
+				fattura.setBanca(banca);
+				if( banca.getCd_terzo_delegato()!=null)
+					fattura.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura));
 			}
 			return context.findDefaultForward();
-		} catch(Exception e) {
+	} catch (Throwable e) {
+	    return handleException(context, e);
+	}
+}
+
+//public Forward doFreeSearchFind_trovato(ActionContext actioncontext) {
+//    try 	
+//    {
+//    	BulkBP bulkbp = (BulkBP)actioncontext.getBusinessProcess();
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)bulkbp;
+//		bp.fillModel(actioncontext);
+//		
+//		//TrovatoBulk oggettobulk = ((Fattura_attiva_rigaIBulk)bp.getDettaglio().getModel()).getTrovato();
+//		TrovatoBulk oggettobulk = new TrovatoBulk();
+//		FormField formfield = getFormField(actioncontext,"main.Dettaglio.find_trovato");
+//        OggettoBulk oggettobulk1 = formfield.getModel();
+//        RicercaLiberaTrovatoBP ricercaliberabp = (RicercaLiberaTrovatoBP)actioncontext.createBusinessProcess("RicercaLiberaTrovato");
+//        ricercaliberabp.setSearchProvider(bp.getSearchProvider(oggettobulk1, formfield.getField().getProperty()));
+//        ricercaliberabp.setFreeSearchSet(formfield.getField().getFreeSearchSet());
+//        ricercaliberabp.setPrototype(oggettobulk);
+//        ricercaliberabp.setColumnSet(formfield.getField().getColumnSet());
+//        actioncontext.addHookForward("seleziona", this, "doBringBackSearchFind_trovato");
+//        HookForward hookforward = (HookForward)actioncontext.findForward("seleziona");
+//        hookforward.addParameter("field", formfield);
+//        Forward fricercaliberabp = actioncontext.addBusinessProcess(ricercaliberabp);
+//        
+//		BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(actioncontext);
+//        ricercaliberabp.setListaTtovati(listaTrovati);
+//        return fricercaliberabp;
+//    }
+//    catch(Exception exception)
+//    {
+//        return handleException(actioncontext, exception);
+//    }
+//
+//}
+//public Forward doBringBackSearchFind_trovato(ActionContext context) 
+//{
+//	try{
+//		HookForward caller = (HookForward)context.getCaller();
+//		TrovatoBulk trovato = (TrovatoBulk)caller.getParameter("focusedElement");
+//
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+//		if (trovato != null) {
+//			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) bp.getDettaglio().getModel();
+//			riga.setTrovato(trovato);
+//			riga.setPg_trovato(trovato.getPg_trovato());
+//			riga.setToBeUpdated();
+//		}
+//		return context.findDefaultForward();
+//	}catch (Throwable ex) {
+//		return handleException(context, ex);
+//	}
+//}
+public Forward doBlankSearchFind_trovato(ActionContext context, TrovatoBulk trovato) {
+
+	if (trovato!=null) {
+		TrovatoBulk newt = new TrovatoBulk();
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) bp.getDettaglio().getModel();
+		riga.setTrovato(newt);
+		riga.setPg_trovato(null);
+	}
+	return context.findDefaultForward();
+}
+public Forward doOnStatoLiquidazioneChange(ActionContext context) {
+	 try {
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+	 	Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+	    String oldCausale=fattura.getCausale();
+        fillModel(context);
+		 if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.LIQ)){
+	       	if(fattura.getCausale()!=null){ 
+	       		fattura.setCausale(null);
+}
+	     }else if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.SOSP)){
+	    	 fattura.setCausale(fattura.ATTLIQ);
+	     } else if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.NOLIQ)){
+	    	 if (fattura.getCausale()!= null && fattura.getCausale().equals(fattura.ATTLIQ)){
+	        		if(oldCausale!=null && !oldCausale.equals(fattura.ATTLIQ))
+	        			fattura.setCausale(oldCausale);
+	        		else
+	        			fattura.setCausale(null);
+	        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	     }
+	     bp.setModel(context, fattura);
+	   } catch (Throwable t) {
+	        return handleException(context, t);
+	  }
+return context.findDefaultForward();
+}
+public Forward doOnCausaleChange(ActionContext context) {
+	try {
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+	 	Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+	    String oldCausale=fattura.getCausale();
+        fillModel(context);
+	         if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.LIQ)){
+	        	if(fattura.getCausale()!=null){ 
+	        		fattura.setCausale(null);
+	        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	         }else if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.NOLIQ)){
+		        	if (fattura.getCausale()!= null && fattura.getCausale().equals(fattura.ATTLIQ)){
+		        		if(oldCausale!=null && !oldCausale.equals(fattura.ATTLIQ))
+		        			fattura.setCausale(oldCausale);
+		        		else
+		        			fattura.setCausale(null);
+		        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+		        	}
+	         }else if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.SOSP)){
+	        	if (fattura.getCausale()!= null && !fattura.getCausale().equals(fattura.ATTLIQ)){
+	        		if(oldCausale!=null )
+	        			fattura.setCausale(oldCausale);
+	        		else
+	        			fattura.setCausale(null);
+       		  throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	        }
+	 	       
+	        bp.setModel(context, fattura);
+	  } catch (Throwable t) {
+	      return handleException(context, t);
+	  }
+	 return context.findDefaultForward();
+}
+protected java.util.List controllaSelezionePerTitoloCapitoloLista(ActionContext context, java.util.Iterator selectedModels)
+		throws ComponentException, PersistencyException, IntrospectionException, RemoteException, BusinessProcessException {
+	
+		if (selectedModels != null) {
+			java.util.Vector soggettiAInventario = new java.util.Vector();
+			java.util.List titoliCapitoli=null;
+			java.util.Vector categorieGruppo = new java.util.Vector();
+			int count = 0;
+			
+			while(selectedModels.hasNext()) {
+				count += 1;
+				Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)selectedModels.next();
+				Bene_servizioBulk beneServizio = rigaSelected.getBene_servizio();
+				if (beneServizio == null)
+					throw new it.cnr.jada.comp.ApplicationException("Valorizzare il bene/servizio per il dettaglio " + ((rigaSelected.getDs_riga_fattura() == null) ? "" : "\"" + rigaSelected.getDs_riga_fattura() + "\"") + "! Operazione interrotta.");
+				if (beneServizio.getFl_gestione_inventario()!=null && beneServizio.getFl_gestione_inventario().booleanValue()) {
+					soggettiAInventario.add(rigaSelected);
+					if (beneServizio.getCategoria_gruppo() == null)
+						throw new it.cnr.jada.comp.ApplicationException("Il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non ha definito alcuna categoria di appartenenza! Operazione interrotta.");
+					else
+						if (categorieGruppo.isEmpty())
+							categorieGruppo.add(beneServizio.getCategoria_gruppo());
+						else 
+							for (java.util.Iterator i = ((java.util.Vector)categorieGruppo.clone()).iterator(); i.hasNext();) {
+								Categoria_gruppo_inventBulk cat = (Categoria_gruppo_inventBulk)i.next();
+									if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(categorieGruppo, beneServizio.getCategoria_gruppo()))
+										categorieGruppo.add(beneServizio.getCategoria_gruppo());
+							}
+				
+				CategoriaGruppoInventComponentSession h= (CategoriaGruppoInventComponentSession)
+							context.getBusinessProcess().createComponentSession(
+										"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
+										CategoriaGruppoInventComponentSession.class);
+					titoliCapitoli = h.findAssVoceFList(context.getUserContext(), beneServizio.getCategoria_gruppo());
+					if (titoliCapitoli == null)
+						throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non è stato attribuito ad alcuna categoria gruppo per l'inventario!");
+				}	
+			}
+			
+			int size = soggettiAInventario.size();
+			if (size != 0) {
+				if (size != count)
+					throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli non inventariabili o solo dettagli inventariabili");
+				else if (categorieGruppo.size() != 1)
+					throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli inventariabili con stesso titolo capitolo!");
+			}
+			if (titoliCapitoli !=null && !titoliCapitoli.isEmpty())
+				return titoliCapitoli;		
+		}
+	return null;
+	}
+
+public Forward doCreaCompenso(ActionContext context) {
+
+	try	{
+		fillModel(context);
+		CRUDFatturaPassivaIBP bp = (CRUDFatturaPassivaIBP)context.getBusinessProcess();
+
+		Integer esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+		//java.math.BigDecimal quotaEsente = new java.math.BigDecimal(0);
+		//java.math.BigDecimal quotaEsenteNonImpo = new java.math.BigDecimal(0);
+		java.math.BigDecimal imBollo = new java.math.BigDecimal(0);
+		
+		Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)bp.getModel();
+		
+		if (fp.getCompenso() != null)
+			throw new it.cnr.jada.comp.ApplicationException("Esiste già un compenso associato alla fattura!");
+		
+		bp.validaFatturaPerCompenso(context);
+
+		V_terzo_per_compensoBulk v_terzo = new V_terzo_per_compensoBulk(fp.getFornitore().getCd_terzo(),new String("A"));
+		v_terzo.setTerzo(fp.getFornitore());
+		v_terzo.setAnagrafico(fp.getFornitore().getAnagrafico());
+		v_terzo.setRagione_sociale(fp.getFornitore().getAnagrafico().getRagione_sociale());
+		v_terzo.setCognome(fp.getFornitore().getAnagrafico().getCognome());
+		v_terzo.setNome(fp.getFornitore().getAnagrafico().getNome());
+		v_terzo.setCodice_fiscale(fp.getFornitore().getAnagrafico().getCodice_fiscale());
+		v_terzo.setPartita_iva(fp.getFornitore().getAnagrafico().getPartita_iva());
+		
+		
+		context.addHookForward("bringback",this,"doBringBackCompenso");
+//		context.addHookForward("close",this,"doBringBackCompenso");
+
+		CRUDCompensoBP compensoBP = (CRUDCompensoBP) creaCompensoBP(context, true);
+		try {
+			compensoBP.reset(context);
+			CompensoBulk compenso = (CompensoBulk)compensoBP.getModel();
+			
+			compenso.setV_terzo(v_terzo);
+			
+			if(fp.getDocumentoEleTestata()!=null && fp.isElettronica())
+			{	
+				//quotaEsente = fp.getDocumentoEleTestata().calcolaImQuotaEsente(fp.getDocumentoEleTestata());
+				//quotaEsenteNonImpo = fp.getDocumentoEleTestata().calcolaImQuotaEsenteNonImpo(fp.getDocumentoEleTestata());
+				if(fp.getDocumentoEleTestata().getImportoBollo()!=null)
+					imBollo = fp.getDocumentoEleTestata().getImportoBollo();
+				
+				compenso.setIm_lordo_percipiente(fp.getDocumentoEleTestata().calcolaImLordoPercipiente(fp.getDocumentoEleTestata()));
+				compenso.setQuota_esente(imBollo);
+				compenso.setQuota_esente_no_iva(imBollo);
+                /*
+				compenso.setIm_lordo_percipiente(fp.getDocumentoEleTestata().calcolaImLordoPercipiente(fp.getDocumentoEleTestata()).add(quotaEsente).add(quotaEsenteNonImpo).add(imBollo));
+				compenso.setQuota_esente(quotaEsenteNonImpo.add(imBollo));
+				compenso.setQuota_esente_no_iva(quotaEsente.add(quotaEsenteNonImpo).add(imBollo));
+				*/
+			}
+			
+			it.cnr.contab.compensi00.ejb.CompensoComponentSession component = (it.cnr.contab.compensi00.ejb.CompensoComponentSession)bp.createComponentSession("CNRCOMPENSI00_EJB_CompensoComponentSession",it.cnr.contab.compensi00.ejb.CompensoComponentSession.class );
+			compenso = component.inizializzaCompensoPerFattura(
+											context.getUserContext(), 
+											compenso, 
+											fp);
+			compensoBP.setModel(context, compenso);
+		} catch (Throwable t) {
+			compensoBP.rollbackToSavePoint(context, bp.SAVE_POINT_NAME);
+			throw t;
+		}
+			
+		return context.addBusinessProcess(compensoBP);
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+private Forward creaCompensoBP(ActionContext context, boolean setSafePoint) 
+		throws BusinessProcessException {
+		try {
+			CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+			Fattura_passivaBulk fp = (Fattura_passivaBulk) bp.getModel();
+			if (fp.getDocumentiContabiliCancellati() != null &&
+				!fp.getDocumentiContabiliCancellati().isEmpty()) {
+				OptionRequestParameter userConfirmation = new OptionRequestParameter();
+				userConfirmation.setCheckDisponibilitaContrattoRequired(Boolean.FALSE);
+				userConfirmation.setCheckDisponibilitaDiCassaRequired(Boolean.FALSE);
+				((FatturaPassivaComponentSession)bp.createComponentSession()).
+			       aggiornaObblSuCancPerCompenso(context.getUserContext(), 
+			    		fp,
+			    		fp.getDocumentiContabiliCancellati(),
+			    		userConfirmation);
+				
+				fp.getDocumentiContabiliCancellati().removeAllElements();
+				//aggiornaObbligazioni(context.getUserContext(), (Fattura_passivaBulk) bp.getModel(), userConfirmation);
+			}
+		} catch (RemoteException e) {
+			return handleException(context, e);
+		} catch (ComponentException e) {
+			return handleException(context, e);
+		} catch(Throwable e) {
 			return handleException(context,e);
 		}
+		
+		CRUDCompensoBP compensoBP = (CRUDCompensoBP)context.getUserInfo().createBusinessProcess(
+																context,
+																"CRUDCompensoBP",
+																new Object[] { "MRSWTh" }
+															);
+		if (setSafePoint)
+			compensoBP.setSavePoint(context, CRUDFatturaPassivaIBP.SAVE_POINT_NAME);
+			
+		return compensoBP;
 	}
+/**
+ * Al ritorno della creazione di un compenso, associo alle rate selezionate questo documento
+ */
+
+public Forward doBringBackCompenso(ActionContext context) {
+
+	HookForward caller = (HookForward)context.getCaller();
+	CompensoBulk compenso = (CompensoBulk)caller.getParameter("bringback");
+	
+	CRUDFatturaPassivaIBP bp = (CRUDFatturaPassivaIBP)getBusinessProcess(context);
+	if(compenso == null) {
+		try {
+			((CRUDCompensoBP)creaCompensoBP(context, false)).rollbackToSavePoint(context, bp.SAVE_POINT_NAME);
+		} catch (BusinessProcessException e) {
+			return handleException(context, e);
+		}
+		return context.findDefaultForward();
+	}
+
+	try {
+
+		Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)bp.getModel();
+		
+		fp.setFl_fattura_compenso(true);
+		fp.setStato_cofi(fp.STATO_CONTABILIZZATO);
+		fp.setStato_coge(fp.NON_PROCESSARE_IN_COGE);
+		fp.setStato_coan(fp.NON_PROCESSARE_IN_COAN);
+		fp.setStato_liquidazione(fp.LIQ);
+		fp.setCausale(null);
+		fp.setStato_pagamento_fondo_eco(fp.NO_FONDO_ECO);
+		fp.setCompenso(compenso);
+		for (java.util.Iterator i = fp.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
+			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)i.next();
+
+			riga.setStato_cofi(fp.STATO_CONTABILIZZATO);
+		}
+		bp.setModel(context, fp);
+		bp.setDirty(true);
+			
+		bp.setMessage("Associazione terminata con successo.");
+		
+		return context.findDefaultForward();
+		
+	} catch (Throwable t) {
+		try {
+			((CRUDCompensoBP)creaCompensoBP(context, false)).rollbackToSavePoint(context, bp.SAVE_POINT_NAME);
+		} catch (BusinessProcessException e) {
+			return handleException(context, e);
+		}
+		return handleException(context, t);
+	}
+}
+public Forward doApriCompenso(ActionContext context) {
+
+	try	{
+		fillModel(context);
+		CRUDFatturaPassivaIBP bp = (CRUDFatturaPassivaIBP)context.getBusinessProcess();
+		Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)bp.getModel();
+				
+		if (fp == null || fp.getCompenso() == null)
+			throw new it.cnr.jada.comp.ApplicationException("Non esiste alcun Compenso da visualizzare!");
+
+		context.addHookForward("bringback",this,"doBringBackApriCompenso");
+
+		CRUDCompensoBP compensoBP = (CRUDCompensoBP)context.createBusinessProcess(
+											"CRUDCompensoBP",
+											new Object[] { "VRSWTh" });
+		compensoBP.setSavePoint(context, bp.SAVE_POINT_NAME);
+
+		try {
+			compensoBP.edit(context, fp.getCompenso());
+		} catch (Throwable t) {
+			compensoBP.rollbackToSavePoint(context, bp.SAVE_POINT_NAME);
+			throw t;
+		}
+			
+		return context.addBusinessProcess(compensoBP);
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doBringBackApriCompenso(ActionContext context) {
+	try	{
+		((CRUDCompensoBP)creaCompensoBP(context, false)).rollbackToSavePoint(
+													context, 
+													CRUDFatturaPassivaIBP.SAVE_POINT_NAME);
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doOnFlFatturaCompensoChange(ActionContext context) {
+	try {
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+		Boolean fatcomp = fattura.getFl_fattura_compenso();
+		fillModel( context );		
+			if (Boolean.TRUE.equals(fatcomp) && fattura.getCompenso() != null) {
+				fattura.setFl_fattura_compenso(fatcomp);
+				bp.setModel(context,fattura);
+				throw new it.cnr.jada.comp.ApplicationException("Non è possibile modificare questa informazione poichè esiste già un compenso collegato!");
+			}
+			if (Boolean.FALSE.equals(fatcomp) && fattura.hasDettagliContabilizzati()) {
+				fattura.setFl_fattura_compenso(fatcomp);
+				bp.setModel(context,fattura);
+				throw new it.cnr.jada.comp.ApplicationException("Non è possibile modificare questa informazione poichè risultano già contabilizzati i dettagli della fattura!");
+			
+			}
+			return context.findDefaultForward();
+	} catch (Throwable t) {
+		return handleException(context, t);
+	}
+	
+	
+}
+public Forward doConfirmDtScadenza(ActionContext context, it.cnr.jada.util.action.OptionBP option) {
+	try {
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+		if (option.getOption() == it.cnr.jada.util.action.OptionBP.NO_BUTTON) {
+			fattura.setDt_scadenza(null);	
+		}
+		return context.findDefaultForward();
+	} catch(Exception e) {
+		return handleException(context,e);
+	}
+}
 }

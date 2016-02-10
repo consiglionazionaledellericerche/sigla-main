@@ -37,7 +37,7 @@ private java.math.BigDecimal calcolaTotaleSelezionati(java.util.List selectedMod
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importo;
 }
 public java.util.List getDetails() {

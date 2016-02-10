@@ -621,7 +621,12 @@ protected Forward riporta(ActionContext context,OggettoBulk model) {
 				//NB: per le fatture att il creditore è un debitore
 				if (tb.getAnagrafico().getTi_italiano_estero()!=null && tb.getAnagrafico().getTi_italiano_estero().equals(NazioneBulk.ITALIA) && ((tb.getAnagrafico().getPartita_iva()==null  && !tb.getAnagrafico().getFl_non_obblig_p_iva()) ||tb.getAnagrafico().getCodice_fiscale()==null))
 					throw new MessageToUser("Il terzo selezionato non è valido!",bp.ERROR_MESSAGE);
-			
+				
+				it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk fa = (it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk)docAmm;
+				String cond = fa.getSupplierNationType();
+				if (!cond.equalsIgnoreCase(tb.getAnagrafico().getTi_italiano_estero()))
+					throw new MessageToUser("E' necessario selezionare un terzo con nazionalità compatibile con quella del documento amministrativo.", bp.ERROR_MESSAGE);
+				
 				if (tb.CREDITORE.equalsIgnoreCase(tb.getTi_terzo()))
 					throw new MessageToUser("Il terzo selezionato non è valido per il documento attivo perché è un creditore!", bp.ERROR_MESSAGE);
 			}
@@ -861,7 +866,9 @@ public Forward doConfermaElenco(ActionContext context,int option) {
 public Forward doOnDt_fin_validitaChange(ActionContext context)  {
 	try{
 		it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP bp = (it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP)getBusinessProcess(context);
-		AnagraficoBulk anagrafico = bp.getAnagrafico();		
+		AnagraficoBulk anagrafico = bp.getAnagrafico();	
+		java.util.GregorianCalendar data_da = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+		java.util.GregorianCalendar data_a = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 		Carico_familiare_anagBulk carico = (Carico_familiare_anagBulk)bp.getCrudCarichi_familiari_anag().getModel();
 		java.sql.Timestamp oldData = carico.getDt_fin_validita();
 		java.sql.Timestamp maxDataCompensi = bp.findMaxDataCompValida(context.getUserContext(), anagrafico);
@@ -869,6 +876,13 @@ public Forward doOnDt_fin_validitaChange(ActionContext context)  {
 			fillModel(context);
 			if(carico.getDt_fin_validita()==null)
 				throw new ValidationException("E' necessario inserire la data di fine validità.");
+			data_da.setTime(carico.getDt_ini_validita());
+			data_a.setTime(carico.getDt_fin_validita());
+//			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
+//				carico.setDt_fin_validita(oldData);
+//				throw new ValidationException("La data di inizio e fine validità devono appartenere allo stesso esercizio.");
+//			}
+				
 			if (!bp.isSearching())
 			  try{
 				  if ((oldData==null || carico.getDt_fin_validita().before(oldData))&& anagrafico.isUtilizzata_detrazioni()&&
@@ -889,4 +903,61 @@ public Forward doOnDt_fin_validitaChange(ActionContext context)  {
 		return handleException(context, e);
 	}
 }
+public Forward doCambiaFl_abilita_diaria_miss_est(ActionContext context) {
+	try {
+		super.fillModel(context);
+		it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk anagraficoBulk =
+			((it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP)context.getBusinessProcess()).getAnagrafico();
+		if (anagraficoBulk.isFl_abilita_diaria_miss_est())
+		{
+			anagraficoBulk.setFl_abilita_diaria_miss_est(Boolean.TRUE);
+		}    
+		else
+		{	
+			anagraficoBulk.setFl_abilita_diaria_miss_est(Boolean.FALSE);
+			anagraficoBulk.setDt_inizio_diaria_miss_est(null);
+			anagraficoBulk.setDt_fine_diaria_miss_est(null);
+
+		}
+		return context.findDefaultForward();
+	} catch(FillException e) {
+		return handleException(context,e);
+	}
+}
+
+public Forward doCambiaDateDiariaMissEst(ActionContext context) {
+
+	try{	
+		CRUDAnagraficaBP bp = (CRUDAnagraficaBP)getBusinessProcess(context);
+		AnagraficoBulk anagrafico = (AnagraficoBulk)bp.getModel();
+		java.sql.Timestamp oldDtIniDiaria = anagrafico.getDt_inizio_diaria_miss_est();
+		java.sql.Timestamp oldDtFinDiaria = anagrafico.getDt_fine_diaria_miss_est();
+		
+		try {
+			fillModel(context);
+			if (anagrafico.getDt_inizio_diaria_miss_est() != null && 
+					anagrafico.getDt_fine_diaria_miss_est() != null	&&
+					anagrafico.getDt_inizio_diaria_miss_est().after(anagrafico.getDt_fine_diaria_miss_est()))
+			{
+				anagrafico.setDt_inizio_diaria_miss_est(oldDtIniDiaria);
+				anagrafico.setDt_fine_diaria_miss_est(oldDtFinDiaria);
+				throw new MessageToUser("La Data di Inizio autorizzazione non può essere successiva alla data di Fine autorizzazione.", bp.ERROR_MESSAGE);
+			}			
+			if (bp.isSearching())
+				return context.findDefaultForward();
+
+		} catch(it.cnr.jada.bulk.FillException e) {
+			anagrafico.setDt_inizio_diaria_miss_est(oldDtIniDiaria);
+			anagrafico.setDt_fine_diaria_miss_est(oldDtFinDiaria);
+			throw e;
+		}
+	
+		return context.findDefaultForward();
+	
+	} catch(Throwable e) {
+		return handleException(context, e);
+	}
+	
+	}
+
 }

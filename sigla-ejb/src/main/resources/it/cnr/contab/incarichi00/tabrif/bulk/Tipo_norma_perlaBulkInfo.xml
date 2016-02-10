@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_norma"
+		property="cd_tipo_norma"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tipo_norma"
+		property="ds_tipo_norma"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="tipo_associazione"
+		property="tipo_associazione"
+		inputType="SELECT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		keysProperty="tipiAssociazioneKeys"
+		label="Tipo Associazione" />
+
+	<formFieldProperty
+		name="cd_tipo_norma" />
+	<formFieldProperty
+		name="ds_tipo_norma" />
+	<formFieldProperty
+		name="tipo_associazione" />
+
+	<columnFieldProperty
+		name="cd_tipo_norma" />
+	<columnFieldProperty
+		name="ds_tipo_norma" />
+
+	<findFieldProperty
+		name="cd_tipo_norma" />
+	<findFieldProperty
+		name="ds_tipo_norma" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tipo_norma" />
+		<formFieldProperty
+			name="ds_tipo_norma"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+</bulkInfo>

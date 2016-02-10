@@ -3,8 +3,8 @@
 		longDescription="Anagrafico"
 		shortDescription="Anagrafico"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="aliquota_fiscale"
@@ -247,7 +247,7 @@
 		name="fl_fatturazione_differita"
 		property="fl_fatturazione_differita"
 		readonlyPropertyOnEdit="dipendente"
-		label="Ente a fatturazione differita art.6 DPR633/72" 
+		label="Ente a fatturazione differita/Split Payment" 
 		inputType="CHECKBOX" />
 	<fieldProperty
 		name="fl_occasionale"
@@ -526,8 +526,8 @@
 		name="im_reddito_complessivo"
 		property="anagrafico_esercizio.im_reddito_complessivo"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		label="Reddito Complessivo (escluso Reddito CNR&lt;BR&gt;e Reddito Abitazione Principale)" 		
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Imponibile Irpef aggiuntivo all'imponibile Irpef CNR&lt;BR&gt;(escluso Reddito Abitazione Principale)" 		
 		nullable="true" />
 	<fieldProperty
 		name="im_reddito_abitaz_princ"
@@ -541,7 +541,13 @@
 		property="anagrafico_esercizio.fl_applica_detr_pers_max"
 		inputType="CHECKBOX"
 		label="Applica Detrazione Personale massima" 		
-		nullable="false" />					
+		nullable="false" />				
+	<fieldProperty
+		name="fl_no_credito_irpef"
+		property="anagrafico_esercizio.fl_no_credito_irpef"
+		inputType="CHECKBOX"
+		label="No Credito Irpef" 		
+		nullable="false" />		
 	<fieldProperty
 		name="fl_non_obblig_p_iva"
 		property="fl_non_obblig_p_iva"
@@ -596,7 +602,40 @@
 		keysProperty="ti_titoloStudioKeys"
 		inputType="SELECT"
 		/>
-
+	<fieldProperty
+		name="codiceAmministrazioneIpa"
+		property="codiceAmministrazioneIpa"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		inputSize="100"
+		label="Codice dell'Amministrazione IPA"
+		inputType="TEXT" />
+	<fieldProperty
+		name="dataAvvioFattElettr"
+		property="dataAvvioFattElettr"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		label="Data di avvio della Fatturazione Elettronica"
+		inputType="TEXT"
+		formatName="date_short" />
+	<fieldProperty
+		name="fl_abilita_diaria_miss_est"
+		property="fl_abilita_diaria_miss_est"
+		label="Autorizzato alla diaria per particolari missioni estere"
+		inputType="CHECKBOX" 
+		nullable="false"/>
+	<fieldProperty
+		name="dt_inizio_diaria_miss_est"
+		property="dt_inizio_diaria_miss_est"
+		label="Data Inizio autorizzazione"
+		inputType="TEXT"
+		inputSize="8"		
+		formatName="date_short" />
+	<fieldProperty
+		name="dt_fine_diaria_miss_est"
+		property="dt_fine_diaria_miss_est"
+		label="Data Fine autorizzazione"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short" />
 		
 	<columnFieldProperty
 		name="cd_anag"
@@ -643,6 +682,18 @@
 		name="fl_cervellone"
 		label="Cervellone"
 		/>
+	<columnFieldProperty
+		name="codiceAmministrazioneIpa"
+		label="Codice Amministrazione IPA"
+		/>
+	<columnFieldProperty
+		name="dataAvvioFattElettr"
+		label="Data avvio Fatturazione Elettronica"
+		/>
+	<columnFieldProperty
+		name="fl_abilita_diaria_miss_est"
+		label="Abilitato Diaria missioni estere"
+		/>		
  <!--   <columnFieldProperty
 		name="pg_tipologia_istat"
 		label="Tipologia Istat"/>
@@ -652,6 +703,12 @@
 	<columnFieldProperty
 		name="find_tipologia_istat"
 		label="Tipologia Istat"/>  -->
+	<form name="searchtool">
+		<formFieldProperty
+			name="cd_anag"/> 
+		<formFieldProperty
+			name="ragione_sociale"/> 			    	    
+	</form>
 	
 	<formFieldProperty
 		name="aliquota_fiscale"
@@ -870,8 +927,9 @@
 	<formFieldProperty
 		name="fl_applica_detr_pers_max" />
 	<formFieldProperty
-		name="fl_non_obblig_p_iva"/>
+		name="fl_no_credito_irpef" />
 	<formFieldProperty
+		name="fl_non_obblig_p_iva"/>	<formFieldProperty
 		name="pg_tipologia_istat"/>
 	<formFieldProperty
 		name="ds_tipologia_istat"/>   
@@ -883,7 +941,23 @@
 		name="fl_sospensione_irpef"/>		
 	<formFieldProperty
 		name="titolo_studio"/>
+	<formFieldProperty
+		name="codiceAmministrazioneIpa"
+		/>
+	<formFieldProperty
+		name="dataAvvioFattElettr"
+		/>
+	<formFieldProperty
+		name="fl_abilita_diaria_miss_est" />	
 		
+	<formFieldProperty
+		name="dt_inizio_diaria_miss_est" 
+		command="doCambiaDateDiariaMissEst"/>
+				
+	<formFieldProperty
+		name="dt_fine_diaria_miss_est" 
+		command="doCambiaDateDiariaMissEst"/>			
+				
 	<findFieldProperty
 		name="cd_anag"
 		label="Codice anagrafico"
@@ -936,4 +1010,10 @@
 		name="ds_tipologia_istat"/> 
 	<findFieldProperty
 		name="fl_sospensione_irpef"/>		
+	<findFieldProperty
+		name="codiceAmministrazioneIpa"	/>
+	<findFieldProperty
+		name="dataAvvioFattElettr"	/>
+	<findFieldProperty
+		name="fl_abilita_diaria_miss_est" />		
 </bulkInfo>

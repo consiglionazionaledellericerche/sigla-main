@@ -13,9 +13,9 @@ import it.cnr.jada.persistency.sql.*;
 
 public class Modalita_pagamentoBulk extends Modalita_pagamentoBase {
 
-	protected TerzoBulk terzo;
+	protected TerzoBulk terzo = new TerzoBulk();
 	protected TerzoBulk terzo_delegato;
-	protected Rif_modalita_pagamentoBulk rif_modalita_pagamento;
+	protected Rif_modalita_pagamentoBulk rif_modalita_pagamento = new Rif_modalita_pagamentoBulk();
 
 	public Modalita_pagamentoBulk() {
 		super();
@@ -53,8 +53,8 @@ public java.lang.String getChiavePerBanca() {
 
 	if (isPerCessione()){
 		perCessione = "Y";
-		if (getTerzo_delegato() != null && getTerzo_delegato().getCd_terzo() != null)
-			cdTerzoDelegato = Integer.toString(getTerzo_delegato().getCd_terzo().intValue());
+		//if (getTerzo_delegato() != null && getTerzo_delegato().getCd_terzo() != null)
+			//cdTerzoDelegato = Integer.toString(getTerzo_delegato().getCd_terzo().intValue());
 	} 
 
 	String chiave = getRif_modalita_pagamento().getTi_pagamento() +

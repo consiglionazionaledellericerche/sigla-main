@@ -71,6 +71,7 @@
 									{ "tabConfigurazioneTappe","Configurazione tappe","/missioni00/tab_missione_configurazione_tappa.jsp" } ,								
 									{ "tabDettaglioSpese","Dettaglio spese","/missioni00/tab_missione_dettaglio_spese.jsp" } ,
 									{ "tabDettaglioDiaria","Dettaglio diaria","/missioni00/tab_missione_dettaglio_diaria.jsp" } ,
+									{ "tabDettaglioRimborso","Dettaglio rimborso","/missioni00/tab_missione_dettaglio_rimborso.jsp" } ,
 									{ "tabObbligazione","Documenti associati","/missioni00/tab_missione_obbligazione.jsp" } ,
 									{ "tabConsuntivo","Consuntivo","/missioni00/tab_missione_consuntivo.jsp" }
 								},

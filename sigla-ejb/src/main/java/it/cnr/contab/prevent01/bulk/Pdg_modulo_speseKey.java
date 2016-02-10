@@ -11,16 +11,18 @@ public class Pdg_modulo_speseKey extends OggettoBulk implements KeyedPersistent 
 	private java.lang.Integer pg_progetto;
 	private java.lang.Integer id_classificazione;
 	private java.lang.String cd_cds_area;
+	private java.lang.Integer pg_dettaglio;
 	public Pdg_modulo_speseKey() {
 		super();
 	}
-	public Pdg_modulo_speseKey(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area) {
+	public Pdg_modulo_speseKey(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area,Integer pg_dettaglio) {
 		super();
 		this.esercizio=esercizio;
 		this.cd_centro_responsabilita=cd_centro_responsabilita;
 		this.pg_progetto=pg_progetto;
 		this.id_classificazione=id_classificazione;
 		this.cd_cds_area=cd_cds_area;
+		this.pg_dettaglio=pg_dettaglio;
 	}
 	public boolean equalsByPrimaryKey(Object o) {
 		if (this== o) return true;
@@ -31,6 +33,7 @@ public class Pdg_modulo_speseKey extends OggettoBulk implements KeyedPersistent 
 		if (!compareKey(getPg_progetto(), k.getPg_progetto())) return false;
 		if (!compareKey(getId_classificazione(), k.getId_classificazione())) return false;
 		if (!compareKey(getCd_cds_area(), k.getCd_cds_area())) return false;
+		if (!compareKey(getPg_dettaglio(), k.getPg_dettaglio())) return false;
 		return true;
 	}
 	public int primaryKeyHashCode() {
@@ -40,6 +43,7 @@ public class Pdg_modulo_speseKey extends OggettoBulk implements KeyedPersistent 
 		i = i + calculateKeyHashCode(getPg_progetto());
 		i = i + calculateKeyHashCode(getId_classificazione());
 		i = i + calculateKeyHashCode(getCd_cds_area());
+		i = i + calculateKeyHashCode(getPg_dettaglio());
 		return i;
 	}
 	public void setEsercizio(java.lang.Integer esercizio)  {
@@ -72,4 +76,11 @@ public class Pdg_modulo_speseKey extends OggettoBulk implements KeyedPersistent 
 	public java.lang.String getCd_cds_area () {
 		return cd_cds_area;
 	}
+	public java.lang.Integer getPg_dettaglio() {
+		return pg_dettaglio;
+	}
+	public void setPg_dettaglio(java.lang.Integer pg_dettaglio) {
+		this.pg_dettaglio = pg_dettaglio;
+	}
+	
 }

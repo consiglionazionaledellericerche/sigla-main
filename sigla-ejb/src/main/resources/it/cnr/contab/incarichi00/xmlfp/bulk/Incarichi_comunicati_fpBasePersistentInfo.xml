@@ -96,7 +96,7 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="FL_RIFERIMENTO_REGOLAMENTO"
 			propertyName="fl_riferimento_regolamento"

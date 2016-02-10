@@ -28,6 +28,7 @@ private void addPrimaryClauses(SQLBuilder sql, Missione_tipo_pastoBulk tipoPasto
  	sql.addClause("AND", "ti_area_geografica",   sql.EQUALS, tipoPasto.getTi_area_geografica());
    	sql.addClause("AND", "pg_nazione",           sql.EQUALS, tipoPasto.getPg_nazione());
  	sql.addClause("AND", "pg_rif_inquadramento", sql.EQUALS, tipoPasto.getPg_rif_inquadramento());
+ 	sql.addClause("AND", "cd_area_estera",       sql.EQUALS, tipoPasto.getCd_area_estera());
 }
 /**
  * Viene ricercata la massima Data Inizio Validita presente in tabella per l'oggetto avente la

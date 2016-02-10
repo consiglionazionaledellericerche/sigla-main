@@ -6,12 +6,12 @@
  */
 package it.cnr.contab.pdg00.action;
 
+import it.cnr.contab.pdg00.bp.StampaRipartizioneCostiBP;
 import it.cnr.contab.pdg00.cdip.bulk.Stampa_ripartizione_costiVBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.reports.action.ParametricPrintAction;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
-
 /**
  * @author mspasiano
  *
@@ -32,4 +32,19 @@ public class StampaRipartizioneCostiAction extends ParametricPrintAction {
 		}		  
 		return context.findDefaultForward();	
 	}	
+	
+	public Forward doSearchFindCommessaForPrint(ActionContext actioncontext) {
+		if (((StampaRipartizioneCostiBP)actioncontext.getBusinessProcess()).getParametriCnr().getFl_nuovo_pdg()){
+			return search(actioncontext, getFormField(actioncontext, "main.findCommessaForPrint"),"filtro_ricerca_aree");
+		}
+		else
+			return search(actioncontext ,getFormField(actioncontext, "main.findCommessaForPrint"),"filtro_ricerca_commesse");
+	}
+	public Forward doSearchFindModuloForPrint(ActionContext actioncontext) {
+		if (((StampaRipartizioneCostiBP)actioncontext.getBusinessProcess()).getParametriCnr().getFl_nuovo_pdg()){
+			return search(actioncontext, getFormField(actioncontext, "main.findModuloForPrint"),"filtro_ricerca_prog2");
+		}
+		else
+			return search(actioncontext ,getFormField(actioncontext, "main.findModuloForPrint"),"filtro_ricerca_moduli");
+	}
 }

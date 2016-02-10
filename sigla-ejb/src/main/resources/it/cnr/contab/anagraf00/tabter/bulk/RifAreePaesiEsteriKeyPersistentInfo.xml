@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabter.bulk.RifAreePaesiEsteriKey">
+	<defaultColumnMap
+		tableName="RIF_AREE_PAESI_ESTERI">
+		<columnMapping
+			columnName="CD_AREA_ESTERA"
+			propertyName="cd_area_estera"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_area_estera"
+		partOfOid="true" />
+</SQLPersistentInfo>

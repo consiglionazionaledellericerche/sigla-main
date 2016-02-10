@@ -1,5 +1,12 @@
 package it.cnr.contab.doccont00.ejb;
 
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+
+import java.rmi.RemoteException;
+import java.sql.Date;
+import java.text.ParseException;
+
 import javax.ejb.Remote;
 
 @Remote
@@ -19,4 +26,5 @@ boolean isChiudibileReversaleProvvisoria(it.cnr.jada.UserContext param0, it.cnr.
 boolean isRevProvvLiquidCoriCentroAperta(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException,it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException;
 java.lang.Boolean isCollegamentoSiopeCompleto (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.doccont00.core.bulk.ReversaleBulk setCodiciSIOPECollegabili (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+byte[] lanciaStampa( it.cnr.jada.UserContext userContext, String cds, Integer esercizio , Long pgReversale) throws PersistencyException, ComponentException, RemoteException, ParseException;
 }

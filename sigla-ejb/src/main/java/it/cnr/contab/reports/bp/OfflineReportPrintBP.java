@@ -150,4 +150,7 @@ public void initCdServizioPEC(String cdServizioPEC) {
 public void initDsOggettoPEC(String dsOggettoPEC) {
 	((Print_spoolerBulk) getModel()).setDs_oggetto_pec(dsOggettoPEC);
 }
+public void initDsNumregPEC(String dsNumregPEC) {
+	((Print_spoolerBulk) getModel()).setDs_numreg_pec(dsNumregPEC);
+}
 }

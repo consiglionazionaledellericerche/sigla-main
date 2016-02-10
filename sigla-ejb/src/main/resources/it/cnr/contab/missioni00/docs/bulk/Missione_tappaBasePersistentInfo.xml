@@ -126,6 +126,14 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_RIMBORSO"
+			propertyName="fl_rimborso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_vitto_gratuito" />
@@ -165,4 +173,6 @@
 		name="dt_fine_tappa" />
 	<persistentProperty
 		name="fl_vitto_alloggio_gratuito" />
+	<persistentProperty
+		name="fl_rimborso" />	
 </SQLPersistentInfo>

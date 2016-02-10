@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="esercizio"
@@ -463,6 +463,36 @@
 	
 	<printForm
 		name="/cnrpreventivo/pdg/situazione_analitica_gae_res_uscite_x_voce.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cdCdsForPrint"
+			property="cdCdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			property="cdUoForPrint"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdCdrForPrint"
+			property="cdCdrForPrint"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="cdr"
+			paramTypeJR="java.lang.String" />
+	</printForm>	
+	<printForm
+		name="/cnrpreventivo/pdg/situazione_analitica_gae_res_uscite_x_esercizio_voce.jasper">
 		<printFieldProperty 
 			name="esercizio"
 			parameterPosition="0"

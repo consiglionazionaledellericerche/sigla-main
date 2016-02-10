@@ -283,9 +283,9 @@ public Risultato_eliminazioneVBulk manageDelete(ActionContext context, IDocument
 								IDocumentoAmministrativoRigaBulk rigaAssociata = (IDocumentoAmministrativoRigaBulk)righe.next();
 								importo = importo.add(rigaAssociata.getIm_imponibile().add(rigaAssociata.getIm_iva()));
 							}
-							importo = docAmm.getImportoSignForDelete(importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+							importo = docAmm.getImportoSignForDelete(importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 							java.math.BigDecimal importoAggiornamento = scadenzaCollegata.getIm_scadenza().add(importo);
-							if (importoAggiornamento.compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) < 0)
+							if (importoAggiornamento.compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) < 0)
 								throw new it.cnr.jada.action.MessageToUser("Cancellare tutte le note di credito generate successivamente a questa nota di debito. Cancellazione annullata!");
 							DocumentoContabileComponentSession docContSession = docContBP.getVirtualSession(context, true);
 							try {

@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Consutazione Incarichi, Assegni di ricerca, Borse di Studio"
+	longDescription="Consutazione Incarichi, Assegni di ricerca, Borse di Studio"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Anno" />
+	<fieldProperty
+		name="pgRepertorio"
+		property="pgRepertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo Interno" />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="CDS" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="STATO_KEYS"
+		inputType="SELECT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Stato" />
+	<fieldProperty
+		name="esercizioProcedura"
+		property="esercizioProcedura"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Anno Procedura" />
+	<fieldProperty
+		name="pgProcedura"
+		property="pgProcedura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo Procedura" />
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Terzo" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="Cognome" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="Nome" />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="dtRegistrazione"
+		property="dtRegistrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Cancellazione" />
+	<fieldProperty
+		name="dtStipula"
+		property="dtStipula"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Stipula" />
+	<fieldProperty
+		name="dtInizioValidita"
+		property="dtInizioValidita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Inizio Validità" />
+	<fieldProperty
+		name="dtFineValidita"
+		property="dtFineValidita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Fine Validità" />
+	<fieldProperty
+		name="dtProroga"
+		property="dtProroga"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Proroga" />
+	<fieldProperty
+		name="dtProrogaPagam"
+		property="dtProrogaPagam"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Proroga Pagamento" />
+	<fieldProperty
+		name="tiIstituzCommerc"
+		property="tiIstituzCommerc"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Istituzionale/Commerciale" />
+	<fieldProperty
+		name="cdTipoRapporto"
+		property="cdTipoRapporto"
+		keysProperty="TIPOLOGIA_COLLABORAZIONE_KEYS"
+		inputType="SELECT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Tipo Rapporto" />
+	<fieldProperty
+		name="cdTrattamento"
+		property="cdTrattamento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Codice Trattamento" />
+	<fieldProperty
+		name="flPubblicaContratto"
+		property="flPubblicaContratto"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Pubblica Contratto" />
+	<fieldProperty
+		name="importoLordo"
+		property="importoLordo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Importo Lordo" />
+	<fieldProperty
+		name="importoComplessivo"
+		property="importoComplessivo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Importo Complessivo" />
+	<fieldProperty
+		name="flInviatoCorteConti"
+		property="flInviatoCorteConti"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Inviato Corte Conti" />
+	<fieldProperty
+		name="dtInvioCorteConti"
+		property="dtInvioCorteConti"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Invio Corte Conti" />
+	<fieldProperty
+		name="esitoCorteConti"
+		property="esitoCorteConti"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Esito Corte Conti" />
+	<fieldProperty
+		name="cdProvv"
+		property="cdProvv"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Codice Provv." />
+	<fieldProperty
+		name="nrProvv"
+		property="nrProvv"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Numero Provv." />
+	<fieldProperty
+		name="dtProvv"
+		property="dtProvv"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Provv." />
+	<fieldProperty
+		name="dtEfficacia"
+		property="dtEfficacia"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Efficacia" />
+	<fieldProperty
+		name="oggetto"
+		property="oggetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Oggetto" />
+	<fieldProperty
+		name="tipoNatura"
+		property="tipoNatura"
+		keysProperty="TIPOLOGIA_FONTI_KEYS"
+		inputType="SELECT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Tipo Natura" />
+	<fieldProperty
+		name="tipoAssociazione"
+		property="tipoAssociazione"
+		keysProperty="TIPOLOGIA_COLLABORAZIONE_KEYS"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Tipo Collaborazione" />
+
+	<fieldProperty
+		name="dt_validita"
+		property="dt_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Attivi alla Data" />
+	<fieldProperty
+		name="esercizioValidita"
+		property="esercizioValidita"
+		inputSize="4"
+		maxLength="4"
+		inputType="TEXT"
+		label="Attivi nell'Esercizio" />
+
+	<fieldProperty
+		name="tipologiaCollaborazione"
+		property="tipologiaCollaborazione"
+		keysProperty="TIPOLOGIA_COLLABORAZIONE_KEYS"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label="Tipologia Collaborazione"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="fonti"
+		property="fonti"
+		keysProperty="TIPOLOGIA_FONTI_KEYS"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label="Tipo Natura"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="statoProvvisorio"
+		property="statoProvvisorio"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Provvisori"
+		nullable="false"/>
+	<fieldProperty
+		name="statoDefinitivo"
+		property="statoDefinitivo"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Definitivi"
+		nullable="false"/>
+	<fieldProperty
+		name="statoAnnullatoEliminato"
+		property="statoAnnullatoEliminato"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Annullati/Eliminati"
+		nullable="false"/>
+	<fieldProperty
+		name="statoInviato"
+		property="statoInviato"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Inviati Corte dei Conti"
+		nullable="false"/>
+	<fieldProperty
+		name="statoChiuso"
+		property="statoChiuso"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Chiusi"
+		nullable="false"/>
+
+	<fieldProperty
+		name="tipologiaAssegni"
+		property="tipologiaAssegni"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Assegni di Ricerca"
+		nullable="false"/>
+	<fieldProperty
+		name="tipologiaBorsaDiStudio"
+		property="tipologiaBorsaDiStudio"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Borse Di Studio"
+		nullable="false"/>
+	<fieldProperty
+		name="tipologiaCollOcc"
+		property="tipologiaCollOcc"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Collaborazioni Occasionali"
+		nullable="false"/>
+	<fieldProperty
+		name="tipologiaCollProf"
+		property="tipologiaCollProf"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Collaborazioni Professionali"
+		nullable="false"/>
+	<fieldProperty
+		name="tipologiaCococo"
+		property="tipologiaCococo"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Collaborazioni Coordinate e Continuative"
+		nullable="false"/>
+
+	<fieldProperty
+		name="findUoForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		columnSet="scrivania"
+		completeOnSave="true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUoForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+
+
+	<fieldProperty
+		name="filtroSoggetto"
+		property="filtroSoggetto"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="Soggetto"/>
+	<fieldProperty
+		name="cd_soggetto"
+		property="filtroSoggetto.cd_terzo"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice Terzo"
+		readonlyProperty="ROsoggetto"
+		nullable="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_precedente"
+		property="filtroSoggetto.cd_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		readonlyProperty="ROsoggetto"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="filtroCognome"
+		property="filtroSoggetto.anagrafico.cognome"
+		maxLength="50"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Cognome"
+		readonlyProperty="ROsoggetto"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="filtroNome"
+		property="filtroSoggetto.anagrafico.nome"
+		maxLength="50"
+		inputSize="50"
+		inputType="ROTEXT"
+		readonlyProperty="ROsoggetto"
+		enabledOnSearch="true"
+		label="Nome"/>
+	<fieldProperty
+		name="codice_fiscale"
+		property="filtroSoggetto.anagrafico.codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Cod. Fiscale"
+		readonlyProperty="ROsoggetto"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />	
+
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pgRepertorio" />
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="esercizioProcedura" />
+	<formFieldProperty
+		name="pgProcedura" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="codiceFiscale" />
+	<formFieldProperty
+		name="dtRegistrazione" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<formFieldProperty
+		name="dtStipula" />
+	<formFieldProperty
+		name="dtInizioValidita" />
+	<formFieldProperty
+		name="dtFineValidita" />
+	<formFieldProperty
+		name="dtProroga" />
+	<formFieldProperty
+		name="dtProrogaPagam" />
+	<formFieldProperty
+		name="tiIstituzCommerc" />
+	<formFieldProperty
+		name="cdTipoRapporto" />
+	<formFieldProperty
+		name="cdTrattamento" />
+	<formFieldProperty
+		name="flPubblicaContratto" />
+	<formFieldProperty
+		name="importoLordo" />
+	<formFieldProperty
+		name="importoComplessivo" />
+	<formFieldProperty
+		name="flInviatoCorteConti" />
+	<formFieldProperty
+		name="dtInvioCorteConti" />
+	<formFieldProperty
+		name="esitoCorteConti" />
+	<formFieldProperty
+		name="cdProvv" />
+	<formFieldProperty
+		name="nrProvv" />
+	<formFieldProperty
+		name="dtProvv" />
+	<formFieldProperty
+		name="dtEfficacia" />
+	<formFieldProperty
+		name="oggetto" />
+	<formFieldProperty
+		name="tipoNatura" />
+	<formFieldProperty
+		name="tipoAssociazione" />
+
+	<formFieldProperty
+		name="dt_validita" />
+	<formFieldProperty
+		name="esercizioValidita" />
+	<formFieldProperty name="fonti" />
+	<formFieldProperty
+		name="statoProvvisorio"/>
+	<formFieldProperty
+		name="statoDefinitivo"/>
+	<formFieldProperty
+		name="statoAnnullatoEliminato"/>
+	<formFieldProperty
+		name="statoInviato"/>
+	<formFieldProperty
+		name="statoChiuso"/>
+
+	<formFieldProperty
+		name="tipologiaAssegni"/>
+	<formFieldProperty
+		name="tipologiaBorsaDiStudio"/>
+	<formFieldProperty
+		name="tipologiaCollOcc"/>
+	<formFieldProperty
+		name="tipologiaCollProf"/>
+	<formFieldProperty
+		name="tipologiaCococo"/>
+
+	<formFieldProperty name="filtroSoggetto" />
+	<formFieldProperty name="cd_soggetto" />
+	<formFieldProperty name="cd_precedente" />
+	<formFieldProperty name="filtroCognome" />
+	<formFieldProperty name="filtroNome" />
+	<formFieldProperty name="codice_fiscale" />
+	<formFieldProperty name="findUoForPrint" />
+	<formFieldProperty name="cdUoForPrint" />
+	<formFieldProperty name="dsUoForPrint" />
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgRepertorio" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="esercizioProcedura" />
+	<findFieldProperty
+		name="pgProcedura" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="codiceFiscale" />
+	<findFieldProperty
+		name="dtRegistrazione" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="dtStipula" />
+	<findFieldProperty
+		name="dtInizioValidita" />
+	<findFieldProperty
+		name="dtFineValidita" />
+	<findFieldProperty
+		name="dtProroga" />
+	<findFieldProperty
+		name="dtProrogaPagam" />
+	<findFieldProperty
+		name="tiIstituzCommerc" />
+	<findFieldProperty
+		name="cdTipoRapporto" />
+	<findFieldProperty
+		name="cdTrattamento" />
+	<findFieldProperty
+		name="flPubblicaContratto" />
+	<findFieldProperty
+		name="importoLordo" />
+	<findFieldProperty
+		name="importoComplessivo" />
+	<findFieldProperty
+		name="flInviatoCorteConti" />
+	<findFieldProperty
+		name="dtInvioCorteConti" />
+	<findFieldProperty
+		name="esitoCorteConti" />
+	<findFieldProperty
+		name="cdProvv" />
+	<findFieldProperty
+		name="nrProvv" />
+	<findFieldProperty
+		name="dtProvv" />
+	<findFieldProperty
+		name="dtEfficacia" />
+	<findFieldProperty
+		name="oggetto" />
+	<findFieldProperty
+		name="tipoNatura" />
+	<findFieldProperty
+		name="tipoAssociazione" />
+	<findFieldProperty
+		name="dt_validita" />
+	<findFieldProperty
+		name="esercizioValidita" />
+	<findFieldProperty name="tipologiaCollaborazione" />
+	<findFieldProperty name="fonti" />
+	<findFieldProperty name="filtroStato" />
+	<findFieldProperty name="filtroSoggetto" />
+	<findFieldProperty name="cd_soggetto" />
+	<findFieldProperty name="cd_precedente" />
+	<findFieldProperty name="filtroCognome" />
+	<findFieldProperty name="filtroNome" />
+	<findFieldProperty name="codice_fiscale" />
+
+	<columnSet
+		name="default">
+	<columnFieldProperty
+		name="cdTipoRapporto" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgRepertorio" />
+	<columnFieldProperty
+		name="esercizioProcedura" />
+	<columnFieldProperty
+		name="pgProcedura" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="codiceFiscale" />
+	<columnFieldProperty
+		name="dtStipula" />
+	<columnFieldProperty
+		name="dtInizioValidita" />
+	<columnFieldProperty
+		name="dtFineValidita" />
+	<columnFieldProperty
+		name="dtProroga" />
+	<columnFieldProperty
+		name="importoLordo" />
+	<columnFieldProperty
+		name="importoComplessivo" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="tipoNatura" />
+	<columnFieldProperty
+		name="oggetto" />
+<!--  	<columnFieldProperty
+		name="tipoNatura" />
+	<columnFieldProperty
+		name="tipoAssociazione" />
+	<columnFieldProperty
+		name="tipoAssociazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="flInviatoCorteConti" />
+	<columnFieldProperty
+		name="dtInvioCorteConti" />
+	<columnFieldProperty
+		name="esitoCorteConti" />
+	<columnFieldProperty
+		name="cdProvv" />
+	<columnFieldProperty
+		name="nrProvv" />
+	<columnFieldProperty
+		name="dtProvv" />
+	<columnFieldProperty
+		name="dtEfficacia" />
+	<columnFieldProperty
+		name="dtRegistrazione" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="dtProrogaPagam" />
+	<columnFieldProperty
+		name="tiIstituzCommerc" />
+	<columnFieldProperty
+		name="cdTipoRapporto" />
+	<columnFieldProperty
+		name="cdTrattamento" />
+	<columnFieldProperty
+		name="flPubblicaContratto" />
+	<columnFieldProperty
+		name="stato" />-->
+	</columnSet>
+</bulkInfo>

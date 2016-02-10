@@ -32,6 +32,7 @@ public class Tipo_contrattoBulk extends Tipo_contrattoBase implements ICancellat
      */
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 		setFl_cancellato(new Boolean(false));
+		setFl_cig(Boolean.FALSE);
 		return super.initializeForInsert(bp,context);
 	}	
     /**

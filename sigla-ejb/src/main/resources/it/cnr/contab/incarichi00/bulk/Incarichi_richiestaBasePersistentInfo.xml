@@ -90,6 +90,12 @@
 			columnSize="100"
 			nullable="false" />
 		<columnMapping
+			columnName="PERSONALE_INTERNO"
+			propertyName="personale_interno"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
 			columnName="NR_RISORSE_DA_TROVARE"
 			propertyName="nr_risorse_da_trovare"
 			sqlTypeName="DECIMAL"
@@ -172,6 +178,8 @@
 		name="data_scadenza" />
 	<persistentProperty
 		name="email_risposte" />
+	<persistentProperty
+		name="personale_interno" />
 	<persistentProperty
 	    name="nr_risorse_da_trovare" />
 	<persistentProperty

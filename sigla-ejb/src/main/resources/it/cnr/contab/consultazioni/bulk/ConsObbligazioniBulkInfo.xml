@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Impegni">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Impegni">
 	<fieldProperty
 		name="cds"
 		property="cds"
@@ -126,6 +126,13 @@
 		maxLength="15"
 		label="Importo dettaglio scadenza" />
 	<fieldProperty
+		name="esercizio_docamm"
+		property="esercizio_docamm"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Es.Doc." />		
+	<fieldProperty
 		name="pg_doc_amm"
 		property="pg_doc_amm"
 		inputType="TEXTAREA"
@@ -164,6 +171,12 @@
 		inputSize="1"
 		maxLength="1"
 		label="Tipo fattura" />
+	<fieldProperty
+		name="tipo_doc_amm"
+		property="tipo_doc_amm"
+		inputType="TEXT"
+		maxLength="100"
+		label="Tipo doc. Amm." />	
 	<formFieldProperty
 		name="cds" />
 	<formFieldProperty
@@ -199,6 +212,10 @@
 	<formFieldProperty
 		name="im_voce" />
 	<formFieldProperty
+		name="tipo_doc_amm" />
+	<formFieldProperty
+		name="esercizio_docamm" />		
+	<formFieldProperty
 		name="pg_doc_amm" />
 	<formFieldProperty
 		name="pg_mandato" />
@@ -208,7 +225,6 @@
 		name="denominazione_sede" />
 	<formFieldProperty
 		name="ti_fattura" />
-
 	<columnFieldProperty
 		name="cds" />
 	<columnFieldProperty
@@ -246,6 +262,10 @@
 	<columnFieldProperty
 		name="im_voce" />
 	<columnFieldProperty
+		name="tipo_doc_amm" />
+	<columnFieldProperty
+		name="esercizio_docamm" />		
+	<columnFieldProperty
 		name="pg_doc_amm" />
 	<columnFieldProperty
 		name="pg_mandato" />
@@ -254,7 +274,6 @@
 	<columnFieldProperty
 		name="denominazione_sede"
 		label="Denominazione&#160;sede&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
-
 	<findFieldProperty
 		name="cds" />
 	<findFieldProperty
@@ -273,7 +292,7 @@
 		name="esercizio_originale" />
 	<findFieldProperty
 		name="pg_obbligazione" />
-	<findFieldProperty
+	<findFieldProperty 
 		name="esercizio_ori_ori_riporto" />
 	<findFieldProperty
 		name="pg_obbligazione_ori_riporto" />
@@ -290,6 +309,10 @@
 	<findFieldProperty
 		name="im_voce" />
 	<findFieldProperty
+		name="tipo_doc_amm" />	
+	<findFieldProperty
+		name="esercizio_docamm" />		
+	<findFieldProperty
 		name="pg_doc_amm" />
 	<findFieldProperty
 		name="pg_mandato" />
@@ -297,4 +320,6 @@
 		name="cd_terzo" />
 	<findFieldProperty
 		name="denominazione_sede" />
+	<findFieldProperty
+		name="tipo_doc_amm" />	
 </bulkInfo>

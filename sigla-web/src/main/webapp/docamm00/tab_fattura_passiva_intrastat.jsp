@@ -26,7 +26,7 @@
 			noninviato=true;
 	}
 	%>
-	<% if (fatturaPassiva.getTi_bene_servizio().compareTo(Fattura_passivaBulk.FATTURA_DI_BENI)==0) { %>
+	<% if (Fattura_passivaBulk.FATTURA_DI_BENI.equals(fatturaPassiva.getTi_bene_servizio())) { %>
 	<div class="Group" style="width:100%">
 		<table width="100%">
 			<tr>

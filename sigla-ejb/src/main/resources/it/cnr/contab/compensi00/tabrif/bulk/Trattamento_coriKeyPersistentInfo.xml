@@ -21,7 +21,7 @@
 			columnName="CD_TRATTAMENTO"
 			propertyName="cd_trattamento"
 			sqlTypeName="VARCHAR"
-			columnSize="5"
+			columnSize="10"
 			nullable="false"
 			primary="true" />
 	</defaultColumnMap>

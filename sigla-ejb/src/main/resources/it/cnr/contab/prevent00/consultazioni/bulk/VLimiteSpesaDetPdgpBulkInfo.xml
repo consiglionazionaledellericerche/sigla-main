@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Dettaglio Limiti spesa"
+    longDescription="Dettaglio Limiti spesa">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cds" />
+	<fieldProperty
+		name="tiAppartenenza"
+		property="tiAppartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="appartenenza" />
+	<fieldProperty
+		name="tiGestione"
+		property="tiGestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="gestione" />
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		nullable="false"
+		label="elemento Voce" />
+	<fieldProperty
+		name="dsElementoVoce"
+		property="dsElementoVoce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="desc. elemento Voce" />
+	<fieldProperty
+		name="fonte"
+		property="fonte"
+		keysProperty="fonteKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		nullable="false"
+		label="fonte" />
+	<fieldProperty
+		name="importoLimite"
+		property="importoLimite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="importo Limite" />
+	<fieldProperty
+		name="importoPrevisto"
+		property="importoPrevisto"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="importo Previsto" />
+	
+	<fieldProperty
+		name="cdClassificazione"
+		property="cdClassificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="34"
+		enabledOnEdit="false"
+		label="classificazione" />
+	<fieldProperty
+		name="idClassificazione"
+		property="idClassificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="false"
+		nullable="false"
+		label="id. Classificazione" />
+	<fieldProperty
+		name="cdProgetto"
+		property="cdProgetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="progetto" />
+	<fieldProperty
+		name="dsProgetto"
+		property="dsProgetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		enabledOnEdit="false"
+		label="desc. Progetto" />
+	<fieldProperty
+		name="cdArea"
+		property="cdArea"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="area" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdArea" />	
+	<formFieldProperty
+		name="tiAppartenenza" />
+	<formFieldProperty
+		name="tiGestione" />
+	<formFieldProperty
+		name="cdElementoVoce" />
+	<formFieldProperty
+		name="dsElementoVoce" />
+	<formFieldProperty
+		name="fonte" />
+	<formFieldProperty
+		name="importoPrevisto" />	
+	<formFieldProperty
+		name="cdClassificazione" />
+	<formFieldProperty
+		name="idClassificazione" />
+	<formFieldProperty
+		name="cdProgetto" />
+	<formFieldProperty
+		name="dsProgetto" />
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdArea" />	
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="dsElementoVoce" />
+	<findFieldProperty
+		name="fonte" />
+	<findFieldProperty
+		name="importoPrevisto" />
+	<findFieldProperty
+		name="cdClassificazione" />
+	<findFieldProperty
+		name="cdProgetto" />
+	<findFieldProperty
+		name="dsProgetto" />
+	
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdArea" />	
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="dsElementoVoce" />
+	<columnFieldProperty
+		name="fonte" />
+	<columnFieldProperty
+		name="importoPrevisto" />
+	<columnFieldProperty
+		name="cdClassificazione" />
+	<columnFieldProperty
+		name="cdProgetto" />
+	<columnFieldProperty
+		name="dsProgetto" />
+	
+</bulkInfo>

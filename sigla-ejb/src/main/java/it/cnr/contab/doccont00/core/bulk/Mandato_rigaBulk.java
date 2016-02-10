@@ -431,7 +431,7 @@ public Codici_siopeBulk removeFromCodici_siopeColl(int index)
 }
 public BigDecimal getIm_associato_siope(){
 	BigDecimal totale = Utility.ZERO;
-	for (Iterator i = getMandato_siopeColl().iterator(); i.hasNext();) totale = totale.add(((Mandato_siopeBulk)i.next()).getImporto());
+	for (Iterator i = getMandato_siopeColl().iterator(); i.hasNext();) totale = totale.add(Utility.nvl(((Mandato_siopeBulk)i.next()).getImporto()));
 	return Utility.nvl(totale);
 }
 public BigDecimal getIm_da_associare_siope(){
@@ -514,9 +514,5 @@ public String getTipoAssociazioneCup() {
 	if (getIm_da_associare_cup().compareTo(Utility.ZERO)==0) return SIOPE_TOTALMENTE_ASSOCIATO;
 	if (totCup.compareTo(Utility.ZERO)==0) return SIOPE_NON_ASSOCIATO;
 	return SIOPE_PARZIALMENTE_ASSOCIATO;
-}
-@Override
-public String getDs_mandato_riga() {
-	return super.getDs_mandato_riga();
 }
 }

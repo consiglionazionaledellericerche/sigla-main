@@ -87,6 +87,7 @@ public class FatturaAttiva  implements Serializable{
 	private Date dt_protocollo;
 	private java.lang.Long nr_protocollo_iva;
 	private String ti_bene_servizio;
+	private String fl_pagamento_anticipato;
 	public String getCod_errore() {
 		return cod_errore;
 	}
@@ -336,6 +337,12 @@ public class FatturaAttiva  implements Serializable{
 	}
 	public void setRigheIntra(java.util.ArrayList<FatturaAttivaIntra> righeIntra) {
 		this.righeIntra = righeIntra;
+	}
+	public String getFl_pagamento_anticipato() {
+		return fl_pagamento_anticipato;
+	}
+	public void setFl_pagamento_anticipato(String fl_pagamento_anticipato) {
+		this.fl_pagamento_anticipato = fl_pagamento_anticipato;
 	}
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	
 	<fieldProperty
@@ -112,6 +112,14 @@
 		nullable="false"/>
 	
 	<fieldProperty
+		name="stato_differito"
+		property="stato_differito"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Differito"
+		nullable="false"/>
+		
+	<fieldProperty
 		name="tipo_att_correttiva"
 		property="tipo_att_correttiva"
 		inputType="CHECKBOX"
@@ -172,6 +180,7 @@
 	<formFieldProperty name="stato_sviluppo" /> 
 	<formFieldProperty name="stato_test" />
 	<formFieldProperty name="stato_rilasciato" /> 
+	<formFieldProperty name="stato_differito" /> 
 	
 	
 	<formFieldProperty name="selezionaTipoAttivita" />
@@ -227,32 +236,38 @@
 			paramNameJR="Stato_iniziale"
 			paramTypeJR="java.lang.String"/> 
 		<printFieldProperty 
-        	name="tipo_att_correttiva"
+        	name="stato_differito"
 			parameterPosition="7"
+			parameterType="STRING" 
+			paramNameJR="Stato_differito"
+			paramTypeJR="java.lang.String"/> 
+		<printFieldProperty 
+        	name="tipo_att_correttiva"
+			parameterPosition="8"
 			parameterType="STRING" 
 			paramNameJR="Tipo_att_correttiva"
 			paramTypeJR="java.lang.String"/>  
 		<printFieldProperty 
         	name="tipo_att_evolutiva"
-			parameterPosition="8"
+			parameterPosition="9"
 			parameterType="STRING" 
 			paramNameJR="Tipo_att_evolutiva"
 			paramTypeJR="java.lang.String"/>
 		<printFieldProperty 
         	name="tipo_att_manutentiva"
-			parameterPosition="9"
+			parameterPosition="10"
 			parameterType="STRING"
 			paramNameJR="Tipo_att_manutentiva"
 			paramTypeJR="java.lang.String" />
 		<printFieldProperty 
         	name="tipo_att_estrazione_dati"
-			parameterPosition="10"
+			parameterPosition="11"
 			parameterType="STRING"
 			paramNameJR="Tipo_att_estrazione_dati"
 			paramTypeJR="java.lang.String" />
 		<printFieldProperty 
         	name="tipo_att_supporto_gestione"
-			parameterPosition="11"
+			parameterPosition="12"
 			parameterType="STRING"
 			paramNameJR="Tipo_att_supporto_gestione"
 			paramTypeJR="java.lang.String" />

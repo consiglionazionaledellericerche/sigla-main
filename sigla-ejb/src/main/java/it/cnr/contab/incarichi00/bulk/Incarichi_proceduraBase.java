@@ -51,6 +51,9 @@ public class Incarichi_proceduraBase extends Incarichi_proceduraKey implements K
 //    CD_PROC_AMM VARCHAR(5)
 	private java.lang.String cd_proc_amm;
  
+//    CD_PROC_AMM_BENEF VARCHAR(5)
+	private java.lang.String cd_proc_amm_benef;
+
 //    CD_TIPO_ATTO VARCHAR(5)
 	private java.lang.String cd_tipo_atto;
  
@@ -104,6 +107,24 @@ public class Incarichi_proceduraBase extends Incarichi_proceduraKey implements K
 
 //    DS_MOTIVAZIONE_SBLOCCO VARCHAR(500)
 	private java.lang.String ds_motivazione_sblocco;
+
+//    CD_TIPO_PRESTAZIONE VARCHAR(5) NOT NULL
+	private java.lang.String cd_tipo_prestazione;
+
+//    CD_TIPO_ATTIVITA_FP VARCHAR(5)
+	private java.lang.String cd_tipo_attivita_fp;
+
+//    FL_APPLICAZIONE_NORMA CHAR(1) NOT NULL
+	private String fl_applicazione_norma;
+
+//    CD_TIPO_NORMA_PERLA VARCHAR(3) NOT NULL
+	private java.lang.String cd_tipo_norma_perla;
+
+//    DS_LIBERA_NORMA_PERLA VARCHAR(3) NOT NULL
+	private java.lang.String ds_libera_norma_perla;
+
+//    FL_MIGRATA_TO_CMIS CHAR(1) NOT NULL
+	private java.lang.Boolean fl_migrata_to_cmis;
 
 	public Incarichi_proceduraBase() {
 		super();
@@ -176,6 +197,12 @@ public class Incarichi_proceduraBase extends Incarichi_proceduraKey implements K
 	}
 	public void setCd_proc_amm(java.lang.String cd_proc_amm)  {
 		this.cd_proc_amm=cd_proc_amm;
+	}
+	public java.lang.String getCd_proc_amm_benef() {
+		return cd_proc_amm_benef;
+	}
+	public void setCd_proc_amm_benef(java.lang.String cd_proc_amm_benef) {
+		this.cd_proc_amm_benef = cd_proc_amm_benef;
 	}
 	public java.lang.String getCd_tipo_atto() {
 		return cd_tipo_atto;
@@ -309,5 +336,41 @@ public class Incarichi_proceduraBase extends Incarichi_proceduraKey implements K
 	}
 	public void setDs_motivazione_sblocco(java.lang.String ds_motivazione_sblocco) {
 		this.ds_motivazione_sblocco = ds_motivazione_sblocco;
+	}
+	public java.lang.String getCd_tipo_prestazione() {
+		return cd_tipo_prestazione;
+	}
+	public void setCd_tipo_prestazione(java.lang.String cd_tipo_prestazione) {
+		this.cd_tipo_prestazione = cd_tipo_prestazione;
+	}
+	public java.lang.String getCd_tipo_attivita_fp() {
+		return cd_tipo_attivita_fp;
+	}
+	public void setCd_tipo_attivita_fp(java.lang.String cd_tipo_attivita_fp) {
+		this.cd_tipo_attivita_fp = cd_tipo_attivita_fp;
+	}
+	public String getFl_applicazione_norma() {
+		return fl_applicazione_norma;
+	}
+	public void setFl_applicazione_norma(String fl_applicazione_norma) {
+		this.fl_applicazione_norma = fl_applicazione_norma;
+	}
+	public java.lang.String getCd_tipo_norma_perla() {
+		return cd_tipo_norma_perla;
+	}
+	public void setCd_tipo_norma_perla(java.lang.String cd_tipo_norma_perla) {
+		this.cd_tipo_norma_perla = cd_tipo_norma_perla;
+	}
+	public java.lang.String getDs_libera_norma_perla() {
+		return ds_libera_norma_perla;
+	}
+	public void setDs_libera_norma_perla(java.lang.String ds_libera_norma_perla) {
+		this.ds_libera_norma_perla = ds_libera_norma_perla;
+	}
+	public java.lang.Boolean getFl_migrata_to_cmis() {
+		return fl_migrata_to_cmis;
+	}
+	public void setFl_migrata_to_cmis(java.lang.Boolean fl_migrata_to_cmis) {
+		this.fl_migrata_to_cmis = fl_migrata_to_cmis;
 	}
 }

@@ -13,6 +13,9 @@ public class Tipo_contrattoBase extends Tipo_contrattoKey implements Keyed {
  
 //    FL_CANCELLATO CHAR(1) NOT NULL
 	private java.lang.Boolean fl_cancellato;
+
+	//  FL_CIG CHAR(1) NOT NULL
+	private java.lang.Boolean fl_cig;
  
 	public Tipo_contrattoBase() {
 		super();
@@ -32,18 +35,24 @@ public class Tipo_contrattoBase extends Tipo_contrattoKey implements Keyed {
 	public void setFl_cancellato(java.lang.Boolean fl_cancellato)  {
 		this.fl_cancellato=fl_cancellato;
 	}
-/**
- * @return
- */
-public java.lang.String getNatura_contabile() {
-	return natura_contabile;
-}
-
-/**
- * @param string
- */
-public void setNatura_contabile(java.lang.String string) {
-	natura_contabile = string;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getNatura_contabile() {
+		return natura_contabile;
+	}
+	
+	/**
+	 * @param string
+	 */
+	public void setNatura_contabile(java.lang.String string) {
+		natura_contabile = string;
+	}
+	public java.lang.Boolean getFl_cig() {
+		return fl_cig;
+	}
+	public void setFl_cig(java.lang.Boolean fl_cig) {
+		this.fl_cig = fl_cig;
+	}
 
 }

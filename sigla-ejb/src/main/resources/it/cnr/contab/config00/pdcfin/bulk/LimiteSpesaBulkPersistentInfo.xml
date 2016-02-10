@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaHome">
+	<defaultColumnMap
+		tableName="LIMITE_SPESA">
+		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="elementoVoce.esercizio" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elementoVoce.ti_appartenenza" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elementoVoce.ti_gestione" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elementoVoce.cd_elemento_voce" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="elementoVoce"
+		partOfOid="true" />
+</SQLPersistentInfo>

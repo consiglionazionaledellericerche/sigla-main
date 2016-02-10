@@ -229,7 +229,7 @@ public void setTotale_prc_la_a3(java.math.BigDecimal totale_prc_la_a3) {
 public void calcolaGiorni_lavorativi(int i,java.math.BigDecimal prc) {
 	setGiorni_lavorativi(i,
 		getGiorni_lavorativi(i).multiply(prc).divide(
-		java.math.BigDecimal.valueOf(100),2,java.math.BigDecimal.ROUND_HALF_EVEN));
+		java.math.BigDecimal.valueOf(100),2,java.math.BigDecimal.ROUND_HALF_UP));
 }
 public java.math.BigDecimal getTotale_prc_ripartito_a1() {
 	BigDecimal totale_prc = BigDecimal.ZERO;

@@ -40,7 +40,7 @@ function escludi(index){
 			</tr>
 			<tr>
 				<td><% bp.getController().writeFormLabel( out, "ds_categoria_gruppo"); %></td>
-				<td><% bp.getController().writeFormInput( out, "ds_categoria_gruppo"); %></td>
+					<td colspan="3"> <% bp.getController().writeFormInput( out, "ds_categoria_gruppo"); %></td>
 			</tr>
 	       <tr>
 				<td><% bp.getController().writeFormInput( out, null,"fl_gestione_inventario",false,null,"onclick=\"escludi(1);submitForm('doDefault')\"");%>
@@ -51,34 +51,42 @@ function escludi(index){
 			<tr>
 				<%if (cgi.getFl_gestione_inventario()!=null && cgi.getFl_gestione_inventario().booleanValue()){%>
 					<td><% bp.getController().writeFormInput( out, null,"fl_ammortamento",false,null,"");%>
-						<% bp.getController().writeFormLabel( out, "fl_ammortamento"); %></td>	   
+						<% bp.getController().writeFormLabel( out, "fl_ammortamento"); %></td>	    
 					<td><% bp.getController().writeFormInput( out, null,"fl_gestione_targa",false,null,"");%>
-						<% bp.getController().writeFormLabel( out, "fl_gestione_targa"); %></td>	   
+						<% bp.getController().writeFormLabel( out, "fl_gestione_targa"); %></td> 
+					<td><% bp.getController().writeFormInput( out, null,"fl_gestione_seriale",false,null,"");%>
+						<% bp.getController().writeFormLabel( out, "fl_gestione_seriale"); %></td>	   
+							   
 				<%}%>
-			</tr>
-			<tr>
-				<td>
-					<% bp.getController().writeFormLabel(out,"cd_voce");%>
-				</td>
-				<td>
-					<% bp.getController().writeFormInput(out,"cd_voce");%>
-					<% bp.getController().writeFormInput(out,"ds_voce");%>
-					<% bp.getController().writeFormInput(out,"voce_f");%>
-				</td>
 			</tr>
 			<tr>
 				<td>
 					<% bp.getController().writeFormLabel(out,"cd_nodo_padre");%>
 				</td>
-				<td>
+				<td colspan="5"> 
 					<% bp.getController().writeFormInput(out,"cd_nodo_padre");%>
 					<% bp.getController().writeFormInput(out,"ds_nodo_padre");%>
 					<% bp.getController().writeFormInput(out,"find_nodo_padre");%>
 				</td>
 			</tr>
-		</table>
-	</div>
-	<%	bp.closeFormWindow(pageContext); %>
+    			<tr>
+						<td colspan="5"> 
+							<% bp.getCrudAssociazioneVoci().writeHTMLTable(pageContext,"associazioneVoci",true,false,true,"100%","100px",true);%>
+						</td>
+					</tr> 
+				<tr>				
+				<td>
+					<% bp.getCrudAssociazioneVoci().writeFormLabel(out,"elemento_voce");%>
+				</td> 
+				<td colspan="3"> 
+					<% bp.getCrudAssociazioneVoci().writeFormInput(out,"cd_elemento_voce");%>
+					<% bp.getCrudAssociazioneVoci().writeFormInput(out,"ds_elemento_voce");%>
+					<% bp.getCrudAssociazioneVoci().writeFormInput(out,"elemento_voce");%> 
+				</td>
+          </tr>
 	
+	    	</table>
+	    	<%	bp.closeFormWindow(pageContext); %>
+	</div>
 </body>
 </html>

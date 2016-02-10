@@ -21,15 +21,19 @@ public class Missione_tipo_pastoKey extends OggettoBulk implements KeyedPersiste
 	// DT_INIZIO_VALIDITA TIMESTAMP NOT NULL (PK)
 	private java.sql.Timestamp dt_inizio_validita;
 
+	// CD_AREA_ESTERA VARCHAR(20) NOT NULL (PK)
+	private java.lang.String cd_area_estera;
+
 public Missione_tipo_pastoKey() {
 	super();
 }
-public Missione_tipo_pastoKey(java.lang.String cd_ti_pasto,java.sql.Timestamp dt_inizio_validita,java.lang.Long pg_nazione,java.lang.Long pg_rif_inquadramento,java.lang.String ti_area_geografica) {
+public Missione_tipo_pastoKey(java.lang.String cd_ti_pasto,java.sql.Timestamp dt_inizio_validita,java.lang.Long pg_nazione,java.lang.Long pg_rif_inquadramento,java.lang.String ti_area_geografica,java.lang.String cd_area_estera) {
 	this.cd_ti_pasto = cd_ti_pasto;
 	this.dt_inizio_validita = dt_inizio_validita;
 	this.pg_nazione = pg_nazione;
 	this.pg_rif_inquadramento = pg_rif_inquadramento;
 	this.ti_area_geografica = ti_area_geografica;
+	this.cd_area_estera = cd_area_estera;
 }
 public boolean equalsByPrimaryKey(Object o) {
 	if (this == o) return true;
@@ -40,6 +44,7 @@ public boolean equalsByPrimaryKey(Object o) {
 	if(!compareKey(getPg_nazione(),k.getPg_nazione())) return false;
 	if(!compareKey(getPg_rif_inquadramento(),k.getPg_rif_inquadramento())) return false;
 	if(!compareKey(getTi_area_geografica(),k.getTi_area_geografica())) return false;
+	if(!compareKey(getCd_area_estera(),k.getCd_area_estera())) return false;
 	return true;
 }
 /* 
@@ -47,6 +52,12 @@ public boolean equalsByPrimaryKey(Object o) {
  */
 public java.lang.String getCd_ti_pasto() {
 	return cd_ti_pasto;
+}
+/* 
+ * Getter dell'attributo cd_area_estera
+ */
+public java.lang.String getCd_area_estera() {
+	return cd_area_estera;
 }
 /* 
  * Getter dell'attributo dt_inizio_validita
@@ -78,13 +89,20 @@ public int primaryKeyHashCode() {
 		calculateKeyHashCode(getDt_inizio_validita())+
 		calculateKeyHashCode(getPg_nazione())+
 		calculateKeyHashCode(getPg_rif_inquadramento())+
-		calculateKeyHashCode(getTi_area_geografica());
+		calculateKeyHashCode(getTi_area_geografica())+
+		calculateKeyHashCode(getCd_area_estera());
 }
 /* 
  * Setter dell'attributo cd_ti_pasto
  */
 public void setCd_ti_pasto(java.lang.String cd_ti_pasto) {
 	this.cd_ti_pasto = cd_ti_pasto;
+}
+/* 
+ * Setter dell'attributo cd_area_estera
+ */
+public void setCd_area_estera(java.lang.String cd_area_estera) {
+	this.cd_area_estera = cd_area_estera;
 }
 /* 
  * Setter dell'attributo dt_inizio_validita

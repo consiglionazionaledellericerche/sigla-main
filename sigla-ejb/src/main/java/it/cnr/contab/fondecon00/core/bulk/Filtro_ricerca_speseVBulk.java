@@ -122,7 +122,7 @@ public Filtro_ricerca_speseVBulk initializeForSearch(
 									it.cnr.jada.action.ActionContext context) {
 
 //	setDt_spesa(getCurrentDate());
-//	setIm_ammontare_spesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+//	setIm_ammontare_spesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	setFl_documentata(Boolean.FALSE);
 	setFl_reintegrata(Boolean.FALSE);
 	

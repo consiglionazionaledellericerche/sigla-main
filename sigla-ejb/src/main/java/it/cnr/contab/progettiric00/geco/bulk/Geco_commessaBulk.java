@@ -52,4 +52,7 @@ public class Geco_commessaBulk extends Geco_commessaBase implements Geco_commess
 			}
 		}
 	}
+	public Long getId_prog_padre() {
+		return getId_prog();
+	}
 }

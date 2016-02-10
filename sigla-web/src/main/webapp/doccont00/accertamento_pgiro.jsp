@@ -99,15 +99,18 @@
 	</tr>
 	
 	<tr>
+	
 	<td>	<% bp.getController().writeFormLabel( out, "cd_voce"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "cd_voce"); %>
-			<% bp.getController().writeFormInput( out, "ds_voce"); %>
-			<% bp.getController().writeFormInput( out, "find_capitolo"); %></td>				 
+	<td>
+		    <% bp.getController().writeFormInput(out,"default","cd_voce",acc.isFl_isTronco()&&bp.isEditing(),"FormInput",null); %>
+		    <% bp.getController().writeFormInput(out,"default","ds_voce", acc.isFl_isTronco()&&bp.isEditing(),"FormInput",null); %>
+		    <% bp.getController().writeFormInput(out,"default","find_capitolo",acc.isFl_isTronco()&&bp.isEditing(),"FormInput",null); %>
+	</td>
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "dt_scadenza"); %></td>
 	<td colspan=2>
-		<% bp.getController().writeFormInput( out, "dt_scadenza"); %></td>
+		<% bp.getController().writeFormInput( out, "dt_scadenza"); %></td> 
 	</tr>
 <!--
 	<tr>

@@ -537,9 +537,13 @@ private Var_bilancioBulk reloadVarBilancio(UserContext userContext, Var_bilancio
 **/
 public Var_bilancioBulk salvaDefinitivo(UserContext userContext, Var_bilancioBulk varBilancio) throws ComponentException{
     try {
+    	 if (varBilancio.getTi_variazione()!=null && (varBilancio.getTi_variazione().compareTo(varBilancio.VAR_QUADRATURA)==0)||(varBilancio.getTi_variazione().compareTo(varBilancio.STORNO_E)==0)||(varBilancio.getTi_variazione().compareTo(varBilancio.STORNO_S)==0))
+  			if (!verificaQuadratura(varBilancio))
+  				throw new it.cnr.jada.comp.ApplicationException("Attenzione, la variazione non è in quadratura, impossibile procedere al salvataggio definitivo.");
 	    lockBulk(userContext, varBilancio);
 	    validaModificaConBulk(userContext, varBilancio);
 	    varBilancio.setToBeUpdated();
+//	    varBilancio = (Var_bilancioBulk) eseguiModificaConBulk(userContext, varBilancio);
 		eseguiModificaConBulk(userContext, varBilancio);
 		
 		// solo nel salvataggio definitivo (almeno per ora, in caso contrario inserire
@@ -549,7 +553,9 @@ public Var_bilancioBulk salvaDefinitivo(UserContext userContext, Var_bilancioBul
 		Iterator it = varBilancio.getDettagli().iterator();
 		while(it.hasNext()) {
 			Var_bilancio_detBulk varBilDett = (Var_bilancio_detBulk)it.next();
-			if (varBilDett.getVoceFSaldi().getCrudStatus()!=OggettoBulk.NORMAL)
+//			aggiunta la condizione sul getCrudStatus()!=OggettoBulk.UNDEFINED
+//			perchè la riga in tabella viene aggiunta nel package CNRCTB055 e deve poter continuare
+			if (varBilDett.getVoceFSaldi().getCrudStatus()!=OggettoBulk.NORMAL && varBilDett.getVoceFSaldi().getCrudStatus()!=OggettoBulk.UNDEFINED)
 				throw new it.cnr.jada.comp.ApplicationException("La voce "+varBilDett.getCd_voce()+" non è corretta. Modificare o eliminare il dettaglio relativo.");
 		}
 
@@ -836,7 +842,7 @@ private boolean verificaQuadratura(Var_bilancioBulk varBilancio) {
   *
 **/
 private void verificaVariazione(Var_bilancioBulk varBilancio) throws ComponentException{
-	if (varBilancio.getDettagli().isEmpty())
+ 	if (varBilancio.getDettagli().isEmpty()) 
 		throw new it.cnr.jada.comp.ApplicationException("Inserire almeno un dettaglio.");
 }
 public List findEsercizi_res(CNRUserContext userContext,Var_bilancioResiduiBulk var_bilancio) throws it.cnr.jada.comp.ComponentException {
@@ -860,6 +866,11 @@ public List findEsercizi_res(CNRUserContext userContext,Var_bilancioBulk var_bil
 			Esercizio_baseHome home = (Esercizio_baseHome)getHome(userContext,Esercizio_baseBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 		    sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.LESS_EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+		    if( var_bilancio.getVar_stanz_res()!=null && var_bilancio.getEsercizio_var_stanz_res()!=null)
+		    	sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.NOT_EQUALS,var_bilancio.getEsercizio());
+		    else if(var_bilancio.getPdg_variazione()!=null && var_bilancio.getPg_variazione_pdg()!=null)
+		    	sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,var_bilancio.getEsercizio());
+		    
 		    sql.addOrderBy("ESERCIZIO DESC");
 			Broker broker = home.createBroker(sql);
 			lista = home.fetchAll(broker);
@@ -985,6 +996,7 @@ public Var_bilancioBulk creaVariazioneBilancioDiRegolarizzazione(UserContext use
 		}
 
 		varBilancio = (Var_bilancioBulk) creaConBulk( userContext, varBilancio);
+		salvaDefinitivo(userContext, varBilancio);
 		return varBilancio;
 	}
 	catch ( Exception e )

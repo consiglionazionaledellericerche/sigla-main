@@ -1,26 +1,40 @@
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.config00.esercizio.bulk.*;
-import it.cnr.contab.doccont00.ejb.*;
-
-import java.rmi.RemoteException;
-import java.sql.*;
-import it.cnr.contab.doccont00.comp.*;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
+import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
+import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
+import it.cnr.contab.util00.bp.AllegatiCRUDBP;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcess;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.jsp.*;
+import it.cnr.jada.util.jsp.Button;
+
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
 public abstract class CRUDVirtualAccertamentoBP 
-	extends it.cnr.jada.util.action.SimpleCRUDBP 
+	extends AllegatiCRUDBP<AllegatoGenericoBulk, AccertamentoBulk>
 	implements IDocumentoContabileBP {
 		
 	private boolean deleting = false;
@@ -28,6 +42,7 @@ public abstract class CRUDVirtualAccertamentoBP
 	protected boolean riportaAvantiIndietro;	
 	private boolean attivoRegolamento_2006 = false;
 	private boolean ribaltato;
+	protected SiglaCMISService cmisService;
 	
 public CRUDVirtualAccertamentoBP() {
 
@@ -302,6 +317,7 @@ public void riportaAvanti(it.cnr.jada.action.ActionContext context) throws it.cn
 	try 
 	{
 		((DocumentoContabileComponentSession)createComponentSession()).callRiportaAvanti( context.getUserContext(), (IDocumentoContabileBulk) getModel());
+		this.setDirty(true);
 		edit( context, getModel(), true );
 		
 	} catch(Exception e) {
@@ -313,6 +329,7 @@ public void riportaIndietro(it.cnr.jada.action.ActionContext context) throws it.
 	try 
 	{
 		((DocumentoContabileComponentSession)createComponentSession()).callRiportaIndietro( context.getUserContext(), (IDocumentoContabileBulk) getModel());
+		this.setDirty(true);
 		edit( context, getModel(), true );
 		
 	} catch(Exception e) {
@@ -442,5 +459,44 @@ public static AccertamentoAbstractComponentSession setSafePoint (
 	}
 	public void setRibaltato(boolean b) {
 		ribaltato = b;
+	}
+	@Override
+	protected CMISPath getCMISPath(AccertamentoBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
+		try {
+			CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR", CMISPath.class);
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getUnita_organizzativa().getCd_unita_organizzativa(), 
+					allegatoParentBulk.getUnita_organizzativa().getDs_unita_organizzativa(), 
+					allegatoParentBulk.getUnita_organizzativa().getDs_unita_organizzativa());
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Accertamenti","Accertamenti","Accertamenti");
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, String.valueOf(allegatoParentBulk.getEsercizio()),
+					String.valueOf(allegatoParentBulk.getEsercizio()),String.valueOf(allegatoParentBulk.getEsercizio()));
+			String folderName = String.valueOf(allegatoParentBulk.getPg_accertamento());
+			if (create) {
+				cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
+						allegatoParentBulk.getDs_accertamento(), allegatoParentBulk.getDs_accertamento());			
+			} else {
+				try {
+					cmisPath = cmisPath.appendToPath(folderName);
+					cmisService.getNodeByPath(cmisPath);
+				} catch (CmisObjectNotFoundException _ex) {
+					return null;
+				}
+			}			
+			return cmisPath;
+		} catch (ApplicationException e) {
+			throw new BusinessProcessException(e);
+		}
+	}
+	@Override
+	protected Class<AllegatoGenericoBulk> getAllegatoClass() {
+		return AllegatoGenericoBulk.class;
+	}
+	
+	public String [][] getTabs() {
+		return new String[][] {
+				{ "tabAccertamento","Accertamento","/doccont00/tab_accertamento.jsp" } ,
+				{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_accertamento.jsp" },
+				{ "tabScadenziario","Scadenziario","/doccont00/tab_scadenziario_accertamento.jsp" }
+		};
 	}
 }

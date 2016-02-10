@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="dt_inizio_tappa"
@@ -67,7 +67,7 @@
 		inputType="TEXT"
 		maxLength="16"
 		inputSize="16"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"		
+		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"		
 		label="Cambio tappa"
 		nullable="false"		
 		/>
@@ -167,6 +167,20 @@
 		label="Alloggio gratuito" />		
 /*****/
 
+	<fieldProperty
+		name="tipoRimborsoRadioGroup"
+		property="flag_tipo_rimborso"
+		keysProperty="flag_tipo_rimborsoKeys"
+		inputType="RADIOGROUP"
+		layout = "VERTICAL"	
+		label=""			
+		/>
+	<fieldProperty
+		name="fl_rimborso"
+		property="fl_rimborso"
+		inputType="CHECKBOX"
+		label="Trattamento alternativo" />	
+
 	<formFieldProperty name="dt_inizio_tappa" />
 	<formFieldProperty name="dt_fine_tappa" />	
 	<formFieldProperty name="find_nazione" />
@@ -180,6 +194,7 @@
 	<formFieldProperty name="cambio_tappa" />	
 	<formFieldProperty name="dt_ingresso_estero" />
 	<formFieldProperty name="dt_uscita_estero" />
+	<formFieldProperty name="tipoRimborsoRadioGroup" />
 		
 	<columnFieldProperty 
 		name="dt_inizio_tappa"
@@ -200,6 +215,7 @@
 	<columnFieldProperty name="fl_alloggio_gratuito" />	
 	<columnFieldProperty name="fl_vitto_alloggio_gratuito" />
 	<columnFieldProperty name="fl_no_diaria" />
+	<columnFieldProperty name="fl_rimborso" />
 	<columnFieldProperty name="dt_ingresso_estero" />	
 	<columnFieldProperty name="dt_uscita_estero" />
 
@@ -222,5 +238,5 @@
 	<findFieldProperty name="dt_uscita_estero" />
 	<findFieldProperty name="dt_fine_tappa" />
 	<findFieldProperty name="fl_alloggio_gratuito" />
-
+	<findFieldProperty name="fl_rimborso" />
 </bulkInfo>

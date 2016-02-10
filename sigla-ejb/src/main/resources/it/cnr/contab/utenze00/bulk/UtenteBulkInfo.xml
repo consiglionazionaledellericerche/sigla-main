@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_cdr"
 		property="cd_cdr"
@@ -104,7 +104,7 @@
 		name="password"
 		property="password"
 		inputType="TEXT"
-		inputSize="15"
+		inputSize="10" 
 		maxLength="20"
 		label="password" />
 	<fieldProperty
@@ -193,6 +193,15 @@
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		label="Utente gestito da procedure esterne" />
+	<fieldProperty
+		name="fl_attiva_blocco"
+		property="fl_attiva_blocco"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Utente soggetto a blocco delle funzioni" />
 
 	<formFieldProperty
 		name="cd_cdr" />
@@ -233,6 +242,8 @@
 		name="ruolo_supervisore" />
 	<formFieldProperty
 		name="fl_altra_proc" />
+	<formFieldProperty
+		name="fl_attiva_blocco" />
 
 	<columnFieldProperty
 		name="cd_utente" />
@@ -240,4 +251,38 @@
 		name="cd_utente_uid" />
 	<columnFieldProperty
 		name="ds_utente" />
+		
+	<form
+		name="searchtool_utente_gest" >
+		<formFieldProperty
+			name="cd_utente"
+		    inputSize="10" />
+		<formFieldProperty
+			name="cd_utente_uid" 
+			inputType="TEXT"
+		    inputSize="20" />
+	</form>
+		
+	<freeSearchSet name="utente_gest">
+		<findFieldProperty
+		    name="cd_utente"
+		    enabledOnSearch="true"/>
+		<findFieldProperty
+			name="cd_utente_uid" />
+	</freeSearchSet>
+	
+	<columnSet
+		name="utente_gest">
+		<columnFieldProperty
+			name="cd_utente" />
+		<columnFieldProperty
+			name="cd_utente_uid" />
+	</columnSet>
+	
+	<findFieldProperty
+		name="cd_utente" />
+	<findFieldProperty
+		name="cd_utente_uid"
+		label="Codice Utente Ufficiale CNR (nome.cognome)" />
+	
 </bulkInfo>

@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
 
+
 /**
  * Insert the type's description here.
  * Creation date: (21/02/2003 9.57.40)
@@ -15,6 +16,9 @@ public class Stampa_vpg_mandatoBulk extends MandatoBulk {
 	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzoForPrint;
 	private java.sql.Timestamp dataInizio;
 	private java.sql.Timestamp dataFine;
+	
+	private boolean isUOForPrintEnabled;
+
 /**
  * Stampa_vpg_mandatoBulk constructor comment.
  */
@@ -39,6 +43,7 @@ public String getCdTerzoCRParameter() {
 
 	return getTerzoForPrint().getCd_terzo().toString();
 }
+
 /**
  * Insert the method's description here.
  * Creation date: (21/02/2003 16.10.07)
@@ -130,5 +135,65 @@ public void setTerzoForPrint(TerzoBulk newTerzo) {
  * controllo sintattico o contestuale.
  */
 public void validate() throws it.cnr.jada.bulk.ValidationException {
+}
+
+/**
+ * Insert the method's description here.
+ * Creation date: (20/01/2003 16.50.12)
+ * @return java.sql.Timestamp
+ */
+public it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk getUoEmittenteForPrint() {
+	return super.getUnita_organizzativa();
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (20/12/2002 10.47.40)
+ * @param newCdUOEmittente java.lang.String
+ */
+public boolean isROCdUOEmittenteForPrint() {
+	return getUoEmittenteForPrint()==null || getUoEmittenteForPrint().getCrudStatus()==NORMAL;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (08/04/2003 15.30.39)
+ * @return boolean
+ */
+public boolean isUOForPrintEnabled() {
+	return isUOForPrintEnabled;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (08/04/2003 15.30.39)
+ * @param newIsUOForPrintEnabled boolean
+ */
+public void setIsUOForPrintEnabled(boolean newIsUOForPrintEnabled) {
+	isUOForPrintEnabled = newIsUOForPrintEnabled;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (20/01/2003 16.50.12)
+ * @return java.sql.Timestamp
+ */
+public void setUoEmittenteForPrint(it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk newUO) {
+	super.setUnita_organizzativa(newUO);
+}
+public String getCdUOCRForPrint() {
+
+    if (super.getUnita_organizzativa() == null)
+        return "%";
+    if (super.getUnita_organizzativa().getCd_unita_organizzativa() == null)
+        return "%";
+
+    return super.getUnita_organizzativa().getCd_unita_organizzativa().toString();
+
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (20/01/2003 16.50.12)
+ * @return java.sql.Timestamp
+ */
+public String getCdUOEmittenteForPrint() {
+	
+	return super.getCd_unita_organizzativa();
 }
 }

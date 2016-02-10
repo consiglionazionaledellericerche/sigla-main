@@ -1,17 +1,13 @@
 package it.cnr.contab.docamm00.actions;
 
-import it.cnr.contab.docamm00.bp.ListaDocumentiAmministrativiBP;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.comp.IDocumentoAmministrativoMgr;
-import it.cnr.contab.docamm00.bp.IGenericSearchDocAmmBP;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_amm_protocollabileVBulk;
 import it.cnr.contab.docamm00.bp.DocumentiAmministrativiProtocollabiliBP;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoGenericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.IGenericSearchDocAmmBP;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_amm_protocollabileVBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -19,12 +15,10 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
 /**
@@ -67,6 +61,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		clauses.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, unita_organizzativa.getCd_unita_organizzativa());
 		clauses.addClause("AND", "protocollo_iva", SQLBuilder.ISNULL, null);
 		clauses.addClause("AND", "protocollo_iva_generale", SQLBuilder.ISNULL, null);
+		clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNULL, null);
 		clauses.addClause("AND", "dt_emissione", SQLBuilder.ISNULL, null);
 		clauses.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk.STATO_ANNULLATO);
 

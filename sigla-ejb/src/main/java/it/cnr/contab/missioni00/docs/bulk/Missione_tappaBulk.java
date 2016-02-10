@@ -51,6 +51,19 @@ public class Missione_tappaBulk extends Missione_tappaBase
 	}
 	/***************************************************************/
 
+	/**** Gestione scelta tipo di trattamento di missione ***/
+	public final static String DOCUMENTATO = "D";	
+	public final static String ALTERNATIVO = "A";
+	public final static Dictionary flag_tipo_rimborsoKeys;
+	private String flag_tipo_rimborso;	
+	static
+	{
+		flag_tipo_rimborsoKeys = new OrderedHashtable();
+		flag_tipo_rimborsoKeys.put(DOCUMENTATO, "Trattamento con rimborso documentato");		
+		flag_tipo_rimborsoKeys.put(ALTERNATIVO, "Trattamento alternativo");
+	}
+	/***************************************************************/
+
 	/**** Gestione edita, conferma, annulla tappa ***/	
 	public static final int STATUS_NOT_CONFIRMED = 0;
 	public static final int STATUS_CONFIRMED = 1;
@@ -253,6 +266,39 @@ public void setFlag_spese(java.lang.String newFlag_spese)
         setFl_vitto_alloggio_gratuito(new Boolean(true));
     }
 }
+//
+//La PROPERTY "flag_tipo_rimborso" viene usata per gestire il RADIO GROUP 
+//del tipo di trattamento di rimborso prescelto
+//
+
+public java.lang.String getFlag_tipo_rimborso() 
+{
+	if(getFl_rimborso()== null)
+		return DOCUMENTATO;
+	
+	if(getFl_rimborso().booleanValue())
+		return ALTERNATIVO;
+
+	if(!getFl_rimborso().booleanValue())
+		return DOCUMENTATO;
+		
+	return null;		
+}
+public final static java.util.Dictionary getFlag_tipo_rimborsoKeys() {
+	return flag_tipo_rimborsoKeys;
+}
+public void setFlag_tipo_rimborso(java.lang.String newFlag_tipo_rimborso) 
+{
+    if (newFlag_tipo_rimborso.equals(ALTERNATIVO)) 
+    {
+        setFl_rimborso (new Boolean(true));
+    }
+    if (newFlag_tipo_rimborso.equals(DOCUMENTATO)) 
+    {
+        setFl_rimborso (new Boolean(false));
+    }
+}
+
 /**
  * Insert the method's description here.
  * Creation date: (05/03/2002 16.00.59)
@@ -327,6 +373,9 @@ public void validaTappa() throws ValidationException
 		// 1 esistera' sicuramente perche' e' quella che sto inserendo
 		if(i > 1)		
 			throw new ValidationException( "La tappa del giorno selezionato e' gia' stata configurata !" );
-	}			
+	}
+	// Se ho settato "Allogio gratuito" o "Vitto e alloggio gratuito" non posso scegliere il trattamento alternativo
+	if((getFl_alloggio_gratuito().booleanValue()||getFl_vitto_alloggio_gratuito().booleanValue())&& getFl_rimborso().booleanValue())
+		throw new ValidationException( "Non è possibile scegliere il Trattamento alternativo quando l'Alloggio è gratuito !" );
 }
 }

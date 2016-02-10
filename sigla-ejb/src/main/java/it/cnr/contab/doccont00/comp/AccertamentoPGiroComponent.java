@@ -605,13 +605,21 @@ public AccertamentoPGiroBulk creaAccertamento(UserContext uc,ImpegnoPGiroBulk im
 
 		Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
 		Ass_partita_giroBulk ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(imp_pgiro);
-		Voce_fBulk voce_f = this.findVoce_f(uc, imp_pgiro, ass_pgiro);
-		if ( voce_f == null )
-			throw new ApplicationException("Impossibile recuperare la voce per il capitolo: " + ( (Ass_partita_giroBulk)result.get(0) ).getCd_voce());			
+
 		accert_pgiro.setTi_appartenenza( ass_pgiro.getTi_appartenenza() );
 		accert_pgiro.setTi_gestione( ass_pgiro.getTi_gestione() );
 		accert_pgiro.setCd_elemento_voce( ass_pgiro.getCd_voce() );
-		accert_pgiro.setCd_voce( voce_f.getCd_voce() );
+
+		Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(uc,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(imp_pgiro.getEsercizio()));
+		if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg()) {
+			Voce_fBulk voce_f = this.findVoce_f(uc, imp_pgiro, ass_pgiro);
+			if ( voce_f == null )
+				throw new ApplicationException("Impossibile recuperare la voce per il capitolo: " + ( (Ass_partita_giroBulk)result.get(0) ).getCd_voce());			
+			accert_pgiro.setCd_voce( voce_f.getCd_voce() );
+		} else {
+			accert_pgiro.setCd_voce( ass_pgiro.getCd_voce() );
+			accert_pgiro.getCapitolo().setCd_elemento_voce( ass_pgiro.getCd_voce() );
+		}
 		
 		Accertamento_scadenzarioBulk accert_scad = creaAccertamento_scadenzario( uc, accert_pgiro );
 		// creaAccertamento_scad_voce( uc, accert_scad, (Obbligazione_scad_voceBulk)(((Obbligazione_scadenzarioBulk)imp_pgiro.getObbligazione_scadenzarioColl().get(0)).getObbligazione_scad_voceColl().get(0)));
@@ -769,7 +777,14 @@ public AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA( UserContext userConte
 		if ( config == null  || config.getVal01() == null )
 			throw new ApplicationException("Configurazione CNR: manca la definizione del CAPITOLO FINANZIARIO per l'annotazione di entrata su partita di giro");
 
-		V_voce_f_partita_giroBulk voce_f = new V_voce_f_partita_giroBulk( config.getVal01(), reversale.getEsercizio(), Elemento_voceHome.APPARTENENZA_CDS, Elemento_voceHome.GESTIONE_ENTRATE );
+		String tiVoce = null;
+		Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(reversale.getEsercizio()));
+        if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
+        	tiVoce = Elemento_voceHome.APPARTENENZA_CDS;
+       	else
+        	tiVoce = Elemento_voceHome.APPARTENENZA_CNR;
+
+        V_voce_f_partita_giroBulk voce_f = new V_voce_f_partita_giroBulk( config.getVal01(), reversale.getEsercizio(), tiVoce, Elemento_voceHome.GESTIONE_ENTRATE );
 		voce_f = (V_voce_f_partita_giroBulk) getHome( userContext, V_voce_f_partita_giroBulk.class ).findByPrimaryKey( voce_f );
 		if ( voce_f == null )
 			throw new ApplicationException("Impossibile recuperare CAPITOLO FINANZIARIO per l'annotazione di entrata su partita di giro");
@@ -1512,13 +1527,16 @@ public AccertamentoPGiroBulk modificaAccertamento(UserContext uc,ImpegnoPGiroBul
 		Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
 		Ass_partita_giroBulk ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(imp_pgiro);
 		
-		Voce_fBulk voce_f = this.findVoce_f(uc, imp_pgiro, ass_pgiro);
-			
 		accert_pgiro.setTi_appartenenza( ass_pgiro.getTi_appartenenza() );
 		accert_pgiro.setTi_gestione( ass_pgiro.getTi_gestione() );
 		accert_pgiro.setCd_elemento_voce( ass_pgiro.getCd_voce() );
-		accert_pgiro.setCd_voce( voce_f.getCd_voce() );
 
+        Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(uc,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(imp_pgiro.getEsercizio()));
+        if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg()) {
+        	Voce_fBulk voce_f = this.findVoce_f(uc, imp_pgiro, ass_pgiro);
+        	accert_pgiro.setCd_voce( voce_f.getCd_voce() );
+        } else 
+        	accert_pgiro.setCd_voce( ass_pgiro.getCd_voce() );
 		
 		accert_pgiro.setUser( uc.getUser() );	
 		updateBulk( uc, accert_pgiro );

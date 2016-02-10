@@ -183,6 +183,9 @@ public Forward doBringBackSearchFind_categoria_bene(ActionContext context, Inven
 			if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					!bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()!=null)
 				bene.setTarga(null);
+			if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+					!bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()!=null)
+				bene.setSeriale(null);
 			
 		  }
 		return context.findDefaultForward();

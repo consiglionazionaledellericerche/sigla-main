@@ -19,6 +19,9 @@
 		<columnMapping
 			columnName="CD_CDS_AREA"
 			propertyName="area.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="CD_COFOG"
+			propertyName="cofog.cd_cofog"/>	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pdg_modulo_costi"
@@ -29,4 +32,7 @@
 	<persistentProperty
 		name="area"
 		partOfOid="true" />
+	<persistentProperty
+		name="cofog"
+		partOfOid="false" />	
 </SQLPersistentInfo>

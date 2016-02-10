@@ -3,6 +3,8 @@ package it.cnr.contab.doccont00.core.bulk;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import java.math.*;
 
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.doccont00.bp.*;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -30,10 +32,6 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
 	public final static String STATO_MANDATO_EMESSO		= "E";
 	public final static String STATO_MANDATO_PAGATO		= "P";
 
-	public final static String STATO_INVIO_AVV_PAG_Y	= "Y";
-	public final static String STATO_INVIO_AVV_PAG_N	= "N";
-	public final static String STATO_INVIO_AVV_PAG_E	= "E";
-	
 	public final static String STATO_COGE_N	= "N";
 	public final static String STATO_COGE_C	= "C";
 	public final static String STATO_COGE_R	= "R";
@@ -54,6 +52,11 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
 	public final static String STATO_TRASMISSIONE_NON_INSERITO	= "N";
 	public final static String STATO_TRASMISSIONE_INSERITO		= "I";
 	public final static String STATO_TRASMISSIONE_TRASMESSO		= "T";
+	
+	//public final static String STATO_TRASMISSIONE_DA_FIRMARE	= "D";
+	public final static String STATO_TRASMISSIONE_PREDISPOSTO	= "P";
+	public final static String STATO_TRASMISSIONE_PRIMA_FIRMA	= "F";
+	
 
 	public final static Dictionary stato_trasmissioneKeys;
 
@@ -62,7 +65,10 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
 		stato_trasmissioneKeys = new it.cnr.jada.util.OrderedHashtable();
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_NON_INSERITO,	"Non inserito in distinta");
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_INSERITO,		"Inserito in distinta");
+		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_PREDISPOSTO,	"Predisposto alla Firma");
+		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_PRIMA_FIRMA,	"Prima Firma");		
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_TRASMESSO,	"Trasmesso");
+		
 	};
 
 	public final static String TIPO_COMPETENZA	= "C";
@@ -865,5 +871,37 @@ public java.math.BigDecimal getIm_associato_siope() {
 }
 public BigDecimal getIm_da_associare_siope(){
 	return Utility.nvl(getIm_mandato()).subtract(Utility.nvl(getIm_associato_siope()));
+}
+public boolean isDipendenteDaConguaglio() 
+{
+	for (Iterator i=this.getMandato_rigaColl().iterator();i.hasNext();){
+		Mandato_rigaBulk riga = (Mandato_rigaBulk)i.next();
+		if (riga.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_COMPENSO) )
+		{
+			CompensoBulk compenso;
+			
+		}
+			
+			
+			return false;
+	}
+	
+	/*
+	
+	V_ass_doc_contabiliBulk associazione;
+	for ( Iterator i = getDoc_contabili_collColl().iterator() ;i.hasNext() ;) 
+	{
+		associazione = (V_ass_doc_contabiliBulk) i.next();
+		if ( associazione.getFl_con_man_prc().booleanValue() &&
+			  associazione.getCd_tipo_documento_cont_coll().equals( getCd_tipo_documento_cont() ) &&
+   		  associazione.getCd_cds_coll().equals( getCd_cds()) &&
+			  associazione.getEsercizio_coll().equals( getEsercizio()) &&
+			  associazione.getPg_documento_cont_coll().equals( getPg_mandato()))
+				 return true;
+	}
+	return false;
+	*/
+
+return false;
 }
 }

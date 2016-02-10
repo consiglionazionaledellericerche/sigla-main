@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.VConsCupReversaliBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.VConsCupReversaliHome">
+	<defaultColumnMap
+		tableName="V_CONS_CUP_REVERSALI">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />	
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pgReversale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizioAccertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizioOriAccertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pgAccertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pgAccertamentoScadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="cdCdsDocAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="cdUoDocAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="esercizioDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cdTipoDocumentoAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_DOC_AMM"
+			propertyName="dsTipoDocAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pgDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cdCup"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CUP"
+			propertyName="dsCup"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dtEmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INCASSO"
+			propertyName="dtIncasso"
+			sqlTypeName="TIMESTAMP"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE"
+			propertyName="dtTrasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="8"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCds" />
+	<persistentProperty
+		name="uo" />	
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pgReversale" />
+	<persistentProperty
+		name="esercizioAccertamento" />
+	<persistentProperty
+		name="esercizioOriAccertamento" />
+	<persistentProperty
+		name="pgAccertamento" />
+	<persistentProperty
+		name="pgAccertamentoScadenzario" />
+	<persistentProperty
+		name="cdCdsDocAmm" />
+	<persistentProperty
+		name="cdUoDocAmm" />
+	<persistentProperty
+		name="esercizioDocAmm" />
+	<persistentProperty
+		name="cdTipoDocumentoAmm" />
+	<persistentProperty
+		name="dsTipoDocAmm" />
+	<persistentProperty
+		name="pgDocAmm" />
+	<persistentProperty
+		name="cdCup" />
+	<persistentProperty
+		name="dsCup" />
+	<persistentProperty
+		name="importo" />
+	<persistentProperty
+		name="dtEmissione" />
+	<persistentProperty
+		name="dtIncasso" />
+	<persistentProperty
+		name="dtTrasmissione" />
+</SQLPersistentInfo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioKey">
+	<defaultColumnMap
+		tableName="UTENTE_FIRMA_DETTAGLIO">
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="cdUtente"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdUtente"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,9 +1,9 @@
 package it.cnr.contab.incarichi00.ejb;
 
+import it.cnr.contab.incarichi00.comp.IncarichiRepertorioComponent;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
-
-import it.cnr.contab.incarichi00.comp.IncarichiRepertorioComponent;
 
 /**
  * Bean implementation class for Enterprise Bean: CNRINCARICHI00_EJB_IncarichiRepertorioComponentSession
@@ -21,24 +21,6 @@ public class IncarichiRepertorioComponentSessionBean extends it.cnr.jada.ejb.CRU
 		pre_component_invocation(param0,componentObj);
 		try {
 			java.util.Collection result = ((IncarichiRepertorioComponent)componentObj).findTipiRapporto(param0,param1);
-			component_invocation_succes(param0,componentObj);
-			return result;
-		} catch(it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param0,componentObj);
-			throw e;
-		} catch(it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(param0,componentObj);
-			throw e;
-		} catch(RuntimeException e) {
-			throw uncaughtRuntimeException(param0,componentObj,e);
-		} catch(Error e) {
-			throw uncaughtError(param0,componentObj,e);
-		}
-	}
-	public java.util.Collection findTipiTrattamento(it.cnr.jada.UserContext param0,it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
-		pre_component_invocation(param0,componentObj);
-		try {
-			java.util.Collection result = ((IncarichiRepertorioComponent)componentObj).findTipiTrattamento(param0,param1);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -195,5 +177,39 @@ public class IncarichiRepertorioComponentSessionBean extends it.cnr.jada.ejb.CRU
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
 		}
-	}	
+	}
+	public void salvaDefinitivoCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((IncarichiRepertorioComponent)componentObj).salvaDefinitivoCMIS(param0,param1);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public void annullaDefinitivoCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((IncarichiRepertorioComponent)componentObj).annullaDefinitivoCMIS(param0,param1);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 }

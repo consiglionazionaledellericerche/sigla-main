@@ -1,21 +1,18 @@
 package it.cnr.contab.pdg00.comp;
 
-import it.cnr.contab.reports.bulk.Print_spoolerBulk;
-import it.cnr.contab.reports.bulk.Report;
-import it.cnr.contab.reports.service.PrintService;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
-import it.cnr.contab.messaggio00.bulk.MessaggioHome;
-import it.cnr.contab.prevent00.bulk.Bilancio_preventivoBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
-import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.cmis.service.CMISService;
-import it.cnr.contab.config00.sto.bulk.CdrKey;
+import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.CdrKey;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.CdsHome;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
@@ -23,14 +20,25 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.pdg00.bulk.*;
+import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
+import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
+import it.cnr.contab.messaggio00.bulk.MessaggioHome;
+import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivoHome;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivo_detBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
+import it.cnr.contab.pdg00.bulk.Pdg_variazione_archivioBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazione_archivioHome;
+import it.cnr.contab.pdg00.bulk.Stampa_pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Stampa_pdg_variazione_riepilogoBulk;
+import it.cnr.contab.pdg00.bulk.Stampa_var_stanz_resBulk;
+import it.cnr.contab.pdg00.bulk.V_stm_paramin_pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.pdg00.bulk.Var_stanz_resHome;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
@@ -39,38 +47,58 @@ import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneHome;
 import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
-
+import it.cnr.contab.prevent00.bulk.Bilancio_preventivoBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
+import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
+import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
+import it.cnr.contab.varstanz00.bulk.V_var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.V_var_stanz_resHome;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.BulkInfo;
+import it.cnr.jada.bulk.FieldProperty;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.FatturaNonTrovataException;
+import it.cnr.jada.comp.GenerazioneReportException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.ColumnMapping;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -83,7 +111,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	private static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	private static final long serialVersionUID = -3132138853583406225L;
 	private PdgVariazioniService pdgVariazioniService;
-	private CMISService cmisService;
+	private SiglaCMISService cmisService;
 
 	public PdGVariazioniComponent() {
 		/* Default constructor */
@@ -147,7 +175,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					EJBCommonServices.getServerDate(), CNRUserContext
 							.getEsercizio(userContext)));
 			pdg_variazione.setTi_causale_respintaKeys(testataHome
-					.loadCausaliMancataApprovazione());
+					.loadCausaliMancataApprovazione(userContext));
 			pdg_variazione.setFl_visto_dip_variazioni(new Boolean(false));
 			inizializzaSommeAZero(pdg_variazione);
 			return super.inizializzaBulkPerInserimento(userContext,
@@ -167,7 +195,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 						userContext, Pdg_variazioneBulk.class);
 				((Pdg_variazioneBulk) oggettobulk)
 						.setTi_causale_respintaKeys(testataHome
-								.loadCausaliMancataApprovazione());
+								.loadCausaliMancataApprovazione(userContext));
 			}
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -185,7 +213,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 						userContext, Pdg_variazioneBulk.class);
 				((Pdg_variazioneBulk) oggettobulk)
 						.setTi_causale_respintaKeys(testataHome
-								.loadCausaliMancataApprovazione());
+								.loadCausaliMancataApprovazione(userContext));
 			}
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -212,17 +240,18 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			pdg.setRiepilogoSpese(new it.cnr.jada.bulk.BulkList(testataHome
 					.findRiepilogoSpese(pdg)));
 			pdg.setTi_causale_respintaKeys(testataHome
-					.loadCausaliMancataApprovazione());
+					.loadCausaliMancataApprovazione(userContext));
 			pdg.setCdsAbilitatoAdApprovare(isCdsAbilitatoAdApprovare(
 					userContext, pdg.getCentro_responsabilita().getCd_cds(),
 					pdg));
-			pdg.setTi_causale_respintaKeys(testataHome
-					.loadCausaliMancataApprovazione());
-			if (pdg.getStato().equalsIgnoreCase(
-					Pdg_variazioneBulk.STATO_APPROVATA)
-					|| pdg.getStato().equalsIgnoreCase(
-							Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE)) {
-				if(selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0) 
+			// RosPuc 28/01/2011
+			if(pdg.getStato().equalsIgnoreCase(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA)){
+//			if (pdg.getStato().equalsIgnoreCase(
+//					Pdg_variazioneBulk.STATO_APPROVATA)
+//					|| pdg.getStato().equalsIgnoreCase(
+//							Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE)) {
+//				
+			  if(selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0) 
 		 	 	  pdg.setStatoDocumentale(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED); 
 			  else if (selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0)
 				  pdg.setStatoDocumentale(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED);
@@ -296,7 +325,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) oggettobulk;
 		if(pdg.getStatoDocumentale()!=null && pdg.getStatoDocumentale().compareTo(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED)==0){
 			pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",PdgVariazioniService.class);
-			cmisService = SpringUtil.getBean("cmisService",CMISService.class);		
+			cmisService = SpringUtil.getBean("cmisService",SiglaCMISService.class);		
 			Print_spoolerBulk print = new Print_spoolerBulk();
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
 			print.setFlEmail(false);
@@ -312,9 +341,9 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				    Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
 					ArchiviaStampaPdgVariazioneBulk stampapdg=new ArchiviaStampaPdgVariazioneBulk();
 					stampapdg.setPdg_variazioneForPrint(pdg);
-					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg.getPdg_variazioneForPrint()));
-					cmisService.updateContent(stampapdg.getPdgVariazioneDocument().getNode().getId(), report.getInputStream(), report.getContentType());
-					cmisService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getNode());
+					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
+					cmisService.updateContent(stampapdg.getPdgVariazioneDocument().getDocument().getId(), report.getInputStream(), report.getContentType());
+					cmisService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getDocument());
 			} catch (IOException e) {
 				throw new ComponentException(e);
 			} catch (DetailedException e) {
@@ -2634,11 +2663,41 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				Boolean clausolaIn)
 			throws ComponentException,
 			it.cnr.jada.persistency.PersistencyException {
+		try{
 		SQLBuilder sql = selectBase(userContext, clauses, bulk);
-		sql.openParenthesis(FindClause.AND);
-		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
-		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
-		sql.closeParenthesis();
+		// RosPuc 28/01/2011
+//		sql.openParenthesis(FindClause.AND);
+//		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+//		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+//		sql.closeParenthesis();
+		if(tiSigned ==null && clausolaIn){
+			sql.openParenthesis(FindClause.AND);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			sql.closeParenthesis();
+		}
+		else if (tiSigned ==null && !clausolaIn){
+		sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+		}
+		else if(tiSigned.compareTo(ArchiviaStampaPdgVariazioneBulk.VIEW_APPROVED)==0){
+			sql.openParenthesis(FindClause.AND);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			sql.closeParenthesis();
+		}
+		else if(tiSigned.compareTo(ArchiviaStampaPdgVariazioneBulk.VIEW_ALL) ==0){
+			sql.openParenthesis(FindClause.AND);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+			sql.closeParenthesis();
+		}
+		else
+		{
+			sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+		}
+		
 		String cds = null, uo = null;
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
 				userContext, Unita_organizzativa_enteBulk.class).findAll()
@@ -2649,12 +2708,29 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, cds);
 			Unita_organizzativaBulk cdsBulk = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).
 				findByPrimaryKey(new Unita_organizzativaBulk(cds));
-			if (Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita())){
-				uo = CNRUserContext.getCd_unita_organizzativa(userContext);
-				sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, uo);
+			 if(Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita()) && 
+					 bulk !=null && bulk instanceof Pdg_variazioneBulk  && ((Pdg_variazioneBulk)bulk).getPg_variazione_pdg()!=null){
+				 Pdg_variazioneHome Pdg_variazioneHome = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
+				 Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) Pdg_variazioneHome.findByPrimaryKey((Pdg_variazioneBulk)bulk);
+				if (pdg!=null && pdg.getCentro_responsabilita()!=null && pdg.getCd_centro_responsabilita()!=null){
+					CdrHome cdrHome = (CdrHome) getHome(userContext, CdrBulk.class);
+					CdrBulk cdrVar = (CdrBulk) cdrHome.findByPrimaryKey(new CdrKey(pdg.getCd_centro_responsabilita()));
+					uo = cdrVar.getCd_unita_organizzativa();
+					sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, uo);
+				}
 			}
-		}		
-		List<Integer> variazioniPresentiSulDocumentale = variazioniPresentiSulDocumentale(userContext, tiSigned,cds, uo);
+			else{	
+				if (Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita())){
+					uo = CNRUserContext.getCd_unita_organizzativa(userContext);
+					sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, uo);
+				}
+			}
+		}
+		Long variazionePdg = null;
+		if (bulk != null && bulk instanceof Pdg_variazioneBulk ){
+			variazionePdg = ((Pdg_variazioneBulk)bulk).getPg_variazione_pdg();
+		}
+		List<Integer> variazioniPresentiSulDocumentale = variazioniPresentiSulDocumentale(userContext, tiSigned, cds, uo, variazionePdg);
 		if (clausolaIn && variazioniPresentiSulDocumentale.isEmpty())
 			sql.addClause(FindClause.AND, "pg_variazione_pdg", SQLBuilder.EQUALS, -1);
 		sql.openParenthesis(FindClause.AND);
@@ -2666,12 +2742,146 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		}
 		sql.closeParenthesis();
 		return sql;
+		}catch (Exception e) {
+			throw new ComponentException(e);
+	}
 	}
 
-	private List<Integer> variazioniPresentiSulDocumentale(UserContext userContext, String tiSigned, String cds, String uo) throws ComponentException, PersistencyException{
+	private List<Integer> variazioniPresentiSulDocumentale(UserContext userContext, String tiSigned, String cds, String uo, Long variazionePdg) throws ComponentException, PersistencyException{
 		PdgVariazioniService pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",
 				PdgVariazioniService.class);
-		return pdgVariazioniService.findVariazioniPresenti(CNRUserContext.getEsercizio(userContext),tiSigned, cds, uo);
+		return pdgVariazioniService.findVariazioniPresenti(CNRUserContext.getEsercizio(userContext),tiSigned, cds, uo, variazionePdg);
+	}
+	
+//	per la stampa delle variazioni residuo conto terzi
+	public byte[] lanciaStampa(UserContext userContext, Integer esercizio,Integer pgVariazione, String tipo_variazione) 
+			throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException {
+		
+		SQLBuilder sqlCDR = getHome(userContext, Configurazione_cnrBulk.class).createSQLBuilder();
+		sqlCDR.resetColumns();
+		sqlCDR.addColumn("VAL01");
+		sqlCDR.addSQLClause("AND", "CD_CHIAVE_PRIMARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.PK_CDR_SPECIALE);
+		sqlCDR.addSQLClause("AND", "CD_CHIAVE_SECONDARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.SK_CDR_PERSONALE);
+
+		if (tipo_variazione.equals("R")){
+//			it.cnr.contab.varstanz00.bulk.Var_stanz_resHome home = (it.cnr.contab.varstanz00.bulk.Var_stanz_resHome) getHome(userContext, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.class);
+//			SQLBuilder sql = home.createSQLBuilder();
+			V_var_stanz_resHome home = (V_var_stanz_resHome) getHome(userContext, V_var_stanz_resBulk.class);
+				SQLBuilder sql = home.createSQLBuilder();
+				
+				sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
+				sql.addSQLClause("AND", "PG_VARIAZIONE", sql.EQUALS, pgVariazione);
+				sql.addSQLClause("AND", "CD_CDR_ASSEGNATARIO", sql.EQUALS, sqlCDR);
+				sql.addSQLClause("AND", "STATO", sql.EQUALS, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.STATO_APPROVATA);
+								
+				java.util.List list = home.fetchAll(sql);
+				if(list.isEmpty())
+					throw new FatturaNonTrovataException("Variazione non trovata");
+				
+			try {
+			      File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("stampa_var_stanziamento_res.jasper",esercizio,pgVariazione));
+			      Print_spoolerBulk print = new Print_spoolerBulk();
+			      print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+			      print.setFlEmail(false);
+			      print.setReport("/cnrpreventivo/pdg/stampa_var_stanziamento_res.jasper");
+			      print.setNomeFile(getOutputFileName("stampa_var_stanziamento_res.jasper", esercizio, pgVariazione));
+			      print.setUtcr(userContext.getUser());
+			      print.addParam("Esercizio", esercizio, Integer.class);
+			      print.addParam("Variazione",pgVariazione, Integer.class);
+			      Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
+			      
+			      FileOutputStream f = new FileOutputStream(output);
+			      	
+			      f.write(report.getBytes());
+			      f.flush();
+				  f.close();
+				  
+				   return report.getBytes();
+				}  catch (IOException e) {
+					throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
+				}
+
+			}
+		
+		if (tipo_variazione.equals("C")){
+			
+			Configurazione_cnrHome homeCDR = (Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class);
+			
+				Pdg_variazioneHome home = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
+				SQLBuilder sql =  home.createSQLBuilder();
+					sql.addSQLClause("AND", "PDG_VARIAZIONE.ESERCIZIO", SQLBuilder.EQUALS, esercizio);
+					sql.addSQLClause("AND", "PDG_VARIAZIONE.PG_VARIAZIONE_PDG", SQLBuilder.EQUALS, pgVariazione);
+				
+				sql.addTableToHeader("PDG_VARIAZIONE_RIGA_GEST");
+				sql.addSQLClause("AND", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO", SQLBuilder.EQUALS, sqlCDR);
+				sql.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+				sql.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
+				sql.openParenthesis("AND");
+					sql.addSQLClause("AND", "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+					sql.addSQLClause("OR", "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+				sql.closeParenthesis();
+				
+				java.util.List list = home.fetchAll(sql);
+				if(list.isEmpty())
+					throw new FatturaNonTrovataException("Variazione non trovata");
+				
+			try {
+			      File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("stampa_variazioni_pdg.jasper",esercizio,pgVariazione));
+			      Print_spoolerBulk print = new Print_spoolerBulk();
+			      print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+			      print.setFlEmail(false);
+			      print.setReport("/cnrpreventivo/pdg/stampa_variazioni_pdg.jasper");
+			      print.setNomeFile(getOutputFileName("stampa_variazioni_pdg.jasper", esercizio, pgVariazione));
+			      print.setUtcr(userContext.getUser());
+			      print.addParam("Esercizio", esercizio, Integer.class);
+			      print.addParam("Variazione",pgVariazione, Integer.class);
+			      Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
+			      
+			      FileOutputStream f = new FileOutputStream(output);
+			      	
+			      f.write(report.getBytes());
+			      f.flush();
+				  f.close();
+				  
+				   return report.getBytes();
+				}  catch (IOException e) {
+					throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
+				}
+			}
+		
+	return null;
+	}
+	
+	private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
+	private String getOutputFileName(String reportName,Integer esercizio,Integer pgVariazione)
+		{
+			String fileName = reportName;
+			fileName = fileName.replace('/', '_');
+			fileName = fileName.replace('\\', '_');
+			if(fileName.startsWith("_"))
+			    fileName = fileName.substring(1);
+			if(fileName.endsWith(".jasper"))
+			    fileName = fileName.substring(0, fileName.length() - 7);
+			fileName = fileName + ".pdf";
+			fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fileName + '_' + esercizio + '_' +  pgVariazione;
+			return fileName;
+		}
+public void aggiornaDataFirma(UserContext userContext, Integer esercizio,
+			Integer numeroVariazione) throws  ComponentException {
+		try{
+			Pdg_variazioneBulk varPdg = (Pdg_variazioneBulk) getHome(userContext, Pdg_variazioneBulk.class).
+					findByPrimaryKey(new Pdg_variazioneBulk(esercizio,new Long(numeroVariazione)));
+			varPdg.setToBeUpdated();
+			varPdg.setDt_firma(EJBCommonServices.getServerDate());
+			varPdg = (Pdg_variazioneBulk)super.modificaConBulk(userContext, varPdg);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+
+		}
+
 	}
 }
- 
+	
