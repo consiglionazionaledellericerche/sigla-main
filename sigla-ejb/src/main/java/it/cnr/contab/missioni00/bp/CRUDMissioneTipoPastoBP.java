@@ -65,6 +65,17 @@ public void gestioneNazione(ActionContext context) throws BusinessProcessExcepti
 			obj.setTi_area_geografica(null);
 			setMessage("Non esiste la nazione associata all'area geografica selezionata");
 		}
+		
+		if (obj.getNazione().getTi_nazione()!= null && obj.getNazione().getTi_nazione().compareTo(TipoAreaGeografica.INDIFFERENTE) != 0)
+		{
+			obj.setRifAreePaesiEsteri(new RifAreePaesiEsteriBulk(obj.getNazione().getCd_area_estera()));
+			obj.setCd_area_estera(obj.getRifAreePaesiEsteri().getCd_area_estera());
+		}
+		else
+		{	
+			obj.setRifAreePaesiEsteri(new RifAreePaesiEsteriBulk(null));
+		    obj.setCd_area_estera(obj.getRifAreePaesiEsteri().getCd_area_estera());
+		}    
 		setModel(context, obj);
 
 	}catch(it.cnr.jada.comp.ComponentException ex){
@@ -73,4 +84,5 @@ public void gestioneNazione(ActionContext context) throws BusinessProcessExcepti
 		throw handleException(ex);
 	}
 }
+
 }

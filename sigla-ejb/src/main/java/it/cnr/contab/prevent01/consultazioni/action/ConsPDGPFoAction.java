@@ -6,24 +6,17 @@
  */
 package it.cnr.contab.prevent01.consultazioni.action;
 
-import java.rmi.RemoteException;
-import java.util.Iterator;
-
-import it.cnr.contab.prevent01.consultazioni.bp.*;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPFoBP;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPFoEtrBP;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPFoSpeBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.ConsultazioniAction;
-import it.cnr.jada.util.action.ConsultazioniBP;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 
 
 public class ConsPDGPFoAction extends ConsultazioniAction {
+	private static final long serialVersionUID = 1L;
 
 	public Forward doConsulta(ActionContext context, String livelloDestinazione) {
 		try {
@@ -40,6 +33,7 @@ public class ConsPDGPFoAction extends ConsultazioniAction {
 			}
 
 			ConsPDGPFoBP consultazioneBP = null;
+			context.closeBusinessProcess(bp);
 			if (bp instanceof ConsPDGPFoSpeBP) 
 				consultazioneBP = (ConsPDGPFoSpeBP)context.createBusinessProcess("ConsPDGPFoSpeBP");
 			else
@@ -63,6 +57,9 @@ public class ConsPDGPFoAction extends ConsultazioniAction {
 		return doConsulta(context, ConsPDGPFoBP.LIVELLO_CDR);
 	}
 	public Forward doConsultaModulo(ActionContext context) {
+		ConsPDGPFoBP bp = (ConsPDGPFoBP)context.getBusinessProcess();
+		if (bp.isFlNuovoPdg())
+			return doConsulta(context, ConsPDGPFoBP.LIVELLO_PRG);
 		return doConsulta(context, ConsPDGPFoBP.LIVELLO_MOD);
 	}
 	public Forward doConsultaLivello1(ActionContext context) {

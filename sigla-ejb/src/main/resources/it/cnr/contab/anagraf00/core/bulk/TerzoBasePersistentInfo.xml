@@ -79,6 +79,11 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300" />
 		<columnMapping
+			columnName="CODICE_UNIVOCO_UFFICIO_IPA"
+			propertyName="codiceUnivocoUfficioIpa"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
+		<columnMapping
 			columnName="DT_FINE_RAPPORTO"
 			propertyName="dt_fine_rapporto"
 			sqlTypeName="TIMESTAMP"
@@ -102,7 +107,7 @@
 			columnName="NOME_UNITA_ORGANIZZATIVA"
 			propertyName="nome_unita_organizzativa"
 			sqlTypeName="VARCHAR"
-			columnSize="100" />
+			columnSize="300" />
 		<columnMapping
 			columnName="UTUV"
 			propertyName="utuv"
@@ -115,6 +120,16 @@
 			sqlTypeName="VARCHAR"
 			columnSize="100"
 			nullable="false" />
+		<columnMapping
+			columnName="CODICE_UNIVOCO_PCC"
+			propertyName="codiceUnivocoPcc"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
+		<columnMapping
+			columnName="DENOMINAZIONE_PCC"
+			propertyName="denominazionePcc"
+			sqlTypeName="VARCHAR"
+			columnSize="150" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="numero_civico_sede" />
@@ -143,6 +158,8 @@
 	<persistentProperty
 		name="note" />
 	<persistentProperty
+		name="codiceUnivocoUfficioIpa" />
+	<persistentProperty
 		name="dt_fine_rapporto" />
 	<persistentProperty
 		name="cd_precedente" />
@@ -156,4 +173,8 @@
 		name="utuv" />
 	<persistentProperty
 		name="via_sede" />
+	<persistentProperty
+		name="codiceUnivocoPcc" />
+	<persistentProperty
+		name="denominazionePcc" />		
 </SQLPersistentInfo>

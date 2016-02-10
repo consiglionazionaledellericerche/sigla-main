@@ -55,4 +55,7 @@ public class Geco_commessa_sacBulk extends Geco_commessa_sacBase implements Geco
 	public Integer getEsito_negoz() {
 		return null;
 	}	
+	public Long getId_prog_padre() {
+		return getId_prog();
+	}
 }

@@ -15,6 +15,7 @@ public class Procedure_amministrativeBulk extends Procedure_amministrativeBase i
 	
 	static public final String TIPO_FORNITURA_SERVIZI 		= "FS";
 	static public final String TIPO_AFFIDAMENTO_INCARICHI	= "AI";
+	static public final String TIPO_INDIVIDUAZIONE_BENEFICIARIO	= "MI";
 	static public final String TIPO_GENERICA 	= "GN";	
 	
 	static

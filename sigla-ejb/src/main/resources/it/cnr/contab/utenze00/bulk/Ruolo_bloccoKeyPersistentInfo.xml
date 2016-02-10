@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Ruolo_bloccoKey" >
+	<defaultColumnMap
+		tableName="RUOLO_BLOCCO" >
+		<columnMapping
+			columnName="CD_RUOLO"
+			propertyName="cd_ruolo"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_ruolo"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -166,7 +166,7 @@ public class RicercaFatturaPassivaBP extends BusinessProcess implements Response
 		elementFattura.appendChild(element);
 		
 		element = xmldoc.createElement("totalefattura");
-		node = xmldoc.createTextNode(fatt.getIm_totale_fattura()==null?"":fatt.getIm_totale_fattura().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).toString());//new it.cnr.contab.util.EuroFormat().format(fatt.getIm_totale_fattura()));
+		node = xmldoc.createTextNode(fatt.getIm_totale_fattura()==null?"":fatt.getIm_totale_fattura().setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString());//new it.cnr.contab.util.EuroFormat().format(fatt.getIm_totale_fattura()));
 		element.appendChild(node);
 		elementFattura.appendChild(element);
 		

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_unita_organizzativa"
 		property="cd_unita_organizzativa"
@@ -155,6 +155,12 @@
 		inputSize="6"
 		label="Tot. % ripartito anno 3" 
 		formatName="it.cnr.contab.util.ConstrainedPercentFormat" />
+	<fieldProperty
+		name="fl_rapporto13"
+		property="fl_rapporto13"
+		label="Contratti Privati"
+		inputType="CHECKBOX"
+		enabledOnFreeSearch="false"	/>
 
 	<formFieldProperty
 		name="im_a3" />
@@ -182,6 +188,8 @@
 		name="totale_prc_ripartito_a2" />
 	<formFieldProperty
 		name="totale_prc_ripartito_a3" />
+	<formFieldProperty
+		name="fl_rapporto13" />
 
 	<columnFieldProperty
 		name="cd_unita_organizzativa" />

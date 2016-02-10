@@ -1,37 +1,72 @@
 package it.cnr.contab.config00.comp;
 
-import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPBulk;
-import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPHome;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsHome;
-import it.cnr.contab.config00.esercizio.bulk.*;
-
 import java.io.FileInputStream;
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPBulk;
+import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPHome;
+import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.blob.bulk.PostItHome;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
+import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
+import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioHome;
+import it.cnr.contab.config00.latt.bulk.Insieme_laBulk;
+import it.cnr.contab.config00.latt.bulk.RisultatoBulk;
+import it.cnr.contab.config00.latt.bulk.RisultatoHome;
+import it.cnr.contab.config00.latt.bulk.Tipo_linea_attivitaBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
+import it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk;
+import it.cnr.contab.config00.pdcfin.bulk.FunzioneHome;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.config00.latt.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.missioni00.docs.bulk.VMissioneSIPBulk;
-import it.cnr.contab.missioni00.docs.bulk.VMissioneSIPHome;
-import it.cnr.contab.progettiric00.core.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.contab.util.RemoveAccent;
-import it.cnr.contab.config00.blob.bulk.*;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPBulk;
 import it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPHome;
+import it.cnr.contab.missioni00.docs.bulk.VMissioneSIPBulk;
+import it.cnr.contab.missioni00.docs.bulk.VMissioneSIPHome;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laHome;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
+import it.cnr.contab.prevent01.bulk.Ass_pdg_missione_tipo_uoBulk;
+import it.cnr.contab.prevent01.bulk.Ass_pdg_missione_tipo_uoHome;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneHome;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.FindBP;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.CRUDComponent;
+import it.cnr.jada.comp.CRUDDuplicateKeyException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.Broker;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.DuplicateKeyException;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class Linea_attivitaComponent extends CRUDComponent implements ILinea_attivitaMgr,Cloneable,Serializable
 {
@@ -111,14 +146,47 @@ protected void checkCessazioneLa(UserContext userContext,WorkpackageBulk la) thr
 public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.cnr.jada.bulk.OggettoBulk bulk) throws ComponentException {
 	try {
 		WorkpackageBulk latt = (WorkpackageBulk) bulk;
-
+		
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(uc,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc),latt))
 			throw new ApplicationException("Non è possibile creare nuovi GAE ad esercizio chiuso.");
-			
-		if ((latt.getProgetto() == null ||(latt.getProgetto() != null && latt.getProgetto().getPg_progetto() == null))&& isCommessaObbligatoria(uc,latt ))
-			throw new ApplicationException( "La Commessa sul GAE non può essere nulla. " );
+		
+		if (latt.getTi_gestione()==null ) throw new ApplicationException( "E' obbligatorio indicare il tipo di gestione. " );
+		
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(uc, CNRUserContext.getEsercizio(uc)); 
+
+		if (latt.getTi_gestione().compareTo(Tipo_linea_attivitaBulk.TI_GESTIONE_SPESE)==0 && parCnr.isCofogObbligatorio() && latt.getCd_cofog()==null)
+			throw new ApplicationException("Non è possibile creare GAE di spesa senza indicare la classificazione Cofog.");	
+
+		if ((latt.getPdgMissione()==null || latt.getPdgMissione().getCd_missione()==null) &&
+			(parCnr.getFl_nuovo_pdg() || (latt.getProgetto2016()!=null && latt.getProgetto2016().getPg_progetto()!=null))) 
+			throw new ApplicationException("Non è possibile creare GAE senza indicare il codice missione.");	
+
+		if (isCommessaObbligatoria(uc,latt )) {
+			String cdProgramma = null;
+			if (!parCnr.getFl_nuovo_pdg() || latt.getEsercizio_inizio().compareTo(Integer.valueOf(2016))==-1) { 
+				if ((latt.getModulo2015() == null ||(latt.getModulo2015() != null && latt.getModulo2015().getPg_progetto() == null)))
+					throw new ApplicationException( "La Commessa sul GAE non può essere nulla.");
+				if (latt!=null && latt.getModulo2015()!=null && 
+					latt.getModulo2015().getProgettopadre()!=null && latt.getModulo2015().getProgettopadre().getProgettopadre()!=null)
+					cdProgramma = latt.getModulo2015().getProgettopadre().getProgettopadre().getCd_dipartimento();
+			}
+			if (parCnr.getFl_nuovo_pdg()) {
+				if (latt.getProgetto2016() == null ||(latt.getProgetto2016() != null && latt.getProgetto2016().getPg_progetto() == null))
+					throw new ApplicationException( "Il Progetto sul GAE non può essere nullo. " );
+				if (latt!=null && latt.getProgetto2016()!=null && latt.getProgetto2016().getProgettopadre()!=null)
+					if (cdProgramma != null && !cdProgramma.equals(latt.getProgetto2016().getProgettopadre().getCd_dipartimento()))
+						throw new ApplicationException( "Il Codice Dipartimento del Modulo di attività ("+cdProgramma+") non può essere differente da quello del Progetto ("+latt.getProgetto2016().getProgettopadre().getCd_dipartimento()+")." );
+					cdProgramma = latt.getProgetto2016().getProgettopadre().getCd_dipartimento();
+			}
+			if (cdProgramma!=null) {
+				if (latt.getPdgProgramma()!=null && !cdProgramma.equals(latt.getPdgProgramma().getCd_programma()))
+					throw new ApplicationException( "Il Codice Dipartimento del Modulo di attività e del Progetto ("+cdProgramma+") risulta differente dal Codice Programma indicato sulla "+
+							" Linea di attività ("+latt.getPdgProgramma().getCd_programma()+")." );
+				latt.setPdgProgramma((Pdg_programmaBulk)findByPrimaryKey(uc, new Pdg_programmaBulk(cdProgramma)));
+			}
+		}				
 
 		if(latt.getTipo_linea_attivita() == null || latt.getTipo_linea_attivita().getCd_tipo_linea_attivita() == null) {
 			latt.setTipo_linea_attivita((Tipo_linea_attivitaBulk)getHome(uc,Tipo_linea_attivitaBulk.class).findByPrimaryKey(new Tipo_linea_attivitaBulk("PROP")));
@@ -149,8 +217,32 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 		  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setCd_linea_attivita(latt.getCd_linea_attivita());
 		}
 		/*Fine PostIt*/		
-		return super.creaConBulk( uc, bulk );
+		ProgettoBulk modulo2015=null,progetto2016=null;
+		if (latt.getModulo2015()!=null && latt.getModulo2015().getPg_progetto()!=null)
+			modulo2015=latt.getModulo2015();
+		if (latt.getProgetto2016()!=null && latt.getProgetto2016().getPg_progetto()!=null)
+			progetto2016 = latt.getProgetto2016();
+		latt = (WorkpackageBulk)super.creaConBulk( uc, bulk );
+		if (modulo2015!=null) {
+			Ass_linea_attivita_esercizioBulk assGaeEsercizio2015 = new Ass_linea_attivita_esercizioBulk(latt.getEsercizio_inizio(),latt.getCd_centro_responsabilita(), latt.getCd_linea_attivita());
+			assGaeEsercizio2015.setProgetto(modulo2015);
+			assGaeEsercizio2015.setEsercizio_fine(Integer.valueOf(2015));
+			assGaeEsercizio2015.setToBeCreated();
+			makeBulkPersistent(uc, assGaeEsercizio2015);
+			latt.setModulo2015(assGaeEsercizio2015.getProgetto());
+		}
+		if (progetto2016!=null) {
+			Ass_linea_attivita_esercizioBulk assGaeEsercizio2016 = new Ass_linea_attivita_esercizioBulk(Integer.valueOf(2016),latt.getCd_centro_responsabilita(), latt.getCd_linea_attivita());
+			assGaeEsercizio2016.setProgetto(progetto2016);
+			assGaeEsercizio2016.setEsercizio_fine(latt.getEsercizio_fine());
+			assGaeEsercizio2016.setToBeCreated();
+			makeBulkPersistent(uc, assGaeEsercizio2016);
+			latt.setProgetto2016(assGaeEsercizio2016.getProgetto());
+		}
+		return latt;
 	} catch(PersistencyException e) {
+		throw handleException(bulk,e);
+	} catch (RemoteException e) {
 		throw handleException(bulk,e);
 	} 
 }
@@ -384,6 +476,15 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
 			  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
 			}            
 		  }
+
+		WorkpackageHome testataHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
+		it.cnr.jada.bulk.BulkList<Ass_linea_attivita_esercizioBulk> assGaeEsercizioList = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliEsercizio((WorkpackageBulk)bulk));
+		for (Iterator i = assGaeEsercizioList.iterator(); i.hasNext();) {
+			Ass_linea_attivita_esercizioBulk assGaeEsercizio = (Ass_linea_attivita_esercizioBulk) i.next();
+			assGaeEsercizio.setToBeDeleted();
+			makeBulkPersistent( userContext,assGaeEsercizio );
+		}
+		  
 		makeBulkPersistent( userContext,bulk );
 	} catch(it.cnr.jada.persistency.sql.ReferentialIntegrityException e) {
 		throw handleException(new ApplicationException( "La cancellazione non e' consentita in quanto il GAE selezionato e' utilizzato. Si consiglia l'impostazione dell'Esercizio di Terminazione. "));
@@ -428,9 +529,36 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		aLA.setRisultati(aBL);
 		
 		WorkpackageHome testataHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
+		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 		/* Angelo 18/11/2004 Aggiunta gestione PostIt*/
 		aLA.setDettagliPostIt(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPostIt(aLA)));
 
+		it.cnr.jada.bulk.BulkList<Ass_linea_attivita_esercizioBulk> assGaeEsercizioList = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliEsercizio(aLA));
+		for (Iterator i = assGaeEsercizioList.iterator(); i.hasNext();) {
+			Ass_linea_attivita_esercizioBulk assGaeEsercizio = (Ass_linea_attivita_esercizioBulk) i.next();
+			if (assGaeEsercizio.getEsercizio().compareTo(new Integer(2016))==-1) {
+				int annoProgetto = CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))!=-1?new Integer(2015):CNRUserContext.getEsercizio(userContext);
+				aLA.setModulo2015((ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(annoProgetto, assGaeEsercizio.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
+				if (aLA.getModulo2015()==null)
+					throw new ApplicationException("Attenzione! E'' stato indicato sulla linea di attivita'' un progetto (" + assGaeEsercizio.getPg_progetto() + ") inesistente.");					
+				//Aggiorno l'anno anche sul progetto padre
+				if (CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))!=-1 && aLA.getModulo2015().getEsercizio_progetto_padre()==null )
+					aLA.getModulo2015().setEsercizio_progetto_padre(annoProgetto);
+			} else { 
+				int annoProgetto = CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))==-1?new Integer(2016):CNRUserContext.getEsercizio(userContext);
+				aLA.setProgetto2016((ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(annoProgetto, assGaeEsercizio.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
+				if (aLA.getProgetto2016()==null)
+					throw new ApplicationException("Attenzione! E'' stato indicato sulla linea di attivita'' un progetto (" + assGaeEsercizio.getPg_progetto() + ") inesistente.");					
+				//Aggiorno l'anno anche sul progetto padre
+				if (CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))==-1 && aLA.getProgetto2016().getEsercizio_progetto_padre()==null )
+					aLA.getProgetto2016().setEsercizio_progetto_padre(annoProgetto);
+			}
+		}
+		
+		//Verifico se è stata utilizzata nel 2015 e/o nel 2016
+		aLA.setUtilizzata2015(isGaeUtilizzata(userContext,aLA,true));
+		aLA.setUtilizzata2016(isGaeUtilizzata(userContext,aLA,false));
+		
 		getHomeCache(userContext).fetchAll(userContext);
 		
 		// 05/09/2003
@@ -547,42 +675,124 @@ protected boolean isEsercizioChiuso(UserContext userContext,Integer esercizio,Wo
   *      ed infine viene salvata la linea di attività specificata.
  */
 public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-	WorkpackageBulk linea_attivita = (WorkpackageBulk)bulk;
-
-	// 05/09/2003
-	// Aggiunto controllo sulla chiusura dell'esercizio
-	if (isEsercizioChiuso(userContext,linea_attivita))
-		throw new ApplicationException("Non è possibile modificare GAE con esercizio di fine validità chiuso.");
+	try{
+		WorkpackageBulk linea_attivita = (WorkpackageBulk)bulk;
+	
+		// 05/09/2003
+		// Aggiunto controllo sulla chiusura dell'esercizio
+		if (isEsercizioChiuso(userContext,linea_attivita))
+			throw new ApplicationException("Non è possibile modificare GAE con esercizio di fine validità chiuso.");
 		
-	if (linea_attivita.getProgetto() == null && isCommessaObbligatoria(userContext,linea_attivita ))
-		throw new ApplicationException( "La Commessa sul GAE non può essere nulla. " );
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)); 
 
-	aggiornaEsercizioFine(userContext, linea_attivita);
-	validaFunzione(userContext,linea_attivita);
-	validaModificaInsieme(userContext,linea_attivita);
-	validaNaturaPerInsieme(userContext,linea_attivita);
-	validaModificaFunzioneNatura(userContext,linea_attivita);
-	/* Angelo 18/11/2004 Aggiunta gestione PostIt*/
-	/*Valorizzazione id PostIt*/	
-	for(int i = 0; ((WorkpackageBulk)bulk).getDettagliPostIt().size() > i; i++) {
-	 /* Solo per i dettagli senza id */
-	 if (((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).getId()== null )
-	 {					
-	  Integer idPostit = new Integer (0);
-	  PostItHome PostIt_home = (PostItHome) getHome(userContext,PostItBulk.class);
-	   try{		
-		 idPostit = PostIt_home.getMaxId();
-	   }catch (it.cnr.jada.persistency.IntrospectionException ie){
-		throw handleException(ie);
-	   }catch (PersistencyException pe){
-		throw handleException(pe);
-	   }
-	  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setId(idPostit);
-	 }
-	 /* Fine if*/
-	/*Fine valorizzazione id PostIt*/
-	}	
-	return super.modificaConBulk( userContext, linea_attivita);
+		if (linea_attivita.getTi_gestione().compareTo(Tipo_linea_attivitaBulk.TI_GESTIONE_SPESE)==0 && parCnr.isCofogObbligatorio() && linea_attivita.getCd_cofog()==null)
+			throw new ApplicationException("Non è possibile modificare GAE di spesa senza indicare la classificazione Cofog.");
+
+		if ((linea_attivita.getPdgMissione()==null || linea_attivita.getPdgMissione().getCd_missione()==null) &&
+			(parCnr.getFl_nuovo_pdg() || (linea_attivita.getProgetto2016()!=null && linea_attivita.getProgetto2016().getPg_progetto()!=null))) 
+			throw new ApplicationException("Non è possibile modificare GAE senza indicare il codice missione.");	
+
+		if (isCommessaObbligatoria(userContext,linea_attivita )) {
+			if (!parCnr.getFl_nuovo_pdg() || linea_attivita.getEsercizio_inizio().compareTo(Integer.valueOf(2016))==-1) { 
+				if ((linea_attivita.getModulo2015() == null ||(linea_attivita.getModulo2015() != null && linea_attivita.getModulo2015().getPg_progetto() == null)))
+					throw new ApplicationException( "La Commessa sul GAE non può essere nulla. " );
+			}
+			if (parCnr.getFl_nuovo_pdg() && (linea_attivita.getProgetto2016() == null ||(linea_attivita.getProgetto2016() != null && linea_attivita.getProgetto2016().getPg_progetto() == null)))
+				throw new ApplicationException( "Il Progetto sul GAE non può essere nullo. " );
+		}				
+
+		aggiornaEsercizioFine(userContext, linea_attivita);
+		validaFunzione(userContext,linea_attivita);
+		validaModificaInsieme(userContext,linea_attivita);
+		validaNaturaPerInsieme(userContext,linea_attivita);
+		validaModificaFunzioneNatura(userContext,linea_attivita);
+		/* Angelo 18/11/2004 Aggiunta gestione PostIt*/
+		/*Valorizzazione id PostIt*/	
+		for(int i = 0; ((WorkpackageBulk)bulk).getDettagliPostIt().size() > i; i++) {
+		 /* Solo per i dettagli senza id */
+		 if (((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).getId()== null )
+		 {					
+		  Integer idPostit = new Integer (0);
+		  PostItHome PostIt_home = (PostItHome) getHome(userContext,PostItBulk.class);
+		   try{		
+			 idPostit = PostIt_home.getMaxId();
+		   }catch (it.cnr.jada.persistency.IntrospectionException ie){
+			throw handleException(ie);
+		   }catch (PersistencyException pe){
+			throw handleException(pe);
+		   }
+		  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setId(idPostit);
+		 }
+		 /* Fine if*/
+		/*Fine valorizzazione id PostIt*/
+		}	
+		WorkpackageHome testataHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
+		it.cnr.jada.bulk.BulkList<Ass_linea_attivita_esercizioBulk> assGaeEsercizioList = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliEsercizio(linea_attivita));
+		Ass_linea_attivita_esercizioBulk assGaeEsercizio2015 = null, assGaeEsercizio2016 = null;
+		for (Iterator i = assGaeEsercizioList.iterator(); i.hasNext();) {
+			Ass_linea_attivita_esercizioBulk assGaeEsercizio = (Ass_linea_attivita_esercizioBulk) i.next();
+			if (assGaeEsercizio.getEsercizio().compareTo(new Integer(2016))==-1) {
+				assGaeEsercizio2015 = assGaeEsercizio;
+				if (linea_attivita.getModulo2015()==null || linea_attivita.getModulo2015().getPg_progetto()==null)
+					assGaeEsercizio2015.setToBeDeleted();
+				else if (!linea_attivita.getModulo2015().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto())) {
+					if (isGaeUtilizzata(userContext,linea_attivita,true)) 
+						throw new ApplicationException( "Il Modulo di attività non può essere modificato in quanto la GAE risulta già utilizzata." );
+					assGaeEsercizio2015.setProgetto(linea_attivita.getModulo2015());
+					assGaeEsercizio2015.setToBeUpdated();
+				}
+			} else {
+				assGaeEsercizio2016 = assGaeEsercizio;
+				if (linea_attivita.getProgetto2016()==null || linea_attivita.getProgetto2016().getPg_progetto()==null ||
+					linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio2016.getEsercizio())==-1) {
+					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
+						throw new ApplicationException( "Il Progetto non può essere eliminato in quanto la GAE risulta già utilizzata." );
+					assGaeEsercizio2016.setToBeDeleted();
+				} else if (!linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) ||
+						!linea_attivita.getEsercizio_fine().equals(assGaeEsercizio.getEsercizio_fine())) {
+					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
+						throw new ApplicationException( "Il Progetto non può essere modificato in quanto la GAE risulta già utilizzata." );
+					assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
+					assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
+					assGaeEsercizio2016.setToBeUpdated();
+				}
+			}
+		}
+		if (assGaeEsercizio2015==null && linea_attivita.getModulo2015()!=null && linea_attivita.getModulo2015().getPg_progetto()!=null){
+			assGaeEsercizio2015 = new Ass_linea_attivita_esercizioBulk(linea_attivita.getEsercizio_inizio(),linea_attivita.getCd_centro_responsabilita(), linea_attivita.getCd_linea_attivita());
+			assGaeEsercizio2015.setProgetto(linea_attivita.getModulo2015());
+			assGaeEsercizio2015.setEsercizio_fine(Integer.valueOf(2015));
+			assGaeEsercizio2015.setToBeCreated();
+		}
+		if (assGaeEsercizio2016==null && linea_attivita.getProgetto2016()!=null && linea_attivita.getProgetto2016().getPg_progetto()!=null){
+			assGaeEsercizio2016 = new Ass_linea_attivita_esercizioBulk(Integer.valueOf(2016),linea_attivita.getCd_centro_responsabilita(), linea_attivita.getCd_linea_attivita());
+			assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
+			assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
+			assGaeEsercizio2016.setToBeCreated();
+		}
+		linea_attivita = (WorkpackageBulk)super.modificaConBulk( userContext, linea_attivita);
+		if (assGaeEsercizio2015!=null &&
+				(assGaeEsercizio2015.isToBeCreated() || assGaeEsercizio2015.isToBeUpdated() || assGaeEsercizio2015.isToBeDeleted())) {
+			if (!assGaeEsercizio2015.isToBeDeleted())
+				linea_attivita.setModulo2015(assGaeEsercizio2015.getProgetto());
+			makeBulkPersistent(userContext, assGaeEsercizio2015);
+		}
+		if (assGaeEsercizio2016!=null && 
+				(assGaeEsercizio2016.isToBeCreated() || assGaeEsercizio2016.isToBeUpdated() || assGaeEsercizio2016.isToBeDeleted())) {
+			if (!assGaeEsercizio2016.isToBeDeleted())
+				linea_attivita.setModulo2015(assGaeEsercizio2016.getProgetto());
+			makeBulkPersistent(userContext, assGaeEsercizio2016);
+		}
+		return linea_attivita;
+	} catch(PersistencyException e) {
+		throw handleException(bulk,e);
+	} catch (IntrospectionException e) {
+		throw handleException(bulk,e);
+	} catch (RemoteException e) {
+		throw handleException(bulk,e);
+	} catch (SQLException e) {
+		throw handleException(bulk,e);
+	}
 }
 /**
   *  Default
@@ -609,6 +819,32 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		sql.addSQLClause("AND","V_PDG_CDR_GESTIBILI.CD_CDR_ROOT",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext));
 		sql.addSQLClause("AND","V_PDG_CDR_GESTIBILI.ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 
+		Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext);
+
+		WorkpackageBulk linea = (WorkpackageBulk)bulk; 
+		if (esercizio.compareTo(Integer.valueOf(2016))==-1) {
+			if (linea.getModulo2015()!=null && linea.getModulo2015().getPg_progetto()!=null)
+				sql.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_PROGETTO.PG_PROGETTO",SQLBuilder.EQUALS,linea.getModulo2015().getPg_progetto());
+			if (linea.getProgetto2016()!=null && linea.getProgetto2016().getPg_progetto()!=null) {
+				Ass_linea_attivita_esercizioHome homeAss = (Ass_linea_attivita_esercizioHome)getHome(userContext, Ass_linea_attivita_esercizioBulk.class);	
+				SQLBuilder sqlExists = homeAss.createSQLBuilder();
+				sqlExists.addSQLJoin("ASS_LINEA_ATTIVITA_ESERCIZIO.CD_LINEA_ATTIVITA", "V_LINEA_ATTIVITA_PROGETTO.CD_LINEA_ATTIVITA");
+				sqlExists.addSQLJoin("ASS_LINEA_ATTIVITA_ESERCIZIO.CD_CENTRO_RESPONSABILITA", "V_LINEA_ATTIVITA_PROGETTO.CD_CENTRO_RESPONSABILITA");
+				sqlExists.addSQLClause("AND", "ASS_LINEA_ATTIVITA_ESERCIZIO.ESERCIZIO", SQLBuilder.EQUALS, Integer.valueOf(2016));
+				sqlExists.addSQLClause("AND", "ASS_LINEA_ATTIVITA_ESERCIZIO.PG_PROGETTO", SQLBuilder.EQUALS, linea.getProgetto2016().getPg_progetto());
+			}
+		} else {
+			if (linea.getProgetto2016()!=null && linea.getProgetto2016().getPg_progetto()!=null)
+				sql.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_PROGETTO.PG_PROGETTO",SQLBuilder.EQUALS,linea.getProgetto2016().getPg_progetto());
+			if (linea.getModulo2015()!=null && linea.getModulo2015().getPg_progetto()!=null) {
+				Ass_linea_attivita_esercizioHome homeAss = (Ass_linea_attivita_esercizioHome)getHome(userContext, Ass_linea_attivita_esercizioBulk.class);	
+				SQLBuilder sqlExists = homeAss.createSQLBuilder();
+				sqlExists.addSQLJoin("ASS_LINEA_ATTIVITA_ESERCIZIO.ESERCIZIO", "V_LINEA_ATTIVITA_PROGETTO.ESERCIZIO_INIZIO");
+				sqlExists.addSQLJoin("ASS_LINEA_ATTIVITA_ESERCIZIO.CD_LINEA_ATTIVITA", "V_LINEA_ATTIVITA_PROGETTO.CD_LINEA_ATTIVITA");
+				sqlExists.addSQLJoin("ASS_LINEA_ATTIVITA_ESERCIZIO.CD_CENTRO_RESPONSABILITA", "V_LINEA_ATTIVITA_PROGETTO.CD_CENTRO_RESPONSABILITA");
+				sqlExists.addSQLClause("AND", "ASS_LINEA_ATTIVITA_ESERCIZIO.PG_PROGETTO", SQLBuilder.EQUALS, linea.getModulo2015().getPg_progetto());
+			}
+		}
 		//sql.addClause( "AND", "esercizio_inizio", sql.LESS_EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
 		//sql.addClause( "AND", "esercizio_fine", sql.GREATER_EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());	
 		return sql;
@@ -618,28 +854,94 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
  * Pre:  Ricerca progetto
  * Post: Limitazione ai progetti diversi da quello in oggetto.
  */
-        public SQLBuilder selectProgettoByClause (UserContext userContext,
-                                              WorkpackageBulk linea_attivita,
-                                              ProgettoBulk progetto,
-                                              CompoundFindClause clause)
-        throws ComponentException, PersistencyException
-        {
-			    ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
-                SQLBuilder sql = progettohome.createSQLBuilder();
-                sql.addClause( clause );
-                sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
-                sql.addSQLClause("AND", "V_PROGETTO_PADRE.PG_PROGETTO", sql.EQUALS, linea_attivita.getPg_progetto());
-                sql.addSQLClause("AND", "V_PROGETTO_PADRE.TIPO_FASE", sql.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
-			    sql.addSQLClause("AND", "V_PROGETTO_PADRE.LIVELLO", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
-                // Se uo 999.000 in scrivania: visualizza tutti i progetti
-	            Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
-	            if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-					sql.addSQLExistsClause("AND",progettohome.abilitazioniModuli(userContext));
-				}
-                if (clause != null) 
-                  sql.addClause(clause);
-                return sql;
-        }
+public SQLBuilder selectProgettoByClause (UserContext userContext,
+                                          WorkpackageBulk linea_attivita,
+                                          ProgettoBulk progetto,
+                                          CompoundFindClause clause) throws ComponentException, PersistencyException {
+	ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+	SQLBuilder sql = progettohome.createSQLBuilder();
+    sql.addClause( clause );
+    sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+    sql.addSQLClause("AND", "V_PROGETTO_PADRE.PG_PROGETTO", sql.EQUALS, linea_attivita.getPg_progetto());
+    sql.addSQLClause("AND", "V_PROGETTO_PADRE.TIPO_FASE", sql.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+    sql.addSQLClause("AND", "V_PROGETTO_PADRE.LIVELLO", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+    // Se uo 999.000 in scrivania: visualizza tutti i progetti
+	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa()))
+	  	sql.addSQLExistsClause("AND",progettohome.abilitazioniModuli(userContext));
+    if (clause != null) 
+        sql.addClause(clause);
+    return sql;
+}
+
+public SQLBuilder selectModulo2015ByClause (UserContext userContext,
+									        WorkpackageBulk linea_attivita,
+									        ProgettoBulk progetto,
+									        CompoundFindClause clause) throws ComponentException, PersistencyException {
+	ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+	SQLBuilder sql = progettohome.createSQLBuilder();
+    sql.addClause( clause );
+    sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+    if (linea_attivita.getModulo2015()!=null)
+    	sql.addSQLClause("AND", "V_PROGETTO_PADRE.PG_PROGETTO", sql.EQUALS, linea_attivita.getModulo2015().getPg_progetto());
+    sql.addSQLClause("AND", "V_PROGETTO_PADRE.TIPO_FASE", sql.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+    sql.addSQLClause("AND", "V_PROGETTO_PADRE.LIVELLO", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+    // Se uo 999.000 in scrivania: visualizza tutti i progetti
+	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa()))
+	  	sql.addSQLExistsClause("AND",progettohome.abilitazioniModuli(userContext));
+    if (linea_attivita!=null && linea_attivita.getPdgProgramma()!=null && linea_attivita.getPdgProgramma().getCd_programma()!=null) {
+		sql.addTableToHeader("V_PROGETTO_PADRE","PROGETTO_DIP");
+		sql.addSQLJoin("V_PROGETTO_PADRE.ESERCIZIO_PROGETTO_PADRE","PROGETTO_DIP.ESERCIZIO");
+		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO_PADRE","PROGETTO_DIP.PG_PROGETTO");
+		sql.addSQLJoin("V_PROGETTO_PADRE.TIPO_FASE_PROGETTO_PADRE","PROGETTO_DIP.TIPO_FASE");
+		sql.addSQLClause(FindClause.AND, "PROGETTO_DIP.P_CD_DIPARTIMENTO", SQLBuilder.EQUALS, linea_attivita.getPdgProgramma().getCd_programma());
+	}
+    if (clause != null) 
+        sql.addClause(clause);
+	return sql;
+}
+
+public SQLBuilder selectProgetto2016ByClause (UserContext userContext,
+										      WorkpackageBulk linea_attivita,
+										      ProgettoBulk progetto,
+										      CompoundFindClause clause) throws ComponentException, PersistencyException {
+	ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+	SQLBuilder sql = progettohome.createSQLBuilder();
+	sql.addClause( clause );
+
+	Parametri_cnrBulk parCnr = null;
+	try {
+		parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+	} catch (RemoteException e) {
+		throw handleException(linea_attivita,e);
+	} 
+	
+	if (parCnr.getFl_nuovo_pdg())
+		sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+	else
+		sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, Integer.valueOf(2016));
+	
+    if (linea_attivita.getProgetto2016()!=null)
+    	sql.addSQLClause("AND", "V_PROGETTO_PADRE.PG_PROGETTO", sql.EQUALS, linea_attivita.getProgetto2016().getPg_progetto());
+	sql.addSQLClause("AND", "V_PROGETTO_PADRE.TIPO_FASE", sql.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+	sql.addSQLClause("AND", "V_PROGETTO_PADRE.LIVELLO", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+	// Se uo 999.000 in scrivania: visualizza tutti i progetti
+	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa()))
+		sql.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(userContext));
+	if (clause != null) 
+		sql.addClause(clause);
+
+	if (linea_attivita!=null && linea_attivita.getPdgProgramma()!=null && linea_attivita.getPdgProgramma().getCd_programma()!=null) {
+		sql.addTableToHeader("PROGETTO","PROGETTO_DIP");
+		sql.addSQLJoin("V_PROGETTO_PADRE.ESERCIZIO_PROGETTO_PADRE","PROGETTO_DIP.ESERCIZIO");
+		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO_PADRE","PROGETTO_DIP.PG_PROGETTO");
+		sql.addSQLJoin("V_PROGETTO_PADRE.TIPO_FASE_PROGETTO_PADRE","PROGETTO_DIP.TIPO_FASE");
+		sql.addSQLClause(FindClause.AND, "PROGETTO_DIP.CD_DIPARTIMENTO", SQLBuilder.EQUALS, linea_attivita.getPdgProgramma().getCd_programma());
+	}
+	return sql;
+}
 /**
   *  Default
   *	   PreCondition:
@@ -986,18 +1288,109 @@ public void Inserimento_BLOB(UserContext userContext,it.cnr.jada.bulk.OggettoBul
 		  file.delete();
 	}	
   }
-@Override
-public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext,
-		OggettoBulk oggettobulk) throws ComponentException {
-	String uo = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(usercontext);
-	try {
-		Unita_organizzativaBulk bulk = (Unita_organizzativaBulk)getHome(usercontext,Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(uo));
-		if (bulk.getCd_tipo_unita().compareTo(Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0){
-			throw new it.cnr.jada.comp.ApplicationException("Le Aree non sono abilitate a generare GAE!");
+public java.util.List findListaGAEFEWS(UserContext userContext,String cdr,Integer modulo)throws ComponentException{
+	try {		
+		WorkpackageHome home = (WorkpackageHome)getHome(userContext,WorkpackageBulk.class,"V_LINEA_ATTIVITA_VALIDA");
+		SQLBuilder sql = home.createSQLBuilder();
+		if(cdr!=null){
+			sql.addTableToHeader("V_PDG_CDR_GESTIBILI");
+			
+			sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","V_PDG_CDR_GESTIBILI.ESERCIZIO");
+			sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_PDG_CDR_GESTIBILI.CD_CENTRO_RESPONSABILITA");
+			
+			sql.addSQLClause("AND","V_PDG_CDR_GESTIBILI.CD_CDR_ROOT",sql.EQUALS,cdr);
+			sql.addSQLClause("AND","V_PDG_CDR_GESTIBILI.ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+		}else{
+			sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)); 
 		}
-	} catch (PersistencyException e) {
-		throw new ComponentException (e);
+		sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",sql.EQUALS,modulo);
+		return home.fetchAll(sql);
+	}catch(it.cnr.jada.persistency.PersistencyException ex){
+		throw handleException(ex);
 	}
-	return super.inizializzaBulkPerInserimento(usercontext, oggettobulk);
 }
+
+	public SQLBuilder selectPdgMissioneByClause (UserContext userContext, WorkpackageBulk linea_attivita, Pdg_missioneBulk pdgMissione, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		Pdg_missioneHome pdgMissionehome = (Pdg_missioneHome)getHome(userContext, Pdg_missioneBulk.class);
+		SQLBuilder sql = pdgMissionehome.createSQLBuilder();
+
+		Ass_pdg_missione_tipo_uoHome asshome = (Ass_pdg_missione_tipo_uoHome)getHome(userContext, Ass_pdg_missione_tipo_uoBulk.class);
+		SQLBuilder sqlExists = asshome.createSQLBuilder();    	
+		sqlExists.addSQLJoin("ASS_PDG_MISSIONE_TIPO_UO.CD_MISSIONE","PDG_MISSIONE.CD_MISSIONE");
+		if (linea_attivita!=null && linea_attivita.getCentro_responsabilita()!=null &&
+				linea_attivita.getCentro_responsabilita().getUnita_padre()!=null && 
+						linea_attivita.getCentro_responsabilita().getUnita_padre().getCd_tipo_unita()!=null)
+			sqlExists.addSQLClause(FindClause.AND, "ASS_PDG_MISSIONE_TIPO_UO.CD_TIPO_UNITA",SQLBuilder.EQUALS,linea_attivita.getCentro_responsabilita().getUnita_padre().getCd_tipo_unita());
+		else
+			sqlExists.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
+			
+
+		sql.addSQLExistsClause(FindClause.AND, sqlExists);
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql;
+	}
+	
+	private boolean isGaeUtilizzata(UserContext userContext, WorkpackageBulk gae, boolean ante2015) throws ComponentException, PersistencyException, SQLException {
+		if (WorkpackageBulk.TI_GESTIONE_SPESE.equals(gae.getTi_gestione())) {
+			//Controllo Ass_cdp_la
+			Ass_cdp_laHome homeAssCdpLa =  (Ass_cdp_laHome)getHome(userContext, Ass_cdp_laBulk.class);
+			SQLBuilder sqlAssCdpLa = homeAssCdpLa.createSQLBuilder();
+			if (ante2015)
+				sqlAssCdpLa.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
+			else
+				sqlAssCdpLa.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
+			sqlAssCdpLa.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
+			sqlAssCdpLa.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
+			
+			if (sqlAssCdpLa.executeExistsQuery(getConnection(userContext)))
+				return true;
+
+			//Controllo Pdg_modulo_spese_gest
+			Pdg_modulo_spese_gestHome homePDG =  (Pdg_modulo_spese_gestHome)getHome(userContext, Pdg_modulo_spese_gestBulk.class);
+			SQLBuilder sqlPDG = homePDG.createSQLBuilder();
+			if (ante2015)
+				sqlPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
+			else
+				sqlPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
+			sqlPDG.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
+
+			if (sqlPDG.executeExistsQuery(getConnection(userContext)))
+				return true;
+
+			//Controllo Pdg_variazione_riga_gest
+			Pdg_variazione_riga_gestHome homeVarPDG =  (Pdg_variazione_riga_gestHome)getHome(userContext, Pdg_variazione_riga_gestBulk.class);
+			SQLBuilder sqlVarPDG = homeVarPDG.createSQLBuilder();
+			if (ante2015)
+				sqlVarPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
+			else
+				sqlVarPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
+			sqlVarPDG.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
+
+			return sqlVarPDG.executeExistsQuery(getConnection(userContext));
+		} else {
+			Pdg_modulo_entrate_gestHome homePDG =  (Pdg_modulo_entrate_gestHome)getHome(userContext, Pdg_modulo_entrate_gestBulk.class);
+			SQLBuilder sqlPDG = homePDG.createSQLBuilder();
+			if (ante2015)
+				sqlPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
+			else
+				sqlPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
+			sqlPDG.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
+
+			if (sqlPDG.executeExistsQuery(getConnection(userContext)))
+				return true;
+
+			//Controllo Pdg_variazione_riga_gest
+			Pdg_variazione_riga_gestHome homeVarPDG =  (Pdg_variazione_riga_gestHome)getHome(userContext, Pdg_variazione_riga_gestBulk.class);
+			SQLBuilder sqlVarPDG = homeVarPDG.createSQLBuilder();
+			if (ante2015)
+				sqlVarPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
+			else
+				sqlVarPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
+			sqlVarPDG.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
+
+			return sqlVarPDG.executeExistsQuery(getConnection(userContext));
+		}
+	}
 }

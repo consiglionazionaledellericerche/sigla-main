@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_accordiBase"
+	keyClassName="it.cnr.contab.bilaterali00.bulk.Blt_accordiKey"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_accordiHome">
+	<defaultColumnMap
+		tableName="BLT_ACCORDI">
+		<columnMapping
+			columnName="NOME_ENTE_STR"
+			propertyName="nome_ente_str"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="ACRONIMO_ENTE_STR"
+			propertyName="acronimo_ente_str"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_NAZIONE_STR"
+			propertyName="pg_nazione_str"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_FIRMA_ACCORDO"
+			propertyName="data_firma_accordo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_FIRMA_ADDENDUM"
+			propertyName="data_firma_addendum"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_RESPONS_ITA"
+			propertyName="cd_respons_ita"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="EMAIL_RESPONS_ITA"
+			propertyName="email_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TELEF_RESPONS_ITA"
+			propertyName="telef_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="FAX_RESPONS_ITA"
+			propertyName="fax_respons_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="COGNOME_RESPONS_STR"
+			propertyName="cognome_respons_str"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME_RESPONS_STR"
+			propertyName="nome_respons_str"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="EMAIL_RESPONS_STR"
+			propertyName="email_respons_str"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TELEF_RESPONS_STR"
+			propertyName="telef_respons_str"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="FAX_RESPONS_STR"
+			propertyName="fax_respons_str"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_DIARIA_ITA"
+			propertyName="importo_diaria_ita"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_MENSILE_ITA"
+			propertyName="importo_mensile_ita"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_DIARIA_STR"
+			propertyName="importo_diaria_str"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DIARIA_LUNGO_PERIODO"
+			propertyName="diaria_lungo_periodo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_MENSILE_STR"
+			propertyName="importo_mensile_str"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="SPESE_VIAGGIO_ITA"
+			propertyName="spese_viaggio_ita"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_RIMBORSO_TRENO"
+			propertyName="fl_rimborso_treno"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SPESE_VISTO"
+			propertyName="fl_spese_visto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_CONV_FISCALE"
+			propertyName="fl_conv_fiscale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SALTA_CONVENZIONE"
+			propertyName="fl_salta_convenzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_PAGAMENTO_ENTE"
+			propertyName="fl_pagamento_ente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_TERZO_ENTE"
+			propertyName="cd_terzo_ente"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_ARTICOLO_CONV_FISCALE"
+			propertyName="num_articolo_conv_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_ARTICOLO_PROP_INTEL"
+			propertyName="num_articolo_prop_intel"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_PROT_DEC_CONTR"
+			propertyName="num_prot_dec_contr"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_PROT_DEC_CONT"
+			propertyName="data_prot_dec_contr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PRC_ONERI_FISCALI"
+			propertyName="prc_oneri_fiscali"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PRC_ONERI_CONTRIBUTIVI"
+			propertyName="prc_oneri_contributivi"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PRC_ANTICIPO"
+			propertyName="prc_anticipo"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_MAX_ANTICIPO"
+			propertyName="importo_max_anticipo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA_ITA"
+			propertyName="cd_divisa_ita"
+			sqlTypeName="VARCHAR"
+			columnSize="10" 
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_PROT_PARERE_COMMISSIONE"
+			propertyName="num_prot_parere_commissione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_PARERE_COMMISSIONE"
+			propertyName="dt_prot_parere_commissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_LISTA_CONGIUNTA"
+			propertyName="num_prot_lista_congiunta"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_LISTA_CONGIUNTA"
+			propertyName="dt_prot_lista_congiunta"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_VIAGGI_INTERNI"
+			propertyName="fl_viaggi_interni"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_LETTERA_INVITO"
+			propertyName="fl_lettera_invito"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ATTI_AMMINISTRATIVI"
+			propertyName="fl_atti_amministrativi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DS_NAZIONE_ENG"
+			propertyName="ds_nazione_eng"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_AGGETTIVO_NAZIONAL"
+			propertyName="ds_aggettivo_nazional"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_COMMISSIONE_BONIFICO"
+			propertyName="importo_commissione_bonifico"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO_ENTE_STR"
+			propertyName="indirizzo_ente_str"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="CITTA_ENTE_STR"
+			propertyName="citta_ente_str"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="EMAIL_TRASMISSIONE_PASSAPORTO"
+			propertyName="email_trasmissione_passaporto"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ANNO_INI"
+			propertyName="anno_ini"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ANNO_FIN"
+			propertyName="anno_fin"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DIARIA_CONTRIB_SOGG_ITA"
+			propertyName="im_diaria_contrib_sogg_ita"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IM_MENSILE_CONTRIB_SOGG_ITA"
+			propertyName="im_mensile_contrib_sogg_ita"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="nome_ente_str" />
+	<persistentProperty
+		name="acronimo_ente_str" />
+	<persistentProperty
+		name="pg_nazione_str" />
+	<persistentProperty
+		name="data_firma_accordo" />
+	<persistentProperty
+		name="data_firma_addendum" />
+	<persistentProperty
+		name="cd_respons_ita" />
+	<persistentProperty
+		name="email_respons_ita" />
+	<persistentProperty
+		name="telef_respons_ita" />
+	<persistentProperty
+		name="fax_respons_ita" />
+	<persistentProperty
+		name="cognome_respons_str" />
+	<persistentProperty
+		name="nome_respons_str" />
+	<persistentProperty
+		name="email_respons_str" />
+	<persistentProperty
+		name="telef_respons_str" />
+	<persistentProperty
+		name="fax_respons_str" />
+	<persistentProperty
+		name="importo_diaria_ita" />
+	<persistentProperty
+		name="importo_mensile_ita" />
+	<persistentProperty
+		name="importo_diaria_str" />
+	<persistentProperty
+		name="diaria_lungo_periodo" />
+	<persistentProperty
+		name="importo_mensile_str" />
+	<persistentProperty
+		name="spese_viaggio_ita" />
+	<persistentProperty
+		name="fl_rimborso_treno" />
+	<persistentProperty
+		name="fl_spese_visto" />
+	<persistentProperty
+		name="fl_conv_fiscale" />
+	<persistentProperty
+		name="fl_salta_convenzione" />
+	<persistentProperty
+		name="fl_pagamento_ente" />
+	<persistentProperty
+		name="cd_terzo_ente" />
+	<persistentProperty
+		name="num_articolo_conv_fiscale" />
+	<persistentProperty
+		name="num_articolo_prop_intel" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="num_prot_dec_contr" />
+	<persistentProperty
+		name="data_prot_dec_contr" />
+	<persistentProperty
+		name="prc_oneri_fiscali" />
+	<persistentProperty
+		name="prc_oneri_contributivi" />
+	<persistentProperty
+		name="prc_anticipo" />
+	<persistentProperty
+		name="importo_max_anticipo" />
+	<persistentProperty
+		name="cd_divisa_ita" />
+	<persistentProperty
+		name="num_prot_parere_commissione" />
+	<persistentProperty
+		name="dt_prot_parere_commissione" />
+	<persistentProperty
+		name="num_prot_lista_congiunta" />
+	<persistentProperty
+		name="dt_prot_lista_congiunta" />
+	<persistentProperty
+		name="fl_viaggi_interni" />
+	<persistentProperty
+		name="fl_lettera_invito" />
+	<persistentProperty
+		name="fl_atti_amministrativi" />
+	<persistentProperty
+		name="ds_nazione_eng" />
+	<persistentProperty
+		name="ds_aggettivo_nazional" />
+	<persistentProperty
+		name="importo_commissione_bonifico" />
+	<persistentProperty
+		name="indirizzo_ente_str" />
+	<persistentProperty
+		name="citta_ente_str" />
+	<persistentProperty
+		name="email_trasmissione_passaporto" />
+	<persistentProperty
+		name="anno_ini" />
+	<persistentProperty
+		name="anno_fin" />
+	<persistentProperty
+		name="im_diaria_contrib_sogg_ita" />
+	<persistentProperty
+		name="im_mensile_contrib_sogg_ita" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

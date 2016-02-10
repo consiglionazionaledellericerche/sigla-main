@@ -1,5 +1,6 @@
 <%@ page 
 	import="it.cnr.jada.action.*,
+		it.cnr.jada.UserContext,
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.jada.util.jsp.*,
@@ -9,6 +10,8 @@
 
 <%
 	CRUDTerzoBP bp = (CRUDTerzoBP)BusinessProcess.getBusinessProcess(request);
+	UserContext uc = HttpActionContext.getUserContext(session);
+	TerzoBulk terzo = (TerzoBulk)bp.getModel();
 %>
 
 <table>
@@ -20,12 +23,12 @@
 <%}%>
 <tr>
   <td><% bp.writeFormLabel(out,"default","denominazione_sede"); %></td>
-  <td><% bp.writeFormInput(out,"default","denominazione_sede"); %></td>
+  <td colspan="3"><% bp.writeFormInput(out,"default","denominazione_sede"); %></td>
 </tr>
 <% if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() ) { %>
 <tr>
 	<td><% bp.writeFormLabel(out,"ds_unita_organizzativa");%></td>
-	<td><% bp.writeFormInput(out,null,"cd_unita_org",!bp.isInserting(),null,null);%>
+	<td colspan="3"><% bp.writeFormInput(out,null,"cd_unita_org",!bp.isInserting(),null,null);%>
 		<% bp.writeFormInput(out,"ds_unita_organizzativa");%>
 		<% bp.writeFormInput(out,null,"find_unita_organizzativa",!bp.isInserting(),null,null);%></td>
 </tr>
@@ -45,16 +48,39 @@
 		<% bp.writeFormInput(out,"find_rapp_legale");%>
 	</td>
 </tr>
-<% }%>
+<% }%> 
 <tr>
 	<% bp.writeFormField(out,"note");%>
 </tr>
 <tr>
-<%	if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() )
-		bp.writeFormField(out,"dt_fine_validita");
-	else
-		bp.writeFormField(out,"dt_fine_rapporto");
-%>
+  <% if(terzo != null && terzo.getAnagrafico() != null && terzo.getAnagrafico().getCodiceAmministrazioneIpa() != null ){ %>
+	<%	if(bp.isGestoreIstat(uc, terzo)){ %>
+		<% bp.writeFormField(out,"codiceUnivocoUfficioIpa");%>
+	<%} else { %> 
+		<td><%bp.writeFormLabel(out,"default","codiceUnivocoUfficioIpa"); %></td>
+		<td><% bp.writeFormInput(out,"default","codiceUnivocoUfficioIpa",true,null,null);%></td>
+	<%} %>
+  <%} %> 
+  <%if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() ){ %>
+    <%if(bp.isGestoreIstat(uc, terzo)){ %> 
+		<% bp.writeFormField(out,"codiceUnivocoPcc");%>
+		<% bp.writeFormField(out,"denominazionePcc");%>
+	<%} else { %> 
+		<td><%bp.writeFormLabel(out,"default","codiceUnivocoPcc"); %></td>
+		<td><% bp.writeFormInput(out,"default","codiceUnivocoPcc",true,null,null);%></td>
+		<td><%bp.writeFormLabel(out,"default","denominazionePcc"); %></td>
+		<td><% bp.writeFormInput(out,"default","denominazionePcc",true,null,null);%></td>
+	<%} %>
+  <%} %>
+</tr>
+<tr>
+	<%	if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() ){ %>
+		<td><%bp.writeFormLabel(out,"default","dt_fine_validita"); %></td> 
+		<td><%bp.writeFormInput(out,"default","dt_fine_validita",false,null,null); %></td>
+	<% }else { %>
+		<td><%bp.writeFormLabel(out,"default","dt_fine_rapporto"); %></td>
+		<td><%bp.writeFormInput(out,"default","dt_fine_rapporto",true,null,null); %></td>
+	<%} %> 
 </tr>
 </table>
 

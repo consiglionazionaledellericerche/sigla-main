@@ -1,5 +1,6 @@
 package it.cnr.contab.fondecon00.comp;
 
+import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
@@ -15,15 +16,19 @@ import it.cnr.contab.docamm00.docs.bulk.Documento_genericoHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.compensi00.docs.bulk.Bonus_nucleo_famBulk;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 
 import it.cnr.contab.anagraf00.util.PartitaIVAControllo;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class FondoSpesaComponent extends it.cnr.jada.comp.CRUDComponent implements IFondoSpesaMgr {
 	/**
@@ -83,7 +88,7 @@ public void controlloQuadrature(
 	if( spesa.getDt_spesa() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Data Spesa non può essere nulla.");
 
-	PreparedStatement ps = null;
+	LoggableStatement ps = null;
 	try {
 		lockBulk(context, fondo);
 		Fondo_spesaHome spesaHome = (Fondo_spesaHome)getHome(context, Fondo_spesaBulk.class);
@@ -158,6 +163,13 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk)
 											((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio())))
 			throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare una spesa per un esercizio non aperto!");
 
+		//Verifica della tracciabilità dei pagamenti
+		try {
+			verificaTracciabilitaPagamenti(userContext, spesa);
+		} catch (RemoteException e) {
+			throw handleException(spesa, e);
+		}
+		
 		return spesa;
 	} catch (Throwable e) {
 		throw handleException(spesa, e);
@@ -571,7 +583,7 @@ private void validaSpesa(it.cnr.jada.UserContext userContext, Fondo_spesaBulk sp
 
 	if(spesa.getIm_ammontare_spesa() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Specificare l'importo della spesa!");
-	if(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(spesa.getIm_ammontare_spesa()) >= 0)
+	if(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(spesa.getIm_ammontare_spesa()) >= 0)
 		throw new it.cnr.jada.comp.ApplicationException("L'importo della spesa deve essere positivo e diverso da 0!");
 
 	if(spesa.getDt_spesa() == null)
@@ -614,7 +626,7 @@ private void validaSpesa(it.cnr.jada.UserContext userContext, Fondo_spesaBulk sp
 			spesa.getCodice_fiscale().trim().length() <= 0 ||
 			spesa.getCitta() == null || 
 			spesa.getCitta().getCrudStatus() != OggettoBulk.NORMAL) {
-			throw new it.cnr.jada.comp.ApplicationException("Dati fornitore non sufficenti (min: Denominazione, Codice Fiscale, Città).");
+			throw new it.cnr.jada.comp.ApplicationException("Dati fornitore non sufficienti (min: Denominazione, Codice Fiscale, Città).");
 		}
 		try {
 			if(spesa.getPartita_iva() != null && spesa.getPartita_iva().length() != 0) {
@@ -648,7 +660,6 @@ private void validaSpesa(it.cnr.jada.UserContext userContext, Fondo_spesaBulk sp
 	controlloQuadrature(userContext, spesa);
 
 }
-
 //^^@@
 /** 
   *  Verifica l'esistenza e apertura dell'esercizio
@@ -680,4 +691,22 @@ public boolean verificaStatoEsercizio(
 	}
 
 }
+public void verificaTracciabilitaPagamenti(UserContext context,
+		Fondo_spesaBulk spesa) throws ComponentException, RemoteException {
+	Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+	java.math.BigDecimal limite=sess.getIm01(context, new Integer(0), null,"LIMITE_UTILIZZO_CONTANTI", "LIMITE1");
+	java.sql.Timestamp data_da=sess.getDt01(context, new Integer(0), null,"LIMITE_UTILIZZO_CONTANTI", "LIMITE1");
+	java.sql.Timestamp data_a=sess.getDt02(context, new Integer(0), null,"LIMITE_UTILIZZO_CONTANTI", "LIMITE1");
+	if ( sess == null  )
+		throw new ApplicationException("Configurazione CNR: manca la definizione del LIMITE_UTILIZZO_CONTANTI");	
+	
+	if ( limite == null || data_da == null || data_a == null)
+		throw new ApplicationException("Configurazione CNR: non sono stati impostati i valori per LIMITE_UTILIZZO_CONTANTI - LIMITE1");			
+
+	if (spesa.getDt_spesa().compareTo(data_da) > -1 && 
+		spesa.getDt_spesa().compareTo(data_a) < 1 &&
+		spesa.getIm_netto_spesa().compareTo(limite)>0)
+		throw new ApplicationException("Non è possibile procedere. Nel rispetto della tracciabilità dei pagamenti, non sono ammissibili spese con importo superiore a " + limite);
+}
+
 }

@@ -2,6 +2,8 @@ package it.cnr.contab.doccont00.consultazioni.comp;
 
 
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.consultazioni.bulk.VRendicontazioneBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_comp_res_sintesiBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
@@ -52,7 +54,7 @@ public class ConsGAEComResSintComponent extends CRUDComponent {
 	 * @return SQLBuilder la query da effettuare
 	 */
 	private SQLBuilder completaSQL(SQLBuilder sql, String tabAlias, CompoundFindClause baseClause, CompoundFindClause findClause){ 
-		sql.addClause(baseClause);		
+		sql.addClause(baseClause); 		
 		sql.addClause(findClause);
 		return sql;
 	}
@@ -112,7 +114,7 @@ public class ConsGAEComResSintComponent extends CRUDComponent {
 				sql.addSQLClause("AND", "V_CDR_VALIDO_LIV1.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
 				sql.addSQLClause("AND", "V_CDR_VALIDO_LIV1.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));*/
 				
-				sql.addSQLClause("AND", "CDR",sql.EQUALS,CNRUserContext.getCd_cdr(context));
+				sql.addSQLClause("AND", "CDR",SQLBuilder.EQUALS,CNRUserContext.getCd_cdr(context));
 				sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
 			 }
 				else {
@@ -179,6 +181,25 @@ public class ConsGAEComResSintComponent extends CRUDComponent {
 			CdrBulk cdr = new CdrBulk( it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext) );
 
 			return (CdrBulk)getHome(userContext, cdr).findByPrimaryKey(cdr);
+		} catch (it.cnr.jada.persistency.PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public RemoteIterator findConsultazioneRend(UserContext userContext,  CompoundFindClause baseClause, CompoundFindClause findClause) throws it.cnr.jada.comp.ComponentException {
+		BulkHome home = getHome(userContext, VRendicontazioneBulk.class);
+		try{
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		    Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk) getHome(userContext,Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));		
+			if(!isUtenteEnte(userContext)){ 
+					if(!uoScrivania.isUoCds())
+						  sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+					sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+			}
+			sql.addClause(baseClause); 		 
+			sql.addClause(findClause);
+			return iterator(userContext,sql,VRendicontazioneBulk.class,null);
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw new ComponentException(e);
 		}

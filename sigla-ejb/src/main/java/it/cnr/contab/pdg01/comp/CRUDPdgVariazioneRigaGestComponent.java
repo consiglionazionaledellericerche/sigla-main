@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Iterator;
 
 import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -21,6 +23,7 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -45,6 +48,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -52,7 +56,9 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
@@ -83,12 +89,32 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 			testata.setRigheVariazioneEtrGest(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliEntrataVariazioneGestionale(testata)));
 			testata.setRigheVariazioneSpeGest(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpesaVariazioneGestionale(testata)));
 			inizializzaVistosuDettagli(userContext,testata);
-			getHomeCache(userContext).fetchAll(userContext);
 			testata.setTotale_quota_spesa(Utility.ZERO);
+			PersistentHome laHome = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
 			for (Iterator righeVar=testata.getRigheVariazioneSpeGest().iterator();righeVar.hasNext();){
 				Pdg_variazione_riga_gestBulk varRiga = (Pdg_variazione_riga_gestBulk)righeVar.next();
 				testata.setTotale_quota_spesa(Utility.nvl(testata.getTotale_quota_spesa()).add(Utility.nvl(varRiga.getIm_variazione())));
+
+				SQLBuilder sql = laHome.createSQLBuilder();
+				sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,testata.getEsercizio());
+				sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varRiga.getCd_cdr_assegnatario());
+				sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,varRiga.getCd_linea_attivita());
+				List list = laHome.fetchAll(sql);
+				if (list.size()==1)
+					varRiga.setProgetto(((WorkpackageBulk)list.get(0)).getProgetto());
 			}					
+			for (Iterator righeVar=testata.getRigheVariazioneEtrGest().iterator();righeVar.hasNext();){
+				Pdg_variazione_riga_gestBulk varRiga = (Pdg_variazione_riga_gestBulk)righeVar.next();
+
+				SQLBuilder sql = laHome.createSQLBuilder();
+				sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,testata.getEsercizio());
+				sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varRiga.getCd_cdr_assegnatario());
+				sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,varRiga.getCd_linea_attivita());
+				List list = laHome.fetchAll(sql);
+				if (list.size()==1)
+					varRiga.setProgetto(((WorkpackageBulk)list.get(0)).getProgetto());
+			}					
+			getHomeCache(userContext).fetchAll(userContext);
 			return testata;
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -223,34 +249,41 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * @param userContext lo userContext che ha generato la richiesta
 	 * @param clauses clausole di ricerca gia' specificate dall'utente
 	 * @return il SQLBuilder con la clausola aggiuntiva sul gestore
+	 * @throws RemoteException 
 	 */
 	public SQLBuilder selectLinea_attivitaByClause (UserContext userContext, 
 													Pdg_variazione_riga_spesa_gestBulk dett,
 													WorkpackageBulk latt, 
-													CompoundFindClause clause) throws ComponentException, PersistencyException {	
+													CompoundFindClause clause) throws ComponentException, PersistencyException, RemoteException {	
 		SQLBuilder sql = getHome(userContext, latt, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
 
-		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-		sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,dett.getCd_cdr_assegnatario());
-	    sql.addClause("AND","ti_gestione",sql.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+		sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,dett.getCd_cdr_assegnatario());
+	    sql.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+	    if (dett.getProgetto()!=null && dett.getProgetto().getPg_progetto()!=null)
+	    	sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
+	    else
+	    	sql.addSQLClause(FindClause.AND, "1!=1");
 	    
-		
+	 // Obbligatorio cofog sulle GAE
+	 	if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+	 		sql.addSQLClause(FindClause.AND,"CD_COFOG",SQLBuilder.ISNOTNULL,null);
 		sql.addTableToHeader("FUNZIONE");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_FUNZIONE","FUNZIONE.CD_FUNZIONE");
-		sql.addSQLClause("AND", "FUNZIONE.FL_UTILIZZABILE",sql.EQUALS,"Y");
+		sql.addSQLClause(FindClause.AND, "FUNZIONE.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 
 		sql.addTableToHeader("NATURA");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
-		sql.addSQLClause("AND", "NATURA.FL_SPESA",sql.EQUALS,"Y");
+		sql.addSQLClause(FindClause.AND, "NATURA.FL_SPESA",SQLBuilder.EQUALS,"Y");
 
 		sql.addTableToHeader("PROGETTO_GEST");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","PROGETTO_GEST.ESERCIZIO");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO","PROGETTO_GEST.PG_PROGETTO");
-		sql.addSQLClause("AND","PROGETTO_GEST.FL_UTILIZZABILE",sql.EQUALS,"Y");
+		sql.addSQLClause(FindClause.AND,"PROGETTO_GEST.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 
 		if (dett.getPdg_variazione().getTipologia_fin() != null) {
-			sql.openParenthesis("AND");
-			sql.addSQLClause("OR","NATURA.TIPO",SQLBuilder.EQUALS,dett.getPdg_variazione().getTipologia_fin());			
+			sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.OR,"NATURA.TIPO",SQLBuilder.EQUALS,dett.getPdg_variazione().getTipologia_fin());			
 
 			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 			try {
@@ -261,7 +294,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 				throw new ComponentException(e);
 			}
 			if (config != null){
-				sql.addSQLClause( "OR", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", sql.EQUALS, config.getVal01());
+				sql.addSQLClause( FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, config.getVal01());
 			}
 			sql.closeParenthesis();
 		}
@@ -278,7 +311,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 			throw new ComponentException(e);
 		}
 		if (config != null){
-			sql.addSQLClause( "AND", "V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",  sql.NOT_EQUALS, config.getVal01());
+			sql.addSQLClause( FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",  SQLBuilder.NOT_EQUALS, config.getVal01());
 		}
 
 		/*
@@ -320,7 +353,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","PROGETTO_GEST.ESERCIZIO");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO","PROGETTO_GEST.PG_PROGETTO");
 		sql.addSQLClause("AND","PROGETTO_GEST.FL_UTILIZZABILE",sql.EQUALS,"Y");
-		
 		/*
 		 * L’origine delle fonti pilota l’utilizzo delle GAE sui dettagli della variazione. 
 		 * In particolare:
@@ -380,17 +412,33 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		SQLBuilder sql = progettoHome.createSQLBuilder();
 		sql.addSQLClause("AND","esercizio",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addSQLClause("AND","tipo_fase",sql.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
-		sql.addSQLClause("AND","livello",sql.EQUALS,ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if (parCnrBulk.getFl_nuovo_pdg())
+			sql.addClause("AND", "livello", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		else
+			sql.addClause("AND", "livello", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+
 		// Se uo 999.000 in scrivania: visualizza tutti i progetti
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 		if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-			sql.addSQLExistsClause("AND",progettoHome.abilitazioniModuli(userContext));
+			if (parCnrBulk.getFl_nuovo_pdg())
+				sql.addSQLExistsClause("AND",progettoHome.abilitazioniCommesse(userContext));
+			else
+				sql.addSQLExistsClause("AND",progettoHome.abilitazioniModuli(userContext));
 		}	  
 		if (clause != null) sql.addClause(clause);
-		
 		return sql; 
 	}	
 	
+	public SQLBuilder selectProgettoByClause (UserContext userContext, 
+											  Pdg_variazione_riga_gestBulk dett,
+											  ProgettoBulk prg, 
+											  CompoundFindClause clause) throws ComponentException, PersistencyException {
+		return selectLinea_attivita_progettoByClause (userContext, dett, prg, clause); 
+	}	
+
 	/**
 	 * Aggiunge delle clausole a tutte le operazioni di ricerca eseguite su Elemento_voceBulk 
 	 *	
@@ -413,9 +461,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 												   Pdg_variazione_riga_spesa_gestBulk dett,
 												   Elemento_voceBulk elementoVoce, 
 												   CompoundFindClause clause) throws ComponentException, PersistencyException {
-		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
-
 		if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
 
 		SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
@@ -435,11 +480,14 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
 		sql.closeParenthesis();
-
+		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_RESIDUO", sql.EQUALS, "N"); 
 		if (dett.getLinea_attivita() != null)
 			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,dett.getLinea_attivita().getCd_funzione());
-		if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
-			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if(!parCnrBulk.getFl_nuovo_pdg())
+			if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
+				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
 
 		if (clause != null) sql.addClause(clause);
 
@@ -450,9 +498,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 												   Pdg_variazione_riga_entrata_gestBulk dett,
 												   Elemento_voceBulk elementoVoce, 
 												   CompoundFindClause clause) throws ComponentException, PersistencyException {
-		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
-
 		if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
 
 		SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_ETR").createSQLBuilder();
@@ -472,7 +517,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.ISNULL, null);	
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.EQUALS, "N");	
 		sql.closeParenthesis();
-
+		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_ETR.FL_SOLO_RESIDUO", sql.EQUALS, "N");
 		if (dett.getLinea_attivita() != null && dett.getCd_linea_attivita() != null)
 			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_ETR.CD_NATURA",sql.EQUALS,dett.getLinea_attivita().getCd_natura());
 		if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null && !dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC))
@@ -488,7 +533,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		SQLBuilder sql = ((CdsHome)getHome(userContext, CdsBulk.class)).createSQLBuilder();
 		if (clause != null) 
 		  sql.addClause(clause);		
-		if(dett.isNonAccentrata()){ 
+		if(dett.isNonAccentrata()|| (dett.getElemento_voce()!=null && dett.getElemento_voce().getFl_prelievo())){ 
 			sql.addTableToHeader("ASS_UO_AREA");
 			sql.addTableToHeader("UNITA_ORGANIZZATIVA UO");
 			sql.addTableToHeader("UNITA_ORGANIZZATIVA CDS");
@@ -514,7 +559,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		BigDecimal totale = Utility.ZERO;
 		try {
 			java.sql.ResultSet rs = null;
-			PreparedStatement ps = null;
+			LoggableStatement ps = null;
 			try {
 				ps = sql.prepareStatement(getConnection(userContext));
 				try {

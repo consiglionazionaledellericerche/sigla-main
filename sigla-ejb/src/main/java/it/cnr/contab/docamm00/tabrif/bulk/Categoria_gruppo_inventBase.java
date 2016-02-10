@@ -32,6 +32,8 @@ public class Categoria_gruppo_inventBase extends Categoria_gruppo_inventKey impl
 	// FL_GESTIONE_TARGA CHAR(1) NOT NULL
 	private java.lang.Boolean fl_gestione_targa;
 
+	private java.lang.Boolean fl_gestione_seriale;
+
 
 public Categoria_gruppo_inventBase() {
 	super();
@@ -140,5 +142,11 @@ public java.lang.Boolean getFl_gestione_targa() {
 }
 public void setFl_gestione_targa(java.lang.Boolean fl_gestione_targa) {
 	this.fl_gestione_targa = fl_gestione_targa;
+}
+public java.lang.Boolean getFl_gestione_seriale() {
+	return fl_gestione_seriale;
+}
+public void setFl_gestione_seriale(java.lang.Boolean fl_gestione_seriale) {
+	this.fl_gestione_seriale = fl_gestione_seriale;
 }
 }

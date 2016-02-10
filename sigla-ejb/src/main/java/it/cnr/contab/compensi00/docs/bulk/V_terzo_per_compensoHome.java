@@ -151,13 +151,25 @@ public SQLBuilder selectVTerzo(String tipoDipendenteAltro, Integer codiceTerzo, 
 **/
 public SQLBuilder selectVTerzo(String tipoDipendenteAltro, Integer codiceTerzo, java.sql.Timestamp dtValiditaTerzo, java.sql.Timestamp dtValiditaRapp, CompoundFindClause clauses) throws PersistencyException{
 
+	return selectVTerzo(tipoDipendenteAltro, codiceTerzo, dtValiditaTerzo, dtValiditaRapp, clauses, true);
+}
+
+private SQLBuilder selectVTerzo(String tipoDipendenteAltro, Integer codiceTerzo, java.sql.Timestamp dtValiditaTerzo, java.sql.Timestamp dtValiditaRapp, CompoundFindClause clauses, Boolean filtroValidita) throws PersistencyException{
+
 	SQLBuilder sql = createSQLBuilder();
 	sql.setDistinctClause(true);
 	sql.addSQLClause("AND","TI_DIPENDENTE_ALTRO",sql.EQUALS,tipoDipendenteAltro);
 	sql.addSQLClause("AND","CD_TERZO",sql.EQUALS,codiceTerzo);
-	addClauseValidita(sql, dtValiditaTerzo, dtValiditaRapp);
+	if (filtroValidita){
+		addClauseValidita(sql, dtValiditaTerzo, dtValiditaRapp);
+	}
 	sql.addClause(clauses);
 
 	return sql;
+}
+
+public SQLBuilder selectVTerzo(Integer codiceTerzo, CompoundFindClause clauses) throws PersistencyException{
+
+	return selectVTerzo(null, codiceTerzo, null, null, clauses, false);
 }
 }

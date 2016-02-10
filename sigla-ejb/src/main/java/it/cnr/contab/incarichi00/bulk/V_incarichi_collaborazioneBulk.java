@@ -44,6 +44,9 @@ public class V_incarichi_collaborazioneBulk extends OggettoBulk implements Persi
 
 	private java.lang.String oggetto;
 
+//  non esiste su DB, contiene la procedura di conferimento incarico
+	private Incarichi_proceduraBulk incaricoProcedura;
+
 //  non esiste su DB, verrà riempito con ll URL dove scaricare il pdf del bando
 	private java.lang.String downloadUrl;
 
@@ -130,5 +133,11 @@ public class V_incarichi_collaborazioneBulk extends OggettoBulk implements Persi
 	}
 	public void setNr_contratti(java.lang.Integer nr_contratti) {
 		this.nr_contratti = nr_contratti;
+	}
+	public Incarichi_proceduraBulk getIncaricoProcedura() {
+		return incaricoProcedura;
+	}
+	public void setIncaricoProcedura(Incarichi_proceduraBulk incaricoProcedura) {
+		this.incaricoProcedura = incaricoProcedura;
 	}
 }

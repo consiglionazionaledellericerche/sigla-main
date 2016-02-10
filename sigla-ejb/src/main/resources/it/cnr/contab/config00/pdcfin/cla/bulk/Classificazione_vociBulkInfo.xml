@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="id_classificazione"
 		property="id_classificazione"
@@ -79,16 +79,16 @@
 		name="cd_livello6"
 		property="cd_livello6"
 		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
+		inputSize="5"
+		maxLength="5"
 		enabledOnSearch="true"
 		label="Sesto Livello" />
 	<fieldProperty
 		name="cd_livello7"
 		property="cd_livello7"
 		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
+		inputSize="5"
+		maxLength="5"
 		enabledOnSearch="true"
 		label="Settimo Livello" />
 	<fieldProperty
@@ -258,6 +258,13 @@
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Somma Totale Spese Accentrate" />
+	<fieldProperty
+		name="ti_classificazione"
+		property="ti_classificazione"
+		keysProperty="ti_classificazioneKeys"
+		label="Tipologia"
+		inputType="SELECT"
+		/>
 
 	<formFieldProperty
 		name="id_classificazione" />
@@ -319,6 +326,8 @@
 		name="find_centro_responsabilita" />
 	<formFieldProperty
 		name="tot_imp_piano_riparto_spese" />
+	<formFieldProperty
+		name="ti_classificazione" />
 
 	<findFieldProperty
 		name="esercizio" />

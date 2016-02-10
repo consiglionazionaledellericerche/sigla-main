@@ -1,25 +1,28 @@
 package it.cnr.contab.config00.comp;
 
-import it.cnr.contab.doccont00.core.bulk.*;
-import java.math.*;
-
-import java.sql.*;
-
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
-import java.io.Serializable;
-
-import java.util.*;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.EnteHome;
+import it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cdsBulk;
+import it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cnrBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.ejb.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Classe che ridefinisce alcune operazioni di CRUD su EsercizioBulk
@@ -351,29 +354,36 @@ private void creaEsplVociEsercizio(UserContext aUC, EsercizioBulk aEsBulk)  thro
 {
 	try
 	{
-		LoggableStatement cs = new LoggableStatement(getConnection( aUC ),
-				"{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-				+"CNRCTB001.creaEsplVociEsercizio(?,?,?)}",false,this.getClass());
-		try
-		{
-			cs.setObject( 1, aEsBulk.getEsercizio());
-			cs.setString( 2, aEsBulk.getCd_cds());
-			cs.setString( 3, null); // Viene utilizzato l'utcr dell'esercizio appena inserito
-			cs.executeQuery();
-		}
-		catch (Throwable e) 
-		{
-			throw handleException(e);
-		}
-		finally
-		{
-			cs.close();
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(aUC, aEsBulk.getEsercizio());
+		if (!parCnr.getFl_nuovo_pdg()) {
+			LoggableStatement cs = new LoggableStatement(getConnection( aUC ),
+					"{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+					+"CNRCTB001.creaEsplVociEsercizio(?,?,?)}",false,this.getClass());
+			try
+			{
+				cs.setObject( 1, aEsBulk.getEsercizio());
+				cs.setString( 2, aEsBulk.getCd_cds());
+				cs.setString( 3, null); // Viene utilizzato l'utcr dell'esercizio appena inserito
+				cs.executeQuery();
+			}
+			catch (Throwable e) 
+			{
+				throw handleException(e);
+			}
+			finally
+			{
+				cs.close();
+			}
 		}
 	}
 	catch ( SQLException e )
 	{
 		throw handleException(e);
 	}	
+	catch ( Exception e )
+	{
+		throw handleException( e );
+	}
 }
 /**
  * Impedisce la cancellazione di un EsercizioBulk. 
@@ -650,6 +660,41 @@ public boolean isEsercizioChiuso (UserContext userContext) throws ComponentExcep
 	 try{
 			EsercizioHome home=(EsercizioHome)getHome(userContext,EsercizioBulk.class);
 			return home.isEsercizioChiuso(userContext);
+	 }catch (PersistencyException ex) {
+					throw handleException(ex);	
+}
+}
+
+/**
+ * Estrae il bulk dell'esercizio dell'ultimo anno aperto del cds a partire dall'esercizio di scrivania
+ * Nel caso non trovi nulla restituisce valore vuoto
+ *
+ * @param userContext contesto
+ * @return l'esercizio del centro di spesa corrispondente all'ultimo anno aperto
+ */	
+public EsercizioBulk getLastEsercizioOpen( UserContext userContext ) throws it.cnr.jada.comp.ComponentException 
+{
+	try 
+	{
+		EsercizioHome home = (EsercizioHome)getHome(userContext, EsercizioBulk.class);
+		EsercizioBulk lastEsercizioOpen = null;
+		
+		for (Iterator esercizi = ((EsercizioHome)getHome(userContext,EsercizioBulk.class)).findEserciziSuccessivi(new EsercizioBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext))).iterator();esercizi.hasNext();){
+			EsercizioBulk esercizio = (EsercizioBulk)esercizi.next();
+			if (lastEsercizioOpen==null || esercizio.getEsercizio().compareTo(lastEsercizioOpen.getEsercizio())==1)
+				lastEsercizioOpen=esercizio;
+		}
+		
+		return lastEsercizioOpen;
+	} catch (Throwable e) {
+		throw handleException(e);
+	}
+}
+public boolean isEsercizioAperto (UserContext userContext) throws ComponentException
+{
+	 try{
+			EsercizioHome home=(EsercizioHome)getHome(userContext,EsercizioBulk.class);
+			return home.isEsercizioAperto(userContext,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext),it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 	 }catch (PersistencyException ex) {
 					throw handleException(ex);	
 }

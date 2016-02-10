@@ -20,9 +20,33 @@
 		command="doOnTipoVariazioneChange"
 		label="Tipologia della variazione" />
 	<fieldProperty
+		name="tipo_variazioneForAssegniRicerca"
+		property="tipo_variazione"
+		keysProperty="tipo_variazioneForAssegniRicercaKeys"
+		inputType="SELECT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		command="doOnTipoVariazioneChange"
+		label="Tipologia della variazione" />
+	<fieldProperty
 		name="tipo_variazioneMinima"
 		property="tipo_variazione"
 		keysProperty="tipo_variazioneMinimaKeys"
+		inputType="SELECT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		command="doOnTipoVariazioneChange"
+		label="Tipologia della variazione" />
+	<fieldProperty
+		name="tipo_variazioneMinimaForAssegniRicerca"
+		property="tipo_variazione"
+		keysProperty="tipo_variazioneMinimaForAssegniRicercaKeys"
 		inputType="SELECT"
 		inputSize="50"
 		maxLength="50"
@@ -101,7 +125,13 @@
 		name="tipo_variazione" 
 		label="Tipologia" />
 	<formFieldProperty
+		name="tipo_variazioneForAssegniRicerca" 
+		label="Tipologia" />
+	<formFieldProperty
 		name="tipo_variazioneMinima" 
+		label="Tipologia" />
+	<formFieldProperty
+		name="tipo_variazioneMinimaForAssegniRicerca" 
 		label="Tipologia" />
 	<formFieldProperty
 		name="tipo_variazioneForEnte" 

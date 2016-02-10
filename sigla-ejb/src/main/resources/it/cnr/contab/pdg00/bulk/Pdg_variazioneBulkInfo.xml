@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Variazioni al Piano di Gestione"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Variazioni al Piano di Gestione"
           longDescription="Variazioni al PDG">
 	<fieldProperty
 		name="esercizio"
@@ -113,7 +113,7 @@
         enabledOnSearch="true"		
 		maxLength="1000"
 		nullable="false"
-		label="Descrizione" />
+		label="Descrizione e Riferimenti" />
 	<fieldProperty
 		name="ds_delibera"
 		property="ds_delibera"
@@ -123,7 +123,7 @@
         enabledOnSearch="true"		
 		maxLength="200"
 		nullable="false"
-		label="Motivazione" />
+		label="Descrizione delibera" />
 	<fieldProperty
 		name="tipo_variazione"
 		property="tipo_variazione"
@@ -170,9 +170,9 @@
 		cols="80"
 		rows="3"
         enabledOnSearch="true"		
-		maxLength="200"
-		nullable="true"
-		label="Riferimenti" />
+		maxLength="500"
+		nullable="false"
+		label="Motivazione" />
 	<fieldProperty
 		name="cd_causale_respinta"
 		property="cd_causale_respinta"
@@ -190,9 +190,9 @@
 		cols="80"
 		rows="3"
         enabledOnSearch="true"		
-		maxLength="200"
+		maxLength="500"
 		nullable="true"
-		label="Motivazione" />
+		label="Motivazione mancata app." />
 	<fieldProperty
 		name="dt_app_formale"
 		property="dt_app_formale"
@@ -384,7 +384,28 @@
 		property="fl_visto_dip_variazioni"
 		inputType="CHECKBOX"
 		label="Visto" />
-		
+	<fieldProperty
+		name="stato_invio"
+		property="stato_invio"
+		inputType="SELECT"
+		keysProperty="stato_invioKeys"
+		inputSize="3"
+		maxLength="3"
+        enabledOnInsert="false"
+        enabledOnEdit="true"
+        enabledOnSearch="true"		
+		nullable="true"
+		label="Stato Invio" />	
+	<fieldProperty
+		name="dt_firma"
+		property="dt_firma"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data firma" />	
     <form
         name="searchtool">
 	 	<formFieldProperty
@@ -500,7 +521,11 @@
 		name="ds_variazione_bilancio" />		
 	<formFieldProperty
 		name="fl_visto_dip_variazioni" />
-				
+	<formFieldProperty
+		name="stato_invio" />	
+	<formFieldProperty
+		name="dt_firma" />	
+							
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -539,7 +564,10 @@
 		name="cd_elemento_voce" />
 	<findFieldProperty
 		name="fl_visto_dip_variazioni" />
-		
+	<findFieldProperty
+		name="stato_invio" />
+	<findFieldProperty
+		name="dt_firma" />	
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -574,7 +602,10 @@
 		name="dt_app_formale" />
 	<columnFieldProperty
 		name="cd_elemento_voce" />
-			
+	<columnFieldProperty
+		name="stato_invio" />	
+	<columnFieldProperty
+		name="dt_firma" />		
 	<columnSet
 	        name="RiepilogoVariazioni">
         	<columnFieldProperty
@@ -584,7 +615,7 @@
         	<columnFieldProperty
         		name="ds_variazione"/> 
         	<columnFieldProperty
-        		name="stato"/> 
+        		name="stato"/> 	
 	</columnSet> 
 	
 	<columnSet
@@ -596,8 +627,8 @@
         	<columnFieldProperty
         		name="ds_variazione"/> 
         	<columnFieldProperty
-        		name="stato"/> 
-	</columnSet>
+        		name="stato"/>
+       </columnSet>
 	
   	<columnSet
 		name="vp_pdg_variazione">
@@ -637,6 +668,10 @@
 				name="dt_app_formale" />
 			<columnFieldProperty
 				name="cd_elemento_voce" />
+			<columnFieldProperty
+				name="stato_invio" />	
+			<columnFieldProperty
+				name="dt_firma" />	
 	</columnSet>
 	
 	

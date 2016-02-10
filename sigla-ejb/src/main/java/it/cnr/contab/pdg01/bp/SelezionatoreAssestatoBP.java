@@ -400,7 +400,7 @@ public class SelezionatoreAssestatoBP extends ConsultazioniBP{
 					}
 					else
 					{
-						voceSel.setPrc_da_assegnare(Utility.nvl(voceSel.getImp_da_assegnare()).divide(totaleSelVoci, 4, java.math.BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
+						voceSel.setPrc_da_assegnare(Utility.nvl(voceSel.getImp_da_assegnare()).divide(totaleSelVoci, 4, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));
 						totalePrcVoci = totalePrcVoci.add( voceSel.getPrc_da_assegnare() );
 					}
 				}
@@ -424,12 +424,12 @@ public class SelezionatoreAssestatoBP extends ConsultazioniBP{
 
 			voceSel.setImp_da_assegnare(Utility.ZERO);
 			
-			if (voceSel.getImporto_disponibile_netto().compareTo(importoDaRipartire.multiply(voceSel.getPrc_da_assegnare().divide(new BigDecimal(100))).setScale(2,BigDecimal.ROUND_HALF_EVEN))<0) {
+			if (voceSel.getImporto_disponibile_netto().compareTo(importoDaRipartire.multiply(voceSel.getPrc_da_assegnare().divide(new BigDecimal(100))).setScale(2,BigDecimal.ROUND_HALF_UP))<0) {
 				voceSel.setImp_da_assegnare(voceSel.getImporto_disponibile_netto());
 				allineaPercentuali = Boolean.TRUE;
 			}
 			else
-				voceSel.setImp_da_assegnare(importoDaRipartire.multiply(voceSel.getPrc_da_assegnare().divide(new BigDecimal(100))).setScale(2,BigDecimal.ROUND_HALF_EVEN));
+				voceSel.setImp_da_assegnare(importoDaRipartire.multiply(voceSel.getPrc_da_assegnare().divide(new BigDecimal(100))).setScale(2,BigDecimal.ROUND_HALF_UP));
 		}
 
 		//Siccome potrei aver inserito, a causa della mancanza di disponibilità, un importo non coerente con

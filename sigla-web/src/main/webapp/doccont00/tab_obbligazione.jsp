@@ -33,7 +33,7 @@
 	    <% bp.getController().writeFormInput( out, "cd_unita_organizzativa"); %>
 		<% bp.getController().writeFormInput( out, "ds_unita_organizzativa"); %></td>				 
 	</tr>
-	<tr>
+	<tr>  
 	<td><% bp.getController().writeFormLabel( out, "pg_obbligazione"); %></td>	
 	<td colspan=2>
 		<% bp.getController().writeFormInput( out, "pg_obbligazione"); %>
@@ -51,7 +51,7 @@
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "ds_obbligazione"); %></td>
 	<td colspan=2>
-		<% bp.getController().writeFormInput( out, "ds_obbligazione"); %></td>
+		<% bp.getController().writeFormInput( out,"default", "ds_obbligazione",bp.isRoCampiResiduoProprio(),"FormInput",null); %></td>
 	</tr>
 
 <!-- 
@@ -102,7 +102,6 @@
 			             <% bp.getController().writeFormInput(out,"pg_repertorio");%>
 			             <% bp.getController().writeFormInput(out,"oggetto_repertorio");%>
 						 <% bp.getController().writeFormInput(out,"find_incarico_repertorio"); %>
-			 			 <% bp.getController().writeFormInput(out,"crea_repertorio"); %>
 			         </td>
 			      </tr>
 			      <% } %>
@@ -131,10 +130,10 @@
 	  <tr>
 	   <td><% bp.getController().writeFormLabel( out, "cd_terzo"); %></td>
 	   <td colspan=2>
-		<% bp.getController().writeFormInput( out, "cd_terzo"); %>
-		<% bp.getController().writeFormInput( out, "ds_creditore"); %>
-		<% bp.getController().writeFormInput( out, "find_creditore"); %>
-		<% bp.getController().writeFormInput( out, "crea_creditore"); %>
+		<% bp.getController().writeFormInput( out,"default","cd_terzo",bp.isRoCampiResiduoProprio(),"FormInput",null); %>
+		<% bp.getController().writeFormInput( out,"default","ds_creditore",bp.isRoCampiResiduoProprio(),"FormInput",null); %>
+		<% bp.getController().writeFormInput( out,"default","find_creditore",bp.isRoCampiResiduoProprio(),"FormInput",null); %>
+		<% bp.getController().writeFormInput( out,"default","crea_creditore",bp.isRoCampiResiduoProprio(),"FormInput",null); %>
 	   </td>
 	  </tr>
 	  <tr>
@@ -179,9 +178,9 @@
 			<table>
 			<tr>
 			<td>
-		    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce", bp.isROElemento_voce(),"FormInput",null); %>
-		    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce", bp.isROElemento_voce(),"FormInput",null); %>
-		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce", bp.isROFindElemento_voce(),"FormInput",null); %>
+		    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce", bp.isRoCampiResiduoProprio()||bp.isROElemento_voce(),"FormInput",null); %>
+		    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce", bp.isRoCampiResiduoProprio()||bp.isROElemento_voce(),"FormInput",null); %>
+		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",bp.isRoCampiResiduoProprio()|| bp.isROFindElemento_voce(),"FormInput",null); %>
 			</td>
 			<td>
 			<%JSPUtils.button(out, "img/find16.gif", "img/find16.gif", "Disponibilità<BR>Voce", "if (disableDblClick()) submitForm('doConsultaInserisciVoce')",null,true);%>
@@ -190,18 +189,36 @@
 			</table>			
 		</td>				 
 	</tr>
+  	<% if (bp.isElementoVoceNewVisible()){ %>
+	<tr>
+		<td colspan="3">
+			<div class="Group" style="border-color:red">
+			<table>
+			<tr>
+				<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce_next"); %><label> <%=Integer.valueOf(obbligazione.getEsercizio()+1).toString()%></label></td>
+				<td colspan=2>
+				    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce_next"); %>
+				    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce_next"); %>
+				    <% bp.getController().writeFormInput(out,"default","find_elemento_voce_next"); %>
+				</td>				 
+			</tr>
+			</table>
+			</div>
+		</td>
+	</tr>
+    <%}%>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "cd_riferimento_contratto"); %></td>
-		<td><% bp.getController().writeFormInput( out, "cd_riferimento_contratto"); %></td>
+		<td><% bp.getController().writeFormInput( out,"default", "cd_riferimento_contratto", bp.isRoCampiResiduoProprio(),"FormInput",null); %></td>
 		<td><% bp.getController().writeFormLabel( out, "dt_scadenza_contratto"); %>
-		    <% bp.getController().writeFormInput( out, "dt_scadenza_contratto"); %></td>
+		    <% bp.getController().writeFormInput( out,"default", "dt_scadenza_contratto", bp.isRoCampiResiduoProprio(),"FormInput",null); %></td>
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "cd_tipo_obbligazione"); %></td>
 		<td colspan=2>
-			<% bp.getController().writeFormInput( out, "cd_tipo_obbligazione"); %>
-			<% bp.getController().writeFormInput( out, "ds_tipo_obbligazione"); %>
-			<% bp.getController().writeFormInput( out, "find_tipo_obbligazione"); %>
+			<% bp.getController().writeFormInput( out,"default", "cd_tipo_obbligazione", bp.isRoCampiResiduoProprio(),"FormInput",null); %>
+			<% bp.getController().writeFormInput( out,"default", "ds_tipo_obbligazione", bp.isRoCampiResiduoProprio(),"FormInput",null); %>
+			<% bp.getController().writeFormInput( out,"default", "find_tipo_obbligazione", bp.isRoCampiResiduoProprio(),"FormInput",null); %>
 		</td>
 	</tr>
   </table>

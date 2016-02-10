@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Stato invio Reversali"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Stato invio Reversali"
           longDescription="Stato invio Reversali di Incasso">
 	<fieldProperty
 		name="cd_cds"
@@ -108,6 +108,11 @@
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data invio distinta" />
+	<fieldProperty
+		name="contabile"
+		property="contabile"
+		inputType="TEXT"
+		label="Contabile" />	
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -198,4 +203,6 @@
 		name="dt_emis_dis" />
 	<columnFieldProperty
 		name="dt_invio_dis" />
+	<columnFieldProperty
+		name="contabile" />
 </bulkInfo>

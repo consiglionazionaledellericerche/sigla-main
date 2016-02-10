@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="codAmm"
+		property="codAmm"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="codAmm" />
+	<fieldProperty
+		name="desAmm"
+		property="desAmm"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		enabledOnEdit="false"
+		label="desAmm" />
+	<fieldProperty
+		name="comune"
+		property="comune"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="comune" />
+	<fieldProperty
+		name="nomeResp"
+		property="nomeResp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="nomeResp" />
+	<fieldProperty
+		name="cognResp"
+		property="cognResp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cognResp" />
+	<fieldProperty
+		name="cap"
+		property="cap"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="cap" />
+	<fieldProperty
+		name="provincia"
+		property="provincia"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="provincia" />
+	<fieldProperty
+		name="regione"
+		property="regione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="regione" />
+	<fieldProperty
+		name="sitoIstituzionale"
+		property="sitoIstituzionale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="sitoIstituzionale" />
+	<fieldProperty
+		name="indirizzo"
+		property="indirizzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="indirizzo" />
+	<fieldProperty
+		name="titoloResp"
+		property="titoloResp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="titoloResp" />
+	<fieldProperty
+		name="tipologiaIstat"
+		property="tipologiaIstat"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="150"
+		enabledOnEdit="false"
+		label="tipologiaIstat" />
+	<fieldProperty
+		name="tipologiaAmm"
+		property="tipologiaAmm"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="140"
+		enabledOnEdit="false"
+		label="tipologiaAmm" />
+	<fieldProperty
+		name="acronimo"
+		property="acronimo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="acronimo" />
+	<fieldProperty
+		name="cfValidato"
+		property="cfValidato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="cfValidato" />
+	<fieldProperty
+		name="cf"
+		property="cf"
+		inputType="TEXT"
+		inputSize="11"
+		maxLength="11"
+		enabledOnEdit="false"
+		label="cf" />
+	<fieldProperty
+		name="mail1"
+		property="mail1"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="mail1" />
+	<fieldProperty
+		name="tipoMail1"
+		property="tipoMail1"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipoMail1" />
+	<fieldProperty
+		name="mail2"
+		property="mail2"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="mail2" />
+	<fieldProperty
+		name="tipoMail2"
+		property="tipoMail2"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipoMail2" />
+	<fieldProperty
+		name="mail3"
+		property="mail3"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="mail3" />
+	<fieldProperty
+		name="tipoMail3"
+		property="tipoMail3"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipoMail3" />
+	<fieldProperty
+		name="mail4"
+		property="mail4"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="mail4" />
+	<fieldProperty
+		name="tipoMail4"
+		property="tipoMail4"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipoMail4" />
+	<fieldProperty
+		name="mail5"
+		property="mail5"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="mail5" />
+	<fieldProperty
+		name="tipoMail5"
+		property="tipoMail5"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipoMail5" />
+	<fieldProperty
+		name="urlFacebook"
+		property="urlFacebook"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1024"
+		enabledOnEdit="false"
+		label="urlFacebook" />
+	<fieldProperty
+		name="urlTwitter"
+		property="urlTwitter"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1024"
+		enabledOnEdit="false"
+		label="urlTwitter" />
+	<fieldProperty
+		name="urlGoogleplus"
+		property="urlGoogleplus"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1024"
+		enabledOnEdit="false"
+		label="urlGoogleplus" />
+	<fieldProperty
+		name="urlYoutube"
+		property="urlYoutube"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1024"
+		enabledOnEdit="false"
+		label="urlYoutube" />
+	<fieldProperty
+		name="livAccessibili"
+		property="livAccessibili"
+		inputType="TEXT"
+		inputSize="11"
+		maxLength="11"
+		enabledOnEdit="false"
+		label="livAccessibili" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="codAmm" />
+	</form>
+	<formFieldProperty
+		name="codAmm" />
+	<formFieldProperty
+		name="desAmm" />
+	<formFieldProperty
+		name="comune" />
+	<formFieldProperty
+		name="nomeResp" />
+	<formFieldProperty
+		name="cognResp" />
+	<formFieldProperty
+		name="cap" />
+	<formFieldProperty
+		name="provincia" />
+	<formFieldProperty
+		name="regione" />
+	<formFieldProperty
+		name="sitoIstituzionale" />
+	<formFieldProperty
+		name="indirizzo" />
+	<formFieldProperty
+		name="titoloResp" />
+	<formFieldProperty
+		name="tipologiaIstat" />
+	<formFieldProperty
+		name="tipologiaAmm" />
+	<formFieldProperty
+		name="acronimo" />
+	<formFieldProperty
+		name="cfValidato" />
+	<formFieldProperty
+		name="cf" />
+	<formFieldProperty
+		name="mail1" />
+	<formFieldProperty
+		name="tipoMail1" />
+	<formFieldProperty
+		name="mail2" />
+	<formFieldProperty
+		name="tipoMail2" />
+	<formFieldProperty
+		name="mail3" />
+	<formFieldProperty
+		name="tipoMail3" />
+	<formFieldProperty
+		name="mail4" />
+	<formFieldProperty
+		name="tipoMail4" />
+	<formFieldProperty
+		name="mail5" />
+	<formFieldProperty
+		name="tipoMail5" />
+	<formFieldProperty
+		name="urlFacebook" />
+	<formFieldProperty
+		name="urlTwitter" />
+	<formFieldProperty
+		name="urlGoogleplus" />
+	<formFieldProperty
+		name="urlYoutube" />
+	<formFieldProperty
+		name="livAccessibili" />
+	<findFieldProperty
+		name="codAmm" />
+	<findFieldProperty
+		name="desAmm" />
+	<findFieldProperty
+		name="comune" />
+	<findFieldProperty
+		name="nomeResp" />
+	<findFieldProperty
+		name="cognResp" />
+	<findFieldProperty
+		name="cap" />
+	<findFieldProperty
+		name="provincia" />
+	<findFieldProperty
+		name="regione" />
+	<findFieldProperty
+		name="sitoIstituzionale" />
+	<findFieldProperty
+		name="indirizzo" />
+	<findFieldProperty
+		name="titoloResp" />
+	<findFieldProperty
+		name="tipologiaIstat" />
+	<findFieldProperty
+		name="tipologiaAmm" />
+	<findFieldProperty
+		name="acronimo" />
+	<findFieldProperty
+		name="cfValidato" />
+	<findFieldProperty
+		name="cf" />
+	<findFieldProperty
+		name="mail1" />
+	<findFieldProperty
+		name="tipoMail1" />
+	<findFieldProperty
+		name="mail2" />
+	<findFieldProperty
+		name="tipoMail2" />
+	<findFieldProperty
+		name="mail3" />
+	<findFieldProperty
+		name="tipoMail3" />
+	<findFieldProperty
+		name="mail4" />
+	<findFieldProperty
+		name="tipoMail4" />
+	<findFieldProperty
+		name="mail5" />
+	<findFieldProperty
+		name="tipoMail5" />
+	<findFieldProperty
+		name="urlFacebook" />
+	<findFieldProperty
+		name="urlTwitter" />
+	<findFieldProperty
+		name="urlGoogleplus" />
+	<findFieldProperty
+		name="urlYoutube" />
+	<findFieldProperty
+		name="livAccessibili" />
+	<columnFieldProperty
+		name="codAmm" />
+	<columnFieldProperty
+		name="desAmm" />
+	<columnFieldProperty
+		name="comune" />
+	<columnFieldProperty
+		name="nomeResp" />
+	<columnFieldProperty
+		name="cognResp" />
+	<columnFieldProperty
+		name="cap" />
+	<columnFieldProperty
+		name="provincia" />
+	<columnFieldProperty
+		name="regione" />
+	<columnFieldProperty
+		name="sitoIstituzionale" />
+	<columnFieldProperty
+		name="indirizzo" />
+	<columnFieldProperty
+		name="titoloResp" />
+	<columnFieldProperty
+		name="tipologiaIstat" />
+	<columnFieldProperty
+		name="tipologiaAmm" />
+	<columnFieldProperty
+		name="acronimo" />
+	<columnFieldProperty
+		name="cfValidato" />
+	<columnFieldProperty
+		name="cf" />
+	<columnFieldProperty
+		name="mail1" />
+	<columnFieldProperty
+		name="tipoMail1" />
+	<columnFieldProperty
+		name="mail2" />
+	<columnFieldProperty
+		name="tipoMail2" />
+	<columnFieldProperty
+		name="mail3" />
+	<columnFieldProperty
+		name="tipoMail3" />
+	<columnFieldProperty
+		name="mail4" />
+	<columnFieldProperty
+		name="tipoMail4" />
+	<columnFieldProperty
+		name="mail5" />
+	<columnFieldProperty
+		name="tipoMail5" />
+	<columnFieldProperty
+		name="urlFacebook" />
+	<columnFieldProperty
+		name="urlTwitter" />
+	<columnFieldProperty
+		name="urlGoogleplus" />
+	<columnFieldProperty
+		name="urlYoutube" />
+	<columnFieldProperty
+		name="livAccessibili" />
+</bulkInfo>

@@ -75,17 +75,17 @@ public boolean checkPercentuale(OggettoBulk vova) throws ApplicationException, P
  * 
  */
 
-public Voce_ivaBulk loadDefault() throws PersistencyException{
-
-	java.util.List occurences = null;
-	Voce_ivaBulk voceIva = new Voce_ivaBulk();
-	voceIva.setFl_default_istituzionale(Boolean.TRUE);
-	occurences = find(voceIva);
-	if (occurences == null || occurences.isEmpty())
-		return null;
-	return (Voce_ivaBulk)occurences.get(0);
-}
-@Override
+	public Voce_ivaBulk loadDefault() throws PersistencyException{
+	
+		java.util.List occurences = null;
+		Voce_ivaBulk voceIva = new Voce_ivaBulk();
+		voceIva.setFl_default_istituzionale(Boolean.TRUE);
+		occurences = find(voceIva);
+		if (occurences == null || occurences.isEmpty())
+			return null;
+		return (Voce_ivaBulk)occurences.get(0);
+	}
+	@Override
 	public SQLBuilder selectByClause(CompoundFindClause compoundfindclause)
 			throws PersistencyException {
 		SQLBuilder sql= super.selectByClause(compoundfindclause);
@@ -95,13 +95,13 @@ public Voce_ivaBulk loadDefault() throws PersistencyException{
 		sql.closeParenthesis();
 		return sql;
 	}
-@Override
-public SQLBuilder createSQLBuilder() {
-	SQLBuilder sql=super.createSQLBuilder();
-	sql.openParenthesis("AND");
-	sql.addSQLClause("AND", "DT_CANCELLAZIONE", sql.ISNULL, null);
-	sql.addSQLClause("OR","DT_CANCELLAZIONE",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
-	sql.closeParenthesis();
-	return sql;
-}
+	@Override
+	public SQLBuilder createSQLBuilder() {
+		SQLBuilder sql=super.createSQLBuilder();
+		sql.openParenthesis("AND");
+		sql.addSQLClause("AND", "DT_CANCELLAZIONE", sql.ISNULL, null);
+		sql.addSQLClause("OR","DT_CANCELLAZIONE",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.closeParenthesis();
+		return sql;
+	}
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+    <fieldProperty
+		name="identificativoSdI"
+		property="identificativoSdI"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="40"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Identificativo SdI" />
+    
+    <fieldProperty
+		name="nomeFile"
+		property="nomeFile"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Nome del File firmato" />
+	<fieldProperty
+		name="file"
+		property="file"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File firmato" />
+	<fieldProperty
+		name="nomeFileMetadati"
+		property="nomeFileMetadati"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Nome del File firmato" />
+	<fieldProperty
+		name="metadati"
+		property="metadati"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File con Metadati" />
+	<fieldProperty
+		name="fileFattureRicevute"
+		property="fileFattureRicevute"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File fatture ricevute" />
+					
+	<formFieldProperty
+		name="file" />
+	<formFieldProperty
+		name="metadati" />
+	<formFieldProperty
+		name="fileFattureRicevute" />		
+</bulkInfo>

@@ -1,0 +1,11 @@
+<webscript>
+   <shortname>Firma fatture</shortname>
+   <description><![CDATA[
+   ]]>
+   </description>
+   <url>/sigla/firma/fatture</url>
+   <family>SIGLA</family>
+   <format default="json">extension</format>
+   <authentication>user</authentication>
+   <transaction>required</transaction>
+</webscript>

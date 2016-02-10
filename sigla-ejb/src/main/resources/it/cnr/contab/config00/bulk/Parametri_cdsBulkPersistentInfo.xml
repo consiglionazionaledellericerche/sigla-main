@@ -8,9 +8,16 @@
 			columnName="CD_CDS"
 			propertyName="centro_spesa.cd_unita_organizzativa"
 		/>
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="dipartimento.cd_dipartimento"
+		/>
 	</defaultColumnMap>
 
 	<persistentProperty 
 	   name="centro_spesa"
 	   partOfOid="true" />
+	  <persistentProperty 
+	   name="dipartimento"
+	   partOfOid="false" />
 </SQLPersistentInfo>

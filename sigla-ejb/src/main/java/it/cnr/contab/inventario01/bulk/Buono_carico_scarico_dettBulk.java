@@ -248,7 +248,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 
 		if (getQuantita() == null) setQuantita(new Long(1));
 		if (getValore_unitario() == null) setValore_unitario(new java.math.BigDecimal(0));
-	    	setTotale(new BigDecimal(getQuantita().longValue()).multiply(getValore_unitario()).setScale(2,java.math.BigDecimal.ROUND_HALF_EVEN));
+	    	setTotale(new BigDecimal(getQuantita().longValue()).multiply(getValore_unitario()).setScale(2,java.math.BigDecimal.ROUND_HALF_UP));
 	    	
 	}
 	public BigDecimal getTotale() {

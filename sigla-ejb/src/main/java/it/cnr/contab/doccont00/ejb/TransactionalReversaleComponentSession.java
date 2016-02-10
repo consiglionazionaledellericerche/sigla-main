@@ -1,6 +1,9 @@
 package it.cnr.contab.doccont00.ejb;
 import java.rmi.*;
 
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalReversaleComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements ReversaleComponentSession {
@@ -520,5 +523,28 @@ public it.cnr.contab.doccont00.core.bulk.ReversaleBulk setCodiciSIOPECollegabili
 			throw new java.rmi.RemoteException("Uncaugth exception",ex);
 		}
 	}
+}
+
+public byte[] lanciaStampa(UserContext userContext, String cds,	Integer esercizio, Long pgReversale) 
+		throws PersistencyException, ComponentException, RemoteException {
+	try {
+		return  (byte[]) invoke("lanciaStampa",new Object[] {
+				userContext,
+				cds,
+				esercizio,
+				pgReversale
+				});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+	
 }
 }

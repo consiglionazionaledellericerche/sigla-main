@@ -1,21 +1,23 @@
 package it.cnr.contab.reports.servlet;
 
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrKey;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Print_spoolerKey;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.utenze00.bulk.UtenteKey;
+import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.persistency.sql.HomeCache;
+
 import java.util.Locale;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
-
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.reports.bulk.*;
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.contab.util.servlet.NameValuePairs;
-import it.cnr.jada.action.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.sql.*;
 
 public class OfflineReportServlet extends javax.servlet.http.HttpServlet {
 /**

@@ -59,12 +59,13 @@ public class ConsObbligazioniBP extends SelezionatoreListaBP
 		try {
 			super.init(config,context);
 
-			CompoundFindClause clauses = new CompoundFindClause();
-			clauses.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bulk.CNRUserInfo)context.getUserInfo()).getCdr().getCd_centro_responsabilita());
-			//clauses.addClause("AND", "pg_obbligazione", SQLBuilder.EQUALS, new Integer("2674"));
-			clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bulk.CNRUserInfo)context.getUserInfo()).getEsercizio(context));
+			//CompoundFindClause clauses = new CompoundFindClause();
 			
-			setBaseclause(clauses);
+//			clauses.addClause("AND", "cd_centro_responsabilita", SQLBuilder.STARTSWITH, ((it.cnr.contab.utenze00.bulk.CNRUserInfo)context.getUserInfo()).getCdr().getCd_cds());
+			//clauses.addClause("AND", "pg_obbligazione", SQLBuilder.EQUALS, new Integer("2674"));
+	//		clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bulk.CNRUserInfo)context.getUserInfo()).getEsercizio(context));
+			
+		//	setBaseclause(clauses);
 
 			//setMultiSelection(true);
 			setPageSize( 15 );	

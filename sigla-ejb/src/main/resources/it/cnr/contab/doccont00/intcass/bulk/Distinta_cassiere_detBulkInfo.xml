@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_cds"
 		property="cd_cds"
@@ -42,7 +42,13 @@
 		property="pg_dettaglio"
 		inputType="TEXT"
 		label="pg_dettaglio" />
-		
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />	
 
 	<formFieldProperty
 		name="cd_cds" />
@@ -58,6 +64,8 @@
 		name="pg_distinta" />
 	<formFieldProperty
 		name="pg_dettaglio" />
+	<formFieldProperty
+		name="cd_cds_origine" />
 
 	<findFieldProperty
 		name="cd_cds" />

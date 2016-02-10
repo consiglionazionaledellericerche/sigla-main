@@ -73,6 +73,11 @@
 	  	<tr>
 		<td><% bp.getController().writeFormLabel(out,"ti_associato_manrevForSearch"); %></td>
 		<td><% bp.getController().writeFormInput(out,"ti_associato_manrevForSearch"); %></td>
+		<td>
+   			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
+   			<% bp.getController().writeFormInput(out,null,"stato_liquidazione",isInSpesaMode,null,"");%>
+   		</td>
+		
 		</tr>
   <% } else { %>
 
@@ -89,6 +94,11 @@
 	  	<tr>
 		<td><% bp.getController().writeFormLabel(out,"ti_associato_manrev"); %></td>
 		<td><% bp.getController().writeFormInput(out,"ti_associato_manrev"); %></td>
+		
+		<td>
+   			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%> 
+   			<% bp.getController().writeFormInput(out,null,"stato_liquidazione",(missione.getCompenso()!=null && missione.getCompenso().isPagato()),null,"");%>
+   		</td>
 	  	</tr>
 
   <% } %>

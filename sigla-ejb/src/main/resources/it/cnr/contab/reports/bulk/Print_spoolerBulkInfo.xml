@@ -182,6 +182,13 @@
 		maxLength="400"
 		inputType="TEXT"
 		label="Descrizione Oggetto PEC" />
+	<fieldProperty
+		name="ds_numreg_pec"
+		property="ds_numreg_pec"
+		inputSize="50"
+		maxLength="50"
+		inputType="TEXT"
+		label="Descrizione Numero di registrazione documento PEC" />
 
 	<formFieldProperty
 		name="ds_stampa" />
@@ -216,6 +223,8 @@
 		name="cd_servizio_pec" />
 	<formFieldProperty
 		name="ds_oggetto_pec" />
+	<formFieldProperty
+		name="ds_numreg_pec" />
 		
 	<columnFieldProperty
 		name="utcr" />

@@ -1,11 +1,10 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
+	private static final long serialVersionUID = 1L;
+
 	// CAMBIO DECIMAL(15,4) NOT NULL
 	private java.math.BigDecimal cambio;
 
@@ -194,13 +193,78 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
 
 	// FL_LIQUIDAZIONE_DIFFERITA CHAR(1) NOT NULL
 	private java.lang.Boolean fl_liquidazione_differita;
+
+	// FL_MERCE_INTRA_UE CHAR(1) NOT NULL
+	private java.lang.Boolean fl_merce_intra_ue;
+
+	private java.lang.Long progr_univoco;
+
+	private java.sql.Timestamp data_protocollo;
+
+	private java.lang.String stato_liquidazione;
+
+	private java.lang.String causale;
 	
-public Fattura_passivaBase() {
-	super();
-}
-public Fattura_passivaBase(java.lang.String cd_cds,java.lang.String cd_unita_organizzativa,java.lang.Integer esercizio,java.lang.Long pg_fattura_passiva) {
-	super(cd_cds,cd_unita_organizzativa,esercizio,pg_fattura_passiva);
-}
+	// CD_CDS_COMPENSO VARCHAR(30)
+	private java.lang.String cds_compenso;
+
+	// CD_UO_COMPENSO VARCHAR(30)
+	private java.lang.String uo_compenso;
+
+	// ESERCIZIO_COMPENSO DECIMAL(4,0)
+	private java.lang.Integer esercizio_compenso;
+
+	// PG_COMPENSO DECIMAL(10,0)
+	private java.lang.Long pg_compenso;
+	
+
+	private java.lang.String idPaese;
+	private java.lang.String idCodice;
+	private java.lang.Long identificativoSdi;
+	private java.lang.Long progressivo;
+
+	public Fattura_passivaBase() {
+		super();
+	}
+
+	public Fattura_passivaBase(java.lang.String cd_cds,
+			java.lang.String cd_unita_organizzativa,
+			java.lang.Integer esercizio, java.lang.Long pg_fattura_passiva) {
+		super(cd_cds, cd_unita_organizzativa, esercizio, pg_fattura_passiva);
+	}
+
+	public java.lang.String getIdPaese() {
+		return idPaese;
+	}
+
+	public void setIdPaese(java.lang.String idPaese) {
+		this.idPaese = idPaese;
+	}
+
+	public java.lang.String getIdCodice() {
+		return idCodice;
+	}
+
+	public void setIdCodice(java.lang.String idCodice) {
+		this.idCodice = idCodice;
+	}
+
+	public java.lang.Long getIdentificativoSdi() {
+		return identificativoSdi;
+	}
+
+	public void setIdentificativoSdi(java.lang.Long identificativoSdi) {
+		this.identificativoSdi = identificativoSdi;
+	}
+
+	public java.lang.Long getProgressivo() {
+		return progressivo;
+	}
+
+	public void setProgressivo(java.lang.Long progressivo) {
+		this.progressivo = progressivo;
+	}
+
 /* 
  * Getter dell'attributo cambio
  */
@@ -951,4 +1015,60 @@ public java.lang.Boolean getFl_liquidazione_differita() {
 public void setFl_liquidazione_differita(java.lang.Boolean fl_liquidazione_differita) {
 	this.fl_liquidazione_differita = fl_liquidazione_differita;
 }
+public java.lang.Boolean getFl_merce_intra_ue() {
+	return fl_merce_intra_ue;
+}
+public void setFl_merce_intra_ue(java.lang.Boolean flMerceIntraUe) {
+	fl_merce_intra_ue = flMerceIntraUe;
+}
+public java.lang.Long getProgr_univoco() {
+	return progr_univoco;
+}
+public void setProgr_univoco(java.lang.Long progr_univoco) {
+	this.progr_univoco = progr_univoco;
+}
+public java.sql.Timestamp getData_protocollo() {
+	return data_protocollo;
+}
+public void setData_protocollo(java.sql.Timestamp data_protocollo) {
+	this.data_protocollo = data_protocollo;
+}
+public java.lang.String getStato_liquidazione() {
+	return stato_liquidazione;
+}
+public void setStato_liquidazione(java.lang.String stato_liquidazione) {
+	this.stato_liquidazione = stato_liquidazione;
+}
+public java.lang.String getCausale() {
+	return causale;
+}
+public void setCausale(java.lang.String causale) {
+	this.causale = causale;
+}
+public java.lang.String getCds_compenso() {
+	return cds_compenso;
+}
+public void setCds_compenso(java.lang.String cds_compenso) {
+	this.cds_compenso = cds_compenso;
+}
+public java.lang.String getUo_compenso() {
+	return uo_compenso;
+}
+public void setUo_compenso(java.lang.String uo_compenso) {
+	this.uo_compenso = uo_compenso;
+}
+public java.lang.Integer getEsercizio_compenso() {
+	return esercizio_compenso;
+}
+public void setEsercizio_compenso(java.lang.Integer esercizio_compenso) {
+	this.esercizio_compenso = esercizio_compenso;
+}
+public java.lang.Long getPg_compenso() {
+	return pg_compenso;
+}
+public void setPg_compenso(java.lang.Long pg_compenso) {
+	this.pg_compenso = pg_compenso;
+}
+
+
 }

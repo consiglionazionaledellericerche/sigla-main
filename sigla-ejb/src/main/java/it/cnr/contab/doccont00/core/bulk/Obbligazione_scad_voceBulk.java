@@ -150,7 +150,7 @@ public BigDecimal getPrc()
 	if ( !obbligazione_scadenzario.getObbligazione().getFl_calcolo_automatico().booleanValue() )
 	{
 		if ( getIm_voce() != null && obbligazione_scadenzario.getIm_scadenza() != null && obbligazione_scadenzario.getIm_scadenza().doubleValue() != 0)
-			return  getIm_voce().multiply( new BigDecimal(100)).divide( getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN );
+			return  getIm_voce().multiply( new BigDecimal(100)).divide( getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP );
 		else
 			return null;	
 	}		

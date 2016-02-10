@@ -124,3 +124,22 @@
 			</table>
 		</div>
 	<% } %>	 
+	<%if (bp.isSiope_cup_attivo() && mandato.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
+		<br><b><font size=3>CUP</font></b>
+		<div class="Group">
+			<table border="0" cellspacing="0" cellpadding="2">
+					<tr>
+						<td colspan="6"> 
+					        <% bp.getSiopeCupCollegati().writeHTMLTable(pageContext,"collegaARigaMandatoSiope",true,false,true,"100%","100px", true); %>
+						</td>
+					</tr> 
+						
+					<tr>	
+						<td><% bp.getSiopeCupCollegati().writeFormField(out,"cdCup"); %> 
+			    			<% bp.getSiopeCupCollegati().writeFormField(out,"dsCup"); %>
+			   				<% bp.getSiopeCupCollegati().writeFormField(out,"findCup"); %></td>
+			   			<td><% bp.getSiopeCupCollegati().writeFormField(out,"importo"); %></td> 	
+					</tr>
+			</table>
+		</div>
+	<% } %>	 

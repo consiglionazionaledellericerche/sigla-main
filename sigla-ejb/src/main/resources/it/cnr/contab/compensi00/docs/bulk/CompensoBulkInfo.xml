@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="cd_cds"
@@ -100,9 +100,31 @@
 		property="fl_accantona_add_terr"
 		inputType="CHECKBOX"		
 		enabledOnInsert = "false"
+		enabledOnEdit = "false"
 		enabledOnSearch = "false"
 		enabledOnFreeSearch = "true"
 		label="Rateizzazione addizionali irpef"/>
+	<fieldProperty
+		name="pg_trovato"
+		property="trovato.pg_trovato"
+		inputType="TEXT"
+		inputSize="10"
+		label="Identificativo del Trovato"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="titoloTrovato"
+		property="trovato.titolo"
+		maxLength="500"
+		inputSize="48"
+		inputType="ROTEXT"
+		label="Titolo del Trovato"/>
+	<fieldProperty
+		name="inventoreTrovato"
+		property="trovato.inventore"
+		maxLength="500"
+		inputSize="48"
+		inputType="ROTEXT"
+		label="Inventore del Trovato"/>
 	<fieldProperty
 		name="fl_recupero_rate"
 		property="fl_recupero_rate"
@@ -133,29 +155,22 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		label="Tipo compenso" />
+
+	<fieldProperty
+		name="tipoPrestazioneCompenso"
+		property="tipoPrestazioneCompenso"
+		printProperty="ds_ti_prestazione"
+		optionsProperty="tipiPrestazioneCompenso"
+		inputType="SELECT"
+		readonlyProperty="ROTipoPrestazioneCompenso"
+		nullable="true"
+		label="Tipo Prestazione" />
 	<fieldProperty
 		name="ti_prestazione"
 		property="ti_prestazione"
-		inputType="SELECT"
-		keysProperty="ti_prestazioneKeys"
-		nullable="true"
-		command="doDefault"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false"
-		label="Tipo prestazione" />
-	<fieldProperty
-		name="ti_prestazioneForSearch"
-		property="ti_prestazione"
-		inputType="SELECT"
-		keysProperty="ti_prestazioneKeys"
-		nullable="true"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Tipo prestazione" />
+		inputType="TEXT"
+		label="Codice Tipo Prestazione" />
+
 	<fieldProperty
 		name="fl_intera_qfissa_deduzione"
 		property="fl_intera_qfissa_deduzione"
@@ -236,6 +251,57 @@
 		enabledOnSearch = "false"
 		enabledOnFreeSearch = "true"
 		label="Generata fattura" />
+	<fieldProperty
+		name="data_protocollo"
+		property="data_protocollo"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="RODatiFattura"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data protocollo" />
+	<fieldProperty
+		name="numero_protocollo"
+		property="numero_protocollo"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="RODatiFattura"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Nr. protocollo" />		
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="RODatiFattura"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data scadenza" />
+	<fieldProperty
+		name="fl_documento_ele"
+		property="fl_documento_ele"
+		inputType="CHECKBOX"
+		nullable="true"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Documento elettronico" />		
 /****************** TERZO ********************/
 	<fieldProperty
 		name="find_terzo"
@@ -480,6 +546,8 @@
 		property="cd_trattamento"
 		inputType="TEXT"
 		label="Codice Trattamento" />
+		
+		
 	<fieldProperty
 		name="incarichi_repertorio_anno"
 		property="incarichi_repertorio_anno"
@@ -515,6 +583,49 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
 		label="Oggetto dell'attività" />
+		
+	<fieldProperty
+		name="contratto"
+		property="contratto"
+		inputType="SEARCHTOOL"
+		formName="searchtoolMin"
+		label="Contratto"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="esercizio_contr"	
+		property="contratto.esercizio"
+		label="Esercizio contratto"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="pg_contratto"
+		property="contratto.pg_contratto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Progressivo contratto"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="oggetto_contratto"
+		property="contratto.oggetto"
+		maxLength="500"
+		cols="80"
+		rows="5"
+		inputType="TEXTAREA"
+		label="Oggetto del contratto"
+		nullable="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		/>		
+		
+		
 	<fieldProperty
 		name="importo_iniziale"
 		property="importo_iniziale"
@@ -935,6 +1046,11 @@
 		property="obbligazioneScadenzario.ds_scadenza"
 		inputType="ROTEXT"
 		label="Descrizione scadenza" />
+	<fieldProperty
+		name="cig"
+		property="obbligazioneScadenzario.obbligazione.contratto.cig.cdCig"
+		inputType="ROTEXT"
+		label="Cig" />	
 /*********************************************/
 /******** SEARCH TOOL AGGIUNTIVI *************/
 /*********** DATI LIQUIDAZIONE ***************/
@@ -1277,6 +1393,69 @@
 		enabledOnSearch = "false"
 		enabledOnFreeSearch = "true"
 		label="Liquidazione differita" />	
+	<fieldProperty
+		name="find_pignorato"
+		property="pignorato"
+		inputType="SEARCHTOOL"
+		label="Terzo Pignorato"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_terzo_pignorato"
+		property="pignorato.cd_terzo"
+		readonlyProperty="ROPignorato"
+		label="Terzo Pignorato"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		nullable="true"
+		/>
+	<fieldProperty
+		name="ds_pignorato"
+		property="ds_pignorato"
+		readonlyProperty="ROPignorato"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="partita_iva_pignorato"
+		property="pignorato.anagrafico.partita_iva"
+		readonlyProperty="ROPignorato"
+		label="Partita IVA"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="true"		
+		/>
+	<fieldProperty
+		name="codice_fiscale_pignorato"
+		property="pignorato.anagrafico.codice_fiscale"
+		readonlyProperty="ROPignorato"
+		label="Codice Fiscale"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="true"		
+		/>
+	<fieldProperty
+		name="stato_liquidazione"
+		property="stato_liquidazione"
+		inputType="SELECT"
+		label="Stato liquidazione"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="stato_liquidazioneKeys" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="SELECT"
+		label="causale"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="causaleKeys" />		
 
 	<formFieldProperty name="cd_cds" />
 	<formFieldProperty name="cd_unita_organizzativa" />
@@ -1291,7 +1470,7 @@
 	<formFieldProperty name="ti_istituz_commerc" />
 	<formFieldProperty name="ti_istituz_commercForSearch" />
 	<formFieldProperty name="ti_prestazione" />
-	<formFieldProperty name="ti_prestazioneForSearch" />
+	<formFieldProperty name="tipoPrestazioneCompenso" />
 	<formFieldProperty name="ti_anagrafico" />
 	<formFieldProperty name="find_terzo" />
 	<formFieldProperty name="crea_terzo" />
@@ -1381,6 +1560,7 @@
 	<formFieldProperty name="scadenza_dt_scadenza" />
 	<formFieldProperty name="scadenza_im_scadenza" />
 	<formFieldProperty name="scadenza_ds_scadenza" />
+	<formFieldProperty name="cig" />
 	<formFieldProperty name="ti_associato_manrev" />
 	<formFieldProperty name="ti_associato_manrevForSearch" />
 	<formFieldProperty name="cd_regione_irap" />
@@ -1422,10 +1602,14 @@
 	<formFieldProperty name="contoN" />
 	<formFieldProperty name="pg_conguaglio" />
 	<formFieldProperty name="pg_minicarriera" />
+	<formFieldProperty name="dt_scadenza" />
+	<formFieldProperty name="data_protocollo" />
+	<formFieldProperty name="numero_protocollo" />
 	<formFieldProperty name="nr_fattura_fornitore" />
 	<formFieldProperty name="esercizio_fattura_fornitore" />
 	<formFieldProperty name="dt_fattura_fornitore" />
 	<formFieldProperty name="fl_generata_fattura" />
+	<formFieldProperty name="fl_documento_ele" />	
 	<formFieldProperty name="pgDocContPrincipale" />
 	<formFieldProperty name="dsDocContPrincipale" />
 	<formFieldProperty name="fl_diaria" />
@@ -1436,12 +1620,28 @@
 	<formFieldProperty name="fl_escludi_qvaria_deduzione" />
 	<formFieldProperty name="im_detrazione_personale_anag" />
 	<formFieldProperty name="fl_accantona_add_terr" />	
+	<formFieldProperty name="pg_trovato"
+		command="doVerificaEsistenzaTrovato" />
+	<formFieldProperty 	name="titoloTrovato" />
+	<formFieldProperty 	name="inventoreTrovato" />
 	<formFieldProperty name="esercizio_rep"/>			
 	<formFieldProperty name="pg_repertorio"/>			
 	<formFieldProperty name="esercizio_limite_rep"/>
 	<formFieldProperty name="im_netto_da_trattenere"
                        command="doOnImNettoDaTrattenereChange" />
    <formFieldProperty name="fl_liquidazione_differita"/> 
+   <formFieldProperty name="cd_terzo_pignorato"/> 
+   <formFieldProperty name="ds_pignorato"/> 
+   <formFieldProperty name="find_pignorato"/> 
+   <formFieldProperty name="codice_fiscale_pignorato"/>
+   <formFieldProperty name="partita_iva_pignorato"/>
+   
+   	<formFieldProperty name="contratto"/>
+   	<formFieldProperty name="esercizio_contr"/>			
+	<formFieldProperty name="pg_contratto"/>
+	<formFieldProperty name="oggetto_contratto" />
+	<formFieldProperty name="stato_liquidazione"/>		
+	<formFieldProperty name="causale"/>			
                        	
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -1454,6 +1654,7 @@
 	<columnFieldProperty name="stato_cofi" />
 	<columnFieldProperty name="ti_associato_manrev" />
 	<columnFieldProperty name="stato_pagamento_fondo_eco" />
+	<columnFieldProperty name="pg_trovato" />
 	<columnFieldProperty name="ti_anagrafico" />
 	<columnFieldProperty name="cd_terzo" />
 	<columnFieldProperty name="cognome" />
@@ -1463,11 +1664,14 @@
 	<columnFieldProperty name="codice_fiscale" />
 	<columnFieldProperty name="cd_tipo_rapporto" />
 	<columnFieldProperty name="cd_trattamento" />
+	<columnFieldProperty name="tipoPrestazioneCompenso" />
 	<columnFieldProperty name="cd_rapporto_inps" />	
 	<columnFieldProperty name="cd_attivita_inps" />	
 	<columnFieldProperty name="cd_altra_ass_inps" />		
 	<columnFieldProperty name="dt_cancellazione" />
 	<columnFieldProperty name="im_totale_compenso" />
+	<columnFieldProperty name="stato_liquidazione"/>		
+	<columnFieldProperty name="causale"/>			
 	<columnSet name="INCARICHI">
 		<columnFieldProperty name="esercizio" />
 		<columnFieldProperty name="pg_compenso" />
@@ -1507,7 +1711,7 @@
 	<findFieldProperty name="cd_termini_pag" />
 	<findFieldProperty name="cd_tipo_rapporto" />
 	<findFieldProperty name="cd_trattamento" />
-	<findFieldProperty name="ti_prestazioneForSearch" />
+	<findFieldProperty name="tipoPrestazioneCompenso" />
 	<findFieldProperty name="cd_rapporto_inps" />	
 	<findFieldProperty name="cd_attivita_inps" />	
 	<findFieldProperty name="cd_altra_ass_inps" />	
@@ -1548,10 +1752,15 @@
 		label="Unita organizzativa missione" />
 	<findFieldProperty name="fl_senza_calcoli" />
 	<findFieldProperty name="fl_recupero_rate" />			
+	<findFieldProperty name="dt_scadenza" />
+	<findFieldProperty name="data_protocollo" />
+	<findFieldProperty name="numero_protocollo" />
+	
 	<findFieldProperty name="nr_fattura_fornitore" />
 	<findFieldProperty name="esercizio_fattura_fornitore" />
 	<findFieldProperty name="dt_fattura_fornitore" />
 	<findFieldProperty name="fl_generata_fattura" />
+	<findFieldProperty name="fl_documento_ele" />
 	<findFieldProperty name="fl_diaria" />
 	<findFieldProperty name="fl_compenso_stipendi" />
 	<findFieldProperty name="fl_compenso_conguaglio" />
@@ -1563,5 +1772,10 @@
 	<findFieldProperty name="esercizio_rep"/>			
 	<findFieldProperty name="pg_repertorio"/>			
 	<findFieldProperty name="esercizio_limite_rep"/>
-	<findFieldProperty name="im_netto_da_trattenere"/>	
+	<findFieldProperty name="im_netto_da_trattenere"/>
+	<findFieldProperty name="cd_terzo_pignorato"/>	
+	<findFieldProperty name="esercizio_contr"/>			
+	<findFieldProperty name="pg_contratto"/>
+	<findFieldProperty name="stato_liquidazione"/>
+	<findFieldProperty name="causale"/>
 </bulkInfo>

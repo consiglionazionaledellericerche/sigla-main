@@ -5,6 +5,9 @@
 	<action 
 		path="/CRUDNazioneAction" actionClass="it.cnr.contab.anagraf00.action.CRUDNazioneAction">
 	</action>
+		<action 
+		path="/CRUDRifAreePaesiEsteriAction" actionClass="it.cnr.contab.anagraf00.action.CRUDRifAreePaesiEsteriAction">
+	</action>
 
 	<businessProcess
 		name="CRUDAbiCabBP" className="it.cnr.contab.anagraf00.bp.CRUDAbiCabBP">
@@ -38,4 +41,11 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
 	</businessProcess>
 
+	<businessProcess
+		name="CRUDRifAreePaesiEsteriBP" className="it.cnr.contab.anagraf00.bp.CRUDRifAreePaesiEsteriBP">
+		<forward name="default" path="/anagraf00/rif_aree_paesi_esteri.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabter.bulk.RifAreePaesiEsteriBulk"/>
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+		<init-param name="defaultAction" value="CRUDRifAreePaesiEsteriAction"/>		
+	</businessProcess>
 </action-mappings>

@@ -1,8 +1,12 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.math.*;
+
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+
 import java.util.*;
 
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -17,14 +21,16 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.*;
 
-public class AccertamentoBulk extends AccertamentoBase implements IDocumentoContabileBulk {
+public class AccertamentoBulk extends AccertamentoBase implements IDocumentoContabileBulk, AllegatoParentBulk {
+	private static final long serialVersionUID = 1L;
 	
 	private it.cnr.jada.util.OrderedHashtable anniResidui = new it.cnr.jada.util.OrderedHashtable();
 	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk debitore = new it.cnr.contab.anagraf00.core.bulk.TerzoBulk();
 	private it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk capitolo = new it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk();
+	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
 	private ContrattoBulk contratto = new ContrattoBulk();
 	private it.cnr.contab.config00.sto.bulk.CdsBulk cds = new CdsBulk();
-
+	private CdsBulk cdsEnte;
 	private it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = new it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk();
 	
 	private BulkList accertamento_scadenzarioColl = new BulkList();
@@ -57,6 +63,8 @@ public class AccertamentoBulk extends AccertamentoBase implements IDocumentoCont
 	public final static int INT_STATO_LATT_CONFERMATE		= 4;
 
 	private int internalStatus = INT_STATO_UNDEFINED;
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+	private boolean enableVoceNext = false;
 
 public AccertamentoBulk() {
 	super();
@@ -64,6 +72,12 @@ public AccertamentoBulk() {
 public AccertamentoBulk(java.lang.String cd_cds,java.lang.Integer esercizio,java.lang.Integer esercizio_originale,java.lang.Long pg_accertamento) {
 	super(cd_cds,esercizio,esercizio_originale,pg_accertamento);
 	setCds(new it.cnr.contab.config00.sto.bulk.CdsBulk(cd_cds));
+}
+public CdsBulk getCdsEnte() {
+	return cdsEnte;
+}
+public void setCdsEnte(CdsBulk cdsEnte) {
+	this.cdsEnte = cdsEnte;
 }
 /**
  * <!-- @TODO: da completare -->
@@ -134,7 +148,7 @@ public void completeFrom(
 		}
 	}
 
-	setIm_accertamento(importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_accertamento(importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 }
 /**
  * <!-- @TODO: da completare -->
@@ -150,7 +164,7 @@ public BulkCollection[] getBulkLists() {
 	// Metti solo le liste di oggetti che devono essere resi persistenti
 	
 	 return new it.cnr.jada.bulk.BulkCollection[] { 
-			accertamento_scadenzarioColl };
+			accertamento_scadenzarioColl, archivioAllegati };
 }
 /**
  * Insert the method's description here.
@@ -1170,5 +1184,92 @@ public void setCd_cds(java.lang.String cd_cds) {
 		if (getFl_netto_sospeso() == null)
 			setFl_netto_sospeso(Boolean.FALSE);
 		super.insertingUsing(persister, userContext);
+	}
+	
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+
+
+	public it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk getElemento_voce_next() {
+		return elemento_voce_next;
+	}
+	
+	public void setElemento_voce_next(it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next) {
+		this.elemento_voce_next = elemento_voce_next;
+	}
+	
+	@Override
+	public Integer getEsercizio_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getEsercizio();
+	}
+
+	@Override
+	public void setEsercizio_ev_next(Integer esercizio_ev_next) {
+		this.getElemento_voce_next().setEsercizio(esercizio_ev_next);
+	}
+
+	@Override
+	public String getTi_appartenenza_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getTi_appartenenza();
+	}
+	
+	@Override
+	public void setTi_appartenenza_ev_next(String ti_appartenenza_ev_next) {
+		this.getElemento_voce_next().setTi_appartenenza(ti_appartenenza_ev_next);
+	}
+	
+	@Override
+	public String getTi_gestione_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getTi_gestione();
+	}
+	
+	@Override
+	public void setTi_gestione_ev_next(String ti_gestione_ev_next) {
+		this.getElemento_voce_next().setTi_gestione(ti_gestione_ev_next);
+	}
+	
+	@Override
+	public String getCd_elemento_voce_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getCd_elemento_voce();
+	}
+	
+	@Override
+	public void setCd_elemento_voce_next(String cd_elemento_voce_next) {
+		this.getElemento_voce_next().setCd_elemento_voce(cd_elemento_voce_next);
+	}
+
+	public boolean isROElemento_voce_next() {
+		return elemento_voce_next == null || elemento_voce_next.getCrudStatus() == NORMAL;
+	}
+	
+	public boolean isEnableVoceNext() {
+		return enableVoceNext;
+	}
+	public void setEnableVoceNext(boolean enableVoceNext) {
+		this.enableVoceNext = enableVoceNext;
 	}
 }

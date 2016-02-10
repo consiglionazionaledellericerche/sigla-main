@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" longDescription="Stampa ripartizione costi su GAE/Modulo/Commessa">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" longDescription="Stampa ripartizione costi su GAE/Modulo/Commessa">
 
 	<formFieldProperty
 		name="cd_cds"
@@ -11,12 +11,17 @@
 		inputSize="3"
 		label="CDS" />	
 		
-	<formFieldProperty
+	  <formFieldProperty
 		name="esercizio"
 		property="esercizio"
 		inputType="ROTEXT"
-		inputSize="3"
-		label="Esercizio" />
+		inputSize="4"
+		label="Esercizio" /> 
+		
+	
+	<fieldProperty
+			name="esercizioForPrint"
+			property="esercizioForPrint"/>	
 
 	<fieldProperty
 		name="findUOForPrint"
@@ -136,6 +141,8 @@
 		enabledOnEdit="false"
 		caseSensitiveSearch="false"/>
 
+	<formFieldProperty name="esercizio"/>
+	<formFieldProperty name="esercizioForPrint"/>
 	<formFieldProperty name="findUOForPrint" />
 	<formFieldProperty name="cdUOForPrint" />
 	<formFieldProperty name="dsUOForPrint" />
@@ -214,7 +221,7 @@
 			paramNameJR="mese"
 			paramTypeJR="java.lang.Integer"/>
 		<printFieldProperty 
-			name="esercizio"
+			name="esercizioForPrint"
 			parameterPosition="1"
 			parameterType="STRING"
 			paramNameJR="esercizio"

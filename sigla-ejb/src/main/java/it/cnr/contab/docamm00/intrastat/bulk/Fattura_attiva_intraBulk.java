@@ -178,8 +178,8 @@ public it.cnr.contab.anagraf00.tabter.bulk.ProvinciaBulk getProvincia_origine() 
 }
 public void initialize() {
 
-    setAmmontare_euro(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-    setValore_statistico(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+    setAmmontare_euro(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+    setValore_statistico(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
     setMassa_netta(null);
     setUnita_supplementari(null);
 

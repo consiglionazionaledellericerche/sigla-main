@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Conserva, per ogni riga di Mandato - Codici SIOPE, i codici CUP associati ed il relativo importo."
+	longDescription="Conserva, per ogni riga di Mandato - Codici SIOPE, i codici CUP associati ed il relativo importo.">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="pgMandato"
+		property="pgMandato"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgMandato" />
+	<fieldProperty
+		name="esercizioObbligazione"
+		property="esercizioObbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizioObbligazione" />
+	<fieldProperty
+		name="esercizioOriObbligazione"
+		property="esercizioOriObbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizioOriObbligazione" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgObbligazione" />
+	<fieldProperty
+		name="pgObbligazioneScadenzario"
+		property="pgObbligazioneScadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgObbligazioneScadenzario" />
+	<fieldProperty
+		name="cdCdsDocAmm"
+		property="cdCdsDocAmm"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCdsDocAmm" />
+	<fieldProperty
+		name="cdUoDocAmm"
+		property="cdUoDocAmm"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdUoDocAmm" />
+	<fieldProperty
+		name="esercizioDocAmm"
+		property="esercizioDocAmm"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizioDocAmm" />
+	<fieldProperty
+		name="cdTipoDocumentoAmm"
+		property="cdTipoDocumentoAmm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdTipoDocumentoAmm" />
+	<fieldProperty
+		name="pgDocAmm"
+		property="pgDocAmm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgDocAmm" />
+	<fieldProperty
+		name="esercizioSiope"
+		property="esercizioSiope"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizioSiope" />
+	<fieldProperty
+		name="tiGestione"
+		property="tiGestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="tiGestione" />
+	<fieldProperty
+		name="cdSiope"
+		property="cdSiope"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdSiope" />
+	<fieldProperty
+		name="findCup"
+		property="cup"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Cup" />
+	<fieldProperty
+		name="cdCup"
+		property="cup.cdCup"
+		inputType="ROTEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsCup"
+		property="cup.descrizione"
+		inputType="ROTEXT"
+		inputSize="200"
+		maxLength="200"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="descrizione" />	
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		nullable="false"
+		label="Importo"
+		command="doDefault"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<formFieldProperty
+		name="findCup" />
+	<formFieldProperty
+		name="importo" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgMandato" />
+	<findFieldProperty
+		name="esercizioObbligazione" />
+	<findFieldProperty
+		name="esercizioOriObbligazione" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<findFieldProperty
+		name="cdCdsDocAmm" />
+	<findFieldProperty
+		name="cdUoDocAmm" />
+	<findFieldProperty
+		name="esercizioDocAmm" />
+	<findFieldProperty
+		name="cdTipoDocumentoAmm" />
+	<findFieldProperty
+		name="pgDocAmm" />
+	<findFieldProperty
+		name="esercizioSiope" />
+	<findFieldProperty
+		name="tiGestione" />
+	<findFieldProperty
+		name="cdSiope" />
+	<findFieldProperty
+		name="cdCup" />
+	<findFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgMandato" />
+	<columnFieldProperty
+		name="esercizioObbligazione" />
+	<columnFieldProperty
+		name="esercizioOriObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<columnFieldProperty
+		name="cdCdsDocAmm" />
+	<columnFieldProperty
+		name="cdUoDocAmm" />
+	<columnFieldProperty
+		name="esercizioDocAmm" />
+	<columnFieldProperty
+		name="cdTipoDocumentoAmm" />
+	<columnFieldProperty
+		name="pgDocAmm" />
+	<columnFieldProperty
+		name="esercizioSiope" />
+	<columnFieldProperty
+		name="tiGestione" />
+	<columnFieldProperty
+		name="cdSiope" />
+	<columnFieldProperty
+		name="cdCup" />
+	<columnFieldProperty
+		name="importo" />
+	<columnSet name="collegaARigaMandatoSiope">
+		<columnFieldProperty
+			name="cdCup" />
+		<columnFieldProperty
+			name="dsCup" />
+		<columnFieldProperty
+			name="importo" 
+			columnStyle="text-align: right;"
+			command="doDefault"
+			enabledOnEdit="true"
+			enabledOnInsert="true"/>
+	</columnSet>
+</bulkInfo>

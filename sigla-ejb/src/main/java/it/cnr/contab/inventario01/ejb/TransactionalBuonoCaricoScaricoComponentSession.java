@@ -3,6 +3,8 @@ import java.rmi.*;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
@@ -1395,6 +1397,22 @@ public void scaricaTuttiBeniDef(UserContext param0,
 		}
 	}
 	
+}
+public Ass_inv_bene_fatturaBulk sdoppiaAssociazioneFor(UserContext param0,Fattura_passiva_rigaBulk param1,Fattura_passiva_rigaBulk param2) throws ComponentException,
+		RemoteException {
+		try {
+			return ((Ass_inv_bene_fatturaBulk)invoke("sdoppiaAssociazioneFor",new Object[] {param0,param1,param2}));
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
 }
 
 }

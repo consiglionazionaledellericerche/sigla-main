@@ -84,7 +84,7 @@ public Collection findSituazioneCassaCds(it.cnr.jada.UserContext userContext, Ri
 			cdsClause = cdsClause + " OR B.CD_CDS = ? ";
 		cdsClause = cdsClause + " ) AND ";	
 		 
-		LoggableStatement ps = new LoggableStatement(getConnection(),"SELECT A.CD_CDS, sum(A.IM_SCADENZA - A.IM_ASSOCIATO_DOC_CONTABILE) " +
+		LoggableStatement ps = new LoggableStatement(getConnection(),"SELECT A.CD_CDS, sum(A.IM_ASSOCIATO_DOC_AMM - A.IM_ASSOCIATO_DOC_CONTABILE) " +
 									  "FROM " +
 									   it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 												  
 									  "OBBLIGAZIONE_SCADENZARIO A, " + 
@@ -95,7 +95,7 @@ public Collection findSituazioneCassaCds(it.cnr.jada.UserContext userContext, Ri
 									  "B.STATO_OBBLIGAZIONE = '" + ObbligazioneBulk.STATO_OBB_DEFINITIVO + "' AND " +
 									  "B.CD_TIPO_DOCUMENTO_CONT in ('"+ Numerazione_doc_contBulk.TIPO_OBB + "','"+Numerazione_doc_contBulk.TIPO_OBB_RES+ "','"+Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA+"') AND " +
 									  "A.DT_SCADENZA <= ?  AND " +
-									  "(A.IM_SCADENZA - A.IM_ASSOCIATO_DOC_CONTABILE) > 0 AND " + 
+									  "(A.IM_ASSOCIATO_DOC_AMM - A.IM_ASSOCIATO_DOC_CONTABILE) > 0 AND " + 
 									  "A.CD_CDS = B.CD_CDS AND " +
 									  "A.ESERCIZIO = B.ESERCIZIO AND " +
 									  "A.ESERCIZIO_ORIGINALE = B.ESERCIZIO_ORIGINALE AND " +

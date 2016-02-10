@@ -36,7 +36,6 @@ function selezionaRiga(riga) {
 	BusinessProcess.encode(bp,pageContext); 
 %>
 <table border="3" cellspacing="0" height=100% cellpadding="2" bgcolor="silver" align="center" bordercolorlight="lightgrey">
-<jsp:include page="/util/title_bar.jsp" /> 
 	<tr height=100%><td colspan=2>
 	<div style="position:relative; width=100%; height=100%; overflow:auto; background-color: white">
 	<table bgcolor=white cellspacing="0" cellpadding="0" border=0 align=center >
@@ -47,11 +46,9 @@ function selezionaRiga(riga) {
 		request.setAttribute("joinI","img/treejoinI16.gif");
 		request.setAttribute("folder","img/FolderSmall.gif");
 		request.setAttribute("onselect","selezionaRiga");%>
-<jsp:include page="/util/tree.jsp" />
 	</table>
 	</div>
 	</td></tr>
-<jsp:include page="/util/message_bar.jsp" />
 </table>
 </FORM>
 </body>

@@ -51,6 +51,13 @@ public class WorkpackageBase extends WorkpackageKey implements Keyed {
 	
     //	FL_LIMITE_ASS_OBB CHAR(1)
     private Boolean fl_limite_ass_obblig;
+    
+    private java.lang.String cd_cofog;
+
+    private java.lang.String cd_programma;
+
+    private java.lang.String cd_missione;
+
 public WorkpackageBase() {
 	super();
 }
@@ -248,5 +255,26 @@ public void setTi_gestione(java.lang.String ti_gestione) {
 	public void setFl_limite_ass_obblig(Boolean boolean1) {
 		fl_limite_ass_obblig = boolean1;
 	}
+	public java.lang.String getCd_cofog() {
+		return cd_cofog;
+	}
+	public void setCd_cofog(java.lang.String cd_cofog) {
+		this.cd_cofog = cd_cofog;
+	}
 
+	public java.lang.String getCd_programma() {
+		return cd_programma;
+	}
+	
+	public void setCd_programma(java.lang.String cd_programma) {
+		this.cd_programma = cd_programma;
+	}
+	
+	public java.lang.String getCd_missione() {
+		return cd_missione;
+	}
+	
+	public void setCd_missione(java.lang.String cd_missione) {
+		this.cd_missione = cd_missione;
+	}
 }

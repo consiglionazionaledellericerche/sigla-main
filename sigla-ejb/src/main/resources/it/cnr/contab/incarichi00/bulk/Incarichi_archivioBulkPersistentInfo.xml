@@ -10,12 +10,23 @@
 		   propertyName="nome_file"
 		   sqlTypeName="VARCHAR"
 		   columnSize="400"
-		   nullable="false" />		   
+		   nullable="true" />		   
 		<columnMapping
 			columnName="DS_FILE"
 			propertyName="ds_file"
 			sqlTypeName="VARCHAR"
 			columnSize="2000" />			
+		<columnMapping
+			columnName="URL_FILE"
+			propertyName="url_file"
+			sqlTypeName="VARCHAR"
+			columnSize="500" />			
+		<columnMapping
+		   columnName="CMS_NODE_REF"
+		   propertyName="cms_node_ref"
+		   sqlTypeName="VARCHAR"
+		   columnSize="100"
+		   nullable="true" />		   
 		<columnMapping
 			columnName="TIPO_ARCHIVIO"
 			propertyName="tipo_archivio"
@@ -63,6 +74,10 @@
 		name="nome_file" />
 	<persistentProperty
 		name="ds_file" />
+	<persistentProperty
+		name="url_file" />
+	<persistentProperty
+		name="cms_node_ref" />
 	<persistentProperty
 		name="tipo_archivio" />
 	<persistentProperty

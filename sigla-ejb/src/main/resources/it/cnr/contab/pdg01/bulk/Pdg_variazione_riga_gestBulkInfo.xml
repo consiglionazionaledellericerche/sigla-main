@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -248,12 +248,19 @@
 		label="Voce del Piano" />
 	<fieldProperty
 		name="searchtool_progetto"
-		property="linea_attivita.progetto"
+		property="progetto"
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROprogetto"
 		formName="form_searchtool_progetto"
-		label="Modulo di attivit&#224;"
-		/>
+		label="Modulo di attivit&#224;" />
+	<fieldProperty
+		name="searchtool_progetto_liv2"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROprogetto"
+		formName="form_searchtool_progetto"
+		columnSet="nuovoPdg"
+		label="Progetto" />
 	<fieldProperty
         name="searchtool_area"
         property="area"
@@ -323,6 +330,8 @@
 		name="find_linea_attivita" />
 	<formFieldProperty
 		name="searchtool_progetto" />
+	<formFieldProperty
+		name="searchtool_progetto_liv2" />
 	<formFieldProperty
 		name="searchtool_area" />
 

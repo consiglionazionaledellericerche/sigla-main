@@ -7,9 +7,19 @@
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*, it.cnr.jada.util.action.*,it.cnr.contab.doccont00.bp.*"
 %>
+<% 
+	JSPUtils.printBaseUrl(pageContext); 
+it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp = (it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request);
+%>
+<script language="JavaScript">
+function doScarica() {	
+	 doPrint('genericdownload/<%=bp.getDocumento()%>?methodName=scaricaDistinta&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+}
+function doScaricaFirmato() {	
+	 doPrint('genericdownload/<%=bp.getDocumento()%>?methodName=scaricaDistintaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+}
+</script>
 
-
-<% 	it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp = (it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request); %>
   <div class="Group">		
 	<table class="Panel">
 	<tr colspan=4>

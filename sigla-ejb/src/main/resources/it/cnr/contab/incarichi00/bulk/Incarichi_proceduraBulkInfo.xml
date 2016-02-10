@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
 		shortDescription="Procedura Conferimento Incarichi"
 		longDescription="Procedura Conferimento Incarichi" >
 	<fieldProperty
@@ -184,6 +184,7 @@
 		readonlyProperty="ROPrimaFaseProcedura"
 		inputType="SEARCHTOOL"
 		enabledOnSearch="true"
+		nullable="false"
 		label="Responsabile del procedimento" />
 	<fieldProperty
 		name="cd_terzo_resp"
@@ -251,6 +252,34 @@
 	<fieldProperty
 		name="crea_procedura_amministrativa"
 		property="procedura_amministrativa"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="CRUDConfigProcedureAmministrativeBP" />
+	<fieldProperty
+		name="procedura_amministrativa_beneficiario"
+		property="procedura_amministrativa_beneficiario"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Modalità di Individuazione del Beneficiario " />
+	<fieldProperty
+		name="cd_proc_amm_benef"
+		property="procedura_amministrativa_beneficiario.cd_proc_amm"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Modalità di Individuazione del Beneficiario " />
+	<fieldProperty
+		name="ds_proc_amm_benef"
+		property="procedura_amministrativa_beneficiario.ds_proc_amm"
+		inputType="TEXT"
+		inputSize="70"
+		label="Modalità di Individuazione del Beneficiario " />
+	<fieldProperty
+		name="crea_procedura_amministrativa_beneficiario"
+		property="procedura_amministrativa_beneficiario"
 		inputType="CRUDTOOL"
 		CRUDBusinessProcessName="CRUDConfigProcedureAmministrativeBP" />
 	<fieldProperty
@@ -551,6 +580,30 @@
 		enabledOnSearch="true"
 		label="Contraente" />
 	<fieldProperty
+		name="incaricoRepertorioSearch"
+		property="incaricoRepertorioForSearch"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Incarico" />
+	<fieldProperty
+		name="esercizio_repertorioSearch"
+		property="incaricoRepertorioForSearch.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_repertorioSearch"
+		property="incaricoRepertorioForSearch.pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Identificativo Incarico" />
+	<fieldProperty
 		name="ragione_sociale"
 		property="v_terzoForSearch.ragione_sociale"
 		inputType="TEXT"
@@ -624,8 +677,8 @@
 		property="fl_art51"
 		inputType="CHECKBOX"
 		enabledOnSearch="true"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
 		nullable="false"
 		label="Selezione art.51 comma 6 L. 449/1997" />
 	<fieldProperty
@@ -647,6 +700,83 @@
 		enabledOnSearch="true"
 		nullable="false"
 		label="Motivazione sblocco" />
+	<fieldProperty
+		name="tipo_prestazione"
+		property="tipo_prestazione"
+		printProperty="ds_tipo_prestazione"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		optionsProperty="tipologie_prestazioni"
+		inputType="SELECT"		
+		command="doOnTipoPrestazioneChange"
+		readonlyProperty="ROTipoPrestazione"
+		enabledOnSearch="true"
+		label="Tipo Prestazione" />
+	<fieldProperty
+		name="find_tipo_attivita_fp0"
+		property="tipo_attivita_fp0"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="true"
+		readonlyProperty="ROTipoAttivitaFp"
+		label="Attività Economica" />
+	<fieldProperty
+		name="find_tipo_attivita_fp1"
+		property="tipo_attivita_fp1"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="true"
+		readonlyProperty="ROTipoAttivitaFp"
+		label="Attività Economica 1" />
+	<fieldProperty
+		name="find_tipo_attivita_fp"
+		property="tipo_attivita_fp"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="true"
+		readonlyProperty="ROTipoAttivitaFp"
+		label="Attività Economica 2" />
+	<fieldProperty
+		name="applicazioneNormaRadioGroup"
+		property="fl_applicazione_norma"
+		keysProperty="applicazioneNormaFlags"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		readonlyProperty="ROFlApplicazioneNorma"
+		label="Incarico conferito in applicazione di una specifica norma"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipo_norma_perla"
+		property="tipo_norma_perla"
+		printProperty="ds_tipo_norma"
+		inputSize="100"
+		maxLength="100"
+		nullable="true"
+		inputType="SELECT"		
+		optionsProperty="tipologie_norma_perla"
+		readonlyProperty="ROTipoNormaPerla"
+		enabledOnSearch="true"
+		command="doOnTipoNormaPerlaChange"
+		label="Norma o titolo a base dell'attribuzione" />
+	<fieldProperty
+		name="ds_libera_norma_perla"
+		property="ds_libera_norma_perla"
+		inputType="TEXTAREA"
+		maxLength="500"
+		cols="90"
+		rows="6"
+		enabledOnSearch="true"
+		nullable="true"
+		readonlyProperty="ROTipoNormaPerla"
+		label="Descrizione Breve&lt;BR&gt;Tipo Norma" />
 
 	<formFieldProperty
 		name="esercizio" />
@@ -714,6 +844,10 @@
 	<formFieldProperty
 		name="ds_proc_amm" />
 	<formFieldProperty
+		name="cd_proc_amm_benef" />
+	<formFieldProperty
+		name="ds_proc_amm_benef" />
+	<formFieldProperty
 		name="atto" />
 	<formFieldProperty
 		name="cd_tipo_atto" />
@@ -749,6 +883,10 @@
 		name="procedura_amministrativa" />
 	<formFieldProperty
 		name="crea_procedura_amministrativa" />
+	<formFieldProperty
+		name="procedura_amministrativa_beneficiario" />
+	<formFieldProperty
+		name="crea_procedura_amministrativa_beneficiario" />
 	<formFieldProperty
 		name="importo_lordo"
 		command="doOnImportoLordoChange"
@@ -809,6 +947,21 @@
 		name="fl_sbloccato" />
 	<formFieldProperty
 		name="ds_motivazione_sblocco" />
+	<formFieldProperty
+		name="tipo_prestazione" />
+	<formFieldProperty
+		name="find_tipo_attivita_fp0" />
+	<formFieldProperty
+		name="find_tipo_attivita_fp1" />
+	<formFieldProperty
+		name="find_tipo_attivita_fp" />
+	<formFieldProperty
+		name="applicazioneNormaRadioGroup"
+		label="Incarico conferito in applicazione&lt;BR&gt;di una specifica norma" />
+	<formFieldProperty
+		name="tipo_norma_perla" />
+	<formFieldProperty
+		name="ds_libera_norma_perla" />
 
 <!-- DATI PER RICERCA TERZO -->
 	<formFieldProperty
@@ -834,6 +987,15 @@
 	<formFieldProperty
 		name="ds_provincia" />
 <!-- FINE DATI PER RICERCA TERZO -->
+
+<!-- DATI PER RICERCA INCARICO -->
+	<formFieldProperty
+		name="incaricoRepertorioSearch" />
+	<formFieldProperty
+		name="esercizio_repertorioSearch"  />
+	<formFieldProperty
+		name="pg_repertorioSearch" />
+<!-- FINE DATI PER RICERCA INCARICO -->
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -910,6 +1072,8 @@
 	<findFieldProperty
 		name="cd_proc_amm" />
 	<findFieldProperty
+		name="cd_proc_amm_benef" />
+	<findFieldProperty
 		name="cd_tipo_atto" />
 	<findFieldProperty
 		name="ds_atto" />
@@ -919,6 +1083,14 @@
 		name="esercizio_richiesta" />
 	<findFieldProperty
 		name="pg_richiesta" />
+	<findFieldProperty
+		name="tipo_prestazione" />
+	<findFieldProperty
+		name="applicazioneNormaRadioGroup" />
+	<findFieldProperty
+		name="tipo_norma_perla" />
+	<findFieldProperty
+		name="ds_libera_norma_perla" />
 
 	<form
 		name="searchtool" >

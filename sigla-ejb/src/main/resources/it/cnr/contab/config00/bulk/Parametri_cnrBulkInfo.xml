@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -105,7 +105,7 @@
 		name="fl_motivazione_su_imp"
 		property="fl_motivazione_su_imp"
 		inputType="CHECKBOX"
-		label="Obbligatorietà campo Motivazione su Impegno" />
+		label="Obbligatoriet? campo Motivazione su Impegno" />
 	<fieldProperty
 		name="importo_max_imp"
 		property="importo_max_imp"
@@ -151,7 +151,7 @@
 		inputSize="3"
 		maxLength="3"
 		nullable="false"
-		label="Giorni di pubblicazione per la verifica professionalità interne" />
+		label="Giorni di pubblicazione per la verifica professionalita interne" />
 	<fieldProperty
 		name="ricerca_prof_int_giorni_scad"
 		property="ricerca_prof_int_giorni_scad"
@@ -159,7 +159,7 @@
 		inputSize="3"
 		maxLength="3"
 		nullable="false"
-		label="Giorni di validità per la verifica professionalità interne dopo la pubblicazione" />
+		label="Giorni di validita per la verifica professionalita interne dopo la pubblicazione" />
 	<fieldProperty
 		name="fl_incarico"
 		property="fl_incarico"
@@ -219,8 +219,49 @@
 	<fieldProperty
 		name="fl_cup"
 		property="fl_cup"
-		label="Gestione Obbligatoria Cup" 
-		inputType="CHECKBOX" />			
+		inputType="CHECKBOX"
+		label="Gestione Cup" />	
+	<fieldProperty
+		name="fl_siope_cup"
+		property="fl_siope_cup"
+		inputType="CHECKBOX"
+		label="Gestione Siope con Cup" />	
+	<fieldProperty
+		name="data_stipula_contratti"
+		property="data_stipula_contratti"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data minima per pubblicazione contratti" />		
+	<fieldProperty
+		name="livello_pdg_cofog"
+		property="livello_pdg_cofog"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Livello COFOG PDG Decisionale" />	
+	<fieldProperty
+		name="fl_credito_irpef"
+		property="fl_credito_irpef"
+		inputType="CHECKBOX"
+		label="Gestione Credito Irpef" />		
+	<fieldProperty
+		name="fl_nuovo_pdg"
+		property="fl_nuovo_pdg"
+		inputType="CHECKBOX"
+		label="Nuova Gestione PDG" />		
+	<fieldProperty
+		name="data_attivazione_new_voce"
+		property="data_attivazione_new_voce"
+		label="Data Attivazione Nuova Voce"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		nullable="true"	/>
+
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -266,11 +307,13 @@
 	<formFieldProperty
 	        name="fl_siope" />
 	<formFieldProperty
+		name="fl_nuovo_pdg" />						      
+	<formFieldProperty
 		name="ricerca_prof_int_giorni_pubbl"
-	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica Professionalità Interne" />
+	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica Professionalit? Interne" />
 	<formFieldProperty
 		name="ricerca_prof_int_giorni_scad" 
-		label="Giorni di validità per la&lt;BR&gt;Verifica Professionalità Interne&lt;BR&gt;dopo la pubblicazione" />
+		label="Giorni di validita per la&lt;BR&gt;Verifica Professionalit? Interne&lt;BR&gt;dopo la pubblicazione" />
 	<formFieldProperty
 	        name="fl_incarico" />
 	<formFieldProperty
@@ -284,10 +327,22 @@
 	<formFieldProperty
 		name="fl_obb_intrastat"/>
 	<formFieldProperty
-		name="fl_cup"/>	
-	<formFieldProperty
 		name="clausolaOrdine"/>
-		       
+	<formFieldProperty
+		name="fl_cup"/>
+	<formFieldProperty
+		name="fl_siope_cup"/>		       
+	<formFieldProperty
+		name="data_stipula_contratti" />						      
+
+	<formFieldProperty
+		name="livello_pdg_cofog"/>
+	<formFieldProperty
+		name="fl_credito_irpef"/>				       
+	<formFieldProperty
+		name="data_attivazione_new_voce" />
+
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -345,11 +400,17 @@
 	 <columnFieldProperty
 		name="fl_obb_intrastat"/>	
 	 <columnFieldProperty
-		name="fl_cup"/>	
-	               
+		name="fl_cup"/>	      
+	<columnFieldProperty
+		name="fl_siope_cup"/>	
 	<columnFieldProperty
 		name="clausolaOrdine"/>
-		               
+	<columnFieldProperty
+		name="data_stipula_contratti" />						
+	<columnFieldProperty
+		name="livello_pdg_cofog"/>
+	<columnFieldProperty
+		name="fl_credito_irpef"/>	               
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty

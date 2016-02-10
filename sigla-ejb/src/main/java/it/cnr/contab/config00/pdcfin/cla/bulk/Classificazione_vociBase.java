@@ -62,7 +62,10 @@ public class Classificazione_vociBase extends Classificazione_vociKey implements
 //	  CDR_ACCENTRATORE VARCHAR(30)
     private java.lang.String cdr_accentratore;
 
-	public Classificazione_vociBase() {
+//	  TI_CLASSIFICAZIONE CHAR(4)
+    private java.lang.String ti_classificazione;
+
+  public Classificazione_vociBase() {
 		super();
 	}
 	public Classificazione_vociBase(java.lang.Integer id_classificazione) {
@@ -181,5 +184,11 @@ public class Classificazione_vociBase extends Classificazione_vociKey implements
 	}
 	public void setCdr_accentratore(java.lang.String string) {
 		cdr_accentratore = string;
+	}
+	public java.lang.String getTi_classificazione() {
+		return ti_classificazione;
+	}
+	public void setTi_classificazione(java.lang.String ti_classificazione) {
+		this.ti_classificazione = ti_classificazione;
 	}
 }

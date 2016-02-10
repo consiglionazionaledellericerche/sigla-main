@@ -7,7 +7,7 @@ public abstract class ImportoFormat extends java.text.Format implements it.cnr.j
 	
 	protected static final java.text.Format format = new java.text.DecimalFormat("#,##0.00");
 	private int precision = 0;
-	private int round = java.math.BigDecimal.ROUND_HALF_EVEN;
+	private int round = java.math.BigDecimal.ROUND_HALF_UP;
 
 public ImportoFormat() {
 	super();

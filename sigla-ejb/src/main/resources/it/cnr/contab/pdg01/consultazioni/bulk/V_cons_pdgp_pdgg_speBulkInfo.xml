@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Ripartizione PdG Preliminare - Spese"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Ripartizione PdG Preliminare - Spese"
           longDescription="Ripartizione PdG Preliminare - Spese">
 	<fieldProperty
 		name="esercizio"
@@ -185,7 +185,22 @@
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo Previsione Spese Decentrate Interne da Ripartire" />
-
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="cd_cofog"
+		property="cd_cofog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="false"
+		label="cofog" />	
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -232,6 +247,10 @@
 		name="im_spese_gest_dec_est_da_rip" />
 	<formFieldProperty
 		name="im_spese_gest_dec_int_da_rip" />
+	<formFieldProperty
+		name="pg_dettaglio" />	
+	<formFieldProperty
+		name="cd_cofog" />		
 
 	<findFieldProperty
 		name="esercizio" />
@@ -292,6 +311,8 @@
 		name="cd_classificazione" />
 	<columnFieldProperty
 		name="ds_classificazione" />
+	<columnFieldProperty
+		name="cd_cofog" />	
 	<columnFieldProperty
 		name="cd_cds_area" />
 	<columnFieldProperty
@@ -323,12 +344,14 @@
 	
 	<columnSet
 	    name="pdgModuloSpeseGest">
-		<columnFieldProperty
+	  	<columnFieldProperty
 			name="cd_progetto" />
 		<columnFieldProperty
 			name="cd_classificazione" />
 		<columnFieldProperty
 			name="ds_classificazione" />
+		<columnFieldProperty
+			name="cd_cofog" />	
        	<columnFieldProperty
        		name="im_spese_gest_dec_int_pdgp"
        		label="Prev."

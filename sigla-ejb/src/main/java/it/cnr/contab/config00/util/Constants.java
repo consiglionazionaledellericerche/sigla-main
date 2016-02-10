@@ -33,6 +33,7 @@ public class Constants
 	public static final Integer ERRORE_SIP_117 = new Integer(117);
 	public static final Integer ERRORE_SIP_118 = new Integer(118);
 	public static final Integer ERRORE_SIP_119 = new Integer(119);
+	public static final Integer ERRORE_SIP_120 = new Integer(120);
 	public final static java.util.Dictionary<Integer,String> erroriSIP;
 	static {
 		erroriSIP = new it.cnr.jada.util.OrderedHashtable();
@@ -56,6 +57,7 @@ public class Constants
 		erroriSIP.put(ERRORE_SIP_117, "Non è stato definito il CDR per la ricerca");
 		erroriSIP.put(ERRORE_SIP_118, "Non è stato definito il tipo: 'E' Entrata o 'S' Spesa");
 		erroriSIP.put(ERRORE_SIP_119, "Formato Matricola errato");
+		erroriSIP.put(ERRORE_SIP_120, "Non è stato definito un parametro obbligatorio");
 	}	
 	
 	public static final String  RICHIESTE_IN_CORSO = "C";

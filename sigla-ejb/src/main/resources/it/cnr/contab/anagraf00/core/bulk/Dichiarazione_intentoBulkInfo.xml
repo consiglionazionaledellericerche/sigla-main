@@ -1,138 +1,204 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="anagrafico"
 		property="anagrafico"
 		label="anagrafico"
+		inputType="TEXT"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"
+		inputType="ROTEXT"/>	
+	<fieldProperty
+		name="progr"
+		property="progr"
+		label="Numero prestatore"
+		inputType="ROTEXT"/>		
+	<fieldProperty
+		name="anno_dich"
+		property="anno_dich"
+		label="Esercizio dichiarante"
 		inputType="TEXT"
-		/>
+		readonlyProperty="RODichiarazione"
+		nullable="false"/>
+	<fieldProperty
+		name="num_dich"
+		property="num_dich"
+		label="Numero dichiarante"
+		readonlyProperty="RODichiarazione"
+		inputType="TEXT"
+		nullable="false"/>
+	<fieldProperty
+		name="fl_acquisti"
+		property="fl_acquisti"
+		readonlyProperty="RODichiarazione"
+		inputType="CHECKBOX"
+		label="Acquisti" />
+	<fieldProperty
+		name="fl_importazioni"
+		property="fl_importazioni"
+		inputType="CHECKBOX"
+		readonlyProperty="RODichiarazione"
+		label="Importazioni" />	
+	<fieldProperty
+		name="anno_rif"
+		property="anno_rif"
+		label="Esercizio riferimento"
+		readonlyProperty="RODichiarazione"
+		inputType="TEXT"
+		nullable="false"/>	
 	<fieldProperty
 		name="dt_comunicazione_dic"
 		property="dt_comunicazione_dic"
-		label="Data Comunicazione Dichiarazione"
+		label="Data di comunicazione dichiarazione"
+		readonlyProperty="RODichiarazione"
 		inputType="TEXT"
 		formatName="date_short"
-		/>
-	<fieldProperty
-		name="dt_comunicazione_rev"
-		property="dt_comunicazione_rev"
-		label="Data Comunicazione Revoca"
-		inputType="TEXT"
-		formatName="date_short"
-		/>
-	<fieldProperty
-		name="dt_fin_validita"
-		property="dt_fin_validita"
-		label="Data Fine Validit&#224;"
-		inputType="TEXT"
-		formatName="date_short"
-		/>
+		nullable="false"/>	
 	<fieldProperty
 		name="dt_ini_validita"
 		property="dt_ini_validita"
 		label="Data Inizio Validit&#224;"
 		inputType="TEXT"
+		readonlyProperty="RODichiarazione"
 		formatName="date_short"
-		/>
+		nullable="false"/>	
 	<fieldProperty
-		name="dt_inserimento_registro"
-		property="dt_inserimento_registro"
-		label="Data Inserimento registro"
+		name="dt_fin_validita"
+		property="dt_fin_validita"
+		label="Data Fine Validit&#224;"
 		inputType="TEXT"
+		readonlyProperty="RODichiarazione"
 		formatName="date_short"
-		/>
+		nullable="false"/>	
 	<fieldProperty
-		name="dt_revoca_registro"
-		property="dt_revoca_registro"
-		label="Data Revcoca Registro"
+		name="dt_inizio_val_dich"
+		property="dt_inizio_val_dich"
+		label="Data di inizio periodo di riferimento"
+		readonlyProperty="RODichiarazione"
 		inputType="TEXT"
-		formatName="date_short"
-		/>
+		formatName="date_short"/>	
 	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		label="Esercizio"
+		name="dt_fine_val_dich"
+		property="dt_fine_val_dich"
+		label="Data di fine periodo di riferimento"
+		readonlyProperty="RODichiarazione"
 		inputType="TEXT"
-		readonlyProperty="notNew"
-		/>
+		formatName="date_short"/>
+	<fieldProperty
+		name="im_limite_sing_op"
+		property="im_limite_sing_op"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		readonlyProperty="RODichiarazione"
+		enabledOnSearch="true"		
+		label="Importo limite singola operazione"/>
+	<fieldProperty
+		name="im_limite_op"
+		property="im_limite_op"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		readonlyProperty="RODichiarazione"
+		enabledOnSearch="true"		
+		label="Importo limite totale"/>					
 	<fieldProperty
 		name="id_dichiarazione"
 		property="id_dichiarazione"
-		label="id_dichiarazione"
 		inputType="TEXT"
-		/>
+		inputSize="17"
+		maxLength="17"
+		caseSensitiveSearch="false" 
+		readonlyProperty="RODichiarazione"
+		enabledOnSearch="true"		
+		label="codice telematico"
+		nullable="false"/>		
+		
+	<columnFieldProperty
+		name="anno_dich"/>
+	<columnFieldProperty
+		name="num_dich"/>
+	<columnFieldProperty
+		name="dt_comunicazione_dic"/>
+	<columnFieldProperty
+		name="dt_ini_validita"/>
+	<columnFieldProperty
+		name="dt_fin_validita"/>
+	<columnFieldProperty
+		name="fl_acquisti"/>
+	<columnFieldProperty
+		name="fl_importazioni"/>
+	<columnFieldProperty
+		name="anno_rif"/>
+	<columnFieldProperty
+		name="id_dichiarazione"/>
+	<columnFieldProperty
+		name="im_limite_op"/>
+	<columnFieldProperty
+		name="im_limite_sing_op"/>
+	<columnFieldProperty
+		name="dt_inizio_val_dich"/>
+	<columnFieldProperty
+		name="dt_fine_val_dich"/>	
 
-	<columnFieldProperty
-		name="dt_comunicazione_dic"
-		/>
-	<columnFieldProperty
-		name="dt_comunicazione_rev"
-		/>
-	<columnFieldProperty
-		name="dt_fin_validita"
-		/>
-	<columnFieldProperty
-		name="dt_ini_validita"
-		/>
-	<columnFieldProperty
-		name="dt_inserimento_registro"
-		/>
-	<columnFieldProperty
-		name="dt_revoca_registro"
-		/>
-	<columnFieldProperty
-		name="esercizio"
-		/>
-
 	<formFieldProperty
-		name="dt_comunicazione_dic"
-		/>
+		name="esercizio"/>
 	<formFieldProperty
-		name="dt_comunicazione_rev"
-		/>
+		name="progr"/>	
 	<formFieldProperty
-		name="dt_fin_validita"
-		/>
+		name="anno_dich"/>
 	<formFieldProperty
-		name="dt_ini_validita"
-		/>
+		name="num_dich"/>
 	<formFieldProperty
-		name="dt_inserimento_registro"
-		/>
+		name="dt_comunicazione_dic"/>
 	<formFieldProperty
-		name="dt_revoca_registro"
-		/>
+		name="dt_ini_validita"/>
 	<formFieldProperty
-		name="esercizio"
-		/>
+		name="dt_fin_validita"/>
 	<formFieldProperty
-		name="id_dichiarazione"
-		/>
-
+		name="fl_acquisti"/>
+	<formFieldProperty
+		name="fl_importazioni"/>
+	<formFieldProperty
+		name="anno_rif"/>
+	<formFieldProperty
+		name="id_dichiarazione"/>
+	<formFieldProperty
+		name="im_limite_op"/>
+	<formFieldProperty
+		name="im_limite_sing_op"/>
+	<formFieldProperty
+		name="dt_inizio_val_dich"/>
+	<formFieldProperty
+		name="dt_fine_val_dich"/>	
+		
 	<findFieldProperty
-		name="dt_comunicazione_dic"
-		/>
+		name="anno_dich"/>
 	<findFieldProperty
-		name="dt_comunicazione_rev"
-		/>
+		name="num_dich"/>
 	<findFieldProperty
-		name="dt_fin_validita"
-		/>
+		name="dt_comunicazione_dic"/>
 	<findFieldProperty
-		name="dt_ini_validita"
-		/>
+		name="dt_ini_validita"/>
 	<findFieldProperty
-		name="dt_inserimento_registro"
-		/>
+		name="dt_fin_validita"/>
 	<findFieldProperty
-		name="dt_revoca_registro"
-		/>
+		name="fl_acquisti"/>
 	<findFieldProperty
-		name="esercizio"
-		/>
-
-
+		name="fl_importazioni"/>
+	<findFieldProperty
+		name="anno_rif"/>
+	<findFieldProperty
+		name="id_dichiarazione"/>
+	<findFieldProperty
+		name="im_limite_op"/>
+	<findFieldProperty
+		name="im_limite_sing_op"/>
+	<findFieldProperty
+		name="dt_inizio_val_dich"/>
+	<findFieldProperty
+		name="dt_fine_val_dich"/>		
 </bulkInfo>

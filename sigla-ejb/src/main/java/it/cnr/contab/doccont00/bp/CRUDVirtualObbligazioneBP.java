@@ -1,28 +1,28 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.esercizio.bulk.*;
-
 import java.rmi.RemoteException;
-import java.sql.*;
+import java.sql.Timestamp;
 
-import javax.ejb.EJBException;
-
-import it.cnr.contab.doccont00.comp.*;
-import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
+import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.DetailedRuntimeException;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcess;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.jsp.*;
+import it.cnr.jada.util.jsp.Button;
 
 public abstract class CRUDVirtualObbligazioneBP 
 	extends it.cnr.jada.util.action.SimpleCRUDBP 
@@ -468,5 +468,4 @@ public static ObbligazioneAbstractComponentSession setSafePoint (
 	public void setRibaltato(boolean b) {
 		ribaltato = b;
 	}
-
 }

@@ -7,7 +7,11 @@
 package it.cnr.contab.prevent01.consultazioni.action;
 
 
-import it.cnr.contab.prevent01.consultazioni.bp.*;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGAreaSpeBP;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGIstBP;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGIstBP;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGIstEtrBP;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGIstSpeBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -15,6 +19,7 @@ import it.cnr.jada.util.action.ConsultazioniAction;
 
 
 public class ConsVarPDGGIstAction extends ConsultazioniAction {
+	private static final long serialVersionUID = 1L;
 
 	public Forward doConsulta(ActionContext context, String livelloDestinazione) {
 		try {
@@ -31,6 +36,7 @@ public class ConsVarPDGGIstAction extends ConsultazioniAction {
 			}
 
 			ConsVarPDGGIstBP consultazioneBP = null;
+			context.closeBusinessProcess(bp);
 			if (bp instanceof ConsVarPDGGIstSpeBP) 
 				consultazioneBP = (ConsVarPDGGIstSpeBP)context.createBusinessProcess("ConsVarPDGGIstSpeBP");
 			else

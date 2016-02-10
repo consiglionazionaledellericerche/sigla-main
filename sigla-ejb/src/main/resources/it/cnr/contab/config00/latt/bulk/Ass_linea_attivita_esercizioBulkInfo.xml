@@ -1,0 +1,86 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Gruppo di Azioni Elementari"
+        longDescription="Associazione Gruppo di Azioni Elementari/Esercizio">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		label="Esercizio di creazione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="linea_attivita.cd_linea_attivita"
+		maxLength="8"
+		inputSize="8"
+		inputType="TEXT"
+		label="Codice GAE"
+		caseSensitiveSearch="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+	    name="cd_centro_responsabilita"
+		property="linea_attivita.centro_responsabilita.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice CDR"/>
+	<fieldProperty
+		name="esercizio_fine"
+		property="esercizio_fine"
+		label="Esercizio di terminazione"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		readonlyPropertyOnEdit="ROEsercizio_fine"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="cd_progetto"
+		property="progetto.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Modulo di Attivita'"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="esercizio_fine" />
+	<formFieldProperty
+		name="cd_progetto" />		
+							
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="esercizio_fine" />
+	<columnFieldProperty
+		name="cd_progetto" />		
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="esercizio_fine" />
+	<findFieldProperty
+		name="cd_progetto" />		
+</bulkInfo>

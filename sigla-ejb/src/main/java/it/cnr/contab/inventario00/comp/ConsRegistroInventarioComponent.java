@@ -1,26 +1,20 @@
 
 package it.cnr.contab.inventario00.comp;
 
-import java.rmi.RemoteException;
-import java.util.Enumeration;
-
-import javax.ejb.EJBException;
-
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.CdsHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.inventario00.bp.ConsRegistroInventarioBP;
+import it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneBulk;
 import it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.IntrospectionException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.ColumnMap;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.RemoteIterator;
 
 /**
@@ -241,4 +235,95 @@ public class ConsRegistroInventarioComponent extends CRUDComponent {
 			if (addColumn)
 				sql.addColumn(valore);
 		}
+		public RemoteIterator findConsultazioneRicognizione(UserContext userContext,it.cnr.jada.persistency.sql.CompoundFindClause baseclause,it.cnr.jada.persistency.sql.CompoundFindClause findclause,VInventarioRicognizioneBulk inv) throws it.cnr.jada.comp.ComponentException {
+			BulkHome home = getHome(userContext,VInventarioRicognizioneBulk.class,"BASECONS");
+ 			SQLBuilder sql = home.createSQLBuilder(); 
+			sql.openParenthesis("AND");
+			sql.addSQLClause("AND","DATA_REGISTRAZIONE", SQLBuilder.LESS_EQUALS,inv.getData());
+			sql.openParenthesis("AND");
+			sql.addSQLClause("AND","DATA_SCARICO_DEF", SQLBuilder.GREATER,inv.getData());
+			sql.addSQLClause("OR", "DATA_SCARICO_DEF", SQLBuilder.ISNULL,null);
+			sql.closeParenthesis();
+			if( inv.getUoForPrint() !=null)
+				sql.addSQLClause("AND","UO",SQLBuilder.EQUALS,  inv.getUoForPrint().getCd_unita_organizzativa());
+			if( inv.getCategoriaForPrint() !=null)
+				sql.addSQLClause("AND","CATEGORIA",SQLBuilder.EQUALS,  inv.getCategoriaForPrint().getCd_categoria_gruppo());
+			sql.closeParenthesis();
+			addBaseColumns(userContext,sql);
+			return iterator(userContext,completaSQL(sql, baseclause, findclause),VInventarioRicognizioneBulk.class,null);
+		}
+		private void addBaseColumns(UserContext userContext,SQLBuilder sql) throws it.cnr.jada.comp.ComponentException {
+			sql.resetColumns();
+			sql.addColumn("TOTALMENTE_SCARICATO");
+			sql.addColumn("UO");
+			sql.addColumn("PG_INVENTARIO");
+			sql.addColumn("NR_INVENTARIO");
+			sql.addColumn("PROGRESSIVO"); 
+			sql.addColumn("ETICHETTA");
+			sql.addColumn("ESERCIZIO_CARICO_BENE");
+			sql.addColumn("CATEGORIA");
+			sql.addColumn("GRUPPO");
+			sql.addColumn("DS_CATEGORIA_GRUPPO");
+			sql.addColumn("DS_BENE");
+			sql.addColumn("UBICAZIONE");
+			sql.addColumn("DS_UBICAZIONE");
+			sql.addColumn("ASSEGNATARIO");
+			sql.addColumn("DS_ASSEGNATARIO");
+			sql.addColumn("SUM(VALORE) VALORE");
+			
+			addSQLGroupBy(sql,"totalmente_scaricato",true);
+			addSQLGroupBy(sql,"uo",true);
+			addSQLGroupBy(sql,"pg_inventario",true);
+			addSQLGroupBy(sql,"nr_inventario",true);
+			addSQLGroupBy(sql,"progressivo",true);
+			addSQLGroupBy(sql,"etichetta",true);
+			addSQLGroupBy(sql,"esercizio_carico_bene",true);
+			addSQLGroupBy(sql,"categoria",true);
+			addSQLGroupBy(sql,"gruppo",true);
+			addSQLGroupBy(sql,"ds_categoria_gruppo",true);
+			addSQLGroupBy(sql,"ds_bene",true);
+			addSQLGroupBy(sql,"ubicazione",true); 
+			addSQLGroupBy(sql,"ds_ubicazione",true);
+			addSQLGroupBy(sql,"assegnatario",true);
+			addSQLGroupBy(sql,"ds_assegnatario",true);
+			sql.addOrderBy("nr_inventario");
+			sql.addOrderBy("progressivo");
+		}
+		private SQLBuilder completaSQL(SQLBuilder sql, CompoundFindClause baseClause, CompoundFindClause findClause){
+			sql.addClause(baseClause);
+			if (findClause==null)
+				return sql;
+			else {
+				sql.addClause(findClause);
+				return sql;
+			}
+		}
+		public SQLBuilder selectCategoriaForPrintByClause(UserContext userContext, VInventarioRicognizioneBulk inv, Categoria_gruppo_inventBulk cat, CompoundFindClause clauses) throws ComponentException {
+			SQLBuilder sql = getHome(userContext, it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk.class).createSQLBuilder();
+			sql.addClause( clauses );
+			sql.addSQLClause("AND","FL_GESTIONE_INVENTARIO",SQLBuilder.EQUALS, "Y");
+			sql.addSQLClause("AND","DATA_CANCELLAZIONE",SQLBuilder.ISNULL, null);
+			sql.addSQLClause("AND","LIVELLO",SQLBuilder.EQUALS, "0");
+			sql.addOrderBy("CD_CATEGORIA_GRUPPO");
+			return sql;
+		}
+		public SQLBuilder selectUoForPrintByClause(UserContext userContext, VInventarioRicognizioneBulk inv,Unita_organizzativaBulk uo, CompoundFindClause clauses) throws ComponentException {
+			// Recupera il Cd_Cds di scrivania
+			String cd_cds_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);
+			CdsHome cds_home = (CdsHome)getHome(userContext, CdsBulk.class);
+			CdsBulk	cds_scrivania;
+			try{
+				// Costruisce il CdsBulk di scrivania
+				cds_scrivania = (CdsBulk)cds_home.findByPrimaryKey(new CdsBulk(cd_cds_scrivania));
+			} catch (it.cnr.jada.persistency.PersistencyException pe){
+				throw handleException(pe);
+			}
+			Unita_organizzativaHome home = (Unita_organizzativaHome)getHome(userContext, Unita_organizzativaBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addClause("AND", "cd_unita_padre", SQLBuilder.EQUALS, cds_scrivania.getCd_unita_organizzativa());
+			sql.addClause("AND","esercizio_fine",SQLBuilder.GREATER,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+			sql.addClause(clauses);
+			return sql;
+		}
+		
 }

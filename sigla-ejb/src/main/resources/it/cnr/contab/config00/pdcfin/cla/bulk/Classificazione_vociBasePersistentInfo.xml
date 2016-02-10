@@ -57,13 +57,13 @@
 			columnName="CD_LIVELLO6"
 			propertyName="cd_livello6"
 			sqlTypeName="VARCHAR"
-			columnSize="4"
+			columnSize="5"
 			nullable="true" />
 		<columnMapping
 			columnName="CD_LIVELLO7"
 			propertyName="cd_livello7"
 			sqlTypeName="VARCHAR"
-			columnSize="4"
+			columnSize="5"
 			nullable="true" />
 		<columnMapping
 			columnName="ID_CLASS_PADRE"
@@ -125,6 +125,12 @@
 			propertyName="cdr_accentratore"
 			sqlTypeName="VARCHAR"
 			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_CLASSIFICAZIONE"
+			propertyName="ti_classificazione"
+			sqlTypeName="CHAR"
+			columnSize="3"
 			nullable="true" />
 		<columnMapping
 			columnName="DUVA"
@@ -195,6 +201,8 @@
 		name="fl_esterna_da_quadrare_sac" />
 	<persistentProperty
 		name="cdr_accentratore" />
+	<persistentProperty
+		name="ti_classificazione" />
 	<persistentProperty
 		name="duva" />
 	<persistentProperty

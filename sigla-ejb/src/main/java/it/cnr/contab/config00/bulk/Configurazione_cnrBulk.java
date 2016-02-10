@@ -40,6 +40,13 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_CDR_SPECIALE = "CDR_SPECIALE";
 	public final static String SK_CDR_PERSONALE = "CDR_PERSONALE";
 
+	public final static String PK_FATTURAZIONE_ELETTRONICA = "FATTURAZIONE_ELETTRONICA";
+
+	public final static String SK_MAIL_REFERENTE_TECNICO = "MAIL_REFERENTE_TECNICO";
+	public final static String SK_TELEFONO_REFERENTE_TECNICO = "TELEFONO_REFERENTE_TECNICO";
+	public final static String SK_ATTIVA = "ATTIVA";
+	public final static String SK_PASSIVA = "PASSIVA";
+
 	public final static String PK_CODICE_SIOPE_DEFAULT = "CODICE_SIOPE_DEFAULT";
 	public final static String SK_MANDATO_ACCREDITAMENTO = "MANDATO_ACCREDITAMENTO";
 	public final static String SK_REVERSALE_TRASFERIMENTO = "REVERSALE_TRASFERIMENTO";
@@ -56,7 +63,16 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String SK_MODELLO_INTRASTAT="MODELLO_INTRASTAT";
 	public final static String PK_INCARICHI_MODIFICA_ALLEGATI = "INCARICHI_MODIFICA_ALLEGATI";
 	public final static String SK_INCARICHI_MOD_CONTRATTO = "INCARICHI_MOD_CONTRATTO";
-
+	
+	public final static String PK_LIMITE_UTILIZZO_CONTANTI = "LIMITE_UTILIZZO_CONTANTI";
+	public final static String SK_LIMITE1 = "LIMITE1";
+	public final static String PK_SPLIT_PAYMENT = "SPLIT_PAYMENT";
+	public final static String PK_CONTO_CORRENTE_BANCA_ITALIA = "CONTO_CORRENTE_BANCA_ITALIA";
+	public final static String SK_CODICE = "CODICE";
+	
+	public final static String PK_INTEGRAZIONE_SDI = "INTEGRAZIONE_SDI";
+	public final static String SK_INTEGRAZIONE_SDI = "MODALITA";
+	
 	public Configurazione_cnrBulk() {
 	super();
 }

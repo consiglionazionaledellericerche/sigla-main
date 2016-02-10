@@ -48,7 +48,7 @@ public class ConsPdgPianoRipartoAction extends ConsultazioniAction {
 			
 			ricercaLiberaBP.addToBaseclause(clause);
 			ricercaLiberaBP.openIterator(context);
-			
+			ricercaLiberaBP.setSearchResultColumnSet("nuovo_pdgp");
 			context.addHookForward("close",this,"doDefault");
 			return context.addBusinessProcess(ricercaLiberaBP);
 		}catch(Throwable ex){

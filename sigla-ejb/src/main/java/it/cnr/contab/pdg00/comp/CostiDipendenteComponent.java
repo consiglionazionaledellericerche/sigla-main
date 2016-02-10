@@ -7,8 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJBException;
-
+import java.util.Collection;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.pdg00.cdip.bulk.*;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -29,6 +31,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.contab.segnalazioni00.bulk.Stampa_attivita_siglaBulk;
 
 public class CostiDipendenteComponent extends RicercaComponent implements ICostiDipendenteMgr, IPrintMgr {
 /**
@@ -434,7 +437,8 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_ripartizio
 
 	stampa.setCd_cds(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 	stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
-    stampa.setCommessaForPrint(new ProgettoBulk());
+	
+	stampa.setCommessaForPrint(new ProgettoBulk());
 	stampa.setModuloForPrint(new ProgettoBulk());
 	stampa.setDipendenteForPrint(new V_dipendenteBulk());
 	try{	    
@@ -522,9 +526,12 @@ private boolean isStatoPdgValidoPerModificaCDP(Pdg_preventivoBulk pdg) {
 		pdg.getStato().equalsIgnoreCase(pdg.ST_E_CHIUSO); 
 }
 private boolean isStatoPdgPValidoPerModificaCDP(Pdg_esercizioBulk pdgP) {
+	if (pdgP==null)
+		return false;
+	else
 	return 
-		pdgP.getStato().equalsIgnoreCase(pdgP.STATO_APERTURA_CDR) || 
-		pdgP.getStato().equalsIgnoreCase(pdgP.STATO_ESAMINATO_CDR); 
+		(pdgP.getStato().equalsIgnoreCase(pdgP.STATO_APERTURA_CDR) || 
+		 pdgP.getStato().equalsIgnoreCase(pdgP.STATO_ESAMINATO_CDR)); 
 }
 /**
  *  Default
@@ -599,8 +606,10 @@ public it.cnr.jada.util.RemoteIterator listaCdr(UserContext userContext,String c
   *		 - la linea di attività deve essere di spesa
   *		 - la linea di attività deve essere valida nell'esercizio di scrivania
   */
-public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext userContext,CdrBulk cdr,int mese, String tipo_rapporto) throws ComponentException {
+public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext userContext,CdrBulk cdr,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException {
+	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 	SQLBuilder sql = getHome(userContext,it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
+try {	
 	if (mese == 0) {
 		sql.addTableToHeader("PDG_MODULO");
 		sql.addSQLJoin("PDG_MODULO.ESERCIZIO","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO");
@@ -610,6 +619,14 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext use
 		sql.addSQLClause(FindClause.AND,"PDG_MODULO.STATO", SQLBuilder.EQUALS, Pdg_moduloBulk.STATO_AC);
 		sql.addSQLClause(FindClause.OR,"PDG_MODULO.STATO", SQLBuilder.EQUALS, Pdg_moduloBulk.STATO_AD);
 		sql.closeParenthesis();
+	}
+	// Obbligatorio cofog sulle GAE
+	Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)); 
+	if (parCnr.isCofogObbligatorio())
+		sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+	if (parCnr.getFl_nuovo_pdg()) {
+		sql.addSQLClause(FindClause.AND,"CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
+		sql.addSQLClause(FindClause.AND,"CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
 	}
 //Filtro che estrae solo le linee di attività di spesa: 25/02/2002
 	sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE",SQLBuilder.EQUALS, it.cnr.contab.config00.latt.bulk.WorkpackageBulk.TI_GESTIONE_SPESE);
@@ -622,7 +639,9 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext use
 	sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
 	sql.addSQLClause(FindClause.AND, "NATURA.FL_SPESA",SQLBuilder.EQUALS,"Y");
 	//Nel gestionale devono vedere tutte le GAE va tolto il controllo della natura per il tempo determiniato/indeterminato
-	if (mese==0 && tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO))
+	if (mese==0 && tipo_rapporto!=null &&
+		(tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO) ||
+		 (tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO) && isRapporto13)))
 		sql.addSQLClause(FindClause.AND, "NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
 	
 	sql.addTableToHeader("FUNZIONE");
@@ -632,9 +651,7 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext use
 	/**
 	 * Escludo la linea di attività dell'IVA C20
 	 */
-	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
-	try {
-		config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
 	} catch (RemoteException e) {
 		throw new ComponentException(e);
 	} catch (EJBException e) {
@@ -666,7 +683,7 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext use
   *      - il pdg associato al cdr della linea di attività deve essere in stato A,B,D o E    
   *      - la linea di attività deve appartenere ad un cdr dell'unità organizzativa dell'utente per l'esercizio di scrivania
   */
-public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext userContext,String id_matricola,String cd_unita_organizzativa,int mese, String tipo_rapporto) throws ComponentException {
+public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext userContext,String id_matricola,String cd_unita_organizzativa,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException {
 	try {
 		BulkHome home = getHome(userContext,it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class,"V_LINEA_ATTIVITA_VALIDA");
 		SQLBuilder sql = home.createSQLBuilder();
@@ -675,6 +692,15 @@ public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext user
 		sql.addSQLClause(FindClause.AND,"CDR.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,cd_unita_organizzativa);
 		sql.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,it.cnr.contab.config00.latt.bulk.WorkpackageBulk.TI_GESTIONE_SPESE);
 		sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		
+		// Obbligatorio cofog sulle GAE
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)); 
+		if (parCnr.isCofogObbligatorio())
+			sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+		if (parCnr.getFl_nuovo_pdg()) {
+			sql.addSQLClause(FindClause.AND,"CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
+			sql.addSQLClause(FindClause.AND,"CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
+		}
 // Tolta perchè voglio vedere tutte le linee di attività anche se sono già
 // state scaricate
 //		sql.addSQLClause("AND","NOT EXISTS ( SELECT 1 FROM ASS_CDP_LA WHERE ASS_CDP_LA.ESERCIZIO = LINEA_ATTIVITA.ESERCIZIO AND ASS_CDP_LA.CD_CENTRO_RESPONSABILITA = LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA AND ASS_CDP_LA.CD_LINEA_ATTIVITA = LINEA_ATTIVITA.CD_LINEA_ATTIVITA )");
@@ -695,7 +721,9 @@ public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext user
 
 		sql.addSQLClause(FindClause.AND, "NATURA.FL_SPESA",SQLBuilder.EQUALS,"Y");
 		//Nel gestionale devono vedere tutte le GAE va tolto il controllo della natura per il tempo determiniato/indeterminato
-		if (mese==0 && tipo_rapporto!=null && tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO))
+		if (mese==0 && tipo_rapporto!=null &&
+				(tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO) ||
+				 (tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO) && isRapporto13)))
 			sql.addSQLClause(FindClause.AND, "NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
 
 		sql.addTableToHeader("FUNZIONE");
@@ -837,7 +865,7 @@ public void lockMatricola(UserContext userContext,String id_matricola,int mese) 
 		sql.addSQLClause(FindClause.AND,"ID_MATRICOLA",SQLBuilder.EQUALS,id_matricola);
 		sql.addSQLClause(FindClause.AND,"MESE",SQLBuilder.EQUALS,new Integer(mese));
 		sql.setForUpdate(true);
-		PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+		LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 		try {
 			java.sql.ResultSet rs = stm.executeQuery();
 			while (rs.next());
@@ -914,9 +942,9 @@ public void ripartizioneResidui(it.cnr.jada.UserContext userContext, java.lang.S
 		try{rs.close();}catch( java.sql.SQLException e ){};
 
 		// Calcolo della percentuale ripartita per ogni anno
-		prc_a1 = prc_a1.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
-		prc_a2 = prc_a2.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
-		prc_a3 = prc_a3.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
+		prc_a1 = prc_a1.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
+		prc_a2 = prc_a2.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
+		prc_a3 = prc_a3.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
 
 		Ass_cdp_laBulk ass_cdp_la = null;
 		// Creazione/modifica delle Ass_cdp_la
@@ -1139,45 +1167,64 @@ public SQLBuilder selectUoForPrintByClause(UserContext usercontext, Stampa_ripar
 public SQLBuilder selectDipendenteForPrintByClause(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa_ripartizione_costivbulk, V_dipendenteBulk dipendenteBulk, CompoundFindClause compoundfindclause)
 	throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
-	V_dipendenteHome dipendentehome = (V_dipendenteHome)getHome(usercontext, V_dipendenteBulk.class);
+	V_dipendenteHome dipendentehome = (V_dipendenteHome)getHome(usercontext, V_dipendenteBulk.class,"V_DIPENDENTE_RID");
 	SQLBuilder sqlbuilder = dipendentehome.createSQLBuilder();
-	sqlbuilder.addClause("AND","esercizio",sqlbuilder.EQUALS,CNRUserContext.getEsercizio(usercontext));
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio());
 	// Se uo 999.000 in scrivania: visualizza tutti i dipendenti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-		sqlbuilder.addClause("AND","cd_unita_organizzativa",sqlbuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(usercontext));	
+		sqlbuilder.addSQLClause("AND","cd_unita_organizzativa",sqlbuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(usercontext));	
 	}
+	sqlbuilder.setDistinctClause(Boolean.TRUE);
 	sqlbuilder.addClause(compoundfindclause);
+	sqlbuilder.setOrderBy("nominativo",it.cnr.jada.util.OrderConstants.ORDER_ASC);
 	return sqlbuilder;
 }
 public SQLBuilder selectCommessaForPrintByClause(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa_ripartizione_costivbulk, ProgettoBulk progettoBulk, CompoundFindClause compoundfindclause)
-	throws ComponentException, it.cnr.jada.persistency.PersistencyException
+	throws ComponentException, it.cnr.jada.persistency.PersistencyException, RemoteException, EJBException
 {
+	Parametri_cnrBulk par=Utility.createParametriCnrComponentSession().getParametriCnr(usercontext, CNRUserContext.getEsercizio(usercontext));
 	ProgettoHome progettohome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class,"V_PROGETTO_PADRE");
 	SQLBuilder sqlbuilder = progettohome.createSQLBuilder();
-	sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+	if (par.getFl_nuovo_pdg())
+		sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_PRIMO);
+	else
+		sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 	sqlbuilder.addSQLClause("AND", "TIPO_FASE", sqlbuilder.EQUALS, ProgettoBulk.TIPO_FASE_PREVISIONE);
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio());
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-		sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(usercontext));
+		if (par.getFl_nuovo_pdg())
+			sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniProgetti(usercontext));
+		else
+			sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(usercontext));
 	}	
 	sqlbuilder.addClause(compoundfindclause);
 	return sqlbuilder;
 }
 public SQLBuilder selectModuloForPrintByClause(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa_ripartizione_costivbulk, ProgettoBulk progettoBulk, CompoundFindClause compoundfindclause)
-	throws ComponentException, it.cnr.jada.persistency.PersistencyException
+	throws ComponentException, it.cnr.jada.persistency.PersistencyException, RemoteException, EJBException
 {
+	Parametri_cnrBulk par=Utility.createParametriCnrComponentSession().getParametriCnr(usercontext, CNRUserContext.getEsercizio(usercontext));
 	ProgettoHome progettohome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class,"V_PROGETTO_PADRE");
 	SQLBuilder sqlbuilder = progettohome.createSQLBuilder();
-	sqlbuilder.addClause("AND", "livello", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+	if (par.getFl_nuovo_pdg())
+		sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+	else
+		sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+
 	sqlbuilder.addSQLClause("AND", "TIPO_FASE", sqlbuilder.EQUALS, ProgettoBulk.TIPO_FASE_PREVISIONE);
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio());
 	if(stampa_ripartizione_costivbulk.getCommessaForPrint()!= null && stampa_ripartizione_costivbulk.getCommessaForPrint().getPg_progetto()!=null)
 	  sqlbuilder.addClause("AND", "pg_progetto_padre", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getCommessaForPrint().getPg_progetto());
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-		sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniModuli(usercontext));
+		if (par.getFl_nuovo_pdg())
+			sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(usercontext));
+		else
+			sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniModuli(usercontext));
 	}	  
 	sqlbuilder.addClause(compoundfindclause);
 	return sqlbuilder;
@@ -1316,7 +1363,7 @@ private CdrBulk getCdrPdgP (UserContext userContext, CdrBulk cdrUtente)  throws 
 			throw new ApplicationException("L'utente non è configurato correttamente per l'utilizzo del pdg preliminare");
 		
 		// riempiamo i dati di cdrUtente.getUnita_padre() dato che ci servono
-		getHome(userContext,cdrUtente.getUnita_padre()).findByPrimaryKey(cdrUtente.getUnita_padre());
+		cdrUtente.setUnita_padre((Unita_organizzativaBulk)getHome(userContext,cdrUtente.getUnita_padre()).findByPrimaryKey(cdrUtente.getUnita_padre()));
 		
 		if (cdrUtente.getLivello().equals(new Integer(1)) || cdrUtente.getUnita_padre().isUoArea() ||
 			isCdrSAC(userContext, cdrUtente)) {
@@ -1388,13 +1435,14 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr)
 			
 		// se il CdR è della SAC deve esser controllato direttamente
 		// altrimenti si vede l'afferenza
+		sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause("AND","ASS_CDP_LA.MESE",sql.EQUALS,BigDecimal.ZERO);
+		
 		if (isCdrSAC(userContext, cdr)) {
-			sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 			sql.addSQLClause("AND","ASS_CDP_LA.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdr.getCd_centro_responsabilita());
 		}
 		else {
 			sql.addToHeader("V_STRUTTURA_ORGANIZZATIVA");
-			sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 			sql.addSQLJoin("ASS_CDP_LA.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
 			sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "V_STRUTTURA_ORGANIZZATIVA.CD_ROOT");
 			sql.addSQLClause("AND","V_STRUTTURA_ORGANIZZATIVA.CD_CDR_AFFERENZA",sql.EQUALS,cdr.getCd_centro_responsabilita());
@@ -1434,12 +1482,14 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr,
 			
 		// se il CdR è della SAC deve esser controllato direttamente
 		// altrimenti si vede l'afferenza
+		sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause("AND","ASS_CDP_LA.MESE",sql.EQUALS,BigDecimal.ZERO);
+		
 		if (isCdrSAC(userContext, cdr)) {
 			sql.addToHeader("LINEA_ATTIVITA");
 			sql.addSQLClause("AND","LINEA_ATTIVITA.PG_PROGETTO",sql.EQUALS,modulo.getPg_progetto());
 			sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
 			sql.addSQLJoin("ASS_CDP_LA.CD_LINEA_ATTIVITA", "LINEA_ATTIVITA.CD_LINEA_ATTIVITA");		
-			sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 			sql.addSQLClause("AND","ASS_CDP_LA.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdr.getCd_centro_responsabilita());
 		}
 		else {
@@ -1448,7 +1498,6 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr,
 			sql.addSQLClause("AND","LINEA_ATTIVITA.PG_PROGETTO",sql.EQUALS,modulo.getPg_progetto());
 			sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
 			sql.addSQLJoin("ASS_CDP_LA.CD_LINEA_ATTIVITA", "LINEA_ATTIVITA.CD_LINEA_ATTIVITA");		
-			sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 			sql.addSQLJoin("ASS_CDP_LA.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
 			sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "V_STRUTTURA_ORGANIZZATIVA.CD_ROOT");
 			sql.addSQLClause("AND","V_STRUTTURA_ORGANIZZATIVA.CD_CDR_AFFERENZA",sql.EQUALS,cdr.getCd_centro_responsabilita());
@@ -1484,17 +1533,19 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr,
  */
 public boolean isModuloUtilizzato (UserContext userContext, CdrBulk cdr, Progetto_sipBulk modulo)  throws ComponentException {
 	try {
+		int esercizio = CNRUserContext.getEsercizio(userContext);
+
 		SQLBuilder sql = getHome(userContext, Ass_cdp_laBulk.class).createSQLBuilder();
-			
 		sql.addToHeader("V_STRUTTURA_ORGANIZZATIVA");
-		sql.addToHeader("LINEA_ATTIVITA");
-		sql.addSQLClause("AND","LINEA_ATTIVITA.PG_PROGETTO",sql.EQUALS,modulo.getPg_progetto());
-		sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
-		sql.addSQLJoin("ASS_CDP_LA.CD_LINEA_ATTIVITA", "LINEA_ATTIVITA.CD_LINEA_ATTIVITA");		
-		sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addToHeader("V_LINEA_ATTIVITA_VALIDA");
+		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,esercizio);
+		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,modulo.getPg_progetto());
+		sql.addSQLJoin("ASS_CDP_LA.ESERCIZIO", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO");
+		sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA");
+		sql.addSQLJoin("ASS_CDP_LA.CD_LINEA_ATTIVITA", "V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA");		
 		sql.addSQLJoin("ASS_CDP_LA.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
 		sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "V_STRUTTURA_ORGANIZZATIVA.CD_ROOT");
-		sql.addSQLClause("AND","V_STRUTTURA_ORGANIZZATIVA.CD_CDR_AFFERENZA",sql.EQUALS,cdr.getCd_centro_responsabilita());
+		sql.addSQLClause("AND","V_STRUTTURA_ORGANIZZATIVA.CD_CDR_AFFERENZA",SQLBuilder.EQUALS,cdr.getCd_centro_responsabilita());
 	
 		List result = getHome( userContext, Ass_cdp_laBulk.class ).fetchAll( sql );
 		if ( result.size() > 0 )
@@ -1524,7 +1575,9 @@ public boolean isSpeseFromScaricoDipendente(UserContext userContext, Pdg_modulo_
 		sql.addSQLClause("AND","PG_PROGETTO_SPESE",sql.EQUALS,pdg_modulo_spese.getPg_progetto());
 		sql.addSQLClause("AND","ID_CLASSIFICAZIONE",sql.EQUALS,pdg_modulo_spese.getId_classificazione());
 		sql.addSQLClause("AND","CD_CDS_AREA",sql.EQUALS,pdg_modulo_spese.getCd_cds_area());
-		PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+		//sql.addSQLClause("AND","PG_DETTAGLIO",sql.EQUALS,pdg_modulo_spese.getPg_dettaglio());
+		
+		LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 		try {
 			java.sql.ResultSet rs = stm.executeQuery();
 			if (rs.next())
@@ -1532,7 +1585,7 @@ public boolean isSpeseFromScaricoDipendente(UserContext userContext, Pdg_modulo_
 		} finally {
 			try{stm.close();}catch( java.sql.SQLException e ){};
 		}
-		return false;
+	return false;
 	}
 	catch( Exception e )
 	{
@@ -1567,18 +1620,22 @@ public boolean isCostiDipendenteCaricati (UserContext userContext, CdrBulk cdr) 
 		BulkHome home = getHome(userContext,V_cdp_matricolaBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-		
-		V_struttura_organizzativaHome homeStrutt = (V_struttura_organizzativaHome)getHome(userContext,V_struttura_organizzativaBulk.class);
-		List uoList = (List)homeStrutt.findUoCollegateCDS(cdr.getUnita_padre(), CNRUserContext.getEsercizio(userContext));
-		Unita_organizzativaBulk uoBulk;
-		
-		sql.openParenthesis("AND");
-		for ( Iterator uoIterator = uoList.iterator(); uoIterator.hasNext();) {
-			uoBulk = (Unita_organizzativaBulk) uoIterator.next();
-			sql.addSQLClause("OR", "CD_UO_CARICO",sql.EQUALS,uoBulk.getCd_unita_organizzativa());
+		sql.addSQLClause("AND","MESE",sql.EQUALS,BigDecimal.ZERO);
+		if (isCdrSAC(userContext, cdr) && cdr.getUnita_padre()!=null) {
+			sql.addSQLClause("AND","CD_UO_CARICO",sql.EQUALS,cdr.getUnita_padre().getCd_unita_organizzativa());
 		}
-		sql.closeParenthesis();
-	
+		else{
+			V_struttura_organizzativaHome homeStrutt = (V_struttura_organizzativaHome)getHome(userContext,V_struttura_organizzativaBulk.class);
+			List uoList = (List)homeStrutt.findUoCollegateCDS(cdr.getUnita_padre(), CNRUserContext.getEsercizio(userContext));
+			Unita_organizzativaBulk uoBulk;
+			
+			sql.openParenthesis("AND");
+			for ( Iterator uoIterator = uoList.iterator(); uoIterator.hasNext();) {
+				uoBulk = (Unita_organizzativaBulk) uoIterator.next();
+				sql.addSQLClause("OR", "CD_UO_CARICO",sql.EQUALS,uoBulk.getCd_unita_organizzativa());
+			}
+			sql.closeParenthesis();
+		}
 		List result = getHome( userContext, V_cdp_matricolaBulk.class ).fetchAll( sql );
 		if ( result.size() > 0 )
 			return true;

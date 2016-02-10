@@ -1,19 +1,29 @@
 package it.cnr.contab.pdg00.action;
 
 
-import java.math.BigDecimal;
-
-import it.cnr.contab.pdg00.bp.*;
-import it.cnr.contab.pdg00.cdip.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.latt.bulk.*;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.pdg00.bp.CostiDipendenteBP;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Costi_dipendenteVBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Costo_del_dipendenteBulk;
+import it.cnr.contab.pdg00.cdip.bulk.V_cdp_matricolaBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.action.OptionBP;
+import it.cnr.jada.util.action.SelectionIterator;
+
+import java.math.BigDecimal;
 
 /**
  * Action per la gestione di CostiDipendenteBP
@@ -185,6 +195,7 @@ public it.cnr.jada.action.Forward doConfermaCopiaRipartizione(it.cnr.jada.action
 			CostiDipendenteBP bp = (CostiDipendenteBP)context.getBusinessProcess();
 			bp.copiaRipartizione(context.getUserContext());
 			bp.setModel(context,bp.createComponentSession().salvaCosti_dipendente(context.getUserContext(),	(Costi_dipendenteVBulk)bp.getModel()));
+			bp.getCostiDipendenti().getSelection().clear();
 		}
 		return context.findDefaultForward();
 	} catch(Throwable e) {
@@ -211,24 +222,34 @@ public it.cnr.jada.action.Forward doConfermaRipartizioneResidui(it.cnr.jada.acti
 			else if (bp.getCostiDipendenti().getSelection().size() != 0 && cdp == null)
 				cdp = (V_cdp_matricolaBulk)bp.getCostiDipendenti().getDetails().get(bp.getCostiDipendenti().getSelection().iterator().nextIndex());
 			
-			int countTi=0, countTd=0;
+			int countTi=0, countTd=0, countRap3=0;
+			StringBuffer matrRap3=new StringBuffer();
 			for (SelectionIterator i = bp.getCostiDipendenti().getSelection().iterator();i.hasNext();) {
 				V_cdp_matricolaBulk matricola_dest = (V_cdp_matricolaBulk)bp.getCostiDipendenti().getDetails().get(i.nextIndex());
 				if (matricola_dest.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO))
 					countTi++;
-				else
+				else {
 					countTd++;
+					if (matricola_dest.getFl_rapporto13()) {
+						countRap3++;
+						if (matrRap3.length()>0) matrRap3.append(", ");
+						matrRap3.append(matricola_dest.getId_matricola());
+					}
+				}
 			}
 			
 			if (countTi>0 && countTd>0)
 				throw new it.cnr.jada.action.MessageToUser("Funzione non disponibile in presenza di selezione contemporanea di dipendenti a tempo deteminato ed indeterminato.");
-
+			else if (countRap3>0)
+				throw new it.cnr.jada.action.MessageToUser("Funzione non disponibile per le matricole "+matrRap3+".");
+				
 			java.util.List linee = bp.createComponentSession().listaLinea_attivitaPerRipartizioneResidui(
 				context.getUserContext(),
 				cdp == null ? null : cdp.getId_matricola(),
 				costi_dipendente.getUnita_organizzativa_filter().getCd_unita_organizzativa(),				
 				bp.getMese(),
-				cdp == null ? null : cdp.getTi_rapporto());
+				cdp == null ? null : cdp.getTi_rapporto(),
+				cdp == null ? null : cdp.getFl_rapporto13());
 			if (linee != null && linee.size()!=0)  { // Fix del 05/03/2002 Se la lista è vuota non effettua operazioni
 				it.cnr.jada.util.action.SelezionatoreListaBP slbp = select(context,new it.cnr.jada.util.ListRemoteIterator(linee),it.cnr.jada.bulk.BulkInfo.getBulkInfo(it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class),null,"doConfermaSelezioneRipartizioneResidui");
 				slbp.setMultiSelection(true);
@@ -333,12 +354,13 @@ private it.cnr.jada.action.Forward doSelezionaCdrPerScarico(it.cnr.jada.action.A
 		if (cdr == null) return context.findDefaultForward();
 		CostiDipendenteBP bp = (CostiDipendenteBP)context.getBusinessProcess();
 		V_cdp_matricolaBulk cdp = (V_cdp_matricolaBulk)bp.getCostiDipendenti().getModel();
-		it.cnr.jada.util.RemoteIterator i = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,bp.createComponentSession().listaLinea_attivitaPerCdr(context.getUserContext(),cdr,bp.getMese(),cdp.getTi_rapporto()));
+		it.cnr.jada.util.RemoteIterator i = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,bp.createComponentSession().listaLinea_attivitaPerCdr(context.getUserContext(),cdr,bp.getMese(),cdp.getTi_rapporto(),cdp.getFl_rapporto13()));
 		if (i.countElements() == 0) {
 			bp.setErrorMessage("Nessuna linea di attività disponibile per il cdr selezionato.");
 			return context.findDefaultForward();
 		}
-		return select(context,i,it.cnr.jada.bulk.BulkInfo.getBulkInfo(WorkpackageBulk.class),null,"doSelezionaLinea_attivitaPerScarico");
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())); 
+		return select(context,i,it.cnr.jada.bulk.BulkInfo.getBulkInfo(WorkpackageBulk.class),parCnr.getFl_nuovo_pdg()?"prg_liv2":null,"doSelezionaLinea_attivitaPerScarico");
 	} catch(Exception e) {
 		return handleException(context,e);
 	}

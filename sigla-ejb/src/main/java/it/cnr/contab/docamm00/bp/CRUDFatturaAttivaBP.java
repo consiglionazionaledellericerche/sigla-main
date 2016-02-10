@@ -1,32 +1,43 @@
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
+import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.jada.DetailedException;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
-
-import it.cnr.contab.docamm00.comp.DocumentoAmministrativoComponentSession;
-import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.*;
-import it.cnr.jada.util.action.*;
 
 /**
  * <!-- @TODO: da completare -->
@@ -54,7 +65,9 @@ public abstract class CRUDFatturaAttivaBP
 	private boolean ribaltato;
 	private boolean isDetailDoubling = false;
 	private boolean isGestoreBancaFatturaAttiva;
+	private boolean contoEnte;
 	private final FatturaAttivaRigaIntrastatCRUDController dettaglioIntrastatController = new FatturaAttivaRigaIntrastatCRUDController("Intrastat",Fattura_attiva_intraBulk.class,"fattura_attiva_intrastatColl", this);
+	private DocumentiCollegatiDocAmmService docCollService;
 public CRUDFatturaAttivaBP() {
 
 	this(Fattura_attiva_rigaBulk.class);
@@ -146,6 +159,27 @@ public void create(it.cnr.jada.action.ActionContext context)
 		setUserConfirm(null);
 	}
 }
+public void gestioneAllegatiFatturazioneElettronica(it.cnr.jada.action.ActionContext context)
+		throws	it.cnr.jada.action.BusinessProcessException {
+			
+		try {
+			Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel(); 
+			int crudStatus = fattura.getCrudStatus();
+			if (fattura.isDocumentoFatturazioneElettronica()){
+//				setModel(
+//						context,
+						((FatturaAttivaSingolaComponentSession)createComponentSession()).gestioneAllegatiPerFatturazioneElettronica(
+																					context.getUserContext(),
+																					fattura
+//																					)
+																					);
+			}
+		} catch(Exception e) {
+			throw handleException(e);
+		} finally {
+			setUserConfirm(null);
+		}
+	}
 public OggettoBulk createEmptyModel(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 
 	setAnnoDiCompetenza(true);
@@ -230,6 +264,9 @@ public String getColumnsetForGenericSearch() {
 		(getParent() instanceof DocumentiAmministrativiProtocollabiliBP ||
 		 getParent() instanceof DocumentiAmministrativiRistampabiliBP))
 		return "protocollazioneIvaSet";
+	if (getParent() != null && 
+			(getParent() instanceof DocumentiAmministrativiFatturazioneElettronicaBP))
+			return "fatturazioneElettronicaSet";
 	return "default";
 }
 /**
@@ -634,6 +671,28 @@ public void salvaRiportandoAvanti(ActionContext context)
 public void save(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException,ValidationException {
 
 	super.save(context);
+	
+	Fattura_attivaBulk documento = (Fattura_attivaBulk)getModel();
+	if (documento.isDocumentoFatturazioneElettronica()){
+		for (Iterator i = documento.getFattura_attiva_dettColl().iterator(); i.hasNext(); ) {
+			Fattura_attiva_rigaIBulk riga = (Fattura_attiva_rigaIBulk)i.next();
+			if (riga.getAccertamento_scadenzario()!=null &&
+				riga.getAccertamento_scadenzario().getAccertamento() != null) {
+				AccertamentoBulk accertamento = riga.getAccertamento_scadenzario().getAccertamento();
+				if (accertamento.getContratto() == null ){
+					setMessage("Attenzione! Per alcune righe del documento sono collegati accertamenti che non hanno il riferimento al contratto e quindi al Codice CUP o al Codice CIG comunicato dal Committente. "+
+							"Il committente potrebbe rifiutare il documento in mancanza di tali dati. Salvataggio Effettuato.");
+				break;
+				} else {
+					if ( accertamento.getContratto().getCdCigFatturaAttiva() == null || (accertamento.getContratto().getCup() == null || accertamento.getContratto().getCup().getCdCup() == null)){
+						setMessage("Attenzione! Per alcune righe del documento sono collegati accertamenti su contratti che non hanno indicato il Codice CUP o il Codice CIG comunicato dal Committente. "+
+									"Il committente potrebbe rifiutare il documento in mancanza di tali dati. Salvataggio Effettuato.");
+						break;
+					}
+				}
+			}
+		}
+	}
 	setCarryingThrough(false);
 	resetTabs();
 }
@@ -774,6 +833,7 @@ private Fattura_attiva_rigaIBulk copyByRigaDocumento(ActionContext context, Fatt
 	nuovoDettaglio.setTi_associato_manrev(origine.getTi_associato_manrev());
 	nuovoDettaglio.setTariffario(origine.getTariffario());
 	nuovoDettaglio.setBene_servizio(origine.getBene_servizio());
+	nuovoDettaglio.setTrovato(origine.getTrovato());
 	nuovoDettaglio.setToBeCreated();
 	return nuovoDettaglio;
 }
@@ -791,25 +851,37 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
         if (documento.getStato_cofi() != null && documento.getStato_cofi().equals(documento.STATO_PAGATO))
        		setMessage("Non è possibile sdoppiare righe in un documento pagato.");
         if (dettaglioSelezionato.getIm_riga_sdoppia()==null ||
-        	dettaglioSelezionato.getIm_riga_sdoppia().equals(Utility.ZERO) ||
-       		dettaglioSelezionato.getIm_riga_sdoppia().compareTo(dettaglioSelezionato.getSaldo())!=-1) {
+        	//dettaglioSelezionato.getIm_riga_sdoppia().equals(Utility.ZERO) ||
+       		dettaglioSelezionato.getIm_riga_sdoppia().compareTo(dettaglioSelezionato.getSaldo())>1) {
        		setMessage("Il nuovo importo della riga da sdoppiare deve essere positivo ed inferiore " + 
        				   "al saldo originario.");
         	return;
         }        	
-
+        BigDecimal importoIva=BigDecimal.ZERO;
+        if (dettaglioSelezionato != null) {
+        	// Calcolo iva rapportato al nuovo totale per cui si esegue lo sdoppiato
+			if (documento.quadraturaInDeroga())
+				importoIva = importoIva.add(dettaglioSelezionato.getIm_riga_sdoppia().subtract(dettaglioSelezionato.getIm_riga_sdoppia().multiply(new BigDecimal(100)).divide(new BigDecimal(100).add(dettaglioSelezionato.getVoce_iva().getPercentuale()),2,BigDecimal.ROUND_HALF_UP)));
+        }
+		
         Accertamento_scadenzarioBulk scadenzaVecchia = dettaglioSelezionato.getAccertamento_scadenzario();
 
 		BigDecimal newImportoRigaVecchia = dettaglioSelezionato.getIm_riga_sdoppia().add(dettaglioSelezionato.getIm_totale_divisa().subtract(dettaglioSelezionato.getSaldo())); 
 		BigDecimal newImportoRigaNuova = dettaglioSelezionato.getSaldo().subtract(dettaglioSelezionato.getIm_riga_sdoppia()); 
 
-		BigDecimal newPrezzoRigaVecchia = newImportoRigaVecchia.divide(dettaglioSelezionato.getQuantita().multiply(dettaglioSelezionato.getVoce_iva().getPercentuale().divide(new BigDecimal(100)).add(new java.math.BigDecimal(1))),2,BigDecimal.ROUND_HALF_EVEN);
-		BigDecimal newPrezzoRigaNuova = dettaglioSelezionato.getPrezzo_unitario().subtract(newPrezzoRigaVecchia); 
-
+		BigDecimal newPrezzoRigaVecchia = newImportoRigaVecchia.divide(dettaglioSelezionato.getQuantita().multiply(dettaglioSelezionato.getVoce_iva().getPercentuale().divide(new BigDecimal(100)).add(new java.math.BigDecimal(1))),2,BigDecimal.ROUND_HALF_UP);
+		BigDecimal newPrezzoRigaNuova = dettaglioSelezionato.getPrezzo_unitario().subtract(newPrezzoRigaVecchia);
+		
 		if (dettaglioSelezionato.getAccertamento_scadenzario()!=null) {
-			scadenzaNuova=(Accertamento_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
-								                                                       scadenzaVecchia,
-																					   scadenzaVecchia.getIm_scadenza().subtract(dettaglioSelezionato.getSaldo()).add(dettaglioSelezionato.getIm_riga_sdoppia()));
+		// se importoIva è diverso da zero vuole dire che è in split_payment ed ho calcolato la quota parte dell'iva  da considerare per sdoppiare le scadenze dell'accertamento 
+	     	  if(importoIva.compareTo(BigDecimal.ZERO)!=0)
+        		  	scadenzaNuova=(Accertamento_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
+    								                                                       scadenzaVecchia,
+    								                                                       dettaglioSelezionato.getIm_riga_sdoppia().subtract(importoIva));
+        	  else
+					scadenzaNuova=(Accertamento_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
+                            scadenzaVecchia,
+                            scadenzaVecchia.getIm_scadenza().subtract(dettaglioSelezionato.getSaldo()).add(dettaglioSelezionato.getIm_riga_sdoppia()));
 
 			//ricarico l'accertamento e recupero i riferimenti alle scadenze
         	AccertamentoBulk accertamento = (AccertamentoBulk)h.inizializzaBulkPerModifica(context.getUserContext(),
@@ -951,6 +1023,11 @@ public boolean isROBank_ModPag(UserContext context, Fattura_attivaBulk fattura) 
 	}
 	return isInputReadonly();
 }
+public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws ComponentException, RemoteException {
+	if(isROBank_ModPag(context,fattura) || isContoEnte() )
+		return true;
+	return isInputReadonly();
+}
 
 
 	public void setGestoreBancaFatturaAttiva(boolean b) {
@@ -968,4 +1045,85 @@ public boolean isROBank_ModPag(UserContext context, Fattura_attivaBulk fattura) 
 	public FatturaAttivaRigaIntrastatCRUDController getDettaglioIntrastatController() {
 		return dettaglioIntrastatController;
 	}
+	public void setContoEnte(boolean b) {
+		contoEnte=b;
+	}
+	public boolean isContoEnte() {
+		return contoEnte;
+	}
+
+	public void ricercaDatiTrovato(ActionContext context)  throws Exception {
+		FatturaPassivaComponentSession h;
+		Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk)getDettaglio().getModel();
+		try {
+			h = (FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class) ;
+			TrovatoBulk trovato = h.ricercaDatiTrovatoValido(context.getUserContext(), riga.getPg_trovato());
+			riga.setTrovato(trovato);
+		} catch (java.rmi.RemoteException e) {
+			riga.setTrovato(new TrovatoBulk());
+			handleException(e);
+		} catch (BusinessProcessException e) {
+			riga.setTrovato(new TrovatoBulk());
+			handleException(e);
+		} catch (Exception e) {
+			riga.setTrovato(new TrovatoBulk());
+			throw e;
+		}
+	}
+	public DocumentiCollegatiDocAmmService getDocCollService() {
+		return docCollService;
+	}
+	public void setDocCollService(DocumentiCollegatiDocAmmService docCollService) {
+		this.docCollService = docCollService;
+	}
+	protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
+		super.initialize(actioncontext);
+		docCollService = SpringUtil.getBean("documentiCollegatiDocAmmService",
+				DocumentiCollegatiDocAmmService.class);	
+	}
+
+	public boolean isDocumentiCollegatiButtonHidden()  {
+		try {
+			Boolean hidden = Boolean.TRUE;
+			if (getStatus() == SEARCH)
+				return hidden;
+			Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel();
+			if (fattura != null && fattura.getPg_fattura_attiva() != null && fattura.isDocumentoFatturazioneElettronica()){
+				return docCollService.getNodeRefContabile(fattura) == null;
+			}
+			return hidden;
+		} catch (DetailedException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+	}
+
+//	public String getDocumentiCollegatiFileName(){
+//		Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel();
+//		if (mandato != null){
+//			return "Contabile ".
+//					concat(String.valueOf(mandato.getEsercizio())).
+//					concat("-").concat(mandato.getCd_cds()==null?"":mandato.getCd_cds()).
+//					concat("-").concat(String.valueOf(mandato.getPg_mandato())).
+//					concat(" .pdf");
+//		}
+//		return null;
+//	}
+	public void scaricaDocumentoCollegato(ActionContext actioncontext) throws Exception {
+		Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel();
+		InputStream is = docCollService.getStreamContabile(fattura);
+		if (is != null){
+			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+			byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+			int buflength;
+			while ((buflength = is.read(buffer)) > 0) {
+				os.write(buffer,0,buflength);
+			}
+			is.close();
+			os.flush();
+		}
+	}
 }
+

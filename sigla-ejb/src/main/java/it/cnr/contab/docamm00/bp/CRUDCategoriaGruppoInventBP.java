@@ -7,8 +7,10 @@ package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
+import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.*;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.*;
@@ -17,7 +19,18 @@ import it.cnr.jada.util.action.*;
  * Gestisce le catene di elementi correlate con la fattura passiva in uso.
  */
 public class CRUDCategoriaGruppoInventBP extends SimpleCRUDBP {
-	
+	private SimpleDetailCRUDController crudAssociazioneVoci = new SimpleDetailCRUDController( "associazioneVoci", Categoria_gruppo_voceBulk.class, "associazioneVoci", this);
+ 
+ 
+public SimpleDetailCRUDController getCrudAssociazioneVoci() {
+		return crudAssociazioneVoci;
+	}
+
+	public void setCrudAssociazioneVoci(
+			SimpleDetailCRUDController crudAssociazioneVoci) {
+		this.crudAssociazioneVoci = crudAssociazioneVoci;
+	}
+
 public CRUDCategoriaGruppoInventBP() {
 	super();
 }
@@ -71,4 +84,5 @@ public RemoteBulkTree getCategoriaGruppoInventTree(ActionContext context) throws
 	  }
 	};
 }
+
 }

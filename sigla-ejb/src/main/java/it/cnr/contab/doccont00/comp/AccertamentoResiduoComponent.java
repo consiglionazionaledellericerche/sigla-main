@@ -194,7 +194,7 @@ public class AccertamentoResiduoComponent extends AccertamentoComponent {
 				{
 					key = (Accertamento_scad_voceBulk)e.nextElement();
 					totaleScad = (BigDecimal) prcImputazioneFinanziariaTable.get( key );			
-					percentuale = totaleScad.multiply(new BigDecimal(100)).divide(accertDB.getIm_accertamento(), 2, BigDecimal.ROUND_HALF_EVEN);
+					percentuale = totaleScad.multiply(new BigDecimal(100)).divide(accertDB.getIm_accertamento(), 2, BigDecimal.ROUND_HALF_UP);
 	
 					for ( Iterator s = accertamento.getAccertamento_scadenzarioColl().iterator(); s.hasNext(); )
 					{
@@ -207,7 +207,7 @@ public class AccertamentoResiduoComponent extends AccertamentoComponent {
 								key.getCd_linea_attivita().equals(osv.getCd_linea_attivita()) &&
 								key.getCd_voce().equals(osv.getCd_voce())) {
 								osv.setToBeUpdated(); 
-								osv.setIm_voce(osv.getAccertamento_scadenzario().getIm_scadenza().multiply(percentuale).divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_EVEN));
+								osv.setIm_voce(osv.getAccertamento_scadenzario().getIm_scadenza().multiply(percentuale).divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 								break;
 							}
 						}

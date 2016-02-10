@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Classificazione internazionale della spesa pubblica per funzione (Cofog)"
+	longDescription="Classificazione internazionale della spesa pubblica per funzione (Cofog) secondo il Sistema dei Conti Europei SEC95">
+	<fieldProperty
+		name="cd_cofog"
+		property="cd_cofog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		nullable="false"
+		label="cofog" />
+	<fieldProperty
+		name="dsCofog"
+		property="dsCofog"
+		inputType="TEXTAREA"
+		maxLength="1000"
+		inputSize="100"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		nullable="false"
+		label="descrizione" />
+	<fieldProperty
+		name="cdLivello1"
+		property="cdLivello1"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false" 
+		label="cdLivello1" />
+	<fieldProperty
+		name="cdLivello2"
+		property="cdLivello2"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="cdLivello2" />
+	<fieldProperty
+		name="cdLivello3"
+		property="cdLivello3"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdLivello3" />
+	<fieldProperty
+		name="nrLivello"
+		property="nrLivello"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="nr. Livello" />
+	<fieldProperty
+		name="flAccentrato"
+		property="flAccentrato"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="flAccentrato" />
+	<fieldProperty
+		name="flDecentrato"
+		property="flDecentrato"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="flDecentrato" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data canc." />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cd_cofog" />
+		<formFieldProperty
+			name="dsCofog"
+			inputType="TEXT"
+			inputSize="30" />	
+	</form>
+	<formFieldProperty
+		name="cd_cofog" />
+	<formFieldProperty
+		name="dsCofog" />
+	<formFieldProperty
+		name="cdLivello1" />
+	<formFieldProperty
+		name="cdLivello2" />
+	<formFieldProperty
+		name="cdLivello3" />
+	<formFieldProperty
+		name="nrLivello" />
+	<formFieldProperty
+		name="flAccentrato" />
+	<formFieldProperty
+		name="flDecentrato" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cd_cofog" />
+	<findFieldProperty
+		name="dsCofog" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cd_cofog" />
+	<columnFieldProperty
+		name="dsCofog" />
+	<columnFieldProperty
+		name="nrLivello" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

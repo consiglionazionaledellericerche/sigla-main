@@ -164,14 +164,26 @@
 		<columnMapping
 			columnName="NR_PROTOCOLLO"
 			propertyName="nrProtocollo"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
 			nullable="true" />	
 		<columnMapping
 			columnName="NR_PROGRESSIVO"
 			propertyName="nrProgressivo"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_TIPO"
+			propertyName="ds_tipo"
+			sqlTypeName="CHAR"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="UO_ORIGINE"
+			propertyName="uo_origine"
+			sqlTypeName="CHAR"
+			columnSize="30"
 			nullable="true" />		
 	</defaultColumnMap>
 	<persistentProperty
@@ -229,5 +241,9 @@
 	<persistentProperty
 		name="nrProtocollo" />	
 	<persistentProperty
-		name="nrProgressivo" />				
+		name="nrProgressivo" />		
+	<persistentProperty
+		name="ds_tipo" />	
+	<persistentProperty
+		name="uo_origine" />				
 </SQLPersistentInfo>

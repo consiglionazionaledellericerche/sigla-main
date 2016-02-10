@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documento elettronico di trasmissione allegati"
+	longDescription="Documento elettronico di trasmissione allegati">
+	<fieldProperty
+		name="idPaese"
+		property="documentoEleTestata.idPaese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nazione Trasmittente" />
+	<fieldProperty
+		name="idCodice"
+		property="documentoEleTestata.idCodice"
+		inputType="TEXT"
+		inputSize="28"
+		maxLength="28"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo Fiscale Trasmittente" />
+	<fieldProperty
+		name="identificativoSdi"
+		property="documentoEleTestata.identificativoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="null" />
+	<fieldProperty
+		name="progressivo"
+		property="documentoEleTestata.progressivo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="nomeAttachment"
+		property="nomeAttachment"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nome Allegato" />
+	<fieldProperty
+		name="algoritmoCompressione"
+		property="algoritmoCompressione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Algoritmo Compressione" />
+	<fieldProperty
+		name="formatoAttachment"
+		property="formatoAttachment"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Formato Allegato" />
+	<fieldProperty
+		name="descrizioneAttachment"
+		property="descrizioneAttachment"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Descrizione Allegato" />
+	<fieldProperty
+		name="cmisNodeRef"
+		property="cmisNodeRef"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="null" />
+	<fieldProperty
+		name="anomalie"
+		property="anomalie"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Segnalazioni da verificare" />
+	<fieldProperty
+		name="attivaFile"
+		property="cmisNodeRef"
+		inputType="BUTTON"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnView="true"
+		img="img/import24.gif"
+		href="javascript:doScaricaFile()"
+		label="Apri File" />		
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="idPaese" />
+		<formFieldProperty
+			name="idCodice" />
+		<formFieldProperty
+			name="identificativoSdi" />
+		<formFieldProperty
+			name="progressivo" />
+		<formFieldProperty
+			name="nomeAttachment" />
+	</form>
+	<formFieldProperty
+		name="nomeAttachment" />
+	<formFieldProperty
+		name="algoritmoCompressione" />
+	<formFieldProperty
+		name="formatoAttachment" />
+	<formFieldProperty
+		name="descrizioneAttachment" />
+	<formFieldProperty
+		name="attivaFile" />
+		
+	<findFieldProperty
+		name="idPaese" />
+	<findFieldProperty
+		name="idCodice" />
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="nomeAttachment" />
+	<findFieldProperty
+		name="algoritmoCompressione" />
+	<findFieldProperty
+		name="formatoAttachment" />
+	<findFieldProperty
+		name="descrizioneAttachment" />
+	<findFieldProperty
+		name="cmisNodeRef" />
+	<findFieldProperty
+		name="anomalie" />
+	<columnFieldProperty
+		name="nomeAttachment" />
+	<columnFieldProperty
+		name="algoritmoCompressione" />
+	<columnFieldProperty
+		name="formatoAttachment" />
+	<columnFieldProperty
+		name="descrizioneAttachment" />
+</bulkInfo>

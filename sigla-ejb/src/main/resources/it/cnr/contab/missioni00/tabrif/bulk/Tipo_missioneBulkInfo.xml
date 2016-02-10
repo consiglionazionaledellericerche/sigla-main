@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_tipo_missione"
 		property="cd_tipo_missione"
@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"		
-		label="Tipo missione" />
+		label="Ambito missione" />
 	<fieldProperty
 		name="ds_tipo_missione"
 		property="ds_tipo_missione"
@@ -25,17 +25,26 @@
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"		
-		label="Descrizione tipo missione"
+		label="Descrizione ambito missione"
 		caseSensitiveSearch="false" 
 		nullable="false"		/>
+	<fieldProperty
+		name="fl_valido"
+		property="fl_valido"
+		inputType="CHECKBOX"
+		label="valido" 
+		/>
 
 	<formFieldProperty name="cd_tipo_missione" />
 	<formFieldProperty name="ds_tipo_missione" />
-
+	<formFieldProperty name="fl_valido" />
+	
 	<columnFieldProperty name="cd_tipo_missione" />
 	<columnFieldProperty name="ds_tipo_missione" />
+	<columnFieldProperty name="fl_valido" />
 
 	<findFieldProperty name="cd_tipo_missione" />
 	<findFieldProperty name="ds_tipo_missione" />
+	<findFieldProperty name="fl_valido" />
 
 </bulkInfo>

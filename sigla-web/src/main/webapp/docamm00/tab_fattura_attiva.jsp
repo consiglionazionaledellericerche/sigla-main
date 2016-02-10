@@ -90,7 +90,7 @@
 		<td>
       		<% bp.getController().writeFormLabel(out,"fl_liquidazione_differita");%>
       	</td><td>
-      		<% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita",roOnAutoGen,null,"onClick=\"submitForm('doOnLiquidazioneDifferitaChange')\"");%>
+      		<% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita",roOnAutoGen||(fatturaAttiva.getFl_liquidazione_differita()!=null && fatturaAttiva.getFl_liquidazione_differita()),null,"onClick=\"submitForm('doOnLiquidazioneDifferitaChange')\"");%>
       	</td>
 		<td>
       		<% bp.getController().writeFormLabel(out,"protocollo_iva");%>
@@ -277,7 +277,7 @@
       	</td>   
 		<td>
 			<% 	if (fatturaAttiva.getBanca_uo() != null) {
-					bp.getController().getBulkInfo().writeFormInput(out,bp.getModel(),null,"listabancheuo",bp.isROBank_ModPag(uc,fatturaAttiva),null,null,bp.getInputPrefix(), bp.getStatus(), bp.getFieldValidationMap());
+					bp.getController().getBulkInfo().writeFormInput(out,bp.getModel(),null,"listabancheuo",bp.isROBank(uc,fatturaAttiva),null,null,bp.getInputPrefix(), bp.getStatus(), bp.getFieldValidationMap());
 				} %>
    		</td>
       </tr>

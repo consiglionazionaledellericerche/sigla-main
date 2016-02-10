@@ -29,21 +29,28 @@ public class AddizionaliComponent extends it.cnr.jada.comp.CRUDComponent{
 	try{
 		ComuneHome home = (ComuneHome)getHome(usercontext, ComuneBulk.class);
 		ComuneBulk comune = home.findComune(usercontext, addizionale.getCd_catastale());
-		if(comune.getDs_comune().compareTo(addizionale.getDs_comune())!=0)
-			throw new ApplicationException("Descrizione Comune non verificata - Codice Catastale: "+addizionale.getCd_catastale()+" - "+addizionale.getDs_comune()+" - "+comune.getDs_comune());
 		if(comune!=null && comune.getPg_comune()!=null){
 			ScaglioneHome home_scaglione =(ScaglioneHome)getHome(usercontext,ScaglioneBulk.class);
 			scaglione =home_scaglione.findScaglione(usercontext, addizionale, comune);
 		}else{
-			throw new ApplicationException("Comune non trovato - Codice Catastale: "+addizionale.getCd_catastale()+" - "+addizionale.getDs_comune());
+			addizionale.setNota("Comune non trovato - Codice Catastale: "+addizionale.getCd_catastale()+" - "+addizionale.getDs_comune());
 		}
+		if(comune.getDs_comune()!=null && comune.getDs_comune().compareTo(addizionale.getDs_comune())!=0)
+			addizionale.setNota("Descrizione Comune non verificata - Codice Catastale: "+addizionale.getCd_catastale()+" - "+addizionale.getDs_comune()+" - in Archivio - "+comune.getDs_comune());
+		
 		if (scaglione != null && scaglione.getAliquota()!=null && scaglione.getAliquota().compareTo(addizionale.getAliquota())!=0){
 			addizionale.setOld_aliquota(scaglione.getAliquota());
 			addizionale.setToBeCreated();
 			creaConBulk(usercontext, addizionale);
 			return addizionale;
-		}else if (scaglione == null)
-			throw new ApplicationException("Esistono più scaglioni validi - Codice Catastale: "+addizionale.getCd_catastale()+" - "+addizionale.getDs_comune());
+		}else if (addizionale.getNota()== null && scaglione == null)
+			addizionale.setNota("Non esistono scaglioni da aggiornare o esistono più scaglioni validi - Codice Catastale: "+addizionale.getCd_catastale()+" - "+addizionale.getDs_comune());
+			if(addizionale.getNota()!=null){
+				addizionale.setOld_aliquota(null);
+				addizionale.setToBeCreated();
+				creaConBulk(usercontext, addizionale);
+				return addizionale;
+			}
 		else
 			return null;
 	}catch(it.cnr.jada.persistency.PersistencyException ex){

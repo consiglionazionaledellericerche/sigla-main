@@ -97,6 +97,25 @@ public class Incarichi_comunicati_fp_detBulk extends Incarichi_comunicati_fp_det
 		}
 	}
 	
+	public static Incarichi_comunicati_fp_detBulk copyFrom(UserContext userContext, Incarichi_comunicati_fpBulk incComunicatoFP, it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType.Pagamenti.NuovoPagamento nuovoPagamento) throws it.cnr.jada.comp.ApplicationException {
+		try {
+			Incarichi_comunicati_fp_detBulk incComunicatoDetFP = new Incarichi_comunicati_fp_detBulk();
+			incComunicatoDetFP.setIncarichi_comunicati_fp(incComunicatoFP);
+			if (incComunicatoFP.getId_incarico()==null)
+				incComunicatoDetFP.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_INVIATO_NEW);
+			else
+				incComunicatoDetFP.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_RICEVUTO_NEW);
+			incComunicatoDetFP.setAnno_pag(nuovoPagamento.getAnno().intValue());
+			incComunicatoDetFP.setSemestre_pag(nuovoPagamento.getSemestre().intValue());
+			incComunicatoDetFP.setImporto_pag(nuovoPagamento.getImporto());
+
+			incComunicatoDetFP.setToBeCreated();
+			return incComunicatoDetFP;
+		} catch (Exception e) {
+			throw new it.cnr.jada.comp.ApplicationException(e.toString());
+		}
+	}
+
 	public static Incarichi_comunicati_fp_detBulk copyFrom(UserContext userContext, Incarichi_comunicati_fpBulk incComunicatoFP, EsitoComunicazione.Consulenti.NuovoIncarico.NuovoPagamento nuovoPagamento) throws it.cnr.jada.comp.ApplicationException {
 		try {
 			Incarichi_comunicati_fp_detBulk incComunicatoDetFP = new Incarichi_comunicati_fp_detBulk();
@@ -126,6 +145,25 @@ public class Incarichi_comunicati_fp_detBulk extends Incarichi_comunicati_fp_det
 			incComunicatoDetFP.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_INVIATO_NEW);
 			incComunicatoDetFP.setAnno_pag(nuovoPagamento.getAnno());
 			incComunicatoDetFP.setSemestre_pag(nuovoPagamento.getSemestre());
+			incComunicatoDetFP.setImporto_pag(nuovoPagamento.getImporto());
+
+			incComunicatoDetFP.setToBeCreated();
+			return incComunicatoDetFP;
+		} catch (Exception e) {
+			throw new it.cnr.jada.comp.ApplicationException(e.toString());
+		}
+	}
+
+	public static Incarichi_comunicati_fp_detBulk copyFrom(UserContext userContext, Incarichi_comunicati_fpBulk incComunicatoFP, it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.NuovoPagamento nuovoPagamento) throws it.cnr.jada.comp.ApplicationException {
+		try {
+			Incarichi_comunicati_fp_detBulk incComunicatoDetFP = new Incarichi_comunicati_fp_detBulk();
+			incComunicatoDetFP.setIncarichi_comunicati_fp(incComunicatoFP);
+			if (incComunicatoFP.getId_incarico()==null)
+				incComunicatoDetFP.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_INVIATO_NEW);
+			else
+				incComunicatoDetFP.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_RICEVUTO_NEW);
+			incComunicatoDetFP.setAnno_pag(nuovoPagamento.getAnno().intValue());
+			incComunicatoDetFP.setSemestre_pag(nuovoPagamento.getSemestre().intValue());
 			incComunicatoDetFP.setImporto_pag(nuovoPagamento.getImporto());
 
 			incComunicatoDetFP.setToBeCreated();

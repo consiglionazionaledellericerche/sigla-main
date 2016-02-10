@@ -213,6 +213,11 @@
 			propertyName="cd_bene_servizio"
 			sqlTypeName="VARCHAR"
 			columnSize="10"/>	
+		<columnMapping
+			columnName="PG_TROVATO"
+			propertyName="pg_trovato"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -288,4 +293,6 @@
 		name="data_esigibilita_iva" />	
 	<persistentProperty
 		name="cd_bene_servizio"/>	
+	<persistentProperty
+		name="pg_trovato" />
 </SQLPersistentInfo>

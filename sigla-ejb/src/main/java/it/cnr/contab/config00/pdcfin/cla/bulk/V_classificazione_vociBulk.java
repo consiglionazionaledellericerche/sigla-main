@@ -8,11 +8,20 @@ import it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoBulk;
 import it.cnr.jada.bulk.BulkList;
 
 public class V_classificazione_vociBulk extends Classificazione_vociBulk {
+  	private java.lang.String cd_livello_last;
   	private java.lang.String cd_classificazione;
 	private java.lang.Integer nr_livello;
 	
 	public V_classificazione_vociBulk() {
 		super();
+	}
+	
+	public java.lang.String getCd_livello_last() {
+		return cd_livello_last;
+	}
+	
+	public void setCd_livello_last(java.lang.String cd_livello_last) {
+		this.cd_livello_last = cd_livello_last;
 	}
 	
 	public V_classificazione_vociBulk(java.lang.Integer id_classificazione) {

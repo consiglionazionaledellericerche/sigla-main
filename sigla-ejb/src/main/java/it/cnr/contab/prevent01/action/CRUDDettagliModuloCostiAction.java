@@ -6,22 +6,18 @@
  */
 package it.cnr.contab.prevent01.action;
 
-import java.rmi.RemoteException;
-
+import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
-import it.cnr.contab.pdg00.ejb.CostiDipendenteComponentSession;
-import it.cnr.contab.prevent01.bp.CRUDDettagliContrSpeseBP;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.prevent01.bp.CRUDDettagliModuloCostiBP;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
-import it.cnr.contab.prevent01.ejb.*;
+import it.cnr.contab.prevent01.ejb.PdgModuloCostiComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.bulk.FillException;
-import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.OptionBP;
 /**
@@ -56,6 +52,14 @@ public class CRUDDettagliModuloCostiAction extends CRUDAction {
 			return actioncontext.findDefaultForward();
 		}		  
 		return openConfirm(actioncontext,"Tutti i dettagli di spesa relativi al modulo verranno cancellati definitivamente. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfermaEliminamodulo");		
+	}
+	public Forward doEliminaProgetto(ActionContext actioncontext) throws BusinessProcessException {
+		CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)actioncontext.getBusinessProcess();
+		if (bp.isCostiDipendenteRipartiti(actioncontext)){
+			bp.setErrorMessage("Eliminazione non possibile, in quanto sono stati scaricati i costi del dipendente!");
+			return actioncontext.findDefaultForward();
+		}		  
+		return openConfirm(actioncontext,"Tutti i dettagli di spesa relativi al progetto verranno cancellati definitivamente. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfermaEliminamodulo");		
 	}
 	public Forward doOnIm_cf_amm_altroChange(ActionContext context) {
 
@@ -392,8 +396,12 @@ public class CRUDDettagliModuloCostiAction extends CRUDAction {
 			CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)getBusinessProcess(context);
 			if (classificazione != null){
 				pdg_modulo_spese.setClassificazione(classificazione);
+				if(classificazione.getFl_mastrino().booleanValue()){
+					pdg_modulo_spese.setLimiteInt(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_INTERNA));
+					pdg_modulo_spese.setLimiteEst(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_ESTERNA));
+				}
 				bp.setModel(context,((PdgModuloCostiComponentSession)bp.createComponentSession()).calcolaPrevisioneAssestataRowByRow(context.getUserContext(),(Pdg_modulo_costiBulk)bp.getModel() ,pdg_modulo_spese,new Integer(CNRUserContext.getEsercizio(context.getUserContext()).intValue() - 1)));
-			}						
+			}
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 			return handleException(context, e);
@@ -408,5 +416,33 @@ public class CRUDDettagliModuloCostiAction extends CRUDAction {
 		}
 		return super.doSalva(context);
 
+	}
+	public Forward doBlankSearchClassificazione(ActionContext context, Pdg_modulo_speseBulk pdg_modulo_spese) throws java.rmi.RemoteException {
+	 	pdg_modulo_spese.setLimiteEst(false);
+		pdg_modulo_spese.setLimiteInt(false);
+		pdg_modulo_spese.setClassificazione(new V_classificazione_vociBulk());
+		return context.findDefaultForward();
+	}
+	public it.cnr.jada.action.Forward doBringBackSearchArea(ActionContext context, Pdg_modulo_speseBulk pdg_modulo_spese, CdsBulk cds) throws java.rmi.RemoteException {
+		try{
+			fillModel(context);	
+			CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)getBusinessProcess(context);
+			if (cds != null)
+				pdg_modulo_spese.setArea(cds);
+			fillModel(context);
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context, e);
+		}
+	}
+	public it.cnr.jada.action.Forward doBlankSearchArea(ActionContext context, Pdg_modulo_speseBulk pdg_modulo_spese, CdsBulk cds) throws java.rmi.RemoteException {
+		try{
+			fillModel(context);	 
+			CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)getBusinessProcess(context);
+			pdg_modulo_spese.setArea(new CdsBulk());
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context, e);
+		}
 	}
 }

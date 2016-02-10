@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.IpaServFattBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.IpaServFattKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.IpaServFattHome">
+	<defaultColumnMap
+		tableName="IPA_SERV_FATT">
+		<columnMapping
+			columnName="COD_UNI_OU"
+			propertyName="codUniOu"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="DES_OU"
+			propertyName="desOu"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="REGIONE"
+			propertyName="regione"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIA"
+			propertyName="provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="COMUNE"
+			propertyName="comune"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO"
+			propertyName="indirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP"
+			propertyName="cap"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CF"
+			propertyName="cf"
+			sqlTypeName="VARCHAR"
+			columnSize="11"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_VERIFICA_CF"
+			propertyName="dtVerificaCf"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_AVVIO_SFE"
+			propertyName="dataAvvioSfe"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="codUniOu" />
+	<persistentProperty
+		name="desOu" />
+	<persistentProperty
+		name="regione" />
+	<persistentProperty
+		name="provincia" />
+	<persistentProperty
+		name="comune" />
+	<persistentProperty
+		name="indirizzo" />
+	<persistentProperty
+		name="cap" />
+	<persistentProperty
+		name="cf" />
+	<persistentProperty
+		name="dtVerificaCf" />
+	<persistentProperty
+		name="dataAvvioSfe" />
+</SQLPersistentInfo>

@@ -128,6 +128,14 @@ public void setPgInizio(java.lang.Long newPgInizio) {
 public void setTerzoForPrint(it.cnr.contab.anagraf00.core.bulk.TerzoBulk newTerzoForPrint) {
 	terzoForPrint = newTerzoForPrint;
 }
+
+public String getCd_cds_orig() {
+
+	if (getCd_cds_origine()==null)
+		return "%";
+	
+	return getCd_cds_origine();
+}
 /**
  * Metodo con cui si verifica la validità di alcuni campi, mediante un 
  * controllo sintattico o contestuale.

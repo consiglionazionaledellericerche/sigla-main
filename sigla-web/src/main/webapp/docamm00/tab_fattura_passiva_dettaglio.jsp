@@ -56,7 +56,7 @@
 		</td>
    		<% bp.getDettaglio().writeFormField(out,"percentuale_voce_iva");%>
    		<td>
-			<% bp.getDettaglio().writeFormInput(out, null, "voce_iva", roOnAutoGen&&fatturaPassiva.isIvaRecuperabile(), null, "");%>
+			<% bp.getDettaglio().writeFormInput(out, null, "voce_iva", false, null, "");%>
 		</td>
 		
       </tr>
@@ -92,9 +92,21 @@
 			     	</td>
 				</tr>
 	    <%	} %>
+      <tr>
+		<%	it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk riga = (it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
+			if (riga != null && riga.getCollegatoCapitoloPerTrovato()) { %>
+			  	  <td>
+				  	<% bp.getDettaglio().writeFormLabel(out,"pg_trovato");%>
+				  </td>
+				  <td colspan="3">	
+				  <% bp.getDettaglio().writeFormInput(out,null,"pg_trovato",false,null,"");%>
+				  	<% bp.getDettaglio().writeFormField(out,"titoloTrovato");%>
+				  	<% bp.getDettaglio().writeFormField(out,"inventoreTrovato");%>
+			  	</td>
+		<%	}  %>
+ 	  </tr>
     </table>
    </div>
-
     <div class="Group">
   	<table>
 	  <tr>
@@ -110,7 +122,19 @@
 	  	<td>
 		  	<% bp.getDettaglio().writeFormInput(out,null,"prezzo_unitario",false,null,"");%>
 		</td>	  	
+      
+      <% if (bp.isDetailDoubling()) { %>
+	   	<td>
+	  		<% bp.getDettaglio().writeFormLabel(out,"im_riga_sdoppia");%>
+	  	</td>
+	  	<td>
+	  		<% bp.getDettaglio().writeFormInput(out,null,"im_riga_sdoppia",false,null,"");%>
+	  	</td>
+	 <%}%>
       </tr>
+   <% if (bp.isDetailDoubling()) { %>
+   	<script>setFocusOnInput('main.Dettaglio.im_riga_sdoppia')</script>
+   <% bp.setDetailDoubling(false);} %>
       <tr>
       	<td>
 	  		<% bp.getDettaglio().writeFormLabel(out,"im_totale_divisa");%>
@@ -129,8 +153,7 @@
 	  	<td>
 		  	<% bp.getDettaglio().writeFormLabel(out,"im_iva");%>
 	  	</td>
-		<%	it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk riga = (it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
-			if (riga != null && riga.getFl_iva_forzata() != null && riga.getFl_iva_forzata().booleanValue()) { %>
+		<%	if (riga != null && riga.getFl_iva_forzata() != null && riga.getFl_iva_forzata().booleanValue()) { %>
 			  	<td>
 				  	<% bp.getDettaglio().writeFormInput(out,null,"im_iva",false,null,"style=\"color:red\"");%>
 			  	</td>
@@ -186,7 +209,12 @@
 				<span class="FormLabel" style="color:red">
 					Nessun riferimento trovato per la modalità di pagamento selezionata!
 				</span>
-		 <%	} %>
+		 <%	} else if(riga!=null && riga.getModalita_pagamento() == null  
+				 && riga.getModalita()!= null && riga.getModalita().size() == 0 && (riga.getFornitore() != null && riga.getFornitore().getCrudStatus() != riga.getFornitore().UNDEFINED)) { %>
+		    <span class="FormLabel" style="color:red">
+				Attenzione! Nessuna modalità di pagamento trovata!
+			</span>
+		 <% } %>
 		<td>
 	  <tr>
     </table>
@@ -208,3 +236,4 @@
 			</table>
 		</div>
 	<% } %>
+	

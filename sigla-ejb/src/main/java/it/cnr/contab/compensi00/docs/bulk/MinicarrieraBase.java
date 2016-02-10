@@ -119,6 +119,10 @@ public class MinicarrieraBase extends MinicarrieraKey implements Keyed {
 
 	// PG_REPERTORIO DECIMAL(10,0)
 	private java.lang.Long pg_repertorio;
+	
+	// TI_PRESTAZIONE CHAR(1) NULL
+	private java.lang.String ti_prestazione;
+	
 public MinicarrieraBase() {
 	super();
 }
@@ -568,5 +572,11 @@ public java.lang.Long getPg_repertorio() {
 }
 public void setPg_repertorio(java.lang.Long pg_repertorio) {
 	this.pg_repertorio = pg_repertorio;
+}
+public java.lang.String getTi_prestazione() {
+	return ti_prestazione;
+}
+public void setTi_prestazione(java.lang.String ti_prestazione) {
+	this.ti_prestazione = ti_prestazione;
 }
 }

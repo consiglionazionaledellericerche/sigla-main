@@ -17,6 +17,13 @@
 			columnSize="8"
 			nullable="false"
 			primary="true" />
+		<columnMapping
+			columnName="PROGR"
+			propertyName="progr"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio"
@@ -24,4 +31,7 @@
 	<persistentProperty
 		name="cd_anag"
 		partOfOid="true" />
+	<persistentProperty
+		name="progr"
+		partOfOid="true" />	
 </SQLPersistentInfo>

@@ -1,0 +1,11 @@
+<webscript>
+   <shortname>Firma Variazioni di Bilancio</shortname>
+   <description><![CDATA[
+   ]]>
+   </description>
+   <url>/sigla/firma/variazioni</url>
+   <family>SIGLA</family>
+   <format default="json">extension</format>
+   <authentication>user</authentication>
+   <transaction>required</transaction>
+</webscript>

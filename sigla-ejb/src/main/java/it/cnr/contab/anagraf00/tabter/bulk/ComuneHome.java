@@ -38,7 +38,7 @@ public class ComuneHome extends BulkHome {
 				comune = (ComuneBulk)findByPrimaryKey(comune);
 				SQLBuilder sql = getHomeCache().getHome(CapBulk.class).createSQLBuilder();
 				sql.addClause("AND","pg_comune",sql.EQUALS,comune.getPg_comune());
-				PreparedStatement stm = sql.prepareStatement(getConnection());
+				LoggableStatement stm = sql.prepareStatement(getConnection());
 				try {
 					java.sql.ResultSet rs = stm.executeQuery();
 					java.util.Collection coll = new java.util.Vector();

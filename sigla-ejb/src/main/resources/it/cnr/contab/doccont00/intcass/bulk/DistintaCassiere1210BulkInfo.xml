@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Tabella contenente la testata della distinta a cassiere. La distinta raccoglie documenti 1210 per invio alla banca."
+	longDescription="Tabella contenente la testata della distinta a cassiere. La distinta raccoglie documenti 1210 per invio alla banca.">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnEdit="false"	
+		enabledOnInsert="false"		
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="pgDistinta"
+		property="pgDistinta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnEdit="false"		
+		enabledOnInsert="false"		
+		nullable="false"
+		label="Progressivo della distinta" />
+	<fieldProperty
+		name="dtEmissione"
+		property="dtEmissione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"		
+		enabledOnInsert="false"		
+		formatName="date_short"
+		label="Data di emissione" />
+	<fieldProperty
+		name="dtInvio"
+		property="dtInvio"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"		
+		formatName="date_short"
+		label="Data invio cassiere" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="pgDistinta" />
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pgDistinta" />
+	<formFieldProperty
+		name="dtEmissione" />
+	<formFieldProperty
+		name="dtInvio" />
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgDistinta" />
+	<findFieldProperty
+		name="dtEmissione" />
+	<findFieldProperty
+		name="dtInvio" />
+	
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgDistinta" />
+	<columnFieldProperty
+		name="dtEmissione" />
+	<columnFieldProperty
+		name="dtInvio" />
+</bulkInfo>

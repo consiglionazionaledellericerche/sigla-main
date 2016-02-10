@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="divisa"
@@ -19,7 +19,7 @@
 		inputType="TEXT"
 		readonlyProperty="ROValuta"
 		label="Divisa"
-		caseSensitiveSearch="true"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
@@ -36,7 +36,7 @@
 		name="cambio"
 		property="cambio"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"
 		label="cambio"
 		nullable="false"
 	 	readonlyProperty="ROCambioDefault"

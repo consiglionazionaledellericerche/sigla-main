@@ -20,6 +20,18 @@
 	<table>
 		<tr>
 			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,"FormInput","onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
+			 	<td>
+					<% if (anagrafico.getDt_fine_rapporto()!=null) { %>
+						<span class="FormLabel" style="color:red">
+							DISABILITATA
+						</span>
+					<%	} %> 
+					<% if (anagrafico.isDipendente()) { %>
+					<span class="FormLabel" style="color:red">
+							DIPENDENTE
+						</span>
+					<%	} %>	
+			  	</td>
 		</tr>
 	<%if (anagrafico.isPersonaFisica() || anagrafico.isPersonaGiuridica() || anagrafico.isDiversi()) {%>
 		<tr>
@@ -64,31 +76,68 @@
 			</td>	
 		</tr>	
 		<%if (anagrafico.isFl_cervellone().booleanValue()) { %>	
-		</table>
-		<table>		
-		<tr>
-			<td><% bp.getController().writeFormLabel(out,"dt_inizio_res_italia");%></td>
-			<td><% bp.getController().writeFormInput(out,null,"dt_inizio_res_italia",false,null,"");%></td>
-			<td><% bp.getController().writeFormLabel(out,"dt_fine_res_italia");%></td>
-			<td><% bp.getController().writeFormInput(out,null,"dt_fine_res_italia",false,null,"");%></td>
-		</tr>
-		<tr>	
-			<td><% bp.getController().writeFormLabel(out,"anno_inizio_res_fis");%></td>
-			<td><% bp.getController().writeFormInput(out,"anno_inizio_res_fis");%></td>
-			<td><% bp.getController().writeFormLabel(out,"anno_fine_agevolazioni");%></td>
-			<td><% bp.getController().writeFormInput(out,"anno_fine_agevolazioni");%></td>
-		</tr>
+			</table>
+			<table>		
+			<tr>
+				<td><% bp.getController().writeFormLabel(out,"dt_inizio_res_italia");%></td>
+				<td><% bp.getController().writeFormInput(out,null,"dt_inizio_res_italia",false,null,"");%></td>
+				<td><% bp.getController().writeFormLabel(out,"dt_fine_res_italia");%></td>
+				<td><% bp.getController().writeFormInput(out,null,"dt_fine_res_italia",false,null,"");%></td>
+			</tr>
+			<tr>	
+				<td><% bp.getController().writeFormLabel(out,"anno_inizio_res_fis");%></td>
+				<td><% bp.getController().writeFormInput(out,"anno_inizio_res_fis");%></td>
+				<td><% bp.getController().writeFormLabel(out,"anno_fine_agevolazioni");%></td>
+				<td><% bp.getController().writeFormInput(out,"anno_fine_agevolazioni");%></td>
+			</tr>
+		<%} %>	
+		<%if (bp.isAbilitatoAutorizzareDiaria()) { %>	
+			<tr>	
+				<td colspan="2">		
+					<% bp.getController().writeFormInput(out,"default","fl_abilita_diaria_miss_est",false,"FormInput","onclick=\"submitForm('doCambiaFl_abilita_diaria_miss_est')\"");%>
+					<% bp.getController().writeFormLabel(out,"fl_abilita_diaria_miss_est");%>
+				</td>	
+			</tr>	
+			<%if (anagrafico.isFl_abilita_diaria_miss_est().booleanValue()) { %>	
+				</table>
+				<table>		
+				<tr>
+					<td><% bp.getController().writeFormLabel(out,"dt_inizio_diaria_miss_est");%></td>
+					<td><% bp.getController().writeFormInput(out,null,"dt_inizio_diaria_miss_est",false,null,"");%></td>
+					<td><% bp.getController().writeFormLabel(out,"dt_fine_diaria_miss_est");%></td>
+					<td><% bp.getController().writeFormInput(out,null,"dt_fine_diaria_miss_est",false,null,"");%></td>
+				</tr>
+			<%} %>
 		<%} %>	
 <%} %>
-
 		<tr>
 			<td colspan="2"><% bp.getController().writeFormLabel(out,"pg_tipologia_istat");%>
 							<% bp.getController().writeFormInput(out,"pg_tipologia_istat");%>
 							<% bp.getController().writeFormInput(out,"ds_tipologia_istat");%></td>
 			<td><% bp.getController().writeFormInput(out,null,"find_tipologia_istat",(anagrafico!=null?!bp.isGestoreOk(uc):false),null,null);%></td>
 		</tr>
-
 	</table>
+	<%if (!anagrafico.isPersonaFisica()) {%>
+	<table>
+		<%	if(bp.isGestoreIstat(uc, anagrafico)){ %>
+			<tr>
+				<% bp.writeFormField(out,"codiceAmministrazioneIpa");%>
+			</tr>
+			<tr>
+				<% bp.writeFormField(out,"dataAvvioFattElettr");%>
+			</tr>			
+		<%} else { %> 
+			<tr>
+				<td><%bp.writeFormLabel(out,"default","codiceAmministrazioneIpa"); %></td>
+				<td><% bp.writeFormInput(out,"default","codiceAmministrazioneIpa",true,null,null);%></td>
+			</tr>
+			<tr>
+				<td><%bp.writeFormLabel(out,"default","dataAvvioFattElettr"); %></td>
+				<td><% bp.writeFormInput(out,"default","dataAvvioFattElettr",true,null,null);%></td>
+			</tr>				
+		<%} %>
+	</table>
+	<%} %>
 </fieldset>
 
 <fieldset class="fieldset">
@@ -108,7 +157,7 @@
 	<%if (anagrafico.isStrutturaCNR() || anagrafico.isPersonaGiuridica() || anagrafico.isDittaIndividuale()) { %>
 		<tr>
 		<%if (anagrafico.isStrutturaCNR()) { %>
-			<td><b>Nome</b></td>
+			<td><%bp.getController().writeFormLabel(out,"nome");%></td>
 		<%} else { %>
 			<td>
 			<%bp.getController().writeFormLabel(out,"ragione_sociale");%>
@@ -121,20 +170,30 @@
 			<td colspan="2"><%bp.getController().writeFormLabel(out,"classificazione_anag");%></td>
 		<%} %>
 		</tr>
-	<%} %>
-
+	<%} %>		
 	
-		<tr><% bp.getController().writeFormField(out,"partita_iva");%>
+	<tr>
+		<%	if(anagrafico != null && anagrafico.getDataAvvioFattElettr() != null && anagrafico.getCodiceAmministrazioneIpa() != null){ %>
+				<td><%bp.writeFormLabel(out,"default","partita_iva"); %></td>
+				<td><% bp.writeFormInput(out,"default","partita_iva",true,null,null);%></td>
+		<%} else { %> 
+			<% bp.getController().writeFormField(out,"partita_iva");%>
+		<%} %>
 		<%if (anagrafico.isPersonaGiuridica()) { %>
 			<td colspan="2"><%bp.getController().writeFormInput(out,"classificazione_anag");%></td>
 		<%} %>
-		</tr>
-	
-		<tr><% bp.getController().writeFormField(out,"codice_fiscale");%>
+	</tr>
+
+	<tr>
+		<%	if(anagrafico != null && anagrafico.getDataAvvioFattElettr() != null && anagrafico.getCodiceAmministrazioneIpa() != null){ %>
+				<td><%bp.writeFormLabel(out,"default","codice_fiscale"); %></td>
+				<td><% bp.writeFormInput(out,"default","codice_fiscale",true,null,null);%></td>
+		<%} else { %> 
+			<% bp.getController().writeFormField(out,"codice_fiscale");%>
+		<%} %>
 		<%if(anagrafico.isPersonaFisica())
 			bp.getController().writeFormField(out,"ti_sesso");%>
-		</tr>
-
+	</tr>
 		<tr><% bp.getController().writeFormField(out,"titolo_studio");%></tr>
 	</table>
 </fieldset>

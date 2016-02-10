@@ -547,7 +547,7 @@ private boolean controllaStatoPdgFigli(UserContext userContext,Pdg_preventivoBul
 		sql.addSQLClause("AND", "V_PDG_CDR_FIGLI.CD_CDR_ROOT", sql.EQUALS, pdg.getCd_centro_responsabilita());
 		sql.setForUpdateOf("stato");
 
-		PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+		LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 		try {
 			java.sql.ResultSet rs = stm.executeQuery();
 			try {
@@ -607,7 +607,7 @@ private boolean controllaStatoPdgPadri(UserContext userContext,Pdg_preventivoBul
 			sql.addSQLClause("AND", "CD_CDR_ROOT", sql.EQUALS, cd_cdr);
 			sql.setForUpdateOf("stato");
 
-			PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+			LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 			try {
 				java.sql.ResultSet rs = stm.executeQuery();
 				try {
@@ -4069,11 +4069,23 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	Stampa_pdg_etr_speVBulk stampa, DipartimentoBulk dipartimento, CompoundFindClause clause) throws ComponentException, PersistencyException
 	{	
 		SQLBuilder sql = getHome(userContext, dipartimento.getClass()).createSQLBuilder();
+		java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(userContext));
+	 	sql.addClause("AND", "dt_istituzione", sql.LESS, lastDayOfYear);
+		sql.openParenthesis("AND");
+		sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS, lastDayOfYear);
+		sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
+		sql.closeParenthesis();
 		sql.addClause( clause );
 		return sql;
 	}		
 	public SQLBuilder selectDipartimentoByClause (UserContext userContext, Stampa_rendiconto_finanziarioVBulk stampa, DipartimentoBulk dipartimento, CompoundFindClause clause) throws ComponentException, PersistencyException{	
 		SQLBuilder sql = getHome(userContext, dipartimento.getClass()).createSQLBuilder();
+		java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(userContext));
+	 	sql.addClause("AND", "dt_istituzione", sql.LESS, lastDayOfYear);
+		sql.openParenthesis("AND");
+		sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS, lastDayOfYear);
+		sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
+		sql.closeParenthesis();
 		sql.addClause( clause );
 		return sql;
 	}		

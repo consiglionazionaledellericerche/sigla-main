@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.IpaServizioFatturaKey">
+	<defaultColumnMap
+		tableName="IPA_SERVIZIO_FATTURA">
+		<columnMapping
+			columnName="COD_AMM"
+			propertyName="codAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="COD_OU"
+			propertyName="codOu"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="codAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="codOu"
+		partOfOid="true" />
+</SQLPersistentInfo>

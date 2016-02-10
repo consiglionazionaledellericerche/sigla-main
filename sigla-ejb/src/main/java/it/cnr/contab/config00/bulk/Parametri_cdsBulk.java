@@ -4,6 +4,7 @@ import java.util.Dictionary;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
@@ -18,7 +19,7 @@ import it.cnr.jada.util.action.CRUDBP;
  */
 public class Parametri_cdsBulk extends Parametri_cdsBase {
 	private CdsBulk centro_spesa = new CdsBulk();
-
+	private DipartimentoBulk  dipartimento = new DipartimentoBulk();
 	public static final String BLOCCO_IMPEGNI_ERROR   ="E";
 	public static final String BLOCCO_IMPEGNI_WARNING ="W";
 	public static final String BLOCCO_IMPEGNI_NOTHING ="N";
@@ -67,5 +68,20 @@ public class Parametri_cdsBulk extends Parametri_cdsBase {
 	public void setCentro_spesa(CdsBulk bulk) {
 		centro_spesa = bulk;
 	}
-
+	public DipartimentoBulk getDipartimento() {
+		return dipartimento;
+	}
+	public void setDipartimento(DipartimentoBulk dipartimento) {
+		this.dipartimento = dipartimento;
+	}
+	@Override
+	public String getCd_dipartimento() {
+		if(getDipartimento() == null)
+			  return null;
+			return getDipartimento().getCd_dipartimento();
+	}
+	@Override 
+	public void setCd_dipartimento(String cd_dipartimento) {
+		  getDipartimento().setCd_dipartimento(cd_dipartimento);
+	}
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="pg_comune_sede"
 		property="pg_comune_sede"
@@ -292,7 +292,8 @@
 		name="cd_terzo"
 		property="cd_terzo"
 		inputType="TEXT"
-		label="Codice terzo" />
+		label="Codice terzo"
+		enabledOnSearch="true" />
 	<fieldProperty
 		name="cd_ente_appartenenza"
 		property="cd_ente_appartenenza"
@@ -367,8 +368,8 @@
 	<fieldProperty
 		name="nome_unita_organizzativa"
 		property="nome_unita_organizzativa"
-		maxLength="100"
-		inputSize="100"
+		maxLength="300"
+		inputSize="300"
 		inputType="TEXT"
 		label="nome_unita_organizzativa"
 		caseSensitiveSearch="false" />

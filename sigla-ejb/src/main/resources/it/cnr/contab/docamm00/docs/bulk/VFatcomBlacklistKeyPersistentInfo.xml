@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistKey">
+	<defaultColumnMap
+		tableName="V_FATCOM_BLACKLIST">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />	
+		<columnMapping
+			columnName="BENE_SERVIZIO"
+			propertyName="bene_servizio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="mese"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_terzo"
+		partOfOid="true" />
+	<persistentProperty
+		name="tipo"
+		partOfOid="true" />	
+	<persistentProperty
+		name="bene_servizio"
+		partOfOid="true" />		
+</SQLPersistentInfo>

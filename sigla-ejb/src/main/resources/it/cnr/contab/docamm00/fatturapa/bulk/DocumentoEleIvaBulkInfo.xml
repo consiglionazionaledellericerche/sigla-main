@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documento elettronico di trasmissione dettaglio iva"
+	longDescription="Documento elettronico di trasmissione dettaglio iva">
+	<fieldProperty
+		name="voceIva"
+		property="voceIva"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		labelStyle="color:blue"
+		label="Codice IVA" />
+	<fieldProperty
+		name="idPaese"
+		property="documentoEleTestata.idPaese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="null" />
+	<fieldProperty
+		name="idCodice"
+		property="documentoEleTestata.idCodice"
+		inputType="TEXT"
+		inputSize="28"
+		maxLength="28"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="null" />
+	<fieldProperty
+		name="identificativoSdi"
+		property="documentoEleTestata.identificativoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="null" />
+	<fieldProperty
+		name="progressivo"
+		property="documentoEleTestata.progressivo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="null" />
+	<fieldProperty
+		name="aliquotaIva"
+		property="aliquotaIva"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Aliquota IVA" />
+	<fieldProperty
+		name="natura"
+		property="natura"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="Natura" />
+	<fieldProperty
+		name="cdVoceIva"
+		property="cdVoceIva"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="null" />
+	<fieldProperty
+		name="speseAccessorie"
+		property="speseAccessorie"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Spese accessorie" />
+	<fieldProperty
+		name="arrotondamento"
+		property="arrotondamento"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Arrotondamento" />
+	<fieldProperty
+		name="imponibileImporto"
+		property="imponibileImporto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Imponibile" />
+	<fieldProperty
+		name="imposta"
+		property="imposta"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Imposta" />
+	<fieldProperty
+		name="esigibilitaIva"
+		property="esigibilitaIva"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Esigibilità Iva" />
+	<fieldProperty
+		name="riferimentoNormativo"
+		property="riferimentoNormativo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Riferimento Normativo" />
+	<fieldProperty
+		name="anomalie"
+		property="anomalie"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Segnalazioni da verificare" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="idPaese" />
+		<formFieldProperty
+			name="idCodice" />
+		<formFieldProperty
+			name="identificativoSdi" />
+		<formFieldProperty
+			name="progressivo" />
+	</form>
+	<formFieldProperty
+		name="voceIva" />	
+	<formFieldProperty
+		name="aliquotaIva" />
+	<formFieldProperty
+		name="natura" />
+	<formFieldProperty
+		name="speseAccessorie" />
+	<formFieldProperty
+		name="arrotondamento" />
+	<formFieldProperty
+		name="imponibileImporto" />
+	<formFieldProperty
+		name="imposta" />
+	<formFieldProperty
+		name="esigibilitaIva" />
+	<formFieldProperty
+		name="riferimentoNormativo" />
+	<formFieldProperty
+		name="anomalie" />
+	<findFieldProperty
+		name="idPaese" />
+	<findFieldProperty
+		name="idCodice" />
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="aliquotaIva" />
+	<findFieldProperty
+		name="natura" />
+	<findFieldProperty
+		name="cdVoceIva" />
+	<findFieldProperty
+		name="speseAccessorie" />
+	<findFieldProperty
+		name="arrotondamento" />
+	<findFieldProperty
+		name="imponibileImporto" />
+	<findFieldProperty
+		name="imposta" />
+	<findFieldProperty
+		name="esigibilitaIva" />
+	<findFieldProperty
+		name="riferimentoNormativo" />
+	<findFieldProperty
+		name="anomalie" />
+	<columnFieldProperty
+		name="aliquotaIva" />
+	<columnFieldProperty
+		name="natura" />
+	<columnFieldProperty
+		name="speseAccessorie" />
+	<columnFieldProperty
+		name="arrotondamento" />
+	<columnFieldProperty
+		name="imponibileImporto" />
+	<columnFieldProperty
+		name="imposta" />
+	<columnFieldProperty
+		name="esigibilitaIva" />
+	<columnFieldProperty
+		name="riferimentoNormativo" />
+</bulkInfo>

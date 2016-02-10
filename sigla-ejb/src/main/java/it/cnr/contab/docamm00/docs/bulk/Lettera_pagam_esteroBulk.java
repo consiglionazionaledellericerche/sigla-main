@@ -1,147 +1,342 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import java.rmi.RemoteException;
 
-public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase {
+import javax.ejb.EJBException;
+
+import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
+import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
+import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkCollections;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.action.CRUDBP;
+
+@SuppressWarnings("unchecked")
+@CMISType(name="D:doccont:document")
+public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implements AllegatoParentBulk, StatoTrasmissione{
 
 	private it.cnr.contab.doccont00.core.bulk.SospesoBulk sospeso = null;
 	private java.util.Vector sospesiCancellati = null;
 	private boolean annoDiCompetenza = true;
-public Lettera_pagam_esteroBulk() {
-	super();
-}
-public Lettera_pagam_esteroBulk(java.lang.String cd_cds,java.lang.String cd_unita_organizzativa,java.lang.Integer esercizio,java.lang.Long pg_lettera) {
-	super(cd_cds,cd_unita_organizzativa,esercizio,pg_lettera);
-}
-public void addToSospesiCancellati(SospesoBulk sospeso) {
-
-	if (getSospesiCancellati() == null)
-		setSospesiCancellati(new java.util.Vector());
-	if (!BulkCollections.containsByPrimaryKey(getSospesiCancellati(), sospeso))
-		getSospesiCancellati().addElement(sospeso);
-}
-
-public void completeFrom(ActionContext context) 
-	throws javax.ejb.EJBException, java.text.ParseException {
-
-	java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();
-	int annoSolare = Fattura_passivaBulk.getDateCalendar(date).get(java.util.Calendar.YEAR);
-	int esercizioInScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).intValue();
-	setAnnoDiCompetenza(esercizioInScrivania == getEsercizio().intValue());
-	if (annoSolare != esercizioInScrivania)
-		date = new java.sql.Timestamp(new java.text.SimpleDateFormat("dd/MM/yyyy").parse("31/12/" + esercizioInScrivania).getTime());
-	setDt_registrazione(date);
-
-	setIm_commissioni(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setIm_pagamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	SospesoBulk sospeso = new SospesoBulk();
-	sospeso.setEsercizio(getEsercizio());
-	sospeso.setCd_cds(getCd_cds());
-	sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
-	sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
-	setSospeso(sospeso);
-	setUser(context.getUserInfo().getUserid());
-}
-public it.cnr.jada.bulk.OggettoBulk[] getBulksForPersistentcy() {
-	return new it.cnr.jada.bulk.OggettoBulk[] { getSospeso() };
-}
-/**
- * Insert the method's description here.
- * Creation date: (6/12/2002 5:18:43 PM)
- * @return it.cnr.jada.bulk.BulkList
- */
-public java.util.Vector getSospesiCancellati() {
-	return sospesiCancellati;
-}
-/**
- * Insert the method's description here.
- * Creation date: (6/7/2002 3:17:11 PM)
- * @return it.cnr.contab.doccont00.core.bulk.SospesoBulk
- */
-public it.cnr.contab.doccont00.core.bulk.SospesoBulk getSospeso() {
-	return sospeso;
-}
-/**
- * Insert the method's description here.
- * Creation date: (6/7/2002 3:17:11 PM)
- * @return it.cnr.contab.doccont00.core.bulk.SospesoBulk
- */
-public java.util.Dictionary getTipo_sospesoKeys() {
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+	private String documento;
+	private DistintaCassiere1210Bulk distintaCassiere;
 	
-	java.util.Dictionary tipi = new java.util.Hashtable();
-	tipi.put("E", "Entrata");
-	tipi.put("S", "Spesa");
-	return tipi;
-}
-/**
- * Insert the method's description here.
- * Creation date: (03/07/2003 15.36.58)
- * @return boolean
- */
-public boolean isAnnoDiCompetenza() {
-	return annoDiCompetenza;
-}
-/**
- * Insert the method's description here.
- * Creation date: (6/11/2002 5:10:59 PM)
- */
-public boolean isROSospeso() {
-
-	return false;	
-}
-/**
- * Insert the method's description here.
- * Creation date: (6/11/2002 5:10:59 PM)
- */
-public boolean isROSospesoSearchTool() {
-
-	return !isAnnoDiCompetenza();	
-}
-public int removeFromSospesiCancellati(SospesoBulk sospeso) {
-
-	if (getSospesiCancellati() == null)
-		return -1;
-	if (BulkCollections.containsByPrimaryKey(getSospesiCancellati(), sospeso))
-		getSospesiCancellati().remove(BulkCollections.indexOfByPrimaryKey(getSospesiCancellati(), sospeso));
-	return getSospesiCancellati().size()-1;
-}
-
-/**
- * Insert the method's description here.
- * Creation date: (03/07/2003 15.36.58)
- * @param newAnnoDiCompetenza boolean
- */
-public void setAnnoDiCompetenza(boolean newAnnoDiCompetenza) {
-	annoDiCompetenza = newAnnoDiCompetenza;
-}
-/**
- * Insert the method's description here.
- * Creation date: (6/12/2002 5:18:43 PM)
- * @param newSospesiCancellati it.cnr.jada.bulk.BulkList
- */
-public void setSospesiCancellati(java.util.Vector newSospesiCancellati) {
-	sospesiCancellati = newSospesiCancellati;
-}
-/**
- * Insert the method's description here.
- * Creation date: (6/7/2002 3:17:11 PM)
- * @param newSospeso it.cnr.contab.doccont00.core.bulk.SospesoBulk
- */
-public void setSospeso(it.cnr.contab.doccont00.core.bulk.SospesoBulk newSospeso) {
-	sospeso = newSospeso;
-}
-public void validate() throws ValidationException {
-
-	if (getIm_commissioni() == null)
-		throw new ValidationException("Specificare un importo per le commissioni della lettera di pagamento estero!");
-	if (getIm_pagamento() != null && getIm_pagamento().compareTo(new java.math.BigDecimal(0)) != 0) {
-		if (getIm_pagamento().compareTo(getIm_commissioni()) < 0)
-			throw new ValidationException("L'importo delle commissioni della lettera di pagamento estero non puo' superare l'importo di pagamento!");
+	@SuppressWarnings("rawtypes")
+	public final static java.util.Dictionary stato_trasmissioneKeys;
+	static 
+	{
+		stato_trasmissioneKeys = new it.cnr.jada.util.OrderedHashtable();
+		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO,	"Non inserito in distinta");
+		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO,	"Predisposto alla Firma");
+		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA,	"Prima Firma");		
+		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_INSERITO,		"Inserito in distinta");		
+		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_TRASMESSO,		"Trasmesso");
 	}
-}
+	public final static String BONIFICO_MEZZO_SWIFT = "S", BONIFICO_MEZZO_TELEGRAMMA = "T", BONIFICO_MEZZO_ASSEGNO = "A";
+	@SuppressWarnings("rawtypes")
+	public final static java.util.Dictionary ti_bonifico_mezzoKeys;
+	static 
+	{
+		ti_bonifico_mezzoKeys = new it.cnr.jada.util.OrderedHashtable();
+		ti_bonifico_mezzoKeys.put(BONIFICO_MEZZO_SWIFT, "S.W.I.F.T.");
+		ti_bonifico_mezzoKeys.put(BONIFICO_MEZZO_TELEGRAMMA, "telegramma - telex");
+		ti_bonifico_mezzoKeys.put(BONIFICO_MEZZO_ASSEGNO, "assegno da inoltrare al beneficiario");				
+	}
+
+	public final static String AMMONTARE_DEBITO_NOSTRO_CONTO = "N", AMMONTARE_DEBITO_CONTO_PROVVISORIO = "P", AMMONTARE_DEBITO_CONTO_SPEC_DEBITORE = "D";
+	@SuppressWarnings("rawtypes")
+	public final static java.util.Dictionary ti_ammontare_debitoKeys;
+	static 
+	{
+		ti_ammontare_debitoKeys = new it.cnr.jada.util.OrderedHashtable();
+		ti_ammontare_debitoKeys.put(AMMONTARE_DEBITO_NOSTRO_CONTO, "nostro conto in");
+		ti_ammontare_debitoKeys.put(AMMONTARE_DEBITO_CONTO_PROVVISORIO, "contro provvisorio a nostro nome");
+		ti_ammontare_debitoKeys.put(AMMONTARE_DEBITO_CONTO_SPEC_DEBITORE, "conto spec debitore in");				
+	}
+
+	public final static String COMMISSIONE_SPESE_NOSTRO_CARICO = "N", COMMISSIONE_SPESE_CARICO_BENEFICIARIO = "B";
+	@SuppressWarnings("rawtypes")
+	public final static java.util.Dictionary ti_commissione_speseKeys;
+	static 
+	{
+		ti_commissione_speseKeys = new it.cnr.jada.util.OrderedHashtable();
+		ti_commissione_speseKeys.put(COMMISSIONE_SPESE_NOSTRO_CARICO, "nostro carico");
+		ti_commissione_speseKeys.put(COMMISSIONE_SPESE_CARICO_BENEFICIARIO, "a carico del beneficiario");
+	}
+	
+	public Lettera_pagam_esteroBulk() {
+		super();
+		setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+	}
+	public Lettera_pagam_esteroBulk(java.lang.String cd_cds,java.lang.String cd_unita_organizzativa,java.lang.Integer esercizio,java.lang.Long pg_lettera) {
+		super(cd_cds,cd_unita_organizzativa,esercizio,pg_lettera);
+		setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+	}
+	
+	public static java.util.Dictionary getStatoTrasmissionekeys() {
+		return stato_trasmissioneKeys;
+	}
+	
+	public static java.util.Dictionary getTiBonificoMezzokeys() {
+		return ti_bonifico_mezzoKeys;
+	}
+	
+	public static java.util.Dictionary getTiAmmontareDebitokeys() {
+		return ti_ammontare_debitoKeys;
+	}
+	public static java.util.Dictionary getTiCommissioneSpesekeys() {
+		return ti_commissione_speseKeys;
+	}
+	public void addToSospesiCancellati(SospesoBulk sospeso) {
+		if (getSospesiCancellati() == null)
+			setSospesiCancellati(new java.util.Vector());
+		if (!BulkCollections.containsByPrimaryKey(getSospesiCancellati(), sospeso))
+			getSospesiCancellati().addElement(sospeso);
+	}
+
+	public void completeFrom(ActionContext context) 
+			throws javax.ejb.EJBException, java.text.ParseException {
+
+		java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();
+		int annoSolare = Fattura_passivaBulk.getDateCalendar(date).get(java.util.Calendar.YEAR);
+		int esercizioInScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).intValue();
+		setAnnoDiCompetenza(esercizioInScrivania == getEsercizio().intValue());
+		if (annoSolare != esercizioInScrivania)
+			date = new java.sql.Timestamp(new java.text.SimpleDateFormat("dd/MM/yyyy").parse("31/12/" + esercizioInScrivania).getTime());
+		setDt_registrazione(date);
+
+		setIm_commissioni(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+		setIm_pagamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+		setAmmontare_debito(AMMONTARE_DEBITO_NOSTRO_CONTO);				
+		try {
+			setConto_debito(Utility.createConfigurazioneCnrComponentSession().getVal03(context.getUserContext(), 0, "*", "CONTO_CORRENTE_SPECIALE", "ENTE"));
+		} catch (ComponentException e) {
+			throw new EJBException(e);
+		} catch (RemoteException e) {
+			throw new EJBException(e);
+		}
+		SospesoBulk sospeso = new SospesoBulk();
+		sospeso.setEsercizio(getEsercizio());
+		sospeso.setCd_cds(getCd_cds());
+		sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
+		sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
+		setSospeso(sospeso);
+		setUser(context.getUserInfo().getUserid());
+	}
+	public it.cnr.jada.bulk.OggettoBulk[] getBulksForPersistentcy() {
+		return new it.cnr.jada.bulk.OggettoBulk[] { getSospeso() };
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (6/12/2002 5:18:43 PM)
+	 * @return it.cnr.jada.bulk.BulkList
+	 */
+	public java.util.Vector getSospesiCancellati() {
+		return sospesiCancellati;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (6/7/2002 3:17:11 PM)
+	 * @return it.cnr.contab.doccont00.core.bulk.SospesoBulk
+	 */
+	public it.cnr.contab.doccont00.core.bulk.SospesoBulk getSospeso() {
+		return sospeso;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (6/7/2002 3:17:11 PM)
+	 * @return it.cnr.contab.doccont00.core.bulk.SospesoBulk
+	 */
+	public java.util.Dictionary getTipo_sospesoKeys() {
+
+		java.util.Dictionary tipi = new java.util.Hashtable();
+		tipi.put("E", "Entrata");
+		tipi.put("S", "Spesa");
+		return tipi;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (03/07/2003 15.36.58)
+	 * @return boolean
+	 */
+	public boolean isAnnoDiCompetenza() {
+		return annoDiCompetenza;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (6/11/2002 5:10:59 PM)
+	 */
+	public boolean isROSospeso() {
+
+		return false;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (6/11/2002 5:10:59 PM)
+	 */
+	public boolean isROSospesoSearchTool() {
+
+		return !isAnnoDiCompetenza();	
+	}
+	public int removeFromSospesiCancellati(SospesoBulk sospeso) {
+
+		if (getSospesiCancellati() == null)
+			return -1;
+		if (BulkCollections.containsByPrimaryKey(getSospesiCancellati(), sospeso))
+			getSospesiCancellati().remove(BulkCollections.indexOfByPrimaryKey(getSospesiCancellati(), sospeso));
+		return getSospesiCancellati().size()-1;
+	}
+
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (03/07/2003 15.36.58)
+	 * @param newAnnoDiCompetenza boolean
+	 */
+	public void setAnnoDiCompetenza(boolean newAnnoDiCompetenza) {
+		annoDiCompetenza = newAnnoDiCompetenza;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (6/12/2002 5:18:43 PM)
+	 * @param newSospesiCancellati it.cnr.jada.bulk.BulkList
+	 */
+	public void setSospesiCancellati(java.util.Vector newSospesiCancellati) {
+		sospesiCancellati = newSospesiCancellati;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (6/7/2002 3:17:11 PM)
+	 * @param newSospeso it.cnr.contab.doccont00.core.bulk.SospesoBulk
+	 */
+	public void setSospeso(it.cnr.contab.doccont00.core.bulk.SospesoBulk newSospeso) {
+		sospeso = newSospeso;
+	}
+	public void validate() throws ValidationException {
+		if (getIm_commissioni() == null)
+			throw new ValidationException("Specificare un importo per le commissioni della lettera di pagamento estero!");
+		if (getIm_pagamento() != null && getIm_pagamento().compareTo(new java.math.BigDecimal(0)) == 0) {
+			throw new ValidationException("Valorizzare l'importo di pagamento!");
+		}
+		if (getIm_pagamento() != null && getIm_pagamento().compareTo(new java.math.BigDecimal(0)) != 0) {
+			if (getIm_pagamento().compareTo(getIm_commissioni()) < 0)
+				throw new ValidationException("L'importo delle commissioni della lettera di pagamento estero non puo' superare l'importo di pagamento!");
+		}
+		if (getDivisa() == null)
+			throw new ValidationException("Valorizzare la Divisa!");
+		if (getBeneficiario() == null)
+			throw new ValidationException("Valorizzare il Beneficiario!");
+	}
+
+	@Override
+	public OggettoBulk initializeForInsert(CRUDBP crudbp,
+			ActionContext actioncontext) {
+		setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+		return super.initializeForInsert(crudbp, actioncontext);
+	}
+	public String getCMISFolderName() {
+		String suffix = "Documento 1210 n.";
+		suffix = suffix.concat(String.valueOf(getPg_documento_cont()));
+		return suffix;
+	}
+	
+	public String getDocumento() {
+		return documento;
+	}
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException {
+		CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR",CMISPath.class);
+		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCd_unita_organizzativa(), 
+				getCd_unita_organizzativa(), 
+				getCd_unita_organizzativa());
+		cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Documenti 1210" ,null, null);
+		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getEsercizio().toString(), null, null);		
+		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCMISFolderName(), 
+				null, 
+				null);
+		return cmisPath;		
+	}
+	
+	public Long getPg_documento_cont() {
+		return getPg_lettera();
+	}
+	@CMISProperty(name="doccont:tipo")
+	public String getCd_tipo_documento_cont() {
+		return "1210";
+	}
+
+	public BulkCollection[] getBulkLists() {
+		 return new it.cnr.jada.bulk.BulkCollection[] { 
+				archivioAllegati };
+	}	
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	public DistintaCassiere1210Bulk getDistintaCassiere() {
+		return distintaCassiere;
+	}
+	public void setDistintaCassiere(DistintaCassiere1210Bulk distintaCassiere) {
+		this.distintaCassiere = distintaCassiere;
+	}
+	
+	@Override
+	public Integer getEsercizio_distinta() {
+		if (distintaCassiere == null)
+			return null;
+		return distintaCassiere.getEsercizio();
+	}
+	
+	@Override
+	public void setEsercizio_distinta(Integer esercizio_distinta) {
+		distintaCassiere.setEsercizio(esercizio_distinta);
+	}
+	
+	@Override
+	public Long getPg_distinta() {
+		if (distintaCassiere == null)
+			return null;
+		return distintaCassiere.getPgDistinta();
+	}
+	
+	@Override
+	public void setPg_distinta(Long pg_distinta) {
+		distintaCassiere.setPgDistinta(pg_distinta);
+	}
+	
+	public String getDisplayStatoTrasmissione() {
+		if (getStato_trasmissione() == null)
+			return null;
+		return (String) stato_trasmissioneKeys.get(getStato_trasmissione());
+	}
+	public String getCMISName() {
+		return getCMISFolderName() + ".pdf";
+	}
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoBulk"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoHome" >
+	<defaultColumnMap 
+	        tableName="TIPO_PRESTAZIONE_COMPENSO" >
+	</defaultColumnMap>
+</SQLPersistentInfo>

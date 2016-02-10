@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaDetPdgpBulk"
+	homeClassName="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaDetPdgpHome">
+	<defaultColumnMap
+		tableName="V_LIMITE_SPESA_DET_PDGP">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="tiAppartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="tiGestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cdElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="dsElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="FONTE"
+			propertyName="fonte"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_LIMITE"
+			propertyName="importoLimite"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_PREVISTO"
+			propertyName="importoPrevisto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cdClassificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="idClassificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cdProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="dsProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_AREA"
+			propertyName="cdArea"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cdCds" />
+	<persistentProperty
+		name="tiAppartenenza" />
+	<persistentProperty
+		name="tiGestione" />
+	<persistentProperty
+		name="cdElementoVoce" />
+	<persistentProperty
+		name="dsElementoVoce" />
+	<persistentProperty
+		name="fonte" />
+	<persistentProperty
+		name="importoLimite" />
+	<persistentProperty
+		name="importoPrevisto" />
+	<persistentProperty
+		name="cdClassificazione" />
+	<persistentProperty
+		name="idClassificazione" />
+	<persistentProperty
+		name="cdProgetto" />
+	<persistentProperty
+		name="dsProgetto" />
+	<persistentProperty
+		name="cdArea" />
+</SQLPersistentInfo>

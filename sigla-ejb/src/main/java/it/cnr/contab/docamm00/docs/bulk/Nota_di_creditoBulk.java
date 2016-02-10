@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import java.util.Dictionary;
 import java.util.Vector;
 import java.util.Collection;
 
@@ -11,6 +12,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
 /**
@@ -72,7 +74,7 @@ public void addToAccertamenti_scadenzarioHash(
 	if (righeAssociate == null) {
 		righeAssociate = new Vector();
 		//accertamenti_scadenzarioHash.put(accertamento_scadenzario, righeAssociate);
-		addToFattura_passiva_ass_totaliMap(accertamento_scadenzario, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		addToFattura_passiva_ass_totaliMap(accertamento_scadenzario, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	}
 	if (rigaNdC != null && !righeAssociate.contains(rigaNdC)) {
 		righeAssociate.add(rigaNdC);
@@ -100,7 +102,8 @@ public void copyFrom(
 	setStato_coan(NON_CONTABILIZZATO_IN_COAN);
 	setStato_pagamento_fondo_eco(NO_FONDO_ECO);
 	setTi_associato_manrev(NON_ASSOCIATO_A_MANDATO);
-	
+	setStato_liquidazione(NOLIQ);
+	setCausale(NCRED);
 	setCd_cds(fattura_passiva.getCd_cds());
 	setEsercizio(esercizioScrivania);
 	setCd_unita_organizzativa(fattura_passiva.getCd_unita_organizzativa());
@@ -109,6 +112,7 @@ public void copyFrom(
 	// Gennaro Borriello/Farinella (09/11/2004 16.12.05)
 	//	Aggiunta gestione dell'es di scrivania per il controllo sullo stato riportato/Anno di competenza
 	setEsercizioInScrivania(fattura_passiva.getEsercizioInScrivania());
+	setDataInizioFatturaElettronica(fattura_passiva.getDataInizioFatturaElettronica());
 	
 	try {
 		java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
@@ -140,6 +144,7 @@ public void copyFrom(
 	setFl_autofattura(fattura_passiva.getFl_autofattura());
 	setTi_bene_servizio(fattura_passiva.getTi_bene_servizio());
 	setFl_merce_extra_ue(fattura_passiva.getFl_merce_extra_ue());
+	setFl_merce_intra_ue(fattura_passiva.getFl_merce_intra_ue());
 	setFl_fattura_compenso(fattura_passiva.getFl_fattura_compenso());
 	setDs_fattura_passiva(fattura_passiva.getDs_fattura_passiva());
 	//setDt_fattura_fornitore(fattura_passiva.getDt_fattura_fornitore());
@@ -165,8 +170,8 @@ public void copyFrom(
 	setCessionario(fattura_passiva.getCessionario());
 	setBanca(fattura_passiva.getBanca());
 
-	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setIm_totale_imponibile_divisa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	setIm_totale_imponibile_divisa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	
 	setFl_liquidazione_differita(fattura_passiva.getFl_liquidazione_differita());
 	setModalita_trasportoColl(fattura_passiva.getModalita_trasportoColl());
@@ -517,5 +522,15 @@ public void setTermini_pagamento_uo(it.cnr.contab.anagraf00.tabrif.bulk.Rif_term
  */
 public void setTermini_uo(java.util.Collection newTermini_uo) {
 	termini_uo = newTermini_uo;
+}
+
+public Dictionary getCausaleKeys(){
+	OrderedHashtable d = (OrderedHashtable)super.getCausaleKeys();
+	if (d == null) return null;
+
+	OrderedHashtable clone = (OrderedHashtable)d.clone();
+	clone.remove(ATTNC);
+	clone.put(NCRED,"Nota Credito");
+	return clone;
 }
 }

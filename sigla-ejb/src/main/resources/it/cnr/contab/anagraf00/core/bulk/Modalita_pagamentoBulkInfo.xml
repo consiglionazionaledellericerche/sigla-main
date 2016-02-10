@@ -1,7 +1,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="cd_modalita_pag"
@@ -67,6 +67,14 @@
 		inputType="TEXT"
 		label="Codice e Descrizione" />		
 
+	<form name="searchtool">
+		<formFieldProperty
+			name="cd_modalita_pag"
+			enabledOnSearch="true"/>
+		<formFieldProperty
+			name="ds_modalita_pag"
+			enabledOnSearch="true"/>		    	    
+	</form>
 	<columnFieldProperty
 		name="cd_modalita_pag"
 		/>
@@ -80,10 +88,6 @@
 	<columnFieldProperty
 		name="ti_pagamento"
 		/>
-	<columnFieldProperty
-		name="cd_terzo_delegato"
-		/>
-
 	<formFieldProperty
 		name="cd_modalita_pag"
 		/>
@@ -119,8 +123,9 @@
 		name="cd_modalita_pag"
 		/>
 	<findFieldProperty
-		name="cd_terzo_delegato"
+		name="ds_modalita_pag"
 		/>
+		
 
 
 </bulkInfo>

@@ -336,10 +336,11 @@ public Forward doConfirmSalvaCup(ActionContext actioncontext,int option) {
 		{
 			CRUDMandatoBP bp = (CRUDMandatoBP)actioncontext.getBusinessProcess();
 			MandatoBulk mandato = (MandatoBulk)bp.getModel();
-			
-			if (bp.isCup_attivo()){
+			// mandato.isRequiredSiope() controlla che non sia un mandato di regolarizzazione 
+			if (bp.isCup_attivo() && mandato.isRequiredSiope() ){
 				boolean trovato =false;
 				if (mandato instanceof MandatoIBulk){
+					bp.getCupCollegati().validate(actioncontext);
 					for (Iterator i=mandato.getMandato_rigaColl().iterator();i.hasNext()&&!trovato;){
 						Mandato_rigaBulk riga = (Mandato_rigaBulk)i.next();
 							if(riga.getMandatoCupColl().isEmpty()||riga.getTipoAssociazioneCup().compareTo(Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO)!=0)
@@ -347,6 +348,23 @@ public Forward doConfirmSalvaCup(ActionContext actioncontext,int option) {
 						}
 					if(trovato)
 					  return openConfirm(actioncontext,"Attenzione! Alcune o tutte le righe mandato non risultano associate completamente al CUP. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmSalva");
+				}
+			}
+			if (bp.isSiope_cup_attivo() && mandato.isRequiredSiope() ){
+				boolean trovato =false;
+				if (mandato instanceof MandatoIBulk){
+					bp.getSiopeCupCollegati().validate(actioncontext);
+					for (Iterator i=mandato.getMandato_rigaColl().iterator();i.hasNext()&&!trovato;){
+						Mandato_rigaBulk riga = (Mandato_rigaBulk)i.next();
+						for (Iterator j=riga.getMandato_siopeColl().iterator();j.hasNext()&&!trovato;){
+							Mandato_siopeBulk rigaSiope = (Mandato_siopeBulk)j.next();
+						
+							if(rigaSiope.getMandatoSiopeCupColl().isEmpty()||rigaSiope.getTipoAssociazioneCup().compareTo(Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO)!=0)
+								trovato =true;
+						}
+					if(trovato)
+					  return openConfirm(actioncontext,"Attenzione! Alcune o tutte le righe siope non risultano associate completamente al CUP. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmSalva");
+					}
 				}
 			}
 			return doConfirmSalva(actioncontext,OptionBP.YES_BUTTON);

@@ -163,6 +163,21 @@ public class AnagraficoBase extends AnagraficoKey implements Keyed {
 	// FL_SPECIALE CHAR(1) NOT NULL
 	private java.lang.Boolean fl_speciale;
 	
+	// CODICE_AMMINISTRAZIONE_IPA VARCHAR(100)
+	private java.lang.String codiceAmministrazioneIpa;
+
+	// DATA_AVVIO_FATT_ELETTR TIMESTAMP
+	private java.sql.Timestamp dataAvvioFattElettr;
+	
+	// FL_ABILITA_DIARIA_MISS_EST CHAR(1) NOT NULL
+	private java.lang.Boolean fl_abilita_diaria_miss_est;
+	
+	// DT_INIZIO_DIARIA_MISS_EST TIMESTAMP
+	private java.sql.Timestamp dt_inizio_diaria_miss_est;
+
+	// DT_FINE_DIARIA_MISS_EST TIMESTAMP
+	private java.sql.Timestamp dt_fine_diaria_miss_est;
+	
 public AnagraficoBase() {
 	super();
 }
@@ -733,5 +748,41 @@ public java.lang.String getTitolo_studio() {
 }
 public void setTitolo_studio(java.lang.String titolo_studio) {
 	this.titolo_studio = titolo_studio;
+}
+public java.lang.String getCodiceAmministrazioneIpa() {
+	return codiceAmministrazioneIpa;
+}
+public void setCodiceAmministrazioneIpa(
+		java.lang.String codiceAmministrazioneIpa) {
+	this.codiceAmministrazioneIpa = codiceAmministrazioneIpa;
+}
+public java.sql.Timestamp getDataAvvioFattElettr() {
+	return dataAvvioFattElettr;
+}
+public void setDataAvvioFattElettr(java.sql.Timestamp dataAvvioFattElettr) {
+	this.dataAvvioFattElettr = dataAvvioFattElettr;
+}
+public java.lang.Boolean isFl_abilita_diaria_miss_est() {
+	if (fl_abilita_diaria_miss_est!=null)
+	   return fl_abilita_diaria_miss_est;
+	return false;
+}
+public void setFl_abilita_diaria_miss_est(java.lang.Boolean fl_abilita_diaria_miss_est) {
+	this.fl_abilita_diaria_miss_est = fl_abilita_diaria_miss_est;
+}
+public java.lang.Boolean getFl_abilita_diaria_miss_est() {
+	return fl_abilita_diaria_miss_est;
+}
+public java.sql.Timestamp getDt_inizio_diaria_miss_est() {
+	return dt_inizio_diaria_miss_est;
+}
+public void setDt_inizio_diaria_miss_est(java.sql.Timestamp dt_inizio_diaria_miss_est) {
+	this.dt_inizio_diaria_miss_est = dt_inizio_diaria_miss_est;
+}
+public java.sql.Timestamp getDt_fine_diaria_miss_est() {
+	return dt_fine_diaria_miss_est;
+}
+public void setDt_fine_diaria_miss_est(java.sql.Timestamp dt_fine_diaria_miss_est) {
+	this.dt_fine_diaria_miss_est = dt_fine_diaria_miss_est;
 }
 }

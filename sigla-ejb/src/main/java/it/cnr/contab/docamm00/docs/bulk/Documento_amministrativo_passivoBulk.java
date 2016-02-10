@@ -132,6 +132,7 @@ public OggettoBulk initializeForSearch(BulkBP bp,ActionContext context) {
 	setFl_spedizioniere(null);
 	setFl_fattura_compenso(null);
 	setFl_merce_extra_ue(null);
+	setFl_merce_intra_ue(null);
 	return this;
 }
 }

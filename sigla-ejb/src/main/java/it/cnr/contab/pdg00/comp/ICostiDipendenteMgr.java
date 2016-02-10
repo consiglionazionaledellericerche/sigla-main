@@ -15,8 +15,8 @@ it.cnr.jada.bulk.OggettoBulk copiaRipartizione(it.cnr.jada.UserContext userConte
 void generaScritturaAnalitica(UserContext userContext,int mese) throws ComponentException;
 it.cnr.jada.util.RemoteIterator listaCdp_analitica(UserContext userContext) throws ComponentException;
 it.cnr.jada.util.RemoteIterator listaCdr(UserContext userContext,String cd_unita_organizzativa,int mese) throws ComponentException;
-it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext userContext,CdrBulk cdr,int mese, String tipo_rapporto) throws ComponentException;
-java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext userContext,String id_matricola,String cd_unita_organizzativa,int mese, String tipo_rapporto) throws ComponentException;
+it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext userContext,CdrBulk cdr,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException;
+java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext userContext,String id_matricola,String cd_unita_organizzativa,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException;
 it.cnr.jada.util.RemoteIterator listaStipendi_cofi(UserContext userContext) throws ComponentException;
 it.cnr.jada.util.RemoteIterator listaUnita_organizzativa(UserContext userContext,String cd_unita_organizzativa,int mese) throws ComponentException;
 void ripartizioneResidui(it.cnr.jada.UserContext userContext, java.lang.String id_matricola,String cd_unita_organizzativa,int mese,java.util.Collection linee_attivita) throws it.cnr.jada.comp.ComponentException;

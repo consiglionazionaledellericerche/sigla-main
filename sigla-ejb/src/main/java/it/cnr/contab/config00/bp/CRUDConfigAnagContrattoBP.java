@@ -6,15 +6,45 @@
  */
 package it.cnr.contab.config00.bp;
 
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
+import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.util.action.RemoteDetailCRUDController;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.upload.UploadedFile;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.Iterator;
+
+import javax.ejb.EJBException;
+import javax.servlet.ServletException;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 
 /**
  * @author mspasiano
@@ -23,35 +53,133 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
-	
-	//private RemoteDetailCRUDController crudAssUO = new RemoteDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUO","CNRCONFIG00_EJB_ContrattoComponentSession", this);
-	//private RemoteDetailCRUDController crudAssUODisponibili = new RemoteDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUODisponibili","CNRCONFIG00_EJB_ContrattoComponentSession", this);
 
+	private static final long serialVersionUID = 1L;
+
+	protected ContrattoService contrattoService;
+	private Date dataStipulaParametri;
+	
 	private SimpleDetailCRUDController crudAssUO = new SimpleDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUO", this);
 	private SimpleDetailCRUDController crudAssUODisponibili = new SimpleDetailCRUDController( "Associazione UO Disponibili", Unita_organizzativaBulk.class, "associazioneUODisponibili", this);
+
+	@SuppressWarnings("serial")
+	private SimpleDetailCRUDController crudArchivioAllegati = new SimpleDetailCRUDController( "ArchivioAllegati", AllegatoContrattoDocumentBulk.class, "archivioAllegati", this){
+		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+			AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)oggettobulk;
+			UploadedFile file = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter("main.ArchivioAllegati.file");
+			if ( allegato.getType() == null )
+				throw new ValidationException("Attenzione: valorizzare il Tipo.");
+			if ( allegato.getNome() == null ) {
+				if ((file == null || file.getName().equals("")) && !allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO))
+					throw new ValidationException("Attenzione: selezionare un File da caricare.");
+				if (((file == null || file.getName().equals("")) && allegato.getLink() == null) && 
+						allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO))
+					throw new ValidationException("Attenzione: selezionare un File da caricare oppure valorizzare il Link al Progetto.");
+			}else{
+				if ((!allegato.isContentStreamPresent() && (allegato.getLink() == null&&allegato.getFile() == null)) && 
+						allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO))
+					throw new ValidationException("Attenzione: selezionare un File da caricare oppure valorizzare il Link al Progetto.");
+			}
+			
+			if (!(file == null || file.getName().equals(""))) {
+				allegato.setFile(file.getFile());
+				allegato.setContentType(file.getContentType());
+				allegato.setNome(allegato.parseFilename(file.getName()));
+			}
+			if (allegato.isContentStreamPresent())
+				allegato.setToBeUpdated();
+			getParentController().setDirty(true);
+			super.validate(actioncontext, oggettobulk);
+		}
+
+		public void validateForDelete(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+			super.validateForDelete(actioncontext, oggettobulk);
+		}
+		public OggettoBulk removeDetail(OggettoBulk oggettobulk, int i) {
+			return super.removeDetail(oggettobulk, i);
+		}
+		public boolean isShrinkable() {
+			return super.isShrinkable() && isAllegatiEnabled();
+		};
+		public boolean isGrowable() {
+			return super.isGrowable();// && isAllegatiEnabled();			
+		};
+	};
 	
 	public CRUDConfigAnagContrattoBP()
 	{
 		super();
-		//initAssUOTable();
 	}
 
 	public CRUDConfigAnagContrattoBP(String s)
 	{
 		super(s);
-		//initAssUOTable();
 	}
-	private void initAssUOTable() {
-		crudAssUO.setPaged(true);
-		crudAssUO.setMultiSelection(true);
-		crudAssUODisponibili.setPaged(true);
-		crudAssUODisponibili.setMultiSelection(true);
-	}	
-	public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException {
+
+	public boolean isPublishHidden(){
+		if (isSearching() || isInserting())
+			return false;
+		if (getModel()!=null){
+			ContrattoBulk contratto = (ContrattoBulk) getModel();
+			if (contratto.isProvvisorio())
+				return false;
+			if (contratto.isCessato())
+				return true;
+		}
+		return isPublishCRUDButtonHidden();
+	}
+
+	public boolean isPublishCRUDButtonHidden(){
+		if (isSearching())
+			return true;		
+		if (getModel()!=null){
+			ContrattoBulk contratto = (ContrattoBulk) getModel();
+			if ((contratto.isPassivo() || contratto.isAttivo_e_Passivo()) &&
+					contratto.isDefinitivo() &&
+					!contratto.getDt_stipula().before(dataStipulaParametri) &&
+					!contratto.getFl_pubblica_contratto()){
+				return false;
+			}
+		}
+		return true;
+	}
 	
+	public boolean isAllegatiEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk) getModel();
+		if (isEditing() && 
+				contratto != null && 
+				contratto.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL){
+			if (contratto.isDefinitivo()){
+				if (contratto.getFl_pubblica_contratto() == null || contratto.getFl_pubblica_contratto())
+					return false;
+				else			
+					return !contratto.getDt_stipula().before(dataStipulaParametri);
+			}
+		}
+		return true;
+	}
+	
+	public boolean isContrattoDefinitivo(){
+		ContrattoBulk contratto = (ContrattoBulk) getModel();
+		if (contratto != null)
+			return contratto.isRODefinitivo();
+		return false;
+	}
+	
+	private Date getDataStipulaParametri(it.cnr.jada.action.ActionContext context) throws ComponentException, RemoteException, EJBException{
+		return Utility.createParametriCnrComponentSession().
+			getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getData_stipula_contratti();
+	}
+	
+	public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException {
 		super.basicEdit(context, bulk, doInitializeForEdit);
+		ContrattoBulk contratto= (ContrattoBulk)getModel();
+		try {
+			dataStipulaParametri = getDataStipulaParametri(context);
+		} catch (Exception e) {
+			throw handleException(e);
+		}
 		if (getStatus()!=VIEW){
-			ContrattoBulk contratto= (ContrattoBulk)getModel();
 			if (contratto.getUnita_organizzativa() != null && contratto.getUnita_organizzativa().getCd_unita_organizzativa() != null &&
 			    !contratto.getUnita_organizzativa().getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()))){
 					setStatus(VIEW);					
@@ -69,12 +197,21 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		}else{
 			getCrudAssUODisponibili().setEnabled(false);
 		}
+			getCrudArchivioAllegati().setEnabled(true);
 	}	
 	/**
 	 * @return
 	 */
 	public SimpleDetailCRUDController getCrudAssUO() {
 		return crudAssUO;
+	}
+	/* 
+	 * Necessario per la creazione di una form con enctype di tipo "multipart/form-data"
+	 * Sovrascrive quello presente nelle superclassi
+	 * 
+	*/
+	public void openForm(javax.servlet.jsp.PageContext context,String action,String target) throws java.io.IOException,javax.servlet.ServletException {
+		openForm(context,action,target,"multipart/form-data");
 	}
 
 	/**
@@ -106,6 +243,47 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		  return false;
 		return true;  	
 	}
+	
+	public boolean isVisualizzaDocammContEtrButtonEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk)getModel();
+		if (contratto==null)
+		  return false;
+		else if (contratto.getTot_docamm_cont_etr()==null)
+		  return false;
+		else if (contratto.getTot_docamm_cont_etr().compareTo(new java.math.BigDecimal(0))==0)
+		  return false;
+		return true;  	
+	}
+	public boolean isVisualizzaDocammContSpeButtonEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk)getModel();
+		if (contratto==null)
+		  return false;
+		else if (contratto.getTot_docamm_cont_spe()==null)
+		  return false;
+		else if (contratto.getTot_docamm_cont_spe().compareTo(new java.math.BigDecimal(0))==0)
+		  return false;
+		return true;  	
+	}
+	public boolean isVisualizzaDoccontContEtrButtonEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk)getModel();
+		if (contratto==null)
+		  return false;
+		else if (contratto.getTot_doccont_cont_etr()==null)
+		  return false;
+		else if (contratto.getTot_doccont_cont_etr().compareTo(new java.math.BigDecimal(0))==0)
+		  return false;
+		return true;  	
+	}
+	public boolean isVisualizzaDoccontContSpeButtonEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk)getModel();
+		if (contratto==null)
+		  return false;
+		else if (contratto.getTot_doccont_cont_spe()==null)
+		  return false;
+		else if (contratto.getTot_doccont_cont_spe().compareTo(new java.math.BigDecimal(0))==0)
+		  return false;
+		return true;  	
+	}
 	public boolean isVisualizzaCommessaButtonEnabled(){
 		return isVisualizzaDocContSpeButtonEnabled()||isVisualizzaDocContEtrButtonEnabled();
 	}	
@@ -116,7 +294,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 
-		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[10];
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[11];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.search");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
@@ -128,6 +306,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.print");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.undoBringBack");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.definitiveSave");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.publish");
 
 		return toolbar;
 	}
@@ -138,7 +317,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	 */
 	public boolean isSalvaDefinitivoButtonEnabled() {
 
-		return isEditing() && !isDirty() &&
+		return isEditing() && 
 				getModel() != null && 
 				getModel().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 				((ContrattoBulk)getModel()).isProvvisorio();
@@ -151,7 +330,11 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	 */
 	public void salvaDefinitivo(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
 		try {
-
+			archiviaAllegati(context, (ContrattoBulk) getModel());
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
+		try {
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			ContrattoBulk contratto = comp.salvaDefinitivo(context.getUserContext(), (ContrattoBulk)getModel());
 			edit(context,contratto);
@@ -161,9 +344,37 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			throw handleException(ex);
 		}
 	}
+	
+	public void pubblicaContratto(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
+		ContrattoBulk contratto = (ContrattoBulk) getModel();
+		try {
+			archiviaAllegati(context, contratto);
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
+		try {
+			Folder folder = contrattoService.getFolderContratto((ContrattoBulk)getModel());
+			if (!contratto.isAllegatoContrattoPresent())
+				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
+			contratto.setFl_pubblica_contratto(Boolean.TRUE);
+			contratto.setToBeUpdated();
+			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
+			comp.modificaConBulk(context.getUserContext(), contratto);
+			if (folder != null){
+				contrattoService.updateProperties(contratto, folder);
+				contrattoService.addAspect(folder, "P:sigla_contratti_aspect:stato_definitivo");
+				contrattoService.addConsumerToEveryone(folder);
+			}
+			edit(context,contratto);
+		}catch(it.cnr.jada.comp.ComponentException ex){
+			throw handleException(ex);
+		}catch(java.rmi.RemoteException ex){
+			throw handleException(ex);
+		}
+	}
+
 	public void controllaCancellazioneAssociazioneUo(ActionContext context,Ass_contratto_uoBulk ass_contratto_uo) throws it.cnr.jada.action.BusinessProcessException{
 		try {
-
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			comp.controllaCancellazioneAssociazioneUo(context.getUserContext(), ass_contratto_uo);
 		}catch(it.cnr.jada.comp.ComponentException ex){
@@ -174,7 +385,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	}
 	public void initializzaUnita_Organizzativa(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
 		try {
-
+			ContrattoBulk contratto = (ContrattoBulk)getModel();
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			setModel(context, comp.initializzaUnita_Organizzativa(context.getUserContext(), (ContrattoBulk)getModel()));
 		}catch(it.cnr.jada.comp.ComponentException ex){
@@ -197,8 +408,169 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public void setCrudAssUODisponibili(SimpleDetailCRUDController controller) {
 		crudAssUODisponibili = controller;
 	}
+	
+	public SimpleDetailCRUDController getCrudArchivioAllegati() {
+		return crudArchivioAllegati;
+	}
+
+	public void setCrudArchivioAllegati(
+			SimpleDetailCRUDController crudArchivioAllegati) {
+		this.crudArchivioAllegati = crudArchivioAllegati;
+	}
+
 	public boolean isDeleteButtonEnabled()
 	{
 		return isEditable() && isEditing();
+	}
+	@Override
+	protected void initialize(ActionContext actioncontext)
+			throws BusinessProcessException {
+		contrattoService = SpringUtil.getBean("contrattoService",
+				ContrattoService.class);		
+		super.initialize(actioncontext);
+	}
+
+	@Override
+	public void delete(ActionContext actioncontext)
+			throws BusinessProcessException {
+		super.delete(actioncontext);
+	}
+	@Override
+	public void update(ActionContext actioncontext)
+			throws BusinessProcessException {
+		super.update(actioncontext);
+		try {
+			archiviaAllegati(actioncontext, (ContrattoBulk) getModel());
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
+		Folder folder;
+		try {
+			folder = contrattoService.getFolderContratto((ContrattoBulk) getModel());
+			if (folder != null)
+				contrattoService.updateProperties(getModel(), folder);
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
+	}
+	
+	@Override
+	public void create(ActionContext actioncontext)
+			throws BusinessProcessException {
+		super.create(actioncontext);
+		try {
+			archiviaAllegati(actioncontext, (ContrattoBulk) getModel());
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
+	}
+
+	@Override
+	public OggettoBulk initializeModelForEdit(ActionContext actioncontext,
+			OggettoBulk oggettobulk) throws BusinessProcessException {
+		ContrattoBulk contratto = (ContrattoBulk)super.initializeModelForEdit(actioncontext, oggettobulk);
+		Folder folder;
+		try {
+			folder = contrattoService.getFolderContratto(contratto);
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
+		if (folder != null){
+			ItemIterable<CmisObject> children = contrattoService.getChildren(folder);
+			for (CmisObject child : children) {
+				Document cmisContratto = (Document) child;
+				AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(cmisContratto);
+				allegato.setContentType(cmisContratto.getContentStreamMimeType());
+				allegato.setNome((String) child.getPropertyValue("sigla_contratti_attachment:original_name"));
+				allegato.setDescrizione(cmisContratto.getProperty(ContrattoService.PROPERTY_DESCRIPTION).getValueAsString());
+				allegato.setTitolo(cmisContratto.getProperty(ContrattoService.PROPERTY_TITLE).getValueAsString());
+				allegato.setType(child.getType().getId());
+				allegato.setLink((String) child.getPropertyValue("sigla_contratti_aspect_link:url"));
+				allegato.setCrudStatus(OggettoBulk.NORMAL);
+				contratto.addToArchivioAllegati(allegato);
+			}
+		}
+		return contratto;
+	}
+
+	public String getNomeAllegato() throws ApplicationException{
+		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
+		if (allegato != null && allegato.isNodePresent()){
+			CmisObject node = contrattoService.getNodeByNodeRef(allegato.getNodeId());			
+			return node.getName();
+		}
+		return null;
+	}
+	
+	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
+		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
+		Document node = (Document) contrattoService.getNodeByNodeRef(allegato.getNodeId());
+		InputStream is = contrattoService.getResource(node);
+		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentStreamMimeType());
+		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer,0,buflength);
+		}
+		is.close();
+		os.flush();
+	}
+	
+	private void archiviaAllegati(ActionContext actioncontext, ContrattoBulk contratto) throws BusinessProcessException, ApplicationException{
+		try {
+			crudArchivioAllegati.validate(actioncontext);
+		} catch (ValidationException e1) {
+			throw handleException(e1);
+		}
+		for (Iterator<AllegatoContrattoDocumentBulk> iterator = contratto.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
+			AllegatoContrattoDocumentBulk allegato = iterator.next();
+			if (allegato.isToBeDeleted()){
+				contrattoService.deleteNode(contrattoService.getNodeByNodeRef(allegato.getNodeId()));
+				allegato.setCrudStatus(OggettoBulk.NORMAL);
+			}
+		}
+		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
+			if (allegato.isToBeCreated()){
+				try {
+					CmisObject node;
+					if (allegato.getFile() != null){
+						node = contrattoService.storeSimpleDocument(allegato, 
+								new FileInputStream(allegato.getFile()),
+								allegato.getContentType(),
+								allegato.getDocumentName(), contrattoService.getCMISPath(allegato), null, true);
+					}else {
+						node = contrattoService.storeSimpleDocument(allegato, 
+								null,
+								allegato.getContentType(),
+								allegato.getDocumentName(), contrattoService.getCMISPath(allegato), null, true);
+					}
+					if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
+						contrattoService.costruisciAlberaturaAlternativa(allegato, (Document) node);
+					
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+					allegato.setNodeId(node.getId());
+				} catch (FileNotFoundException e) {
+					throw handleException(e);
+				}catch (CmisContentAlreadyExistsException e) {
+					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+				}
+			}else if (allegato.isToBeUpdated()) {
+				try {
+					if (allegato.getFile() != null)
+						contrattoService.updateContent(allegato.getNodeId(), 
+								new FileInputStream(allegato.getFile()),
+								allegato.getContentType());
+					contrattoService.updateProperties(allegato, contrattoService.getNodeByNodeRef(allegato.getNodeId()));
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+				} catch (FileNotFoundException e) {
+					throw handleException(e);
+				}catch (CmisConstraintException e) {
+					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+				}
+			}
+		}
 	}
 }

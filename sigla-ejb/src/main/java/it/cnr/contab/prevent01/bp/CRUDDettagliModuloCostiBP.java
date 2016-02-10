@@ -7,19 +7,13 @@
 package it.cnr.contab.prevent01.bp;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.rmi.RemoteException;
-import java.util.Enumeration;
-import java.util.List;
 
-import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Parametri_livelliComponentSession;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg00.ejb.CostiDipendenteComponentSession;
 import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk;
@@ -29,29 +23,18 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgModuloCostiComponentSession;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Config;
-import it.cnr.jada.bulk.BulkInfo;
-import it.cnr.jada.bulk.ColumnFieldProperty;
-import it.cnr.jada.bulk.FieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.jada.util.action.FormController;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
-import it.cnr.jada.util.jsp.TableCustomizer;
 
 /**
  * @author mspasiano
@@ -65,6 +48,8 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 	private CrudDettagliSpeseBP crudDettagliSpese = new CrudDettagliSpeseBP( "DettagliSpese", Pdg_modulo_speseBulk.class, "dettagliSpese", this);
 	private Integer livelloContrattazione;
 	private Boolean pdgApprovatoDefinitivo;
+    private boolean cofogObb;
+	private boolean flNuovoPdg = false;
 
 	private SimpleDetailCRUDController crudDettagliContrSpese = new SimpleDetailCRUDController( "DettagliContrSpese", Pdg_contrattazione_speseBulk.class, "dettagliContrSpese", this, false) {
 
@@ -129,15 +114,22 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 		}
 		setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
 		setPdg_esercizio(cercaPdg_esercizio(actioncontext));
-
+		
 		if (!isEditable())
 		  setStatus(VIEW);	
 		resetTabs(actioncontext);
 		try {
-			setDescrizioneClassificazione(createParametriLivelliComponentSession().getDescrizioneLivello(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext()),Utility.TIPO_GESTIONE_SPESA));
-			setDescrizioneClassificazioneContrSpese(createParametriLivelliComponentSession().getDescrizioneLivelloContrSpese(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())));
-			setPdgApprovatoDefinitivo(Utility.createPdgContrSpeseComponentSession().isApprovatoDefinitivo(actioncontext.getUserContext()));
-			setLivelloContrattazione(Utility.createPdgContrSpeseComponentSession().livelloContrattazioneSpese(actioncontext.getUserContext()));
+			Parametri_livelliComponentSession parametriLivelliSession = createParametriLivelliComponentSession();
+			setDescrizioneClassificazione(parametriLivelliSession.getDescrizioneLivello(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext()),Utility.TIPO_GESTIONE_SPESA));
+			setDescrizioneClassificazioneContrSpese(parametriLivelliSession.getDescrizioneLivelloContrSpese(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())));
+
+			PdgContrSpeseComponentSession pdgContrSpeseSession = Utility.createPdgContrSpeseComponentSession();
+			setPdgApprovatoDefinitivo(pdgContrSpeseSession.isApprovatoDefinitivo(actioncontext.getUserContext()));
+			setLivelloContrattazione(pdgContrSpeseSession.livelloContrattazioneSpese(actioncontext.getUserContext()));
+
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
+			setCofogObb(parCnr.isCofogObbligatorio());
+			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 		}catch (ComponentException e) {
 			throw new BusinessProcessException(e);
 		} catch (RemoteException e) {
@@ -152,8 +144,9 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 		return super.initializeModelForInsert(actioncontext, pdg_modulo_costi);
 	}
 	protected void writeToolbar(JspWriter jspwriter, Button[] abutton) throws IOException, ServletException {
-		String label = "<SPAN style=\""+getBulkInfo().getFieldProperty("label_titolo").getLabelStyle()+"\">";
-		label += getBulkInfo().getFieldProperty("label_titolo").getLabel() + "</SPAN>";
+		String field_titolo = this.isFlNuovoPdg()?"label_titolo_nuovo_pdg":"label_titolo";
+		String label = "<SPAN style=\""+getBulkInfo().getFieldProperty(field_titolo).getLabelStyle()+"\">";
+		label += getBulkInfo().getFieldProperty(field_titolo).getLabel() + "</SPAN>";
 		openToolbar(jspwriter);
 		JSPUtils.toolbar(jspwriter, abutton, this,label);
 		closeToolbar(jspwriter);
@@ -381,5 +374,29 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 
 	private void setLivelloContrattazione(Integer livelloContrattazione) {
 		this.livelloContrattazione = livelloContrattazione;
+	}
+
+	public boolean isCofogObb() {
+		return cofogObb;
+	}
+
+	public void setCofogObb(boolean cofogObb) {
+		this.cofogObb = cofogObb;
+	}
+
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
+	}
+
+	private void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+ 
+	public boolean isDeleteModuloButtonHidden() {
+		return super.isDeleteButtonHidden() || this.isFlNuovoPdg();
+	}
+
+	public boolean isDeleteProgettoButtonHidden() {
+		return super.isDeleteButtonHidden() || !this.isFlNuovoPdg();
 	}
 }

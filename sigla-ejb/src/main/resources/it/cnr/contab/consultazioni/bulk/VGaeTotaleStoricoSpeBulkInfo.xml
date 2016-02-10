@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Storico GAE dei movimenti contabili di spesa dal 2005">
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdr" />
+	<fieldProperty
+		name="cdLineaAttivita"
+		property="cdLineaAttivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="gae" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="denominazione" />
+	<fieldProperty
+		name="cdResponsabileTerzo"
+		property="cdResponsabileTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="responsabile" />
+	<fieldProperty
+		name="dsTerzo"
+		property="dsTerzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="denominazione Resp. " />
+	<fieldProperty
+		name="cdModulo"
+		property="cdModulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="modulo" />
+	<fieldProperty
+		name="dsModulo"
+		property="dsModulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		enabledOnEdit="false"
+		label="desc. Modulo" />
+	<fieldProperty
+		name="pgProgetto"
+		property="pgProgetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="progetto" />
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="elemento Voce" />
+	<fieldProperty
+		name="stanziamentoAssestatoTot"
+		property="stanziamentoAssestatoTot"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="stanziamento Assestato" />
+	<fieldProperty
+		name="impegnato"
+		property="impegnato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="impegnato" />
+	<fieldProperty
+		name="disponibilitaImpegnare"
+		property="disponibilitaImpegnare"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="disponibilita Impegnare" />
+	<fieldProperty
+		name="pagato"
+		property="pagato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="pagato" />
+	<fieldProperty
+		name="daPagare"
+		property="daPagare"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="da Pagare" />
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="cdr" />
+	<formFieldProperty
+		name="cdLineaAttivita" />
+	<formFieldProperty
+		name="denominazione" />
+	<formFieldProperty
+		name="cdResponsabileTerzo" />
+	<formFieldProperty
+		name="dsTerzo" />
+	<formFieldProperty
+		name="cdModulo" />
+	<formFieldProperty
+		name="dsModulo" />
+	<formFieldProperty
+		name="pgProgetto" />
+	<formFieldProperty
+		name="cdElementoVoce" />
+	<formFieldProperty
+		name="stanziamentoAssestatoTot" />
+	<formFieldProperty
+		name="impegnato" />
+	<formFieldProperty
+		name="disponibilitaImpegnare" />
+	<formFieldProperty
+		name="pagato" />
+	<formFieldProperty
+		name="daPagare" />
+	<findFieldProperty
+		name="cdr" />
+	<findFieldProperty
+		name="cdLineaAttivita" />
+	<findFieldProperty
+		name="denominazione" />
+	<findFieldProperty
+		name="cdResponsabileTerzo" />
+	<findFieldProperty
+		name="dsTerzo" />
+	<findFieldProperty
+		name="cdModulo" />
+	<findFieldProperty
+		name="dsModulo" />
+	<findFieldProperty
+		name="pgProgetto" />
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="stanziamentoAssestatoTot" />
+	<findFieldProperty
+		name="impegnato" />
+	<findFieldProperty
+		name="disponibilitaImpegnare" />
+	<findFieldProperty
+		name="pagato" />
+	<findFieldProperty
+		name="daPagare" />
+	<columnFieldProperty
+		name="cdr" />
+	<columnFieldProperty
+		name="cdLineaAttivita" />
+	<columnFieldProperty
+		name="denominazione" />
+	<columnFieldProperty
+		name="cdResponsabileTerzo" />
+	<columnFieldProperty
+		name="dsTerzo" />
+	<columnFieldProperty
+		name="cdModulo" />
+	<columnFieldProperty
+		name="dsModulo" />
+	<columnFieldProperty
+		name="pgProgetto" />
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="stanziamentoAssestatoTot" />
+	<columnFieldProperty
+		name="impegnato" />
+	<columnFieldProperty
+		name="disponibilitaImpegnare" />
+	<columnFieldProperty
+		name="pagato" />
+	<columnFieldProperty
+		name="daPagare" />
+</bulkInfo>

@@ -1,10 +1,20 @@
 package it.cnr.contab.compensi00.actions;
 
+import java.util.Enumeration;
+
 import it.cnr.contab.compensi00.bp.StampaCertificazioneBP;
 import it.cnr.contab.compensi00.docs.bulk.StampaCertificazioneVBulk;
 import it.cnr.contab.missioni00.bp.CRUDMissioneBP;
 import it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk;
+import it.cnr.contab.reports.bp.OfflineReportPrintBP;
+import it.cnr.contab.reports.bp.ParametricPrintBP;
+import it.cnr.contab.reports.bp.ReportPrintBP;
+import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.bulk.PrintFieldProperty;
+import it.cnr.jada.bulk.ValidationException;
 
 /**
  * Insert the type's description here.
@@ -36,6 +46,10 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(false);
 		bp.setStampaRit_contrib(false);
 		stampa.setStampaRit_contrib(false);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
+		bp.setStampaRit_acconto_ppt(false);
+		stampa.setStampaRit_acconto_ppt(false);
 	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_ACCONTO)){
 		bp.setStampaRit_prev(false);
 		stampa.setStampaRit_prev(false);
@@ -47,6 +61,10 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(false);
 		bp.setStampaRit_contrib(false);
 		stampa.setStampaRit_contrib(false);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
+		bp.setStampaRit_acconto_ppt(false);
+		stampa.setStampaRit_acconto_ppt(false);
 	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_IMPOSTA)){
 		bp.setStampaRit_prev(false);
 		stampa.setStampaRit_prev(false);
@@ -58,6 +76,10 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(false);
 		bp.setStampaRit_contrib(false);
 		stampa.setStampaRit_contrib(false);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
+		bp.setStampaRit_acconto_ppt(false);
+		stampa.setStampaRit_acconto_ppt(false);
 	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_IMPOSTA_CC)){
 		bp.setStampaRit_prev(false);
 		stampa.setStampaRit_prev(false);
@@ -69,6 +91,40 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(true);
 		bp.setStampaRit_contrib(false);
 		stampa.setStampaRit_contrib(false);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
+		bp.setStampaRit_acconto_ppt(false);
+		stampa.setStampaRit_acconto_ppt(false);
+	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_IMPOSTA_PC)){
+		bp.setStampaRit_prev(false);
+		stampa.setStampaRit_prev(false);
+		bp.setStampaRit_acconto(false);
+		stampa.setStampaRit_acconto(false);
+		bp.setStampaTit_imposta(false);
+		stampa.setStampaTit_imposta(false);
+		bp.setStampaTit_imposta_cc(false);
+		stampa.setStampaTit_imposta_cc(false);
+		bp.setStampaRit_contrib(false);
+		stampa.setStampaRit_contrib(false);	
+		bp.setStampaTit_imposta_pc(true);
+		stampa.setStampaTit_imposta_pc(true);
+		bp.setStampaRit_acconto_ppt(false);
+		stampa.setStampaRit_acconto_ppt(false);
+	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_ACCONTO_PPT)){
+		bp.setStampaRit_prev(false);
+		stampa.setStampaRit_prev(false);
+		bp.setStampaRit_acconto(false);
+		stampa.setStampaRit_acconto(false);
+		bp.setStampaTit_imposta(false);
+		stampa.setStampaTit_imposta(false);
+		bp.setStampaTit_imposta_cc(false);
+		stampa.setStampaTit_imposta_cc(false);
+		bp.setStampaRit_contrib(false);
+		stampa.setStampaRit_contrib(false);	
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
+		bp.setStampaRit_acconto_ppt(true);
+		stampa.setStampaRit_acconto_ppt(true);		
 	} else {
 		bp.setStampaRit_prev(false);
 		stampa.setStampaRit_prev(false);
@@ -80,7 +136,57 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(false);
 		bp.setStampaRit_contrib(true);
 		stampa.setStampaRit_contrib(true);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
+		bp.setStampaRit_acconto_ppt(false);
+		stampa.setStampaRit_acconto_ppt(false);
 	}
 	return context.findDefaultForward();
+}
+public Forward doPrintComunicazione(ActionContext context) {
+	ParametricPrintBP bp = (ParametricPrintBP)context.getBusinessProcess();
+	StampaCertificazioneBP scbp = (StampaCertificazioneBP)context.getBusinessProcess();	
+	try {
+		fillModel(context);
+		bp.completeSearchTools(context,bp.getController());
+		bp.validate(context);
+		bp.print(context,bp.getModel());
+		OfflineReportPrintBP printbp = (OfflineReportPrintBP)context.createBusinessProcess("OfflineReportPrintBP");
+		printbp.setReportName(scbp.getReportNameComunicazione());
+		for (Enumeration e = bp.getBulkInfo().getPrintFieldProperties(scbp.getReportNameComunicazione());e.hasMoreElements();) {
+			PrintFieldProperty printFieldProperty = (PrintFieldProperty)e.nextElement();
+			Object value = printFieldProperty.getValueFrom(bp.getModel());
+			Print_spooler_paramBulk param = new Print_spooler_paramBulk();
+			if (scbp.getReportNameComunicazione().endsWith("jasper")){
+				param.setNomeParam(printFieldProperty.getParamNameJR());
+				param.setParamType(printFieldProperty.getParamTypeJR());
+			}else{
+				param.setNomeParam("prompt"+printFieldProperty.getParameterPosition());
+			}
+			switch(printFieldProperty.getParamType()) {
+				case PrintFieldProperty.TYPE_DATE:
+					param.setValoreParam(ReportPrintBP.DATE_FORMAT.format((java.sql.Timestamp)value));
+					break;
+				case PrintFieldProperty.TYPE_TIMESTAMP:
+					param.setValoreParam(ReportPrintBP.TIMESTAMP_FORMAT.format((java.sql.Timestamp)value));
+					break;
+				case PrintFieldProperty.TYPE_STRING:
+				default:
+					if (value == null)
+						param.setValoreParam("");
+					else
+						param.setValoreParam(value.toString());
+					break;
+			}								
+			printbp.addToPrintSpoolerParam(param);
+		}
+		bp.setDirty(false);
+		return context.addBusinessProcess(printbp);
+	} catch(ValidationException e) {
+		bp.setErrorMessage(e.getMessage());
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
 }
 }

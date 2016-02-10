@@ -1,19 +1,11 @@
 package it.cnr.contab.incarichi00.bp;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.jsp.PageContext;
-
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.jsp.Button;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.upload.UploadedFile;
 
 /**
@@ -43,10 +35,14 @@ public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.Si
 
 			allegato.setFile(file.getFile());
 			allegato.setNome_file(allegato.parseFilename(file.getName()));
+			allegato.setContentType(file.getContentType());
 			((OggettoBulk)allegato).setToBeUpdated();
 			getParentController().setDirty(true);
 		}
 		
+		if ( allegato.getUrl_file() == null && allegato.isUrlRequired())
+			throw new ValidationException("Attenzione: indicare un indirizzo URL da cui reperire l'allegato.");
+
 		super.validate(actioncontext, oggettobulk);
 	}
 	public void validateForDelete(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
@@ -92,6 +88,14 @@ public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.Si
 	public void addContratto(ActionContext actioncontext) throws BusinessProcessException {
 		add(actioncontext);
 		((Incarichi_archivioBulk)getModel()).setTipo_archivio(Incarichi_archivioBulk.TIPO_CONTRATTO);
+	}		
+	public void addCurriculumVincitore(ActionContext actioncontext) throws BusinessProcessException {
+		add(actioncontext);
+		((Incarichi_archivioBulk)getModel()).setTipo_archivio(Incarichi_archivioBulk.TIPO_CURRICULUM_VINCITORE);
+	}		
+	public void addProgetto(ActionContext actioncontext) throws BusinessProcessException {
+		add(actioncontext);
+		((Incarichi_archivioBulk)getModel()).setTipo_archivio(Incarichi_archivioBulk.TIPO_PROGETTO);
 	}		
 	public void addAllegatoGenerico(ActionContext actioncontext) throws BusinessProcessException {
 		add(actioncontext);

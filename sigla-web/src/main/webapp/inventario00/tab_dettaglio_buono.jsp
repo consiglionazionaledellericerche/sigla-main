@@ -22,7 +22,10 @@
 				<% bp.getDettaglio().writeFormLabel(out,"targa"); %>
 				<% bp.getDettaglio().writeFormInput(out,null,"targa",(bp.isEditing()|| (bene!=null && bene.isROtarga())),null,null); %>
 			</td>		
-			
+				<td>
+				<% bp.getDettaglio().writeFormLabel(out,"seriale"); %>
+				<% bp.getDettaglio().writeFormInput(out,null,"seriale",(bp.isEditing()|| (bene!=null && bene.isROseriale())),null,null); %>
+			</td>	
 		</tr>
 		<tr>
 			<td>

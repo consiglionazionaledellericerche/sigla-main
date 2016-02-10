@@ -403,7 +403,7 @@ private Integer getNumLiquidazione(
 	Liquid_coriBulk liquidazione_cori)
 	throws  it.cnr.jada.comp.ComponentException {
 
-	CallableStatement cs = null;
+	LoggableStatement cs = null;
 	Integer pg = null;
 	try {
 		try	{
@@ -742,7 +742,7 @@ public OggettoBulk cercaBatch(
 		//recupero le note dalla testata del batch
 		SQLBuilder sql;	
 		String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
-		PreparedStatement ps = null;
+		LoggableStatement ps = null;
 		java.sql.ResultSet rs = null;
 		String note=null;
 		sql = getHome(userContext, Batch_log_tstaBulk.class).createSQLBuilder();
@@ -926,10 +926,10 @@ public List EstraiListaTot(UserContext userContext,Liquid_coriBulk liquidazione)
 		F24ep_tempTotHome home = (F24ep_tempTotHome)getHome(userContext,F24ep_tempTotBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addClause("AND", "esercizio",sql.EQUALS,liquidazione.getEsercizio());
-		sql.addClause("AND", "cd_cds",sql.EQUALS,liquidazione.getCd_cds());
+		sql.addClause("AND", "cd_cds",sql.EQUALS,liquidazione.getCd_cds()); 
 		sql.addClause("AND", "cd_unita_organizzativa",sql.EQUALS,liquidazione.getCd_unita_organizzativa());
 		sql.addClause("AND", "pg_liquidazione",sql.EQUALS,liquidazione.getPg_liquidazione());
-		sql.addOrderBy("PROG");
+		sql.addOrderBy(" tipo_riga_f24,codice_tributo,codice_ente,mese_rif,anno_rif,esercizio,cd_cds,cd_unita_organizzativa,pg_liquidazione,cd_matricola_inps,periodo_da,periodo_a");
 		try {
 			return home.fetchAll(sql);
 		} catch (PersistencyException e) {
@@ -940,7 +940,7 @@ public List EstraiListaTot(UserContext userContext,Liquid_coriBulk liquidazione)
 public void Popola_f24Tot(UserContext userContext,Liquid_coriBulk liquidazione) throws ComponentException
 {
 	try{
-		// Elimina pendenti con la stessa liquidazione
+	if(liquidazione!=null && liquidazione.getPg_liquidazione()!=null){	
 		F24ep_tempTotHome home = (F24ep_tempTotHome)getHome(userContext,F24ep_tempTotBulk.class);
 		SQLBuilder sql= home.createSQLBuilder();
 		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
@@ -954,14 +954,19 @@ public void Popola_f24Tot(UserContext userContext,Liquid_coriBulk liquidazione) 
 			F24ep_temp.setToBeDeleted();
 			((CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession",it.cnr.jada.ejb.CRUDComponentSession.class)).eliminaConBulk(userContext,F24ep_temp);
 		}		
-		
+	}
+	
+	List lista;
+	F24ep_tempTotHome home = (F24ep_tempTotHome)getHome(userContext,F24ep_tempTotBulk.class);
+	SQLBuilder sql= home.createSQLBuilder();
 	home = (F24ep_tempTotHome)getHome(userContext,F24ep_tempTotBulk.class,"V_F24EP","none");
 	sql= home.createSQLBuilder();
 	sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 	sql.addSQLClause("AND", "cd_cds",sql.EQUALS,liquidazione.getCd_cds());
 	sql.addSQLClause("AND", "cd_unita_organizzativa",sql.EQUALS,liquidazione.getCd_unita_organizzativa());
 	sql.addSQLClause("AND", "pg_liquidazione",sql.EQUALS,liquidazione.getPg_liquidazione());
-	sql.addOrderBy("PROG");
+	sql.addOrderBy(" tipo_riga_f24,codice_tributo,codice_ente,mese_rif,anno_rif,esercizio,cd_cds,cd_unita_organizzativa,pg_liquidazione,cd_matricola_inps,periodo_da,periodo_a");
+	
 	lista =home.fetchAll(sql);
 	for (Iterator i=lista.iterator();i.hasNext();){
 		F24ep_tempTotBulk F24ep_temp= (F24ep_tempTotBulk)i.next();
@@ -1011,6 +1016,38 @@ public String getSedeInpdapF24(UserContext userContext) throws it.cnr.jada.comp.
 		return configurazione.getVal01(userContext, new Integer(0),null,"F24_EP","SEDE_INPDAP");
 	} catch(Throwable e) {
 		throw handleException(e);
+	}
+}
+public String getSedeInpgiF24(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+	try {
+		it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configurazione = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession",it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+		return configurazione.getVal01(userContext, new Integer(0),null,"F24_EP","SEDE_INPGI");
+	} catch(Throwable e) {
+		throw handleException(e);
+	}
+}
+public void eliminaPendenti_f24Tot(UserContext userContext) throws ComponentException
+{
+	try{
+		// Elimina pendenti con la stessa liquidazione
+		F24ep_tempTotHome home = (F24ep_tempTotHome)getHome(userContext,F24ep_tempTotBulk.class);
+		SQLBuilder sql= home.createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause("AND", "cd_cds",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
+		sql.addSQLClause("AND", "cd_unita_organizzativa",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+		sql.addOrderBy("PROG");
+		List lista =home.fetchAll(sql);
+		for (Iterator i=lista.iterator();i.hasNext();){
+			F24ep_tempTotBulk F24ep_temp= (F24ep_tempTotBulk)i.next();
+			F24ep_temp.setToBeDeleted();
+			((CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession",it.cnr.jada.ejb.CRUDComponentSession.class)).eliminaConBulk(userContext,F24ep_temp);
+		}		
+	} catch (PersistencyException e) {
+		handleException(e);
+	} catch (RemoteException e) {
+		handleException(e);
+	} catch (EJBException e) {
+		handleException(e);
 	}
 }
 }

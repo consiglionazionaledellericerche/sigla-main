@@ -69,7 +69,7 @@ public class Costanti
 		erroriFA.put(ERRORE_FA_103, "Fattura di tipo tariffario con codice tariffario non valorizzato");
 		erroriFA.put(ERRORE_FA_104, "Estremi del contratto non presenti");
 		erroriFA.put(ERRORE_FA_105, "Estremi del cliente non presenti");
-		erroriFA.put(ERRORE_FA_106, "Estremi della voce iva non presenti");
+		erroriFA.put(ERRORE_FA_106, "Estremi della voce iva non presenti o non validi");
 		erroriFA.put(ERRORE_FA_107, "Estremi della voce non presenti o non coerenti");
 		erroriFA.put(ERRORE_FA_108, "Estremi del contratto non completi");
 		erroriFA.put(ERRORE_FA_109, "Estremi riga fattura di riferimento non presenti");

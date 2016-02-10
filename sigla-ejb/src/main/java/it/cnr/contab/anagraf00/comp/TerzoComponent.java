@@ -84,11 +84,13 @@ public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext,Unita_o
 		sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS,unita_organizzativa.getCd_unita_organizzativa());
 		sql.addSQLClause("AND", "(DT_CANC >= SYSDATE OR DT_CANC IS NULL)");
 		sql.addSQLClause("AND", "(DT_FINE_RAPPORTO >= SYSDATE OR DT_FINE_RAPPORTO IS NULL)");
+		
 		it.cnr.jada.persistency.Broker broker = getHome(userContext,TerzoBulk.class).createBroker(sql);
 		if (!broker.next()) return null;
-		TerzoBulk terzo = (TerzoBulk)broker.fetch(TerzoBulk.class);
-		if (broker.next()) 
-			throw new ApplicationException("Esistono più terzi associati a questa Unità Organizzativa");
+		TerzoBulk terzo = (TerzoBulk)broker.fetch(TerzoBulk.class); 
+		// eliminato controllo terzo unico per UO 
+		//if (broker.next()) 
+			//throw new ApplicationException("Esistono più terzi associati a questa Unità Organizzativa");
 		return terzo;
 	} catch(it.cnr.jada.persistency.PersistencyException ex) {
 		throw new ComponentException(ex);
@@ -111,8 +113,17 @@ public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext,Unita_o
 
 	public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 		try {
-			makeBulkPersistent(userContext,bulk);
-		} catch (it.cnr.jada.persistency.sql.ReferentialIntegrityException rie) {
+			try {
+				TerzoBulk terzo = (TerzoBulk)bulk;
+				terzo.setCrudStatus(bulk.TO_BE_UPDATED);
+				terzo.setDt_fine_rapporto(getHome(userContext,terzo).getServerDate());
+				makeBulkPersistent(userContext,bulk);
+			} catch(Throwable e) {
+				throw handleException(bulk,e);
+			}
+			
+			//makeBulkPersistent(userContext,bulk);
+		//} catch (it.cnr.jada.persistency.sql.ReferentialIntegrityException rie) {
 		/*	Angelo 03/01/05 Se ci sono dei dettagli non imposto la data di fine
 			try {
 				TerzoBulk terzo = (TerzoBulk)bulk;
@@ -122,7 +133,7 @@ public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext,Unita_o
 			} catch(Throwable e) {
 				throw handleException(bulk,rie);
 			}*/
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");
+			//throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");
 		} catch (Throwable e) {
 			throw handleException(bulk,e);
 		}
@@ -220,9 +231,10 @@ public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBu
 		sql.addSQLJoin("V_TERZO_CF_PI.CD_ANAG","ANAGRAFICO.CD_ANAG");
 		sql.addSQLClause("AND","ANAGRAFICO.TI_ENTITA",sql.NOT_EQUALS,AnagraficoBulk.STRUT_CNR);
 		sql.addClause(clauses);
-	} else
+	} else{
 		sql.addClause("AND","cd_anag",sql.EQUALS,terzo.getCd_anag());
-		
+		sql.addClause(clauses);
+	}
 	return sql;
 }
 
@@ -501,8 +513,8 @@ private void validaUnitaOrganizzativa(UserContext userContext,TerzoBulk terzo) t
 			throw new ApplicationException("Attenzione: Unità Organizzativa non specificata");		
 		SQLBuilder sql = getHome(userContext, TerzoBulk.class).createSQLBuilder();
 		sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, terzo.getCd_unita_organizzativa());
-		if (sql.executeExistsQuery(getConnection(userContext)))
-			throw new ApplicationException("Attenzione: l'Unità Organizzativa selezionata è già stata utilizzata.");		
+		//if (sql.executeExistsQuery(getConnection(userContext)))
+			//throw new ApplicationException("Attenzione: l'Unità Organizzativa selezionata è già stata utilizzata.");		
 		
 	} catch(Throwable e) {
 		throw handleException(e);
@@ -1042,8 +1054,8 @@ public java.util.List findListaTerziSIP(UserContext userContext,String query,Str
 					}
 				}
 				sql.closeParenthesis();
-				sql.addOrderBy("COGNOME");
-				sql.addOrderBy("NOME");
+				sql.addOrderBy("UPPER(COGNOME)");
+				sql.addOrderBy("UPPER(NOME)");
 			}else if (tipoterzo.equalsIgnoreCase("giuridica")){
 				sql.openParenthesis("AND");
 				sql.addSQLClause("AND","TI_ENTITA",SQLBuilder.EQUALS,AnagraficoBulk.GIURIDICA);
@@ -1088,7 +1100,7 @@ public java.util.List findListaTerziSIP(UserContext userContext,String query,Str
 					}
 				}
 				sql.closeParenthesis();
-				sql.addOrderBy("DENOMINAZIONE_SEDE");
+				sql.addOrderBy("UPPER(DENOMINAZIONE_SEDE)");
 			}
 		}
 		return home.fetchAll(sql);
@@ -1249,20 +1261,15 @@ public List findNazioniIban(UserContext userContext,BancaBulk bulk) throws it.cn
 	return lista;	
 }
 	@SuppressWarnings("unchecked")
-	/**
-	 * Cerca la matricola di un eventuale dipendente, se il terzo passato non è un dipendente ritorna null  
-	 * @param userContext
-	 * @param terzo
-	 * @return
-	 * @throws it.cnr.jada.comp.ComponentException
-	 */
-	public Integer findMatricolaDipendente(UserContext userContext, TerzoBulk terzo, Date dataCompetenzaDocumento) throws it.cnr.jada.comp.ComponentException {
+	public TerzoBulk completaTerzo(UserContext userContext, TerzoBulk terzo) throws it.cnr.jada.comp.ComponentException {
 		try {
-			return ((TerzoHome)getHome(userContext, TerzoBulk.class)).findMatricolaDipendente(userContext, terzo, dataCompetenzaDocumento);
-		} catch(PersistencyException e) {
-			throw handleException(e);
-		} catch (IntrospectionException e) {
-			throw handleException(e);
-		}			
+			terzo.setDipendente(((AnagraficoHome)getHome(userContext, AnagraficoBulk.class)).findRapportoDipendenteFor(terzo.getAnagrafico()));
+			return terzo;
+		}
+		catch( Exception e )
+		{
+			throw handleException( e );
+		}		
 	}
+
 }

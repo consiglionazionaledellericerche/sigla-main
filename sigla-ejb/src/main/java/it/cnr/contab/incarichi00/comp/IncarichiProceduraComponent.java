@@ -3,6 +3,9 @@ package it.cnr.contab.incarichi00.comp;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -24,21 +27,33 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraHome;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioHome;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileAssegniRicerca;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileBorseStudio;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileIncarichi;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProcedura;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderContrattiModel;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderProcedura;
+import it.cnr.contab.incarichi00.cmis.CMISContrattiAspect;
+import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.incarichi00.ejb.RepertorioLimitiComponentSession;
+import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametri_configBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametri_configHome;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivita_fpBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaHome;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -52,19 +67,36 @@ import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.ejb.EJBException;
 
+import oracle.sql.BLOB;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.data.Ace;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class IncarichiProceduraComponent extends CRUDComponent {
+	private transient static final Logger logger = LoggerFactory.getLogger(IncarichiProceduraComponent.class);
 	private final static int INSERIMENTO = 1;
 	private final static int MODIFICA    = 2;
 	private final static int CANCELLAZIONE = 3;	
@@ -84,6 +116,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				procedura.setFl_art51(Boolean.FALSE);
 				procedura.setFl_sbloccato(Boolean.FALSE);
 				procedura.setNr_contratti(1);
+				procedura.setFl_applicazione_norma(Incarichi_proceduraBulk.APPLICAZIONE_NORMA_YES);
+				procedura.setFl_applicazione_norma_orig(Incarichi_proceduraBulk.APPLICAZIONE_NORMA_YES);
+				procedura.setFl_migrata_to_cmis(Boolean.TRUE);
 				
 				if (procedura.getIncarichi_richiesta()==null || procedura.getIncarichi_richiesta().getPg_richiesta()==null){  
 					procedura.setCds( (CdsBulk)getHome(usercontext, CdsBulk.class).findByPrimaryKey(new CdsBulk(CNRUserContext.getCd_cds(usercontext))) );
@@ -111,7 +146,12 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				procedura.setIncarichi_procedura_annoColl( new BulkList( procHome.findIncarichi_procedura_annoList(usercontext, procedura ) ));
 				procedura.setArchivioAllegati( new BulkList( procHome.findArchivioAllegati( procedura ) ));
 				procedura.setIncarichi_procedura_noteColl( new BulkList( procHome.findIncarichi_procedura_noteList(usercontext, procedura ) ));
-
+				procedura.setTipo_prestazione_orig(procedura.getTipo_prestazione());
+				procedura.setTipo_norma_perla_orig(procedura.getTipo_norma_perla());
+				procedura.setTipo_attivita_fp_orig(procedura.getTipo_attivita_fp());
+				if (procedura.getTipologie_norma_perla()==null) 
+					procedura.setFl_applicazione_norma_orig(Incarichi_proceduraBulk.APPLICAZIONE_NORMA_YES);
+				
 				BulkList listIncarichi =  new BulkList( procHome.findIncarichi_repertorioList(usercontext, procedura ) );
 				BulkList listIncarichiClone = new BulkList(); 
 				for (Iterator i=listIncarichi.iterator();i.hasNext();) {
@@ -139,6 +179,11 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					if (procedura.getIncarichi_repertorioValidiColl().size()==1)
 						procedura.getArchivioAllegatiMI().addAll(((Incarichi_repertorioBulk)procedura.getIncarichi_repertorioValidiColl().get(0)).getArchivioAllegati());
 				}
+				if (procedura.getTipo_attivita_fp()!=null && procedura.getTipo_attivita_fp().getCd_tipo_attivita()!=null) {
+					procedura.setTipo_attivita_fp1(procedura.getTipo_attivita_fp().getTipo_attivita_fp_padre());
+					procedura.setTipo_attivita_fp0(procedura.getTipo_attivita_fp1().getTipo_attivita_fp_padre());
+				}
+				procedura = (Incarichi_proceduraBulk)caricaSedeUnitaOrganizzativa(usercontext, procedura);
 				getHomeCache(usercontext).fetchAll(usercontext);
 			}
 			return oggettobulk;
@@ -176,6 +221,21 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		}		
 	}
 	protected Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+	{
+		SQLBuilder sql = (SQLBuilder) this.selectBase(userContext, clauses, bulk);
+
+		sql.addTableToHeader("TIPO_ATTIVITA");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_ATTIVITA","TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
+		sql.addSQLClause(FindClause.AND, "TIPO_ATTIVITA.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_attivitaBulk.ASS_INCARICHI);
+	
+		sql.addTableToHeader("TIPO_INCARICO");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_INCARICO","TIPO_INCARICO.CD_TIPO_INCARICO");
+		sql.addSQLClause(FindClause.AND, "TIPO_INCARICO.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_INCARICHI);
+
+		return sql;
+	}
+	
+	protected Query selectBase(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
 		Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
 		boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
@@ -216,19 +276,31 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				sql.addSQLExistsClause(FindClause.OR,sqlCdsExists);
 			sql.closeParenthesis();
 		}
-		if (((Incarichi_proceduraBulk)bulk).getV_terzoForSearch()!=null &&
-			((Incarichi_proceduraBulk)bulk).getV_terzoForSearch().getTerzo()!=null &&
-			((Incarichi_proceduraBulk)bulk).getV_terzoForSearch().getTerzo().getCd_terzo()!=null) {
+
+		Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)bulk;
+		boolean searchTerzo = procedura.getV_terzoForSearch()!=null && procedura.getV_terzoForSearch().getTerzo()!=null &&
+				 			  procedura.getV_terzoForSearch().getTerzo().getCd_terzo()!=null;
+		boolean searchIncarico = procedura.getIncaricoRepertorioForSearch()!=null &&
+							  	 procedura.getIncaricoRepertorioForSearch().getEsercizio()!=null &&
+							  	 procedura.getIncaricoRepertorioForSearch().getPg_repertorio()!=null;
+
+		if (searchTerzo || searchIncarico) {
 			SQLBuilder sqlExists = getHome(userContext, Incarichi_repertorioBulk.class).createSQLBuilder();
 			sqlExists.addSQLJoin( "INCARICHI_REPERTORIO.ESERCIZIO_PROCEDURA", "INCARICHI_PROCEDURA.ESERCIZIO");
 			sqlExists.addSQLJoin( "INCARICHI_REPERTORIO.PG_PROCEDURA", "INCARICHI_PROCEDURA.PG_PROCEDURA");
-			sqlExists.addClause(FindClause.AND, "cd_terzo", SQLBuilder.EQUALS, ((Incarichi_proceduraBulk)bulk).getV_terzoForSearch().getTerzo().getCd_terzo());
+			if (searchTerzo)
+				sqlExists.addClause(FindClause.AND, "cd_terzo", SQLBuilder.EQUALS, procedura.getV_terzoForSearch().getTerzo().getCd_terzo());
+			if (searchIncarico) {
+				sqlExists.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, procedura.getIncaricoRepertorioForSearch().getEsercizio());
+				sqlExists.addClause(FindClause.AND, "pg_repertorio", SQLBuilder.EQUALS, procedura.getIncaricoRepertorioForSearch().getPg_repertorio());
+			}
 			sql.addSQLExistsClause(FindClause.AND, sqlExists);
 		}
+
 		sql.addOrderBy("pg_procedura");
 		return sql;
 	}
-	
+
 	protected java.util.GregorianCalendar getGregorianCalendar() {
 		java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 		
@@ -240,7 +312,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		
 		return gc;
 	}
-	public it.cnr.jada.persistency.sql.SQLBuilder selectIncarichi_procedura_padreByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_proceduraBulk proceduraPadre, it.cnr.jada.persistency.sql.CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException{
+	protected it.cnr.jada.persistency.sql.SQLBuilder selectBaseIncarichi_procedura_padreByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_proceduraBulk proceduraPadre, it.cnr.jada.persistency.sql.CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException{
 		it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(userContext, proceduraPadre).createSQLBuilder();
 
 		Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
@@ -262,6 +334,17 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			sql.closeParenthesis();
 		}
 		sql.addClause(clauses);
+		return sql;
+	}
+	public it.cnr.jada.persistency.sql.SQLBuilder selectIncarichi_procedura_padreByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_proceduraBulk proceduraPadre, it.cnr.jada.persistency.sql.CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException{
+		SQLBuilder sql = selectBaseIncarichi_procedura_padreByClause(userContext, procedura, proceduraPadre, clauses);
+		sql.addTableToHeader("TIPO_ATTIVITA");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_ATTIVITA","TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
+		sql.addSQLClause(FindClause.AND, "TIPO_ATTIVITA.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_attivitaBulk.ASS_INCARICHI);
+
+		sql.addTableToHeader("TIPO_INCARICO");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_INCARICO","TIPO_INCARICO.CD_TIPO_INCARICO");
+		sql.addSQLClause(FindClause.AND, "TIPO_INCARICO.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_INCARICHI);
 		return sql;
 	}
 	public it.cnr.jada.persistency.sql.SQLBuilder selectUnita_organizzativaByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Unita_organizzativaBulk uo, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
@@ -309,10 +392,23 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		if (clause == null) 
 		    clause = tipo_attivita.buildFindClauses(null);
 		SQLBuilder sql = getHome(userContext, tipo_attivita).createSQLBuilder();
-		sql.addSQLClause(FindClause.AND, "FL_CANCELLATO", SQLBuilder.EQUALS, "N");
+		sql.addClause(FindClause.AND, "tipo_associazione", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_INCARICHI);
+		sql.addClause(FindClause.AND, "fl_cancellato", SQLBuilder.EQUALS, Boolean.FALSE);
 		if (clause != null) 
 		  sql.addClause(clause);
 		sql.addOrderBy("CD_TIPO_ATTIVITA");
+		return sql;
+	}
+	public SQLBuilder selectBaseTipo_incaricoByClause (UserContext userContext, OggettoBulk bulk, Tipo_incaricoBulk tipo_incarico, CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		    clause = tipo_incarico.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, tipo_incarico).createSQLBuilder();
+		sql.addClause(FindClause.AND, "tipo_associazione", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_INCARICHI);
+		sql.addClause(FindClause.AND, "fl_cancellato", SQLBuilder.EQUALS, Boolean.FALSE);
+		if (clause != null) 
+		  sql.addClause(clause);
+		sql.addOrderBy("CD_TIPO_INCARICO");
 		return sql;
 	}
 	/**
@@ -321,13 +417,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 	 */
 	public SQLBuilder selectTipo_incaricoByClause (UserContext userContext, OggettoBulk bulk, Tipo_incaricoBulk tipo_incarico, CompoundFindClause clause)	throws ComponentException, PersistencyException
 	{
-		if (clause == null) 
-		    clause = tipo_incarico.buildFindClauses(null);
-		SQLBuilder sql = getHome(userContext, tipo_incarico).createSQLBuilder();
-		sql.addSQLClause(FindClause.AND, "FL_CANCELLATO", SQLBuilder.EQUALS, "N");
-		if (clause != null) 
-		  sql.addClause(clause);
-		sql.addOrderBy("CD_TIPO_INCARICO");
+		SQLBuilder sql = selectBaseTipo_incaricoByClause(userContext, bulk, tipo_incarico, clause);
 
     	if (bulk.getCrudStatus()!=OggettoBulk.UNDEFINED && !bulk.isToBeCreated() &&
    			!((Incarichi_proceduraBulk)bulk).isProceduraProvvisoria() && 
@@ -379,7 +469,23 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		return sql;
 	}	
 
+	public SQLBuilder selectProcedura_amministrativa_beneficiarioByClause (UserContext userContext, OggettoBulk bulk, Procedure_amministrativeBulk procedura_amministrativa_beneficario,CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		  clause = procedura_amministrativa_beneficario.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, procedura_amministrativa_beneficario).createSQLBuilder();
+
+		sql.addClause(FindClause.AND, "ti_proc_amm", SQLBuilder.EQUALS, Procedure_amministrativeBulk.TIPO_INDIVIDUAZIONE_BENEFICIARIO);
+		sql.addClause(FindClause.AND, "fl_cancellato", SQLBuilder.EQUALS, Boolean.FALSE);
+
+		if (clause != null) 
+		  sql.addClause(clause);
+		return sql;
+	}	
+
 	private void validaProceduraIncarico(UserContext aUC,Incarichi_proceduraBulk procedura) throws ComponentException {
+		if (procedura.getTerzo_resp()==null || procedura.getTerzo_resp().getCd_terzo()==null)
+			throw handleException( new ApplicationException( "Il campo \"Responsabile del procedimento\" non può essere vuoto.") );
 		/*
 		 *Recupero l'eventuale nuova parametrizzazione 
 		 */
@@ -398,8 +504,6 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				throw handleException( new ApplicationException( "Il campo \"Decisione a contrattare\" non può essere vuoto.") );
 			if (procedura.getDs_atto()==null)
 				throw handleException( new ApplicationException( "Il campo \"Estremi della decisione a contrattare\" non può essere vuoto.") );
-			if (procedura.getTerzo_resp()==null || procedura.getTerzo_resp().getCd_terzo()==null)
-				throw handleException( new ApplicationException( "Il campo \"Responsabile del procedimento\" non può essere vuoto.") );
 		}
 
 		if (procedura.getProcedura_amministrativa().isMeramenteOccasionaleRequired() && !procedura.getFl_meramente_occasionale().booleanValue())
@@ -488,9 +592,14 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		for (Iterator<Incarichi_repertorioBulk> i = procedura.getIncarichi_repertorioColl().iterator(); i.hasNext(); ) {
 			Incarichi_repertorioBulk incarico = i.next();
 		
-			if (incarico.getTerzo()==null || incarico.getTerzo().getCd_terzo()==null)
+			if (incarico.getFl_inviato_corte_conti() && procedura.getTipo_prestazione()!=null && 
+				procedura.getTipo_prestazione().getTipo_classificazione().equals("LEGGE"))
+				throw handleException( new ApplicationException((incarico.getPg_repertorio()!=null?"Contratto "+incarico.getEsercizio()+"/"+incarico.getPg_repertorio()+" - ":"")+"Deselezionare il flag \"Invio alla corte dei conti\" in quanto non previsto su incarichi per prestazioni previsti da norme di legge!") );
+			else if (incarico.getTerzo()==null || incarico.getTerzo().getCd_terzo()==null)
 				throw handleException( new ApplicationException(incarico.getPg_repertorio()!=null?"Contratto "+incarico.getEsercizio()+"/"+incarico.getPg_repertorio()+" - completare le informazioni relative al terzo!":"Completare le informazioni relative al terzo!") );
 			else if (incarico.getTerzo()!=null || incarico.getTerzo().getCd_terzo()!=null) {
+				if (incarico.getTerzo().getAnagrafico()!=null && !incarico.getTerzo().getAnagrafico().isPersonaFisica())
+					throw handleException( new ApplicationException( "Il terzo selezionato (cod: "+incarico.getTerzo().getCd_terzo()+") non risulta essere una persona fisica!") );
 				if (incarico.getDt_inizio_validita()!=null && incarico.getDt_fine_validita()!=null) {
 					if (incarico.getTipo_rapporto()==null)
 						throw handleException( new ApplicationException( "Completare le informazioni relative al tipo rapporto da applicare al terzo selezionato (cod: "+incarico.getTerzo().getCd_terzo()+")!") );
@@ -531,6 +640,66 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONTRATTO).toString()+"\".");
 						else
 							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONTRATTO).toString()+"\".");
+					}
+				}
+				if (incarico.getCurriculumVincitore()==null) {
+					if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) { 
+						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+							//Istanzio la classe per riempire tipo_archivioKeys
+							new Incarichi_procedura_archivioBulk(); 
+						}
+	
+						if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CURRICULUM_VINCITORE).toString()+"\".");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CURRICULUM_VINCITORE).toString()+"\".");
+					}
+				}
+				if (incarico.getDecretoDiNomina()==null) {
+					if (parametri!=null && parametri.getAllega_decreto_nomina()!=null && parametri.getAllega_decreto_nomina().equals("Y")) { 
+						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+							//Istanzio la classe per riempire tipo_archivioKeys
+							new Incarichi_procedura_archivioBulk(); 
+						}
+
+						if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_DECRETO_DI_NOMINA).toString()+"\".");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_DECRETO_DI_NOMINA).toString()+"\".");
+					}
+				}
+				if (incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()!=null && incarico.getAttoEsitoControllo()==null) {
+					if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+						//Istanzio la classe per riempire tipo_archivioKeys
+						new Incarichi_procedura_archivioBulk(); 
+					}
+
+					if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+						throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_ATTO_ESITO_CONTROLLO).toString()+"\".");
+					else
+						throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_ATTO_ESITO_CONTROLLO).toString()+"\".");
+				}
+			    if (procedura.getDecisioneAContrattare()==null) {
+					if (parametri==null || parametri.getAllega_decisione_ctr()==null || parametri.getAllega_decisione_ctr().equals("Y")) 
+						throw new it.cnr.jada.comp.ApplicationException("Allegare alla \"Procedura di conferimento incarico\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_DECISIONE_A_CONTRATTARE).toString()+"\".");
+			    }
+			    //Controllo che sia stata inserita la dichiarazione del contraente....almeno quella del primo anno di validità dell'incarico 
+			    if (procedura.isDichiarazioneContraenteRequired()) {
+				    boolean existRapportoAnnoStipula = false;
+					GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
+					data_da.setTime(incarico.getDt_stipula());
+					if (incarico.getIncarichi_repertorio_rappColl()!=null && !incarico.getIncarichi_repertorio_rappColl().isEmpty()) {
+						for (Iterator y = incarico.getIncarichi_repertorio_rappColl().iterator(); y.hasNext();) {
+							Incarichi_repertorio_rappBulk rapporto = (Incarichi_repertorio_rappBulk) y.next();
+							if (!rapporto.isAnnullato() && rapporto.getAnno_competenza().equals(data_da.get(java.util.Calendar.YEAR)))
+								existRapportoAnnoStipula = true;
+						}
+					}
+					if (!existRapportoAnnoStipula) {
+						if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+							throw new it.cnr.jada.comp.ApplicationException("Inserire la dichiarazione dell'anno "+data_da.get(java.util.Calendar.YEAR)+", anno di stipula del contratto, resa dal terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" sui rapporti stipulati con altri enti.");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Inserire la dichiarazione dell'anno "+data_da.get(java.util.Calendar.YEAR)+", anno di stipula del contratto, resa dal terzo sui rapporti stipulati con altri enti.");
 					}
 				}
 			}
@@ -643,44 +812,6 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		return utilizzato;
 	}
 
-	/** 
-	  *  Archivia i file indicati dall'utente 
-	  *
-	  * @param  userContext
-	  * @param  incarico    Bulk della richiesta incarico di cui si vuole effettuare l'archiviazione
-	  * @param  tipo	 	Tipo di consultazione effettuata E/S/C/R
-	  * @param  file	 	File da archiviare
-	  * @return	void
-	 */
-	public void archiviaAllegati(UserContext userContext, Incarichi_proceduraBulk procedura, String tipo, File file) throws ComponentException{
-		Incarichi_procedura_archivioHome archiveHome = (Incarichi_procedura_archivioHome)getHome(userContext,Incarichi_procedura_archivioBulk.class);
-		Incarichi_procedura_archivioBulk archive = new Incarichi_procedura_archivioBulk();
-        archive.setIncarichi_procedura(procedura);
-        archive.setTipo_archivio(tipo);
-        archive.setToBeCreated();
-        super.creaConBulk(userContext, archive);         		
-		try {
-			oracle.sql.BLOB blob = (oracle.sql.BLOB)archiveHome.getSQLBlob(archive,"BDATA");
-			java.io.InputStream in = new java.io.BufferedInputStream(new FileInputStream(file));
-			byte[] byteArr = new byte[1024];
-			java.io.OutputStream os = new java.io.BufferedOutputStream(blob.getBinaryOutputStream());
-			int len;			
-			while ((len = in.read(byteArr))>0){
-			   os.write(byteArr,0,len);
-			}
-			os.close();
-			in.close();
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);	
-		} catch (FileNotFoundException e) {
-			throw new ComponentException(e);	
-		} catch (IOException e) {
-			throw new ComponentException(e);	
-		} catch (SQLException e) {
-			throw new ComponentException(e);	
-		}
-	}
-	
 	private void archiviaAllegati(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException{
 		List listFileAllegabili = null;
 		if (procedura.getProcedura_amministrativa()!=null && procedura.getProcedura_amministrativa().getCd_gruppo_file()!=null) {
@@ -693,16 +824,17 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			}
 		}
 		
-		BulkList listFileDaArchiviare = new BulkList();
-		listFileDaArchiviare.addAll(procedura.getArchivioAllegati());
+		BulkList<Incarichi_archivioBulk> listArchiviFile = new BulkList<Incarichi_archivioBulk>();
+		listArchiviFile.addAll(procedura.getArchivioAllegati());
 		for (Iterator<Incarichi_repertorioBulk> i = procedura.getIncarichi_repertorioColl().iterator();i.hasNext();){
 			Incarichi_repertorioBulk incarico = i.next();
-			listFileDaArchiviare.addAll(incarico.getArchivioAllegati());
-			listFileDaArchiviare.addAll(incarico.getIncarichi_repertorio_varColl());
+			listArchiviFile.addAll(incarico.getArchivioAllegati());
+			listArchiviFile.addAll(incarico.getIncarichi_repertorio_varColl());
+			listArchiviFile.addAll(incarico.getIncarichi_repertorio_rappColl());
 		}
 
-		for (Iterator i = listFileDaArchiviare.iterator(); i.hasNext();) {
-			Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
+		for (Iterator<Incarichi_archivioBulk> i = listArchiviFile.iterator(); i.hasNext();) {
+			Incarichi_archivioBulk allegato = i.next();
 			if (!(allegato.getFile() == null || allegato.getFile().getName().equals(""))) {
 				if (listFileAllegabili != null && !listFileAllegabili.isEmpty()){
 					String nomeFile = allegato.getFile().getName();
@@ -721,29 +853,105 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					if (!valido)
 						throw new ApplicationException( "File non valido!\nI formati dei file consentiti sono "+estensioniValide+".");
 				}
-				allegato.setToBeUpdated();
-				BulkHome archiveHome = getHome(userContext,allegato.getClass());
-				try {
-					oracle.sql.BLOB blob = (oracle.sql.BLOB)archiveHome.getSQLBlob(allegato,"BDATA");
-					java.io.InputStream in = new java.io.BufferedInputStream(new FileInputStream(allegato.getFile()));
-					byte[] byteArr = new byte[1024];
-					java.io.OutputStream os = new java.io.BufferedOutputStream(blob.getBinaryOutputStream());
-					int len;			
-					while ((len = in.read(byteArr))>0){
-						os.write(byteArr,0,len);
-					}
-					os.close();
-					in.close();
-				} catch (PersistencyException e) {
-					throw new ComponentException(e);	
-				} catch (FileNotFoundException e) {
-					throw new ComponentException(e);	
-				} catch (IOException e) {
-					throw new ComponentException(e);	
-				} catch (SQLException e) {
-					throw new ComponentException(e);	
-				}
 			}
+		}
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		archiviaAllegatiCMIS(userContext, contrattiService, listArchiviFile);
+	}
+
+	private void archiviaAllegatiCMIS(UserContext userContext, SiglaCMISService cmisService, BulkList<Incarichi_archivioBulk> listArchiviFile) throws ComponentException{
+		List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
+		List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
+		try {
+			for (Iterator<Incarichi_archivioBulk> i = listArchiviFile.iterator(); i.hasNext();) {
+				Incarichi_archivioBulk allegato = i.next();
+	
+				CMISFile cmisFile = null;
+				if (allegato.getCms_node_ref()==null)
+					try{
+						cmisFile = allegato.getCMISFile();
+					} catch (IOException e) {
+						throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getMessage() + ")");
+					}
+				else 
+					cmisFile = allegato.getCMISFile((Document) cmisService.getNodeByNodeRef(allegato.getCms_node_ref().toString()));
+	
+				if (cmisFile!=null) {
+					//E' previsto solo l'inserimento ma non l'aggiornamento
+					if (allegato.getCms_node_ref()==null || allegato.isAnnullato()) {
+						CMISPath path = cmisFile.getCMISParentPath(cmisService);
+						CMISPath alternativePath = null;
+						if (allegato.getNome_file()!=null)
+							alternativePath = cmisFile.getCMISAlternativeParentPath(cmisService);
+						
+						if (allegato.getCms_node_ref()==null) {
+							try{
+								Document node = cmisService.restoreSimpleDocument(cmisFile, 
+															 			      	 cmisFile.getInputStream(),
+															 			      	 cmisFile.getContentType(),
+															 			      	 cmisFile.getFileName(), 
+															 			      	 path);
+								cmisFile.setDocument(node);
+								cmisFileCreate.add(cmisFile);
+								if (alternativePath!=null)
+									try{
+										cmisService.copyNode(node, (Folder) cmisService.getNodeByPath(alternativePath));
+									} catch (CmisRuntimeException e) {
+									}
+		
+								allegato.setCms_node_ref(node.getId());
+								allegato.setToBeUpdated();
+								updateBulk(userContext, allegato);
+							} catch (CmisBaseException e) {
+								throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getErrorContent() + ")");
+							} catch (Exception e) {
+								if (e.getCause() instanceof CmisConstraintException)
+									throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
+								throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getMessage() + ")");
+							}
+						} 
+						if (allegato.isAnnullato()) {
+							Document node = cmisFile.getDocument();
+							if (node!=null && !node.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+								String cmisFileName = cmisFile.getFileName();
+								String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
+								cmisFile.setFileName(cmisFileName.replace("."+cmisFileEstensione, "-ANNULLATO."+cmisFileEstensione));
+								Boolean CMISAggiornato=Boolean.FALSE;
+								int numFile=0;
+								do {
+									try {
+										cmisService.updateProperties(cmisFile, node);
+										cmisService.addAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+										cmisFile.setDocument((Document) cmisService.getNodeByNodeRef(node.getId()));
+										cmisFileAnnullati.add(cmisFile);
+										CMISAggiornato=Boolean.TRUE;
+									} catch (Exception e) {
+										numFile++;
+										cmisFile.setFileName(cmisFileName.replace("."+cmisFileEstensione, "-ANNULLATO"+numFile+"."+cmisFileEstensione));
+									}
+								} while (!CMISAggiornato && numFile<=100);
+							}
+						}
+					} else {
+						cmisService.updateProperties(cmisFile, cmisFile.getDocument());
+					}
+				}
+				if (allegato!=null && allegato.getFile()!=null)
+					allegato.getFile().delete();
+			}
+		} catch (Exception e){
+			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+			for (CMISFile cmisFile : cmisFileCreate)
+				cmisService.deleteNode(cmisFile.getDocument());
+			for (CMISFile cmisFile : cmisFileAnnullati) {
+				String cmisFileName = cmisFile.getFileName();
+				String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
+				String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
+				cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
+				cmisService.updateProperties(cmisFile, cmisFile.getDocument());
+				cmisService.removeAspect(cmisFile.getDocument(), CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+			}
+			throw new ApplicationException(e.getMessage());
 		}
 	}
 	public void eliminaConBulk (UserContext aUC,OggettoBulk bulk) throws ComponentException
@@ -824,6 +1032,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				procedura.setStato(Incarichi_proceduraBulk.STATO_ANNULLATO);
 				procedura.setDt_cancellazione( DateServices.getDt_valida(aUC));
 				procedura.setToBeUpdated();
+				removeConsumerToEveryone(aUC, procedura);
 	
 				aggiornaImportiRepertorioLimiti(aUC, procedura, CANCELLAZIONE);
 				
@@ -913,8 +1122,29 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				}
 				
 				procedura.setStato(Incarichi_proceduraBulk.STATO_PUBBLICATA);
+				addConsumerToEveryone(usercontext, procedura);
 			}
 			updateBulk(usercontext, oggettobulk);
+			if (oggettobulk instanceof Incarichi_proceduraBulk) {
+				//lanciato per aggiornare le proprietà sul documentale
+				archiviaAllegati(usercontext, (Incarichi_proceduraBulk)oggettobulk);
+			}
+			return oggettobulk;
+		}
+		catch(Throwable throwable)
+        {
+            throw handleException(throwable);
+        }
+	}
+	public OggettoBulk annullaPubblicazioneSulSito(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+		try {
+			if (oggettobulk instanceof Incarichi_proceduraBulk) {
+				Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)oggettobulk;
+				procedura.setStato(Incarichi_proceduraBulk.STATO_ANNULLATO);
+				procedura.setDt_cancellazione( DateServices.getDt_valida(usercontext));
+				updateBulk(usercontext, procedura);
+				removeConsumerToEveryone(usercontext, procedura);
+			}
 			return oggettobulk;
 		}
 		catch(Throwable throwable)
@@ -1318,6 +1548,21 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 								parametri.getGiorni_limite_dt_stipula().compareTo(parametriDefinitivi.getGiorni_limite_dt_stipula())==-1)
 								parametriDefinitivi.setGiorni_limite_dt_stipula(parametri.getGiorni_limite_dt_stipula());
 						}
+						if (!(parametriDefinitivi.getAllega_curriculum_vitae()!=null && parametriDefinitivi.getAllega_curriculum_vitae().equals("Y")) &&
+						    parametri.getAllega_curriculum_vitae()!=null)
+							parametriDefinitivi.setAllega_curriculum_vitae(parametri.getAllega_curriculum_vitae());
+						if (!(parametriDefinitivi.getAllega_dich_contraente()!=null && parametriDefinitivi.getAllega_dich_contraente().equals("Y")) &&
+							parametri.getAllega_dich_contraente()!=null)
+							parametriDefinitivi.setAllega_dich_contraente(parametri.getAllega_dich_contraente());
+						if (!(parametriDefinitivi.getAllega_progetto()!=null && parametriDefinitivi.getAllega_progetto().equals("Y")) &&
+							parametri.getAllega_progetto()!=null)
+							parametriDefinitivi.setAllega_progetto(parametri.getAllega_progetto());
+						if (!(parametriDefinitivi.getIndica_url_progetto()!=null && parametriDefinitivi.getIndica_url_progetto().equals("Y")) &&
+							parametri.getIndica_url_progetto()!=null)
+							parametriDefinitivi.setIndica_url_progetto(parametri.getIndica_url_progetto());
+						if (!(parametriDefinitivi.getFl_invio_fp()!=null && parametriDefinitivi.getFl_invio_fp().equals("Y")) &&
+							parametri.getFl_invio_fp()!=null)
+							parametriDefinitivi.setFl_invio_fp(parametri.getFl_invio_fp());
 					}
 				}
 				return parametriDefinitivi;
@@ -1326,5 +1571,557 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		} catch (PersistencyException e) {
 	        throw handleException(e);
 		}
+	}
+
+	public SQLBuilder selectTipo_attivita_fp0ByClause (UserContext userContext, OggettoBulk bulk, Tipo_attivita_fpBulk tipo_attivita_fp, CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		    clause = tipo_attivita_fp.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, tipo_attivita_fp).createSQLBuilder();
+		sql.addSQLClause(FindClause.AND, "LIVELLO", SQLBuilder.EQUALS, new Integer(0));
+		sql.addSQLClause(FindClause.AND, "FL_CANCELLATO", SQLBuilder.EQUALS, "N");
+		if (bulk instanceof Incarichi_proceduraBulk && ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp1()!=null &&
+			((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp1().getCd_tipo_attivita_padre()!=null) {
+			sql.addSQLClause(FindClause.AND, "CD_TIPO_ATTIVITA", SQLBuilder.EQUALS, ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp1().getCd_tipo_attivita_padre());
+		}else if (bulk instanceof Incarichi_proceduraBulk && ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp()!=null &&
+			((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp().getCd_tipo_attivita()!=null) {
+			sql.addSQLClause(FindClause.AND, "LIVELLO", SQLBuilder.EQUALS, new Integer(-1));
+		}
+		if (clause != null) 
+		  sql.addClause(clause);
+		sql.addOrderBy("CD_TIPO_ATTIVITA");
+		return sql;
+	}
+
+	public SQLBuilder selectTipo_attivita_fp1ByClause (UserContext userContext, OggettoBulk bulk, Tipo_attivita_fpBulk tipo_attivita_fp, CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		    clause = tipo_attivita_fp.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, tipo_attivita_fp).createSQLBuilder();
+		if (bulk instanceof Incarichi_proceduraBulk && ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp0()!=null &&
+			((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp0().getCd_tipo_attivita()!=null) {
+			sql.addSQLClause(FindClause.AND, "LIVELLO", SQLBuilder.EQUALS, new Integer(1));
+			sql.addSQLClause(FindClause.AND, "CD_TIPO_ATTIVITA_PADRE", SQLBuilder.EQUALS, ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp0().getCd_tipo_attivita());
+			sql.addSQLClause(FindClause.AND, "FL_CANCELLATO", SQLBuilder.EQUALS, "N");
+			if (bulk instanceof Incarichi_proceduraBulk && ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp()!=null &&
+				((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp().getCd_tipo_attivita_padre()!=null) {
+				sql.addSQLClause(FindClause.AND, "CD_TIPO_ATTIVITA", SQLBuilder.EQUALS, ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp().getCd_tipo_attivita_padre());
+			}		
+		}else if (bulk instanceof Incarichi_proceduraBulk && ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp()!=null &&
+			((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp().getCd_tipo_attivita_padre()!=null) {
+			sql.addSQLClause(FindClause.AND, "CD_TIPO_ATTIVITA", SQLBuilder.EQUALS, ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp().getCd_tipo_attivita_padre());
+		} else {
+			sql.addSQLClause(FindClause.AND, "LIVELLO", SQLBuilder.EQUALS, new Integer(-1));
+		}
+		if (clause != null) 
+		  sql.addClause(clause);
+		sql.addOrderBy("CD_TIPO_ATTIVITA");
+		return sql;
+	}
+
+	public SQLBuilder selectTipo_attivita_fpByClause (UserContext userContext, OggettoBulk bulk, Tipo_attivita_fpBulk tipo_attivita_fp, CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		    clause = tipo_attivita_fp.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, tipo_attivita_fp).createSQLBuilder();
+		if (bulk instanceof Incarichi_proceduraBulk && ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp1()!=null &&
+			((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp1().getCd_tipo_attivita()!=null) {
+			sql.addSQLClause(FindClause.AND, "LIVELLO", SQLBuilder.EQUALS, new Integer(2));
+			sql.addSQLClause(FindClause.AND, "CD_TIPO_ATTIVITA_PADRE", SQLBuilder.EQUALS, ((Incarichi_proceduraBulk)bulk).getTipo_attivita_fp1().getCd_tipo_attivita());
+			sql.addSQLClause(FindClause.AND, "FL_CANCELLATO", SQLBuilder.EQUALS, "N");
+
+		} else {
+			sql.addSQLClause(FindClause.AND, "LIVELLO", SQLBuilder.EQUALS, new Integer(-1));
+		}
+		if (clause != null) 
+		  sql.addClause(clause);
+		sql.addOrderBy("CD_TIPO_ATTIVITA");
+		return sql;
+	}
+	public java.util.Collection findTipologie_norma_perla(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException{
+		try{
+			Tipo_norma_perlaHome tnpHome = (Tipo_norma_perlaHome)getHome(userContext, Tipo_norma_perlaBulk.class);
+			SQLBuilder sql = tnpHome.createSQLBuilder();
+
+			sql.addClause(FindClause.AND, "tipo_associazione", SQLBuilder.EQUALS, Tipo_norma_perlaBulk.ASS_INCARICHI);
+			sql.addOrderBy("cd_tipo_norma");
+			return tnpHome.fetchAll(sql);
+		}catch (it.cnr.jada.persistency.PersistencyException ex){
+			throw handleException(procedura, ex);
+		}
+	}
+	public void addConsumerToEveryone(UserContext userContext, Incarichi_proceduraBulk incarico_procedura) throws ComponentException{
+		List<CmisObject> nodeAddConsumer = new ArrayList<CmisObject>();
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		try{
+			CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeProcedura!=null) {
+				contrattiService.addConsumerToEveryone(nodeProcedura);
+				nodeAddConsumer.add(nodeProcedura);
+			}
+		}
+		catch( Exception e )
+		{
+			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+			for (CmisObject node : nodeAddConsumer)
+				contrattiService.removeConsumerToEveryone(node);
+			throw new ApplicationException(e.getMessage());
+		}		
+	}
+	public void removeConsumerToEveryone(UserContext userContext, Incarichi_proceduraBulk incarico_procedura) throws ComponentException{
+		List<CmisObject> nodeRemoveConsumer = new ArrayList<CmisObject>();
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		try{
+			CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeProcedura!=null){
+				contrattiService.removeConsumerToEveryone(nodeProcedura);
+				nodeRemoveConsumer.add(nodeProcedura);
+			}
+		}
+		catch( Exception e )
+		{
+			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+			for (CmisObject node : nodeRemoveConsumer)
+				contrattiService.addConsumerToEveryone(node);
+			throw new ApplicationException(e.getMessage());
+		}		
+	}
+	public void salvaDefinitivoCMIS(UserContext userContext, Incarichi_proceduraBulk incarico_procedura) throws ComponentException{
+		List<CmisObject> nodeAddAspect = new ArrayList<CmisObject>();
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		try{
+			CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeProcedura!=null && !contrattiService.hasAspect(nodeProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				contrattiService.addAspect(nodeProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				nodeAddAspect.add(nodeProcedura);
+			}
+			
+			BulkList listArchiviFile = new BulkList();
+			listArchiviFile.addAll(incarico_procedura.getArchivioAllegati());
+			
+			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
+				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
+				if (allegato.getCms_node_ref()!=null) {
+					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && !contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()) &&
+						!contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+						contrattiService.addAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+						nodeAddAspect.add(nodeAllegato);
+					}
+				}
+			}
+		}
+		catch( Exception e )
+		{
+			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+			for (CmisObject node : nodeAddAspect)
+				contrattiService.removeAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			throw new ApplicationException(e.getMessage());
+		}		
+	}
+	public void annullaDefinitivoCMIS(UserContext userContext, Incarichi_proceduraBulk incarico_procedura) throws ComponentException{
+		List<CmisObject> nodeRemoveAspect = new ArrayList<CmisObject>();
+		List<CmisObject> nodeRemoveConsumer = new ArrayList<CmisObject>();
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		try{
+			incarico_procedura = (Incarichi_proceduraBulk)inizializzaBulkPerModifica(userContext, incarico_procedura);
+			CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeProcedura!=null && contrattiService.hasAspect(nodeProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+				contrattiService.removeAspect(nodeProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				nodeRemoveAspect.add(nodeProcedura);
+				if (incarico_procedura.isProceduraProvvisoria()){
+					contrattiService.removeConsumerToEveryone(nodeProcedura);
+					nodeRemoveConsumer.add(nodeProcedura);
+				}
+			}
+			BulkList listArchiviFile = new BulkList();
+			listArchiviFile.addAll(incarico_procedura.getArchivioAllegati());
+			
+			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
+				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
+				if (allegato.getCms_node_ref()!=null) {
+					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+						contrattiService.removeAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+						nodeRemoveAspect.add(nodeAllegato);
+					}
+				}
+			}
+		}
+		catch( Exception e )
+		{
+			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+			for (CmisObject node : nodeRemoveAspect)
+				contrattiService.addAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			for (CmisObject node : nodeRemoveConsumer)
+				contrattiService.addConsumerToEveryone(node);
+			throw new ApplicationException(e.getMessage());
+		}		
+	}
+
+	public List getIncarichiForMigrateFromDBToCMIS(UserContext userContext, Integer esercizio, Long procedura) throws ComponentException{
+		try{
+			Incarichi_proceduraHome procHome = (Incarichi_proceduraHome)getHome(userContext, Incarichi_proceduraBulk.class);
+			SQLBuilder sql = procHome.createSQLBuilder();
+
+			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+			if (procedura!=null) 
+				sql.addClause(FindClause.AND, "pg_procedura", SQLBuilder.EQUALS, procedura);
+			
+			sql.addClause(FindClause.AND, "fl_migrata_to_cmis", SQLBuilder.EQUALS, Boolean.FALSE);
+			
+			sql.addOrderBy("PG_PROCEDURA DESC");
+			return procHome.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw new ApplicationException("Errore in fase di ricerca procedure conferimento incarichi");			
+		}
+	}
+
+	public void migrateAllegatiFromDBToCMIS(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException{
+		IncarichiRepertorioComponentSession incaricoSession = Utility.createIncarichiRepertorioComponentSession();
+			
+		procedura = (Incarichi_proceduraBulk)inizializzaBulkPerModifica(userContext, procedura);
+				
+		try{
+			BulkList<Incarichi_archivioBulk> listArchiviFile = new BulkList<Incarichi_archivioBulk>();
+	
+			listArchiviFile.addAll(addArchivioForMigrateFromDBToCMIS(userContext, procedura.getArchivioAllegati()));
+			for (Iterator<Incarichi_repertorioBulk> i = procedura.getIncarichi_repertorioColl().iterator();i.hasNext();){
+				Incarichi_repertorioBulk incarico = i.next();
+				listArchiviFile.addAll(addArchivioForMigrateFromDBToCMIS(userContext, incarico.getArchivioAllegati()));
+				listArchiviFile.addAll(addArchivioForMigrateFromDBToCMIS(userContext, incarico.getIncarichi_repertorio_varColl()));
+				listArchiviFile.addAll(addArchivioForMigrateFromDBToCMIS(userContext, incarico.getIncarichi_repertorio_rappColl()));
+			}
+			
+			ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+			archiviaAllegatiCMIS(userContext, contrattiService, listArchiviFile);
+			
+			for (Iterator iterator = procedura.getIncarichi_repertorioColl().iterator(); iterator.hasNext();) {
+				Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk) iterator.next();
+				if (incarico.isIncaricoDefinitivo())
+					incaricoSession.salvaDefinitivoCMIS(userContext, incarico);
+				else
+					incaricoSession.annullaDefinitivoCMIS(userContext, incarico);
+			}
+			if (procedura.isProceduraDefinitiva())
+				salvaDefinitivoCMIS(userContext, procedura);
+			else
+				annullaDefinitivoCMIS(userContext, procedura);
+			procedura.setFl_migrata_to_cmis(Boolean.TRUE);
+			procedura.setToBeUpdated();
+			updateBulk(userContext, procedura);
+		} catch (RemoteException e) {
+			logger.error("Errore in fase attivazione EJB IncarichiComponent",e);
+			throw new ApplicationException("Errore in fase attivazione EJB IncarichiComponent");			
+		} catch (PersistencyException e) {
+			logger.error("Errore in fase aggiornamento flag su IncarichiProcedura",e);
+			throw new ApplicationException("Errore in fase aggiornamento flag su IncarichiProcedura");			
+		}
+	}
+	
+	private List<Incarichi_archivioBulk> addArchivioForMigrateFromDBToCMIS(UserContext userContext, List<Incarichi_archivioBulk> listArchivio) {
+		BulkList<Incarichi_archivioBulk> listArchivioForCMIS = new BulkList<Incarichi_archivioBulk>();
+		for (Iterator<Incarichi_archivioBulk> iterator = listArchivio.iterator(); iterator.hasNext();) {
+			Incarichi_archivioBulk archivioBulk = iterator.next();
+			try {
+				archivioBulk.setFile(File.createTempFile(archivioBulk.getNome_file(), ".tmp"));
+				BLOB blob = (BLOB)getHome(userContext, archivioBulk.getClass()).getSQLBlob(archivioBulk, "BDATA");
+				if (!blob.isEmptyLob()){
+					InputStream is = blob.getBinaryStream();
+					OutputStream os = new FileOutputStream(archivioBulk.getFile());
+					byte buf[]=new byte[1024];
+					int len;
+					while((len=is.read(buf))>0)
+						os.write(buf,0,len);
+					os.close();
+					is.close();
+	
+					listArchivioForCMIS.add(archivioBulk);
+				}
+			} catch (Exception e) {
+			}
+		}
+		return listArchivioForCMIS;
+	}
+	
+	public List getIncarichiForMergeWithCMIS(UserContext userContext, Integer esercizio, Long procedura) throws ComponentException{
+		try{
+			Incarichi_proceduraHome procHome = (Incarichi_proceduraHome)getHome(userContext, Incarichi_proceduraBulk.class);
+			SQLBuilder sql = procHome.createSQLBuilder();
+
+			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+			if (procedura!=null) 
+				sql.addClause(FindClause.AND, "pg_procedura", SQLBuilder.EQUALS, procedura);
+			
+			sql.addOrderBy("PG_PROCEDURA DESC");
+			return procHome.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw new ApplicationException("Errore in fase di ricerca procedure conferimento incarichi");			
+		}
+	}
+
+	public List<String> mergeAllegatiWithCMIS(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException{
+		List<String> listError = new ArrayList<String>();
+
+		IncarichiRepertorioComponentSession incaricoSession = Utility.createIncarichiRepertorioComponentSession();
+			
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		procedura = (Incarichi_proceduraBulk)inizializzaBulkPerModifica(userContext, procedura);
+		
+		boolean existIncaricoDefinitivo = false; 
+
+		for (Iterator<Incarichi_repertorioBulk> iterator = procedura.getIncarichi_repertorioColl().iterator(); iterator.hasNext();) {
+			Incarichi_repertorioBulk incarico = iterator.next();
+
+			boolean isIncaricoDefinitivo = incarico.isIncaricoDefinitivo() || incarico.isIncaricoChiuso(); 
+
+			//Controlli su Cartella INCARICHI
+			CMISFolderContrattiModel cmisFolderIncarico = incarico.getCMISFolder();
+			CmisObject nodeFolderIncarico = contrattiService.getNodeByPath(cmisFolderIncarico.getCMISPath(contrattiService));
+			if (!cmisFolderIncarico.isEqualsTo(nodeFolderIncarico, listError)) {
+				contrattiService.updateProperties(cmisFolderIncarico, nodeFolderIncarico);
+				listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - Disallineamento dati ");
+			}
+			Ace aclFolderIncarico = contrattiService.getACL(nodeFolderIncarico, "GROUP_EVERYONE", "cmis:read");
+			if (isIncaricoDefinitivo) {
+				existIncaricoDefinitivo = true;
+				if (aclFolderIncarico==null){
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addConsumerToEveryone");
+					contrattiService.addConsumerToEveryone(nodeFolderIncarico);
+				}
+				if (!contrattiService.hasAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+					contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				}
+			} else {
+				if (aclFolderIncarico!=null && aclFolderIncarico.isDirect()) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeConsumerToEveryone");
+					contrattiService.removeConsumerToEveryone(nodeFolderIncarico);
+				}
+				if (contrattiService.hasAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+					contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				}
+			}
+
+			if (isIncaricoDefinitivo && incarico.getFl_pubblica_contratto().equals(Boolean.TRUE)) {
+				if (!contrattiService.hasAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_PUBBLICATO");
+					contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
+				}
+			} else {
+				if (contrattiService.hasAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_PUBBLICATO");
+					contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
+				}
+			}
+
+			//Controlli su Allegati Cartella INCARICHI
+			for (Iterator<Incarichi_archivioBulk> iterator2 = incarico.getArchivioAllegati().iterator(); iterator2.hasNext();) {
+				Incarichi_archivioBulk archivio = iterator2.next();
+				if (archivio.getCms_node_ref()==null)
+					listError.add("ERRORE GRAVE: Allegato Incarico alla procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Manca Archiviazione");
+				else {
+					//Controlli su Allegati INCARICHI
+					Document nodeArchivioIncarico = (Document) contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
+					CMISFile cmisFile = (CMISFile)archivio.getCMISFile(nodeArchivioIncarico);
+					boolean makeUpdateProperties = false;
+					if (cmisFile.getContentType().equals("application/octet-stream")) {
+						String newContentType = new MimetypesFileTypeMap().getContentType(cmisFile.getFileName());
+						if (!newContentType.equals("application/octet-stream")) {
+							makeUpdateProperties = true;
+							cmisFile.setContentType(newContentType);
+						}
+					}
+					if (cmisFile instanceof CMISFileIncarichi) {
+						if (!((CMISFileIncarichi)cmisFile).isEqualsTo(nodeArchivioIncarico, listError) || makeUpdateProperties) {
+							contrattiService.updateProperties(cmisFile, nodeArchivioIncarico);
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+((CMISFileIncarichi)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileIncarichi)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						}
+					} else if (cmisFile instanceof CMISFileAssegniRicerca) {
+						if (!((CMISFileAssegniRicerca)cmisFile).isEqualsTo(nodeArchivioIncarico, listError) || makeUpdateProperties) {
+							contrattiService.updateProperties(cmisFile, nodeArchivioIncarico);
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico CMISFileAssegniRicerca "+((CMISFileAssegniRicerca)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileAssegniRicerca)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						}
+					} else if (cmisFile instanceof CMISFileBorseStudio) {
+						if (!((CMISFileBorseStudio)cmisFile).isEqualsTo(nodeArchivioIncarico, listError) || makeUpdateProperties) {
+							contrattiService.updateProperties(cmisFile, nodeArchivioIncarico);
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico CMISFileBorseStudio "+((CMISFileBorseStudio)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileBorseStudio)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						}
+					}
+
+					if (contrattiService.hasAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+						contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+					}
+
+					if (archivio.isAnnullato()) {
+						if (!contrattiService.hasAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+							contrattiService.addAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+						}
+					} else {
+						if (contrattiService.hasAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+							contrattiService.removeAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+						}
+					}
+				}
+			}
+		}
+		
+		//Controlli su Cartella PROCEDURA
+		CMISFolderProcedura cmisFolderProcedura = procedura.getCMISFolder();
+		CmisObject nodeFolderProcedura = contrattiService.getNodeByPath(cmisFolderProcedura.getCMISPath(contrattiService));
+		if (!cmisFolderProcedura.isEqualsTo(nodeFolderProcedura, listError)) {
+			contrattiService.updateProperties(cmisFolderProcedura, nodeFolderProcedura);
+			listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Disallineamento dati ");
+		}
+
+		boolean isProceduraDefinitiva = procedura.isProceduraDefinitiva() || procedura.isProceduraChiusa(); 
+		
+		Ace aclFolderProcedura = contrattiService.getACL(nodeFolderProcedura, "GROUP_EVERYONE", "cmis:read");
+		if (isProceduraDefinitiva || existIncaricoDefinitivo) {
+			if (aclFolderProcedura==null) {
+				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
+				contrattiService.addConsumerToEveryone(nodeFolderProcedura);
+			}
+			if (procedura.isProceduraDefinitiva() && !contrattiService.hasAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+				contrattiService.addAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			}
+		} else {
+			if (aclFolderProcedura!=null && aclFolderProcedura.isDirect()) {
+				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
+				contrattiService.removeConsumerToEveryone(nodeFolderProcedura);
+			}
+			if (contrattiService.hasAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+				contrattiService.removeAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			}
+		}
+		
+		//Controlli su Allegati Cartella PROCEDURA
+		for (Iterator<Incarichi_archivioBulk> iterator = procedura.getArchivioAllegati().iterator(); iterator.hasNext();) {
+			Incarichi_procedura_archivioBulk archivio = (Incarichi_procedura_archivioBulk)iterator.next();
+			if (archivio.getCms_node_ref()==null)
+				listError.add("ERRORE GRAVE: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Manca Archiviazione");
+			else {
+				//Controlli su Allegati PROCEDURA
+				Document nodeArchivioProcedura = (Document) contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
+				CMISFileProcedura cmisFileProcedura = (CMISFileProcedura)archivio.getCMISFile(nodeArchivioProcedura);
+				boolean makeUpdateProperties = false;
+				if (cmisFileProcedura.getContentType().equals("application/octet-stream")) {
+					String newContentType = new MimetypesFileTypeMap().getContentType(cmisFileProcedura.getFileName());
+					if (!newContentType.equals("application/octet-stream")) {
+						makeUpdateProperties = true;
+						cmisFileProcedura.setContentType(newContentType);
+					}
+				}
+				if (!cmisFileProcedura.isEqualsTo(nodeArchivioProcedura, listError) || makeUpdateProperties) {
+					contrattiService.updateProperties(cmisFileProcedura, nodeArchivioProcedura);
+					listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Disallineamento dati ");
+				}
+
+				Ace aclArchivioProcedura = contrattiService.getACL(nodeArchivioProcedura, "GROUP_EVERYONE", "cmis:read");
+				if (archivio.isBando() && !procedura.isProceduraProvvisoria() && procedura.getDt_pubblicazione()!=null) {
+					if (aclArchivioProcedura==null) {
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
+						contrattiService.addConsumerToEveryone(nodeArchivioProcedura);
+					}
+					if (!contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_PUBBLICATO");
+						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
+					}
+				} else {
+					if (aclArchivioProcedura!=null && aclArchivioProcedura.isDirect()) {
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
+						contrattiService.removeConsumerToEveryone(nodeArchivioProcedura);
+					}
+					if (contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_PUBBLICATO");
+						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
+					}
+				}
+
+				if (contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+					contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				}
+				
+				if (archivio.isAnnullato()) {
+					if (!contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+					}
+				} else {
+					if (contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+					}
+				}
+			}
+		}
+		return listError;
+	}
+	public it.cnr.jada.persistency.sql.SQLBuilder selectBaseIncaricoRepertorioForSearchByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_repertorioBulk incarico, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+	{
+		if (clauses == null) 
+			clauses = incarico.buildFindClauses(null);
+
+		Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
+		boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
+		boolean isUoSac  = uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0;
+		
+		SQLBuilder sqlCdsExists = getHome(userContext, Ass_incarico_uoBulk.class).createSQLBuilder();
+		sqlCdsExists.addSQLJoin("ASS_INCARICO_UO.ESERCIZIO","INCARICHI_REPERTORIO.ESERCIZIO");
+		sqlCdsExists.addSQLJoin("ASS_INCARICO_UO.PG_REPERTORIO","INCARICHI_REPERTORIO.PG_REPERTORIO");
+
+		if (isUoSac)
+			sqlCdsExists.addSQLClause(FindClause.AND, "ASS_INCARICO_UO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+		else {
+			sqlCdsExists.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
+			sqlCdsExists.addSQLClause(FindClause.AND, "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			sqlCdsExists.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_ROOT","ASS_INCARICO_UO.CD_UNITA_ORGANIZZATIVA");
+			sqlCdsExists.addSQLClause(FindClause.AND, "V_STRUTTURA_ORGANIZZATIVA.CD_CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+		}
+
+		SQLBuilder sql = getHome(userContext, Incarichi_repertorioBulk.class).createSQLBuilder();
+		if (!isUoEnte) {
+			sql.openParenthesis(FindClause.AND);
+				sql.openParenthesis(FindClause.OR);
+					sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+					if (isUoSac)
+						sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.closeParenthesis();
+			sql.closeParenthesis();
+		} else if (isUoSac) {
+			sql.openParenthesis(FindClause.AND);
+				sql.addClause(FindClause.OR, "cd_unita_organizzativa", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.addSQLExistsClause(FindClause.OR,sqlCdsExists);
+			sql.closeParenthesis();
+		}
+		if (clauses != null) 
+			sql.addClause(clauses);
+		sql.addOrderBy("ESERCIZIO, PG_REPERTORIO");		
+		return sql;
+	}
+	public it.cnr.jada.persistency.sql.SQLBuilder selectIncaricoRepertorioForSearchByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_repertorioBulk incarico, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+	{
+		SQLBuilder sql = selectBaseIncaricoRepertorioForSearchByClause(userContext, procedura, incarico, clauses);
+
+		sql.addTableToHeader("INCARICHI_PROCEDURA");
+		sql.addSQLJoin("INCARICHI_REPERTORIO.ESERCIZIO_PROCEDURA", "INCARICHI_PROCEDURA.ESERCIZIO");
+		sql.addSQLJoin("INCARICHI_REPERTORIO.PG_PROCEDURA", "INCARICHI_PROCEDURA.PG_PROCEDURA");
+
+		sql.addTableToHeader("TIPO_ATTIVITA");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_ATTIVITA","TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
+		sql.addSQLClause(FindClause.AND, "TIPO_ATTIVITA.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_attivitaBulk.ASS_INCARICHI);
+	
+		sql.addTableToHeader("TIPO_INCARICO");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_INCARICO","TIPO_INCARICO.CD_TIPO_INCARICO");
+		sql.addSQLClause(FindClause.AND, "TIPO_INCARICO.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_INCARICHI);
+
+		return sql;
 	}
 }

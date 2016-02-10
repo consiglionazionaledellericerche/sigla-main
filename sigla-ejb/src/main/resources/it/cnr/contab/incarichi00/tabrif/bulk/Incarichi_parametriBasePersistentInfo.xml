@@ -79,6 +79,36 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="ALLEGA_CURRICULUM_VITAE"
+			propertyName="allega_curriculum_vitae"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ALLEGA_DICH_CONTRAENTE"
+			propertyName="allega_dich_contraente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ALLEGA_PROGETTO"
+			propertyName="allega_progetto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="INDICA_URL_PROGETTO"
+			propertyName="indica_url_progetto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_INVIO_FP"
+			propertyName="fl_invio_fp"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
 			columnName="UTCR"
 			propertyName="utcr"
 			sqlTypeName="VARCHAR"
@@ -133,6 +163,16 @@
 		name="incarico_ric_giorni_scad"/>
 	<persistentProperty
 		name="cd_gruppo_file"/>
+	<persistentProperty
+		name="allega_curriculum_vitae" />
+	<persistentProperty
+		name="allega_dich_contraente" />
+	<persistentProperty
+		name="allega_progetto" />
+	<persistentProperty
+		name="indica_url_progetto" />
+	<persistentProperty
+		name="fl_invio_fp" />
 	<persistentProperty
 		name="utcr"/>
 	<persistentProperty

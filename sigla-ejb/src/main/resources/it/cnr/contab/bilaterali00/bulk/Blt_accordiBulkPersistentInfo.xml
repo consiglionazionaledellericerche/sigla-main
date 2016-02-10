@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_accordiBulk"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_accordiHome">
+	<defaultColumnMap
+		tableName="BLT_ACCORDI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_RESPONS_ITA"
+			propertyName="responsabileIta.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="PG_NAZIONE_STR"
+			propertyName="nazioneStr.pg_nazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_DIVISA_ITA"
+			propertyName="divisaIta.cd_divisa" 
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TERZO_ENTE"
+			propertyName="terzoEnte.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="elemento_voce" />
+	<persistentProperty
+		name="responsabileIta" />
+	<persistentProperty
+		name="nazioneStr" />
+	<persistentProperty
+		name="divisaIta" />
+	<persistentProperty
+		name="terzoEnte" />
+</SQLPersistentInfo>

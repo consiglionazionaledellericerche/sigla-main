@@ -163,6 +163,7 @@
 					<% bp.getController().writeFormInput(out,null,"fl_nr_obbligazione",false,null,"onClick=\"submitForm('doOnFlNrObbligazioneChange')\"");%>
 				</td>
 			</tr>
+			<% 	bp.getController().writeFormField(out,"tipo_obbligazione"); %>
 			<% 	bp.getController().writeFormField(out,"nr_obbligazione"); %>
 			<% 	bp.getController().writeFormField(out,"nr_scadenza"); %>
 		</table>

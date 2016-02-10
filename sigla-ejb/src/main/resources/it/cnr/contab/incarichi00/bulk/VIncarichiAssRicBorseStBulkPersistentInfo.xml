@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.VIncarichiAssRicBorseStBulk"
+	keyClassName="it.cnr.contab.incarichi00.bulk.VIncarichiAssRicBorseStKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.VIncarichiAssRicBorseStHome">
+	<defaultColumnMap
+		tableName="v_incarichi_ass_ric_borse_st">
+	</defaultColumnMap>
+</SQLPersistentInfo>

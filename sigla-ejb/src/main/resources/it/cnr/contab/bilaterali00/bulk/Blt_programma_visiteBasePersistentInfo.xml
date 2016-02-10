@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_programma_visiteBase"
+	keyClassName="it.cnr.contab.bilaterali00.bulk.Blt_programma_visiteKey"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_programma_visiteHome">
+	<defaultColumnMap
+		tableName="BLT_PROGRAMMA_VISITE">
+		<columnMapping
+			columnName="ANNO_VISITA"
+			propertyName="annoVisita"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_STRANIERO"
+			propertyName="flStraniero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="NUM_VISITE_AUTORIZZATE"
+			propertyName="numVisiteAutorizzate"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_VISITE_UTILIZZATE"
+			propertyName="numVisiteUtilizzate"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_MAX_GG_VISITA"
+			propertyName="numMaxGgVisita"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="annoVisita" />
+	<persistentProperty
+		name="flStraniero" />
+	<persistentProperty
+		name="numVisiteAutorizzate" />
+	<persistentProperty
+		name="numVisiteUtilizzate" />
+	<persistentProperty
+		name="numMaxGgVisita" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

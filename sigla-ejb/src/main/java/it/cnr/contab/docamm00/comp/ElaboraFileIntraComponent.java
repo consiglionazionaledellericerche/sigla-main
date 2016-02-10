@@ -1,10 +1,15 @@
 package it.cnr.contab.docamm00.comp;
 
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistBulk;
+import it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistHome;
 import it.cnr.contab.docamm00.docs.bulk.VIntra12Bulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntra12Home;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatHome;
+import it.cnr.contab.docamm00.docs.bulk.VSpesometroBulk;
+import it.cnr.contab.docamm00.docs.bulk.VSpesometroHome;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaAttivaIntraSBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaAttivaIntraSHome;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaPassivaIntraSBulk;
@@ -19,14 +24,21 @@ import it.cnr.contab.doccont00.core.bulk.MandatoIHome;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome;
 import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.ejb.EJBException;
 
 /**
  * Insert the type's description here.
@@ -269,26 +281,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	return null;
 	}
 
-	public Integer recuperoMaxProt(UserContext param0) throws ComponentException {
-		// Numero progressivo univoco della dichiarazione non dovrebbe essere per anno
-		Fattura_attiva_intraHome home=(Fattura_attiva_intraHome)getHome(param0, Fattura_attiva_intraBulk.class);
-		Fattura_passiva_intraHome home_att=(Fattura_passiva_intraHome)getHome(param0, Fattura_passiva_intraBulk.class);
-		try {
-			
-			Integer attive= (new Integer(
-					((Integer)home_att.findMax( new Fattura_attiva_intraBulk(), "nr_protocollo", new Integer(200000)))+1));
-			Integer passive=(new Integer(
-					((Integer)home.findMax( new Fattura_passiva_intraBulk(), "nr_protocollo", new Integer(200000)))+1));
-			if(attive.compareTo(passive)>0)
-				return attive;
-			else 
-				return passive;
-			   
-		} catch (PersistencyException e) {
-			handleException(e);
-		}
-		return 1;
-	}
+	
     public java.util.Date recuperoMaxDtPagamentoLiq(UserContext uc, OggettoBulk bulk) throws ComponentException 
     {
     	try {
@@ -333,15 +326,22 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	}
     return null;
     }
-	public void confermaElaborazione(UserContext context, VIntrastatBulk bulk) throws ComponentException {
-		try {
+	public void confermaElaborazione(UserContext context, VIntrastatBulk bulk) throws ComponentException, PersistencyException {
+		
 			Fattura_passiva_intraHome home=(Fattura_passiva_intraHome)getHome(context, Fattura_passiva_intraBulk.class);
 			Fattura_attiva_intraHome home_att=(Fattura_attiva_intraHome)getHome(context, Fattura_attiva_intraBulk.class);
 			FatturaPassivaIntraSHome home_s=(FatturaPassivaIntraSHome)getHome(context, FatturaPassivaIntraSBulk.class);
 			FatturaAttivaIntraSHome home_att_s=(FatturaAttivaIntraSHome)getHome(context, FatturaAttivaIntraSBulk.class);
-			
-			Integer prot=recuperoMaxProt(context);
+			String prot=null;
 			Integer conta=0;
+			
+			if(bulk.getNrProtocolloAcq()==null &&bulk.getNrProtocolloVen()==null)
+				throw new ApplicationException("Non sono stati indicati ne il numero Protocollo Acq/Serv. ricevuti, ne il numero Protocollo Cessioni/Serv. resi.");
+			if(bulk.getNrProtocolloAcq()!=null){
+				prot=bulk.getNrProtocolloAcq();
+			//else
+				//throw new ApplicationException("Non è stato indicato il numero Protocollo Acq/Serv. ricevuti");
+			// per gestire caso in cui un solo flusso viene accettato
 			for (Iterator i=(SezioneUnoAcquisti(context, bulk)).iterator();i.hasNext();){
 				conta=conta+1;
     			VIntrastatBulk det=(VIntrastatBulk)i.next();
@@ -409,8 +409,13 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	    			updateBulk(context, fats);
     			}
 			}
+			} //fine (bulk.getNrProtocolloAcq()!=null	
 			conta=0;
-			prot=recuperoMaxProt(context);
+			// per gestire caso in cui un solo flusso viene accettato
+			if(bulk.getNrProtocolloVen()!=null){
+				prot=bulk.getNrProtocolloVen();
+			//else
+				//throw new ApplicationException("Non è stato indicato il numero Protocollo Cessioni/Serv. resi");
 			for (Iterator i=(SezioneUnoVendite(context, bulk)).iterator();i.hasNext();){
 				conta=conta+1;
     			VIntrastatBulk det=(VIntrastatBulk)i.next();
@@ -479,9 +484,64 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	    			updateBulk(context, fats);
     			}
 			}
-		} catch (Exception e) {
-			handleException(e);
-		}
+			}//fine (bulk.getNrProtocollVen()!=null
+			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+			try {
+				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context), null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_COSTANTI, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_MODELLO_INTRASTAT);
+				config.setIm01(new BigDecimal(bulk.getNrProtocollo()));
+				config.setToBeUpdated();
+				updateBulk(context, config);
+				// se ribaltata la configurazione aggiorno il valore anche per esercizio +1
+				config=Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context)+1, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_COSTANTI, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_MODELLO_INTRASTAT);
+				if(config!=null){
+					config.setIm01(new BigDecimal(bulk.getNrProtocollo()));
+					config.setToBeUpdated();
+					updateBulk(context, config);
+				}
+			} catch (RemoteException e) {
+				throw new ComponentException(e);
+			} catch (EJBException e) {
+				throw new ComponentException(e);
+			}
+			
+		
 	}
-	
+
+	public List EstraiBlacklist(UserContext context, OggettoBulk bulk,OggettoBulk bulkterzo)  throws ComponentException {
+		if(bulk instanceof VFatcomBlacklistBulk){
+		
+				VFatcomBlacklistHome home = (VFatcomBlacklistHome)getHome(context,VFatcomBlacklistBulk.class);
+				SQLBuilder sql = home.createSQLBuilder();
+				sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+				sql.addClause("AND", "mese",sql.EQUALS,((VFatcomBlacklistBulk)bulk).getMese());
+				if(bulkterzo !=null && (bulkterzo instanceof TerzoBulk)){
+					TerzoBulk terzo=(TerzoBulk)bulkterzo;
+					if(terzo.getCd_terzo()!=null)
+						sql.addClause("AND", "cd_terzo", sql.EQUALS,terzo.getCd_terzo());
+				}
+				sql.addOrderBy("esercizio,mese,cd_terzo,tipo,bene_servizio");
+				try {
+					return home.fetchAll(sql);
+				} catch (PersistencyException e) {
+					handleException(e);
+				}
+		}else if (bulk instanceof VSpesometroBulk){
+			VSpesometroHome home = (VSpesometroHome)getHome(context,VSpesometroBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+			if(((VSpesometroBulk)bulk).getMese()!=null){
+				sql.addClause("AND", "mese",sql.EQUALS,((VSpesometroBulk)bulk).getMese());
+				sql.addClause("AND", "tipoFiscalita",sql.EQUALS,"FS");
+			}else
+				sql.addClause("AND", "mese",sql.ISNULL,null);
+			sql.addOrderBy("esercizio,quadro,tipo,ti_bene_servizio,prog");
+			try {
+				return home.fetchAll(sql);
+			} catch (PersistencyException e) {
+				handleException(e);
+			}
+		}
+					
+	return null;
+	}
 }

@@ -18,7 +18,21 @@ public class VIntrastatBulk extends VIntrastatBase {
 	public VIntrastatBulk(java.lang.String cd_cds,java.lang.String cd_unita_organizzativa,java.lang.Integer esercizio,java.lang.Long pg_fattura,java.lang.Long pg_riga_intra,java.lang.Long pgStorico) {
 		super(cd_cds,cd_unita_organizzativa,esercizio,pg_fattura,pg_riga_intra,pgStorico);
 	}
+	String nrProtocolloAcq;
+	String nrProtocolloVen;
 
+	public String getNrProtocolloAcq() {
+		return nrProtocolloAcq;
+	}
+	public void setNrProtocolloAcq(String nrProtocolloAcq) {
+		this.nrProtocolloAcq = nrProtocolloAcq;
+	}
+	public String getNrProtocolloVen() {
+		return nrProtocolloVen;
+	}
+	public void setNrProtocolloVen(String nrProtocolloVen) {
+		this.nrProtocolloVen = nrProtocolloVen;
+	}
 	private static java.util.Dictionary meseKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final int GENNAIO = 1;
 	public static final int FEBBRAIO = 2;

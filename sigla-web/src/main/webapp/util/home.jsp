@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<% 	it.cnr.jada.util.jsp.JSPUtils.printBaseUrl(pageContext); %>
-		<title><%= it.cnr.contab.Version.getApplicationTitleAndVersion()%></title>
+		<title><%=pageContext.getServletContext().getAttribute("APPLICATION_TITLE_VERSION") %></title>
 		<script language="javascript" src="scripts/css.js"></script>
 <script language="javascript" type="text/javascript">
 //<!--
