@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Ass_pdg_missione_tipo_uoKey">
+	<defaultColumnMap
+		tableName="ASS_PDG_MISSIONE_TIPO_UO">
+		<columnMapping
+			columnName="CD_MISSIONE"
+			propertyName="cd_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TIPO_UNITA"
+			propertyName="cd_tipo_unita"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_missione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_tipo_unita"
+		partOfOid="true" />
+</SQLPersistentInfo>

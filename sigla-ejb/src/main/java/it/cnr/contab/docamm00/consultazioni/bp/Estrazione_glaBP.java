@@ -122,7 +122,7 @@ public class Estrazione_glaBP extends AbstractEstrazioneFiscaleBP
 				            				Date dateValue = c.getDateCellValue();
 				            				bw.append((new SimpleDateFormat("dd/MM/yyyy")).format(dateValue));
 				            		}else
-				            		bw.append(new BigDecimal(c.getNumericCellValue()).setScale(2,java.math.BigDecimal.ROUND_HALF_EVEN).toString());
+				            		bw.append(new BigDecimal(c.getNumericCellValue()).setScale(2,java.math.BigDecimal.ROUND_HALF_UP).toString());
 			            	}
 				            bw.write(';');
 			            }

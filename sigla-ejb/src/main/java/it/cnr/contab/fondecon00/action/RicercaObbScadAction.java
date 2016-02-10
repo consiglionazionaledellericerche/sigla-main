@@ -168,7 +168,7 @@ private Forward doOnFlChange(ActionContext context, String flName) {
 				&& filtro.getIm_importo() == null
 				&& filtro.getFl_importo().booleanValue())
 		{
-				filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		} else
 			if("fl_data_scadenziario".equalsIgnoreCase(flName)
 				&& filtro.getData_scadenziario() == null
@@ -249,7 +249,7 @@ public Forward doOpenObbligazioniWindow(ActionContext context) {
 		}
 		scadenza.setIm_scadenza(
 			(filtro.getIm_importo() == null)?
-				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN) :
+				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP) :
 				filtro.getIm_importo());
 		scadenza.setUser(obbligazione.getUser());
 		scadenza.setToBeCreated();

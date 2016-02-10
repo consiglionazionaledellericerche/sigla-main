@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappKey">
+	<defaultColumnMap
+		tableName="INCARICHI_REPERTORIO_RAPP">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="pg_repertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA"
+			propertyName="progressivo_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_repertorio"
+		partOfOid="true" />
+	<persistentProperty
+		name="progressivo_riga"
+		partOfOid="true" />
+</SQLPersistentInfo>

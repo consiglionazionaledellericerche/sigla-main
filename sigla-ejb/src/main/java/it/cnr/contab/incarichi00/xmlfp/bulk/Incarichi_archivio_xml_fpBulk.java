@@ -16,10 +16,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unchecked")
+import javax.xml.bind.JAXBElement;
+
+@SuppressWarnings({ "unchecked", "serial" })
 public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase {
+	@SuppressWarnings("rawtypes")
 	public final static Dictionary ti_dataCalcoloKeys = new it.cnr.jada.util.OrderedHashtable();
+	@SuppressWarnings("rawtypes")
 	public final static Dictionary ti_pagamentiKeys = new it.cnr.jada.util.OrderedHashtable();
+	@SuppressWarnings("rawtypes")
 	public final static Dictionary ti_semestriKeys = new it.cnr.jada.util.OrderedHashtable();
 
 	final public static String DATA_STIPULA = "S";
@@ -51,9 +56,17 @@ public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase
 
 	private java.lang.Integer semestre;
 	
+	private java.lang.Integer esercizio_inizio;
+
+	private java.lang.Integer semestre_inizio;
+
 	private java.lang.String dt_calcolo;
 	
+	private boolean fl_crea_file_modifiche = false;
+
 	private boolean fl_crea_file_per_tipologia = false;
+
+	private boolean fl_crea_file_perla = true;
 
 	private boolean fl_crea_file_da_file = false;
 
@@ -77,15 +90,25 @@ public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase
 
 	private Comunicazione comunicazione;
 	
-	private EsitoComunicazione esitoComunicazione;
+	private EsitoComunicazione esitoComunicazione, esitoComunicazioneConErrori;
 	
-	private EsitoComunicazione esitoComunicazioneConErrori;
-
 	private String pathFileZip;
 	
 	private Map<String,Comunicazione> mapFileNuovoIncaricoXML, mapFileModificaIncaricoXML, mapFileCancellaIncaricoXML;
 
 	private Map<String,EsitoComunicazione> mapFileAnomalieNuovoIncaricoXML, mapFileAnomalieModificaIncaricoXML, mapFileAnomalieCancellaIncaricoXML;
+
+	private JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType> comunicazioneNuovoIncaricoPerla, esitoComunicazioneNuovoIncaricoPerla;
+
+	private JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType> comunicazioneModificaIncaricoPerla, esitoComunicazioneModificaIncaricoPerla;
+
+	private JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType> comunicazioneCancellaIncaricoPerla, esitoComunicazioneCancellaIncaricoPerla;
+
+	private Map<String,JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType>> mapFileNuovoIncaricoXMLPerla, mapFileAnomalieNuovoIncaricoXMLPerla;
+
+	private Map<String,JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType>> mapFileModificaIncaricoXMLPerla, mapFileAnomalieModificaIncaricoXMLPerla;
+
+	private Map<String,JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType>> mapFileCancellaIncaricoXMLPerla, mapFileAnomalieCancellaIncaricoXMLPerla;
 
 	public java.lang.Integer getEsercizio() {
 		return esercizio;
@@ -103,6 +126,22 @@ public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase
 		this.semestre = semestre;
 	}
 
+	public java.lang.Integer getEsercizio_inizio() {
+		return esercizio_inizio;
+	}
+
+	public void setEsercizio_inizio(java.lang.Integer esercizio_inizio) {
+		this.esercizio_inizio = esercizio_inizio;
+	}
+
+	public java.lang.Integer getSemestre_inizio() {
+		return semestre_inizio;
+	}
+
+	public void setSemestre_inizio(java.lang.Integer semestre_inizio) {
+		this.semestre_inizio = semestre_inizio;
+	}
+
 	public java.lang.String getDt_calcolo() {
 		return dt_calcolo;
 	}
@@ -111,12 +150,29 @@ public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase
 		dt_calcolo = dtCalcolo;
 	}
 
+	public boolean isFl_crea_file_modifiche() {
+		return fl_crea_file_modifiche;
+	}
+
+	public void setFl_crea_file_modifiche(boolean flCreaFileModifiche) {
+		fl_crea_file_modifiche = flCreaFileModifiche;
+	}
+
+
 	public boolean isFl_crea_file_per_tipologia() {
 		return fl_crea_file_per_tipologia;
 	}
 
 	public void setFl_crea_file_per_tipologia(boolean flCreaFilePerTipologia) {
 		fl_crea_file_per_tipologia = flCreaFilePerTipologia;
+	}
+
+	public boolean isFl_crea_file_perla() {
+		return fl_crea_file_perla;
+	}
+
+	public void setFl_crea_file_perla(boolean fl_crea_file_perla) {
+		this.fl_crea_file_perla = fl_crea_file_perla;
 	}
 
 	public java.lang.Integer getNum_max_file_record() {
@@ -137,7 +193,13 @@ public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase
 		       (getMapFileCancellaIncaricoXML()!=null && !getMapFileCancellaIncaricoXML().isEmpty()) ||
 		       (getMapFileAnomalieNuovoIncaricoXML()!=null && !getMapFileAnomalieNuovoIncaricoXML().isEmpty()) ||
 		       (getMapFileAnomalieModificaIncaricoXML()!=null && !getMapFileAnomalieModificaIncaricoXML().isEmpty()) ||
-		       (getMapFileAnomalieCancellaIncaricoXML()!=null && !getMapFileAnomalieCancellaIncaricoXML().isEmpty());
+		       (getMapFileAnomalieCancellaIncaricoXML()!=null && !getMapFileAnomalieCancellaIncaricoXML().isEmpty()) ||
+		       (getMapFileNuovoIncaricoXMLPerla()!=null && !getMapFileNuovoIncaricoXMLPerla().isEmpty()) ||
+		       (getMapFileModificaIncaricoXMLPerla()!=null && !getMapFileModificaIncaricoXMLPerla().isEmpty()) ||
+		       (getMapFileCancellaIncaricoXMLPerla()!=null && !getMapFileCancellaIncaricoXMLPerla().isEmpty()) ||
+		       (getMapFileAnomalieNuovoIncaricoXMLPerla()!=null && !getMapFileAnomalieNuovoIncaricoXMLPerla().isEmpty()) ||
+		       (getMapFileAnomalieModificaIncaricoXMLPerla()!=null && !getMapFileAnomalieModificaIncaricoXMLPerla().isEmpty()) ||
+		       (getMapFileAnomalieCancellaIncaricoXMLPerla()!=null && !getMapFileAnomalieCancellaIncaricoXMLPerla().isEmpty());		       
 	}
 	
 	public void setBlob_inv(java.lang.String blobInv) {
@@ -261,6 +323,114 @@ public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase
 		this.mapFileAnomalieCancellaIncaricoXML = mapFileAnomalieCancellaIncaricoXML;
 	}
 
+	public JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType> getComunicazioneNuovoIncaricoPerla() {
+		return comunicazioneNuovoIncaricoPerla;
+	}
+
+	public void setComunicazioneNuovoIncaricoPerla(
+			JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType> comunicazioneNuovoIncaricoPerla) {
+		this.comunicazioneNuovoIncaricoPerla = comunicazioneNuovoIncaricoPerla;
+	}
+
+	public JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType> getComunicazioneModificaIncaricoPerla() {
+		return comunicazioneModificaIncaricoPerla;
+	}
+
+	public void setComunicazioneModificaIncaricoPerla(
+			JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType> comunicazioneModificaIncaricoPerla) {
+		this.comunicazioneModificaIncaricoPerla = comunicazioneModificaIncaricoPerla;
+	}
+
+	public JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType> getComunicazioneCancellaIncaricoPerla() {
+		return comunicazioneCancellaIncaricoPerla;
+	}
+
+	public void setComunicazioneCancellaIncaricoPerla(
+			JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType> comunicazioneCancellaIncaricoPerla) {
+		this.comunicazioneCancellaIncaricoPerla = comunicazioneCancellaIncaricoPerla;
+	}
+
+	public JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType> getEsitoComunicazioneNuovoIncaricoPerla() {
+		return esitoComunicazioneNuovoIncaricoPerla;
+	}
+
+	public void setEsitoComunicazioneNuovoIncaricoPerla(
+			JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType> esitoComunicazioneNuovoIncaricoPerla) {
+		this.esitoComunicazioneNuovoIncaricoPerla = esitoComunicazioneNuovoIncaricoPerla;
+	}
+
+	public JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType> getEsitoComunicazioneModificaIncaricoPerla() {
+		return esitoComunicazioneModificaIncaricoPerla;
+	}
+
+	public void setEsitoComunicazioneModificaIncaricoPerla(
+			JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType> esitoComunicazioneModificaIncaricoPerla) {
+		this.esitoComunicazioneModificaIncaricoPerla = esitoComunicazioneModificaIncaricoPerla;
+	}
+
+	public JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType> getEsitoComunicazioneCancellaIncaricoPerla() {
+		return esitoComunicazioneCancellaIncaricoPerla;
+	}
+
+	public void setEsitoComunicazioneCancellaIncaricoPerla(
+			JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType> esitoComunicazioneCancellaIncaricoPerla) {
+		this.esitoComunicazioneCancellaIncaricoPerla = esitoComunicazioneCancellaIncaricoPerla;
+	}
+
+	public Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType>> getMapFileNuovoIncaricoXMLPerla() {
+		return mapFileNuovoIncaricoXMLPerla;
+	}
+
+	public void setMapFileNuovoIncaricoXMLPerla(
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType>> mapFileNuovoIncaricoXMLPerla) {
+		this.mapFileNuovoIncaricoXMLPerla = mapFileNuovoIncaricoXMLPerla;
+	}
+
+	public Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType>> getMapFileModificaIncaricoXMLPerla() {
+		return mapFileModificaIncaricoXMLPerla;
+	}
+
+	public void setMapFileModificaIncaricoXMLPerla(
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType>> mapFileModificaIncaricoXMLPerla) {
+		this.mapFileModificaIncaricoXMLPerla = mapFileModificaIncaricoXMLPerla;
+	}
+
+	public Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType>> getMapFileCancellaIncaricoXMLPerla() {
+		return mapFileCancellaIncaricoXMLPerla;
+	}
+
+	public void setMapFileCancellaIncaricoXMLPerla(
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType>> mapFileCancellaIncaricoXMLPerla) {
+		this.mapFileCancellaIncaricoXMLPerla = mapFileCancellaIncaricoXMLPerla;
+	}
+
+	public Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType>> getMapFileAnomalieNuovoIncaricoXMLPerla() {
+		return mapFileAnomalieNuovoIncaricoXMLPerla;
+	}
+
+	public void setMapFileAnomalieNuovoIncaricoXMLPerla(
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType>> mapFileAnomalieNuovoIncaricoXMLPerla) {
+		this.mapFileAnomalieNuovoIncaricoXMLPerla = mapFileAnomalieNuovoIncaricoXMLPerla;
+	}
+
+	public Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType>> getMapFileAnomalieModificaIncaricoXMLPerla() {
+		return mapFileAnomalieModificaIncaricoXMLPerla;
+	}
+
+	public void setMapFileAnomalieModificaIncaricoXMLPerla(
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType>> mapFileAnomalieModificaIncaricoXMLPerla) {
+		this.mapFileAnomalieModificaIncaricoXMLPerla = mapFileAnomalieModificaIncaricoXMLPerla;
+	}
+
+	public Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType>> getMapFileAnomalieCancellaIncaricoXMLPerla() {
+		return mapFileAnomalieCancellaIncaricoXMLPerla;
+	}
+
+	public void setMapFileAnomalieCancellaIncaricoXMLPerla(
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType>> mapFileAnomalieCancellaIncaricoXMLPerla) {
+		this.mapFileAnomalieCancellaIncaricoXMLPerla = mapFileAnomalieCancellaIncaricoXMLPerla;
+	}
+
 	public String getPathFileZip() {
 		return pathFileZip;
 	}
@@ -270,285 +440,568 @@ public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase
 	}
 
 	public List<String> getElencoPathFileNuovoIncaricoXML() {
-		if (getMapFileNuovoIncaricoXML()!=null)
-			return new ArrayList<String>(getMapFileNuovoIncaricoXML().keySet());
+		if (isFl_crea_file_perla()){
+			if (getMapFileNuovoIncaricoXMLPerla()!=null)
+				return new ArrayList<String>(getMapFileNuovoIncaricoXMLPerla().keySet());
+		} else {
+			if (getMapFileNuovoIncaricoXML()!=null)
+				return new ArrayList<String>(getMapFileNuovoIncaricoXML().keySet());
+		}
 		return null;
 	}
 
 	public List<String> getElencoPathFileModificaIncaricoXML() {
-		if (getMapFileModificaIncaricoXML()!=null)
-			return new ArrayList<String>(getMapFileModificaIncaricoXML().keySet());
+		if (isFl_crea_file_perla()){
+			if (getMapFileModificaIncaricoXMLPerla()!=null)
+				return new ArrayList<String>(getMapFileModificaIncaricoXMLPerla().keySet());
+		} else {
+			if (getMapFileModificaIncaricoXML()!=null)
+				return new ArrayList<String>(getMapFileModificaIncaricoXML().keySet());
+		}
 		return null;
 	}
 
 	public List<String> getElencoPathFileCancellaIncaricoXML() {
-		if (getMapFileCancellaIncaricoXML()!=null)
-			return new ArrayList<String>(getMapFileCancellaIncaricoXML().keySet());
+		if (isFl_crea_file_perla()){
+			if (getMapFileCancellaIncaricoXMLPerla()!=null)
+				return new ArrayList<String>(getMapFileCancellaIncaricoXMLPerla().keySet());
+		} else {
+			if (getMapFileCancellaIncaricoXML()!=null)
+				return new ArrayList<String>(getMapFileCancellaIncaricoXML().keySet());
+		}
 		return null;
 	}
 
 	public List<String> getElencoPathFileAnomalieNuovoIncaricoXML() {
-		if (getMapFileAnomalieNuovoIncaricoXML()!=null)
-			return new ArrayList<String>(getMapFileAnomalieNuovoIncaricoXML().keySet());
+		if (isFl_crea_file_perla()){
+			if (getMapFileAnomalieNuovoIncaricoXMLPerla()!=null)
+				return new ArrayList<String>(getMapFileAnomalieNuovoIncaricoXMLPerla().keySet());
+		} else {
+			if (getMapFileAnomalieNuovoIncaricoXML()!=null)
+				return new ArrayList<String>(getMapFileAnomalieNuovoIncaricoXML().keySet());
+		}
 		return null;
 	}
 
 	public List<String> getElencoPathFileAnomalieModificaIncaricoXML() {
-		if (getMapFileAnomalieModificaIncaricoXML()!=null)
-			return new ArrayList<String>(getMapFileAnomalieModificaIncaricoXML().keySet());
+		if (isFl_crea_file_perla()){
+			if (getMapFileAnomalieModificaIncaricoXMLPerla()!=null)
+				return new ArrayList<String>(getMapFileAnomalieModificaIncaricoXMLPerla().keySet());
+		} else {
+			if (getMapFileAnomalieModificaIncaricoXML()!=null)
+				return new ArrayList<String>(getMapFileAnomalieModificaIncaricoXML().keySet());
+		}
 		return null;
 	}
 
 	public List<String> getElencoPathFileAnomalieCancellaIncaricoXML() {
-		if (getMapFileAnomalieCancellaIncaricoXML()!=null)
-			return new ArrayList<String>(getMapFileAnomalieCancellaIncaricoXML().keySet());
+		if (isFl_crea_file_perla()){
+			if (getMapFileAnomalieCancellaIncaricoXMLPerla()!=null)
+				return new ArrayList<String>(getMapFileAnomalieCancellaIncaricoXMLPerla().keySet());
+		} else {
+			if (getMapFileAnomalieCancellaIncaricoXML()!=null)
+				return new ArrayList<String>(getMapFileAnomalieCancellaIncaricoXML().keySet());
+		}
 		return null;
 	}
 
 	public Integer getCountInsIncarichiComunicati() {
-		if (getComunicazione()==null || getComunicazione().getConsulenti()==null || getComunicazione().getConsulenti().getNuovoIncarico()==null ||
-			getComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
-			return 0;
-		return getComunicazione().getConsulenti().getNuovoIncarico().size();
+		if (isFl_crea_file_perla()){
+			if (getComunicazioneNuovoIncaricoPerla()==null || getComunicazioneNuovoIncaricoPerla().getValue()==null || 
+		     	getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi()==null ||
+		     	getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi().getNuoviIncarichi()==null ||
+		     	getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi().getNuoviIncarichi().getConsulente()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi().getNuoviIncarichi().getConsulente().isEmpty())
+				return 0;
+			return getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi().getNuoviIncarichi().getConsulente().size();
+		} else {
+			if (getComunicazione()==null || getComunicazione().getConsulenti()==null || getComunicazione().getConsulenti().getNuovoIncarico()==null ||
+				getComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
+				return 0;
+			return getComunicazione().getConsulenti().getNuovoIncarico().size();
+		}
 	}
 
 	public Integer getCountUpdIncarichiComunicati() {
-		if (getComunicazione()==null || getComunicazione().getConsulenti()==null || getComunicazione().getConsulenti().getModificaIncarico()==null ||
-			getComunicazione().getConsulenti().getModificaIncarico().isEmpty())
-			return 0;
-		return getComunicazione().getConsulenti().getModificaIncarico().size();
+		if (isFl_crea_file_perla()){
+			if (getComunicazioneModificaIncaricoPerla()==null || getComunicazioneModificaIncaricoPerla().getValue()==null || 
+		     	getComunicazioneModificaIncaricoPerla().getValue().getVariazioneIncarichi()==null ||
+		     	getComunicazioneModificaIncaricoPerla().getValue().getVariazioneIncarichi().getModificaIncarichi()==null ||
+		     	getComunicazioneModificaIncaricoPerla().getValue().getVariazioneIncarichi().getModificaIncarichi().getConsulente()==null ||
+				getComunicazioneModificaIncaricoPerla().getValue().getVariazioneIncarichi().getModificaIncarichi().getConsulente().isEmpty())
+				return 0;
+			return getComunicazioneModificaIncaricoPerla().getValue().getVariazioneIncarichi().getModificaIncarichi().getConsulente().size();
+		} else {
+			if (getComunicazione()==null || getComunicazione().getConsulenti()==null || getComunicazione().getConsulenti().getModificaIncarico()==null ||
+				getComunicazione().getConsulenti().getModificaIncarico().isEmpty())
+				return 0;
+			return getComunicazione().getConsulenti().getModificaIncarico().size();
+		}
 	}
 
 	public Integer getCountDelIncarichiComunicati() {
-		if (getComunicazione()==null || getComunicazione().getConsulenti()==null || getComunicazione().getConsulenti().getCancellaIncarico()==null ||
-			getComunicazione().getConsulenti().getCancellaIncarico().isEmpty())
-			return 0;
-		return getComunicazione().getConsulenti().getCancellaIncarico().size();
+		if (getFl_perla()){
+			if (getComunicazioneCancellaIncaricoPerla()==null || getComunicazioneCancellaIncaricoPerla().getValue()==null || 
+		     	getComunicazioneCancellaIncaricoPerla().getValue().getCancellazioneIncarichi()==null ||
+		     	getComunicazioneCancellaIncaricoPerla().getValue().getCancellazioneIncarichi().getIncarichi()==null ||
+		     	getComunicazioneCancellaIncaricoPerla().getValue().getCancellazioneIncarichi().getIncarichi().getConsulente()==null ||
+				getComunicazioneCancellaIncaricoPerla().getValue().getCancellazioneIncarichi().getIncarichi().getConsulente().isEmpty())
+				return 0;
+			return getComunicazioneCancellaIncaricoPerla().getValue().getCancellazioneIncarichi().getIncarichi().getConsulente().size();
+		} else {
+			if (getComunicazione()==null || getComunicazione().getConsulenti()==null || getComunicazione().getConsulenti().getCancellaIncarico()==null ||
+				getComunicazione().getConsulenti().getCancellaIncarico().isEmpty())
+				return 0;
+			return getComunicazione().getConsulenti().getCancellaIncarico().size();
+		}
 	}
 	
 	public Integer getCountInsIncarichiOkRicevuti() {
-		if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getNuovoIncarico()==null ||
-			getEsitoComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
-			return 0;
-		if (getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK))
-			return getEsitoComunicazione().getConsulenti().getNuovoIncarico().size();
 		int countOk=0;
-		for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator = getEsitoComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
-			EsitoComunicazione.Consulenti.NuovoIncarico type = iterator.next();
-			if (type.getEsito()==null || type.getEsito().equals(Esito.OK)) countOk++;
+		if (getFl_perla()){
+			if (getEsitoComunicazioneNuovoIncaricoPerla()==null || getEsitoComunicazioneNuovoIncaricoPerla().getValue()==null || 
+		     	getEsitoComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi()==null ||
+				getEsitoComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente()==null ||				 
+				getEsitoComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().isEmpty())
+				return 0;
+			if (getEsitoComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoFile()!=null && 
+				getEsitoComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoFile().equals(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoType.OK))
+				return getEsitoComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().size();
+			for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType> iterator = getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+				it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType type = iterator.next();
+				if (type.getEsito()==null || type.getEsito().equals(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoType.OK)) countOk++;
+			}
+		} else {
+			if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getNuovoIncarico()==null ||
+				getEsitoComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
+				return 0;
+			if (getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK))
+				return getEsitoComunicazione().getConsulenti().getNuovoIncarico().size();
+			for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator = getEsitoComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
+				EsitoComunicazione.Consulenti.NuovoIncarico type = iterator.next();
+				if (type.getEsito()==null || type.getEsito().equals(Esito.OK)) countOk++;
+			}
 		}
 		return countOk;
 	}
 
 	public Integer getCountUpdIncarichiOkRicevuti() {
-		if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getModificaIncarico()==null ||
-			getEsitoComunicazione().getConsulenti().getModificaIncarico().isEmpty())
-			return 0;
-		if (getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK))
-			return getEsitoComunicazione().getConsulenti().getModificaIncarico().size();
 		int countOk=0;
-		for (Iterator<EsitoComunicazione.Consulenti.ModificaIncarico> iterator = getEsitoComunicazione().getConsulenti().getModificaIncarico().iterator(); iterator.hasNext();) {
-			EsitoComunicazione.Consulenti.ModificaIncarico type = iterator.next();
-			if (type.getEsito()==null || type.getEsito().equals(Esito.OK)) countOk++;
+		if (getFl_perla()){
+			if (getEsitoComunicazioneModificaIncaricoPerla()==null || getEsitoComunicazioneModificaIncaricoPerla().getValue()==null || 
+				getEsitoComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi()==null ||
+				getEsitoComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente()==null ||				 
+				getEsitoComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().isEmpty())
+				return 0;
+			if (getEsitoComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoFile()!=null && 
+				getEsitoComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoFile().equals(it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoType.OK))
+				return getEsitoComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().size();
+			for (Iterator<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoConsulenteType> iterator = getEsitoComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+				it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoConsulenteType type = iterator.next();
+				if (type.getEsito()==null || type.getEsito().equals(it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoType.OK)) countOk++;
+			}
+		} else {
+			if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getModificaIncarico()==null ||
+				getEsitoComunicazione().getConsulenti().getModificaIncarico().isEmpty())
+				return 0;
+			if (getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK))
+				return getEsitoComunicazione().getConsulenti().getModificaIncarico().size();
+			for (Iterator<EsitoComunicazione.Consulenti.ModificaIncarico> iterator = getEsitoComunicazione().getConsulenti().getModificaIncarico().iterator(); iterator.hasNext();) {
+				EsitoComunicazione.Consulenti.ModificaIncarico type = iterator.next();
+				if (type.getEsito()==null || type.getEsito().equals(Esito.OK)) countOk++;
+			}
 		}
 		return countOk;
 	}
 
 	public Integer getCountDelIncarichiOkRicevuti() {
-		if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getCancellaIncarico()==null ||
-			getEsitoComunicazione().getConsulenti().getCancellaIncarico().isEmpty())
-			return 0;
-		if (getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK))
-			return getEsitoComunicazione().getConsulenti().getCancellaIncarico().size();
 		int countOk=0;
-		for (Iterator<EsitoComunicazione.Consulenti.CancellaIncarico> iterator = getEsitoComunicazione().getConsulenti().getCancellaIncarico().iterator(); iterator.hasNext();) {
-			EsitoComunicazione.Consulenti.CancellaIncarico type = iterator.next();
-			if (type.getEsito()==null || type.getEsito().equals(Esito.OK)) countOk++;
+		if (getFl_perla()){
+			if (getComunicazioneCancellaIncaricoPerla()==null || getComunicazioneCancellaIncaricoPerla().getValue()==null || 
+		     	getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi()==null ||
+				getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente()==null ||				 
+				getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente().isEmpty())
+				return 0;
+			if (getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoFile()!=null && 
+				getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoFile().equals(it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.EsitoType.OK))
+				return getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente().size();
+			for (Iterator<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.EsitoIncaricoType> iterator = getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+				it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.EsitoIncaricoType type = iterator.next();
+				if (type.getEsito()==null || type.getEsito().equals(it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.EsitoType.OK)) countOk++;
+			}
+		} else {
+			if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getCancellaIncarico()==null ||
+				getEsitoComunicazione().getConsulenti().getCancellaIncarico().isEmpty())
+				return 0;
+			if (getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK))
+				return getEsitoComunicazione().getConsulenti().getCancellaIncarico().size();
+			for (Iterator<EsitoComunicazione.Consulenti.CancellaIncarico> iterator = getEsitoComunicazione().getConsulenti().getCancellaIncarico().iterator(); iterator.hasNext();) {
+				EsitoComunicazione.Consulenti.CancellaIncarico type = iterator.next();
+				if (type.getEsito()==null || type.getEsito().equals(Esito.OK)) countOk++;
+			}
 		}
 		return countOk;
 	}
 
 	public Integer getCountInsIncarichiErrRicevuti() {
-		if (getEsitoComunicazione()==null || 
-			(getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK)) ||
-			getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getNuovoIncarico()==null ||
-			getEsitoComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
-			return 0;
 		int countErr=0;
-		for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator = getEsitoComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
-			EsitoComunicazione.Consulenti.NuovoIncarico type = iterator.next();
-			if (type.getEsito()!=null && type.getEsito().equals(Esito.ERRATO)) countErr++;
+		if (getFl_perla()){
+			if (getComunicazioneNuovoIncaricoPerla()==null || getComunicazioneNuovoIncaricoPerla().getValue()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi()==null ||
+				(getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoFile()!=null && 
+				 getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoFile().equals(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoType.OK)) ||
+		     	getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente()==null ||				 
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().isEmpty())
+					return 0;
+				for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType> iterator = getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+					it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType type = iterator.next();
+					if (type.getEsito()!=null && type.getEsito().equals(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoType.KO)) countErr++;
+				}
+		} else {
+			if (getEsitoComunicazione()==null || 
+				(getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK)) ||
+				getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getNuovoIncarico()==null ||
+				getEsitoComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
+				return 0;
+			for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator = getEsitoComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
+				EsitoComunicazione.Consulenti.NuovoIncarico type = iterator.next();
+				if (type.getEsito()!=null && type.getEsito().equals(Esito.ERRATO)) countErr++;
+			}
 		}
 		return countErr;
 	}
 
 	public Integer getCountUpdIncarichiErrRicevuti() {
-		if (getEsitoComunicazione()==null || 
-			(getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK)) ||
-			getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getModificaIncarico()==null ||
-			getEsitoComunicazione().getConsulenti().getModificaIncarico().isEmpty())
-			return 0;
 		int countErr=0;
-		for (Iterator<EsitoComunicazione.Consulenti.ModificaIncarico> iterator = getEsitoComunicazione().getConsulenti().getModificaIncarico().iterator(); iterator.hasNext();) {
-			EsitoComunicazione.Consulenti.ModificaIncarico type = iterator.next();
-			if (type.getEsito()!=null && type.getEsito().equals(Esito.ERRATO)) countErr++;
+		if (getFl_perla()){
+			if (getComunicazioneModificaIncaricoPerla()==null || getComunicazioneModificaIncaricoPerla().getValue()==null ||
+				getComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi()==null ||
+				(getComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoFile()!=null && 
+				 getComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoFile().equals(it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoType.OK)) ||
+		     	getComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi()==null ||
+				getComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente()==null ||				 
+				getComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().isEmpty())
+					return 0;
+				for (Iterator<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoConsulenteType> iterator = getComunicazioneModificaIncaricoPerla().getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+					it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoConsulenteType type = iterator.next();
+					if (type.getEsito()!=null && type.getEsito().equals(it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoType.KO)) countErr++;
+				}
+		} else {
+			if (getEsitoComunicazione()==null || 
+				(getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK)) ||
+				getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getModificaIncarico()==null ||
+				getEsitoComunicazione().getConsulenti().getModificaIncarico().isEmpty())
+				return 0;
+			for (Iterator<EsitoComunicazione.Consulenti.ModificaIncarico> iterator = getEsitoComunicazione().getConsulenti().getModificaIncarico().iterator(); iterator.hasNext();) {
+				EsitoComunicazione.Consulenti.ModificaIncarico type = iterator.next();
+				if (type.getEsito()!=null && type.getEsito().equals(Esito.ERRATO)) countErr++;
+			}
 		}
 		return countErr;
 	}
 
 	public Integer getCountDelIncarichiErrRicevuti() {
-		if (getEsitoComunicazione()==null || 
-			(getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK)) ||
-			getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getCancellaIncarico()==null ||
-			getEsitoComunicazione().getConsulenti().getCancellaIncarico().isEmpty())
-			return 0;
 		int countErr=0;
-		for (Iterator<EsitoComunicazione.Consulenti.CancellaIncarico> iterator = getEsitoComunicazione().getConsulenti().getCancellaIncarico().iterator(); iterator.hasNext();) {
-			EsitoComunicazione.Consulenti.CancellaIncarico type = iterator.next();
-			if (type.getEsito()!=null && type.getEsito().equals(Esito.ERRATO)) countErr++;
-		}
+		if (getFl_perla()){
+			if (getComunicazioneCancellaIncaricoPerla()==null || getComunicazioneCancellaIncaricoPerla().getValue()==null ||
+				getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi()==null ||
+				(getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoFile()!=null && 
+				 getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoFile().equals(it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.EsitoType.OK)) ||
+		     	getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi()==null ||
+				getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente()==null ||				 
+				getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente().isEmpty())
+					return 0;
+				for (Iterator<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.EsitoIncaricoType> iterator = getComunicazioneCancellaIncaricoPerla().getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+					it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.EsitoIncaricoType type = iterator.next();
+					if (type.getEsito()!=null && type.getEsito().equals(it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.EsitoType.KO)) countErr++;
+				}
+		} else {
+			if (getEsitoComunicazione()==null || 
+				(getEsitoComunicazione().getEsito()!=null && getEsitoComunicazione().getEsito().equals(Esito.OK)) ||
+				getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getCancellaIncarico()==null ||
+				getEsitoComunicazione().getConsulenti().getCancellaIncarico().isEmpty())
+				return 0;
+			for (Iterator<EsitoComunicazione.Consulenti.CancellaIncarico> iterator = getEsitoComunicazione().getConsulenti().getCancellaIncarico().iterator(); iterator.hasNext();) {
+				EsitoComunicazione.Consulenti.CancellaIncarico type = iterator.next();
+				if (type.getEsito()!=null && type.getEsito().equals(Esito.ERRATO)) countErr++;
+			}
+		}			
 		return countErr;
 	}
 
 	public Integer getCountInsIncarichiOkEstratti() {
-		if (getMapFileNuovoIncaricoXML()==null || getMapFileNuovoIncaricoXML().isEmpty())
-			return 0;
 		int countOk=0;
-		for (Iterator<String> iterator = getMapFileNuovoIncaricoXML().keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			Comunicazione value = getMapFileNuovoIncaricoXML().get(key);
-			if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getNuovoIncarico()!=null)
-				countOk = countOk + value.getConsulenti().getNuovoIncarico().size();
+		if (isFl_crea_file_perla()){
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType>> mapPerla = getMapFileNuovoIncaricoXMLPerla();
+			if (mapPerla==null || mapPerla.isEmpty())
+				return 0;
+			for (Iterator<String> iterator = mapPerla.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType> value = mapPerla.get(key);
+				if (value!=null && value.getValue()!=null && value.getValue().getInserimentoIncarichi()!=null &&
+					value.getValue().getInserimentoIncarichi().getNuoviIncarichi()!=null && 
+					value.getValue().getInserimentoIncarichi().getNuoviIncarichi().getConsulente()!=null)
+					countOk = countOk + value.getValue().getInserimentoIncarichi().getNuoviIncarichi().getConsulente().size();
+			}
+		} else {
+			if (getMapFileNuovoIncaricoXML()==null || getMapFileNuovoIncaricoXML().isEmpty())
+				return 0;
+			for (Iterator<String> iterator = getMapFileNuovoIncaricoXML().keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				Comunicazione value = getMapFileNuovoIncaricoXML().get(key);
+				if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getNuovoIncarico()!=null)
+					countOk = countOk + value.getConsulenti().getNuovoIncarico().size();
+			}
 		}
 		return countOk;
 	}
 
 	public Integer getCountUpdIncarichiOkEstratti() {
-		Map<String, Comunicazione> map = null;
-		if (isFl_crea_file_per_tipologia())
-			map = getMapFileModificaIncaricoXML();
-		else
-			map = getMapFileNuovoIncaricoXML();
-
-		if (map==null || map.isEmpty())
-			return 0;
 		int countOk=0;
-		for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			Comunicazione value = map.get(key);
-			if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getModificaIncarico()!=null)
-				countOk = countOk + value.getConsulenti().getModificaIncarico().size();
+		if (isFl_crea_file_perla()){
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType>> mapPerla = getMapFileModificaIncaricoXMLPerla();
+			if (mapPerla==null || mapPerla.isEmpty())
+				return 0;
+			for (Iterator<String> iterator = mapPerla.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType> value = mapPerla.get(key);
+				if (value!=null && value.getValue()!=null && value.getValue().getVariazioneIncarichi()!=null &&
+					value.getValue().getVariazioneIncarichi().getModificaIncarichi()!=null && 
+					value.getValue().getVariazioneIncarichi().getModificaIncarichi().getConsulente()!=null)
+					countOk = countOk + value.getValue().getVariazioneIncarichi().getModificaIncarichi().getConsulente().size();
+			}
+		} else {
+			Map<String, Comunicazione> map = null;
+			if (isFl_crea_file_per_tipologia())
+				map = getMapFileModificaIncaricoXML();
+			else
+				map = getMapFileNuovoIncaricoXML();
+	
+			if (map==null || map.isEmpty())
+				return 0;
+			for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				Comunicazione value = map.get(key);
+				if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getModificaIncarico()!=null)
+					countOk = countOk + value.getConsulenti().getModificaIncarico().size();
+			}
 		}
 		return countOk;
 	}
 
 	public Integer getCountDelIncarichiOkEstratti() {
-		Map<String, Comunicazione> map = null;
-		if (isFl_crea_file_per_tipologia())
-			map = getMapFileCancellaIncaricoXML();
-		else
-			map = getMapFileNuovoIncaricoXML();
-
-		if (map==null || map.isEmpty())
-			return 0;
 		int countOk=0;
-		for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			Comunicazione value = map.get(key);
-			if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getCancellaIncarico()!=null)
-				countOk = countOk + value.getConsulenti().getCancellaIncarico().size();
+		if (isFl_crea_file_perla()){
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType>> mapPerla = getMapFileCancellaIncaricoXMLPerla();
+			if (mapPerla==null || mapPerla.isEmpty())
+				return 0;
+			for (Iterator<String> iterator = mapPerla.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType> value = mapPerla.get(key);
+				if (value!=null && value.getValue()!=null && value.getValue().getCancellazioneIncarichi()!=null &&
+					value.getValue().getCancellazioneIncarichi().getIncarichi()!=null && value.getValue().getCancellazioneIncarichi().getIncarichi().getConsulente()!=null)
+					countOk = countOk + value.getValue().getCancellazioneIncarichi().getIncarichi().getConsulente().size();
+			}
+		} else {
+			Map<String, Comunicazione> map = null;
+			if (isFl_crea_file_per_tipologia())
+				map = getMapFileCancellaIncaricoXML();
+			else
+				map = getMapFileNuovoIncaricoXML();
+	
+			if (map==null || map.isEmpty())
+				return 0;
+			for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				Comunicazione value = map.get(key);
+				if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getCancellaIncarico()!=null)
+					countOk = countOk + value.getConsulenti().getCancellaIncarico().size();
+			}
 		}
 		return countOk;
 	}
 
 	public Integer getCountInsIncarichiErrEstratti() {
-		if (getMapFileAnomalieNuovoIncaricoXML()==null || getMapFileAnomalieNuovoIncaricoXML().isEmpty())
-			return 0;
 		int countOk=0;
-		for (Iterator<String> iterator = getMapFileAnomalieNuovoIncaricoXML().keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			EsitoComunicazione value = getMapFileAnomalieNuovoIncaricoXML().get(key);
-			if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getNuovoIncarico()!=null)
-				countOk = countOk + value.getConsulenti().getNuovoIncarico().size();
+		if (getFl_perla()){
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType>> mapPerla = getMapFileAnomalieNuovoIncaricoXMLPerla();
+			if (mapPerla==null || mapPerla.isEmpty())
+				return 0;
+			for (Iterator<String> iterator = mapPerla.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				JAXBElement<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType> value = mapPerla.get(key);
+				if (value!=null && value.getValue()!=null && value.getValue().getEsitoInserimentoIncarichi()!=null &&
+					value.getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi()!=null && value.getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente()!=null)
+					countOk = countOk + value.getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().size();
+			}
+		} else {
+			if (getMapFileAnomalieNuovoIncaricoXML()==null || getMapFileAnomalieNuovoIncaricoXML().isEmpty())
+				return 0;
+			for (Iterator<String> iterator = getMapFileAnomalieNuovoIncaricoXML().keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				EsitoComunicazione value = getMapFileAnomalieNuovoIncaricoXML().get(key);
+				if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getNuovoIncarico()!=null)
+					countOk = countOk + value.getConsulenti().getNuovoIncarico().size();
+			}
 		}
 		return countOk;
 	}
 
 	public Integer getCountUpdIncarichiErrEstratti() {
-		if (getMapFileAnomalieModificaIncaricoXML()==null || getMapFileAnomalieModificaIncaricoXML().isEmpty())
-			return 0;
 		int countOk=0;
-		for (Iterator<String> iterator = getMapFileAnomalieModificaIncaricoXML().keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			EsitoComunicazione value = getMapFileAnomalieModificaIncaricoXML().get(key);
-			if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getModificaIncarico()!=null)
-				countOk = countOk + value.getConsulenti().getModificaIncarico().size();
+		if (getFl_perla()){
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType>> mapPerla = getMapFileAnomalieModificaIncaricoXMLPerla();
+			if (mapPerla==null || mapPerla.isEmpty())
+				return 0;
+			for (Iterator<String> iterator = mapPerla.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				JAXBElement<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType> value = mapPerla.get(key);
+				if (value!=null && value.getValue()!=null && value.getValue().getEsitoVariazioneIncarichi()!=null &&
+					value.getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi()!=null && 
+					value.getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente()!=null)
+					countOk = countOk + value.getValue().getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().size();
+			}
+		} else {
+			if (getMapFileAnomalieModificaIncaricoXML()==null || getMapFileAnomalieModificaIncaricoXML().isEmpty())
+				return 0;
+			for (Iterator<String> iterator = getMapFileAnomalieModificaIncaricoXML().keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				EsitoComunicazione value = getMapFileAnomalieModificaIncaricoXML().get(key);
+				if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getModificaIncarico()!=null)
+					countOk = countOk + value.getConsulenti().getModificaIncarico().size();
+			}
 		}
 		return countOk;
 	}
 
 	public Integer getCountDelIncarichiErrEstratti() {
-		if (getMapFileAnomalieCancellaIncaricoXML()==null || getMapFileAnomalieCancellaIncaricoXML().isEmpty())
-			return 0;
 		int countOk=0;
-		for (Iterator<String> iterator = getMapFileAnomalieCancellaIncaricoXML().keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			EsitoComunicazione value = getMapFileAnomalieCancellaIncaricoXML().get(key);
-			if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getCancellaIncarico()!=null)
-				countOk = countOk + value.getConsulenti().getCancellaIncarico().size();
+		if (getFl_perla()){
+			Map<String, JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType>> mapPerla = getMapFileAnomalieCancellaIncaricoXMLPerla();
+			if (mapPerla==null || mapPerla.isEmpty())
+				return 0;
+			for (Iterator<String> iterator = mapPerla.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				JAXBElement<it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ComunicazioneType> value = mapPerla.get(key);
+				if (value!=null && value.getValue()!=null && value.getValue().getEsitoCancellazioneIncarichi()!=null &&
+					value.getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi()!=null && 
+					value.getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente()!=null)
+					countOk = countOk + value.getValue().getEsitoCancellazioneIncarichi().getEsitoIncarichi().getConsulente().size();
+			}
+		} else {
+			if (getMapFileAnomalieCancellaIncaricoXML()==null || getMapFileAnomalieCancellaIncaricoXML().isEmpty())
+				return 0;
+			for (Iterator<String> iterator = getMapFileAnomalieCancellaIncaricoXML().keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				EsitoComunicazione value = getMapFileAnomalieCancellaIncaricoXML().get(key);
+				if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getCancellaIncarico()!=null)
+					countOk = countOk + value.getConsulenti().getCancellaIncarico().size();
+			}
 		}
 		return countOk;
 	}
 
 	public BigDecimal getTotImportoNuoviIncarichiComunicato() {
-		if (getComunicazione()==null || getComunicazione().getConsulenti()==null || getComunicazione().getConsulenti().getNuovoIncarico()==null ||
-			getComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
-			return BigDecimal.ZERO;
 		BigDecimal totale = BigDecimal.ZERO;
-		for (Iterator<Comunicazione.Consulenti.NuovoIncarico> iterator = getComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
-			Comunicazione.Consulenti.NuovoIncarico type = iterator.next();
-			totale = totale.add(type.getImportoPrevisto());
+		if (getFl_perla()){
+			if (getComunicazioneNuovoIncaricoPerla()==null || getComunicazioneNuovoIncaricoPerla().getValue()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi().getNuoviIncarichi()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi().getNuoviIncarichi().getConsulente().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType> iterator = getComunicazioneNuovoIncaricoPerla().getValue().getInserimentoIncarichi().getNuoviIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+				it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType type = iterator.next();
+				if (type.getIncarico()!=null && type.getIncarico().getImporto()!=null)
+					totale = totale.add(type.getIncarico().getImporto());
+			}
+		} else {
+			if (getComunicazione()==null || getComunicazione().getConsulenti()==null || getComunicazione().getConsulenti().getNuovoIncarico()==null ||
+				getComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<Comunicazione.Consulenti.NuovoIncarico> iterator = getComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
+				Comunicazione.Consulenti.NuovoIncarico type = iterator.next();
+				totale = totale.add(type.getImportoPrevisto());
+			}
 		}
 		return totale;
 	}
 
 	public BigDecimal getTotImportoNuoviIncarichiOkRicevuti() {
-		if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getNuovoIncarico()==null ||
-			getEsitoComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
-			return BigDecimal.ZERO;
 		BigDecimal totale = BigDecimal.ZERO;
-		for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator = getEsitoComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
-			EsitoComunicazione.Consulenti.NuovoIncarico type = iterator.next();
-			if (type.getEsito()==null || type.getEsito().equals(Esito.OK))
-				totale = totale.add(type.getImportoPrevisto());
+		if (getFl_perla()){
+			if (getComunicazioneNuovoIncaricoPerla()==null || getComunicazioneNuovoIncaricoPerla().getValue()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType> iterator = getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+				it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType type = iterator.next();
+				totale = totale.add(BigDecimal.ZERO);
+			}
+		} else {
+			for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator = getEsitoComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
+				EsitoComunicazione.Consulenti.NuovoIncarico type = iterator.next();
+				if (type.getEsito()==null || type.getEsito().equals(Esito.OK))
+					totale = totale.add(type.getImportoPrevisto());
+			}
 		}
 		return totale;
 	}
 
 	public BigDecimal getTotImportoNuoviIncarichiErrRicevuti() {
-		if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getNuovoIncarico()==null ||
-			getEsitoComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
-			return BigDecimal.ZERO;
 		BigDecimal totale = BigDecimal.ZERO;
-		for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator = getEsitoComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
-			EsitoComunicazione.Consulenti.NuovoIncarico type = iterator.next();
-			if (type.getEsito()!=null && type.getEsito().equals(Esito.ERRATO)) 
-				totale = totale.add(type.getImportoPrevisto());
+		if (getFl_perla()){
+			if (getComunicazioneNuovoIncaricoPerla()==null || getComunicazioneNuovoIncaricoPerla().getValue()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi()==null ||
+				getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType> iterator = getComunicazioneNuovoIncaricoPerla().getValue().getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().iterator(); iterator.hasNext();) {
+				it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType type = iterator.next();
+				totale = totale.add(BigDecimal.ZERO);
+			}
+		} else {
+			if (getEsitoComunicazione()==null || getEsitoComunicazione().getConsulenti()==null || getEsitoComunicazione().getConsulenti().getNuovoIncarico()==null ||
+				getEsitoComunicazione().getConsulenti().getNuovoIncarico().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator = getEsitoComunicazione().getConsulenti().getNuovoIncarico().iterator(); iterator.hasNext();) {
+				EsitoComunicazione.Consulenti.NuovoIncarico type = iterator.next();
+				if (type.getEsito()!=null && type.getEsito().equals(Esito.ERRATO)) 
+					totale = totale.add(type.getImportoPrevisto());
+			}
 		}
 		return totale;
 	}
 
 	public BigDecimal getTotImportoNuoviIncarichiOkEstratti() {
-		if (getMapFileNuovoIncaricoXML()==null || getMapFileNuovoIncaricoXML().isEmpty())
-			return BigDecimal.ZERO;
 		BigDecimal totale = BigDecimal.ZERO;
-		for (Iterator<String> iterator = getMapFileNuovoIncaricoXML().keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			Comunicazione value = getMapFileNuovoIncaricoXML().get(key);
-			if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getNuovoIncarico()!=null) {
-				for (Iterator<Comunicazione.Consulenti.NuovoIncarico> iterator2 = value.getConsulenti().getNuovoIncarico().iterator(); iterator2.hasNext();) {
-					Comunicazione.Consulenti.NuovoIncarico type = iterator2.next();
-					totale = totale.add(type.getImportoPrevisto());
+		if (isFl_crea_file_perla()){
+			if (getMapFileNuovoIncaricoXMLPerla()==null || getMapFileNuovoIncaricoXMLPerla().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<String> iterator = getMapFileNuovoIncaricoXMLPerla().keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType value = getMapFileNuovoIncaricoXMLPerla().get(key).getValue();
+				if (value!=null && value.getInserimentoIncarichi()!=null && value.getInserimentoIncarichi().getNuoviIncarichi()!=null && 
+					value.getInserimentoIncarichi().getNuoviIncarichi().getConsulente()!=null) {
+					for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType> iterator2 = value.getInserimentoIncarichi().getNuoviIncarichi().getConsulente().iterator(); iterator2.hasNext();) {
+						it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType type = iterator2.next();
+						if (type.getIncarico()!=null)
+							totale = totale.add(type.getIncarico().getImporto());
+					}
+				}
+			}
+		} else {
+			if (getMapFileNuovoIncaricoXML()==null || getMapFileNuovoIncaricoXML().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<String> iterator = getMapFileNuovoIncaricoXML().keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				Comunicazione value = getMapFileNuovoIncaricoXML().get(key);
+				if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getNuovoIncarico()!=null) {
+					for (Iterator<Comunicazione.Consulenti.NuovoIncarico> iterator2 = value.getConsulenti().getNuovoIncarico().iterator(); iterator2.hasNext();) {
+						Comunicazione.Consulenti.NuovoIncarico type = iterator2.next();
+						totale = totale.add(type.getImportoPrevisto());
+					}
 				}
 			}
 		}
@@ -556,16 +1009,32 @@ public class Incarichi_archivio_xml_fpBulk extends Incarichi_archivio_xml_fpBase
 	}
 
 	public BigDecimal getTotImportoNuoviIncarichiErrEstratti() {
-		if (getMapFileAnomalieNuovoIncaricoXML()==null || getMapFileAnomalieNuovoIncaricoXML().isEmpty())
-			return BigDecimal.ZERO;
 		BigDecimal totale = BigDecimal.ZERO;
-		for (Iterator<String> iterator = getMapFileAnomalieNuovoIncaricoXML().keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			EsitoComunicazione value = getMapFileAnomalieNuovoIncaricoXML().get(key);
-			if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getNuovoIncarico()!=null) {
-				for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator2 = value.getConsulenti().getNuovoIncarico().iterator(); iterator2.hasNext();) {
-					EsitoComunicazione.Consulenti.NuovoIncarico type = iterator2.next();
-					totale = totale.add(type.getImportoPrevisto());
+		if (getFl_perla()){
+			if (getMapFileAnomalieNuovoIncaricoXMLPerla()==null || getMapFileAnomalieNuovoIncaricoXMLPerla().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<String> iterator = getMapFileAnomalieNuovoIncaricoXMLPerla().keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType value = getMapFileAnomalieNuovoIncaricoXMLPerla().get(key).getValue();
+				if (value!=null && value.getEsitoInserimentoIncarichi()!=null && value.getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi()!=null && 
+					value.getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente()!=null) {
+					for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType> iterator2 = value.getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().iterator(); iterator2.hasNext();) {
+						it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType type = iterator2.next();
+						totale = totale.add(BigDecimal.ZERO);
+					}
+				}
+			}
+		} else {
+			if (getMapFileAnomalieNuovoIncaricoXML()==null || getMapFileAnomalieNuovoIncaricoXML().isEmpty())
+				return BigDecimal.ZERO;
+			for (Iterator<String> iterator = getMapFileAnomalieNuovoIncaricoXML().keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				EsitoComunicazione value = getMapFileAnomalieNuovoIncaricoXML().get(key);
+				if (value!=null && value.getConsulenti()!=null && value.getConsulenti().getNuovoIncarico()!=null) {
+					for (Iterator<EsitoComunicazione.Consulenti.NuovoIncarico> iterator2 = value.getConsulenti().getNuovoIncarico().iterator(); iterator2.hasNext();) {
+						EsitoComunicazione.Consulenti.NuovoIncarico type = iterator2.next();
+						totale = totale.add(type.getImportoPrevisto());
+					}
 				}
 			}
 		}

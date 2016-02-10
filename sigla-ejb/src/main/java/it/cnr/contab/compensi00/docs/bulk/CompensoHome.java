@@ -1,53 +1,39 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.cmis.acl.ACLType;
 import it.cnr.contab.cmis.acl.Permission;
-import it.cnr.contab.cmis.acl.Role;
 import it.cnr.contab.cmis.acl.SIGLAGroups;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
-import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
-import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-
-import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import javax.persistence.PersistenceException;
-
-import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
-
-import it.cnr.contab.config00.esercizio.bulk.*;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
-import it.cnr.contab.docamm00.service.DocAmmCMISService;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.contab.missioni00.docs.bulk.*;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.service.LDAPService;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.Broker;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.sql.Types;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 public class CompensoHome extends BulkHome implements
 		it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaHome {
@@ -280,38 +266,14 @@ public class CompensoHome extends BulkHome implements
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Tipo_trattamentoBulk loadTipo_trattamento(CompensoBulk compenso)
-		throws PersistencyException {
-		Tipo_trattamentoHome tipoTrattamentoHome = (Tipo_trattamentoHome) getHomeCache()
-			.getHome(Tipo_trattamentoBulk.class);
-		SQLBuilder sql = tipoTrattamentoHome.createSQLBuilder();
-		sql.addClause(FindClause.AND, "cd_trattamento", SQLBuilder.EQUALS, compenso.getCd_trattamento());
-		tipoTrattamentoHome.addClauseValidita(sql, compenso.getDt_registrazione());
-		List<Tipo_trattamentoBulk> trattamenti = tipoTrattamentoHome.fetchAll(sql);
-		if (trattamenti.isEmpty())
-			return null;
-		if (trattamenti.size() > 1)
-			throw new PersistencyException("Esistono più trattamenti con codice "+compenso.getCd_trattamento());
-		return trattamenti.get(0);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Boolean archiviaStampa(UserContext userContext, MandatoBulk mandato, IDocumentoAmministrativoSpesaBulk docAmm)
+	public void archiviaStampa(UserContext userContext, CompensoBulk compenso)
 			throws IntrospectionException, PersistencyException {
-		CompensoBulk compenso = (CompensoBulk)docAmm;
-		compenso.setTipoTrattamento(loadTipo_trattamento(compenso));
-		if (compenso.getTipoTrattamento() == null)
-			throw new PersistenceException("Trattamento non trovato: "+compenso.getCd_trattamento());
-		TerzoBulk terzo = (TerzoBulk) getHomeCache().getHome(TerzoBulk.class).
-			findByPrimaryKey(new TerzoBulk(compenso.getCd_terzo()));
-		if (terzo == null || terzo.getAnagrafico() == null)
-			return Boolean.FALSE;
-		
 		Boolean isDipendente = Boolean.FALSE;
 		Integer matricola = null;
 		if (compenso.getTipoRapporto().isDipendente()) {
 			Collection<RapportoBulk> rapporti = ((AnagraficoHome) getHomeCache()
-					.getHome(AnagraficoBulk.class)).findRapporti(terzo.getAnagrafico());
+					.getHome(AnagraficoBulk.class)).findRapporti(compenso
+					.getTerzo().getAnagrafico());
 			for (RapportoBulk rapporto : rapporti) {
 				if (rapporto.getMatricola_dipendente() != null) {
 					isDipendente = Boolean.TRUE;
@@ -320,105 +282,57 @@ public class CompensoHome extends BulkHome implements
 				}
 			}
 		}
-		if (isDipendente && compenso.getTipoRapporto().isDipendente() 
-				&& !compenso.isDaMissione()) {
-			
-			try {
+		if (isDipendente && compenso.getTipoRapporto().isDipendente() ) {
+			if (compenso.getMissione() == null && (
+					(compenso.getStato_pagamento_fondo_eco().equals(MissioneBulk.REGISTRATO_IN_FONDO_ECO) &&
+						compenso.getDt_pagamento_fondo_eco() != null))) {
 				Print_spoolerBulk print = new Print_spoolerBulk();
 				print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
 				print.setFlEmail(false);
-				//TODO da Controllare
-				if (compenso.getTipoTrattamento().getFl_tfr()){
-					print.setReport("/doccont/doccont/vpg_man_rev_ass.jasper");
-					print.setNomeFile("Mandato n. "
-							+ mandato.getPg_mandato()
-							+ " della UO "
-							+ mandato.getCd_unita_organizzativa()
-							+ " del "
-							+ new SimpleDateFormat("dd-MM-yyyy").format(mandato
-									.getDt_emissione()) + ".pdf");
-					print.setUtcr(userContext.getUser());
-					print.addParam("aCd_cds", mandato.getCd_cds(), String.class);
-					print.addParam("aEs", mandato.getEsercizio(), Integer.class);
-					print.addParam("aPg_da", mandato.getPg_mandato(), Long.class);
-					print.addParam("aPg_a", mandato.getPg_mandato(), Long.class);
-					print.addParam("aDt_da", DateUtils.truncate(mandato.getDt_emissione()), Date.class);
-					print.addParam("aDt_a", DateUtils.truncate(mandato.getDt_emissione()), Date.class);
-					print.addParam("aCd_terzo", "%", String.class);
-				}else{
-					print.setReport("/docamm/docamm/compenso.jasper");
-					print.setNomeFile("Compenso n. "
-							+ compenso.getPg_compenso()
-							+ " della UO "
-							+ compenso.getCd_unita_organizzativa()
-							+ " del "
-							+ new SimpleDateFormat("dd-MM-yyyy").format(compenso
-									.getDt_registrazione()) + ".pdf");
-					print.setUtcr(userContext.getUser());
-					print.addParam("Esercizio", compenso.getEsercizio(), Integer.class);
-					print.addParam("CDS", compenso.getCd_cds(), String.class);
-					print.addParam("UO", compenso.getCd_unita_organizzativa(),
-							String.class);
-					print.addParam("Pg_inizio", compenso.getPg_compenso(), Long.class);
-					print.addParam("Pg_fine", compenso.getPg_compenso(), Long.class);
-					print.addParam("Terzo", "%", String.class);
-				}
-				
-				Report report = SpringUtil.getBean("printService",
-						PrintService.class).executeReport(userContext,
-						print);
+				print.setReport("/docamm/docamm/compenso.jasper");
+				print.setNomeFile("Compenso n. "
+						+ compenso.getPg_compenso()
+						+ " della UO "
+						+ compenso.getCd_unita_organizzativa()
+						+ " del "
+						+ new SimpleDateFormat("dd-MM-yyyy").format(compenso
+								.getDt_registrazione()) + ".pdf");
+				print.setUtcr(userContext.getUser());
+				print.addParam("Esercizio", compenso.getEsercizio(), Integer.class);
+				print.addParam("CDS", compenso.getCd_cds(), String.class);
+				print.addParam("UO", compenso.getCd_unita_organizzativa(),
+						String.class);
+				print.addParam("Pg_compenso", compenso.getPg_compenso().intValue(), Integer.class);
 
-				compenso
-						.setUnitaOrganizzativa((Unita_organizzativaBulk) getHomeCache()
-								.getHome(Unita_organizzativaBulk.class)
-								.findByPrimaryKey(
-										new Unita_organizzativaBulk(
-												compenso
-														.getCd_unita_organizzativa())));
-				compenso.setMandatoPagamento(mandato);
-				DocAmmCMISService docAmmCMISService = SpringUtil.getBean("docAmmCMISService",
-						DocAmmCMISService.class);
-				LDAPService ldapService = SpringUtil.getBean("ldapService",
-						LDAPService.class);
-				String[] uidMail = ldapService.getLdapUserFromMatricola(
-						userContext, matricola);
-				
-				String beanName;
-				String typePayment;
-				if (compenso.getTipoTrattamento() != null &&
-						compenso.getTipoTrattamento().getFl_stralcio_dip()!= null &&
-						!compenso.getTipoTrattamento().getFl_stralcio_dip() &&
-						compenso.getTipoTrattamento().getFl_tfr()){
-					beanName = "cmisPathIndAnzianita";
-					typePayment = "IndAnzianita";
-				}else{
-					beanName = "cmisPathConcFormazReddito";
-					typePayment = "ConcFormazReddito";
-				}
-				compenso.setTypePayment(typePayment);
-				
-				CMISPath cmisPath = SpringUtil.getBean(beanName,CMISPath.class);				
-				
-				cmisPath = docAmmCMISService.createFolderIfNotPresent(cmisPath, String.valueOf(mandato.getEsercizio()), 
-						"Esercizio "+mandato.getEsercizio(), "Esercizio "+mandato.getEsercizio());
-				cmisPath = docAmmCMISService.createFolderIfNotPresent(cmisPath, "Dipendenti", 
-						"Dipendenti", "Dipendenti");
-				cmisPath = docAmmCMISService.createFolderIfNotPresent(cmisPath, "Matricola "+matricola, 
-						uidMail[0], uidMail[0]);
+				try {
+					compenso
+							.setUnitaOrganizzativa((Unita_organizzativaBulk) getHomeCache()
+									.getHome(Unita_organizzativaBulk.class)
+									.findByPrimaryKey(
+											new Unita_organizzativaBulk(
+													compenso
+															.getCd_unita_organizzativa())));
+					CMISPath cmisPath = SpringUtil
+						.getBean("cmisPathConcFormazReddito",
+								CMISPath.class);
+					
+					SiglaCMISService cmisService = SpringUtil.getBean("cmisService",
+							SiglaCMISService.class);
+					LDAPService ldapService = SpringUtil.getBean("ldapService",
+							LDAPService.class);
+					String[] uidMail = ldapService.getLdapUserFromMatricola(
+							userContext, matricola);
 
-				Node node = docAmmCMISService.storePrintDocument(compenso, report, cmisPath, 
-						Permission.construct(uidMail[0], docAmmCMISService.getRoleConsumer()),
-						Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), docAmmCMISService.getRoleCoordinator()));
-				/**
-				 * Add another parent to Node
-				 */
-				docAmmCMISService.addAnotherParentToNode(mandato, docAmm, uidMail[0], node, beanName);
-			}catch (CmisConstraintException e) {
-				throw new PersistencyException(e);
-			}catch (Exception e) {
-				throw new PersistencyException(e);
+					Report report = SpringUtil.getBean("printService",
+							PrintService.class).executeReport(userContext,
+							print);
+					cmisService.storePrintDocument(compenso, report, cmisPath, 
+							Permission.construct(uidMail[0], ACLType.Consumer),
+							Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), ACLType.Coordinator));
+				} catch (Exception e) {
+					throw new PersistencyException(e);
+				}
 			}
 		}
-		return Boolean.TRUE;
 	}
 }

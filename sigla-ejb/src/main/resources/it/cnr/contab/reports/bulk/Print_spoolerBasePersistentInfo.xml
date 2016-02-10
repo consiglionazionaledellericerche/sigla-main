@@ -181,6 +181,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="400"
 			nullable="true" />			
+		<columnMapping
+			columnName="DS_NUMREG_PEC"
+			propertyName="ds_numreg_pec"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -244,4 +250,6 @@
 		name="cd_servizio_pec" />
 	<persistentProperty
 		name="ds_oggetto_pec" />
+	<persistentProperty
+		name="ds_numreg_pec" />
 </SQLPersistentInfo>

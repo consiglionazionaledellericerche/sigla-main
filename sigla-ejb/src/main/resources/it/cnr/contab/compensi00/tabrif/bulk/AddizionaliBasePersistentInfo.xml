@@ -60,6 +60,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+			columnName="NOTA"
+			propertyName="nota"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="ds_comune" />
@@ -79,4 +85,6 @@
 		name="utuv" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+		name="nota" />	
 </SQLPersistentInfo>

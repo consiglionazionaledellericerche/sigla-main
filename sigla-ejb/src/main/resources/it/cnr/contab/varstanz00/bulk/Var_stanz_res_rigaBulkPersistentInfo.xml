@@ -18,18 +18,6 @@
 			propertyName="linea_di_attivita.cd_linea_attivita"/>
 		<columnMapping
 			columnName="ESERCIZIO_VOCE"
-			propertyName="voce_f.esercizio"/>
-		<columnMapping
-			columnName="TI_APPARTENENZA"
-			propertyName="voce_f.ti_appartenenza"/>
-		<columnMapping
-			columnName="TI_GESTIONE"
-			propertyName="voce_f.ti_gestione"/>
-		<columnMapping
-			columnName="CD_VOCE"
-			propertyName="voce_f.cd_voce"/>
-		<columnMapping
-			columnName="ESERCIZIO_VOCE"
 			propertyName="elemento_voce.esercizio"/>
 		<columnMapping
 			columnName="TI_APPARTENENZA"
@@ -47,8 +35,6 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="linea_di_attivita"/>
-	<persistentProperty
-		name="voce_f" />
 	<persistentProperty
 		name="elemento_voce" />		
 </SQLPersistentInfo>

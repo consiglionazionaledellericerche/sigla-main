@@ -139,7 +139,7 @@ public class CRUDEsenzioni_addizionaliBP extends SimpleCRUDBP{
 				  bulk.setCd_catastale(codcat.trim());
 				  bulk.setDs_comune(comune.trim());
 				  bulk.setCd_provincia(prov);
-				  bulk.setImporto(imp.setScale(2,java.math.BigDecimal.ROUND_HALF_EVEN));
+				  bulk.setImporto(imp.setScale(2,java.math.BigDecimal.ROUND_HALF_UP));
 				  bulk=createComponentSession().verifica_aggiornamento(context.getUserContext(),(Esenzioni_addizionaliBulk)bulk);
 				  if(bulk !=null)				
 					  getDettagliCRUDController().add(context,bulk);

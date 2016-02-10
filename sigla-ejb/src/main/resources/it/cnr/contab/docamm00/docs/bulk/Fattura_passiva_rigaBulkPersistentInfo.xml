@@ -56,7 +56,9 @@
 		<columnMapping
 			columnName="CD_TERMINI_PAG"
 			propertyName="termini_pagamento.cd_termini_pag" />
-	
+		<columnMapping
+			columnName="PG_TROVATO"
+			propertyName="trovato.pg_trovato" />
 	</defaultColumnMap>		
 
 	<fetchPolicy
@@ -81,4 +83,6 @@
 		name="modalita_pagamento" />
 	<persistentProperty
 		name="termini_pagamento" />
+	<persistentProperty
+		name="trovato" />
 </SQLPersistentInfo>

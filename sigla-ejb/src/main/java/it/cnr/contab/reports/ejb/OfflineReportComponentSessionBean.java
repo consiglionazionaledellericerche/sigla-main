@@ -1,5 +1,9 @@
 package it.cnr.contab.reports.ejb;
+import java.rmi.RemoteException;
+
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.comp.OfflineReportComponent;
+import it.cnr.contab.utente00.comp.RuoloComponent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
@@ -123,4 +127,23 @@ public class OfflineReportComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}	
+	
+	
+	public boolean controllaStampeInCoda(it.cnr.jada.UserContext param0, it.cnr.contab.reports.bulk.Print_spoolerBulk param1) throws it.cnr.jada.comp.ComponentException,RemoteException{
+		try{
+			boolean result = ((OfflineReportComponent)componentObj).controllaStampeInCoda(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 }

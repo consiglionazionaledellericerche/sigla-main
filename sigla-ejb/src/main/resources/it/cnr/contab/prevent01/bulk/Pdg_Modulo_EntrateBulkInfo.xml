@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 <!-- I campi im_entrata_tot - esercizo_inizio - esercizio_fine - im_spese_vive - ds_spese_vive
 	 possono essere null -->
@@ -126,9 +126,9 @@
 		name="find_classificazione_voci"
 		property="classificazione_voci"
 		inputType="SEARCHTOOL"
-		formName="searchtool"
-		columnSet="searchtool"
-		freeSearchSet="searchtool"
+		formName="searchtool_codlast"
+		columnSet="searchtool_codlast"
+		freeSearchSet="searchtool_codlast"
 		nullable="false"
 		completeOnSave = "true"
 		enabledOnSearch="true"
@@ -299,6 +299,36 @@
 		maxLength="30"
 		label="Modulo di Commessa" />	
 	<fieldProperty
+		name="dipartimento_liv2"
+		property="testata.progetto.progettopadre.cd_dipartimento"
+		descProperty="testata.progetto.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		maxLength="10"
+		label="Programma" />		
+	<fieldProperty
+		name="cd_progetto_liv1"
+		property="testata.progetto.progettopadre.cd_progetto"
+		descProperty="testata.progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="10"
+		label="Area Progettuale" />
+	<fieldProperty
+		name="cd_progetto_liv2"
+		property="testata.progetto.cd_progetto"
+		descProperty="testata.progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="10"
+		label="Progetto" />
+	<fieldProperty
 		name="classificazione"
 		property="classificazione_voci.cd_classificazione"
 		descProperty="classificazione_voci.ds_classificazione"
@@ -419,6 +449,12 @@
 	<formFieldProperty
 		name="modulo" />	
 	<formFieldProperty
+		name="dipartimento_liv2" />		
+	<formFieldProperty
+		name="cd_progetto_liv1" />
+	<formFieldProperty
+		name="cd_progetto_liv2" />
+	<formFieldProperty
 		name="classificazione" />	
 	<formFieldProperty
 		name="desctool_area" />	
@@ -502,4 +538,33 @@
 		name="im_entrata_a3" />
 	<columnFieldProperty
 		name="cd_cds_area"/>
+		
+	<columnSet name="without_area">
+	<columnFieldProperty
+		name="cd_classificazione" />	
+	<columnFieldProperty
+		name="natura" />	
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="ds_dettaglio" />	
+	<columnFieldProperty
+		name="im_entrata_tot" />
+	<columnFieldProperty
+		name="esercizio_inizio" />
+	<columnFieldProperty
+		name="esercizio_fine" />
+	<columnFieldProperty
+		name="im_entrata"
+		label="Proposta"
+		headerLabel="PREVISIONE anno corrente"/>
+	<columnFieldProperty
+		name="im_entrata_app" 		
+		label="Approvato"
+		headerLabel="PREVISIONE anno corrente"/>
+	<columnFieldProperty
+		name="im_entrata_a2" />
+	<columnFieldProperty
+		name="im_entrata_a3" />
+	</columnSet>		
 </bulkInfo>

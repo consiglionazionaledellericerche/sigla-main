@@ -616,6 +616,12 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 	Stampa_ricostruzione_residui_LAVBulk stampa, DipartimentoBulk dipartimento, CompoundFindClause clause) throws ComponentException, PersistencyException
 	{	
 		SQLBuilder sql = getHome(userContext, dipartimento.getClass()).createSQLBuilder();
+		java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(userContext));
+	 	sql.addClause("AND", "dt_istituzione", sql.LESS, lastDayOfYear);
+		sql.openParenthesis("AND");
+		sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS, lastDayOfYear);
+		sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
+		sql.closeParenthesis();
 		sql.addClause( clause );
 		return sql;
 	}		

@@ -111,7 +111,7 @@ public void initialize() {
 	setDt_fine_rata(MinicarrieraBulk.getDataOdierna());
 	setDt_scadenza(MinicarrieraBulk.getDataOdierna());
 
-	setIm_rata(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_rata(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	
 	setStato_ass_compenso(STATO_NON_ASS_COMPENSO);
 }

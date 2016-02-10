@@ -62,12 +62,18 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	
 	// TIPO_RAPP_IMPIEGO CHAR(3) NULL
 	private java.lang.String tipo_rapp_impiego;
+	
+	// FL_VISIBILE_A_TUTTI CHAR(1) NOT NULL
+	private java.lang.Boolean fl_visibile_a_tutti;
 
-	// FL_STRALCIO_DIP CHAR(1)
-	private java.lang.Boolean fl_stralcio_dip;
-
-	// FL_STRALCIO_DIP CHAR(1)
-	private java.lang.Boolean fl_tfr;
+	// FL_PIGNORATO_OBBL CHAR(1) NOT NULL
+	private java.lang.Boolean fl_pignorato_obbl;
+	
+	// FL_PIGNORATO_OBBL CHAR(1) NOT NULL
+	private java.lang.Boolean fl_tipo_prestazione_obbl;	
+	
+	// FL_AGEVOLAZIONI_RIENTRO_LAV CHAR(1) NOT NULL
+	private java.lang.Boolean fl_agevolazioni_rientro_lav;
 	
 public Tipo_trattamentoBase() {
 	super();
@@ -268,16 +274,30 @@ public java.lang.String getTipo_rapp_impiego() {
 public void setTipo_rapp_impiego(java.lang.String tipo_rapp_impiego) {
 	this.tipo_rapp_impiego = tipo_rapp_impiego;
 }
-public java.lang.Boolean getFl_stralcio_dip() {
-	return fl_stralcio_dip;
+public java.lang.Boolean getFl_visibile_a_tutti() {
+		return fl_visibile_a_tutti;
 }
-public void setFl_stralcio_dip(java.lang.Boolean fl_stralcio_dip) {
-	this.fl_stralcio_dip = fl_stralcio_dip;
+public void setFl_visibile_a_tutti(java.lang.Boolean fl_visibile_a_tutti) {
+		this.fl_visibile_a_tutti = fl_visibile_a_tutti;
 }
-public java.lang.Boolean getFl_tfr() {
-	return fl_tfr;
+public java.lang.Boolean getFl_pignorato_obbl() {
+	return fl_pignorato_obbl;
 }
-public void setFl_tfr(java.lang.Boolean fl_tfr) {
-	this.fl_tfr = fl_tfr;
+public void setFl_pignorato_obbl(java.lang.Boolean fl_pignorato_obbl) {
+	this.fl_pignorato_obbl = fl_pignorato_obbl;
+}
+public java.lang.Boolean getFl_tipo_prestazione_obbl() {
+	return fl_tipo_prestazione_obbl;
+}
+public void setFl_tipo_prestazione_obbl(
+		java.lang.Boolean fl_tipo_prestazione_obbl) {
+	this.fl_tipo_prestazione_obbl = fl_tipo_prestazione_obbl;
+}
+public java.lang.Boolean getFl_agevolazioni_rientro_lav() {
+	return fl_agevolazioni_rientro_lav;
+}
+public void setFl_agevolazioni_rientro_lav(
+		java.lang.Boolean fl_agevolazioni_rientro_lav) {
+	this.fl_agevolazioni_rientro_lav = fl_agevolazioni_rientro_lav;
 }
 }

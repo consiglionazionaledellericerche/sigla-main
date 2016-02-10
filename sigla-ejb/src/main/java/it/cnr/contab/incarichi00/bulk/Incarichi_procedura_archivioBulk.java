@@ -3,22 +3,18 @@
  * Date 03/04/2008
  */
 package it.cnr.contab.incarichi00.bulk;
-import java.io.File;
-import java.sql.Timestamp;
-import java.util.StringTokenizer;
 
-import it.cnr.jada.persistency.Persister;
+import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProcedura;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProceduraBando;
+import it.cnr.contab.util.Utility;
+
+import java.io.IOException;
+
+import org.apache.chemistry.opencmis.client.api.Document;
+
 public class Incarichi_procedura_archivioBulk extends Incarichi_procedura_archivioKey{
 	private Incarichi_proceduraBulk incarichi_procedura;
-
-	static {
-		tipo_archivioKeys.put(TIPO_BANDO,"Avviso da pubblicare");
-//		tipo_archivioKeys.put(TIPO_DA_PUBBLICARE,"Allegato da pubblicare");
-		tipo_archivioKeys.put(TIPO_GENERICO,"Allegato generico");
-		tipo_archivioKeys.put(TIPO_CONTRATTO,"Contratto stipulato");
-		tipo_archivioKeys.put(TIPO_DECISIONE_A_CONTRATTARE,"Decisione a contrattare");
-		tipo_archivioKeys.put(TIPO_DECRETO_DI_NOMINA,"Decreto di nomina");
-	}
 
 	public Incarichi_procedura_archivioBulk() {
 		super();
@@ -61,5 +57,35 @@ public class Incarichi_procedura_archivioBulk extends Incarichi_procedura_archiv
 			getIncarichi_procedura().isProceduraInviataCorteConti())
 			return Incarichi_proceduraBulk.FASE_INVIO_CORTE_CONTI;
 		return getIncarichi_procedura().getFaseProcesso();
+	}
+	public CMISFile getCMISFile() throws IOException{
+		CMISFileProcedura cmisFile = null;
+		if (this.isBando()) {
+			if (this.getFile()==null)
+				cmisFile = new CMISFileProceduraBando(this);
+			else 
+				cmisFile = new CMISFileProceduraBando(this.getFile(), this.getNome_file(), this);
+		} else {
+			if (this.getFile()==null)
+				cmisFile = new CMISFileProcedura(this);
+			else 
+				cmisFile = new CMISFileProcedura(this.getFile(), this.getNome_file(), this);
+		}
+		return cmisFile;
+	}
+	public CMISFile getCMISFile(Document node) {
+		if (this.isBando())
+			return new CMISFileProceduraBando(node, this);
+		else
+			return new CMISFileProcedura(node, this);
+	}
+
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(super.constructCMISNomeFile());
+		nomeFile = nomeFile.append("-"+this.getIncarichi_procedura().getCd_unita_organizzativa());
+		nomeFile = nomeFile.append("-"+this.getIncarichi_procedura().getEsercizio().toString()+Utility.lpad(this.getIncarichi_procedura().getPg_procedura().toString(),9,'0'));
+		nomeFile = nomeFile.append("."+(this.getNome_file()!=null?this.getNome_file():Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getTipo_archivio()).toString()+".txt"));
+		return nomeFile.toString();
 	}
 }

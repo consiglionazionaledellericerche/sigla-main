@@ -31,7 +31,7 @@ public class ConsGAEComResSintBP extends ConsultazioniBP {
 		try {
 			super.init(config,context);
 			setMultiSelection(true);
-			setPageSize(10);
+			setPageSize(20);
 			setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(WorkpackageBulk.class));
 		} catch (RemoteException e) {
 			  throw new BusinessProcessException(e);

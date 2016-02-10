@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewKey" >
+	<defaultColumnMap
+		tableName="ASS_EVOLD_EVNEW" >
+		<columnMapping
+			columnName="ESERCIZIO_OLD"
+			propertyName="esercizio_old"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_OLD"
+			propertyName="ti_appartenenza_old"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_GESTIONE_OLD"
+			propertyName="ti_gestione_old"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_OLD"
+			propertyName="cd_elemento_voce_old"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_NEW"
+			propertyName="esercizio_new"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_NEW"
+			propertyName="ti_appartenenza_new"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_GESTIONE_NEW"
+			propertyName="ti_gestione_new"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_NEW"
+			propertyName="cd_elemento_voce_new"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_old"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_appartenenza_old"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_gestione_old"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_elemento_voce_old"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_new"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_appartenenza_new"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_gestione_new"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_elemento_voce_new"
+		partOfOid="true" />
+</SQLPersistentInfo>

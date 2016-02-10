@@ -80,6 +80,9 @@ public class Incarichi_repertorioBase extends Incarichi_repertorioKey implements
 //    DT_PROVV TIMESTAMP(7)
 	private java.sql.Timestamp dt_provv;
 
+//    DT_EFFICACIA TIMESTAMP(7)
+	private java.sql.Timestamp dt_efficacia;
+
 	public Incarichi_repertorioBase() {
 		super();
 	}
@@ -241,5 +244,12 @@ public class Incarichi_repertorioBase extends Incarichi_repertorioKey implements
 	}
 	public void setDt_provv(java.sql.Timestamp dtProvv) {
 		dt_provv = dtProvv;
+	}
+
+    public java.sql.Timestamp getDt_efficacia() {
+		return dt_efficacia;
+	}
+    public void setDt_efficacia(java.sql.Timestamp dt_efficacia) {
+		this.dt_efficacia = dt_efficacia;
 	}
 }

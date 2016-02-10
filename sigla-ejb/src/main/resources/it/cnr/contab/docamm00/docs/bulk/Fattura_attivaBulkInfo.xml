@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="contoAUO"
@@ -395,7 +395,7 @@
 		property="fl_liquidazione_differita"
 		inputType="CHECKBOX"
 		readonlyProperty="ROFl_liquidazione_differita"
-		label="Liquidazione Differita" />
+		label="Liquidazione Differita/Split Payment" />
 	<fieldProperty
 		name="fl_san_marino"
 		property="fl_san_marino"
@@ -596,11 +596,49 @@
 		enabledOnSearch="false"
 		enabledOnEdit="false"
 		label="Valuta"/>
-
-		
-	
-	
-	
+	<fieldProperty
+		name="codiceUnivocoUfficioIpa"
+		property="codiceUnivocoUfficioIpa"
+		maxLength="6"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Codice IPA"/>	
+	<fieldProperty
+		name="codiceInvioSdi"
+		property="codiceInvioSdi"
+		maxLength="30"
+		inputSize="30"
+		label="Identificativo SDI"
+		inputType="ROTEXT"/>
+	<fieldProperty
+		name="statoInvioSdi"
+		property="statoInvioSdi"
+		keysProperty="statoInvioSdiKeys"
+		label="Stato invio Fatturazione Elettronica"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="noteInvioSdi"
+		property="noteInvioSdi"
+		maxLength="500"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="5"
+		label="Note di scarto Fatturazione Elettronica"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"/>	
+	<fieldProperty
+		name="dtConsegnaSdi"
+		property="dtConsegnaSdi"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Data Consegna SDI"/>		
 	<fieldProperty
 		name="im_totale_iva"
 		property="im_totale_iva"
@@ -727,6 +765,12 @@
 		enabledOnFreeSearch="true"
 		label="Servizi/Beni"
 		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="collegamentoDocumentale"
+		property="collegamentoDocumentale"
+		inputType="TEXT"
+		label="Documenti Elettronici Collegati" />		
+
 	<findFieldProperty name="pg_fattura_attiva"/>
 	<findFieldProperty name="protocollo_iva" />	
 	<findFieldProperty name="ti_associato_manrevForSearch" />
@@ -753,6 +797,10 @@
 	<findFieldProperty name="cd_precedente" />
 	<findFieldProperty name="fl_congelata" />
 	<findFieldProperty name="ti_bene_servizioForSearch" />
+	<findFieldProperty name="statoInvioSdi" />
+	<findFieldProperty name="codiceInvioSdi" />
+	<findFieldProperty name="codiceUnivocoUfficioIpa" />
+	<findFieldProperty name="dtConsegnaSdi" />
 	
 	<formFieldProperty
 		name="ti_bene_servizio" />
@@ -860,6 +908,16 @@
 		name="dt_emissione" />
 	<formFieldProperty
 		name="riportata" />
+	<formFieldProperty
+		name="codiceUnivocoUfficioIpa" />
+	<formFieldProperty
+		name="codiceInvioSdi" />
+	<formFieldProperty
+		name="dtConsegnaSdi" />
+	<formFieldProperty
+		name="statoInvioSdi" />
+	<formFieldProperty
+		name="noteInvioSdi" />
 
 	<formFieldProperty
 		name="sezionaliFlagsRadioGroup" />
@@ -952,6 +1010,10 @@
 	<columnFieldProperty
 		name="ragione_sociale" />
 	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="partita_iva" />		
+	<columnFieldProperty
 		name="ti_causale_emissione" />
 	<columnFieldProperty
 		name="sezionale" />
@@ -965,6 +1027,14 @@
 		name="ti_associato_manrev" />
 	<columnFieldProperty
 		name="stato_cofi" />
+	<columnFieldProperty
+		name="codiceUnivocoUfficioIpa" />
+	<columnFieldProperty
+		name="codiceInvioSdi" />
+	<columnFieldProperty
+		name="dtConsegnaSdi" />
+	<columnFieldProperty
+		name="statoInvioSdi" />
 		
 	<columnSet
 		name="protocollazioneIvaSet">
@@ -987,7 +1057,30 @@
 		<columnFieldProperty name="im_totale_fattura" />
 		<columnFieldProperty name="ti_associato_manrev" />
 		<columnFieldProperty name="stato_cofi" />
+	</columnSet>
 
+	<columnSet name="fatturazioneElettronicaSet">
+	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="cd_uo_origine" />
+	<columnFieldProperty name="pg_fattura_attiva" />
+	<columnFieldProperty name="dt_registrazione" />
+	<columnFieldProperty name="ds_fattura_attiva" />
+	<columnFieldProperty name="cognome" />
+	<columnFieldProperty name="nome" />
+	<columnFieldProperty name="ragione_sociale" />
+	<columnFieldProperty name="ti_causale_emissione" />
+	<columnFieldProperty name="sezionale" />
+	<columnFieldProperty name="protocollo_iva" />
+	<columnFieldProperty name="dt_emissione" />
+	<columnFieldProperty name="im_totale_fattura" />
+	<columnFieldProperty name="ti_associato_manrev" />
+	<columnFieldProperty name="stato_cofi" />
+	<columnFieldProperty name="codiceUnivocoUfficioIpa" />
+	<columnFieldProperty name="codiceInvioSdi" />
+	<columnFieldProperty name="dtConsegnaSdi" />
+	<columnFieldProperty name="statoInvioSdi" />
+	<columnFieldProperty name="ti_fattura" />
+	<columnFieldProperty name="collegamentoDocumentale" />
 	</columnSet>
 
 </bulkInfo>

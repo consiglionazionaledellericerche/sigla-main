@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk"
+	homeClassName="it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioHome">
+	<defaultColumnMap
+		tableName="UTENTE_FIRMA_DETTAGLIO">
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="utente.cd_utente" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="DELEGATO_DA"
+			propertyName="delegato.cd_utente" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="utente"
+		partOfOid="true" />
+	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="delegato" />
+	
+</SQLPersistentInfo>

@@ -12,6 +12,7 @@ import it.cnr.contab.config00.sto.bulk.*;
 
 import java.util.*;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -20,9 +21,11 @@ import it.cnr.jada.persistency.Persister;
 import it.cnr.jada.util.*;
 
 public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDocumentoContabileBulk {
+	private static final long serialVersionUID = 1L;
 
 	private it.cnr.jada.util.OrderedHashtable anniResidui = new it.cnr.jada.util.OrderedHashtable();
 	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
+	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
 	private it.cnr.contab.doccont00.tabrif.bulk.Tipo_obbligazioneBulk tipo_obbligazione = new it.cnr.contab.doccont00.tabrif.bulk.Tipo_obbligazioneBulk();
 	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk creditore = new it.cnr.contab.anagraf00.core.bulk.TerzoBulk();
 	private OrderedHashtable esercizio_competenza_Keys;
@@ -40,6 +43,7 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 	private Collection lineeAttivitaColl = Collections.EMPTY_LIST;	
 	private Collection lineeAttivitaSelezionateColl = Collections.EMPTY_LIST;
 	private BulkList nuoveLineeAttivitaColl = new BulkList();
+	private boolean enableVoceNext = false;
 
 	public final static String STATO_OBB_PROVVISORIO 	= "P";
 	public final static String STATO_OBB_DEFINITIVO 	= "D";
@@ -184,7 +188,7 @@ public void completeFrom(
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	
 	Obbligazione_scadenzarioBulk scadenza = new Obbligazione_scadenzarioBulk(this);
 	scadenza.setUser(getUser());
@@ -210,13 +214,13 @@ public void completeFrom(
  * @param cd_cdr	
  * @return 
  */
-public it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk getArticolo( String cd_funzione, String cd_cdr ) 
+public it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk getArticolo( String cd_funzione, String cd_cdr ) 
 {
-	it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce;
+	it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk voce;
 	for ( Iterator i = getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 	{
-		voce = (it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) i.next();
-		if ( voce.getCd_funzione().equals( cd_funzione ) && voce.getCd_centro_responsabilita().equals( cd_cdr ) )
+		voce = (it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) i.next();
+		if ( voce.getCd_funzione().equals( cd_funzione ) && (!(voce instanceof Voce_fBulk) || ((Voce_fBulk)voce).getCd_centro_responsabilita().equals( cd_cdr ) ))
 			return voce;
 	}
 	return null;	
@@ -257,12 +261,12 @@ public java.util.Collection getCapitoliDiSpesaCdsSelezionatiColl() {
  * @param cd_funzione	
  * @return 
  */
-public it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk getCapitolo( String cd_funzione ) 
+public it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk getCapitolo( String cd_funzione ) 
 {
-	it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce;
+	it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk voce;
 	for ( Iterator i = getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 	{
-		voce = (it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) i.next();
+		voce = (it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) i.next();
 		if ( voce.getCd_funzione().equals( cd_funzione ) )
 			return voce;
 	}
@@ -568,17 +572,22 @@ public it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk getUnita_organizz
  *
  * @return Il valore della proprietà 'vociMap'
  */
-public PrimaryKeyHashMap getVociMap(  ) 
+public PrimaryKeyHashMap getVociMap(boolean flNuovoPdg ) 
 {
 	PrimaryKeyHashMap map = new PrimaryKeyHashMap();
 	Obbligazione_scad_voceBulk osv;
 	BigDecimal im_voce;
-	Voce_fBulk voce;
+	IVoceBilancioBulk voce;
+
 	for ( Iterator i = obbligazione_scadenzarioColl.iterator(); i.hasNext(); )
 		for ( Iterator j = ((Obbligazione_scadenzarioBulk) i.next()).getObbligazione_scad_voceColl().iterator(); j.hasNext(); )
 		{
 			osv = (Obbligazione_scad_voceBulk) j.next();
-			voce = new Voce_fBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
+			if (flNuovoPdg)
+				voce = new Elemento_voceBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
+			else
+				voce = new Voce_fBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
+			
 			im_voce = (BigDecimal) map.get( voce );
 			if ( im_voce == null )
 				map.put( voce, osv.getIm_voce() );
@@ -586,9 +595,18 @@ public PrimaryKeyHashMap getVociMap(  )
 				map.put( voce, im_voce.add( osv.getIm_voce()) );
 		}
 	return map;		
-		
-	
 }
+
+public PrimaryKeyHashMap getElementoVociMap( ) 
+{
+	return getVociMap(true);
+}
+
+public PrimaryKeyHashMap getVoceFMap( ) 
+{
+	return getVociMap(false);
+}
+
 /**
  * <!-- @TODO: da completare -->
  * Restituisce il valore della proprietà 'Obbligazione_scad_voceMap'
@@ -848,7 +866,7 @@ public void refreshCapitoliDiSpesaCdsSelezionatiColl()
 		Obbligazione_scad_voceBulk osv = (Obbligazione_scad_voceBulk) s.next();
 		for ( Iterator c = capitoliDiSpesaCdsColl.iterator(); c.hasNext(); )
 		{
-			it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) c.next();
+			it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) c.next();
 			if ( osv.getCd_voce().equals( voce.getCd_voce() ))
 				capitoli.put ( osv.getCd_voce(), voce );
 		}
@@ -875,7 +893,7 @@ public void refreshCapitoliDiSpesaCdsSelezionatiColl(java.util.List vociList)
 		OggettoBulk voceSel = (OggettoBulk)s.next();
 		for ( Iterator c = capitoliDiSpesaCdsColl.iterator(); c.hasNext(); )
 		{
-			it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) c.next();
+			it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) c.next();
 			if (voceSel instanceof V_assestatoBulk)  
 				if ( ((V_assestatoBulk)voceSel).getCd_voce().equals( voce.getCd_voce() ))
 					capitoli.put ( ((V_assestatoBulk)voceSel).getCd_voce(), voce );
@@ -1435,7 +1453,7 @@ public void validateNuovaLineaAttivita( it.cnr.contab.doccont00.core.bulk.Linea_
 	boolean found = false;
 	for ( Iterator i = getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 	{
-		if ( ((it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) i.next()).getCd_funzione().equals( latt.getFunzione().getCd_funzione()))
+		if ( ((it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) i.next()).getCd_funzione().equals( latt.getFunzione().getCd_funzione()))
 		{
 			found = true;
 			break;
@@ -1839,4 +1857,74 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		return isROFlGaraInCorso();
 	}
 
+	public it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk getElemento_voce_next() {
+		return elemento_voce_next;
+	}
+	
+	public void setElemento_voce_next(it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next) {
+		this.elemento_voce_next = elemento_voce_next;
+	}
+	
+	@Override
+	public Integer getEsercizio_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getEsercizio();
+	}
+
+	@Override
+	public void setEsercizio_ev_next(Integer esercizio_ev_next) {
+		this.getElemento_voce_next().setEsercizio(esercizio_ev_next);
+	}
+
+	@Override
+	public String getTi_appartenenza_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getTi_appartenenza();
+	}
+	
+	@Override
+	public void setTi_appartenenza_ev_next(String ti_appartenenza_ev_next) {
+		this.getElemento_voce_next().setTi_appartenenza(ti_appartenenza_ev_next);
+	}
+	
+	@Override
+	public String getTi_gestione_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getTi_gestione();
+	}
+	
+	@Override
+	public void setTi_gestione_ev_next(String ti_gestione_ev_next) {
+		this.getElemento_voce_next().setTi_gestione(ti_gestione_ev_next);
+	}
+	
+	@Override
+	public String getCd_elemento_voce_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getCd_elemento_voce();
+	}
+	
+	@Override
+	public void setCd_elemento_voce_next(String cd_elemento_voce_next) {
+		this.getElemento_voce_next().setCd_elemento_voce(cd_elemento_voce_next);
+	}
+
+	public boolean isROElemento_voce_next() {
+		return elemento_voce_next == null || elemento_voce_next.getCrudStatus() == NORMAL;
+	}
+	
+	public boolean isEnableVoceNext() {
+		return enableVoceNext;
+	}
+	public void setEnableVoceNext(boolean enableVoceNext) {
+		this.enableVoceNext = enableVoceNext;
+	}
 }

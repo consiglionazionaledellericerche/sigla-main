@@ -80,6 +80,8 @@ public class Inventario_beniBase extends Inventario_beniKey implements Keyed {
 	private java.math.BigDecimal variazione_piu;
 	
 	private java.lang.String targa;
+	
+	private java.lang.String seriale;
 
 public Inventario_beniBase() {
 	super();
@@ -380,5 +382,11 @@ public java.lang.String getTarga() {
 }
 public void setTarga(java.lang.String targa) {
 	this.targa = targa;
+}
+public java.lang.String getSeriale() {
+	return seriale;
+}
+public void setSeriale(java.lang.String seriale) {
+	this.seriale = seriale;
 }
 }

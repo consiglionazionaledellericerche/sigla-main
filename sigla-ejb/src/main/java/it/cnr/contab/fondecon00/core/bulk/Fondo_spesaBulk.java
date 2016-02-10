@@ -406,8 +406,8 @@ public OggettoBulk initializeForInsert(
 
 	initialize(bp, context);
 
-	setIm_ammontare_spesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setImportoNettoSpesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_ammontare_spesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	setImportoNettoSpesa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	setDs_spesa(null);
 	
 	try {

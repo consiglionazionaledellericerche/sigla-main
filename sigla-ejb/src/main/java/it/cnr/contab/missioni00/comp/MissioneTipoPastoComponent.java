@@ -164,6 +164,23 @@ private NazioneBulk findNazione(it.cnr.jada.UserContext userContext, String tipo
 		throw handleException(ex);
 	}
 }
+/*
+private RifAreePaesiEsteriBulk findAreePaesiEsteri(it.cnr.jada.UserContext userContext, Missione_tipo_pastoBulk bulk) throws ComponentException{
+
+	try{
+		if(bulk.getNazione().getTi_nazione().compareTo(TipoAreaGeografica.INDIFFERENTE)!=0)
+		{
+			RifAreePaesiEsteriHome home = (RifAreePaesiEsteriHome)getHome(userContext, RifAreePaesiEsteriBulk.class);
+			return home.findAreePaesiEsteri(bulk.getNazione().getCd_area_estera());
+		}
+		return new RifAreePaesiEsteriBulk()	;
+
+	}catch(it.cnr.jada.persistency.PersistencyException ex){
+		throw handleException(ex);
+	}
+}
+*/
+
 /**
  * Viene richiesto il completamento dell'oggetto bulk passato come parametro
  * Vengono cercate la nazione e la valuta associate al tipo area geografica
@@ -191,6 +208,7 @@ public Missione_tipo_pastoBulk gestioneNazione(UserContext userContext, Missione
 
 	return bulk;
 }
+
 /**
   * Prepara un OggettoBulk per la presentazione all'utente per una possibile
   * operazione di modifica.
@@ -259,6 +277,15 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectNazioneByClause(UserContext 
 	if (TipoAreaGeografica.ESTERO.equals(bulk.getTi_area_geografica()))
 		sql.addClause("AND", "ti_nazione", sql.NOT_EQUALS, TipoAreaGeografica.ITALIA);
 
+	sql.addClause(clauses);
+	return sql;
+}
+public it.cnr.jada.persistency.sql.SQLBuilder selectRifAreePaesiEsteriByClause(UserContext aUC, Missione_tipo_pastoBulk bulk, RifAreePaesiEsteriBulk aree, CompoundFindClause clauses) throws ComponentException {
+
+	RifAreePaesiEsteriHome areeHome = (RifAreePaesiEsteriHome)getHome(aUC, RifAreePaesiEsteriBulk.class);
+	it.cnr.jada.persistency.sql.SQLBuilder sql = areeHome.createSQLBuilder();
+	if (bulk.getNazione().getTi_nazione()!= null && bulk.getNazione().getTi_nazione().compareTo(TipoAreaGeografica.INDIFFERENTE) != 0)
+		sql.addClause("AND", "cd_area_estera", sql.EQUALS, bulk.getNazione().getCd_area_estera());
 	sql.addClause(clauses);
 	return sql;
 }

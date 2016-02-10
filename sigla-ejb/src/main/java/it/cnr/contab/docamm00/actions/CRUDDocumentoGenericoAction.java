@@ -385,7 +385,7 @@ private Forward basicDoRicercaObbligazione(ActionContext context, Documento_gene
         Filtro_ricerca_obbligazioniVBulk filtro= new Filtro_ricerca_obbligazioniVBulk();
 
         CRUDDocumentoGenericoPassivoBP bp= (CRUDDocumentoGenericoPassivoBP) context.getBusinessProcess();
-
+//        filtro.setSoloVociSenzaIndicazioneTrovato(true);
         //Documento_genericoBulk documento = ((Documento_genericoBulk) bp.getModel());
 
         //imposta il tipo documento
@@ -503,7 +503,7 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(java.util.List selectedM
         }
     }
 
-    importo= importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+    importo= importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
     return importo;
 }
 private void controllaQuadraturaAccertamenti(ActionContext context, Documento_genericoBulk doc) throws it.cnr.jada.comp.ComponentException {
@@ -849,7 +849,7 @@ public Forward doBlankSearchSospeso(ActionContext context,
 		sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
 		sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
 		lettera.setSospeso(sospeso);
-		java.math.BigDecimal zero = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		java.math.BigDecimal zero = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 		lettera.setIm_pagamento(zero);
 		//lettera.setIm_commissioni(zero);
 		//lettera.setDt_registrazione(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -1042,12 +1042,24 @@ public Forward doBringBackRemoveToCRUDMain_Dettaglio(ActionContext context) {
 public Forward doBringBackSearchListabanche(ActionContext context, Documento_generico_rigaBulk documentoGenericoRiga, BancaBulk banca) throws java.rmi.RemoteException {
 //imposta la banca selezionata
     try {
+    	fillModel(context);
+		it.cnr.jada.util.action.CRUDBP bp= (it.cnr.jada.util.action.CRUDBP) getBusinessProcess(context);
+		DocumentoGenericoComponentSession component= null;
+
+		Documento_genericoBulk documentoGenerico= (Documento_genericoBulk) bp.getModel();
+		if (!documentoGenerico.isGenericoAttivo()) {
+			component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoPassivoBP) bp).createComponentSession();
+		} else {
+			component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoAttivoBP) bp).createComponentSession();
+		}
+
 	    if (banca != null) {//per attivi la banca è quella sulla uo
 	        if (documentoGenericoRiga.getDocumento_generico().isGenericoAttivo()) {
 	            documentoGenericoRiga.setBanca_uo_cds(banca);
 	        } else
 	        //per passivi è quella del terzo
 	            documentoGenericoRiga.setBanca(banca);
+	        	documentoGenericoRiga.setCessionario(component.findCessionario(context.getUserContext(), documentoGenericoRiga));
 	    }
         return context.findDefaultForward();
 
@@ -1166,7 +1178,7 @@ public Forward doCalcolaTotalePerAccertamento(ActionContext context, it.cnr.cont
             documentoGenerico.setImportoTotalePerAccertamento(calcolaTotaleSelezionati((java.util.List) documentoGenerico.getDocumento_generico_accertamentiHash().get(accertamento)));
         } catch (it.cnr.jada.comp.ApplicationException e) {
 	        //imposta 0
-            documentoGenerico.setImportoTotalePerAccertamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+            documentoGenerico.setImportoTotalePerAccertamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
         }
     return context.findDefaultForward();
 }
@@ -1190,7 +1202,7 @@ public Forward doCalcolaTotalePerObbligazione(ActionContext context, it.cnr.cont
         try {
             documentoGenerico.setImportoTotalePerObbligazione(calcolaTotaleSelezionati((java.util.List) documentoGenerico.getDocumento_generico_obbligazioniHash().get(obbligazione)));
         } catch (it.cnr.jada.comp.ApplicationException e) {
-            documentoGenerico.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+            documentoGenerico.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
         }
     return context.findDefaultForward();
 }
@@ -1604,7 +1616,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
             if (scadenza == null)
                 throw new it.cnr.jada.comp.ApplicationException("Selezionare l'impegno da modificare in automatico!");
             java.math.BigDecimal importoScadenza=
-                getImportoPerAggiornamentoScadenzaObbligazioniInAutomatico(context, scadenza, documentoGenerico, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                getImportoPerAggiornamentoScadenzaObbligazioniInAutomatico(context, scadenza, documentoGenerico, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 
             java.util.Vector righeAssociate= (java.util.Vector) documentoGenerico.getDocumento_generico_obbligazioniHash().get(scadenza);
             if (righeAssociate == null || righeAssociate.isEmpty())
@@ -1617,7 +1629,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
                     (Obbligazione_scadenzarioBulk) h.modificaScadenzaInAutomatico(
                         context.getUserContext(),
                         scadenza,
-                        getImportoPerAggiornamentoScadenzaObbligazioniInAutomatico(context, scadenza, documentoGenerico, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)),
+                        getImportoPerAggiornamentoScadenzaObbligazioniInAutomatico(context, scadenza, documentoGenerico, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)),
                         false);
                 documentoGenerico.addToDefferredSaldi(scadenza.getObbligazione(), scadenza.getObbligazione().getSaldiInfo());
                 Forward fwd= basicDoBringBackOpenObbligazioniWindow(context, scadenza);
@@ -1639,7 +1651,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
             if (documentoGenerico.isFlagEnte() && Numerazione_doc_contBulk.TIPO_ACR_RES.equalsIgnoreCase(scadenza.getAccertamento().getCd_tipo_documento_cont()))
                 throw new it.cnr.jada.comp.ApplicationException("Impossibile modificare in automatico documenti contabili di tipo \"accertamenti residui\"!");
             java.math.BigDecimal importoScadenza=
-                getImportoPerAggiornamentoScadenzaAccertamentiInAutomatico(context, scadenza, documentoGenerico, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                getImportoPerAggiornamentoScadenzaAccertamentiInAutomatico(context, scadenza, documentoGenerico, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
             java.util.Vector righeAssociate= (java.util.Vector) documentoGenerico.getDocumento_generico_accertamentiHash().get(scadenza);
             if (righeAssociate == null || righeAssociate.isEmpty())
                 throw new it.cnr.jada.comp.ApplicationException("Associare dei dettagli prima di aggiornare in automatico la scadenza dell'accertamento!");
@@ -1650,7 +1662,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
                     (Accertamento_scadenzarioBulk) h.modificaScadenzaInAutomatico(
                         context.getUserContext(),
                         scadenza,
-                        getImportoPerAggiornamentoScadenzaAccertamentiInAutomatico(context, scadenza, documentoGenerico, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)),
+                        getImportoPerAggiornamentoScadenzaAccertamentiInAutomatico(context, scadenza, documentoGenerico, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)),
                         false);
                 documentoGenerico.addToDefferredSaldi(scadenza.getAccertamento(), scadenza.getAccertamento().getSaldiInfo());
                 Forward fwd= basicDoBringBackOpenAccertamentiWindow(context, scadenza);
@@ -1690,7 +1702,7 @@ public Forward doOnChangeModified(ActionContext context) {
         BigDecimal cambioAttuale = documentoGenerico.getCambio();
         if (cambioAttuale == null)
         	documentoGenerico.setCambio((cambioAttuale = new java.math.BigDecimal(0)));
-        cambioAttuale = cambioAttuale.setScale(3,BigDecimal.ROUND_HALF_EVEN);
+        cambioAttuale = cambioAttuale.setScale(4,BigDecimal.ROUND_HALF_UP);
         documentoGenerico.setCambio(cambioAttuale);
         if (cambioAttuale.compareTo(new java.math.BigDecimal(0))==0){
         	documentoGenerico.setCambio(vecchioCambio);
@@ -1801,10 +1813,10 @@ public Forward doOnFlagEnteChange(ActionContext context) {
 	    	//return context.findDefaultForward();
 		}
         if (documentoGenerico.isFlagEnte()
-            && (documentoGenerico.isGenericoAttivo()
-                && (documentoGenerico.getAccertamentiHash() == null || documentoGenerico.getAccertamentiHash().isEmpty())
-                || !documentoGenerico.isGenericoAttivo()
-                && (documentoGenerico.getObbligazioniHash() == null || documentoGenerico.getObbligazioniHash().isEmpty()))) {
+            && ((documentoGenerico.isGenericoAttivo()
+                && (documentoGenerico.getAccertamentiHash() == null || documentoGenerico.getAccertamentiHash().isEmpty()))
+                || (!documentoGenerico.isGenericoAttivo()
+                && (documentoGenerico.getObbligazioniHash() == null || documentoGenerico.getObbligazioniHash().isEmpty())))) {
             documentoGenerico= component.setEnte(context.getUserContext(), documentoGenerico);
             documentoGenerico.setPassivo_ente(true);
         } else {
@@ -1900,10 +1912,12 @@ public Forward doOnModalitaPagamentoChange(ActionContext context) {
                 if (coll == null || coll.isEmpty())
                     throw new it.cnr.jada.comp.ApplicationException("Non e' stato possibile trovare i riferimenti bancari");
                 if (documentoGenerico.isGenericoAttivo()) {
+                	((CRUDDocumentoGenericoAttivoBP)bp).setContoEnte(false);
 					if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(riga.getModalita_pagamento_uo_cds().getTi_pagamento()))
 		            	riga.setBanca_uo_cds(getBancaDefaultForCdsFrom(context, riga, coll));
 		            else {
 			        	BancaBulk banca = component.setContoEnteIn(context.getUserContext(), riga, coll);
+			        	((CRUDDocumentoGenericoAttivoBP)bp).setContoEnte(true);
 			        	if (banca == null)
 			        		banca = getBancaDefaultForCdsFrom(context, riga, coll);
 			        	riga.setBanca_uo_cds(banca);
@@ -1939,7 +1953,15 @@ public Forward doOnTipoDocumentoChange(ActionContext context) {
         //else
             //component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoPassivoBP) bp).createComponentSession();
 
-           
+        if (documentoGenerico.getCd_tipo_doc_amm() !=null && documentoGenerico.getCd_tipo_doc_amm().compareTo(documentoGenerico.GENERICO_S)!=0){
+        	documentoGenerico.setStato_liquidazione(null);
+        	documentoGenerico.setCausale(null);
+        }else if (documentoGenerico.getCd_tipo_doc_amm() !=null && documentoGenerico.getCd_tipo_doc_amm().compareTo(documentoGenerico.GENERICO_S)==0){
+        	if(documentoGenerico.getStato_liquidazione()==null){
+        		documentoGenerico.setStato_liquidazione(documentoGenerico.SOSP);
+        		documentoGenerico.setCausale(documentoGenerico.ATTLIQ);
+        	}
+        }
         if (documentoGenerico.getTipo_documento() != null && documentoGenerico.getTipo_documento().getFl_solo_partita_giro().booleanValue()) {
 
 	        if (!documentoGenerico.isDefaultValuta()) {
@@ -3721,5 +3743,71 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     		return handleException(context, t);
     	}
     	return context.findDefaultForward();
-    }
+    } 
+   public Forward doOnStatoLiquidazioneChange(ActionContext context) {
+		 try { 
+			 CRUDDocumentoGenericoPassivoBP bp=null; 
+	  		if (getBusinessProcess(context)instanceof CRUDDocumentoGenericoPassivoBP)
+				 bp = (CRUDDocumentoGenericoPassivoBP)getBusinessProcess(context);
+	  		if (bp!=null){ 
+				Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
+				//if (documento.getTipo_documento().getCd_tipo_documento_amm().compareTo(documento.GENERICO_S)==0)
+	  		 String oldCausale=documento.getCausale();
+	  		 fillModel(context);
+			 if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.LIQ)){
+		       	if(documento.getCausale()!=null){ 
+		       		documento.setCausale(null);
+		       	} 
+		     }else if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.SOSP)){
+		    	 documento.setCausale(documento.ATTLIQ);
+		     } else if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.NOLIQ)){
+		    	 documento.setCausale(documento.CONT);
+		     }
+		     bp.setModel(context, documento);
+	  		}
+		   } catch (Throwable t) {
+		        return handleException(context, t);
+		  }
+	return context.findDefaultForward();
+   }
+	public Forward doOnCausaleChange(ActionContext context) {
+		try {
+			  CRUDDocumentoGenericoPassivoBP bp=null; 
+		  		if (getBusinessProcess(context)instanceof CRUDDocumentoGenericoPassivoBP)
+					 bp = (CRUDDocumentoGenericoPassivoBP)getBusinessProcess(context);
+		  		if (bp!=null){
+					Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
+		  		 String oldCausale=documento.getCausale();
+		  		 fillModel(context);
+		         if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.LIQ)){
+		        	if(documento.getCausale()!=null){ 
+		        		documento.setCausale(null);
+		        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+		        	}
+		         }else if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.NOLIQ)){
+		        	
+		        	if (documento.getCausale()!= null && !documento.getCausale().equals(documento.CONT)){
+		        		if(oldCausale!=null)
+		        			documento.setCausale(oldCausale);
+		        		else
+		        			documento.setCausale(null);
+		        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+		        	}
+		         }else if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.SOSP)){
+		        	if (documento.getCausale()!= null && (!documento.getCausale().equals(documento.ATTLIQ)&&!documento.getCausale().equals(documento.CONT))){
+		        		if(oldCausale!=null )
+		        			documento.setCausale(oldCausale);
+		        		else
+		        			documento.setCausale(null);
+	        		  throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+		        	}
+		        }
+		 	       
+		        bp.setModel(context, documento);
+		  	}
+		  } catch (Throwable t) {
+		      return handleException(context, t);
+		  }
+		 return context.findDefaultForward();
+	}
 }

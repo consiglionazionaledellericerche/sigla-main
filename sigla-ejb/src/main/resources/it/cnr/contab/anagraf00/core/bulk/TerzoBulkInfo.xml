@@ -1,7 +1,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="descrizioneAnagrafica"
 		property="anagrafico.descrizioneAnagrafica"
@@ -128,7 +128,29 @@
 		property="note"
 		readonlyPropertyOnEdit="dipendente"
 		label="Note"
+		cols="40"
+		rows="2"
 		inputType="TEXTAREA" />
+	<fieldProperty
+		name="codiceUnivocoUfficioIpa"
+		property="codiceUnivocoUfficioIpa"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		label="Codice Univoco Ufficio IPA"
+		inputType="TEXT" />
+	<fieldProperty
+		name="codiceUnivocoPcc"
+		property="codiceUnivocoPcc"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		label="Codice Pcc"
+		inputType="TEXT" />	
+	<fieldProperty
+		name="denominazionePcc"
+		property="denominazionePcc"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		label="Denominazione Pcc"
+		cols="60"
+		rows="2"
+		inputType="TEXTAREA" />		
 	<fieldProperty
 		name="numero_civico_sede"
 		property="numero_civico_sede"
@@ -219,6 +241,7 @@
 		property="anagrafico.codice_fiscale"
 		label="Codice Fiscale"
 		inputType="TEXT"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		enabledOnSearch="true"
@@ -233,6 +256,12 @@
 		enabledOnInsert="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
+		/>
+	<fieldProperty
+		name="italianoEstero"
+		property="anagrafico.ti_italiano_estero_anag"
+		label="Italiano/Estero"
+		inputType="ROTEXT"
 		/>
 
 	<form
@@ -298,6 +327,15 @@
 		name="note"
 		/>
 	<formFieldProperty
+		name="codiceUnivocoUfficioIpa"
+		/>
+	<formFieldProperty
+		name="codiceUnivocoPcc"
+		/>	
+	<formFieldProperty
+		name="denominazionePcc"
+		/>		
+	<formFieldProperty
 		name="numero_civico_sede"
 		/>
 	<formFieldProperty
@@ -333,7 +371,10 @@
 	<formFieldProperty
 		name="dt_fine_validita"
 		/>
-
+	<formFieldProperty
+		name="italianoEstero"
+		/>
+		
 	<findFieldProperty
 		name="cd_terzo"
 		/>
@@ -386,8 +427,10 @@
 			enabledOnFreeSearch="true" />
 		<findFieldProperty
 			name="cd_precedente"
-			enabledOnFreeSearch="true"
-			/>
+			enabledOnFreeSearch="true"/>
+		<findFieldProperty
+			name="codiceUnivocoUfficioIpa"
+			enabledOnFreeSearch="true" />				
 	</freeSearchSet>
 	
 	<freeSearchSet
@@ -403,6 +446,12 @@
 		<findFieldProperty
 			name="dt_fine_validita"
 			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="codiceUnivocoUfficioIpa"
+			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="codiceUnivocoPcc"
+			enabledOnFreeSearch="true" />	
 	</freeSearchSet>
 
 	<freeSearchSet
@@ -444,8 +493,7 @@
 		name="cd_anag"
 		label="Anagrafica" />
 	<columnFieldProperty
-		name="denominazione_sede"
-		headerStyle="width:100%" />
+		name="denominazione_sede"/>
 	<columnFieldProperty
 		name="codice_fiscale_anagrafico"/>
 	<columnFieldProperty
@@ -453,8 +501,42 @@
 	<columnFieldProperty
 		name="dt_fine_rapporto"
 		label="Fine rapp." />
-
 	<columnFieldProperty
 		name="descrizioneAnagrafica" />
+	<columnFieldProperty
+		name="via_sede" />
+	<columnFieldProperty
+		name="comune_sede" />
+	<columnFieldProperty
+		name="codiceUnivocoUfficioIpa"
+		label="Codice IPA" />
+	<columnFieldProperty
+		name="codiceUnivocoPcc" />
+	<columnFieldProperty
+		name="denominazionePcc" />	
+
+	<columnSet
+		name="columnSet01" >
+		<columnFieldProperty
+			name="cd_terzo"
+			label="Codice" />
+		<columnFieldProperty
+			name="cd_anag"
+			label="Anagrafica" />
+		<columnFieldProperty
+			name="denominazione_sede"/>
+		<columnFieldProperty
+			name="codice_fiscale_anagrafico"/>
+		<columnFieldProperty
+			name="partita_iva_anagrafico"/>
+		<columnFieldProperty
+			name="dt_fine_rapporto"
+			label="Fine rapp." />
+		<columnFieldProperty
+			name="descrizioneAnagrafica" />
+		<columnFieldProperty
+			name="italianoEstero" 
+			label="Italiano/&lt;BR&gt;Estero"/>
+	</columnSet>
 
 </bulkInfo>

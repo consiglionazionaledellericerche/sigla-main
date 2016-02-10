@@ -37,7 +37,7 @@ public void calcolaGiorni_uo(int i,java.math.BigDecimal giorni_lavorativi) {
 			java.math.BigDecimal.valueOf(0) : 
 			getPrc_uo(i).multiply(
 				giorni_lavorativi).divide(
-				java.math.BigDecimal.valueOf(100),2,java.math.BigDecimal.ROUND_HALF_EVEN));
+				java.math.BigDecimal.valueOf(100),2,java.math.BigDecimal.ROUND_HALF_UP));
 }
 /**
  * Calcola i giorni relativi ad una UO per i tre anni (i=1,2,3)
@@ -62,7 +62,7 @@ public void calcolaPrc_uo(int i,java.math.BigDecimal giorni_lavorativi) {
 			java.math.BigDecimal.valueOf(0) :
 			getGiorni_uo(i).multiply(
 				java.math.BigDecimal.valueOf(100)).divide(
-				giorni_lavorativi,2,java.math.BigDecimal.ROUND_HALF_EVEN));
+				giorni_lavorativi,2,java.math.BigDecimal.ROUND_HALF_UP));
 }
 public java.lang.String getCd_unita_organizzativa() {
 	it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = this.getUnita_organizzativa();

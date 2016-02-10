@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneBulk"
+	homeClassName="it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneHome">
+	<defaultColumnMap
+		tableName="V_INVENTARIO_RICOGNIZIONE">
+		<columnMapping
+			columnName="CATEGORIA"
+			propertyName="categoria"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="GRUPPO"
+			propertyName="gruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />	
+		<columnMapping
+			columnName="DS_CATEGORIA_GRUPPO"
+			propertyName="dsCategoriaGruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pgInventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nrInventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="dsBene"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_REGISTRAZIONE"
+			propertyName="dataRegistrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ETICHETTA"
+			propertyName="etichetta"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_CARICO_BENE"
+			propertyName="esercizioCaricoBene"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="UBICAZIONE"
+			propertyName="ubicazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_UBICAZIONE"
+			propertyName="dsUbicazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="ASSEGNATARIO"
+			propertyName="assegnatario"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true"/>
+		<columnMapping
+			columnName="DS_ASSEGNATARIO"
+			propertyName="dsAssegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />	
+		<columnMapping
+			columnName="TOTALMENTE_SCARICATO"
+			propertyName="totalmenteScaricato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" 
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="VALORE"
+			propertyName="valore"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_SCARICO_DEF"
+			propertyName="dataScaricoDef"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="categoria" />
+	<persistentProperty
+		name="gruppo" />	
+	<persistentProperty
+		name="dsCategoriaGruppo" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="pgInventario" />
+	<persistentProperty
+		name="nrInventario" />
+	<persistentProperty
+		name="progressivo" />
+	<persistentProperty
+		name="dsBene" />
+	<persistentProperty
+		name="dataRegistrazione" />
+	<persistentProperty
+		name="etichetta" />
+	<persistentProperty
+		name="esercizioCaricoBene" />
+	<persistentProperty
+		name="ubicazione" />
+	<persistentProperty
+		name="dsUbicazione" />
+	<persistentProperty
+		name="assegnatario" />
+	<persistentProperty
+		name="dsAssegnatario" />	
+	<persistentProperty
+		name="totalmenteScaricato" />
+	<persistentProperty
+		name="valore" />
+	<persistentProperty
+		name="dataScaricoDef" />	
+	<columnMap 	name="BASECONS"	tableName="V_INVENTARIO_RICOGNIZIONE">
+	<columnMapping
+			columnName="CATEGORIA"
+			propertyName="categoria"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="GRUPPO"
+			propertyName="gruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />	
+		<columnMapping
+			columnName="DS_CATEGORIA_GRUPPO"
+			propertyName="dsCategoriaGruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pgInventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nrInventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="dsBene"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="ETICHETTA"
+			propertyName="etichetta"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_CARICO_BENE"
+			propertyName="esercizioCaricoBene"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="UBICAZIONE"
+			propertyName="ubicazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_UBICAZIONE"
+			propertyName="dsUbicazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="ASSEGNATARIO"
+			propertyName="assegnatario"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ASSEGNATARIO"
+			propertyName="dsAssegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />		
+		<columnMapping
+			columnName="TOTALMENTE_SCARICATO"
+			propertyName="totalmenteScaricato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" 
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="VALORE"
+			propertyName="valore"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="2"
+			nullable="true" />
+	</columnMap>		
+</SQLPersistentInfo>

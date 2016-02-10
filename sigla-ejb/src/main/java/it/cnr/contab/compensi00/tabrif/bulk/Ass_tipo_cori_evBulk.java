@@ -40,9 +40,9 @@ public class Ass_tipo_cori_evBulk extends Ass_tipo_cori_evBase {
 	private Elemento_voceBulk elemento_voce = new Elemento_voceBulk();
 	
 	public Ass_tipo_cori_evBulk() {
-		
+		 
 		super();
-		setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CDS);
+		//setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CDS);
 	}
 	public Ass_tipo_cori_evBulk(java.lang.Integer esercizio, java.lang.String ti_appartenenza, java.lang.String ti_gestione, java.lang.String ti_ente_percepiente, java.lang.String cd_contributo_ritenuta) {
 		super(esercizio, ti_appartenenza, ti_gestione, ti_ente_percepiente, cd_contributo_ritenuta);
@@ -117,7 +117,7 @@ public class Ass_tipo_cori_evBulk extends Ass_tipo_cori_evBase {
 
 		super.initializeForInsert(bp,context);
 		setTi_ente_percepiente(INDIFFERENTE);
-		setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CDS);
+		//setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CDS);
 		return this;
 	}
 	public void validate() throws ValidationException 
@@ -139,7 +139,7 @@ public class Ass_tipo_cori_evBulk extends Ass_tipo_cori_evBase {
 		return TI_GESTIONE_D;
 	}
 	protected OggettoBulk initialize(CRUDBP crudbp, ActionContext actioncontext) {
-		setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CDS);
+		//setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CDS);
 		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(actioncontext));
 		return super.initialize(crudbp, actioncontext);
 	}

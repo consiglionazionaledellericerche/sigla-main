@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupIBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupIHome" >
+	<defaultColumnMap
+		tableName="MANDATO_SIOPE_CUP" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="mandato_siopeI.mandato_rigaI.mandatoI.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="mandato_siopeI.mandato_rigaI.mandatoI.esercizio" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandato_siopeI.mandato_rigaI.mandatoI.pg_mandato" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="mandato_siopeI.mandato_rigaI.esercizio_obbligazione" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="mandato_siopeI.mandato_rigaI.esercizio_ori_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="mandato_siopeI.mandato_rigaI.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="mandato_siopeI.mandato_rigaI.pg_obbligazione_scadenzario" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="mandato_siopeI.mandato_rigaI.cd_cds_doc_amm" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="mandato_siopeI.mandato_rigaI.cd_uo_doc_amm" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="mandato_siopeI.mandato_rigaI.esercizio_doc_amm" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="mandato_siopeI.mandato_rigaI.cd_tipo_documento_amm" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="mandato_siopeI.mandato_rigaI.pg_doc_amm" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="mandato_siopeI.codice_siope.esercizio" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="mandato_siopeI.codice_siope.ti_gestione" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="mandato_siopeI.codice_siope.cd_siope" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="mandato_siopeI"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -67,10 +67,16 @@ public class Pdg_modulo_speseHome extends BulkHome {
 		return sql;
 	}
 	public void initializePrimaryKeyForInsert(UserContext  usercontext,OggettoBulk oggettobulk)throws PersistencyException, ComponentException {
-		Pdg_modulo_speseBulk pdg_modulo_spese = (Pdg_modulo_speseBulk)oggettobulk;
-		if (pdg_modulo_spese.getCd_cds_area() == null)
-		  pdg_modulo_spese.setArea(pdg_modulo_spese.getPdg_modulo_costi().getPdg_modulo().getCdr().getUnita_padre().getUnita_padre());
-		super.initializePrimaryKeyForInsert(usercontext, pdg_modulo_spese);
+		try {
+			Pdg_modulo_speseBulk pdg_modulo_spese = (Pdg_modulo_speseBulk)oggettobulk;
+			if (pdg_modulo_spese.getCd_cds_area() == null)
+			  pdg_modulo_spese.setArea(pdg_modulo_spese.getPdg_modulo_costi().getPdg_modulo().getCdr().getUnita_padre().getUnita_padre());
+			pdg_modulo_spese.setPg_dettaglio(
+					new Integer(((Integer)findAndLockMax( oggettobulk, "pg_dettaglio", new Integer(0) )).intValue()+1));
+			super.initializePrimaryKeyForInsert(usercontext, pdg_modulo_spese);
+		} catch(it.cnr.jada.bulk.BusyResourceException e) {
+			throw new PersistencyException(e);
+		}
 	}
 	
 	/**
@@ -155,6 +161,7 @@ public class Pdg_modulo_speseHome extends BulkHome {
 		sql.addClause("AND","pg_progetto",sql.EQUALS,testata.getPg_progetto());
 		sql.addClause("AND","id_classificazione",sql.EQUALS,testata.getId_classificazione());
 		sql.addClause("AND","cd_cds_area",sql.EQUALS,testata.getCd_cds_area());
+		sql.addClause("AND","pg_dettaglio",sql.EQUALS,testata.getPg_dettaglio());
 		return sql;
 	}	
 	/**

@@ -10,34 +10,23 @@ import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.List;
-
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
-
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.EcfBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntra12Bulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
 import it.cnr.contab.docamm00.ejb.ElaboraFileIntraComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.intrastat.bulk.FatturaPassivaIntraSBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -45,7 +34,6 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
-
 
 public class ElaboraFileIntraBP extends SimpleCRUDBP {
 	
@@ -67,7 +55,7 @@ public boolean isScaricaButtonEnabled() {
 		return false;
 }
 public boolean isConfermaButtonHidden() {
-	if (this.getModel()  instanceof VIntrastatBulk && getFile()!=null) {
+	if (this.getModel()  instanceof VIntrastatBulk && getFile()!=null && getInvio() ) {
 		return false;
 	}
 	else
@@ -93,8 +81,18 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 }
 
 private String file;
+private Boolean invio=new Boolean(false);
+public Boolean getInvio() {
+	return invio;
+}
+public void setInvio(Boolean invio) {
+	this.invio = invio;
+}
 public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invio) throws BusinessProcessException, ComponentException, PersistencyException, IntrospectionException {
-	  try{			  
+	  try{
+		  setInvio(invio);
+		  dett.setNrProtocolloAcq(null);
+		  dett.setNrProtocolloVen(null);
 		  AnagraficoComponentSession sess = (AnagraficoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRANAGRAF00_EJB_AnagraficoComponentSession", AnagraficoComponentSession.class);
 	      AnagraficoBulk ente = sess.getAnagraficoEnte(context.getUserContext());
 	      java.util.List lista=((ElaboraFileIntraComponentSession)createComponentSession()).EstraiLista(context.getUserContext(),getModel());
@@ -111,7 +109,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 				 throw new ApplicationException("Codice utente abilitato non configurato");
 	    	 File f;
 	    if (invio){
-		   f = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/",
+	       f = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/",
 				   Formatta(config.getVal02(),"S",4," ")+//codice utente abilitato
 				   Formatta(new Integer(EcfBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.MONTH)+1).toString(),"D",2,"0")+
 				   Formatta(new Integer(EcfBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.DAY_OF_MONTH)).toString(),"D",2,"0")+
@@ -155,7 +153,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 				 throw new ApplicationException("Codice sezione doganale non configurato");
 			bw.append(Formatta(config.getVal01(),"D",6,"0"));
 			bw.append(Formatta(null,"S",4," "));//riservata SDA
-			bw.append(Formatta(P_iva,"D",16,"0"));
+			bw.append(Formatta(P_iva,"S",16," "));
 			if(config.getVal03()==null)
 				 throw new ApplicationException("Progressivo sede utente abilitato non configurato");
 			bw.append(Formatta(config.getVal03(),"D",3,"0")); //progressivo sede
@@ -175,8 +173,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     	    	   !listaSezioneQuattroAcquisti.isEmpty()){
 	    	bw.append(new String("EUROX"));
 	    	bw.append(P_iva);
-	    	prot=((ElaboraFileIntraComponentSession)createComponentSession()).recuperoMaxProt(context.getUserContext());
-	    	
+	    	prot=config.getIm01().intValue()+1;
 	    	bw.append(Formatta(prot.toString(),"D",6,"0"));
 	    	bw.append("0");// Tipo record Frontespizio
 	    	bw.append(Formatta("0","D",5,"0"));// progressivo riga di dettaglio per frontespizio 0
@@ -372,11 +369,11 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(det.getPartitaIva(),"S",12," "));
     			bw.append(Formatta(new BigDecimal(det.getAmmontareEuro()).abs().toString(),"D",13,"0"));  
     			bw.append(Formatta(new BigDecimal(det.getAmmontareDivisa()).abs().toString(),"D",13,"0"));
-    			bw.append(Formatta(det.getNrFattura(),"S",15," "));
-    			bw.append(Formatta(det.getDtFattura(),"S",6," "));
+    			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
+    			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(det.getCdCpa(),"D",6,"0"));
-    			bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
-    			bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
+    			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
+    			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(det.getProvenienza(),"S",2," "));
     			
     			bw.append("\r\n");
@@ -427,15 +424,16 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append("\r\n");
     		}
     	}
-    	if(prot!=0)
-    		prot=((ElaboraFileIntraComponentSession)createComponentSession()).recuperoMaxProt(context.getUserContext())+1;
-    	else
-    		prot=((ElaboraFileIntraComponentSession)createComponentSession()).recuperoMaxProt(context.getUserContext());
+    	
     	// VENDITE
     	if(!listaSezioneUnoVendite.isEmpty()||
     	   !listaSezioneDueVendite.isEmpty()||
     	   !listaSezioneTreVendite.isEmpty()||
     	   !listaSezioneQuattroVendite.isEmpty()){
+    		if(prot!=0)
+        		prot=prot+1;
+        	else
+        		prot=config.getIm01().intValue()+1;
          	//parte iniziale fissa
     		bw.append(new String("EUROX"));
         	bw.append(P_iva);
@@ -629,11 +627,11 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(det.getNazFiscale(),"S",2," "));//nazione cliente
     			bw.append(Formatta(det.getPartitaIva(),"S",12," "));
     			bw.append(Formatta(new BigDecimal(det.getAmmontareEuro()).abs().toString(),"D",13,"0"));  
-    			bw.append(Formatta(det.getNrFattura(),"S",15," "));
-    			bw.append(Formatta(det.getDtFattura(),"S",6," "));
+    			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
+    			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(det.getCdCpa(),"D",6,"0"));
-    			bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
-    			bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
+    			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
+    			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(det.getDest(),"S",2," "));
     			
     			bw.append("\r\n");
@@ -678,6 +676,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 	      bw.close();
 	      osw.close();
 	      os.close();	      
+	      dett.setNrProtocollo(prot.toString());
 	      setFile("/tmp/"+f.getName());	  
      }else{
 	    	  bw.flush();
@@ -791,6 +790,8 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 	   
 	   BigDecimal totImpS30Extra=new BigDecimal("0");
 	   
+	   BigDecimal totImpBeniExtra=new BigDecimal("0");
+	   BigDecimal totIvaBeniExtra=new BigDecimal("0");
 	   
 	   for (Iterator i = lista.iterator(); i.hasNext();) {
 		   VIntra12Bulk d=(VIntra12Bulk)i.next();
@@ -817,10 +818,13 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 			   		
 			   			totImpServExtra=totImpServExtra.add(d.getImponibile());
 			   	   		totIvaServExtra=totIvaServExtra.add(d.getIva());
-			   		}else{
+			   		}else if (d.getCdBeneServizio().compareTo("BENI")!=0){
 			   			totImpServExtra=totImpServExtra.add(d.getImponibile());
 			   	   		totIvaServExtra=totIvaServExtra.add(d.getIva());
-			   		}   			
+			   		} else if(d.getCdBeneServizio().compareTo("BENI")==0){
+			   			totImpBeniExtra=totImpBeniExtra.add(d.getImponibile());
+			   	   		totIvaBeniExtra=totIvaBeniExtra.add(d.getIva());
+			   		}
 	   		}
 	   }
 	   // Tipo Record A Testata
@@ -897,7 +901,9 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 		   bw.append(Formatta(comune.getDs_comune(),"S",40," "));//COMUNE nascita rappresentante     ???????????????
 		   bw.append(Formatta(comune.getCd_provincia(),"S",2," "));//PROV nascita rappresentante     ???????????????
 	   }
-	   bw.append(Formatta(null,"D",3,"0"));//codice stato estero rappresentante     ???????????????
+	   //cambiato il tracciato dal 01/10/2015 diventati tutti filler
+	   bw.append(Formatta(null,"S",3," "));//codice stato estero rappresentante     ???????????????
+	   //bw.append(Formatta(null,"D",3,"0"));//codice stato estero rappresentante     ???????????????
 	   bw.append(Formatta(null,"S",24," "));//stato fed rappresentante     ???????????????
 	   bw.append(Formatta(null,"S",24," "));//residenza rappresentante     ???????????????
 	   bw.append(Formatta(null,"S",35," "));//indirizzo estero rappresentante     ???????????????
@@ -909,10 +915,15 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 	   bw.append(Formatta(null,"S",16," ")); 
  	   bw.append(Formatta(null,"S",5,"0"));  
  	   bw.append(Formatta("0","D",1,"0"));//
+ 	   // cambiato il tracciato dal 01/10/2015
+ 	   bw.append(Formatta(null,"S",1," "));
+ 	   // fine cambio
  	   bw.append(Formatta(null,"D",8,"0"));
  	   bw.append(Formatta("0","D",1,"0"));// Firma intermediario
  	  
- 	   bw.append(Formatta(null,"S",1228," "));// Filler
+ 	   
+ 	   //bw.append(Formatta(null,"S",1228," "));// Filler -- cambiato il tracciato dal 01/10/2015
+ 	   bw.append(Formatta(null,"S",1227," "));// Filler -- cambiato il tracciato dal 01/10/2015 
  	   bw.append(Formatta(null,"S",20," "));// Filler
  	   bw.append(Formatta(null,"S",34," "));// Filler 
  	   bw.append("A"); //
@@ -970,7 +981,7 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 	   if(BigDecimal.ZERO.compareTo(BigDecimal.ZERO)!=0){
 			   bw.append("TR012004");// Iva Beni soggetti stabiliti in altri stati comunita (beni assemblati in Italia)
 			   bw.append(Formatta(BigDecimal.ZERO.toString(),"D",16," "));
-			   num_col++;
+	 		   num_col++;
 	   }		   
 	   if(totImpServIntra.compareTo(BigDecimal.ZERO)!=0){
 		   bw.append("TR012005");
@@ -987,14 +998,14 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 		  bw.append(Formatta(totIvaServIntra.setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString().replace(".", ","),"D",16," "));
 		  num_col++;
 	  }	
-	  if(BigDecimal.ZERO.compareTo(BigDecimal.ZERO)!=0){
-		  bw.append("TR012008");// Bolle doganali ignorare imponibile
-		  bw.append(Formatta(BigDecimal.ZERO.toString(),"D",16," "));
+	  if(totImpBeniExtra.compareTo(BigDecimal.ZERO)!=0){
+		  bw.append("TR012008");// Bolle doganali ignorare imponibile - considerato beni san marino
+		  bw.append(Formatta(totImpBeniExtra.setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString().replace(".", ","),"D",16," "));
 		  num_col++;
 	  }	
-	  if(BigDecimal.ZERO.compareTo(BigDecimal.ZERO)!=0){
+	  if(totIvaBeniExtra.compareTo(BigDecimal.ZERO)!=0){
 		   bw.append("TR012009");// Bolle doganali ignorare iva
-		   bw.append(Formatta(BigDecimal.ZERO.toString(),"D",16," "));
+		   bw.append(Formatta(totIvaBeniExtra.setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString().replace(".", ","),"D",16," "));
 		   num_col++;
 	   }	
 	   if(totImpServExtra.compareTo(BigDecimal.ZERO)!=0){
@@ -1014,9 +1025,9 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 		   bw.append(Formatta(totIvaServExtra.setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString().replace(".", ","),"D",16," "));
 		   num_col++;
 	}	
-	 if((totIvaServExtra.add(totIvaServIntra).add(totIvaBeniIntra)).compareTo(BigDecimal.ZERO)!=0){
+	 if((totIvaServExtra.add(totIvaServIntra).add(totIvaBeniIntra).add(totIvaBeniExtra)).compareTo(BigDecimal.ZERO)!=0){
 		   bw.append("TR012013");
-		   bw.append(Formatta((((totIvaServExtra.add(totIvaServIntra).add(totIvaBeniIntra)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)).toString().replace(".", ",")),"D",16," "));
+		   bw.append(Formatta((((totIvaServExtra.add(totIvaServIntra).add(totIvaBeniIntra).add(totIvaBeniExtra)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)).toString().replace(".", ",")),"D",16," "));
 		   num_col++;
 	 }	
 	// Campi non posizionali
@@ -1056,7 +1067,7 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
       bw.flush();
       bw.close();
       osw.close();
-      os.close();	      
+      os.close();	     
       setFile("/tmp/"+f.getName());	  
 	}else{
    	  bw.flush();
@@ -1077,7 +1088,7 @@ throw new ApplicationException("Errore nella scrittura del file!");
 }	
 }
 public void confermaElaborazione(ActionContext context, VIntrastatBulk dett) throws ComponentException, PersistencyException, IntrospectionException, RemoteException, BusinessProcessException {
-	((ElaboraFileIntraComponentSession)createComponentSession()).confermaElaborazione(context.getUserContext(),dett);
-	setFile(null);
+		((ElaboraFileIntraComponentSession)createComponentSession()).confermaElaborazione(context.getUserContext(),dett);
+		setFile(null);
 	}
 }

@@ -115,7 +115,13 @@
 			sqlTypeName="VARCHAR"
 			columnSize="3"
 			nullable="true" />
-			
+		<columnMapping
+			columnName="FL_RAPPORTO13"
+			propertyName="fl_rapporto13"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="mese" />
@@ -161,4 +167,6 @@
 		name="dt_scad_contratto" />
 	<persistentProperty
 		name="origine_fonti" />
+	<persistentProperty
+		name="fl_rapporto13" />
 </SQLPersistentInfo>

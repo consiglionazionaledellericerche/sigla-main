@@ -1,8 +1,14 @@
 package it.cnr.contab.docamm00.comp;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.util.List;
 
+import javax.ejb.EJBException;
+
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -38,28 +44,46 @@ public class ProgressiviAmmComponent extends it.cnr.jada.comp.CRUDComponent impl
 
 public Long getNextPG (UserContext userContext,Numerazione_doc_ammBulk progressivo) 
 	throws ComponentException {
-
-
 	try {
 		String cds = progressivo.getCd_cds();
 		String cdUnitaOrg = progressivo.getCd_unita_organizzativa();
 		String tipoDoc = progressivo.getCd_tipo_documento_amm();
 		Integer es = progressivo.getEsercizio();
-		
 		Numerazione_doc_ammHome home = (Numerazione_doc_ammHome)getHome(userContext, progressivo);
+		if( progressivo.getCd_tipo_documento_amm().compareTo(Numerazione_doc_ammBulk.TIPO_LETTERA_ESTERO)==0){			
+				if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,progressivo.getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+					Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);					
+					progressivo =new Numerazione_doc_ammBulk(uoEnte.getCd_cds(), tipoDoc, uoEnte.getCd_unita_organizzativa(), es );
+				}
+				else{
+					progressivo = new Numerazione_doc_ammBulk(cds, tipoDoc, cdUnitaOrg, es );
+				}			
+		}
 		try {
 			progressivo = (Numerazione_doc_ammBulk)home.findAndLock(progressivo);
 		} catch (it.cnr.jada.persistency.ObjectNotFoundException e) {
 			progressivo = null;
-		}
-		
+		}		
 		Long pgCorrente = null;
 		if (progressivo == null) {
 			progressivo = new Numerazione_doc_ammBulk();
-			progressivo.setCd_cds(cds);
 			progressivo.setCd_tipo_documento_amm(tipoDoc);
-			progressivo.setCd_unita_organizzativa(cdUnitaOrg);
 			progressivo.setEsercizio(es);
+			if( progressivo.getCd_tipo_documento_amm().compareTo(Numerazione_doc_ammBulk.TIPO_LETTERA_ESTERO)==0){			
+				if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,progressivo.getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+					Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
+					progressivo.setCd_cds(uoEnte.getCd_cds());
+					progressivo.setCd_unita_organizzativa(uoEnte.getCd_unita_organizzativa());
+				}
+				else{
+					progressivo.setCd_cds(cds);			
+					progressivo.setCd_unita_organizzativa(cdUnitaOrg);
+				}
+			}
+			else{
+				progressivo.setCd_cds(cds);			
+				progressivo.setCd_unita_organizzativa(cdUnitaOrg);
+			} 
 			progressivo.setUser(userContext.getUser());
 			pgCorrente = new Long(1);
 			progressivo.setCorrente(pgCorrente);

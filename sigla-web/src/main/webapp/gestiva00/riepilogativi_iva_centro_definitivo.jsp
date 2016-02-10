@@ -39,6 +39,10 @@
 					<% bp.getController().writeFormInput(out,null,"tipo_sezionale",false,null,"onChange=\"submitForm('doOnTipoSezionaleChange')\"");%>
 				</td>
 <%}%>
+				<td colspan=2>  
+					<% bp.getController().writeFormInput(out,null,"intero_anno",false,null,"onClick=\"submitForm('doSettaInteroAnno()')\"");%>
+					<% bp.getController().writeFormLabel(out,"intero_anno");%>
+				</td>
 			</tr>
 			<br>
 			<tr>

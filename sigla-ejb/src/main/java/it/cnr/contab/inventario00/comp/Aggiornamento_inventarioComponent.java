@@ -271,12 +271,21 @@ public SQLBuilder selectUbicazione_destinazioneByClause(UserContext userContext,
 		sql.addSQLClause("AND","CD_CDS",sql.EQUALS, cds_scrivania);
 		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, uo_scrivania);
 		
+//		public static final String CD_CDS_FITTIZIO = "999";
+//		public static final String CD_UO_FITTIZIO = "999.000";
+//		// Aggiunge alle Ubicazioni della UO di scrivania, quelle fittizie.
+//		sql.addSQLClause("OR","CD_CDS",sql.EQUALS, Ubicazione_beneBulk.CD_CDS_FITTIZIO);
+//		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, Ubicazione_beneBulk.CD_UO_FITTIZIO);
+//		sql.closeParenthesis();
 
-		// Aggiunge alle Ubicazioni della UO di scrivania, quelle fittizie.
-		sql.addSQLClause("OR","CD_CDS",sql.EQUALS, Ubicazione_beneBulk.CD_CDS_FITTIZIO);
-		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, Ubicazione_beneBulk.CD_UO_FITTIZIO);
+		try {
+			Unita_organizzativa_enteBulk uoEnte=(Unita_organizzativa_enteBulk)(Utility.createUnita_organizzativaComponentSession().getUoEnte(userContext));
+			sql.addSQLClause("OR","CD_CDS",sql.EQUALS, uoEnte.getCd_unita_padre());
+			sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, uoEnte.getCd_unita_organizzativa());
+		} catch (Exception e) {
+			throw handleException(e);
+		}
 		sql.closeParenthesis();
-		
 		sql.addOrderBy("LIVELLO");
 		sql.addOrderBy("CD_UBICAZIONE");
 		

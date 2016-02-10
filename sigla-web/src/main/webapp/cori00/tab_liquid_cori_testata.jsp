@@ -103,7 +103,7 @@
 		</table>
 	<% } %>
 	</div>
-	<% if (bp.isCalcolato() || bp.isEditing()){ %>
+	<% if ((bp.isCalcolato() || bp.isEditing())|| bp.isViewing()){ %> 
 		 <table class="Group" style="width:100%">
 	       <tr>
 	    	<td>

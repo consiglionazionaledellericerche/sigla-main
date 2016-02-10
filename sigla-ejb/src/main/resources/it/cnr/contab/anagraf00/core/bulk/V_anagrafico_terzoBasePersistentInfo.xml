@@ -284,7 +284,7 @@
 			columnName="NOME_UNITA_ORGANIZZATIVA"
 			propertyName="nome_unita_organizzativa"
 			sqlTypeName="VARCHAR"
-			columnSize="100" />
+			columnSize="300" />
 		<columnMapping
 			columnName="CD_TERZO"
 			propertyName="cd_terzo"

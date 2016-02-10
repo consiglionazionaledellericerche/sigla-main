@@ -50,37 +50,44 @@ public Long findmax(Ass_inv_bene_fatturaBulk ass) throws PersistencyException{
  *	fra le righe di Fattura e i Beni ad esse associati. 
 */
 public void makePersistentAssocia(UserContext userContext, Ass_inv_bene_fatturaBulk associaBulk, it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk fattura_passiva) throws PersistencyException, IntrospectionException {
-	PersistentHome apgHome = getHomeCache().getHome(Inventario_beni_apgBulk.class);
-	SQLBuilder sql = apgHome.createSQLBuilder();
-	sql.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID",sql.EQUALS,associaBulk.getLocal_transactionID());
-	sql.addSQLClause("AND","INVENTARIO_BENI_APG.PG_BUONO_C_S",sql.GREATER,"0");
-	List beni_apg=apgHome.fetchAll(sql);
-	Ass_inv_bene_fatturaBulk nuova_associazione = new Ass_inv_bene_fatturaBulk();
-	for (Iterator i = beni_apg.iterator();i.hasNext();){
-		Inventario_beni_apgBulk bene_apg=(Inventario_beni_apgBulk)i.next();
-		try{
-		//r.p. Prendo il progressivo dalla fattura_passivaBulk perchè viene aggiornato
-		nuova_associazione.setRiga_fatt_pass (new Fattura_passiva_rigaIBulk(fattura_passiva.getCd_cds(),fattura_passiva.getCd_unita_organizzativa(),
-				fattura_passiva.getEsercizio(),fattura_passiva.getPg_fattura_passiva(),bene_apg.getProgressivo_riga()));
-		nuova_associazione.getRiga_fatt_pass().setFattura_passivaI(new Fattura_passiva_IBulk(fattura_passiva.getCd_cds(),fattura_passiva.getCd_unita_organizzativa(),
-				fattura_passiva.getEsercizio(),fattura_passiva.getPg_fattura_passiva()));
-		nuova_associazione.setNr_inventario(bene_apg.getNr_inventario());
-		nuova_associazione.setProgressivo(bene_apg.getProgressivo());		
-		nuova_associazione.setTest_buono(new Buono_carico_scaricoBulk(bene_apg.getPg_inventario(),bene_apg.getTi_documento(),bene_apg.getEsercizio(),bene_apg.getPg_buono_c_s()));
-		nuova_associazione.setUser(fattura_passiva.getUser());
-		//perchè gia' loccata in modifica
-		nuova_associazione.setPg_riga(new Long(
-				(Long)findAndLockMax( nuova_associazione, "pg_riga", new Long(0))).longValue()+1);
-		insert(nuova_associazione, userContext);
-		apgHome.delete(bene_apg, userContext);
-	
-	}catch(it.cnr.jada.bulk.BusyResourceException e) {
-	nuova_associazione.setPg_riga(new Long(
-		(Long)findMax( nuova_associazione, "pg_riga", new Long(0))).longValue()+1);
-		insert(nuova_associazione, userContext);
-		apgHome.delete(bene_apg, userContext);
-		//throw new PersistencyException(e);
+	// caso normale in cui le associazioni tra la riga di fattura ed i buono  esistono sui dati di Inventario_beni_apg
+	if(associaBulk.getLocal_transactionID()!=null){
+		PersistentHome apgHome = getHomeCache().getHome(Inventario_beni_apgBulk.class);
+		SQLBuilder sql = apgHome.createSQLBuilder();
+		sql.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID",sql.EQUALS,associaBulk.getLocal_transactionID());
+		sql.addSQLClause("AND","INVENTARIO_BENI_APG.PG_BUONO_C_S",sql.GREATER,"0");
+		List beni_apg=apgHome.fetchAll(sql);
+		Ass_inv_bene_fatturaBulk nuova_associazione = new Ass_inv_bene_fatturaBulk();
+		for (Iterator i = beni_apg.iterator();i.hasNext();){
+			Inventario_beni_apgBulk bene_apg=(Inventario_beni_apgBulk)i.next();
+				try{
+				//r.p. Prendo il progressivo dalla fattura_passivaBulk perchè viene aggiornato
+					nuova_associazione.setRiga_fatt_pass (new Fattura_passiva_rigaIBulk(fattura_passiva.getCd_cds(),fattura_passiva.getCd_unita_organizzativa(),
+							fattura_passiva.getEsercizio(),fattura_passiva.getPg_fattura_passiva(),bene_apg.getProgressivo_riga()));
+					nuova_associazione.getRiga_fatt_pass().setFattura_passivaI(new Fattura_passiva_IBulk(fattura_passiva.getCd_cds(),fattura_passiva.getCd_unita_organizzativa(),
+							fattura_passiva.getEsercizio(),fattura_passiva.getPg_fattura_passiva()));
+					nuova_associazione.setNr_inventario(bene_apg.getNr_inventario());
+					nuova_associazione.setProgressivo(bene_apg.getProgressivo());		
+					nuova_associazione.setTest_buono(new Buono_carico_scaricoBulk(bene_apg.getPg_inventario(),bene_apg.getTi_documento(),bene_apg.getEsercizio(),bene_apg.getPg_buono_c_s()));
+					nuova_associazione.setUser(fattura_passiva.getUser());
+					//perchè gia' loccata in modifica
+					nuova_associazione.setPg_riga(new Long(
+							(Long)findAndLockMax( nuova_associazione, "pg_riga", new Long(0))).longValue()+1);
+					insert(nuova_associazione, userContext);
+					apgHome.delete(bene_apg, userContext);
+			}catch(it.cnr.jada.bulk.BusyResourceException e) {
+				nuova_associazione.setPg_riga(new Long(
+				(Long)findMax( nuova_associazione, "pg_riga", new Long(0))).longValue()+1);
+				insert(nuova_associazione, userContext);
+				apgHome.delete(bene_apg, userContext);
+				//throw new PersistencyException(e);
+			}
+		}
 	}
+	else
+	{
+		//nel caso in cui viene sdoppiata la riga di fattura non esistono i dati su Inventario_beni_apg
+		insert(associaBulk, userContext);
 	}
 }
 

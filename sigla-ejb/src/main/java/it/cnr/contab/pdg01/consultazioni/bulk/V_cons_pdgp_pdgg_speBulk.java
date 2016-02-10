@@ -81,6 +81,10 @@ public class V_cons_pdgp_pdgg_speBulk extends OggettoBulk implements Persistent 
 
 //	  IM_SPESE_GEST_ACC_EST_PDGG DECIMAL(15,2)
     private java.math.BigDecimal im_spese_gest_acc_est_da_rip;
+    
+    private Integer pg_dettaglio;
+    
+    private java.lang.String cd_cofog;
 
 	public java.lang.Integer getEsercizio () {
 		return esercizio;
@@ -220,4 +224,17 @@ public class V_cons_pdgp_pdgg_speBulk extends OggettoBulk implements Persistent 
 	public void setIm_spese_gest_dec_int_da_rip(java.math.BigDecimal decimal) {
 		im_spese_gest_dec_int_da_rip = decimal;
 	}
+	public Integer getPg_dettaglio() {
+		return pg_dettaglio;
+	}
+	public void setPg_dettaglio(Integer pg_dettaglio) {
+		this.pg_dettaglio = pg_dettaglio;
+	}
+	public java.lang.String getCd_cofog() {
+		return cd_cofog;
+	}
+	public void setCd_cofog(java.lang.String cd_cofog) {
+		this.cd_cofog = cd_cofog;
+	}
+	
 }

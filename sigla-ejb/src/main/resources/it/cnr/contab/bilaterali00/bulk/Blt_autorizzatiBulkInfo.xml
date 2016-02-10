@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdAccordo"
+		property="bltProgetti.bltAccordo.cd_accordo"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Codice Accordo" />
+	<fieldProperty
+		name="dsAccordo"
+		property="bltProgetti.bltAccordo.ds_accordo"
+		inputType="ROTEXT"
+		label="Descrizione Accordo" />
+	<fieldProperty
+		name="cdProgetto"
+		property="bltProgetti.cd_progetto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Codice Progetto" />
+	<fieldProperty
+		name="dsProgetto"
+		property="bltProgetti.ds_progetto_ita"
+		inputType="ROTEXT"
+		label="Descrizione Progetto (Lingua Italiana)" />
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		label="Terzo Autorizzato"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cdTerzo"
+		property="terzo.cd_terzo"
+		label="Terzo Autorizzato"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="dsTerzo"
+		property="terzo.denominazione_sede"
+		inputSize="60"
+		inputType="ROTEXT" 
+		label="Descrizione Terzo" />
+	<fieldProperty
+		name="cdCdrTerzoIta"
+		property="cdrTerzo.cd_centro_responsabilita"
+		label="Centro di Responsabilità"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		enabledOnSearch="true" 
+		nullable="false" />
+	<fieldProperty
+		name="cdCdrTerzoStr"
+		property="cdrTerzo.cd_centro_responsabilita"
+		label="Centro di Responsabilità"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		enabledOnSearch="true" 
+		nullable="true" />
+	<fieldProperty
+		name="dsCdrTerzo"
+		property="cdrTerzo.ds_cdr"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="findCdrTerzo"
+		property="cdrTerzo"
+		inputType="SEARCHTOOL" 
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="emailTerzo"
+		property="emailTerzo"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		label="Email" />
+	<fieldProperty
+		name="telefTerzo"
+		property="telefTerzo"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="50"
+		label="Telefono" />
+	<fieldProperty
+		name="faxTerzo"
+		property="faxTerzo"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="50"
+		label="Fax" />
+	<fieldProperty
+		name="flAssimilatoDip"
+		property="flAssimilatoDip"
+		label="Dipendente/Assimilato"
+		inputType="CHECKBOX"
+		command="doDefault"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flAssociato"
+		property="flAssociato"
+		label="Associato CNR"
+		inputType="CHECKBOX"
+		command="doDefault"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="enteDiAppartenenza"
+		property="enteDiAppartenenza"
+		inputSize="70"
+		maxLength="100"
+		label="Ente di Appartenenza"
+		inputType="TEXT" 		
+		nullable="false" />
+	<fieldProperty
+		name="indirizzoEnteDiAppartenenza"
+		property="indirizzoEnteDiAppartenenza"
+		inputSize="70"
+		maxLength="250"
+		label="Indirizzo"
+		inputType="TEXT" 		
+		nullable="false" />
+	<fieldProperty
+		name="capEnteDiAppartenenza"
+		property="capEnteDiAppartenenza"
+		label="CAP"
+		inputSize="20"
+		optionsProperty="caps_comune"
+		inputType="SELECT"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dsComuneEnteDiAppartenenza"
+		property="comuneEnteDiAppartenenza.ds_comune"
+		readonlyProperty="ROdsComuneEnteDiAppartenenza"
+		inputSize="30"
+		label="Citt&#224;/comune"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="findComuneEnteDiAppartenenza"
+		property="comuneEnteDiAppartenenza"
+		label="Citt&#224;/comune fiscale"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="ds_indirizzo"
+		property="bltIstituto.indirizzo"
+		inputSize="30"
+		label="Indirizzo"
+		inputType="ROTEXT"/>
+	<fieldProperty
+		name="ds_co_indirizzo"
+		property="bltIstituto.coIndirizzo"
+		inputSize="30"
+		label="C/O"
+		inputType="ROTEXT"/>
+	<fieldProperty
+		name="ds_comune"
+		property="bltIstituto.comune.ds_comune"
+		inputSize="30"
+		label="Comune"
+		inputType="ROTEXT"/>
+
+	<formFieldProperty
+		name="cdAccordo" />
+	<formFieldProperty
+		name="dsAccordo" />
+	<formFieldProperty
+		name="cdProgetto" />
+	<formFieldProperty
+		name="dsProgetto" />
+	<formFieldProperty
+		name="findTerzo" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="dsTerzo" />
+	<formFieldProperty
+		name="cdCdrTerzoIta" />
+	<formFieldProperty
+		name="cdCdrTerzoStr" />
+	<formFieldProperty
+		name="dsCdrTerzo" />
+	<formFieldProperty
+		name="findCdrTerzo" />
+	<formFieldProperty
+		name="emailTerzo" />
+	<formFieldProperty
+		name="telefTerzo" />
+	<formFieldProperty
+		name="faxTerzo" />
+	<formFieldProperty
+		name="flAssimilatoDip" />
+	<formFieldProperty
+		name="flAssociato" />
+	<formFieldProperty
+		name="enteDiAppartenenza" />
+	<formFieldProperty
+		name="indirizzoEnteDiAppartenenza" />
+	<formFieldProperty
+		name="capEnteDiAppartenenza" />
+	<formFieldProperty
+		name="dsComuneEnteDiAppartenenza" />
+	<formFieldProperty
+		name="findComuneEnteDiAppartenenza" />
+	<formFieldProperty
+		name="ds_indirizzo" />
+	<formFieldProperty
+		name="ds_co_indirizzo" />
+	<formFieldProperty
+		name="ds_comune" />
+
+	<columnFieldProperty
+		name="cdTerzo" 
+		label="Codice Terzo"/>
+	<columnFieldProperty
+		name="dsTerzo" 
+		label="Descrizione" />
+	<columnFieldProperty
+		name="dsCdrTerzo" 
+		label="Cdr" />
+
+	<findFieldProperty
+		name="cdAccordo" />
+	<findFieldProperty
+		name="dsAccordo" />
+	<findFieldProperty
+		name="cdProgetto" />
+	<findFieldProperty
+		name="dsProgetto" />
+	<findFieldProperty
+		name="findTerzo" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="dsTerzo" />
+	<findFieldProperty
+		name="cdCdrTerzoIta" />
+	<findFieldProperty
+		name="cdCdrTerzoStr" />
+	<findFieldProperty
+		name="dsCdrTerzo" />
+	<findFieldProperty
+		name="findCdrTerzo" />
+	<findFieldProperty
+		name="emailTerzo" />
+	<findFieldProperty
+		name="telefTerzo" />
+	<findFieldProperty
+		name="faxTerzo" />
+	<findFieldProperty
+		name="flAssociato" />
+	<findFieldProperty
+		name="enteDiAppartenenza" />
+	<findFieldProperty
+		name="indirizzoEnteDiAppartenenza" />
+	<findFieldProperty
+		name="capEnteDiAppartenenza" />
+	<findFieldProperty
+		name="dsComuneEnteDiAppartenenza" />
+	<findFieldProperty
+		name="findComuneEnteDiAppartenenza" />
+</bulkInfo>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Gestione limite spesa"
+	longDescription="Tabella di associazione tra elemento voce - fonte ed importo limite utilizzata nella gestione degli impegni per controllare il limite da utilizzare">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="esercizio_voce"
+		property="elementoVoce.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Esercizio voce" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="elementoVoce.ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="elementoVoce.ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="gestione" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elementoVoce.cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elementoVoce.ds_elemento_voce"
+		inputType="ROTEXT"
+		inputSize="20"
+		maxLength="300"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Elemento voce" />	
+	<fieldProperty
+		name="findElementoVoce"
+		property="elementoVoce"
+		inputType="SEARCHTOOL"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		label="voce" />	
+	<fieldProperty
+		name="fonte"
+		property="fonte"
+		inputType="SELECT"
+		keysProperty="fonteKeys"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="fonte" />
+	<fieldProperty
+		name="importo_limite"
+		property="importo_limite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="importo limite" />
+	<fieldProperty
+		name="importo_assegnato"
+		property="importo_assegnato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="importo assegnato" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="ti_appartenenza" />
+		<formFieldProperty
+			name="ti_gestione" />
+		<formFieldProperty
+			name="cd_elemento_voce" />
+		<formFieldProperty
+			name="fonte" />
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_voce" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="fonte" />
+	<formFieldProperty
+		name="findElementoVoce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="fonte" />
+	<formFieldProperty
+		name="importo_limite" />
+	<formFieldProperty
+		name="importo_assegnato" />
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="fonte" />
+	<findFieldProperty
+		name="importo_limite" />
+	<findFieldProperty
+		name="importo_assegnato" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="fonte" />
+	<columnFieldProperty
+		name="importo_limite" />
+	<columnFieldProperty
+		name="importo_assegnato" />
+</bulkInfo>

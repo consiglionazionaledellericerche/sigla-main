@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.CofogBase"
+	keyClassName="it.cnr.contab.config00.latt.bulk.CofogKey"
+	homeClassName="it.cnr.contab.config00.latt.bulk.CofogHome">
+	<defaultColumnMap
+		tableName="COFOG">
+		<columnMapping
+			columnName="DS_COFOG"
+			propertyName="dsCofog"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cdLivello1"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cdLivello2"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cdLivello3"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_LIVELLO"
+			propertyName="nrLivello"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ACCENTRATO"
+			propertyName="flAccentrato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_DECENTRATO"
+			propertyName="flDecentrato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dsCofog" />
+	<persistentProperty
+		name="cdLivello1" />
+	<persistentProperty
+		name="cdLivello2" />
+	<persistentProperty
+		name="cdLivello3" />
+	<persistentProperty
+		name="nrLivello" />
+	<persistentProperty
+		name="flAccentrato" />
+	<persistentProperty
+		name="flDecentrato" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

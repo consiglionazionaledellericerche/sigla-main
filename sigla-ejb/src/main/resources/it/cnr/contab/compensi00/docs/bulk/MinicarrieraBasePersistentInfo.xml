@@ -251,7 +251,14 @@
 			columnName="PG_REPERTORIO"
 			propertyName="pg_repertorio"
 			sqlTypeName="DECIMAL"
-			columnSize="10" />			
+			columnSize="10" />	
+		<columnMapping
+			columnName="TI_PRESTAZIONE"
+			propertyName="ti_prestazione"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="true" />
+					
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_fine_minicarriera" />
@@ -338,5 +345,7 @@
 	<persistentProperty
 		name="esercizio_rep" />		
 	<persistentProperty
-		name="pg_repertorio" />		
+		name="pg_repertorio" />	
+	<persistentProperty
+		name="ti_prestazione" />				
 </SQLPersistentInfo>

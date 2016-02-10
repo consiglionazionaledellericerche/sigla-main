@@ -2,7 +2,7 @@ package it.cnr.contab.prevent01.bp;
 
 import java.rmi.RemoteException;
 
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -10,7 +10,8 @@ import it.cnr.contab.prevent01.bulk.Contrattazione_speseVirtualBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_approvato_dip_areaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -22,6 +23,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
 public class CRUDDettagliContrSpeseBP extends SimpleCRUDBP {
+	private boolean flNuovoPdg = false;
 
 	private Unita_organizzativaBulk uoSrivania;
 	private DipartimentoBulk dipartimentoSrivania;
@@ -101,26 +103,34 @@ public class CRUDDettagliContrSpeseBP extends SimpleCRUDBP {
 	}
 
 	protected void initialize(ActionContext context) throws BusinessProcessException {
-		super.initialize(context);
-		setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
-		if (it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context)!=null)
-			setDipartimentoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context));
-		setTab("tab","tabTestata");
-		setPdgApprovatoDefinitivo(isApprovatoDefinitivo(context));
-
-		try {	
-			setLivelloContrattazione(((PdgContrSpeseComponentSession)createComponentSession()).livelloContrattazioneSpese(context.getUserContext()));
-		}catch (RemoteException e) {
-			throw new BusinessProcessException(e);
+		try {
+			super.initialize(context);
+			setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
+			if (it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context)!=null)
+				setDipartimentoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context));
+			setTab("tab","tabTestata");
+			setPdgApprovatoDefinitivo(isApprovatoDefinitivo(context));
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())); 
+			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+	
+			try {	
+				setLivelloContrattazione(((PdgContrSpeseComponentSession)createComponentSession()).livelloContrattazioneSpese(context.getUserContext()));
+			}catch (RemoteException e) {
+				throw new BusinessProcessException(e);
+			} catch (ComponentException e) {
+				throw new BusinessProcessException(e);
+			} catch (PersistencyException e) {
+				throw new BusinessProcessException(e);
+			}
+	
+			if (getPdgApprovatoDefinitivo() || 
+			    !it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
+				setStatus(VIEW);
 		} catch (ComponentException e) {
 			throw new BusinessProcessException(e);
-		} catch (PersistencyException e) {
+		} catch (RemoteException e) {
 			throw new BusinessProcessException(e);
-		}
-
-		if (getPdgApprovatoDefinitivo() || 
-		    !it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
-			setStatus(VIEW);
+		} 
 	}
 
 	public boolean isApprovatoDefinitivo(ActionContext context) throws BusinessProcessException {
@@ -304,5 +314,12 @@ public class CRUDDettagliContrSpeseBP extends SimpleCRUDBP {
 	public OggettoBulk initializeModelForSearch(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		setStatus(VIEW);
 		return super.initializeModelForSearch(actioncontext, oggettobulk);
+	}
+
+	public void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
 	}
 }

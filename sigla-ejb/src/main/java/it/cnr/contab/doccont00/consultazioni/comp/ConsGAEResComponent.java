@@ -131,8 +131,8 @@ public class ConsGAEResComponent extends CRUDComponent {
 				else {
 					sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 //					bisogna ottimizzare la view
-//			 		sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
-					sql.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, CNRUserContext.getCd_cdr(userContext));
+			 		sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+//					sql.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, CNRUserContext.getCd_cdr(userContext));
 					
 				}
 			}
@@ -460,7 +460,7 @@ public class ConsGAEResComponent extends CRUDComponent {
 						sql.addColumn("NVL(VAR_PIU_OBBL_RES_PRO,0)", "VAR_PIU_OBBL_RES_PRO");
 						sql.addColumn("NVL(VAR_MENO_OBBL_RES_PRO,0)", "VAR_MENO_OBBL_RES_PRO");		
 						sql.addColumn("NVL(IM_MANDATI_REVERSALI_PRO,0)", "IM_MANDATI_REVERSALI_PRO");		
-						sql.addColumn("NVL(RIMASTI_DA_PAGARE,0)", "RIMASTI_DA_PAGARE_PRO");
+						sql.addColumn("NVL(RIMASTI_DA_PAGARE_PRO,0)", "RIMASTI_DA_PAGARE_PRO");
 					}
 				}
 				

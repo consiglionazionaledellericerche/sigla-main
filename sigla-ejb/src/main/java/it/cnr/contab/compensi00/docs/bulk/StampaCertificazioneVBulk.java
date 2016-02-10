@@ -19,6 +19,7 @@ public class StampaCertificazioneVBulk extends it.cnr.jada.bulk.OggettoBulk {
 	// NOTE
 	private String note;
 	private String ti_cert;
+	private String denominazione;
 	//private boolean editingTi_cert; 
 
 	private static OrderedHashtable tipoKeys;
@@ -28,12 +29,16 @@ public class StampaCertificazioneVBulk extends it.cnr.jada.bulk.OggettoBulk {
 	public static final String TI_IMPOSTA = "TI";
 	public static final String TI_IMPOSTA_CC = "CC";
 	public static final String TI_CONTRIBUTI = "RC";
+	public static final String TI_IMPOSTA_PC = "PC";
+	public static final String TI_ACCONTO_PPT = "RAPPT";
 
 	private boolean stampaRit_prev;
 	private boolean stampaRit_acconto;
 	private boolean stampaTit_imposta;
 	private boolean stampaTit_imposta_cc;	
 	private boolean stampaRit_contrib;
+	private boolean stampaTit_imposta_pc;
+	private boolean stampaRit_acconto_ppt;
 
 /**
  * StampaCertificazioneVBulk constructor comment.
@@ -51,6 +56,8 @@ public OrderedHashtable getTipoKeys() {
 		tipoKeys.put("TI", "a Titolo d'Imposta");
 		tipoKeys.put("CC", "a Titolo d'Imposta - Co.Co.Co.");
 		tipoKeys.put("RC", "per Contributi corrisposti ad imprese");
+		tipoKeys.put("PC", "a Titolo d'Imposta - Premi per concorsi");
+		tipoKeys.put("RAPPT", "a Ritenuta d'Acconto su somme liquidate a seguito di pignoramenti presso terzi");
 	}
 	return tipoKeys;
 }
@@ -132,7 +139,17 @@ public String getTi_cert() {
     	return TI_CONTRIBUTI;
     	*/
 }
+public String getDenominazione() {
+	if (getAnagraficoForPrint()==null)
+		return null;
+	if (getAnagraficoForPrint().getCd_anag()==null)
+		return null;
+    if (getAnagraficoForPrint().getRagione_sociale()!=null)
+    	return getAnagraficoForPrint().getRagione_sociale();
+    
+	return getAnagraficoForPrint().getCognome()+" "+ getAnagraficoForPrint().getNome();
 
+}
 public boolean isROAnagraficoForPrint(){
 	return anagraficoForPrint == null || anagraficoForPrint.getCrudStatus() == NORMAL;
 }
@@ -243,5 +260,19 @@ public void setStampaTit_imposta(boolean newStampaTit_imposta) {
 	 */
 	public void setTi_cert(String ti_cert) {
 		this.ti_cert = ti_cert;
+	}
+	public boolean isStampaTit_imposta_pc() {
+		return stampaTit_imposta_pc;
+	}
+
+	public void setStampaTit_imposta_pc(boolean b) {
+		this.stampaTit_imposta_pc = b;
+	}
+	public boolean isStampaRit_acconto_ppt() {
+		return stampaRit_acconto_ppt;
+	}
+
+	public void setStampaRit_acconto_ppt(boolean stampaRit_acconto_ppt) {
+		this.stampaRit_acconto_ppt = stampaRit_acconto_ppt;
 	}
 }

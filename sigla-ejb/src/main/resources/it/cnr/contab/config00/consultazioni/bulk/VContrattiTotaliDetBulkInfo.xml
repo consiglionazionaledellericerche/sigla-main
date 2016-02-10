@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Dettaglio documenti per contratto">
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="tipo" />
+	<fieldProperty
+		name="esercizioOriginale"
+		property="esercizioOriginale"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio Orig." />
+	<fieldProperty
+		name="terzo"
+		property="terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="terzo" />
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Voce" />
+	<fieldProperty
+		name="esercizioContratto"
+		property="esercizioContratto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio Contratto" />
+	<fieldProperty
+		name="pgContratto"
+		property="pgContratto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="nr°Contratto" />
+	<fieldProperty
+		name="statoContratto"
+		property="statoContratto"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="stato Contratto" />
+	<fieldProperty
+		name="oggetto"
+		property="oggetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="500"
+		enabledOnEdit="false"
+		label="oggetto" />
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data Inizio" />
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data Fine" />
+	<fieldProperty
+		name="linea"
+		property="linea"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="gae" />
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdr" />
+	<fieldProperty
+		name="esercizioObbAcr"
+		property="esercizioObbAcr"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio Obb/Acr" />
+	<fieldProperty
+		name="pgObbligazioneAccertamento"
+		property="pgObbligazioneAccertamento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="nr°Obbligazione/Accertamento" />
+	<fieldProperty
+		name="esercizioManRev"
+		property="esercizioManRev"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="esercizio Man/Rev" />
+	<fieldProperty
+		name="pgManRev"
+		property="pgManRev"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="nr° Man/Rev" />
+	<fieldProperty
+		name="esDocAmm"
+		property="esDocAmm"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="es Doc.Amm" />
+	<fieldProperty
+		name="pgDocAmm"
+		property="pgDocAmm"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="nr° Doc.Amm" />
+	<fieldProperty
+		name="tipoDoc"
+		property="tipoDoc"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="tipo Doc.Amm" />
+	<fieldProperty
+		name="descVoce"
+		property="descVoce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="desc.Voce" />
+	<fieldProperty
+		name="descTerzo"
+		property="descTerzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="denominazione" />
+	<fieldProperty
+		name="descGae"
+		property="descGae"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="desc.Gae" />
+	<fieldProperty
+		name="totaleEntrate"
+		property="totaleEntrate"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+        maxLength="18"
+        inputSize="18"
+		enabledOnEdit="false"
+		label="totale Accertato" />
+	<fieldProperty
+		name="totaleSpese"
+		property="totaleSpese"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+        maxLength="18"
+        inputSize="18"
+		enabledOnEdit="false"
+		label="totale Impegnato" />
+	<fieldProperty
+		name="liquidatoEntrate"
+		property="liquidatoEntrate"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+        maxLength="18"
+        inputSize="18"
+		enabledOnEdit="false"
+		label="liquidato Entrate" />
+	<fieldProperty
+		name="liquidatoSpese"
+		property="liquidatoSpese"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+        maxLength="18"
+        inputSize="18"
+		enabledOnEdit="false"
+		label="liquidato Spese" />
+	<fieldProperty
+		name="totaleReversali"
+		property="totaleReversali"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+        maxLength="18"
+        inputSize="18"
+		enabledOnEdit="false"
+		label="totale Incassato" />
+	<fieldProperty
+		name="totaleMandati"
+		property="totaleMandati"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+        maxLength="18"
+        inputSize="18"
+		enabledOnEdit="false"
+		label="totale Pagato" />
+	<fieldProperty
+		name="totaleEntrateContratto"
+		property="totaleEntrateContratto"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+        maxLength="18"
+        inputSize="18"
+		enabledOnEdit="false"
+		label="importo Attivo Contratto" />
+	<fieldProperty
+		name="totaleSpeseContratto"
+		property="totaleSpeseContratto"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+        maxLength="18"
+        inputSize="18"
+		enabledOnEdit="false"
+		label="importo Passivo Contratto" />	
+	<fieldProperty
+		name="esercizioContrattoPadre"
+		property="esercizioContrattoPadre"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio Contratto Padre" />
+	<fieldProperty
+		name="pgContrattoPadre"
+		property="pgContrattoPadre"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="nr°Contratto Padre" />
+	<fieldProperty
+		name="statoContrattoPadre"
+		property="statoContrattoPadre"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="stato Contratto Padre" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cds" />
+	<fieldProperty
+		name="tipoContratto"
+		property="tipoContratto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="tipo Contratto" />	
+				
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="esercizioOriginale" />
+	<formFieldProperty
+		name="terzo" />
+	<formFieldProperty
+		name="cdElementoVoce" />
+	<formFieldProperty
+		name="esercizioContratto" />
+	<formFieldProperty
+		name="pgContratto" />
+	<formFieldProperty
+		name="statoContratto" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="tipoContratto" />	
+	<formFieldProperty
+		name="oggetto" />
+	<formFieldProperty
+		name="dataInizio" />
+	<formFieldProperty
+		name="dataFine" />
+	<formFieldProperty
+		name="linea" />
+	<formFieldProperty
+		name="cdr" />
+	<formFieldProperty
+		name="esercizioObbAcr" />
+	<formFieldProperty
+		name="pgObbligazioneAccertamento" />
+	<formFieldProperty
+		name="esercizioManRev" />
+	<formFieldProperty
+		name="pgManRev" />
+	<formFieldProperty
+		name="esDocAmm" />
+	<formFieldProperty
+		name="pgDocAmm" />
+	<formFieldProperty
+		name="tipoDoc" />
+	<formFieldProperty
+		name="esercizioContrattoPadre" />
+	<formFieldProperty
+		name="statoContrattoPadre" />
+	<formFieldProperty
+		name="pgContrattoPadre" />
+	<formFieldProperty
+		name="descVoce" />
+	<formFieldProperty
+		name="descTerzo" />
+	<formFieldProperty
+		name="descGae" />
+	<formFieldProperty
+		name="totaleEntrateContratto" />
+	<formFieldProperty
+		name="totaleSpeseContratto" />	
+	<formFieldProperty
+		name="totaleEntrate" />
+	<formFieldProperty
+		name="totaleSpese" />
+	<formFieldProperty
+		name="liquidatoEntrate" />
+	<formFieldProperty
+		name="liquidatoSpese" />
+	<formFieldProperty
+		name="totaleReversali" />
+	<formFieldProperty
+		name="totaleMandati" />
+	
+	<findFieldProperty
+		name="esercizioContratto" />
+	<findFieldProperty
+		name="pgContratto" />
+	<findFieldProperty
+		name="oggetto" />
+	<findFieldProperty
+		name="dataInizio" />
+	<findFieldProperty
+		name="dataFine" />
+	<findFieldProperty
+		name="totaleEntrateContratto" />
+	<findFieldProperty
+		name="totaleSpeseContratto" />		
+	<findFieldProperty
+		name="terzo" />
+	<findFieldProperty
+		name="descTerzo" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="cdr" />
+	<findFieldProperty
+		name="linea" />
+	<findFieldProperty
+		name="descGae" />
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="descVoce" />
+	<findFieldProperty
+		name="esercizioOriginale" />
+	<findFieldProperty
+		name="esercizioObbAcr" />
+	<findFieldProperty
+		name="pgObbligazioneAccertamento" />
+	<findFieldProperty
+		name="totaleEntrate" />
+	<findFieldProperty
+		name="totaleSpese" />
+	<findFieldProperty
+		name="esDocAmm" />
+	<findFieldProperty
+		name="tipoDoc" />		
+	<findFieldProperty
+		name="pgDocAmm" />
+	<findFieldProperty
+		name="liquidatoEntrate" />
+	<findFieldProperty
+		name="liquidatoSpese" />		
+	<findFieldProperty
+		name="esercizioManRev" />
+	<findFieldProperty
+		name="pgManRev" />
+	<findFieldProperty
+		name="totaleReversali" />
+	<findFieldProperty
+		name="totaleMandati" />	
+	<findFieldProperty
+		name="tipoContratto" />	
+	<findFieldProperty
+		name="esercizioContrattoPadre" />
+	<findFieldProperty
+		name="statoContrattoPadre" />
+	<findFieldProperty
+		name="pgContrattoPadre" />
+			
+	<columnFieldProperty
+		name="esercizioContratto" />
+	<columnFieldProperty
+		name="pgContratto" />
+	<columnFieldProperty
+		name="oggetto" />
+	<columnFieldProperty
+		name="dataInizio" />
+	<columnFieldProperty
+		name="dataFine" />
+	<columnFieldProperty
+		name="totaleEntrateContratto" />
+	<columnFieldProperty
+		name="totaleSpeseContratto" />		
+	<columnFieldProperty
+		name="terzo" />
+	<columnFieldProperty
+		name="descTerzo" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="cdr" />
+	<columnFieldProperty
+		name="linea" />
+	<columnFieldProperty
+		name="descGae" />
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="descVoce" />
+	<columnFieldProperty
+		name="esercizioOriginale" />
+	<columnFieldProperty
+		name="esercizioObbAcr" />
+	<columnFieldProperty
+		name="pgObbligazioneAccertamento" />
+	<columnFieldProperty
+		name="totaleEntrate" />
+	<columnFieldProperty
+		name="totaleSpese" />
+	<columnFieldProperty
+		name="esDocAmm" />
+	<columnFieldProperty
+		name="tipoDoc" />		
+	<columnFieldProperty
+		name="pgDocAmm" />
+	<columnFieldProperty
+		name="liquidatoEntrate" />
+	<columnFieldProperty
+		name="liquidatoSpese" />		
+	<columnFieldProperty
+		name="esercizioManRev" />
+	<columnFieldProperty
+		name="pgManRev" />
+	<columnFieldProperty
+		name="totaleReversali" />
+	<columnFieldProperty
+		name="totaleMandati" />	
+	<columnFieldProperty
+		name="tipoContratto" />	
+	<columnFieldProperty
+		name="esercizioContrattoPadre" />
+	<columnFieldProperty
+		name="statoContrattoPadre" />
+	<columnFieldProperty
+		name="pgContrattoPadre" />
+	
+	<columnSet
+	        name="Doccont">
+	<columnFieldProperty
+		name="esercizioContratto" />
+	<columnFieldProperty
+		name="pgContratto" />
+	<columnFieldProperty
+		name="terzo" />
+	<columnFieldProperty
+		name="descTerzo"/>
+	<columnFieldProperty
+		name="esercizioOriginale"/>	
+	<columnFieldProperty
+		name="esercizioObbAcr"/>	
+	<columnFieldProperty
+		name="pgObbligazioneAccertamento"/>	
+	<columnFieldProperty
+		name="cdElementoVoce"/>
+	<columnFieldProperty
+		name="descVoce" />
+	<columnFieldProperty
+		name="cdr" />
+	<columnFieldProperty
+		name="linea" />
+	<columnFieldProperty
+		name="descGae" />	
+	<columnFieldProperty
+		name="tipoDoc" />
+	<columnFieldProperty
+		name="esDocAmm"/>
+	<columnFieldProperty
+		name="pgDocAmm" />
+	<columnFieldProperty
+		name="esercizioManRev" />
+	<columnFieldProperty
+		name="pgManRev"/>
+	<columnFieldProperty
+		name="esercizioOriginale"/>	
+	<columnFieldProperty
+		name="esercizioObbAcr"/>	
+	<columnFieldProperty
+		name="pgObbligazioneAccertamento"/>	
+	<columnFieldProperty
+		name="totaleReversali" />	
+	<columnFieldProperty
+		name="totaleMandati" />
+	<columnFieldProperty
+		name="esercizioContrattoPadre" />
+	<columnFieldProperty
+		name="pgContrattoPadre" />		
+	</columnSet>
+		
+	<columnSet
+	        name="Docamm">
+	<columnFieldProperty
+		name="esercizioContratto" />
+	<columnFieldProperty
+		name="pgContratto" />  
+	<columnFieldProperty
+		name="terzo" />
+	<columnFieldProperty
+		name="descTerzo"/>
+	<columnFieldProperty
+		name="esercizioOriginale"/>	
+	<columnFieldProperty
+		name="esercizioObbAcr"/>	
+	<columnFieldProperty
+		name="pgObbligazioneAccertamento"/>	
+	<columnFieldProperty
+		name="cdElementoVoce"/>
+	<columnFieldProperty
+		name="descVoce" />
+	<columnFieldProperty
+		name="cdr" />
+	<columnFieldProperty
+		name="linea" />
+	<columnFieldProperty
+		name="descGae" />	
+	<columnFieldProperty
+		name="esDocAmm" />
+	<columnFieldProperty
+		name="tipoDoc" />		
+	<columnFieldProperty
+		name="pgDocAmm" />
+	<columnFieldProperty
+		name="liquidatoEntrate" />
+	<columnFieldProperty
+		name="liquidatoSpese" />	
+	<columnFieldProperty
+		name="esercizioContrattoPadre" />
+	<columnFieldProperty
+		name="pgContrattoPadre" />	
+	</columnSet>	
+</bulkInfo>

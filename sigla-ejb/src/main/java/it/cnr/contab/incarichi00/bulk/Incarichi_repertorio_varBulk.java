@@ -4,10 +4,22 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
+import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileAssegniRicerca;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileBorseStudio;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileIncarichi;
+import it.cnr.contab.util.Utility;
+
+import java.io.IOException;
+
+import org.apache.chemistry.opencmis.client.api.Document;
+
 public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 	public static final java.util.Dictionary tipo_variazioneForEnteKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary tipo_variazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+	public static final java.util.Dictionary tipo_variazioneForAssegniRicercaKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary tipo_variazioneMinimaKeys = new it.cnr.jada.util.OrderedHashtable();
+	public static final java.util.Dictionary tipo_variazioneMinimaForAssegniRicercaKeys = new it.cnr.jada.util.OrderedHashtable();
 
 	private Incarichi_repertorioBulk incarichi_repertorio;
 
@@ -33,22 +45,26 @@ public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 	final public static String TIPO_INTEGRAZIONE_INCARICO = "I";
 	final public static String TIPO_VARIAZIONE_CONTRIBUTI = "C";
 	final public static String TIPO_VARIAZIONE_GENERICA = "G";
+	final public static String TIPO_VARIAZIONE_MATERNITA = "M";
 
 	static {
 		tipo_variazioneMinimaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
 
+		tipo_variazioneMinimaForAssegniRicercaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
+		tipo_variazioneMinimaForAssegniRicercaKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternità");
+
 		tipo_variazioneKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
 		tipo_variazioneKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
+
+		tipo_variazioneForAssegniRicercaKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
+		tipo_variazioneForAssegniRicercaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
+		tipo_variazioneForAssegniRicercaKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternità");
 
 		tipo_variazioneForEnteKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
 		tipo_variazioneForEnteKeys.put(TIPO_INTEGRAZIONE_INCARICO,"Adeguamento Incarico");
 		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
+		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternità");
 		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_GENERICA,"Variazione Generica");
-	}
-
-	static {
-		tipo_archivioKeys.put(TIPO_GENERICO,"Allegato generico");
-		tipo_archivioKeys.put(TIPO_CONTRATTO,"Contratto stipulato");
 	}
 
 	public Incarichi_repertorio_varBulk() {
@@ -141,6 +157,9 @@ public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
     public boolean isVariazioneIntegrazioneContributi() {
 		return isAllegatoValido() && getTipo_variazione() != null && getTipo_variazione().equals(TIPO_VARIAZIONE_CONTRIBUTI);
     }
+    public boolean isVariazioneIntegrazioneMaternita() {
+		return isAllegatoValido() && getTipo_variazione() != null && getTipo_variazione().equals(TIPO_VARIAZIONE_MATERNITA);
+    }
     public boolean isVariazioneIntegrazioneGenerica() {
 		return isAllegatoValido() && getTipo_variazione() != null && getTipo_variazione().equals(TIPO_VARIAZIONE_GENERICA);
     }
@@ -155,5 +174,57 @@ public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 	}
 	public boolean isFileRequired() {
 		return isVariazioneIntegrazioneIncaricoTransitorio() && isDefinitivo();
+	}
+	public Integer getEsercizioProcedura() {
+		if (this.getIncarichi_repertorio() == null)
+			return null;
+		return this.getIncarichi_repertorio().getEsercizio_procedura();
+	}
+	public Long getPg_procedura() {
+		if (this.getIncarichi_repertorio() == null)
+			return null;
+		return this.getIncarichi_repertorio().getPg_procedura();
+	}
+	public CMISFile getCMISFile() throws IOException{
+		CMISFile cmisFile=null;
+		if (this.getIncarichi_repertorio()!=null && 
+			this.getIncarichi_repertorio().getIncarichi_procedura()!=null) {
+			if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForBorseStudio()) {
+				if (this.getFile()==null)
+					cmisFile = new CMISFileBorseStudio(this);
+				else
+					cmisFile = new CMISFileBorseStudio(this.getFile(), this.getNome_file(), this);
+			} else if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForAssegniRicerca()) {
+				if (this.getFile()==null)
+					cmisFile = new CMISFileAssegniRicerca(this);
+				else
+					cmisFile = new CMISFileAssegniRicerca(this.getFile(), this.getNome_file(), this);
+			}
+		}
+		if (cmisFile==null) {
+			if (this.getFile()==null)
+				cmisFile = new CMISFileIncarichi(this);
+			else
+				cmisFile = new CMISFileIncarichi(this.getFile(), this.getNome_file(), this);
+		}
+		return cmisFile;
+	}
+	public CMISFile getCMISFile(Document node) {
+		if (this.getIncarichi_repertorio()!=null && 
+			this.getIncarichi_repertorio().getIncarichi_procedura()!=null) {
+			if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForBorseStudio())
+				return new CMISFileBorseStudio(node, this);
+			else if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForAssegniRicerca())
+				return new CMISFileAssegniRicerca(node, this);
+		}
+		return new CMISFileIncarichi(node, this);
+	}
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(super.constructCMISNomeFile());
+		nomeFile = nomeFile.append("-"+this.getIncarichi_repertorio().getCd_unita_organizzativa());
+		nomeFile = nomeFile.append("-"+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),9,'0'));
+		nomeFile = nomeFile.append("."+(this.getNome_file()!=null?this.getNome_file():Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getTipo_archivio()).toString()+this.getProgressivo_riga()+".txt"));
+		return nomeFile.toString();
 	}
 }

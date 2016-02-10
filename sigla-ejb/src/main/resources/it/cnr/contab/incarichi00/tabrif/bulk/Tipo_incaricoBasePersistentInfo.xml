@@ -32,6 +32,12 @@
 			columnSize="10"
 			nullable="false" />
 		<columnMapping
+			columnName="TIPO_ASSOCIAZIONE"
+			propertyName="tipo_associazione"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
 			columnName="FL_CANCELLATO"
 			propertyName="fl_cancellato"
 			sqlTypeName="CHAR"
@@ -77,6 +83,8 @@
 		name="prc_incremento_var" />
 	<persistentProperty
 		name="cd_tipo_rapporto" />
+	<persistentProperty
+		name="tipo_associazione" />
 	<persistentProperty
 		name="fl_cancellato" />
 	<persistentProperty

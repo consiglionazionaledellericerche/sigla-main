@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_proprio_unita"
 		property="cd_proprio_unita"
@@ -256,6 +256,11 @@
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		/>
+	<fieldProperty
+		name="cd_tipo_unita"
+		property="cd_tipo_unita"
+		label="Tipo Unita"
+		/>
 
 	<form
 		name="searchtool" >
@@ -294,6 +299,11 @@
 		name="esercizio_inizio"
 		/>
 	<columnFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		/>
+	
+	<columnFieldProperty
 		name="cd_unita_organizzativa"
 		/>
 	<columnFieldProperty
@@ -319,6 +329,16 @@
 	<columnFieldProperty
 		name="esercizio_fine"
 		/>
+
+	<columnSet name="restService" >
+		<columnFieldProperty name="cd_unita_organizzativa"/>
+		<columnFieldProperty name="ds_unita_organizzativa"/>
+		<columnFieldProperty name="cd_tipo_unita"/>
+		<columnFieldProperty name="cd_responsabile"/>
+		<columnFieldProperty name="cd_unita_padre"/>
+		<columnFieldProperty name="fl_uo_cds"/>
+		<columnFieldProperty name="esercizio_fine"/>
+	</columnSet>
 
 	<columnSet
 		name="scrivania">

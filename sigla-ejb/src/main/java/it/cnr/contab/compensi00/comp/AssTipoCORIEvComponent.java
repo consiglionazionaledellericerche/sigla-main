@@ -30,7 +30,7 @@ public class AssTipoCORIEvComponent extends it.cnr.jada.comp.CRUDComponent{
 	SQLBuilder sql = getHome(userContext, Elemento_voceBulk.class).createSQLBuilder();
 	sql.addClause( clauses );
 	sql.addSQLClause("AND","FL_PARTITA_GIRO",sql.EQUALS,"Y");
-	sql.addSQLClause("AND","TI_APPARTENENZA",sql.EQUALS,ass.getTi_appartenenza());
+	//sql.addSQLClause("AND","TI_APPARTENENZA",sql.EQUALS,ass.getTi_appartenenza());
 	sql.addSQLClause("AND","TI_GESTIONE",sql.EQUALS,ass.getTi_gestione());
 	sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 	return sql;		

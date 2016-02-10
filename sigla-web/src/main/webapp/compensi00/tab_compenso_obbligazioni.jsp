@@ -46,7 +46,10 @@
 	<td><% bp.getController().writeFormLabel(out,"scadenza_ds_scadenza"); %></td>
 	<td><% bp.getController().writeFormInput(out,"scadenza_ds_scadenza"); %></td>
   </tr>
-
+ <tr>
+	<td><% bp.getController().writeFormLabel(out,"cig"); %></td>
+	<td><% bp.getController().writeFormInput(out,"cig"); %></td>
+  </tr>
   <tr>
 	<td colspan=2>
 		<% if (compenso.isStatoCompensoEseguiCalcolo()) { %>

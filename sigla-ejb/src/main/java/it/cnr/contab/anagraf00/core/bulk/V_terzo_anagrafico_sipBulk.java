@@ -25,6 +25,24 @@ public class V_terzo_anagrafico_sipBulk extends OggettoBulk implements Persisten
 	// NOME VARCHAR(50)
 	private java.lang.String nome;
 
+	private java.lang.String via_fiscale;
+	
+	private java.lang.String num_civico_fiscale;
+	
+	private java.lang.String cap_comune_fiscale;
+	
+	private java.lang.Integer pg_nazione_fiscale;
+	private java.lang.Integer pg_comune_fiscale;
+	
+		// DT_NASCITA TIMESTAMP
+	private java.sql.Timestamp dt_nascita;
+	private java.lang.String sesso;
+	private java.lang.Integer pg_comune_nascita;
+	
+	private java.lang.String comune_fiscale;
+	private java.lang.String comune_nascita;
+	private java.lang.String ds_nazione;
+	
 	public V_terzo_anagrafico_sipBulk() {
 		super();
 	}
@@ -83,6 +101,94 @@ public class V_terzo_anagrafico_sipBulk extends OggettoBulk implements Persisten
 
 	public void setTi_entita(java.lang.String ti_entita) {
 		this.ti_entita = ti_entita;
+	}
+
+	public java.lang.String getVia_fiscale() {
+		return via_fiscale;
+	}
+
+	public void setVia_fiscale(java.lang.String via_fiscale) {
+		this.via_fiscale = via_fiscale;
+	}
+
+	public java.lang.String getNum_civico_fiscale() {
+		return num_civico_fiscale;
+	}
+
+	public void setNum_civico_fiscale(java.lang.String num_civico_fiscale) {
+		this.num_civico_fiscale = num_civico_fiscale;
+	}
+
+	public java.lang.String getCap_comune_fiscale() {
+		return cap_comune_fiscale;
+	}
+
+	public void setCap_comune_fiscale(java.lang.String cap_comune_fiscale) {
+		this.cap_comune_fiscale = cap_comune_fiscale;
+	}
+
+	public java.lang.Integer getPg_nazione_fiscale() {
+		return pg_nazione_fiscale;
+	}
+
+	public void setPg_nazione_fiscale(java.lang.Integer pg_nazione_fiscale) {
+		this.pg_nazione_fiscale = pg_nazione_fiscale;
+	}
+
+	public java.lang.Integer getPg_comune_fiscale() {
+		return pg_comune_fiscale;
+	}
+
+	public void setPg_comune_fiscale(java.lang.Integer pg_comune_fiscale) {
+		this.pg_comune_fiscale = pg_comune_fiscale;
+	}
+
+	public java.sql.Timestamp getDt_nascita() {
+		return dt_nascita;
+	}
+
+	public void setDt_nascita(java.sql.Timestamp dt_nascita) {
+		this.dt_nascita = dt_nascita;
+	}
+
+	public java.lang.String getSesso() {
+		return sesso;
+	}
+
+	public void setSesso(java.lang.String sesso) {
+		this.sesso = sesso;
+	}
+
+	public java.lang.Integer getPg_comune_nascita() {
+		return pg_comune_nascita;
+	}
+
+	public void setPg_comune_nascita(java.lang.Integer pg_comune_nascita) {
+		this.pg_comune_nascita = pg_comune_nascita;
+	}
+
+	public java.lang.String getComune_fiscale() {
+		return comune_fiscale;
+	}
+
+	public void setComune_fiscale(java.lang.String comune_fiscale) {
+		this.comune_fiscale = comune_fiscale;
+	}
+
+	public java.lang.String getComune_nascita() {
+		return comune_nascita;
+	}
+
+	public void setComune_nascita(java.lang.String comune_nascita) {
+		this.comune_nascita = comune_nascita;
+	}
+
+	public java.lang.String getDs_nazione() {
+		return ds_nazione;
+	}
+
+	public void setDs_nazione(java.lang.String ds_nazione) {
+		this.ds_nazione = ds_nazione;
 	}
 
 }

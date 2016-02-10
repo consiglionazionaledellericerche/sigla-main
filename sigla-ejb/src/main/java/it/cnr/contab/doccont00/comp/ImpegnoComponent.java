@@ -18,6 +18,7 @@ import it.cnr.contab.config00.latt.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -174,7 +175,12 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
 private void aggiornaSaldiInInserimento( UserContext userContext, ImpegnoResiduoBulk imp) throws ComponentException, java.rmi.RemoteException
 {
 	SaldoComponentSession session = createSaldoComponentSession();
-	PrimaryKeyHashMap saldiDaAggiornare = imp.getVociMap();
+	PrimaryKeyHashMap saldiDaAggiornare;
+	try {
+		saldiDaAggiornare = imp.getVociMap(((Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class)).isNuovoPdg(userContext));
+	} catch (PersistencyException e) {
+		throw handleException(e);
+	}
 	for ( Iterator i = saldiDaAggiornare.keySet().iterator(); i.hasNext(); )
 	{
 		Voce_fBulk voce = (Voce_fBulk) i.next();

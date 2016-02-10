@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivita_fpKey">
+	<defaultColumnMap
+		tableName="TIPO_ATTIVITA_FP">
+		<columnMapping
+			columnName="CD_TIPO_ATTIVITA"
+			propertyName="cd_tipo_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_attivita"
+		partOfOid="true" />
+</SQLPersistentInfo>

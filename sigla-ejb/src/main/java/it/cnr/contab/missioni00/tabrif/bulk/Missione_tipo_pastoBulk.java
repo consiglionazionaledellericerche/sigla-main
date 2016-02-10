@@ -17,13 +17,17 @@ public class Missione_tipo_pastoBulk extends Missione_tipo_pastoBase
 		
 	private Rif_inquadramentoBulk rifInquadramento;
 	private java.util.Collection rifInquadramenti;
+	
+	private RifAreePaesiEsteriBulk rifAreePaesiEsteri = new RifAreePaesiEsteriBulk();
+	
 public Missione_tipo_pastoBulk() {
 	super();
 }
-public Missione_tipo_pastoBulk(java.lang.String cd_ti_pasto,java.sql.Timestamp dt_inizio_validita,java.lang.Long pg_nazione,java.lang.Long pg_rif_inquadramento,java.lang.String ti_area_geografica) {
-	super(cd_ti_pasto,dt_inizio_validita,pg_nazione,pg_rif_inquadramento,ti_area_geografica);
+public Missione_tipo_pastoBulk(java.lang.String cd_ti_pasto,java.sql.Timestamp dt_inizio_validita,java.lang.Long pg_nazione,java.lang.Long pg_rif_inquadramento,java.lang.String ti_area_geografica,java.lang.String cd_area_estera) {
+	super(cd_ti_pasto,dt_inizio_validita,pg_nazione,pg_rif_inquadramento,ti_area_geografica,cd_area_estera);
 	setRifInquadramento(new it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk(pg_rif_inquadramento));
 	setNazione(new it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk(pg_nazione));
+	setRifAreePaesiEsteri(new RifAreePaesiEsteriBulk(cd_area_estera));
 }
 public java.lang.String getCd_divisa() {
 	it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk divisa = this.getDivisa();
@@ -62,6 +66,12 @@ public java.lang.Long getPg_nazione() {
 	if (nazione == null)
 		return null;
 	return nazione.getPg_nazione();
+}
+public java.lang.String getCd_area_estera() {
+	it.cnr.contab.anagraf00.tabter.bulk.RifAreePaesiEsteriBulk rifAreePaesiEsteri = this.getRifAreePaesiEsteri();
+	if (rifAreePaesiEsteri == null)
+		return null;
+	return rifAreePaesiEsteri.getCd_area_estera();
 }
 public java.lang.Long getPg_rif_inquadramento() {
 	it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk rifInquadramento = this.getRifInquadramento();
@@ -162,6 +172,9 @@ public void setNazione(it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk newNazion
 public void setPg_nazione(java.lang.Long pg_nazione) {
 	this.getNazione().setPg_nazione(pg_nazione);
 }
+public void setCd_area_estera(java.lang.String cd_area_estera) {
+	this.getRifAreePaesiEsteri().setCd_area_estera(cd_area_estera);
+}
 public void setPg_rif_inquadramento(java.lang.Long pg_rif_inquadramento) {
 	this.getRifInquadramento().setPg_rif_inquadramento(pg_rif_inquadramento);
 }
@@ -215,5 +228,20 @@ public void validate() throws ValidationException {
 	// controllo su campo DATA CANCELLAZIONE
 	if(getDt_cancellazione()!=null && getDt_cancellazione().compareTo(getDt_inizio_validita())<0)
 		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio Validità");
+	
+	// controllo su campo Area Estera
+	if ( getCd_area_estera() == null )
+		throw new ValidationException( "Il campo Area Estera non può essere vuoto!" );
 }		
+
+	public it.cnr.contab.anagraf00.tabter.bulk.RifAreePaesiEsteriBulk getRifAreePaesiEsteri() {
+		return rifAreePaesiEsteri;
+	}
+	public void setRifAreePaesiEsteri(it.cnr.contab.anagraf00.tabter.bulk.RifAreePaesiEsteriBulk newArea) {
+		rifAreePaesiEsteri = newArea;
+	}
+	
+	public boolean isROFindRifAreePaesiEsteri(){
+		return false;
+	}
 }

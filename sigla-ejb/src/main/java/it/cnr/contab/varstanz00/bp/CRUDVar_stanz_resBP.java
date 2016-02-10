@@ -10,23 +10,17 @@ import java.rmi.RemoteException;
 
 import javax.ejb.RemoveException;
 
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
@@ -305,7 +299,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			return (isSaveButtonEnabled()||(super.isSaveButtonEnabled()&&((Var_stanz_resBulk)getModel()).isPropostaProvvisoria()))&& 
 					((Var_stanz_resBulk)getModel()).isPropostaProvvisoria() && 
 					((Var_stanz_resBulk)getModel()).isNotNew() &&
-					(controllaCdrDaAccMod() || isUoArea())&&
+					(controllaCdrDaAccMod() || isUoArea()|| isUoSac())&&
 					controllaBP() &&
 					((Var_stanz_resBulk)getModel()).getCentroDiResponsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 		}catch(NullPointerException e){
@@ -321,7 +315,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			return (isSaveButtonEnabled()||(((Var_stanz_resBulk)getModel()).isPropostaDefinitiva()))&& 
 					((Var_stanz_resBulk)getModel()).isPropostaDefinitiva() && 
 					((Var_stanz_resBulk)getModel()).isNotNew() &&
-					(controllaCdrDaAccMod() || isUoArea())&&
+					(controllaCdrDaAccMod() || isUoArea()||isUoSac())&&
 					((Var_stanz_resBulk)getModel()).getCentroDiResponsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 		}catch(NullPointerException e){
 			return false;
@@ -391,6 +385,9 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	public boolean isUoEnte(){
 		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0);
+	}
+	public boolean isUoSac(){
+		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0);
 	}
 	public boolean isUoArea(){
 		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0);
@@ -561,6 +558,5 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	public void setAbilitatoModificaDescVariazioni(boolean abilitatoModificaDescVariazioni) {
 		this.abilitatoModificaDescVariazioni = abilitatoModificaDescVariazioni;
-	}
-	
+	}	
 }

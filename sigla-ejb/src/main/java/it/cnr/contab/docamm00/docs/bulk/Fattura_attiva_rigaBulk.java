@@ -38,6 +38,7 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 	public final static String NON_ASSOCIATO_A_MANDATO = "N";
 	public final static String ASSOCIATO_A_MANDATO = "T";
 	private Bene_servizioBulk bene_servizio;
+	private Boolean collegatoCapitoloPerTrovato = false;
 	static{
 		
 		STATO = new it.cnr.jada.util.OrderedHashtable();
@@ -59,6 +60,7 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 	private it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk accertamento_scadenzario;
 	private boolean inventariato = false;
 	private java.lang.String riportata = NON_RIPORTATO;
+	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione necessaria per i bulk non persistenti
 
 public Fattura_attiva_rigaBulk() {
 	super();
@@ -95,17 +97,17 @@ public void calcolaCampiDiRiga() {
 	if (getPrezzo_unitario() == null) setPrezzo_unitario(new java.math.BigDecimal(0));
 	if (getIm_iva() == null) setIm_iva(new java.math.BigDecimal(0));
 
-	setIm_totale_divisa(getQuantita().multiply(getPrezzo_unitario()).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_divisa(getQuantita().multiply(getPrezzo_unitario()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	java.math.BigDecimal imp_divisa = new java.math.BigDecimal(0);
 	java.math.BigDecimal change = getFattura_attiva().getCambio();
 	imp_divisa = (getFattura_attiva().getChangeOperation() == Fattura_attivaBulk.MOLTIPLICA) ?
 						getIm_totale_divisa().multiply(change) :
-						getIm_totale_divisa().divide(change, java.math.BigDecimal.ROUND_HALF_EVEN);
-	setIm_imponibile(imp_divisa.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+						getIm_totale_divisa().divide(change, java.math.BigDecimal.ROUND_HALF_UP);
+	setIm_imponibile(imp_divisa.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	if (getFl_iva_forzata() == null) setFl_iva_forzata(Boolean.FALSE);
 	if (!getFl_iva_forzata().booleanValue()) {
 		if (voce_iva != null && voce_iva.getPercentuale() != null)
-			setIm_iva(imp_divisa.multiply(voce_iva.getPercentuale()).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			setIm_iva(imp_divisa.multiply(voce_iva.getPercentuale()).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_UP));
 		else
 			setIm_iva(new java.math.BigDecimal(0));
 	}
@@ -122,11 +124,11 @@ public void calcolaTotaliDiRigaForzaIva() {
     //setIm_imponibile(
         //getQuantita().multiply(getPrezzo_unitario()).setScale(
             //2,
-            //java.math.BigDecimal.ROUND_HALF_EVEN));
+            //java.math.BigDecimal.ROUND_HALF_UP));
    //setIm_totale_divisa(
             //(getIm_imponibile().add(getIm_iva())).setScale(
                 //2,
-                //java.math.BigDecimal.ROUND_HALF_EVEN));
+                //java.math.BigDecimal.ROUND_HALF_UP));
     //}
 }
 public boolean checkIfRiportata() {
@@ -442,5 +444,26 @@ public Bene_servizioBulk getBene_servizio() {
 }
 public void setBene_servizio(Bene_servizioBulk bene_servizio) {
 	this.bene_servizio = bene_servizio;
+}
+public void setTrovato(TrovatoBulk trovato) {
+	this.trovato = trovato;
+}
+public TrovatoBulk getTrovato() {
+	return trovato;
+}
+public java.lang.Long getPg_trovato() {
+	if (this.getTrovato() == null)
+		return null;
+	return this.getTrovato().getPg_trovato();
+}
+public void setPg_trovato(java.lang.Long pg_trovato) {
+	if (this.getTrovato() != null)
+		this.getTrovato().setPg_trovato(pg_trovato);
+}
+public Boolean getCollegatoCapitoloPerTrovato() {
+	return collegatoCapitoloPerTrovato;
+}
+public void setCollegatoCapitoloPerTrovato(Boolean collegatoCapitoloPerTrovato) {
+	this.collegatoCapitoloPerTrovato = collegatoCapitoloPerTrovato;
 }
 }

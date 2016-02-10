@@ -17,18 +17,6 @@
 			columnName="PG_MODIFICA"
 			propertyName="accertamento_modifica.pg_modifica" />
 		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="voce_f.esercizio" />
-		<columnMapping
-			columnName="TI_APPARTENENZA"
-			propertyName="voce_f.ti_appartenenza" />
-		<columnMapping
-			columnName="TI_GESTIONE"
-			propertyName="voce_f.ti_gestione" />
-		<columnMapping
-			columnName="CD_VOCE"
-			propertyName="voce_f.cd_voce" />
-		<columnMapping
 			columnName="CD_CENTRO_RESPONSABILITA"
 			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita" />
 		<columnMapping
@@ -39,17 +27,12 @@
 		name="accertamento_modifica"
 		partOfOid="true" />
 	<persistentProperty
-		name="voce_f"
-		partOfOid="true" />
-	<persistentProperty
 		name="linea_attivita"
 		partOfOid="true" />
 
 	<fetchPolicy
 		name="default">
 		<exclude pattern="*" />
-		<include pattern="voce_f"/>
-		<include pattern="voce_f.*"/>
 		<include pattern="linea_attivita"/>
 		<include pattern="linea_attivita.*"/>
 	</fetchPolicy>

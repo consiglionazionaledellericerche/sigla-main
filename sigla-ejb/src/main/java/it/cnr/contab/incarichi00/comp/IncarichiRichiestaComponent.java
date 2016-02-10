@@ -1,16 +1,8 @@
 package it.cnr.contab.incarichi00.comp;
 
-import java.rmi.RemoteException;
-import java.sql.Timestamp;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.ejb.EJBException;
-
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
@@ -19,8 +11,8 @@ import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioHome;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioHome;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
@@ -32,6 +24,7 @@ import it.cnr.contab.incarichi00.bulk.V_incarichi_elencoBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_elencoHome;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_richiestaBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_richiestaHome;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
@@ -42,11 +35,20 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
+
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.ejb.EJBException;
 
 public class IncarichiRichiestaComponent extends CRUDComponent {
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
@@ -288,7 +290,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 			}
 
 		if(anno!=null)
-			sql.addSQLClause("AND","to_char(DATA_PUBBLICAZIONE, 'YYYY')",SQLBuilder.EQUALS,anno);
+			sql.addSQLClause("AND","to_char(DT_PUBBLICAZIONE, 'YYYY')",SQLBuilder.EQUALS,anno);
 
 		if(cdCds!=null)
 			sql.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS,cdCds);
@@ -356,19 +358,10 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
         			sediUo.put(incarico.getCd_unita_organizzativa(), indirizzo);
     			}
     			incarico.setSede(indirizzo);
-
-    			Incarichi_procedura_archivioHome home2 = (Incarichi_procedura_archivioHome)getHome(userContext, Incarichi_procedura_archivioBulk.class);
-    			SQLBuilder sql2 = home2.createSQLBuilder();
-				sql2.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,incarico.getEsercizio());
-				sql2.addClause(FindClause.AND,"pg_procedura",SQLBuilder.EQUALS,incarico.getPg_procedura());
-				sql2.addClause(FindClause.AND,"tipo_archivio",SQLBuilder.EQUALS,Incarichi_procedura_archivioBulk.TIPO_BANDO);
-				sql2.addClause(FindClause.AND,"stato",SQLBuilder.EQUALS,"V");
-				List listaRep = home2.fetchAll(sql2);
-				if (!listaRep.isEmpty()) {
-					Incarichi_procedura_archivioBulk rep = (Incarichi_procedura_archivioBulk)home2.fetchAll(sql2).get(0);
-	    			if (rep!=null)
-	    				incarico.setDownloadUrl(rep.getDownloadUrl());
-				}
+    			
+				Incarichi_proceduraBulk incaricoProcedura = (Incarichi_proceduraBulk)getHome(userContext, Incarichi_proceduraBulk.class).findByPrimaryKey(new Incarichi_proceduraBulk(incarico.getEsercizio(), incarico.getPg_procedura()));
+				incaricoProcedura.setArchivioAllegati( new BulkList( ((Incarichi_proceduraHome) getHome( userContext, Incarichi_proceduraBulk.class )).findArchivioAllegati( incaricoProcedura ) ));
+				incarico.setIncaricoProcedura(incaricoProcedura);
 			}
 
 			return list;
@@ -378,12 +371,46 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 			throw handleException(ex);
 		} catch (EJBException ex) {
 			throw handleException(ex);
+		} catch (IntrospectionException ex) {
+			throw handleException(ex);
 		}
 	}
 
-	public RemoteIterator findListaIncarichiElenco(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
+	public RemoteIterator findListaIncarichiElenco(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca,String tipoInc) throws ComponentException {
 		V_incarichi_elencoHome home = (V_incarichi_elencoHome)getHome(userContext, V_incarichi_elencoBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
+		sql.addTableToHeader("TIPO_ATTIVITA");
+		sql.addSQLJoin("V_INCARICHI_ELENCO.CD_TIPO_ATTIVITA", "TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
+		if (tipoInc==null)
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPO_ASSOCIAZIONE",SQLBuilder.EQUALS,Tipo_attivitaBulk.ASS_INCARICHI);
+		else if (tipoInc.equals("1"))
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_CONSULENZA);
+		else if (tipoInc.equals("2")) {
+			sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.OR,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_STUDIO);
+			sql.addSQLClause(FindClause.OR,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_RICERCA);
+			sql.addSQLClause(FindClause.OR,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_ALTRO);
+			sql.closeParenthesis();
+		} else if (tipoInc.equals("3"))
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_ASSEGNO_RICERCA);
+		else if (tipoInc.equals("4"))
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_BORSA_STUDIO);
+		else if (tipoInc.equals("5"))
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_TIROCINIO);
+
+		sql = addFiltriListaIncarichiElenco(sql, query, dominio, anno, cdCds, order, strRicerca);
+		return iterator(userContext, sql, V_incarichi_elencoBulk.class, getFetchPolicyName("find"));
+	}
+	
+	public RemoteIterator findListaIncarichiElencoArt18(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
+		V_incarichi_elencoHome home = (V_incarichi_elencoHome)getHome(userContext, V_incarichi_elencoBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"to_number(to_char(DT_STIPULA,'yyyy')) >= to_number('2013')");
+		sql = addFiltriListaIncarichiElenco(sql, query, dominio, anno, cdCds, order, strRicerca);
+		return iterator(userContext, sql, V_incarichi_elencoBulk.class, getFetchPolicyName("find"));
+	}
+
+	public SQLBuilder addFiltriListaIncarichiElenco(SQLBuilder sql,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
 		if(dominio.equalsIgnoreCase("data"))
 			if (Constants.RICHIESTE_IN_CORSO.equalsIgnoreCase(query)) {
 				sql.addSQLClause(FindClause.AND,"to_number(to_char(sysdate,'yyyy')) = to_number(to_char(DT_STIPULA,'yyyy'))");
@@ -400,7 +427,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 			sql.openParenthesis(FindClause.AND);
 			sql.addSQLClause(FindClause.OR,"instr(ESERCIZIO||'/'||PG_REPERTORIO,'"+strRicerca+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(UPPER(DS_UNITA_ORGANIZZATIVA),'"+strRicerca.toUpperCase()+"')>0");
-			sql.addSQLClause(FindClause.OR,"instr(UPPER(NOMINATIVO),'"+strRicerca.toUpperCase()+"')>0");
+			sql.addSQLClause(FindClause.OR,"instr(UPPER(BENEF_DENOMINAZIONE_SEDE),'"+strRicerca.toUpperCase()+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(UPPER(OGGETTO),'"+strRicerca.toUpperCase()+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IMPORTO_LORDO,0)+nvl(IMPORTO_VARIAZIONE,0), '999999999999999D99'),'"+strRicerca.toUpperCase()+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IMPORTO_LORDO,0)+nvl(IMPORTO_VARIAZIONE,0), '999G999G999G999G999D99'),'"+strRicerca.toUpperCase()+"')>0");
@@ -419,7 +446,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 			else if (order.equals("cdr"))
 				sql.addOrderBy("DS_UNITA_ORGANIZZATIVA");
 			else if (order.equals("nominativo"))
-				sql.addOrderBy("NOMINATIVO");
+				sql.addOrderBy("BENEF_DENOMINAZIONE_SEDE");
 			else if (order.equals("oggetto"))
 				sql.addOrderBy("OGGETTO");
 			else if (order.equals("importo"))
@@ -430,9 +457,9 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 				sql.addOrderBy("nvl(DT_FINE_VALIDITA_VARIAZIONE, DT_FINE_VALIDITA)");
 		}
 
-		return iterator(userContext, sql, V_incarichi_elencoBulk.class, getFetchPolicyName("find"));
+		return sql;
 	}
-	
+
 	public List completaListaIncarichiElenco(UserContext userContext, List list) throws ComponentException{
 		try {	
 			Hashtable sediUo = new Hashtable<String, String>();
@@ -457,7 +484,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 	    				ComuneBulk comune = (ComuneBulk)getHome(userContext, ComuneBulk.class).findByPrimaryKey(terzo.getComune_sede());
 	    				indirizzo = indirizzo + ", "+comune.getDs_comune();
 	    			}
-    			sediUo.put(incarico.getCd_unita_organizzativa(), indirizzo);
+	    			sediUo.put(incarico.getCd_unita_organizzativa(), indirizzo);
     			}
 
     			incarico.setSede(indirizzo);
@@ -491,6 +518,18 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 
 					incarico.setListDownloadUrl(listaDownload);
 				} 
+
+				Incarichi_repertorioHome incHome = (Incarichi_repertorioHome)getHome(userContext, Incarichi_repertorioBulk.class);
+				incarico.setIncarichi_repertorio_rapp_detColl( new BulkList( incHome.findIncarichi_repertorio_rapp_detList(userContext, new Incarichi_repertorioBulk(incarico.getEsercizio(), incarico.getPg_repertorio()))));
+
+				Incarichi_repertorioBulk incaricoRepertorio = (Incarichi_repertorioBulk)getHome(userContext, Incarichi_repertorioBulk.class).findByPrimaryKey(new Incarichi_repertorioBulk(incarico.getEsercizio(), incarico.getPg_repertorio()));
+				Incarichi_proceduraBulk incaricoProcedura = (Incarichi_proceduraBulk)getHome(userContext, Incarichi_proceduraBulk.class).findByPrimaryKey(new Incarichi_proceduraBulk(incarico.getEsercizio_procedura(), incarico.getPg_procedura()));
+
+				incaricoRepertorio.setIncarichi_procedura(incaricoProcedura);
+				incarico.setIncaricoRepertorio(incaricoRepertorio);
+				
+				incaricoProcedura.setArchivioAllegati( new BulkList( ((Incarichi_proceduraHome) getHome( userContext, Incarichi_proceduraBulk.class )).findArchivioAllegati( incaricoProcedura ) ));
+				incaricoRepertorio.setArchivioAllegati( new BulkList( ((Incarichi_repertorioHome) getHome( userContext, Incarichi_repertorioBulk.class )).findArchivioAllegati( incaricoRepertorio ) ));
 			}
 			return list;
 
@@ -499,6 +538,8 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		} catch (RemoteException ex) {
 			throw handleException(ex);
 		} catch (EJBException ex) {
+			throw handleException(ex);
+		} catch (IntrospectionException ex) {
 			throw handleException(ex);
 		}
 	}
@@ -511,6 +552,24 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 			}
 			return oggettobulk;
 		}catch( Exception e ){
+			throw handleException( e );
+		}		
+	}
+	public V_incarichi_elencoBulk completaIncaricoElenco(UserContext userContext, V_incarichi_elencoBulk bulk) throws ComponentException{
+		try {
+			Incarichi_repertorioBulk incaricoRepertorio = (Incarichi_repertorioBulk)getHome(userContext, Incarichi_repertorioBulk.class).findByPrimaryKey(new Incarichi_repertorioBulk(bulk.getEsercizio(), bulk.getPg_repertorio()));
+			Incarichi_proceduraBulk incaricoProcedura = (Incarichi_proceduraBulk)getHome(userContext, Incarichi_proceduraBulk.class).findByPrimaryKey(new Incarichi_proceduraBulk(bulk.getEsercizio_procedura(), bulk.getPg_procedura()));
+
+			incaricoRepertorio.setIncarichi_procedura(incaricoProcedura);
+			bulk.setIncaricoRepertorio(incaricoRepertorio);
+			
+			incaricoProcedura.setArchivioAllegati( new BulkList( ((Incarichi_proceduraHome) getHome( userContext, Incarichi_proceduraBulk.class )).findArchivioAllegati( incaricoProcedura ) ));
+			incaricoRepertorio.setArchivioAllegati( new BulkList( ((Incarichi_repertorioHome) getHome( userContext, Incarichi_repertorioBulk.class )).findArchivioAllegati( incaricoRepertorio ) ));
+			
+			return bulk;
+		}
+		catch( Exception e )
+		{
 			throw handleException( e );
 		}		
 	}

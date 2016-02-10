@@ -34,6 +34,7 @@ public class StampaVarStanzResAction extends ParametricPrintAction {
 			if (ds.length()>400)
 				ds=ds.substring(0, 399);
 			printbp.initDsOggettoPEC(ds);
+			printbp.initDsNumregPEC(bulk.getPg_variazione()+"-"+bulk.getEsercizio());
 
 		}
 		return forward;

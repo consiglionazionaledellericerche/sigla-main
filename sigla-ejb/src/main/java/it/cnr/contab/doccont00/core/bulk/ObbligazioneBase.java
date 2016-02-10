@@ -1,11 +1,10 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class ObbligazioneBase extends ObbligazioneKey implements Keyed {
+	private static final long serialVersionUID = 1L;
+
 	// CD_CDS_ORIGINE VARCHAR(30) NOT NULL
 	private java.lang.String cd_cds_origine;
 
@@ -116,6 +115,18 @@ public class ObbligazioneBase extends ObbligazioneKey implements Keyed {
 	
 	// DS_GARA_IN_CORSO VARCHAR(300) NOT NULL
 	private java.lang.String ds_gara_in_corso;
+
+	// ESERCIZIO_EV_NEXT DECIMAL(4,0) NOT NULL
+	private java.lang.Integer esercizio_ev_next;
+
+	// TI_APPARTENENZA_EV_NEXT CHAR(1) NOT NULL
+	private java.lang.String ti_appartenenza_ev_next;
+
+	// TI_GESTIONE_EV_NEXT CHAR(1) NOT NULL
+	private java.lang.String ti_gestione_ev_next;
+
+	// CD_ELEMENTO_VOCE_NEXT VARCHAR(20) NOT NULL
+	private java.lang.String cd_elemento_voce_next;
 
 public ObbligazioneBase() {
 	super();
@@ -535,5 +546,29 @@ public void setTi_gestione(java.lang.String ti_gestione) {
 	}
 	public void setDs_gara_in_corso(java.lang.String dsGaraInCorso) {
 		ds_gara_in_corso = dsGaraInCorso;
+	}
+	public java.lang.Integer getEsercizio_ev_next() {
+		return esercizio_ev_next;
+	}
+	public void setEsercizio_ev_next(java.lang.Integer esercizio_ev_next) {
+		this.esercizio_ev_next = esercizio_ev_next;
+	}
+	public java.lang.String getTi_appartenenza_ev_next() {
+		return ti_appartenenza_ev_next;
+	}
+	public void setTi_appartenenza_ev_next(java.lang.String ti_appartenenza_ev_next) {
+		this.ti_appartenenza_ev_next = ti_appartenenza_ev_next;
+	}
+	public java.lang.String getTi_gestione_ev_next() {
+		return ti_gestione_ev_next;
+	}
+	public void setTi_gestione_ev_next(java.lang.String ti_gestione_ev_next) {
+		this.ti_gestione_ev_next = ti_gestione_ev_next;
+	}
+	public java.lang.String getCd_elemento_voce_next() {
+		return cd_elemento_voce_next;
+	}
+	public void setCd_elemento_voce_next(java.lang.String cd_elemento_voce_next) {
+		this.cd_elemento_voce_next = cd_elemento_voce_next;
 	}
 }

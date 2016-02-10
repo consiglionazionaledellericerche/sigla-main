@@ -16,10 +16,11 @@ public class Pdg_modulo_spese_gestKey extends OggettoBulk implements KeyedPersis
 	private java.lang.String ti_appartenenza;
 	private java.lang.String ti_gestione;
 	private java.lang.String cd_elemento_voce;
+	private Integer pg_dettaglio;
 	public Pdg_modulo_spese_gestKey() {
 		super();
 	}
-	public Pdg_modulo_spese_gestKey(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area, java.lang.String cd_cdr_assegnatario, java.lang.String cd_linea_attivita, java.lang.String ti_appartenenza, java.lang.String ti_gestione, java.lang.String cd_elemento_voce) {
+	public Pdg_modulo_spese_gestKey(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area, java.lang.String cd_cdr_assegnatario, java.lang.String cd_linea_attivita, java.lang.String ti_appartenenza, java.lang.String ti_gestione, java.lang.String cd_elemento_voce,Integer pg_dettaglio) {
 		super();
 		this.esercizio=esercizio;
 		this.cd_centro_responsabilita=cd_centro_responsabilita;
@@ -31,6 +32,7 @@ public class Pdg_modulo_spese_gestKey extends OggettoBulk implements KeyedPersis
 		this.ti_appartenenza=ti_appartenenza;
 		this.ti_gestione=ti_gestione;
 		this.cd_elemento_voce=cd_elemento_voce;
+		this.pg_dettaglio=pg_dettaglio;
 	}
 	public boolean equalsByPrimaryKey(Object o) {
 		if (this== o) return true;
@@ -46,6 +48,7 @@ public class Pdg_modulo_spese_gestKey extends OggettoBulk implements KeyedPersis
 		if (!compareKey(getTi_appartenenza(), k.getTi_appartenenza())) return false;
 		if (!compareKey(getTi_gestione(), k.getTi_gestione())) return false;
 		if (!compareKey(getCd_elemento_voce(), k.getCd_elemento_voce())) return false;
+		if (!compareKey(getPg_dettaglio(), k.getPg_dettaglio())) return false;
 		return true;
 	}
 	public int primaryKeyHashCode() {
@@ -60,6 +63,7 @@ public class Pdg_modulo_spese_gestKey extends OggettoBulk implements KeyedPersis
 		i = i + calculateKeyHashCode(getTi_appartenenza());
 		i = i + calculateKeyHashCode(getTi_gestione());
 		i = i + calculateKeyHashCode(getCd_elemento_voce());
+		i = i + calculateKeyHashCode(getPg_dettaglio());
 		return i;
 	}
 	public void setEsercizio(java.lang.Integer esercizio)  {
@@ -121,5 +125,11 @@ public class Pdg_modulo_spese_gestKey extends OggettoBulk implements KeyedPersis
 	}
 	public java.lang.String getCd_elemento_voce () {
 		return cd_elemento_voce;
+	}
+	public Integer getPg_dettaglio() {
+		return pg_dettaglio;
+	}
+	public void setPg_dettaglio(Integer pg_dettaglio) {
+		this.pg_dettaglio = pg_dettaglio;
 	}
 }

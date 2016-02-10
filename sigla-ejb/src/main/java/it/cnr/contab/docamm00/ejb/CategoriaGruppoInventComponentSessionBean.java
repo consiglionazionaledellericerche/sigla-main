@@ -1,9 +1,15 @@
 package it.cnr.contab.docamm00.ejb;
+import java.rmi.RemoteException;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.docamm00.comp.CategoriaGruppoInventComponent;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession")
 public class CategoriaGruppoInventComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CategoriaGruppoInventComponentSession{
 	@PostConstruct
@@ -118,6 +124,25 @@ public class CategoriaGruppoInventComponentSessionBean extends it.cnr.jada.ejb.C
 		pre_component_invocation(param0,componentObj);
 		try {
 			boolean result = ((CategoriaGruppoInventComponent)componentObj).isLeaf(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List findAssVoceFList(UserContext param0,
+			Categoria_gruppo_inventBulk param1) throws ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,javax.ejb.EJBException ,RemoteException{
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.util.List result = ((CategoriaGruppoInventComponent)componentObj).findAssVoceFList(param0,param1);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

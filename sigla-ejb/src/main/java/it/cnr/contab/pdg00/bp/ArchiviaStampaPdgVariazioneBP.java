@@ -1,20 +1,20 @@
 package it.cnr.contab.pdg00.bp;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.paging.ListNodePage;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.CMISRelationship;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.cmis.AllegatoPdGVariazioneDocumentBulk;
+import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -35,11 +35,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.SocketException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
 
 public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 	private SimpleDetailCRUDController crudArchivioAllegati = new SimpleDetailCRUDController( "ArchivioAllegati", AllegatoPdGVariazioneDocumentBulk.class, "archivioAllegati", this){
@@ -77,7 +81,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 	
 	private static final long serialVersionUID = -3132138853583406225L;
 	private PdgVariazioniService pdgVariazioniService;
-	private CMISService cmisService;
+	private SiglaCMISService cmisService;
 	public ArchiviaStampaPdgVariazioneBP() {
 		super();
 	}
@@ -117,7 +121,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",
 				PdgVariazioniService.class);
 		cmisService = SpringUtil.getBean("cmisService",
-				CMISService.class);		
+				SiglaCMISService.class);		
 		super.initialize(actioncontext);
 	}
 	
@@ -138,7 +142,8 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		if (archiviaStampaPdgVariazioneBulk == null || 
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() == null)
 			return false;
-		return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode().hasAspect(CMISAspect.CNR_SIGNEDDOCUMENT.value());
+		return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument().
+				getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains(CMISAspect.CNR_SIGNEDDOCUMENT.value());
 	}
 	
 	@Override
@@ -207,23 +212,26 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 			archiviaStampaPdgVariazioneBulk.setPdg_variazioneForPrint((Pdg_variazioneBulk) oggettobulk);
 		}
 		try {
-			archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(
-					pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk.getPdg_variazioneForPrint()));
+			if (archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() == null)
+				archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(
+						pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk));
 			if (archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().isSignedDocument())
 				archiviaStampaPdgVariazioneBulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED);
 			else
 				archiviaStampaPdgVariazioneBulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED);
 			archiviaStampaPdgVariazioneBulk.getArchivioAllegati().clear();
-			ListNodePage<Node> allegati = cmisService.getRelationship(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode().getId(), 
+			List<CmisObject> allegati = cmisService.getRelationship(
+					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument().getId(), 
 					CMISRelationship.VARPIANOGEST_ALLEGATIVARBILANCIO);
-			for (Node node : allegati) {
-				if (node.hasAspect(CMISAspect.SYS_ARCHIVED.value()))
+			for (CmisObject node : allegati) {
+				if (cmisService.hasAspect(node, CMISAspect.SYS_ARCHIVED.value()))
 					continue;
-				AllegatoPdGVariazioneDocumentBulk allegato = AllegatoPdGVariazioneDocumentBulk.construct(node);
-				allegato.setContentType(node.getContentType());
+				Document document = (Document) node;
+				AllegatoPdGVariazioneDocumentBulk allegato = AllegatoPdGVariazioneDocumentBulk.construct(document);
+				allegato.setContentType(document.getContentStreamMimeType());
 				allegato.setNome(node.getName());
-				allegato.setDescrizione(node.getDescription());
-				allegato.setTitolo(node.getTitle());
+				allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 				archiviaStampaPdgVariazioneBulk.addToArchivioAllegati(allegato);
 			}
@@ -256,8 +264,9 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 					PrintService.class).executeReport(actioncontext.getUserContext(),
 					print);
 			CMISPath cmisPath = getCMISPath(archiviaStampaPdgVariazioneBulk);
-			Node node = cmisService.storePrintDocument(archiviaStampaPdgVariazioneBulk, report, cmisPath);
+			Document node = cmisService.storePrintDocument(archiviaStampaPdgVariazioneBulk, report, cmisPath);
 			archiviaAllegati(actioncontext, node);
+			archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(PdgVariazioneDocument.construct(node));
 			setModel(actioncontext, archiviaStampaPdgVariazioneBulk);
 		} catch (ComponentException e) {
 			throw handleException(e);
@@ -267,7 +276,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		
 	}
 
-	private CMISPath getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk){
+	private CMISPath getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws ApplicationException{
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathVariazioniAlPianoDiGestione",CMISPath.class);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, archiviaStampaPdgVariazioneBulk.getEsercizio().toString(), 
 				"Esercizio :"+archiviaStampaPdgVariazioneBulk.getEsercizio().toString(), 
@@ -277,44 +286,31 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				archiviaStampaPdgVariazioneBulk.getDs_cds());
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, 
 				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
-				" Variazione "+ lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0'), 
+				" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0'), 
 				null, 
 				null);
 		return cmisPath;
 	}
 	
-	public static String lpad(double d, int size, char pad) {
-        return lpad(Double.toString(d), size, pad);
-	}
-
-	public static String lpad(long l, int size, char pad) {
-        return lpad(Long.toString(l), size, pad);
-	}
-
-	public static String lpad(String s, int size, char pad) {
-        StringBuilder builder = new StringBuilder();
-        while (builder.length() + s.length() < size) {
-                builder.append(pad);
-        }
-        builder.append(s);
-        return builder.toString();
-	}
-	
 	@Override
 	public void update(ActionContext actioncontext)
 			throws BusinessProcessException {
-		archiviaAllegati(actioncontext, null);
+		try {
+			archiviaAllegati(actioncontext, null);
+		} catch (ApplicationException e) {
+			handleException(e);
+		}
 	}
 
-	private void archiviaAllegati(ActionContext actioncontext, Node pdgVariazioneDocumentNode) throws BusinessProcessException{
+	private void archiviaAllegati(ActionContext actioncontext, Document pdgVariazioneDocumentNode) throws BusinessProcessException, ApplicationException{
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
 		if (pdgVariazioneDocumentNode == null)
-			pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode();
+			pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument();
 		CMISPath cmisPath = getCMISPath(archiviaStampaPdgVariazioneBulk);
 		for (AllegatoPdGVariazioneDocumentBulk allegato : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
 			if (allegato.isToBeCreated()){
 				try {
-					Node node = cmisService.storeSimpleDocument(allegato, 
+					Document node = cmisService.storeSimpleDocument(allegato, 
 							new FileInputStream(allegato.getFile()),
 							allegato.getContentType(),
 							allegato.getNome(), cmisPath);
@@ -327,10 +323,10 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 			}else if (allegato.isToBeUpdated()) {
 				try {
 					if (allegato.getFile() != null)
-						cmisService.updateContent(allegato.getNode().getId(), 
+						cmisService.updateContent(allegato.getDocument().getId(), 
 								new FileInputStream(allegato.getFile()),
 								allegato.getContentType());
-					cmisService.updateProperties(allegato, allegato.getNode());
+					cmisService.updateProperties(allegato, allegato.getDocument());
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					handleException(e);
@@ -340,7 +336,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		for (Iterator<AllegatoPdGVariazioneDocumentBulk> iterator = archiviaStampaPdgVariazioneBulk.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
 			AllegatoPdGVariazioneDocumentBulk allegato = iterator.next();
 			if (allegato.isToBeDeleted()){
-				cmisService.deleteNode(allegato.getNode());
+				cmisService.deleteNode(allegato.getDocument());
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 			}
 		}
@@ -350,9 +346,13 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 	public void delete(ActionContext actioncontext)
 			throws BusinessProcessException {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
-		pdgVariazioniService.deleteNode(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode());
-		for (AllegatoPdGVariazioneDocumentBulk allegato : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
-			pdgVariazioniService.deleteNode(allegato.getNode());
+		try {
+			pdgVariazioniService.deleteNode(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument());
+			for (AllegatoPdGVariazioneDocumentBulk allegato : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
+				pdgVariazioniService.deleteNode(allegato.getDocument());
+			}
+		} catch (ApplicationException e) {
+			handleException(e);
 		}
 	}
 
@@ -360,24 +360,23 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
 		if (archiviaStampaPdgVariazioneBulk != null &&
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() != null &&
-				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode() != null)
-			return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode().getName();
+				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument() != null)
+			return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument().getName();
 		return null;
 	}
 	
 	public String getNomeAllegato(){
 		AllegatoPdGVariazioneDocumentBulk allegato = (AllegatoPdGVariazioneDocumentBulk)getCrudArchivioAllegati().getModel();
-		if (allegato != null && allegato.getNode() != null)
-			return allegato.getNode().getName();
+		if (allegato != null && allegato.getDocument() != null)
+			return allegato.getDocument().getName();
 		return null;
 	}
 	
 	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException {
 		AllegatoPdGVariazioneDocumentBulk allegato = (AllegatoPdGVariazioneDocumentBulk)getCrudArchivioAllegati().getModel();
-		InputStream is = cmisService.getResource(allegato.getNode());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(allegato.getNode().getContentLength().intValue());
-		((HttpActionContext)actioncontext).getResponse().setContentType(allegato.getNode().getContentType());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(allegato.getNode().getContentLength().intValue());
+		InputStream is = cmisService.getResource(allegato.getDocument());
+		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(allegato.getDocument().getContentStreamLength()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(allegato.getDocument().getContentStreamMimeType());
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
@@ -392,10 +391,11 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 	public void scaricaFile(ActionContext actioncontext) throws IOException,
 			ServletException {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
-		InputStream is = pdgVariazioniService.getResource(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode().getContentLength().intValue());		
-		((HttpActionContext)actioncontext).getResponse().setContentType(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode().getContentType());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode().getContentLength().intValue());
+		InputStream is = pdgVariazioniService.getResource(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument());
+		((HttpActionContext)actioncontext).getResponse().setContentLength(
+				Long.valueOf(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument().getContentStreamLength()).intValue());		
+		((HttpActionContext)actioncontext).getResponse().setContentType(
+				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument().getContentStreamMimeType());
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];

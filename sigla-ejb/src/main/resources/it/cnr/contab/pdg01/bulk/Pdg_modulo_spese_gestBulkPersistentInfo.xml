@@ -40,6 +40,9 @@
 		<columnMapping
 			columnName="CD_ELEMENTO_VOCE"
 			propertyName="elemento_voce.cd_elemento_voce" />
+	    <columnMapping
+			columnName="PG_DETTAGLIO"
+			propertyName="pdg_modulo_spese.pg_dettaglio" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pdg_modulo_spese"

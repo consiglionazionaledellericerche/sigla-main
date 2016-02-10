@@ -1,18 +1,16 @@
 package it.cnr.contab.config00.latt.bulk;
 
-import java.util.List;
-import java.util.Vector;
-
-import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-
+import it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gestione {
 	protected Gruppo_linea_attivitaBulk gruppo_linea_attivita;
@@ -23,7 +21,11 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 	protected java.util.Collection funzioni;
 	protected it.cnr.contab.config00.sto.bulk.CdrBulk centro_responsabilita;
 	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto;
+	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk modulo2015;
+	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto2016;
 	protected TerzoBulk responsabile;
+	public boolean utilizzata2015 = Boolean.FALSE;
+	public boolean utilizzata2016 = Boolean.FALSE;
 
 	private BulkList risultati;
 	private BulkList dettagliPostIt = new BulkList();
@@ -37,8 +39,13 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 	}	
 	private Insieme_laBulk insieme_la;
 
+	private CofogBulk cofog;
 	private java.util.Collection tipi_risultato;
 	
+	private Pdg_programmaBulk pdgProgramma;
+
+	private Pdg_missioneBulk pdgMissione;
+
 public WorkpackageBulk() {
 	super();
 }
@@ -224,7 +231,11 @@ public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.acti
 	gruppo_linea_attivita = new Gruppo_linea_attivitaBulk();
 	tipo_linea_attivita = new Tipo_linea_attivitaBulk();
 	risultati = new BulkList();
-	progetto = new ProgettoBulk();
+	//progetto = new ProgettoBulk();
+	if (it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context).compareTo(Integer.valueOf(2016))==-1)
+		modulo2015 = new ProgettoBulk();
+	else
+		progetto2016 = new ProgettoBulk();
 	return this;
 }
 public OggettoBulk initializeForFreeSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -244,10 +255,13 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setEsercizio_fine( it.cnr.contab.config00.esercizio.bulk.EsercizioBulk.ESERCIZIO_FINE);
 	setCentro_responsabilita(new it.cnr.contab.config00.sto.bulk.CdrBulk());
 	setFl_limite_ass_obblig(Boolean.TRUE);
+	setCofog(new CofogBulk());
 	return super.initializeForInsert(bp,context);
 }
 public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 	centro_responsabilita = new it.cnr.contab.config00.sto.bulk.CdrBulk();
+	modulo2015 = new ProgettoBulk();
+	progetto2016 = new ProgettoBulk();
 	return super.initializeForSearch(bp,context);
 }
 /**
@@ -283,9 +297,23 @@ public boolean isRODenominazione() {
  * @return Il valore della proprietà 'rOprogetto'
  */
 public boolean isROprogetto() {
-	
 	return getProgetto() == null ||
 			getProgetto().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL;
+}
+public boolean isROmodulo2015() {
+	return getModulo2015() == null ||
+			getModulo2015().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL ||
+			isUtilizzata2015();
+}
+public boolean isROprogetto2016() {
+	return getProgetto2016() == null ||
+			getProgetto2016().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL ||
+			isUtilizzata2016();
+}
+public boolean isROCofog() {
+	
+	return getCofog() != null &&
+		  getCofog().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL;
 }
 /**
  * Restituisce il valore della proprietà 'rODescrizione'
@@ -426,6 +454,18 @@ public void setTipi_risultato(java.util.Collection newTipi_risultato) {
 public void setTipo_linea_attivita(Tipo_linea_attivitaBulk newTipo_linea_attivita) {
 	tipo_linea_attivita = newTipo_linea_attivita;
 }
+@Override
+public String getCd_cofog() {
+	CofogBulk cofog = this.getCofog();
+	if (cofog == null)
+		return null;
+	return cofog.getCd_cofog();
+}
+@Override
+public void setCd_cofog(String cd_cofog) {
+	// TODO Auto-generated method stub
+	getCofog().setCd_cofog(cd_cofog);
+}
 /**
  * Esegue la validazione formale dei campi di input
  */
@@ -518,7 +558,84 @@ public void validate() throws ValidationException
 	public void setResponsabile(TerzoBulk obj) {
 		responsabile = obj;
 	}
+	public CofogBulk getCofog() {
+		return cofog;
+	}
+	public void setCofog(CofogBulk cofog) {
+		this.cofog = cofog;
+	}
 	
+	public Pdg_programmaBulk getPdgProgramma() {
+		return pdgProgramma;
+	}
 	
+	public void setPdgProgramma(Pdg_programmaBulk pdgProgramma) {
+		this.pdgProgramma = pdgProgramma;
+	}
+	
+	public Pdg_missioneBulk getPdgMissione() {
+		return pdgMissione;
+	}
+	
+	public void setPdgMissione(Pdg_missioneBulk pdgMissione) {
+		this.pdgMissione = pdgMissione;
+	}
+	
+	@Override
+	public String getCd_programma() {
+		Pdg_programmaBulk pdgProgramma = this.getPdgProgramma();
+		if (pdgProgramma == null)
+			return null;
+		return pdgProgramma.getCd_programma();
+	}
+	
+	@Override
+	public void setCd_programma(String cd_programma) {
+		this.getPdgProgramma().setCd_programma(cd_programma);
+	}
 
+	@Override
+	public String getCd_missione() {
+		Pdg_missioneBulk pdgMissione = this.getPdgMissione();
+		if (pdgMissione == null)
+			return null;
+		return pdgMissione.getCd_missione();
+	}
+	
+	@Override
+	public void setCd_missione(String cd_missione) {
+		this.getPdgMissione().setCd_missione(cd_missione);
+	}
+
+	public it.cnr.contab.progettiric00.core.bulk.ProgettoBulk getModulo2015() {
+		return modulo2015;
+	}
+	
+	public void setModulo2015(it.cnr.contab.progettiric00.core.bulk.ProgettoBulk modulo2015) {
+		this.modulo2015 = modulo2015;
+	}
+	
+	public it.cnr.contab.progettiric00.core.bulk.ProgettoBulk getProgetto2016() {
+		return progetto2016;
+	}
+	
+	public void setProgetto2016(it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto2016) {
+		this.progetto2016 = progetto2016;
+	}
+	
+	public void setUtilizzata2015(boolean utilizzata2015) {
+		this.utilizzata2015 = utilizzata2015;
+	}
+	
+	public boolean isUtilizzata2015() {
+		return utilizzata2015;
+	}
+	
+	public void setUtilizzata2016(boolean utilizzata2016) {
+		this.utilizzata2016 = utilizzata2016;
+	}
+	
+	public boolean isUtilizzata2016() {
+		return utilizzata2016;
+	}
 }

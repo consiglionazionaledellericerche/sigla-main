@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_prestazioneKey">
+	<defaultColumnMap
+		tableName="TIPO_PRESTAZIONE">
+		<columnMapping
+			columnName="CD_TIPO_PRESTAZIONE"
+			propertyName="cd_tipo_prestazione"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_prestazione"
+		partOfOid="true" />
+</SQLPersistentInfo>

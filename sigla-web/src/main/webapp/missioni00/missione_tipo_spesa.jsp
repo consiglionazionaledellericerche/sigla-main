@@ -75,6 +75,7 @@
 
 <table class="Panel" >
   <tr><td><% bp.getController().writeFormField( out, "fl_giustificativo_richiesto"); %></td></tr>
+  <tr><td><% bp.getController().writeFormField( out, "fl_ammissibile_con_rimborso"); %></td></tr>
 </table>
 <table class="Panel" > 
   <tr><td><% bp.getController().writeFormInput(out,"default","tipoSpeseRadioGroup", false,"FormInput", null);%></td></tr>	

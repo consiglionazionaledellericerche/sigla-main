@@ -1,9 +1,9 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import java.sql.Timestamp;
-
+import it.cnr.contab.client.docamm.Terzo;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDBP;
 
 /**
@@ -239,7 +239,7 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 		setStato_cofi(STATO_CONTABILIZZATO);
 		setStato_pagamento_fondo_eco(FONDO_ECO);
 		setFl_congelata(Boolean.FALSE);
-
+		setStato_liquidazione(LIQ);
 		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 		if (it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(uo.getCd_tipo_unita())){
 			setCd_unita_organizzativa(null);
@@ -274,7 +274,7 @@ public boolean isDoc1210Associato() {
 
 	return	getLettera_pagamento_estero() != null &&
 			getLettera_pagamento_estero().getIm_pagamento() != null &&
-			getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0;
+			getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0;
 }
 public boolean isEditable() {
 	try{
@@ -325,6 +325,7 @@ public boolean isROStato_pagamento_fondo_eco() {
 			hasStorni() || 
 			hasAddebiti() ||
 			isEstera() ||
+			isElettronica() ||
 			(getFl_san_marino_con_iva() != null && getFl_san_marino_con_iva().booleanValue()) ||
 			(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue());// ||
 		//(getFl_spedizioniere() != null && getFl_spedizioniere().booleanValue()) ||
@@ -406,7 +407,6 @@ public void setPg_fattura_passiva_fat_clgs(java.lang.Long pg_fattura_passiva_fat
 public void setStorniHashMap(java.util.HashMap newStorniHashMap) {
 	storniHashMap = newStorniHashMap;
 }
-public Timestamp getDt_documento() {
-	return getDt_registrazione();
+
 }
-}
+

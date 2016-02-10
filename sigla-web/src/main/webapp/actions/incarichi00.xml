@@ -108,6 +108,22 @@
   </businessProcess>
 
   <businessProcess
+      name="CRUDBorseStudioProceduraBP" className="it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP">
+    <forward name="default" path="/incarichi00/incarichi_procedura.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk"/>
+    <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_BorseStudioProceduraComponentSession"/>
+	<init-param name="defaultAction" value="IncarichiProceduraAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDAssegniRicercaProceduraBP" className="it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP">
+    <forward name="default" path="/incarichi00/incarichi_procedura.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk"/>
+    <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_AssegniRicercaProceduraComponentSession"/>
+	<init-param name="defaultAction" value="IncarichiProceduraAction"/>
+  </businessProcess>
+
+  <businessProcess
       name="ConsCdSDaCompletareBP" className="it.cnr.contab.incarichi00.bp.ConsCdSDaCompletareBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.CdsBulk" />
@@ -131,5 +147,15 @@
 	    <init-param name="defaultAction" value="ConsIncarichiEstrazioneFpAction" />
 	    <init-param name="searchResultColumnSet" value="basic" />
 	    <init-param name="multiSelezione" value="Y" />
+  </businessProcess>
+  <action 
+      path="/ConsIncarAssRicBorseStAction" actionClass="it.cnr.contab.incarichi00.action.ConsIncarAssRicBorseStAction">
+  </action>
+  <businessProcess
+	 name="ConsIncarAssRicBorseStBP" className="it.cnr.contab.incarichi00.bp.ConsIncarAssRicBorseStBP">
+        <forward name="default" path="/incarichi00/cons_incar_assRic_borseStudio.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.VIncarichiAssRicBorseStBulk"/>
+		<init-param name="componentSessionName" value="CNRINCARICHI00_EJB_ConsIncarAssRicBorseStComponentSession"/>								
+	    <init-param name="defaultAction" value="ConsIncarAssRicBorseStAction"/>	    
   </businessProcess>
 </action-mappings>

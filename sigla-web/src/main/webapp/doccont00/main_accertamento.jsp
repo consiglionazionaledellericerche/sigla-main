@@ -36,30 +36,16 @@
 
 <table class="Panel">
 	<tr><td>
-		<%	if (bp.isEditingScadenza())
-				JSPUtils.tabbed(
-						pageContext,
-						"tab",
-						new String[][] {
-								{ "tabAccertamento","Accertamento","/doccont00/tab_accertamento.jsp" } ,
-								{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_accertamento.jsp" },
-								{ "tabScadenziario","Scadenziario","/doccont00/tab_scadenziario_accertamento.jsp" } },
-						bp.getTab("tab"),
-						"center",
-						null, null,
-						false);
-			else
-				JSPUtils.tabbed(
-						pageContext,
-						"tab",
-						new String[][] {
-								{ "tabAccertamento","Accertamento","/doccont00/tab_accertamento.jsp" } ,
-								{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_accertamento.jsp" },
-								{ "tabScadenziario","Scadenziario","/doccont00/tab_scadenziario_accertamento.jsp" } },
-						bp.getTab("tab"),
-						"center",
-						null, null,
-						true);
+		<%	
+			
+			JSPUtils.tabbed(
+					pageContext,
+					"tab",
+					bp.getTabs(),
+					bp.getTab("tab"),
+					"center",
+					null, null,
+					!bp.isEditingScadenza());
 		%>
 	</td></tr>
 </table>

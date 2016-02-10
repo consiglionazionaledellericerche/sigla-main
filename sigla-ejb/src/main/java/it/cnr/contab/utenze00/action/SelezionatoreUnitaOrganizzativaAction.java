@@ -8,6 +8,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import javax.servlet.http.HttpSessionBindingEvent;
 
@@ -22,9 +23,9 @@ public SelezionatoreUnitaOrganizzativaAction() {
 public Forward basicDoBringBack(ActionContext context) throws BusinessProcessException {
 	try {
 		SelezionatoreUnitaOrganizzativaBP bp = (SelezionatoreUnitaOrganizzativaBP)context.getBusinessProcess();
+		context.closeBusinessProcess();
 		if (((CNRUserInfo)context.getUserInfo()).getUtente()!=null &&
 			((CNRUserInfo)context.getUserInfo()).getUtente().isSupervisore()) {
-
 			Unita_organizzativaBulk	uo = (it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk)bp.getFocusedElement();
 			SelezionaCdsBulk scds = new SelezionaCdsBulk();
 			scds.setUo(uo);
@@ -58,6 +59,7 @@ public Forward doSelezionaEsercizio(ActionContext context) {
 				null));
 			return context.findForward("desktop");
 		}
+		EJBCommonServices.closeRemoteIterator(bp.getIterator());
 		it.cnr.jada.util.RemoteIterator ri = getComponentSession().listaUOPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),bp.getUserInfo().getEsercizio());
 		bp.setIterator(context,ri);
 		return context.findDefaultForward();

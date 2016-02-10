@@ -34,9 +34,9 @@ public CRUDUtenteGestoreBP( String function ) throws BusinessProcessException {
 	setTab("tab","tabUtenza");
 }
 
-public boolean isDeleteButtonEnabled()
+/*public boolean isDeleteButtonEnabled()
 	{
 		return false;
 	}
-
+*/
 }

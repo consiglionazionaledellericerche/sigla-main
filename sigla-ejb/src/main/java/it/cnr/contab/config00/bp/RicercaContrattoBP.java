@@ -10,11 +10,11 @@ import java.util.List;
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
-
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 import javax.xml.transform.dom.*;
+
 import org.w3c.dom.*;
 
 import it.cnr.contab.anagraf00.core.bulk.V_anagrafico_terzoBulk;
@@ -25,6 +25,7 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
 import it.cnr.contab.config00.util.Constants;
+import it.cnr.contab.util.RemoveAccent;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.comp.ComponentException;
@@ -130,7 +131,7 @@ public class RicercaContrattoBP extends BusinessProcess implements ResponseXMLBP
 			element.appendChild(elementid);	
 		}
 		elementid = xmldoc.createElement(prefix+"Oggetto");
-		node = xmldoc.createTextNode(contratto.getOggetto()==null?"":contratto.getOggetto());
+		node = xmldoc.createTextNode(contratto.getOggetto()==null?"":RemoveAccent.convert(contratto.getOggetto()).replace('"',' ' ));
 		elementid.appendChild(node);
 		element.appendChild(elementid);
 		

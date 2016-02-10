@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Definition of new Model -->
+<model name="doccont:contentmodel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>SIGLA extension Content Model - Mandati e Reversali</description>
+	<author>Marco Spasiano</author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/doccont/1.0/" prefix="doccont" />
+	</namespaces>
+	<types>
+		<type name="doccont:document">
+			<title>Documento contabile</title>
+			<description>Documento contabile</description>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="doccont:esercizioDoc">
+					<title>Esercizio Documento</title>
+					<type>d:int</type>
+				</property>
+				<property name="doccont:numDoc">
+					<title>Numero Documento</title>
+					<type>d:long</type>
+				</property>
+				<property name="doccont:datDoc">
+					<title>Data documento</title>
+					<type>d:datetime</type>
+				</property>
+				<property name="doccont:descDoc">
+					<title>Descrizione Documento</title>
+					<type>d:text</type>
+				</property>
+				<property name="doccont:importo">
+					<title>Importo del Documento</title>
+					<type>d:double</type>
+				</property>
+				<property name="doccont:tipo">
+					<title>Tipo documento</title>
+					<type>d:text</type>
+				</property>
+				<property name="doccont:stato_trasmissione">
+					<title>Stato trasmissione</title>
+					<type>d:text</type>
+				</property>
+				<property name="doccont:pg_distinta">
+					<title>Progressivo distinta</title>
+					<type>d:long</type>
+				</property>								
+			</properties>
+		</type>
+	</types>
+	<aspects>
+		<aspect name="doccont:rif_modalita_pagamentoAspect">
+			<title>Riferimento Modalita di Pagamento</title>
+			<description>Riferimento Modalita di Pagamento</description>
+			<properties>
+			    <property name="doccont:rif_modalita_pagamento">
+					<title>Riferimento Modalita di Pagamento</title>
+					<type>d:text</type>
+				</property>
+			</properties>			
+		</aspect>
+	</aspects>		
+</model>

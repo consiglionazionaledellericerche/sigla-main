@@ -312,8 +312,6 @@
 	<fieldProperty
 		name="tipo_trattamento"
 		property="tipo_trattamento"
-		printProperty="ds_ti_trattamento"
-		optionsProperty="tipiTrattamento"
 		readonlyProperty="ROTrattamento"
 		inputType="SELECT"
 		enabledOnSearch="true"
@@ -406,7 +404,7 @@
 		enabledOnEdit="true"
 		nullable="false"
 		readonlyProperty="ROFlInvioCorteConti"
-		command="doDefault"
+		command="doOnFlInviatoCorteContiChange"
 		label="Inviato Corte Conti" />
 	<fieldProperty
 		name="dt_invio_corte_conti"
@@ -453,6 +451,16 @@
 		enabledOnSearch="true"
 		nullable="false"
 		label="Data Protocollo" />
+	<fieldProperty
+		name="dt_efficacia"
+		property="dt_efficacia"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		command="doOnDtEfficaciaChange"
+		readonlyProperty="RODataEfficacia"
+		label="Data Efficacia" />
 
 	<formFieldProperty
 		name="esercizio" />
@@ -578,6 +586,8 @@
 	<formFieldProperty
 		name="dt_provv" 
 		label="Data&lt;BR&gt;Protocollo" />
+	<formFieldProperty
+		name="dt_efficacia" />
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -595,6 +605,8 @@
 		name="ragione_sociale" />
 	<columnFieldProperty
 		name="dt_stipula" />
+	<columnFieldProperty
+		name="dt_efficacia" />
 	<columnFieldProperty
 		name="dt_inizio_validita" />
 	<columnFieldProperty
@@ -640,6 +652,8 @@
 		name="nr_provv" />
 	<findFieldProperty
 		name="dt_provv" />
+	<findFieldProperty
+		name="dt_efficacia" />
 
 	<form
 		name="searchtool" >

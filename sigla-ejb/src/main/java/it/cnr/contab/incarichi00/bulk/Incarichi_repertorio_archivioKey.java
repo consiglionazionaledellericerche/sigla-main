@@ -51,19 +51,4 @@ public class Incarichi_repertorio_archivioKey extends Incarichi_archivioBulk imp
 	public java.lang.Long getProgressivo_riga() {
 		return progressivo_riga;
 	}
-	public String getDownloadUrl()
-	{
-		if(this == null ||this.getNome_file() == null)
-			return null;
-		StringBuffer stringbuffer = new StringBuffer("download_incarichi/fileIncaricoAllegato");
-		stringbuffer.append("/");
-		stringbuffer.append(this.getEsercizio());
-		stringbuffer.append("/");
-		stringbuffer.append(this.getPg_repertorio());	
-		stringbuffer.append("/");
-		stringbuffer.append(this.getProgressivo_riga());	
-		stringbuffer.append("/");
-		stringbuffer.append(this.getNome_file());	
-		return stringbuffer.toString();
-	}
 }

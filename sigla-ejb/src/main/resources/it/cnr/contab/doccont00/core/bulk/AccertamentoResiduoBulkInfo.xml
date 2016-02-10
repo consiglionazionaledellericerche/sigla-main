@@ -1,7 +1,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="esercizio_competenza"
 		property="esercizio_competenza"
@@ -138,6 +138,30 @@
 		enabledOnSearch="true"
 		nullable="false"
 		/>
+	
+	<fieldProperty
+		name="statoAccertamento"
+		property="stato"
+		maxLength="-1"
+		inputSize="1"
+		label="Stato"
+		caseSensitiveSearch="false" 
+		enabledOnView="true"
+		enabledOnSearch="true"
+		keysProperty="stato_AccertamentoResiduoKeys"
+		inputType="SELECT" />
+	
+	<fieldProperty
+		name="statoAccertamento_ro"
+		property="stato"
+		maxLength="-1"
+		inputSize="1"
+		label="Stato"
+		caseSensitiveSearch="false" 
+		enabledOnSearch="true"
+		keysProperty="stato_AccertamentoResiduoKeys"
+		inputType="SELECT" />
+			
 	<formFieldProperty
 		name="im_accertamento"
 		enabledOnView="true"
@@ -183,7 +207,11 @@
 	<formFieldProperty
 		name="crea_contratto_eov"
 		/>		
-
+	<formFieldProperty
+		name="statoAccertamento"/>		
+	<formFieldProperty
+		name="statoAccertamento_ro"/>		
+		
 	<columnFieldProperty
 		name="esercizio_ori_ori_riporto"
 		/>
@@ -191,7 +219,10 @@
 		name="pg_accertamento_ori_riporto"
 		columnStyle="padding-left:5px"
 		/>
-
+	<columnFieldProperty
+		name="statoAccertamento"
+		/>		
+	
 	<findFieldProperty
 		name="esercizio_ori_ori_riporto"
 		/>
@@ -204,4 +235,8 @@
 	<findFieldProperty
 		name="pg_accertamento"
 		/>
+	<findFieldProperty
+		name="statoAccertamento"
+		/>		
+		
 </bulkInfo>

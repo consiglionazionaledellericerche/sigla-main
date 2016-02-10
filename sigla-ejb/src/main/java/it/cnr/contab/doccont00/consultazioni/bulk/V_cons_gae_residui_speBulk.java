@@ -79,10 +79,10 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 	private java.lang.String ds_var_st_res;
  
 //    VAR_PIU_STANZ_RES_IMP DECIMAL(22,0)
-	private java.lang.Long var_piu_stanz_res_imp;
+	private java.math.BigDecimal var_piu_stanz_res_imp;
  
 //    VAR_MENO_STANZ_RES_IMP DECIMAL(22,0)
-	private java.lang.Long var_meno_stanz_res_imp;
+	private java.math.BigDecimal var_meno_stanz_res_imp;
  
 //    CD_CDS_OBB VARCHAR(30)
 	private java.lang.String cd_cds_obb;
@@ -100,10 +100,10 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 	private java.lang.String ds_scadenza;
  
 //    IM_OBBL_RES_IMP DECIMAL(22,0)
-	private java.lang.Long im_obbl_res_imp;
+	private java.math.BigDecimal im_obbl_res_imp;
  
 //    IM_OBBL_RES_PRO DECIMAL(22,0)
-	private java.lang.Long im_obbl_res_pro;
+	private java.math.BigDecimal im_obbl_res_pro;
  
 //    PG_VAR_RES_PRO DECIMAL(22,0)
 	private java.lang.Long pg_var_res_pro;
@@ -112,10 +112,10 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 	private java.lang.String ds_var_res_pro;
  
 //    VAR_PIU_OBBL_RES_PRO DECIMAL(22,0)
-	private java.lang.Long var_piu_obbl_res_pro;
+	private java.math.BigDecimal var_piu_obbl_res_pro;
  
 //    VAR_MENO_OBBL_RES_PRO DECIMAL(22,0)
-	private java.lang.Long var_meno_obbl_res_pro;
+	private java.math.BigDecimal var_meno_obbl_res_pro;
  
 //    CD_CDS_MAN VARCHAR(30)
 	private java.lang.String cd_cds_man;
@@ -127,31 +127,31 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 	private java.lang.String ds_mandato;
  
 //    IM_MANDATI_REVERSALI_PRO DECIMAL(22,0)
-	private java.lang.Long im_mandati_reversali_pro;
+	private java.math.BigDecimal im_mandati_reversali_pro;
  
 //    IM_MANDATI_REVERSALI_IMP DECIMAL(22,0)
-	private java.lang.Long im_mandati_reversali_imp;
+	private java.math.BigDecimal im_mandati_reversali_imp;
  
 //  IM_STANZ_RES_IMPROPRIO+VAR_PIU_STANZ_RES_IMP-VAR_MENO_STANZ_RES_IMP=Assestato residuo improprio DECIMAL(22,0)
-	private java.lang.Long ass_res_imp;
+	private java.math.BigDecimal ass_res_imp;
 
 //  IM_OBBL_RES_PRO - VAR_PIU_OBBL_RES_PRO + VAR_MENO_OBBL_RES_PRO = Iniziale DECIMAL(22,0)
-	private java.lang.Long iniziale;
+	private java.math.BigDecimal iniziale;
 
 //  Assestato residuo improprio - IM_OBBL_RES_IMP + VAR_MENO_OBBL_RES_PRO - VAR_PIU_OBBL_RES_PRO = Disponibiltà residui DECIMAL(22,0)
-	private java.lang.Long disp_res;
+	private java.math.BigDecimal disp_res;
 
 //  IM_OBBL_RES_IMP + IM_OBBL_RES_PRO - IM_MANDATI_REVERSALI_IMP -IM_MANDATI_REVERSALI_PRO= Rimasti da Pagare  DECIMAL(22,0)
-	private java.lang.Long rimasti_da_pagare;
+	private java.math.BigDecimal rimasti_da_pagare;
 
 //  IM_OBBL_RES_IMP - IM_MANDATI_REVERSALI_IMP = Rimasti da Pagare (Impropri) DECIMAL(22,0)
-	private java.lang.Long rimasti_da_pagare_imp;
+	private java.math.BigDecimal rimasti_da_pagare_imp;
 
 //  IM_OBBL_RES_PRO - IM_MANDATI_REVERSALI_PRO = Rimasti da Pagare (Propri) DECIMAL(22,0)
-	private java.lang.Long rimasti_da_pagare_pro;
+	private java.math.BigDecimal rimasti_da_pagare_pro;
 
 //  IM_MANDATI_REVERSALI_PRO + IM_MANDATI_REVERSALI_IMP = Pagato Residuo Totale DECIMAL(22,0)
-	private java.lang.Long pagato_totale;
+	private java.math.BigDecimal pagato_totale;
 
 	
 	public V_cons_gae_residui_speBulk() {
@@ -291,16 +291,16 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 	public void setDs_var_st_res(java.lang.String ds_var_st_res)  {
 		this.ds_var_st_res=ds_var_st_res;
 	}
-	public java.lang.Long getVar_piu_stanz_res_imp() {
+	public java.math.BigDecimal getVar_piu_stanz_res_imp() {
 		return var_piu_stanz_res_imp;
 	}
-	public void setVar_piu_stanz_res_imp(java.lang.Long var_piu_stanz_res_imp)  {
+	public void setVar_piu_stanz_res_imp(java.math.BigDecimal var_piu_stanz_res_imp)  {
 		this.var_piu_stanz_res_imp=var_piu_stanz_res_imp;
 	}
-	public java.lang.Long getVar_meno_stanz_res_imp() {
+	public java.math.BigDecimal getVar_meno_stanz_res_imp() {
 		return var_meno_stanz_res_imp;
 	}
-	public void setVar_meno_stanz_res_imp(java.lang.Long var_meno_stanz_res_imp)  {
+	public void setVar_meno_stanz_res_imp(java.math.BigDecimal var_meno_stanz_res_imp)  {
 		this.var_meno_stanz_res_imp=var_meno_stanz_res_imp;
 	}
 	public java.lang.String getCd_cds_obb() {
@@ -333,16 +333,16 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 	public void setDs_scadenza(java.lang.String ds_scadenza)  {
 		this.ds_scadenza=ds_scadenza;
 	}
-	public java.lang.Long getIm_obbl_res_imp() {
+	public java.math.BigDecimal getIm_obbl_res_imp() {
 		return im_obbl_res_imp;
 	}
-	public void setIm_obbl_res_imp(java.lang.Long im_obbl_res_imp)  {
+	public void setIm_obbl_res_imp(java.math.BigDecimal im_obbl_res_imp)  {
 		this.im_obbl_res_imp=im_obbl_res_imp;
 	}
-	public java.lang.Long getIm_obbl_res_pro() {
+	public java.math.BigDecimal getIm_obbl_res_pro() {
 		return im_obbl_res_pro;
 	}
-	public void setIm_obbl_res_pro(java.lang.Long im_obbl_res_pro)  {
+	public void setIm_obbl_res_pro(java.math.BigDecimal im_obbl_res_pro)  {
 		this.im_obbl_res_pro=im_obbl_res_pro;
 	}
 	public java.lang.Long getPg_var_res_pro() {
@@ -357,16 +357,16 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 	public void setDs_var_res_pro(java.lang.String ds_var_res_pro)  {
 		this.ds_var_res_pro=ds_var_res_pro;
 	}
-	public java.lang.Long getVar_piu_obbl_res_pro() {
+	public java.math.BigDecimal getVar_piu_obbl_res_pro() {
 		return var_piu_obbl_res_pro;
 	}
-	public void setVar_piu_obbl_res_pro(java.lang.Long var_piu_obbl_res_pro)  {
+	public void setVar_piu_obbl_res_pro(java.math.BigDecimal var_piu_obbl_res_pro)  {
 		this.var_piu_obbl_res_pro=var_piu_obbl_res_pro;
 	}
-	public java.lang.Long getVar_meno_obbl_res_pro() {
+	public java.math.BigDecimal getVar_meno_obbl_res_pro() {
 		return var_meno_obbl_res_pro;
 	}
-	public void setVar_meno_obbl_res_pro(java.lang.Long var_meno_obbl_res_pro)  {
+	public void setVar_meno_obbl_res_pro(java.math.BigDecimal var_meno_obbl_res_pro)  {
 		this.var_meno_obbl_res_pro=var_meno_obbl_res_pro;
 	}
 	public java.lang.String getCd_cds_man() {
@@ -387,86 +387,86 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 	public void setDs_mandato(java.lang.String ds_mandato)  {
 		this.ds_mandato=ds_mandato;
 	}
-	public java.lang.Long getIm_mandati_reversali_pro() {
+	public java.math.BigDecimal getIm_mandati_reversali_pro() {
 		return im_mandati_reversali_pro;
 	}
-	public void setIm_mandati_reversali_pro(java.lang.Long im_mandati_reversali_pro)  {
+	public void setIm_mandati_reversali_pro(java.math.BigDecimal im_mandati_reversali_pro)  {
 		this.im_mandati_reversali_pro=im_mandati_reversali_pro;
 	}
-	public java.lang.Long getIm_mandati_reversali_imp() {
+	public java.math.BigDecimal getIm_mandati_reversali_imp() {
 		return im_mandati_reversali_imp;
 	}
-	public void setIm_mandati_reversali_imp(java.lang.Long im_mandati_reversali_imp)  {
+	public void setIm_mandati_reversali_imp(java.math.BigDecimal im_mandati_reversali_imp)  {
 		this.im_mandati_reversali_imp=im_mandati_reversali_imp;
 	}
 
 
-	public java.lang.Long getAss_res_imp() {
+	public java.math.BigDecimal getAss_res_imp() {
 		return ass_res_imp;
 	}
 
 
-	public void setAss_res_imp(java.lang.Long ass_res_imp) {
+	public void setAss_res_imp(java.math.BigDecimal ass_res_imp) {
 		this.ass_res_imp = ass_res_imp;
 	}
 
 
-	public java.lang.Long getDisp_res() {
+	public java.math.BigDecimal getDisp_res() {
 		return disp_res;
 	}
 
 
-	public void setDisp_res(java.lang.Long disp_res) {
+	public void setDisp_res(java.math.BigDecimal disp_res) {
 		this.disp_res = disp_res;
 	}
 
 
-	public java.lang.Long getPagato_totale() {
+	public java.math.BigDecimal getPagato_totale() {
 		return pagato_totale;
 	}
 
 
-	public void setPagato_totale(java.lang.Long pagato_totale) {
+	public void setPagato_totale(java.math.BigDecimal pagato_totale) {
 		this.pagato_totale = pagato_totale;
 	}
 
 
-	public java.lang.Long getRimasti_da_pagare() {
+	public java.math.BigDecimal getRimasti_da_pagare() {
 		return rimasti_da_pagare;
 	}
 
 
-	public void setRimasti_da_pagare(java.lang.Long rimasti_da_pagare) {
+	public void setRimasti_da_pagare(java.math.BigDecimal rimasti_da_pagare) {
 		this.rimasti_da_pagare = rimasti_da_pagare;
 	}
 
 
-	public java.lang.Long getIniziale() {
+	public java.math.BigDecimal getIniziale() {
 		return iniziale;
 	}
 
 
-	public void setIniziale(java.lang.Long iniziale) {
+	public void setIniziale(java.math.BigDecimal iniziale) {
 		this.iniziale = iniziale;
 	}
 
 
-	public java.lang.Long getRimasti_da_pagare_imp() {
+	public java.math.BigDecimal getRimasti_da_pagare_imp() {
 		return rimasti_da_pagare_imp;
 	}
 
 
-	public void setRimasti_da_pagare_imp(java.lang.Long rimasti_da_pagare_imp) {
+	public void setRimasti_da_pagare_imp(java.math.BigDecimal rimasti_da_pagare_imp) {
 		this.rimasti_da_pagare_imp = rimasti_da_pagare_imp;
 	}
 
 
-	public java.lang.Long getRimasti_da_pagare_pro() {
+	public java.math.BigDecimal getRimasti_da_pagare_pro() {
 		return rimasti_da_pagare_pro;
 	}
 
 
-	public void setRimasti_da_pagare_pro(java.lang.Long rimasti_da_pagare_pro) {
+	public void setRimasti_da_pagare_pro(java.math.BigDecimal rimasti_da_pagare_pro) {
 		this.rimasti_da_pagare_pro = rimasti_da_pagare_pro;
 	}
 

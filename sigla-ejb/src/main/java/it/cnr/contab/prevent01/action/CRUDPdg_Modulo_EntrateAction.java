@@ -12,6 +12,7 @@ import java.util.Iterator;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
+import it.cnr.contab.prevent01.bp.CRUDDettagliModuloCostiBP;
 import it.cnr.contab.prevent01.bp.CRUDPdg_Modulo_EntrateBP;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession;
@@ -108,5 +109,8 @@ public Forward doBringBackSearchFind_classificazione_voci(ActionContext context,
 		}	
 		public Forward doEliminamodulo(ActionContext actioncontext) throws BusinessProcessException {
 			return openConfirm(actioncontext,"Tutti i dettagli di entrata relativi al modulo verranno cancellati definitivamente. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfermaEliminamodulo");		
+		}
+		public Forward doEliminaProgetto(ActionContext actioncontext) throws BusinessProcessException {
+			return openConfirm(actioncontext,"Tutti i dettagli di entrata relativi al progetto verranno cancellati definitivamente. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfermaEliminamodulo");		
 		}
 }

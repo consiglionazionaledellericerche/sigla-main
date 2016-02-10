@@ -202,7 +202,7 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 	public void setTitle() {
 		
 		   String title=null;
-		   		   title = "Confronto Entrate-Spese per CDS";
+		   		   title = "Confronto Entrate-Spese per CDS Competenza";
 			
 			if (isPresenteMOD()) title = title.concat(" - Modulo");
 			if (isPresenteGAE()) title = title.concat(" - GAE");

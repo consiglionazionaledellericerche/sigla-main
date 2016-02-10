@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="sigla_fatture_attachment:sigla_fatture_attachmentModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+	<description>Sigla Dynamic Model</description>
+	<author>gianfranco.gasparro</author>
+	<version>1.0</version>
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<import uri="http://www.cnr.it/model/sigla/commons_aspect/" prefix="sigla_commons_aspect" />
+	</imports>
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/sigla/fatture/attachment/cmis" prefix="sigla_fatture_attachment" />
+	</namespaces>
+	<types>
+		<type name="sigla_fatture_attachment:document">
+			<title>Allegati alle Fatture</title>
+			<description>Allegati alle Fatture (Fatture Attive/Fatture Passive)</description>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="sigla_fatture_attachment:original_name">
+					<title>Nome Originale del File</title>
+					<description>Nome Originale del File</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>sigla_commons_aspect:utente_applicativo_sigla</aspect>
+			</mandatory-aspects>
+		</type>
+	</types>
+	<aspects>
+		<aspect name="sigla_fatture_attachment:stampa_fattura_prima_protocollo">
+			<title>Stampa Fattura Prima della Protocollazione</title>
+			<description>Stampa Fattura Prima della Protocollazione</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:stampa_fattura_dopo_protocollo">
+			<title>Stampa Fattura dopo la Protocollazione</title>
+			<description>Stampa Fattura dopo la Protocollazione</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:fattura_elettronica_xml_ante_firma">
+			<title>File XML della fatturazione Elettronica prima della Firma Digitale</title>
+			<description>File XML della fatturazione Elettronica prima della Firma Digitale</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:fattura_elettronica_xml_post_firma">
+			<title>File XML della fatturazione Elettronica firmato Digitalmente</title>
+			<description>File XML della fatturazione Elettronica firmato Digitalmente</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:ricevuta_consegna">
+			<title>File XML di tipo Ricevuta Consegna preveniente da www.fatturapa.gov.it</title>
+			<description>File XML di tipo Ricevuta Consegna preveniente da www.fatturapa.gov.it</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:mancata_consegna">
+			<title>File XML di tipo Mancata Consegna preveniente da www.fatturapa.gov.it</title>
+			<description>File XML di tipo Mancata Consegna preveniente da www.fatturapa.gov.it</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:scarto">
+			<title>File XML di tipo Scarto preveniente da www.fatturapa.gov.it</title>
+			<description>File XML di tipo Scarto preveniente da www.fatturapa.gov.it</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:esito_accettato">
+			<title>File XML di tipo Esito Accettato preveniente da www.fatturapa.gov.it</title>
+			<description>File XML di tipo Esito Accettato preveniente da www.fatturapa.gov.it</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:esito_rifiutato">
+			<title>File XML di tipo Esito Rifiutato preveniente da www.fatturapa.gov.it</title>
+			<description>File XML di tipo Esito Rifiutato preveniente da www.fatturapa.gov.it</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:decorrenza_termini">
+			<title>File XML di tipo Decorrenza Termini preveniente da www.fatturapa.gov.it</title>
+			<description>File XML di tipo Decorrenza Termini preveniente da www.fatturapa.gov.it</description>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:trasmissione_fattura">
+			<title>File XML di tipo Trasmissione Fattura preveniente da www.fatturapa.gov.it</title>
+			<description>File XML di tipo Trasmissione Fattura preveniente da www.fatturapa.gov.it</description>
+		</aspect>
+		<!--
+			ASPECT allegati alla fattura
+		-->
+		<aspect name="sigla_fatture_attachment:durc">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:tacciabilita">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:prestazione_resa">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:comunicazione_non_registrabilita">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>		
+		<aspect name="sigla_fatture_attachment:altro">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>		
+	</aspects>
+</model>

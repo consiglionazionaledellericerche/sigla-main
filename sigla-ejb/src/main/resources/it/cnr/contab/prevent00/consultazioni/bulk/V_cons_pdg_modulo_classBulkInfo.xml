@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Dettaglio PDGP per Modulo/Classificazione"
-          longDescription="Dettaglio PDGP per Modulo-Classificazione">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription="Dettaglio PDGP"
+         longDescription="Dettaglio PDGP">
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -124,4 +125,22 @@
 		name="ds_progetto" />
 	<columnFieldProperty
 		name="importo_ripartito" />
+		
+	<columnSet name="nuovo_pdgp">
+		<columnFieldProperty
+			name="cd_classificazione" />
+		<columnFieldProperty
+			name="ds_classificazione" />
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="ds_cdr" />
+		<columnFieldProperty
+			name="cd_progetto"
+			label="Progetto" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="importo_ripartito" />
+	</columnSet>
 </bulkInfo>

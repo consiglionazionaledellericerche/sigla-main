@@ -33,20 +33,35 @@
 		</td>	
 	</tr>
 	<tr>
-		<td><% bp.getController().writeFormLabel(out,"modulo"); %></td>
-		<td><% bp.getController().writeFormInput(out,"modulo"); %></td>
-		<td><% bp.getController().writeFormLabel(out,"commessa"); %></td>
-		<td><% bp.getController().writeFormInput(out,"commessa"); %></td>
-		<td><% bp.getController().writeFormLabel(out,"progetto"); %></td>
-		<td><% bp.getController().writeFormInput(out,"progetto"); %></td>
+		<% if (!bp.isFlNuovoPdg()) { %>
+			<td><% bp.getController().writeFormLabel(out,"modulo"); %></td>
+			<td><% bp.getController().writeFormInput(out,"modulo"); %></td>
+			<td><% bp.getController().writeFormLabel(out,"commessa"); %></td>
+			<td><% bp.getController().writeFormInput(out,"commessa"); %></td>
+			<td><% bp.getController().writeFormLabel(out,"progetto"); %></td>
+			<td><% bp.getController().writeFormInput(out,"progetto"); %></td>
+		<% } else { %>
+			<td><% bp.getController().writeFormLabel(out,"cd_progetto_liv2"); %></td>
+			<td><% bp.getController().writeFormInput(out,"cd_progetto_liv2"); %></td>
+			<td><% bp.getController().writeFormLabel(out,"cd_progetto_liv1"); %></td>
+			<td><% bp.getController().writeFormInput(out,"cd_progetto_liv1"); %></td>
+			<td><% bp.getController().writeFormLabel(out,"dipartimento_liv2"); %></td>
+			<td><% bp.getController().writeFormInput(out,"dipartimento_liv2"); %></td>
+		<% } %>		
 	</tr>
 	<tr>
-		<td><% bp.getController().writeFormLabel(out,"dipartimento"); %></td>
-		<td><% bp.getController().writeFormInput(out,"dipartimento"); %></td>
+		<% if (!bp.isFlNuovoPdg()) { %>
+			<td><% bp.getController().writeFormLabel(out,"dipartimento"); %></td>
+			<td><% bp.getController().writeFormInput(out,"dipartimento"); %></td>
+		<% } %>		
 		<td><% bp.getController().writeFormLabel(out,"desctool_classificazione"); %></td>
 		<td><% bp.getController().writeFormInput(out,"desctool_classificazione"); %></td>
-		<td><% bp.getController().writeFormLabel(out,"desctool_area"); %></td>
-		<td><% bp.getController().writeFormInput(out,"desctool_area"); %></td>
+		<% if (!bp.isFlNuovoPdg()) { %>
+			<td><% bp.getController().writeFormLabel(out,"desctool_area"); %></td>
+			<td><% bp.getController().writeFormInput(out,"desctool_area"); %></td>
+		<% } %>		
+	  	<td><% bp.getController().writeFormLabel(out,"desctool_cofog");%></td>
+		<td><% bp.getController().writeFormInput(out,"desctool_cofog");%></td>
 	</tr>
 <!--
 	<tr>

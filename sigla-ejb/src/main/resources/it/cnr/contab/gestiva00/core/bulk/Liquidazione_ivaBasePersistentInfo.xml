@@ -63,6 +63,12 @@
 			columnSize="15"
 			columnScale="2" />
 		<columnMapping
+			columnName="IVA_LIQ_ESTERNA"
+			propertyName="iva_liq_esterna"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />	
+		<columnMapping
 			columnName="IVA_VENDITE_DIFF"
 			propertyName="iva_vendite_diff"
 			sqlTypeName="DECIMAL"
@@ -282,6 +288,8 @@
 		name="annotazioni" />
 	<persistentProperty
 		name="var_imp_per_prec" />
+	<persistentProperty
+		name="iva_liq_esterna" />	
 	<persistentProperty
 		name="iva_vendite_diff" />
 	<persistentProperty

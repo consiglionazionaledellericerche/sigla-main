@@ -1,7 +1,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="cd_proprio_unita"
 		property="cd_proprio_unita"
@@ -104,6 +104,12 @@
 		label="Area scientifica"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="fl_cds"
+		property="fl_cds"
+		label="Flag CDS"
+		inputType="TEXT" 
+		/>
 
 	<form
 		name="searchtool" >
@@ -136,15 +142,14 @@
 			inputType="TEXT"
 			inputSize="60" />
 	</columnSet>
-	<columnSet
-		name="basic" >
-		<columnFieldProperty
-			name="cd_unita_organizzativa"
-			label="Codice CdS"/>
-		<columnFieldProperty
-			name="ds_unita_organizzativa"/>
+
+	<columnSet name="restService" >
+		<columnFieldProperty name="cd_proprio_unita"/>
+		<columnFieldProperty name="ds_unita_organizzativa"/>
+		<columnFieldProperty name="cd_tipo_unita"/>
+		<columnFieldProperty name="cd_responsabile"/>
 	</columnSet>
-	
+
 	<columnSet
 		name="basic" >
 		<columnFieldProperty

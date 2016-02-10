@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_attivita"
+		property="cd_tipo_attivita"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tipo_attivita"
+		property="ds_tipo_attivita"
+		inputType="TEXTAREA"
+		maxLength="500"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="livello"
+		property="livello"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Livello Classificazione" />
+	<fieldProperty
+		name="find_attivita_padre"
+		property="tipo_attivita_fp_padre"
+		inputType="SEARCHTOOL"
+		label="Codice Padre"
+		enabledOnSearch="true"
+		completeOnSave="false"
+		/>
+	<fieldProperty
+		name="cd_tipo_attivita_padre"
+		property="tipo_attivita_fp_padre.cd_tipo_attivita"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Codice padre" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Eliminato" />
+
+	<formFieldProperty
+		name="cd_tipo_attivita" />
+	<formFieldProperty
+		name="ds_tipo_attivita" />
+	<formFieldProperty
+		name="livello" />
+	<formFieldProperty
+		name="find_attivita_padre" />
+	<formFieldProperty
+		name="cd_tipo_attivita_padre" />
+	<formFieldProperty
+		name="fl_cancellato" />
+
+	<columnFieldProperty
+		name="cd_tipo_attivita" />
+	<columnFieldProperty
+		name="ds_tipo_attivita" />
+	<columnFieldProperty
+		name="livello" />
+	<columnFieldProperty
+		name="cd_tipo_attivita_padre" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+
+	<findFieldProperty
+		name="cd_tipo_attivita" />
+	<findFieldProperty
+		name="ds_tipo_attivita" />
+	<findFieldProperty
+		name="livello" />
+	<findFieldProperty
+		name="cd_tipo_attivita_padre" />
+	<findFieldProperty
+		name="fl_cancellato" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tipo_attivita" />
+		<formFieldProperty
+			name="ds_tipo_attivita"
+			inputType="TEXT"
+			inputSize="50" />
+	</form>
+</bulkInfo>

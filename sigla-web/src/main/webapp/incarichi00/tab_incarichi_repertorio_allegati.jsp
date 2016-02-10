@@ -36,11 +36,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-   larghFinestra=5;
-   altezFinestra=5;
-   sinistra=(screen.width)/2;
-   alto=(screen.height)/2;
-   window.open("<%= (incaricoAllegato==null?null:incaricoAllegato.getDownloadUrl()) %>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
+	doPrint('<%=(incaricoAllegato==null?null:incaricoAllegato.getDownloadUrl())%>');
 }
 </script>
 
@@ -51,7 +47,7 @@ function doScaricaFile() {
 	</tr>
     <% if (incaricoAllegato==null || incaricoAllegato.getTipo_archivio()!=null) {%>
 	    <% if (incaricoAllegato!=null && incaricoAllegato.getTipo_archivio()!=null &&
-	    	  (incaricoAllegato.isBando() || incaricoAllegato.isContratto() || incaricoAllegato.isAllegatoDaPubblicare())) {%>
+	    	  (incaricoAllegato.isBando() || incaricoAllegato.isContratto())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group"><table>
@@ -68,7 +64,7 @@ function doScaricaFile() {
 					</span>
 				</td></tr>
 				<% } %>
-				<% if (incaricoAllegato.isBando() || incaricoAllegato.isContratto() || incaricoAllegato.isAllegatoDaPubblicare()) { %>
+				<% if (incaricoAllegato.isBando() || incaricoAllegato.isContratto()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>

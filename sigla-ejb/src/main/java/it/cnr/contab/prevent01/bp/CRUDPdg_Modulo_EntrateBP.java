@@ -6,47 +6,24 @@
  */
 package it.cnr.contab.prevent01.bp;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Enumeration;
 
 import javax.ejb.EJBException;
-import javax.ejb.RemoveException;
-import javax.servlet.jsp.JspWriter;
 
-import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
-import it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.ejb.Parametri_livelliComponentSession;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Parametri_livelliBulk;
-import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Config;
-import it.cnr.jada.bulk.BulkInfo;
-import it.cnr.jada.bulk.ColumnFieldProperty;
-import it.cnr.jada.bulk.FieldProperty;
-import it.cnr.jada.bulk.FillException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.FormController;
-import it.cnr.jada.util.action.SimpleDetailCRUDController;
-import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.cnr.jada.util.jsp.Button;
 
 
 /**
@@ -98,7 +75,7 @@ public class CRUDPdg_Modulo_EntrateBP extends it.cnr.jada.util.action.SimpleCRUD
 	{
 		return super.isDeleteButtonEnabled() && this.getCrudDettagliEntrate().countDetails()!=0 && !isUtente_Ente();
 	}
-		
+	
    private CrudDettagliEntrataBP crudDettagliEntrate = new CrudDettagliEntrataBP( "dettagliCRUDController", Pdg_Modulo_EntrateBulk.class, "dettagli_entrata", this);
 
 	protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
@@ -233,4 +210,11 @@ public class CRUDPdg_Modulo_EntrateBP extends it.cnr.jada.util.action.SimpleCRUD
 		this.isPDGPEsaminatoDalCentroUP = isPDGPEsaminatoDalCentroUP;
 	}
 
+	public boolean isDeleteModuloButtonHidden() {
+		return super.isDeleteButtonHidden() || this.getParametriCnr().getFl_nuovo_pdg();
+	}
+
+	public boolean isDeleteProgettoButtonHidden() {
+		return super.isDeleteButtonHidden() || !this.getParametriCnr().getFl_nuovo_pdg();
+	}
 }

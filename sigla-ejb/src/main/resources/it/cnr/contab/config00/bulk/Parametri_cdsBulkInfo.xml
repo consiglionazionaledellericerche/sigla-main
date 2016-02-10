@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
 		shortDescription="Parametri del Centro di Spesa"
 		longDescription="Parametri del Centro di Spesa">
 
@@ -37,7 +37,28 @@
 		inputType="TEXT"
 		label="Descrizione Cds" 
 		/>
+	<fieldProperty
+		name="dipartimento"
+		property="dipartimento"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"		
+		label="Dipartimento" 
+		/>
 
+	<fieldProperty
+		name="cd_dipartimento"
+		property="dipartimento.cd_dipartimento"
+		inputType="TEXT"
+		label="Codice dipartimento" 
+		/>
+	
+	<fieldProperty
+		name="ds_dipartimento"
+		property="dipartimento.ds_dipartimento"
+		inputType="TEXT"
+		label="Descrizione dipartimento" 
+		/>
 	<fieldProperty
 		name="fl_obbligo_protocollo_inf"
 		property="fl_obbligo_protocollo_inf"
@@ -200,7 +221,8 @@
 		label="In possesso del Kit di Firma Digitale"/>					
 
 	<formFieldProperty name="esercizio" />
-	<formFieldProperty name="centro_spesa" />		
+	<formFieldProperty name="centro_spesa" />
+	<formFieldProperty name="dipartimento" />
 	<formFieldProperty name="fl_commessa_obbligatoria" />
 	<formFieldProperty name="fl_obbligo_protocollo_inf" />
 	<formFieldProperty name="fl_contratto_cessato"
@@ -230,6 +252,8 @@
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
 	<columnFieldProperty name="ds_unita_organizzativa" />
+	<columnFieldProperty name="cd_dipartimento" />
+	<columnFieldProperty name="ds_dipartimento" />
 	<columnFieldProperty name="fl_commessa_obbligatoria" />
 	<columnFieldProperty name="fl_obbligo_protocollo_inf" />
 	<columnFieldProperty name="fl_contratto_cessato" />
@@ -259,6 +283,7 @@
 	<columnFieldProperty name="fl_kit_firma_digitale" />
 	
 	<findFieldProperty name="cd_unita_organizzativa" />
+	<findFieldProperty name="cd_dipartimento" />
 	<findFieldProperty name="fl_commessa_obbligatoria" />
 	<findFieldProperty name="fl_obbligo_protocollo_inf" />
 	<findFieldProperty name="fl_contratto_cessato" />

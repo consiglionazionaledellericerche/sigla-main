@@ -3,6 +3,7 @@ package it.cnr.contab.inventario00.docs.bulk;
 import java.util.Dictionary;
 
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.inventario00.tabrif.bulk.*;
 /**
@@ -44,6 +45,7 @@ public class Stampa_registro_inventarioVBulk extends it.cnr.jada.bulk.OggettoBul
 	
 	//  Tipo_carico_scarico di stampa
 	private java.util.Collection tipoMovimenti;
+	private CdsBulk cdsEnte;
 	private Boolean fl_ufficiale= new Boolean(false);
 	private Boolean fl_solo_totali = new Boolean(false);
 	private String ti_commerciale_istituzionale;	
@@ -61,6 +63,12 @@ public class Stampa_registro_inventarioVBulk extends it.cnr.jada.bulk.OggettoBul
  */
 public Stampa_registro_inventarioVBulk() {
 	super();
+}
+public CdsBulk getCdsEnte() {
+	return cdsEnte;
+}
+public void setCdsEnte(CdsBulk cdsEnte) {
+	this.cdsEnte = cdsEnte;
 }
 /**
  * Insert the method's description here.
@@ -90,7 +98,7 @@ public java.lang.String getCd_cds() {
  * comunque visualizzato
  * */
 public java.lang.String getCdCdsForPrint() {
-	if (cd_cds==null ||cd_cds.equals("999") )
+	if (cd_cds==null ||cd_cds.equals(cdsEnte.getCd_unita_organizzativa()) )
 	    return "*";	
 	return cd_cds;	
 }

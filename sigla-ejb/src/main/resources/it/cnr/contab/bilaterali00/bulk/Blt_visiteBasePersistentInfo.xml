@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_visiteBase"
+	keyClassName="it.cnr.contab.bilaterali00.bulk.Blt_visiteKey"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_visiteHome">
+	<defaultColumnMap
+		tableName="BLT_VISITE">
+		<columnMapping
+			columnName="NUM_PROT_CANDIDATURA"
+			propertyName="numProtCandidatura"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PROT_CANDIDATURA"
+			propertyName="dtProtCandidatura"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_PROT_AUTORIZZ_DIRETTORE"
+			propertyName="numProtAutorizzDirettore"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_AUTORIZZ_DIRETTORE"
+			propertyName="dtProtAutorizzDirettore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_INI_VISITA"
+			propertyName="dtIniVisita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FIN_VISITA"
+			propertyName="dtFinVisita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ACCORDO_PRG"
+			propertyName="cdAccordoPrg"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO_PRG"
+			propertyName="cdProgettoPrg"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_RECORD_PRG"
+			propertyName="pgRecordPrg"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_DISP_FIN"
+			propertyName="numProtDispFin"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_DISP_FIN"
+			propertyName="dtProtDispFin"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_TRASMISS_CANDIDATURA"
+			propertyName="numProtTrasmissCandidatura"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_TRASMISS_CANDIDATURA"
+			propertyName="dtProtTrasmissCandidatura"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_ACCETT_DISP_FIN"
+			propertyName="numProtAccettDispFin"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_ACCETT_DISP_FIN"
+			propertyName="dtProtAccettDispFin"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_ACCETT_ENTE_STR"
+			propertyName="numProtAccettEnteStr"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_ACCETT_ENTE_STR"
+			propertyName="dtProtAccettEnteStr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_AUTORIZ_PARTENZA"
+			propertyName="numProtAutorizPartenza"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_AUTORIZ_PARTENZA"
+			propertyName="dtProtAutorizPartenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAM_ANT"
+			propertyName="dtPagamAnt"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAM_SALDO"
+			propertyName="dtPagamSaldo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_CDS_OBBLIG"
+			propertyName="cdCdsObblig"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIG"
+			propertyName="esercizioObblig"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIG"
+			propertyName="esercizioOriObblig"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pgObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pgObbligazioneScadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_ATTESTATO_SOGG"
+			propertyName="numProtAttestatoSogg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_ATTESTATO_SOGG"
+			propertyName="dtProtAttestatoSogg"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_NOTA_ADDEBITO"
+			propertyName="numProtNotaAddebito"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_NOTA_ADDEBITO"
+			propertyName="dtProtNotaAddebito"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_NOTA_ADDEBITO_ANT"
+			propertyName="numProtNotaAddebitoAnt"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_NOTA_ADDEBITO_ANT"
+			propertyName="dtProtNotaAddebitoAnt"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_PROVV_IMPEGNO"
+			propertyName="numProtProvvImpegno"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_PROVV_IMPEGNO"
+			propertyName="dtProtProvvImpegno"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_RIMB_SPESE"
+			propertyName="numProtRimbSpese"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_RIMB_SPESE"
+			propertyName="dtProtRimbSpese"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_PROVV_PAGAM_ANT"
+			propertyName="numProtProvvPagamAnt"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_PROVV_PAGAM_ANT"
+			propertyName="dtProtProvvPagamAnt"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_PROVV_PAGAM"
+			propertyName="numProtProvvPagam"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_PROVV_PAGAM"
+			propertyName="dtProtProvvPagam"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="LUOGO_VISITA"
+			propertyName="luogoVisita"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_ATTRIB_INCARICO"
+			propertyName="numProtAttribIncarico"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_ATTRIB_INCARICO"
+			propertyName="dtProtAttribIncarico"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_CONTRATTO"
+			propertyName="numProtContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_PROT_CONTRATTO"
+			propertyName="dataProtContratto"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_STIPULA_CONTRATTO"
+			propertyName="dtStipulaContratto"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_ACCETT_CONVENZ"
+			propertyName="numProtAccettConvenz"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_ACCETT_CONVENZ"
+			propertyName="dtProtAccettConvenz"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_REPERTORIO"
+			propertyName="esercizioRepertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="pgRepertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_COMUNIC_CAMBIO_DATE"
+			propertyName="numProtComunicCambioDate"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_COMUNIC_CAMBIO_DATE"
+			propertyName="dtProtComunicCambioDate"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_NEW_INIZIO_VISITA"
+			propertyName="dtNewInizioVisita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_NEW_FINE_VISITA"
+			propertyName="dtNewFineVisita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_PROVV_DIFF_VISITA"
+			propertyName="numProtProvvDiffVisita"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_PROVV_DIFF_VISITA"
+			propertyName="dtProtProvvDiffVisita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_MODIFICA_INCARICO"
+			propertyName="numProtModificaIncarico"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_MODIFICA_INCARICO"
+			propertyName="dtProtModificaIncarico"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_RINUNCIA_VISITA"
+			propertyName="numProtRinunciaVisita"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_RINUNCIA_VISITA"
+			propertyName="dtProtRinunciaVisita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PROT_ANNULLA_PROVV"
+			propertyName="numProtAnnullaProvv"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROT_ANNULLA_PROVV"
+			propertyName="dtProtAnnullaProvv"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_ACCETTAZIONE_CONVENZIONE"
+			propertyName="flAccettazioneConvenzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_AUTORIZZ_DIRETTORE"
+			propertyName="flAutorizzDirettore"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STAMPATO_DOC_CANDIDATURA"
+			propertyName="flStampatoDocCandidatura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STAMPATO_AUTORIZ_PARTENZA"
+			propertyName="flStampatoAutorizPartenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STAMPATO_PROVV_PAGAM_ANT"
+			propertyName="flStampatoProvvPagamAnt"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STAMPATO_PROVV_PAGAMENTO"
+			propertyName="flStampatoProvvPagamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STAMPATO_PROVV_IMPEGNO"
+			propertyName="flStampatoProvvImpegno"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STAMPATO_ANN_PROVV_IMPEGNO"
+			propertyName="flStampatoAnnProvvImpegno"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STAMPATO_MODELLO_CONTRATTO"
+			propertyName="flStampatoModelloContratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STAMPATO_NOTA_ADDEBITO"
+			propertyName="flStampatoNotaAddebito"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_PAGAMENTO_FINE_VISITA"
+			propertyName="flPagamentoFineVisita"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_BREVE_PERIODO"
+			propertyName="flBrevePeriodo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_PAGAMENTO_ENTE"
+			propertyName="flPagamentoEnte"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_TERZO_ENTE"
+			propertyName="cdTerzoEnte"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_PAGAMENTO_CON_BONIFICO"
+			propertyName="flPagamentoConBonifico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_VISITA_ANNULLATA"
+			propertyName="flVisitaAnnullata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_RIMB_SPESE_ANT"
+			propertyName="imRimbSpeseAnt"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO_BANCA_ANT"
+			propertyName="cdTerzoBancaAnt"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_BANCA_ANT"
+			propertyName="pgBancaAnt"
+			sqlTypeName="DECIMAL"
+			columnSize="10" 
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG_ANT"
+			propertyName="cdModalitaPagAnt"
+			sqlTypeName="VARCHAR"
+			columnSize="10" 
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RIMB_SPESE"
+			propertyName="imRimbSpese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO_BANCA"
+			propertyName="cdTerzoBanca"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pgBanca"
+			sqlTypeName="DECIMAL"
+			columnSize="10" 
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cdModalitaPag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" 
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RIMB_PREVISTO"
+			propertyName="imRimbPrevisto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PRC_ONERI_FISCALI"
+			propertyName="prc_oneri_fiscali"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PRC_ONERI_CONTRIBUTIVI"
+			propertyName="prc_oneri_contributivi"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INI_VISITA_EFFETTIVA"
+			propertyName="dtIniVisitaEffettiva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FIN_VISITA_EFFETTIVA"
+			propertyName="dtFinVisitaEffettiva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="numProtCandidatura" />
+	<persistentProperty
+		name="dtProtCandidatura" />
+	<persistentProperty
+		name="numProtAutorizzDirettore" />
+	<persistentProperty
+		name="dtProtAutorizzDirettore" />
+	<persistentProperty
+		name="dtIniVisita" />
+	<persistentProperty
+		name="dtFinVisita" />
+	<persistentProperty
+		name="dtPagamAnt" />
+	<persistentProperty
+		name="dtPagamSaldo" />
+	<persistentProperty
+		name="cdAccordoPrg" />
+	<persistentProperty
+		name="cdProgettoPrg" />
+	<persistentProperty
+		name="pgRecordPrg" />
+	<persistentProperty
+		name="numProtDispFin" />
+	<persistentProperty
+		name="dtProtDispFin" />
+	<persistentProperty
+		name="numProtTrasmissCandidatura" />
+	<persistentProperty
+		name="dtProtTrasmissCandidatura" />
+	<persistentProperty
+		name="numProtAccettDispFin" />
+	<persistentProperty
+		name="dtProtAccettDispFin" />
+	<persistentProperty
+		name="numProtAccettEnteStr" />
+	<persistentProperty
+		name="dtProtAccettEnteStr" />
+	<persistentProperty
+		name="numProtAutorizPartenza" />
+	<persistentProperty
+		name="dtProtAutorizPartenza" />
+	<persistentProperty
+		name="cdCdsObblig" />
+	<persistentProperty
+		name="esercizioObblig" />
+	<persistentProperty
+		name="esercizioOriObblig" />
+	<persistentProperty
+		name="pgObbligazione" />
+	<persistentProperty
+		name="pgObbligazioneScadenzario" />
+	<persistentProperty
+		name="numProtAttestatoSogg" />
+	<persistentProperty
+		name="dtProtAttestatoSogg" />
+	<persistentProperty
+		name="numProtNotaAddebito" />
+	<persistentProperty
+		name="dtProtNotaAddebito" />
+	<persistentProperty
+		name="numProtNotaAddebitoAnt" />
+	<persistentProperty
+		name="dtProtNotaAddebitoAnt" />
+	<persistentProperty
+		name="numProtProvvImpegno" />
+	<persistentProperty
+		name="dtProtProvvImpegno" />
+	<persistentProperty
+		name="numProtRimbSpese" />
+	<persistentProperty
+		name="dtProtRimbSpese" />
+	<persistentProperty
+		name="numProtProvvPagamAnt" />
+	<persistentProperty
+		name="dtProtProvvPagamAnt" />
+	<persistentProperty
+		name="numProtProvvPagam" />
+	<persistentProperty
+		name="dtProtProvvPagam" />
+	<persistentProperty
+		name="luogoVisita" />
+	<persistentProperty
+		name="numProtAttribIncarico" />
+	<persistentProperty
+		name="dtProtAttribIncarico" />
+	<persistentProperty
+		name="numProtContratto" />
+	<persistentProperty
+		name="dataProtContratto" />
+	<persistentProperty
+		name="dtStipulaContratto" />
+	<persistentProperty
+		name="numProtAccettConvenz" />
+	<persistentProperty
+		name="dtProtAccettConvenz" />
+	<persistentProperty
+		name="esercizioRepertorio" />
+	<persistentProperty
+		name="pgRepertorio" />
+	<persistentProperty
+		name="numProtComunicCambioDate" />
+	<persistentProperty
+		name="dtProtComunicCambioDate" />
+	<persistentProperty
+		name="dtNewInizioVisita" />
+	<persistentProperty
+		name="dtNewFineVisita" />
+	<persistentProperty
+		name="numProtProvvDiffVisita" />
+	<persistentProperty
+		name="dtProtProvvDiffVisita" />
+	<persistentProperty
+		name="numProtModificaIncarico" />
+	<persistentProperty
+		name="dtProtModificaIncarico" />
+	<persistentProperty
+		name="numProtRinunciaVisita" />
+	<persistentProperty
+		name="dtProtRinunciaVisita" />
+	<persistentProperty
+		name="numProtAnnullaProvv" />
+	<persistentProperty
+		name="dtProtAnnullaProvv" />
+	<persistentProperty
+		name="flAccettazioneConvenzione" />
+	<persistentProperty
+		name="flAutorizzDirettore" />
+	<persistentProperty
+		name="flBrevePeriodo" />
+	<persistentProperty
+		name="flStampatoDocCandidatura" />
+	<persistentProperty
+		name="flStampatoAutorizPartenza" />
+	<persistentProperty
+		name="flStampatoProvvPagamAnt" />
+	<persistentProperty
+		name="flStampatoProvvPagamento" />
+	<persistentProperty
+		name="flStampatoProvvImpegno" />
+	<persistentProperty
+		name="flStampatoAnnProvvImpegno" />
+	<persistentProperty
+		name="flStampatoModelloContratto" />
+	<persistentProperty
+		name="flStampatoNotaAddebito" />
+	<persistentProperty
+		name="flPagamentoFineVisita" />
+	<persistentProperty
+		name="flPagamentoEnte" />
+	<persistentProperty
+		name="cdTerzoEnte" />
+	<persistentProperty
+		name="flPagamentoConBonifico" />
+	<persistentProperty
+		name="flVisitaAnnullata" />
+	<persistentProperty
+		name="imRimbSpeseAnt" />
+	<persistentProperty
+		name="cdTerzoBancaAnt" />
+	<persistentProperty
+		name="pgBancaAnt" />
+	<persistentProperty
+		name="cdModalitaPagAnt" />
+	<persistentProperty
+		name="imRimbSpese" />
+	<persistentProperty
+		name="cdTerzoBanca" />
+	<persistentProperty
+		name="pgBanca" />
+	<persistentProperty
+		name="cdModalitaPag" />
+	<persistentProperty
+		name="imRimbPrevisto" />
+	<persistentProperty
+		name="prc_oneri_fiscali" />
+	<persistentProperty
+		name="prc_oneri_contributivi" />
+	<persistentProperty
+		name="dtIniVisitaEffettiva" />
+	<persistentProperty
+		name="dtFinVisitaEffettiva" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

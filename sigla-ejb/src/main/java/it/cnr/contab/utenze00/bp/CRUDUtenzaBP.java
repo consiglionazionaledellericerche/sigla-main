@@ -8,25 +8,55 @@ package it.cnr.contab.utenze00.bp;
 
 
 
-import java.rmi.RemoteException;
-
-import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.contab.utente00.ejb.UtenteComponentSession;
-import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.utente00.ejb.UtenteComponentSession;
+import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
+import it.cnr.contab.utenze00.bulk.AccessoBulk;
+import it.cnr.contab.utenze00.bulk.RuoloBulk;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.utenze00.bulk.UtenteTemplateBulk;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
+import java.rmi.RemoteException;
 
 public class CRUDUtenzaBP extends SimpleCRUDBP {
-	private final SimpleDetailCRUDController crudAccessi_disponibili = new SimpleDetailCRUDController("Accessi_disponibili",AccessoBulk.class,"accessi_disponibili",this);
+	private CompoundFindClause compoundfindclauseAccessiDisponibili = null;
+	private final SimpleDetailCRUDController crudAccessi_disponibili = new SimpleDetailCRUDController("Accessi_disponibili",AccessoBulk.class,"accessi_disponibili",this) {
+		public void setFilter(ActionContext actioncontext, CompoundFindClause compoundfindclause) {
+			compoundfindclauseAccessiDisponibili = compoundfindclause;
+			CRUDUtenzaBP bp = (CRUDUtenzaBP) actioncontext.getBusinessProcess();
+			UtenteTemplateBulk utente = (UtenteTemplateBulk)bp.getModel();
+			utente.resetAccessi();
+			try {
+				bp.setModel(actioncontext,((UtenteComponentSession)createComponentSession()).
+						cercaAccessi(actioncontext.getUserContext(),utente, utente.getUnita_org_per_accesso(), compoundfindclause));
+				
+			} catch (BusinessProcessException e) {
+				handleException(e);
+			} catch (ComponentException e) {
+				handleException(e);
+			} catch (RemoteException e) {
+				handleException(e);
+			}
+			super.setFilter(actioncontext, compoundfindclause);
+		};
+		
+		public boolean isFiltered() {
+			return compoundfindclauseAccessiDisponibili != null;
+		};
+	};
 	private final SimpleDetailCRUDController crudAccessi = new SimpleDetailCRUDController("Accessi",AccessoBulk.class,"accessi",this);
 	private final SimpleDetailCRUDController crudRuoli_disponibili = new SimpleDetailCRUDController("Ruoli_disponibili",RuoloBulk.class,"ruoli_disponibili",this);
 	private final SimpleDetailCRUDController crudRuoli = new SimpleDetailCRUDController("Ruoli",RuoloBulk.class,"ruoli",this);
@@ -51,7 +81,7 @@ public void cercaAccessi(ActionContext context) throws it.cnr.jada.action.Busine
 
 		UtenteTemplateBulk utente = (UtenteTemplateBulk)getModel();
 		utente.resetAccessi();
-		setModel(context,((UtenteComponentSession)createComponentSession()).cercaAccessi(context.getUserContext(),utente, utente.getUnita_org_per_accesso()));
+		setModel(context,((UtenteComponentSession)createComponentSession()).cercaAccessi(context.getUserContext(),utente, utente.getUnita_org_per_accesso(), compoundfindclauseAccessiDisponibili));
 	} catch(Exception e) {
 		throw handleException(e);
 	}
@@ -192,7 +222,7 @@ public boolean isUtenteAbilitatoLdap(UserContext uc) throws it.cnr.jada.action.B
 		 throw new MessageToUser("Codice utente ufficiale non valorizzato!");
 	
 	try {
-		return ((GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class)).isUtenteAbilitatoLdap(uc, utente.getCd_utente_uid());
+		return ((GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class)).isUtenteAbilitatoLdap(uc, utente.getCd_utente_uid(), true);
 	} catch (ComponentException e) {
 		throw handleException(e);
 	} catch (RemoteException e) {

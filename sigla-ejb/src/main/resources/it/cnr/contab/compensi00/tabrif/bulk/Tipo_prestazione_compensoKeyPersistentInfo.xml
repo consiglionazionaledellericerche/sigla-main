@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoKey" >
+	<defaultColumnMap
+		tableName="TIPO_PRESTAZIONE_COMPENSO" >
+		<columnMapping
+			columnName="CD_TI_PRESTAZIONE"
+			propertyName="cd_ti_prestazione"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_ti_prestazione"
+		partOfOid="true" />
+</SQLPersistentInfo>

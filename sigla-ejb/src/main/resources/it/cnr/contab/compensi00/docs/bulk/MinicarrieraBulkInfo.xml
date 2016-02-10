@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
 		name="cd_cds"
@@ -348,12 +348,27 @@
 		enabledOnFreeSearch = "true"
 		nullable="false"
 		label="Tipo Trattamento" />
+		
+	<fieldProperty
+		name="tipoPrestazioneCompenso"
+		property="tipoPrestazioneCompenso"
+		printProperty="ds_ti_prestazione"
+		optionsProperty="tipiPrestazioneCompenso"
+		inputType="SELECT"
+		nullable="true"
+		label="Tipo Prestazione" />
+	<fieldProperty
+		name="ti_prestazione"
+		property="ti_prestazione"
+		inputType="TEXT"
+		label="Codice Tipo Prestazione" />
+		
 	<fieldProperty
 		name="incarichi_repertorio"
 		property="incarichi_repertorio"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		label="Incarico"/>		
+		label="Es./Prog."/>		
 	<fieldProperty
 		name="fl_tassazione_separata"
 		property="fl_tassazione_separata"
@@ -688,6 +703,8 @@
 	<formFieldProperty name="banca" />
 	<formFieldProperty name="tipo_rapporto" />
 	<formFieldProperty name="tipo_trattamento" />
+	<formFieldProperty name="ti_prestazione" />
+	<formFieldProperty name="tipoPrestazioneCompenso" />
 	<formFieldProperty name="incarichi_repertorio" />	
 	<formFieldProperty name="fl_tassazione_separata" />
 	<formFieldProperty name="fl_escludi_qvaria_deduzione" />
@@ -809,5 +826,6 @@
 		name="dt_inizio_minicarriera" />
 	<findFieldProperty 
 		name="pgMinicarrieraPos" />
-
+	<findFieldProperty 
+	    name="tipoPrestazioneCompenso" />
 </bulkInfo>

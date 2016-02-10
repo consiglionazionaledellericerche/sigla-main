@@ -14,6 +14,17 @@ public interface IDocumentoAmministrativoBulk {
 
 	public final static String RIPORTA_AVANTI = "RIPORTA_AVANTI";
 	public final static String RIPORTA_INDIETRO = "RIPORTA_INDIETRO";
+	
+	public final static String LIQ = "LIQ";
+	public final static String SOSP = "SOSP";
+	public final static String NOLIQ = "NOLIQ";
+		
+	public final static String ATTLIQ = "ATTLIQ";
+	public final static String CONT = "CONT";
+	public final static String ATTNC = "ATTNC";
+	public final static String NCRED= "NCRED";
+	
+	
 public void addToDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio);
 public void addToDocumentiContabiliCancellati(IScadenzaDocumentoContabileBulk dettaglio);
 /**

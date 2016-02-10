@@ -1,5 +1,9 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
+import it.cnr.jada.bulk.BulkList;
+
 /**
  * Insert the type's description here.
  * Creation date: (10/25/2001 11:52:17 AM)
@@ -12,6 +16,12 @@ public class Fattura_passiva_rigaIBulk extends Fattura_passiva_rigaBulk {
 	private java.math.BigDecimal saldo = new java.math.BigDecimal(0);
 	private java.math.BigDecimal im_totale_storni = new java.math.BigDecimal(0);
 	private java.math.BigDecimal im_totale_addebiti = new java.math.BigDecimal(0);
+	private java.math.BigDecimal im_riga_sdoppia;
+
+    /*
+     * lista righe mandati associati, utilizzato per l'integrazione con i brevetti
+     */
+    private BulkList<Mandato_rigaIBulk> mandatiRighe = new BulkList();
 /**
  * Fattura_passiva_rigaIBulk constructor comment.
  */
@@ -91,7 +101,7 @@ public java.math.BigDecimal getSaldo() {
 public boolean hasAddebiti() {
 	
 	return	getIm_totale_addebiti() != null && 
-			getIm_totale_addebiti().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) > 0;
+			getIm_totale_addebiti().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) > 0;
 }
 /**
  * Insert the method's description here.
@@ -101,7 +111,7 @@ public boolean hasAddebiti() {
 public boolean hasStorni() {
 	
 	return	getIm_totale_storni() != null && 
-			getIm_totale_storni().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) > 0;
+			getIm_totale_storni().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) > 0;
 }
 /**
  * Insert the method's description here.
@@ -143,5 +153,18 @@ public void setIm_totale_storni(java.math.BigDecimal newIm_totale_storni) {
  */
 public void setSaldo(java.math.BigDecimal newSaldo) {
 	saldo = newSaldo;
+}
+public java.math.BigDecimal getIm_riga_sdoppia() {
+	return im_riga_sdoppia;
+}
+public void setMandatiRighe(BulkList<Mandato_rigaIBulk> mandatiRighe) {
+	this.mandatiRighe = mandatiRighe;
+}
+public void setIm_riga_sdoppia(java.math.BigDecimal im_riga_sdoppia) {
+	this.im_riga_sdoppia = im_riga_sdoppia;
+}
+
+public BulkList<Mandato_rigaIBulk> getMandatiRighe() {
+	return mandatiRighe;
 }
 }

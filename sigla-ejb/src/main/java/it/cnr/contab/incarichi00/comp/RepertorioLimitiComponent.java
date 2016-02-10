@@ -69,7 +69,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 						/*valorizzo la percentuale se trattasi di uo ente*/
 						if (isUoEnte) {
 							if (Utility.nvl(replim.getImporto_limite()).compareTo(Utility.ZERO)==1) {
-								inccds.setPrc_utilizzato(Utility.nvl(inccds.getIm_incarichi()).divide(Utility.nvl(replim.getImporto_limite()), 4, java.math.BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
+								inccds.setPrc_utilizzato(Utility.nvl(inccds.getIm_incarichi()).divide(Utility.nvl(replim.getImporto_limite()), 4, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));
 								totalePrcCds = totalePrcCds.add( inccds.getPrc_utilizzato() );
 							}
 							else
@@ -89,7 +89,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 							if (Utility.nvl(inccds.getIm_incarichi()).compareTo(Utility.ZERO)==1)
 								if (x.hasNext())
 								{
-									incuo.setPrc_utilizzato(Utility.nvl(incuo.getIm_incarichi()).divide(Utility.nvl(inccds.getIm_incarichi()), 4, java.math.BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
+									incuo.setPrc_utilizzato(Utility.nvl(incuo.getIm_incarichi()).divide(Utility.nvl(inccds.getIm_incarichi()), 4, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));
 									totalePrcUo = totalePrcUo.add( incuo.getPrc_utilizzato() );
 								}
 								else
@@ -229,13 +229,9 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 			
 			reperBulk = findAndLock( userContext, reperBulk.getEsercizio(), reperBulk.getCd_tipo_limite());
 
-			importo = importo.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+			importo = importo.setScale(2, BigDecimal.ROUND_HALF_UP);
 
-			boolean isUoEnte = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
-					findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)))).
-					getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
-
-			if (reperBulk.getFl_raggiunto_limite() && !isUoEnte && importo.compareTo(Utility.ZERO)==1)
+			if (reperBulk.getFl_raggiunto_limite() && importo.compareTo(Utility.ZERO)==1)
 				  throw new ApplicationException(
 							"Impossibile effettuare l'operazione !\n\n"+
 					        "Nell'esercizio "+esercizio+ " per la combinazione: \n\n"+
@@ -243,7 +239,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 		                    "- Tipo Attivita: "+tipoAttivitaBulk.getDs_tipo_attivita()+"\n"+
 		                    "- Natura: "+NaturaBulk.tipo_naturaKeys.get(cd_tipo_natura)+"\n\n"+
 					        "è stato raggiunto il limite.");
-			else if (!isUoEnte) {
+			else {
 				if (reperBulk.getImporto_residuo().compareTo(Utility.ZERO)==0 && importo.compareTo(Utility.ZERO)==1)
 					  throw new ApplicationException(
 						"Impossibile effettuare l'operazione !\n\n"+

@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		shortDescription="Associazioni Elemento Voce/Siope"
+		longDescription="Associazioni Elemento Voce/Siope">
 	<fieldProperty
 		name="esercizio"
 		property="elemento_voce.esercizio"
-		inputType="ROTEXT"
-		inputSize="4"
-		maxLength="4"
-		label="Esercizio" />
-	<fieldProperty
-		name="esercizio_scrivania"
-		property="esercizio_scrivania"
 		inputType="ROTEXT"
 		inputSize="4"
 		maxLength="4"
@@ -40,7 +35,8 @@
 		property="elemento_voce"
 		inputType="SEARCHTOOL"
 		readonlyPropertyOnEdit="ROGiaAssociato"
-		enabledOnSearch="true"/>
+		enabledOnSearch="true"
+		label="Elemento voce"/>
 	<fieldProperty
 		name="cd_elemento_voce"
 		property="elemento_voce.cd_elemento_voce"
@@ -62,7 +58,8 @@
 		property="codici_siope"
 		inputType="SEARCHTOOL"
 		readonlyPropertyOnEdit="ROGiaAssociato"
-		enabledOnSearch="true"/>
+		enabledOnSearch="true"
+		label="Codice Siope"/>
 	<fieldProperty
 		name="cd_siope"
 		property="codici_siope.cd_siope"
@@ -98,8 +95,6 @@
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
-		name="esercizio_scrivania" />
-	<formFieldProperty
 		name="ti_appartenenza" />
 	<formFieldProperty
 		name="ti_gestione" />
@@ -131,9 +126,7 @@
 	<findFieldProperty
 		name="cd_siope" />
 	<findFieldProperty
-		name="esercizio_siope" />
-	<findFieldProperty
-		name="ti_gestione_siope" />
+		name="ds_siope" />
 		
 	<columnFieldProperty
 		name="esercizio" />
@@ -148,8 +141,7 @@
 	<columnFieldProperty
 		name="cd_siope" />
 	<columnFieldProperty
-		name="esercizio_siope" />
-	<columnFieldProperty
-		name="ti_gestione_siope" />
+		name="ds_siope" />
+	
 	
 </bulkInfo>

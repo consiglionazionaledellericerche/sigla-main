@@ -17,13 +17,16 @@ import javax.servlet.jsp.PageContext;
 import it.cnr.contab.anagraf00.ejb.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
@@ -50,33 +53,54 @@ import it.cnr.jada.util.jsp.JSPUtils;
  */
 
 public class CRUDAnagraficaBP extends SimpleCRUDBP {
-	private boolean isGestoreIstat;
 	
-	private final SimpleDetailCRUDController crudDichiarazioni_intento = new SimpleDetailCRUDController("Dichiarazioni_intento",Dichiarazione_intentoBulk.class,"dichiarazioni_intento",this);
-
+	private final SimpleDetailCRUDController crudDichiarazioni_intento = new SimpleDetailCRUDController("Dichiarazioni_intento",Dichiarazione_intentoBulk.class,"dichiarazioni_intento",this){
+		protected void validate(ActionContext context,OggettoBulk bulk) throws ValidationException {
+			super.validate(context,bulk);
+			validaDichiarazione(context,(Dichiarazione_intentoBulk)bulk);
+		}
+		public OggettoBulk removeDetail(int i) {
+			if (!getModel().isNew()){	
+				List list = getDetails();
+				Dichiarazione_intentoBulk dic=(Dichiarazione_intentoBulk)list.get(i);
+				if (dic.getAnagrafico().isUtilizzata()){
+						setMessage("Cancellazione non possibile!");
+						return null;
+				}
+				else
+					return super.removeDetail(i);
+			}
+			return super.removeDetail(i);
+		}
+	};
 	private final SimpleDetailCRUDController crudCarichi_familiari_anag = new SimpleDetailCRUDController("Carichi_familiari_anag",Carico_familiare_anagBulk.class,"carichi_familiari_anag",this){
 		protected void validate(ActionContext context,OggettoBulk bulk) throws ValidationException {
 			super.validate(context,bulk);
 			validaCarico(context,(Carico_familiare_anagBulk)bulk);
 		}
+		
 		public OggettoBulk removeDetail(int i) {
-			List list = getDetails();
-			Carico_familiare_anagBulk carico=(Carico_familiare_anagBulk)list.get(i);	
-			if(carico.getAnagrafico()!=null &&  carico.getAnagrafico().isUtilizzata_detrazioni()){
-				setMessage("Cancellazione non possibile! Carico familiare utilizzato nel calcolo delle detrazioni.");
-				return null;
-		}else{
-			if (carico.isConiuge())
-			{
-			for(int j = list.size() - 1; j >= 0; j--)
-				{
-					Carico_familiare_anagBulk carico_familiare=(Carico_familiare_anagBulk)list.get(j);
-					validaRemoveDetail(carico_familiare);
+			if (!getModel().isNew()){	
+				List list = getDetails();
+				Carico_familiare_anagBulk carico=(Carico_familiare_anagBulk)list.get(i);
+			
+				if(carico.getAnagrafico()!=null &&  carico.getAnagrafico().isUtilizzata_detrazioni()){
+					setMessage("Cancellazione non possibile! Carico familiare utilizzato nel calcolo delle detrazioni.");
+					return null;
 				}
-			}
-			return super.removeDetail(i);
+				else{
+					if (carico.isConiuge()){
+						for(int j = list.size() - 1; j >= 0; j--){
+							Carico_familiare_anagBulk carico_familiare=(Carico_familiare_anagBulk)list.get(j);
+							validaRemoveDetail(carico_familiare);
+						}
+					}
+					return super.removeDetail(i);
+				}
 		}
+			return super.removeDetail(i);	
 		}
+	
 	};
 
 	private final SimpleDetailCRUDController crudRapporti = new SimpleDetailCRUDController("Rapporti",RapportoBulk.class,"rapporti",this) {
@@ -490,17 +514,29 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		
 	}
 	protected void validaCarico(ActionContext context,Carico_familiare_anagBulk carico) throws ValidationException {
+		if(carico.isToBeCreated()){
 		try {
 			AnagraficoComponentSession sess = (AnagraficoComponentSession)createComponentSession();
+
+			sess.controllaUnicitaCaricoInAnnoImposta(context.getUserContext(),carico.getAnagrafico(),carico);
+			
 			if (carico.isConiuge()|| carico.isFiglio()){
 				sess.checkConiugeAlreadyExistFor(context.getUserContext(),carico.getAnagrafico(),carico);
 			}
 			if (carico.isFiglio() && 
 				!carico.getFl_primo_figlio_manca_con() && 
 				carico.getPrc_carico().compareTo(new java.math.BigDecimal(100))==0 &&
-				!sess.esisteConiugeValido(context.getUserContext(),carico.getAnagrafico(),carico) &&
+				//!sess.esisteConiugeValido(context.getUserContext(),carico.getAnagrafico(),carico) &&
 				carico.getCodice_fiscale_altro_gen() == null)
 				throw new ValidationException("Attenzione: è necessario specificare il Codice fiscale dell'altro genitore");
+			java.util.GregorianCalendar data_da = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+			java.util.GregorianCalendar data_a = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+			data_da.setTime(carico.getDt_ini_validita());
+			data_a.setTime(carico.getDt_fin_validita());
+//			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
+//				throw new ValidationException("La data di inizio e fine validità devono appartenere allo stesso esercizio.");
+//			}
+			sess.checkCaricoAlreadyExistFor(context.getUserContext(),carico.getAnagrafico(),carico);
 		} catch(javax.ejb.EJBException e) {
 			throw new it.cnr.jada.DetailedRuntimeException(e);
 		}catch(it.cnr.jada.comp.ComponentException ex){
@@ -509,6 +545,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 			throw new it.cnr.jada.DetailedRuntimeException(ex);
 		}catch (java.rmi.RemoteException ex) {
 			throw new it.cnr.jada.DetailedRuntimeException(ex);
+		}
 		}
 	}
 	public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException {
@@ -522,18 +559,13 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		}
 	}
 	
-	public void setGestoreIstat(boolean b) {
-		isGestoreIstat = b;
-	}
 	
-	public boolean isGestoreIstat() {
-		return isGestoreIstat;
+	public boolean isGestoreIstat(UserContext context, AnagraficoBulk anagraficoBulk) throws ComponentException, RemoteException {
+		return !anagraficoBulk.isNotGestoreIstat();
 	}
-	
+
 	public boolean isGestoreOk(UserContext context) throws ComponentException, RemoteException {
-    		setGestoreIstat(UtenteBulk.isGestoreIstatSiope(context));
-			return isGestoreIstat;		
-		
+		return UtenteBulk.isGestoreIstatSiope(context);
 	}
 	
 	protected void validaRemoveDetail(Carico_familiare_anagBulk carico_familiare) {
@@ -579,6 +611,16 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		try{
 			AnagraficoComponentSession sess = (AnagraficoComponentSession)createComponentSession();
 			return sess.isGestiteDetrazioniFamily(userContext);
+		}catch(it.cnr.jada.comp.ComponentException ex){
+			throw handleException(ex);
+		}catch(java.rmi.RemoteException ex){
+			throw handleException(ex);
+		}
+	}	
+	public boolean isGestitoCreditoIrpef(UserContext userContext) throws BusinessProcessException {
+		try{
+			AnagraficoComponentSession sess = (AnagraficoComponentSession)createComponentSession();
+			return sess.isGestitoCreditoIrpef(userContext);
 		}catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
 		}catch(java.rmi.RemoteException ex){
@@ -1219,11 +1261,21 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 	public void setAbilitatoSospensioneCori(boolean abilitatoSospensioneCori) {
 		this.abilitatoSospensioneCori = abilitatoSospensioneCori;
 	}	
+
+    private boolean abilitatoAutorizzareDiaria;
+	
+	public boolean isAbilitatoAutorizzareDiaria() {
+		return abilitatoAutorizzareDiaria;
+	}
+	public void setAbilitatoAutorizzareDiaria(boolean abilitatoAutorizzareDiaria) {
+		this.abilitatoAutorizzareDiaria = abilitatoAutorizzareDiaria;
+	}
 	
 protected void initialize(ActionContext context) throws BusinessProcessException {
 	try {
 		setAbilitatoECF(UtenteBulk.isAbilitatoECF(context.getUserContext()));
 		setAbilitatoSospensioneCori(UtenteBulk.isAbilitatoSospensioneCori(context.getUserContext()));
+		setAbilitatoAutorizzareDiaria(UtenteBulk.isAbilitatoAutorizzareDiaria(context.getUserContext()));
 	} catch (ComponentException e1) {
 		throw handleException(e1);
 	} catch (RemoteException e1) {
@@ -1231,6 +1283,43 @@ protected void initialize(ActionContext context) throws BusinessProcessException
 	}
 	super.initialize(context);
 }
+
+public OggettoBulk initializeModelForInsert(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
+	AnagraficoBulk anagrafico = (AnagraficoBulk)super.initializeModelForInsert(context,bulk);
+	try {
+		anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(context.getUserContext()));
+		if (isUoEnte(context))
+			anagrafico.setUo_ente(true);
+		else
+			anagrafico.setUo_ente(false);
+		
+	} catch (ComponentException e1) {
+		handleException(e1);
+	} catch (RemoteException e1) {
+		handleException(e1);
+	}
+	return anagrafico;
+}
+@Override
+public OggettoBulk initializeModelForEdit(ActionContext actioncontext,OggettoBulk oggettobulk) throws BusinessProcessException {
+	oggettobulk = super.initializeModelForEdit(actioncontext,oggettobulk);
+	if (oggettobulk instanceof AnagraficoBulk) {
+		AnagraficoBulk anagrafico = (AnagraficoBulk)oggettobulk;
+		try {
+			anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(actioncontext.getUserContext()));
+			if (isUoEnte(actioncontext))
+				anagrafico.setUo_ente(true);
+			else
+				anagrafico.setUo_ente(false);
+		} catch (ComponentException e1) {
+			handleException(e1);
+		} catch (RemoteException e1) {
+			handleException(e1);
+		}		
+	}
+	return oggettobulk;
+}
+
 public void writeToolbar(PageContext pagecontext) throws IOException, ServletException {
 	Button[] toolbar = getToolbar();
 	if(getFile()!=null){
@@ -1267,7 +1356,25 @@ public Timestamp findMaxDataCompValida(UserContext context,AnagraficoBulk anagra
 	}
 }
 public String[][] getTabs() {
-	if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica())
+	if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero() !=null && ((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
+			((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getPartita_iva()!=null &&
+					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica()))
+		return new String[][] {
+			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
+			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
+			{ "tabDetrazioniFamiliari","Carichi familiari","/anagraf00/tab_detrazioni_familiari.jsp" },
+			{ "tabDettagli","Dettagli","/anagraf00/tab_dettagli.jsp" },
+			{ "tabPagamentiEsterni","Pagamenti esterni","/anagraf00/tab_pagamenti_esterni.jsp" },
+			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }};
+	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero() !=null && ((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
+			((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getPartita_iva()!=null &&
+					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaGiuridica()) &&
+					(!((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isStudioAssociato()))
+		return new String[][] {
+			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
+			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" } ,
+			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }};
+	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica())
 		return new String[][] {
 			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
 			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
@@ -1283,10 +1390,44 @@ public String[][] getTabs() {
 		return new String[][] {
 			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
 			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" } };
-
-	//{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }
 }
 public SimpleDetailCRUDController getCrudAssociatiStudio() {
 	return crudAssociatiStudio;
 }
+protected void validaDichiarazione(ActionContext context,Dichiarazione_intentoBulk dic) throws ValidationException {
+	for (java.util.Iterator i = dic.getAnagrafico().getDichiarazioni_intento().iterator();i.hasNext();) {
+		Dichiarazione_intentoBulk dic_int = (Dichiarazione_intentoBulk)i.next();
+		if (!dic.equals(dic_int) &&
+			!((dic.getDt_ini_validita().before(dic_int.getDt_ini_validita()) &&
+					dic.getDt_ini_validita().before(dic_int.getDt_fin_validita()) &&
+					dic.getDt_fin_validita().before(dic_int.getDt_ini_validita()) &&
+					dic.getDt_fin_validita().before(dic_int.getDt_fin_validita())) ||
+					(dic.getDt_ini_validita().after(dic_int.getDt_ini_validita()) &&
+		    		dic.getDt_ini_validita().after(dic_int.getDt_fin_validita()) &&
+		    		dic.getDt_fin_validita().after(dic_int.getDt_ini_validita()) &&
+		    		dic.getDt_fin_validita().after(dic_int.getDt_fin_validita())))){
+ 			throw new ValidationException ("Attenzione: non è possibile indicare una dichiarazione in questo periodo, esiste già una dichiarazione valida nello stesso periodo!");
+ 			
+}
+		if (!dic.equals(dic_int) &&
+				(dic.getDt_inizio_val_dich()!=null && dic.getDt_fine_val_dich()!=null &&
+				 dic_int.getDt_inizio_val_dich()!=null && dic_int.getDt_fine_val_dich()!=null) &&
+				!((dic.getDt_inizio_val_dich().before(dic_int.getDt_inizio_val_dich()) &&
+						dic.getDt_inizio_val_dich().before(dic_int.getDt_fine_val_dich()) &&
+						dic.getDt_fine_val_dich().before(dic_int.getDt_inizio_val_dich()) &&
+						dic.getDt_fine_val_dich().before(dic_int.getDt_fine_val_dich())) ||
+						(dic.getDt_inizio_val_dich().after(dic_int.getDt_inizio_val_dich()) &&
+			    		dic.getDt_inizio_val_dich().after(dic_int.getDt_fine_val_dich()) &&
+			    		dic.getDt_fine_val_dich().after(dic_int.getDt_inizio_val_dich()) &&
+			    		dic.getDt_fine_val_dich().after(dic_int.getDt_fine_val_dich())))){
+	 			throw new ValidationException ("Attenzione: non è possibile indicare una dichiarazione in questo periodo di riferimento, esiste già una dichiarazione valida nello stesso periodo!");
+		}
+	}
+}
+public boolean isUoEnte(ActionContext context){	
+	Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
+	if (uo.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
+		return true;	
+	return false; 
+}	
 }

@@ -77,7 +77,8 @@ protected it.cnr.jada.util.jsp.Button[] createViewDettaglioGruppiToolbar() {
 	return toolbar;
 }
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-	Button[] toolbar = new Button[12];
+	Button[] toolbar = new Button[11];
+	//Button[] toolbar = new Button[12];
 	int i = 0;
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.search");
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.startSearch");
@@ -88,7 +89,7 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.bringBack");
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.print");
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.undoBringBack");
-	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.f24");
+	//toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.f24");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.f24Tot");
 	// attenzione il link al file viene settato dinamicamente con il nome del file nella writeToolbar(PageContext pagecontext) 
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.download");
@@ -308,7 +309,7 @@ if(getFile()!=null){
     stringbuffer.append(':');
     stringbuffer.append(pagecontext.getRequest().getServerPort());
     stringbuffer.append(JSPUtils.getAppRoot(httpservletrequest));
-    toolbar[11].setHref("javascript:doPrint('"+stringbuffer+getFile()+ "')");
+    toolbar[10].setHref("javascript:doPrint('"+stringbuffer+getFile()+ "')");
 }
 super.writeToolbar(pagecontext);
 }
@@ -318,6 +319,7 @@ return file;
 public void setFile(String file) {
 this.file = file;
 }
+/**Procedura attualmente NON UTILIZZATA Vecchio tracciato*/
 public void Estrazione(ActionContext context) throws ComponentException, RemoteException, BusinessProcessException{
 	 try{	
 		 //	da fare 
@@ -556,7 +558,7 @@ public OggettoBulk initializeModelForSearch(ActionContext actioncontext, Oggetto
 	return super.initializeModelForSearch(actioncontext, oggettobulk);
 }
 
-public void SelezionaF24(ActionContext context) {
+public void SelezionaF24(ActionContext context,boolean negativi) {
 	try {
 		List gruppi=getGruppi().getDetails();
 		Gruppo_crBulk gruppo_cr=null;
@@ -569,10 +571,15 @@ public void SelezionaF24(ActionContext context) {
 				it.cnr.jada.persistency.sql.HomeCache homeCache = new it.cnr.jada.persistency.sql.HomeCache(conn);
 				gruppo_cr = new Gruppo_crBulk();
 				gruppo_cr.setEsercizio(liquid.getEsercizio());
-				gruppo_cr.setCd_gruppo_cr(liquid.getCd_gruppo_cr());
+				gruppo_cr.setCd_gruppo_cr(liquid.getCd_gruppo_cr());  
 				gruppo_cr = (Gruppo_crBulk)homeCache.getHome(Gruppo_crBulk.class).findByPrimaryKey(gruppo_cr);
-				if (gruppo_cr.getFl_f24online().booleanValue())
-					getGruppi().getSelection().setSelected(i);
+				if (gruppo_cr.getFl_f24online().booleanValue()){
+					if (negativi)
+						getGruppi().getSelection().setSelected(i);
+					else
+						if(liquid.getIm_liquidato().compareTo(BigDecimal.ZERO)>=0)
+							getGruppi().getSelection().setSelected(i);
+				}
 			}
 			 finally {
    				   if (conn!=null)
@@ -775,6 +782,15 @@ public void EstrazioneTot(ActionContext context) throws ComponentException, Remo
 		    		  bw.append(Formatta(f24ep.getPeriodo_a(),"S",6," "));
 		    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
 	    		 }
+	    		 if(f24ep.getTipo_riga_f24().compareTo(Gruppo_crBulk.INPGI)==0){
+	    			  String sede_inpgi= ((Liquid_coriComponentSession)createComponentSession()).getSedeInpgiF24(context.getUserContext());
+	    			  bw.append(Formatta(null,"S",5," "));
+	    			  //??? FACOLTATIVO ???
+		    		  bw.append(Formatta(Formatta(sede_inpgi,"S",5,"0"),"S",17," "));  // ESTREMI IDENTIFICATIVI 
+		    		  bw.append(Formatta(Formatta(f24ep.getMese_rif(),"D",4,"0"),"S",6," "));
+		    		  bw.append(Formatta(Formatta(f24ep.getAnno_rif(),"D",4,"0"),"S",6," "));
+		    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
+	    		 }
 	    	  }
     		  if(riga ==28){
     			  tot_righe=tot_righe+1;
@@ -863,7 +879,7 @@ public void EstrazioneTot(ActionContext context) throws ComponentException, Remo
 		throw new ApplicationException("Errore nella scrittura del file!");		
 	}		 
 }
-public void SelezionaF24Prev(ActionContext context) {
+public void SelezionaF24Prev(ActionContext context,boolean negativi) {
 	try {
 		List gruppi=getGruppi().getDetails();
 		Gruppo_crBulk gruppo_cr=null;
@@ -879,8 +895,12 @@ public void SelezionaF24Prev(ActionContext context) {
 				gruppo_cr.setCd_gruppo_cr(liquid.getCd_gruppo_cr());
 				gruppo_cr = (Gruppo_crBulk)homeCache.getHome(Gruppo_crBulk.class).findByPrimaryKey(gruppo_cr);
 				if (gruppo_cr.getFl_f24online_previd().booleanValue())
-					getGruppi().getSelection().setSelected(i);
-			}
+					if (negativi)
+						getGruppi().getSelection().setSelected(i);
+					else
+						if(liquid.getIm_liquidato().compareTo(BigDecimal.ZERO)>=0)
+							getGruppi().getSelection().setSelected(i);
+			  }
 			 finally {
    				   if (conn!=null)
    					  try{conn.close();}catch( java.sql.SQLException e ){};
@@ -903,5 +923,12 @@ public void SelezionaF24Prev(ActionContext context) {
 	 catch(Throwable e) {
 	}
 		 
+}
+public static CRUDLiquidazioneCORIBP getBusinessProcessFor(it.cnr.jada.action.ActionContext context, Liquid_coriBulk liq, String mode) throws it.cnr.jada.action.BusinessProcessException 
+{
+	if(liq == null) 
+		return null;
+	else
+		return (CRUDLiquidazioneCORIBP)context.getUserInfo().createBusinessProcess(context,"CRUDLiquidazioneCORIBP",new Object[] { mode });
 }
 }

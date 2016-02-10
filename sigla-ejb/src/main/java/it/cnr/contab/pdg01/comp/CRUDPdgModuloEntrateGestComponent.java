@@ -174,6 +174,13 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 		sql.addClause("AND","cd_natura",sql.EQUALS,dett.getCd_natura());
 		sql.addClause("AND","ti_gestione",sql.EQUALS,Elemento_voceHome.GESTIONE_ENTRATE);
 
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if (parCnrBulk!=null && parCnrBulk.getFl_nuovo_pdg()) {
+			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
+			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
+		}
+
 		sql.addTableToHeader("NATURA");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
 		sql.addSQLClause("AND", "NATURA.FL_ENTRATA",sql.EQUALS,"Y");
@@ -229,7 +236,7 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.ISNULL, null);	
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.EQUALS, "N");	
 		sql.closeParenthesis();
-
+		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_ETR.FL_SOLO_RESIDUO", sql.EQUALS, "N");
 		if (dett.getLinea_attivita() != null && dett.getCd_linea_attivita() != null)
 			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_ETR.CD_NATURA",sql.EQUALS,dett.getLinea_attivita().getCd_natura());
 		if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null && !dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC))
@@ -244,7 +251,7 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 		BigDecimal totale = Utility.ZERO;
 		try {
 			java.sql.ResultSet rs = null;
-			PreparedStatement ps = null;
+			LoggableStatement ps = null;
 			try {
 				ps = sql.prepareStatement(getConnection(userContext));
 				try {

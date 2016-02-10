@@ -40,6 +40,18 @@
 		<columnMapping
 			columnName="PG_CONTRATTO"
 			propertyName="contratto.pg_contratto"/>			
+		<columnMapping
+			columnName="ESERCIZIO_EV_NEXT"
+			propertyName="elemento_voce_next.esercizio" />
+		<columnMapping
+			columnName="TI_GESTIONE_EV_NEXT"
+			propertyName="elemento_voce_next.ti_gestione"/>		
+		<columnMapping
+			columnName="TI_APPARTENENZA_EV_NEXT"
+			propertyName="elemento_voce_next.ti_appartenenza"/>
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_NEXT"
+			propertyName="elemento_voce_next.cd_elemento_voce"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="cds"
@@ -52,7 +64,9 @@
 		name="unita_organizzativa" />
 	<persistentProperty
 		name="contratto" />
-
+	<persistentProperty
+		name="elemento_voce_next"/>
+		
 	<columnMap 
 		name="V_ACCERTAMENTO_IM_REVERSALE"
 		tableName="V_ACCERTAMENTO_IM_REVERSALE"

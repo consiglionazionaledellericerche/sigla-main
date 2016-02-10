@@ -122,7 +122,7 @@
 		path="/StampaRipartizioneCostiAction" actionClass="it.cnr.contab.pdg00.action.StampaRipartizioneCostiAction">
 	</action>
 	
-	<businessProcess name="StampaRipartizioneCostiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	<businessProcess name="StampaRipartizioneCostiBP" className="it.cnr.contab.pdg00.bp.StampaRipartizioneCostiBP">
 		<forward name="default" path="/pdg00/stampa_ripartizione_costi.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stampa_ripartizione_costiVBulk" />
 		<init-param name="printbp" value="OfflineReportPrintBP"/>
@@ -325,5 +325,18 @@
 	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGVariazioniComponentSession" />
 	    <init-param name="reportName" value="/cnrpreventivo/pdg/stampa_var_stanziamento_res.jasper" />
 	</businessProcess> 
+	<action
+		path="/StampaSituazioneAnaliticaXGaeAction" actionClass="it.cnr.contab.pdg00.action.StampaSituazioneAnaliticaXGaeAction">
+	</action>
+	
+	<businessProcess name="StampaUsciteResiduiXEsercizioVoceBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/pdg00/stampa_situazione_analitica_x_GAE_uscite.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Stampa_situazione_analitica_x_GAEBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSituazioneAnaliticaXGaeAction" />
+	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/situazione_analitica_gae_res_uscite_x_esercizio_voce.jasper" />
+	</businessProcess>
+	
 	
 </action-mappings>

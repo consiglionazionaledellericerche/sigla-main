@@ -28,6 +28,5 @@
 	CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext);
 %>
-	<jsp:include page="/anagraf00/tab_terzi.jsp" />
 <%	bp.closeFormWindow(pageContext); %>
 </body>

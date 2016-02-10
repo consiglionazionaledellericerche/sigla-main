@@ -707,8 +707,8 @@
 		<columnMapping
 			columnName="TI_PRESTAZIONE"
 			propertyName="ti_prestazione"
-			sqlTypeName="CHAR"
-			columnSize="1"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
 			nullable="true" />
 		<columnMapping	
 			columnName="ESERCIZIO_BONUS"
@@ -727,6 +727,72 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="CD_TERZO_PIGNORATO"
+			propertyName="cd_terzo_pignorato"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />	
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="esercizio_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="pg_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="stato_contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_TROVATO"
+			propertyName="pg_trovato"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_TOT_REDDITO_COMPLESSIVO"
+			propertyName="im_tot_reddito_complessivo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_PROTOCOLLO"
+			propertyName="numero_protocollo"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />	
+		<columnMapping
+			columnName="DATA_PROTOCOLLO"
+			propertyName="data_protocollo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />						
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />						
+		<columnMapping
+			columnName="STATO_LIQUIDAZIONE"
+			propertyName="stato_liquidazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>	
+		<columnMapping
+			columnName="FL_DOCUMENTO_ELE"
+			propertyName="fl_documento_ele"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+					
 	</defaultColumnMap>
 	<persistentProperty
 		name="cognome" />
@@ -971,5 +1037,31 @@
 	<persistentProperty
 		name="pg_bonus" />		
 	<persistentProperty
-		name="fl_liquidazione_differita" />			
+		name="fl_liquidazione_differita" />	
+	<persistentProperty
+		name="cd_terzo_pignorato" />	
+	<persistentProperty
+		name="esercizio_contratto" />	
+	<persistentProperty
+		name="stato_contratto" />
+	<persistentProperty
+		name="pg_contratto" />	
+	<persistentProperty
+		name="im_tot_reddito_complessivo" />				
+	<persistentProperty
+		name="pg_trovato" />	
+	<persistentProperty
+		name="data_protocollo" />	
+	<persistentProperty
+		name="numero_protocollo" />	
+	<persistentProperty
+		name="dt_scadenza" />	
+	<persistentProperty
+		name="stato_liquidazione" />
+	<persistentProperty
+		name="causale" />								
+	<persistentProperty
+		name="pg_trovato" />
+	<persistentProperty
+		name="fl_documento_ele" />		
 </SQLPersistentInfo>

@@ -6,8 +6,10 @@ package it.cnr.contab.utenze00.bulk;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.CRUDBP;
 public class Utente_indirizzi_mailBulk extends Utente_indirizzi_mailBase {
 	private UtenteBulk utente;
 	public Utente_indirizzi_mailBulk() {
@@ -45,5 +47,20 @@ public class Utente_indirizzi_mailBulk extends Utente_indirizzi_mailBase {
 			}
 		}
 		super.validate(oggettobulk);
+	}
+	@Override
+	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) {
+
+		super.initializeForInsert(bp, context);
+		resetFlags();
+		return this;
+	}
+	private void resetFlags() {
+		setFl_com_app_var_stanz_comp(false);
+		setFl_com_app_var_stanz_res(false); 
+		setFl_err_appr_var_bil_cnr_comp(false);
+		setFl_err_appr_var_bil_cnr_res(false);
+		setFlEsitoNegFattElettr(false);
+		setFlEsitoPosFattElettr(false);
 	}
 }

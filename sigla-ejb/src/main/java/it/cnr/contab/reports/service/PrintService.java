@@ -1,17 +1,17 @@
 package it.cnr.contab.reports.service;
 
-import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.ejb.OfflineReportComponentSession;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
@@ -37,6 +37,7 @@ public class PrintService {
 	}
 	
 	public Report executeReport(UserContext userContext, Print_spoolerBulk printSpooler) throws IOException, ComponentException{
+		new HttpClient(new MultiThreadedHttpConnectionManager());
 		PostMethod method = null;
 		try{
 			method = new PostMethod(offlineReportComponent.getLastServerActive(userContext));

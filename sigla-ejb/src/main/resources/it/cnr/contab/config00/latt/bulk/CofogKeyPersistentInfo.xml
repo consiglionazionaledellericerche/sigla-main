@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.CofogKey">
+	<defaultColumnMap
+		tableName="COFOG">
+		<columnMapping
+			columnName="CD_COFOG"
+			propertyName="cd_cofog"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cofog"
+		partOfOid="true" />
+</SQLPersistentInfo>

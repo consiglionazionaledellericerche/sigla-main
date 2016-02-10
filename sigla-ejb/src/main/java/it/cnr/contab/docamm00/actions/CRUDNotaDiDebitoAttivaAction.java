@@ -51,7 +51,7 @@ protected void basicCalcolaImportoDisponibileNC(
 	Nota_di_debito_attiva_rigaBulk rigaND = (Nota_di_debito_attiva_rigaBulk)riga;
 	if (rigaND.getQuantita() == null) rigaND.setQuantita(new java.math.BigDecimal(1));
 	if (rigaND.getPrezzo_unitario() == null) rigaND.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (rigaND.getIm_iva() == null) rigaND.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (rigaND.getIm_iva() == null) rigaND.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 
 	rigaND.calcolaCampiDiRiga();
 	java.math.BigDecimal totaleDiRiga = rigaND.getIm_imponibile().add(rigaND.getIm_iva());
@@ -59,7 +59,7 @@ protected void basicCalcolaImportoDisponibileNC(
 	java.math.BigDecimal nuovoImportoDisponibile = rigaFP.getIm_diponibile_nc().add(totaleDiRiga.subtract(vecchioTotale));
 	if (nuovoImportoDisponibile.signum() < 0)
 		throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile è di " + rigaFP.getIm_diponibile_nc() + " EUR!");
-	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 }
 /**
  * Richiama sulla component il metodo per addebitare i dettagli selezionati e ritorna la nota di debito aggiornata
@@ -121,7 +121,7 @@ private Forward basicDoAddebitaDettagli(
 										new String[] { Nota_di_debito_attivaBulk.STATO_PARZIALE, Nota_di_debito_attivaBulk.STATO_PAGATO });
 
 		if (dettagliDaAddebitare != null && !dettagliDaAddebitare.isEmpty()) {
-			it.cnr.jada.util.RemoteIterator ri = ((FatturaAttivaSingolaComponentSession)bp.createComponentSession()).findAccertamentiFor(context.getUserContext(), notaDiDebito, calcolaTotaleSelezionati(dettagliDaAddebitare));
+			it.cnr.jada.util.RemoteIterator ri = ((FatturaAttivaSingolaComponentSession)bp.createComponentSession()).findAccertamentiFor(context.getUserContext(), notaDiDebito, calcolaTotaleSelezionati(dettagliDaAddebitare,notaDiDebito.quadraturaInDeroga()));
 			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 			if (ri != null && ri.hasMoreElements()) {
 				it.cnr.jada.util.action.SelezionatoreListaBP slbp = select(context, ri, it.cnr.jada.bulk.BulkInfo.getBulkInfo(Fattura_attiva_rigaIBulk.class), "default", "doSelezionaDettagli");
@@ -162,7 +162,7 @@ protected void basicDoCalcolaTotaliDiRiga(
 	java.math.BigDecimal nuovoImportoDisponibile = rigaFP.getIm_diponibile_nc().add(totaleDiRiga.subtract(vecchioTotale));
 	if (nuovoImportoDisponibile.signum() < 0)
 		throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile è di " + rigaFP.getIm_diponibile_nc() + " EUR!");
-	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	doSelectAccertamenti(context);
 }
 /**
@@ -464,7 +464,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
 		java.math.BigDecimal importoAttuale = notaDiDebito.getImportoTotalePerAccertamento();
 		java.math.BigDecimal importoOriginale = (java.math.BigDecimal)notaDiDebito.getFattura_attiva_ass_totaliMap().get(scadenza);
 		java.math.BigDecimal delta = importoAttuale.subtract(importoOriginale);
-		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(delta) == 0)
+		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(delta) == 0)
 			throw new it.cnr.jada.comp.ApplicationException("La modifica in automatico non è disponibile!");
 		try {
 			scadenza = (Accertamento_scadenzarioBulk)h.modificaScadenzaInAutomatico(

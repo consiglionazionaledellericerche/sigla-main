@@ -15,11 +15,11 @@
 	
 	
 	<action 
-		path="/StampaElencoProgettiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction" >	
+		path="/StampaElencoProgettiAction" actionClass="it.cnr.contab.doccont00.action.StampaElencoProgettiAction" >	
 	</action>
 	
 	<businessProcess
-		name="StampaElencoProgettiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		name="StampaElencoProgettiBP" className="it.cnr.contab.doccont00.bp.StampaElencoProgettiBP">
 		<forward name="default" path="/doccont00/stampa_elenco_progetti_la.jsp"/>
 			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_elenco_progetti_laBulk" />
 			<init-param name="printbp" value="OfflineReportPrintBP"/>

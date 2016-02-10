@@ -19,6 +19,18 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="TIPO_ASSOCIAZIONE"
+			propertyName="tipo_associazione"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPOLOGIA"
+			propertyName="tipologia"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
 			columnName="FL_CANCELLATO"
 			propertyName="fl_cancellato"
 			sqlTypeName="CHAR"
@@ -58,6 +70,10 @@
 	</defaultColumnMap>
 	<persistentProperty
 		name="ds_tipo_attivita" />
+	<persistentProperty
+		name="tipo_associazione" />
+	<persistentProperty
+		name="tipologia" />
 	<persistentProperty
 		name="fl_pubblica_contratto" />
 	<persistentProperty

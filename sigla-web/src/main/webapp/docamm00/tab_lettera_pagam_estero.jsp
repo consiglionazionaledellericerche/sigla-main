@@ -20,6 +20,7 @@
 	</table>
 </div>
 <div class="Group" style="width:100%">
+	<div class="GroupLabel"><% bp.writeFormInput(out, "displayStatoTrasmissione");%></div>
 	<table width="100%">
 		<tr>
 			<% bp.writeFormFieldDoc1210(out,"esercizio_lettera");%>
@@ -34,6 +35,51 @@
 		<tr>
 			<% bp.writeFormFieldDoc1210(out,"im_commissioni_lettera");%>
 		</tr>
+		<tr>
+			<td colspan="4">
+				<div class="GroupLabel">Stampa documento</div>
+				<div class="Group" style="width:90%">
+					<table>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "bonifico_mezzo");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "divisa");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "beneficiario");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "num_conto_ben");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "iban");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "indirizzo");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "indirizzo_swift");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "motivo_pag");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "ammontare_debito");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "conto_debito");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "commissioni_spese");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "commissioni_spese_estere");%>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>		
 		<tr>
 			<td colspan="4">
 				<div class="GroupLabel">Sospeso</div>

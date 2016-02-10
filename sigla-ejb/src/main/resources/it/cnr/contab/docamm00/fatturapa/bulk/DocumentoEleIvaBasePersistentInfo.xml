@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBase"
+	keyClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaKey"
+	homeClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaHome">
+	<defaultColumnMap
+		tableName="DOCUMENTO_ELE_IVA">
+		<columnMapping
+			columnName="ALIQUOTA_IVA"
+			propertyName="aliquotaIva"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="NATURA"
+			propertyName="natura"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cdVoceIva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="SPESE_ACCESSORIE"
+			propertyName="speseAccessorie"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ARROTONDAMENTO"
+			propertyName="arrotondamento"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE_IMPORTO"
+			propertyName="imponibileImporto"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPOSTA"
+			propertyName="imposta"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ESIGIBILITA_IVA"
+			propertyName="esigibilitaIva"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="RIFERIMENTO_NORMATIVO"
+			propertyName="riferimentoNormativo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="ANOMALIE"
+			propertyName="anomalie"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="aliquotaIva" />
+	<persistentProperty
+		name="natura" />
+	<persistentProperty
+		name="cdVoceIva" />
+	<persistentProperty
+		name="speseAccessorie" />
+	<persistentProperty
+		name="arrotondamento" />
+	<persistentProperty
+		name="imponibileImporto" />
+	<persistentProperty
+		name="imposta" />
+	<persistentProperty
+		name="esigibilitaIva" />
+	<persistentProperty
+		name="riferimentoNormativo" />
+	<persistentProperty
+		name="anomalie" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

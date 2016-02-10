@@ -1,9 +1,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+
 
 public class Numerazione_doc_ammBulk extends Numerazione_doc_ammBase {
 
@@ -11,6 +9,7 @@ public class Numerazione_doc_ammBulk extends Numerazione_doc_ammBase {
 	public final static String TIPO_AUTOFATTURA 	= "AUTOFATT";
 	public final static String TIPO_LETTERA_ESTERO 	= "LT_ESTERO";
 	public final static String TIPO_FATTURA_ATTIVA 	= "FATTURA_A";
+	public final static String TIPO_UNIVOCO_FATTURA_ATTIVA 	= "FATT_A_UNI";
 	public final static String TIPO_DOC_GENERICO_S 	= "GENERICO_S";
 	public final static String TIPO_DOC_GENERICO_E 	= "GENERICO_E";
 	public final static String TIPO_TRASF_E 		= "TRASF_E";
@@ -73,6 +72,15 @@ public Numerazione_doc_ammBulk(Documento_genericoBulk documento) {
 	setEsercizio(documento.getEsercizio());
 	setCd_unita_organizzativa(documento.getCd_unita_organizzativa());
 }
+
+public Numerazione_doc_ammBulk(Fattura_attivaBulk fatturaAttiva, Unita_organizzativaBulk uoEntePerProgressivoUnivoco) {
+	super();
+	setCd_tipo_documento_amm(Numerazione_doc_ammBulk.TIPO_UNIVOCO_FATTURA_ATTIVA);
+	setEsercizio(fatturaAttiva.getEsercizio());
+	setCd_cds(uoEntePerProgressivoUnivoco.getCd_cds());
+	setCd_unita_organizzativa(uoEntePerProgressivoUnivoco.getCd_unita_organizzativa());
+}
+
 public Numerazione_doc_ammBulk(Fattura_attivaBulk fatturaAttiva) {
 	super();
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://contab.cnr.it/schema/SIGLA"
-	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -258,7 +258,35 @@
 		property="pgStorico"
 		inputType="TEXT"
 		maxLength="10"
-		enabledOnEdit="false"/>			
+		enabledOnEdit="false"/>
+	<fieldProperty
+		name="ds_tipo"
+		property="ds_tipo"
+		inputType="TEXT"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Tipo Fattura"/>		
+	<fieldProperty
+		name="uo_origine"
+		property="uo_origine"
+		inputType="TEXT"
+		maxLength="30"
+		enabledOnEdit="false"
+		label ="Uo origine"/>		
+	<fieldProperty
+		name="nrProtocolloAcq"
+		property="nrProtocolloAcq"
+		inputType="TEXT"
+		maxLength="6"
+		enabledOnEdit="true"
+		label="Protocollo Acq/Serv. ricevuti "/>		
+	<fieldProperty
+		name="nrProtocolloVen"
+		property="nrProtocolloVen"
+		inputType="TEXT"
+		maxLength="6"
+		enabledOnEdit="true"
+		label="Protocollo Cessioni/Serv. resi "/>		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -326,7 +354,16 @@
 	<formFieldProperty
 		name="nrProtocollo" />	
 	<formFieldProperty
-		name="pgStorico" />			
+		name="pgStorico" />
+	<formFieldProperty
+		name="ds_tipo" />	
+	<formFieldProperty
+		name="uo_origine" />
+	<formFieldProperty
+		name="nrProtocolloAcq" />
+	<formFieldProperty
+		name="nrProtocolloVen" />			
+						
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -381,6 +418,11 @@
 		name="cdProvinciaOrigine" />
 	<findFieldProperty
 		name="nazFiscale" />	
+	<findFieldProperty
+		name="ds_tipo" />
+	<findFieldProperty
+		name="uo_origine" />	
+		
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -434,5 +476,9 @@
 	<columnFieldProperty
 		name="cdProvinciaOrigine" />
 	<columnFieldProperty
-		name="nazFiscale" />	
+		name="nazFiscale" />
+	<columnFieldProperty
+		name="ds_tipo" />
+	<columnFieldProperty
+		name="uo_origine" />			
 </bulkInfo>

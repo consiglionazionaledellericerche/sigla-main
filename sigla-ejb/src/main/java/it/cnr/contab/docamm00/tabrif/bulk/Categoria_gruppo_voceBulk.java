@@ -7,7 +7,15 @@ import it.cnr.jada.persistency.sql.*;
 public class Categoria_gruppo_voceBulk extends Categoria_gruppo_voceBase {
 
 	Categoria_gruppo_inventBulk categoria_gruppo;
-	Elemento_voceBulk voce_f;
+	Elemento_voceBulk elemento_voce;
+
+public Elemento_voceBulk getElemento_voce() {
+		return elemento_voce;
+	}
+
+	public void setElemento_voce(Elemento_voceBulk elemento_voce) {
+		this.elemento_voce = elemento_voce;
+	}
 
 public Categoria_gruppo_voceBulk() {
 	super();
@@ -15,17 +23,6 @@ public Categoria_gruppo_voceBulk() {
 
 public Categoria_gruppo_voceBulk(java.lang.String cd_categoria_gruppo,java.lang.String cd_elemento_voce,java.lang.Integer esercizio,java.lang.String ti_appartenenza,java.lang.String ti_gestione) {
 	super(cd_categoria_gruppo,cd_elemento_voce,esercizio,ti_appartenenza,ti_gestione);
-}
-
-/**
- * Insert the method's description here.
- * Creation date: (07/05/2002 18.20.20)
- * @param newVoce_f it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk
- */
-public void basicSetAssociazioneConVoce_F(it.cnr.jada.action.ActionContext context) {
-	this.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
-	this.setTi_appartenenza("D");
-	this.setTi_gestione("S");
 }
 
 /**
@@ -45,48 +42,34 @@ public java.lang.String getCd_categoria_gruppo() {
 }
 
 public java.lang.String getCd_elemento_voce() {
-	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getVoce_f();
-	if (voce_f == null)
-		return null;
-	return voce_f.getCd_elemento_voce();
-}
-
-public java.lang.String getCd_voce() {
-	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getVoce_f();
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getElemento_voce();
 	if (voce_f == null)
 		return null;
 	return voce_f.getCd_elemento_voce();
 }
 
 public java.lang.Integer getEsercizio() {
-	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getVoce_f();
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getElemento_voce();
 	if (voce_f == null)
 		return null;
 	return voce_f.getEsercizio();
 }
 
 public java.lang.String getTi_appartenenza() {
-	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getVoce_f();
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getElemento_voce();
 	if (voce_f == null)
 		return null;
 	return voce_f.getTi_appartenenza();
 }
 
 public java.lang.String getTi_gestione() {
-	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getVoce_f();
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce_f = this.getElemento_voce();
 	if (voce_f == null)
 		return null;
 	return voce_f.getTi_gestione();
 }
 
-/**
- * Insert the method's description here.
- * Creation date: (07/05/2002 18.20.20)
- * @return it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk
- */
-public it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk getVoce_f() {
-	return voce_f;
-}
+
 
 /**
  * Insert the method's description here.
@@ -94,7 +77,9 @@ public it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk getVoce_f() {
  * @param newVoce_f it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk
  */
 public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
-    super.initializeForEdit(bp, context);
+    super.initialize(bp, context);
+    this.setCategoria_gruppo(this.getCategoria_gruppo());
+    this.setElemento_voce(new Elemento_voceBulk());
     this.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
     this.setTi_appartenenza("D");
     this.setTi_gestione("S");
@@ -108,9 +93,11 @@ public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.act
  */
 public OggettoBulk initializeForEdit(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
     super.initializeForEdit(bp, context);
-    this.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
-    this.setTi_appartenenza("D");
-    this.setTi_gestione("S");
+//    this.setCategoria_gruppo(this.getCategoria_gruppo());
+//    this.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
+//    this.setTi_appartenenza("D");
+//    this.setTi_gestione("S");
+//    
     return this;
 }
 
@@ -121,6 +108,8 @@ public OggettoBulk initializeForEdit(it.cnr.jada.util.action.CRUDBP bp, it.cnr.j
  */
 public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
     super.initializeForInsert(bp, context);
+    this.setCategoria_gruppo(this.getCategoria_gruppo()); 
+    this.setElemento_voce(new Elemento_voceBulk());
     this.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
     this.setTi_appartenenza("D");
     this.setTi_gestione("S");
@@ -141,34 +130,20 @@ public void setCd_categoria_gruppo(java.lang.String cd_categoria_gruppo) {
 }
 
 public void setCd_elemento_voce(java.lang.String cd_elemento_voce) {
-	this.getVoce_f().setCd_elemento_voce(cd_elemento_voce);
-}
-
-public void setCd_voce(java.lang.String cd_voce) {
-	if (this.getVoce_f()!=null)
-		this.getVoce_f().setCd_elemento_voce(cd_voce);
-	else
-		super.setCd_elemento_voce(cd_voce);	
+	this.getElemento_voce().setCd_elemento_voce(cd_elemento_voce);
 }
 
 public void setEsercizio(java.lang.Integer esercizio) {
-	this.getVoce_f().setEsercizio(esercizio);
+	this.getElemento_voce().setEsercizio(esercizio);
 }
 
 public void setTi_appartenenza(java.lang.String ti_appartenenza) {
-	this.getVoce_f().setTi_appartenenza(ti_appartenenza);
+	this.getElemento_voce().setTi_appartenenza(ti_appartenenza);
 }
 
 public void setTi_gestione(java.lang.String ti_gestione) {
-	this.getVoce_f().setTi_gestione(ti_gestione);
+	this.getElemento_voce().setTi_gestione(ti_gestione);
 }
 
-/**
- * Insert the method's description here.
- * Creation date: (07/05/2002 18.20.20)
- * @param newVoce_f it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk
- */
-public void setVoce_f(it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk newVoce_f) {
-	voce_f = newVoce_f;
-}
+
 }

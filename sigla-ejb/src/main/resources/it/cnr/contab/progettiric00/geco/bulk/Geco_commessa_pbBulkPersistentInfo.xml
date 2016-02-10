@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.geco.bulk.Geco_commessa_pbBulk"
+	homeClassName="it.cnr.contab.progettiric00.geco.bulk.Geco_commessa_pbHome">
+	<defaultColumnMap
+		tableName="commessa_pb">
+	</defaultColumnMap>
+</SQLPersistentInfo>

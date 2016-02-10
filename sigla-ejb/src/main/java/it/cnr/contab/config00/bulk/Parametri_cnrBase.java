@@ -1,6 +1,7 @@
 package it.cnr.contab.config00.bulk;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import it.cnr.jada.persistency.Keyed;
 
@@ -19,6 +20,7 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private String cd_tipo_rapporto_prof;
 	private Integer livello_pdg_decis_spe;
 	private Integer livello_pdg_decis_etr;
+	private Integer livello_pdg_cofog;
 	private Integer livello_contratt_pdg_spe;
 	private Boolean fl_regolamento_2006;
 	private Boolean fl_diaria_miss_italia;
@@ -39,9 +41,14 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private String oggettoEmail;
 	private String corpoEmail;
 	private Boolean fl_cup;
+	private Boolean fl_siope_cup;
+	private Boolean fl_credito_irpef;
 	private String clausolaOrdine;
+	private java.sql.Timestamp data_stipula_contratti;
+	private Boolean fl_nuovo_pdg;
+	private java.sql.Timestamp data_attivazione_new_voce;
 	
-	
+	private Boolean fl_tesoreria_unica;
 	public Boolean getFl_incarico() {
 		return fl_incarico;
 	}
@@ -272,4 +279,52 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	public void setClausolaOrdine(String clausolaOrdine) {
 		this.clausolaOrdine = clausolaOrdine;
 	}
+
+	public java.sql.Timestamp getData_stipula_contratti() {
+		return data_stipula_contratti;
+	}
+
+	public void setData_stipula_contratti(java.sql.Timestamp data_stipula_contratti) {
+		this.data_stipula_contratti = data_stipula_contratti;
+	}
+	public Integer getLivello_pdg_cofog() {
+		return livello_pdg_cofog;
+	}
+	public void setLivello_pdg_cofog(Integer livello_pdg_cofog) {
+		this.livello_pdg_cofog = livello_pdg_cofog;
+	}
+	public Boolean getFl_credito_irpef() {
+		return fl_credito_irpef;
+	}
+	public void setFl_credito_irpef(Boolean fl_credito_irpef) {
+		this.fl_credito_irpef = fl_credito_irpef;
+	}
+	
+	public Boolean getFl_siope_cup() {
+		return fl_siope_cup;
+	}
+	public void setFl_siope_cup(Boolean fl_siope_cup) {
+		this.fl_siope_cup = fl_siope_cup;
+	}
+	
+	public Boolean getFl_nuovo_pdg() {
+		return fl_nuovo_pdg;
+	}
+	
+	public void setFl_nuovo_pdg(Boolean fl_nuovo_pdg) {
+		this.fl_nuovo_pdg = fl_nuovo_pdg;
+	}
+	public java.sql.Timestamp getData_attivazione_new_voce() {
+		return data_attivazione_new_voce;
+	}
+	
+	public void setData_attivazione_new_voce(java.sql.Timestamp data_attivazione_new_voce) {
+		this.data_attivazione_new_voce = data_attivazione_new_voce;
+	}	public Boolean getFl_tesoreria_unica() {
+		return fl_tesoreria_unica;
+
+	}
+	public void setFl_tesoreria_unica(Boolean fl_tesoreria_unica) {
+		this.fl_tesoreria_unica = fl_tesoreria_unica;
+	}	
 }

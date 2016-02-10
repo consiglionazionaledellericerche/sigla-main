@@ -25,65 +25,6 @@ public BeneServizioComponent() {
 	super();
 }
 /**
- * Esegue una operazione di modifica di un OggettoBulk.
- *
- * Pre-post-conditions:
- *
- * Nome: Non passa validazione applicativa
- * Pre: l'OggettoBulk non passa i criteri di validità applicativi per l'operazione
- *		di modifica
- * Post: Viene generata CRUDValidationException che descrive l'errore di validazione.
- *
- * Nome: Non passa validazione per violazione di vincoli della base di dati
- * Pre: l'OggettoBulk contiene qualche attributo nullo in corrispondenza di campi NOT_NULLABLE o qualche
- *			attributo stringa troppo lungo per i corrispondenti campi fisici.
- * Post: Viene generata una it.cnr.jada.comp.CRUDNotNullConstraintException o una 
- *	 		CRUDTooLargeConstraintException con la descrizione dell'errore
- *
- * Nome: Oggetto non trovato
- * Pre: l'OggettoBulk specificato non esiste.
- * Post: Viene generata una CRUDException con la descrizione dell'errore
- *
- * Nome: Oggetto scaduto
- * Pre: l'OggettoBulk specificato è stato modificato da altri utenti dopo la lettura
- * Post: Viene generata una CRUDException con la descrizione dell'errore
- *
- * Nome: Oggetto occupato
- * Pre: l'OggettoBulk specificato è bloccato da qualche altro utente.
- * Post: Viene generata una CRUDException con la descrizione dell'errore
- *
- * Nome: Tutti i controlli superati
- * Pre: Tutti i controlli precedenti superati
- * Post: l'OggettoBulk viene modificato fisicamente nella base dati e viene chiusa la transazione
- * 
- * @param	uc	lo UserContext che ha generato la richiesta
- * @param	bulk	l'OggettoBulk che deve essere modificato
- * @return	l'OggettoBulk risultante dopo l'operazione di modifica.
- */
-public Bene_servizioBulk completaElementoVoceOf(UserContext userContext, Bene_servizioBulk beneServizio) throws it.cnr.jada.comp.ComponentException {
-
-	//ctrl
-    if (beneServizio == null)
-        return null;
-
-    Categoria_gruppo_inventBulk categoriaGruppo= beneServizio.getCategoria_gruppo();
-    if (categoriaGruppo != null) {
-        /*it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk ev = new it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk(
-        								categoriaGruppo.getCd_voce(),
-        								it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext),
-        								categoriaGruppo.getTi_appartenenza(),
-        								categoriaGruppo.getTi_gestione());*/
-        it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk ev= new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
-
-        try {
-            categoriaGruppo.setVoce_f((it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk) getHome(userContext, ev).findByPrimaryKey(ev));            
-        } catch (it.cnr.jada.persistency.PersistencyException e) {
-            throw handleException(beneServizio, e);
-        }
-    }
-    return beneServizio;
-}
-/**
  * Prepara un OggettoBulk per la presentazione all'utente per una possibile
  * operazione di creazione.
  *
@@ -105,7 +46,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 	Categoria_gruppo_inventBulk categoriaGruppo = beneServizio.getCategoria_gruppo();
 	if (categoriaGruppo == null)
 		categoriaGruppo = new Categoria_gruppo_inventBulk();
-	categoriaGruppo.setVoce_f(new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk());
+	//categoriaGruppo.setVoce_f(new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk());
 	return beneServizio;
 }
 public it.cnr.jada.persistency.sql.SQLBuilder selectCategoria_gruppoByClause(UserContext aUC,Bene_servizioBulk bene, Categoria_gruppo_inventBulk cgi, it.cnr.jada.persistency.sql.CompoundFindClause clauses) 
@@ -129,5 +70,10 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_ivaByClause(UserContext
 
 	
 	return sql;
+}
+public Bene_servizioBulk completaElementoVoceOf(UserContext param0,
+		Bene_servizioBulk param1) throws ComponentException {
+	// TODO Auto-generated method stub
+	return param1;
 }
 }

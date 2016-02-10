@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Progetti scientifici"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Progetti scientifici"
           longDescription="Progetti scientifici">
           
 	<fieldProperty
@@ -205,6 +205,43 @@
 			name="ds_dipartimento"/>			
 	</columnSet>          
 
+	<columnSet
+		name="progetto_liv1">
+		<columnFieldProperty
+			name="cd_progetto"
+			label="Area Progettuale"/>
+		<columnFieldProperty
+			name="ds_progetto" />			
+		<columnFieldProperty
+			name="cd_dipartimento"
+			label="Programma"/>
+		<columnFieldProperty
+			name="ds_dipartimento"
+			label="Descrizione Programma"/>			
+	</columnSet>
+	
+	<columnSet
+		name="progetto_liv2">
+		<columnFieldProperty
+			name="cd_commessa"
+			label="Progetto" />
+		<columnFieldProperty
+			name="cd_progetto_commessa"
+			label="Area Progettuale"/>
+		<columnFieldProperty
+			name="cd_dipartimento_commessa"
+			label="Programma"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa"
+			label="UO Responsabile" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="dt_inizio" />	
+	</columnSet>
+	
 	<columnFieldProperty
 		name="cd_modulo"/>
 	<columnFieldProperty

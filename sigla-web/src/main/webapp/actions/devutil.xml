@@ -1,16 +1,7 @@
 <action-mappings>
   <action 
-      path="/SQLTraceAction" actionClass="it.cnr.contab.devutil00.action.SQLTraceAction">
-  </action>
-  <action 
       path="/RequestTraceAction" actionClass="it.cnr.contab.devutil00.action.RequestTraceAction">
   </action>
-
-  <businessProcess
-      name="SQLTraceBP" className="it.cnr.contab.devutil00.bp.SQLTraceBP">
-    <forward name="default" path="/util/sqltrace.jsp" />
-    <init-param name="defaultAction" value="SQLTraceAction" />
-  </businessProcess>
 
   <businessProcess
       name="RequestTraceBP" className="it.cnr.contab.devutil00.bp.RequestTraceBP">

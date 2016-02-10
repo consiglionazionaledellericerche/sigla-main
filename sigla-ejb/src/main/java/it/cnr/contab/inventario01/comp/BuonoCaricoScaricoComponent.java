@@ -21,6 +21,7 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
@@ -509,8 +510,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		
 		String cds_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);
 		String uo_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
-	
-			
+		
 		SQLBuilder sql = getHome(userContext, Ubicazione_beneBulk.class).createSQLBuilder();
 		sql.addClause( clauses );
 		
@@ -519,14 +519,26 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		sql.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS, cds_scrivania);
 		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, uo_scrivania);
 	
-		// Aggiunge alle Ubicazioni della UO di scrivania, quelle fittizie.
-		sql.addSQLClause("OR","CD_CDS",SQLBuilder.EQUALS, Ubicazione_beneBulk.CD_CDS_FITTIZIO);
-		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, Ubicazione_beneBulk.CD_UO_FITTIZIO);
+		
+//		public static final String CD_CDS_FITTIZIO = "999";
+//		public static final String CD_UO_FITTIZIO = "999.000";
+//		// Aggiunge alle Ubicazioni della UO di scrivania, quelle fittizie.
+//		sql.addSQLClause("OR","CD_CDS",sql.EQUALS, Ubicazione_beneBulk.CD_CDS_FITTIZIO);
+//		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, Ubicazione_beneBulk.CD_UO_FITTIZIO);
+//		sql.closeParenthesis();
+
+		try {
+			Unita_organizzativa_enteBulk uoEnte=(Unita_organizzativa_enteBulk)(Utility.createUnita_organizzativaComponentSession().getUoEnte(userContext));
+			sql.addSQLClause("OR","CD_CDS",sql.EQUALS, uoEnte.getCd_unita_padre());
+			sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, uoEnte.getCd_unita_organizzativa());
+		} catch (Exception e) {
+			throw handleException(e);
+		}
 		sql.closeParenthesis();
 	
 		sql.addOrderBy("LIVELLO");
 		sql.addOrderBy("CD_UBICAZIONE");	
-		
+
 		return sql;		
 	}	
 	/**
@@ -3603,7 +3615,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
 							sql.addSQLClause("AND","PROGRESSIVO_RIGA",sql.EQUALS,documento.getProgressivo_riga());
 							sql.addSQLClause("AND","CD_TIPO_DOCUMENTO_AMM",sql.EQUALS,documento.getCd_tipo_documento_amm());
 						}
-									
+						//??			
 						List beni_canc = home.fetchAll(sql); 
 						for(Iterator iteratore= beni_canc.iterator();iteratore.hasNext();){
 							Inventario_beni_apgBulk new_bene_apg =(Inventario_beni_apgBulk)iteratore.next();
@@ -5262,7 +5274,7 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 							sql_ass.addSQLJoin("ASS_INV_BENE_FATTURA.PROGRESSIVO",sql_ass.EQUALS,"INVENTARIO_BENI_APG.PROGRESSIVO");
 							sql_ass.addSQLJoin("ASS_INV_BENE_FATTURA.TI_DOCUMENTO",sql_ass.EQUALS,"INVENTARIO_BENI_APG.TI_DOCUMENTO");
 							sql.addSQLNotExistsClause("AND",sql_ass);
-						}
+						} 
 					if (sql.executeCountQuery(getConnection(userContext))==0)
 						throw new ApplicationException("Attenzione: è necessario indicare per ogni riga di Fattura almeno un bene.\n La riga " + riga_fattura.getDs_riga_fattura() +  " non ha beni associati.");
 					
@@ -5795,7 +5807,7 @@ private void callTrasferisciBeni(
 		cs.setInt(4, esercizio); 								// ESERCIZIO
 		cs.setString(5, buonoT.getTipoMovimentoCarico().getCd_tipo_carico_scarico()); 		// TIPO_MOVIMENTO_CARICO
 		cs.setString(6, buonoT.getTipoMovimentoScarico().getCd_tipo_carico_scarico()); 		// TIPO_MOVIMENTO_SCARICO
-		cs.setString(7, buonoT.getDs_buono_carico_scarico()); 	// DS_TRASFERIMENTO
+		cs.setString(7, buonoT.getDs_buono_carico_scarico().replace("'"," ")); 	// DS_TRASFERIMENTO
 		cs.setTimestamp(8, buonoT.getData_registrazione()); 	// DT_REGISRAZIONE
 		cs.setString(9, fl_trasf_tutti); 						// FL_TRASFERISCI_TUTTI
 		cs.setString(10, it.cnr.contab.utenze00.bp.CNRUserContext.getUser(userContext));	// USER
@@ -6041,7 +6053,12 @@ private Buono_carico_scaricoBulk esplodiDettagli (UserContext aUC, Buono_carico_
 					newDettaglio.getBene().getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					!newDettaglio.getBene().getCategoria_Bene().getFl_gestione_targa() && newDettaglio.getBene().getTarga()!=null)
 					newDettaglio.getBene().setTarga(null);
-				
+
+				if (newDettaglio.getBene().getCategoria_Bene()!=null &&  
+						newDettaglio.getBene().getCategoria_Bene().getCd_categoria_gruppo()!=null && 
+						!newDettaglio.getBene().getCategoria_Bene().getFl_gestione_seriale() && newDettaglio.getBene().getSeriale()!=null)
+						newDettaglio.getBene().setSeriale(null);
+					 
 				if (!newDettaglio.isAccessorioContestuale()){
 					newDettaglioColl.add(newDettaglio);
 				}
@@ -6236,7 +6253,7 @@ private void validaValoreBeneDaFattura(Buono_carico_scaricoBulk buonoC) {
 			imponibile_totale =riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 		else
 			imponibile_totale =riga_fattura.getIm_imponibile();
-		valore_unitario = imponibile_totale.divide(riga_fattura.getQuantita(), 2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		valore_unitario = imponibile_totale.divide(riga_fattura.getQuantita(), 2, java.math.BigDecimal.ROUND_HALF_UP);
 		valore_residuo = imponibile_totale.subtract(valore_unitario.multiply(riga_fattura.getQuantita()));
 		dettagli_associati =(BulkList) righe_fatturaHash.get(riga_fattura);
 		for (java.util.Iterator i = dettagli_associati.iterator(); i.hasNext();){
@@ -6388,6 +6405,9 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 			if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()==null)
 					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare la targa per la Categoria del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
+			if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+					bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()==null)
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare il seriale per la Categoria del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
 
 			// CONTROLLA CHE SIA STATA SPECIFICATA UNA DESCRIZIONE PER IL BENE
 			if (bene.getDs_bene()==null)
@@ -7334,7 +7354,59 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 			throw  handleException(e);
 		} 
 	}
-
+	public Ass_inv_bene_fatturaBulk sdoppiaAssociazioneFor (UserContext userContext,Fattura_passiva_rigaBulk riga_fattura,Fattura_passiva_rigaBulk riga_fattura_new) 
+	throws ComponentException
+	{
+		Ass_inv_bene_fatturaBulk ass=new Ass_inv_bene_fatturaBulk();
+		try{
+			if(riga_fattura instanceof Fattura_passiva_rigaIBulk){
+				Ass_inv_bene_fatturaHome home = (Ass_inv_bene_fatturaHome)getHome(userContext,Ass_inv_bene_fatturaBulk.class);
+				SQLBuilder sql= home.createSQLBuilder();
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.ESERCIZIO_FATT_PASS",sql.EQUALS,riga_fattura.getEsercizio());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_CDS_FATT_PASS",sql.EQUALS,riga_fattura.getCd_cds());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_UO_FATT_PASS",sql.EQUALS,riga_fattura.getCd_unita_organizzativa());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PG_FATTURA_PASSIVA",sql.EQUALS,riga_fattura.getPg_fattura_passiva());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PROGRESSIVO_RIGA_FATT_PASS",sql.EQUALS,riga_fattura.getProgressivo_riga());
+				if (home.fetchAll(sql).size() ==1){ 
+					ass=(Ass_inv_bene_fatturaBulk)home.fetchAll(sql).get(0); 
+					Ass_inv_bene_fatturaBulk new_ass=new Ass_inv_bene_fatturaBulk();
+					new_ass.setPg_riga(findMaxAssociazione(userContext,new_ass));
+					new_ass.setRiga_fatt_pass(ass.getRiga_fatt_pass());
+					new_ass.setTest_buono(ass.getTest_buono());
+					new_ass.setNr_inventario(ass.getNr_inventario());
+					new_ass.setProgressivo(ass.getProgressivo());
+					new_ass.setProgressivo_riga_fatt_pass(riga_fattura_new.getProgressivo_riga());
+					new_ass.setUser(userContext.getUser());
+					new_ass.setToBeCreated();
+					return new_ass;
+				}
+			}else if(riga_fattura instanceof Nota_di_credito_rigaBulk){
+				Ass_inv_bene_fatturaHome home = (Ass_inv_bene_fatturaHome)getHome(userContext,Ass_inv_bene_fatturaBulk.class);
+				SQLBuilder sql= home.createSQLBuilder();
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.ESERCIZIO_FATT_PASS",sql.EQUALS,riga_fattura.getEsercizio());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_CDS_FATT_PASS",sql.EQUALS,riga_fattura.getCd_cds());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_UO_FATT_PASS",sql.EQUALS,riga_fattura.getCd_unita_organizzativa());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PG_FATTURA_PASSIVA",sql.EQUALS,riga_fattura.getPg_fattura_passiva());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PROGRESSIVO_RIGA_FATT_PASS",sql.EQUALS,riga_fattura.getProgressivo_riga());
+				if (home.fetchAll(sql).size() ==1){ 
+					ass=(Ass_inv_bene_fatturaBulk)home.fetchAll(sql).get(0);
+					Ass_inv_bene_fatturaBulk new_ass=new Ass_inv_bene_fatturaBulk();
+					new_ass.setPg_riga(findMaxAssociazione(userContext,new_ass));
+					new_ass.setRiga_fatt_pass(ass.getRiga_fatt_pass());
+					new_ass.setTest_buono(ass.getTest_buono());
+					new_ass.setNr_inventario(ass.getNr_inventario());
+					new_ass.setProgressivo(ass.getProgressivo());
+					new_ass.setProgressivo_riga_fatt_pass(riga_fattura_new.getProgressivo_riga());
+					new_ass.setUser(userContext.getUser());
+					new_ass.setToBeCreated();
+					return new_ass;
+				}
+			}
+			}catch(it.cnr.jada.persistency.PersistencyException ex){
+				throw handleException( ex);
+			}
+		return null;			
+		}	
 }
 
 

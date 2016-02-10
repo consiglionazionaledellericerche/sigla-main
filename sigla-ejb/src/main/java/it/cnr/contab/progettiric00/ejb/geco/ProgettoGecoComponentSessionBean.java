@@ -1,6 +1,6 @@
 package it.cnr.contab.progettiric00.ejb.geco;
 
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoIBulk;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentiIBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaIBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloIBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoIBulk;
@@ -85,10 +85,10 @@ public class ProgettoGecoComponentSessionBean extends it.cnr.jada.ejb.CRUDCompon
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public List<Geco_dipartimentoIBulk>  cercaDipartimentiGeco(it.cnr.jada.UserContext param0, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public List<Geco_dipartimentiIBulk>  cercaDipartimentiGeco(it.cnr.jada.UserContext param0, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		try {
 			componentObj.initialize();
-			List<Geco_dipartimentoIBulk> result = ((it.cnr.contab.progettiric00.comp.geco.ProgettoGecoComponent)componentObj).cercaDipartimentiGeco(param0, oggettoBulk, bulkClass);
+			List<Geco_dipartimentiIBulk> result = ((it.cnr.contab.progettiric00.comp.geco.ProgettoGecoComponent)componentObj).cercaDipartimentiGeco(param0, oggettoBulk, bulkClass);
 			componentObj.release(param0);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

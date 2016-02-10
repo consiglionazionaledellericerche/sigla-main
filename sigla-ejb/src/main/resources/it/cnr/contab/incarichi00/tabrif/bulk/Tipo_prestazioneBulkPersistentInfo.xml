@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_prestazioneBulk"
+	homeClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_prestazioneHome">
+	<defaultColumnMap
+		tableName="TIPO_PRESTAZIONE">
+	</defaultColumnMap>
+</SQLPersistentInfo>

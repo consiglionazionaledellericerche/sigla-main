@@ -17,7 +17,7 @@ public class BancaBulk extends BancaBase {
 	private TerzoBulk terzo;
 	private it.cnr.contab.anagraf00.tabrif.bulk.AbicabBulk abi_cab;
 	private java.util.Collection nazioniIban;
-
+	private TerzoBulk  terzo_delegato;
 	private String chiave;
 
 	public static String ORIGINE_ON_LINE = "O";
@@ -69,9 +69,9 @@ public  BancaBulk(it.cnr.jada.util.action.CRUDController crud){
  //  	if (mod_pagamento.isPerCessione())
 
 	if (mod_pagamento.isPerCessione()){		
-		setCd_terzo_delegato(mod_pagamento.getTerzo_delegato().getCd_terzo());		
+		setCd_terzo_delegato(getTerzo_delegato().getCd_terzo());		
 		perCessione = "Y";
-		cdTerzoDelegato = Integer.toString(getCd_terzo_delegato().intValue());
+		//cdTerzoDelegato = Integer.toString(getCd_terzo_delegato().intValue());
 	} 
 
 	setChiave(rifModalita + "-" + perCessione + "-" + cdTerzoDelegato);
@@ -125,7 +125,7 @@ public java.lang.String getChiave() {
 		
 		if (getCd_terzo_delegato() != null){
 			perCessione = "Y";
-			cdTerzoDelegato = Integer.toString(getCd_terzo_delegato().intValue());
+			//cdTerzoDelegato = Integer.toString(getCd_terzo_delegato().intValue());
 		}
 
 		this.setChiave(getTi_pagamento() + "-" + perCessione + "-" + cdTerzoDelegato);	
@@ -242,7 +242,7 @@ public boolean isROAbiCab() {
  */
 public boolean isROBanca() {
 	
-	if (isPerCessione() || isOrigineStipendi())
+	if (isPerCessione() || isOrigineStipendi()|| getPg_banca()!=null)
 		return true;
 	if (getFl_cancellato()==null)
 		return false;
@@ -345,6 +345,17 @@ public void validate(OggettoBulk parent) throws ValidationException {
 		else
 			setCodice_iban(null);
 	}
+	if (!isROBanca() &&((Rif_modalita_pagamentoBulk.IBAN.equals(getTi_pagamento())||Rif_modalita_pagamentoBulk.BANCARIO.equals(getTi_pagamento())))){
+		if(this.getNazione_iban()!=null && this.getNazione_iban().getFl_iban()){
+			if ((this.getNazione_iban()==null)||(this.getNazione_iban()!=null && this.getNazione_iban().getCd_iso().compareTo(new String("IT"))!=0 ))
+				if(this.getCodice_swift()==null) 
+					throw new ValidationException("Il codice swift è obbligatorio.");
+		  
+			if (this.getCodice_swift()!=null && (this.getCodice_swift().length()<8 || this.getCodice_swift().length()>11)) 
+				throw new ValidationException("Formato del codice bic non valido.");
+		}
+	}
+			
 }
 public NazioneBulk getNazione_iban() {
 	return nazione_iban;
@@ -553,5 +564,23 @@ public void allineaContoDaIbanIT() throws ValidationException {
 		else if (getCodice_iban_parte5()!=null && getNumero_conto()!=null && !getNumero_conto().equals(getCodice_iban_parte5().substring(getCodice_iban_parte5().length()>=getNumero_conto().length()?getCodice_iban_parte5().length()-getNumero_conto().length():0)))
 			throw new ValidationException("Attenzione! La 6^ parte del codice Iban è diversa dal Numero Conto indicato.");
 	}
+}
+public TerzoBulk getTerzo_delegato() {
+	return terzo_delegato;
+}
+public void setTerzo_delegato(TerzoBulk terzo_delegato) {
+	this.terzo_delegato = terzo_delegato;
+}
+public boolean isROterzo_delegato() {
+	return terzo_delegato == null || terzo_delegato.getCrudStatus() == OggettoBulk.NORMAL;
+}
+public java.lang.Integer getCd_terzo_delegato() {
+	it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo_delegato = this.getTerzo_delegato();
+	if (terzo_delegato == null)
+		return null;
+	return terzo_delegato.getCd_terzo();
+}
+public void setCd_terzo_delegato(java.lang.Integer cd_terzo_delegato) {
+	this.getTerzo_delegato().setCd_terzo(cd_terzo_delegato);
 }
 }

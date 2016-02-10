@@ -7,6 +7,18 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
 public class Tipo_incaricoBulk extends Tipo_incaricoBase {
+    public final static java.util.Dictionary <String,String> TIPI_ASSOCIAZIONE;
+    public final static String ASS_INCARICHI = "INC";
+    public final static String ASS_BORSE_STUDIO = "BST";
+    public final static String ASS_ASSEGNI_RICERCA = "ASR";
+
+	static {
+		TIPI_ASSOCIAZIONE = new it.cnr.jada.util.OrderedHashtable();
+		TIPI_ASSOCIAZIONE.put(ASS_INCARICHI,"Incarichi");
+		TIPI_ASSOCIAZIONE.put(ASS_BORSE_STUDIO,"Borse di Studio");
+		TIPI_ASSOCIAZIONE.put(ASS_ASSEGNI_RICERCA,"Assegni di Ricerca");
+	}
+
 	private it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk tipoRapporto = new it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk();
 	
 	public Tipo_incaricoBulk() {
@@ -34,5 +46,8 @@ public class Tipo_incaricoBulk extends Tipo_incaricoBase {
 		if (tipoRapporto == null)
 			return null;
 		return tipoRapporto.getCd_tipo_rapporto();
+	}
+	public java.util.Dictionary getTipiAssociazioneKeys(){
+		return TIPI_ASSOCIAZIONE;
 	}
 }
