@@ -1,12 +1,16 @@
 package it.cnr.contab.varstanz00.ejb;
 
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
+import it.cnr.contab.varstanz00.comp.VariazioniStanziamentoResiduoComponent;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.ejb.CRUDComponentSessionBean;
+
+import java.rmi.RemoteException;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.contab.varstanz00.comp.VariazioniStanziamentoResiduoComponent;
-import it.cnr.jada.ejb.CRUDComponentSessionBean;
 
 /**
  * Bean implementation class for Enterprise Bean: CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession
@@ -23,6 +27,25 @@ public class VariazioniStanziamentoResiduoComponentSessionBean extends CRUDCompo
 	public static CRUDComponentSessionBean newInstance() throws EJBException {
 		return new VariazioniStanziamentoResiduoComponentSessionBean();
 	}	
+	public Var_stanz_res_rigaBulk recuperoRigaLiquidazioneIva(it.cnr.jada.UserContext param0, Var_stanz_resBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			Var_stanz_res_rigaBulk result = ((VariazioniStanziamentoResiduoComponent)componentObj).recuperoRigaLiquidazioneIva(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
+	
 	public it.cnr.jada.bulk.OggettoBulk salvaDefinitivo(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
@@ -135,6 +158,25 @@ public class VariazioniStanziamentoResiduoComponentSessionBean extends CRUDCompo
 		pre_component_invocation(param0,componentObj);
 		try {
 			java.math.BigDecimal result = ((VariazioniStanziamentoResiduoComponent)componentObj).calcolaDisponibilita_stanz_res(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	
+	public boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext param0, Var_stanz_resBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			boolean result = ((VariazioniStanziamentoResiduoComponent)componentObj).isVariazioneFromLiquidazioneIvaDaModificare(param0,param1);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

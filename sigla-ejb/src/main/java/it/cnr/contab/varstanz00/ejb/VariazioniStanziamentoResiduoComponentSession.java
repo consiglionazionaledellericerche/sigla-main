@@ -1,5 +1,10 @@
 package it.cnr.contab.varstanz00.ejb;
 
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+
 import javax.ejb.Remote;
 
 /**
@@ -20,4 +25,6 @@ public interface VariazioniStanziamentoResiduoComponentSession extends it.cnr.ja
 	it.cnr.jada.bulk.OggettoBulk esitaVariazioneBilancio(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 	void validaOrigineFontiPerAnnoResiduo(it.cnr.jada.UserContext usercontext, Integer annoResiduo, String origineFonti) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;	
 	it.cnr.contab.progettiric00.core.bulk.ProgettoBulk getProgettoLineaAttivita(it.cnr.jada.UserContext usercontext, it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk varRiga) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+	boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,java.rmi.RemoteException;
+	Var_stanz_res_rigaBulk recuperoRigaLiquidazioneIva(UserContext userContext, Var_stanz_resBulk bulk) throws ComponentException,java.rmi.RemoteException;
 }

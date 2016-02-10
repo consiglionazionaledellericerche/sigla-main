@@ -6,46 +6,55 @@
  */
 package it.cnr.contab.pdg01.comp;
 
-import it.cnr.contab.pdg00.comp.*;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
-import it.cnr.contab.messaggio00.bulk.MessaggioHome;
-import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
-import it.cnr.contab.prevent00.bulk.V_assestatoHome;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
-
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
-import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.pdg00.bulk.*;
+import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
+import it.cnr.contab.messaggio00.bulk.MessaggioHome;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
+import it.cnr.contab.pdg00.comp.PdGVariazioniComponent;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneHome;
+import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
+import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+import it.cnr.contab.prevent00.bulk.V_assestatoHome;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
-
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.OptionRequestException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SQLExceptionHandler;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
@@ -53,8 +62,6 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
@@ -182,7 +189,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		}
 	}
 
-	private void aggiornaSaldiCdrLinea(UserContext userContext, Pdg_variazione_riga_gestBulk varRiga) throws ComponentException{
+	private void aggiornaSaldiCdrLinea(UserContext userContext, Pdg_variazione_riga_gestBulk varRiga, Boolean sottraiImportoDaVariazioneEsistente) throws ComponentException{
 		try {
 			BigDecimal impDaAggiornare = Utility.ZERO;
 			Voce_f_saldi_cdr_lineaBulk saldo = new Voce_f_saldi_cdr_lineaBulk(varRiga.getEsercizio(), 
@@ -203,7 +210,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				saldo.setToBeCreated();
 				saldo.inizializzaSommeAZero();
 				saldo.setCd_elemento_voce(varRiga.getCd_elemento_voce());
-				saldi = (Voce_f_saldi_cdr_lineaBulk)super.creaConBulk(userContext,saldo);
+				saldi = (Voce_f_saldi_cdr_lineaBulk)((CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession",it.cnr.jada.ejb.CRUDComponentSession.class)).creaConBulk(userContext,saldo);
 			}
 			
 			Voce_f_saldi_cdr_lineaBulk saldoNew = Utility.createSaldoComponentSession().aggiornaVariazioneStanziamento(userContext, 
@@ -212,13 +219,14 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 																				 saldo.getVoce(), 
 																				 varRiga.getEsercizio(), 
 																				 Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA, 
-																				 varRiga.getIm_variazione());
+																				 varRiga.getIm_variazione(),
+																				 sottraiImportoDaVariazioneEsistente);
 			if (saldo.getTi_gestione().equalsIgnoreCase(Voce_f_saldi_cdr_lineaBulk.TIPO_GESTIONE_SPESA)||
 				varRiga.getIm_variazione().compareTo(Utility.ZERO)==-1){
 				String err = Utility.createSaldoComponentSession().getMessaggioSfondamentoDisponibilita(userContext, 
 																									    saldoNew);
-				if (!(err==null ||err.equals("")))
-					throw new ApplicationException(err);
+//				if (!(err==null ||err.equals("")))
+//					throw new ApplicationException(err);
 		        }
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -226,6 +234,42 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			throw new ComponentException(e);
 		} catch (EJBException e) {
 			throw new ComponentException(e);
+		}
+	}
+
+	public void aggiornaSaldiCdrLinea(UserContext userContext, Pdg_variazione_riga_gestBulk varRiga) throws ComponentException{
+		aggiornaSaldiCdrLinea(userContext, varRiga, false);
+	}
+
+	public void allineaSaldiVariazioneApprovata(UserContext userContext, Ass_pdg_variazione_cdrBulk ass) throws ComponentException {
+		boolean primoGiro = true;
+		Configurazione_cnrBulk config;
+		try {
+			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+		} catch (ComponentException e1) {
+			throw handleException(e1);
+		} catch (RemoteException e1) {
+			throw handleException(e1);
+		} catch (EJBException e1) {
+			throw handleException(e1);
+		}
+		for (java.util.Iterator i =  ass.getRigheVariazioneSpeGest().iterator();i.hasNext();) {
+			Pdg_variazione_riga_gestBulk varRiga = (Pdg_variazione_riga_gestBulk)i.next();
+			try {
+				aggiornaSaldiCdrLinea(userContext,varRiga);
+				if (primoGiro){
+					Pdg_variazione_riga_gestBulk rigaCloned = new Pdg_variazione_riga_gestBulk();
+					rigaCloned.setElemento_voce(varRiga.getElemento_voce());
+					rigaCloned.setPdg_variazione(varRiga.getPdg_variazione());
+					rigaCloned.setCdr_assegnatario(varRiga.getCdr_assegnatario());
+					rigaCloned.setCd_linea_attivita(config.getVal01());
+					rigaCloned.setIm_spese_gest_accentrata_est(ass.getIm_spesa().multiply(new BigDecimal(-1)));
+					aggiornaSaldiCdrLinea(userContext,rigaCloned, true);
+					primoGiro = false;
+				}
+			} catch (ComponentException e) {
+				throw handleException(e);
+			}
 		}
 	}
 
