@@ -1876,7 +1876,7 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 								// aggiornato dalla creazione reversale
 								bulk = (MandatoIBulk) inizializzaBulkPerModifica(
 										userContext, mandato);
-								if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()){								
+								if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()){								
 									((MandatoIBulk) bulk)
 										.setStato_coge(MandatoIBulk.STATO_COGE_X);
 									bulk.setToBeUpdated();
