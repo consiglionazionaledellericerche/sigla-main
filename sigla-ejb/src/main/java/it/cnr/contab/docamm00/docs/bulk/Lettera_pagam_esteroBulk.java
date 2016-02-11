@@ -47,6 +47,7 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA,	"Prima Firma");		
 		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_INSERITO,		"Inserito in distinta");		
 		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_TRASMESSO,		"Trasmesso");
+		stato_trasmissioneKeys.put(StatoTrasmissione.ALL, "Tutti");
 	}
 	public final static String BONIFICO_MEZZO_SWIFT = "S", BONIFICO_MEZZO_TELEGRAMMA = "T", BONIFICO_MEZZO_ASSEGNO = "A";
 	@SuppressWarnings("rawtypes")
@@ -330,7 +331,6 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 	public void setPg_distinta(Long pg_distinta) {
 		distintaCassiere.setPgDistinta(pg_distinta);
 	}
-	
 	public String getDisplayStatoTrasmissione() {
 		if (getStato_trasmissione() == null)
 			return null;

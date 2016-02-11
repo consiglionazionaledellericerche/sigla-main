@@ -44,12 +44,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.bindings.impl.CmisBindingsHelper;
 import org.apache.chemistry.opencmis.client.bindings.spi.http.Output;
 import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
-import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
 import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.util.URIUtil;
@@ -81,14 +79,15 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	@Override
 	public void setMultiSelection(boolean flag) {
 		super.setMultiSelection(flag);
-        super.table.setOnselect("select");
 	}
 	
 	public void setColumnSet(ActionContext actioncontext, String statoTrasmissione) {
 		String columnSetName = "firmaBase";
-		if (!statoTrasmissione.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO))
+		if (statoTrasmissione.equalsIgnoreCase(StatoTrasmissione.ALL))
+			columnSetName = "all";
+		else if (!statoTrasmissione.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO))
 			columnSetName = "firmaPredisposta";
-		if (statoTrasmissione.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
+		else if (statoTrasmissione.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 			columnSetName = "firmaEseguita";		
 		setColumns(getBulkInfo().getColumnFieldPropertyDictionary(columnSetName));
 		Unita_organizzativaBulk uoScrivania = CNRUserInfo.getUnita_organizzativa(actioncontext);			
@@ -203,20 +202,19 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 
 	public boolean isDetailButtonEnabled() {
 		StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-		return (!oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)) && (getSelection().size() == 1);
+		return (!oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO));
 	}
 
 	public boolean isSignButtonEnabled() {
 		StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
 		if (firmatario == null)
 			return false;		
-		return oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO) && getSelection().size() >= 1;
+		return oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
 	}
 
 	public boolean isDeleteButtonHidden() {
 		StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();		
-		if (getSelection().size() >= 1 && 				
-				oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO))
+		if (oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO))
 			return false;
 		return true;
 	}
@@ -224,24 +222,21 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 		StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
 		if (firmatario == null)
 			return true;
-		if (getSelection().size() >= 1 && 				
-				oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
+		if (oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 			return false;
 		return true;		
 	}
 
 	public boolean isPdfDocumentiButtonHidden(){
 		StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();		
-		if (getSelection().size() >= 1 && 				
-				oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO))
+		if (oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO))
 			return false;
 		return true;		
 	}
 
 	public boolean isZipDocumentiButtonHidden(){
 		StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();		
-		if (getSelection().size() >= 1 && 
-				!oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) &&
+		if (!oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) &&
 				!oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO))
 			return false;
 		return true;		
@@ -272,6 +267,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	
 	@SuppressWarnings("unchecked")
 	public void scaricaDocumenti(ActionContext actioncontext) throws Exception {
+		setSelection(actioncontext);
 		List<StatoTrasmissione> selectelElements = getSelectedElements(actioncontext);
 		if (selectelElements == null || selectelElements.isEmpty()){
 			((HttpActionContext)actioncontext).getResponse().setStatus(HttpStatus.SC_NO_CONTENT);
