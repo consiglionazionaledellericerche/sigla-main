@@ -98,8 +98,9 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(simpleFindClause, collegatiFindClause));
 			setBaseclause(compoundfindclause);
 			
+			V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk) getModel();
 			EJBCommonServices.closeRemoteIterator(getIterator());
-			setIterator(actioncontext, find(actioncontext, compoundfindclause, getModel()));
+			setIterator(actioncontext, find(actioncontext, compoundfindclause, v_mandato_reversaleBulk.getStato_trasmissione().equalsIgnoreCase(StatoTrasmissione.ALL) ? new V_mandato_reversaleBulk() : v_mandato_reversaleBulk));
 		} catch (RemoteException e) {
 			throw new BusinessProcessException(e);
 		}
@@ -267,7 +268,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						PDFMergerUtility ut = new PDFMergerUtility();
 						ByteArrayOutputStream out = new ByteArrayOutputStream();
 						ut.setDestinationStream(out);
-						ut.addSource(documentiContabiliService.getStreamDocumento((V_mandato_reversaleBulk) statoTrasmissione));
+						ut.addSource(documentiContabiliService.getStreamDocumentoInitialVersion((V_mandato_reversaleBulk) statoTrasmissione));
 						for (String documentId : childs) {
 							ut.addSource(((Document)documentiContabiliService.getNodeByNodeRef(documentId)).getContentStream().getStream());						
 						}

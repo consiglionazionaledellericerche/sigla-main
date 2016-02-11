@@ -71,6 +71,8 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA,	"Prima Firma");				
 		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_INSERITO,		"Inserito in distinta");
 		stato_trasmissioneKeys.put(it.cnr.contab.doccont00.core.bulk.MandatoBulk.STATO_TRASMISSIONE_TRASMESSO,		"Trasmesso");
+		stato_trasmissioneKeys.put(StatoTrasmissione.ALL, "Tutti");
+
 	}
 
 	public final static java.util.Dictionary ti_cc_biKeys;
