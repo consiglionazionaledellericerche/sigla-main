@@ -944,8 +944,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				}
 
 				BigDecimal totaleImportoRiga = BigDecimal.ZERO;
-				Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
 				if (var_stanz_res.isApprovata()){
+					Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
 					for (java.util.Iterator i =  var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
 						Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
 						try {
@@ -969,6 +969,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				}
 				
 				if (rigaInsMod){
+					Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
 					if (ass_var_cdr.getIm_spesa().compareTo(totaleRighe) == 0){
 					if (inviaMessaggio(usercontext,var_stanz_res,ass_var_cdr)){
 						for (java.util.Iterator i= utenteHome.findUtenteByCDRIncludeFirstLevel(var_stanz_res.getCd_centro_responsabilita()).iterator();i.hasNext();){
