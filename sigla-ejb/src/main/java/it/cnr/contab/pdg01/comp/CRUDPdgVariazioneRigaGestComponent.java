@@ -1,5 +1,16 @@
 package it.cnr.contab.pdg01.comp;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
+import javax.ejb.EJBException;
+
+import org.apache.chemistry.opencmis.client.api.Document;
+
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -55,17 +66,6 @@ import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
-import javax.ejb.EJBException;
-
-import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDComponent {
 	/**
@@ -240,7 +240,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 					PdGVariazioniComponentSession comp = Utility.createPdGVariazioniComponentSession();
 					try {
 						if (comp.isRigaLiquidazioneIva(userContext, riga)){
-							throw new ApplicationException ("Attenzione: Non è possibile inserire salvare la variazione contenente la GAE di default della liquidazione IVA!");
+							throw new ApplicationException ("Attenzione: Non è possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
 						} else {
 							totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
 						}
