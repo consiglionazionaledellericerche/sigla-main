@@ -267,6 +267,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	
 	@SuppressWarnings("unchecked")
 	public void scaricaDocumenti(ActionContext actioncontext) throws Exception {
+		setSelection(actioncontext);
 		List<StatoTrasmissione> selectelElements = getSelectedElements(actioncontext);
 		if (selectelElements == null || selectelElements.isEmpty()){
 			((HttpActionContext)actioncontext).getResponse().setStatus(HttpStatus.SC_NO_CONTENT);
