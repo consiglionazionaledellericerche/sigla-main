@@ -950,7 +950,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
 						try {
 							if (isRigaLiquidazioneIva(usercontext, riga)){
-								throw new ApplicationException ("Attenzione: Non è possibile inserire salvare la variazione contenente la GAE di default della liquidazione IVA!");
+								throw new ApplicationException ("Attenzione: Non è possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
 							} else {
 								totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
 							}
@@ -962,7 +962,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilità!");
 					}
 					try {
-						allineaSaldiVariazioneApprovata(usercontext, var_stanz_res);
+						allineaSaldiVariazioneApprovata(usercontext, var_stanz_res, totaleImportoRiga);
 					} catch (ComponentException e) {
 						throw handleException(e);
 					}
@@ -989,7 +989,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		return super.modificaConBulk(usercontext, var_stanz_res);
 	}
 
-	private void allineaSaldiVariazioneApprovata(UserContext userContext, Var_stanz_resBulk var_stanz_res) throws ComponentException {
+	private void allineaSaldiVariazioneApprovata(UserContext userContext, Var_stanz_resBulk var_stanz_res, BigDecimal totaleImporto) throws ComponentException {
 		boolean primoGiro = true;
 		Configurazione_cnrBulk config;
 		try {
@@ -1001,6 +1001,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		} catch (EJBException e1) {
 			throw handleException(e1);
 		}
+
 		for (java.util.Iterator i =  var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
 			Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
 			try {
@@ -1020,7 +1021,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					rigaCloned.setEsercizio_res(riga.getEsercizio_res());
 					rigaCloned.setCd_voce(riga.getCd_voce());
 					rigaCloned.setLinea_di_attivita(wp);
-					rigaCloned.setIm_variazione(riga.getIm_variazione().multiply(new BigDecimal(-1)));
+					rigaCloned.setIm_variazione(totaleImporto.multiply(new BigDecimal(-1)));
 					saldi = allineaSaldi(userContext, rigaCloned, true);
 					super.modificaConBulk(userContext,saldi);
 					primoGiro = false;
