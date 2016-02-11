@@ -9,6 +9,7 @@ package it.cnr.contab.pdg01.bp;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
@@ -413,7 +414,13 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 				if (rigaDB != null){
 		    		Elemento_voceBulk elementoVoce = (Elemento_voceBulk)createComponentSession().findByPrimaryKey(context.getUserContext(), 
 							new Elemento_voceBulk(rigaDB.getElemento_voce().getCd_elemento_voce(), rigaDB.getElemento_voce().getEsercizio(), rigaDB.getElemento_voce().getTi_appartenenza(), rigaDB.getElemento_voce().getTi_gestione()));
-					riga.setElemento_voce(elementoVoce);
+		    		if (elementoVoce.getV_classificazione_voci() != null){
+		    			V_classificazione_vociBulk vClassDB = elementoVoce.getV_classificazione_voci();
+			    		V_classificazione_vociBulk vClass = (V_classificazione_vociBulk)createComponentSession().findByPrimaryKey(context.getUserContext(), 
+								new V_classificazione_vociBulk(vClassDB.getId_classificazione()));
+			    		elementoVoce.setV_classificazione_voci(vClass);
+		    		}
+		    		riga.setElemento_voce(elementoVoce);
 				}
 			} catch (RemoteException e1) {
 				throw handleException(e1);
