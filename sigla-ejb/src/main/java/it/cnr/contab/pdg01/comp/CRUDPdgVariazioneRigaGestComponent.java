@@ -262,7 +262,9 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 			}
 
 			OggettoBulk assPdg = super.modificaConBulk(userContext, oggettobulk);	
-			createDocumentForVariazioneLiquidazioneIVA(userContext, ass.getPdg_variazione());
+			if (ass.getPdg_variazione().isApprovata()){
+				createDocumentForVariazioneLiquidazioneIVA(userContext, ass.getPdg_variazione());
+			}
 			return assPdg;
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
