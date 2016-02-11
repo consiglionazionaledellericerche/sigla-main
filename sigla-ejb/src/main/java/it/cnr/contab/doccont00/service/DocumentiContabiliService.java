@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
@@ -132,6 +133,7 @@ public class DocumentiContabiliService extends SiglaCMISService {
 			return null;
 		}
 	}
+	
 	public InputStream getStreamDocumento(Integer esercizio, String cds, Long pgMandato, String tipo) throws Exception{
 		List<String> ids = getNodeRefDocumento(esercizio, cds, pgMandato, tipo);
 		if (ids != null){
@@ -158,6 +160,15 @@ public class DocumentiContabiliService extends SiglaCMISService {
 			}
 		}
 		return null;
+	}
+	public InputStream getStreamDocumentoInitialVersion(V_mandato_reversaleBulk bulk) throws Exception{
+		Document doc;
+		try {
+			doc = (Document) getNodeByPath(bulk.getCMISPath(this).getPath() + "/" + bulk.getCMISName());
+		} catch (CmisObjectNotFoundException _ex) {
+			return null;
+		}
+		return doc.getObjectOfLatestVersion(true).getContentStream().getStream();
 	}
 	
 	public InputStream getStreamDocumento(V_mandato_reversaleBulk bulk) throws Exception{
