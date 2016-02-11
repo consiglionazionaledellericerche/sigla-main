@@ -6,6 +6,7 @@ import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.comp.ApplicationException;
 
 public interface StatoTrasmissione extends AllegatoParentBulk{
+	public static String ALL = "ALL";
 	public java.lang.String getStato_trasmissione();
 	public void setStato_trasmissione(java.lang.String stato_trasmissione);
 	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException;
