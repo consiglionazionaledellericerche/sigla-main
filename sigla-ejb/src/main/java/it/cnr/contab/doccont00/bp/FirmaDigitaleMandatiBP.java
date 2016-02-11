@@ -268,7 +268,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						PDFMergerUtility ut = new PDFMergerUtility();
 						ByteArrayOutputStream out = new ByteArrayOutputStream();
 						ut.setDestinationStream(out);
-						ut.addSource(documentiContabiliService.getStreamDocumento((V_mandato_reversaleBulk) statoTrasmissione));
+						ut.addSource(documentiContabiliService.getStreamDocumentoInitialVersion((V_mandato_reversaleBulk) statoTrasmissione));
 						for (String documentId : childs) {
 							ut.addSource(((Document)documentiContabiliService.getNodeByNodeRef(documentId)).getContentStream().getStream());						
 						}
