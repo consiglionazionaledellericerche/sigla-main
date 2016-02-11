@@ -21,7 +21,11 @@ function doVisualizzaSingoloDocumento(esercizio, cds , numero_documento, tipo) {
 	doPrint('genericdownload/Documento contabile '+esercizio+'-'+cds+'-'+numero_documento+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_documento='+numero_documento+'&tipo='+tipo+'&methodName=scaricaDocumento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 function doVisualizzaDocumenti() {
-	doPrint('genericdownload/Documenti Contabili.pdf?methodName=scaricaDocumenti&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	elementName = "mainTable.selection", mainTableSelection = "";
+	for (j = 0;j < document.mainForm.elements.length;j++)
+		if (document.mainForm.elements[j].name == elementName && document.mainForm.elements[j].checked)
+			mainTableSelection += "&" + elementName + "=" + document.mainForm.elements[j].value;
+	doPrint('genericdownload/Documenti Contabili.pdf?methodName=scaricaDocumenti&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>&mainTable.focus=0' + mainTableSelection);
 }
 </script>
 </head>
