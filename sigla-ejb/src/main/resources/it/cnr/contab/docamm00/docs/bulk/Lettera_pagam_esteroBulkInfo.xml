@@ -30,6 +30,12 @@
 		nullable="false"
 		label="Commissioni" />
 	<fieldProperty
+		name="divisa"
+		property="divisa"
+		inputType="TEXT"
+		nullable="false"
+		label="Divisa"/>		
+	<fieldProperty
 		name="im_pagamento"
 		property="im_pagamento"
 		inputType="ROTEXT"
@@ -127,6 +133,8 @@
 	<columnFieldProperty
 		name="im_commissioni" />
 	<columnFieldProperty
+		name="divisa" />		
+	<columnFieldProperty
 		name="im_pagamento" />
 	<columnFieldProperty
 		name="pg_lettera" />
@@ -181,6 +189,8 @@
 		<columnFieldProperty
 			name="im_commissioni" />
 		<columnFieldProperty
+			name="divisa" />		
+		<columnFieldProperty
 			name="im_pagamento" />
 		<columnFieldProperty
 			name="dt_registrazione" />
@@ -197,6 +207,8 @@
 			name="pg_lettera" />		
 		<columnFieldProperty
 			name="im_commissioni" />
+		<columnFieldProperty
+			name="divisa" />		
 		<columnFieldProperty
 			name="im_pagamento" />
 		<columnFieldProperty
@@ -220,6 +232,8 @@
 		<columnFieldProperty
 			name="im_commissioni" />
 		<columnFieldProperty
+			name="divisa" />				
+		<columnFieldProperty
 			name="im_pagamento" />
 		<columnFieldProperty
 			name="dt_registrazione" />
@@ -234,4 +248,36 @@
 			inputType="TEXT"
 			label="Data di Firma" />
 	</columnSet>
+	<columnSet
+        name="all">
+		<columnFieldProperty
+			name="stato_trasmissione" />	    		
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cd_cds"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa"/>				
+		<columnFieldProperty
+			name="pg_lettera" />		
+		<columnFieldProperty
+			name="im_commissioni" />
+		<columnFieldProperty
+			name="divisa" />				
+		<columnFieldProperty
+			name="im_pagamento" />
+		<columnFieldProperty
+			name="dt_registrazione" />
+		<columnFieldProperty
+			name="documento"
+			property="documento"
+			inputType="TEXT"
+			label="Documento" />				
+		<columnFieldProperty
+			name="dt_firma"
+			property="dt_firma"
+			inputType="TEXT"
+			label="Data di Firma" />
+	</columnSet>
+		
 </bulkInfo>
