@@ -471,7 +471,41 @@
 		label="Data di Firma" />				
 		
 	</columnSet>	
-			
+	<columnSet
+        name="all">
+		<columnFieldProperty
+		name="stato_trasmissione" />	    
+	    <columnFieldProperty
+		name="cd_tipo_documento_cont" />
+		<columnFieldProperty
+		name="pg_documento_cont" />
+		<columnFieldProperty
+		name="ti_documento_cont" />
+		<columnFieldProperty
+		name="im_documento_cont" />
+		<columnFieldProperty
+		name="ds_documento_cont" />
+		<columnFieldProperty
+		name="dt_emissione" />
+		<columnFieldProperty
+		name="cd_terzo" />
+		<columnFieldProperty
+		name="cd_anag" />
+		<columnFieldProperty
+		name="denominazione_sede" />
+		<columnFieldProperty
+		name="documento"
+		property="documento"
+		inputType="TEXT"
+		label="documento" />				
+		<columnFieldProperty
+		name="dt_firma"
+		property="dt_firma"
+		inputType="TEXT"
+		label="Data di Firma" />				
+		
+	</columnSet>	
+				
 	<columnSet
         name="elencoConUoFirmati">
     <columnFieldProperty

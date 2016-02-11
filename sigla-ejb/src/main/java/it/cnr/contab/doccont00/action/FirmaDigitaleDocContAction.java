@@ -1,7 +1,5 @@
 package it.cnr.contab.doccont00.action;
 
-import java.util.List;
-
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.doccont00.bp.AbstractFirmaDigitaleDocContBP;
 import it.cnr.contab.doccont00.bp.AllegatiDocContBP;
@@ -14,8 +12,11 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.ConsultazioniAction;
+
+import java.util.List;
 
 /**
  * 
@@ -85,6 +86,7 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			statoTrasmissioneBulk.setStato_trasmissione(statoTrasmissione);
 			bp.setModel(context, bulk);
 			try {
+				bp.setSelection(context);
 				bp.predisponiPerLaFirma(context);							
 			} finally {
 				bp.openIterator(context);				
@@ -107,13 +109,19 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			statoTrasmissioneBulk = ((StatoTrasmissione)bulk);
 			statoTrasmissioneBulk.setStato_trasmissione(statoTrasmissione);
 			bp.setModel(context, bulk);
-			bp.eliminaPredisposizione(context);
+			try {
+				bp.setSelection(context);
+				bp.eliminaPredisposizione(context);
+			} finally {
+				bp.openIterator(context);				
+			}			
 			bp.openIterator(context);
 			return context.findDefaultForward();
 		} catch(Exception e) {
 			return handleException(context,e);
 		}
 	}
+	@SuppressWarnings("unchecked")
 	public Forward doDetail(ActionContext context) {
 		AbstractFirmaDigitaleDocContBP bp = (AbstractFirmaDigitaleDocContBP)context.getBusinessProcess();
 		OggettoBulk bulk = bp.getModel();
@@ -125,6 +133,11 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			statoTrasmissioneBulk = ((StatoTrasmissione)bulk);
 			statoTrasmissioneBulk.setStato_trasmissione(statoTrasmissione);
 			bp.setModel(context, bulk);
+			bp.setSelection(context);
+			List<StatoTrasmissione> selectedElements = bp.getSelectedElements(context);
+			if (selectedElements == null || selectedElements.isEmpty() || selectedElements.size() > 1)
+				throw new ApplicationException("Selezionare solo un elemento!");
+			
 			AllegatiDocContBP allegatiDocContBP = (AllegatiDocContBP) context.createBusinessProcess("AllegatiDocContBP", new Object[] {"M"});
 			StatoTrasmissione  selectedStatoTrasmissione  = (StatoTrasmissione) bp.getSelectedElements(context).get(0);
 			if (selectedStatoTrasmissione.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)){
@@ -145,12 +158,19 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			return handleException(context,e);
 		}
 	}
-
 	
+	@SuppressWarnings("unchecked")
 	public Forward doSign(ActionContext context) {
+		AbstractFirmaDigitaleDocContBP bp = (AbstractFirmaDigitaleDocContBP)context.getBusinessProcess();
 		try {
+			fillModel(context);
+			bp.setSelection(context);
+			List<StatoTrasmissione> selectedElements = bp.getSelectedElements(context);
+			if (selectedElements == null || selectedElements.isEmpty())
+				throw new ApplicationException("Selezionare almeno un elemento!");
+
 			BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
-			firmaOTPBP.setModel(context, new FirmaOTPBulk());
+			firmaOTPBP.setModel(context, new FirmaOTPBulk());			
 			context.addHookForward("firmaOTP",this,"doBackSign");			
 			return context.addBusinessProcess(firmaOTPBP);
 		} catch(Exception e) {
@@ -172,6 +192,7 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			statoTrasmissioneBulk.setStato_trasmissione(statoTrasmissione);
 			bp.setModel(context, bulk);
 			try {
+				bp.setSelection(context);
 				bp.sign(context, firmaOTPBulk);
 			} finally {
 				bp.openIterator(context);				
