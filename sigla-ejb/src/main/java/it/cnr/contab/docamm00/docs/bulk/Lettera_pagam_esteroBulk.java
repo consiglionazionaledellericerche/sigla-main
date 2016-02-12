@@ -319,7 +319,21 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 	public void setEsercizio_distinta(Integer esercizio_distinta) {
 		distintaCassiere.setEsercizio(esercizio_distinta);
 	}
+
+	@Override
+	public String getCd_sospeso() {
+		if (getSospeso() == null)
+			return null;
+		return getSospeso().getCd_sospeso();
+	}
 	
+	@Override
+	public void setCd_sospeso(String cd_sospeso) {
+		if (getSospeso() != null)
+			getSospeso().setCd_sospeso(cd_sospeso);
+		else
+			super.setCd_sospeso(cd_sospeso);
+	}
 	@Override
 	public Long getPg_distinta() {
 		if (distintaCassiere == null)
