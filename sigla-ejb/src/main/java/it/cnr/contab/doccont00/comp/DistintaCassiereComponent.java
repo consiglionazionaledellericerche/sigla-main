@@ -4279,7 +4279,7 @@ public class DistintaCassiereComponent extends
 			bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
 			
 			infover.setBollo(bollo);
-			versante.setAnagraficaVersante(docContabile.getDenominazioneSede());
+			versante.setAnagraficaVersante(RemoveAccent.convert(docContabile.getDenominazioneSede()).replace('"',' ' ).replace('°',' '));
 			infover.setVersante(versante);
 			
 			// gestito inserimento cup nella CAUSALE 
@@ -4292,7 +4292,7 @@ public class DistintaCassiereComponent extends
 					infover.setCausale(docContabile.getDsDocumento().substring(0,98));
 				else 
 					infover.setCausale(docContabile.getDsDocumento());
-			infover.setCausale(RemoveAccent.convert(infover.getCausale()).replace('"',' ' ));
+			infover.setCausale(RemoveAccent.convert(infover.getCausale()).replace('"',' ' ).replace('°',' '));
 			// SOSPESO			
 			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO)==0){
 				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
@@ -4530,14 +4530,14 @@ public class DistintaCassiereComponent extends
 				bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
 				bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
 				infoben.setBollo(bollo);
-				benef.setAnagraficaBeneficiario(docContabile.getDenominazioneSede());
+				benef.setAnagraficaBeneficiario(RemoveAccent.convert(docContabile.getDenominazioneSede()).replace('"',' ' ).replace('°',' '));
 				//benef.setStatoBeneficiario(docContabile.getCdIso());
 				if(obb_dati_beneficiario){
-					benef.setIndirizzoBeneficiario(docContabile.getViaSede());
+					benef.setIndirizzoBeneficiario(RemoveAccent.convert(docContabile.getViaSede()).replace('"',' ' ).replace('°',' '));
 					if(docContabile.getCapComuneSede()==null)
 						throw new ApplicationException("Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "+docContabile.getCdTerzo()+" cds "+docContabile.getCdCds()+" mandato "+docContabile.getPgDocumento());
 					benef.setCapBeneficiario(docContabile.getCapComuneSede());
-					benef.setLocalitaBeneficiario(docContabile.getDsComune());
+					benef.setLocalitaBeneficiario(RemoveAccent.convert(docContabile.getDsComune()).replace('"',' ' ).replace('°',' '));
 					benef.setProvinciaBeneficiario(docContabile.getCdProvincia());
 				}
 				infoben.setBeneficiario(benef);
@@ -4581,7 +4581,7 @@ public class DistintaCassiereComponent extends
 						infoben.setCausale(docContabile.getDsDocumento().substring(0,98));
 					else 
 						infoben.setCausale(docContabile.getDsDocumento());
-				infoben.setCausale(RemoveAccent.convert(infoben.getCausale()).replace('"',' ' ));
+				infoben.setCausale(RemoveAccent.convert(infoben.getCausale()).replace('"',' ' ).replace('°',' '));
 				// SOSPESO			
 				if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO)==0){
 					it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
