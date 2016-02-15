@@ -4687,13 +4687,17 @@ public BancaBulk setContoEnteIn(
 	Documento_generico_rigaBulk dettaglio, 
 	java.util.List banche)
  	throws ComponentException {
-
-	if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(dettaglio.getModalita_pagamento_uo_cds().getTi_pagamento()) ||
-		!dettaglio.getDocumento_generico().isGenericoAttivo() ||
-		!dettaglio.getDocumento_generico().isFlagEnte())
-		return null;
-		
 	try {
+		if(Utility.createParametriCnrComponentSession().getParametriCnr(userContext,dettaglio.getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
+			if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(dettaglio.getModalita_pagamento_uo_cds().getTi_pagamento()) ||
+				!dettaglio.getDocumento_generico().isGenericoAttivo())
+				return null;
+		}else{
+			if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(dettaglio.getModalita_pagamento_uo_cds().getTi_pagamento()) ||
+				!dettaglio.getDocumento_generico().isGenericoAttivo() ||
+				!dettaglio.getDocumento_generico().isFlagEnte())
+				return null;
+		}
 		Configurazione_cnrBulk config = new Configurazione_cnrBulk(
 															"CONTO_CORRENTE_SPECIALE",
 															"ENTE", 
@@ -4723,6 +4727,10 @@ public BancaBulk setContoEnteIn(
 				return null;
 		}
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
+		throw handleException(e);
+	} catch (RemoteException e) {
+		throw handleException(e);
+	} catch (EJBException e) {
 		throw handleException(e);
 	}
 
