@@ -118,6 +118,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import java.rmi.RemoteException;
+import javax.ejb.EJBException;
 
 public class DocumentoGenericoComponent
 	extends it.cnr.jada.comp.CRUDComponent
