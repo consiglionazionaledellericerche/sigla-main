@@ -7,6 +7,8 @@ import it.cnr.jada.persistency.sql.*;
 
 public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
+	public final static String SK_SDI = "SDI";
+	public final static String PK_EMAIL_PEC = "EMAIL_PEC";
 	public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
 	public final static String SK_CODICE_DIVERSI_PGIRO = "CODICE_DIVERSI_PGIRO";
 	public final static String SK_CODICE_DIVERSI_IMPEGNI = "CODICE_DIVERSI_IMPEGNI";

@@ -1,15 +1,14 @@
 package it.cnr.contab.chiusura00.ejb;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBException;
-import javax.ejb.Remote;
-
-import it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+
+import java.rmi.RemoteException;
+
+import javax.ejb.EJBException;
+import javax.ejb.Remote;
 @Remote
 public interface RicercaDocContComponentSession extends it.cnr.jada.ejb.RicercaComponentSession {
 void callAnnullamentoDocCont(it.cnr.jada.UserContext param0,java.lang.Long param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
@@ -36,6 +35,7 @@ void setSelectionPerRiportaAvanti(it.cnr.jada.UserContext param0,it.cnr.contab.c
 void setSelectionPerRiportaAvantiEvoluto(it.cnr.jada.UserContext param0,it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk param1,it.cnr.jada.bulk.OggettoBulk[] param2,java.util.BitSet param3,java.util.BitSet param4) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void setSelectionPerRiportaIndietro(it.cnr.jada.UserContext param0,it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk param1,it.cnr.jada.bulk.OggettoBulk[] param2,java.util.BitSet param3,java.util.BitSet param4) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isRibaltato(it.cnr.jada.UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean isRibaltato(it.cnr.jada.UserContext param0, String param1, Integer esercizio) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.CdrBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.CdsBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.CdsBulk param1, Integer esercizio) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
