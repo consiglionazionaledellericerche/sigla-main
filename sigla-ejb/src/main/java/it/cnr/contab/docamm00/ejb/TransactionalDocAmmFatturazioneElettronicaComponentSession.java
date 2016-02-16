@@ -1,5 +1,4 @@
 package it.cnr.contab.docamm00.ejb;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -7,6 +6,7 @@ import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaType;
 
 import java.rmi.RemoteException;
 
+import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 
 public class TransactionalDocAmmFatturazioneElettronicaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements DocAmmFatturazioneElettronicaComponentSession {
@@ -29,9 +29,9 @@ public class TransactionalDocAmmFatturazioneElettronicaComponentSession extends 
 		}
 	}
 
-	public UnitaOrganizzativaPecBulk getAuthenticatorFromUo(it.cnr.jada.UserContext param0, String param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	public PasswordAuthentication getAuthenticatorFromUo(it.cnr.jada.UserContext param0, String param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
-			return (UnitaOrganizzativaPecBulk)invoke("getAuthenticatorFromUo",new Object[] {
+			return (PasswordAuthentication)invoke("getAuthenticatorFromUo",new Object[] {
 					param0,
 					param1 });
 		} catch(java.rmi.RemoteException e) {

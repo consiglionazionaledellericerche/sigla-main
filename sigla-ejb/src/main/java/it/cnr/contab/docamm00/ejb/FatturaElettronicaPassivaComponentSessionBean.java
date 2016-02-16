@@ -1,6 +1,6 @@
 package it.cnr.contab.docamm00.ejb;
 
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.comp.FatturaElettronicaPassivaComponent;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
@@ -91,24 +91,24 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
             throw uncaughtError(usercontext, componentObj, error);
         }
     }
-	public List<UnitaOrganizzativaPecBulk> scanPECProtocollo(UserContext usercontext) throws ComponentException, EJBException{
-        pre_component_invocation(usercontext, componentObj);
+	public Configurazione_cnrBulk getEmailPecSdi(UserContext userContext) throws it.cnr.jada.comp.ComponentException{
+        pre_component_invocation(userContext, componentObj);
         try{
-        	List<UnitaOrganizzativaPecBulk> results = ((FatturaElettronicaPassivaComponent)componentObj).scanPECProtocollo(usercontext);
-            component_invocation_succes(usercontext, componentObj);
-            return results;
+        	Configurazione_cnrBulk result = ((FatturaElettronicaPassivaComponent)componentObj).getEmailPecSdi(userContext);
+            component_invocation_succes(userContext, componentObj);
+            return result;
         }catch(NoRollbackException norollbackexception){
-            component_invocation_succes(usercontext, componentObj);
+            component_invocation_succes(userContext, componentObj);
             throw norollbackexception;
         }catch(ComponentException componentexception){
-            component_invocation_failure(usercontext, componentObj);
+            component_invocation_failure(userContext, componentObj);
             throw componentexception;
         }catch(RuntimeException runtimeexception){
-            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+            throw uncaughtRuntimeException(userContext, componentObj, runtimeexception);
         }catch(Error error){
-            throw uncaughtError(usercontext, componentObj, error);
+            throw uncaughtError(userContext, componentObj, error);
         }
-    }		
+	}
 
 	public void notificaEsito(UserContext usercontext, TipoIntegrazioneSDI tipoIntegrazioneSDI, DocumentoEleTestataBulk documentoEleTestataBulk) throws ComponentException, EJBException{
         pre_component_invocation(usercontext, componentObj);
@@ -296,21 +296,4 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
         }
 	}
 
-	public void scanPECProtocollo(UserContext usercontext, UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk) throws ComponentException, EJBException{
-        pre_component_invocation(usercontext, componentObj);
-        try{
-        	((FatturaElettronicaPassivaComponent)componentObj).scanPECProtocollo(usercontext, unitaOrganizzativaPecBulk);
-            component_invocation_succes(usercontext, componentObj);
-        }catch(NoRollbackException norollbackexception){
-            component_invocation_succes(usercontext, componentObj);
-            throw norollbackexception;
-        }catch(ComponentException componentexception){
-            component_invocation_failure(usercontext, componentObj);
-            throw componentexception;
-        }catch(RuntimeException runtimeexception){
-            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
-        }catch(Error error){
-            throw uncaughtError(usercontext, componentObj, error);
-        }
-    }	
 }
