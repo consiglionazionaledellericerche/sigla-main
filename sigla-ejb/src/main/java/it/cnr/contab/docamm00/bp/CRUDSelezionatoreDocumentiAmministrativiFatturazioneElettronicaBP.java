@@ -6,7 +6,6 @@ import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
@@ -187,13 +186,8 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    	if (docAmm instanceof Fattura_attivaBulk) {
 	    		Fattura_attivaBulk fattura = (Fattura_attivaBulk) docAmm;
 				logger.info("Processo la fattura");
-
-		    	UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk = component.getAuthenticatorFromUo(userContext, fattura.getCd_uo_origine());
+				PasswordAuthentication authentication = component.getAuthenticatorFromUo(userContext, fattura.getCd_uo_origine());
 		    	
-		    	if (unitaOrganizzativaPecBulk == null || unitaOrganizzativaPecBulk.getEmailPecProtocollo() == null || unitaOrganizzativaPecBulk.getCodPecProtocollo() == null){
-					throw new ApplicationException("Impossibile procedere. Non è stato possibile recuperare l'email della PEC dell'istituto per l'invio della fattura elettronica!");
-		    	}
-				PasswordAuthentication authentication = new PasswordAuthentication(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), unitaOrganizzativaPecBulk.getCodPecProtocolloInChiaro());
 				logger.info("Recuperata Autenticazione PEC");
 				File file = creaFileXml(userContext, fattura);
 

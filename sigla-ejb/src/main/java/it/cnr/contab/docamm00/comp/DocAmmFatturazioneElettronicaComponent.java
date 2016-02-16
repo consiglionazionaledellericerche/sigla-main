@@ -70,6 +70,7 @@ import java.util.List;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.ejb.EJBException;
+import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -339,16 +340,19 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 	}
 
-	public UnitaOrganizzativaPecBulk getAuthenticatorFromUo(UserContext userContext, String uo) throws ComponentException {
+	public PasswordAuthentication getAuthenticatorFromUo(UserContext userContext, String uo) throws ComponentException {
+		Configurazione_cnrBulk email;
 		try {
-			Unita_organizzativaBulk unita_organizzativa = (Unita_organizzativaBulk)getHomeCache(userContext).getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(uo));
-			if (unita_organizzativa != null){
-				return ((UnitaOrganizzativaPecHome)getHome( userContext, UnitaOrganizzativaPecBulk.class)).recuperoUoPec(unita_organizzativa);
-			}
-			return null;
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		}	    	
+			email = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, new Integer(0),null,Configurazione_cnrBulk.PK_EMAIL_PEC, Configurazione_cnrBulk.SK_SDI);
+		} catch (RemoteException e) {
+			throw new ApplicationException(e);
+		} catch (EJBException e) {
+			throw new ApplicationException(e);
+		}
+
+		if (email != null)
+			return new PasswordAuthentication(email.getVal01(), email.getVal02());	
+		throw new ApplicationException("Confiurazione PEC non trovata, contattare il servizio di HelpDesk!");
 	}
 
 	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
