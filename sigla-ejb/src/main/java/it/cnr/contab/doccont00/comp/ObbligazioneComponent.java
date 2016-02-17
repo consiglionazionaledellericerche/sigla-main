@@ -88,6 +88,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
@@ -5358,17 +5359,23 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 	public SQLBuilder selectAssestatoSpeseByClause (UserContext userContext, ObbligazioneBulk obbligazione, V_assestatoBulk assestato, CompoundFindClause clause) throws ComponentException, PersistencyException{	
 		SQLBuilder sql = getHome(userContext, V_assestatoBulk.class).createSQLBuilder();
 		sql.addClause( clause );
-		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
 		sql.addClause("AND", "esercizio_res", SQLBuilder.EQUALS, obbligazione.getEsercizio_originale());
 		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, CostantiTi_gestione.TI_GESTIONE_SPESE);		
 		sql.addClause("AND", "ti_appartenenza", SQLBuilder.NOT_EQUALS, "C");
 		sql.addClause("AND", "cd_elemento_voce", SQLBuilder.EQUALS, obbligazione.getCd_elemento_voce());
 		if (obbligazione.getCd_unita_organizzativa() != null){
-			SQLBuilder sqlStruttura = getHome(userContext, V_struttura_organizzativaBulk.class).createSQLBuilder();
-			sqlStruttura.addSQLJoin("V_ASSESTATO.ESERCIZIO","V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
-			sqlStruttura.addSQLJoin("V_ASSESTATO.CD_CENTRO_RESPONSABILITA","V_STRUTTURA_ORGANIZZATIVA.CD_CENTRO_RESPONSABILITA");
-			sqlStruttura.addSQLClause("AND", "V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, obbligazione.getCd_unita_organizzativa());
-            sql.addSQLExistsClause("AND",sqlStruttura);
+			BulkHome bulkHome = getHome(userContext, V_struttura_organizzativaBulk.class);
+			SQLBuilder sqlStruttura = bulkHome.createSQLBuilder();
+			sqlStruttura.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			sqlStruttura.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, obbligazione.getCd_unita_organizzativa());
+			sqlStruttura.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA", SQLBuilder.ISNOTNULL, true);			
+			List<V_struttura_organizzativaBulk> strutture = bulkHome.fetchAll(sqlStruttura);
+			sql.openParenthesis(FindClause.AND);
+			for (V_struttura_organizzativaBulk v_struttura_organizzativaBulk : strutture) {
+				sql.addClause(FindClause.OR, "cd_centro_responsabilita", SQLBuilder.EQUALS, v_struttura_organizzativaBulk.getCd_centro_responsabilita());
+			}
+			sql.closeParenthesis();
 		}
 		return sql;
 	}
