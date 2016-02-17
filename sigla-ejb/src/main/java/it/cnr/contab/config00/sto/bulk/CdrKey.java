@@ -16,6 +16,10 @@ public CdrKey(java.lang.String cd_centro_responsabilita) {
 	super();
 	this.cd_centro_responsabilita = cd_centro_responsabilita;
 }
+@Override
+public boolean equals(Object obj) {
+	return equalsByPrimaryKey(obj);
+}
 public boolean equalsByPrimaryKey(Object o) {
 	if (this == o) return true;
 	if (!(o instanceof CdrKey)) return false;
