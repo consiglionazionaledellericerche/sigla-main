@@ -64,8 +64,7 @@
 			propertyName="fl_cdr_uo"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
-			nullable="true" 
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio" />
