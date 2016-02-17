@@ -1682,23 +1682,23 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 	//Select che serve per limitare la visualizzazione alle sole voci di bilancio che hanno avuto almeno uno stanziamento
 	try {
 		SQLBuilder sqlAssestato = new SQLBuilder();
-		sqlAssestato.addTableToHeader("SALDI_STANZIAMENTI");
+		sqlAssestato.addTableToHeader("VOCE_F_SALDI_CDR_LINEA");
 		sqlAssestato.setHeader(String.valueOf("SELECT 1"));
-		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
-		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.TI_APPARTENENZA","ELEMENTO_VOCE.TI_APPARTENENZA");
-		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.TI_GESTIONE","ELEMENTO_VOCE.TI_GESTIONE");
-		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.CD_ELEMENTO_VOCE","ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
+		sqlAssestato.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
+		sqlAssestato.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.TI_APPARTENENZA","ELEMENTO_VOCE.TI_APPARTENENZA");
+		sqlAssestato.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE","ELEMENTO_VOCE.TI_GESTIONE");
+		sqlAssestato.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE","ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
 
 		sqlAssestato.openParenthesis(FindClause.AND);
 		sqlAssestato.addSQLClause(FindClause.OR, "ELEMENTO_VOCE.FL_LIMITE_ASS_OBBLIG", SQLBuilder.EQUALS, "N" );
-		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(SALDI_STANZIAMENTI.IM_STANZ_INIZIALE_A1,0)+nvl(SALDI_STANZIAMENTI.VARIAZIONI_PIU,0)-nvl(SALDI_STANZIAMENTI.VARIAZIONI_MENO,0))", SQLBuilder.GREATER, 0);
-		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(SALDI_STANZIAMENTI.IM_STANZ_RES_IMPROPRIO,0)+nvl(SALDI_STANZIAMENTI.VAR_PIU_STANZ_RES_IMP,0)-nvl(SALDI_STANZIAMENTI.VAR_MENO_STANZ_RES_IMP,0))", SQLBuilder.GREATER, 0);
+		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(VOCE_F_SALDI_CDR_LINEA.IM_STANZ_INIZIALE_A1,0)+nvl(VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_PIU,0)-nvl(VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_MENO,0))", SQLBuilder.GREATER, 0);
+		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(VOCE_F_SALDI_CDR_LINEA.IM_STANZ_RES_IMPROPRIO,0)+nvl(VOCE_F_SALDI_CDR_LINEA.VAR_PIU_STANZ_RES_IMP,0)-nvl(VOCE_F_SALDI_CDR_LINEA.VAR_MENO_STANZ_RES_IMP,0) +  nvl(VOCE_F_SALDI_CDR_LINEA.VAR_MENO_OBBL_RES_PRO,0)-nvl(VOCE_F_SALDI_CDR_LINEA.VAR_PIU_OBBL_RES_PRO,0))", SQLBuilder.GREATER, 0);
 		sqlAssestato.closeParenthesis();
 		
 		SQLBuilder sqlstrOrg = new SQLBuilder();
 		sqlstrOrg.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
 		sqlstrOrg.setHeader(String.valueOf("SELECT 1"));
-		sqlstrOrg.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_CENTRO_RESPONSABILITA","SALDI_STANZIAMENTI.CD_CENTRO_RESPONSABILITA");
+		sqlstrOrg.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
 		sqlstrOrg.addSQLClause(FindClause.AND,"V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, bulk.getUnita_organizzativa().getCd_unita_organizzativa());
 		
 		sqlAssestato.addSQLExistsClause(FindClause.AND, sqlstrOrg);
