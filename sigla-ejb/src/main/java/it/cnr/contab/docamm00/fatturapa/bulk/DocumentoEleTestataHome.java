@@ -26,7 +26,6 @@ import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.DateUtils;
 import it.gov.fatturapa.sdi.messaggi.v1.EsitoCommittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.RiferimentoFatturaType;
@@ -241,8 +240,8 @@ public class DocumentoEleTestataHome extends BulkHome {
     		} catch(ApplicationException _ex) {
         		throw _ex;
     		} catch(Exception _ex) {
-    			logger.error("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!" + _ex.getMessage(), _ex);
-    			throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!\n" + _ex.getMessage(), _ex);
+    			logger.error("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!" + _ex.getMessage(), _ex.getCause());
+    			throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!\n" + _ex.getMessage(), _ex.getCause());
     		}
     	} else if (!tipoIntegrazioneSDI.equals(TipoIntegrazioneSDI.PEC)) {
         	ObjectFactory obj = new ObjectFactory();
