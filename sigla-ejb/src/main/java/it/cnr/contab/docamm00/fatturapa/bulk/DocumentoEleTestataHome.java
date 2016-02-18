@@ -17,7 +17,9 @@ import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -51,6 +53,7 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 import javax.ejb.EJBException;
+import javax.mail.AuthenticationFailedException;
 import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
@@ -161,7 +164,12 @@ public class DocumentoEleTestataHome extends BulkHome {
 		}
 
 		if (email != null)
-			return new PasswordAuthentication(email.getVal01(), email.getVal02());	
+			try {
+				String password = StringEncrypter.decrypt(email.getVal01(), email.getVal02());
+				return new PasswordAuthentication(email.getVal01(), password);	
+			} catch (EncryptionException e1) {
+				new AuthenticationFailedException("Cannot decrypt password");
+			}
 		throw new ApplicationException("Confiurazione PEC non trovata, contattare il servizio di HelpDesk!");
 	}
 	public NotificaEsitoCommittenteType createNotificaEsitoCommittente(DocumentoEleTestataBulk documentoEleTestataBulk) {
