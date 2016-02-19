@@ -7,9 +7,6 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
@@ -18,9 +15,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
@@ -72,8 +67,6 @@ import java.util.List;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.ejb.EJBException;
-import javax.mail.AuthenticationFailedException;
-import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -343,24 +336,18 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 	}
 
-	public PasswordAuthentication getAuthenticatorFromUo(UserContext userContext, String uo) throws ComponentException {
+	public Configurazione_cnrBulk getAuthenticatorPecSdi(UserContext userContext) throws ComponentException {
 		Configurazione_cnrBulk email;
 		try {
 			email = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, new Integer(0),null,Configurazione_cnrBulk.PK_EMAIL_PEC, Configurazione_cnrBulk.SK_SDI);
+			if (email != null)
+				return email;
+				throw new ApplicationException("Confiurazione PEC non trovata, contattare il servizio di HelpDesk!");
 		} catch (RemoteException e) {
 			throw new ApplicationException(e);
 		} catch (EJBException e) {
 			throw new ApplicationException(e);
 		}
-
-		if (email != null)
-			try {
-				String password = StringEncrypter.decrypt(email.getVal01(), email.getVal02());
-				return new PasswordAuthentication(email.getVal01(), password);	
-			} catch (EncryptionException e1) {
-				new AuthenticationFailedException("Cannot decrypt password");
-			}
-		throw new ApplicationException("Confiurazione PEC non trovata, contattare il servizio di HelpDesk!");
 	}
 
 	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
