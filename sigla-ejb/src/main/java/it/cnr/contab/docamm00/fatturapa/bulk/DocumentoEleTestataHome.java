@@ -153,7 +153,7 @@ public class DocumentoEleTestataHome extends BulkHome {
         return sql;
     }	
 	
-	public PasswordAuthentication getAuthenticatorFromCUU(UserContext userContext, DocumentoEleTestataBulk documentoEleTestataBulk) throws ComponentException {
+	public PasswordAuthentication getAuthenticatorPecSdi(UserContext userContext) throws ComponentException {
 		Configurazione_cnrBulk email;
 		try {
 			email = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, new Integer(0),null,Configurazione_cnrBulk.PK_EMAIL_PEC, Configurazione_cnrBulk.SK_SDI);
@@ -227,7 +227,7 @@ public class DocumentoEleTestataHome extends BulkHome {
             			createNotificaEsitoCommittente(notificaEsitoCommittenteType);
             	ByteArrayOutputStream outputStreamNotificaEsito = new ByteArrayOutputStream();
             	client.getMarshaller().marshal(notificaEsitoCommittente, new StreamResult(outputStreamNotificaEsito));
-            	PasswordAuthentication authentication = getAuthenticatorFromCUU(userContext, documentoEleTestataBulk);
+            	PasswordAuthentication authentication = getAuthenticatorPecSdi(userContext);
             	if (authentication == null) {
         			logger.error("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");
             		throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");
