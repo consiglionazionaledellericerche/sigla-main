@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.ejb;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.comp.DocAmmFatturazioneElettronicaComponent;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.jada.UserContext;
@@ -11,7 +12,6 @@ import java.rmi.RemoteException;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 
 /**
@@ -27,10 +27,10 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 		return new DocAmmFatturazioneElettronicaComponentSessionBean();
 	}
 	
-	public PasswordAuthentication getAuthenticatorFromUo(UserContext userContext, String uo) throws it.cnr.jada.comp.ComponentException {
+	public Configurazione_cnrBulk getAuthenticatorPecSdi(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
 		pre_component_invocation(userContext,componentObj);
 		try {
-			PasswordAuthentication result = ((DocAmmFatturazioneElettronicaComponent)componentObj).getAuthenticatorFromUo(userContext, uo);
+			Configurazione_cnrBulk result = ((DocAmmFatturazioneElettronicaComponent)componentObj).getAuthenticatorPecSdi(userContext);
 			component_invocation_succes(userContext,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
