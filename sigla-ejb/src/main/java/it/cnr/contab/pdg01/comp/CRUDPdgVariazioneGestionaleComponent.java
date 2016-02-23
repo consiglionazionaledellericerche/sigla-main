@@ -8,6 +8,7 @@ package it.cnr.contab.pdg01.comp;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -767,10 +768,15 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			sql.addToHeader("V_STRUTTURA_ORGANIZZATIVA");
 			sql.addSQLJoin("V_CDR_VALIDO.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
 			sql.addSQLJoin("V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA", "V_STRUTTURA_ORGANIZZATIVA.CD_ROOT");
-			sql.addToHeader("V_STRUTTURA_ORGANIZZATIVA B");
-			sql.addSQLJoin("B.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
-			sql.addSQLJoin("B.CD_ROOT", "V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
-			sql.addSQLClause("AND","B.CD_TIPO_UNITA",sql.NOT_EQUALS,Tipo_unita_organizzativaHome.TIPO_UO_AREA);
+
+
+			Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)));
+			if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg().booleanValue()){
+				sql.addToHeader("V_STRUTTURA_ORGANIZZATIVA B");
+				sql.addSQLJoin("B.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
+				sql.addSQLJoin("B.CD_ROOT", "V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+				sql.addSQLClause("AND","B.CD_TIPO_UNITA",sql.NOT_EQUALS,Tipo_unita_organizzativaHome.TIPO_UO_AREA);
+			}
 		}
 
 		if(clause != null)
