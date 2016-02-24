@@ -1,33 +1,36 @@
 package it.cnr.contab.doccont00.comp;
 
-import it.cnr.contab.prevent00.bulk.*;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.config00.sto.bulk.CdrHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-
-import java.math.*;
-import java.rmi.RemoteException;
-import java.util.*;
-
-import it.cnr.contab.doccont00.core.bulk.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Iterator;
+import java.util.List;
 
-import javax.ejb.EJBException;
-
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
+import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.*;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.SQLBuilder;
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
 
@@ -706,7 +709,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext u
                voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
 																  new Voce_fBulk(voce.getCd_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
 																  );
-			Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+            Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
 			                                                      new Elemento_voceBulk(voce.getCd_elemento_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
 			                                                      );
             if (elemento_voce == null)
@@ -885,7 +888,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 					//recupero la voce di ribaltamento
 					Elemento_voceBulk elemento_voce = null;
 					if (voce instanceof Voce_fBulk) {
-						if (!((Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class)).isNuovoPdg(userContext, esercizio.getEsercizio())) {
+						if (!((Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class)).isNuovoPdg(esercizio.getEsercizio())) {
 							voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
 									  new Voce_fBulk(voce.getCd_voce(),esercizio.getEsercizio(),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
 									  );
