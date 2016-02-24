@@ -581,7 +581,9 @@ public String Formatta(String s, String allineamento,Integer dimensione,String r
 public boolean isSignButtonEnabled() {
 	if (firmatarioDistinta == null)
 		return false;
-	if ( super.isDeleteButtonEnabled())// &&(((Distinta_cassiereBulk)getModel()).getDt_invio() == null ||isFlusso())  )
+	if ( super.isDeleteButtonEnabled() &&(((Distinta_cassiereBulk)getModel()).getDt_invio() == null) && (!isFlusso()))
+		return true;
+	if ( super.isDeleteButtonEnabled() &&(((Distinta_cassiereBulk)getModel()).getDt_invio() != null) && (isFlusso()))
 		return true;
 	else 
 		return false;
@@ -593,7 +595,7 @@ public boolean isSalvaDefButtonHidden() {
 		return false;
 }
 public boolean isSalvaDefButtonEnabled() {
-	if( isSaveButtonEnabled())
+	if( isSaveButtonEnabled() && (((Distinta_cassiereBulk)getModel()).getDt_invio() == null ))
 		return true;
 	else 
 		return false;
