@@ -4521,11 +4521,13 @@ public class DistintaCassiereComponent extends
 					}
 				} 
 				// differenza ultimo
+				if(totAssSiope.subtract(totAssCup).compareTo(BigDecimal.ZERO)>0) {
 			    if(totAssCup.compareTo(BigDecimal.ZERO)!=0 && totAssCup.compareTo(totAssSiope)!=0 ){		    	
 						clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 						clas.setCodiceCgu(oldDoc.getCdSiope());
 						clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
 						infoben.getClassificazione().add(clas);
+					}
 				}
 				bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
 				bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
