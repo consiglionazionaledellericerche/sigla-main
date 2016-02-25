@@ -1,12 +1,14 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import java.util.*;
+import java.util.List;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class ImpegnoPGiroHome extends ObbligazioneHome {
 public ImpegnoPGiroHome(Class clazz, java.sql.Connection conn) {
@@ -82,18 +84,17 @@ public Accertamento_scadenzarioBulk findAccertamentoScadenzarioPGiro( it.cnr.jad
  */
 public SQLBuilder selectElemento_voceByClause( ImpegnoPGiroBulk bulk, Elemento_voceHome home,Elemento_voceBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException 
 {
-	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
-	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
+	boolean isNuovoPdg = ((Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class)).isNuovoPdg(bulk.getEsercizio());
 	
 	SQLBuilder sql = home.createSQLBuilder();
 	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
-	if ( bulk.getCd_uo_ente().equals( bulk.getCd_unita_organizzativa()))
+	if ( !isNuovoPdg && bulk.getCd_uo_ente().equals( bulk.getCd_unita_organizzativa()))
 		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CNR );
 	else // == OBB_PGIRO
 		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CDS );		
 	sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
 	sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
-	if (parCNR!=null && !parCNR.getFl_nuovo_pdg())
+	if (!isNuovoPdg)
 		sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_2 );
 	sql.addClause("AND", "fl_partita_giro", SQLBuilder.EQUALS, new Boolean(true) );	
 	if ( !Tipo_unita_organizzativaHome.TIPO_UO_SAC.equals(bulk.getCds().getCd_tipo_unita())  )
