@@ -683,7 +683,7 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 		Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
 		//spostato nel salva definitivo anche in questo caso
 		Document distinta_doc;
-		if(distinta.getDt_invio()==null)
+		if(distinta.getPg_distinta_def()==null)
 			 distinta_doc=inviaDistinta(context,distinta);
 		else{
 			distinta_doc = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat("Distinta n. ").concat(String.valueOf(distinta.getPg_distinta_def())).
