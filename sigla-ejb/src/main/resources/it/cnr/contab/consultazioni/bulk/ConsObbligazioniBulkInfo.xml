@@ -177,6 +177,20 @@
 		inputType="TEXT"
 		maxLength="100"
 		label="Tipo doc. Amm." />	
+	<fieldProperty
+		name="esercizio_contratto"
+		property="esercizio_contratto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Es. Contratto" />
+	<fieldProperty
+		name="pg_contratto"
+		property="pg_contratto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Contratto" />	
 	<formFieldProperty
 		name="cds" />
 	<formFieldProperty
@@ -225,6 +239,10 @@
 		name="denominazione_sede" />
 	<formFieldProperty
 		name="ti_fattura" />
+	<formFieldProperty
+		name="esercizio_contratto" />
+	<formFieldProperty
+		name="pg_contratto" />	
 	<columnFieldProperty
 		name="cds" />
 	<columnFieldProperty
@@ -274,6 +292,12 @@
 	<columnFieldProperty
 		name="denominazione_sede"
 		label="Denominazione&#160;sede&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+	<columnFieldProperty
+		name="tipo_doc_amm" />		
+    <columnFieldProperty
+		name="esercizio_contratto" />
+	<columnFieldProperty
+		name="pg_contratto" />	
 	<findFieldProperty
 		name="cds" />
 	<findFieldProperty
@@ -322,4 +346,9 @@
 		name="denominazione_sede" />
 	<findFieldProperty
 		name="tipo_doc_amm" />	
+	<findFieldProperty
+		name="esercizio_contratto" />
+	<findFieldProperty
+		name="pg_contratto" />	
+		
 </bulkInfo>
