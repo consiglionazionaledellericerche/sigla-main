@@ -835,17 +835,10 @@ private String getTitolo() {
 }
 public String getDocumento(){
 	Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
-	
 	if (distinta != null){
-		if(!isFlusso())		
-		return "Distinta ".
-				concat(String.valueOf(distinta.getEsercizio())).
-				concat("-").concat(distinta.getCd_unita_organizzativa()==null?"":distinta.getCd_unita_organizzativa()).
-				concat("-").concat(String.valueOf(distinta.getPg_distinta_def()));
-		else
 			return 
 					String.valueOf(distinta.getEsercizio()).concat("-").concat(distinta.getCd_unita_organizzativa()==null?"":distinta.getCd_unita_organizzativa()).
-					concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).concat("-I.xslt.p7m");
+					concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).concat("-I.xslt");
 	}
 	return null;
 }
@@ -853,14 +846,15 @@ public String getDocumento(){
 public void scaricaDistinta(ActionContext actioncontext) throws Exception {
 	Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
 	if(this.getParametriCnr()!= null && this.getParametriCnr().getFl_tesoreria_unica()){
-		CmisObject id =documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
+		Document id =(Document)documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
 				concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
 				concat("-I.xslt"));
 		InputStream is =null;
 		if(id!=null){
 			 is = documentiContabiliService.getResource(id);
 			if (is != null){
-				((HttpActionContext)actioncontext).getResponse().setContentType("text/html");
+				((HttpActionContext)actioncontext).getResponse().setCharacterEncoding("UTF-8");
+				((HttpActionContext)actioncontext).getResponse().setContentType(id.getContentStreamMimeType());
 				OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 				((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 				byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
@@ -958,6 +952,23 @@ public boolean isDownloadFirmatoDocumentaleButtonHidden() {
 		return false;			
 		 
 }
+public String getDocumentoFirmato(){
+	Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
+	
+	if (distinta != null){
+		if(!isFlusso())		
+		return "Distinta ".
+				concat(String.valueOf(distinta.getEsercizio())).
+				concat("-").concat(distinta.getCd_unita_organizzativa()==null?"":distinta.getCd_unita_organizzativa()).
+				concat("-").concat(String.valueOf(distinta.getPg_distinta_def()));
+		else
+			return 
+					String.valueOf(distinta.getEsercizio()).concat("-").concat(distinta.getCd_unita_organizzativa()==null?"":distinta.getCd_unita_organizzativa()).
+					concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).concat("-I.xslt.p7m");
+	}
+	return null;
+}
+
 }
 
 
