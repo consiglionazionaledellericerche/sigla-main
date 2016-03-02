@@ -20,11 +20,17 @@
 	CNRUserInfo userInfo = (CNRUserInfo)HttpActionContext.getUserInfo(request);
 	DocumentoEleTestataBulk model = (DocumentoEleTestataBulk)bp.getModel();
 	String nomeFile = model != null?model.getNomeFile("EC"):"";
+	String nomeFileFirmato = model != null?model.getNomeFileFirmato():"";
+
 %>
 <title>FATTURA ELETTRONICA</title>
 <script language="JavaScript">
 function doScaricaFatturaHtml() {
 	window.open('genericdownload/fattura.html?methodName=scaricaFatturaHtml&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
+			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+}
+function doScaricaFatturaFirmata() {
+	window.open('genericdownload/<%=nomeFileFirmato%>?methodName=scaricaFatturaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
 			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
 }
 function doScaricaEsito() {
