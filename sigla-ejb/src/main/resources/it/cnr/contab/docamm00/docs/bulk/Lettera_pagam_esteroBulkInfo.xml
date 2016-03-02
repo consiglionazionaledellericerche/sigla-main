@@ -103,8 +103,17 @@
 		nullable="false"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"/>
-
-		
+	<fieldProperty
+		name="esercizio_distinta"
+		property="esercizio_distinta"
+		inputType="TEXT"
+		label="Es. Distinta" />
+	<fieldProperty
+		name="pg_distinta"
+		property="pg_distinta"
+		inputType="TEXT"
+		label="N. Distinta" />
+			
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -175,7 +184,11 @@
 		name="ti_entrata_spesa" />
 	<findFieldProperty
 		name="sospeso" />
-		
+	<findFieldProperty
+		name="esercizio_distinta" />
+	<findFieldProperty
+		name="pg_distinta" />
+			
 	<columnSet
         name="firmaBase">
 		<columnFieldProperty
@@ -269,15 +282,18 @@
 		<columnFieldProperty
 			name="dt_registrazione" />
 		<columnFieldProperty
+			name="dt_firma"
+			property="dt_firma"
+			inputType="TEXT"
+			label="Data di Firma" />		
+		<columnFieldProperty
+			name="esercizio_distinta" />
+		<columnFieldProperty
+			name="pg_distinta" />		
+		<columnFieldProperty
 			name="documento"
 			property="documento"
 			inputType="TEXT"
 			label="Documento" />				
-		<columnFieldProperty
-			name="dt_firma"
-			property="dt_firma"
-			inputType="TEXT"
-			label="Data di Firma" />
-	</columnSet>
-		
+	</columnSet>		
 </bulkInfo>

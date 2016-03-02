@@ -45,7 +45,7 @@
 		name="cd_unita_organizzativa"
 		property="cd_unita_organizzativa"
 		inputSize="10"
-		inputType="ROTEXT"
+		inputType="TEXT"
 		label="Unit&#224; Organizzativa"
 		enabledOnFreeSearch="true"		
 		caseSensitiveSearch="false" />
