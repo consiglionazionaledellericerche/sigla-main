@@ -4,7 +4,6 @@ import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.EsercizioComponentSession;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.actions.CRUDFatturaPassivaAction;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
@@ -40,15 +39,12 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.gov.fatturapa.sdi.fatturapa.v1.RegimeFiscaleType;
-import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
-import it.gov.fatturapa.sdi.fatturapa.v1.TipoDocumentoType;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -158,6 +154,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		toolbar.addAll(Arrays.asList(buttons));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.download"));
+		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+				.getHandler().getProperties(getClass()), "Toolbar.downloadFatturaFirmata"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.rifiuta"));
@@ -311,6 +309,29 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				response.setContentType("text/html");
 				Transformer trasform = tFactory.newTransformer(xslDoc);
 				trasform.transform(xmlDoc, new StreamResult(os));
+				os.flush();
+			}
+		}
+	}	
+
+	public void scaricaFatturaFirmata(ActionContext actioncontext) throws IOException, ServletException, TransformerException, ApplicationException {
+    	DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
+		Folder fatturaFolder = (Folder) cmisService.getNodeByNodeRef(documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef());
+		ItemIterable<CmisObject> files = fatturaFolder.getChildren();
+		for (CmisObject cmisObject : files) {
+			if (cmisObject.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains("P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma")){													
+				Document document = (Document) cmisObject;
+				InputStream is = cmisService.getResource(document);
+				((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(document.getContentStreamLength()).intValue());
+				((HttpActionContext)actioncontext).getResponse().setContentType(document.getContentStreamMimeType());
+				OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+				((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+				byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+				int buflength;
+				while ((buflength = is.read(buffer)) > 0) {
+					os.write(buffer,0,buflength);
+				}
+				is.close();
 				os.flush();
 			}
 		}

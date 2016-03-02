@@ -420,6 +420,10 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 			return false;
 		return true;
 	}
+
+	public String getNomeFileFirmato() {
+		return getDocumentoEleTrasmissione().getNomeFile();
+	}	
 	
 	public String getNomeFile(String prefix) {
 		if (getIdPaese() == null)
