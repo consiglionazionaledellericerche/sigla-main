@@ -124,7 +124,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 				PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
 				valorizzaField(pdAcroForm, "LUOGO", "ROMA");
 				valorizzaField(pdAcroForm, "DATA", new SimpleDateFormat("dd/MM/yyyy").format(lettera.getDt_registrazione()));
-				valorizzaField(pdAcroForm, "NUM_RIF", String.valueOf(lettera.getPg_lettera()));
+				valorizzaField(pdAcroForm, "NUM_RIF", String.valueOf(lettera.getPg_lettera()) + " - " + lettera.getCd_unita_organizzativa());
 				valorizzaField(pdAcroForm, "BONIFICO_MEZZO_"+lettera.getBonifico_mezzo(), "X");
 				valorizzaField(pdAcroForm, "DIVISA", lettera.getDivisa());
 				valorizzaField(pdAcroForm, "IMPORTO", new java.text.DecimalFormat("#,##0.00").format(lettera.getIm_pagamento()));

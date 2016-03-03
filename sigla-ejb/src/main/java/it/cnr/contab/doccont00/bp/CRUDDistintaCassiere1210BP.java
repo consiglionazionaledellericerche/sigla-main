@@ -46,6 +46,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -360,9 +361,6 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
 			if (lettera_pagam_esteroBulk.getFl_seconda_firma_apposta() == null || !lettera_pagam_esteroBulk.getFl_seconda_firma_apposta())
 				nodes.addAll(documentiContabiliService.getNodeRefDocumento(lettera_pagam_esteroBulk, true));
-			lettera_pagam_esteroBulk.setFl_seconda_firma_apposta(true);
-			lettera_pagam_esteroBulk.setToBeUpdated();
-			lettera_pagam_esteroBulk = (Lettera_pagam_esteroBulk) createComponentSession().modificaConBulk(context.getUserContext(), lettera_pagam_esteroBulk);
 		}
 		Apparence apparence = new Apparence(
 				null, 
@@ -412,20 +410,21 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		} catch (Exception e) {
 			throw new BusinessProcessException(e);
 		}
+		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
+			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
+			lettera_pagam_esteroBulk.setFl_seconda_firma_apposta(true);
+			lettera_pagam_esteroBulk.setToBeUpdated();
+			lettera_pagam_esteroBulk = (Lettera_pagam_esteroBulk) createComponentSession().modificaConBulk(context.getUserContext(), lettera_pagam_esteroBulk);
+		}
 	}
 	
 	public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
 		DistintaCassiere1210Bulk distintaCassiere1210Bulk = (DistintaCassiere1210Bulk)getModel();
-		distintaCassiere1210Bulk.setDtInvio(EJBCommonServices.getServerTimestamp());
-		distintaCassiere1210Bulk.setToBeUpdated();
-		distintaCassiere1210Bulk = (DistintaCassiere1210Bulk) createComponentSession().modificaConBulk(context.getUserContext(), distintaCassiere1210Bulk);
+		Timestamp currentTimestamp = EJBCommonServices.getServerTimestamp();
 		List<String> nodes = new ArrayList<String>();
 		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
 			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
 			nodes.addAll(documentiContabiliService.getNodeRefDocumento(lettera_pagam_esteroBulk, true));
-			lettera_pagam_esteroBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
-			lettera_pagam_esteroBulk.setToBeUpdated();
-			lettera_pagam_esteroBulk = (Lettera_pagam_esteroBulk) createComponentSession().modificaConBulk(context.getUserContext(), lettera_pagam_esteroBulk);
 		}
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		Print_spoolerBulk print = new Print_spoolerBulk();
@@ -438,13 +437,13 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		print.addParam("esercizio", String.valueOf(distintaCassiere1210Bulk.getEsercizio()), String.class);
 		print.addParam("pg_distinta", String.valueOf(distintaCassiere1210Bulk.getPgDistinta()), String.class);
 		print.addParam("DT_EMISSIONE", format.format(distintaCassiere1210Bulk.getDtEmissione()), String.class);
-		print.addParam("DT_INVIO", format.format(distintaCassiere1210Bulk.getDtInvio()), String.class);
+		print.addParam("DT_INVIO", format.format(currentTimestamp), String.class);
 		
 		Report report = SpringUtil.getBean("printService",
 				PrintService.class).executeReport(context.getUserContext(),
 				print);
 		CMISPath cmisPath = distintaCassiere1210Bulk.getCMISPath(documentiContabiliService);
-		Document node = documentiContabiliService.storePrintDocument(distintaCassiere1210Bulk, report, cmisPath);
+		Document node = documentiContabiliService.restoreSimpleDocument(distintaCassiere1210Bulk, report.getInputStream(), report.getContentType(), report.getName(), cmisPath);
 		String nodo = (String) node.getPropertyValue("alfcmis:nodeRef");
 		Apparence apparence = new Apparence(
 				null, 
@@ -452,6 +451,16 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 				"per invio all'Istituto cassiere\nFirmato da\n", 
 				450, 40, getLastPagePDF(node.getContentStream().getStream()), 700, 80);		
 		signDocuments(context, firmaOTPBulk, Collections.singletonList(nodo), apparence);		
+		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
+			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
+			lettera_pagam_esteroBulk = ((Lettera_pagam_esteroBulk) createComponentSession().findByPrimaryKey(context.getUserContext(), lettera_pagam_esteroBulk));
+			lettera_pagam_esteroBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+			lettera_pagam_esteroBulk.setToBeUpdated();
+			lettera_pagam_esteroBulk = (Lettera_pagam_esteroBulk) createComponentSession().modificaConBulk(context.getUserContext(), lettera_pagam_esteroBulk);
+		}
+		distintaCassiere1210Bulk.setDtInvio(currentTimestamp);
+		distintaCassiere1210Bulk.setToBeUpdated();
+		distintaCassiere1210Bulk = (DistintaCassiere1210Bulk) createComponentSession().modificaConBulk(context.getUserContext(), distintaCassiere1210Bulk);
 		nodes.add(nodo);
 		documentiContabiliService.inviaDistintaPEC1210(nodes);		
 		save(context);
