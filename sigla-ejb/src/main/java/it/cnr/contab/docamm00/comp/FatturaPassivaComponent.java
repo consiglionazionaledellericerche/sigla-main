@@ -7405,14 +7405,15 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
 	      String key = null;
 	      Hashtable<String, BigDecimal> currentMap = null;
-	      if (rigaEle.getNatura()!=null) {
-	    	  key = rigaEle.getNatura();
-	    	  currentMap = mapNaturaEle;
-	      } else {
-	    	  key = rigaEle.getAliquotaIva().toString();
-	    	  currentMap = mapIvaEle;
+	      if(rigaEle.getImponibileImporto()!=null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO)!=0){
+		      if (rigaEle.getNatura()!=null) {
+		    	  key = rigaEle.getNatura();
+		    	  currentMap = mapNaturaEle;
+		      } else {
+		    	  key = rigaEle.getAliquotaIva().toString();
+		    	  currentMap = mapIvaEle;
+		      }
 	      }
-
 	      if (currentMap.get(key)!=null)
 	    	  currentMap.put(key, currentMap.get(key).add(rigaEle.getImposta()));
 	      else
