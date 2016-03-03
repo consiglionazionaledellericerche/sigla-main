@@ -323,11 +323,14 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		DocumentoEleTrasmissioneHome home = (DocumentoEleTrasmissioneHome) getHome(usercontext, DocumentoEleTrasmissioneBulk.class);
     	try {
     		DocumentoEleTrasmissioneBulk testataDB = (DocumentoEleTrasmissioneBulk) home.findByPrimaryKey(trasmissione);
-			if (testataDB.getUnitaCompetenza() == null && trasmissione.getUnitaCompetenza() != null && 
-					trasmissione.getUnitaCompetenza().getCd_unita_organizzativa() != null) {
+			if ((testataDB.getUnitaCompetenza() == null && trasmissione.getUnitaCompetenza() != null && 
+					trasmissione.getUnitaCompetenza().getCd_unita_organizzativa() != null) ||
+					(testataDB.getUnitaCompetenza() != null && trasmissione.getUnitaCompetenza() != null && 
+					trasmissione.getUnitaCompetenza().getCd_unita_organizzativa() != null && 
+					!testataDB.getUnitaCompetenza().equalsByPrimaryKey(trasmissione.getUnitaCompetenza()))) {
 				try {
 	        		String subject= "[SIGLA] Notifica assegnazione fattura passiva con Identificativo SdI:" + trasmissione.getIdentificativoSdi();
-	        		subject += " UO: " + testataDB.getUnitaCompetenza().getCd_unita_organizzativa();
+	        		subject += " UO: " + trasmissione.getUnitaCompetenza().getCd_unita_organizzativa();
 	        		String text = "E' pervenuta la fattura dal trasmittente: <b>" +trasmissione.getIdCodice() + "</b><br>"+
 	        				"Prestatore: " + trasmissione.getDenominzionePrestatore() +"<br>" +
 	        				"Il documento è presente nell'area temporanea di SIGLA.";
@@ -346,6 +349,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 						SendMail.sendMail(subject, text, InternetAddress.parse(addressTO));
 	    			}        	        		
 	        	}catch (Exception _ex) {
+	        		logger.error("NotificaUOCompetenza: " + _ex.getMessage(), _ex);
 	        	}				
 			}
 		} catch (PersistencyException e) {
