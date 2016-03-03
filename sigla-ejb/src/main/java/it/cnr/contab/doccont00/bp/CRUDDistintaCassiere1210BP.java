@@ -453,6 +453,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		signDocuments(context, firmaOTPBulk, Collections.singletonList(nodo), apparence);		
 		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
 			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
+			lettera_pagam_esteroBulk = ((Lettera_pagam_esteroBulk) createComponentSession().findByPrimaryKey(context.getUserContext(), lettera_pagam_esteroBulk));
 			lettera_pagam_esteroBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
 			lettera_pagam_esteroBulk.setToBeUpdated();
 			lettera_pagam_esteroBulk = (Lettera_pagam_esteroBulk) createComponentSession().modificaConBulk(context.getUserContext(), lettera_pagam_esteroBulk);
