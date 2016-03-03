@@ -28,6 +28,7 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.Log;
 import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
@@ -83,7 +84,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	
 	public void setColumnSet(ActionContext actioncontext, String statoTrasmissione) {
 		String columnSetName = "firmaBase";
-		if (statoTrasmissione.equalsIgnoreCase(StatoTrasmissione.ALL))
+		if (statoTrasmissione.equalsIgnoreCase(StatoTrasmissione.ALL) || statoTrasmissione.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO))
 			columnSetName = "all";
 		else if (!statoTrasmissione.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO))
 			columnSetName = "firmaPredisposta";
@@ -439,4 +440,12 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
 		
 	}
+	@Override
+	public RemoteIterator search(ActionContext actioncontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws BusinessProcessException {
+		setFindclause(compoundfindclause);
+		StatoTrasmissione statoTrasmissione = (StatoTrasmissione)oggettobulk.clone();
+		if (statoTrasmissione.getStato_trasmissione().equalsIgnoreCase(StatoTrasmissione.ALL))
+			statoTrasmissione.setStato_trasmissione(null);
+		return findFreeSearch(actioncontext, compoundfindclause, (OggettoBulk) statoTrasmissione);
+	}	
 }
