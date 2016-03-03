@@ -3053,4 +3053,11 @@ public void validateDate() throws ValidationException {
 			return true;
 		return false;
 	}	
+	public boolean isSanMarinoConIVA() {
+
+		if ((getFl_san_marino_con_iva() != null && getFl_san_marino_con_iva().booleanValue()))
+			return true;
+			
+		return false;
+	}
 }
