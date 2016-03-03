@@ -74,11 +74,29 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			compoundfindclause.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS,
 					((CNRUserContext) actioncontext.getUserContext()).getEsercizio());			
 			if (uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)!=0) {
-				compoundfindclause.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS,
-						((CNRUserContext) actioncontext.getUserContext()).getCd_cds());
-				if (!uoScrivania.isUoCds())
-					compoundfindclause.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS,
-						((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa());				
+				SimpleFindClause cdsFindClause = new SimpleFindClause();
+				cdsFindClause.setLogicalOperator(FindClause.AND);
+				cdsFindClause.setSqlClause("cd_cds = '" + ((CNRUserContext) actioncontext.getUserContext()).getCd_cds() + "'");
+
+				SimpleFindClause incassoReversaliFindClause = new SimpleFindClause();
+				incassoReversaliFindClause.setLogicalOperator(FindClause.AND);
+				incassoReversaliFindClause.setSqlClause("cd_cds_origine = '" + ((CNRUserContext) actioncontext.getUserContext()).getCd_cds() + "'" + 
+						" AND ti_documento_cont = 'S' AND cd_tipo_documento_cont = 'REV'");
+				
+				compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(cdsFindClause, incassoReversaliFindClause));
+
+				if (!uoScrivania.isUoCds()) {
+					SimpleFindClause uoFindClause = new SimpleFindClause();
+					uoFindClause.setLogicalOperator(FindClause.AND);
+					uoFindClause.setSqlClause("cd_unita_organizzativa = '" + ((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa() + "'");
+
+					SimpleFindClause incassoReversaliUOFindClause = new SimpleFindClause();
+					incassoReversaliUOFindClause.setLogicalOperator(FindClause.AND);
+					incassoReversaliUOFindClause.setSqlClause("cd_uo_origine = '" + ((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa() + "'" + 
+							" AND ti_documento_cont = 'S' AND cd_tipo_documento_cont = 'REV'");
+
+					compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(uoFindClause, incassoReversaliUOFindClause));					
+				}
 			}
 			compoundfindclause.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS,
 					MandatoBulk.TIPO_REGOLARIZZAZIONE);
