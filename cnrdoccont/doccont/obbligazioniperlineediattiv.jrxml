@@ -3,10 +3,10 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0000000000000004"/>
-	<property name="ireport.x" value="87"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR10" isDefault="true" markup="none" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10BOLD" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
@@ -43,25 +43,25 @@
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="uo" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["080.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["084.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["080"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["084"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="linea" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cdr" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["080.000.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["084.000.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2006)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_da" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2006/01/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2016/01/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_a" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2006/12/31")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2016/12/31")]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM PRT_STAMPA_OBBL_LINEE_ATTIVITA
@@ -71,7 +71,7 @@ WHERE UO LIKE DECODE($P{uo},'*','%',$P{uo})
   AND CD_CENTRO_RESPONSABILITA LIKE DECODE($P{cdr},'*','%',$P{cdr})
   AND ESERCIZIO = $P{esercizio}
   AND DT_REGISTRAZIONE BETWEEN $P{data_da} AND $P{data_a}
-ORDER BY CD_CENTRO_RESPONSABILITA ASC, CD_LINEA_ATTIVITA ASC]]>
+ORDER BY CD_CENTRO_RESPONSABILITA ASC, CD_LINEA_ATTIVITA ASC, ESERCIZIO_ORIGINALE ASC, PG_OBBLIGAZIONE ASC, PG_OBBLIGAZIONE_SCADENZARIO ASC]]>
 	</queryString>
 	<field name="CDS" class="java.lang.String"/>
 	<field name="UO" class="java.lang.String"/>
