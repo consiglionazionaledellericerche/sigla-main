@@ -7413,11 +7413,12 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		    	  key = rigaEle.getAliquotaIva().toString();
 		    	  currentMap = mapIvaEle;
 		      }
+	      
+		      if (currentMap.get(key)!=null)
+		    	  currentMap.put(key, currentMap.get(key).add(rigaEle.getImposta()));
+		      else
+		    	  currentMap.put(key, rigaEle.getImposta());
 	      }
-	      if (currentMap.get(key)!=null)
-	    	  currentMap.put(key, currentMap.get(key).add(rigaEle.getImposta()));
-	      else
-	    	  currentMap.put(key, rigaEle.getImposta());
 	}
 
 	Hashtable<String, BigDecimal> mapNaturaEleArr = new Hashtable<String, BigDecimal>(), mapIvaEleArr = new Hashtable<String, BigDecimal>();
