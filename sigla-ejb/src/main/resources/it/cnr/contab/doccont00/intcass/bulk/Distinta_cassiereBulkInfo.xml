@@ -343,6 +343,17 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
 		label="Sepa" />
+	<fieldProperty
+		name="utcr"
+		property="utcr"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"	
+		enabledOnFreeSearch="true"			
+		maxLength="20"
+		inputSize="20"
+		label="Utente" />
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -437,6 +448,8 @@
 		name="fl_flusso" />
 	<formFieldProperty
 		name="fl_sepa" />
+	<formFieldProperty
+		name="utcr" />	
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -453,6 +466,10 @@
 		name="pg_distinta_def" />
 	<columnFieldProperty
 		name="fl_flusso" />
+	<columnFieldProperty
+		name="fl_sepa" />		
+	<columnFieldProperty
+		name="utcr" />	
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -467,5 +484,6 @@
 		name="dt_invio" />
 	<findFieldProperty
 		name="pg_distinta_def" />
-
+	<findFieldProperty
+		name="utcr" />	
 </bulkInfo>
