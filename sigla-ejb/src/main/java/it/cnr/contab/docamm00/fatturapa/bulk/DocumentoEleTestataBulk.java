@@ -5,6 +5,7 @@
 package it.cnr.contab.docamm00.fatturapa.bulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
@@ -96,6 +97,8 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	 * [DOCUMENTO_ELE_TRASMISSIONE Documento elettronico di trasmissione]
 	 **/
 	private DocumentoEleTrasmissioneBulk documentoEleTrasmissione =  new DocumentoEleTrasmissioneBulk();
+	private Unita_organizzativaBulk unitaCompetenza =  new Unita_organizzativaBulk();
+	
 	/**
 	 * [MODALITA_PAGAMENTO Descrive le modalitÃƒÂ  di pagamento previste per un dato terzo.]
 	 **/
@@ -584,4 +587,28 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		}
 		return false;
 	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [Unità organizzativa]
+	 **/
+	public java.lang.String getCdUnitaCompetenza() {
+		Unita_organizzativaBulk unitaOrganizzativa = this.getUnitaCompetenza();
+		if (unitaOrganizzativa == null)
+			return null;
+		return unitaOrganizzativa.getCd_unita_organizzativa();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [Unità organizzativa]
+	 **/
+	public void setCdUnitaCompetenza(java.lang.String cdUnitaOrganizzativa)  {
+		this.getUnitaCompetenza().setCd_unita_organizzativa(cdUnitaOrganizzativa);
+	}
+	
+	public Unita_organizzativaBulk getUnitaCompetenza() {
+		return unitaCompetenza;
+	}
+	public void setUnitaCompetenza(Unita_organizzativaBulk unitaCompetenza) {
+		this.unitaCompetenza = unitaCompetenza;
+	}	
 }

@@ -631,7 +631,7 @@
 		label="Segnalazioni da verificare" />
 	<fieldProperty
 		name="unitaCompetenza"
-		property="documentoEleTrasmissione.unitaCompetenza"
+		property="unitaCompetenza"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		labelStyle="color:blue"
@@ -1177,7 +1177,7 @@
 		label="UO destinataria"/>
 	<findFieldProperty
 		name="cdUnitaCompetenza"
-		property="documentoEleTrasmissione.cdUnitaCompetenza" 
+		property="cdUnitaCompetenza" 
 		label="UO di competenza"/>	
 	<findFieldProperty
 		name="codiceDestinatario"/>	
@@ -1207,7 +1207,7 @@
 		label="UO destinataria"/>
 	<columnFieldProperty
 		name="cdUnitaCompetenza"
-		property="documentoEleTrasmissione.cdUnitaCompetenza" 
+		property="cdUnitaCompetenza" 
 		label="UO di competenza"/>	
 	<columnFieldProperty
 		name="tipoDocumento" />

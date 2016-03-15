@@ -291,7 +291,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     			(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null || 
         			documentoEleTrasmissioneBulk.getPrestatoreCodice() != null))
     		return false;
-    	if (documentoEleTrasmissioneBulk.getCdUnitaCompetenza() != null && ((documentoEleTrasmissioneBulk.getFlCompletato() != null && !documentoEleTrasmissioneBulk.getFlCompletato()) || 
+    	if (documentoEleTestata.getCdUnitaCompetenza() != null && ((documentoEleTrasmissioneBulk.getFlCompletato() != null && !documentoEleTrasmissioneBulk.getFlCompletato()) || 
     			documentoEleTrasmissioneBulk.getFlCompletato() == null))
     		return false;
     	return isCompletato;
@@ -311,7 +311,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
     	if (oggettobulk instanceof DocumentoEleTestataBulk){
     		((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione().setToBeUpdated();
-    		notificaUOCompetenza(usercontext, ((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione());
+    		notificaUOCompetenza(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
     		super.modificaConBulk(usercontext, ((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione());
     		cambiaStatoCompletato(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
     	}
@@ -319,25 +319,25 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     }      
     
     @SuppressWarnings("unchecked")
-	private void notificaUOCompetenza(UserContext usercontext, DocumentoEleTrasmissioneBulk trasmissione) throws ComponentException {
-		DocumentoEleTrasmissioneHome home = (DocumentoEleTrasmissioneHome) getHome(usercontext, DocumentoEleTrasmissioneBulk.class);
+	private void notificaUOCompetenza(UserContext usercontext, DocumentoEleTestataBulk testata) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
     	try {
-    		DocumentoEleTrasmissioneBulk testataDB = (DocumentoEleTrasmissioneBulk) home.findByPrimaryKey(trasmissione);
-			if ((testataDB.getUnitaCompetenza() == null && trasmissione.getUnitaCompetenza() != null && 
-					trasmissione.getUnitaCompetenza().getCd_unita_organizzativa() != null) ||
-					(testataDB.getUnitaCompetenza() != null && trasmissione.getUnitaCompetenza() != null && 
-					trasmissione.getUnitaCompetenza().getCd_unita_organizzativa() != null && 
-					!testataDB.getUnitaCompetenza().equalsByPrimaryKey(trasmissione.getUnitaCompetenza()))) {
+    		DocumentoEleTestataBulk testataDB = (DocumentoEleTestataBulk) home.findByPrimaryKey(testata);
+			if ((testataDB.getUnitaCompetenza() == null && testata.getUnitaCompetenza() != null && 
+					testata.getUnitaCompetenza().getCd_unita_organizzativa() != null) ||
+					(testataDB.getUnitaCompetenza() != null && testata.getUnitaCompetenza() != null && 
+					testata.getUnitaCompetenza().getCd_unita_organizzativa() != null && 
+					!testataDB.getUnitaCompetenza().equalsByPrimaryKey(testata.getUnitaCompetenza()))) {
 				try {
-	        		String subject= "[SIGLA] Notifica assegnazione fattura passiva con Identificativo SdI:" + trasmissione.getIdentificativoSdi();
-	        		subject += " UO: " + trasmissione.getUnitaCompetenza().getCd_unita_organizzativa();
-	        		String text = "E' pervenuta la fattura dal trasmittente: <b>" +trasmissione.getIdCodice() + "</b><br>"+
-	        				"Prestatore: " + trasmissione.getDenominzionePrestatore() +"<br>" +
+	        		String subject= "[SIGLA] Notifica assegnazione fattura passiva con Identificativo SdI:" + testata.getIdentificativoSdi();
+	        		subject += " UO: " + testata.getUnitaCompetenza().getCd_unita_organizzativa();
+	        		String text = "E' pervenuta la fattura dal trasmittente: <b>" +testata.getIdCodice() + "</b><br>"+
+	        				"Prestatore: " + testata.getDocumentoEleTrasmissione().getDenominzionePrestatore() +"<br>" +
 	        				"Il documento è presente nell'area temporanea di SIGLA.";
 	        		String addressTO = null;
 	        		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(usercontext,Utente_indirizzi_mailBulk.class);
 	    			for (java.util.Iterator<Utente_indirizzi_mailBulk> i = utente_indirizzi_mailHome.findUtenteNotificaRicezioneFatturaElettronica(
-	    					trasmissione.getUnitaCompetenza()).iterator();i.hasNext();){
+	    					testata.getUnitaCompetenza()).iterator();i.hasNext();){
 	    				Utente_indirizzi_mailBulk utente_indirizzi = (Utente_indirizzi_mailBulk)i.next();
 	    				if (addressTO == null)
 	    				  addressTO = new String();
