@@ -29,11 +29,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"/>				
 		<columnMapping
-			columnName="CD_UNITA_COMPETENZA"
-			propertyName="cdUnitaCompetenza"
-			sqlTypeName="VARCHAR"
-			columnSize="30"/>						
-		<columnMapping
 			columnName="TRASMITTENTE_TELEFONO"
 			propertyName="trasmittenteTelefono"
 			sqlTypeName="VARCHAR"
@@ -561,8 +556,6 @@
 		name="codiceDestinatario" />
 	<persistentProperty
 		name="cdUnitaOrganizzativa" />			
-	<persistentProperty
-		name="cdUnitaCompetenza" />
 	<persistentProperty
 		name="trasmittenteTelefono" />
 	<persistentProperty
