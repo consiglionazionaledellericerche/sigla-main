@@ -18,6 +18,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
 import it.cnr.contab.config00.tabnum.bulk.Numerazione_baseBulk;
@@ -184,6 +185,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
+import javax.ejb.EJBException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -5486,7 +5489,7 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectLettera_pagamento_estero_sos
 		throw new it.cnr.jada.comp.ApplicationException("Attenzione la Tipologia del pagamento è vuota!");
 	
 	it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,sospeso).createSQLBuilder();
-
+	
 	sql.openParenthesis("AND");
 	sql.addSQLClause("OR", "IM_ASSOCIATO", sql.EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("OR", "IM_ASSOCIATO", sql.ISNULL, null);
@@ -5499,10 +5502,38 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectLettera_pagamento_estero_sos
 	sql.addSQLClause("OR", "IM_SOSPESO", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND", "IM_SOSPESO", sql.ISNOTNULL, null);
 	sql.closeParenthesis();
-	sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
 	sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
-	sql.addClause("AND", "cd_cds", sql.EQUALS, fatturaPassiva.getCd_cds());
-	sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
+	try {
+	EnteBulk ente = (EnteBulk) getHome(aUC, EnteBulk.class)
+			.findAll().get(0);
+
+		if (!Utility.createParametriCnrComponentSession().getParametriCnr(aUC,fatturaPassiva.getLettera_pagamento_estero().getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+			sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+			sql.addClause("AND", "cd_cds", sql.EQUALS, fatturaPassiva.getCd_cds());
+			sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
+		}
+		else
+		{
+			sql.addClause("AND", "cd_cds", sql.EQUALS, ente.getCd_unita_organizzativa());
+			sql.openParenthesis("AND"); 
+			sql.openParenthesis("AND"); 
+			sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+			sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
+			sql.closeParenthesis();
+			sql.openParenthesis("OR");
+			sql.addClause("OR", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+			sql.addClause("AND", "cd_cds_origine", sql.ISNULL,null);
+			sql.closeParenthesis();
+			sql.closeParenthesis();
+		}
+	} catch (RemoteException e) {
+		throw handleException(fatturaPassiva, e);
+	} catch (EJBException e) {
+		throw handleException(fatturaPassiva, e);
+	} catch (PersistencyException e) {
+		throw handleException(fatturaPassiva, e);
+	}	
+	
 	sql.addClause("AND", "esercizio", sql.EQUALS, fatturaPassiva.getLettera_pagamento_estero().getEsercizio());
 	sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, sospeso.TIPO_SPESA);
 	sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.TI_SOSPESO);
@@ -5850,7 +5881,7 @@ private void validaConConsuntivi(
 private void validaDisponibilitaDiCassaCDS(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException {
 
 	try	{
-		if (fattura.getLettera_pagamento_estero()!=null && fattura.getLettera_pagamento_estero().getEsercizio()!=null && !Utility.createParametriCnrComponentSession().getParametriCnr(userContext,fattura.getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
+		if (fattura.getLettera_pagamento_estero()!=null && fattura.getLettera_pagamento_estero().getEsercizio()!=null && !Utility.createParametriCnrComponentSession().getParametriCnr(userContext,fattura.getLettera_pagamento_estero().getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
 			it.cnr.jada.bulk.BulkHome home = getHome( userContext, V_disp_cassa_cdsBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addClause( "AND", "esercizio", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
