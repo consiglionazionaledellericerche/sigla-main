@@ -17,8 +17,6 @@ public class DocumentoEleTrasmissioneBase extends DocumentoEleTrasmissioneKey im
 	//  CD_UNITA_ORGANIZZATIVA VARCHAR(30)
 	private java.lang.String cdUnitaOrganizzativa;
 
-	//  CD_UNITA_COMPETENZA VARCHAR(30)
-	private java.lang.String cdUnitaCompetenza;
  
 //    TRASMITTENTE_TELEFONO VARCHAR(12)
 	private java.lang.String trasmittenteTelefono;
@@ -1373,12 +1371,6 @@ public class DocumentoEleTrasmissioneBase extends DocumentoEleTrasmissioneKey im
 	public void setIntermediarioCdAnag(java.lang.Integer intermediarioCdAnag) {
 		this.intermediarioCdAnag = intermediarioCdAnag;
 	}
-	public java.lang.String getCdUnitaCompetenza() {
-		return cdUnitaCompetenza;
-	}
-	public void setCdUnitaCompetenza(java.lang.String cdUnitaCompetenza) {
-		this.cdUnitaCompetenza = cdUnitaCompetenza;
-	}	
 	public java.lang.Boolean getFlCompletato() {
 		return flCompletato;
 	}

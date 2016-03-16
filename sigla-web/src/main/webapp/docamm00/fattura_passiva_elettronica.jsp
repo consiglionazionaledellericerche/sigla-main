@@ -65,8 +65,8 @@ function doScaricaEsito() {
 		<tr>
 			<% bp.getController().writeFormField(out,"unitaCompetenza");%>
 			<% 	if (!bp.isSearching() && model != null && 
-					model.getDocumentoEleTrasmissione().getUnitaCompetenza() != null &&
-					userInfo.getUnita_organizzativa().equalsByPrimaryKey(model.getDocumentoEleTrasmissione().getUnitaCompetenza())) {
+					model.getUnitaCompetenza() != null &&
+					userInfo.getUnita_organizzativa().equalsByPrimaryKey(model.getUnitaCompetenza())) {
 					bp.getController().writeFormField(out,"flCompletato");
 				}
 			%>

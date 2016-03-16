@@ -457,6 +457,11 @@
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />	
+		<columnMapping
+			columnName="CD_UNITA_COMPETENZA"
+			propertyName="cdUnitaCompetenza"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>											
 	</defaultColumnMap>
 	<persistentProperty
 		name="tipoDocumento" />
@@ -606,4 +611,6 @@
 		name="pg_ver_rec" />
 	<persistentProperty
 		name="flIrregistrabile" />		
+	<persistentProperty
+		name="cdUnitaCompetenza" />			
 </SQLPersistentInfo>

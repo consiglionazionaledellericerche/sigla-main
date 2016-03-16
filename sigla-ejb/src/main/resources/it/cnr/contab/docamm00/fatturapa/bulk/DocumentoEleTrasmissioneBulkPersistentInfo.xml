@@ -8,9 +8,6 @@
 			columnName="CD_UNITA_ORGANIZZATIVA"
 			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />	    		
 		<columnMapping
-			columnName="CD_UNITA_COMPETENZA"
-			propertyName="unitaCompetenza.cd_unita_organizzativa" />		
-		<columnMapping
 			columnName="PRESTATORE_CD_TERZO"
 			propertyName="prestatore.cd_terzo" />
 		<columnMapping
@@ -30,13 +27,10 @@
 			propertyName="intermediario.cd_terzo" />
 		<columnMapping
 			columnName="INTERMEDIARIO_CD_ANAG"
-			propertyName="intermediarioAnag.cd_anag" />
-				
+			propertyName="intermediarioAnag.cd_anag" />				
 	</defaultColumnMap>
 	<persistentProperty
 		name="unitaOrganizzativa" />		
-	<persistentProperty
-		name="unitaCompetenza" />			
 	<persistentProperty
 		name="prestatore" />
 	<persistentProperty
