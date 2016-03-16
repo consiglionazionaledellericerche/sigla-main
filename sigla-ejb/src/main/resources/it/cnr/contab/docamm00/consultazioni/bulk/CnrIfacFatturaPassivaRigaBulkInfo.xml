@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUnitaOrganizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="pgFatturaPassiva"
+		property="pgFatturaPassiva"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="pgFatturaPassiva" />
+	<fieldProperty
+		name="progressivoRiga"
+		property="progressivoRiga"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="progressivoRiga" />
+	<fieldProperty
+		name="tiIstituzCommerc"
+		property="tiIstituzCommerc"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tiIstituzCommerc" />
+	<fieldProperty
+		name="esercizioObbligazione"
+		property="esercizioObbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioObbligazione" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgObbligazione" />
+	<fieldProperty
+		name="pgObbligazioneScadenzario"
+		property="pgObbligazioneScadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgObbligazioneScadenzario" />
+	<fieldProperty
+		name="nrFatturaFornitore"
+		property="nrFatturaFornitore"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		nullable="false"
+		label="nrFatturaFornitore" />
+	<fieldProperty
+		name="dtFatturaFornitore"
+		property="dtFatturaFornitore"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtFatturaFornitore" />
+	<fieldProperty
+		name="imTotaleImponibile"
+		property="imTotaleImponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imTotaleImponibile" />
+	<fieldProperty
+		name="imTotaleIva"
+		property="imTotaleIva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imTotaleIva" />
+	<fieldProperty
+		name="imTotaleFattura"
+		property="imTotaleFattura"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imTotaleFattura" />
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pgFatturaPassiva" />
+	<formFieldProperty
+		name="progressivoRiga" />
+	<formFieldProperty
+		name="tiIstituzCommerc" />
+	<formFieldProperty
+		name="esercizioObbligazione" />
+	<formFieldProperty
+		name="pgObbligazione" />
+	<formFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<formFieldProperty
+		name="nrFatturaFornitore" />
+	<formFieldProperty
+		name="dtFatturaFornitore" />
+	<formFieldProperty
+		name="imTotaleImponibile" />
+	<formFieldProperty
+		name="imTotaleIva" />
+	<formFieldProperty
+		name="imTotaleFattura" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgFatturaPassiva" />
+	<findFieldProperty
+		name="progressivoRiga" />
+	<findFieldProperty
+		name="tiIstituzCommerc" />
+	<findFieldProperty
+		name="esercizioObbligazione" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<findFieldProperty
+		name="nrFatturaFornitore" />
+	<findFieldProperty
+		name="dtFatturaFornitore" />
+	<findFieldProperty
+		name="imTotaleImponibile" />
+	<findFieldProperty
+		name="imTotaleIva" />
+	<findFieldProperty
+		name="imTotaleFattura" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgFatturaPassiva" />
+	<columnFieldProperty
+		name="progressivoRiga" />
+	<columnFieldProperty
+		name="tiIstituzCommerc" />
+	<columnFieldProperty
+		name="esercizioObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<columnFieldProperty
+		name="nrFatturaFornitore" />
+	<columnFieldProperty
+		name="dtFatturaFornitore" />
+	<columnFieldProperty
+		name="imTotaleImponibile" />
+	<columnFieldProperty
+		name="imTotaleIva" />
+	<columnFieldProperty
+		name="imTotaleFattura" />
+</bulkInfo>
