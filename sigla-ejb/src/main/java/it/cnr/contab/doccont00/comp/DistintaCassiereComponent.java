@@ -4495,7 +4495,7 @@ public class DistintaCassiereComponent extends
 										}	
 							else
 								//primo inserimento
-								if(doc.getCdCup()!=null){
+								if(doc.getCdCup()!=null && doc.getImportoCup().compareTo(BigDecimal.ZERO)!=0){
 									clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 									clas.setCodiceCgu(doc.getCdSiope());
 									clas.setCodiceCup(doc.getCdCup());

@@ -144,4 +144,14 @@ public void validate() throws ValidationException {
 	if ( getIm_associato().compareTo( getReversale().getIm_reversale()) > 0 )
 		throw new ValidationException( "Il campo IMPORTO del Sospeso deve essere inferiore o uguale all'importo della reversale." );
 }
+public java.lang.String getCd_cds_reversale() {
+	
+	it.cnr.contab.doccont00.core.bulk.ReversaleBulk reversale = this.getReversale();
+	if (reversale == null)
+		return null;
+	return reversale.getCd_cds();
+}
+public void setCd_cds_reversale(java.lang.String cd_cds_reversale) {
+	this.getReversale().setCd_cds(cd_cds_reversale);
+}
 }

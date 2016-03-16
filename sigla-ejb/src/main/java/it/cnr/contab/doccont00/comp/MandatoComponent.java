@@ -1545,8 +1545,9 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 			it.cnr.jada.persistency.sql.CompoundFindClause clausole,
 			MandatoBulk mandato) throws it.cnr.jada.comp.ComponentException {
 		try {
+			
 			return iterator(userContext, ((SospesoHome) getHome(userContext,
-					SospesoBulk.class)).selectSospesiDiSpesa(mandato),
+					SospesoBulk.class)).selectSospesiDiSpesa(mandato,Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()),
 					SospesoBulk.class, getFetchPolicyName("find"));
 		} catch (Throwable e) {
 			throw handleException(e);

@@ -1445,7 +1445,8 @@ public Forward doBlankSearchSospeso(ActionContext context,
 		
 		SospesoBulk sospeso = new SospesoBulk();
 		sospeso.setEsercizio(lettera.getEsercizio());
-		sospeso.setCd_cds(lettera.getCd_cds());
+		if (!Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),lettera.getEsercizio()).getFl_tesoreria_unica().booleanValue())
+			sospeso.setCd_cds(lettera.getCd_cds());
 		sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
 		sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
 		lettera.setSospeso(sospeso);
