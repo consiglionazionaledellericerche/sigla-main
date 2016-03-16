@@ -24,6 +24,11 @@
 			sqlTypeName="VARCHAR"
 			columnSize="24" />
 		<columnMapping
+			columnName="CD_CDS_SOSPESO"
+			propertyName="cd_cds_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />	
+		<columnMapping
 			columnName="UTCR"
 			propertyName="utcr"
 			sqlTypeName="VARCHAR"
@@ -166,6 +171,8 @@
 		name="im_commissioni" />
 	<persistentProperty
 		name="cd_sospeso" />
+	<persistentProperty
+		name="cd_cds_sospeso" />	
 	<persistentProperty
 		name="utcr" />
 	<persistentProperty
