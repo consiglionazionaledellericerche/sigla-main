@@ -1,5 +1,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OutdatedResourceException;
@@ -100,9 +102,9 @@ public class SospesoHome extends BulkHome {
 	 *         reversale
 	 * 
 	 */
-	public Collection findSospesiDiEntrata(ReversaleBulk reversale)
+	public Collection findSospesiDiEntrata(ReversaleBulk reversale,boolean tesoreriaUnica)
 			throws IntrospectionException, PersistencyException {
-		SQLBuilder sql = selectSospesiDiEntrata(reversale, null);
+		SQLBuilder sql = selectSospesiDiEntrata(reversale, null,tesoreriaUnica);
 		return fetchAll(sql);
 
 	}
@@ -116,9 +118,9 @@ public class SospesoHome extends BulkHome {
 	 * @return <code>Collection</code> i sospesi di spesa associati al mandato
 	 * 
 	 */
-	public Collection findSospesiDiSpesa(MandatoBulk mandato)
+	public Collection findSospesiDiSpesa(MandatoBulk mandato,boolean tesoreriaUnica)
 			throws IntrospectionException, PersistencyException {
-		SQLBuilder sql = selectSospesiDiSpesa(mandato);
+		SQLBuilder sql = selectSospesiDiSpesa(mandato,tesoreriaUnica);
 		return fetchAll(sql);
 	}
 
@@ -266,12 +268,13 @@ public class SospesoHome extends BulkHome {
 	 * 
 	 */
 	public SQLBuilder selectSospesiDiEntrata(ReversaleBulk reversale,
-			it.cnr.jada.persistency.sql.CompoundFindClause clausole) {
+			it.cnr.jada.persistency.sql.CompoundFindClause clausole,boolean tesoreriaUnica) {
 		SQLBuilder sql = createSQLBuilder();
 		if (clausole != null)
 			sql.addClause(clausole);
 		sql.addClause("AND", "esercizio", sql.EQUALS, reversale.getEsercizio());
-		sql.addClause("AND", "cd_cds", sql.EQUALS, reversale.getCd_cds());
+		if (!tesoreriaUnica)
+			sql.addClause("AND", "cd_cds", sql.EQUALS, reversale.getCd_cds());
 		// sql.addClause( "AND", "cd_uo_origine", sql.EQUALS,
 		// reversale.getCd_uo_origine() );
 		sql.addClause("AND", "fl_stornato", sql.EQUALS, new Boolean(false));
@@ -337,10 +340,12 @@ public class SospesoHome extends BulkHome {
 	 *         spesa associati al mandato
 	 * 
 	 */
-	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato) {
+	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato,boolean tesoreriaUnica) {
 		SQLBuilder sql = createSQLBuilder();
 		sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
-		sql.addClause("AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
+		if (!tesoreriaUnica)
+			sql.addClause("AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
+		//altrimenti dovrebbe essere sempre 999
 		// sql.addClause( "AND", "cd_uo_origine", sql.EQUALS,
 		// mandato.getCd_uo_origine() );
 		sql.addClause("AND", "fl_stornato", sql.EQUALS, new Boolean(false));
@@ -352,6 +357,7 @@ public class SospesoHome extends BulkHome {
 		/* stato */
 		// sql.addClause( "AND", "stato_sospeso", sql.EQUALS,
 		// SospesoBulk.STATO_SOSP_ASS_A_CDS );
+
 		sql.openParenthesis("AND");
 		sql.openParenthesis("AND");
 		sql.addClause("AND", "stato_sospeso", sql.EQUALS,
