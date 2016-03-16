@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.CnrIfacDettObbligazioniBase"
+	keyClassName="it.cnr.contab.doccont00.consultazioni.bulk.CnrIfacDettObbligazioniKey"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.CnrIfacDettObbligazioniHome">
+	<defaultColumnMap
+		tableName="CNR_IFAC_DETT_OBBLIGAZIONI">
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_VOCE"
+			propertyName="imVoce"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="1200"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="RIPORTATO"
+			propertyName="riportato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_ORI_RIPORTO"
+			propertyName="pgObbligazioneOriRiporto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="FORNITORE"
+			propertyName="fornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdUnitaOrganizzativa" />
+	<persistentProperty
+		name="imVoce" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="riportato" />
+	<persistentProperty
+		name="pgObbligazioneOriRiporto" />
+	<persistentProperty
+		name="fornitore" />
+</SQLPersistentInfo>
