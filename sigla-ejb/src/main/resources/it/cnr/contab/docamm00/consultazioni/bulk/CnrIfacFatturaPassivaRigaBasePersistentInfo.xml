@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.CnrIfacFatturaPassivaRigaBase"
+	keyClassName="it.cnr.contab.docamm00.consultazioni.bulk.CnrIfacFatturaPassivaRigaKey"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.CnrIfacFatturaPassivaRigaHome">
+	<defaultColumnMap
+		tableName="CNR_IFAC_FATTURA_PASSIVA_RIGA">
+		<columnMapping
+			columnName="TI_ISTITUZ_COMMERC"
+			propertyName="tiIstituzCommerc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizioObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pgObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pgObbligazioneScadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nrFatturaFornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dtFatturaFornitore"
+			sqlTypeName="DATE"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_IMPONIBILE"
+			propertyName="imTotaleImponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_IVA"
+			propertyName="imTotaleIva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_FATTURA"
+			propertyName="imTotaleFattura"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tiIstituzCommerc" />
+	<persistentProperty
+		name="esercizioObbligazione" />
+	<persistentProperty
+		name="pgObbligazione" />
+	<persistentProperty
+		name="pgObbligazioneScadenzario" />
+	<persistentProperty
+		name="nrFatturaFornitore" />
+	<persistentProperty
+		name="dtFatturaFornitore" />
+	<persistentProperty
+		name="imTotaleImponibile" />
+	<persistentProperty
+		name="imTotaleIva" />
+	<persistentProperty
+		name="imTotaleFattura" />
+</SQLPersistentInfo>
