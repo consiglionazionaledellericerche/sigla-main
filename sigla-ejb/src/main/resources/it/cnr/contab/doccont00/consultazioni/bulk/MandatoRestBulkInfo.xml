@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="im_disp_cassa"
+		property="im_disp_cassa"
+		inputType="ROTEXT"
+		label="Disponibilità di cassa"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="dt_trasmissione"
+		property="dt_trasmissione"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
+		label="Data Trasmissione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dt_pagamento"
+		property="dt_pagamento"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
+		label="Data Pagamento"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dt_ritrasmissione"
+		property="dt_ritrasmissione"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
+		label="Data Ritrasmissione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SELECT"
+		optionsProperty="unita_organizzativaOptions"
+		readonlyProperty="ROUnitaOrganizzativa"		
+		printProperty="ds_estesa"
+		nullable="false"
+		inputSize="40"
+		label="Unit&#224; organizzativa"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"				
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="8"
+		label="Unit&#224; organizzativa"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		label=""
+		inputType="ROTEXT"
+		inputSize="50"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="statoKeys"
+		label="Stato"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="stato_trasmissione"
+		property="stato_trasmissione"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="stato_trasmissioneKeys"
+		label="Stato Trasmissione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_mandato"
+		property="ds_mandato"
+		maxLength="300"
+		inputSize="70"
+		inputType="TEXT"
+		label="Causale di Pagamento"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio"
+		maxLength="4"
+		inputSize="8"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="dt_annullamento"
+		property="dt_annullamento"
+		inputType="TEXT"
+		label="dt_annullamento" />
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
+		label="Data Contabilizzazione"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="ti_mandato"
+		property="ti_mandato"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		label="Tipo"
+		keysProperty="tipoMandatoKeys"
+		readonlyProperty="ROTi_mandato"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		label="Numero Mandato"
+		maxLength="10"
+		inputSize="8"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ti_competenza_residuo"
+		property="ti_competenza_residuo"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="competenzaResiduoKeys"		
+		label="Competenza/Residuo"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"				
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_mandato"
+		property="im_mandato"
+		inputType="ROTEXT"
+		label="Importo Lordo"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="im_netto"
+		property="im_netto"
+		inputType="ROTEXT"
+		label="Importo Netto"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"/>
+	<fieldProperty
+		name="im_ritenute"
+		property="im_ritenute"
+		inputType="ROTEXT"
+		label="Importo Ritenute"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"/>
+	<fieldProperty
+		name="im_pagato"
+		property="im_pagato"
+		inputType="ROTEXT"
+		label="Importo Riscontrato" 
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true" />		
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		label="UO origine"/>
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		inputType="TEXT"
+		label="CdS origine"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="terzo_cd_terzo"
+		property="mandato_terzo.terzo.cd_terzo"
+		inputType="ROTEXT"
+		label="Beneficiario"
+		inputSize="5"
+		/>
+	<fieldProperty
+		name="terzo_ds_terzo"
+		property="mandato_terzo.terzo.denominazione_sede"
+		inputType="ROTEXT"
+		inputSize="40"
+		/>
+	<fieldProperty
+		name="cd_terzo_cedente"
+		property="terzo_cedente.cd_terzo"
+		inputType="ROTEXT"
+		label="Terzo cedente"
+		inputSize="5"		
+		/>
+	<fieldProperty
+		name="ds_terzo_cedente"
+		property="terzo_cedente.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo cedente"				
+		/>
+	<fieldProperty
+		name="im_associato_siope"
+		property="im_associato_siope"
+		inputType="TEXT"
+		label="Importo Associato"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="im_da_associare_siope"
+		property="im_da_associare_siope"
+		inputType="TEXT"
+		label="Importo da Associare"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+
+	<form name="searchtool">
+		<formFieldProperty
+			name="pg_mandato"
+    		maxLength="10"
+			inputSize="10"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="ds_mandato"
+			maxLength="300"
+			inputSize="70"
+			inputType="TEXT" />
+	</form>
+
+	<formFieldProperty
+		name="im_disp_cassa" />
+	<formFieldProperty
+		name="dt_trasmissione" />
+	<formFieldProperty
+		name="dt_pagamento" />
+	<formFieldProperty
+		name="dt_ritrasmissione" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds"/>
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa"/>
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="stato_trasmissione" />
+	<formFieldProperty
+		name="im_pagato" />
+	<formFieldProperty
+		name="ds_mandato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="dt_annullamento" />
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="ti_mandato" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="ti_competenza_residuo" />
+	<formFieldProperty
+		name="im_mandato" />
+	<formFieldProperty
+		name="im_netto" />
+	<formFieldProperty
+		name="im_ritenute" />		
+	<formFieldProperty
+		name="terzo_cd_terzo"/>
+	<formFieldProperty
+		name="terzo_ds_terzo"/>
+	<formFieldProperty
+		name="cd_terzo_cedente"/>
+	<formFieldProperty
+		name="ds_terzo_cedente"/>
+	<formFieldProperty
+		name="im_associato_siope" />
+	<formFieldProperty
+		name="im_da_associare_siope" />
+		
+	<columnFieldProperty
+		name="esercizio"/>
+	<columnFieldProperty
+		name="cd_cds" 
+		inputType="TEXT"/>
+	<columnFieldProperty
+		name="cd_cds_origine"/>
+	<columnFieldProperty
+		name="cd_uo_origine"/>
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="ti_competenza_residuo" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="stato_trasmissione" />
+	<columnFieldProperty
+		name="dt_emissione"
+		inputType="TEXT"
+		label="Data Contab."/>
+	<columnFieldProperty
+		name="im_mandato"/>
+	<columnFieldProperty
+		name="im_pagato"/>
+	<columnFieldProperty
+		name="ds_mandato"/>
+	<columnFieldProperty
+		name="dt_trasmissione"/>		
+	<columnFieldProperty
+		name="dt_pagamento"/>		
+		
+	<columnSet name="restService" >
+		<columnFieldProperty name="esercizio"/>
+		<columnFieldProperty name="pg_mandato"/>
+		<columnFieldProperty name="ti_mandato"/>
+		<columnFieldProperty name="dt_emissione"/>
+		<columnFieldProperty name="dt_trasmissione"/>
+		<columnFieldProperty name="dt_pagamento"/>
+		<columnFieldProperty name="im_pagato"/>
+		<columnFieldProperty name="stato_trasmissione"/>
+	</columnSet>
+
+	<columnSet name="mandatoAutomatico">
+		<columnFieldProperty
+			name="esercizio"/>
+		<columnFieldProperty
+			name="pg_mandato" />
+		<columnFieldProperty
+			name="ti_competenza_residuo" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="dt_emissione"
+			inputType="TEXT"
+			label="Data Contab."/>
+		<columnFieldProperty
+			name="im_mandato"/>
+		<columnFieldProperty
+			name="ds_mandato"/>
+	</columnSet>
+
+	<findFieldProperty
+		name="esercizio"/>
+	<findFieldProperty
+		name="cd_cds" 
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="cd_unita_organizzativa"/>
+	<findFieldProperty
+		name="pg_mandato"/>
+	<findFieldProperty
+		name="ds_mandato"/>
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="stato_trasmissione" />
+	<findFieldProperty
+		name="dt_emissione"
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="im_mandato"
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="ti_mandato"/>		
+	<findFieldProperty
+		name="im_pagato"
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="cd_uo_origine"/>
+	<findFieldProperty
+		name="cd_cds_origine"/>
+	<findFieldProperty
+		name="dt_trasmissione"/>
+	<findFieldProperty
+		name="dt_ritrasmissione"/>
+	<findFieldProperty
+		name="im_ritenute"
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="ti_competenza_residuo" />
+		
+
+</bulkInfo>

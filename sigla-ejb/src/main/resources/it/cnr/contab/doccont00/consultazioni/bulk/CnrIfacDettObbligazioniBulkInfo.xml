@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUnitaOrganizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="data_creazione"
+		property="data_creazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data Creazione" />
+	<fieldProperty
+		name="data_ultima_variazione"
+		property="data_ultima_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data Ultima Variazione" />
+	<fieldProperty
+		name="esercizioOriginale"
+		property="esercizioOriginale"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Esercizio Originale" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="pgObbligazione" />
+	<fieldProperty
+		name="pgObbligazioneScadenzario"
+		property="pgObbligazioneScadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="pgObbligazioneScadenzario" />
+	<fieldProperty
+		name="tiAppartenenza"
+		property="tiAppartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tiAppartenenza" />
+	<fieldProperty
+		name="tiGestione"
+		property="tiGestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tiGestione" />
+	<fieldProperty
+		name="cdVoce"
+		property="cdVoce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdVoce" />
+	<fieldProperty
+		name="cdCentroResponsabilita"
+		property="cdCentroResponsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCentroResponsabilita" />
+	<fieldProperty
+		name="cdLineaAttivita"
+		property="cdLineaAttivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdLineaAttivita" />
+	<fieldProperty
+		name="imVoce"
+		property="imVoce"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imVoce" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1200"
+		enabledOnEdit="false"
+		nullable="false"
+		label="descrizione" />
+	<fieldProperty
+		name="note"
+		property="note"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="note" />
+	<fieldProperty
+		name="riportato"
+		property="riportato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="riportato" />
+	<fieldProperty
+		name="pgObbligazioneOriRiporto"
+		property="pgObbligazioneOriRiporto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgObbligazioneOriRiporto" />
+	<fieldProperty
+		name="fornitore"
+		property="fornitore"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		nullable="false"
+		label="fornitore" />
+	<fieldProperty
+		name="utcr"
+		property="utcr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Utente Creazione" />
+	<fieldProperty
+		name="utuv"
+		property="utuv"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Utente Ultima Variazione" />
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="data_creazione" />
+	<formFieldProperty
+		name="data_ultima_variazione" />
+	<formFieldProperty
+		name="pgObbligazione" />
+	<formFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<formFieldProperty
+		name="tiAppartenenza" />
+	<formFieldProperty
+		name="tiGestione" />
+	<formFieldProperty
+		name="cdVoce" />
+	<formFieldProperty
+		name="cdCentroResponsabilita" />
+	<formFieldProperty
+		name="cdLineaAttivita" />
+	<formFieldProperty
+		name="imVoce" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="note" />
+	<formFieldProperty
+		name="riportato" />
+	<formFieldProperty
+		name="pgObbligazioneOriRiporto" />
+	<formFieldProperty
+		name="fornitore" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<findFieldProperty
+		name="tiAppartenenza" />
+	<findFieldProperty
+		name="tiGestione" />
+	<findFieldProperty
+		name="cdVoce" />
+	<findFieldProperty
+		name="cdCentroResponsabilita" />
+	<findFieldProperty
+		name="cdLineaAttivita" />
+	<findFieldProperty
+		name="imVoce" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="note" />
+	<findFieldProperty
+		name="riportato" />
+	<findFieldProperty
+		name="pgObbligazioneOriRiporto" />
+	<findFieldProperty
+		name="fornitore" />
+	<findFieldProperty
+		name="utcr" />
+	<findFieldProperty
+		name="utuv" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<columnFieldProperty
+		name="tiAppartenenza" />
+	<columnFieldProperty
+		name="tiGestione" />
+	<columnFieldProperty
+		name="cdVoce" />
+	<columnFieldProperty
+		name="cdCentroResponsabilita" />
+	<columnFieldProperty
+		name="cdLineaAttivita" />
+	<columnFieldProperty
+		name="imVoce" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="note" />
+	<columnFieldProperty
+		name="riportato" />
+	<columnFieldProperty
+		name="pgObbligazioneOriRiporto" />
+	<columnFieldProperty
+		name="fornitore" />
+	<columnFieldProperty
+		name="utcr" />
+	<columnFieldProperty
+		name="utuv" />
+	<columnSet name="restService" >
+		<columnFieldProperty name="cdCds" />
+		<columnFieldProperty name="cdUnitaOrganizzativa" />
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="pgObbligazione" />
+		<columnFieldProperty name="pgObbligazioneScadenzario" />
+		<columnFieldProperty name="tiAppartenenza" />
+		<columnFieldProperty name="tiGestione" />
+		<columnFieldProperty name="cdVoce" />
+		<columnFieldProperty name="cdCentroResponsabilita" />
+		<columnFieldProperty name="cdLineaAttivita" />
+		<columnFieldProperty name="imVoce" />
+		<columnFieldProperty name="descrizione" />
+		<columnFieldProperty name="note" />
+		<columnFieldProperty name="riportato" />
+		<columnFieldProperty name="pgObbligazioneOriRiporto" />
+		<columnFieldProperty name="fornitore" />
+		<columnFieldProperty name="data_creazione" />
+		<columnFieldProperty name="data_ultima_variazione" />
+		<columnFieldProperty name="utcr" />
+		<columnFieldProperty name="utuv" />
+	</columnSet>
+</bulkInfo>
