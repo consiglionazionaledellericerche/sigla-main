@@ -128,7 +128,7 @@ public Collection findSospeso_det_etr( it.cnr.jada.UserContext userContext,Rever
 	PersistentHome home = getHomeCache().getHome( Sospeso_det_etrBulk.class );
 	SQLBuilder sql = home.createSQLBuilder();
 	sql.addClause( "AND", "esercizio", sql.EQUALS, reversale.getEsercizio());	
-	sql.addClause( "AND", "cd_cds", sql.EQUALS, reversale.getCd_cds());
+	sql.addClause( "AND", "cd_cds_reversale", sql.EQUALS, reversale.getCd_cds());
 	sql.addClause( "AND", "pg_reversale", sql.EQUALS, reversale.getPg_reversale());
 	sql.addClause( "AND", "ti_sospeso_riscontro", sql.EQUALS, SospesoBulk.TI_SOSPESO);
 //	sql.addClause( "AND", "stato", sql.EQUALS, Sospeso_det_etrBulk.STATO_DEFAULT);	

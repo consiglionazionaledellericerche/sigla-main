@@ -11,6 +11,9 @@ public class Sospeso_det_uscBase extends Sospeso_det_uscKey implements Keyed {
 
 	// STATO CHAR(1) NOT NULL
 	private java.lang.String stato;
+	
+	private java.lang.String cd_cds_mandato;
+
 
 public Sospeso_det_uscBase() {
 	super();
@@ -41,5 +44,11 @@ public void setIm_associato(java.math.BigDecimal im_associato) {
  */
 public void setStato(java.lang.String stato) {
 	this.stato = stato;
+}
+public java.lang.String getCd_cds_mandato() {
+	return cd_cds_mandato;
+}
+public void setCd_cds_mandato(java.lang.String cd_cds_mandato) {
+	this.cd_cds_mandato = cd_cds_mandato;
 }
 }
