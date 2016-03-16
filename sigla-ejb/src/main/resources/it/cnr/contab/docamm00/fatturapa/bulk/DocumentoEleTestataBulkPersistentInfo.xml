@@ -19,6 +19,9 @@
 		<columnMapping
 			columnName="PAGAMENTO_CD_MODALITA_PAG"
 			propertyName="modalitaPagamento.rif_modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_UNITA_COMPETENZA"
+			propertyName="unitaCompetenza.cd_unita_organizzativa" />		
 	</defaultColumnMap>
 	<columnMap 
 		name="V_DOCUMENTO_ELE"
@@ -48,7 +51,7 @@
 			columnName="CD_UNITA_COMPETENZA"
 			sqlTypeName="VARCHAR"
 			columnSize="30"
-			propertyName="documentoEleTrasmissione.cdUnitaCompetenza" />	
+			propertyName="cdUnitaCompetenza" />	
 		<columnMapping
 			columnName="DATA_RICEZIONE"
 			sqlTypeName="DATE"
@@ -61,4 +64,6 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="modalitaPagamento" />
+	<persistentProperty
+		name="unitaCompetenza" />		
 </SQLPersistentInfo>

@@ -54,7 +54,6 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	private AnagraficoBulk intermediarioAnag =  new AnagraficoBulk();
 
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
-	private Unita_organizzativaBulk unitaCompetenza =  new Unita_organizzativaBulk();
 	
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -302,28 +301,4 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		this.getUnitaOrganizzativa().setCd_unita_organizzativa(cdUnitaOrganizzativa);
 	}
 
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Unità organizzativa]
-	 **/
-	public java.lang.String getCdUnitaCompetenza() {
-		Unita_organizzativaBulk unitaOrganizzativa = this.getUnitaCompetenza();
-		if (unitaOrganizzativa == null)
-			return null;
-		return unitaOrganizzativa.getCd_unita_organizzativa();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Unità organizzativa]
-	 **/
-	public void setCdUnitaCompetenza(java.lang.String cdUnitaOrganizzativa)  {
-		this.getUnitaCompetenza().setCd_unita_organizzativa(cdUnitaOrganizzativa);
-	}
-	
-	public Unita_organizzativaBulk getUnitaCompetenza() {
-		return unitaCompetenza;
-	}
-	public void setUnitaCompetenza(Unita_organizzativaBulk unitaCompetenza) {
-		this.unitaCompetenza = unitaCompetenza;
-	}
 }

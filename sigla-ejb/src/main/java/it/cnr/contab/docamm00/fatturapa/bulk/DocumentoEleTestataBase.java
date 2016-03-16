@@ -208,6 +208,8 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 
 //    ANOMALIE VARCHAR(2000)
 	private java.lang.String anomalie;
+	//  CD_UNITA_COMPETENZA VARCHAR(30)
+	private java.lang.String cdUnitaCompetenza;
 	
 	private java.lang.String flIrregistrabile;
 	
@@ -1156,4 +1158,10 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	public void setFlIrregistrabile(java.lang.String flIrregistrabile) {
 		this.flIrregistrabile = flIrregistrabile;
 	}
+	public java.lang.String getCdUnitaCompetenza() {
+		return cdUnitaCompetenza;
+	}
+	public void setCdUnitaCompetenza(java.lang.String cdUnitaCompetenza) {
+		this.cdUnitaCompetenza = cdUnitaCompetenza;
+	}	
 }
