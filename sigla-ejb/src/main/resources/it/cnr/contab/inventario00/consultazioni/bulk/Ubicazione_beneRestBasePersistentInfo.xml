@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.consultazioni.bulk.Ubicazione_beneRestBase"
+	keyClassName="it.cnr.contab.inventario00.consultazioni.bulk.Ubicazione_beneRestKey"
+	homeClassName="it.cnr.contab.inventario00.consultazioni.bulk.Ubicazione_beneRestHome" >
+	<defaultColumnMap
+		tableName="UBICAZIONE_BENE" >
+		<columnMapping
+			columnName="DS_UBICAZIONE_BENE"
+			propertyName="ds_ubicazione_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UBICAZIONE_PROPRIA"
+			propertyName="cd_ubicazione_propria"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UBICAZIONE_PADRE"
+			propertyName="cd_ubicazione_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_UO_PADRE"
+			propertyName="cd_uo_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />	
+		<columnMapping
+			columnName="CD_CDS_PADRE"
+			propertyName="cd_cds_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />	
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_UBICAZIONE_DEFAULT"
+			propertyName="fl_ubicazione_default"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_ubicazione_bene" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_ubicazione_propria" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="cd_ubicazione_padre" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="fl_ubicazione_default" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

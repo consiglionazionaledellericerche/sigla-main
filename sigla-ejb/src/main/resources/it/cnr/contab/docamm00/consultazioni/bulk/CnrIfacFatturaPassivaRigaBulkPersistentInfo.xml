@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.CnrIfacFatturaPassivaRigaBulk"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.CnrIfacFatturaPassivaRigaHome">
+	<defaultColumnMap
+		tableName="CNR_IFAC_FATTURA_PASSIVA_RIGA">
+	</defaultColumnMap>
+</SQLPersistentInfo>
