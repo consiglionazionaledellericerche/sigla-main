@@ -110,10 +110,6 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		return distintaCassiere1210LettereCollegate;
 	}
 	@Override
-	public boolean isSaveButtonHidden() {
-		return true;
-	}
-	@Override
 	public boolean isDeleteButtonEnabled() {
 		return super.isDeleteButtonEnabled() && getModel() != null && ((DistintaCassiere1210Bulk)getModel()).getDtInvio() == null;
 	}
