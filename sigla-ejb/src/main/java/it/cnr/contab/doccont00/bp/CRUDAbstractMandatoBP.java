@@ -107,7 +107,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 			else if ( mandato != null && !mandato.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) &&
 					!mandato.isMandatoAccreditamento()) {
 				setStatus(VIEW);
-				setMessage("Mandato inserito in distinta. Non consentita la modifica.");
+			setMessage("Verificare lo stato di trasmissione del mandato. Non consentita la modifica.");
 			}
 		}
 	}
