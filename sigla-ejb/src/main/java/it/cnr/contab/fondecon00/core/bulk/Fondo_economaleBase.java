@@ -74,6 +74,9 @@ public class Fondo_economaleBase extends Fondo_economaleKey implements Keyed {
 
 	// TI_SR_SOSPESO CHAR(1)
 	private java.lang.String ti_sr_sospeso;
+	
+	// CD_CDS_SOSPESO VARCHAR(30)
+		private java.lang.String cd_cds_sospeso;
 
 public Fondo_economaleBase() {
 	super();
@@ -356,5 +359,11 @@ public void setTi_es_sospeso(java.lang.String ti_es_sospeso) {
  */
 public void setTi_sr_sospeso(java.lang.String ti_sr_sospeso) {
 	this.ti_sr_sospeso = ti_sr_sospeso;
+}
+public java.lang.String getCd_cds_sospeso() {
+	return cd_cds_sospeso;
+}
+public void setCd_cds_sospeso(java.lang.String cd_cds_sospeso) {
+	this.cd_cds_sospeso = cd_cds_sospeso;
 }
 }

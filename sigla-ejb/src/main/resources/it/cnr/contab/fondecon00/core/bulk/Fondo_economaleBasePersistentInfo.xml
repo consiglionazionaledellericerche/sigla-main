@@ -180,6 +180,11 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_SOSPESO"
+			propertyName="cd_cds_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_banca" />
@@ -237,4 +242,6 @@
 		name="ds_fondo" />
 	<persistentProperty
 		name="im_max_gg_spesa_non_doc" />
+	<persistentProperty
+		name="cd_cds_sospeso" />	
 </SQLPersistentInfo>
