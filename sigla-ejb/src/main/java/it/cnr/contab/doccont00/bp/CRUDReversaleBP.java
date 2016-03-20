@@ -167,7 +167,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				if ( reversale != null && !reversale.getStato_trasmissione().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)) 
 				{
 					setStatus(VIEW);
-					setMessage("Reversale inserita in distinta. Non consentita la modifica.");
+					setMessage("Verificare lo stato di trasmissione della reversale. Non consentita la modifica.");
 				}
 				else if (session.isRevProvvLiquidCoriCentroAperta(context.getUserContext(), reversale))
 				{

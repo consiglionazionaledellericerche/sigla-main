@@ -44,6 +44,8 @@ public class Stampa_giornale_reversaliBulk extends ReversaleBulk {
 
 		statoTrasmissioneKeys = new it.cnr.jada.util.OrderedHashtable();
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_NON_INSERITO, "Non inserita in distinta");
+		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_PREDISPOSTO,	"Predisposta alla Firma");
+		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_PRIMA_FIRMA,	"Prima Firma");	
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_INSERITO,	   "Inserita in distinta");
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_TRASMESSO,	   "Trasmessa");
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_TUTTI,		   "Tutti");
