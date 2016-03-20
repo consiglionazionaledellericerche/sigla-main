@@ -7,8 +7,12 @@ import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.fondecon00.views.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaHome;
+
+import java.rmi.RemoteException;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
+
+import javax.ejb.EJBException;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
@@ -17,6 +21,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.fondecon00.core.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -30,6 +35,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 
 public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent implements IFondoEconomaleMgr, it.cnr.jada.comp.IPrintMgr{
 	/**
@@ -434,13 +440,42 @@ public RemoteIterator cercaSospesiDiChiusuraFondo(
 	//alla reversale di chiusura 03/12/2003
 	sql.addSQLClause("AND", "(IM_SOSPESO - IM_ASSOCIATO)", sql.GREATER_EQUALS, fondo.getIm_residuo_fondo().subtract(fondo.getIm_totale_netto_spese()));
 	// r.p. 12/02/2013 la condizione precedente era commentata
-	sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
-	sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
-	sql.addClause("AND", "cd_cds", sql.EQUALS, fondo.getCd_cds());
-	sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fondo.getCd_cds());
+	
+	try {
+		EnteBulk ente = (EnteBulk) getHome(userContext, EnteBulk.class)
+				.findAll().get(0);
+
+	if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,fondo.getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+		sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+		sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
+		
+		sql.addClause("AND", "cd_cds", sql.EQUALS, fondo.getCd_cds());
+		
+		sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fondo.getCd_cds());
+	}
+	else{
+			sql.addClause("AND", "cd_cds", sql.EQUALS, ente.getCd_unita_organizzativa());
+			sql.openParenthesis("AND"); 
+			sql.openParenthesis("AND"); 
+			sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+			sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fondo.getCd_cds());
+			sql.closeParenthesis();
+			sql.openParenthesis("OR");
+			sql.addClause("OR", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+			sql.addClause("AND", "cd_cds_origine", sql.ISNULL,null);
+			sql.closeParenthesis();
+			sql.closeParenthesis();
+	}
+	
 	sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, SospesoBulk.TIPO_ENTRATA);
 	sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, SospesoBulk.TI_SOSPESO);
-
+	} catch (it.cnr.jada.persistency.PersistencyException e) {
+		throw handleException(fondo, e);
+	} catch (RemoteException e) {
+		throw handleException(fondo, e);
+	} catch (EJBException e) {
+		throw handleException(fondo, e);
+	}
 	try {
 		int annoSolare = Fondo_spesaBulk.getDateCalendar(getHome(userContext, fondo).getServerDate()).get(Calendar.YEAR);
 		int esScrivania = CNRUserContext.getEsercizio(userContext).intValue();
