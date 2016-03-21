@@ -212,6 +212,15 @@
   <action 
       path="/ConsMandatoRigaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
+  <action 
+      path="/ConsGaeCompetenzaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <action 
+      path="/ConsGaeResiduiEntrataAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <action 
+      path="/ConsGaeResiduiSpesaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
 
    <businessProcess
       name="ConsObbligazioniBP" className="it.cnr.contab.consultazioni.bp.ConsObbligazioniBP">
@@ -1371,6 +1380,30 @@
 		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.Mandato_rigaRestBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 	    <init-param name="defaultAction" value="ConsMandatoRigaAction" />
+		<init-param name="searchResultColumnSet" value="restService"/>
+  </businessProcess>
+  <businessProcess
+      name="ConsGaeCompetenzaRestBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VSitAnaliticaGaeCompetenzaBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsGaeCompetenzaAction" />
+		<init-param name="searchResultColumnSet" value="restService"/>
+  </businessProcess>
+  <businessProcess
+      name="ConsGaeResiduiEntrataRestBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiEntrataBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsGaeResiduiEntrataAction" />
+		<init-param name="searchResultColumnSet" value="restService"/>
+  </businessProcess>
+  <businessProcess
+      name="ConsGaeResiduiSpesaRestBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiSpesaBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsGaeResiduiSpesaAction" />
 		<init-param name="searchResultColumnSet" value="restService"/>
   </businessProcess>
 </action-mappings>
