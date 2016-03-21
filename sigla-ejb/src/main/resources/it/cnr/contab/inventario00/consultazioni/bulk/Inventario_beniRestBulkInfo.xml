@@ -562,6 +562,7 @@
 		<columnFieldProperty name="cd_ubicazione"/>
 		<columnFieldProperty name="cd_assegnatario"/>
 		<columnFieldProperty name="cd_categoria_gruppo"/>
+		<columnFieldProperty name="id_bene_origine"/>
 		<columnFieldProperty name="data_creazione"/>
 		<columnFieldProperty name="data_ultima_variazione"/>
 	</columnSet>

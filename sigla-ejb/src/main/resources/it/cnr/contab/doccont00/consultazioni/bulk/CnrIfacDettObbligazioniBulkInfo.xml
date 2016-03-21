@@ -58,6 +58,15 @@
 		nullable="false"
 		label="Esercizio Originale" />
 	<fieldProperty
+		name="esercizioOriOriRiporto"
+		property="esercizioOriOriRiporto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="true"
+		label="Esercizio Originale Riporto" />
+	<fieldProperty
 		name="pgObbligazione"
 		property="pgObbligazione"
 		inputType="TEXT"
@@ -241,6 +250,10 @@
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
+		name="esercizioOriginale" />
+	<findFieldProperty
+		name="esercizioOriOriRiporto" />
+	<findFieldProperty
 		name="pgObbligazione" />
 	<findFieldProperty
 		name="pgObbligazioneScadenzario" />
@@ -323,6 +336,8 @@
 		<columnFieldProperty name="riportato" />
 		<columnFieldProperty name="pgObbligazioneOriRiporto" />
 		<columnFieldProperty name="fornitore" />
+		<columnFieldProperty name="esercizioOriginale" />
+		<columnFieldProperty name="esercizioOriOriRiporto" />
 		<columnFieldProperty name="data_creazione" />
 		<columnFieldProperty name="data_ultima_variazione" />
 		<columnFieldProperty name="utcr" />
