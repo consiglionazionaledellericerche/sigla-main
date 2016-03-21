@@ -66,23 +66,33 @@
 			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="esercizioOriginale" />
+		name="esercizioOriginale"
+		partOfOid="true"  />
 	<persistentProperty
-		name="cdCds" />
+		name="cdCds" 
+		partOfOid="true" />
 	<persistentProperty
-		name="esercizio" />
+		name="esercizio" 
+		partOfOid="true" />
 	<persistentProperty
-		name="pgObbligazione" />
+		name="pgObbligazione" 
+		partOfOid="true" />
 	<persistentProperty
-		name="pgObbligazioneScadenzario" />
+		name="pgObbligazioneScadenzario" 
+		partOfOid="true" />
 	<persistentProperty
-		name="tiAppartenenza" />
+		name="tiAppartenenza" 
+		partOfOid="true" />
 	<persistentProperty
-		name="tiGestione" />
+		name="tiGestione" 
+		partOfOid="true" />
 	<persistentProperty
-		name="cdVoce" />
+		name="cdVoce" 
+		partOfOid="true" />
 	<persistentProperty
-		name="cdCentroResponsabilita" />
+		name="cdCentroResponsabilita"
+		partOfOid="true"  />
 	<persistentProperty
-		name="cdLineaAttivita" />
+		name="cdLineaAttivita"
+		partOfOid="true"  />
 </SQLPersistentInfo>

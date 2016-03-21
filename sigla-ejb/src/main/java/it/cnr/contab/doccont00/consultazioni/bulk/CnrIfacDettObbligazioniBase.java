@@ -22,6 +22,9 @@ public class CnrIfacDettObbligazioniBase extends CnrIfacDettObbligazioniKey impl
 //    RIPORTATO CHAR(1) NOT NULL
 	private java.lang.String riportato;
  
+//  RIPORTATO CHAR(1) NOT NULL
+	private java.lang.Integer esercizioOriOriRiporto;
+
 	private java.sql.Date data_creazione;
 	 
 	private java.sql.Date data_ultima_variazione;
@@ -146,5 +149,11 @@ public class CnrIfacDettObbligazioniBase extends CnrIfacDettObbligazioniKey impl
 	}
 	public java.sql.Date getData_creazione(){
 		return new Date(getDacr().getTime());
+	}
+	public java.lang.Integer getEsercizioOriOriRiporto() {
+		return esercizioOriOriRiporto;
+	}
+	public void setEsercizioOriOriRiporto(java.lang.Integer esercizioOriOriRiporto) {
+		this.esercizioOriOriRiporto = esercizioOriOriRiporto;
 	}
 }

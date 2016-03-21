@@ -35,13 +35,18 @@
 			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="cdCds" />
+		name="cdCds" 
+		partOfOid="true" />
 	<persistentProperty
-		name="cdUnitaOrganizzativa" />
+		name="cdUnitaOrganizzativa" 
+		partOfOid="true" />
 	<persistentProperty
-		name="esercizio" />
+		name="esercizio"
+		partOfOid="true"  />
 	<persistentProperty
-		name="pgFatturaPassiva" />
+		name="pgFatturaPassiva"
+		partOfOid="true"  />
 	<persistentProperty
-		name="progressivoRiga" />
+		name="progressivoRiga"
+		partOfOid="true"  />
 </SQLPersistentInfo>
