@@ -67,6 +67,12 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="ESERCIZIO_ORI_ORI_RIPORTO"
+			propertyName="esercizioOriOriRiporto"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
 			columnName="FORNITORE"
 			propertyName="fornitore"
 			sqlTypeName="VARCHAR"
@@ -91,6 +97,8 @@
 		name="note" />
 	<persistentProperty
 		name="riportato" />
+	<persistentProperty
+		name="esercizioOriOriRiporto" />
 	<persistentProperty
 		name="pgObbligazioneOriRiporto" />
 	<persistentProperty
