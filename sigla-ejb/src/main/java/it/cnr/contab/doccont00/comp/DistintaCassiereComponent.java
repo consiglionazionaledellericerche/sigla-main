@@ -4455,7 +4455,7 @@ public class DistintaCassiereComponent extends
 							if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
 								clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 								clas.setCodiceCgu(oldDoc.getCdSiope());
-								clas.setImporto(doc.getImportoCge().add(totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
+								clas.setImporto(totAssSiope.subtract(totAssCup).setScale(2, BigDecimal.ROUND_HALF_UP));
 								totAssCup=BigDecimal.ZERO;  
 								totAssSiope=BigDecimal.ZERO; 
 								infoben.getClassificazione().add(clas);
