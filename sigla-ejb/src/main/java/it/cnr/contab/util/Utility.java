@@ -7,19 +7,17 @@
 package it.cnr.contab.util;
 
 import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
-import it.cnr.contab.config00.ejb.CDRComponentSession;
 import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.ejb.Parametri_cdsComponentSession;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
-import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
-import it.cnr.contab.config00.ejb.Parametri_cdsComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
-import it.cnr.contab.incarichi00.comp.IncarichiRepertorioComponent;
 import it.cnr.contab.incarichi00.ejb.IncarichiProceduraComponentSession;
 import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.incarichi00.ejb.RepertorioLimitiComponentSession;
@@ -28,7 +26,6 @@ import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
 import it.cnr.contab.progettiric00.ejb.geco.ProgettoGecoComponentSession;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.math.BigDecimal;
@@ -132,9 +129,13 @@ public final class Utility {
 		}
 	}
 
+	public static void main(String[] args) {
+		System.out.println(NumberToText(new BigDecimal("-16754.50")));
+	}
+	
 	public static String NumberToText(BigDecimal importo) {
 		int parteIntera = importo.intValue();
-		String parteDecimale = String.valueOf(importo.remainder(BigDecimal.ONE).movePointRight(importo.scale()).abs().toBigInteger());
+		String parteDecimale = importo.remainder(BigDecimal.ONE).abs().toPlainString().substring(2);
 		if (parteIntera == 0) {
 			return "zero/" + parteDecimale;
 		} else {
