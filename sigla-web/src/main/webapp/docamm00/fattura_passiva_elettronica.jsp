@@ -72,7 +72,12 @@ function doScaricaEsito() {
 			%>
 		</tr>
 		<tr>
-			<% 	if (bp.isSearching()) {%>
+			<% 	if (bp.isSearching()) {%>				
+				<% bp.getController().writeFormField(out,"flIrregistrabile");%>			
+			<% } %>	    
+		</tr>
+		<tr>
+			<% 	if (bp.isSearching()) {%>				
 				<% bp.getController().writeFormField(out,"statoDocumento");%>
 			<% } else {%>
 				<td>

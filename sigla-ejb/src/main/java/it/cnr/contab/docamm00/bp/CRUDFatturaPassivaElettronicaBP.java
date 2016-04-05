@@ -184,7 +184,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		super.initialize(actioncontext);
     	DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
     	documentoEleTestata.setStatoDocumento(StatoDocumentoEleEnum.AGGIORNATO.name());
-		setStatus(SEARCH);
+    	documentoEleTestata.setFlIrregistrabile("N");
+    	setStatus(SEARCH);
 		setUoScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
 		cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
 		try {
