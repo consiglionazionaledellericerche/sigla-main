@@ -130,12 +130,14 @@ public final class Utility {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(NumberToText(new BigDecimal("-16754.50")));
+		System.out.println(NumberToText(new BigDecimal("16754")));
 	}
 	
 	public static String NumberToText(BigDecimal importo) {
 		int parteIntera = importo.intValue();
-		String parteDecimale = importo.remainder(BigDecimal.ONE).abs().toPlainString().substring(2);
+		String parteDecimale = importo.remainder(BigDecimal.ONE).abs().toPlainString();
+		if (parteDecimale.length() > 1)
+			parteDecimale = parteDecimale.substring(2);
 		if (parteIntera == 0) {
 			return "zero/" + parteDecimale;
 		} else {
