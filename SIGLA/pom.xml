@@ -25,6 +25,7 @@
 				<version>2.5</version>
 				<configuration>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
+          				<classifier>wildfly</classifier>
 					<generateApplicationXml>false</generateApplicationXml>
 					<archive>
 						<manifestEntries>
