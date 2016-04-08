@@ -171,17 +171,8 @@ public class BatchControlComponent extends CRUDComponent
         return stringbuffer.toString();
     }
 	public void aggiornaViewSnapshot(UserContext usercontext) throws ComponentException{
-		/*Batch_controlBulk batch_controlbulk = new Batch_controlBulk();
-		batch_controlbulk.setDs_batch("");
-		batch_controlbulk.setParametri(new BulkList());
 		try {
-			batch_controlbulk.setProcedura((Batch_proceduraBulk)getHome(usercontext, Batch_proceduraBulk.class).findByPrimaryKey(new Batch_proceduraBulk("AGGVIEWREALTIME")));
-			creaBatchDinamico(usercontext, batch_controlbulk);
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		}*/
-		try {
-			Connection connInformix = EJBCommonServices.getDatasource("java:jdbc/GECO").getConnection();
+			Connection connInformix = EJBCommonServices.getDatasource("java:/jdbc/GECO").getConnection();
 			LoggableStatement aPS=null;
 		    try {
 			 aPS=new LoggableStatement(connInformix,
@@ -197,12 +188,9 @@ public class BatchControlComponent extends CRUDComponent
 			 if(aPS != null) 
 		         try{aPS.close();}catch( java.sql.SQLException e ){};
 		    }	
-		} catch (EJBException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		try
 		{

@@ -28,10 +28,10 @@
 					<generateApplicationXml>false</generateApplicationXml>
 					<archive>
 						<manifestEntries>
-							<Dependencies>oracle.jdbc, org.apache.xerces, com.novell.ldap,
-								com.sun.security, org.apache.commons.collections,
+							<Dependencies>com.oracle.jdbc, org.apache.xerces, com.novell.ldap,
+								org.apache.commons.collections,
 								com.informix.jdbc</Dependencies>
-						</manifestEntries>
+						</manifestEntries>					
 					</archive>
 					<earName>SIGLA</earName>
 					<artifactTypeMappings>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>it.cnr.commons</groupId>
 			<artifactId>firmadigitale</artifactId>
-			<version>1.1</version>
+			<version>1.2-SNAPSHOT</version>
 		</dependency>	
 		<dependency>
 			<groupId>org.jvnet.staxex</groupId>
