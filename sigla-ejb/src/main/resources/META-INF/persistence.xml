@@ -14,7 +14,7 @@
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="GECO" >
-		<jta-data-source>java:jdbc/GECO</jta-data-source>
+		<jta-data-source>java:/jdbc/GECO</jta-data-source>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="none"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.InformixDialect"/>
