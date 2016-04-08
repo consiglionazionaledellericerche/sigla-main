@@ -135,7 +135,7 @@ public class ProgettoGecoComponent extends CRUDComponent {
 	public Connection getConnection(UserContext usercontext) throws ComponentException {
         try{
         	if (connection == null)
-        		connection = EJBCommonServices.getDatasource("java:jdbc/GECO").getConnection();
+        		connection = EJBCommonServices.getDatasource("java:/jdbc/GECO").getConnection();
         	return connection;
         }catch(Exception exception){
             throw handleException(exception);
