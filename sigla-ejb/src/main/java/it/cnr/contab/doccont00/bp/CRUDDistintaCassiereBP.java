@@ -739,7 +739,10 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
 			} 
 		
-			documentiContabiliService.inviaDistintaPEC(nodes,this.isSepa());	
+			if(distinta.getEsercizio()!=null && distinta.getPg_distinta_def()!=null)
+					documentiContabiliService.inviaDistintaPEC(nodes,this.isSepa(),distinta.getEsercizio()+"/"+distinta.getPg_distinta_def());
+			else
+					documentiContabiliService.inviaDistintaPEC(nodes,this.isSepa(),null);
 			setMessage("Invio effettuato correttamente.");
 		
 		} catch (HttpException e) {

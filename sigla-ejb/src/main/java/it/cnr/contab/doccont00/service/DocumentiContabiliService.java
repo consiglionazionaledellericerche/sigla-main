@@ -191,20 +191,26 @@ public class DocumentiContabiliService extends SiglaCMISService {
 	}
 	
 	public void inviaDistintaPEC1210(List<String> nodes) throws EmailException, ApplicationException, IOException {
-		inviaDistintaPEC1210(nodes, true);
+		inviaDistintaPEC1210(nodes, true,null);
 	}	
 	
-	public void inviaDistintaPEC1210(List<String> nodes, boolean isNoEuroOrSepa) throws EmailException, ApplicationException, IOException {
+	public void inviaDistintaPEC1210(List<String> nodes, boolean isNoEuroOrSepa, String nrDistinta) throws EmailException, ApplicationException, IOException {
 		// Create the email message
 		SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
 		email.setHostName(pecHostName);
 		if (isNoEuroOrSepa)
-			email.addTo(pecMailToBancaNoEuroSepa, pecMailToBancaNoEuroSepa);
+			if (pecMailToBancaNoEuroSepa!=null)
+			        email.addTo(pecMailToBancaNoEuroSepa.split(";"));
 		else
-			email.addTo(pecMailToBancaItaliaF23F24, pecMailToBancaItaliaF23F24);			
+			if(pecMailToBancaItaliaF23F24!=null )
+				email.addTo(pecMailToBancaItaliaF23F24.split(";"));
+		
 		email.setFrom(pecMailFromBanca, pecMailFromBanca);
-		email.setSubject("Invio Documenti 1210");
-		email.setMsg("In allegato i documenti 1210");
+		if (nrDistinta!=null)
+			email.setSubject("Invio Distinta 1210 "+nrDistinta);
+		else
+			email.setSubject("Invio Distinta 1210");
+	
 		// add the attachment
 		for (String nodeRef : nodes) {
 			CmisObject cmisObject = getNodeByNodeRef(nodeRef);
@@ -214,16 +220,23 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		email.send();
 		logger.debug("Inviata distinta PEC");
 	}
-	public void inviaDistintaPEC(List<String> nodes, boolean isNoEuroOrSepa) throws EmailException, ApplicationException, IOException {
+	public void inviaDistintaPEC(List<String> nodes, boolean isNoEuroOrSepa, String nrDistinta ) throws EmailException, ApplicationException, IOException {
 		// Create the email message
 		SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
 		email.setHostName(pecHostName);
+		
 		if (isNoEuroOrSepa)
-			email.addTo(pecMailToBancaNoEuroSepa, pecMailToBancaNoEuroSepa);
+			if (pecMailToBancaNoEuroSepa!=null)
+			        email.addTo(pecMailToBancaNoEuroSepa.split(";"));
 		else
-			email.addTo(pecMailToBancaItaliaF23F24, pecMailToBancaItaliaF23F24);			
+			if(pecMailToBancaItaliaF23F24!=null )
+				email.addTo(pecMailToBancaItaliaF23F24.split(";"));
+			
 		email.setFrom(pecMailFromBanca, pecMailFromBanca);
-		email.setSubject("Invio Distinta e Documenti");
+		if (nrDistinta!=null)
+			email.setSubject("Invio Distinta "+nrDistinta+" e Documenti");
+		else
+			email.setSubject("Invio Distinta e Documenti");
 		email.setMsg("In allegato i documenti");
 		// add the attachment
 		for (String nodeRef : nodes) {
