@@ -86,32 +86,44 @@
 			columnName="IMPORTO"
 			propertyName="importo"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_DEC_INT"
 			propertyName="imDecInt"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_DEC_EST"
 			propertyName="imDecEst"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_ACC_INT"
 			propertyName="imAccInt"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_ACC_EST"
 			propertyName="imAccEst"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
+		<columnMapping
+			columnName="IM_ENTRATA"
+			propertyName="imEntrata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
 		<columnMapping
 			columnName="GAE"
 			propertyName="gae"
@@ -124,6 +136,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="true" />
+		<columnMapping
+			columnName="DT_APPROVAZIONE"
+			propertyName="dtApprovazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="tipoVar" />
@@ -162,7 +180,11 @@
 	<persistentProperty
 		name="imAccEst" />
 	<persistentProperty
+		name="imEntrata" />	
+	<persistentProperty
 		name="gae" />
 	<persistentProperty
 		name="voceDelPiano" />
+	<persistentProperty
+		name="dtApprovazione" />	
 </SQLPersistentInfo>
