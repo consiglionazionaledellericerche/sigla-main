@@ -53,25 +53,29 @@ public class VConsVarCompResBulk extends OggettoBulk implements Persistent {
 	private java.lang.String fonte;
 
 //  IMPORTO DECIMAL(22,0)
-	private java.lang.Long importo;
+	private java.math.BigDecimal importo;
 
 //  IM_DEC_INT DECIMAL(22,0)
-	private java.lang.Long imDecInt;
+	private java.math.BigDecimal imDecInt;
 
 //  IM_DEC_EST DECIMAL(22,0)
-	private java.lang.Long imDecEst;
+	private java.math.BigDecimal imDecEst;
 
 //  IM_ACC_INT DECIMAL(22,0)
-	private java.lang.Long imAccInt;
+	private java.math.BigDecimal imAccInt;
 
 //  IM_ACC_EST DECIMAL(22,0)
-	private java.lang.Long imAccEst;
+	private java.math.BigDecimal imAccEst;
 
+	private java.math.BigDecimal imEntrata;
 //  GAE VARCHAR(10)
 	private java.lang.String gae;
 
 //  VOCE_DEL_PIANO VARCHAR(20)
 	private java.lang.String voceDelPiano;
+	
+//  dtApprovazione TIMESTAMP(7)
+	private java.sql.Timestamp dtApprovazione;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -283,70 +287,70 @@ public class VConsVarCompResBulk extends OggettoBulk implements Persistent {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [importo]
 	 **/
-	public java.lang.Long getImporto() {
+	public java.math.BigDecimal getImporto() {
 		return importo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [importo]
 	 **/
-	public void setImporto(java.lang.Long importo)  {
+	public void setImporto(java.math.BigDecimal importo)  {
 		this.importo=importo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imDecInt]
 	 **/
-	public java.lang.Long getImDecInt() {
+	public java.math.BigDecimal getImDecInt() {
 		return imDecInt;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imDecInt]
 	 **/
-	public void setImDecInt(java.lang.Long imDecInt)  {
+	public void setImDecInt(java.math.BigDecimal imDecInt)  {
 		this.imDecInt=imDecInt;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imDecEst]
 	 **/
-	public java.lang.Long getImDecEst() {
+	public java.math.BigDecimal getImDecEst() {
 		return imDecEst;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imDecEst]
 	 **/
-	public void setImDecEst(java.lang.Long imDecEst)  {
+	public void setImDecEst(java.math.BigDecimal imDecEst)  {
 		this.imDecEst=imDecEst;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imAccInt]
 	 **/
-	public java.lang.Long getImAccInt() {
+	public java.math.BigDecimal getImAccInt() {
 		return imAccInt;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imAccInt]
 	 **/
-	public void setImAccInt(java.lang.Long imAccInt)  {
+	public void setImAccInt(java.math.BigDecimal imAccInt)  {
 		this.imAccInt=imAccInt;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imAccEst]
 	 **/
-	public java.lang.Long getImAccEst() {
+	public java.math.BigDecimal getImAccEst() {
 		return imAccEst;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imAccEst]
 	 **/
-	public void setImAccEst(java.lang.Long imAccEst)  {
+	public void setImAccEst(java.math.BigDecimal imAccEst)  {
 		this.imAccEst=imAccEst;
 	}
 	/**
@@ -377,5 +381,16 @@ public class VConsVarCompResBulk extends OggettoBulk implements Persistent {
 	public void setVoceDelPiano(java.lang.String voceDelPiano)  {
 		this.voceDelPiano=voceDelPiano;
 	}
-
+	public java.math.BigDecimal getImEntrata() {
+		return imEntrata;
+	}
+	public void setImEntrata(java.math.BigDecimal imEntrata) {
+		this.imEntrata = imEntrata;
+	}
+	public java.sql.Timestamp getDtApprovazione() {
+		return dtApprovazione;
+	}
+	public void setDtApprovazione(java.sql.Timestamp dtApprovazione) {
+		this.dtApprovazione = dtApprovazione;
+	}
 }
