@@ -91,6 +91,7 @@
 		<property name="pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.decorrenzaTermini.term}"/>
 		<property name="pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.attestazioneTrasmissioneFattura.term}"/>
 		<property name="pecSDISubjectFatturaAttivaInvioTerm" value="${pec.sdi.subject.fatturaAttiva.invio.term}"/>
+		<property name="pecSDISubjectMancataConsegnaPecTerm" value="${pec.sdi.subject.fatturaAttiva.mancataConsegna.term}"/>
 		<property name="pecSDISubjectNotificaPecTerm" value="${pec.sdi.subject.notificaPec.term}"/>
 		<property name="pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm" value="${pec.sdi.subject.fatturaPassiva.notifica.scartoEsito.term}"/>
 
