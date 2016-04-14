@@ -4610,7 +4610,7 @@ public class DistintaCassiereComponent extends
 						if(doc.getCdSospeso()!=null){
 							sosp=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
 							try{
-								sosp.setNumeroProvvisorio(new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().lastIndexOf("."))).longValue());
+								sosp.setNumeroProvvisorio(new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().indexOf("."))).longValue());
 							}catch (NumberFormatException e) {
 								throw new ApplicationException("Formato del codice del sospeso non compatibile.");
 							}
