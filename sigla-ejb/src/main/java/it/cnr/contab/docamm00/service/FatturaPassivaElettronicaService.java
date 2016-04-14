@@ -22,8 +22,10 @@ import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,12 +86,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private UserContext userContext;
 	private Boolean pecScanDisable;
 	private Properties pecMailConf;
-
 	private List<String> listaMessageIdAlreadyScanned = new ArrayList<String>();
 
 	private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
 		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
-		pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn;
+		pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn, pecSDISubjectMancataConsegnaPecTerm;
 	private List<String> pecScanFolderName, pecScanReceiptFolderName, pecHostAddress;
 	
 	public RicercaDocContComponentSession getRicercaDocContComponentSession() {
@@ -122,6 +123,14 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	public void setPecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm(
 			String pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm) {
 		this.pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm = pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm;
+	}
+
+	public String getPecSDISubjectMancataConsegnaPecTerm() {
+		return pecSDISubjectMancataConsegnaPecTerm;
+	}
+	public void setPecSDISubjectMancataConsegnaPecTerm(
+			String pecSDISubjectMancataConsegnaPecTerm) {
+		this.pecSDISubjectMancataConsegnaPecTerm = pecSDISubjectMancataConsegnaPecTerm;
 	}
 
 	public void setFatturaElettronicaPassivaComponentSession(
@@ -350,7 +359,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			URLName urlName = new URLName(pecURLName);
 			final Store store = session.getStore(urlName);
 			store.connect(userName, password);
-			searchMailFromPec(userName, store);
+			searchMailFromPec(userName, password, store);
 			searchMailFromSdi(userName, store);
 			searchMailFromReturn(userName, store);
 			store.close();
@@ -362,7 +371,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			logger.error("Error while scan PEC email:" +userName, e);
 		}				
 	}
-	private void searchMailFromPec(String userName, final Store store)
+	private void searchMailFromPec(String userName, String password, final Store store)
 			throws MessagingException {
 		List<Folder> folders = new ArrayList<Folder>();
 		for (String folderName : pecScanReceiptFolderName) {
@@ -371,7 +380,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
 				folder.open(Folder.READ_WRITE);
-				processingMailFromHostPec(folder, userName);
+				processingMailFromHostPec(folder, userName, password);
 				folder.close(true);				
 		    } 
 		}
@@ -530,7 +539,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		return terms;
 	}
 	
-	private void processingMailFromHostPec(Folder folder, String userName) throws MessagingException{
+	private void processingMailFromHostPec(Folder folder, String userName, String password) throws MessagingException{
 		List<SearchTerm> terms = createTermsForSearchPec();
     	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
     	logger.info("Recuperati " + messages.length +" messaggi PEC dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
@@ -538,7 +547,19 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	    	try {
 	    		Message message = messages[i];
 	    		
-	    		if (message.getSubject().contains(getSubjectTermForFatturaAttivaPec())){
+	    		if (message.getSubject().contains(getSubjectTermForMancataConsegnaFatturaAttivaPec())){
+		    		String nomeFile = message.getSubject().substring(getSubjectTermForMancataConsegnaFatturaAttivaPec().length() + 1 );
+		    		if (nomeFile != null){
+			    			InputStream streamSigned = trasmissioneFattureService.mancataConsegnaPecInvioFatturaAttiva(userContext, nomeFile);
+			    			if (streamSigned != null){
+				    			File fileSigned = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", nomeFile);
+		    					OutputStream outputStream = new FileOutputStream(fileSigned);
+		    					IOUtils.copy(streamSigned, outputStream);
+		    					outputStream.close();
+				    			inviaFatturaElettronica(userName, password, fileSigned, nomeFile);
+			    			}
+		    		}
+	    		} else if (message.getSubject().contains(getSubjectTermForFatturaAttivaPec())){
 		    		String nomeFile = message.getSubject().substring(getSubjectTermForFatturaAttivaPec().length() + 1 );
 		    		if (nomeFile != null){
 						trasmissioneFattureService.notificaFatturaAttivaConsegnaPec(userContext, nomeFile, message.getSentDate());
@@ -580,6 +601,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		List<SearchTerm> listSubject = new ArrayList<SearchTerm>();
 		listSubject.add(new SubjectTerm(getSubjectTermForFatturaAttivaPec()));
 		listSubject.add(new SubjectTerm(getSubjectTermForFatturaPassivaPec()));
+		listSubject.add(new SubjectTerm(getSubjectTermForMancataConsegnaFatturaAttivaPec()));
 		SearchTerm[] termsSubjects = listSubject.toArray(new SearchTerm[listSubject.size()]);
     	terms.add(new OrTerm(termsSubjects));
 	}
@@ -593,6 +615,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	public String getSubjectTermForFatturaAttivaPec() {
 		String subjectTerm = pecSDISubjectNotificaPecTerm+" "+pecSDISubjectFatturaAttivaInvioTerm;
+		return subjectTerm;
+	}
+	public String getSubjectTermForMancataConsegnaFatturaAttivaPec() {
+		String subjectTerm = pecSDISubjectMancataConsegnaPecTerm+" "+pecSDISubjectFatturaAttivaInvioTerm;
 		return subjectTerm;
 	}
 	public String getSubjectTermForFatturaPassivaPec() {
