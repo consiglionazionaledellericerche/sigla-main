@@ -8,7 +8,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPROGETTIRIC00_EJB_ProgettoRicercaPadreComponentSession")
 public class ProgettoRicercaPadreComponentSessionBean extends it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSessionBean implements ProgettoRicercaPadreComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.progettiric00.comp.ProgettoRicercaPadreComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

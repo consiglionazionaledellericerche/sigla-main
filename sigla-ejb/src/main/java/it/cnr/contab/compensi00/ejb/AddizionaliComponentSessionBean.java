@@ -11,7 +11,7 @@ import it.cnr.jada.ejb.CRUDComponentSessionBean;
 @Stateless(name="CNRCOMPENSI00_EJB_AddizionaliComponentSession")
 public class AddizionaliComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AddizionaliComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.compensi00.comp.AddizionaliComponent();
 	}
 	@Remove

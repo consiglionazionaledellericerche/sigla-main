@@ -13,7 +13,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 		componentObj.release();
 	}
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.comp.SaldoComponent();
 	}
 	public static 

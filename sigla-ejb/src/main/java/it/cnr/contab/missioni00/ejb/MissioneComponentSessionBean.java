@@ -18,7 +18,7 @@ public class MissioneComponentSessionBean extends
 		it.cnr.jada.ejb.CRUDComponentSessionBean implements
 		MissioneComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.missioni00.comp.MissioneComponent();
 	}
 

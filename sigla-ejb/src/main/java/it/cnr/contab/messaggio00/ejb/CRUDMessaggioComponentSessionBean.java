@@ -6,7 +6,7 @@ import it.cnr.contab.messaggio00.comp.CRUDMessaggioComponent;
 @Stateless(name="CNRMESSAGGIO00_EJB_CRUDMessaggioComponentSession")
 public class CRUDMessaggioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CRUDMessaggioComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.messaggio00.comp.CRUDMessaggioComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -8,7 +8,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRANAGRAF00_EJB_AbiCabComponentSession")
 public class AbiCabComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AbiCabComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.anagraf00.comp.AbiCabComponent();
 	}
 	@Remove

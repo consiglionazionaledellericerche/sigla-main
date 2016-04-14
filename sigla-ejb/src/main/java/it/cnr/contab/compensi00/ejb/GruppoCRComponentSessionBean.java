@@ -12,7 +12,7 @@ import it.cnr.jada.ejb.CRUDComponentSessionBean;
 @Stateless(name="CNRCOMPENSI00_EJB_GruppoCRComponentSession")
 public class GruppoCRComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements GruppoCRComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.compensi00.comp.GruppoCRComponent();
 }
 public static CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

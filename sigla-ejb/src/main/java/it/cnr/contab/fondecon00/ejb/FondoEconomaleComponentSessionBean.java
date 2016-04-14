@@ -6,7 +6,7 @@ import it.cnr.contab.fondecon00.comp.FondoEconomaleComponent;
 @Stateless(name="CNRFONDECON00_EJB_FondoEconomaleComponentSession")
 public class FondoEconomaleComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FondoEconomaleComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.fondecon00.comp.FondoEconomaleComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

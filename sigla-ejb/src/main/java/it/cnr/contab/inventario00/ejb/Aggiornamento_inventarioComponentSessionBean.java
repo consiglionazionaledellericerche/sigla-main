@@ -7,7 +7,7 @@ import it.cnr.contab.inventario00.comp.Aggiornamento_inventarioComponent;
 @Stateless(name="CNRINVENTARIO00_EJB_Aggiornamento_inventarioComponentSession")
 public class Aggiornamento_inventarioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Aggiornamento_inventarioComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.inventario00.comp.Aggiornamento_inventarioComponent();
 	}
 	@Remove

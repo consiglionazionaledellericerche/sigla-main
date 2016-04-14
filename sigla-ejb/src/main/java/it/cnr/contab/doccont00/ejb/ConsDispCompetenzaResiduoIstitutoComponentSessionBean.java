@@ -22,7 +22,7 @@ public class ConsDispCompetenzaResiduoIstitutoComponentSessionBean extends it.cn
 	 * ejbCreate
 	 */
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new ConsDispCompetenzaResiduoIstitutoComponent();
 	}
 	@Remove

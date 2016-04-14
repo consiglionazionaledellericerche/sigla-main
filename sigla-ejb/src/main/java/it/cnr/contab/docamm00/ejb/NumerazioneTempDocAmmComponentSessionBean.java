@@ -9,7 +9,7 @@ import it.cnr.contab.docamm00.comp.NumerazioneTempDocAmmComponent;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class NumerazioneTempDocAmmComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements NumerazioneTempDocAmmComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.docamm00.comp.NumerazioneTempDocAmmComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

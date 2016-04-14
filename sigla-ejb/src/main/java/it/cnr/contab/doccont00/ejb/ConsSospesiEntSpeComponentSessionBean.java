@@ -18,7 +18,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 public class ConsSospesiEntSpeComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsSospesiEntSpeComponentSession{
 	
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new ConsSospesiEntSpeComponent();
 	}
 	

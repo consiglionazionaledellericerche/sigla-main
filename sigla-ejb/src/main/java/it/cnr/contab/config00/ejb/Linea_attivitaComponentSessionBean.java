@@ -9,7 +9,7 @@ import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRCONFIG00_EJB_Linea_attivitaComponentSession")
 public class Linea_attivitaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Linea_attivitaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.config00.comp.Linea_attivitaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

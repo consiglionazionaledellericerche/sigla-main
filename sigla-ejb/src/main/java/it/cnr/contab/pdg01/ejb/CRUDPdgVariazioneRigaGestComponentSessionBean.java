@@ -7,7 +7,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPDG01_EJB_CRUDPdgVariazioneRigaGestComponentSession")
 public class CRUDPdgVariazioneRigaGestComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean  implements CRUDPdgVariazioneRigaGestComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.pdg01.comp.CRUDPdgVariazioneRigaGestComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

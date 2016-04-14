@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRINVENTARIO00_EJB_ConsRegistroInventarioComponentSession")
 public class ConsRegistroInventarioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsRegistroInventarioComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.inventario00.comp.ConsRegistroInventarioComponent();
 	}
 	public static ConsRegistroInventarioComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -9,7 +9,7 @@ public class TRequiredNumerazione_baseComponentSessionBean extends it.cnr.jada.e
 		componentObj.release();
 	}
 	@PostConstruct
-		public void ejbCreate() throws javax.ejb.CreateException {
+		public void ejbCreate() {
 		componentObj = new it.cnr.contab.config00.tabnum.comp.Numerazione_baseComponent();
 	}
 	public static 

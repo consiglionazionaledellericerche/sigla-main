@@ -21,7 +21,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 public class ConsRiepilogoSiopeComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsRiepilogoSiopeComponentSession{
 	
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new ConsRiepilogoSiopeComponent();
 	}
 	

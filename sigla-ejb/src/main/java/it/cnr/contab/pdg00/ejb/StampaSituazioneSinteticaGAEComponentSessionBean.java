@@ -16,7 +16,7 @@ import it.cnr.jada.util.RemoteIterator;
 @Stateless(name="CNRPDG00_EJB_StampaSituazioneSinteticaGAEComponentSession")
 public class StampaSituazioneSinteticaGAEComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements StampaSituazioneSinteticaGAEComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new StampaSituazioneSinteticaGAEComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

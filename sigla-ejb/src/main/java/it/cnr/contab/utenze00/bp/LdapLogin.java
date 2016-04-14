@@ -1,17 +1,26 @@
 package it.cnr.contab.utenze00.bp;
 
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.jada.util.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Map;
 
-import com.novell.ldap.LDAPAttribute;
-import com.novell.ldap.LDAPConnection;
-import com.novell.ldap.LDAPEntry;
-import com.novell.ldap.LDAPException;
-import com.novell.ldap.LDAPJSSESecureSocketFactory;
-import com.novell.ldap.LDAPModification;
-import com.novell.ldap.LDAPSearchResults;
+import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.BasicAttribute;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.ModificationItem;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
+import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
 
 public class LdapLogin {
 
@@ -40,6 +49,7 @@ public class LdapLogin {
 
 	private boolean ssl = false;
 	private boolean master = false;
+	private static final Log logger = Log.getInstance(LdapLogin.class);
 
 	public LdapLogin() {
 	}
@@ -47,7 +57,7 @@ public class LdapLogin {
 	public LdapLogin(String ldapHost, int ldapPort, String loginDN,
 			String password, boolean ssl, boolean master) {
 		setLdapHost(ldapHost);
-		setLdapPort(ldapPort);
+		setLdapPort(ldapPort);		
 		setLoginDN(loginDN);
 		setPassword(password);
 		setSsl(ssl);
@@ -64,13 +74,73 @@ public class LdapLogin {
 	 * @param calNow
 	 *            data di accesso del tentativo di validazione
 	 * @throws Exception
-	 * @throws LDAPException
 	 */
 	public void validaUtente(UtenteBulk utenteReale,
-			java.util.Calendar calNow) throws Exception, LDAPException {
+			java.util.Calendar calNow) throws Exception {
 		validaUtente(utenteReale, calNow, false);
 	}
 
+	private LdapContext getLdapContext(String principal, String credentials) throws NamingException {
+		String protocol = "ldap://";
+		int iLdapPort = getLdapPort();
+		if (getLdapPort() == 0) {
+			if (isSsl()) {
+				iLdapPort = 636;				
+			} else {
+				iLdapPort = 389;
+			}
+		}
+		if (isSsl()) {
+			protocol = "ldaps://";				
+		}		
+         
+        Hashtable<String,String> env = new Hashtable<String,String>();
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(Context.PROVIDER_URL, protocol + ldapHost + ":" + iLdapPort);
+        env.put(Context.SECURITY_AUTHENTICATION, "simple");
+        env.put(Context.SECURITY_PRINCIPAL, principal);
+        env.put(Context.SECURITY_CREDENTIALS, credentials);
+        env.put("com.sun.jndi.ldap.connect.timeout", "5000");
+        env.put("com.sun.jndi.ldap.read.timeout", "30000");
+        
+        return new InitialLdapContext(env, null);
+	}
+	
+	private Map<String, Object> getLDAPAttributes (LdapContext ctxGC, String search) throws NamingException {
+		String returnAttrs[] = { appName, attrDataPw, CODICEFISCALE_ATTRIBUTE, MAIL_ATTRIBUTE};
+		SearchControls searchCtls = new SearchControls();
+		searchCtls.setReturningAttributes(returnAttrs);
+        
+		// Specify the search scope
+		searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+			
+		NamingEnumeration<SearchResult> answer = ctxGC.search(baseDN, search, searchCtls);
+		Map<String, Object> amap = new HashMap<String,Object>();
+		while (answer.hasMoreElements()) {
+		    SearchResult sr = (SearchResult) answer.next();
+		    Attributes attrs = sr.getAttributes();
+		    if (attrs != null) {
+		        amap.put("DN", sr.getNameInNamespace());
+		        NamingEnumeration<?> ne = attrs.getAll();
+		        while (ne.hasMore()) {
+		            Attribute attr = (Attribute) ne.next();
+		            if (attr.size() == 1) {
+		                amap.put(attr.getID(), attr.get());
+		            } else {
+		                HashSet<String> s = new HashSet<String>();
+		                NamingEnumeration<?> n =  attr.getAll();
+		                while (n.hasMoreElements()) {
+		                    s.add((String)n.nextElement());
+		                }
+		                amap.put(attr.getID(), s);
+		            }
+		        }
+		        ne.close();
+		    }
+		}
+		return amap;
+		
+	}
 	/**
 	 * Valida un utente sul server LDAP indicato in questa istanza
 	 * 
@@ -84,105 +154,52 @@ public class LdapLogin {
 	 *            se a true deve affettuare anche l'autorizzazione dell'utente a
 	 *            SIGLA oltre ad autenticare
 	 * @throws Exception
-	 * @throws LDAPException
 	 */
 	public void validaUtente(UtenteBulk utenteReale,
-			java.util.Calendar calNow, boolean abilita) throws Exception,
-			LDAPException {
+			java.util.Calendar calNow, boolean abilita) throws Exception {
 		String userID = utenteReale.getCd_utente_uid();
 		String userPassword = utenteReale.getLdap_password();
-		
+
 		if (userID == null)
 			throw new Exception("Valorizzare il codice utente.");
 		if (userPassword == null)
 			throw new Exception("Valorizzare la password utente.");
 
-		int iLdapPort = getLdapPort();
-		if (getLdapPort() == 0)
-			if (isSsl())
-				iLdapPort = LDAPConnection.DEFAULT_SSL_PORT;
-			else
-				iLdapPort = LDAPConnection.DEFAULT_PORT;
-
-		int ldapVersion = LDAPConnection.LDAP_V3;
-
-		java.security.Security
-				.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-
-		LDAPJSSESecureSocketFactory ssf = new LDAPJSSESecureSocketFactory();
-		LDAPConnection lc = null;
-
-		if (isSsl())
-			lc = new LDAPConnection(ssf);
-		else
-			lc = new LDAPConnection();
-
-		String userDN;
-
+		String userDN = null;
+		LdapContext ctxGC = getLdapContext(getLoginDN(), getPassword());
 		try {
-			// connetti al server
-			lc.connect(getLdapHost(), iLdapPort);
+			Map<String, Object> amap = getLDAPAttributes(ctxGC, UID_ATTRIBUTE + "=" + userID);
 
-			// autenticati al server con l'utente reader
-			lc.bind(ldapVersion, getLoginDN(), getPassword().getBytes("UTF8"));
-
-			LDAPSearchResults searchResults = lc.search(baseDN,
-					LDAPConnection.SCOPE_SUB, UID_ATTRIBUTE + "=" + userID,
-					null, // return all attributes
-					false); // return attrs and values
-
-			LDAPEntry nextEntry = null;
-			if (searchResults.hasMore()) {
-				nextEntry = searchResults.next();
-			} else {
+            if (amap.isEmpty())
 				throw new Exception("L'utente con uid=" + userID
 						+ " non è stato trovato.");
-			}
-			userDN = nextEntry.getDN();
-
-			String returnAttrs[] = { appName, attrDataPw, CODICEFISCALE_ATTRIBUTE };
-
-			LDAPEntry apps = lc.read(userDN, returnAttrs);
-			LDAPAttribute sigla = apps.getAttribute(appName);
-			LDAPAttribute dataPw = apps.getAttribute(attrDataPw);
-			utenteReale.setCodiceFiscaleLDAP(apps.getAttribute(CODICEFISCALE_ATTRIBUTE).getStringValue());
-			
-			// vecchio metodo per semplice confronto
-			// non tiene conto delle password cifrate
-			/*
-			 * LDAPAttribute attr = new LDAPAttribute( "userPassword",
-			 * userPassword ); boolean correct = lc.compare( userDN, attr );
-			 * 
-			 * if (!correct) { throw new
-			 * PasswordNonValidaException("La password dell'utente "
-			 * +userDN+" non e' corretta.\n"); }
-			 */
-
-			// autenticati al server con l'utente finale
-			try {
-				lc.bind(ldapVersion, userDN, userPassword.getBytes("UTF8"));
-			} catch (LDAPException e) {
-				if (e.getResultCode() == LDAPException.INVALID_CREDENTIALS)
-					throw new PasswordNonValidaException(
-							"La password dell'utente " + userDN
-									+ " non e' corretta.\n");
-			}
-
-			// se non esiste l'attributo e se il server non è di tipo MASTER
-			// lanciamo una eccezione in modo che si arrivi al server master
-			// per aggiungere l'attributo (il master è l'unico su cui si può
-			// scrivere)
+            userDN = String.valueOf(amap.get("DN"));
+            String sigla = String.valueOf(amap.get(appName));
+            LdapContext ctxGCUser = null;
+            try {
+                ctxGCUser = getLdapContext(userDN, userPassword);
+            	
+            } catch (javax.naming.AuthenticationException _ex){
+            	throw new PasswordNonValidaException(
+            				"La password dell'utente " + userDN + " non e' corretta.\n");
+            } finally {
+            	if (ctxGCUser != null) 
+            		ctxGCUser.close();	
+            }
+            /**
+             * se non esiste l'attributo e se il server non è di tipo MASTER
+             * lanciamo una eccezione in modo che si arrivi al server master
+             * per aggiungere l'attributo (il master è l'unico su cui si può
+             * scrivere
+             */
 			if (sigla == null) {
 				if ((abilita == ABILITA_UTENTE_IN_LDAP_TRUE) && isMaster())
 					cambiaAbilitazioneUtente(userID, true);
 				else
 					throw new AttributoNonPresenteException(
-							"L'utente "
-									+ userDN
-									+ " non e' abilitato all'utilizzo dell'applicazione SIGLA.");
+							"L'utente " + userDN + " non e' abilitato all'utilizzo dell'applicazione SIGLA.");
 			} else {
-				String siglaVal = sigla.getStringValue();
-				if (siglaVal.equalsIgnoreCase(USER_NOT_ENABLED)) {
+				if (sigla.equalsIgnoreCase(USER_NOT_ENABLED)) {
 					if ((abilita == ABILITA_UTENTE_IN_LDAP_TRUE) && isMaster())
 						cambiaAbilitazioneUtente(userID, true);
 					else
@@ -191,30 +208,13 @@ public class LdapLogin {
 										+ userDN
 										+ " non e' abilitato all'utilizzo dell'applicazione SIGLA.");
 				}
-				// else
-				// throw new
-				// Exception("L'utente "+userDN+" non e' abilitato all'utilizzo dell'applicazione SIGLA.");
-			}
-			/*
-			 * if (dataPw!=null) { String dataPwVal = dataPw.getStringValue();
-			 * java.text.SimpleDateFormat sdf = new
-			 * java.text.SimpleDateFormat("yyyyMMddHHmmss'N'"); java.util.Date
-			 * dataUltimoCambioPw = sdf.parse(dataPwVal); java.util.Calendar
-			 * calScad = java.util.Calendar.getInstance();
-			 * calScad.setTime(calNow.getTime()); calScad.add(calNow.MONTH,-6);
-			 * 
-			 * if (calScad.getTime().after(dataUltimoCambioPw)) throw new
-			 * PasswordLdapScadutaException(); }
-			 */
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("Errore: " + e.toString());
-		} finally {
-			try {
-				// disconnetti
-				lc.disconnect();
-			} catch (LDAPException ex) {
-			}
-		} // fine try esterna
+			}                
+        } catch (NamingException nex) {
+            logger.error(nex);
+            throw nex;
+        } finally {
+            ctxGC.close();        	
+        }
 	}
 
 	/**
@@ -232,73 +232,32 @@ public class LdapLogin {
 	 * @param abilita
 	 *            valore dell'abilitazione da impostare
 	 * @throws Exception
-	 * @throws LDAPException
 	 */
 	public void cambiaAbilitazioneUtente(String userID, boolean abilita)
-			throws Exception, LDAPException {
+			throws Exception {
 		if (userID == null)
 			throw new Exception("Valorizzare lo User ID.");
-
-		int iLdapPort = getLdapPort();
-		if (getLdapPort() == 0)
-			if (isSsl())
-				iLdapPort = LDAPConnection.DEFAULT_SSL_PORT;
-			else
-				iLdapPort = LDAPConnection.DEFAULT_PORT;
-
-		int ldapVersion = LDAPConnection.LDAP_V3;
-
-		java.security.Security
-				.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-
-		LDAPJSSESecureSocketFactory ssf = new LDAPJSSESecureSocketFactory();
-		LDAPConnection lc = null;
-
-		if (isSsl())
-			lc = new LDAPConnection(ssf);
-		else
-			lc = new LDAPConnection();
-
-		String userDN;
-
+		
+		LdapContext ctxGC = null;
 		try {
-			// connetti al server
-			lc.connect(getLdapHost(), iLdapPort);
-
-			// autenticati al server con l'utente reader
-			lc.bind(ldapVersion, getLoginDN(), getPassword().getBytes("UTF8"));
-
-			LDAPSearchResults searchResults = lc.search(baseDN,
-					LDAPConnection.SCOPE_SUB, UID_ATTRIBUTE + "=" + userID,
-					null, // return all attributes
-					false); // return attrs and values
-
-			LDAPEntry nextEntry = null;
-			if (searchResults.hasMore()) {
-				nextEntry = searchResults.next();
-			} else {
+			ctxGC = getLdapContext(getLoginDN(), getPassword());
+			Map<String, Object> amap = getLDAPAttributes(ctxGC, UID_ATTRIBUTE + "=" + userID);
+            if (amap.isEmpty())
 				throw new Exception("L'utente con uid=" + userID
 						+ " non è stato trovato.");
+    		String userDN = String.valueOf(amap.get("DN"));
+    		String sigla = String.valueOf(amap.get(appName));
+    		ModificationItem[] mods = new ModificationItem[1];
+    		Attribute mod0;
+			if (abilita == ABILITA_UTENTE_IN_LDAP_TRUE) {
+				mod0 = new BasicAttribute(appName, USER_ENABLED);
+			} else {
+				mod0 = new BasicAttribute(appName, USER_NOT_ENABLED);
+				
 			}
-			userDN = nextEntry.getDN();
-
-			String returnAttrs[] = { appName };
-
-			LDAPEntry apps = lc.read(userDN, returnAttrs);
-			LDAPAttribute sigla = apps.getAttribute(appName);
-
-			LDAPModification[] modAppAbil = new LDAPModification[1];
-
-			LDAPAttribute modSigla = null;
-			if (abilita == ABILITA_UTENTE_IN_LDAP_TRUE)
-				modSigla = new LDAPAttribute(appName, USER_ENABLED);
-			else
-				modSigla = new LDAPAttribute(appName, USER_NOT_ENABLED);
-
 			if (sigla == null) {
-				modAppAbil[0] = new LDAPModification(LDAPModification.ADD,
-						modSigla);
-				lc.modify(userDN, modAppAbil);
+				mods[0] = new ModificationItem(DirContext.ADD_ATTRIBUTE, mod0);
+				ctxGC.modifyAttributes(userDN, mods);				
 			} else {
 				/*
 				 * se l'utente va disabilitato lo facciamo solo se non lo è già
@@ -308,148 +267,71 @@ public class LdapLogin {
 				 * nell'effetto di abilitazione) di "no"
 				 */
 				if (!(abilita == ABILITA_UTENTE_IN_LDAP_TRUE)
-						&& !sigla.getStringValue().equalsIgnoreCase(
+						&& !sigla.equalsIgnoreCase(
 								USER_NOT_ENABLED)
 						|| (abilita == ABILITA_UTENTE_IN_LDAP_TRUE)
-						&& sigla.getStringValue().equalsIgnoreCase(
+						&& sigla.equalsIgnoreCase(
 								USER_NOT_ENABLED)) {
-
-					modAppAbil[0] = new LDAPModification(
-							LDAPModification.REPLACE, modSigla);
-					lc.modify(userDN, modAppAbil);
-				}
-
+					mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod0);
+					ctxGC.modifyAttributes(userDN, mods);				
+				}				
 			}
 
 		} catch (UnsupportedEncodingException e) {
-			System.out.println("Errore: " + e.toString());
+			logger.error(e);
+            throw e;
 		} finally {
-			try {
-				// disconnetti
-				lc.disconnect();
-			} catch (LDAPException ex) {
-			}
+			if (ctxGC != null)
+				ctxGC.close();
 		} // fine try esterna
 	}
 	
-	public  String[] getLdapUser(Integer matricola) throws Exception,
-	LDAPException {
+	public  String[] getLdapUser(Integer matricola) throws Exception {
 		if (matricola == null)
 			throw new Exception("Valorizzare la matricola.");
-		int iLdapPort = getLdapPort();
-		if (getLdapPort() == 0)
-			if (isSsl())
-				iLdapPort = LDAPConnection.DEFAULT_SSL_PORT;
-			else
-				iLdapPort = LDAPConnection.DEFAULT_PORT;
-
-		int ldapVersion = LDAPConnection.LDAP_V3;
-		java.security.Security
-				.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-		LDAPJSSESecureSocketFactory ssf = new LDAPJSSESecureSocketFactory();
-		LDAPConnection lc = null;
-		if (isSsl())
-			lc = new LDAPConnection(ssf);
-		else
-			lc = new LDAPConnection();
-		String userDN;
+		LdapContext ctxGC = null;
 		try {
-			lc.connect(getLdapHost(), iLdapPort);
-			lc.bind(ldapVersion, getLoginDN(), getPassword().getBytes("UTF8"));
-			LDAPSearchResults searchResults = lc.search(baseDN,
-					LDAPConnection.SCOPE_SUB, MATRICOLA_ATTRIBUTE + "=" + matricola,
-					null, // return all attributes
-					false); // return attrs and values
-
-			LDAPEntry nextEntry = null;
-			if (searchResults.hasMore()) {
-				nextEntry = searchResults.next();
-			} else {
+			ctxGC = getLdapContext(getLoginDN(), getPassword());
+			Map<String, Object> amap = getLDAPAttributes(ctxGC, MATRICOLA_ATTRIBUTE + "=" + matricola);
+			if (amap.isEmpty())
 				throw new Exception("L'utente con matricola=" + matricola
 						+ " non è stato trovato.");
-			}
-			userDN = nextEntry.getDN();
-
-			String returnAttrs[] = { UID_ATTRIBUTE, MAIL_ATTRIBUTE };
-
-			LDAPEntry apps = lc.read(userDN, returnAttrs);
-			return new String[]{apps.getAttribute(UID_ATTRIBUTE).getStringValue(), apps.getAttribute(MAIL_ATTRIBUTE).getStringValue()};
+			return new String[]{
+					String.valueOf(amap.get(UID_ATTRIBUTE)), 
+					String.valueOf(amap.get(MAIL_ATTRIBUTE))};
 		} finally {
-			lc.disconnect();
+			if (ctxGC != null)
+				ctxGC.close();
 		}
 	}
 	
-	public boolean isUtenteAbilitato(String userID) throws Exception,
-			LDAPException {
+	public boolean isUtenteAbilitato(String userID) throws Exception {
 		if (userID == null)
 			throw new Exception("Valorizzare lo User ID.");
-
-		int iLdapPort = getLdapPort();
-		if (getLdapPort() == 0)
-			if (isSsl())
-				iLdapPort = LDAPConnection.DEFAULT_SSL_PORT;
-			else
-				iLdapPort = LDAPConnection.DEFAULT_PORT;
-
-		int ldapVersion = LDAPConnection.LDAP_V3;
-
-		java.security.Security
-				.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-
-		LDAPJSSESecureSocketFactory ssf = new LDAPJSSESecureSocketFactory();
-		LDAPConnection lc = null;
-
-		if (isSsl())
-			lc = new LDAPConnection(ssf);
-		else
-			lc = new LDAPConnection();
-
-		String userDN;
-
+		LdapContext ctxGC = null;
 		try {
-			// connetti al server
-			lc.connect(getLdapHost(), iLdapPort);
-
-			// autenticati al server con l'utente reader
-			lc.bind(ldapVersion, getLoginDN(), getPassword().getBytes("UTF8"));
-
-			LDAPSearchResults searchResults = lc.search(baseDN,
-					LDAPConnection.SCOPE_SUB, UID_ATTRIBUTE + "=" + userID,
-					null, // return all attributes
-					false); // return attrs and values
-
-			LDAPEntry nextEntry = null;
-			if (searchResults.hasMore()) {
-				nextEntry = searchResults.next();
-			} else {
+			ctxGC = getLdapContext(getLoginDN(), getPassword());
+			Map<String, Object> amap = getLDAPAttributes(ctxGC, UID_ATTRIBUTE + "=" + userID);
+            if (amap.isEmpty())
 				throw new Exception("L'utente con uid=" + userID
 						+ " non è stato trovato.");
-			}
-			userDN = nextEntry.getDN();
-
-			String returnAttrs[] = { appName };
-
-			LDAPEntry apps = lc.read(userDN, returnAttrs);
-			LDAPAttribute sigla = apps.getAttribute(appName);
+            String sigla = String.valueOf(amap.get(appName));
 
 			if (sigla == null) {
 				return false;
 			} else {
-				if (sigla.getStringValue().equalsIgnoreCase(USER_NOT_ENABLED))
+				if (sigla.equalsIgnoreCase(USER_NOT_ENABLED))
 					return false;
 				else
 					return true;
 			}
 		} catch (UnsupportedEncodingException e) {
-			System.out.println("Errore: " + e.toString());
+			logger.error(e);
+            throw e;
 		} finally {
-			try {
-				// disconnetti
-				lc.disconnect();
-			} catch (LDAPException ex) {
-			}
-		} // fine try esterna
-		return false;
+			if (ctxGC != null)
+				ctxGC.close();
+		}
 	}
 
 	public String getLdapHost() {

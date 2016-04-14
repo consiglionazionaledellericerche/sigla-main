@@ -8,7 +8,7 @@ import it.cnr.contab.compensi00.comp.MinicarrieraComponent;
 @Stateless(name="CNRCOMPENSI00_EJB_MinicarrieraComponentSession")
 public class MinicarrieraComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements MinicarrieraComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.compensi00.comp.MinicarrieraComponent();
 	}
 	@Remove

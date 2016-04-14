@@ -10,7 +10,7 @@ import it.cnr.jada.ejb.CRUDComponentSessionBean;
 @Stateless(name="CNRCOMPENSI00_EJB_Esenzioni_addizionaliComponentSession")
 public class Esenzioni_addizionaliComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Esenzioni_addizionaliComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.compensi00.comp.Esenzioni_addizionaliComponent();
 }
 public static CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

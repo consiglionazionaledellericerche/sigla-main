@@ -10,7 +10,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPREVENT01_EJB_Pdg_Modulo_EntrateComponentSession")
 public class PdgModuloEntrateComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdgModuloEntrateComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new CRUDPdg_Modulo_EntrateComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

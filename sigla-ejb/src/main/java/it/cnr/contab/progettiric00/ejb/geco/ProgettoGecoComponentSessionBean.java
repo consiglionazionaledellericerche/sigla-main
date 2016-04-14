@@ -22,7 +22,7 @@ import javax.ejb.TransactionAttributeType;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ProgettoGecoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ProgettoGecoComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.progettiric00.comp.geco.ProgettoGecoComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

@@ -6,7 +6,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession")
 public class ProgettoRicercaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean  implements ProgettoRicercaComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

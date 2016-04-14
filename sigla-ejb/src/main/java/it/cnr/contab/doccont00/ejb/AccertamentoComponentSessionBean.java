@@ -9,7 +9,7 @@ import it.cnr.jada.bulk.PrimaryKeyHashtable;
 @Stateless(name="CNRDOCCONT00_EJB_AccertamentoComponentSession")
 public class AccertamentoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AccertamentoComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.comp.AccertamentoComponent();
 	}
 	@Remove

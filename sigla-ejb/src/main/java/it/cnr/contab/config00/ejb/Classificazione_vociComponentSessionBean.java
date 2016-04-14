@@ -9,7 +9,7 @@ import it.cnr.contab.config00.comp.Classificazione_vociComponent;
 @Stateless(name="CNRCONFIG00_EJB_Classificazione_vociComponentSession")
 public class Classificazione_vociComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Classificazione_vociComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.config00.comp.Classificazione_vociComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

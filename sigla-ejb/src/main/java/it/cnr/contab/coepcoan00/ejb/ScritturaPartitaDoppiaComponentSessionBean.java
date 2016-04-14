@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaComponentSession")
 public class ScritturaPartitaDoppiaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScritturaPartitaDoppiaComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
