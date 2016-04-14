@@ -10,7 +10,7 @@ import it.cnr.contab.pdg00.comp.RicostruzioneResiduiComponent;
 @Stateless(name="CNRPDG00_EJB_RicostruzioneResiduiComponentSession")
 public class RicostruzioneResiduiComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements RicostruzioneResiduiComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.pdg00.comp.RicostruzioneResiduiComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

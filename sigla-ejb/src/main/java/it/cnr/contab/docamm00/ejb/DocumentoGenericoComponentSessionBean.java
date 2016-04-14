@@ -17,7 +17,7 @@ import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRDOCAMM00_EJB_DocumentoGenericoComponentSession")
 public class DocumentoGenericoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements DocumentoGenericoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.docamm00.comp.DocumentoGenericoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

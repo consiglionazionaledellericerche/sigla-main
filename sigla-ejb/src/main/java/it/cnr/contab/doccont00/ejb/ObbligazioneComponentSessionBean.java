@@ -12,7 +12,7 @@ import it.cnr.jada.bulk.PrimaryKeyHashtable;
 @Stateless(name="CNRDOCCONT00_EJB_ObbligazioneComponentSession")
 public class ObbligazioneComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ObbligazioneComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.ObbligazioneComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

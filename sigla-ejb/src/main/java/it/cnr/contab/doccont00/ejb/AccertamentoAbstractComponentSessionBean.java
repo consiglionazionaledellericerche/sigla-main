@@ -7,7 +7,7 @@ import it.cnr.contab.doccont00.comp.AccertamentoAbstractComponent;
 @Stateless(name="CNRDOCCONT00_EJB_AccertamentoAbstractComponentSession")
 public class AccertamentoAbstractComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AccertamentoAbstractComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.comp.AccertamentoAbstractComponent();
 	}
 	@Remove

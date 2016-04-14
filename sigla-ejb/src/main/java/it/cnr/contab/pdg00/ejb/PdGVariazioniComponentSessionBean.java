@@ -12,7 +12,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRPDG00_EJB_PdGVariazioniComponentSession")
 public class PdGVariazioniComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdGVariazioniComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.pdg00.comp.PdGVariazioniComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

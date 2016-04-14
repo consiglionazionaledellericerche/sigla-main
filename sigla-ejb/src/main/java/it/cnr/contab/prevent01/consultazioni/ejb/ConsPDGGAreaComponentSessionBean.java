@@ -7,7 +7,7 @@ import it.cnr.contab.prevent01.consultazioni.comp.ConsPDGGAreaComponent;
 @Stateless(name="CNRPREVENT01_EJB_ConsPDGGAreaComponentSession")
 public class ConsPDGGAreaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsPDGGAreaComponentSession  {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.prevent01.consultazioni.comp.ConsPDGGAreaComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

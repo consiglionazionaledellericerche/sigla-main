@@ -15,7 +15,7 @@ public class OfflineReportComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 		componentObj.release();
 	}
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.reports.comp.OfflineReportComponent();
 	}
 	public static OfflineReportComponentSessionBean newInstance() throws EJBException {

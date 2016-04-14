@@ -25,7 +25,7 @@ import org.apache.chemistry.opencmis.client.api.Document;
 @Stateless(name="CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession")
 public class FatturaAttivaSingolaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FatturaAttivaSingolaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

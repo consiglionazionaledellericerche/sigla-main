@@ -13,7 +13,7 @@ public void ejbRemove() throws EJBException {
 	componentObj.release();
 }
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.config00.comp.Configurazione_cnrComponent();
 }
 public static 

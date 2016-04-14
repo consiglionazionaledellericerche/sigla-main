@@ -27,7 +27,8 @@ import org.apache.chemistry.opencmis.commons.definitions.PropertyDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CMISBulkInfo<T extends Serializable> {
+public class CMISBulkInfo<T extends Serializable> implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private transient static final Logger logger = LoggerFactory.getLogger(CMISBulkInfo.class);
 	private Map<Class<?>, ObjectType> cacheObjType = new Hashtable<Class<?>, ObjectType>();
 	private Map<Class<?>, Set<String>> cacheObjAspect = new Hashtable<Class<?>, Set<String>>();

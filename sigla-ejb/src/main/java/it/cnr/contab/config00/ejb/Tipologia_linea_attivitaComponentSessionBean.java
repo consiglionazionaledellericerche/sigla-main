@@ -6,7 +6,7 @@ import it.cnr.contab.config00.comp.Tipologia_linea_attivitaComponent;
 @Stateless(name="CNRCONFIG00_EJB_Tipologia_linea_attivitaComponentSession")
 public class Tipologia_linea_attivitaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Tipologia_linea_attivitaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.config00.comp.Tipologia_linea_attivitaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRCHIUSURA00_EJB_RicercaDocContComponentSession")
 public class RicercaDocContComponentSessionBean extends it.cnr.jada.ejb.RicercaComponentSessionBean  implements RicercaDocContComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.chiusura00.comp.RicercaDocContComponent();
 	}
 	@Remove

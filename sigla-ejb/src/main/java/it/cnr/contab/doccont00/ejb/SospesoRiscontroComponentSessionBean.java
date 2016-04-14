@@ -6,7 +6,7 @@ import it.cnr.contab.doccont00.comp.SospesoRiscontroComponent;
 @Stateless(name="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession")
 public class SospesoRiscontroComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements SospesoRiscontroComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.SospesoRiscontroComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

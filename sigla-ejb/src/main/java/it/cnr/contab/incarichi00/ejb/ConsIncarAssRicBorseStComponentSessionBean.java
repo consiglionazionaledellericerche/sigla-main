@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRINCARICHI00_EJB_ConsIncarAssRicBorseStComponentSession")
 public class ConsIncarAssRicBorseStComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsIncarAssRicBorseStComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new ConsIncarAssRicBorseStComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

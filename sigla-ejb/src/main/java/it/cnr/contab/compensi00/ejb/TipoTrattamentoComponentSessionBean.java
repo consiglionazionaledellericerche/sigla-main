@@ -6,7 +6,7 @@ import it.cnr.contab.compensi00.comp.TipoTrattamentoComponent;
 @Stateless(name="CNRCOMPENSI00_EJB_TipoTrattamentoComponentSession")
 public class TipoTrattamentoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements TipoTrattamentoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.compensi00.comp.TipoTrattamentoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

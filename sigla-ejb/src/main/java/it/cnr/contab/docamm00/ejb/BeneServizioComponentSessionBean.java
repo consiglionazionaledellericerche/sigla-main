@@ -7,7 +7,7 @@ import it.cnr.contab.docamm00.comp.BeneServizioComponent;
 @Stateless(name="CNRDOCAMM00_EJB_BeneServizioComponentSession")
 public class BeneServizioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements BeneServizioComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.docamm00.comp.BeneServizioComponent();
 	}
 	@Remove

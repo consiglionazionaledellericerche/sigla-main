@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRCONFIG00_EJB_ClassificazioneComponentSession")
 public class ClassificazioneComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ClassificazioneComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.config00.comp.ClassificazioneComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

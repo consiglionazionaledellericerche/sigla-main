@@ -13,7 +13,7 @@ import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession")
 public class CategoriaGruppoInventComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CategoriaGruppoInventComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.docamm00.comp.CategoriaGruppoInventComponent();
 	}
 	@Remove

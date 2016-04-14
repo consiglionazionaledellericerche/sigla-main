@@ -9,7 +9,7 @@ import it.cnr.contab.doccont00.consultazioni.comp.ConsFileCassiereComponent;
 @Stateless(name="CNRDOCCONT00_EJB_ConsFileCassiereComponentSession")
 public class ConsFileCassiereComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsFileCassiereComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.consultazioni.comp.ConsFileCassiereComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

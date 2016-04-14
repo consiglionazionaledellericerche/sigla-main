@@ -7,7 +7,7 @@ import it.cnr.contab.config00.comp.EsercizioComponent;
 @Stateless(name="CNRCONFIG00_EJB_EsercizioComponentSession")
 public class EsercizioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements EsercizioComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.config00.comp.EsercizioComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

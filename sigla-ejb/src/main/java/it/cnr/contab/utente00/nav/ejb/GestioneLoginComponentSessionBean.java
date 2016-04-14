@@ -20,7 +20,7 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 	private it.cnr.contab.utente00.nav.comp.GestioneLoginComponent componentObj;
 	
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.utente00.nav.comp.GestioneLoginComponent();
 	}
 	@Remove

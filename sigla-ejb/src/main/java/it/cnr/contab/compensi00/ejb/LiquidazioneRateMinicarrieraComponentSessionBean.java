@@ -6,7 +6,7 @@ import it.cnr.contab.compensi00.comp.LiquidazioneRateMinicarrieraComponent;
 @Stateless(name="CNRCOMPENSI00_EJB_LiquidazioneRateMinicarrieraComponentSession")
 public class LiquidazioneRateMinicarrieraComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements LiquidazioneRateMinicarrieraComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.compensi00.comp.LiquidazioneRateMinicarrieraComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

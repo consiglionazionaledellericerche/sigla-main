@@ -16,7 +16,7 @@ import javax.ejb.Stateless;
 @Stateless(name="BLOGS_EJB_BatchControlComponentSession")
 public class BatchControlComponentSessionBean extends CRUDComponentSessionBean implements BatchControlComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
         componentObj = new BatchControlComponent();
     }
 	@Remove

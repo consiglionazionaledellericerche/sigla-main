@@ -20,7 +20,7 @@ import javax.xml.bind.JAXBElement;
 @Stateless(name="CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession")
 public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements DocAmmFatturazioneElettronicaComponentSession  {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new DocAmmFatturazioneElettronicaComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

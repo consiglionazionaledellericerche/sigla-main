@@ -21,7 +21,7 @@ import it.cnr.jada.util.RemoteIterator;
 @Stateless(name="CNRDOCCONT00_EJB_DistintaCassiereComponentSession")
 public class DistintaCassiereComponentSessionBean extends it.cnr.jada.ejb.CRUDDetailComponentSessionBean implements DistintaCassiereComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.DistintaCassiereComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

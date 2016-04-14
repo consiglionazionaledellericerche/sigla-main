@@ -16,7 +16,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPREVENTVAR00_EJB_ConsVarStanzCompetenzaComponentSession")
 public class ConsVarStanzCompetenzaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsVarStanzCompetenzaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new ConsVarStanzCompetenzaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

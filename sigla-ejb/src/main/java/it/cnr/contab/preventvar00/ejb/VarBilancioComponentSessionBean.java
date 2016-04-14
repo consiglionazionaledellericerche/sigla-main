@@ -10,7 +10,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPREVENTVAR00_EJB_VarBilancioComponentSession")
 public class VarBilancioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements VarBilancioComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.preventvar00.comp.VarBilancioComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

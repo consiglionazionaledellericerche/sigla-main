@@ -8,7 +8,7 @@ import it.cnr.contab.pdg00.comp.CRUDCostoDelDipendenteComponent;
 @Stateless(name="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession")
 public class CRUDCostoDelDipendenteComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CRUDCostoDelDipendenteComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.pdg00.comp.CRUDCostoDelDipendenteComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

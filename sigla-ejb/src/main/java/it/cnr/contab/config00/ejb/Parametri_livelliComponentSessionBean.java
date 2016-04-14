@@ -10,7 +10,7 @@ import it.cnr.contab.config00.comp.Parametri_livelliComponent;
 @Stateless(name="CNRCONFIG00_EJB_Parametri_livelliComponentSession")
 public class Parametri_livelliComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Parametri_livelliComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.config00.comp.Parametri_livelliComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

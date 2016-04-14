@@ -6,7 +6,7 @@ import it.cnr.contab.compensi00.comp.ScaglioneComponent;
 @Stateless(name="CNRCOMPENSI00_EJB_ScaglioneComponentSession")
 public class ScaglioneComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScaglioneComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.compensi00.comp.ScaglioneComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
