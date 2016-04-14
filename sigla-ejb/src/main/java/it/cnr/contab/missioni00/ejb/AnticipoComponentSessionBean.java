@@ -7,7 +7,7 @@ import it.cnr.contab.missioni00.comp.AnticipoComponent;
 @Stateless(name="CNRMISSIONI00_EJB_AnticipoComponentSession")
 public class AnticipoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AnticipoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.missioni00.comp.AnticipoComponent();
 	}
 	@Remove

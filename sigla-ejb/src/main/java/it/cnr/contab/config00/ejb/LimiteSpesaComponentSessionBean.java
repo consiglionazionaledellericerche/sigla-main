@@ -9,7 +9,7 @@ import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRCONFIG00_EJB_LimiteSpesaComponentSession")
 public class LimiteSpesaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements LimiteSpesaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.config00.comp.LimiteSpesaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

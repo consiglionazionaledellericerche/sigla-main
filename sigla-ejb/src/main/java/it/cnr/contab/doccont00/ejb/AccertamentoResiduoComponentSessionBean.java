@@ -8,7 +8,7 @@ import it.cnr.contab.doccont00.comp.AccertamentoResiduoComponent;
 @Stateless(name="CNRDOCCONT00_EJB_AccertamentoResiduoComponentSession")
 public class AccertamentoResiduoComponentSessionBean extends it.cnr.contab.doccont00.ejb.AccertamentoComponentSessionBean implements AccertamentoResiduoComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.comp.AccertamentoResiduoComponent();
 	}
 	@Remove

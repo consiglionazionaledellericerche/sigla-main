@@ -6,7 +6,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPREVENT00_EJB_BilancioPreventivoComponentSession")
 public class BilancioPreventivoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements BilancioPreventivoComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.prevent00.comp.BilancioPreventivoComponent();
 	}
 	@Remove

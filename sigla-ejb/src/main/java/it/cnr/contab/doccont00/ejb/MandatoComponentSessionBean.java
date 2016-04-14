@@ -11,7 +11,7 @@ import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 @Stateless(name="CNRDOCCONT00_EJB_MandatoComponentSession")
 public class MandatoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements MandatoComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.comp.MandatoComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

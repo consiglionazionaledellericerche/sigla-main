@@ -17,7 +17,7 @@ import javax.ejb.TransactionAttributeType;
 @Stateless(name="CNRDOCAMM00_EJB_FatturaElettronicaAttivaComponentSession")
 public class FatturaElettronicaAttivaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FatturaElettronicaAttivaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.docamm00.comp.FatturaElettronicaAttivaComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

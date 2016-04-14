@@ -7,7 +7,7 @@ import it.cnr.contab.doccont00.comp.AssManualeMandatoReversaleComponent;
 @Stateless(name="CNRDOCCONT00_EJB_AssManualeMandatoReversaleComponentSession")
 public class AssManualeMandatoReversaleComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AssManualeMandatoReversaleComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.comp.AssManualeMandatoReversaleComponent();
 	}
 	@Remove

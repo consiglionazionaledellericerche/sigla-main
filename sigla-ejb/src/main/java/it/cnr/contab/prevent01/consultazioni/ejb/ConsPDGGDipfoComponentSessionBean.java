@@ -11,7 +11,7 @@ import it.cnr.contab.prevent01.consultazioni.comp.ConsPDGGDipfoComponent;
 @Stateless(name="CNRPREVENT01_EJB_ConsPDGGDipfoComponentSession")
 public class ConsPDGGDipfoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsPDGGDipfoComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.prevent01.consultazioni.comp.ConsPDGGDipfoComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

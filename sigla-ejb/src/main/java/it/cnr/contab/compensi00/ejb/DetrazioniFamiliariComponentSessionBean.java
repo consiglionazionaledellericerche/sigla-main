@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRCOMPENSI00_EJB_DetrazioniFamiliariComponentSession")
 public class DetrazioniFamiliariComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements DetrazioniFamiliariComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.compensi00.comp.DetrazioniFamiliariComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

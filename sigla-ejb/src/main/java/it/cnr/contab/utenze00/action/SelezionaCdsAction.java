@@ -135,7 +135,7 @@ protected Forward selectFromSearchResult(ActionContext actioncontext, FormField 
         if(remoteiterator.countElements() == 1)
         {
             doBringBackSearchResult(actioncontext, formfield, (OggettoBulk)remoteiterator.nextElement());
-            EJBCommonServices.closeRemoteIterator(remoteiterator);
+            EJBCommonServices.closeRemoteIterator(actioncontext,remoteiterator);
             return actioncontext.findDefaultForward();
         } else
         {

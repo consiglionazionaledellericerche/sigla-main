@@ -7,7 +7,7 @@ import it.cnr.contab.gestiva00.comp.StampaRegistriIvaComponent;
 @Stateless(name="CNRGESTIVA00_EJB_StampaRegistriIvaComponentSession")
 public class StampaRegistriIvaComponentSessionBean extends it.cnr.jada.ejb.RicercaComponentSessionBean implements StampaRegistriIvaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.gestiva00.comp.StampaRegistriIvaComponent();
 	}
 	@Remove

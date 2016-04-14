@@ -12,7 +12,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRBILATERALI00_EJB_BltVisiteComponentSession")
 public class BltVisiteComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements it.cnr.contab.bilaterali00.ejb.BltVisiteComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.bilaterali00.comp.BltVisiteComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

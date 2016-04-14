@@ -6,7 +6,7 @@ import it.cnr.contab.compensi00.comp.TrattamentoCORIComponent;
 @Stateless(name="CNRCOMPENSI00_EJB_TrattamentoCORIComponentSession")
 public class TrattamentoCORIComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements TrattamentoCORIComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.compensi00.comp.TrattamentoCORIComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

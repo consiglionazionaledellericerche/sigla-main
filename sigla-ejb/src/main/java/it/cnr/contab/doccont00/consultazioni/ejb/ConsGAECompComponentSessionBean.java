@@ -9,7 +9,7 @@ import it.cnr.contab.doccont00.consultazioni.comp.ConsGAECompComponent;
 @Stateless(name="CNRDOCCONT00_EJB_ConsGAECompComponentSession")
 public class ConsGAECompComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsGAECompComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.consultazioni.comp.ConsGAECompComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -6,7 +6,7 @@ import it.cnr.contab.doccont00.comp.OrdineComponent;
 @Stateless(name="CNRDOCCONT00_EJB_OrdineComponentSession")
 public class OrdineComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements OrdineComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.OrdineComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

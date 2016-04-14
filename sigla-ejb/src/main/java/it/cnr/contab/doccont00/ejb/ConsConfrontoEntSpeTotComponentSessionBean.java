@@ -23,7 +23,7 @@ public class ConsConfrontoEntSpeTotComponentSessionBean extends GenericComponent
 		componentObj.release();
 	}
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new ConsConfrontoEntSpeTotComponent();
 	}
 	

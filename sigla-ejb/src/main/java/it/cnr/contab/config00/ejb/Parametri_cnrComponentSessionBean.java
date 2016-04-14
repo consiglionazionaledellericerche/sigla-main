@@ -9,7 +9,7 @@ import it.cnr.contab.config00.comp.Parametri_cnrComponent;
 @Stateless(name="CNRCONFIG00_EJB_Parametri_cnrComponentSession")
 public class Parametri_cnrComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Parametri_cnrComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.config00.comp.Parametri_cnrComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

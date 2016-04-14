@@ -19,7 +19,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPREVENT01_EJB_PdgContrSpeseComponentSession")
 public class PdgContrSpeseComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdgContrSpeseComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.prevent01.comp.PdgContrSpeseComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

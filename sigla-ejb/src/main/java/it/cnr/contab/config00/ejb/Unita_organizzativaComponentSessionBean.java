@@ -6,7 +6,7 @@ import it.cnr.contab.config00.comp.Unita_organizzativaComponent;
 @Stateless(name="CNRCONFIG00_EJB_Unita_organizzativaComponentSession")
 public class Unita_organizzativaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Unita_organizzativaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.config00.comp.Unita_organizzativaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

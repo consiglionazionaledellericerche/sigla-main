@@ -10,7 +10,7 @@ import it.cnr.contab.gestiva00.comp.LiquidIvaInterfComponent;
 @Stateless(name="CNRGESTIVA00_EJB_LiquidIvaInterfComponentSession")
 public class LiquidIvaInterfComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements LiquidIvaInterfComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.gestiva00.comp.LiquidIvaInterfComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRCONFIG00_EJB_CODICI_SIOPE_ComponentSession")
 public class CodiciSiopeComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CodiciSiopeComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new CodiciSiopeComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRINCARICHI00_EJB_AssegniRicercaProceduraComponentSession")
 public class AssegniRicercaProceduraComponentSessionBean extends IncarichiProceduraComponentSessionBean implements AssegniRicercaProceduraComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.incarichi00.comp.AssegniRicercaProceduraComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

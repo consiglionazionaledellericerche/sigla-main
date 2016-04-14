@@ -9,7 +9,7 @@ import it.cnr.contab.doccont00.comp.NumTempDocContComponent;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class NumTempDocContComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements NumTempDocContComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.NumTempDocContComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

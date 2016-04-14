@@ -10,7 +10,7 @@ import javax.ejb.*;
 @Stateless(name="CNRUTENZE00_EJB_UtenteComponentSession")
 public class UtenteComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements UtenteComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.utente00.comp.UtenteComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

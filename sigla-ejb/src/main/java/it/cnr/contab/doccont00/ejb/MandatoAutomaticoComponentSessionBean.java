@@ -7,7 +7,7 @@ import it.cnr.contab.doccont00.comp.MandatoAutomaticoComponent;
 @Stateless(name="CNRDOCCONT00_EJB_MandatoAutomaticoComponentSession")
 public class MandatoAutomaticoComponentSessionBean extends MandatoComponentSessionBean implements MandatoAutomaticoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.MandatoAutomaticoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

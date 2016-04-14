@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRINCARICHI00_EJB_IncarichiRepertorioComponentSession")
 public class IncarichiRepertorioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements IncarichiRepertorioComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.incarichi00.comp.IncarichiRepertorioComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
