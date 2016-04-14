@@ -15,7 +15,7 @@ import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRDOCCONT00_EJB_ReversaleComponentSession")
 public class ReversaleComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ReversaleComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.ReversaleComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

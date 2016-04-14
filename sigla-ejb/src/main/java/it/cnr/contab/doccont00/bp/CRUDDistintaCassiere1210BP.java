@@ -110,10 +110,6 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		return distintaCassiere1210LettereCollegate;
 	}
 	@Override
-	public boolean isSaveButtonHidden() {
-		return true;
-	}
-	@Override
 	public boolean isDeleteButtonEnabled() {
 		return super.isDeleteButtonEnabled() && getModel() != null && ((DistintaCassiere1210Bulk)getModel()).getDtInvio() == null;
 	}
@@ -477,4 +473,14 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		document.close();
 		return lastPage;
 	}
+	@Override
+	protected void closed() throws BusinessProcessException {
+		super.closed();
+		try {
+			distintaCassiere1210LettereCollegate.closed();
+			distintaCassiere1210LettereDaCollegare.closed();
+		} catch (RemoteException e) {
+			handleException(e);
+		}
+	}	
 }

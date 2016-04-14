@@ -12,7 +12,7 @@ import it.cnr.jada.ejb.CRUDComponentSessionBean;
 @Stateless(name="CNRCOMPENSI00_EJB_AssGruppoCRUOComponentSession")
 public class AssGruppoCRUOComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AssGruppoCRUOComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.compensi00.comp.AssGruppoCRUOComponent();
 	}
 	@Remove

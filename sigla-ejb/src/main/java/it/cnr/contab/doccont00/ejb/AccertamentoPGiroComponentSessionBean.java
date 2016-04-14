@@ -7,7 +7,7 @@ import it.cnr.contab.doccont00.comp.AccertamentoPGiroComponent;
 @Stateless(name="CNRDOCCONT00_EJB_AccertamentoPGiroComponentSession")
 public class AccertamentoPGiroComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AccertamentoPGiroComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.comp.AccertamentoPGiroComponent();
 	}
 	@Remove

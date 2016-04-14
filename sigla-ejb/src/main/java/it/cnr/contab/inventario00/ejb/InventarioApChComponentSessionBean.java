@@ -6,7 +6,7 @@ import it.cnr.contab.inventario00.comp.InventarioApChComponent;
 @Stateless(name="CNRINVENTARIO00_EJB_InventarioApChComponentSession")
 public class InventarioApChComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements InventarioApChComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.inventario00.comp.InventarioApChComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

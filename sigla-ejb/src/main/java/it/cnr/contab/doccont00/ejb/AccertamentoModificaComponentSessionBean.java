@@ -15,7 +15,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 @Stateless(name="CNRDOCCONT00_EJB_AccertamentoModificaComponentSession")
 public class AccertamentoModificaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AccertamentoModificaComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.comp.AccertamentoModificaComponent();
 	}
 	@Remove

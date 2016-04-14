@@ -6,7 +6,7 @@ import it.cnr.contab.docamm00.comp.ProgressiviAmmComponent;
 @Stateless(name="CNRDOCAMM00_EJB_ProgressiviAmmComponentSession")
 public class ProgressiviAmmComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ProgressiviAmmComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.docamm00.comp.ProgressiviAmmComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -6,7 +6,7 @@ import it.cnr.contab.pdg00.comp.PdGPreventivoComponent;
 @Stateless(name="CNRPDG00_EJB_PdGPreventivoComponentSession")
 public class PdGPreventivoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdGPreventivoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.pdg00.comp.PdGPreventivoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

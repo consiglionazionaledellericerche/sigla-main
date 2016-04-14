@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRUTENZE00_EJB_AssBpAccessoComponentSession")
 public class AssBpAccessoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AssBpAccessoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new AssBpAccessoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

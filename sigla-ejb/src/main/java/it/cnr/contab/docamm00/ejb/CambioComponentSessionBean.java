@@ -6,7 +6,7 @@ import it.cnr.contab.docamm00.comp.CambioComponent;
 @Stateless(name="CNRDOCAMM00_EJB_CambioComponentSession")
 public class CambioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CambioComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.docamm00.comp.CambioComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -11,7 +11,7 @@ import it.cnr.contab.inventario01.comp.NumerazioneTempBuonoComponent;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class NumerazioneTempBuonoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements NumerazioneTempBuonoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new NumerazioneTempBuonoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

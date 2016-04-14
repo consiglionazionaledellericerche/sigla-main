@@ -8,7 +8,7 @@ import it.cnr.contab.pdg00.comp.CostiDipendenteComponent;
 @Stateless(name="CNRPDG00_EJB_CostiDipendenteComponentSession")
 public class CostiDipendenteComponentSessionBean extends it.cnr.jada.ejb.RicercaComponentSessionBean implements CostiDipendenteComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.pdg00.comp.CostiDipendenteComponent();
 	}
 	@Remove

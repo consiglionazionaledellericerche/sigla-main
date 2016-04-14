@@ -7,7 +7,7 @@ import it.cnr.contab.pdg00.consultazioni.comp.ConsPDGAssestatoAggregatoComponent
 @Stateless(name="CNRPDG00_EJB_ConsPDGAssestatoAggregatoComponentSession")
 public class ConsPDGAssestatoAggregatoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsPDGAssestatoAggregatoComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.pdg00.consultazioni.comp.ConsPDGAssestatoAggregatoComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

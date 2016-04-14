@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRCONFIG00_EJB_LockObjectSession")
 public class LockObjectSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements LockObjectSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new LockObjectComponent();
 	}
 	

@@ -10,7 +10,7 @@ public class Lunghezza_chiaviComponentSessionBean extends it.cnr.jada.ejb.Generi
 		componentObj.release();
 	}
 	@PostConstruct
-		public void ejbCreate() throws javax.ejb.CreateException {
+		public void ejbCreate() {
 		componentObj = new it.cnr.contab.config00.comp.Lunghezza_chiaviComponent();
 	}
 	public static 

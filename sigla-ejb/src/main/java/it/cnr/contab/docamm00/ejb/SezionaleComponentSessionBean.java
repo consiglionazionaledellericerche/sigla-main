@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRDOCAMM00_EJB_SezionaleComponentSession")
 public class SezionaleComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements SezionaleComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.docamm00.comp.SezionaleComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

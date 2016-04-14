@@ -18,7 +18,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRDOCAMM00_EJB_ElaboraFileIntraComponentSession")
 public class ElaboraFileIntraComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ElaboraFileIntraComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.docamm00.comp.ElaboraFileIntraComponent();
 	}
 	@Remove

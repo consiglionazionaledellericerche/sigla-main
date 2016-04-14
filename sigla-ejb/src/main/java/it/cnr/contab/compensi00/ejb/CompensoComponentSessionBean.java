@@ -23,7 +23,7 @@ public class CompensoComponentSessionBean extends
 		it.cnr.jada.ejb.CRUDComponentSessionBean implements
 		CompensoComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.compensi00.comp.CompensoComponent();
 	}
 

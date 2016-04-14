@@ -6,7 +6,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPREVENT01_EJB_PdGPreliminareComponentSession")
 public class PdGPreliminareComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdGPreliminareComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.prevent01.comp.PdGPreliminareComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

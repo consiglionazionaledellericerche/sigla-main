@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRCOEPCOAN00_EJB_AssAnagVoceEpComponentSession")
 public class AssAnagVoceEpComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AssAnagVoceEpComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.coepcoan00.comp.AssAnagVoceEpComponent();
 	}
 	@Remove
