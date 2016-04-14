@@ -27,6 +27,31 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 		return getNodeRefContabile(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva(), Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP);
 	}
 
+	private List<String> getNodeRefFatturaAttivaXmlFirmato(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
+		List<String> ids = new ArrayList<String>();
+		Folder node = recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+		if (node == null){
+			throw new ApplicationException("Non esistono documenti collegati alla fattura.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+" numero:"+pgFattura);
+		}
+		String folder = (String) node.getPropertyValue(PropertyIds.OBJECT_ID); 
+		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
+		query.append(" join sigla_fatture_attachment:fattura_elettronica_xml_post_firma fatture on doc.cmis:objectId = fatture.cmis:objectId");
+		query.append(" where IN_FOLDER(doc, '").append(folder).append("')");
+		//				query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
+		//				query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
+		//				query.append(" order by doc.cmis:creationDate DESC");
+		ItemIterable<QueryResult> results = search(query);
+		if (results.getTotalNumItems() == 0)
+			return null;
+		else {
+			for (QueryResult nodeFile : results) {
+				String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
+				ids.add(file);
+			}
+		}
+		return ids;
+	}
+	
 	public List<String> getNodeRefContabile(Integer esercizio, String cds, String cdUo, Long pgFattura, String tipoDocumento)throws DetailedException{
 		List<String> ids = new ArrayList<String>();
 		Folder node = recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
@@ -105,7 +130,36 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 		return null;
 	}
 	
+	public InputStream getStreamXmlFirmatoFatturaAttiva(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception{
+		List<String> ids = getNodeRefFatturaAttivaXmlFirmato(esercizio, cds, cdUo, pgFattura);
+		if (ids != null){
+			if (ids.size() == 1){
+				try{
+					return getResource(getNodeByNodeRef(ids.get(0)));
+				}catch (CmisObjectNotFoundException _ex){
+				}
+			}else{
+				PDFMergerUtility ut = new PDFMergerUtility();
+				ut.setDestinationStream(new ByteArrayOutputStream());
+				try {
+					for (String id : ids) {
+						ut.addSource(getResource(getNodeByNodeRef(id)));
+					}
+					ut.mergeDocuments();
+					return new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
+				} catch (COSVisitorException e) {
+					throw e;
+				} catch (IOException e) {
+					throw e;
+				}catch (CmisObjectNotFoundException _ex){
+				}
+			}
+		}
+		return null;
+	}
+	
 	public InputStream getStreamContabile(Fattura_attivaBulk fattura) throws Exception{
 		return getStreamContabile(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva(), Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP);
 	}
+
 }

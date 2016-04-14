@@ -34,6 +34,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 
 import javax.activation.DataHandler;
@@ -298,6 +299,40 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 				logger.warn("Fatture Elettroniche: Attive: PEC. Per il nome del file indicato nell'e-mail di Consegna della PEC non corrisponde nessuna fattura." + nomeFile);
 				SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Per il nome del file indicato nell'e-mail di Consegna della PEC non corrisponde nessuna fattura", "Consegna PEC. Nome File: "+nomeFile);
 			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public InputStream mancataConsegnaPecInvioFatturaAttiva(UserContext userContext, String nomeFile) throws ComponentException {
+		try {
+			logger.info("Fatture Elettroniche: Attive: Pec: Mancata Consegna Nome File: "+nomeFile);
+			Fattura_attivaBulk fattura = recuperoFatturaDaNomeFile(userContext, nomeFile);
+			if (fattura != null){
+				logger.info("Fatture Elettroniche: Attive: Pec: Mancata Consegna Fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva());
+				if (fattura.getStatoInvioSdi() != null && fattura.getStatoInvioSdi().equals("FATT_ELETT_INVIATA_SDI")){
+					try{
+		    			DocumentiCollegatiDocAmmService docCollService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
+		    			InputStream streamSigned = docCollService.getStreamXmlFirmatoFatturaAttiva(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
+		    			if (streamSigned != null){
+							SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Mancata Consegna Fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva(), "Verrà riprovato l'invio.");
+			    			return streamSigned;
+		    			}
+						SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Stream file firmato non trovato.", "Mancata Consegna Fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva());
+					} catch (Exception ex) {
+						logger.error("Fatture Elettroniche: Attive: PEC. Mancata Consegna. Errore nella ricerca dello stream del file firmato della fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+ ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+						java.io.StringWriter sw = new java.io.StringWriter();
+						ex.printStackTrace(new java.io.PrintWriter(sw));
+						SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Mancata Consegna. Errore nella ricerca dello stream del file firmato della fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva(), sw.toString());
+					}
+				} else {
+					logger.info("Fatture Elettroniche: Attive: Pec: Mancata Consegna Fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+". Mancata Consegna Elaborata");
+				}
+			} else {
+				logger.warn("Fatture Elettroniche: Attive: PEC. Mancata Consegna. Per il nome del file indicato nell'e-mail di Consegna della PEC non corrisponde nessuna fattura." + nomeFile);
+				SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Fatture Elettroniche: Attive: PEC. Mancata Consegna. Per il nome del file indicato nell'e-mail di Consegna della PEC non corrisponde nessuna fattura", "Consegna PEC. Nome File: "+nomeFile);
+			}
+			return null;
 		} catch (Exception e) {
 			throw new ComponentException(e);
 		}
