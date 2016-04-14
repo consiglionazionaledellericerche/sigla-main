@@ -9,7 +9,7 @@ public class RiportoDocAmmComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 		componentObj.release();
 	}
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.docamm00.comp.RiportoDocAmmComponent();
 	}
 	public static RiportoDocAmmComponentSessionBean newInstance() throws EJBException {

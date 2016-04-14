@@ -6,7 +6,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPREVENT00_EJB_PdgAggregatoComponentSession")
 public class PdgAggregatoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdgAggregatoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.prevent00.comp.PdgAggregatoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

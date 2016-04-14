@@ -30,7 +30,7 @@ import it.cnr.jada.comp.ComponentException;
 public class BuonoCaricoScaricoComponentSessionBean extends it.cnr.jada.ejb.CRUDDetailComponentSessionBean implements BuonoCaricoScaricoComponentSession {
 	
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.inventario01.comp.BuonoCaricoScaricoComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

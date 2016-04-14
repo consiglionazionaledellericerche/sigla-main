@@ -6,7 +6,7 @@ import javax.ejb.*;
 public class PingComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean  implements PingComponentSession{
 	private it.cnr.contab.util00.comp.PingComponent componentObj;
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.util00.comp.PingComponent();
 	}
 	@Remove

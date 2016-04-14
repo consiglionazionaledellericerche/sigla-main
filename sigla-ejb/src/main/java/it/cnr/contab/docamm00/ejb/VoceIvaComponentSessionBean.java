@@ -6,7 +6,7 @@ import it.cnr.contab.docamm00.comp.VoceIvaComponent;
 @Stateless(name="CNRDOCAMM00_EJB_VoceIvaComponentSession")
 public class VoceIvaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements VoceIvaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.docamm00.comp.VoceIvaComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

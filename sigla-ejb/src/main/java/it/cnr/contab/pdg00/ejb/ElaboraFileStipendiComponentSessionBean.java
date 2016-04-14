@@ -14,7 +14,7 @@ import it.cnr.contab.pdg00.comp.ElaboraFileStipendiComponent;
 @Stateless(name="CNRPDG00_EJB_ElaboraFileStipendiComponentSession")
 public class ElaboraFileStipendiComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ElaboraFileStipendiComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.pdg00.comp.ElaboraFileStipendiComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

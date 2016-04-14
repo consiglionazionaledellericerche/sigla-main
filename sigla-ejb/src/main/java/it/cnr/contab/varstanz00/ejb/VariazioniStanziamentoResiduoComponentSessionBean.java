@@ -17,7 +17,7 @@ public class VariazioniStanziamentoResiduoComponentSessionBean extends CRUDCompo
 	 * ejbCreate
 	 */
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj=new VariazioniStanziamentoResiduoComponent();
 	}
 	public static CRUDComponentSessionBean newInstance() throws EJBException {

@@ -7,7 +7,7 @@ import it.cnr.contab.logregistry00.comp.LogRegistryComponent;
 @Stateless(name="CNRLOGREGISTRY00_EJB_LogRegistryComponentSession")
 public class LogRegistryComponentSessionBean extends it.cnr.jada.ejb.RicercaComponentSessionBean implements LogRegistryComponentSession {
 	@PostConstruct
-		public void ejbCreate() throws javax.ejb.CreateException {
+		public void ejbCreate() {
 		componentObj = new it.cnr.contab.logregistry00.comp.LogRegistryComponent();
 	}
 	@Remove

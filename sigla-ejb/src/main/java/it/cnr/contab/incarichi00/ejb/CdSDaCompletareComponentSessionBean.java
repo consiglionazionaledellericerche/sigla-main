@@ -13,7 +13,7 @@ import javax.ejb.*;
 @Stateless(name="CNRINCARICHI00_EJB_CdSDaCompletareComponentSession")
 public class CdSDaCompletareComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CdSDaCompletareComponentSession  {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.incarichi00.comp.CdSDaCompletareComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

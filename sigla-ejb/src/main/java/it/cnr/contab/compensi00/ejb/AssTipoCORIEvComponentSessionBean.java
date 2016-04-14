@@ -8,7 +8,7 @@ import it.cnr.jada.ejb.CRUDComponentSessionBean;
 @Stateless(name="CNRCOMPENSI00_EJB_AssTipoCORIEvComponentSession")
 public class AssTipoCORIEvComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements  AssTipoCORIEvComponentSession{
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.compensi00.comp.AssTipoCORIEvComponent();
 	}
 	@Remove

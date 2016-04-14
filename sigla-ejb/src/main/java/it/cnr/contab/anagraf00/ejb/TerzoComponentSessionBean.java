@@ -10,7 +10,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRANAGRAF00_EJB_TerzoComponentSession")
 public class TerzoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements TerzoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.anagraf00.comp.TerzoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

@@ -18,7 +18,7 @@ import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRCONFIG00_EJB_Parametri_enteComponentSession")
 public class Parametri_enteComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Parametri_enteComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.config00.comp.Parametri_enteComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

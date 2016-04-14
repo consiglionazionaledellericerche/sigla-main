@@ -7,7 +7,7 @@ import it.cnr.contab.compensi00.comp.ConguaglioComponent;
 @Stateless(name="CNRCOMPENSI00_EJB_ConguaglioComponentSession")
 public class ConguaglioComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConguaglioComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.compensi00.comp.ConguaglioComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

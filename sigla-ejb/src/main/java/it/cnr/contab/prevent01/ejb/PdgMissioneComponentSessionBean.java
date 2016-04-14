@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRPREVENT01_EJB_PdgMissioneComponentSession")
 public class PdgMissioneComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdgMissioneComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.prevent01.comp.PdgMissioneComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

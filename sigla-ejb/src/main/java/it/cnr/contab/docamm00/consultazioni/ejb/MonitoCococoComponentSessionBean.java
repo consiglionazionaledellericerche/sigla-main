@@ -10,7 +10,7 @@ import javax.ejb.*;
 @Stateless(name="CNRDOCAMM00_EJB_MonitoCococoComponentSession")
 public class MonitoCococoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements MonitoCococoComponentSession  {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.docamm00.consultazioni.comp.MonitoCococoComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

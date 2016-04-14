@@ -1,7 +1,16 @@
 package it.cnr.contab.utente00.nav.comp;
 
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.contab.messaggio00.bulk.*;
+import it.cnr.contab.config00.bulk.ApplicationServerBulk;
+import it.cnr.contab.config00.bulk.ApplicationServerHome;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteHome;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
+import it.cnr.contab.messaggio00.bulk.Messaggio_lettoBulk;
 //@@<< FB
 // ***************************************************************
 // *
@@ -27,34 +36,40 @@ import it.cnr.contab.messaggio00.bulk.*;
 // *+--------+------------+--------------------------------------------------
 // *|        |            |
 // *+--------+------------+--------------------------------------------------
-
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Timestamp;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-
-import com.novell.ldap.LDAPException;
-
-import it.cnr.contab.utenze00.action.LoginAction;
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.messaggio00.bulk.Messaggio_notificatoBulk;
+import it.cnr.contab.messaggio00.bulk.Messaggio_notificatoKey;
+import it.cnr.contab.utenze00.bp.AttributoNonPresenteException;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bp.LdapLogin;
+import it.cnr.contab.utenze00.bp.PasswordNonValidaException;
+import it.cnr.contab.utenze00.bp.UtenteNonAbilitatoException;
+import it.cnr.contab.utenze00.bulk.Albero_mainBulk;
+import it.cnr.contab.utenze00.bulk.Albero_mainHome;
+import it.cnr.contab.utenze00.bulk.Ldap_serverBulk;
+import it.cnr.contab.utenze00.bulk.Ldap_serverHome;
+import it.cnr.contab.utenze00.bulk.PreferitiBulk;
+import it.cnr.contab.utenze00.bulk.PreferitiHome;
+import it.cnr.contab.utenze00.bulk.Ruolo_bloccoBulk;
+import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
+import it.cnr.contab.utenze00.bulk.SessionTraceHome;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.utenze00.bulk.UtenteComuneBulk;
+import it.cnr.contab.utenze00.bulk.UtenteHome;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.Log;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.Timestamp;
+import java.util.Iterator;
+import java.util.List;
 
 public class GestioneLoginComponent
 	extends it.cnr.jada.comp.GenericComponent
@@ -916,16 +931,10 @@ public class GestioneLoginComponent
 					return null;
 				} catch (PasswordLdapScadutaException e) {
 					throw e;
-				} catch (LDAPException e) {
+				} catch (Exception e) {
 					if (!it.hasNext()) {
-				    	e.printStackTrace();
-	        	        if (e.getResultCode()==LDAPException.CONNECT_ERROR)
-	    					throw new ApplicationException("Impossibile stabilire una connessione con il servizio di autenticazione utente.\nContattare il supporto applicativo.");
 						throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
 					}
-				} catch (Exception e) {
-					//if (!it.hasNext())
-					throw new ApplicationException(e.getMessage());
 				}
 	        }
 			
@@ -969,13 +978,8 @@ public class GestioneLoginComponent
 				return ldapLogin.getLdapUser(matricola);
 			} catch (PasswordLdapScadutaException e) {
 				throw e;
-			} catch (LDAPException e) {
-		    	e.printStackTrace();
-		        if (e.getResultCode()==LDAPException.CONNECT_ERROR)
-					throw new ApplicationException("Impossibile stabilire una connessione con il servizio di autenticazione utente.\nContattare il supporto applicativo.");
-				throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
 			} catch (Exception e) {
-				throw new ApplicationException(e.getMessage());
+				throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
 			}
 		} catch(Throwable e) {
 			throw handleException(e);
@@ -1016,15 +1020,8 @@ public class GestioneLoginComponent
 					return ldapLogin.isUtenteAbilitato(userID);
 				} catch (PasswordLdapScadutaException e) {
 					throw e;
-				} catch (LDAPException e) {
-			    	e.printStackTrace();
-					if (!it.hasNext()) {
-				        if (e.getResultCode()==LDAPException.CONNECT_ERROR)
-							throw new ApplicationException("Impossibile stabilire una connessione con il servizio di autenticazione utente.\nContattare il supporto applicativo.");
-						throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
-					}
 				} catch (Exception e) {
-					throw new ApplicationException(e.getMessage());
+					throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
 				}
 			}
 
@@ -1074,15 +1071,9 @@ public class GestioneLoginComponent
 				ldapLogin.cambiaAbilitazioneUtente(userID, abilita);
 			} catch (PasswordLdapScadutaException e) {
 				throw e;
-			} catch (LDAPException e) {
-		    	e.printStackTrace();
-		        if (e.getResultCode()==LDAPException.CONNECT_ERROR)
-					throw new ApplicationException("Impossibile stabilire una connessione con il servizio di autenticazione utente.\nContattare il supporto applicativo.");
-				throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
 			} catch (Exception e) {
-				throw new ApplicationException(e.getMessage());
+				throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
 			}
-	
 		} catch(Throwable e) {
 			throw handleException(e);
 		}

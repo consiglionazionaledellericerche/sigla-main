@@ -26,7 +26,7 @@ public class StampaConfrontoSiglaDwhComponentSessionBean extends it.cnr.jada.ejb
 //	private StampaConfrontoSiglaDwhComponent componentObj;
 	
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new StampaConfrontoSiglaDwhComponent();
 	}
 	

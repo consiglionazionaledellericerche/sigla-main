@@ -18,7 +18,7 @@ import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRANAGRAF00_EJB_AnagraficoComponentSession")
 public class AnagraficoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AnagraficoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.anagraf00.comp.AnagraficoComponent();
 	}
 	@Remove

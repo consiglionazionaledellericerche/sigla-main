@@ -10,6 +10,7 @@ import it.cnr.jada.comp.ApplicationException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +64,8 @@ import org.slf4j.LoggerFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class SiglaCMISService {
+public class SiglaCMISService implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private transient static final Logger logger = LoggerFactory.getLogger(SiglaCMISService.class);
 	public static final String ASPECT_TITLED = "P:cm:titled", 
 			PROPERTY_TITLE = "cm:title", 

@@ -12,7 +12,7 @@ import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRCORI00_EJB_Liquid_coriComponentSession")
 public class Liquid_coriComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Liquid_coriComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.cori00.comp.Liquid_coriComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

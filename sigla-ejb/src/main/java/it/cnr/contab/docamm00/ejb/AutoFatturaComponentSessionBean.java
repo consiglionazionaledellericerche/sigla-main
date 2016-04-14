@@ -13,7 +13,7 @@ import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCAMM00_EJB_AutoFatturaComponentSession")
 public class AutoFatturaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AutoFatturaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.docamm00.comp.AutoFatturaComponent();
 	}
 	@Remove

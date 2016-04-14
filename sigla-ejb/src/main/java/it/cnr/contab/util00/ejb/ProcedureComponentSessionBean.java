@@ -8,7 +8,7 @@ public class ProcedureComponentSessionBean extends it.cnr.jada.ejb.GenericCompon
 	private it.cnr.contab.util00.comp.ProcedureComponent componentObj;
 
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.util00.comp.ProcedureComponent();
 	}
 	@Remove

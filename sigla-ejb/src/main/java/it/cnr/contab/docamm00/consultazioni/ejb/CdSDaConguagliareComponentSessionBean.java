@@ -14,7 +14,7 @@ import javax.ejb.*;
 @Stateless(name="CNRDOCAMM00_EJB_CdSDaConguagliareComponentSession")
 public class CdSDaConguagliareComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CdSDaConguagliareComponentSession  {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.docamm00.consultazioni.comp.CdSDaConguagliareComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

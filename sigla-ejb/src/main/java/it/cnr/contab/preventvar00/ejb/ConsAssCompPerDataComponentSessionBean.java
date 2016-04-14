@@ -18,7 +18,7 @@ import it.cnr.jada.util.RemoteIterator;
 @Stateless(name="CNRPREVENTVAR00_EJB_ConsAssCompPerDataComponentSession")
 public class ConsAssCompPerDataComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsAssCompPerDataComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new ConsAssCompPerDataComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

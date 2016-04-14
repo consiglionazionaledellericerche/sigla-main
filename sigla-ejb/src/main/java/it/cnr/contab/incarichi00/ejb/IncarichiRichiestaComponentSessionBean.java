@@ -11,7 +11,7 @@ import it.cnr.contab.incarichi00.comp.IncarichiRichiestaComponent;
 @Stateless(name="CNRINCARICHI00_EJB_IncarichiRichiestaComponentSession")
 public class IncarichiRichiestaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements IncarichiRichiestaComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.incarichi00.comp.IncarichiRichiestaComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

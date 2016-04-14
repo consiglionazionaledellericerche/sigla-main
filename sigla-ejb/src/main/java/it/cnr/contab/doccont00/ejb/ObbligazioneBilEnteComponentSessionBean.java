@@ -6,7 +6,7 @@ import it.cnr.contab.doccont00.comp.ObbligazioneBilEnteComponent;
 @Stateless(name="CNRDOCCONT00_EJB_ObbligazioneBilEnteComponentSession")
 public class ObbligazioneBilEnteComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ObbligazioneBilEnteComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.ObbligazioneBilEnteComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

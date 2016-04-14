@@ -19,7 +19,7 @@ import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRDOCAMM00_EJB_FatturaPassivaComponentSession")
 public class FatturaPassivaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FatturaPassivaComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 
 	componentObj = new it.cnr.contab.docamm00.comp.FatturaPassivaComponent();
 }

@@ -6,7 +6,7 @@ import it.cnr.contab.doccont00.comp.ImpegnoComponent;
 @Stateless(name="CNRDOCCONT00_EJB_ImpegnoComponentSession")
 public class ImpegnoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ImpegnoComponentSession{
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.doccont00.comp.ImpegnoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

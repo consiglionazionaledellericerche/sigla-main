@@ -6,7 +6,7 @@ import it.cnr.contab.missioni00.comp.MissioneTipoPastoComponent;
 @Stateless(name="CNRMISSIONI00_EJB_MissioneTipoPastoComponentSession")
 public class MissioneTipoPastoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements MissioneTipoPastoComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new it.cnr.contab.missioni00.comp.MissioneTipoPastoComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {

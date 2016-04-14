@@ -10,7 +10,7 @@ import javax.ejb.*;
 @Stateless(name="CNRPDG00_EJB_PdgPianoRipartoComponentSession")
 public class PdgPianoRipartoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdgPianoRipartoComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.prevent00.comp.PdgPianoRipartoComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {

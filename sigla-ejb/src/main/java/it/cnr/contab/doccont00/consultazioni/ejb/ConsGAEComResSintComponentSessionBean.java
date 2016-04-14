@@ -15,7 +15,7 @@ import it.cnr.jada.util.RemoteIterator;
 @Stateless(name="CNRDOCCONT00_EJB_ConsGAEComResSintComponentSession")
 public class ConsGAEComResSintComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsGAEComResSintComponentSession {
 	@PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 		componentObj = new it.cnr.contab.doccont00.consultazioni.comp.ConsGAEComResSintComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
