@@ -67,7 +67,6 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 						((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa());				
 			}
 			setBaseclause(compoundfindclause);
-			EJBCommonServices.closeRemoteIterator(getIterator());		
 			Lettera_pagam_esteroBulk lettera = (Lettera_pagam_esteroBulk) getModel();
 			Lettera_pagam_esteroBulk letteraAll = new Lettera_pagam_esteroBulk();
 			letteraAll.setStato_trasmissione(null);
