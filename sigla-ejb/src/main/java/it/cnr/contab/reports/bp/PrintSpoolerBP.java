@@ -93,8 +93,7 @@ public boolean isSignButtonEnabled() {
 		((Print_spoolerBulk)getFocusedElement()).isEseguita();
 }
 public void refresh(ActionContext context) throws BusinessProcessException {
-	try {
-		EJBCommonServices.closeRemoteIterator(getIterator());
+	try {		
 		setIterator(context,createComponentSession().queryJobs(
 			context.getUserContext(),
 			((Print_spoolerBulk)getModel()).getTiVisibilita()));
