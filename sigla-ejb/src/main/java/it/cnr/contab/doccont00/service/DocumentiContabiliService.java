@@ -198,12 +198,21 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		// Create the email message
 		SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
 		email.setHostName(pecHostName);
-		if (isNoEuroOrSepa)
-			if (pecMailToBancaNoEuroSepa!=null)
+		if (isNoEuroOrSepa){
+			if (pecMailToBancaNoEuroSepa!=null && pecMailToBancaNoEuroSepa.split(";").length!=0){
 			        email.addTo(pecMailToBancaNoEuroSepa.split(";"));
-		else
-			if(pecMailToBancaItaliaF23F24!=null )
+			}else{ 
+			       	email.addTo(pecMailToBancaNoEuroSepa,pecMailToBancaNoEuroSepa);
+			}
+		}        
+		else{
+			if(pecMailToBancaItaliaF23F24!=null && pecMailToBancaItaliaF23F24.split(";").length!=0 ){
 				email.addTo(pecMailToBancaItaliaF23F24.split(";"));
+			}
+			else{
+				email.addTo(pecMailToBancaItaliaF23F24,pecMailToBancaItaliaF23F24);
+			}
+		}
 		
 		email.setFrom(pecMailFromBanca, pecMailFromBanca);
 		if (nrDistinta!=null)
@@ -225,13 +234,21 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
 		email.setHostName(pecHostName);
 		
-		if (isNoEuroOrSepa)
-			if (pecMailToBancaNoEuroSepa!=null)
+		if (isNoEuroOrSepa){
+			if (pecMailToBancaNoEuroSepa!=null && pecMailToBancaNoEuroSepa.split(";").length!=0){
 			        email.addTo(pecMailToBancaNoEuroSepa.split(";"));
-		else
-			if(pecMailToBancaItaliaF23F24!=null )
+			}else{ 
+			       	email.addTo(pecMailToBancaNoEuroSepa,pecMailToBancaNoEuroSepa);
+			}
+		}        
+		else{
+			if(pecMailToBancaItaliaF23F24!=null && pecMailToBancaItaliaF23F24.split(";").length!=0 ){
 				email.addTo(pecMailToBancaItaliaF23F24.split(";"));
-			
+			}
+			else{
+				email.addTo(pecMailToBancaItaliaF23F24,pecMailToBancaItaliaF23F24);
+			}
+		}
 		email.setFrom(pecMailFromBanca, pecMailFromBanca);
 		if (nrDistinta!=null)
 			email.setSubject("Invio Distinta "+nrDistinta+" e Documenti");
