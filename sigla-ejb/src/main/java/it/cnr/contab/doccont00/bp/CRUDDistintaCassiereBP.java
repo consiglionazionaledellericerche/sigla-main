@@ -691,7 +691,7 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 			distinta_doc = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat("Distinta n. ").concat(String.valueOf(distinta.getPg_distinta_def())).
 					concat(".pdf"));
 		}
-		
+		distinta = (Distinta_cassiereBulk)getModel();
 		List<String> nodes = new ArrayList<String>();
 		String nodo = (String) distinta_doc.getPropertyValue("alfcmis:nodeRef");
 		nodes.add(nodo);
