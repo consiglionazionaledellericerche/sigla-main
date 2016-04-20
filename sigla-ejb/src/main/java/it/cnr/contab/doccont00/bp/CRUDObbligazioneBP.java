@@ -611,16 +611,17 @@ public OggettoBulk getBringBackModel() {
 				}
 			}
 		}
-		if (getParent() instanceof CRUDFatturaPassivaIBP || getParent() instanceof CRUDDocumentoGenericoPassivoBP ) {
+		if (//getParent() instanceof CRUDFatturaPassivaIBP || 
+				getParent() instanceof CRUDDocumentoGenericoPassivoBP ) {
 			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
 				throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
 		}
-		if (getParent() instanceof RicercaObbligazioniBP) {
-			RicercaObbligazioniBP ricercaBP = (RicercaObbligazioniBP)getParent();
-			if (ricercaBP.getParent() != null && ricercaBP.getParent() instanceof CRUDFatturaPassivaIBP &&
-				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
-					throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
-		}
+//		if (getParent() instanceof RicercaObbligazioniBP) {
+//			RicercaObbligazioniBP ricercaBP = (RicercaObbligazioniBP)getParent();
+//			if (ricercaBP.getParent() != null && ricercaBP.getParent() instanceof CRUDFatturaPassivaIBP &&
+//				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
+//					throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
+//		}
 
 		if(	getParent() instanceof IDocumentoAmministrativoBP &&
 			scadenzaSelezionata.getIm_associato_doc_amm() != null &&
