@@ -16,7 +16,7 @@ COPY SIGLA/target/SIGLA-wildfly.ear ${WILDFLY}/standalone/deployments/SIGLA.ear
 
 WORKDIR ${WILDFLY}
 
-CMD ["./bin/standalone.sh", "-b", "0.0.0.0"]
+CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "--debug", "8787"]
 
 COPY src/main/docker/standalone/configuration/  standalone/configuration/
 COPY src/main/docker/modules/system/layers/base/com/informix/jdbc/ modules/system/layers/base/com/informix/jdbc/
