@@ -1,0 +1,4 @@
+SIGLA/
+.git/
+sigla-*/
+!SIGLA/target/*.ear
