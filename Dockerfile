@@ -12,7 +12,7 @@ ADD http://download.jboss.org/wildfly/${WILDFLY_VERSION}/${WILDFLY}.tar.gz .
 
 RUN tar xvf ${WILDFLY}.tar.gz && rm ${WILDFLY}.tar.gz
 
-ADD http://maven.si.cnr.it/content/repositories/releases/${SIGLA} ${WILDFLY}/standalone/deployments/SIGLA.ear
+COPY SIGLA/target/SIGLA-wildfly.ear ${WILDFLY}/standalone/deployments/SIGLA.ear
 
 WORKDIR ${WILDFLY}
 
