@@ -23,6 +23,6 @@ COPY src/main/docker/modules/system/layers/base/com/informix/jdbc/ modules/syste
 COPY src/main/docker/modules/system/layers/base/com/oracle/jdbc/ modules/system/layers/base/com/oracle/jdbc/
 
 EXPOSE 8080
-EXPOSE 9999
+EXPOSE 9990
 
 RUN ./bin/add-user.sh admin admin --silent
