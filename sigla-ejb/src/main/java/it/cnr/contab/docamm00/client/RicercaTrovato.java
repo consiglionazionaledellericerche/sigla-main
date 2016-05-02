@@ -18,6 +18,7 @@ import java.net.URL;
 
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
+import org.springframework.core.io.ClassPathResource;
 
 public class RicercaTrovato {
 
@@ -30,7 +31,7 @@ public class RicercaTrovato {
 		super();
 //		recuperoTrovatoProperties();	
 		// carica le proprietà solo alla prima occorrenza della classe
-		if (getTargetEndpoint()==null)
+//		if (getTargetEndpoint()==null)
 			loadProperties();
 	}
 
@@ -116,19 +117,22 @@ public class RicercaTrovato {
 		setTargetEndpoint(trovatoProperties.getTrovatoTargetEndpoint());
 		PWCBHandler.setSiglaClientWSPassword(trovatoProperties.getTrovatoSiglaWSClientPassword());
 
-		URL urlAxis2 = getClass().getClassLoader().getResource("axis2/");
+		URL urlAxis2 = new ClassPathResource("axis2/").getURL();
 		
 		if (urlAxis2 != null){
 			setAxis2Home(urlAxis2.getPath());
-			if (getAxis2Home().startsWith("file:")){
-				String axis2Home = getAxis2Home().substring(5);
-				if (axis2Home != null){
-					setAxis2Home(axis2Home.replace("!", "-contents"));
-				}
-			}
+//			if (getAxis2Home().startsWith("file:")){
+//				String axis2Home = getAxis2Home().substring(5);
+//				if (axis2Home != null){
+//					setAxis2Home(axis2Home.replace("!", "-contents"));
+//				}
+//			}
 			setAxis2TrovatoConf(getAxis2Home()+"axis2-brevetti.xml");
+		} else {
+			
 		}
-		
+//		setAxis2TrovatoConf(getAxis2Home()+"axis2-brevetti.xml");
+
 	}
 
 	public static String getAxis2Home() {

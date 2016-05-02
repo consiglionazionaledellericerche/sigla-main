@@ -398,7 +398,7 @@ protected Object[] getBPAndRealInstanceFor(
 											context.getUserContext(), 
 											null,
 											(OggettoBulk)docAmm);
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 		docAmm = (IDocumentoAmministrativoBulk)ri.nextElement();
 	} finally {
 		if (ri != null)
