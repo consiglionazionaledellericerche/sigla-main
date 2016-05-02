@@ -125,7 +125,7 @@ protected Forward selectFromSearchResult(ActionContext actioncontext, FormField 
 		SelezionaCdsBulk scds = (SelezionaCdsBulk)bulkbp.getModel();
 		
 
-        EJBCommonServices.openRemoteIterator(actioncontext, remoteiterator);
+        remoteiterator = EJBCommonServices.openRemoteIterator(actioncontext, remoteiterator);
         if(remoteiterator == null || remoteiterator.countElements() == 0)
         {
             EJBCommonServices.closeRemoteIterator(remoteiterator);
