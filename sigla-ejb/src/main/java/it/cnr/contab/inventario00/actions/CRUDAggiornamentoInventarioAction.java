@@ -177,7 +177,7 @@ public Forward doBringBackAddBeni(ActionContext context) {
 		it.cnr.jada.persistency.sql.CompoundFindClause clauses = (it.cnr.jada.persistency.sql.CompoundFindClause)fwd.getParameter("filter");
 		bp.setClauses(clauses);
 		it.cnr.jada.util.RemoteIterator iterator = bp.getListaBeniDaAggiornare(context.getUserContext(),buonoS.getBuono_carico_scarico_dettColl(), clauses);
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,iterator);
+		iterator = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,iterator);
 		int count = iterator.countElements();
 		if (count == 0) {
 			bp.setMessage("Nessun Bene associabile");

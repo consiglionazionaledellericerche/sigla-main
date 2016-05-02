@@ -87,7 +87,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 			fillModel(context);
 			RicercaObbScadBP bp = (RicercaObbScadBP)context.getBusinessProcess();
 			it.cnr.jada.util.RemoteIterator ri = bp.findObb_scad(context);
-			it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 			if (ri == null || ri.countElements() == 0) {
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
 				bp.setMessage("La ricerca non ha fornito alcun risultato.");

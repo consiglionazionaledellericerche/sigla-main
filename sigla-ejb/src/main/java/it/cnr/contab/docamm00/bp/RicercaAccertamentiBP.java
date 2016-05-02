@@ -103,11 +103,11 @@ public it.cnr.jada.util.RemoteIterator findAccertamenti(it.cnr.jada.action.Actio
 	try {
 		if ((actionContext.getBusinessProcess().getParent() instanceof CRUDFatturaAttivaIBP )||
 		    (actionContext.getBusinessProcess().getParent() instanceof CRUDFatturaPassivaBP )){
-			FatturaAttivaSingolaComponentSession component = (FatturaAttivaSingolaComponentSession)actionContext.getBusinessProcess().createComponentSession("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession", FatturaAttivaSingolaComponentSession.class);
+			FatturaAttivaSingolaComponentSession component = (FatturaAttivaSingolaComponentSession)actionContext.getBusinessProcess().getParent().createComponentSession("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession", FatturaAttivaSingolaComponentSession.class);
 			return component.cercaAccertamenti(actionContext.getUserContext(), (Filtro_ricerca_accertamentiVBulk)getModel());
 		}
 		else{
-			it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession component = (it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession)actionContext.getBusinessProcess().createComponentSession("CNRDOCAMM00_EJB_DocumentoGenericoComponentSession", it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession.class);
+			it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession component = (it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession)actionContext.getBusinessProcess().getParent().createComponentSession("CNRDOCAMM00_EJB_DocumentoGenericoComponentSession", it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession.class);
 			return component.cercaAccertamenti(actionContext.getUserContext(), (Filtro_ricerca_accertamentiVBulk)getModel());
 		}
 		

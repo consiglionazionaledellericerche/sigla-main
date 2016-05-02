@@ -578,7 +578,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 			Fattura_attiva_IBulk fa = (Fattura_attiva_IBulk)((CRUDFatturaAttivaIBP)bp.getParent()).getModel();
 			FatturaAttivaSingolaComponentSession h = (FatturaAttivaSingolaComponentSession)bp.createComponentSession();
 			it.cnr.jada.util.RemoteIterator ri = h.findNotaDiCreditoFor(context.getUserContext(), fa);
-			it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 			if (ri == null || ri.countElements() == 0) {
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
 				bp.setMessage("La ricerca non ha fornito alcun risultato.");

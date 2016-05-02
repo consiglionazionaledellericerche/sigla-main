@@ -340,7 +340,7 @@ private Forward basicDoStornaDettagli(
 															context.getUserContext(), 
 															notaDiCredito, 
 															calcolaTotaleSelezionati(dettagliDaStornare, notaDiCredito.quadraturaInDeroga()));
-			it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 			if (ri != null && ri.hasMoreElements()) {
 				if (notaDiCredito.getAccertamentiHash() != null && !notaDiCredito.getAccertamentiHash().isEmpty()) {
 					throw new it.cnr.jada.comp.ApplicationException("Non è possibile procedere all'inserimento di un impegno, perchè questa nota di credito contiene degli accertamenti!");
@@ -752,7 +752,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 			Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)((CRUDFatturaPassivaIBP)bp.getParent()).getModel();
 			FatturaPassivaComponentSession h = (FatturaPassivaComponentSession)bp.createComponentSession();
 			it.cnr.jada.util.RemoteIterator ri = h.findNotaDiCreditoFor(context.getUserContext(), fp);
-			it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 			if (ri == null || ri.countElements() == 0) {
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
 				bp.setMessage("La ricerca non ha fornito alcun risultato.");

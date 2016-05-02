@@ -52,7 +52,7 @@ public Forward doAddToCRUDMain_gruppiController(ActionContext context) {
 		} else{
 			ri = ((it.cnr.contab.inventario00.ejb.Tipo_ammortamentoComponentSession)bp.createComponentSession()).cercaGruppiAssociabiliPerModifica(context.getUserContext(),(Tipo_ammortamentoBulk)bp.getModel());
 		}
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 		int count = ri.countElements();
 		if (count == 0) {
 			bp.setMessage("Nessun Gruppo associabile");

@@ -155,7 +155,7 @@ public Forward doAddToCRUDMain_DettagliFattura_RigheInventarioDaFattura(ActionCo
 		}
 		 
 		
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		int count = ri.countElements();
 		
 		// Controlla che ci siano beni disponibili.
@@ -227,7 +227,7 @@ public Forward doAddToCRUDMain_DettagliFattura_RigheDaFattura(ActionContext cont
 		}
 		 
 		
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		int count = ri.countElements();
 		
 		// Controlla che ci siano beni disponibili.
@@ -510,7 +510,7 @@ public Forward doAddToCRUDMain_DettagliDocumento_RigheDaDocumento(ActionContext 
 			 ri = ((it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession)bp.createComponentSession()).cercaBeniAssociabili(context.getUserContext(),(Ass_inv_bene_fatturaBulk)bp.getModel(),modello,null);
 		}
 			
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		int count = ri.countElements();
 		
 		// Controlla che ci siano beni disponibili.
@@ -585,7 +585,7 @@ public Forward doAddToCRUDMain_DettagliDocumento_RigheInventarioDaDocumento(Acti
 			Documento_generico_rigaBulk modello = (Documento_generico_rigaBulk)bp.getDettagliDocumento().getSelectedModels(context).get(0);
 			 ri = ((it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession)bp.createComponentSession()).cercaBeniAssociabili(context.getUserContext(),(Ass_inv_bene_fatturaBulk)bp.getModel(),modello,null);
 		}
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		int count = ri.countElements();
 		
 		// Controlla che ci siano beni disponibili.

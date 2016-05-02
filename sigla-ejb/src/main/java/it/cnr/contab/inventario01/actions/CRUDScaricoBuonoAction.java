@@ -196,7 +196,7 @@ public Forward doBringBackAddBeni(ActionContext context) {
 			selezionati=((it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession)bp.createComponentSession()).selezionati(context.getUserContext(),(Buono_carico_scaricoBulk)bp.getModel());
 		
 		it.cnr.jada.util.RemoteIterator iterator = bp.getListaBeniDaScaricare(context.getUserContext(),no_accessori,selezionati, clauses);
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,iterator);
+		iterator = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,iterator);
 		int count = iterator.countElements();
 		
 		/* Non ci sono beni disponibili ad essere associati */
