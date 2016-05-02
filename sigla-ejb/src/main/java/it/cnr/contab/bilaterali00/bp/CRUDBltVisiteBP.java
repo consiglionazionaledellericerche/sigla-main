@@ -842,7 +842,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			firmatario.setCd_terzo(61999);
 			try	{
 				RemoteIterator ri = incaricoProceduraBP.find(context,null,firmatario,procedura,"firmatario");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setFirmatario((V_persona_fisicaBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -852,7 +852,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			//metodo per riempire immediatamente la Procedura Amministrativa
 			try	{
 				RemoteIterator ri = incaricoProceduraBP.find(context,null,new Tipo_atto_amministrativoBulk("DEC"),procedura,"atto");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setAtto((Tipo_atto_amministrativoBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -872,7 +872,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			responsabile.setCd_terzo(visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getCd_respons_ita());
 			try	{
 				RemoteIterator ri = incaricoProceduraBP.find(context,null,responsabile,procedura,"terzo_resp");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setTerzo_resp((V_persona_fisicaBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -882,7 +882,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			//metodo per riempire immediatamente la Procedura Amministrativa
 			try	{
 				RemoteIterator ri = incaricoProceduraBP.find(context,null,new Procedure_amministrativeBulk("INC3"),procedura,"procedura_amministrativa");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = incaricoProceduraBP.initializeProcedura_amministrativa(context, procedura, (Procedure_amministrativeBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -892,7 +892,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			//metodo per riempire immediatamente il tipo di attivita
 			try	{
 				RemoteIterator ri = incaricoProceduraBP.find(context,null,new Tipo_attivitaBulk("2"),procedura,"tipo_attivita");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setTipo_attivita((Tipo_attivitaBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -902,7 +902,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			//metodo per riempire immediatamente il tipo di incarico
 			try	{
 				RemoteIterator ri = incaricoProceduraBP.find(context,null,new Tipo_incaricoBulk("1"),procedura,"tipo_incarico");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = incaricoProceduraBP.initializeFind_tipo_incarico(context, procedura, (Tipo_incaricoBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -939,7 +939,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			terzo.setCd_terzo(visita.getCdTerzo());
 			try	{
 				RemoteIterator ri = incaricoProceduraBP.find(context,null,terzo,incarico,"v_terzo");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					incarico = incaricoProceduraBP.initializeTerzo(context, incarico, (V_terzo_per_compensoBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -1060,7 +1060,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			if (visita.isVisitaStraniero() && visita.getIncaricoRepertorio()!=null && visita.getIncaricoRepertorio().getEsercizio()!=null && visita.getIncaricoRepertorio().getPg_repertorio()!=null){
 				try	{
 					RemoteIterator ri = obbligazioneBP.find(context,null,new Incarichi_repertorioBulk(visita.getIncaricoRepertorio().getEsercizio(),visita.getIncaricoRepertorio().getPg_repertorio()), obbligazione,"find_incarico_repertorio");	
-					it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+					ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 					if (ri != null && ri.countElements() == 1)
 						obbligazione.setIncarico_repertorio((Incarichi_repertorioBulk)ri.nextElement());
 					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -1172,7 +1172,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 				if (visita.getBltAutorizzatiDett()!=null && visita.getBltAutorizzatiDett().getCdAccordo()!=null && visita.getBltAutorizzatiDett().getCdProgetto()!=null &&
 					visita.getBltAutorizzatiDett().getCdTerzo()!=null) {
 					RemoteIterator ri = find(actioncontext,null,visita.getBltAutorizzatiDett().getBltAutorizzati(),visita,"bltAutorizzatiDett.bltAutorizzati");	
-					it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
+					ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 					if (ri != null && ri.countElements() == 1)
 						visita.getBltAutorizzatiDett().setBltAutorizzati((Blt_autorizzatiBulk)ri.nextElement());
 					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);

@@ -92,7 +92,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 				RemoteIterator iterator = terzoComponent
 						.cercaBanchePerTerzoCessionario(
 								context.getUserContext(), modalita);
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(
+				iterator = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(
 						context, iterator);
 				if (iterator.countElements() == 0) {
 					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(
