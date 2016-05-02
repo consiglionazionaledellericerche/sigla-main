@@ -43,6 +43,19 @@
 			name="attivaFile" />	    	    
 	</form>	
 			
+	<form name="fatturaAttiva">
+		<formFieldProperty
+			name="nome" />
+		<formFieldProperty
+			name="descrizione" />
+		<formFieldProperty
+			name="titolo" />
+		<formFieldProperty
+			name="file" />
+		<formFieldProperty
+			name="attivaFile" />	    	    
+	</form>	
+	
 	<columnSet name="default">
 		<columnFieldProperty
 			name="aspectName"
@@ -53,5 +66,13 @@
 			name="descrizione" />
 		<columnFieldProperty
 			name="titolo" />
+	<columnSet name="fatturaAttiva">
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="titolo" />
+	</columnSet>	
 	</columnSet>	
 </bulkInfo>
