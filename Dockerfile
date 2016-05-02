@@ -16,12 +16,13 @@ COPY SIGLA/target/SIGLA-wildfly.ear ${WILDFLY}/standalone/deployments/SIGLA.ear
 
 WORKDIR ${WILDFLY}
 
-CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "--debug", "8787"]
+CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "--debug", "8787", "-bmanagement", "0.0.0.0"]
 
 COPY src/main/docker/standalone/configuration/  standalone/configuration/
 COPY src/main/docker/modules/system/layers/base/com/informix/jdbc/ modules/system/layers/base/com/informix/jdbc/
 COPY src/main/docker/modules/system/layers/base/com/oracle/jdbc/ modules/system/layers/base/com/oracle/jdbc/
 
 EXPOSE 8080
-EXPOSE 9999
+EXPOSE 9990
 
+RUN ./bin/add-user.sh admin admin --silent
