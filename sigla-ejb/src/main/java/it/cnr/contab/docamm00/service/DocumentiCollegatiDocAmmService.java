@@ -25,6 +25,7 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 	private final static String TIPO_ALLEGATO_NON_INVIATO_SDI = "allegati_non_inviati_sdi";
 	private final static String TIPO_ALLEGATO_FATTURA_DOPO_PROTOCOLLO = "stampa_fattura_dopo_protocollo";
 	private final static String TIPO_ALLEGATO_FATTURA_PRIMA_PROTOCOLLO = "stampa_fattura_prima_protocollo";
+	private final static String FILE_FATTURA_XML_FIRMATO = "fattura_elettronica_xml_post_firma";
 	public List<String> getNodeRefDocumentoAttivo(Fattura_attivaBulk fattura)throws DetailedException{
 		return getNodeRefDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
 	}
@@ -46,6 +47,21 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 		return ids;
 	}
 
+	private List<String> getNodeRefFatturaAttivaXmlFirmato(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
+		List<String> ids = new ArrayList<String>();
+		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura); 
+		ItemIterable<QueryResult> results = getDocuments(folder, FILE_FATTURA_XML_FIRMATO);
+		if (results.getTotalNumItems() == 0)
+			return null;
+		else {
+			for (QueryResult nodeFile : results) {
+				String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
+				ids.add(file);
+			}
+		}
+		return ids;
+	}
+	
 	public List<String> getNodeRefAllegatiDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
 		List<String> ids = new ArrayList<String>();
 		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura); 
@@ -152,6 +168,11 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 		return null;
 	}
 	
+	public InputStream getStreamXmlFirmatoFatturaAttiva(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception{
+		List<String> ids = getNodeRefFatturaAttivaXmlFirmato(esercizio, cds, cdUo, pgFattura);
+		return getStream(ids);
+	}
+
 	public InputStream getStreamDocumento(Fattura_attivaBulk fattura) throws Exception{
 		return getStreamDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
 	}
