@@ -81,7 +81,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		RicercaObbligazioniBP bp = (RicercaObbligazioniBP)context.getBusinessProcess();
 		Filtro_ricerca_obbligazioniVBulk filtro = (Filtro_ricerca_obbligazioniVBulk)bp.getModel();
 		it.cnr.jada.util.RemoteIterator ri = bp.findObbligazioni(context, filtro);
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 		if (ri == null || ri.countElements() == 0) {
 			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");

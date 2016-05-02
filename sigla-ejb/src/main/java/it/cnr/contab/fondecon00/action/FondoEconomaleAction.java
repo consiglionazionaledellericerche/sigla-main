@@ -190,7 +190,7 @@ public it.cnr.jada.action.Forward doAssociaSpeseObbligazione(it.cnr.jada.action.
 								context.getUserContext(),
 								(Fondo_economaleBulk)((BulkBP)context.getBusinessProcess()).getModel(),
 								(Obbligazione_scadenzarioBulk)selezione);
-			it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 			if (ri != null && ri.countElements() == 0) {
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
 				if (filtroUtilizzato.getFl_associate() != null && filtroUtilizzato.getFl_associate().booleanValue())
@@ -846,7 +846,7 @@ public it.cnr.jada.action.Forward doRicercaSpeseAssociate(it.cnr.jada.action.Act
 											context.getUserContext(),
 											fondo,
 											fondo.getScadenza_ricerca());
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 		if (ri == null || ri.countElements() == 0) {
 			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
@@ -943,7 +943,7 @@ public it.cnr.jada.action.Forward doSelezionaSospesoDiChiusuraFondo(
 			try {
 				FondoEconomaleComponentSession session = (FondoEconomaleComponentSession)bp.createComponentSession();
 				it.cnr.jada.util.RemoteIterator ri = session.cercaSospesiDiChiusuraFondo(context.getUserContext(), fondo);
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 				if (ri == null || ri.countElements() == 0) {
 					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
 					bp.setMessage("Non è stato trovato alcun sospeso valido per la chiusura del fondo economale! Operazione annullata.");
@@ -1020,7 +1020,7 @@ private boolean hasSpese(
 		it.cnr.jada.util.RemoteIterator ri = session.cercaSpese(
 													context.getUserContext(),
 													filtro);
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 		try {
 			return (ri != null && ri.countElements() != 0);
 		} finally {

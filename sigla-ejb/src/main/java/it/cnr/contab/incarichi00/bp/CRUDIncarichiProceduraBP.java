@@ -785,7 +785,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 
 			//metodo per riempire immediatamente la Procedura Amministrativa se ne esiste 1 sola
 			try	{
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setProcedura_amministrativa((Procedure_amministrativeBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -805,7 +805,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			//metodo per riempire immediatamente la Procedura Amministrativa
 			try	{
 				RemoteIterator ri = this.find(actioncontext,null,new Procedure_amministrativeBulk("INC3"),procedura,"procedura_amministrativa");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = this.initializeProcedura_amministrativa(actioncontext, procedura, (Procedure_amministrativeBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -818,7 +818,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				Tipo_attivitaBulk tipoAttivita = new Tipo_attivitaBulk();
 				tipoAttivita.setTipo_associazione(this.isAssegniRicercaBP()?Tipo_attivitaBulk.ASS_ASSEGNI_RICERCA:Tipo_attivitaBulk.ASS_BORSE_STUDIO);
 				RemoteIterator ri = this.find(actioncontext,null,tipoAttivita,procedura,"tipo_attivita");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setTipo_attivita((Tipo_attivitaBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
@@ -831,7 +831,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				Tipo_incaricoBulk tipoIncarico = new Tipo_incaricoBulk();
 				tipoIncarico.setTipo_associazione(this.isAssegniRicercaBP()?Tipo_incaricoBulk.ASS_ASSEGNI_RICERCA:Tipo_incaricoBulk.ASS_BORSE_STUDIO);
 				RemoteIterator ri = this.find(actioncontext,null,tipoIncarico,procedura,"tipo_incarico");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = this.initializeFind_tipo_incarico(actioncontext, procedura, (Tipo_incaricoBulk)ri.nextElement());
 				else {
@@ -1545,7 +1545,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			//metodo per riempire immediatamente la Procedura Amministrativa
 			try	{
 				RemoteIterator ri = this.find(actioncontext,null,new Procedure_amministrativeBulk("INC3"),procedura,"procedura_amministrativa");	
-				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = this.initializeProcedura_amministrativa(actioncontext, procedura, (Procedure_amministrativeBulk)ri.nextElement());
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);

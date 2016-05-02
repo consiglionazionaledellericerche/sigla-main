@@ -61,7 +61,7 @@ public Forward doSearchFind_documento_cont(ActionContext context)
 		SospesoBulk sospeso = (SospesoBulk) bp.getModel();
 		ri = bp.find(context,null,sospeso.getV_man_rev(),sospeso,"v_man_rev");	
 
-		it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
+		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		if (ri == null || ri.countElements() == 0) {
 			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
