@@ -6,13 +6,11 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaIBP;
-import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoAttivaBP;
 import it.cnr.contab.docamm00.bp.CRUDNotaDiDebitoAttivaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.RisultatoEliminazioneBP;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
-import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
 import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
@@ -20,7 +18,6 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_accertamentiVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
@@ -28,7 +25,6 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
@@ -52,7 +48,6 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -2739,6 +2734,9 @@ public Forward doTab(ActionContext context, String tabName, String pageName) {
         if ("tabFatturaAttivaIntrastat".equalsIgnoreCase(bp.getTab(tabName))) {
 			fillModel( context );
 			bp.getDettaglioIntrastatController().validate(context);
+		}
+        if ("tabFatturaAttivaAllegati".equalsIgnoreCase(bp.getTab(tabName))) {
+			fillModel( context );
 		}
         return super.doTab(context, tabName, pageName);
     } catch (Throwable e) {
