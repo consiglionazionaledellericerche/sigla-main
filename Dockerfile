@@ -20,9 +20,7 @@ COPY ./src/main/docker/conf/* /opt/jboss-4.2.2.GA/server/default/conf/
 COPY ./src/main/docker/deploy/* /opt/jboss-4.2.2.GA/server/default/deploy/
 COPY ./src/main/docker/lib/* /opt/jboss-4.2.2.GA/server/default/lib/
 
-#ADD http://maven.si.cnr.it/service/local/artifact/maven/redirect?r=snapshots&g=it.cnr&a=sigla-ear&v=LATEST&e=ear
-
-ADD  http://maven.si.cnr.it/content/repositories/snapshots/it/cnr/sigla-ear/3.1.60-SNAPSHOT/sigla-ear-3.1.60-20160406.091205-14.ear /opt/jboss-4.2.2.GA/server/default/deploy/SIGLA.ear
+COPY SIGLA/target/SIGLA.ear /opt/jboss-4.2.2.GA/server/default/deploy/SIGLA.ear
 
 EXPOSE 8080
 
