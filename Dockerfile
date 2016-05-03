@@ -16,7 +16,7 @@ RUN yum install -y unzip
 
 RUN unzip jboss-4.2.2.GA.zip && rm jboss-4.2.2.GA.zip
 
-COPY ./src/main/docker/conf/* /opt/jboss-4.2.2.GA/server/default/conf/
+COPY ./src/main/docker/conf/sigla/ /opt/jboss-4.2.2.GA/server/default/conf/sigla/
 COPY ./src/main/docker/deploy/* /opt/jboss-4.2.2.GA/server/default/deploy/
 COPY ./src/main/docker/lib/* /opt/jboss-4.2.2.GA/server/default/lib/
 
