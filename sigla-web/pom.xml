@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>it.cnr</groupId>
 		<artifactId>sigla</artifactId>
-		<version>3.1.71-SNAPSHOT</version>
+		<version>3.1.73-SNAPSHOT</version>
 	</parent>
 	<build>
 		<pluginManagement>
