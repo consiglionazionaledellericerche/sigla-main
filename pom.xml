@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr</groupId>
-	<version>3.1.71-SNAPSHOT</version>
+	<version>3.1.73-SNAPSHOT</version>
 	<artifactId>sigla</artifactId>
 	<packaging>pom</packaging>
 	<parent>
@@ -23,7 +23,7 @@
 		<java.version>1.5</java.version>
 		<opencmis.version>0.10.0</opencmis.version>
 		<spring.version>3.0.3.RELEASE</spring.version>
-		<jada.version>2.4.0</jada.version>
+		<jada.version>2.4.1</jada.version>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>		
 		<slf4j.version>1.4.3</slf4j.version>
@@ -60,7 +60,8 @@
 		</pluginManagement>
 	</build>
   <scm>
-    <connection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/trunk</connection>
-    <developerConnection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/trunk</developerConnection>
+    <connection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</connection>
+    <developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
 </project>
