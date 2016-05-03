@@ -66,6 +66,7 @@
 			name="descrizione" />
 		<columnFieldProperty
 			name="titolo" />
+	</columnSet>	
 	<columnSet name="fatturaAttiva">
 		<columnFieldProperty
 			name="nome" />
@@ -73,6 +74,5 @@
 			name="descrizione" />
 		<columnFieldProperty
 			name="titolo" />
-	</columnSet>	
 	</columnSet>	
 </bulkInfo>
