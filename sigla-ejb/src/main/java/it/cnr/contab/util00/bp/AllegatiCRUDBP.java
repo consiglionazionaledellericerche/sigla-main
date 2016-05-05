@@ -92,16 +92,16 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		return crudArchivioAllegati;
 	}
 	
-	public String getNomeAllegato(){
+	public String getNomeAllegato() throws ApplicationException{
 		AllegatoGenericoBulk allegato = (AllegatoGenericoBulk)getCrudArchivioAllegati().getModel();
-		if (allegato != null && allegato.getDocument() != null)
-			return allegato.getDocument().getName();
+		if (allegato != null && allegato.getDocument(cmisService) != null)
+			return allegato.getDocument(cmisService).getName();
 		return null;
 	}
 
 	public void scaricaAllegatoGenerico(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		AllegatoGenericoBulk allegato = (T)crudArchivioAllegati.getModel();
-		Document document = allegato.getDocument();
+		Document document = allegato.getDocument(cmisService);
 		InputStream is = cmisService.getResource(document);
 		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(document.getContentStreamLength()).intValue());
 		((HttpActionContext)actioncontext).getResponse().setContentType(document.getContentStreamMimeType());
@@ -160,7 +160,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		return initializeModelForEditAllegati(actioncontext, oggettobulk);
 	}
 	
-	protected void completeAllegato(T allegato) {
+	protected void completeAllegato(T allegato)  throws ApplicationException {
 	}
 	
 	protected boolean excludeChild(CmisObject cmisObject) {
@@ -194,7 +194,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk)getModel();
 		try {
 			for (AllegatoGenericoBulk allegato : allegatoParentBulk.getArchivioAllegati()) {
-				cmisService.deleteNode(allegato.getDocument());
+				cmisService.deleteNode(allegato.getDocument(cmisService));
 			}
 		} catch (ApplicationException e) {
 			throw handleException(e);
@@ -225,10 +225,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 			}else if (allegato.isToBeUpdated()) {
 				try {
 					if (allegato.getFile() != null)
-						cmisService.updateContent(allegato.getDocument().getId(), 
+						cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
 								new FileInputStream(allegato.getFile()),
 								allegato.getContentType());
-					cmisService.updateProperties(allegato, allegato.getDocument());
+					cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
@@ -238,7 +238,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		for (Iterator<AllegatoGenericoBulk> iterator = allegatoParentBulk.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
 			AllegatoGenericoBulk allegato = iterator.next();
 			if (allegato.isToBeDeleted()){
-				cmisService.deleteNode(allegato.getDocument());
+				cmisService.deleteNode(allegato.getDocument(cmisService));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 			}
 		}
