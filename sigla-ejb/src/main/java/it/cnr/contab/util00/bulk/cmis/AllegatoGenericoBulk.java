@@ -7,6 +7,7 @@ import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.io.File;
 import java.util.StringTokenizer;
@@ -15,7 +16,7 @@ import org.apache.chemistry.opencmis.client.api.Document;
 @CMISType(name="cmis:document")
 public class AllegatoGenericoBulk extends OggettoBulk {
 	private static final long serialVersionUID = 1L;
-	private Document node;
+	private String nodeRef;
 	private File file;
 	private String contentType;
 	private String nome;
@@ -32,7 +33,7 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	
 	public AllegatoGenericoBulk(Document node) {
 		super();
-		this.node = node;
+		this.nodeRef = node.getId();
 	}
 
 	public String parseFilename(String file) {
@@ -52,11 +53,11 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	}
 	
 	public boolean isNodePresent(){
-		return getDocument() == null;
+		return nodeRef != null;
 	}
 	
-	public Document getDocument() {
-		return node;
+	public Document getDocument(SiglaCMISService service) throws ApplicationException {
+		return (Document)service.getNodeByNodeRef(nodeRef);
 	}
 
 	public File getFile() {
