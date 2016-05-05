@@ -33,7 +33,9 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	
 	public AllegatoGenericoBulk(Document node) {
 		super();
-		this.nodeRef = node.getId();
+		if (node != null){
+			this.nodeRef = node.getId();
+		}
 	}
 
 	public String parseFilename(String file) {
