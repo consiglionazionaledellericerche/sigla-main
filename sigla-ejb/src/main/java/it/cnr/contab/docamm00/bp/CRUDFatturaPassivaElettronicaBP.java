@@ -588,8 +588,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	}
 	
 	@Override
-	protected void completeAllegato(AllegatoFatturaBulk allegato) {
-		for (SecondaryType secondaryType : allegato.getDocument().getSecondaryTypes()) {
+	protected void completeAllegato(AllegatoFatturaBulk allegato) throws ApplicationException {
+		for (SecondaryType secondaryType : allegato.getDocument(cmisService).getSecondaryTypes()) {
 			if (AllegatoFatturaBulk.aspectNamesDecorrenzaTerminiKeys.get(secondaryType.getId()) != null){
 				allegato.setAspectName(secondaryType.getId());
 				break;
