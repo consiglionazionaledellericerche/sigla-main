@@ -94,9 +94,9 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 	}
 	
 	@Override
-	protected void completeAllegato(AllegatoDocContBulk allegato) {
+	protected void completeAllegato(AllegatoDocContBulk allegato) throws ApplicationException  {
 		super.completeAllegato(allegato);
-		Property<?> property = allegato.getDocument().getProperty("doccont:rif_modalita_pagamento");
+		Property<?> property = allegato.getDocument(cmisService).getProperty("doccont:rif_modalita_pagamento");
 		if (property != null && property.getValue() != null)
 			allegato.setRifModalitaPagamento(property.getValueAsString());
 	}
