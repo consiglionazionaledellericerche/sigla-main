@@ -300,7 +300,6 @@ public class FirmaDigitalePdgVariazioniBP extends
 
 	public void refresh(ActionContext context) throws BusinessProcessException {
 		try {
-			EJBCommonServices.closeRemoteIterator(getIterator());
 			if (!isTestSession())
 					setIterator(context, EJBCommonServices.openRemoteIterator(context,
 							createComponentSession().cercaVariazioniForDocumentale(
@@ -310,6 +309,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 									((ArchiviaStampaPdgVariazioneBulk) getModel())
 											.getTiSigned(), Boolean.TRUE)));
 			else {
+				EJBCommonServices.closeRemoteIterator(getIterator());
 				Pdg_variazioneBulk bulk = new Pdg_variazioneBulk();
 				CdsBulk cds = null;
 				Unita_organizzativaBulk uo = null;
