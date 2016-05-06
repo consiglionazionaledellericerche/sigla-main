@@ -195,7 +195,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 											pageContext,
 											null,
 											"genericdownload/"
-													+ nomeFileAllegato+"x"
+													+ nomeFileAllegato
 													+ "?methodName=scaricaFileGenerico&it.cnr.jada.action.BusinessProcess="
 													+ getPath()) + "')");
 			Document nodeSignedFile = null;
@@ -388,7 +388,10 @@ public class FirmaDigitalePdgVariazioniBP extends
 			is = pdgVariazioniService
 					.getResource(archiviaStampaPdgVariazioneBulk
 							.getPdgVariazioneDocument().getDocument());
-			((HttpActionContext) actioncontext).getResponse().setContentType("text/octet-stream");
+			((HttpActionContext) actioncontext).getResponse().setContentType(
+					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
+							.getDocument().getContentStreamMimeType());
+//			((HttpActionContext) actioncontext).getResponse().setContentType("text/octet-stream");
 			((HttpActionContext) actioncontext).getResponse().setContentLength(
 					Long.valueOf(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 							.getDocument().getContentStreamLength()).intValue());
