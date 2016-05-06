@@ -391,7 +391,6 @@ public class FirmaDigitalePdgVariazioniBP extends
 			((HttpActionContext) actioncontext).getResponse().setContentType(
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 							.getDocument().getContentStreamMimeType());
-//			((HttpActionContext) actioncontext).getResponse().setContentType("text/octet-stream");
 			((HttpActionContext) actioncontext).getResponse().setContentLength(
 					Long.valueOf(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 							.getDocument().getContentStreamLength()).intValue());
