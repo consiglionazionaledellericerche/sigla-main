@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -33,109 +34,106 @@ import javax.xml.soap.SOAPFault;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
-import org.jboss.ws.annotation.EndpointConfig;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 @XmlSeeAlso({java.util.ArrayList.class}) 
 @Stateless
 @WebService(endpointInterface="it.cnr.contab.brevetti.ejb.FatturaAttivaTrovatiComponentSessionWS")
-@DeclareRoles({"WSUserRole","BrevettiRole"})
-// annotation proprietarie di JBoss, purtroppo in JBoss 4.2.2 non funzionano i corrispondenti tag in jboss.xml
-@EndpointConfig(configName = "Standard WSSecurity Endpoint")
-@WebContext(contextRoot="/SIGLA-SIGLAEJB")
+@DeclareRoles(value = {"WSUserRole","BrevettiRole"})
+@WebContext(authMethod="WSSE", contextRoot="SIGLA-SIGLAEJB")
 public class FatturaAttivaTrovatiComponentWS {
-@RolesAllowed({"WSUserRole","BrevettiRole"})
-private java.util.ArrayList<FatturaAttiva> ricercaFatturaAttiva(String user, Long esercizio, String cds, String uo, Long pg, boolean byKey) throws Exception {
-	java.util.ArrayList listaRitorno=new ArrayList();
-	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
-	if(cds==null||uo==null||pg==null||esercizio==null)
-		 throw new SOAPFaultException(faultChiaveFatturaNonCompleta());
-	try{	
-		Fattura_attivaBulk fattura = null;
-		if (byKey)
-			fattura = ((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).ricercaFatturaByKey(userContext,esercizio, cds, uo, pg);
-		else
-			fattura = ((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).ricercaFattura(userContext,esercizio, cds, uo, pg);
-		
-		caricaFattura(userContext, listaRitorno, fattura, Boolean.FALSE);
+	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
+	private java.util.ArrayList<FatturaAttiva> ricercaFatturaAttiva(String user, Long esercizio, String cds, String uo, Long pg, boolean byKey) throws Exception {
+		java.util.ArrayList<FatturaAttiva> listaRitorno = new ArrayList<FatturaAttiva>();
+		UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+		if(cds==null||uo==null||pg==null||esercizio==null)
+			throw new SOAPFaultException(faultChiaveFatturaNonCompleta());
+		try{	
+			Fattura_attivaBulk fattura = null;
+			if (byKey)
+				fattura = fatturaAttivaSingolaComponentSession.ricercaFatturaByKey(userContext,esercizio, cds, uo, pg);
+			else
+				fattura = fatturaAttivaSingolaComponentSession.ricercaFattura(userContext,esercizio, cds, uo, pg);
 
-		return listaRitorno;  
-	}catch(FatturaNonTrovataException e){
-		throw new SOAPFaultException(faultFatturaNonTrovata());
-	}
-}
-@RolesAllowed({"WSUserRole","BrevettiRole"})
-public java.util.ArrayList<FatturaAttiva> ricercaFatturaAttiva(String user, Long esercizio, String cds, String uo, Long pg) throws Exception {
-	return ricercaFatturaAttiva(user, esercizio, cds, uo, pg, false);
-}
-@RolesAllowed({"WSUserRole","BrevettiRole"})
-public java.util.ArrayList<FatturaAttiva> ricercaFatturaAttivaByKey(String user, Long esercizio, String cds, String uo, Long pg) throws Exception {
-	return ricercaFatturaAttiva(user, esercizio, cds, uo, pg, true);
-}
-/**
- * Restituisce le fatture legate al progressivo "trovato" con informazioni complete
- * 
- * @param user
- * @param trovato
- * @return
- * @throws Exception
- */
-@RolesAllowed({"WSUserRole","BrevettiRole"})
-public java.util.ArrayList<FatturaAttiva> ricercaFattureAttive(String user, Long trovato) throws Exception {
-	return ricercaFatture(user, trovato, Boolean.FALSE);
-}
-/**
- * Restituisce le fatture legate al progressivo "trovato" con minori informazioni
- * 
- * @param user
- * @param trovato
- * @return
- * @throws Exception
- */
-@RolesAllowed({"WSUserRole","BrevettiRole"})
-public java.util.ArrayList<FatturaAttivaBase> ricercaFattureAttiveBase(String user, Long trovato) throws Exception {
-	return ricercaFatture(user, trovato, Boolean.TRUE);
-}
-private java.util.ArrayList ricercaFatture(String user, Long trovato, Boolean base) throws Exception {
-	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
-	java.util.ArrayList listaRitorno=new ArrayList();
-	if(trovato==null)
-		 throw new SOAPFaultException(faultIdTrovatoNullo());
-	try{	
-		java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> fatture =((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).ricercaFattureTrovato(userContext, trovato);
-		for (Iterator<Fattura_attivaBulk> i = fatture.iterator(); i.hasNext(); ) {
-			Fattura_attivaBulk fattura=(Fattura_attivaBulk)i.next();
+			caricaFattura(userContext, listaRitorno, fattura, Boolean.FALSE);
 
-			caricaFattura(userContext, listaRitorno, fattura, base);
+			return listaRitorno;  
+		}catch(FatturaNonTrovataException e){
+			throw new SOAPFaultException(faultFatturaNonTrovata());
 		}
-
-		return listaRitorno;  
-	}catch(FatturaNonTrovataException e){
-		throw new SOAPFaultException(faultFatturaNonTrovata());
 	}
-}
-private void caricaFattura(UserContext userContext, java.util.ArrayList listaRitorno, Fattura_attivaBulk fattura, Boolean base) throws Exception {
-	// serve per diminuire traffico di rete con oggetti più grandi
-	// e informazioni che non sono necessarie (richiesto dai colleghi di brevetti)
-	if (base.booleanValue()) {
-		FatturaAttivaBase ritorno=new FatturaAttivaBase();
-		ritorno.setCd_cds(fattura.getCd_cds());
-		ritorno.setCd_unita_organizzativa(fattura.getCd_unita_organizzativa());
-		ritorno.setEsercizio(fattura.getEsercizio());
-		ritorno.setPg_fattura_attiva(fattura.getPg_fattura_attiva());
-		ritorno.setDs_fattura_attiva(fattura.getDs_fattura_attiva());
-		ritorno.setCd_cds_origine(fattura.getCd_cds_origine());
-		ritorno.setCd_uo_origine(fattura.getCd_uo_origine());
-		ritorno.setDt_emissione(fattura.getDt_emissione());
-		ritorno.setCd_terzo(fattura.getCd_terzo());
+	@RolesAllowed({"WSUserRole","BrevettiRole"})
+	public java.util.ArrayList<FatturaAttiva> ricercaFatturaAttiva(String user, Long esercizio, String cds, String uo, Long pg) throws Exception {
+		return ricercaFatturaAttiva(user, esercizio, cds, uo, pg, false);
+	}
+	@RolesAllowed({"WSUserRole","BrevettiRole"})
+	public java.util.ArrayList<FatturaAttiva> ricercaFatturaAttivaByKey(String user, Long esercizio, String cds, String uo, Long pg) throws Exception {
+		return ricercaFatturaAttiva(user, esercizio, cds, uo, pg, true);
+	}
+	/**
+	 * Restituisce le fatture legate al progressivo "trovato" con informazioni complete
+	 * 
+	 * @param user
+	 * @param trovato
+	 * @return
+	 * @throws Exception
+	 */
+	@RolesAllowed({"WSUserRole","BrevettiRole"})
+	public java.util.ArrayList<FatturaAttiva> ricercaFattureAttive(String user, Long trovato) throws Exception {
+		return ricercaFatture(user, trovato, Boolean.FALSE);
+	}
+	/**
+	 * Restituisce le fatture legate al progressivo "trovato" con minori informazioni
+	 * 
+	 * @param user
+	 * @param trovato
+	 * @return
+	 * @throws Exception
+	 */
+	@RolesAllowed({"WSUserRole","BrevettiRole"})
+	public java.util.ArrayList<FatturaAttivaBase> ricercaFattureAttiveBase(String user, Long trovato) throws Exception {
+		return ricercaFatture(user, trovato, Boolean.TRUE);
+	}
+	private java.util.ArrayList ricercaFatture(String user, Long trovato, Boolean base) throws Exception {
+		UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+		java.util.ArrayList listaRitorno=new ArrayList();
+		if(trovato==null)
+			throw new SOAPFaultException(faultIdTrovatoNullo());
+		try{	
+			java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> fatture =((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).ricercaFattureTrovato(userContext, trovato);
+			for (Iterator<Fattura_attivaBulk> i = fatture.iterator(); i.hasNext(); ) {
+				Fattura_attivaBulk fattura=(Fattura_attivaBulk)i.next();
 
-		listaRitorno.add(ritorno);
+				caricaFattura(userContext, listaRitorno, fattura, base);
+			}
 
-	} else {
-		BulkList<Fattura_attiva_rigaBulk> dett = fattura.getFattura_attiva_dettColl();
-		
-		for (Iterator<Fattura_attiva_rigaBulk> j = dett.iterator(); j.hasNext(); ) {
-			Fattura_attiva_rigaBulk det = (Fattura_attiva_rigaBulk) j.next();
-//			if (det.getPg_trovato() != null){
+			return listaRitorno;  
+		}catch(FatturaNonTrovataException e){
+			throw new SOAPFaultException(faultFatturaNonTrovata());
+		}
+	}
+	private void caricaFattura(UserContext userContext, java.util.ArrayList listaRitorno, Fattura_attivaBulk fattura, Boolean base) throws Exception {
+		// serve per diminuire traffico di rete con oggetti più grandi
+		// e informazioni che non sono necessarie (richiesto dai colleghi di brevetti)
+		if (base.booleanValue()) {
+			FatturaAttivaBase ritorno=new FatturaAttivaBase();
+			ritorno.setCd_cds(fattura.getCd_cds());
+			ritorno.setCd_unita_organizzativa(fattura.getCd_unita_organizzativa());
+			ritorno.setEsercizio(fattura.getEsercizio());
+			ritorno.setPg_fattura_attiva(fattura.getPg_fattura_attiva());
+			ritorno.setDs_fattura_attiva(fattura.getDs_fattura_attiva());
+			ritorno.setCd_cds_origine(fattura.getCd_cds_origine());
+			ritorno.setCd_uo_origine(fattura.getCd_uo_origine());
+			ritorno.setDt_emissione(fattura.getDt_emissione());
+			ritorno.setCd_terzo(fattura.getCd_terzo());
+
+			listaRitorno.add(ritorno);
+
+		} else {
+			BulkList<Fattura_attiva_rigaBulk> dett = fattura.getFattura_attiva_dettColl();
+
+			for (Iterator<Fattura_attiva_rigaBulk> j = dett.iterator(); j.hasNext(); ) {
+				Fattura_attiva_rigaBulk det = (Fattura_attiva_rigaBulk) j.next();
+				//			if (det.getPg_trovato() != null){
 				FatturaAttiva ritorno=new FatturaAttiva();
 				ritorno.setCd_cds(fattura.getCd_cds());
 				ritorno.setCd_unita_organizzativa(fattura.getCd_unita_organizzativa());
@@ -153,7 +151,7 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 				ritorno.setRagione_sociale(fattura.getRagione_sociale());
 				ritorno.setCambio(fattura.getCambio());
 				ritorno.setCd_divisa(fattura.getCd_divisa());
-				
+
 				ritorno.setProgressivo_riga(det.getProgressivo_riga());
 				ritorno.setCd_voce_iva(det.getCd_voce_iva());
 				ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
@@ -179,48 +177,47 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 					}
 				} 
 				listaRitorno.add(ritorno);
-//			}
+				//			}
+			}
 		}
 	}
-}
 
-private void impostaImportiRiga(Fattura_attiva_rigaBulk det, FatturaAttiva ritorno) {
-	if (det.getVoce_iva() != null){
-		ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
-		if ("Y".equals(det.getVoce_iva().getFl_non_soggetto())){
-			ritorno.setIm_imponibile(BigDecimal.ZERO);
-			ritorno.setFcIva(det.getIm_imponibile());
+	private void impostaImportiRiga(Fattura_attiva_rigaBulk det, FatturaAttiva ritorno) {
+		if (det.getVoce_iva() != null){
+			ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
+			if ("Y".equals(det.getVoce_iva().getFl_non_soggetto())){
+				ritorno.setIm_imponibile(BigDecimal.ZERO);
+				ritorno.setFcIva(det.getIm_imponibile());
+			} else {
+				ritorno.setIm_imponibile(det.getIm_imponibile());
+				ritorno.setFcIva(BigDecimal.ZERO);
+			}
 		} else {
 			ritorno.setIm_imponibile(det.getIm_imponibile());
 			ritorno.setFcIva(BigDecimal.ZERO);
 		}
-	} else {
-		ritorno.setIm_imponibile(det.getIm_imponibile());
-		ritorno.setFcIva(BigDecimal.ZERO);
+		ritorno.setIm_iva(det.getIm_iva());
 	}
-	ritorno.setIm_iva(det.getIm_iva());
-}
 
-private SOAPFault faultChiaveFatturaNonCompleta() throws SOAPException{
-	return generaFault("001","Identificativo Fattura non valido e/o incompleto");
-}
-private SOAPFault faultIdTrovatoNullo() throws SOAPException{
-	return generaFault("001","Identificativo Trovato non valorizzato");
-}
-private SOAPFault faultFatturaNonTrovata() throws SOAPException{
-	return generaFault("002","Fattura non trovata");
-}
+	private SOAPFault faultChiaveFatturaNonCompleta() throws SOAPException{
+		return generaFault("001","Identificativo Fattura non valido e/o incompleto");
+	}
+	private SOAPFault faultIdTrovatoNullo() throws SOAPException{
+		return generaFault("001","Identificativo Trovato non valorizzato");
+	}
+	private SOAPFault faultFatturaNonTrovata() throws SOAPException{
+		return generaFault("002","Fattura non trovata");
+	}
 
-private SOAPFault generaFault(String localName,String stringFault) throws SOAPException{
-	MessageFactory factory = MessageFactory.newInstance();
-	SOAPMessage message = factory.createMessage(); 
-	SOAPFactory soapFactory = SOAPFactory.newInstance();
-	SOAPBody body = message.getSOAPBody(); 
-	SOAPFault fault = body.addFault();
-	Name faultName = soapFactory.createName(localName,"", SOAPConstants.URI_NS_SOAP_ENVELOPE);
-	fault.setFaultCode(faultName);
-	fault.setFaultString(stringFault);
-	return fault;
+	private SOAPFault generaFault(String localName,String stringFault) throws SOAPException{
+		MessageFactory factory = MessageFactory.newInstance();
+		SOAPMessage message = factory.createMessage(); 
+		SOAPFactory soapFactory = SOAPFactory.newInstance();
+		SOAPBody body = message.getSOAPBody(); 
+		SOAPFault fault = body.addFault();
+		Name faultName = soapFactory.createName(localName,"", SOAPConstants.URI_NS_SOAP_ENVELOPE);
+		fault.setFaultCode(faultName);
+		fault.setFaultString(stringFault);
+		return fault;
+	}
 }
-}
-                   
