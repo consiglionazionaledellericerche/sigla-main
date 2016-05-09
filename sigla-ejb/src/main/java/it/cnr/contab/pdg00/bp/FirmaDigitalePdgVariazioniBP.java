@@ -195,7 +195,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 											pageContext,
 											null,
 											"genericdownload/"
-													+ nomeFileAllegato+"x"
+													+ nomeFileAllegato
 													+ "?methodName=scaricaFileGenerico&it.cnr.jada.action.BusinessProcess="
 													+ getPath()) + "')");
 			Document nodeSignedFile = null;
@@ -300,7 +300,6 @@ public class FirmaDigitalePdgVariazioniBP extends
 
 	public void refresh(ActionContext context) throws BusinessProcessException {
 		try {
-			EJBCommonServices.closeRemoteIterator(getIterator());
 			if (!isTestSession())
 					setIterator(context, EJBCommonServices.openRemoteIterator(context,
 							createComponentSession().cercaVariazioniForDocumentale(
@@ -310,6 +309,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 									((ArchiviaStampaPdgVariazioneBulk) getModel())
 											.getTiSigned(), Boolean.TRUE)));
 			else {
+				EJBCommonServices.closeRemoteIterator(getIterator());
 				Pdg_variazioneBulk bulk = new Pdg_variazioneBulk();
 				CdsBulk cds = null;
 				Unita_organizzativaBulk uo = null;
@@ -388,7 +388,9 @@ public class FirmaDigitalePdgVariazioniBP extends
 			is = pdgVariazioniService
 					.getResource(archiviaStampaPdgVariazioneBulk
 							.getPdgVariazioneDocument().getDocument());
-			((HttpActionContext) actioncontext).getResponse().setContentType("text/octet-stream");
+			((HttpActionContext) actioncontext).getResponse().setContentType(
+					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
+							.getDocument().getContentStreamMimeType());
 			((HttpActionContext) actioncontext).getResponse().setContentLength(
 					Long.valueOf(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 							.getDocument().getContentStreamLength()).intValue());
