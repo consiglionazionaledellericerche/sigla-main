@@ -1,10 +1,24 @@
 package it.cnr.contab.anagraf00.comp;
 
+import it.cnr.contab.client.docamm.Tariffario;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.docamm00.ejb.TariffarioComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
+import it.cnr.contab.utenze00.bp.Costanti;
+import it.cnr.contab.utenze00.bp.WSUserContext;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+
 import java.io.StringWriter;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -27,237 +41,250 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.jboss.ws.api.annotation.WebContext;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import it.cnr.contab.client.docamm.Tariffario;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.ejb.TariffarioComponentSession;
-import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
-import it.cnr.contab.utenze00.bp.Costanti;
-import it.cnr.contab.utenze00.bp.WSUserContext;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
-import org.jboss.ws.annotation.EndpointConfig;
-import org.jboss.wsf.spi.annotation.WebContext;
 /**
- * Questa classe svolge le operazioni fondamentali di lettura, scrittura e filtro dei dati
- * immessi o richiesti dall'utente. In oltre sovrintende alla gestione e creazione dati a cui
- * l'utente stesso non ha libero accesso e/o non gli sono trasparenti.
+ * Questa classe svolge le operazioni fondamentali di lettura, scrittura e
+ * filtro dei dati immessi o richiesti dall'utente. In oltre sovrintende alla
+ * gestione e creazione dati a cui l'utente stesso non ha libero accesso e/o non
+ * gli sono trasparenti.
  */
 @Stateless
-@WebService(endpointInterface="it.cnr.contab.anagraf00.ejb.TariffarioComponentSessionWS")
-@XmlSeeAlso({java.util.ArrayList.class}) 
-@DeclareRoles({"WSUserRole","IITRole"})
-// annotation proprietarie di JBoss, purtroppo in JBoss 4.2.2 non funzionano i corrispondenti tag in jboss.xml
-@EndpointConfig(configName = "Standard WSSecurity Endpoint")
-@WebContext(contextRoot="/SIGLA-SIGLAEJB")
-public class TariffarioComponentWS  {
+@WebService(endpointInterface = "it.cnr.contab.anagraf00.ejb.TariffarioComponentSessionWS")
+@XmlSeeAlso({ java.util.ArrayList.class })
+@DeclareRoles({ "WSUserRole", "IITRole" })
+@WebContext(authMethod = "WSSE", contextRoot = "SIGLA-SIGLAEJB")
+public class TariffarioComponentWS {
+	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
+	@EJB TariffarioComponentSession tariffarioComponentSession;
 
-public  TariffarioComponentWS() {
-}
-@RolesAllowed({"WSUserRole","IITRole"})
-public java.util.ArrayList<Tariffario>  cercaTariffario(
-		  String uo,
-		  String query,
-		  String dominio,
-		  Integer numMax,
-		  String user,
-		  String ricerca) throws Exception{
-	java.util.ArrayList<Tariffario>  listatariffari=new ArrayList<Tariffario>();
-	List tariffari=null;
-	try{
-		
-	if(user== null)
-		user="IIT";
-	if(ricerca== null)
-		ricerca="selettiva";
-	 if(numMax==null)
-		 numMax=20;
-		 
-	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
-	if(uo== null)
-		throw new SOAPFaultException(faultUONonDefinita());
-	if(query== null){
-		throw new SOAPFaultException(faultQueryNonDefinita());
-	}else if(dominio== null||(!dominio.equalsIgnoreCase("codice")&&!dominio.equalsIgnoreCase("descrizione"))){
-		throw new SOAPFaultException(faultDominioNonDefinito());
-	}else{
+	@RolesAllowed({ "WSUserRole", "IITRole" })
+	public java.util.ArrayList<Tariffario> cercaTariffario(String uo,
+			String query, String dominio, Integer numMax, String user,
+			String ricerca) throws Exception {
+		java.util.ArrayList<Tariffario> listatariffari = new ArrayList<Tariffario>();
+		List tariffari = null;
 		try {
-			Unita_organizzativaBulk uo_db=new Unita_organizzativaBulk();
-			uo_db=(((Unita_organizzativaBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,new Unita_organizzativaBulk(uo)))));
-			if(uo_db==null)
+
+			if (user == null)
+				user = "IIT";
+			if (ricerca == null)
+				ricerca = "selettiva";
+			if (numMax == null)
+				numMax = 20;
+
+			UserContext userContext = new WSUserContext(user, null,
+					new Integer(java.util.Calendar.getInstance().get(
+							java.util.Calendar.YEAR)), null, null, null);
+			if (uo == null)
 				throw new SOAPFaultException(faultUONonDefinita());
-			else
-				tariffari=(((TariffarioComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_TariffarioComponentSession",TariffarioComponentSession.class)).findListaTariffariWS(userContext, uo, query, dominio, ricerca));
-		} catch (ComponentException e) {
-			throw new SOAPFaultException(faultGenerico());
-		} catch (RemoteException e) {
+			if (query == null) {
+				throw new SOAPFaultException(faultQueryNonDefinita());
+			} else if (dominio == null
+					|| (!dominio.equalsIgnoreCase("codice") && !dominio
+							.equalsIgnoreCase("descrizione"))) {
+				throw new SOAPFaultException(faultDominioNonDefinito());
+			} else {
+				try {
+					Unita_organizzativaBulk uo_db = new Unita_organizzativaBulk();
+					uo_db = (((Unita_organizzativaBulk) fatturaAttivaSingolaComponentSession
+							.completaOggetto(userContext,
+									new Unita_organizzativaBulk(uo))));
+					if (uo_db == null)
+						throw new SOAPFaultException(faultUONonDefinita());
+					else
+						tariffari = tariffarioComponentSession
+								.findListaTariffariWS(userContext, uo, query,
+										dominio, ricerca);
+				} catch (ComponentException e) {
+					throw new SOAPFaultException(faultGenerico());
+				} catch (RemoteException e) {
+					throw new SOAPFaultException(faultGenerico());
+				}
+			}
+
+			int num = 0;
+			if (tariffari != null && !tariffari.isEmpty()) {
+				for (Iterator i = tariffari.iterator(); i.hasNext()
+						&& num < new Integer(numMax).intValue();) {
+					TariffarioBulk tariffario = (TariffarioBulk) i.next();
+					Tariffario tar = new Tariffario();
+					tar.setCodice(tariffario.getCd_tariffario());
+					tar.setDescrizione(tariffario.getDs_tariffario());
+					tar.setImporto(tariffario.getIm_tariffario());
+					tar.setIva(tariffario.getVoce_iva().getCd_voce_iva());
+					tar.setMisura(tariffario.getUnita_misura());
+					listatariffari.add(tar);
+					num++;
+				}
+			}
+			return listatariffari;
+		} catch (SOAPFaultException e) {
+			throw e;
+		} catch (Exception e) {
 			throw new SOAPFaultException(faultGenerico());
 		}
 	}
-	
+
+	@RolesAllowed({ "WSUserRole", "IITRole" })
+	public String cercaTariffarioXml(String uo, String query, String dominio,
+			String numMax, String user, String ricerca) throws Exception {
+		List tariffari = null;
+		UserContext userContext = new WSUserContext(user, null, new Integer(
+				java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),
+				null, null, null);
+		if (uo == null)
+			throw new SOAPFaultException(faultUONonDefinita());
+		if (query == null) {
+			throw new SOAPFaultException(faultQueryNonDefinita());
+		} else if (dominio == null
+				|| (!dominio.equalsIgnoreCase("codice") && !dominio
+						.equalsIgnoreCase("descrizione"))) {
+			throw new SOAPFaultException(faultDominioNonDefinito());
+		} else {
+			try {
+				Unita_organizzativaBulk uo_db = new Unita_organizzativaBulk();
+				uo_db = (((Unita_organizzativaBulk) fatturaAttivaSingolaComponentSession
+						.completaOggetto(userContext,
+								new Unita_organizzativaBulk(uo))));
+				if (uo_db == null)
+					throw new SOAPFaultException(faultUONonDefinita());
+				else
+					tariffari =tariffarioComponentSession
+							.findListaTariffariWS(userContext, uo, query,
+									dominio, ricerca);
+			} catch (ComponentException e) {
+				throw new SOAPFaultException(faultGenerico());
+			} catch (RemoteException e) {
+				throw new SOAPFaultException(faultGenerico());
+			}
+		}
+		try {
+			return generaXML(numMax, tariffari);
+		} catch (Exception e) {
+			throw new SOAPFaultException(faultGenerico());
+		}
+	}
+
+	private SOAPFault faultGenerico() throws SOAPException {
+		return generaFault(new String(Costanti.ERRORE_WS_100.toString()),
+				Costanti.erroriWS.get(Costanti.ERRORE_WS_100));
+	}
+
+	private SOAPFault faultQueryNonDefinita() throws SOAPException {
+		return generaFault(new String(Costanti.ERRORE_WS_101.toString()),
+				Costanti.erroriWS.get(Costanti.ERRORE_WS_101));
+	}
+
+	private SOAPFault faultDominioNonDefinito() throws SOAPException {
+		return generaFault(new String(Costanti.ERRORE_WS_102.toString()),
+				Costanti.erroriWS.get(Costanti.ERRORE_WS_102));
+	}
+
+	private SOAPFault faultUONonDefinita() throws SOAPException {
+		return generaFault(new String(Costanti.ERRORE_WS_105.toString()),
+				Costanti.erroriWS.get(Costanti.ERRORE_WS_105));
+	}
+
+	public String generaXML(String numMax, List tariffari)
+			throws ParserConfigurationException, TransformerException {
+		if (numMax == null)
+			numMax = new Integer(20).toString();
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		DOMImplementation impl = builder.getDOMImplementation();
+		Document xmldoc = impl.createDocument(null, "root", null);
+		Element root = xmldoc.getDocumentElement();
+		root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance",
+				"xsi:noNamespaceSchemaLocation",
+				"https://contab.cnr.it/SIGLA/schema/cercatariffario.xsd");
+
+		root.appendChild(generaNumeroTariffari(xmldoc, tariffari));
 		int num = 0;
-		if (tariffari != null && !tariffari.isEmpty()){
-    		for (Iterator i = tariffari.iterator();i.hasNext()&&num< new Integer(numMax).intValue();){
-    			TariffarioBulk tariffario = (TariffarioBulk)i.next();
-    			Tariffario tar=new Tariffario();
-    			tar.setCodice(tariffario.getCd_tariffario());
-    			tar.setDescrizione(tariffario.getDs_tariffario());
-    			tar.setImporto(tariffario.getIm_tariffario());
-    			tar.setIva(tariffario.getVoce_iva().getCd_voce_iva());
-    			tar.setMisura(tariffario.getUnita_misura());
-    			listatariffari.add(tar);
-    			num++;
-    		}
+		if (tariffari != null && !tariffari.isEmpty()) {
+			for (Iterator i = tariffari.iterator(); i.hasNext()
+					&& num < new Integer(numMax).intValue();) {
+				TariffarioBulk tariffario = (TariffarioBulk) i.next();
+				root.appendChild(generaDettaglioTariffari(xmldoc, tariffario
+						.getCd_tariffario(), tariffario.getDs_tariffario(),
+						tariffario.getIm_tariffario(), tariffario.getVoce_iva()
+								.getCd_voce_iva(), tariffario.getUnita_misura()));
+				num++;
+			}
 		}
-		return listatariffari;
-	}catch (SOAPFaultException e) {
-		throw e;			
-	} catch (Exception e) {
-		throw new SOAPFaultException(faultGenerico());
+
+		DOMSource domSource = new DOMSource(xmldoc);
+		StringWriter domWriter = new StringWriter();
+		StreamResult streamResult = new StreamResult(domWriter);
+
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer serializer = tf.newTransformer();
+		serializer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
+		// serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"http://150.146.206.250/DTD/cercaterzi.dtd");
+		// serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"cercatariffari");
+		serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+		serializer.setOutputProperty(OutputKeys.STANDALONE, "no");
+		serializer.transform(domSource, streamResult);
+		return domWriter.toString();
 	}
-}
 
-@RolesAllowed({"WSUserRole","IITRole"})
-public String  cercaTariffarioXml(
-		  String uo,
-		  String query,
-		  String dominio,
-		  String numMax,
-		  String user,
-		  String ricerca) throws Exception{
-	List tariffari=null;
-	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
-	if(uo== null)
-		throw new SOAPFaultException(faultUONonDefinita());
-	if(query== null){
-		throw new SOAPFaultException(faultQueryNonDefinita());
-	}else if(dominio== null||(!dominio.equalsIgnoreCase("codice")&&!dominio.equalsIgnoreCase("descrizione"))){
-		throw new SOAPFaultException(faultDominioNonDefinito());
-	}else{
-		try {
-			Unita_organizzativaBulk uo_db=new Unita_organizzativaBulk();
-			uo_db=(((Unita_organizzativaBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,new Unita_organizzativaBulk(uo)))));
-			if(uo_db==null)
-				throw new SOAPFaultException(faultUONonDefinita());
-			else
-				tariffari=(((TariffarioComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_TariffarioComponentSession",TariffarioComponentSession.class)).findListaTariffariWS(userContext, uo, query, dominio, ricerca));
-		} catch (ComponentException e) {
-			throw new SOAPFaultException(faultGenerico());
-		} catch (RemoteException e) {
-			throw new SOAPFaultException(faultGenerico());
-		}
+	private Element generaNumeroTariffari(Document xmldoc, List tariffari) {
+		Element e = xmldoc.createElement("numris");
+		Node n = xmldoc
+				.createTextNode(new Integer(tariffari.size()).toString());
+		e.appendChild(n);
+		return e;
 	}
-	try {
-		return generaXML(numMax,tariffari);
-	} catch (Exception e) {
-		throw new SOAPFaultException(faultGenerico());
+
+	private Element generaDettaglioTariffari(Document xmldoc, String codice,
+			String descrizione, java.math.BigDecimal importo, String voce_iva,
+			String misura) {
+		Element element = xmldoc.createElement("tariffario");
+		Element elementCodice = xmldoc.createElement("codice");
+		Node nodeCodice = xmldoc.createTextNode(codice);
+		elementCodice.appendChild(nodeCodice);
+		element.appendChild(elementCodice);
+
+		Element elementDenominazione = xmldoc.createElement("descrizione");
+		Node nodeDenominazione = xmldoc.createTextNode(descrizione == null ? ""
+				: descrizione);
+		elementDenominazione.appendChild(nodeDenominazione);
+		element.appendChild(elementDenominazione);
+
+		Element elementImporto = xmldoc.createElement("importo");
+		Node nodeImporto = xmldoc.createTextNode(importo == null ? "" : importo
+				.toString());
+		elementImporto.appendChild(nodeImporto);
+		element.appendChild(elementImporto);
+
+		Element elementVoce = xmldoc.createElement("iva");
+		Node nodeIva = xmldoc.createTextNode(voce_iva == null ? "" : voce_iva);
+		elementVoce.appendChild(nodeIva);
+		element.appendChild(elementVoce);
+
+		Element elementMisura = xmldoc.createElement("misura");
+		Node nodeMisura = xmldoc.createTextNode(misura == null ? "" : misura);
+		elementMisura.appendChild(nodeMisura);
+		element.appendChild(elementMisura);
+
+		return element;
 	}
-}
-private SOAPFault faultGenerico() throws SOAPException {
-	return generaFault(new String(Costanti.ERRORE_WS_100.toString()),
-			Costanti.erroriWS.get(Costanti.ERRORE_WS_100));
-}
-private SOAPFault faultQueryNonDefinita() throws SOAPException {
-	return generaFault(new String(Costanti.ERRORE_WS_101.toString()),
-			Costanti.erroriWS.get(Costanti.ERRORE_WS_101));
-}
-private SOAPFault faultDominioNonDefinito() throws SOAPException {
-	return generaFault(new String(Costanti.ERRORE_WS_102.toString()),
-			Costanti.erroriWS.get(Costanti.ERRORE_WS_102));
-}
-private SOAPFault faultUONonDefinita() throws SOAPException {
-	return generaFault(new String(Costanti.ERRORE_WS_105.toString()),
-			Costanti.erroriWS.get(Costanti.ERRORE_WS_105));
-}
-public String  generaXML(String numMax,List tariffari) throws ParserConfigurationException, TransformerException{
-		if (numMax==null)
-			numMax=new Integer(20).toString();
-    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    	DocumentBuilder builder = factory.newDocumentBuilder();
-    	DOMImplementation impl = builder.getDOMImplementation();
-    	Document xmldoc = impl.createDocument(null, "root", null);
-    	Element root = xmldoc.getDocumentElement();
-    	root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:noNamespaceSchemaLocation", "https://contab.cnr.it/SIGLA/schema/cercatariffario.xsd");
-    	
-    		root.appendChild(generaNumeroTariffari(xmldoc,tariffari));
-    		int num = 0;
-    		if (tariffari != null && !tariffari.isEmpty()){
-	    		for (Iterator i = tariffari.iterator();i.hasNext()&&num< new Integer(numMax).intValue();){
-	    			TariffarioBulk tariffario = (TariffarioBulk)i.next();
-	    			root.appendChild(generaDettaglioTariffari(xmldoc,tariffario.getCd_tariffario(),tariffario.getDs_tariffario(),tariffario.getIm_tariffario(),tariffario.getVoce_iva().getCd_voce_iva(),tariffario.getUnita_misura()));	    			
-	    			num++;
-	    		}
-    		}
-    	
-    	DOMSource domSource = new DOMSource(xmldoc);
-    	StringWriter domWriter = new StringWriter();
-    	StreamResult streamResult = new StreamResult(domWriter);
 
-    	TransformerFactory tf = TransformerFactory.newInstance();
-    	Transformer serializer = tf.newTransformer();
-    	serializer.setOutputProperty(OutputKeys.ENCODING,"ISO-8859-1");
-    	//serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"http://150.146.206.250/DTD/cercaterzi.dtd");
-    	//serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"cercatariffari");
-    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
-    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
-    	serializer.transform(domSource, streamResult);
-        return domWriter.toString();
-}
-
-
-private Element generaNumeroTariffari(Document xmldoc,List tariffari){
-	Element e = xmldoc.createElement("numris");
-	Node n = xmldoc.createTextNode(new Integer(tariffari.size()).toString());
-	e.appendChild(n);
-	return e;	
-}
-private Element generaDettaglioTariffari(Document xmldoc, String codice, String descrizione, java.math.BigDecimal importo,String voce_iva,String misura){
-	Element element = xmldoc.createElement("tariffario");
-	Element elementCodice = xmldoc.createElement("codice");
-	Node nodeCodice = xmldoc.createTextNode(codice);
-	elementCodice.appendChild(nodeCodice);
-	element.appendChild(elementCodice);
-
-	Element elementDenominazione = xmldoc.createElement("descrizione");
-	Node nodeDenominazione = xmldoc.createTextNode(descrizione==null?"":descrizione);
-	elementDenominazione.appendChild(nodeDenominazione);
-	element.appendChild(elementDenominazione);
-	
-	Element elementImporto = xmldoc.createElement("importo");
-	Node nodeImporto = xmldoc.createTextNode(importo==null?"":importo.toString());
-	elementImporto.appendChild(nodeImporto);
-	element.appendChild(elementImporto);
-	
-	Element elementVoce = xmldoc.createElement("iva");
-	Node nodeIva = xmldoc.createTextNode(voce_iva==null?"":voce_iva);
-	elementVoce.appendChild(nodeIva);
-	element.appendChild(elementVoce);
-	
-	Element elementMisura = xmldoc.createElement("misura");
-	Node nodeMisura = xmldoc.createTextNode(misura==null?"":misura);
-	elementMisura.appendChild(nodeMisura);
-	element.appendChild(elementMisura);
-	
-	return element;
-}
-
-private SOAPFault generaFault(String localName,String stringFault) throws SOAPException{
-	MessageFactory factory = MessageFactory.newInstance();
-	SOAPMessage message = factory.createMessage(); 
-	SOAPFactory soapFactory = SOAPFactory.newInstance();
-	SOAPBody body = message.getSOAPBody(); 
-	SOAPFault fault = body.addFault();
-	Name faultName = soapFactory.createName(localName,"", SOAPConstants.URI_NS_SOAP_ENVELOPE);
-	fault.setFaultCode(faultName);
-	fault.setFaultString(stringFault);
-	return fault;
-}
+	private SOAPFault generaFault(String localName, String stringFault)
+			throws SOAPException {
+		MessageFactory factory = MessageFactory.newInstance();
+		SOAPMessage message = factory.createMessage();
+		SOAPFactory soapFactory = SOAPFactory.newInstance();
+		SOAPBody body = message.getSOAPBody();
+		SOAPFault fault = body.addFault();
+		Name faultName = soapFactory.createName(localName, "",
+				SOAPConstants.URI_NS_SOAP_ENVELOPE);
+		fault.setFaultCode(faultName);
+		fault.setFaultString(stringFault);
+		return fault;
+	}
 }
