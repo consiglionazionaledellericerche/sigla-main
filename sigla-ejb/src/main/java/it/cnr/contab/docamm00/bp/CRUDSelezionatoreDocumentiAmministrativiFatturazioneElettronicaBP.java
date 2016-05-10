@@ -32,24 +32,6 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.jsp.Button;
 import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaType;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.StringReader;
-import java.rmi.RemoteException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.mail.PasswordAuthentication;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
@@ -59,13 +41,22 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import java.io.*;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP extends SelezionatoreListaBP {
-	private transient final static Log logger = LogFactory.getLog(CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP.class);
+	private transient final static Logger logger = LoggerFactory.getLogger(CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP.class);
 	private static final long serialVersionUID = 1L;
 	private DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService;
 	private boolean utenteNonAbilitatoFirma;
