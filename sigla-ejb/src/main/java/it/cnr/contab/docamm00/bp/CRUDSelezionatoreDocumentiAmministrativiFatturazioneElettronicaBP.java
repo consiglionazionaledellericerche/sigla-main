@@ -6,7 +6,7 @@ import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
@@ -18,6 +18,8 @@ import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.StringEncrypter;
+import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -187,13 +189,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    	if (docAmm instanceof Fattura_attivaBulk) {
 	    		Fattura_attivaBulk fattura = (Fattura_attivaBulk) docAmm;
 				logger.info("Processo la fattura");
-
-		    	UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk = component.getAuthenticatorFromUo(userContext, fattura.getCd_uo_origine());
-		    	
-		    	if (unitaOrganizzativaPecBulk == null || unitaOrganizzativaPecBulk.getEmailPecProtocollo() == null || unitaOrganizzativaPecBulk.getCodPecProtocollo() == null){
-					throw new ApplicationException("Impossibile procedere. Non è stato possibile recuperare l'email della PEC dell'istituto per l'invio della fattura elettronica!");
-		    	}
-				PasswordAuthentication authentication = new PasswordAuthentication(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), unitaOrganizzativaPecBulk.getCodPecProtocolloInChiaro());
+				Configurazione_cnrBulk config = component.getAuthenticatorPecSdi(userContext);
 				logger.info("Recuperata Autenticazione PEC");
 				File file = creaFileXml(userContext, fattura);
 
@@ -271,7 +267,13 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		    	    					logger.info("Fattura con progressivo univoco "+fattura.getEsercizio()+"/"+fattura.getProgrUnivocoAnno()+" aggiornata.");
 				    					if (!fattura.isNotaCreditoDaNonInviareASdi()){
 					    					FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean("fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
-			    	    			    	fatturaService.inviaFatturaElettronica(authentication.getUserName(), authentication.getPassword(), fileSigned, nomeFileP7m);
+					    					String password = null;
+					    					try {
+					    						password = StringEncrypter.decrypt(config.getVal01(), config.getVal02());
+					    					} catch (EncryptionException e1) {
+					    						new ApplicationException("Cannot decrypt password");
+					    					}
+					    					fatturaService.inviaFatturaElettronica(config.getVal01(), password, fileSigned, nomeFileP7m);
 					    					logger.info("File firmato inviato");
 				    					}
 		    	    				} catch (Exception ex) {

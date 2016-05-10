@@ -65,6 +65,8 @@ public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persi
  
 	private String contabile;
 	
+	private java.lang.String cd_modalita_pag;
+	
 	public V_cons_stato_invio_mandatiBulk() {
 		super();
 	}
@@ -187,5 +189,11 @@ public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persi
 	}
 	public String getTipo() {
 		return Numerazione_doc_contBulk.TIPO_MAN;
+	}
+	public java.lang.String getCd_modalita_pag() {
+		return cd_modalita_pag; 
+	}
+	public void setCd_modalita_pag(java.lang.String cd_modalita_pag) {
+		this.cd_modalita_pag = cd_modalita_pag;
 	}
 }

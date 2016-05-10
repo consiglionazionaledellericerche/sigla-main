@@ -18,6 +18,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
 import it.cnr.contab.config00.tabnum.bulk.Numerazione_baseBulk;
@@ -184,6 +185,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
+import javax.ejb.EJBException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2574,8 +2577,8 @@ public void controllaQuadraturaConti(UserContext aUC,Fattura_passivaBulk fattura
 			if (fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro() == null)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: il totale dei dettagli di " + fatturaPassiva.getIm_totale_fattura_calcolato() + " (Imponibile + IVA) non corrisponde al totale di " + fatturaPassiva.getIm_totale_fattura() + " della testata fattura!");
 				
-			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro()) == 0)
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: l'importo di testata non può essere 0!");
+//			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro()) == 0)
+//				throw new it.cnr.jada.comp.ApplicationException("Attenzione: l'importo di testata non può essere 0!");
 
 			if (fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro().compareTo(fatturaPassiva.getIm_totale_fattura_calcolato()) != 0) {
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: il totale dei dettagli di " + fatturaPassiva.getIm_totale_fattura_calcolato() + " (Imponibile + IVA) non corrisponde al totale di " + fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro() + " EUR della testata fattura!");
@@ -5486,7 +5489,7 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectLettera_pagamento_estero_sos
 		throw new it.cnr.jada.comp.ApplicationException("Attenzione la Tipologia del pagamento è vuota!");
 	
 	it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,sospeso).createSQLBuilder();
-
+	
 	sql.openParenthesis("AND");
 	sql.addSQLClause("OR", "IM_ASSOCIATO", sql.EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("OR", "IM_ASSOCIATO", sql.ISNULL, null);
@@ -5499,10 +5502,38 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectLettera_pagamento_estero_sos
 	sql.addSQLClause("OR", "IM_SOSPESO", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND", "IM_SOSPESO", sql.ISNOTNULL, null);
 	sql.closeParenthesis();
-	sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
 	sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
-	sql.addClause("AND", "cd_cds", sql.EQUALS, fatturaPassiva.getCd_cds());
-	sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
+	try {
+	EnteBulk ente = (EnteBulk) getHome(aUC, EnteBulk.class)
+			.findAll().get(0);
+
+		if (!Utility.createParametriCnrComponentSession().getParametriCnr(aUC,fatturaPassiva.getLettera_pagamento_estero().getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+			sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+			sql.addClause("AND", "cd_cds", sql.EQUALS, fatturaPassiva.getCd_cds());
+			sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
+		}
+		else
+		{
+			sql.addClause("AND", "cd_cds", sql.EQUALS, ente.getCd_unita_organizzativa());
+			sql.openParenthesis("AND"); 
+			sql.openParenthesis("AND"); 
+			sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+			sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
+			sql.closeParenthesis();
+			sql.openParenthesis("OR");
+			sql.addClause("OR", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+			sql.addClause("AND", "cd_cds_origine", sql.ISNULL,null);
+			sql.closeParenthesis();
+			sql.closeParenthesis();
+		}
+	} catch (RemoteException e) {
+		throw handleException(fatturaPassiva, e);
+	} catch (EJBException e) {
+		throw handleException(fatturaPassiva, e);
+	} catch (PersistencyException e) {
+		throw handleException(fatturaPassiva, e);
+	}	
+	
 	sql.addClause("AND", "esercizio", sql.EQUALS, fatturaPassiva.getLettera_pagamento_estero().getEsercizio());
 	sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, sospeso.TIPO_SPESA);
 	sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.TI_SOSPESO);
@@ -5850,7 +5881,7 @@ private void validaConConsuntivi(
 private void validaDisponibilitaDiCassaCDS(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException {
 
 	try	{
-		if (fattura.getLettera_pagamento_estero()!=null && fattura.getLettera_pagamento_estero().getEsercizio()!=null && !Utility.createParametriCnrComponentSession().getParametriCnr(userContext,fattura.getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
+		if (fattura.getLettera_pagamento_estero()!=null && fattura.getLettera_pagamento_estero().getEsercizio()!=null && !Utility.createParametriCnrComponentSession().getParametriCnr(userContext,fattura.getLettera_pagamento_estero().getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
 			it.cnr.jada.bulk.BulkHome home = getHome( userContext, V_disp_cassa_cdsBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addClause( "AND", "esercizio", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
@@ -6092,8 +6123,9 @@ public void validaRiga (UserContext aUC,Fattura_passiva_rigaBulk riga) throws Co
 		throw new it.cnr.jada.comp.ApplicationException("La quantità specificata NON è valida.");
 	if (riga.getPrezzo_unitario() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Il prezzo unitario specificato NON è valido.");
-	if (riga.getPrezzo_unitario().doubleValue() == 0 && !riga.getFl_iva_forzata().booleanValue())
-		throw new it.cnr.jada.comp.ApplicationException("Il prezzo unitario o l'importo IVA specificati NON sono validi.");
+	  //20/04/2016 Rospuc - Gestione importo 0
+//	if (riga.getPrezzo_unitario().doubleValue() == 0 && !riga.getFl_iva_forzata().booleanValue())
+//		throw new it.cnr.jada.comp.ApplicationException("Il prezzo unitario o l'importo IVA specificati NON sono validi.");
 	if (riga.getFl_iva_forzata().booleanValue() &&
 		riga.getPrezzo_unitario().doubleValue() == 0 && 
 		riga.getIm_iva().doubleValue() == 0)
@@ -7405,18 +7437,20 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
 	      String key = null;
 	      Hashtable<String, BigDecimal> currentMap = null;
-	      if (rigaEle.getNatura()!=null) {
-	    	  key = rigaEle.getNatura();
-	    	  currentMap = mapNaturaEle;
-	      } else {
-	    	  key = rigaEle.getAliquotaIva().toString();
-	    	  currentMap = mapIvaEle;
+	      if(rigaEle.getImponibileImporto()!=null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO)!=0){
+		      if (rigaEle.getNatura()!=null) {
+		    	  key = rigaEle.getNatura();
+		    	  currentMap = mapNaturaEle;
+		      } else {
+		    	  key = rigaEle.getAliquotaIva().toString();
+		    	  currentMap = mapIvaEle;
+		      }
+	      
+		      if (currentMap.get(key)!=null)
+		    	  currentMap.put(key, currentMap.get(key).add(rigaEle.getImposta()));
+		      else
+		    	  currentMap.put(key, rigaEle.getImposta());
 	      }
-
-	      if (currentMap.get(key)!=null)
-	    	  currentMap.put(key, currentMap.get(key).add(rigaEle.getImposta()));
-	      else
-	    	  currentMap.put(key, rigaEle.getImposta());
 	}
 
 	Hashtable<String, BigDecimal> mapNaturaEleArr = new Hashtable<String, BigDecimal>(), mapIvaEleArr = new Hashtable<String, BigDecimal>();

@@ -119,6 +119,7 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo" />
 	<fieldProperty
 		name="imDecInt"
@@ -127,6 +128,7 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
 		label="Spese Decentrate Interne" />
 	<fieldProperty
 		name="imDecEst"
@@ -135,6 +137,7 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
 		label="Spese Decentrate Esterne" />
 	<fieldProperty
 		name="imAccInt"
@@ -143,6 +146,7 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
 		label="Spese Accentrate Interne" />
 	<fieldProperty
 		name="imAccEst"
@@ -151,7 +155,17 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
-		label="Spese Accentrate Esterne" />
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spese Accentrate Esterne" />	
+	<fieldProperty
+		name="imEntrata"
+		property="imEntrata"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrate" />
 	<fieldProperty
 		name="gae"
 		property="gae"
@@ -168,6 +182,12 @@
 		maxLength="20"
 		enabledOnEdit="false"
 		label="Voce del Piano" />
+	<fieldProperty
+		name="dtApprovazione"
+		property="dtApprovazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data approvazione" />	
 	<form
 		name="searchtool">
 	</form>
@@ -208,9 +228,13 @@
 	<formFieldProperty
 		name="imAccEst" />
 	<formFieldProperty
+		name="imEntrata" />	
+	<formFieldProperty
 		name="gae" />
 	<formFieldProperty
 		name="voceDelPiano" />
+	<formFieldProperty
+		name="dtApprovazione" />	
 	<findFieldProperty
 		name="tipoVar" />
 	<findFieldProperty
@@ -248,9 +272,13 @@
 	<findFieldProperty
 		name="imAccEst" />
 	<findFieldProperty
+		name="imEntrata" />		
+	<findFieldProperty
 		name="gae" />
 	<findFieldProperty
 		name="voceDelPiano" />
+	<findFieldProperty
+		name="dtApprovazione" />		
 	<columnFieldProperty
 		name="tipoVar" />
 	<columnFieldProperty
@@ -288,7 +316,11 @@
 	<columnFieldProperty
 		name="imAccEst" />
 	<columnFieldProperty
+		name="imEntrata" />		
+	<columnFieldProperty
 		name="gae" />
 	<columnFieldProperty
 		name="voceDelPiano" />
+	<columnFieldProperty
+		name="dtApprovazione" />		
 </bulkInfo>

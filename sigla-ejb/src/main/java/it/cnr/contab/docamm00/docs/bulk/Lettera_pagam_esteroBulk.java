@@ -112,7 +112,7 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 	}
 
 	public void completeFrom(ActionContext context) 
-			throws javax.ejb.EJBException, java.text.ParseException {
+			throws javax.ejb.EJBException, java.text.ParseException, ComponentException, RemoteException {
 
 		java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();
 		int annoSolare = Fattura_passivaBulk.getDateCalendar(date).get(java.util.Calendar.YEAR);
@@ -134,7 +134,8 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 		}
 		SospesoBulk sospeso = new SospesoBulk();
 		sospeso.setEsercizio(getEsercizio());
-		sospeso.setCd_cds(getCd_cds());
+		//if (!Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),this.getEsercizio()).getFl_tesoreria_unica().booleanValue())
+			sospeso.setCd_cds(getCd_cds_sospeso());
 		sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
 		sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
 		setSospeso(sospeso);

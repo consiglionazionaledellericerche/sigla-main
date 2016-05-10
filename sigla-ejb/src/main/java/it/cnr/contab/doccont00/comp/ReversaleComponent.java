@@ -1144,9 +1144,10 @@ public it.cnr.jada.util.RemoteIterator cercaSospesi(UserContext userContext,it.c
 	{
 		return iterator(
 			userContext,
-			((SospesoHome) getHome( userContext, SospesoBulk.class )).selectSospesiDiEntrata( reversale, clausole),
+			((SospesoHome) getHome( userContext, SospesoBulk.class )).selectSospesiDiEntrata( reversale, clausole,Utility.createParametriCnrComponentSession().getParametriCnr(userContext,reversale.getEsercizio()).getFl_tesoreria_unica().booleanValue()),
 			SospesoBulk.class,
 			getFetchPolicyName("find"));
+		
 	} catch(Throwable e) {
 		throw handleException(e);
 	}

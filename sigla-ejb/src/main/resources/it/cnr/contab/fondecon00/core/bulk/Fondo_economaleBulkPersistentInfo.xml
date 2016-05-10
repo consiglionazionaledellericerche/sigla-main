@@ -69,9 +69,8 @@
 			columnName="ESERCIZIO_REVERSALE"
 			propertyName="sospeso_di_chiusura.esercizio" />
 		<columnMapping
-			columnName="CD_CDS"
-			propertyName="sospeso_di_chiusura.cds.cd_unita_organizzativa"
-			fetchOnly="true" />
+			columnName="CD_CDS_SOSPESO"
+			propertyName="sospeso_di_chiusura.cds.cd_unita_organizzativa"/>
 		<columnMapping
 			columnName="TI_ES_SOSPESO"
 			propertyName="sospeso_di_chiusura.ti_entrata_spesa" />

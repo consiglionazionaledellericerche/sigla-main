@@ -1,5 +1,5 @@
 package it.cnr.contab.docamm00.ejb;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -29,11 +29,10 @@ public class TransactionalDocAmmFatturazioneElettronicaComponentSession extends 
 		}
 	}
 
-	public UnitaOrganizzativaPecBulk getAuthenticatorFromUo(it.cnr.jada.UserContext param0, String param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	public Configurazione_cnrBulk getAuthenticatorPecSdi(it.cnr.jada.UserContext param0) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
-			return (UnitaOrganizzativaPecBulk)invoke("getAuthenticatorFromUo",new Object[] {
-					param0,
-					param1 });
+			return (Configurazione_cnrBulk)invoke("getAuthenticatorPecSdi",new Object[] {
+					param0 });
 		} catch(java.rmi.RemoteException e) {
 			throw e;
 		} catch(java.lang.reflect.InvocationTargetException e) {

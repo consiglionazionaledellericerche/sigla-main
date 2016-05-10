@@ -47,6 +47,8 @@ public class Stampa_giornale_mandatiBulk extends MandatoBulk {
 
 		statoTrasmissioneKeys = new it.cnr.jada.util.OrderedHashtable();
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_NON_INSERITO, "Non inserito in distinta");
+		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_PREDISPOSTO,	"Predisposto alla Firma");
+		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_PRIMA_FIRMA,	"Prima Firma");		
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_INSERITO, "Inserito in distinta");
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_TRASMESSO, "Trasmesso");
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_TUTTI, "Tutti");

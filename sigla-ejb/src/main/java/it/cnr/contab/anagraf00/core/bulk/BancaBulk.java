@@ -531,7 +531,7 @@ public void allineaIbanDaContoIT() throws ValidationException {
         // Cod. C/C
 		if (getCodice_iban_parte5()==null && getNumero_conto()!=null)
 			setCodice_iban_parte5(StrServ.lpad(getNumero_conto().toString(),this.getNazione_iban().getStrutturaIbanLivello(5).length(),"0"));
-		else if (getCodice_iban_parte5()!=null && getNumero_conto()!=null && !getNumero_conto().equals(getCodice_iban_parte5().substring(getCodice_iban_parte5().length()>=getNumero_conto().length()?getCodice_iban_parte5().length()-getNumero_conto().length():0)))
+		else if (getCodice_iban_parte5()!=null && getNumero_conto()!=null && !getNumero_conto().equals(getCodice_iban_parte5()))
 			throw new ValidationException("Attenzione! La 6^ parte del codice Iban è diversa dal Numero Conto indicato.");
 	}
 }
@@ -561,7 +561,7 @@ public void allineaContoDaIbanIT() throws ValidationException {
         // Cod. C/C
 		if (getCodice_iban_parte5()!=null && getNumero_conto()==null)
 			setNumero_conto(getCodice_iban_parte5());
-		else if (getCodice_iban_parte5()!=null && getNumero_conto()!=null && !getNumero_conto().equals(getCodice_iban_parte5().substring(getCodice_iban_parte5().length()>=getNumero_conto().length()?getCodice_iban_parte5().length()-getNumero_conto().length():0)))
+		else if (getCodice_iban_parte5()!=null && getNumero_conto()!=null && !getNumero_conto().equals(getCodice_iban_parte5()))
 			throw new ValidationException("Attenzione! La 6^ parte del codice Iban è diversa dal Numero Conto indicato.");
 	}
 }

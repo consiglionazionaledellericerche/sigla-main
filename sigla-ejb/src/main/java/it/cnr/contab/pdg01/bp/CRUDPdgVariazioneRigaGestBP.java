@@ -6,12 +6,10 @@
  */
 package it.cnr.contab.pdg01.bp;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.Iterator;
-import java.util.List;
-
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
@@ -19,6 +17,7 @@ import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
@@ -30,6 +29,11 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author rpagano
@@ -178,6 +182,16 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 	public CRUDPdgVariazioneRigaGestBP() {
 		super();
 	}
+
+	
+	public void save(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException,ValidationException {
+		super.save(context);
+		Ass_pdg_variazione_cdrBulk ass = (Ass_pdg_variazione_cdrBulk)this.getModel();
+		if (ass.getPdg_variazione().isApprovata()){
+			setStatus(VIEW);
+		}
+	}
+
 	protected void validaRiga(ActionContext actioncontext,
 			Pdg_variazione_riga_gestBulk oggettobulk) throws ValidationException {
 		for (java.util.Iterator i = ((Ass_pdg_variazione_cdrBulk)this.getModel()).getRigheVariazioneEtrGest().iterator();i.hasNext();) {
@@ -201,27 +215,28 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 				throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
 			}
 	
-	for (java.util.Iterator i =  ((Ass_pdg_variazione_cdrBulk)this.getModel()).getRigheVariazioneSpeGest().iterator();i.hasNext();) {
-		Pdg_variazione_riga_gestBulk riga = (Pdg_variazione_riga_gestBulk)i.next();
-		if (!riga.equals(oggettobulk) &&
-				riga.getEsercizio().compareTo(oggettobulk.getEsercizio())==0 &&
-				riga.getCd_cdr_assegnatario().compareTo(oggettobulk.getCd_cdr_assegnatario())==0 &&
-				((
-				(riga.getCd_cds_area()!= null && oggettobulk.getCd_cds_area()!=null ) &&
-				(riga.getCd_cds_area().compareTo(oggettobulk.getCd_cds_area())==0))|| 
-				(riga.getCd_cds_area()== null && oggettobulk.getCd_cds_area()==null ) ||
-				(riga.getCd_cds_area()!=null && riga.getCd_cds_area().compareTo(riga.getCdr_assegnatario().getCd_cds())==0 &&
-						oggettobulk.getCd_cds_area()==null )||		
-				(oggettobulk.getCd_cds_area()!=null && oggettobulk.getCd_cds_area().compareTo(oggettobulk.getCdr_assegnatario().getCd_cds())==0 &&
-						riga.getCd_cds_area()==null)) &&
-				oggettobulk.getLinea_attivita()!=null && riga.getLinea_attivita()!=null &&
-				oggettobulk.getCd_linea_attivita()!=null && riga.getCd_linea_attivita()!=null &&
-			    riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
-			    riga.getCd_elemento_voce()!=null && oggettobulk.getCd_elemento_voce()!=null &&
-			    riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
-			throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
+		Ass_pdg_variazione_cdrBulk ass = (Ass_pdg_variazione_cdrBulk)this.getModel();
+		for (java.util.Iterator i =  ((Ass_pdg_variazione_cdrBulk)this.getModel()).getRigheVariazioneSpeGest().iterator();i.hasNext();) {
+			Pdg_variazione_riga_gestBulk riga = (Pdg_variazione_riga_gestBulk)i.next();
+			if (!riga.equals(oggettobulk) &&
+					riga.getEsercizio().compareTo(oggettobulk.getEsercizio())==0 &&
+					riga.getCd_cdr_assegnatario().compareTo(oggettobulk.getCd_cdr_assegnatario())==0 &&
+					((
+							(riga.getCd_cds_area()!= null && oggettobulk.getCd_cds_area()!=null ) &&
+							(riga.getCd_cds_area().compareTo(oggettobulk.getCd_cds_area())==0))|| 
+							(riga.getCd_cds_area()== null && oggettobulk.getCd_cds_area()==null ) ||
+							(riga.getCd_cds_area()!=null && riga.getCd_cds_area().compareTo(riga.getCdr_assegnatario().getCd_cds())==0 &&
+							oggettobulk.getCd_cds_area()==null )||		
+							(oggettobulk.getCd_cds_area()!=null && oggettobulk.getCd_cds_area().compareTo(oggettobulk.getCdr_assegnatario().getCd_cds())==0 &&
+							riga.getCd_cds_area()==null)) &&
+							oggettobulk.getLinea_attivita()!=null && riga.getLinea_attivita()!=null &&
+							oggettobulk.getCd_linea_attivita()!=null && riga.getCd_linea_attivita()!=null &&
+							riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
+							riga.getCd_elemento_voce()!=null && oggettobulk.getCd_elemento_voce()!=null &&
+							riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
+				throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
+		}
 	}
-}
 	
 	public CRUDPdgVariazioneRigaGestBP(String function) {
 		super(function);
@@ -388,6 +403,42 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 			DipartimentoBulk dipartimentoSrivania) {
 		this.dipartimentoSrivania = dipartimentoSrivania;
 	}		
+
+	public Pdg_variazione_riga_gestBulk preparaNuovaRiga(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
+		Pdg_variazione_riga_gestBulk riga = new Pdg_variazione_riga_spesa_gestBulk(); 
+		Ass_pdg_variazione_cdrBulk bulk = (Ass_pdg_variazione_cdrBulk)getModel();
+		if (isVariazioneApprovata(context)){
+			PdGVariazioniComponentSession comp = Utility.createPdGVariazioniComponentSession();
+			try {
+				Pdg_variazione_riga_spesa_gestBulk rigaDB = (Pdg_variazione_riga_spesa_gestBulk)comp.recuperoRigaLiquidazioneIva(context.getUserContext(), bulk);
+				if (rigaDB != null){
+		    		Elemento_voceBulk elementoVoce = (Elemento_voceBulk)createComponentSession().findByPrimaryKey(context.getUserContext(), 
+							new Elemento_voceBulk(rigaDB.getElemento_voce().getCd_elemento_voce(), rigaDB.getElemento_voce().getEsercizio(), rigaDB.getElemento_voce().getTi_appartenenza(), rigaDB.getElemento_voce().getTi_gestione()));
+		    		if (elementoVoce.getV_classificazione_voci() != null){
+		    			V_classificazione_vociBulk vClassDB = elementoVoce.getV_classificazione_voci();
+			    		V_classificazione_vociBulk vClass = (V_classificazione_vociBulk)createComponentSession().findByPrimaryKey(context.getUserContext(), 
+								new V_classificazione_vociBulk(vClassDB.getId_classificazione()));
+			    		elementoVoce.setV_classificazione_voci(vClass);
+		    		}
+		    		riga.setElemento_voce(elementoVoce);
+				}
+			} catch (RemoteException e1) {
+				throw handleException(e1);
+			} catch (ComponentException e1) {
+				throw handleException(e1);
+			}
+		}
+		return riga;
+	}
+
+	public boolean isVariazioneApprovata(ActionContext context) {
+		Ass_pdg_variazione_cdrBulk bulk = (Ass_pdg_variazione_cdrBulk)getModel();
+		if (bulk.getPdg_variazione().isApprovata()){
+			return true;
+		}
+		return false;
+	}
+
 
 	public void apponiVistoDipartimento(ActionContext context, Pdg_variazione_riga_gestBulk riga) throws it.cnr.jada.action.BusinessProcessException{
 		try {
