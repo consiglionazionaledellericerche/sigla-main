@@ -29,9 +29,15 @@
 					<generateApplicationXml>false</generateApplicationXml>
 					<archive>
 						<manifestEntries>
-							<Dependencies>com.oracle.jdbc, org.apache.xerces, 
+							<Dependencies>
+								com.oracle.jdbc, org.apache.xerces, 
 								org.apache.commons.collections,
-								com.informix.jdbc</Dependencies>
+								com.informix.jdbc,
+								org.wildfly.extension.undertow,
+								io.undertow.core,
+								io.undertow.servlet,
+								org.apache.cxf
+							</Dependencies>
 						</manifestEntries>					
 					</archive>
 					<earName>SIGLA</earName>
