@@ -20,22 +20,14 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.fatturapa.FileSdIType;
-import it.gov.fatturapa.sdi.messaggi.v1.AttestazioneTrasmissioneFatturaType;
-import it.gov.fatturapa.sdi.messaggi.v1.ErroreType;
-import it.gov.fatturapa.sdi.messaggi.v1.EsitoCommittenteType;
-import it.gov.fatturapa.sdi.messaggi.v1.ListaErroriType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaMancataConsegnaType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaScartoType;
-import it.gov.fatturapa.sdi.messaggi.v1.RicevutaConsegnaType;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
+import it.gov.fatturapa.sdi.messaggi.v1.*;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.jboss.wsf.spi.annotation.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.activation.DataHandler;
 import javax.ejb.Stateless;
@@ -44,22 +36,10 @@ import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.soap.MessageFactory;
-import javax.xml.soap.Name;
-import javax.xml.soap.SOAPBody;
-import javax.xml.soap.SOAPConstants;
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPFactory;
-import javax.xml.soap.SOAPFault;
-import javax.xml.soap.SOAPMessage;
+import javax.xml.soap.*;
 import javax.xml.ws.soap.SOAPFaultException;
-
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.jboss.wsf.spi.annotation.WebContext;
+import java.io.*;
+import java.util.Date;
 
 @Stateless
 @WebService(endpointInterface="it.gov.fatturapa.TrasmissioneFatture", 
@@ -67,7 +47,7 @@ import org.jboss.wsf.spi.annotation.WebContext;
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @WebContext(contextRoot="/fatturesdi")
 public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture, it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA {
-	private static final Logger logger = Logger.getLogger(TrasmissioneFatture.class);
+	private static final Logger logger = LoggerFactory.getLogger(TrasmissioneFatture.class);
 	
 	public void ricevutaConsegna(FileSdIType ricevuta) {
 		UserContext userContext = createUserContext();
