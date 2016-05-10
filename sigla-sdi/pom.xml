@@ -25,7 +25,7 @@
 						<ejbVersion>3.0</ejbVersion>
 					</configuration>
 				</plugin>
-	            <!--This plugin's configuration is used to store Eclipse 
+	            <!--This plugin's configuration is used to store Eclipse
 	                m2e settings only. It has no influence on the Maven build itself. -->
 	            <plugin>
 	                <groupId>org.eclipse.m2e</groupId>
@@ -62,8 +62,8 @@
         			<execution>
             			<id>WSDL-FATTURAPA</id>
                       	<phase>generate-sources</phase>
-                      	<goals> 
-                          <goal>wsimport</goal> 
+                      	<goals>
+                          <goal>wsimport</goal>
                       	</goals>
 		        		<configuration>
 							<args>
@@ -80,7 +80,7 @@
 		          	</execution>
         		</executions>
 		    </plugin>
-		</plugins> 
+		</plugins>
 	</build>
 	<dependencies>
  		<dependency>
@@ -88,13 +88,13 @@
             <artifactId>jaxb2-basics-runtime</artifactId>
             <version>0.5.3</version>
             <scope>provided</scope>
-        </dependency>		
+        </dependency>
 		<dependency>
 			<groupId>it.cnr</groupId>
 			<artifactId>jada</artifactId>
 			<version>${jada.version}</version>
 			<classifier>wildfly</classifier>
-			<type>ejb</type>			
+			<type>ejb</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -192,16 +192,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId> 
-			<artifactId>log4j</artifactId> 
-			<version>1.2.17</version> 
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId> 
-			<artifactId>junit</artifactId> 
-			<version>4.10</version> 
-			<scope>test</scope> 
-	  	</dependency>	
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+	  	</dependency>
 		<dependency>
 		  <groupId>commons-io</groupId>
 		  <artifactId>commons-io</artifactId>
@@ -213,6 +208,6 @@
 			<artifactId>firmadigitale</artifactId>
 			<version>0.2</version>
 			<scope>provided</scope>
-		</dependency>				  	
+		</dependency>
 	</dependencies>
 </project>
