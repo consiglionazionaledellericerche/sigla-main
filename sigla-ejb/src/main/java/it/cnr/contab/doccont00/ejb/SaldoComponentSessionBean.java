@@ -1,6 +1,9 @@
 package it.cnr.contab.doccont00.ejb;
 import java.math.BigDecimal;
 
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
@@ -240,6 +243,24 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 		pre_component_invocation(param0,componentObj);
 		try {
 			String result = componentObj.checkDispObbligazioniAccertamenti(param0,param1,param2,param3,param4,param5,param6);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, String param5, java.math.BigDecimal param6, Boolean param7) throws ComponentException{
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.aggiornaVariazioneStanziamento(param0,param1,param2,param3,param4,param5,param6,param7);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

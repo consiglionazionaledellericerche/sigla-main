@@ -13,9 +13,8 @@
 			propertyName="sospeso.esercizio"
 			fetchOnly="true" />
 		<columnMapping
-			columnName="CD_CDS"
-			propertyName="sospeso.cds.cd_unita_organizzativa"
-			fetchOnly="true" />
+			columnName="CD_CDS_SOSPESO"
+			propertyName="sospeso.cds.cd_unita_organizzativa"/>
 		<columnMapping
 			columnName="TI_ENTRATA_SPESA"
 			propertyName="sospeso.ti_entrata_spesa" />

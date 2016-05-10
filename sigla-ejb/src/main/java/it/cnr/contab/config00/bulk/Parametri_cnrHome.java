@@ -41,10 +41,10 @@ public class Parametri_cnrHome extends BulkHome {
 	
 	}
 	public boolean isNuovoPdg(UserContext userContext) throws PersistencyException{
-		return isNuovoPdg(userContext, CNRUserContext.getEsercizio(userContext));
+		return isNuovoPdg(CNRUserContext.getEsercizio(userContext));
 	}
 
-	public boolean isNuovoPdg(UserContext userContext, int esercizio) throws PersistencyException{
+	public boolean isNuovoPdg(int esercizio) throws PersistencyException{
         Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)findByPrimaryKey(new Parametri_cnrBulk(esercizio));
         return parametriCnr!=null && parametriCnr.getFl_nuovo_pdg();
 	}	

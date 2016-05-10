@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato"
+		keysProperty="statoKeys"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="esercizio_doc_amm"
+		property="esercizio_doc_amm"
+		inputType="TEXT"
+		label="Esercizio doc.amm." />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		label="Scadenza Impegno" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		label="pg_mandato" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		inputType="TEXT"
+		label="esercizio_obbligazione" />
+	<fieldProperty
+		name="ds_mandato_riga"
+		property="ds_mandato_riga"
+		maxLength="300"
+		inputSize="60"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="modalita_pagamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="SELECT"
+		optionsProperty="modalita_pagamentoOptions"
+		printProperty="cd_modalita_pag"
+		readonlyProperty="ROBanca"
+		label="Modalita pag."
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="banca"
+		property="banca"
+		inputType="SELECT"
+		readonlyProperty="ROBanca"		
+		optionsProperty="bancaOptions"
+		printProperty="ds_estesa"
+		label="Coordinate"
+		nullable="false"/>
+	<fieldProperty
+		name="pg_banca"
+		property="banca.pg_banca"
+		inputType="TEXT"
+		label="pg_banca" />
+	<fieldProperty
+		name="banca_cab"
+		property="banca.cab"
+		inputType="ROTEXT"
+		label="CAB" />
+	<fieldProperty
+		name="banca_abi"
+		property="banca.abi"
+		inputType="ROTEXT"
+		label="ABI" />
+	<fieldProperty
+		name="banca_intestazione"
+		property="banca.intestazione"
+		inputType="ROTEXT"
+		label="Intestazione" />
+	<fieldProperty
+		name="banca_nr_conto"
+		property="banca.numero_conto"
+		inputType="ROTEXT"
+		label="Numero Conto" />				
+	<fieldProperty
+		name="im_mandato_riga"
+		property="im_mandato_riga"
+		inputType="ROTEXT"
+		readonlyProperty="ROIm_mandato_riga"		
+		label="Importo"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		label="Beneficiario" />
+	<fieldProperty
+		name="cd_terzo_cedente"
+		property="terzo_cedente.cd_terzo"
+		inputType="ROTEXT"
+		label="Terzo Cedente" />
+	<fieldProperty
+		name="ds_terzo_cedente"
+		property="terzo_cedente.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo Cedente" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		inputType="TEXT"
+		label="Es. impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		label="Nr. impegno" />
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		keysProperty="tipoDocumentoKeys"		
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Tipo doc.amm." />
+	<fieldProperty
+		name="cd_uo_doc_amm"
+		property="cd_uo_doc_amm"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO doc.amm." />
+	<fieldProperty
+		name="cd_cds_doc_amm"
+		property="cd_cds_doc_amm"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds doc.amm." />
+	<fieldProperty
+		name="pg_doc_amm"
+		property="pg_doc_amm"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Nr. doc.amm." />
+	<fieldProperty
+		name="fl_pgiro"
+		property="fl_pgiro"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="P.Giro"
+		keysProperty="fl_pgiro_Keys"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_ritenute_riga"
+		property="im_ritenute_riga"
+		inputType="TEXT"
+		label="Importo Ritenute"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="im_associato_siope"
+		property="im_associato_siope"
+		inputType="TEXT"
+		label="Importo Associato Siope"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="im_da_associare_siope"
+		property="im_da_associare_siope"
+		inputType="TEXT"
+		label="Importo da Associare Siope"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Voce di Bilancio" />
+	<fieldProperty
+		name="tipoAssociazioneSiope"
+		property="tipoAssociazioneSiope"
+		maxLength="1"
+		inputSize="1"
+		inputType="ROTEXT"
+		label="Siope" />
+		
+	<columnSet name="restService" >
+		<columnFieldProperty name="esercizio"/>
+		<columnFieldProperty name="pg_mandato"/>
+		<columnFieldProperty name="esercizio_obbligazione"/>
+		<columnFieldProperty name="pg_obbligazione"/>
+		<columnFieldProperty name="pg_obbligazione_scadenzario"/>
+		<columnFieldProperty name="cd_tipo_documento_amm"/>
+		<columnFieldProperty name="ds_mandato_riga"/>
+		<columnFieldProperty name="stato"/>
+		<columnFieldProperty name="im_mandato_riga"/>
+	</columnSet>
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="esercizio_obbligazione" />
+	<formFieldProperty
+		name="ds_mandato_riga" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cd_terzo_cedente" />
+	<formFieldProperty
+		name="ds_terzo_cedente" />
+	<formFieldProperty
+		name="cd_modalita_pag" />
+	<formFieldProperty
+		name="banca" />
+	<formFieldProperty
+		name="im_mandato_riga" />
+	<formFieldProperty
+		name="esercizio_doc_amm" />
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />
+	<formFieldProperty
+		name="cd_uo_doc_amm" />
+	<formFieldProperty
+		name="cd_cds_doc_amm" />
+	<formFieldProperty
+		name="pg_doc_amm" />
+	<formFieldProperty
+		name="im_ritenute_riga" />
+	<formFieldProperty
+		name="im_associato_siope" />
+	<formFieldProperty
+		name="im_da_associare_siope" />
+		
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="esercizio_obbligazione" />
+	<findFieldProperty
+		name="ds_mandato_riga" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_modalita_pag" />
+	<findFieldProperty
+		name="pg_banca" />
+	<findFieldProperty
+		name="im_mandato_riga" />
+	<findFieldProperty
+		name="esercizio_doc_amm" />
+	<findFieldProperty
+		name="cd_tipo_documento_amm" />
+	<findFieldProperty
+		name="cd_uo_doc_amm" />
+	<findFieldProperty
+		name="cd_cds_doc_amm" />
+	<findFieldProperty
+		name="pg_doc_amm" />
+	<findFieldProperty
+		name="im_ritenute_riga" />
+
+</bulkInfo>

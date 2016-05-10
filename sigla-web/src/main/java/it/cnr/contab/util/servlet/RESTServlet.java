@@ -349,14 +349,15 @@ public class RESTServlet extends HttpServlet{
 	private void parseRequestParameter(HttpServletRequest req, HttpActionContext actioncontext,
 			JSONRequest jsonRequest, ConsultazioniBP consBP) throws RemoteException, BusinessProcessException {
 		if (jsonRequest != null) {			
-			if (jsonRequest.getMaxItemsPerPage() != null){
+			if (jsonRequest.getMaxItemsPerPage() != null && jsonRequest.getMaxItemsPerPage().compareTo(0) > 0){
                 logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". MaxItemsPerPage: "+jsonRequest.getMaxItemsPerPage());
 	    		consBP.setPageSize(jsonRequest.getMaxItemsPerPage());
 	    		consBP.refresh(actioncontext);
 			}
-			if (jsonRequest.getActivePage() != null)
+			if (jsonRequest.getActivePage() != null && jsonRequest.getActivePage().compareTo(0) > 0){
                 logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". ActivePage: "+jsonRequest.getActivePage());
 	    		consBP.goToPage(actioncontext, jsonRequest.getActivePage());
+			}
 			if (jsonRequest.getOrderBy() != null) {
 				for (OrderBy orderBy : jsonRequest.getOrderBy()) {
 	                int orderType = orderBy.getType() == null || orderBy.getType().equalsIgnoreCase("ASC")?OrderConstants.ORDER_ASC: OrderConstants.ORDER_DESC; 

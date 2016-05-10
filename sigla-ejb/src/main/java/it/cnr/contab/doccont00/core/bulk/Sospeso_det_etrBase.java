@@ -11,6 +11,8 @@ public class Sospeso_det_etrBase extends Sospeso_det_etrKey implements Keyed {
 
 	// STATO CHAR(1) NOT NULL
 	private java.lang.String stato;
+	
+	private java.lang.String cd_cds_reversale;
 
 public Sospeso_det_etrBase() {
 	super();
@@ -41,5 +43,11 @@ public void setIm_associato(java.math.BigDecimal im_associato) {
  */
 public void setStato(java.lang.String stato) {
 	this.stato = stato;
+}
+public java.lang.String getCd_cds_reversale() {
+	return cd_cds_reversale;
+}
+public void setCd_cds_reversale(java.lang.String cd_cds_reversale) {
+	this.cd_cds_reversale = cd_cds_reversale;
 }
 }

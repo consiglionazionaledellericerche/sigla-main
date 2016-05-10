@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_ubicazione"
+		property="cd_ubicazione"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Ubicazione" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Cds" />	
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice UO" />	
+	<fieldProperty
+		name="cd_ubicazione_propria"
+		property="cd_ubicazione_propria"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Codice Ubicazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_ubicazione_padre"
+		property="cd_ubicazione_padre"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Codice Ubicazione Padre"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_ubicazione_bene"
+		property="ds_ubicazione_bene"
+		maxLength="300"
+		inputSize="300"
+		cols="75"
+		rows="4"
+		inputType="TEXTAREA"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="livello"
+		property="livello"
+		inputType="TEXT"
+		label="Livello" />
+
+	<fieldProperty
+		name="fl_ubicazione_default"
+		property="fl_ubicazione_default"
+		inputType="CHECKBOX"
+		label="Ubicazione di Default" />
+		
+	/*********************************************************/
+	
+	<formFieldProperty
+		name="cd_ubicazione_propria" />
+	<formFieldProperty
+		name="ds_ubicazione_bene" />
+	<formFieldProperty
+		name="find_nodo_padre" />
+	<formFieldProperty
+		name="cd_ubicazione_padre" />
+	<formFieldProperty
+		name="ds_nodo_padre" />
+	<formFieldProperty
+		name="fl_ubicazione_default" />
+	<formFieldProperty
+		name="cd_ubicazione" />
+
+	<columnFieldProperty
+		name="cd_ubicazione"
+		style="width:170px" />
+	<columnFieldProperty
+		name="ds_ubicazione_bene"
+		style="width:300px" />
+	<columnFieldProperty
+		name="livello"
+		style="width:40px" />
+	<columnFieldProperty
+		name="fl_ubicazione_default" />
+
+	<findFieldProperty
+		name="cd_ubicazione" />
+	<findFieldProperty
+		name="cd_ubicazione_propria" />
+	<findFieldProperty
+		name="cd_ubicazione_padre" />
+	<findFieldProperty
+		name="ds_ubicazione_bene" />
+	<findFieldProperty
+		name="livello" />
+	<findFieldProperty
+		name="fl_ubicazione_default" />
+	
+	  <form name="searchtool">
+		<formFieldProperty
+			name="cd_ubicazione" />
+		<formFieldProperty
+			name="ds_ubicazione_bene"
+			inputType="TEXT"
+			inputSize="50"/>
+	   </form>   
+	<columnSet name="restService" >
+		<columnFieldProperty name="cd_unita_organizzativa"/>
+		<columnFieldProperty name="cd_ubicazione"/>
+		<columnFieldProperty name="ds_ubicazione_bene"/>
+		<columnFieldProperty name="cd_ubicazione_padre"/>
+		<columnFieldProperty name="cd_ubicazione_propria"/>
+		<columnFieldProperty name="livello"/>
+	</columnSet>
+	   
+</bulkInfo>

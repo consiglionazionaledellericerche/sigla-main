@@ -73,6 +73,11 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	private java.lang.String ti_fattura;
 	
 	private java.lang.Integer esercizio_docamm; 
+	
+	private java.lang.Integer esercizio_contratto;
+
+	private java.lang.Long pg_contratto;
+
  
 	public java.lang.String getUo () {
 		return uo;
@@ -218,5 +223,17 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	}
 	public void setEsercizio_docamm(java.lang.Integer esercizio_docamm) {
 		this.esercizio_docamm = esercizio_docamm;
+	}
+	public java.lang.Integer getEsercizio_contratto() {
+		return esercizio_contratto;
+	}
+	public void setEsercizio_contratto(java.lang.Integer esercizio_contratto) {
+		this.esercizio_contratto = esercizio_contratto;
+	}
+	public java.lang.Long getPg_contratto() {
+		return pg_contratto;
+	}
+	public void setPg_contratto(java.lang.Long pg_contratto) {
+		this.pg_contratto = pg_contratto;
 	}
 }

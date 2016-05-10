@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.consultazioni.bulk.Inventario_beniRestBase"
+	keyClassName="it.cnr.contab.inventario00.consultazioni.bulk.Inventario_beniRestKey"
+	homeClassName="it.cnr.contab.inventario00.consultazioni.bulk.Inventario_beniRestHome" >
+	<defaultColumnMap
+		tableName="INVENTARIO_BENI" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="VALORE_INIZIALE"
+			propertyName="valore_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="COLLOCAZIONE"
+			propertyName="collocazione"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_UBICAZIONE"
+			propertyName="cd_ubicazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="VARIAZIONE_PIU"
+			propertyName="variazione_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="ETICHETTA"
+			propertyName="etichetta"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_BENE_ORIGINE"
+			propertyName="id_bene_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="cd_categoria_gruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_CARICO_BENE"
+			propertyName="esercizio_carico_bene"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_COMMERCIALE_ISTITUZIONALE"
+			propertyName="ti_commerciale_istituzionale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_AMMORTAMENTO"
+			propertyName="fl_ammortamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_AMMORTAMENTO"
+			propertyName="ti_ammortamento"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="FL_MIGRATO"
+			propertyName="fl_migrato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="VALORE_ALIENAZIONE"
+			propertyName="valore_alienazione"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />
+		<columnMapping
+			columnName="CD_CONDIZIONE_BENE"
+			propertyName="cd_condizione_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="VARIAZIONE_MENO"
+			propertyName="variazione_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />
+		<columnMapping
+			columnName="CD_ASSEGNATARIO"
+			propertyName="cd_assegnatario"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="FL_TOTALMENTE_SCARICATO"
+			propertyName="fl_totalmente_scaricato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="VALORE_AMMORTIZZATO"
+			propertyName="valore_ammortizzato"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="ds_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_AMMORTAMENTO"
+			propertyName="imponibile_ammortamento"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />
+		<columnMapping
+			columnName="DT_VALIDITA_VARIAZIONE"
+			propertyName="dt_validita_variazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_ACQUISIZIONE"
+			propertyName="dt_acquisizione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />	
+		<columnMapping
+			columnName="CD_BARRE"
+			propertyName="cd_barre"
+			sqlTypeName="DECIMAL"
+			columnSize="6" />	
+		<columnMapping
+			columnName="TARGA"
+			propertyName="targa"
+			sqlTypeName="VARCHAR"
+			columnSize="8" />		
+		<columnMapping
+			columnName="SERIALE"
+			propertyName="seriale"
+			sqlTypeName="VARCHAR"
+			columnSize="25" />				
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="valore_iniziale" />
+	<persistentProperty
+		name="collocazione" />
+	<persistentProperty
+		name="cd_ubicazione" />
+	<persistentProperty
+		name="variazione_piu" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="etichetta" />
+	<persistentProperty
+		name="id_bene_origine" />
+	<persistentProperty
+		name="cd_categoria_gruppo" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="esercizio_carico_bene" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ti_commerciale_istituzionale" />
+	<persistentProperty
+		name="fl_ammortamento" />
+	<persistentProperty
+		name="ti_ammortamento" />
+	<persistentProperty
+		name="fl_migrato" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="valore_alienazione" />
+	<persistentProperty
+		name="cd_condizione_bene" />
+	<persistentProperty
+		name="variazione_meno" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_assegnatario" />
+	<persistentProperty
+		name="fl_totalmente_scaricato" />
+	<persistentProperty
+		name="valore_ammortizzato" />
+	<persistentProperty
+		name="ds_bene" />
+	<persistentProperty
+		name="imponibile_ammortamento" />
+	<persistentProperty
+		name="dt_validita_variazione" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="dt_acquisizione" />
+	<persistentProperty
+		name="cd_barre" />
+	<persistentProperty
+		name="targa" />	
+	<persistentProperty
+		name="seriale" />		
+</SQLPersistentInfo>
