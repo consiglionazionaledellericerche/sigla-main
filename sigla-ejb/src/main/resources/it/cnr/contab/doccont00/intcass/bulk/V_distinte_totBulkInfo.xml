@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Situazione Distinte"
+          longDescription="Situazione Distinte">
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdS" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Esercizio" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Uo" />
+	<fieldProperty
+		name="pg_distinta"
+		property="pg_distinta"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Numero Distinta" />
+	<fieldProperty
+		name="pg_distinta_def"
+		property="pg_distinta_def"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Numero Distinta Definitiva" />
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data emissione" />
+	<fieldProperty
+		name="dt_invio"
+		property="dt_invio"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data invio" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="SELECT"
+		keysProperty="tipoKeys"
+		inputSize="6"
+		maxLength="6"
+		label="Tipo" />
+	<fieldProperty
+		name="tot_mandati"
+		property="tot_mandati"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		inputSize="22"
+		maxLength="22"
+		label="Tot. mandati"/>
+	<fieldProperty
+		name="tot_reversali"
+		property="tot_reversali"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		inputSize="22"
+		maxLength="22"
+		label="Tot. reversali" />
+	<fieldProperty
+		name="tot_pagato"
+		property="tot_pagato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		inputSize="22"
+		maxLength="22"
+		label="Tot. pagato" />
+	<fieldProperty
+		name="tot_incassato"
+		property="tot_incassato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		inputSize="22"
+		maxLength="22"
+		label="Tot. incassato"/>	
+	<fieldProperty
+		name="diff_pagato"
+		property="diff_pagato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		inputSize="22"
+		maxLength="22"
+		label="Diff. pagato" />
+	<fieldProperty
+		name="diff_incassato"
+		property="diff_incassato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		inputSize="22"
+		maxLength="22"
+		label="Diff. incassato"/>		
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="pg_distinta" />
+	<formFieldProperty
+		name="pg_distinta_def" />	
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="dt_invio" />		
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="tot_mandati" />
+	<formFieldProperty
+		name="tot_reversali" />
+	<formFieldProperty
+		name="tot_pagato" />
+	<formFieldProperty
+		name="tot_incassato" />
+	<formFieldProperty
+		name="diff_pagato" />
+	<formFieldProperty
+		name="diff_incassato" />
+		
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="pg_distinta" />
+	<findFieldProperty
+		name="pg_distinta_def" />	
+	<findFieldProperty
+		name="dt_emissione" />
+	<findFieldProperty
+		name="dt_invio" />		
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="tot_mandati" />
+	<findFieldProperty
+		name="tot_reversali" />
+	<findFieldProperty
+		name="tot_pagato" />
+	<findFieldProperty
+		name="tot_incassato" />
+	<findFieldProperty
+		name="diff_pagato" />
+	<findFieldProperty
+		name="diff_incassato" />	
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="pg_distinta" />
+	<columnFieldProperty
+		name="pg_distinta_def" />	
+	<columnFieldProperty
+		name="dt_emissione" />
+	<columnFieldProperty
+		name="dt_invio" />		
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="tot_mandati" />
+	<columnFieldProperty
+		name="tot_reversali" />
+	<columnFieldProperty
+		name="tot_pagato" />
+	<columnFieldProperty
+		name="tot_incassato" />
+	<columnFieldProperty
+		name="diff_pagato" />
+	<columnFieldProperty
+		name="diff_incassato" />		
+	
+</bulkInfo>

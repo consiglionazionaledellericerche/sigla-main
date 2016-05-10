@@ -63,10 +63,14 @@ public class ConsSospesiAction extends ConsultazioniAction{
 	
 	
 	public Forward doConsultaMandati(ActionContext context) {
+		ConsSospesiBP bp = (ConsSospesiBP)context.getBusinessProcess();
+		bp.setSelection(context);
 		return doConsulta(context, ConsSospesiBP.LIV_SOSMANMDETTMAN);
 	}
 	
 	public Forward doConsultaReversali(ActionContext context) {
+		ConsSospesiBP bp = (ConsSospesiBP)context.getBusinessProcess();
+		bp.setSelection(context);
 		return doConsulta(context, ConsSospesiBP.LIV_SOSREVRDETTREV);
 	}
 	public Forward doCloseForm(ActionContext context) throws BusinessProcessException {

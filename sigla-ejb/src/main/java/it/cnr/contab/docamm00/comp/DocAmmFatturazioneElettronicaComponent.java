@@ -7,9 +7,6 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
@@ -339,16 +336,18 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 	}
 
-	public UnitaOrganizzativaPecBulk getAuthenticatorFromUo(UserContext userContext, String uo) throws ComponentException {
+	public Configurazione_cnrBulk getAuthenticatorPecSdi(UserContext userContext) throws ComponentException {
+		Configurazione_cnrBulk email;
 		try {
-			Unita_organizzativaBulk unita_organizzativa = (Unita_organizzativaBulk)getHomeCache(userContext).getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(uo));
-			if (unita_organizzativa != null){
-				return ((UnitaOrganizzativaPecHome)getHome( userContext, UnitaOrganizzativaPecBulk.class)).recuperoUoPec(unita_organizzativa);
-			}
-			return null;
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		}	    	
+			email = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, new Integer(0),null,Configurazione_cnrBulk.PK_EMAIL_PEC, Configurazione_cnrBulk.SK_SDI);
+			if (email != null)
+				return email;
+				throw new ApplicationException("Confiurazione PEC non trovata, contattare il servizio di HelpDesk!");
+		} catch (RemoteException e) {
+			throw new ApplicationException(e);
+		} catch (EJBException e) {
+			throw new ApplicationException(e);
+		}
 	}
 
 	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {

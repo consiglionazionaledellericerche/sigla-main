@@ -4,6 +4,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
@@ -17,6 +18,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
@@ -347,7 +349,10 @@ private void aggiornaSaldiInModifica( UserContext userContext, AccertamentoBulk 
 	List saldiDaAggiornare = ((V_mod_saldi_accertHome)getHome( userContext, V_mod_saldi_accertBulk.class )).findModificheSaldiFor( accertamento, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornare.size() == 0 )
 		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + accertamento.getEsercizio_originale() + "/" + accertamento.getPg_accertamento() + " non può essere aggiornato perchè l'accertamento non e' presente nello storico.");
-	//e' sempre uno solo
+	/*
+	* Aggiorno i Saldi per Voce_f_saldi_cmpBulk
+	* e' sempre uno solo
+	*/
 	for ( Iterator i = saldiDaAggiornare.iterator(); i.hasNext(); )
 	{
 		V_mod_saldi_accertBulk modSaldo = (V_mod_saldi_accertBulk) i.next();
@@ -374,8 +379,15 @@ private void aggiornaSaldiInModifica( UserContext userContext, AccertamentoBulk 
 	for ( Iterator i = saldiDaAggiornareCdrLinea.iterator(); i.hasNext(); )
 	{
 		V_mod_saldi_accert_scad_voceBulk modSaldo = (V_mod_saldi_accert_scad_voceBulk) i.next();
-		Voce_fBulk voce = new Voce_fBulk( modSaldo.getCd_voce(), accertamento.getEsercizio(), modSaldo.getTi_appartenenza(), modSaldo.getTi_gestione() );
-		if ( modSaldo.getIm_delta_voce().compareTo( new BigDecimal(0)) != 0 ) {
+
+		boolean isNuovoPdg = ((Parametri_cnrHome)getHome(userContext,Parametri_cnrBulk.class)).isNuovoPdg(userContext);
+		IVoceBilancioBulk voce = null;
+        if (!isNuovoPdg)
+        	voce = new Voce_fBulk( modSaldo.getCd_voce(), accertamento.getEsercizio(), modSaldo.getTi_appartenenza(), modSaldo.getTi_gestione() );
+        else
+        	voce = new Elemento_voceBulk( modSaldo.getCd_voce(), accertamento.getEsercizio(), modSaldo.getTi_appartenenza(), modSaldo.getTi_gestione() );
+
+        if ( modSaldo.getIm_delta_voce().compareTo( new BigDecimal(0)) != 0 ) {
 			// MITODO - verificare se è necessario non effettuare l'aggiornamento in questo caso
 			//if (!accertamento.isAccertamentoResiduo())
 			session.aggiornaObbligazioniAccertamenti( userContext, modSaldo.getCd_centro_responsabilita(), modSaldo.getCd_linea_attivita(), voce, modSaldo.getEsercizio_originale(),modSaldo.getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_ACR_RES)?Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_PROPRIO:Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA,modSaldo.getIm_delta_voce(),modSaldo.getCd_tipo_documento_cont());

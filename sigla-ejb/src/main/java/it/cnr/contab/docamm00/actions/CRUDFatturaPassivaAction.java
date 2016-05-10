@@ -1445,7 +1445,8 @@ public Forward doBlankSearchSospeso(ActionContext context,
 		
 		SospesoBulk sospeso = new SospesoBulk();
 		sospeso.setEsercizio(lettera.getEsercizio());
-		sospeso.setCd_cds(lettera.getCd_cds());
+		if (!Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),lettera.getEsercizio()).getFl_tesoreria_unica().booleanValue())
+			sospeso.setCd_cds(lettera.getCd_cds());
 		sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
 		sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
 		lettera.setSospeso(sospeso);
@@ -1908,6 +1909,7 @@ public Forward doCambiaDataEmissioneFattura(ActionContext context) {
 						!fattura.isElettronica() &&
 						!fattura.isEstera() &&
 						!fattura.isSanMarinoSenzaIVA() &&
+						!fattura.isSanMarinoConIVA() &&
 						!fattura.isBollaDoganale()){    
 						java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 							throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
@@ -2833,6 +2835,7 @@ public Forward doOnFlBollaDoganaleChange(ActionContext context) {
 				!fattura.isElettronica() &&
 				!fattura.isEstera() &&
 				!fattura.isSanMarinoSenzaIVA()&&
+				!fattura.isSanMarinoConIVA()&&
 				!fattura.isBollaDoganale()){    
 				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 					throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
@@ -2912,6 +2915,7 @@ public Forward doOnFlExtraUEChange(ActionContext context) {
 					!fattura.isElettronica() &&
 					!fattura.isEstera() &&
 					!fattura.isSanMarinoSenzaIVA()&&
+					!fattura.isSanMarinoConIVA() &&
 					!fattura.isBollaDoganale()){    
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 						throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
@@ -2996,6 +3000,7 @@ public Forward doOnFlIntraUEChange(ActionContext context) {
 				!fattura.isElettronica() &&
 				!fattura.isEstera() &&
 				!fattura.isSanMarinoSenzaIVA()&&
+				!fattura.isSanMarinoConIVA()&&
 				!fattura.isBollaDoganale()){    
 				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 					throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
@@ -3147,6 +3152,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 					!fattura.isElettronica() &&
 					!fattura.isEstera() &&
 					!fattura.isSanMarinoSenzaIVA()&&
+					!fattura.isSanMarinoConIVA()&&
 					!fattura.isBollaDoganale()){    
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 						throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");

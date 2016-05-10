@@ -9,6 +9,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -16,6 +17,9 @@ import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.StringEncrypter;
+import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -37,6 +41,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -46,6 +51,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.activation.DataHandler;
+import javax.ejb.EJBException;
+import javax.mail.AuthenticationFailedException;
 import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
@@ -145,31 +152,24 @@ public class DocumentoEleTestataHome extends BulkHome {
         return sql;
     }	
 	
-	public PasswordAuthentication getAuthenticatorFromCUU(UserContext userContext, DocumentoEleTestataBulk documentoEleTestataBulk) throws ComponentException {
+	public PasswordAuthentication getAuthenticatorPecSdi(UserContext userContext) throws ComponentException {
+		Configurazione_cnrBulk email;
 		try {
-			TerzoHome terzoHome = (TerzoHome)getHomeCache().getHome(TerzoBulk.class);
-	    	SQLBuilder sql = terzoHome.createSQLBuilder();
-	    	sql.addClause(FindClause.AND, "codiceUnivocoUfficioIpa", SQLBuilder.EQUALS, documentoEleTestataBulk.getDocumentoEleTrasmissione().getCodiceDestinatario());
-	    	List<TerzoBulk> terzoUOS = terzoHome.fetchAll(sql);
-	    	getHomeCache().fetchAll(userContext);
-	    	if (terzoUOS != null && !terzoUOS.isEmpty()) {
-	    		Unita_organizzativaBulk unita_organizzativa = terzoUOS.get(0).getUnita_organizzativa();
-	    		String uoPec;
-	    		if (unita_organizzativa.getCd_tipo_unita().equalsIgnoreCase(Tipo_unita_organizzativaHome.TIPO_UO_SAC))
-	    			uoPec = unita_organizzativa.getCd_unita_organizzativa();
-	    		else
-	    			uoPec = unita_organizzativa.getCd_unita_padre();
-				UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk = (UnitaOrganizzativaPecBulk)getHomeCache().getHome(UnitaOrganizzativaPecBulk.class).
-						findByPrimaryKey(new UnitaOrganizzativaPecBulk(uoPec));
-	    		if (unitaOrganizzativaPecBulk != null && unitaOrganizzativaPecBulk.getEmailPecProtocollo() != null)
-	    			return new PasswordAuthentication(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-							unitaOrganizzativaPecBulk.getCodPecProtocolloInChiaro());	
-	    	}
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
+			email = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, new Integer(0),null,Configurazione_cnrBulk.PK_EMAIL_PEC, Configurazione_cnrBulk.SK_SDI);
+		} catch (RemoteException e) {
+			throw new ApplicationException(e);
+		} catch (EJBException e) {
+			throw new ApplicationException(e);
 		}
-		throw new ApplicationException("Confiurazione PEC non trovata per il CUU " + 
-				documentoEleTestataBulk.getDocumentoEleTrasmissione().getCodiceDestinatario() + ", contattare il servizio di HelpDesk!");
+
+		if (email != null)
+			try {
+				String password = StringEncrypter.decrypt(email.getVal01(), email.getVal02());
+				return new PasswordAuthentication(email.getVal01(), password);	
+			} catch (EncryptionException e1) {
+				new AuthenticationFailedException("Cannot decrypt password");
+			}
+		throw new ApplicationException("Confiurazione PEC non trovata, contattare il servizio di HelpDesk!");
 	}
 	public NotificaEsitoCommittenteType createNotificaEsitoCommittente(DocumentoEleTestataBulk documentoEleTestataBulk) {
     	it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory objMessaggi = new it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory();        	
@@ -226,7 +226,7 @@ public class DocumentoEleTestataHome extends BulkHome {
             			createNotificaEsitoCommittente(notificaEsitoCommittenteType);
             	ByteArrayOutputStream outputStreamNotificaEsito = new ByteArrayOutputStream();
             	client.getMarshaller().marshal(notificaEsitoCommittente, new StreamResult(outputStreamNotificaEsito));
-            	PasswordAuthentication authentication = getAuthenticatorFromCUU(userContext, documentoEleTestataBulk);
+            	PasswordAuthentication authentication = getAuthenticatorPecSdi(userContext);
             	if (authentication == null) {
         			logger.error("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");
             		throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");

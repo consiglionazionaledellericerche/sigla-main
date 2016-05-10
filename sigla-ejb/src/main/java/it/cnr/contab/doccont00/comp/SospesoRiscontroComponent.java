@@ -674,6 +674,7 @@ private void creaDettaglioSospesoEtr (UserContext userContext,SospesoBulk sospes
 		det_etr.setCd_sospeso( sospeso.getCd_sospeso() );
 		det_etr.setIm_associato( sospeso.getIm_sospeso() );
 		det_etr.setStato( det_etr.STATO_DEFAULT );
+		det_etr.setCd_cds_reversale( sospeso.getV_man_rev().getCd_cds());
 		insertBulk( userContext, det_etr );
 		aggiornaIm_pagato_incassato( userContext, det_etr, sospeso.getV_man_rev());
 		aggiornaStatoDocContabile( userContext, det_etr, sospeso.getV_man_rev());		
@@ -733,6 +734,7 @@ private void creaDettaglioSospesoUsc (UserContext userContext,SospesoBulk sospes
 		det_usc.setCd_sospeso( sospeso.getCd_sospeso() );
 		det_usc.setIm_associato( sospeso.getIm_sospeso() );
 		det_usc.setStato( det_usc.STATO_DEFAULT );
+		det_usc.setCd_cds_mandato( sospeso.getV_man_rev().getCd_cds() );
 		insertBulk( userContext, det_usc );
 		aggiornaIm_pagato_incassato( userContext, det_usc, sospeso.getV_man_rev());
 		aggiornaStatoDocContabile( userContext, det_usc, sospeso.getV_man_rev());

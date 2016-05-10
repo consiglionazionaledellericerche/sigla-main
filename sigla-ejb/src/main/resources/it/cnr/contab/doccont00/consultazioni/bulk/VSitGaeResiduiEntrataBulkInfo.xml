@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="cds" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="uo" />
+	<fieldProperty
+		name="cdCentroResponsabilita"
+		property="cdCentroResponsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCentroResponsabilita" />
+	<fieldProperty
+		name="dsCdr"
+		property="dsCdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="dsCdr" />
+	<fieldProperty
+		name="cdLineaAttivita"
+		property="cdLineaAttivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdLineaAttivita" />
+	<fieldProperty
+		name="dsLineaAttivita"
+		property="dsLineaAttivita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="dsLineaAttivita" />
+	<fieldProperty
+		name="cdNatura"
+		property="cdNatura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="cdNatura" />
+	<fieldProperty
+		name="cdProgetto"
+		property="cdProgetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdProgetto" />
+	<fieldProperty
+		name="dsProgetto"
+		property="dsProgetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		enabledOnEdit="false"
+		label="dsProgetto" />
+	<fieldProperty
+		name="cdCommessa"
+		property="cdCommessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCommessa" />
+	<fieldProperty
+		name="dsCommessa"
+		property="dsCommessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		enabledOnEdit="false"
+		label="dsCommessa" />
+	<fieldProperty
+		name="cdModulo"
+		property="cdModulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdModulo" />
+	<fieldProperty
+		name="dsModulo"
+		property="dsModulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		enabledOnEdit="false"
+		label="dsModulo" />
+	<fieldProperty
+		name="tiAppartenenza"
+		property="tiAppartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tiAppartenenza" />
+	<fieldProperty
+		name="tiGestione"
+		property="tiGestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tiGestione" />
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="cdElementoVoce" />
+	<fieldProperty
+		name="cdVoce"
+		property="cdVoce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cdVoce" />
+	<fieldProperty
+		name="dsElementoVoce"
+		property="dsElementoVoce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="dsElementoVoce" />
+	<fieldProperty
+		name="esercizioRes"
+		property="esercizioRes"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioRes" />
+	<fieldProperty
+		name="resProIni"
+		property="resProIni"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="resProIni" />
+	<fieldProperty
+		name="varResProPiu"
+		property="varResProPiu"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="varResProPiu" />
+	<fieldProperty
+		name="varResProMeno"
+		property="varResProMeno"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="varResProMeno" />
+	<fieldProperty
+		name="totale"
+		property="totale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="totale" />
+	<fieldProperty
+		name="liquidatoPro"
+		property="liquidatoPro"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="liquidatoPro" />
+	<fieldProperty
+		name="incassatoPro"
+		property="incassatoPro"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="incassatoPro" />
+	<fieldProperty
+		name="daIncassare"
+		property="daIncassare"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="daIncassare" />
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="cdCentroResponsabilita" />
+	<formFieldProperty
+		name="dsCdr" />
+	<formFieldProperty
+		name="cdLineaAttivita" />
+	<formFieldProperty
+		name="dsLineaAttivita" />
+	<formFieldProperty
+		name="cdNatura" />
+	<formFieldProperty
+		name="cdProgetto" />
+	<formFieldProperty
+		name="dsProgetto" />
+	<formFieldProperty
+		name="cdCommessa" />
+	<formFieldProperty
+		name="dsCommessa" />
+	<formFieldProperty
+		name="cdModulo" />
+	<formFieldProperty
+		name="dsModulo" />
+	<formFieldProperty
+		name="tiAppartenenza" />
+	<formFieldProperty
+		name="tiGestione" />
+	<formFieldProperty
+		name="cdElementoVoce" />
+	<formFieldProperty
+		name="cdVoce" />
+	<formFieldProperty
+		name="dsElementoVoce" />
+	<formFieldProperty
+		name="esercizioRes" />
+	<formFieldProperty
+		name="resProIni" />
+	<formFieldProperty
+		name="varResProPiu" />
+	<formFieldProperty
+		name="varResProMeno" />
+	<formFieldProperty
+		name="totale" />
+	<formFieldProperty
+		name="liquidatoPro" />
+	<formFieldProperty
+		name="incassatoPro" />
+	<formFieldProperty
+		name="daIncassare" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="cdCentroResponsabilita" />
+	<findFieldProperty
+		name="dsCdr" />
+	<findFieldProperty
+		name="cdLineaAttivita" />
+	<findFieldProperty
+		name="dsLineaAttivita" />
+	<findFieldProperty
+		name="cdNatura" />
+	<findFieldProperty
+		name="cdProgetto" />
+	<findFieldProperty
+		name="dsProgetto" />
+	<findFieldProperty
+		name="cdCommessa" />
+	<findFieldProperty
+		name="dsCommessa" />
+	<findFieldProperty
+		name="cdModulo" />
+	<findFieldProperty
+		name="dsModulo" />
+	<findFieldProperty
+		name="tiAppartenenza" />
+	<findFieldProperty
+		name="tiGestione" />
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="cdVoce" />
+	<findFieldProperty
+		name="dsElementoVoce" />
+	<findFieldProperty
+		name="esercizioRes" />
+	<findFieldProperty
+		name="resProIni" />
+	<findFieldProperty
+		name="varResProPiu" />
+	<findFieldProperty
+		name="varResProMeno" />
+	<findFieldProperty
+		name="totale" />
+	<findFieldProperty
+		name="liquidatoPro" />
+	<findFieldProperty
+		name="incassatoPro" />
+	<findFieldProperty
+		name="daIncassare" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="cdCentroResponsabilita" />
+	<columnFieldProperty
+		name="dsCdr" />
+	<columnFieldProperty
+		name="cdLineaAttivita" />
+	<columnFieldProperty
+		name="dsLineaAttivita" />
+	<columnFieldProperty
+		name="cdNatura" />
+	<columnFieldProperty
+		name="cdProgetto" />
+	<columnFieldProperty
+		name="dsProgetto" />
+	<columnFieldProperty
+		name="cdCommessa" />
+	<columnFieldProperty
+		name="dsCommessa" />
+	<columnFieldProperty
+		name="cdModulo" />
+	<columnFieldProperty
+		name="dsModulo" />
+	<columnFieldProperty
+		name="tiAppartenenza" />
+	<columnFieldProperty
+		name="tiGestione" />
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="cdVoce" />
+	<columnFieldProperty
+		name="dsElementoVoce" />
+	<columnFieldProperty
+		name="esercizioRes" />
+	<columnFieldProperty
+		name="resProIni" />
+	<columnFieldProperty
+		name="varResProPiu" />
+	<columnFieldProperty
+		name="varResProMeno" />
+	<columnFieldProperty
+		name="totale" />
+	<columnFieldProperty
+		name="liquidatoPro" />
+	<columnFieldProperty
+		name="incassatoPro" />
+	<columnFieldProperty
+		name="daIncassare" />
+	<columnSet name="restService" >
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="uo" />
+		<columnFieldProperty name="cdCentroResponsabilita" />
+		<columnFieldProperty name="dsCdr" />
+		<columnFieldProperty name="cdLineaAttivita" />
+		<columnFieldProperty name="dsLineaAttivita" />
+		<columnFieldProperty name="cdNatura" />
+		<columnFieldProperty name="cdProgetto" />
+		<columnFieldProperty name="dsProgetto" />
+		<columnFieldProperty name="cdCommessa" />
+		<columnFieldProperty name="dsCommessa" />
+		<columnFieldProperty name="cdModulo" />
+		<columnFieldProperty name="dsModulo" />
+		<columnFieldProperty name="tiAppartenenza" />
+		<columnFieldProperty name="tiGestione" />
+		<columnFieldProperty name="cdElementoVoce" />
+		<columnFieldProperty name="cdVoce" />
+		<columnFieldProperty name="dsElementoVoce" />
+		<columnFieldProperty name="esercizioRes" />
+		<columnFieldProperty name="resProIni" />
+		<columnFieldProperty name="varResProPiu" />
+		<columnFieldProperty name="varResProMeno" />
+		<columnFieldProperty name="totale" />
+		<columnFieldProperty name="liquidatoPro" />
+		<columnFieldProperty name="incassatoPro" />
+		<columnFieldProperty name="daIncassare" />
+	</columnSet>
+</bulkInfo>

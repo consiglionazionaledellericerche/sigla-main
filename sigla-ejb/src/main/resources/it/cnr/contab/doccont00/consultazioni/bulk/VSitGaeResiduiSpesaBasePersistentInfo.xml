@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiSpesaBase"
+	keyClassName="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiSpesaKey"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiSpesaHome">
+	<defaultColumnMap
+		tableName="V_SIT_GAE_RESIDUI_SPESA">
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="dsCdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="dsLineaAttivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cdNatura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cdProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="dsProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cdCommessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="dsCommessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cdModulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="dsModulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cdElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="dsElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="STANZ_RES_INI"
+			propertyName="stanzResIni"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_STANZ_RES_PIU"
+			propertyName="varStanzResPiu"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_STANZ_RES_MENO_STO"
+			propertyName="varStanzResMenoSto"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_STANZ_RES_MENO_ECO"
+			propertyName="varStanzResMenoEco"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_PRO_INI"
+			propertyName="resProIni"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_RES_PRO_PIU"
+			propertyName="varResProPiu"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_RES_PRO_MENO"
+			propertyName="varResProMeno"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="LIQUIDATO_PRO"
+			propertyName="liquidatoPro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PAGATO_PRO"
+			propertyName="pagatoPro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_IMP_RIBALTATI"
+			propertyName="resImpRibaltati"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_IMP_RIB_LIQ"
+			propertyName="resImpRibLiq"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_IMP_RIB_PAG"
+			propertyName="resImpRibPag"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_IMP_EM_ESE"
+			propertyName="resImpEmEse"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_IMP_EM_ESE_LIQ"
+			propertyName="resImpEmEseLiq"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_IMP_EM_ESE_PAG"
+			propertyName="resImpEmEsePag"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_IMP_ATTUALI"
+			propertyName="resImpAttuali"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="dsCdr" />
+	<persistentProperty
+		name="dsLineaAttivita" />
+	<persistentProperty
+		name="cdNatura" />
+	<persistentProperty
+		name="cdProgetto" />
+	<persistentProperty
+		name="dsProgetto" />
+	<persistentProperty
+		name="cdCommessa" />
+	<persistentProperty
+		name="dsCommessa" />
+	<persistentProperty
+		name="cdModulo" />
+	<persistentProperty
+		name="dsModulo" />
+	<persistentProperty
+		name="cdElementoVoce" />
+	<persistentProperty
+		name="dsElementoVoce" />
+	<persistentProperty
+		name="stanzResIni" />
+	<persistentProperty
+		name="varStanzResPiu" />
+	<persistentProperty
+		name="varStanzResMenoSto" />
+	<persistentProperty
+		name="varStanzResMenoEco" />
+	<persistentProperty
+		name="resProIni" />
+	<persistentProperty
+		name="varResProPiu" />
+	<persistentProperty
+		name="varResProMeno" />
+	<persistentProperty
+		name="liquidatoPro" />
+	<persistentProperty
+		name="pagatoPro" />
+	<persistentProperty
+		name="resImpRibaltati" />
+	<persistentProperty
+		name="resImpRibLiq" />
+	<persistentProperty
+		name="resImpRibPag" />
+	<persistentProperty
+		name="resImpEmEse" />
+	<persistentProperty
+		name="resImpEmEseLiq" />
+	<persistentProperty
+		name="resImpEmEsePag" />
+	<persistentProperty
+		name="resImpAttuali" />
+</SQLPersistentInfo>

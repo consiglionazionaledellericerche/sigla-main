@@ -760,4 +760,13 @@ public void validate() throws ValidationException {
 	{
 		cds = bulk;
 	}
+	public java.lang.String getCd_cds_sospeso() {
+		it.cnr.contab.doccont00.core.bulk.SospesoBulk sospeso_di_chiusura = this.getSospeso_di_chiusura();
+		if (sospeso_di_chiusura == null)
+			return null;
+		return sospeso_di_chiusura.getCd_cds();
+	}
+	public void setCd_cds_sospeso(java.lang.String cd_cds_sospeso) {
+		this.getSospeso_di_chiusura().setCd_cds(cd_cds_sospeso);
+	}
 }

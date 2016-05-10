@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.ejb;
 
+import java.io.InputStream;
 import java.util.Date;
 
 import it.cnr.jada.UserContext;
@@ -16,4 +17,5 @@ public interface TrasmissioneFatturePA {
 	public void notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException;
 	public void notificaFatturaAttivaConsegnaPec(UserContext userContext, String nomeFile, Date dataConsegna) throws ComponentException;
 	public Boolean notificaFatturaAttivaDecorrenzaTermini(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException;
+	public InputStream mancataConsegnaPecInvioFatturaAttiva(UserContext userContext, String nomeFile) throws ComponentException;
 }

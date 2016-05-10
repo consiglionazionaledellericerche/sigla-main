@@ -5,21 +5,6 @@
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 package it.cnr.contab.varstanz00.comp;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.ejb.EJBException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -91,6 +76,21 @@ import it.cnr.jada.util.Config;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 /**
  * @author mspasiano
@@ -507,40 +507,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			}
 			for (Iterator righe = testataHome.findAllVariazioniRiga(var_stanz_res).iterator();righe.hasNext();){
 				Var_stanz_res_rigaBulk varRiga = (Var_stanz_res_rigaBulk)righe.next();
-				Voce_f_saldi_cdr_lineaBulk saldo = new Voce_f_saldi_cdr_lineaBulk(varRiga.getEsercizio(), 
-				                                                                  varRiga.getEsercizio_res(), 
-																				  varRiga.getCd_cdr(), 
-																				  varRiga.getCd_linea_attivita(), 
-																				  varRiga.getElemento_voce().getTi_appartenenza(), 
-																				  varRiga.getElemento_voce().getTi_gestione(), 
-																				  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
-				Voce_f_saldi_cdr_lineaBulk saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldo);
-				if (saldi == null){
-					saldo.setToBeCreated();
-					saldo.inizializzaSommeAZero();
-					saldo.setCd_elemento_voce(varRiga.getElemento_voce().getCd_elemento_voce());
-					saldi = (Voce_f_saldi_cdr_lineaBulk)super.creaConBulk(userContext,saldo);
-				}
-				if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
-				  saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().add(varRiga.getIm_variazione().abs()));
-				else if (varRiga.getIm_variazione().compareTo(Utility.ZERO) > 0)
-				  saldi.setVar_piu_stanz_res_imp(saldi.getVar_piu_stanz_res_imp().add(varRiga.getIm_variazione().abs()));
-				if (saldi.getDispAdImpResiduoImproprio().compareTo(Utility.ZERO) < 0){
-					throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
-												   "Nell'esercizio residuo "+ varRiga.getEsercizio_res()+
-												   " e per il CdR "+varRiga.getCd_cdr()+", "+
-												   " Voce "+(varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce())+
-												   " e GAE "+varRiga.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
-												   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldi.getDispAdImpResiduoImproprio().abs())+")");					
-				}
-				saldi.setToBeUpdated();
-				Utility.createSaldoComponentSession().aggiornaSaldiAnniSuccessivi(userContext,
-						                                                          saldi.getCd_centro_responsabilita(),
-						                                                          saldi.getCd_linea_attivita(),
-						                                                          new Voce_fBulk( saldi.getCd_voce(), saldi.getEsercizio(), saldi.getTi_appartenenza(), saldi.getTi_gestione()),
-						                                                          saldi.getEsercizio_res(),
-						                                                          varRiga.getIm_variazione().negate(),
-						                                                          saldi);
+				Voce_f_saldi_cdr_lineaBulk saldi = allineaSaldi(userContext, varRiga);
 				super.modificaConBulk(userContext,saldi);
 			}
 			generaVariazioneBilancio(userContext, var_stanz_res);
@@ -557,6 +524,58 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			throw new ComponentException(e);
 		} 
 		return var_stanz_res;
+	}
+
+	private Voce_f_saldi_cdr_lineaBulk allineaSaldi(UserContext userContext,
+			Var_stanz_res_rigaBulk varRiga) throws PersistencyException,
+			ComponentException, ApplicationException, RemoteException {
+		return allineaSaldi(userContext, varRiga, false);
+	}
+	private Voce_f_saldi_cdr_lineaBulk allineaSaldi(UserContext userContext,
+			Var_stanz_res_rigaBulk varRiga, Boolean sottraiImportoDaVariazioneEsistente) throws PersistencyException,
+			ComponentException, ApplicationException, RemoteException {
+		Voce_f_saldi_cdr_lineaBulk saldo = new Voce_f_saldi_cdr_lineaBulk(varRiga.getEsercizio(), 
+		                                                                  varRiga.getEsercizio_res(), 
+																		  varRiga.getCd_cdr(), 
+																		  varRiga.getCd_linea_attivita(), 
+																		  varRiga.getElemento_voce().getTi_appartenenza(), 
+																		  varRiga.getElemento_voce().getTi_gestione(), 
+																		  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
+		Voce_f_saldi_cdr_lineaBulk saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldo);
+		if (saldi == null){
+			saldo.setToBeCreated();
+			saldo.inizializzaSommeAZero();
+			saldo.setCd_elemento_voce(varRiga.getElemento_voce().getCd_elemento_voce());
+			saldi = (Voce_f_saldi_cdr_lineaBulk)super.creaConBulk(userContext,saldo);
+		}
+		if (sottraiImportoDaVariazioneEsistente){
+			if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
+				saldi.setVar_piu_stanz_res_imp(saldi.getVar_piu_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
+			else if (varRiga.getIm_variazione().compareTo(Utility.ZERO) > 0)
+				saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
+		} else {
+			if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
+				saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().add(varRiga.getIm_variazione().abs()));
+			else if (varRiga.getIm_variazione().compareTo(Utility.ZERO) > 0)
+				saldi.setVar_piu_stanz_res_imp(saldi.getVar_piu_stanz_res_imp().add(varRiga.getIm_variazione().abs()));
+		}
+		if (saldi.getDispAdImpResiduoImproprio().compareTo(Utility.ZERO) < 0){
+			throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
+										   "Nell'esercizio residuo "+ varRiga.getEsercizio_res()+
+										   " e per il CdR "+varRiga.getCd_cdr()+", "+
+										   " Voce "+(varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce())+
+										   " e GAE "+varRiga.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
+										   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldi.getDispAdImpResiduoImproprio().abs())+")");					
+		}
+		saldi.setToBeUpdated();
+		Utility.createSaldoComponentSession().aggiornaSaldiAnniSuccessivi(userContext,
+				                                                          saldi.getCd_centro_responsabilita(),
+				                                                          saldi.getCd_linea_attivita(),
+				                                                          new Voce_fBulk( saldi.getCd_voce(), saldi.getEsercizio(), saldi.getTi_appartenenza(), saldi.getTi_gestione()),
+				                                                          saldi.getEsercizio_res(),
+				                                                          varRiga.getIm_variazione().negate(),
+				                                                          saldi);
+		return saldi;
 	}
 	/**
 	 * 
@@ -923,6 +942,32 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						rigaInsMod = true;				
 					}
 				}
+
+				BigDecimal totaleImportoRiga = BigDecimal.ZERO;
+				if (var_stanz_res.isApprovata()){
+					Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
+					for (java.util.Iterator i =  var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
+						Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
+						try {
+							if (isRigaLiquidazioneIva(usercontext, riga)){
+								throw new ApplicationException ("Attenzione: Non è possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
+							} else {
+								totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
+							}
+						} catch (ComponentException e) {
+							throw new ApplicationException (e.getMessage());
+						}
+					}
+					if (Utility.nvl(ass_var_cdr.getIm_spesa()).compareTo(totaleImportoRiga) != 0){
+						throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilità!");
+					}
+					try {
+						allineaSaldiVariazioneApprovata(usercontext, var_stanz_res, totaleImportoRiga);
+					} catch (ComponentException e) {
+						throw handleException(e);
+					}
+				}
+				
 				if (rigaInsMod){
 					Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
 					if (ass_var_cdr.getIm_spesa().compareTo(totaleRighe) == 0){
@@ -943,6 +988,54 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		//cercaProgettiResidui(usercontext,var_stanz_res);	
 		return super.modificaConBulk(usercontext, var_stanz_res);
 	}
+
+	private void allineaSaldiVariazioneApprovata(UserContext userContext, Var_stanz_resBulk var_stanz_res, BigDecimal totaleImporto) throws ComponentException {
+		boolean primoGiro = true;
+		Configurazione_cnrBulk config;
+		try {
+			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+		} catch (ComponentException e1) {
+			throw handleException(e1);
+		} catch (RemoteException e1) {
+			throw handleException(e1);
+		} catch (EJBException e1) {
+			throw handleException(e1);
+		}
+
+		for (java.util.Iterator i =  var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
+			Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
+			try {
+				Voce_f_saldi_cdr_lineaBulk saldi = allineaSaldi(userContext, riga);
+				super.modificaConBulk(userContext,saldi);
+				if (primoGiro){
+					Var_stanz_res_rigaBulk rigaCloned = new Var_stanz_res_rigaBulk();
+					WorkpackageBulk wp = new WorkpackageBulk(riga.getCentroTestata().getCd_centro_responsabilita(), config.getVal01());
+					wp = (WorkpackageBulk) getHome(userContext, WorkpackageBulk.class).findByPrimaryKey(wp);
+					if (wp == null){
+						throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
+								   "Linea Attività della liquidazione IVA non esistente.");					
+					}
+					rigaCloned.setElemento_voce(riga.getElemento_voce());
+					rigaCloned.setVar_stanz_res(riga.getVar_stanz_res());
+					rigaCloned.setCentroTestata(riga.getCentroTestata());
+					rigaCloned.setEsercizio_res(riga.getEsercizio_res());
+					rigaCloned.setCd_voce(riga.getCd_voce());
+					rigaCloned.setLinea_di_attivita(wp);
+					rigaCloned.setIm_variazione(totaleImporto.multiply(new BigDecimal(-1)));
+					saldi = allineaSaldi(userContext, rigaCloned, true);
+					super.modificaConBulk(userContext,saldi);
+					primoGiro = false;
+				}
+			} catch (PersistencyException e) {
+				throw handleException(e);
+			} catch (RemoteException e) {
+				throw handleException(e);
+			} catch (ComponentException e) {
+				throw handleException(e);
+			}
+		}
+	}
+
 	public OggettoBulk creaConBulk(UserContext usercontext, OggettoBulk oggettobulk)throws ComponentException {
 		Var_stanz_resBulk var_stanz_res = (Var_stanz_resBulk)super.creaConBulk(usercontext, oggettobulk);
 			try {	
@@ -1063,7 +1156,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			var_stanz_res_riga.setLinea_di_attivita(new WorkpackageBulk(saldo.getCd_centro_responsabilita(),saldo.getCd_linea_attivita()));
 			var_stanz_res_riga.setElemento_voce((Elemento_voceBulk)getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(new Elemento_voceBulk(saldo.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione())));
 			
-			if (!((Parametri_cnrHome)getHome(usercontext, Parametri_cnrBulk.class)).isNuovoPdg(usercontext, var_stanz_res.getEsercizio()))
+			if (!((Parametri_cnrHome)getHome(usercontext, Parametri_cnrBulk.class)).isNuovoPdg(var_stanz_res.getEsercizio()))
 				var_stanz_res_riga.setVoce_f(new Voce_fBulk(saldo.getCd_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
 			else {
 				var_stanz_res_riga.setVoce_f(null);
@@ -1226,4 +1319,64 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		}
 		super.validaCreaModificaConBulk(usercontext, oggettobulk);
 	}
+
+	public boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,java.rmi.RemoteException{
+		/**
+		 * Recupero la linea di attività dell'IVA C20
+		 */
+		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+		try {
+			if (variazione.isApprovata()){
+				Var_stanz_res_rigaBulk varRiga = recuperoRigaLiquidazioneIva(userContext, variazione);
+				if (varRiga != null){
+					return true;
+				}
+			}
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
+		return false;
+	}
+	public Var_stanz_res_rigaBulk recuperoRigaLiquidazioneIva(it.cnr.jada.UserContext userContext, Var_stanz_resBulk bulk) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+			/**
+			 * Recupero la linea di attività dell'IVA C20
+			 */
+			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+			try {
+				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+				Var_stanz_resHome home = (Var_stanz_resHome) getHome(userContext, Var_stanz_resBulk.class);
+				for (Iterator dett = home.findAllVariazioniRiga(bulk).iterator(); dett.hasNext();){
+					Var_stanz_res_rigaBulk spe_det = (Var_stanz_res_rigaBulk) dett.next();
+					if (spe_det.getCd_linea_attivita() != null && spe_det.getCd_linea_attivita().equals(config.getVal01())){
+						return spe_det;
+					}
+				}
+			} catch (IntrospectionException e) {
+				throw new ComponentException(e);
+			} catch (RemoteException e) {
+				throw new ComponentException(e);
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			} catch (EJBException e) {
+				throw new ComponentException(e);
+			}
+			return null;
+	}
+	private boolean isRigaLiquidazioneIva(it.cnr.jada.UserContext userContext, Var_stanz_res_rigaBulk bulk) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		/**
+		 * Recupero la linea di attività dell'IVA C20
+		 */
+		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+		try {
+			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+			if (bulk.getCd_linea_attivita() != null && bulk.getCd_linea_attivita().equals(config.getVal01())){
+				return true;
+			}
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
+		return false;
+}
 }

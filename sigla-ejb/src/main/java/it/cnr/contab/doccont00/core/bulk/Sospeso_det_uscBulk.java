@@ -116,6 +116,7 @@ public void setMandato(MandatoBulk newMandato) {
 public void setPg_mandato(java.lang.Long pg_mandato) {
 	this.getMandato().setPg_mandato(pg_mandato);
 }
+
 /**
  * @param newSospeso it.cnr.contab.doccont00.core.bulk.SospesoBulk
  */
@@ -142,5 +143,15 @@ public void validate() throws ValidationException {
 		throw new ValidationException( "Il campo IMPORTO del Sospeso deve essere maggiore di zero." );
 	if ( getIm_associato().compareTo( getMandato().getIm_mandato()) > 0 )
 		throw new ValidationException( "Il campo IMPORTO del Sospeso deve essere inferiore o uguale all'importo del mandato." );
+}
+public java.lang.String getCd_cds_mandato() {
+	
+	it.cnr.contab.doccont00.core.bulk.MandatoBulk mandato = this.getMandato();
+	if (mandato == null)
+		return null;
+	return mandato.getCd_cds();
+}
+public void setCd_cds_mandato(java.lang.String cd_cds_mandato) {
+	this.getMandato().setCd_cds(cd_cds_mandato);
 }
 }
