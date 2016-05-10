@@ -133,7 +133,14 @@
 		name="contabile"
 		property="contabile"
 		inputType="TEXT"
-		label="Contabile" />		
+		label="Contabile" />	
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="cd_modalita_pag"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Modalità pag." />		
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -170,6 +177,8 @@
 		name="dt_invio_dis" />
 	<formFieldProperty
 		name="dt_pagamento" />	
+	<formFieldProperty
+		name="cd_modalita_pag" />		
 	<findFieldProperty
 		name="cd_cds" />
 	<findFieldProperty
@@ -205,7 +214,9 @@
 	<findFieldProperty
 		name="dt_invio_dis" />
 	<findFieldProperty
-		name="dt_pagamento" />		
+		name="dt_pagamento" />	
+	<findFieldProperty
+		name="cd_modalita_pag" />				
 	<columnFieldProperty
 		name="cd_cds" />
 	<columnFieldProperty
@@ -244,5 +255,6 @@
 		name="dt_pagamento" />		
 	<columnFieldProperty
 		name="contabile" />		
-
+	<columnFieldProperty
+		name="cd_modalita_pag" />		
 </bulkInfo>

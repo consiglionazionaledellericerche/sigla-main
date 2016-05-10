@@ -8,11 +8,10 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoHome;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
@@ -34,15 +33,13 @@ import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
-import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -58,9 +55,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
 
@@ -441,47 +436,19 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 	}	
 
-	public void scanPECProtocollo(UserContext usercontext, UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk) throws ComponentException {
-		FatturaPassivaElettronicaService fatturaPassivaElettronicaService = SpringUtil.getBean(
-				"fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
+	public Configurazione_cnrBulk getEmailPecSdi(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
 		try {
-			lockBulk(usercontext, unitaOrganizzativaPecBulk);
-				fatturaPassivaElettronicaService.pecScan(
-						unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-						unitaOrganizzativaPecBulk.getCodPecProtocollo(),
-						true);
-		} catch (OutdatedResourceException e) {
-		} catch (BusyResourceException e) {
-		} catch (PersistencyException e) {
-			handleException(e);
-		}	
-	}	
-	@SuppressWarnings("unchecked")
-	public List<UnitaOrganizzativaPecBulk> scanPECProtocollo(UserContext usercontext) throws ComponentException {
-		UnitaOrganizzativaPecHome home = (UnitaOrganizzativaPecHome) getHome(usercontext, UnitaOrganizzativaPecBulk.class);
-		List<UnitaOrganizzativaPecBulk> results = new ArrayList<UnitaOrganizzativaPecBulk>();
-		Map<String, String> indirizziPec = new HashMap<String, String>();
-    	try {    		
-    		SQLBuilder sql = home.createSQLBuilder();
-    		sql.addClause(FindClause.AND, "emailPecProtocollo", SQLBuilder.ISNOTNULL, null);
-    		sql.addClause(FindClause.AND, "codPecProtocollo", SQLBuilder.ISNOTNULL, null);    		
-    		List<UnitaOrganizzativaPecBulk> pecs = home.fetchAll(sql);
-    		for (UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk : pecs) {
-				if (!indirizziPec.containsKey(unitaOrganizzativaPecBulk.getEmailPecProtocollo())) {
-					results.add(unitaOrganizzativaPecBulk);
-				}
-				indirizziPec.put(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-						unitaOrganizzativaPecBulk.getCodPecProtocollo());
-			}
-    		return results;
-    	} catch (PersistencyException e) {
+			return Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, new Integer(0),null,Configurazione_cnrBulk.PK_EMAIL_PEC, Configurazione_cnrBulk.SK_SDI);
+		} catch(Throwable e) {
 			throw handleException(e);
 		}
-	}	
+	}
 	
 	public void notificaEsito(UserContext usercontext, TipoIntegrazioneSDI tipoIntegrazioneSDI, DocumentoEleTestataBulk documentoEleTestataBulk) throws ComponentException{
 		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
 		try {
+			List<DocumentoEleTrasmissioneBulk> lista = recuperoTrasmissione(usercontext, documentoEleTestataBulk.getIdentificativoSdi());
+			documentoEleTestataBulk.setDocumentoEleTrasmissione(lista.get(0));
 			home.notificaEsito(usercontext, tipoIntegrazioneSDI, documentoEleTestataBulk);
 		} catch (IOException e) {
 			handleException(e);

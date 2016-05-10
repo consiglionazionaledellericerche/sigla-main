@@ -21,22 +21,6 @@
 			fetchOnly="true"						
 			/>			
 		<columnMapping
-			columnName="CD_VOCE"
-			propertyName="voce_f.cd_voce"
-			fetchOnly="true" />
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="voce_f.esercizio"
-			fetchOnly="true" />
-		<columnMapping
-			columnName="TI_GESTIONE"
-			propertyName="voce_f.ti_gestione"
-			fetchOnly="true" />
-		<columnMapping
-			columnName="TI_APPARTENENZA"
-			propertyName="voce_f.ti_appartenenza"
-			fetchOnly="true" />
-		<columnMapping
 			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
 			propertyName="obbligazione_scadenzario.pg_obbligazione_scadenzario"
 			/>
@@ -59,8 +43,6 @@
 	<persistentProperty
 		name="linea_attivita"
 		partOfOid="true" />
-	<persistentProperty
-		name="voce_f" />
     <columnMap 
 		name="CDR_LINEA_VOCE"
 		tableName="OBBLIGAZIONE_SCAD_VOCE">

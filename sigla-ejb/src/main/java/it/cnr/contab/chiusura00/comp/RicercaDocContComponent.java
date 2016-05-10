@@ -1,15 +1,5 @@
 package it.cnr.contab.chiusura00.comp;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.BitSet;
-import java.util.List;
-
-import javax.ejb.EJBException;
-
 import it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
@@ -23,15 +13,9 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceHome;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_residuoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_residuoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -39,13 +23,21 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.rmi.RemoteException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.BitSet;
+import java.util.List;
+
+import javax.ejb.EJBException;
 	   
 
 public class RicercaDocContComponent extends it.cnr.jada.comp.RicercaComponent implements IRicercaDocContComponent
@@ -1620,6 +1612,15 @@ public boolean isRibaltato(it.cnr.jada.UserContext userContext, CdrBulk cdr) thr
 		cdr = (CdrBulk)getHome(userContext, CdrBulk.class, null, getFetchPolicyName("find")).findByPrimaryKey(cdr);
 		cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 		return ((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext, cdr.getCd_cds());
+	} 
+	catch(Throwable e) {
+		throw handleException(e);
+	}
+}	
+public boolean isRibaltato(it.cnr.jada.UserContext userContext, String cds, Integer esercizio) throws ComponentException
+{
+	try	{
+		return ((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext, cds, esercizio);
 	} 
 	catch(Throwable e) {
 		throw handleException(e);

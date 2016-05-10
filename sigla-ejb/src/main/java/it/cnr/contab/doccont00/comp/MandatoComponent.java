@@ -1545,8 +1545,9 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 			it.cnr.jada.persistency.sql.CompoundFindClause clausole,
 			MandatoBulk mandato) throws it.cnr.jada.comp.ComponentException {
 		try {
+			
 			return iterator(userContext, ((SospesoHome) getHome(userContext,
-					SospesoBulk.class)).selectSospesiDiSpesa(mandato),
+					SospesoBulk.class)).selectSospesiDiSpesa(mandato,Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()),
 					SospesoBulk.class, getFetchPolicyName("find"));
 		} catch (Throwable e) {
 			throw handleException(e);
@@ -1876,7 +1877,7 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 								// aggiornato dalla creazione reversale
 								bulk = (MandatoIBulk) inizializzaBulkPerModifica(
 										userContext, mandato);
-								if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()){								
+								if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()){								
 									((MandatoIBulk) bulk)
 										.setStato_coge(MandatoIBulk.STATO_COGE_X);
 									bulk.setToBeUpdated();

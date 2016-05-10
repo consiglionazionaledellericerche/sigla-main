@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.VSitAnaliticaGaeCompetenzaBase"
+	keyClassName="it.cnr.contab.doccont00.consultazioni.bulk.VSitAnaliticaGaeCompetenzaKey"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.VSitAnaliticaGaeCompetenzaHome">
+	<defaultColumnMap
+		tableName="V_SIT_ANALITICA_GAE_COMPETENZA">
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="dsCdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cdNatura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cdProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="dsProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cdCommessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="dsCommessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cdModulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="dsModulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cdElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="dsElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A1"
+			propertyName="imStanzInizialeA1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_PIU"
+			propertyName="variazioniPiu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO"
+			propertyName="variazioniMeno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_COMP"
+			propertyName="assestatoComp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP"
+			propertyName="imObblAccComp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DA_ASSUMERE"
+			propertyName="daAssumere"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM_SPE"
+			propertyName="imAssDocAmmSpe"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM_ETR"
+			propertyName="imAssDocAmmEtr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="imMandatiReversaliPro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DA_PAGARE_INCASSARE"
+			propertyName="daPagareIncassare"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="dsCdr" />
+	<persistentProperty
+		name="denominazione" />
+	<persistentProperty
+		name="cdNatura" />
+	<persistentProperty
+		name="cdProgetto" />
+	<persistentProperty
+		name="dsProgetto" />
+	<persistentProperty
+		name="cdCommessa" />
+	<persistentProperty
+		name="dsCommessa" />
+	<persistentProperty
+		name="cdModulo" />
+	<persistentProperty
+		name="dsModulo" />
+	<persistentProperty
+		name="cdElementoVoce" />
+	<persistentProperty
+		name="dsElementoVoce" />
+	<persistentProperty
+		name="imStanzInizialeA1" />
+	<persistentProperty
+		name="variazioniPiu" />
+	<persistentProperty
+		name="variazioniMeno" />
+	<persistentProperty
+		name="assestatoComp" />
+	<persistentProperty
+		name="imObblAccComp" />
+	<persistentProperty
+		name="daAssumere" />
+	<persistentProperty
+		name="imAssDocAmmSpe" />
+	<persistentProperty
+		name="imAssDocAmmEtr" />
+	<persistentProperty
+		name="imMandatiReversaliPro" />
+	<persistentProperty
+		name="daPagareIncassare" />
+</SQLPersistentInfo>

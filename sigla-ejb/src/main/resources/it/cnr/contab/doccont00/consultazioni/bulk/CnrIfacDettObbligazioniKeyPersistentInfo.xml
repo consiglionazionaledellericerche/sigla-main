@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.CnrIfacDettObbligazioniKey">
+	<defaultColumnMap
+		tableName="CNR_IFAC_DETT_OBBLIGAZIONI">
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizioOriginale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pgObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pgObbligazioneScadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="tiAppartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="tiGestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cdVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cdCentroResponsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cdLineaAttivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizioOriginale"
+		partOfOid="true"  />
+	<persistentProperty
+		name="cdCds" 
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio" 
+		partOfOid="true" />
+	<persistentProperty
+		name="pgObbligazione" 
+		partOfOid="true" />
+	<persistentProperty
+		name="pgObbligazioneScadenzario" 
+		partOfOid="true" />
+	<persistentProperty
+		name="tiAppartenenza" 
+		partOfOid="true" />
+	<persistentProperty
+		name="tiGestione" 
+		partOfOid="true" />
+	<persistentProperty
+		name="cdVoce" 
+		partOfOid="true" />
+	<persistentProperty
+		name="cdCentroResponsabilita"
+		partOfOid="true"  />
+	<persistentProperty
+		name="cdLineaAttivita"
+		partOfOid="true"  />
+</SQLPersistentInfo>

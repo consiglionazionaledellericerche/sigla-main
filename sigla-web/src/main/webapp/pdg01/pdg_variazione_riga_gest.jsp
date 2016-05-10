@@ -90,7 +90,7 @@
 	</tr>
 	<tr>
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_elemento_voce");%></td>
-		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_elemento_voce",isDettaglioGestionaleEnable,null,null);%></td>
+		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_elemento_voce",(isDettaglioGestionaleEnable || bulk.getPdg_variazione().isApprovata()),null,null);%></td>
 	</tr>
 <% 	if (!bp.isUoArea() && !bp.getParametriCnr().getFl_nuovo_pdg()) { %>
 	<tr>

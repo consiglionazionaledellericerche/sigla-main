@@ -2,6 +2,7 @@ package it.cnr.contab.docamm00.comp;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -9,6 +10,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+
+import javax.ejb.EJBException;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -118,6 +121,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import java.rmi.RemoteException;
+import javax.ejb.EJBException;
 
 public class DocumentoGenericoComponent
 	extends it.cnr.jada.comp.CRUDComponent
@@ -4338,58 +4343,79 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectLettera_pagamento_estero_sos
 	UserContext aUC,
 	Documento_genericoBulk documento, 
 	SospesoBulk sospeso,
-	CompoundFindClause clauses) 
+	CompoundFindClause clauses)  
 	throws ComponentException {
-
-	it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,sospeso).createSQLBuilder();
-
-	sql.openParenthesis("AND");
-	sql.addSQLClause("OR", "IM_ASSOCIATO", sql.EQUALS, new java.math.BigDecimal(0));
-	sql.addSQLClause("OR", "IM_ASSOCIATO", sql.ISNULL, null);
-	sql.closeParenthesis();
-	sql.openParenthesis("AND");
-	sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.EQUALS, new java.math.BigDecimal(0));
-	sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.ISNULL, null);
-	sql.closeParenthesis();
-	sql.openParenthesis("AND");
-	sql.addSQLClause("OR", "IM_SOSPESO", sql.NOT_EQUALS, new java.math.BigDecimal(0));
-	sql.addSQLClause("AND", "IM_SOSPESO", sql.ISNOTNULL, null);
-	sql.closeParenthesis();
+	try {
+		it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,sospeso).createSQLBuilder();
+ 
+		sql.openParenthesis("AND");
+		sql.addSQLClause("OR", "IM_ASSOCIATO", sql.EQUALS, new java.math.BigDecimal(0));
+		sql.addSQLClause("OR", "IM_ASSOCIATO", sql.ISNULL, null);
+		sql.closeParenthesis();
+		sql.openParenthesis("AND");
+		sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.EQUALS, new java.math.BigDecimal(0));
+		sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.ISNULL, null);
+		sql.closeParenthesis();
+		sql.openParenthesis("AND");
+		sql.addSQLClause("OR", "IM_SOSPESO", sql.NOT_EQUALS, new java.math.BigDecimal(0));
+		sql.addSQLClause("AND", "IM_SOSPESO", sql.ISNOTNULL, null);
+		sql.closeParenthesis();
+		
+		
+		sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
+		sql.addClause("AND", "esercizio", sql.EQUALS, documento.getEsercizio());
+		sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, sospeso.TIPO_SPESA);
+		sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.TI_SOSPESO);
 	
-	sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
-	sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
-	sql.addClause("AND", "esercizio", sql.EQUALS, documento.getEsercizio());
-	sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, sospeso.TIPO_SPESA);
-	sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.TI_SOSPESO);
-
-	//Questa operazione è possibile perché viene effettuato precedentemente
-	//il controllo di compatibilità sulle modalità di pagam
-	Rif_modalita_pagamentoBulk aMod = null;
-	if (documento.getDocumento_generico_dettColl() != null &&
-		!documento.getDocumento_generico_dettColl().isEmpty())
-		aMod = ((Documento_generico_rigaBulk)documento.getDocumento_generico_dettColl().get(0)).getModalita_pagamento();
-	if (aMod == null)
-		sql.addClause("AND", "ti_cc_bi", sql.NOT_EQUALS, sospeso.TIPO_BANCA_ITALIA);
-	else
-		sql.addClause(
-			"AND", 
-			"ti_cc_bi", 
-			(Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(aMod.getTi_pagamento())?
-				sql.EQUALS : sql.NOT_EQUALS),
-			sospeso.TIPO_BANCA_ITALIA);
-	
-	sql.openParenthesis("AND");
-		sql.addClause("OR", "cd_cds_origine", sql.ISNULL, null);
-		sql.addClause("OR", "cd_cds_origine", sql.EQUALS, documento.getCd_cds());
-		sql.openParenthesis("OR");
+		//Questa operazione è possibile perché viene effettuato precedentemente
+		//il controllo di compatibilità sulle modalità di pagam
+		Rif_modalita_pagamentoBulk aMod = null;
+		if (documento.getDocumento_generico_dettColl() != null &&
+			!documento.getDocumento_generico_dettColl().isEmpty())
+			aMod = ((Documento_generico_rigaBulk)documento.getDocumento_generico_dettColl().get(0)).getModalita_pagamento();
+		if (aMod == null)
+			sql.addClause("AND", "ti_cc_bi", sql.NOT_EQUALS, sospeso.TIPO_BANCA_ITALIA);
+		else
+			sql.addClause(
+				"AND", 
+				"ti_cc_bi", 
+				(Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(aMod.getTi_pagamento())?
+					sql.EQUALS : sql.NOT_EQUALS),
+				sospeso.TIPO_BANCA_ITALIA);
+		EnteBulk ente = (EnteBulk) getHome(aUC, EnteBulk.class)
+				.findAll().get(0);
+		
+		if (!Utility.createParametriCnrComponentSession().getParametriCnr(aUC,documento.getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+			sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+			sql.openParenthesis("AND");
+			sql.addClause("OR", "cd_cds_origine", sql.ISNULL, null);
+			sql.addClause("OR", "cd_cds_origine", sql.EQUALS, documento.getCd_cds());
+			sql.openParenthesis("OR");
 			sql.addClause("AND", "cd_cds", sql.EQUALS, documento.getCd_cds());
 			sql.addClause("AND", "cd_cds_origine", sql.EQUALS, documento.getCd_cds_origine());
-		sql.closeParenthesis();
-	sql.closeParenthesis();
-	
+			sql.closeParenthesis();
+			sql.closeParenthesis();
+		}else{
+			sql.addClause("AND", "cd_cds", sql.EQUALS, ente.getCd_unita_organizzativa());
+			sql.openParenthesis("AND");
+			sql.addClause("OR", "cd_cds_origine", sql.ISNULL, null);
+			sql.addClause("OR", "cd_cds_origine", sql.EQUALS, documento.getCd_cds());
+			sql.closeParenthesis();
+			sql.openParenthesis("AND");
+			sql.addClause("OR", "stato_sospeso",sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+			sql.addClause("OR", "stato_sospeso",sql.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+			sql.closeParenthesis();
+		}	
 	sql.addClause(clauses);
 
 	return sql;
+		} catch (RemoteException e) {
+			throw handleException(documento, e);
+		} catch (EJBException e) {
+			throw handleException(documento, e);
+		} catch (PersistencyException e) {
+			throw handleException(documento, e);
+		}	
 }
 //^^@@
 /** 
@@ -4687,13 +4713,17 @@ public BancaBulk setContoEnteIn(
 	Documento_generico_rigaBulk dettaglio, 
 	java.util.List banche)
  	throws ComponentException {
-
-	if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(dettaglio.getModalita_pagamento_uo_cds().getTi_pagamento()) ||
-		!dettaglio.getDocumento_generico().isGenericoAttivo() ||
-		!dettaglio.getDocumento_generico().isFlagEnte())
-		return null;
-		
 	try {
+		if(Utility.createParametriCnrComponentSession().getParametriCnr(userContext,dettaglio.getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
+			if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(dettaglio.getModalita_pagamento_uo_cds().getTi_pagamento()) ||
+				!dettaglio.getDocumento_generico().isGenericoAttivo())
+				return null;
+		}else{
+			if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(dettaglio.getModalita_pagamento_uo_cds().getTi_pagamento()) ||
+				!dettaglio.getDocumento_generico().isGenericoAttivo() ||
+				!dettaglio.getDocumento_generico().isFlagEnte())
+				return null;
+		}
 		Configurazione_cnrBulk config = new Configurazione_cnrBulk(
 															"CONTO_CORRENTE_SPECIALE",
 															"ENTE", 
@@ -4723,6 +4753,10 @@ public BancaBulk setContoEnteIn(
 				return null;
 		}
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
+		throw handleException(e);
+	} catch (RemoteException e) {
+		throw handleException(e);
+	} catch (EJBException e) {
 		throw handleException(e);
 	}
 
