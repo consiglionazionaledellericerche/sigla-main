@@ -161,6 +161,16 @@
 			propertyName="tipo_doc_amm"
 			sqlTypeName="VARCHAR"
 			columnSize="100"/>
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="esercizio_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="pg_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />	
 		
 	</defaultColumnMap>	
 	<persistentProperty
@@ -225,4 +235,8 @@
 		name="ti_fattura" />
 	<persistentProperty
 		name="tipo_doc_amm" />	
+	<persistentProperty
+		name="esercizio_contratto" />
+	<persistentProperty
+		name="pg_contratto" />	
 </SQLPersistentInfo>

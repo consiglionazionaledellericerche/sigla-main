@@ -1,6 +1,10 @@
 package it.cnr.contab.pdg00.ejb;
 
+import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -30,4 +34,7 @@ it.cnr.jada.util.RemoteIterator cercaVariazioniForDocumentale(it.cnr.jada.UserCo
 void archiviaVariazioneDocumentale(it.cnr.jada.UserContext userContext,	Pdg_variazioneBulk bulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 byte[] lanciaStampa(it.cnr.jada.UserContext userContext,Integer esercizio,Integer pg_variazione,String tipo_variazione) throws PersistencyException, ComponentException,java.rmi.RemoteException, javax.ejb.EJBException;
 void aggiornaDataFirma(UserContext userContext, Integer esercizio,Integer numeroVariazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext userContext, Pdg_variazioneBulk variazione) throws ComponentException,java.rmi.RemoteException;
+Pdg_variazione_riga_spesa_gestBulk recuperoRigaLiquidazioneIva(UserContext userContext, Ass_pdg_variazione_cdrBulk ass) throws ComponentException;
+boolean isRigaLiquidazioneIva(UserContext userContext, Pdg_variazione_riga_gestBulk riga) throws ComponentException;
 }

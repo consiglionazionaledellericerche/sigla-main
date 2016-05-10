@@ -133,7 +133,7 @@ public Collection findSospeso_det_usc( it.cnr.jada.UserContext userContext,Manda
 	PersistentHome home = getHomeCache().getHome( Sospeso_det_uscBulk.class );
 	SQLBuilder sql = home.createSQLBuilder();
 	sql.addClause( "AND", "esercizio", sql.EQUALS, mandato.getEsercizio());	
-	sql.addClause( "AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
+	sql.addClause( "AND", "cd_cds_mandato", sql.EQUALS, mandato.getCd_cds()); 
 	sql.addClause( "AND", "pg_mandato", sql.EQUALS, mandato.getPg_mandato());
 	sql.addClause( "AND", "ti_sospeso_riscontro", sql.EQUALS, SospesoBulk.TI_SOSPESO);
 //	sql.addClause( "AND", "stato", sql.EQUALS, Sospeso_det_uscBulk.STATO_DEFAULT);	

@@ -462,7 +462,10 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		distintaCassiere1210Bulk.setToBeUpdated();
 		distintaCassiere1210Bulk = (DistintaCassiere1210Bulk) createComponentSession().modificaConBulk(context.getUserContext(), distintaCassiere1210Bulk);
 		nodes.add(nodo);
-		documentiContabiliService.inviaDistintaPEC1210(nodes);		
+		if(distintaCassiere1210Bulk.getEsercizio()!=null && distintaCassiere1210Bulk.getPgDistinta()!=null)
+			documentiContabiliService.inviaDistintaPEC1210(nodes,true,distintaCassiere1210Bulk.getEsercizio()+"/"+distintaCassiere1210Bulk.getPgDistinta());
+		else
+			documentiContabiliService.inviaDistintaPEC1210(nodes);
 		save(context);
 		basicEdit(context, distintaCassiere1210Bulk, false);
 	}

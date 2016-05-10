@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.intcass.bulk;
 
 import java.util.*;
 
+import it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
@@ -332,8 +333,15 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	
 	setEsercizio( it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context) );
 	setUnita_organizzativa( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
-	setFl_flusso(Boolean.FALSE);
-	setFl_sepa(Boolean.FALSE);
+	if(bp instanceof CRUDDistintaCassiereBP){
+		setFl_flusso(((CRUDDistintaCassiereBP)bp).isFlusso());
+		setFl_sepa(((CRUDDistintaCassiereBP)bp).isSepa());
+	}
+	else {
+		setFl_flusso(Boolean.FALSE);
+		setFl_sepa(Boolean.FALSE);
+	}
+	
 	return this;
 }
 /**

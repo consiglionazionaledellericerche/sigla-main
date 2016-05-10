@@ -5,6 +5,7 @@ import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
@@ -58,7 +59,8 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk acc, V_voce_f_partita_
 {
 	AccertamentoPGiroBulk bulk = (AccertamentoPGiroBulk) acc;
 	SQLBuilder sql = getHomeCache().getHome( Voce_fBulk.class, "V_VOCE_F_PARTITA_GIRO" ).createSQLBuilder();
-	  
+	boolean isNuovoPdg = ((Parametri_cnrHome)getHomeCache().getHome( Parametri_cnrBulk.class )).isNuovoPdg(bulk.getEsercizio());
+
 	if (acc instanceof AccertamentoPGiroResiduoBulk)
     	sql.addSQLClause( "AND", "fl_solo_competenza", sql.EQUALS, "N");
 	else if(acc instanceof AccertamentoPGiroBulk )
@@ -69,32 +71,31 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk acc, V_voce_f_partita_
 		/* simona 14.5.2002 
 		CdsBulk cds = findCdsSAC();
 		sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, cds.getCd_unita_organizzativa() );		*/
-		if (acc instanceof AccertamentoPGiroResiduoBulk){
-			sql.openParenthesis( "AND");		
-			sql.openParenthesis( "AND");
-			sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
-			sql.addSQLClause( "OR", "cd_unita_organizzativa", sql.ISNULL,null);
-			sql.closeParenthesis();
-			sql.closeParenthesis();		
-		}else{
-			sql.openParenthesis( "AND");		
-			sql.openParenthesis( "AND");
-			sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
-			sql.addSQLClause( "AND", "fl_azzera_residui",  sql.EQUALS, "N");
-			sql.closeParenthesis();
-			sql.openParenthesis( "OR");
-			sql.addSQLClause( "OR", "cd_unita_organizzativa", sql.ISNULL,null);
-			sql.addSQLClause( "AND", "fl_azzera_residui",  sql.EQUALS, "Y");
-			sql.closeParenthesis();
-			sql.closeParenthesis();		
+		if (!isNuovoPdg) {
+			if (acc instanceof AccertamentoPGiroResiduoBulk){
+				sql.openParenthesis( "AND");		
+				sql.openParenthesis( "AND");
+				sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
+				sql.addSQLClause( "OR", "cd_unita_organizzativa", sql.ISNULL,null);
+				sql.closeParenthesis();
+				sql.closeParenthesis();		
+			}else{
+				sql.openParenthesis( "AND");		
+				sql.openParenthesis( "AND");
+				sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
+				sql.addSQLClause( "AND", "fl_azzera_residui",  sql.EQUALS, "N");
+				sql.closeParenthesis();
+				sql.openParenthesis( "OR");
+				sql.addSQLClause( "OR", "cd_unita_organizzativa", sql.ISNULL,null);
+				sql.addSQLClause( "AND", "fl_azzera_residui",  sql.EQUALS, "Y");
+				sql.closeParenthesis();
+				sql.closeParenthesis();		
+			}
 		}
 	}	
 	else // == ACCERT_PGIRO
 	{
-		PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
-		Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
-		
-		if (parCNR.getFl_nuovo_pdg()==null || !parCNR.getFl_nuovo_pdg())
+		if (!isNuovoPdg)
 			sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
 	}	
 	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );

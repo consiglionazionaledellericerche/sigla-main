@@ -48,6 +48,11 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_MANDATO"
+			propertyName="cd_cds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -63,4 +68,6 @@
 		name="im_associato" />
 	<persistentProperty
 		name="utuv" />
+	<persistentProperty
+		name="cd_cds_mandato" />	
 </SQLPersistentInfo>

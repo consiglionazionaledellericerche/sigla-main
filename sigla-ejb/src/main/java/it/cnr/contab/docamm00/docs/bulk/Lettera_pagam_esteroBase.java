@@ -79,6 +79,9 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
 	// FL_SECONDA_FIRMA_APPOSTA CHAR(1)
 	private java.lang.Boolean fl_seconda_firma_apposta;
 	
+	// CD_SOSPESO VARCHAR(20)
+    private java.lang.String cd_cds_sospeso;
+	
 	public Lettera_pagam_esteroBase() {
 		super();
 	}
@@ -260,5 +263,11 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
 	public void setFl_seconda_firma_apposta(
 			java.lang.Boolean fl_seconda_firma_apposta) {
 		this.fl_seconda_firma_apposta = fl_seconda_firma_apposta;
+	}
+	public java.lang.String getCd_cds_sospeso() {
+		return cd_cds_sospeso;
+	}
+	public void setCd_cds_sospeso(java.lang.String cd_cds_sospeso) {
+		this.cd_cds_sospeso = cd_cds_sospeso;
 	}	
 }

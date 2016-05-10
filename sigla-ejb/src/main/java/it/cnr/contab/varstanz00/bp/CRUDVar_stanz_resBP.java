@@ -14,6 +14,8 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -559,4 +561,12 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	public void setAbilitatoModificaDescVariazioni(boolean abilitatoModificaDescVariazioni) {
 		this.abilitatoModificaDescVariazioni = abilitatoModificaDescVariazioni;
 	}	
+	public boolean isVariazioneFromLiquidazioneIvaDaModificare(ActionContext context, Var_stanz_resBulk variazione) throws BusinessProcessException{
+		try {
+			VariazioniStanziamentoResiduoComponentSession comp = (VariazioniStanziamentoResiduoComponentSession)createComponentSession();
+			return comp.isVariazioneFromLiquidazioneIvaDaModificare(context.getUserContext(), variazione);
+		} catch (Throwable e) {
+			throw new BusinessProcessException(e.getMessage());
+		}
+	}
 }

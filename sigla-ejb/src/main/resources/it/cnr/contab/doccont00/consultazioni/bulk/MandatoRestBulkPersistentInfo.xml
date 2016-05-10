@@ -1,0 +1,7 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.MandatoRestBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.MandatoRestHome" >
+	<defaultColumnMap
+		tableName="MANDATO" >
+	</defaultColumnMap>
+</SQLPersistentInfo>

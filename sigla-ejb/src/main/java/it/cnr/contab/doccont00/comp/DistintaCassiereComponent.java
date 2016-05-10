@@ -4279,7 +4279,7 @@ public class DistintaCassiereComponent extends
 			bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
 			
 			infover.setBollo(bollo);
-			versante.setAnagraficaVersante(docContabile.getDenominazioneSede());
+			versante.setAnagraficaVersante(RemoveAccent.convert(docContabile.getDenominazioneSede()).replace('"',' ' ).replace('°',' '));
 			infover.setVersante(versante);
 			
 			// gestito inserimento cup nella CAUSALE 
@@ -4292,7 +4292,7 @@ public class DistintaCassiereComponent extends
 					infover.setCausale(docContabile.getDsDocumento().substring(0,98));
 				else 
 					infover.setCausale(docContabile.getDsDocumento());
-			infover.setCausale(RemoveAccent.convert(infover.getCausale()).replace('"',' ' ));
+			infover.setCausale(RemoveAccent.convert(infover.getCausale()).replace('"',' ' ).replace('°',' '));
 			// SOSPESO			
 			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO)==0){
 				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
@@ -4437,11 +4437,11 @@ public class DistintaCassiereComponent extends
 				List listClass = homeClass.fetchAll(sqlClass);
 				BigDecimal totAssSiope=BigDecimal.ZERO;
 				BigDecimal totAssCup=BigDecimal.ZERO;
-				boolean salta=false;
 				VDocumentiFlussoBulk oldDoc=null;
 				for(Iterator c=listClass.iterator();c.hasNext();){
 					VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
 					if(doc.getCdSiope()!=null){
+						//cambio codice siope senza cup dovrebbe essere il resto
 						if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
 								clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 								clas.setCodiceCgu(oldDoc.getCdSiope());
@@ -4450,76 +4450,96 @@ public class DistintaCassiereComponent extends
 								totAssSiope=BigDecimal.ZERO; 
 								infoben.getClassificazione().add(clas);
 							
-						}
-						clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-						clas.setCodiceCgu(doc.getCdSiope());
-						salta=false;
-						if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0){
-							totAssSiope=BigDecimal.ZERO;
-							totAssCup=BigDecimal.ZERO;
-							salta=false; 
-						}
-						else
-							if(oldDoc!=null &&oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 ){// && (oldDoc.getCdTipoDocumentoAmm().compareTo(doc.getCdTipoDocumentoAmm())!=0|| oldDoc.getPgDocAmm().compareTo(doc.getPgDocAmm())!=0)){ 
-								if( doc.getCdCup()==null){
-									totAssSiope=totAssSiope.add(doc.getImportoCge());
-									salta=false;
-								}
-								if(doc.getImDocumento().compareTo(totAssSiope)!=0){
-									totAssSiope=totAssSiope.add(doc.getImDocumento().subtract(totAssSiope));
-									salta=false;
-								}
+						}else
+						 //stesso codice siope senza cup resto
+							if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
+								clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+								clas.setCodiceCgu(oldDoc.getCdSiope());
+								clas.setImporto(totAssSiope.subtract(totAssCup).setScale(2, BigDecimal.ROUND_HALF_UP));
+								totAssCup=BigDecimal.ZERO;  
+								totAssSiope=BigDecimal.ZERO; 
+								infoben.getClassificazione().add(clas);
 							}
-							else {
-								if(totAssCup.compareTo(BigDecimal.ZERO)!=0){
-									totAssSiope=totAssSiope.add(doc.getImportoCge());
-									salta=false;
-								}else{
-									totAssSiope=doc.getImportoCge();
-									salta=false;
+							else //stesso codice siope con cup
+								if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 && doc.getCdCup()!=null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
+									clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+									clas.setCodiceCgu(doc.getCdSiope());
+									clas.setCodiceCup(doc.getCdCup());
+									clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
+									totAssCup=totAssCup.add(doc.getImportoCup());
+									// Causale  Cup
+									if(infoben.getCausale()!=null ){
+										if (!infoben.getCausale().contains(doc.getCdCup()))
+												infoben.setCausale(infoben.getCausale()+"-"+doc.getCdCup());
+									}else 
+										 infoben.setCausale("CUP "+doc.getCdCup());
+									infoben.getClassificazione().add(clas);
 								}
-							}		
-						if(doc.getCdCup()!=null){
-							clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
-							clas.setCodiceCup(doc.getCdCup());
-							if(totAssSiope==BigDecimal.ZERO)
-								totAssSiope=doc.getImportoCge();
-							totAssCup=totAssCup.add(doc.getImportoCup());
-							// Causale  Cup
-							if(infoben.getCausale()!=null ){
-								if (!infoben.getCausale().contains(doc.getCdCup()))
-										infoben.setCausale(infoben.getCausale()+"-"+doc.getCdCup());
-							}else 
-								 infoben.setCausale("CUP "+doc.getCdCup());
-						}
-						else{
+								else//stesso siope con cup null precedente completamente associato a cup
+									if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)==0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
+										clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+										clas.setCodiceCgu(doc.getCdSiope());				
+										clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
+										totAssSiope=BigDecimal.ZERO; 
+										totAssCup=BigDecimal.ZERO; 
+										infoben.getClassificazione().add(clas);
+									}
+									else// diverso siope con cup null e precedente completamente associato a cup
+										if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)==0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
+											clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+											clas.setCodiceCgu(doc.getCdSiope());				
+											clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
+											totAssSiope=BigDecimal.ZERO; 
+											totAssCup=BigDecimal.ZERO; 
+											infoben.getClassificazione().add(clas);
+										}	
+							else
+								//primo inserimento
+								if(doc.getCdCup()!=null && doc.getImportoCup().compareTo(BigDecimal.ZERO)!=0){
+									clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+									clas.setCodiceCgu(doc.getCdSiope());
+									clas.setCodiceCup(doc.getCdCup());
+									clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
+									totAssCup=doc.getImportoCup();  
+									totAssSiope=doc.getImportoCge();
+									// Causale  Cup
+									if(infoben.getCausale()!=null ){
+										if (!infoben.getCausale().contains(doc.getCdCup()))
+												infoben.setCausale(infoben.getCausale()+"-"+doc.getCdCup());
+									}else 
+										 infoben.setCausale("CUP "+doc.getCdCup());
+									infoben.getClassificazione().add(clas);
+								} 
+						   else{
+							   clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+								clas.setCodiceCgu(doc.getCdSiope());								
 								clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
-						}
-						oldDoc=doc;
-						if (!salta)
-							infoben.getClassificazione().add(clas);
+								totAssSiope=doc.getImportoCge();  
+								infoben.getClassificazione().add(clas);
+						   }
+						   oldDoc=doc;
 					}
 				} 
 				// differenza ultimo
-			    if(totAssCup.compareTo(BigDecimal.ZERO)!=0 && totAssCup.compareTo(totAssSiope)!=0 ){
-			    	if(oldDoc.getImDocumento().compareTo(totAssSiope)!=0){
+				if(totAssSiope.subtract(totAssCup).compareTo(BigDecimal.ZERO)>0) {
+			    if(totAssCup.compareTo(BigDecimal.ZERO)!=0 && totAssCup.compareTo(totAssSiope)!=0 ){		    	
 						clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 						clas.setCodiceCgu(oldDoc.getCdSiope());
 						clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
 						infoben.getClassificazione().add(clas);
-			    	}
+					}
 				}
 				bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
 				bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
 				infoben.setBollo(bollo);
-				benef.setAnagraficaBeneficiario(docContabile.getDenominazioneSede());
+				benef.setAnagraficaBeneficiario(RemoveAccent.convert(docContabile.getDenominazioneSede()).replace('"',' ' ).replace('°',' '));
 				//benef.setStatoBeneficiario(docContabile.getCdIso());
 				if(obb_dati_beneficiario){
-					benef.setIndirizzoBeneficiario(docContabile.getViaSede());
+					benef.setIndirizzoBeneficiario(RemoveAccent.convert(docContabile.getViaSede()).replace('"',' ' ).replace('°',' '));
 					if(docContabile.getCapComuneSede()==null)
 						throw new ApplicationException("Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "+docContabile.getCdTerzo()+" cds "+docContabile.getCdCds()+" mandato "+docContabile.getPgDocumento());
 					benef.setCapBeneficiario(docContabile.getCapComuneSede());
-					benef.setLocalitaBeneficiario(docContabile.getDsComune());
+					benef.setLocalitaBeneficiario(RemoveAccent.convert(docContabile.getDsComune()).replace('"',' ' ).replace('°',' '));
 					benef.setProvinciaBeneficiario(docContabile.getCdProvincia());
 				}
 				infoben.setBeneficiario(benef);
@@ -4563,7 +4583,7 @@ public class DistintaCassiereComponent extends
 						infoben.setCausale(docContabile.getDsDocumento().substring(0,98));
 					else 
 						infoben.setCausale(docContabile.getDsDocumento());
-				infoben.setCausale(RemoveAccent.convert(infoben.getCausale()).replace('"',' ' ));
+				infoben.setCausale(RemoveAccent.convert(infoben.getCausale()).replace('"',' ' ).replace('°',' '));
 				// SOSPESO			
 				if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO)==0){
 					it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
@@ -4590,7 +4610,7 @@ public class DistintaCassiereComponent extends
 						if(doc.getCdSospeso()!=null){
 							sosp=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
 							try{
-								sosp.setNumeroProvvisorio(new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().lastIndexOf("."))).longValue());
+								sosp.setNumeroProvvisorio(new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().indexOf("."))).longValue());
 							}catch (NumberFormatException e) {
 								throw new ApplicationException("Formato del codice del sospeso non compatibile.");
 							}
