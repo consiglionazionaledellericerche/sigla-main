@@ -1,20 +1,9 @@
-FROM java:8
-
-WORKDIR /opt/
-
-ENV WILDFLY_VERSION 10.0.0.Final
-
-ENV WILDFLY wildfly-${WILDFLY_VERSION}
+FROM jboss/wildfly:10.0.0.Final
+WORKDIR /opt/jboss/wildfly
 
 ENV SIGLA it/cnr/sigla-ear/4.0.1/sigla-ear-4.0.1-wildfly.ear
 
-ADD http://download.jboss.org/wildfly/${WILDFLY_VERSION}/${WILDFLY}.tar.gz .
-
-RUN tar xvf ${WILDFLY}.tar.gz && rm ${WILDFLY}.tar.gz
-
-COPY SIGLA/target/SIGLA-wildfly.ear ${WILDFLY}/standalone/deployments/SIGLA.ear
-
-WORKDIR ${WILDFLY}
+COPY SIGLA/target/SIGLA-wildfly.ear standalone/deployments/SIGLA.ear
 
 CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "--debug", "8787", "-bmanagement", "0.0.0.0"]
 
