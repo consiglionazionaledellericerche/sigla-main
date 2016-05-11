@@ -12,7 +12,6 @@ COPY src/main/docker/domain/configuration/  domain/configuration/
 COPY src/main/docker/modules/system/layers/base/com/informix/jdbc/ modules/system/layers/base/com/informix/jdbc/
 COPY src/main/docker/modules/system/layers/base/com/oracle/jdbc/ modules/system/layers/base/com/oracle/jdbc/
 
-EXPOSE 8080
 EXPOSE 9990
 
 RUN ./bin/add-user.sh admin admin --silent
