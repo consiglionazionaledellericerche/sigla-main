@@ -1,5 +1,9 @@
 package it.cnr.contab.consultazioni.comp;
 
+import java.util.Enumeration;
+import java.util.Iterator;
+
+import it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -12,6 +16,7 @@ import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.AssBpAccessoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
@@ -21,6 +26,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SimpleFindClause;
 
 /**
  * @author mspasiano
@@ -41,6 +47,22 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 			sql.addClause( "AND", "esercizio", sql.EQUALS, ((CNRUserContext)userContext).getEsercizio());
 		} else if (oggettobulk instanceof Elemento_voceBulk){
 			sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		} else if (oggettobulk instanceof InquadramentoBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				Boolean trovataCondizioneCdAnagrafica = false;
+				Enumeration e = compoundfindclause.getClauses();
+				while(e.hasMoreElements() ){
+					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_anag") && 
+							operator == 8192){
+						trovataCondizioneCdAnagrafica = true;
+					}
+				}
+				if (!trovataCondizioneCdAnagrafica){
+					throw new ComponentException("Non e' possibile richiamare il servizio REST degli inquadramenti senza la condizione del codice anagrafico.");
+				}
+			}
 		} else if (oggettobulk instanceof WorkpackageBulk){
 			if(!isUtenteEnte(userContext)){ 
 				WorkpackageHome home = (WorkpackageHome) getHome(userContext, oggettobulk);
