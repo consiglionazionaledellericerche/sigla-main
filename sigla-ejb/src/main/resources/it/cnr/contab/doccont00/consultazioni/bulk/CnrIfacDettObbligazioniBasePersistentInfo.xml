@@ -67,6 +67,12 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="PG_DOCAMM"
+			propertyName="pgDocamm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
 			columnName="ESERCIZIO_ORI_ORI_RIPORTO"
 			propertyName="esercizioOriOriRiporto"
 			sqlTypeName="DECIMAL"
@@ -101,6 +107,8 @@
 		name="esercizioOriOriRiporto" />
 	<persistentProperty
 		name="pgObbligazioneOriRiporto" />
+	<persistentProperty
+		name="pgDocamm" />
 	<persistentProperty
 		name="fornitore" />
 </SQLPersistentInfo>
