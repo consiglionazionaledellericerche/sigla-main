@@ -221,6 +221,12 @@
   <action 
       path="/ConsGaeResiduiSpesaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
+  <action 
+      path="/ConsTerzoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <action 
+      path="/ConsInquadramentoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
 
    <businessProcess
       name="ConsObbligazioniBP" className="it.cnr.contab.consultazioni.bp.ConsObbligazioniBP">
@@ -1404,6 +1410,22 @@
 		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiSpesaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 	    <init-param name="defaultAction" value="ConsGaeResiduiSpesaAction" />
+		<init-param name="searchResultColumnSet" value="restService"/>
+  </businessProcess>
+  <businessProcess
+      name="ConsTerzoRestBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.core.bulk.TerzoBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsTerzoAction" />
+		<init-param name="searchResultColumnSet" value="columnSet01"/>
+  </businessProcess>
+  <businessProcess
+      name="ConsInquadramentoRestBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsInquadramentoAction" />
 		<init-param name="searchResultColumnSet" value="restService"/>
   </businessProcess>
 </action-mappings>
