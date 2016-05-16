@@ -3,16 +3,19 @@ package it.cnr.contab.doccont00.consultazioni.bp;
 
 import java.rmi.RemoteException;
 import java.util.Iterator;
+
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VRendicontazioneBulk;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_comp_res_sintesiBulk;
 import it.cnr.contab.doccont00.consultazioni.ejb.ConsGAEComResSintComponentSession;
 import it.cnr.contab.pdg00.ejb.StampaSituazioneSinteticaGAEComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
@@ -25,6 +28,7 @@ public class ConsGAERendBP extends ConsultazioniBP {
 	public static final String DETT= "DETT";
 	
 	private String pathConsultazione;
+
 	public ConsGAEComResSintComponentSession createConsGAEComResSintComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {		
 		   return (ConsGAEComResSintComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsGAEComResSintComponentSession",ConsGAEComResSintComponentSession.class);
 	}
@@ -34,9 +38,14 @@ public class ConsGAERendBP extends ConsultazioniBP {
 			setMultiSelection(true);
 			setPageSize(20);  
 			setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(WorkpackageBulk.class));
+		    Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())); 
+			if (parCnr.getFl_nuovo_pdg().booleanValue())
+				setColumns(getBulkInfo().getColumnFieldPropertyDictionary("prg_liv2"));
+		} catch (ComponentException e) {
+			throw new BusinessProcessException(e);
 		} catch (RemoteException e) {
-			  throw new BusinessProcessException(e);
-		}	
+			throw new BusinessProcessException(e);
+		} 
 	}
 	public void initVariabili(it.cnr.jada.action.ActionContext context,  String livello_destinazione) throws it.cnr.jada.action.BusinessProcessException {
 		   try {
