@@ -86,6 +86,18 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_CONTO_BI"
+			propertyName="fl_conto_bi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_MANDATO"
+			propertyName="ti_mandato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -112,5 +124,9 @@
 	<persistentProperty
 		name="fl_cancellato" />				
 	<persistentProperty
-		name="fl_all_obbl_mandato" />					
+		name="fl_all_obbl_mandato" />			
+	<persistentProperty
+		name="fl_conto_bi" />		
+	<persistentProperty
+		name="ti_mandato" />				
 </SQLPersistentInfo>
