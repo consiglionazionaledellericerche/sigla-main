@@ -7,22 +7,18 @@
 package it.cnr.contab.consultazioni.bp;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.BitSet;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspWriter;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
-import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
-import it.cnr.contab.pdg00.comp.StampaSituazioneSinteticaGAEComponent;
 import it.cnr.contab.pdg00.ejb.StampaSituazioneSinteticaGAEComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -49,6 +45,7 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP
 	private CompoundFindClause findclause;
 	private CompoundFindClause baseclause;
 	private int navPosition = 0;
+	private boolean flNuovoPdg = false;
 	
 	private java.math.BigDecimal pg_stampa = null;
 	private java.math.BigDecimal currentSequence = null;
@@ -69,6 +66,8 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP
 	protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 		try {
 			super.init(config,context);
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())); 
+			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 			CompoundFindClause clauses = new CompoundFindClause();
 			
 			//clauses.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bulk.CNRUserInfo)context.getUserInfo()).getCdr().getCd_centro_responsabilita());
@@ -275,7 +274,7 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP
 	public void setBulkClassName(java.lang.String bulkClassName) throws ClassNotFoundException {
 		bulkClass = getClass().getClassLoader().loadClass(bulkClassName);
 		setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(bulkClass));
-		setColumns(getBulkInfo().getColumnFieldPropertyDictionary());
+		setColumns(getBulkInfo().getColumnFieldPropertyDictionary(this.isFlNuovoPdg()?"prg_liv2":null));
 	}
 
 	/* (non-Javadoc)
@@ -392,6 +391,10 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP
 			throw handleException(e);
 		}
 	}
-
-	
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
+	}
+	private void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
 }

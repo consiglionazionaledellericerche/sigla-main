@@ -32,6 +32,9 @@ public class CnrIfacDettObbligazioniBase extends CnrIfacDettObbligazioniKey impl
 //    PG_OBBLIGAZIONE_ORI_RIPORTO DECIMAL(10,0)
 	private java.lang.Long pgObbligazioneOriRiporto;
  
+//  PG_DOCAMM DECIMAL(10,0)
+	private java.lang.Long pgDocamm;
+
 //    FORNITORE VARCHAR(200) NOT NULL
 	private java.lang.String fornitore;
  
@@ -155,5 +158,11 @@ public class CnrIfacDettObbligazioniBase extends CnrIfacDettObbligazioniKey impl
 	}
 	public void setEsercizioOriOriRiporto(java.lang.Integer esercizioOriOriRiporto) {
 		this.esercizioOriOriRiporto = esercizioOriOriRiporto;
+	}
+	public java.lang.Long getPgDocamm() {
+		return pgDocamm;
+	}
+	public void setPgDocamm(java.lang.Long pgDocamm) {
+		this.pgDocamm = pgDocamm;
 	}
 }
