@@ -904,4 +904,13 @@ public boolean isDipendenteDaConguaglio()
 
 return false;
 }
+	public boolean isRequiredSospeso(){
+		return (this.isRegolamentoSospeso());
+	}
+	public boolean isSospesoTotalmenteAssociato(){
+		if(getImTotaleSospesi().compareTo(this.getIm_mandato())==0)
+				  return true;
+		else
+			return false;
+	}
 }
