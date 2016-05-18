@@ -91,7 +91,8 @@
 			propertyName="fl_conto_bi"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			nullable="true" />
+			nullable="true" 
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />										
 		<columnMapping
 			columnName="TI_MANDATO"
 			propertyName="ti_mandato"
