@@ -6524,6 +6524,17 @@ public Boolean isCollegamentoSospesoCompleto(UserContext userContext,
 		MandatoHome mandatoHome = (MandatoHome) getHome(userContext,mandato.getClass());
 		mandato = (MandatoBulk) mandatoHome.findByPrimaryKey(mandato);
 		if (mandato.isRequiredSospeso()) {
+			
+			Sospeso_det_uscBulk sdu;
+			mandato.setSospeso_det_uscColl(new BulkList(
+					((MandatoHome) getHome(userContext, mandato.getClass()))
+					.findSospeso_det_usc(userContext, mandato)));
+			for (Iterator i = mandato.getSospeso_det_uscColl().iterator(); i.hasNext();) {
+				sdu = (Sospeso_det_uscBulk) i.next();
+				sdu.setMandato(mandato);
+				if (sdu.getStato().equals(sdu.STATO_ANNULLATO))
+					i.remove();
+			}
 			return mandato.isSospesoTotalmenteAssociato();
 		}
 		return Boolean.TRUE;
