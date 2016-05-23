@@ -1,15 +1,18 @@
-
 package it.cnr.contab.doccont00.consultazioni.bp;
 
+import java.rmi.RemoteException;
 import java.util.Iterator;
 
-
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_entBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBulk;
 import it.cnr.contab.doccont00.consultazioni.ejb.ConsGAEResComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.Config;
@@ -37,6 +40,8 @@ public class ConsGAEResBP extends ConsultazioniBP {
 	
 	private String livelloConsultazione;
 	private String pathConsultazione;
+	private boolean flNuovoPdg = false;
+
 	public ConsGAEResComponentSession createGAEResComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		
 		   return (ConsGAEResComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsGAEResComponentSession",ConsGAEResComponentSession.class);
@@ -45,26 +50,34 @@ public class ConsGAEResBP extends ConsultazioniBP {
 	   
 
 	   protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-		   Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
-		   	
-			CompoundFindClause clauses = new CompoundFindClause();
-		   clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-		   setBaseclause(clauses);
-		
-		   if (getPathConsultazione()==null) {
-				if (this instanceof ConsGAEResEtrBP){
-			   		setPathConsultazione(this.LIVELLO_ETRGAE);					
-			   		setLivelloConsultazione(this.LIVELLO_ETRGAE);
-				} 
-				else
-				{
-					setPathConsultazione(this.LIVELLO_SPEGAE);					
-					setLivelloConsultazione(this.LIVELLO_SPEGAE);
-				} 
+		   try {
+			   Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+			   Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), esercizio); 
+			   setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+			   	
+				CompoundFindClause clauses = new CompoundFindClause();
+			   clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+			   setBaseclause(clauses);
 			
-			   	super.init(config,context);
-				initVariabili(context, null,getPathConsultazione());   
-		   }	 		
+			   if (getPathConsultazione()==null) {
+					if (this instanceof ConsGAEResEtrBP){
+				   		setPathConsultazione(this.LIVELLO_ETRGAE);					
+				   		setLivelloConsultazione(this.LIVELLO_ETRGAE);
+					} 
+					else
+					{
+						setPathConsultazione(this.LIVELLO_SPEGAE);					
+						setLivelloConsultazione(this.LIVELLO_SPEGAE);
+					} 
+				
+				   	super.init(config,context);
+					initVariabili(context, null,getPathConsultazione());   
+			   }	 		
+			} catch (ComponentException e) {
+				throw new BusinessProcessException(e);
+			} catch (RemoteException e) {
+				throw new BusinessProcessException(e);
+			} 
 	   }
 	   public void initVariabili(it.cnr.jada.action.ActionContext context, String pathProvenienza, String livello_destinazione) throws it.cnr.jada.action.BusinessProcessException {
 		   try {
@@ -84,8 +97,16 @@ public class ConsGAEResBP extends ConsultazioniBP {
 					   setLivelloConsultazione(livello_destinazione);					   
 				   }	
 		
-			   setSearchResultColumnSet(getPathConsultazione());
-			   setFreeSearchSet(getPathConsultazione());
+			   if (!isFlNuovoPdg()) {
+				   setSearchResultColumnSet(getPathConsultazione());
+				   setFreeSearchSet(getPathConsultazione());
+			   } else {
+				   String path = getPathConsultazione().replace(this.LIVELLO_ETRGAE, this.LIVELLO_ETRGAE.concat("2"));
+				   path = path.replace(this.LIVELLO_SPEGAE, this.LIVELLO_SPEGAE.concat("2"));
+				   setSearchResultColumnSet(path);
+				   setFreeSearchSet(path);
+			   }
+
 			   setTitle();
 			   
 			   if ((livello_destinazione.equals(this.LIVELLO_MAN))||(livello_destinazione.equals(this.LIVELLO_REV))||livello_destinazione.equals(this.LIVELLO_VARP)||livello_destinazione.equals(this.LIVELLO_VARM))
@@ -359,5 +380,59 @@ public class ConsGAEResBP extends ConsultazioniBP {
 			   throw new BusinessProcessException(e);
 		   }
 	   }
- 
-   }
+
+		public void setFlNuovoPdg(boolean flNuovoPdg) {
+			this.flNuovoPdg = flNuovoPdg;
+		}
+		public boolean isFlNuovoPdg() {
+			return flNuovoPdg;
+		}
+		public String getColumnLabelCd_commessa(){
+			if (this.isFlNuovoPdg())
+				return ProgettoBulk.LABEL_AREA_PROGETTUALE;
+			else
+				return ProgettoBulk.LABEL_COMMESSA;
+		}	
+		public String getFindLabelCd_commessa(){
+			if (this.isFlNuovoPdg())
+				return ProgettoBulk.LABEL_AREA_PROGETTUALE;
+			else
+				return ProgettoBulk.LABEL_COMMESSA;
+		}	
+		public String getColumnLabelCd_modulo(){
+			if (this.isFlNuovoPdg())
+				return ProgettoBulk.LABEL_PROGETTO;
+			else
+				return ProgettoBulk.LABEL_MODULO;
+		}	
+		public String getFindLabelCd_modulo(){
+			if (this.isFlNuovoPdg())
+				return ProgettoBulk.LABEL_PROGETTO;
+			else
+				return ProgettoBulk.LABEL_MODULO;
+		}	
+		public String getColumnLabelDs_commessa(){
+			if (this.isFlNuovoPdg())
+				return "Desc. ".concat(ProgettoBulk.LABEL_AREA_PROGETTUALE);
+			else
+				return "Desc. ".concat(ProgettoBulk.LABEL_COMMESSA);
+		}	
+		public String getFindLabelDs_commessa(){
+			if (this.isFlNuovoPdg())
+				return "Desc. ".concat(ProgettoBulk.LABEL_AREA_PROGETTUALE);
+			else
+				return "Desc. ".concat(ProgettoBulk.LABEL_COMMESSA);
+		}	
+		public String getColumnLabelDs_modulo(){
+			if (this.isFlNuovoPdg())
+				return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+			else
+				return "Desc. ".concat(ProgettoBulk.LABEL_MODULO);
+		}	
+		public String getFindLabelDs_modulo(){
+			if (this.isFlNuovoPdg())
+				return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+			else
+				return "Desc. ".concat(ProgettoBulk.LABEL_MODULO);
+		}
+}
