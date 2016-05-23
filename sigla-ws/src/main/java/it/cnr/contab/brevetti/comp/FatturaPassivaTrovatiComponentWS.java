@@ -99,13 +99,8 @@ public java.util.ArrayList<FatturaPassiva> ricercaFatturePassive(String user, Lo
  * @throws Exception
  */
 @RolesAllowed({"WSUserRole","BrevettiRole"})
-public java.util.ArrayList<FatturaPassivaBase> ricercaDocumentiAmministrativiBase(String user, Long trovato) throws Exception {
-	return ricercaDocumentiAmministrativiBase(user, trovato, Boolean.TRUE);
-}
-
-@RolesAllowed({"WSUserRole","BrevettiRole"})
 public java.util.ArrayList<FatturaPassivaBase> ricercaFatturePassiveBase(String user, Long trovato) throws Exception {
-	return ricercaFatture(user, trovato, Boolean.TRUE);
+	return ricercaDocumentiAmministrativiBase(user, trovato, Boolean.TRUE);
 }
 
 private java.util.ArrayList ricercaDocumentiAmministrativiBase(String user, Long trovato, Boolean base) throws Exception {
