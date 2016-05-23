@@ -207,6 +207,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private java.util.Vector documentiContabiliCancellati = new java.util.Vector();
 	private java.util.Vector dettagliCancellati = new java.util.Vector();
 	private java.util.List docContAssociati;
+	private java.util.List mandatiRigaAssociati;
 	private V_doc_cont_compBulk docContPrincipale;
 	private java.lang.Boolean aperturaDaMinicarriera = java.lang.Boolean.FALSE;
 	private java.lang.String riportata = NON_RIPORTATO;
@@ -3527,5 +3528,13 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 	public void setCompensoSoloInailEnte(boolean isCompensoSoloInailEnte) {
 		this.isCompensoSoloInailEnte = isCompensoSoloInailEnte;
+	}
+
+	public java.util.List getMandatiRigaAssociati() {
+		return mandatiRigaAssociati;
+	}
+
+	public void setMandatiRigaAssociati(java.util.List mandatiRigaAssociati) {
+		this.mandatiRigaAssociati = mandatiRigaAssociati;
 	}
 }
