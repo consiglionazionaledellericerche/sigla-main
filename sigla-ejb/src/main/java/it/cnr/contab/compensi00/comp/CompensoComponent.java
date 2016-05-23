@@ -2520,6 +2520,16 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				.inizializzaBulkPerInserimento(userContext, bulk);
 
 		try {
+			ricercaCompensiTrovato(userContext, new Long ("10221"));
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (PersistencyException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
 			if (!verificaStatoEsercizio(
 					userContext,
 					new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk(
@@ -7097,7 +7107,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	private void recuperoInfoAggiuntiveCompensoPerBrevetto(
 			UserContext userContext, CompensoBulk comp)
 			throws ComponentException, PersistencyException {
-		List bl = loadDocContAssociati(userContext, comp);
+		List bl = new ArrayList();
 		SQLBuilder sql = getHome( userContext, Mandato_rigaIBulk.class ).createSQLBuilder();
 		sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, comp.getCd_cds() );
 		sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, comp.getCd_unita_organizzativa() );
@@ -7106,15 +7116,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		sql.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, comp.getPg_compenso() );
 		sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, Mandato_rigaBulk.STATO_ANNULLATO);
 		List result = getHome( userContext, Mandato_rigaIBulk.class ).fetchAll( sql );
-		if (bl == null){
-			bl = new ArrayList();
-		}
 		for (Iterator k = result.iterator(); k.hasNext(); ) {
 			Mandato_rigaIBulk manr = (Mandato_rigaIBulk)k.next();
 			manr.setMandato((MandatoIBulk)getHome(userContext, MandatoIBulk.class).findByPrimaryKey(manr.getMandato()));
 			bl.add(manr);
 		}
-		comp.setDocContAssociati(bl);
+		comp.setMandatiRigaAssociati(bl);
 	}
 	public Tipo_rapportoBulk getTipoRapportoProf(UserContext userContext)
 			throws ComponentException {
