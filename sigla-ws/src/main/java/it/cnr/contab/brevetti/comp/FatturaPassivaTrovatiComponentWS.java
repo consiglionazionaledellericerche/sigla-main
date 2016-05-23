@@ -178,6 +178,7 @@ public Compenso ricercaCompensoByKey(String user,Long esercizio,String cds,Strin
 }
 
 
+@RolesAllowed({"WSUserRole","BrevettiRole"})
 public java.util.ArrayList<Compenso> ricercaCompensi(String user, Long trovato) throws Exception {
 	return ricercaCompensi(user, trovato, Boolean.FALSE);
 }
