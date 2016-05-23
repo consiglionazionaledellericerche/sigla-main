@@ -1,33 +1,28 @@
 package it.cnr.contab.pdg00.comp;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiHome;
-import it.cnr.contab.pdg00.bulk.*;
+import it.cnr.contab.pdg00.bulk.V_stm_paramin_sit_sint_gaeBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.Iterator;
-import java.util.Vector;
 
 
 public class StampaSituazioneSinteticaGAEComponent extends it.cnr.jada.comp.CRUDComponent implements it.cnr.jada.comp.ICRUDMgr,  Cloneable,Serializable {
@@ -148,43 +143,35 @@ public class StampaSituazioneSinteticaGAEComponent extends it.cnr.jada.comp.CRUD
 	
 	public RemoteIterator selezionaGae (UserContext userContext,  CompoundFindClause clause) throws ComponentException, PersistencyException, RemoteException
 		{ 
-		WorkpackageHome gaeHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
+		WorkpackageHome gaeHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
 		SQLBuilder sql = gaeHome.createSQLBuilder();
 		
 		if(!isUtenteEnte(userContext)){ 
 			CdrBulk cdrUtente = cdrFromUserContext(userContext);
-			String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
+			String uoScrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
+
+			sql.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+
+			sql.addTableToHeader("V_CDR_VALIDO");
+			sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","V_CDR_VALIDO.ESERCIZIO");
+			sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+			sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.AND, "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,cdrUtente.getCd_centro_responsabilita());
+
 			if (cdrUtente.getLivello().compareTo(CdrHome.CDR_PRIMO_LIVELLO)==0)
-			{
-				sql.addTableToHeader("V_CDR_VALIDO");
-				sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
-				sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-//				if(cdrUtente.getCd_centro_responsabilita().substring(0,7).equals(uo_scrivania)){
-					sql.openParenthesis("AND");
-					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-					//sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
-					sql.closeParenthesis();
-//				}
-//				else
-//					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
-			}else{
-				sql.addTableToHeader("V_CDR_VALIDO");
-				sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
-				sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-				sql.openParenthesis("AND");
-				sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-				sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
-				sql.closeParenthesis();
-			}
-			
+				sql.addSQLClause(FindClause.OR, "V_CDR_VALIDO.CD_CDR_AFFERENZA",SQLBuilder.EQUALS,cdrUtente.getCd_centro_responsabilita());
+			else
+				sql.addSQLClause(FindClause.OR, "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,uoScrivania);
+
+			sql.closeParenthesis();
 		}
+
 		Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
-		SQLBuilder sql_saldi = saldiHome.createSQLBuilder();
-		sql_saldi.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-		sql_saldi.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
-		sql_saldi.addSQLJoin("LINEA_ATTIVITA.CD_LINEA_ATTIVITA","VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
-		sql.addSQLExistsClause("AND",sql_saldi);
+		SQLBuilder sqlSaldi = saldiHome.createSQLBuilder();
+		sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
+		sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
+		sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA","VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
+		sql.addSQLExistsClause(FindClause.AND,sqlSaldi);
 		sql.addClause(clause);
 		return iterator(userContext, sql, WorkpackageBulk.class, getFetchPolicyName("find"));
 		}
