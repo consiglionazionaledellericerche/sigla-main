@@ -3773,12 +3773,21 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					.findTipoTrattamentoValido(filtro);
 
 			compenso.setTipoTrattamento(tratt);
+			if (isCompensoSoloInailEnte(tratt)){
+				compenso.setCompensoSoloInailEnte(true);
+			}
 
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
 			throw handleException(ex);
 		}
 	}
 
+	private Boolean isCompensoSoloInailEnte(Tipo_trattamentoBulk tratt){
+		if (tratt != null && tratt.getFl_solo_inail_ente() != null && tratt.getFl_solo_inail_ente()){
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * Viene caricato da db il TERZO associato al compenso valido in Data
 	 * Registrazione e con tipi rapporto validi in Data Competenza Coge
@@ -4701,6 +4710,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					compenso.setRegioneIrap(loadRegioneIRAPDefalut(userContext,
 							compenso));
 				}
+				if (isCompensoSoloInailEnte(compenso.getTipoTrattamento())){
+					compenso.setCompensoSoloInailEnte(true);
+				}
 				if (obj.getCd_cori().startsWith(compenso.CODICE_INAIL))
 					compenso.setVisualizzaTipologiaRischio(true);
 				if (obj.getCd_cori().startsWith(compenso.CODICE_IVA))
@@ -5008,16 +5020,18 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	private void validaCompensoConCalcoli(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
 
-		if (compenso.getIm_lordo_percipiente().compareTo(
-				new java.math.BigDecimal(0)) <= 0)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"L'importo lordo deve essere maggiore di zero");
+		if (!isCompensoSoloInailEnte(compenso.getTipoTrattamento())){
+			if (compenso.getIm_lordo_percipiente().compareTo(
+					new java.math.BigDecimal(0)) <= 0)
+				throw new it.cnr.jada.comp.ApplicationException(
+						"L'importo lordo deve essere maggiore di zero");
 
-		java.math.BigDecimal tmp = compenso.getQuota_esente().add(
-				compenso.getIm_no_fiscale());
-		if (compenso.getIm_lordo_percipiente().compareTo(tmp) < 0)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"L'importo lordo deve essere maggiore delle quote esenti IRPEF e CO/RI");
+			java.math.BigDecimal tmp = compenso.getQuota_esente().add(
+					compenso.getIm_no_fiscale());
+			if (compenso.getIm_lordo_percipiente().compareTo(tmp) < 0)
+				throw new it.cnr.jada.comp.ApplicationException(
+						"L'importo lordo deve essere maggiore delle quote esenti IRPEF e CO/RI");
+		}
 	}
 
 	/**
