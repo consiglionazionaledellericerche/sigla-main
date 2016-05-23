@@ -336,7 +336,7 @@ private void caricaCompenso(UserContext userContext, java.util.ArrayList listaRi
 			ritorno.setDt_emissione_obbligazione_impegno(obbl.getDt_registrazione());
 		}
 
-		List mans = compenso.getDocContAssociati();
+		List mans = compenso.getMandatiRigaAssociati();
 		
 		Mandato_rigaIBulk manr=null;
 		if (mans!=null && !mans.isEmpty()) {
