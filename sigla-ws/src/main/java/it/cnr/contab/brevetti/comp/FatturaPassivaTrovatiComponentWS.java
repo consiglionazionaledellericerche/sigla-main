@@ -14,9 +14,12 @@ import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
+import it.cnr.jada.persistency.PersistencyException;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -96,9 +99,21 @@ public java.util.ArrayList<FatturaPassiva> ricercaFatturePassive(String user, Lo
  * @throws Exception
  */
 @RolesAllowed({"WSUserRole","BrevettiRole"})
+public java.util.ArrayList<FatturaPassivaBase> ricercaDocumentiAmministrativiBase(String user, Long trovato) throws Exception {
+	return ricercaDocumentiAmministrativiBase(user, trovato, Boolean.TRUE);
+}
+
+@RolesAllowed({"WSUserRole","BrevettiRole"})
 public java.util.ArrayList<FatturaPassivaBase> ricercaFatturePassiveBase(String user, Long trovato) throws Exception {
 	return ricercaFatture(user, trovato, Boolean.TRUE);
 }
+
+private java.util.ArrayList ricercaDocumentiAmministrativiBase(String user, Long trovato, Boolean base) throws Exception {
+	java.util.ArrayList listaRitorno=ricercaFatture(user, trovato, base);
+	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+	return ricercaCompensi(trovato, base, userContext, listaRitorno);
+}
+
 private java.util.ArrayList ricercaFatture(String user, Long trovato, Boolean base) throws Exception {
 	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
 	java.util.ArrayList listaRitorno=new ArrayList();
@@ -121,6 +136,12 @@ private java.util.ArrayList ricercaFatture(String user, Long trovato, Boolean ba
 private java.util.ArrayList ricercaCompensi(String user, Long trovato, Boolean base) throws Exception {
 	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
 	java.util.ArrayList listaRitorno=new ArrayList();
+	return ricercaCompensi(trovato, base, userContext, listaRitorno);
+}
+private java.util.ArrayList ricercaCompensi(Long trovato, Boolean base,
+		UserContext userContext, java.util.ArrayList listaRitorno)
+		throws SOAPException, ComponentException, RemoteException,
+		PersistencyException, Exception {
 	if(trovato==null)
 		 throw new SOAPFaultException(faultIdTrovatoNullo());
 	try{	
