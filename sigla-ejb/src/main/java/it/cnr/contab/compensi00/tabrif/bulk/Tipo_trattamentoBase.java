@@ -75,6 +75,9 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	// FL_AGEVOLAZIONI_RIENTRO_LAV CHAR(1) NOT NULL
 	private java.lang.Boolean fl_agevolazioni_rientro_lav;
 	
+	// FL_SOLO_INAIL_ENTE CHAR(1) NOT NULL
+	private java.lang.Boolean fl_solo_inail_ente;
+	
 public Tipo_trattamentoBase() {
 	super();
 }
@@ -299,5 +302,11 @@ public java.lang.Boolean getFl_agevolazioni_rientro_lav() {
 public void setFl_agevolazioni_rientro_lav(
 		java.lang.Boolean fl_agevolazioni_rientro_lav) {
 	this.fl_agevolazioni_rientro_lav = fl_agevolazioni_rientro_lav;
+}
+public java.lang.Boolean getFl_solo_inail_ente() {
+	return fl_solo_inail_ente;
+}
+public void setFl_solo_inail_ente(java.lang.Boolean fl_solo_inail_ente) {
+	this.fl_solo_inail_ente = fl_solo_inail_ente;
 }
 }
