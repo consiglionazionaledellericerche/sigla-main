@@ -32,9 +32,6 @@ public class CnrIfacDettObbligazioniBase extends CnrIfacDettObbligazioniKey impl
 //    PG_OBBLIGAZIONE_ORI_RIPORTO DECIMAL(10,0)
 	private java.lang.Long pgObbligazioneOriRiporto;
  
-//  PG_DOCAMM DECIMAL(10,0)
-	private java.lang.Long pgDocamm;
-
 //    FORNITORE VARCHAR(200) NOT NULL
 	private java.lang.String fornitore;
  
@@ -42,8 +39,8 @@ public class CnrIfacDettObbligazioniBase extends CnrIfacDettObbligazioniKey impl
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: CNR_IFAC_DETT_OBBLIGAZIONI
 	 **/
-	public CnrIfacDettObbligazioniBase(java.lang.String cdCds,java.lang.String cdCentroResponsabilita,java.lang.String cdLineaAttivita,java.lang.String cdVoce,java.lang.Integer esercizio,java.lang.Integer esercizioOriginale,java.lang.Long pgObbligazione,java.lang.Long pgObbligazioneScadenzario,java.lang.String tiAppartenenza,java.lang.String tiGestione) {
-		super(cdCds, cdCentroResponsabilita, cdLineaAttivita, cdVoce, esercizio, esercizioOriginale, pgObbligazione, pgObbligazioneScadenzario, tiAppartenenza, tiGestione);
+	public CnrIfacDettObbligazioniBase(java.lang.String cdCds,java.lang.String cdCentroResponsabilita,java.lang.String cdLineaAttivita,java.lang.String cdVoce,java.lang.Integer esercizio,java.lang.Integer esercizioOriginale,java.lang.Long pgObbligazione,java.lang.Long pgObbligazioneScadenzario,java.lang.String tiAppartenenza,java.lang.String tiGestione,java.lang.Long pgDocamm) {
+		super(cdCds, cdCentroResponsabilita, cdLineaAttivita, cdVoce, esercizio, esercizioOriginale, pgObbligazione, pgObbligazioneScadenzario, tiAppartenenza, tiGestione, pgDocamm);
 	}
 	public CnrIfacDettObbligazioniBase() {
 		super();
@@ -158,11 +155,5 @@ public class CnrIfacDettObbligazioniBase extends CnrIfacDettObbligazioniKey impl
 	}
 	public void setEsercizioOriOriRiporto(java.lang.Integer esercizioOriOriRiporto) {
 		this.esercizioOriOriRiporto = esercizioOriOriRiporto;
-	}
-	public java.lang.Long getPgDocamm() {
-		return pgDocamm;
-	}
-	public void setPgDocamm(java.lang.Long pgDocamm) {
-		this.pgDocamm = pgDocamm;
 	}
 }
