@@ -191,7 +191,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk tipologiaRischio;
 	private boolean visualizzaVoceIva = false;
 	private boolean visualizzaRegioneIrap = false;
+	private boolean trattamentoSoloEnte = false;
 	private boolean visualizzaTipologiaRischio = false;
+	private boolean isCompensoSoloInailEnte = false;
 	public final static java.lang.String CODICE_IRAP = "IRAP";
 	public final static java.lang.String CODICE_INAIL = "INAIL";
 	public final static java.lang.String CODICE_IVA = "IVA";
@@ -205,6 +207,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private java.util.Vector documentiContabiliCancellati = new java.util.Vector();
 	private java.util.Vector dettagliCancellati = new java.util.Vector();
 	private java.util.List docContAssociati;
+	private java.util.List mandatiRigaAssociati;
 	private V_doc_cont_compBulk docContPrincipale;
 	private java.lang.Boolean aperturaDaMinicarriera = java.lang.Boolean.FALSE;
 	private java.lang.String riportata = NON_RIPORTATO;
@@ -2095,6 +2098,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 		setVisualizzaRegioneIrap(false);
 		setVisualizzaTipologiaRischio(false);
+		setCompensoSoloInailEnte(false);
 		setVisualizzaVoceIva(false);
 	}
 
@@ -3480,6 +3484,13 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		      return	true;
         return false;
 	}
+	public boolean isTrattamentoSoloEnte() {
+		return trattamentoSoloEnte;
+	}
+
+	public void setTrattamentoSoloEnte(boolean trattamentoSoloEnte) {
+		this.trattamentoSoloEnte = trattamentoSoloEnte;
+	}
 	public void impostaVoceIva(Fattura_passiva_IBulk fp) {
 		
 		for (java.util.Iterator i = fp.getFattura_passiva_dettColl()
@@ -3509,5 +3520,21 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 				}
 			}
 		}
+	}
+
+	public boolean isCompensoSoloInailEnte() {
+		return isCompensoSoloInailEnte;
+	}
+
+	public void setCompensoSoloInailEnte(boolean isCompensoSoloInailEnte) {
+		this.isCompensoSoloInailEnte = isCompensoSoloInailEnte;
+	}
+
+	public java.util.List getMandatiRigaAssociati() {
+		return mandatiRigaAssociati;
+	}
+
+	public void setMandatiRigaAssociati(java.util.List mandatiRigaAssociati) {
+		this.mandatiRigaAssociati = mandatiRigaAssociati;
 	}
 }
