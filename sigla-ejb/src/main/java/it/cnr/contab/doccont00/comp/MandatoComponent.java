@@ -6524,11 +6524,14 @@ public Boolean isCollegamentoSospesoCompleto(UserContext userContext,
 		MandatoHome mandatoHome = (MandatoHome) getHome(userContext,mandato.getClass());
 		mandato = (MandatoBulk) mandatoHome.findByPrimaryKey(mandato);
 		if (mandato.isRequiredSospeso()) {
-			
+			mandato.setMandato_rigaColl(new BulkList(((MandatoHome) getHome(
+					userContext, mandato.getClass())).findMandato_riga(userContext, mandato)));
 			Sospeso_det_uscBulk sdu;
 			mandato.setSospeso_det_uscColl(new BulkList(
 					((MandatoHome) getHome(userContext, mandato.getClass()))
 					.findSospeso_det_usc(userContext, mandato)));
+			mandato = inizializzaFlagFaiReversale(userContext,
+					(MandatoIBulk) mandato);
 			for (Iterator i = mandato.getSospeso_det_uscColl().iterator(); i.hasNext();) {
 				sdu = (Sospeso_det_uscBulk) i.next();
 				sdu.setMandato(mandato);
