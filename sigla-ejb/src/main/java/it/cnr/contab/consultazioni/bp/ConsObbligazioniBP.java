@@ -20,6 +20,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelectionListener;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
@@ -32,7 +33,7 @@ import it.cnr.jada.util.jsp.JSPUtils;
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class ConsObbligazioniBP extends SelezionatoreListaBP 
+public class ConsObbligazioniBP extends ConsultazioniRestBP
 	implements SelectionListener, SearchProvider {
 
 	private String componentSessioneName;
@@ -50,11 +51,6 @@ public class ConsObbligazioniBP extends SelezionatoreListaBP
 		super(function);
 	}
 
-	public it.cnr.jada.ejb.CRUDComponentSession createComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException, BusinessProcessException {
-	
-		return (it.cnr.jada.ejb.CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession", it.cnr.jada.ejb.CRUDComponentSession.class);
-	}
-	
 	protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 		try {
 			super.init(config,context);
