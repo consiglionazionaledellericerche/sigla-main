@@ -144,6 +144,22 @@
 		inputType="TEXT"
 		maxLength="100"
 		label="Tipo doc. Amm." />	
+	<fieldProperty
+		name="data_incasso"
+		property="data_incasso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		label="Data di incasso" />
+	<fieldProperty
+		name="data_docamm"
+		property="data_docamm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		label="Data documento Amministrativo" />
 	<formFieldProperty
 		name="cds" />
 	<formFieldProperty
@@ -186,6 +202,10 @@
 		name="denominazione_sede" />
 	<formFieldProperty
 		name="ti_fattura" />
+	<formFieldProperty
+		name="data_incasso" />
+	<formFieldProperty
+		name="data_docamm" />
 	<columnFieldProperty
 		name="cds" />
 	<columnFieldProperty
@@ -229,6 +249,10 @@
 	<columnFieldProperty
 		name="denominazione_sede"
 		label="Denominazione sede" />
+	<columnFieldProperty
+		name="data_incasso" />
+	<columnFieldProperty
+		name="data_docamm" />
 	<findFieldProperty
 		name="cds" />
 	<findFieldProperty
@@ -271,4 +295,8 @@
 		name="denominazione_sede" />
 	<findFieldProperty
 		name="tipo_doc_amm" />	
+	<findFieldProperty
+		name="data_incasso" />
+	<findFieldProperty
+		name="data_docamm" />
 </bulkInfo>
