@@ -196,7 +196,7 @@
 		name="cd_linea_attivita" />
 	<columnFieldProperty
 		name="ds_linea_attivita"
-		label="Descrizione&#160;GAE&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+		label="Descrizione GAE" />
 	<columnFieldProperty
 		name="cd_elemento_voce" />
 	<columnFieldProperty
@@ -211,7 +211,7 @@
 		name="pg_accertamento_scadenzario" />
 	<columnFieldProperty
 		name="ds_scadenza" 		
-		label="Descrizione&#160;scadenza&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+		label="Descrizione scadenza" />
 	<columnFieldProperty
 		name="im_scadenza" />
 	<columnFieldProperty
@@ -228,7 +228,7 @@
 		name="cd_terzo" />
 	<columnFieldProperty
 		name="denominazione_sede"
-		label="Denominazione&#160;sede&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+		label="Denominazione sede" />
 	<findFieldProperty
 		name="cds" />
 	<findFieldProperty
