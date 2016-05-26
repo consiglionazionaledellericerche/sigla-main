@@ -106,6 +106,16 @@
 			propertyName="tipo_doc_amm"
 			sqlTypeName="VARCHAR"
 			columnSize="100"/>
+		<columnMapping
+			columnName="DATA_DOCAMM"
+			propertyName="data_docamm"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DATA_INCASSO"
+			propertyName="data_incasso"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
 	</defaultColumnMap>	
 		
 	<persistentProperty
@@ -148,4 +158,8 @@
 		name="denominazione_sede" />
 	<persistentProperty
 		name="tipo_doc_amm" />	
+	<persistentProperty
+		name="data_docamm" />
+	<persistentProperty
+		name="data_incasso" />
 </SQLPersistentInfo>

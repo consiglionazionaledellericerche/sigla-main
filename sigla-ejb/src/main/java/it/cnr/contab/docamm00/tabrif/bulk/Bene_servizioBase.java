@@ -34,6 +34,8 @@ public class Bene_servizioBase extends Bene_servizioKey implements Keyed {
 	private java.lang.Boolean fl_obb_intrastat_ven;
 	
 	private java.lang.Boolean fl_autofattura;
+
+	private java.lang.Boolean fl_bollo;
 public Bene_servizioBase() {
 	super();
 }
@@ -147,5 +149,11 @@ public java.lang.Boolean getFl_autofattura() {
 }
 public void setFl_autofattura(java.lang.Boolean fl_autofattura) {
 	this.fl_autofattura = fl_autofattura;
+}
+public java.lang.Boolean getFl_bollo() {
+	return fl_bollo;
+}
+public void setFl_bollo(java.lang.Boolean fl_bollo) {
+	this.fl_bollo = fl_bollo;
 }
 }
