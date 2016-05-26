@@ -14,8 +14,8 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.action.ConsultazioniAction;
 import it.cnr.jada.util.action.RicercaLiberaBP;
-import it.cnr.jada.util.action.SelezionatoreListaAction;
 
 /**
  * @author mincarnato
@@ -23,7 +23,7 @@ import it.cnr.jada.util.action.SelezionatoreListaAction;
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class ConsObbligazioniAction extends SelezionatoreListaAction {
+public class ConsObbligazioniAction extends ConsultazioniAction {
 
 	public Forward doBringBack(ActionContext actioncontext) {
 		return null;
