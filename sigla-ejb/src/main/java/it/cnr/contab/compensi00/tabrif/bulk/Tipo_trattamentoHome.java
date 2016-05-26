@@ -46,6 +46,7 @@ private void addSQLTipoTrattamento(SQLBuilder sql, Filtro_trattamentoBulk filtro
 	sql.addClause("AND","fl_incarico",sql.EQUALS, filtro.getFlIncarico());
 	sql.addClause("AND","fl_tipo_prestazione_obbl",sql.EQUALS, filtro.getFlTipoPrestazioneObbl());
 	sql.addClause("AND","fl_agevolazioni_rientro_lav",sql.EQUALS, filtro.getFlAgevolazioniRientroLav());	
+	sql.addClause("AND","fl_solo_inail_ente",sql.EQUALS, filtro.getFlSoloInailEnte());	
 	if (filtro.getCdTipoRapporto() != null && filtro.getCdTipoRapporto().equals("DIP"))
 	{   
 		sql.addClause("AND (","fl_anno_prec",sql.ISNULL,null);

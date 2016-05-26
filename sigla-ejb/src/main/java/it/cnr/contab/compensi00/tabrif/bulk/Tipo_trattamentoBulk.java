@@ -93,6 +93,7 @@ private void resetFlags() {
 	this.setFl_incarico(Boolean.FALSE);
 	this.setFl_tipo_prestazione_obbl(Boolean.FALSE);
 	this.setFl_agevolazioni_rientro_lav(Boolean.FALSE);	
+	this.setFl_solo_inail_ente(Boolean.FALSE);	
 }
 /**
  * Insert the method's description here.
