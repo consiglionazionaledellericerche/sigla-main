@@ -91,6 +91,8 @@ protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.a
 		setFl_valido(TRUE);
 	if (getFl_autofattura()==null)
 		setFl_autofattura(FALSE);	
+	if (getFl_bollo()==null)
+		setFl_bollo(FALSE);	
 	
 	return super.initialize(bp,context);
 }
