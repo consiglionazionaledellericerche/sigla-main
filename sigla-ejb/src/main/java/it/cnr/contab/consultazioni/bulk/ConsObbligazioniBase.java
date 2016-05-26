@@ -78,7 +78,12 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 
 	private java.lang.Long pg_contratto;
 
- 
+//  DT_PAGAMENTO TIMESTAMP(7)
+	private java.sql.Timestamp data_pagamento;
+
+//  DT_DOCAMM TIMESTAMP(7)
+	private java.sql.Timestamp data_docamm;
+
 	public java.lang.String getUo () {
 		return uo;
 	}
@@ -235,5 +240,17 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	}
 	public void setPg_contratto(java.lang.Long pg_contratto) {
 		this.pg_contratto = pg_contratto;
+	}
+	public java.sql.Timestamp getData_pagamento() {
+		return data_pagamento;
+	}
+	public void setData_pagamento(java.sql.Timestamp data_pagamento) {
+		this.data_pagamento = data_pagamento;
+	}
+	public java.sql.Timestamp getData_docamm() {
+		return data_docamm;
+	}
+	public void setData_docamm(java.sql.Timestamp data_docamm) {
+		this.data_docamm = data_docamm;
 	}
 }
