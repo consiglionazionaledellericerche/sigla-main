@@ -191,6 +191,22 @@
 		inputSize="10"
 		maxLength="10"
 		label="Numero Contratto" />	
+	<fieldProperty
+		name="data_pagamento"
+		property="data_pagamento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		label="Data di pagamento" />
+	<fieldProperty
+		name="data_docamm"
+		property="data_docamm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		label="Data documento Amministrativo" />
 	<formFieldProperty
 		name="cds" />
 	<formFieldProperty
@@ -205,6 +221,10 @@
 		name="cd_elemento_voce" />
 	<formFieldProperty
 		name="dt_registrazione" />
+	<formFieldProperty
+		name="data_pagamento" />
+	<formFieldProperty
+		name="data_docamm" />
 	<formFieldProperty
 		name="esercizio_originale" />
 	<formFieldProperty
@@ -259,6 +279,10 @@
 	<columnFieldProperty
 		name="dt_registrazione" />
 	<columnFieldProperty
+		name="data_pagamento" />
+	<columnFieldProperty
+		name="data_docamm" />
+	<columnFieldProperty
 		name="esercizio_originale" />
 	<columnFieldProperty
 		name="pg_obbligazione" />
@@ -312,6 +336,10 @@
 		name="cd_elemento_voce" />
 	<findFieldProperty
 		name="dt_registrazione" />
+	<findFieldProperty
+		name="data_pagamento" />
+	<findFieldProperty
+		name="data_docamm" />
 	<findFieldProperty
 		name="esercizio_originale" />
 	<findFieldProperty
