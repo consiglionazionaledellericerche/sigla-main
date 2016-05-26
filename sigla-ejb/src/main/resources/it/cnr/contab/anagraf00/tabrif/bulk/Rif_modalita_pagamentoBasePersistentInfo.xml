@@ -48,7 +48,7 @@
 			propertyName="fl_all_obbl_mandato"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			nullable="false"
+			nullable="true"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />										
 		<columnMapping
 			columnName="DACR"
