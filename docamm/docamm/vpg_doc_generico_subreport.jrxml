@@ -444,7 +444,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 					<text><![CDATA[incasserà la somma di]]></text>
 				</staticText>
 				<textField pattern="€ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="132" y="75" width="55" height="14"/>
+					<reportElement key="textField" style="TNR10" x="132" y="75" width="84" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -476,17 +476,6 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_DOCUMENTO_GENERICO}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement key="staticText-26" style="TNR10" x="187" y="75" width="19" height="14"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement/>
-					<text><![CDATA[ #]]></text>
-				</staticText>
 				<line>
 					<reportElement key="line-27" style="TNR8" x="3" y="2" width="529" height="1"/>
 				</line>
@@ -564,7 +553,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 					<text><![CDATA[Importo:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="€ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-14" style="TNR10" x="54" y="1" width="55" height="14"/>
+					<reportElement key="textField-14" style="TNR10" x="54" y="1" width="73" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -575,7 +564,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_TOTALE}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-23" style="TNR10" x="108" y="1" width="19" height="14"/>
+					<reportElement key="staticText-23" style="TNR10" x="129" y="2" width="19" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -692,7 +681,7 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 					<text><![CDATA[Importo del pagamento:]]></text>
 				</staticText>
 				<textField pattern="€ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-19" style="TNR10" x="121" y="56" width="55" height="14"/>
+					<reportElement key="textField-19" style="TNR10" x="121" y="56" width="96" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -702,17 +691,6 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_RIGA}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement key="staticText-24" style="TNR10" x="175" y="56" width="19" height="14"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement/>
-					<text><![CDATA[ #]]></text>
-				</staticText>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-34" style="TNR10" x="55" y="41" width="282" height="14"/>
 					<box>
@@ -756,7 +734,7 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 					<text><![CDATA[Importo in valuta]]></text>
 				</staticText>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-20" style="TNR10" x="120" y="3" width="55" height="14"/>
+					<reportElement key="textField-20" style="TNR10" x="120" y="3" width="96" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -777,17 +755,6 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA["("+$F{CD_DIVISA}+"):"]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement key="staticText-25" style="TNR10" x="176" y="3" width="19" height="14"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement/>
-					<text><![CDATA[ #]]></text>
-				</staticText>
 				<line>
 					<reportElement key="line-10" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="17"/>
 				</line>
