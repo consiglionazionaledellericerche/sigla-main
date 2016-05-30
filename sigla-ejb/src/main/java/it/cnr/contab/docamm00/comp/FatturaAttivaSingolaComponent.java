@@ -5435,9 +5435,10 @@ public void validaFattura(UserContext aUC, Fattura_attivaBulk fatturaAttiva) thr
                     throw new it.cnr.jada.comp.ApplicationException("Attenzione: inserire un tariffario valido per ogni riga");
             }
             validaRiga(aUC, riga);
-            if (riga.getBene_servizio().getFl_bollo() && esisteRigaConBollo){
-                throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste più di una riga con un bene/servizio di tipo Bollo");
-            } else {	
+            if (riga.getBene_servizio().getFl_bollo()){
+            	if (esisteRigaConBollo){
+                    throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste più di una riga con un bene/servizio di tipo Bollo");
+            	}
             	esisteRigaConBollo = true;
             }
         }
