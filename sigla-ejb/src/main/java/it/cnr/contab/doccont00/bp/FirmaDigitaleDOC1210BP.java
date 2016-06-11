@@ -84,6 +84,8 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 			Lettera_pagam_esteroBulk lettera = new Lettera_pagam_esteroBulk(statoTrasmissione.getCd_cds(),statoTrasmissione.getCd_unita_organizzativa(),
 					statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont());
 			lettera = (Lettera_pagam_esteroBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), lettera);
+			if (!statoTrasmissione.getStato_trasmissione().equals(lettera.getStato_trasmissione()))
+				throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");			
 			lettera.setStato_trasmissione(stato);
 			if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 				lettera.setDt_firma(EJBCommonServices.getServerTimestamp());
