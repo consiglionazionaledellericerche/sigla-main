@@ -120,7 +120,6 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			for (Lettera_pagam_esteroBulk lettera : selectedElements) {
 				CMISPath cmisPath = lettera.getCMISPath(cmisService);
-				lettera.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
 				PDDocument document = PDDocument.load(this.getClass().getResourceAsStream("1210.pdf"));
 				PDDocumentCatalog pdCatalog = document.getDocumentCatalog();
 				PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
