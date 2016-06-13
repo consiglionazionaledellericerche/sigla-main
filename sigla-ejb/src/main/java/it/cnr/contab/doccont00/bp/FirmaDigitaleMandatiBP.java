@@ -131,7 +131,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {				
 				MandatoIBulk mandato = new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
 				mandato = (MandatoIBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), mandato);
-				if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(mandato.getStato()))
+				if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(mandato.getStato_trasmissione()))
 					throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
 				mandato.setStato_trasmissione(stato);
 				if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
@@ -152,7 +152,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	private void aggiornaStatoReversale(ActionContext actioncontext, StatoTrasmissione v_mandato_reversaleBulk, String stato) throws ComponentException, RemoteException {
 		ReversaleIBulk reversale = new ReversaleIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
 		reversale = (ReversaleIBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), reversale);
-		if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(reversale.getStato()))
+		if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(reversale.getStato_trasmissione()))
 			throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
 		reversale.setStato_trasmissione(stato);
 		if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
@@ -237,7 +237,6 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 				PrintService.class).executeReport(actioncontext.getUserContext(),
 				print);
 		CMISPath cmisPath = v_mandato_reversaleBulk.getCMISPath(cmisService);
-		v_mandato_reversaleBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
 		Document node = cmisService.restoreSimpleDocument(v_mandato_reversaleBulk, report.getInputStream(), report.getContentType(), report.getName(), cmisPath);
 		cmisService.makeVersionable(node);
 		aggiornaStato(actioncontext, MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO, v_mandato_reversaleBulk);		
