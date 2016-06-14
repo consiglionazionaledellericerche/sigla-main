@@ -3,10 +3,10 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="85"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
@@ -25,10 +25,10 @@
 	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
 	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("2005")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("2015")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Variazione" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("146")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("869")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
@@ -42,7 +42,7 @@
 where esercizio = $P{Esercizio}
 and pg_variazione_pdg = $P{Variazione}]]>
 	</queryString>
-	<field name="ESERCIZIO" class="java.lang.Integer"/>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="CD_CENTRO_RESPONSABILITA" class="java.lang.String"/>
 	<field name="DS_CDR" class="java.lang.String"/>
 	<field name="CD_LINEA_ATTIVITA" class="java.lang.String"/>
@@ -57,7 +57,7 @@ and pg_variazione_pdg = $P{Variazione}]]>
 	<field name="STATO" class="java.lang.String"/>
 	<field name="CD_NATURA" class="java.lang.String"/>
 	<field name="DS_NATURA" class="java.lang.String"/>
-	<field name="PG_VARIAZIONE_PDG" class="java.lang.Integer"/>
+	<field name="PG_VARIAZIONE_PDG" class="java.math.BigDecimal"/>
 	<field name="ESERCIZIO_VARIAZIONE_PDG" class="java.math.BigDecimal"/>
 	<field name="CD_CENTRO_RESPONSABILITA_CLGS" class="java.lang.String"/>
 	<field name="DS_CDR_CLGS" class="java.lang.String"/>
@@ -67,6 +67,7 @@ and pg_variazione_pdg = $P{Variazione}]]>
 	<field name="CATEGORIA" class="java.lang.String"/>
 	<field name="CD_MODULO" class="java.lang.String"/>
 	<field name="DS_MODULO" class="java.lang.String"/>
+	<field name="LIVELLO_PROGETTO" class="java.math.BigDecimal"/>
 	<variable name="SUM_Assestato_Spesa" class="java.math.BigDecimal" resetType="Group" resetGroup="Cd_linea_attivita" calculation="Sum">
 		<variableExpression><![CDATA[$F{ASSESTATO_SPESA}]]></variableExpression>
 	</variable>
@@ -119,7 +120,9 @@ and pg_variazione_pdg = $P{Variazione}]]>
 					<text><![CDATA[CdR Assegnatario]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-3" style="TNRG10" x="9" y="18" width="86" height="12"/>
+					<reportElement key="staticText-3" style="TNRG10" x="9" y="18" width="86" height="12">
+						<printWhenExpression><![CDATA[$F{LIVELLO_PROGETTO}.equals( new BigDecimal("3" ) )]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -128,6 +131,19 @@ and pg_variazione_pdg = $P{Variazione}]]>
 					</box>
 					<textElement/>
 					<text><![CDATA[Modulo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-3" style="TNRG10" x="9" y="18" width="86" height="12">
+						<printWhenExpression><![CDATA[$F{LIVELLO_PROGETTO}.equals( new BigDecimal("2") )]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Progetto]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-4" style="TNRG10" x="9" y="32" width="86" height="12"/>
