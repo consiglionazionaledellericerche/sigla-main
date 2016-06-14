@@ -3,11 +3,11 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.9487171000000014"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="92"/>
+	<property name="ireport.y" value="480"/>
 	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
@@ -806,7 +806,7 @@ $F{DENOMINAZIONE_SEDE} != null)]]></printWhenExpression>
 			     "  "+($F{CIN_TERZO}==null?" ":$F{CIN_TERZO})+
                              "  "+($F{ABI_TERZO}==null?" ":$F{ABI_TERZO})+
 			     "  "+($F{CAB_TERZO}==null?" ":$F{CAB_TERZO})+
-                             "  "+$F{NUMERO_CONTO_TERZO}+
+                 "  "+($F{NUMERO_CONTO_TERZO}==null?" ":$F{NUMERO_CONTO_TERZO})+
 			     "  "+($F{IBAN_TERZO}==null?" ":"IBAN "+$F{IBAN_TERZO})+
 			     "  "+($F{SWIFT_TERZO}==null?" ":"SWIFT "+$F{SWIFT_TERZO})
 :$F{TI_PAGAMENTO}.equals("P")?$F{DS_MODALITA_PAG} + " n. " + $F{NUMERO_CONTO_TERZO} + ($F{INTESTAZIONE_TERZO}!=null?", intestazione: " + $F{INTESTAZIONE_TERZO}:"")
@@ -1672,7 +1672,7 @@ $F{TI_MANDATO}.equals("R")
 	<pageHeader>
 		<band height="50" splitType="Stretch">
 			<printWhenExpression><![CDATA[new Boolean(!$F{TI_RECORD_L1}.equals("B"))]]></printWhenExpression>
-			<image>
+			<image onErrorType="Blank">
 				<reportElement key="image-1" x="0" y="0" width="531" height="41"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
