@@ -22,6 +22,7 @@ public enum CMISDocAmmAspect {
 	SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO("P:sigla_fatture_attachment:esito_accettato"),
 	SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO("P:sigla_fatture_attachment:esito_rifiutato"),
 	SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI("P:sigla_fatture_attachment:decorrenza_termini"),
+	SIGLA_FATTURE_ATTACHMENT_ALLEGATI_NON_INVIATI_SDI("P:sigla_fatture_attachment:allegati_non_inviati_sdi"),
 	SIGLA_FATTURE_ATTACHMENT_TRASMISSIONE_FATTURA("P:sigla_fatture_attachment:trasmissione_fattura");
 	
 	
