@@ -1,5 +1,6 @@
 package it.cnr.contab.anagraf00.tabrif.bulk;
 
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -116,5 +117,10 @@ public boolean isModalitaBancaItalia() {
 		return true;
 	}
 	return false;
+}
+public boolean isMandatoRegSospeso(){
+	if(getTi_mandato()!=null && getTi_mandato().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO)==0)
+	  return true;
+	return false; 
 }
 }

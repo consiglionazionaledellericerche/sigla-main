@@ -138,6 +138,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -2519,6 +2520,16 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				.inizializzaBulkPerInserimento(userContext, bulk);
 
 		try {
+			ricercaCompensiTrovato(userContext, new Long ("10221"));
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (PersistencyException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
 			if (!verificaStatoEsercizio(
 					userContext,
 					new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk(
@@ -3773,12 +3784,21 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					.findTipoTrattamentoValido(filtro);
 
 			compenso.setTipoTrattamento(tratt);
+			if (isCompensoSoloInailEnte(tratt)){
+				compenso.setCompensoSoloInailEnte(true);
+			}
 
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
 			throw handleException(ex);
 		}
 	}
 
+	private Boolean isCompensoSoloInailEnte(Tipo_trattamentoBulk tratt){
+		if (tratt != null && tratt.getFl_solo_inail_ente() != null && tratt.getFl_solo_inail_ente()){
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * Viene caricato da db il TERZO associato al compenso valido in Data
 	 * Registrazione e con tipi rapporto validi in Data Competenza Coge
@@ -4701,6 +4721,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					compenso.setRegioneIrap(loadRegioneIRAPDefalut(userContext,
 							compenso));
 				}
+				if (isCompensoSoloInailEnte(compenso.getTipoTrattamento())){
+					compenso.setCompensoSoloInailEnte(true);
+				}
 				if (obj.getCd_cori().startsWith(compenso.CODICE_INAIL))
 					compenso.setVisualizzaTipologiaRischio(true);
 				if (obj.getCd_cori().startsWith(compenso.CODICE_IVA))
@@ -5008,16 +5031,18 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	private void validaCompensoConCalcoli(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
 
-		if (compenso.getIm_lordo_percipiente().compareTo(
-				new java.math.BigDecimal(0)) <= 0)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"L'importo lordo deve essere maggiore di zero");
+		if (!isCompensoSoloInailEnte(compenso.getTipoTrattamento())){
+			if (compenso.getIm_lordo_percipiente().compareTo(
+					new java.math.BigDecimal(0)) <= 0)
+				throw new it.cnr.jada.comp.ApplicationException(
+						"L'importo lordo deve essere maggiore di zero");
 
-		java.math.BigDecimal tmp = compenso.getQuota_esente().add(
-				compenso.getIm_no_fiscale());
-		if (compenso.getIm_lordo_percipiente().compareTo(tmp) < 0)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"L'importo lordo deve essere maggiore delle quote esenti IRPEF e CO/RI");
+			java.math.BigDecimal tmp = compenso.getQuota_esente().add(
+					compenso.getIm_no_fiscale());
+			if (compenso.getIm_lordo_percipiente().compareTo(tmp) < 0)
+				throw new it.cnr.jada.comp.ApplicationException(
+						"L'importo lordo deve essere maggiore delle quote esenti IRPEF e CO/RI");
+		}
 	}
 
 	/**
@@ -7082,6 +7107,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	private void recuperoInfoAggiuntiveCompensoPerBrevetto(
 			UserContext userContext, CompensoBulk comp)
 			throws ComponentException, PersistencyException {
+		List bl = new ArrayList();
 		SQLBuilder sql = getHome( userContext, Mandato_rigaIBulk.class ).createSQLBuilder();
 		sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, comp.getCd_cds() );
 		sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, comp.getCd_unita_organizzativa() );
@@ -7090,12 +7116,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		sql.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, comp.getPg_compenso() );
 		sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, Mandato_rigaBulk.STATO_ANNULLATO);
 		List result = getHome( userContext, Mandato_rigaIBulk.class ).fetchAll( sql );
-		List bl = comp.getDocContAssociati();
 		for (Iterator k = result.iterator(); k.hasNext(); ) {
 			Mandato_rigaIBulk manr = (Mandato_rigaIBulk)k.next();
 			manr.setMandato((MandatoIBulk)getHome(userContext, MandatoIBulk.class).findByPrimaryKey(manr.getMandato()));
 			bl.add(manr);
 		}
+		comp.setMandatiRigaAssociati(bl);
 	}
 	public Tipo_rapportoBulk getTipoRapportoProf(UserContext userContext)
 			throws ComponentException {

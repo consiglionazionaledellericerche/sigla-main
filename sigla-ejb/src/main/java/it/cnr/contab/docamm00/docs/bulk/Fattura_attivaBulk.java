@@ -25,6 +25,8 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkCollections;
 import it.cnr.jada.bulk.BulkList;
@@ -48,7 +50,8 @@ import java.util.Map;
 import java.util.Vector;
 
 
-public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements IDocumentoAmministrativoBulk, Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi {
+public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements IDocumentoAmministrativoBulk, Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi,
+AllegatoParentBulk {
 	public final static String BENEDUREVOLE        = "B";
 	public final static String CONTRATTO           = "C";
 	public final static String LIBERA              = "L";
@@ -116,6 +119,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String TIPO_FATTURA_ATTIVA = "F";
 	public final static String TIPO_NOTA_DI_CREDITO = "C";
 	public final static String TIPO_NOTA_DI_DEBITO = "D";
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
 	public final static Dictionary statoInvioSdiKeys;
 
@@ -2109,5 +2113,19 @@ public Boolean isNotaCreditoDaNonInviareASdi(){
 		return false;
 	}
 	return true;
+}
+public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+	return getArchivioAllegati().remove(index);
+}
+public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+	archivioAllegati.add(allegato);
+	return archivioAllegati.size()-1;		
+}
+public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+	return archivioAllegati;
+}
+public void setArchivioAllegati(
+		BulkList<AllegatoGenericoBulk> archivioAllegati) {
+	this.archivioAllegati = archivioAllegati;
 }
 }

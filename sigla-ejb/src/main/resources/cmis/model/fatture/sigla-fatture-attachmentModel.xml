@@ -76,6 +76,10 @@
 			<title>File XML di tipo Trasmissione Fattura preveniente da www.fatturapa.gov.it</title>
 			<description>File XML di tipo Trasmissione Fattura preveniente da www.fatturapa.gov.it</description>
 		</aspect>
+		<aspect name="sigla_fatture_attachment:allegati_non_inviati_sdi">
+			<title>Files allegati alla fattura non inviati a SDI</title>
+			<description>Files allegati alla fattura non inviati a SDI</description>
+		</aspect>
 		<!--
 			ASPECT allegati alla fattura
 		-->
