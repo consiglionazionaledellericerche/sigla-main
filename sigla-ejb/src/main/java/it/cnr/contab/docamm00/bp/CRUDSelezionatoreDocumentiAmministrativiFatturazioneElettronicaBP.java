@@ -10,7 +10,6 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_ammVBulk;
 import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
@@ -32,6 +31,23 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.jsp.Button;
 import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaType;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
@@ -96,7 +112,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		if (node == null){
 			is = getStreamNewDocument(actioncontext, esercizio, cds, cdUo, pgFattura);
 		} else {
-			is = documentiCollegatiDocAmmService.getStreamContabile(esercizio, cds, cdUo, pgFattura, Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP);
+			is = documentiCollegatiDocAmmService.getStreamDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
 			if (is == null){
 				is = getStreamNewDocument(actioncontext, esercizio, cds, cdUo, pgFattura);
 			}

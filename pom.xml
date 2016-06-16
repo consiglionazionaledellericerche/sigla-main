@@ -60,7 +60,8 @@
 		</pluginManagement>
 	</build>
   <scm>
-    <connection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/trunk</connection>
-    <developerConnection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/trunk</developerConnection>
+    <connection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</connection>
+    <developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
 </project>
