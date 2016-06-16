@@ -145,7 +145,9 @@ public class LdapLogin {
 			LDAPEntry apps = lc.read(userDN, returnAttrs);
 			LDAPAttribute sigla = apps.getAttribute(appName);
 			LDAPAttribute dataPw = apps.getAttribute(attrDataPw);
-			utenteReale.setCodiceFiscaleLDAP(apps.getAttribute(CODICEFISCALE_ATTRIBUTE).getStringValue());
+			
+			if (apps.getAttribute(CODICEFISCALE_ATTRIBUTE) != null)
+				utenteReale.setCodiceFiscaleLDAP(apps.getAttribute(CODICEFISCALE_ATTRIBUTE).getStringValue());
 			
 			// vecchio metodo per semplice confronto
 			// non tiene conto delle password cifrate
