@@ -14,9 +14,12 @@ import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
+import it.cnr.jada.persistency.PersistencyException;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -105,6 +108,7 @@ public class FatturaPassivaTrovatiComponentWS {
 			String user, Long trovato) throws Exception {
 		return ricercaFatture(user, trovato, Boolean.FALSE);
 	}
+<<<<<<< HEAD
 
 	/**
 	 * Restituisce le fatture legate al progressivo "trovato" con minori
@@ -142,6 +146,59 @@ public class FatturaPassivaTrovatiComponentWS {
 			return listaRitorno;
 		} catch (FatturaNonTrovataException e) {
 			throw new SOAPFaultException(faultFatturaNonTrovata());
+=======
+}
+@RolesAllowed({"WSUserRole","BrevettiRole"})
+public java.util.ArrayList<FatturaPassiva> ricercaFatturaPassiva(String user, Long esercizio, String cds, String uo, Long pg) throws Exception {
+	return ricercaFatturaPassiva(user, esercizio, cds, uo, pg, false);
+}
+@RolesAllowed({"WSUserRole","BrevettiRole"})
+public java.util.ArrayList<FatturaPassiva> ricercaFatturaPassivaByKey(String user, Long esercizio, String cds, String uo, Long pg) throws Exception {
+	return ricercaFatturaPassiva(user, esercizio, cds, uo, pg, true);
+}
+/**
+ * Restituisce le fatture legate al progressivo "trovato" con informazioni complete
+ * 
+ * @param user
+ * @param trovato
+ * @return
+ * @throws Exception
+ */
+@RolesAllowed({"WSUserRole","BrevettiRole"})
+public java.util.ArrayList<FatturaPassiva> ricercaFatturePassive(String user, Long trovato) throws Exception {
+	return ricercaFatture(user, trovato, Boolean.FALSE);
+}
+/**
+ * Restituisce le fatture legate al progressivo "trovato" con minori informazioni
+ * 
+ * @param user
+ * @param trovato
+ * @return
+ * @throws Exception
+ */
+@RolesAllowed({"WSUserRole","BrevettiRole"})
+public java.util.ArrayList<FatturaPassivaBase> ricercaFatturePassiveBase(String user, Long trovato) throws Exception {
+	return ricercaDocumentiAmministrativiBase(user, trovato, Boolean.TRUE);
+}
+
+private java.util.ArrayList ricercaDocumentiAmministrativiBase(String user, Long trovato, Boolean base) throws Exception {
+	java.util.ArrayList listaRitorno=ricercaFatture(user, trovato, base);
+	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+	return ricercaCompensi(trovato, base, userContext, listaRitorno);
+}
+
+private java.util.ArrayList ricercaFatture(String user, Long trovato, Boolean base) throws Exception {
+	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+	java.util.ArrayList listaRitorno=new ArrayList();
+	if(trovato==null)
+		 throw new SOAPFaultException(faultIdTrovatoNullo());
+	try{	
+		java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> fatture =((FatturaPassivaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaPassivaComponentSession",FatturaPassivaComponentSession.class)).ricercaFattureTrovato(userContext, trovato);
+		for (Iterator<Fattura_passivaBulk> i = fatture.iterator(); i.hasNext(); ) {
+			Fattura_passivaBulk fattura=(Fattura_passivaBulk)i.next();
+
+			caricaFattura(userContext, listaRitorno, fattura, base);
+>>>>>>> master
 		}
 	}
 
@@ -168,31 +225,26 @@ public class FatturaPassivaTrovatiComponentWS {
 		}
 	}
 
-	@RolesAllowed({ "WSUserRole", "BrevettiRole" })
-	public Compenso ricercaCompenso(String user, Long esercizio, String cds,
-			String uo, Long pg, boolean byKey) throws Exception {
-		java.util.ArrayList listaRitorno = new ArrayList();
-		UserContext userContext = new WSUserContext(user, null, new Integer(
-				java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),
-				null, null, null);
-		if (cds == null || uo == null || pg == null || esercizio == null)
-			throw new SOAPFaultException(faultChiaveCompensoNonCompleta());
-		try {
-			CompensoBulk compenso = null;
+}
 
-			if (byKey)
-				compenso = compensoComponentSession.ricercaCompensoTrovato(
-						userContext, esercizio, cds, uo, pg);
-			else
-				compenso = compensoComponentSession.ricercaCompensoByKey(userContext,
-						esercizio, cds, uo, pg);
+private java.util.ArrayList ricercaCompensi(String user, Long trovato, Boolean base) throws Exception {
+	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+	java.util.ArrayList listaRitorno=new ArrayList();
+	return ricercaCompensi(trovato, base, userContext, listaRitorno);
+}
+private java.util.ArrayList ricercaCompensi(Long trovato, Boolean base,
+		UserContext userContext, java.util.ArrayList listaRitorno)
+		throws SOAPException, ComponentException, RemoteException,
+		PersistencyException, Exception {
+	if(trovato==null)
+		 throw new SOAPFaultException(faultIdTrovatoNullo());
+	try{	
+		CompensoComponentSession compensoComponent = recuperoCompensoComponent();
+		List<CompensoBulk> compensi = compensoComponent.ricercaCompensiTrovato(userContext, trovato);
+		for (Iterator<CompensoBulk> i = compensi.iterator(); i.hasNext(); ) {
+			CompensoBulk compenso=(CompensoBulk)i.next();
 
-			caricaCompenso(userContext, listaRitorno, compenso, Boolean.FALSE);
-
-			return (Compenso) listaRitorno.get(0);
-
-		} catch (FatturaNonTrovataException e) {
-			throw new SOAPFaultException(faultCompensoNonTrovato());
+			caricaCompenso(userContext, listaRitorno, compenso, base);
 		}
 	}
 
@@ -212,14 +264,61 @@ public class FatturaPassivaTrovatiComponentWS {
 		return ricercaCompensi(user, trovato, Boolean.FALSE);
 	}
 
-	private void caricaFattura(UserContext userContext,
-			java.util.ArrayList listaRitorno, Fattura_passivaBulk fattura,
-			Boolean base) throws Exception {
-		// serve per diminuire traffico di rete con oggetti pi\F9 grandi
-		// e informazioni che non sono necessarie (richiesto dai colleghi di
-		// brevetti)
-		if (base.booleanValue()) {
-			FatturaPassivaBase ritorno = new FatturaPassivaBase();
+// 	private void caricaFattura(UserContext userContext,
+// 			java.util.ArrayList listaRitorno, Fattura_passivaBulk fattura,
+// 			Boolean base) throws Exception {
+// 		// serve per diminuire traffico di rete con oggetti pi\F9 grandi
+// 		// e informazioni che non sono necessarie (richiesto dai colleghi di
+// 		// brevetti)
+// 		if (base.booleanValue()) {
+// 			FatturaPassivaBase ritorno = new FatturaPassivaBase();
+// }
+private CompensoComponentSession recuperoCompensoComponent() {
+	CompensoComponentSession compensoComponent = ((CompensoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCOMPENSI00_EJB_CompensoComponentSession",CompensoComponentSession.class));
+	return compensoComponent;
+}
+
+@RolesAllowed({"WSUserRole","BrevettiRole"})
+public Compenso ricercaCompenso(String user,Long esercizio,String cds,String uo, Long pg)  throws Exception {
+	return ricercaCompenso(user, esercizio, cds, uo, pg, false);
+}
+
+public Compenso ricercaCompensoByKey(String user,Long esercizio,String cds,String uo, Long pg)  throws Exception {
+	return ricercaCompenso(user, esercizio, cds, uo, pg, true);
+}
+
+
+@RolesAllowed({"WSUserRole","BrevettiRole"})
+public java.util.ArrayList<Compenso> ricercaCompensi(String user, Long trovato) throws Exception {
+	return ricercaCompensi(user, trovato, Boolean.FALSE);
+}
+
+private void caricaFattura(UserContext userContext, java.util.ArrayList listaRitorno, Fattura_passivaBulk fattura, Boolean base) throws Exception {
+	// serve per diminuire traffico di rete con oggetti più grandi
+	// e informazioni che non sono necessarie (richiesto dai colleghi di brevetti)
+	if (base.booleanValue()) {
+		FatturaPassivaBase ritorno=new FatturaPassivaBase();
+		ritorno.setCd_cds(fattura.getCd_cds());
+		ritorno.setCd_unita_organizzativa(fattura.getCd_unita_organizzativa());
+		ritorno.setEsercizio(fattura.getEsercizio());
+		ritorno.setPg_fattura_passiva(fattura.getPg_fattura_passiva());
+		ritorno.setCd_cds_origine(fattura.getCd_cds_origine());
+		ritorno.setCd_uo_origine(fattura.getCd_uo_origine());
+		ritorno.setDs_fattura_passiva(fattura.getDs_fattura_passiva());
+		ritorno.setNr_fattura_fornitore(fattura.getNr_fattura_fornitore());
+		ritorno.setDt_fattura_fornitore(fattura.getDt_fattura_fornitore());
+		ritorno.setPartita_iva(fattura.getPartita_iva());
+		ritorno.setCodice_fiscale(fattura.getCodice_fiscale());
+		ritorno.setTipoFatturaCompenso(FatturaPassivaBase.TIPO_FATTURA);
+		ritorno.setCd_terzo(fattura.getCd_terzo());
+
+		listaRitorno.add(ritorno);
+	} else {
+		BulkList<Fattura_passiva_rigaBulk> dett = fattura.getFattura_passiva_dettColl();
+		for (Iterator<Fattura_passiva_rigaBulk> j = dett.iterator(); j.hasNext(); ) {
+			Fattura_passiva_rigaBulk det = (Fattura_passiva_rigaBulk) j.next();
+			FatturaPassiva ritorno=new FatturaPassiva();
+			
 			ritorno.setCd_cds(fattura.getCd_cds());
 			ritorno.setCd_unita_organizzativa(fattura
 					.getCd_unita_organizzativa());
@@ -327,6 +426,7 @@ public class FatturaPassivaTrovatiComponentWS {
 		ritorno.setIm_iva(det.getIm_iva());
 	}
 
+<<<<<<< HEAD
 	private void caricaCompenso(UserContext userContext,
 			java.util.ArrayList listaRitorno, CompensoBulk compenso,
 			Boolean base) throws Exception {
@@ -406,6 +506,16 @@ public class FatturaPassivaTrovatiComponentWS {
 			}
 
 			listaRitorno.add(ritorno);
+=======
+		List mans = compenso.getMandatiRigaAssociati();
+		
+		Mandato_rigaIBulk manr=null;
+		if (mans!=null && !mans.isEmpty()) {
+			manr=(Mandato_rigaIBulk) mans.get(0);
+			ritorno.setEsercizio_mandato(manr.getEsercizio());
+			ritorno.setPg_mandato(manr.getPg_mandato());
+			ritorno.setDt_emissione_mandato(manr.getMandato().getDt_emissione());
+>>>>>>> master
 		}
 	}
 

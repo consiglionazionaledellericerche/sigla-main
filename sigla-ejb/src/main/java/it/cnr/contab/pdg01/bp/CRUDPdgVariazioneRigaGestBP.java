@@ -6,7 +6,11 @@
  */
 package it.cnr.contab.pdg01.bp;
 
-import it.cnr.contab.cmis.service.SiglaCMISService;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
+
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
@@ -17,10 +21,11 @@ import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
-import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneRigaGestComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -29,11 +34,6 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author rpagano
@@ -457,5 +457,20 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 	
 	public Parametri_cnrBulk getParametriCnr() {
 		return parametriCnr;
+	}
+
+	public void valorizzaProgettoLineaAttivita(ActionContext actioncontext, Pdg_variazione_riga_gestBulk riga) throws BusinessProcessException{
+		try {
+			if (riga.getLinea_attivita() != null && riga.getLinea_attivita().getCd_linea_attivita() != null)
+				riga.setProgetto(((CRUDPdgVariazioneRigaGestComponentSession)createComponentSession()).getProgettoLineaAttivita(actioncontext.getUserContext(),riga));
+			else
+				riga.setProgetto(null);
+		} catch (DetailedRuntimeException e) {
+			throw new BusinessProcessException(e);
+		} catch (ComponentException e) {
+			throw new BusinessProcessException(e);
+		} catch (RemoteException e) {
+			throw new BusinessProcessException(e);
+		}
 	}
 }
