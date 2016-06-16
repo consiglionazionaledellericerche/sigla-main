@@ -58,7 +58,7 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 	}	
 	@Override
 	public void validate() throws ValidationException {
-		if (aspectName == null) {
+		if (getAspectName() == null) {
 			throw new ValidationException("Attenzione: selezionare la tipologia di File!");
 		}		
 		super.validate();

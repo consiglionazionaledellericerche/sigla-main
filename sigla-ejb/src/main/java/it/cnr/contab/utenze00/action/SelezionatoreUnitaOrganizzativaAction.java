@@ -59,7 +59,6 @@ public Forward doSelezionaEsercizio(ActionContext context) {
 				null));
 			return context.findForward("desktop");
 		}
-		EJBCommonServices.closeRemoteIterator(bp.getIterator());
 		it.cnr.jada.util.RemoteIterator ri = getComponentSession().listaUOPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),bp.getUserInfo().getEsercizio());
 		bp.setIterator(context,ri);
 		return context.findDefaultForward();

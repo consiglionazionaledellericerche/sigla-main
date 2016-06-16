@@ -5427,6 +5427,7 @@ public void validaFattura(UserContext aUC, Fattura_attivaBulk fatturaAttiva) thr
         throw new it.cnr.jada.comp.ApplicationException("Attenzione: non possono esistere fatture senza almeno un dettaglio");
     else {
         BulkList dettaglio= fatturaAttiva.getFattura_attiva_dettColl();
+        Boolean esisteRigaConBollo = false;
         for (Iterator i= dettaglio.iterator(); i.hasNext();) {
             Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
             if (fatturaAttiva.getTi_causale_emissione() != null && fatturaAttiva.getTi_causale_emissione().equals(fatturaAttiva.TARIFFARIO)) {
@@ -5434,6 +5435,12 @@ public void validaFattura(UserContext aUC, Fattura_attivaBulk fatturaAttiva) thr
                     throw new it.cnr.jada.comp.ApplicationException("Attenzione: inserire un tariffario valido per ogni riga");
             }
             validaRiga(aUC, riga);
+            if (riga.getBene_servizio().getFl_bollo()){
+            	if (esisteRigaConBollo){
+                    throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste più di una riga con un bene/servizio di tipo Bollo");
+            	}
+            	esisteRigaConBollo = true;
+            }
         }
     }
 
