@@ -27,12 +27,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckbox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.apache.pdfbox.pdmodel.interactive.form.PDVariableText;
 /**
  * 
  * @author mspasiano
@@ -105,6 +107,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 				else
 					((PDCheckbox)field).unCheck();
 			} else {
+				field.getDictionary().setString(COSName.DA, "/F2 0 Tf 0 g");
 				field.setValue(fieldValue);				
 			}
 		}
