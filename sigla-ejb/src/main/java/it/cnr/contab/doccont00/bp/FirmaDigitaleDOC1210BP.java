@@ -143,9 +143,9 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 				valorizzaField(pdAcroForm, "BENEFICIARIO_1", lettera.getBeneficiario(), true);
 				valorizzaField(pdAcroForm, "NUM_CONTO", lettera.getNum_conto_ben(), true);
 				valorizzaField(pdAcroForm, "IBAN", lettera.getIban(), false);
-				valorizzaField(pdAcroForm, "PRESSO_TRAMITE", lettera.getIndirizzo(), false);
+				valorizzaField(pdAcroForm, "PRESSO_TRAMITE", lettera.getIndirizzo(), true);
 				valorizzaField(pdAcroForm, "SWIFT_BIC_ADDRESS", lettera.getIndirizzo_swift(), false);
-				valorizzaField(pdAcroForm, "MOTIVO_PAGAMENTO", lettera.getMotivo_pag(), false);
+				valorizzaField(pdAcroForm, "MOTIVO_PAGAMENTO", lettera.getMotivo_pag(), true);
 				valorizzaField(pdAcroForm, "AMMONTARE_DEBITO_"+lettera.getAmmontare_debito(), "X", false);
 				valorizzaField(pdAcroForm, "CONTO_PROVVISORIO_"+lettera.getAmmontare_debito(), lettera.getConto_debito(), false);
 				valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false);
