@@ -1336,14 +1336,30 @@ private java.math.BigDecimal calcolaTotaleIVAPer(
 	throws it.cnr.jada.comp.ApplicationException {
 
 	java.math.BigDecimal importo = new java.math.BigDecimal(0);
-		
+	java.math.BigDecimal impStorniTot=new java.math.BigDecimal(0);
+	java.math.BigDecimal impStorniSenzaIVA=new java.math.BigDecimal(0);
+	java.math.BigDecimal impAddebitiTot=new java.math.BigDecimal(0);
+	java.math.BigDecimal impAddebitiSenzaIVA=new java.math.BigDecimal(0);
 	if (selectedModels != null) {
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
 			Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)i.next();
-			importo = importo.add(rigaSelected.getIm_iva());
+			if(rigaSelected  instanceof Fattura_passiva_rigaIBulk) {
+				Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk) rigaSelected;
+				if (riga.getFattura_passivaI().getAddebitiHashMap()!=null  && riga.getFattura_passivaI().getAddebitiHashMap().size()!=0){
+					impAddebitiTot = calcolaTotalePer((Vector)riga.getFattura_passivaI().getAddebitiHashMap().get(riga), false);
+					impAddebitiSenzaIVA = calcolaTotalePer((Vector)riga.getFattura_passivaI().getAddebitiHashMap().get(riga), true);
+					importo = importo.add(impAddebitiTot.subtract(impAddebitiSenzaIVA));
+				}
+				if (riga.getFattura_passivaI().getStorniHashMap()!=null  && riga.getFattura_passivaI().getStorniHashMap().size()!=0 ){
+					impStorniTot = calcolaTotalePer((Vector)riga.getFattura_passivaI().getStorniHashMap().get(riga), false);
+					impStorniSenzaIVA = calcolaTotalePer((Vector)riga.getFattura_passivaI().getStorniHashMap().get(riga), true);
+					importo = importo.subtract(impStorniTot.subtract(impStorniSenzaIVA));
+				}
+				importo = importo.add(riga.getIm_iva());	
+			}else
+				importo = importo.add(rigaSelected.getIm_iva());
 		}
 	}
-
 	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importo;
 }
@@ -1964,7 +1980,7 @@ public RemoteIterator cercaFatturaPerNdC(UserContext context, Nota_di_creditoBul
 	sql.addClause("AND", "fl_congelata", sql.EQUALS, Boolean.FALSE);
 	sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passiva_IBulk.STATO_ANNULLATO);
 	// RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
-	sql.addClause("AND", "pg_lettera", sql.ISNULL, null);
+	//sql.addClause("AND", "pg_lettera", sql.ISNULL, null);
 	sql.addClause("AND", "ti_istituz_commerc", sql.EQUALS, notaDiCredito.getTi_istituz_commerc());
 	sql.addOrderBy("ESERCIZIO DESC");
 	
@@ -2709,8 +2725,15 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 						//caso di QUADRATURA IN DEROGA DEVO sommare anche tutta l'iva
 						java.math.BigDecimal importoLettera = fatturaPassiva.getLettera_pagamento_estero().getIm_pagamento();
 						boolean deroga1210 = fatturaPassiva.quadraturaInDeroga1210();
-						if (deroga1210)
-							importoLettera = importoLettera.add(fatturaPassiva.getIm_totale_iva());
+						if (deroga1210){
+								if (fatturaPassiva instanceof Fattura_passiva_IBulk) {
+									Fattura_passiva_IBulk fatturaPassivaI = (Fattura_passiva_IBulk)fatturaPassiva;
+									if (fatturaPassivaI.hasStorni() || fatturaPassivaI.hasAddebiti())
+										importoLettera = importoLettera.add(calcolaTotaleIVAPer((List)fatturaPassiva.getObbligazioniHash().get(scadenza)));
+									else
+										importoLettera = importoLettera.add(fatturaPassiva.getIm_totale_iva());
+								}
+						}
 						delta = importoLettera.subtract(totale);
 						if (delta.compareTo(new java.math.BigDecimal(0)) != 0) {
 							if (deroga1210)
@@ -2720,13 +2743,10 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 						}
 						if (fatturaPassiva instanceof Fattura_passiva_IBulk &&
 							deroga1210) {
-								
 							totale = calcolaTotaleIVAPer((List)fatturaPassiva.getObbligazioniHash().get(scadenza));
 							if (scadenza.getIm_scadenza().compareTo(totale) <= 0)
 								throw new it.cnr.jada.comp.ApplicationException("Attenzione: l'importo della scadenza \"" + scadenza.getDs_scadenza() + "\" deve essere strettamente maggiore dell'importo totale IVA dei dettagli ad essa associati!");
 						}
-						
-
 					}
 				} else {
 					totale = calcolaTotaleObbligazionePer(aUC, scadenza, fatturaPassiva);//.abs();
@@ -4243,7 +4263,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 	
 	fattura.setDt_da_competenza_coge(fattura.getDt_registrazione());
 	fattura.setDt_a_competenza_coge(fattura.getDt_registrazione());
-
+	setDt_termine_creazione_docamm(userContext, fattura);
 	/**
 	  * Gennaro Borriello - (08/11/2004 13.35.27)
 	  *	Aggiunta proprietï¿½ <code>esercizioInScrivania</code>, che verrï¿½ utilizzata
@@ -6137,6 +6157,10 @@ public void validaRiga (UserContext aUC,Fattura_passiva_rigaBulk riga) throws Co
         throw new it.cnr.jada.comp.ApplicationException(
             "Attenzione! Non è stato inserito il Brevetto/Trovato mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
     boolean isBeneSconto = isBeneServizioPerSconto(aUC, riga);
+    if(isBeneSconto && (riga.getIm_imponibile().add(riga.getIm_iva())).abs().compareTo(BigDecimal.ONE)>0) //??
+    	throw new it.cnr.jada.comp.ApplicationException(
+                "Attenzione! Non è possibile inserire per questo bene/servizio questo importo.");
+    	
     //28/08/2014 Rospuc - Gestione importo righe negativo 
 //	if (riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) < 0 && !isBeneSconto)
 //		throw new it.cnr.jada.comp.ApplicationException("L'importo del prezzo unitario specificato NON ï¿½ valido.");
@@ -7264,7 +7288,7 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 
 	if (fatturaPassiva.getDocumentoEleTestata() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile recuperare il documento elettronico!");
-
+	boolean noSegno=false;
 	/*
 	if (fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente() == null || 
 			  !fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) 
@@ -7393,19 +7417,22 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 					}
 		    	}
 	}
-	
+	if(fatturaPassiva.getTi_fattura().compareTo(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO)==0)
+			noSegno=true;
+	else
+		    noSegno=false;
 	if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()!= null &&
 			fatturaPassiva.getIm_totale_fattura() != null &&
-			(fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(totaleFat)!= 0)
+		 (noSegno?fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs():fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(totaleFat)!= 0)
 	{   //se non ï¿½ previsto arrotondamento restituisco l'errore	
 		if (fatturaPassiva.getDocumentoEleTestata().getArrotondamento()== null)
-			throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  totaleFat + " diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + "!");
+				throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  totaleFat + " diverso da quello inserito nel documento elettronico: " + (noSegno?fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs():fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + "!");
 		//controllo se c'ï¿½ quadratura a meno di arrotondamento
 		else
 			if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()!= null &&
-					totaleFat != null &&
-			(((fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().subtract(totaleFat)).abs()).compareTo((fatturaPassiva.getDocumentoEleTestata().getArrotondamento()).abs())) != 0)
-				throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  totaleFat + " non coerente con quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + " anche considerando l'arrotondamento: " + fatturaPassiva.getDocumentoEleTestata().getArrotondamento() + "!");
+			totaleFat != null &&
+			((((noSegno?fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs():fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).subtract(totaleFat)).abs()).compareTo((fatturaPassiva.getDocumentoEleTestata().getArrotondamento()).abs())) != 0)
+				throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  totaleFat + " non coerente con quello inserito nel documento elettronico: " +(noSegno?fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs():fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + " anche considerando l'arrotondamento: " + fatturaPassiva.getDocumentoEleTestata().getArrotondamento() + "!");	
 	}
 	
 	Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
@@ -7437,7 +7464,7 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
 	      String key = null;
 	      Hashtable<String, BigDecimal> currentMap = null;
-	      if(rigaEle.getImponibileImporto()!=null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO)!=0){
+	  	  if(rigaEle.getImponibileImporto()!=null && (noSegno?rigaEle.getImponibileImporto().abs():rigaEle.getImponibileImporto()).compareTo(BigDecimal.ZERO)!=0){
 		      if (rigaEle.getNatura()!=null) {
 		    	  key = rigaEle.getNatura();
 		    	  currentMap = mapNaturaEle;
@@ -7447,9 +7474,9 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		      }
 	      
 		      if (currentMap.get(key)!=null)
-		    	  currentMap.put(key, currentMap.get(key).add(rigaEle.getImposta()));
+		    	  currentMap.put(key, currentMap.get(key).add( (noSegno?rigaEle.getImposta().abs():rigaEle.getImposta())));
 		      else
-		    	  currentMap.put(key, rigaEle.getImposta());
+		    	  currentMap.put(key, (noSegno?rigaEle.getImposta().abs():rigaEle.getImposta()));
 	      }
 	}
 
@@ -7589,4 +7616,28 @@ public boolean verificaGenerazioneAutofattura(UserContext aUC,Fattura_passivaBul
 			
 			return obbligatorio;
 }
+private void setDt_termine_creazione_docamm(
+		it.cnr.jada.UserContext userContext,
+		Fattura_passivaBulk fattura) 
+		throws ComponentException {
+
+		try {
+			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession session = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)
+				it.cnr.jada.util.ejb.EJBCommonServices.createEJB(
+								"CNRCONFIG00_EJB_Configurazione_cnrComponentSession", 
+								it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+			java.sql.Timestamp t = session.getDt01(
+												userContext,
+												fattura.getEsercizio(), 
+												"*", 
+												"CHIUSURA_COSTANTI", 
+												"TERMINE_CREAZIONE_DOCAMM_ES_PREC");
+			if (t == null)
+				throw new it.cnr.jada.comp.ApplicationException("La costante di chiusura \"termine creazione docamm es prec\" NON è stata definita! Impossibile proseguire.");
+
+			fattura.setDt_termine_creazione_docamm(t);
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
 }
