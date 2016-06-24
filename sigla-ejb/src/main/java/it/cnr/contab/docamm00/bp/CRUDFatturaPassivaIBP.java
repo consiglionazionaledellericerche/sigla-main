@@ -143,9 +143,9 @@ public boolean isApriNdCButtonEnabled() {
 
 	Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)getModel();
 	return !isInserting() && !isSearching() && fp != null &&
-			fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
+			//fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 			// RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
-			!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
+			//!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
 			!fp.isByFondoEconomale() &&
 			!fp.isGenerataDaCompenso() &&
 			!fp.isBollaDoganale() &&
@@ -159,9 +159,9 @@ public boolean isApriNdDButtonEnabled() {
 
 	Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)getModel();
 	return 	!isInserting() && !isSearching() && fp != null &&
-			fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
+			//fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 			// RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
-			!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
+			//!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
 			!fp.isByFondoEconomale() &&
 			!fp.isGenerataDaCompenso() &&
 			!fp.isBollaDoganale() &&
@@ -183,21 +183,22 @@ public boolean isGeneraNdCButtonEnabled() {
 	
 	Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)getModel();
 	return 	isEditing() && fp != null &&
-			fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
+			//fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 			// RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
-			!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
+			//!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
 			!fp.isAnnullato() &&
 			!fp.isCongelata() &&
 			!fp.isByFondoEconomale() &&
 			!fp.isGenerataDaCompenso() &&
 			!fp.isBollaDoganale() &&
-			!fp.isSpedizioniere() && 
-			((isAnnoDiCompetenza() && !fp.isRiportata())   				
+			!fp.isSpedizioniere();// && 
+			//((isAnnoDiCompetenza() && !fp.isRiportata())   				
 			// RP 16/03/2010 Da commentare per generare NC di anni precedenti
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato
 				//	DA UN ES. PRECEDENTE a quello di scrivania. 
-					 ||(!isAnnoDiCompetenza() && (fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())|| fp.PARZIALMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()))));
+					 //||(!isAnnoDiCompetenza() && (fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())|| fp.PARZIALMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())))
+			// );
 }
 public boolean isGeneraNdCButtonHidden() {
 	
@@ -207,20 +208,21 @@ public boolean isGeneraNdDButtonEnabled() {
 	
 	Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)getModel();
 	return isEditing() && fp != null &&
-			fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
+			//fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 			// RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
-			!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
+			//!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
 			!fp.isAnnullato() &&
 			!fp.isCongelata() &&
 			!fp.isByFondoEconomale() &&
 			!fp.isGenerataDaCompenso() &&
 			!fp.isBollaDoganale() &&
-			!fp.isSpedizioniere() &&
-			((isAnnoDiCompetenza() && !fp.isRiportata()) || 				
+			!fp.isSpedizioniere(); // &&
+			//((isAnnoDiCompetenza() && !fp.isRiportata())  				
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato
 				//	DA UN ES. PRECEDENTE a quello di scrivania. 
-				(!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())));
+				//||(!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()))
+				//);
 }
 public boolean isGeneraNdDButtonHidden() {
 	
