@@ -136,6 +136,7 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 		
 		refreshList( context );
 
+		setModel(context, createNewBulk(context));
 	} catch(ClassNotFoundException e) {
 		throw new RuntimeException("Non trovata la classe bulk");
 	} catch(Throwable e) {
@@ -248,9 +249,18 @@ public RemoteIterator search(
 			 * Mi conservo la findClause per poi utilizzarla
 			 * nel selectAll
 			 */
+			((SospesoBulk)oggettobulk).setStatoTextForSearch(SospesoBulk.STATO_DOCUMENTO_TUTTI);
+			super.setModel(actioncontext, ((SospesoBulk)oggettobulk));
 			setFindclause(compoundfindclause);
 			return findFreeSearch(actioncontext,
 								  compoundfindclause,
 								  new ListaSospesiBulk());
 	}
+
+@Override
+public void setModel(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+	if (this.getModel()!=null && oggettobulk instanceof SospesoBulk)
+		((SospesoBulk)oggettobulk).setStatoTextForSearch(((SospesoBulk)this.getModel()).getStatoTextForSearch());
+	super.setModel(actioncontext, oggettobulk);
+}
 }

@@ -473,7 +473,8 @@ public void setCd_cofog(String cd_cofog) {
 public void validate() throws ValidationException 
 {
 	super.validate();
-
+    if( getCd_linea_attivita()!=null && getCd_linea_attivita().contains("'"))
+    	throw new ValidationException( "Il campo codice non può contenere virgolette. " );
 	if ( getResponsabile() == null || getResponsabile().getCd_terzo() == null)
 	{
 		throw new ValidationException( "Il campo Responsabile deve essere valorizzato. " );
