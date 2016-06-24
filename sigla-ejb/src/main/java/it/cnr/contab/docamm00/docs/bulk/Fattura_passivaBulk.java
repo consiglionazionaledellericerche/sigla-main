@@ -249,7 +249,7 @@ public abstract class Fattura_passivaBulk
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	public final static java.util.Dictionary ti_bonifico_mezzoKeys = Lettera_pagam_esteroBulk.ti_bonifico_mezzoKeys, 
 			ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys, ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys;
-	
+	private java.sql.Timestamp dt_termine_creazione_docamm = null;
 public Fattura_passivaBulk() {
 	super();
 }
@@ -2653,12 +2653,18 @@ public void validaDateCompetenza()
 		else if (annoCompetenzaDa == annoPrecedente) {
 			if (annoCompetenzaA > annoPrecedente)	
 				throw new ValidationException("La data di \"competenza a\" deve appartenere all'esercizio dell'anno " + annoPrecedente + ".");
+			if (this.getStato_cofi()!=null && this.getStato_cofi().equals(STATO_INIZIALE))
+				if (getDt_registrazione().after(getDt_termine_creazione_docamm())) {
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+					throw new ValidationException("Non è possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
+				}
 		} else
 			throw e;
 		if(!eseguito && (annoCompetenzaA==getEsercizio()-1)){
 			eseguito=new Boolean(true);
 			throw new ValidationException("Attenzione: per le date competenza indicate non è possibile inventariare i beni!");
 	}
+				
 }
 }
 public void validate() throws ValidationException {
@@ -3059,5 +3065,12 @@ public void validateDate() throws ValidationException {
 			return true;
 			
 		return false;
+	}
+	public java.sql.Timestamp getDt_termine_creazione_docamm() {
+		return dt_termine_creazione_docamm;
+	}
+	public void setDt_termine_creazione_docamm(
+			java.sql.Timestamp dt_termine_creazione_docamm) {
+		this.dt_termine_creazione_docamm = dt_termine_creazione_docamm;
 	}
 }
