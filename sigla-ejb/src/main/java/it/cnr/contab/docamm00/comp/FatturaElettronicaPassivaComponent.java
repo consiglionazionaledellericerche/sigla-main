@@ -373,8 +373,10 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     			docTestata.getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) {
     		if (docTestata.getDocumentoEleTrasmissione().getIntermediarioCdTerzo() != null)
     			sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getIntermediarioCdTerzo());
-    		if (docTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo() != null)
-    			sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo());    		
+    		else if (docTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo() != null)
+    			sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo());
+    		else
+    			sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo());
     	} else {
         	sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo());    		
     	}
