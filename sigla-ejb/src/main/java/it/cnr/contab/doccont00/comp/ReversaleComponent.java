@@ -3540,14 +3540,14 @@ private void verificaModalitaPagamento (UserContext aUC,ReversaleBulk reversale)
 		/* vengono escluse dal test le note di debito e le note di credito */
 		
 		for ( Iterator i = reversale.getReversale_rigaColl().iterator(); i.hasNext(); )
-		{
+		{ 
 			riga = (Reversale_rigaBulk) i.next();
 
-			if ( Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA.equals( riga.getCd_tipo_documento_amm() ) &&
-				  riga.getTi_fattura().equals( Fattura_passiva_IBulk.TIPO_NOTA_DI_CREDITO ) )
-			// si tratta di una nota di credito - non deve essere effettuato la verifica delle modalità di pagamento
-				continue;
-			
+//			if ( Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA.equals( riga.getCd_tipo_documento_amm() ) &&
+//				  riga.getTi_fattura().equals( Fattura_passiva_IBulk.TIPO_NOTA_DI_CREDITO ) )
+//			// si tratta di una nota di credito - non deve essere effettuato la verifica delle modalità di pagamento
+//				continue;
+//			
 			//modalità di pagamento
 			if ( !riga.getModalita_pagamento().getCd_modalita_pag().equals( cd_modalita_pag ))
 				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalità di pagamento");

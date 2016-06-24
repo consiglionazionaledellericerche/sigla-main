@@ -1572,32 +1572,36 @@ public Query select(UserContext userContext, CompoundFindClause clauses, Oggetto
 		return sql;
 		
 	}
-	else if ( bulk instanceof ListaSospesiBulk )
-		{
-			Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
-			if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( uoEnte.getCd_unita_organizzativa()))
-				 throw new ApplicationException("Funzione non consentita per utente non abilitato a " + uoEnte.getCd_unita_organizzativa() );
-			verificaStatoEsercizio( userContext, ((CNRUserContext) userContext).getEsercizio(), ((CNRUserContext) userContext).getCd_cds() );	 
-//			((ListaSospesiBulk) bulk).setSospesi_cnrColl( ((SospesoHome)getHome( userContext, SospesoBulk.class)).findSospesiCNR( ((CNRUserContext)userContext).getEsercizio()));
-			SQLBuilder sql = (SQLBuilder) getHome( userContext, SospesoBulk.class ).createSQLBuilder();
-			sql.addClause(clauses);
-			sql.addSQLClause( "AND", "sospeso.esercizio", sql.EQUALS, ((CNRUserContext)userContext).getEsercizio() );
-			sql.addSQLClause( "AND", "sospeso.cd_cds", sql.EQUALS, uoEnte.getCd_unita_padre() );
-			sql.addSQLClause( "AND", "sospeso.fl_stornato", sql.EQUALS, "N" );
-		//	sql.addSQLClause( "AND", "sospeso.ti_entrata_spesa", sql.EQUALS, SospesoBulk.TIPO_ENTRATA );
-			sql.addSQLClause( "AND", "sospeso.ti_sospeso_riscontro", sql.EQUALS, SospesoBulk.TI_SOSPESO );
-		//	sql.addSQLClause( "AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_INIZIALE );
-			sql.addTableToHeader( "V_SOSPESO_IM_FIGLI");
-			sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.esercizio", "SOSPESO.ESERCIZIO");
-			sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.cd_cds", "SOSPESO.cd_cds");
-			sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.ti_sospeso_riscontro", "SOSPESO.ti_sospeso_riscontro");
-			sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.ti_entrata_spesa", "SOSPESO.ti_entrata_spesa");
-			sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.cd_sospeso", "SOSPESO.cd_sospeso");
-			return sql;
-			
-		}
+	else if ( bulk instanceof ListaSospesiBulk ) {
+		SQLBuilder sql = (SQLBuilder)selectForListaSospesi(userContext, clauses, bulk);
+		sql.addSQLClause( "AND", "sospeso.fl_stornato", SQLBuilder.EQUALS, "N" );
+		return sql;
+	}
 
 	return null;	
+}
+
+private Query selectForListaSospesi(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk ) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+	Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( uoEnte.getCd_unita_organizzativa()))
+		 throw new ApplicationException("Funzione non consentita per utente non abilitato a " + uoEnte.getCd_unita_organizzativa() );
+	verificaStatoEsercizio( userContext, ((CNRUserContext) userContext).getEsercizio(), ((CNRUserContext) userContext).getCd_cds() );	 
+//	((ListaSospesiBulk) bulk).setSospesi_cnrColl( ((SospesoHome)getHome( userContext, SospesoBulk.class)).findSospesiCNR( ((CNRUserContext)userContext).getEsercizio()));
+	SQLBuilder sql = (SQLBuilder) getHome( userContext, SospesoBulk.class ).createSQLBuilder();
+	sql.addClause(clauses);
+	sql.addSQLClause( "AND", "sospeso.esercizio", sql.EQUALS, ((CNRUserContext)userContext).getEsercizio() );
+	sql.addSQLClause( "AND", "sospeso.cd_cds", sql.EQUALS, uoEnte.getCd_unita_padre() );
+//	sql.addSQLClause( "AND", "sospeso.fl_stornato", sql.EQUALS, "N" );
+//	sql.addSQLClause( "AND", "sospeso.ti_entrata_spesa", sql.EQUALS, SospesoBulk.TIPO_ENTRATA );
+	sql.addSQLClause( "AND", "sospeso.ti_sospeso_riscontro", sql.EQUALS, SospesoBulk.TI_SOSPESO );
+//	sql.addSQLClause( "AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_INIZIALE );
+	sql.addTableToHeader( "V_SOSPESO_IM_FIGLI");
+	sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.esercizio", "SOSPESO.ESERCIZIO");
+	sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.cd_cds", "SOSPESO.cd_cds");
+	sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.ti_sospeso_riscontro", "SOSPESO.ti_sospeso_riscontro");
+	sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.ti_entrata_spesa", "SOSPESO.ti_entrata_spesa");
+	sql.addSQLJoin( "V_SOSPESO_IM_FIGLI.cd_sospeso", "SOSPESO.cd_sospeso");
+	return sql;
 }
 
 	
@@ -2560,5 +2564,62 @@ protected void verificaStatoEsercizio( UserContext userContext, Integer es, Stri
 	if ( !esercizio.STATO_APERTO.equals(esercizio.getSt_apertura_chiusura()))
 			throw handleException( new ApplicationException( "Inserimento impossibile: esercizio non aperto!") );
 }			
-			
+
+public RemoteIterator cercaSospesiPerStato(UserContext usercontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk, String statoForSearch) throws ComponentException{
+    try{
+    	SQLBuilder sql = null;
+    	if (oggettobulk instanceof ListaSospesiBulk) {
+    		sql = (SQLBuilder)selectForListaSospesi(usercontext, compoundfindclause, oggettobulk );
+
+    		if ("ANN".equals(statoForSearch))
+    			sql.addSQLClause( FindClause.AND, "sospeso.fl_stornato", SQLBuilder.EQUALS, "Y" );
+    		else if (!SospesoBulk.STATO_DOCUMENTO_TUTTI.equals(statoForSearch)) {
+    			sql.addSQLClause( FindClause.AND, "sospeso.fl_stornato", SQLBuilder.EQUALS, "N" );
+    		
+		    	SQLBuilder sqlExists = getHome(usercontext, SospesoBulk.class).createSQLBuilder();
+		    	sqlExists.setFromClause(sqlExists.getFromClause().append(" SOSPESO_FIGLIO"));
+		    	sqlExists.addSQLJoin("SOSPESO_FIGLIO.esercizio", "SOSPESO.esercizio");
+		    	sqlExists.addSQLJoin("SOSPESO_FIGLIO.cd_cds", "SOSPESO.cd_cds");
+		    	sqlExists.addSQLJoin("SOSPESO_FIGLIO.ti_entrata_spesa", "SOSPESO.ti_entrata_spesa");
+		    	sqlExists.addSQLJoin("SOSPESO_FIGLIO.ti_sospeso_riscontro", "SOSPESO.ti_sospeso_riscontro");
+		    	sqlExists.addSQLJoin("SOSPESO_FIGLIO.cd_sospeso_padre", "SOSPESO.cd_sospeso");
+		
+		    	SQLBuilder sqlNotExists = getHome(usercontext, SospesoBulk.class).createSQLBuilder();
+		    	sqlNotExists.setFromClause(sqlNotExists.getFromClause().append(" SOSPESO_FIGLIO"));
+		    	sqlNotExists.addSQLJoin("SOSPESO_FIGLIO.esercizio", "SOSPESO.esercizio");
+		    	sqlNotExists.addSQLJoin("SOSPESO_FIGLIO.cd_cds", "SOSPESO.cd_cds");
+		    	sqlNotExists.addSQLJoin("SOSPESO_FIGLIO.ti_entrata_spesa", "SOSPESO.ti_entrata_spesa");
+		    	sqlNotExists.addSQLJoin("SOSPESO_FIGLIO.ti_sospeso_riscontro", "SOSPESO.ti_sospeso_riscontro");
+		    	sqlNotExists.addSQLJoin("SOSPESO_FIGLIO.cd_sospeso_padre", "SOSPESO.cd_sospeso");
+		
+		    	if (SospesoBulk.STATO_SOSP_INIZIALE.equals(statoForSearch)) {
+		    	    sqlExists.addSQLClause(FindClause.AND, "SOSPESO_FIGLIO.STATO_SOSPESO", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_INIZIALE);
+		    	    sqlNotExists.addSQLClause(FindClause.AND, "SOSPESO_FIGLIO.STATO_SOSPESO", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+		    	    sql.addSQLExistsClause(FindClause.AND, sqlExists);
+		    	    sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
+		    	}  	
+		    	else if (SospesoBulk.STATO_SOSP_IN_SOSPESO.equals(statoForSearch)) {
+		    	    sqlExists.addSQLClause(FindClause.AND, "SOSPESO_FIGLIO.STATO_SOSPESO", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+		    		sql.addSQLExistsClause(FindClause.AND, sqlExists);
+		    	} 
+		    	else if (SospesoBulk.STATO_SOSP_ASS_A_CDS.equals(statoForSearch)) {
+		    	    sqlExists.addSQLClause(FindClause.AND, "SOSPESO_FIGLIO.STATO_SOSPESO", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+				    sqlNotExists.openParenthesis(FindClause.AND);
+				    sqlNotExists.addSQLClause(FindClause.OR, "SOSPESO_FIGLIO.STATO_SOSPESO", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_INIZIALE);
+				    sqlNotExists.addSQLClause(FindClause.OR, "SOSPESO_FIGLIO.STATO_SOSPESO", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+				    sqlNotExists.closeParenthesis();
+		    	    sql.addSQLExistsClause(FindClause.AND, sqlExists);
+		    	    sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
+		    	} else if("LIBERO".equals(statoForSearch)) {
+		    		sql.addSQLJoin("V_SOSPESO_IM_FIGLI.IM_ASSOCIATO_FIGLI", SQLBuilder.NOT_EQUALS, "SOSPESO.IM_SOSPESO");
+		    	}
+    		}
+    	} else
+        	sql = (SQLBuilder)select(usercontext, compoundfindclause, oggettobulk);
+
+    	return iterator(usercontext, sql, SospesoBulk.class, getFetchPolicyName("find"));
+    }catch(Throwable throwable){
+        throw handleException(throwable);
+    }
+}
 }

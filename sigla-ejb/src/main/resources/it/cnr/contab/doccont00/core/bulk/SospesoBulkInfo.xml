@@ -280,8 +280,25 @@
 		enabledOnEdit="false"
 		label="Data Storno"
 		enabledOnSearch="true"/>	
+	<fieldProperty
+		name="statoText"
+		property="statoText"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"
+		keysProperty="tiStatoTextForSearchKeys"
+		label="Stato" />		
+	<fieldProperty
+		name="statoTextForSearch"
+		property="statoTextForSearch"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"
+		keysProperty="tiStatoTextForSearchKeys"
+		label="Visualizza sospesi in stato" />		
 
-
+	<formFieldProperty
+		name="statoText" />	
+	<formFieldProperty
+		name="statoTextForSearch" />
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -332,7 +349,6 @@
 		name="find_documento_cont" />
 	<formFieldProperty
 		name="find_documento_cont_for_search" />
-		
 
 	<columnFieldProperty
 		name="ti_sospeso_riscontro" />
@@ -356,7 +372,10 @@
 		name="causale" />
 	<columnFieldProperty
 		name="ds_anagrafico" />
-
+	<columnFieldProperty
+		name="statoText"
+		inputType="ROTEXT" />
+		
 	<columnSet
 		name="SospesiPadre">
 	<columnFieldProperty
@@ -368,14 +387,18 @@
 	<columnFieldProperty
 		name="im_sospeso" />
 	<columnFieldProperty
+		name="im_associato_figli" />	
+	<columnFieldProperty
 		name="dt_registrazione" />
 	<columnFieldProperty
 		name="ti_cc_bi" 
-		inputType="ROTEXT"/>		
+		inputType="ROTEXT"/>
 	<columnFieldProperty
 		name="causale" />
 	<columnFieldProperty
 		name="ds_anagrafico" />
+	<columnFieldProperty
+		name="statoText" />	
 	</columnSet>	
 		
 
@@ -426,6 +449,8 @@
 		<columnFieldProperty
 			name="im_sospeso" />
 		<columnFieldProperty
+			name="im_associato_figli" />	
+		<columnFieldProperty
 			name="dt_registrazione" />
 		<columnFieldProperty
 			name="ti_cc_bi" />		
@@ -433,6 +458,8 @@
 			name="causale" />
 		<columnFieldProperty
 			name="ds_anagrafico" />
+		<columnFieldProperty
+			name="statoText" />
 	</columnSet>
 
 
@@ -448,7 +475,6 @@
 			name="stato_sospeso" />
 		<columnFieldProperty
 			name="cd_cds_origine" />			
-			
 	</columnSet>
 
 	<columnSet
