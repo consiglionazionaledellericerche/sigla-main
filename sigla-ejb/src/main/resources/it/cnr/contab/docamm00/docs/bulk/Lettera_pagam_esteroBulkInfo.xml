@@ -38,8 +38,10 @@
 	<fieldProperty
 		name="im_pagamento"
 		property="im_pagamento"
-		inputType="ROTEXT"
+		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Importo" />
 	<fieldProperty
