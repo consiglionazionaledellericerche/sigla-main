@@ -234,7 +234,8 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		try {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
-			if (bulk.getImportoDocumento() == null||bulk.getImportoDocumento() .compareTo(BigDecimal.ZERO)==0) {
+			BigDecimal tot_riepilogo=BigDecimal.ZERO;
+			if (bulk.getImportoDocumento() == null) {
 				fatturaPassivaElettronicaBP.setMessage("Prima di procedere verificare il totale del documento!");
 				return context.findDefaultForward();
 			} else if (!bulk.getDocEleIVAColl().isEmpty()){
@@ -245,6 +246,15 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' o 'Split Payment', il documento deve essere rifiutato!");	
 			    	  return context.findDefaultForward();			    	  
 			      }
+			      if (rigaEle.getImponibileImporto()!=null) 
+			    	  tot_riepilogo=tot_riepilogo.add(rigaEle.getImponibileImporto());
+			      if (rigaEle.getImposta()!=null)
+			    	  tot_riepilogo=tot_riepilogo.add(rigaEle.getImposta());
+			      
+				}
+				if(bulk.getImportoDocumento().compareTo(BigDecimal.ZERO)==0 && bulk.getImportoDocumento() .compareTo(tot_riepilogo)!=0) {
+					fatturaPassivaElettronicaBP.setMessage("Prima di procedere verificare il totale del documento!");
+					return context.findDefaultForward();
 				}
 			}
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
