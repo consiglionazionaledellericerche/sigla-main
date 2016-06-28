@@ -63,6 +63,12 @@ public class ConsAccertamentiBase extends  OggettoBulk implements Persistent {
 	// ESERCIZIO_DOCAMM
 	private java.lang.Integer esercizio_docamm;
   
+//  DT_PAGAMENTO TIMESTAMP(7)
+	private java.sql.Timestamp data_incasso;
+
+//  DT_DOCAMM TIMESTAMP(7)
+	private java.sql.Timestamp data_docamm;
+
 	public java.lang.String getUo () {
 		return uo;
 	}
@@ -184,5 +190,17 @@ public class ConsAccertamentiBase extends  OggettoBulk implements Persistent {
 	}
 	public void setEsercizio_docamm(java.lang.Integer esercizio_docamm) {
 		this.esercizio_docamm = esercizio_docamm;
+	}
+	public java.sql.Timestamp getData_incasso() {
+		return data_incasso;
+	}
+	public void setData_incasso(java.sql.Timestamp data_incasso) {
+		this.data_incasso = data_incasso;
+	}
+	public java.sql.Timestamp getData_docamm() {
+		return data_docamm;
+	}
+	public void setData_docamm(java.sql.Timestamp data_docamm) {
+		this.data_docamm = data_docamm;
 	}
 }

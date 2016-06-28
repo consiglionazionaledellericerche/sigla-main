@@ -237,6 +237,17 @@
 		nullable="false"
 		label="G.a.e." />
 	<fieldProperty
+		name="find_linea_attivita_liv2"
+		property="linea_attivita"
+		inputType="SEARCHTOOL"
+		formName="searchtool_denominazione"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROLinea_attivita"
+		nullable="false"
+		columnSet="prg_liv2"
+		label="G.a.e." />
+	<fieldProperty
 		name="find_elemento_voce"
 		property="elemento_voce"
 		inputType="SEARCHTOOL"
@@ -252,6 +263,7 @@
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROprogetto"
 		formName="form_searchtool_progetto"
+		columnSet="livello3"
 		label="Modulo di attivit&#224;" />
 	<fieldProperty
 		name="searchtool_progetto_liv2"
@@ -328,6 +340,8 @@
 		name="find_elemento_voce" />
 	<formFieldProperty
 		name="find_linea_attivita" />
+	<formFieldProperty
+		name="find_linea_attivita_liv2" />
 	<formFieldProperty
 		name="searchtool_progetto" />
 	<formFieldProperty

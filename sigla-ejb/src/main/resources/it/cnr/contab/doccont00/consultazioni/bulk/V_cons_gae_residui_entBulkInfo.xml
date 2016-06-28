@@ -575,7 +575,113 @@
 			<columnFieldProperty name="pg_reversale" />
 			<columnFieldProperty name="ds_reversale" />
 			<columnFieldProperty name="im_mandati_reversali_pro" />
-		</columnSet>		
+		</columnSet>
+		
+<!-- Column Set per gestione Aree Progettuali -->		
+		<columnSet name="ETRGAE2">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="ds_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="ds_commessa" />			
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_modulo" />
+			<columnFieldProperty name="im_obbl_res_pro" />
+			<columnFieldProperty name="var_piu_acc_res_pro" />
+			<columnFieldProperty name="var_meno_acc_res_pro" />
+			<columnFieldProperty name="im_mandati_reversali_pro" />
+			<columnFieldProperty name="da_riscuotere" />
+		</columnSet>
+		<columnSet name="ETRGAE2VOC">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="ds_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="ds_commessa" />			
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_modulo" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="ds_elemento_voce" />
+			<columnFieldProperty name="im_obbl_res_pro" />
+			<columnFieldProperty name="var_piu_acc_res_pro" />
+			<columnFieldProperty name="var_meno_acc_res_pro" />
+			<columnFieldProperty name="im_mandati_reversali_pro" />
+			<columnFieldProperty name="da_riscuotere" />
+		</columnSet>
+		<columnSet name="ETRGAE2VOCVARP">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_commessa" />			
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="pg_var_res_pro" />
+			<columnFieldProperty name="ds_var_res_pro" />
+			<columnFieldProperty name="var_piu_acc_res_pro" />
+		</columnSet>
+		<columnSet name="ETRGAE2VOCVARM">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_commessa" />			
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="pg_var_res_pro" />
+			<columnFieldProperty name="ds_var_res_pro" />
+			<columnFieldProperty name="var_meno_acc_res_pro" />
+		</columnSet>
+		<columnSet name="ETRGAE2VOCACC">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_commessa" />			
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="cd_cds_acc" />
+			<columnFieldProperty name="pg_accertamento" />
+			<columnFieldProperty name="pg_accertamento_scadenzario" />
+			<columnFieldProperty name="ds_scadenza" />
+			<columnFieldProperty name="im_mandati_reversali_pro" />
+			<columnFieldProperty name="da_riscuotere" />	
+		</columnSet>
+		<columnSet name="ETRGAE2VOCACCREV">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_commessa" />			
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="cd_cds_acc" />
+			<columnFieldProperty name="pg_accertamento" />
+			<columnFieldProperty name="pg_accertamento_scadenzario" />
+			<columnFieldProperty name="ds_scadenza" />
+			<columnFieldProperty name="cd_cds_rev" />
+			<columnFieldProperty name="pg_reversale" />
+			<columnFieldProperty name="ds_reversale" />
+			<columnFieldProperty name="im_mandati_reversali_pro" />
+		</columnSet>
+		<columnSet name="ETRGAE2VOCREV">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_commessa" />			
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="cd_cds_rev" />
+			<columnFieldProperty name="pg_reversale" />
+			<columnFieldProperty name="ds_reversale" />
+			<columnFieldProperty name="im_mandati_reversali_pro" />
+		</columnSet>
+		
 		<freeSearchSet name="ETRGAE">
 			<findFieldProperty name="cd_centro_responsabilita" />
 			<findFieldProperty name="cd_linea_attivita" />
@@ -682,4 +788,102 @@
 			<findFieldProperty name="im_mandati_reversali_pro" />
 		</freeSearchSet>
 		
+<!-- freeSearchSet per gestione Aree Progettuali -->
+		
+		<freeSearchSet name="ETRGAE2">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="ds_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_commessa" />
+			<findFieldProperty name="ds_commessa" />			
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_modulo" />
+			<findFieldProperty name="im_obbl_res_pro" />
+			<findFieldProperty name="var_piu_acc_res_pro" />
+			<findFieldProperty name="var_meno_acc_res_pro" />
+			<findFieldProperty name="im_mandati_reversali_pro" />
+			<findFieldProperty name="da_riscuotere" />	
+		</freeSearchSet>
+		<freeSearchSet name="ETRGAE2VOC">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="ds_linea_attivita" />			
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_commessa" />
+			<findFieldProperty name="ds_commessa" />			
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_modulo" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="ds_elemento_voce" />
+			<findFieldProperty name="im_obbl_res_pro" />
+			<findFieldProperty name="var_piu_acc_res_pro" />
+			<findFieldProperty name="var_meno_acc_res_pro" />
+			<findFieldProperty name="im_mandati_reversali_pro" />
+			<findFieldProperty name="da_riscuotere" />	
+		</freeSearchSet>
+		<freeSearchSet name="ETRGAE2VOCVARP">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_commessa" />			
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="pg_var_res_pro" />
+			<findFieldProperty name="ds_var_res_pro" />
+			<findFieldProperty name="var_piu_acc_res_pro" />
+		</freeSearchSet>
+		<freeSearchSet name="ETRGAE2VOCVARM">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_commessa" />			
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="pg_var_res_pro" />
+			<findFieldProperty name="ds_var_res_pro" />
+			<findFieldProperty name="var_meno_acc_res_pro" />
+		</freeSearchSet>
+		<freeSearchSet name="ETRGAE2VOCACC">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_commessa" />			
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="cd_cds_acc" />
+			<findFieldProperty name="pg_accertamento" />
+			<findFieldProperty name="pg_accertamento_scadenzario" />
+			<findFieldProperty name="ds_scadenza" />
+			<findFieldProperty name="da_riscuotere" />
+			<findFieldProperty name="im_mandati_reversali_pro" />	
+		</freeSearchSet>
+		<freeSearchSet name="ETRGAE2VOCACCREV">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_commessa" />			
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="cd_cds_acc" />
+			<findFieldProperty name="pg_accertamento" />
+			<findFieldProperty name="pg_accertamento_scadenzario" />
+			<findFieldProperty name="ds_scadenza" />
+			<findFieldProperty name="cd_cds_rev" />
+			<findFieldProperty name="pg_reversale" />
+			<findFieldProperty name="ds_reversale" />
+			<findFieldProperty name="im_mandati_reversali_pro" />
+		</freeSearchSet>
+		<freeSearchSet name="ETRGAE2VOCREV">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_commessa" />			
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="cd_cds_rev" />
+			<findFieldProperty name="pg_reversale" />
+			<findFieldProperty name="ds_reversale" />
+			<findFieldProperty name="im_mandati_reversali_pro" />
+		</freeSearchSet>
 </bulkInfo>

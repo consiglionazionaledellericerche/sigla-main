@@ -92,6 +92,8 @@ function escludi(index){
 					<% bp.getController().writeFormLabel( out, "fl_valido"); %></td>
 				<td><% bp.getController().writeFormInput( out, "fl_autofattura"); %>
 					<% bp.getController().writeFormLabel( out, "fl_autofattura"); %></td>	
+				<td><% bp.getController().writeFormInput( out, "fl_bollo"); %>
+					<% bp.getController().writeFormLabel( out, "fl_bollo"); %></td>	
 			</tr>
 		</table> 
 	</div>

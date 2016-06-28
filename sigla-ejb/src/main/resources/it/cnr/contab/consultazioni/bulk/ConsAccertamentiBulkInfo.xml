@@ -144,6 +144,22 @@
 		inputType="TEXT"
 		maxLength="100"
 		label="Tipo doc. Amm." />	
+	<fieldProperty
+		name="data_incasso"
+		property="data_incasso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		label="Data di incasso" />
+	<fieldProperty
+		name="data_docamm"
+		property="data_docamm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		label="Data documento Amministrativo" />
 	<formFieldProperty
 		name="cds" />
 	<formFieldProperty
@@ -186,6 +202,10 @@
 		name="denominazione_sede" />
 	<formFieldProperty
 		name="ti_fattura" />
+	<formFieldProperty
+		name="data_incasso" />
+	<formFieldProperty
+		name="data_docamm" />
 	<columnFieldProperty
 		name="cds" />
 	<columnFieldProperty
@@ -196,7 +216,7 @@
 		name="cd_linea_attivita" />
 	<columnFieldProperty
 		name="ds_linea_attivita"
-		label="Descrizione&#160;GAE&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+		label="Descrizione GAE" />
 	<columnFieldProperty
 		name="cd_elemento_voce" />
 	<columnFieldProperty
@@ -211,7 +231,7 @@
 		name="pg_accertamento_scadenzario" />
 	<columnFieldProperty
 		name="ds_scadenza" 		
-		label="Descrizione&#160;scadenza&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+		label="Descrizione scadenza" />
 	<columnFieldProperty
 		name="im_scadenza" />
 	<columnFieldProperty
@@ -228,7 +248,11 @@
 		name="cd_terzo" />
 	<columnFieldProperty
 		name="denominazione_sede"
-		label="Denominazione&#160;sede&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+		label="Denominazione sede" />
+	<columnFieldProperty
+		name="data_incasso" />
+	<columnFieldProperty
+		name="data_docamm" />
 	<findFieldProperty
 		name="cds" />
 	<findFieldProperty
@@ -271,4 +295,8 @@
 		name="denominazione_sede" />
 	<findFieldProperty
 		name="tipo_doc_amm" />	
+	<findFieldProperty
+		name="data_incasso" />
+	<findFieldProperty
+		name="data_docamm" />
 </bulkInfo>

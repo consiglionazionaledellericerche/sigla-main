@@ -85,8 +85,13 @@
 		%>
 	</tr>
 	<tr>
-		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_linea_attivita");%></td>
-		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) { %> 
+			<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_linea_attivita_liv2");%></td>
+			<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita_liv2",isDettaglioGestionaleEnable,null,null);%></td>
+		<% } else { %>
+			<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_linea_attivita");%></td>
+			<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+		<% } %>
 	</tr>
 	<tr>
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_elemento_voce");%></td>
