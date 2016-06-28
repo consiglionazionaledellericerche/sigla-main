@@ -52,6 +52,7 @@
   <% } %>
 <% } %>
 
+  <% if (!bp.isSearching() && !compenso.isCompensoSoloInailEnte()) { %>
 <div class="Group" style="width:100%">
 <table>
   <tr>
@@ -78,6 +79,7 @@
 	<td width="25%"><% bp.getController().writeFormLabel(out,"quota_esente_inps"); %></td>
 	<td><% bp.getController().writeFormInput(out,"quota_esente_inps"); %></td>	
   </tr>
+  <% } %>
   
 </table>
 </div>

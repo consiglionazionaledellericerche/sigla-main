@@ -1,17 +1,20 @@
 package it.cnr.contab.doccont00.bp;
 
+import java.rmi.RemoteException;
 import java.util.Iterator;
 
-
-
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_speBulk;
 
 import it.cnr.contab.doccont00.ejb.ConsConfrontoEntSpeComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
@@ -25,15 +28,14 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 	public static final String LIV_BASEMOD= "MOD";
 	public static final String LIV_BASEMODGAE= "GAE";
 	public static final String LIV_BASEMODGAEVOCE= "VOCE";
-//	public static final String LIV_BASEMODGAEVOCEDET= "DET";
 	
 	private String livelloConsultazione;
 	private String pathConsultazione;
-	
+	private boolean flNuovoPdg = false;
 	
 	public ConsConfrontoEntSpeComponentSession createConsConfrontoEntSpeComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		return (ConsConfrontoEntSpeComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsConfrontoEntSpeComponentSession", ConsConfrontoEntSpeComponentSession.class);
-}
+	}
 	
 	
 	public RemoteIterator search(ActionContext context, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws BusinessProcessException {
@@ -54,41 +56,46 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 		}
 	}
 	
-	
-	
 	protected void init(it.cnr.jada.action.Config config,ActionContext context) throws BusinessProcessException {
-		   Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());
-		   String cds = CNRUserContext.getCd_cds(context.getUserContext());
-		   CompoundFindClause clauses = new CompoundFindClause();
-//		   String cds_scrivania = CNRUserContext.getCd_cds(context.getUserContext());
-		   String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(context.getUserContext())+"%";
-		  
-		   Unita_organizzativaBulk uo = new Unita_organizzativaBulk(uo_scrivania);
-		   
-			   if(!isUoEnte(context) && !uo.isUoCds())	 {					
-					clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-					clauses.addClause("AND", "cds",SQLBuilder.EQUALS, cds);
-				}
+		try {
+			Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), esercizio); 
+			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 
-			   if(!isUoEnte(context) && uo.isUoCds())	 {					
-					clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-					clauses.addClause("AND", "cds",SQLBuilder.EQUALS, cds);
-				}
-			   
-			   if (isUoEnte(context))
-					clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-				
-				setBaseclause(clauses);	
-					
-					if (getPathConsultazione()==null) {
-							setPathConsultazione(this.LIV_BASE);					
-							setLivelloConsultazione(this.LIV_BASE);
-					} 
+			String cds = CNRUserContext.getCd_cds(context.getUserContext());
+			CompoundFindClause clauses = new CompoundFindClause();
+			String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(context.getUserContext())+"%";
 		  
+		    Unita_organizzativaBulk uo = new Unita_organizzativaBulk(uo_scrivania);
+		   
+			if(!isUoEnte(context) && !uo.isUoCds())	 {					
+				clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+				clauses.addClause("AND", "cds",SQLBuilder.EQUALS, cds);
+			}
+
+			if(!isUoEnte(context) && uo.isUoCds())	 {					
+				clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+				clauses.addClause("AND", "cds",SQLBuilder.EQUALS, cds);
+			}
+			   
+			if (isUoEnte(context))
+				clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+				
+			setBaseclause(clauses);	
+					
+			if (getPathConsultazione()==null) {
+				setPathConsultazione(this.LIV_BASE);					
+				setLivelloConsultazione(this.LIV_BASE);
+			} 
 				
 			super.init(config,context);
 			initVariabili(context,null,getPathConsultazione()); 
-		}
+		} catch (ComponentException e) {
+			throw new BusinessProcessException(e);
+		} catch (RemoteException e) {
+			throw new BusinessProcessException(e);
+		} 
+	}
 
 	   public void initVariabili(ActionContext context, String pathProvenienza, String livello_destinazione) throws BusinessProcessException {
 		   try {
@@ -182,8 +189,12 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 	   
 	   		if (getLivelloConsultazione().equals(this.LIV_BASE)) {
 				Button button = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.dettagli_mod");
+				if (this.isFlNuovoPdg()) {
+					button.setTitle("Consultazione per "+ProgettoBulk.LABEL_PROGETTO);
+					button.setLabel("Dettagli "+ProgettoBulk.LABEL_PROGETTO);
+				}
 				button.setSeparator(true);
-				   listButton.addElement(button);
+			   listButton.addElement(button);
 			}
 
 	   		if (getLivelloConsultazione().equals(this.LIV_BASEMOD)) {
@@ -204,7 +215,7 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 		   String title=null;
 		   		   title = "Confronto Entrate-Spese per CDS Competenza";
 			
-			if (isPresenteMOD()) title = title.concat(" - Modulo");
+			if (isPresenteMOD()) title = title.concat(" - "+(!this.isFlNuovoPdg()?ProgettoBulk.LABEL_MODULO:ProgettoBulk.LABEL_PROGETTO));
 			if (isPresenteGAE()) title = title.concat(" - GAE");
 			if (isPresenteVOCE()) title = title.concat(" - Voce");
 		
@@ -223,5 +234,23 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 	   return getPathConsultazione().indexOf(LIV_BASEMODGAEVOCE)>=0;
 	}
 	
+	public void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
+	}
 	
+	public String getColumnLabelCd_modulo(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_PROGETTO;
+		else
+			return ProgettoBulk.LABEL_MODULO;
+	}	
+	public String getFindLabelCd_progetto(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_PROGETTO;
+		else
+			return ProgettoBulk.LABEL_MODULO;
+	}	
 }

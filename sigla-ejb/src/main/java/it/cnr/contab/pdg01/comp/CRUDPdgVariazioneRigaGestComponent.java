@@ -356,8 +356,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	    sql.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
 	    if (dett.getProgetto()!=null && dett.getProgetto().getPg_progetto()!=null)
 	    	sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
-	    else
-	    	sql.addSQLClause(FindClause.AND, "1!=1");
 	    
 	 // Obbligatorio cofog sulle GAE
 	 	if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
@@ -743,5 +741,21 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		} catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
 		}
+	}
+
+	public ProgettoBulk getProgettoLineaAttivita(UserContext usercontext, Pdg_variazione_riga_gestBulk dett) throws ComponentException{
+		try {
+			PersistentHome laHome = getHome(usercontext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+			SQLBuilder sql = laHome.createSQLBuilder();
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,dett.getEsercizio());
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,dett.getCd_cdr_assegnatario());
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,dett.getCd_linea_attivita());
+			List list = laHome.fetchAll(sql);
+			if (list.size()==1)
+				return (ProgettoBulk)getHome(usercontext, ProgettoBulk.class).findByPrimaryKey(usercontext, ((WorkpackageBulk)list.get(0)).getProgetto());
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		return null;
 	}
 }

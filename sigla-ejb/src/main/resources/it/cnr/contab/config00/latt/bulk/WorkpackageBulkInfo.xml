@@ -183,7 +183,6 @@
 		inputSize="30"
 		inputType="TEXT"
 		label="Codice Commessa"
-		readonlyProperty="ROprogetto"		
 		caseSensitiveSearch="false"
 		enabledOnSearch="true" 
 		enabledOnFreeSearch="true"		
@@ -224,7 +223,6 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="TEXT"
-		readonlyProperty="ROprogetto"
 		label="Codice Modulo di Attivita'"
 		caseSensitiveSearch="false"
 		enabledOnSearch="true" 
@@ -472,11 +470,13 @@
 	<formFieldProperty
 		name="find_nodo_progettopadre" />
 	<formFieldProperty
-		name="cd_progetto" />		
+		name="cd_progetto" 
+		readonlyProperty="ROprogetto" />		
 	<formFieldProperty
 		name="ds_progetto" />		
 	<formFieldProperty
-		name="cd_progetto_padre" />		
+		name="cd_progetto_padre" 
+		readonlyProperty="ROprogetto" />		
 	<formFieldProperty
 		name="ds_progetto_padre" />
 	<formFieldProperty
@@ -641,10 +641,6 @@
 	<findFieldProperty
 		name="cd_gruppo_linea_attivita" />
 	<findFieldProperty
-		name="cd_progetto" />		
-	<findFieldProperty
-		name="cd_progetto_padre" />		
-	<findFieldProperty
 		name="esercizio_inizio" />
 	<findFieldProperty
 		name="denominazione" />
@@ -676,9 +672,4 @@
 		name="cd_programma"/>
 	<findFieldProperty
 		name="cd_missione"/>
-	<findFieldProperty
-		name="cd_modulo2015" />		
-	<findFieldProperty
-		name="cd_progetto2016" />		
-		
 </bulkInfo>
