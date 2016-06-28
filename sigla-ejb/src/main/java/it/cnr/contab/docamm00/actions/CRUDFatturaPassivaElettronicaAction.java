@@ -218,7 +218,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 			if (bulk.getFlDecorrenzaTermini().equalsIgnoreCase("S")) {
-				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto, Registrare il documento e richiedere nota credito!");
+				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalità di invio PEC (Vedere Manuale)!");
 			} else {
 				String message = "Inserire il motivo di rifiuto della fattura:";
 				message += "<textarea maxLength=\"255\" name=\"main.motivoRifiuto\" class=\"FormInput\" "+

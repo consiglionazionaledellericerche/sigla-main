@@ -6,9 +6,10 @@
  */
 package it.cnr.contab.pdg01.action;
 
+import java.util.Iterator;
+
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneRigaGestBP;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
@@ -17,10 +18,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.OptionBP;
-
-import java.util.Iterator;
 
 
 /**
@@ -94,6 +92,10 @@ public class CRUDPdgVariazioneRigaGestAction extends it.cnr.jada.util.action.CRU
 		bulk.setIm_entrata(Utility.ZERO);
 		return context.findDefaultForward();
 	}
+	
+	public it.cnr.jada.action.Forward doBlankSearchFind_linea_attivita_liv2(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk) {
+		return doBlankSearchFind_linea_attivita(context, bulk);
+	}
 
 	private void gestioneVariazioneApprovata(
 			it.cnr.jada.action.ActionContext context,
@@ -163,5 +165,19 @@ public class CRUDPdgVariazioneRigaGestAction extends it.cnr.jada.util.action.CRU
 		}catch(Throwable ex){
 			return handleException(context, ex);
 		}			
+	}
+	public it.cnr.jada.action.Forward doBringBackSearchFind_linea_attivita(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk, WorkpackageBulk linea_di_attivita) {
+		try {
+			fillModel(context);
+			CRUDPdgVariazioneRigaGestBP bp = (CRUDPdgVariazioneRigaGestBP)getBusinessProcess(context);
+			bulk.setLinea_attivita(linea_di_attivita);
+			bp.valorizzaProgettoLineaAttivita(context,bulk);
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+	}
+	public it.cnr.jada.action.Forward doBringBackSearchFind_linea_attivita_liv2(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk, WorkpackageBulk linea_di_attivita) {
+		return doBringBackSearchFind_linea_attivita(context, bulk, linea_di_attivita);
 	}
 }

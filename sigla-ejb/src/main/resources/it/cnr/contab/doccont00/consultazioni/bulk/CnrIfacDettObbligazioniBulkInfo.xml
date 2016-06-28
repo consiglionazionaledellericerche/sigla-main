@@ -185,6 +185,14 @@
 		nullable="false"
 		label="fornitore" />
 	<fieldProperty
+		name="pgDocamm"
+		property="pgDocamm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Numero Documento Amministrativo" />
+	<fieldProperty
 		name="utcr"
 		property="utcr"
 		inputType="TEXTAREA"
@@ -242,6 +250,8 @@
 	<formFieldProperty
 		name="pgObbligazioneOriRiporto" />
 	<formFieldProperty
+		name="pgDocamm" />
+	<formFieldProperty
 		name="fornitore" />
 	<findFieldProperty
 		name="cdCds" />
@@ -278,6 +288,8 @@
 	<findFieldProperty
 		name="pgObbligazioneOriRiporto" />
 	<findFieldProperty
+		name="pgDocamm" />
+	<findFieldProperty
 		name="fornitore" />
 	<findFieldProperty
 		name="utcr" />
@@ -314,6 +326,8 @@
 	<columnFieldProperty
 		name="pgObbligazioneOriRiporto" />
 	<columnFieldProperty
+		name="pgDocamm" />
+	<columnFieldProperty
 		name="fornitore" />
 	<columnFieldProperty
 		name="utcr" />
@@ -338,6 +352,7 @@
 		<columnFieldProperty name="fornitore" />
 		<columnFieldProperty name="esercizioOriginale" />
 		<columnFieldProperty name="esercizioOriOriRiporto" />
+		<columnFieldProperty name="pgDocamm" />
 		<columnFieldProperty name="data_creazione" />
 		<columnFieldProperty name="data_ultima_variazione" />
 		<columnFieldProperty name="utcr" />

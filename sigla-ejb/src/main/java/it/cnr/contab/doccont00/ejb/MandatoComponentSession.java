@@ -31,4 +31,5 @@ java.lang.Boolean isCollegamentoSiopeCompleto (it.cnr.jada.UserContext param0, i
 it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoPerRegolarizzazione(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoIBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.Boolean isDipendenteDaConguaglio (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 List<Rif_modalita_pagamentoBulk> findModPagObbligatorieAssociateAlMandato(UserContext userContext, V_mandato_reversaleBulk mandato_reversaleBulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+java.lang.Boolean isCollegamentoSospesoCompleto (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
