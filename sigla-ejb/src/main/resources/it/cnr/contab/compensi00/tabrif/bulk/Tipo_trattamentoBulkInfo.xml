@@ -226,6 +226,14 @@
 		enabledOnSearch="false"
 		enabledOnEdit="true"
 		enabledOnInsert="true" />			
+	<fieldProperty
+		name="fl_solo_inail_ente"
+		property="fl_solo_inail_ente"
+		inputType="CHECKBOX"
+		label="Solo dati INAIL ente"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />	
 		
 	<formFieldProperty
 		name="cd_trattamento"
@@ -255,6 +263,8 @@
 	<formFieldProperty name="fl_pignorato_obbl" />
 	<formFieldProperty name="fl_tipo_prestazione_obbl" />
 	<formFieldProperty name="fl_agevolazioni_rientro_lav" />	
+	<formFieldProperty name="fl_solo_inail_ente" />	
+	
 
 	<columnFieldProperty name="cd_trattamento" />
 	<columnFieldProperty name="ds_ti_trattamento" />
@@ -280,6 +290,7 @@
 	<columnFieldProperty name="fl_pignorato_obbl" />	
 	<columnFieldProperty name="fl_tipo_prestazione_obbl" />		
 	<columnFieldProperty name="fl_agevolazioni_rientro_lav" />					
+	<columnFieldProperty name="fl_solo_inail_ente" />					
 
 	<columnSet name="cd_ds_trattamento">
 		<columnFieldProperty name="cd_trattamento" />
@@ -311,5 +322,7 @@
 	<findFieldProperty name="fl_visibile_a_tutti" />	
 	<findFieldProperty name="fl_pignorato_obbl" />	
 	<findFieldProperty name="fl_tipo_prestazione_obbl" />	
-	<findFieldProperty name="fl_agevolazioni_rientro_lav" />		
+	<findFieldProperty name="fl_agevolazioni_rientro_lav" />	
+	<findFieldProperty name="fl_solo_inail_ente" />	
+		
 </bulkInfo>

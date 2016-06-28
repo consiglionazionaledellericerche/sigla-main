@@ -29,6 +29,10 @@ public class Rif_modalita_pagamentoBase extends Rif_modalita_pagamentoKey implem
 
 	// fl_all_obbl_mandato CHAR(1) NOT NULL
 	private java.lang.Boolean fl_all_obbl_mandato;
+	
+	private java.lang.Boolean fl_conto_bi;
+	
+	private java.lang.String ti_mandato;
 
 	public java.lang.Boolean getFl_utilizzabile_art35() {
 		return fl_utilizzabile_art35;
@@ -108,4 +112,17 @@ public class Rif_modalita_pagamentoBase extends Rif_modalita_pagamentoKey implem
 	public void setFl_all_obbl_mandato(java.lang.Boolean fl_all_obbl_mandato) {
 		this.fl_all_obbl_mandato = fl_all_obbl_mandato;
 	}	
+	public java.lang.Boolean getFl_conto_bi() {
+		return fl_conto_bi;
+	}
+	public void setFl_conto_bi(java.lang.Boolean fl_conto_bi) {
+		this.fl_conto_bi = fl_conto_bi;
+	}
+	public java.lang.String getTi_mandato() {
+		return ti_mandato;
+	}
+	public void setTi_mandato(java.lang.String ti_mandato) {
+		this.ti_mandato = ti_mandato;
+	}
+
 }

@@ -226,8 +226,8 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				varRiga.getIm_variazione().compareTo(Utility.ZERO)==-1){
 				String err = Utility.createSaldoComponentSession().getMessaggioSfondamentoDisponibilita(userContext, 
 																									    saldoNew);
-//				if (!(err==null ||err.equals("")))
-//					throw new ApplicationException(err);
+				if (!(err==null ||err.equals("")))
+					throw new ApplicationException(err);
 		        }
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);

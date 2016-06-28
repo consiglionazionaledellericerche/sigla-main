@@ -63,6 +63,21 @@
 		readonlyProperty="notNew"
 		nullable="false"
 		/>
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		label="Codice Anagrafico"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+		/>
+	<fieldProperty
+		name="pg_rif_inquadramento"
+		property="rif_inquadramento.pg_rif_inquadramento"
+		inputType="TEXT"
+		label="Pg Riferimento Inquadramento"/>
 
 	<formFieldProperty
 		name="rif_inquadramento" />
@@ -75,10 +90,14 @@
 	<formFieldProperty
 		name="ds_inquadramento" />
 	<formFieldProperty
+		name="pg_rif_inquadramento" />
+	<formFieldProperty
 		name="dt_fin_validita" />
 	<formFieldProperty
 		name="dt_ini_validita" />
 
+	<columnFieldProperty
+		name="cd_anag"/>
 	<columnFieldProperty
 		name="cd_progressione" />
 	<columnFieldProperty
@@ -87,11 +106,21 @@
 		name="cd_profilo" />
 	<columnFieldProperty
 		name="ds_inquadramento" />
+	<columnFieldProperty
+		name="pg_rif_inquadramento" />
 	<columnFieldProperty
 		name="rif_inquadramento" />
 	<columnFieldProperty
 		name="dt_ini_validita" />
 	<columnFieldProperty 
 		name="dt_fin_validita" />
+
+	<columnSet name="restService" >
+		<columnFieldProperty name="cd_anag" />
+		<columnFieldProperty name="pg_rif_inquadramento" />
+		<columnFieldProperty name="ds_inquadramento" />
+		<columnFieldProperty name="dt_ini_validita" />
+		<columnFieldProperty name="dt_fin_validita" />
+	</columnSet>
 
 </bulkInfo>
