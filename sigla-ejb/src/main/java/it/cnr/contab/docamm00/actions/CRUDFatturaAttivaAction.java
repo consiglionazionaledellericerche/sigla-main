@@ -2594,7 +2594,7 @@ public Forward doSalva(ActionContext actioncontext) throws java.rmi.RemoteExcept
     }
     return actioncontext.findDefaultForward();
 }
-private void postSalvataggio(ActionContext context) throws BusinessProcessException {
+protected void postSalvataggio(ActionContext context) throws BusinessProcessException {
 
     CRUDFatturaAttivaBP bp= (CRUDFatturaAttivaBP) getBusinessProcess(context);
 	bp.gestioneAllegatiFatturazioneElettronica(context);
