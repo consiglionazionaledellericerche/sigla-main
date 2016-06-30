@@ -1134,6 +1134,7 @@ public Forward doSalva(ActionContext context) throws java.rmi.RemoteException {
 
 		bp.setSavePoint(context, IDocumentoAmministrativoBulk.RIPORTA_AVANTI);
 		bp.save(context);
+		postSalvataggio(context);
 
 		Nota_di_credito_attivaBulk ndc = (Nota_di_credito_attivaBulk)bp.getModel();
 		if (bp.isEditing() &&
