@@ -43,6 +43,7 @@ import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.cori00.ejb.Liquid_coriComponentSession;
+import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.*;
 import it.cnr.contab.doccont00.intcass.bulk.*;
@@ -59,6 +60,7 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -583,7 +585,7 @@ public String Formatta(String s, String allineamento,Integer dimensione,String r
 public boolean isSignButtonEnabled() {
 	if (firmatarioDistinta == null)
 		return false;
-	if ( super.isDeleteButtonEnabled() &&(((Distinta_cassiereBulk)getModel()).getDt_invio() == null) && (!isFlusso()))
+	if ( super.isDeleteButtonEnabled() &&(((Distinta_cassiereBulk)getModel()).getDt_invio_pec() == null) && (!isFlusso()))
 		return true;
 	if ( super.isDeleteButtonEnabled() &&(((Distinta_cassiereBulk)getModel()).getDt_invio() != null) && (isFlusso()))
 		return true;
@@ -744,6 +746,11 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 			else
 					documentiContabiliService.inviaDistintaPEC(nodes,this.isSepa(),null);
 			setMessage("Invio effettuato correttamente.");
+			distinta = (Distinta_cassiereBulk)getModel();
+			distinta.setDt_invio_pec(DateServices.getDt_valida(context.getUserContext()));
+			distinta.setUser(((CNRUserContext) context.getUserContext()).getUser());
+			distinta.setToBeUpdated();
+			commitUserTransaction();
 		
 		} catch (HttpException e) {
 			throw new BusinessProcessException(e);
