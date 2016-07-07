@@ -117,7 +117,6 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			setBaseclause(compoundfindclause);
 			
 			V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk) getModel();
-			EJBCommonServices.closeRemoteIterator(getIterator());
 			setIterator(actioncontext, find(actioncontext, compoundfindclause, v_mandato_reversaleBulk.getStato_trasmissione().equalsIgnoreCase(StatoTrasmissione.ALL) ? new V_mandato_reversaleBulk() : v_mandato_reversaleBulk));
 		} catch (RemoteException e) {
 			throw new BusinessProcessException(e);
