@@ -71,6 +71,12 @@
 			columnSize="7"
 			nullable="true" />
 		<columnMapping
+			columnName="DT_INCASSO"
+			propertyName="dt_incasso"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
 			columnName="PG_DISTINTA"
 			propertyName="pg_distinta"
 			sqlTypeName="DECIMAL"
@@ -117,6 +123,8 @@
 		name="dt_emis_rev" />
 	<persistentProperty
 		name="dt_annullamento" />
+	<persistentProperty
+		name="dt_incasso" />	
 	<persistentProperty
 		name="pg_distinta" />
 	<persistentProperty
