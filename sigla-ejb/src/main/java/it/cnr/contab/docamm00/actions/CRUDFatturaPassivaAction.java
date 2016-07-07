@@ -4408,9 +4408,9 @@ private void scollegaDettagliDaObbligazione(ActionContext context, java.util.Lis
 
 	if (models != null) {
 		try {
-			if (!((CRUDFatturaPassivaBP)getBusinessProcess(context)).isDeleting() &&
-				hasRangeDetailWithDocAmmAssociated(context, models))
-				throw new it.cnr.jada.comp.ApplicationException("Uno o più dettagli hanno storni o addebiti collegati! Impossibile scollegare.");
+//			if (!((CRUDFatturaPassivaBP)getBusinessProcess(context)).isDeleting() &&
+//				hasRangeDetailWithDocAmmAssociated(context, models))
+//				throw new it.cnr.jada.comp.ApplicationException("Uno o più dettagli hanno storni o addebiti collegati! Impossibile scollegare.");
 
 			for (java.util.Iterator i = models.iterator(); i.hasNext();) {
 				Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
