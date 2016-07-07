@@ -27,16 +27,16 @@
 	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2006)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CDS" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["999"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DaData" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2006/11/10")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2016/01/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="AData" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2006/11/10")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2016/07/06")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DaNumero" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
@@ -54,7 +54,7 @@
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Stato_trasm" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["NT"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
@@ -76,15 +76,18 @@
 FROM PRT_REVE_ELENCO_CNR,parametri_cnr
 WHERE
 parametri_cnr.esercizio =  $P{Esercizio} and
-PRT_REVE_ELENCO_CNR.ESERCIZIO = $P{Esercizio}
-AND COD_CDS like
+PRT_REVE_ELENCO_CNR.ESERCIZIO = $P{Esercizio} and
+PRT_REVE_ELENCO_CNR.cds_ori_accertamento like
 decode(fl_tesoreria_unica,'Y',decode($P{CDS},CNRCTB020.GETCDCDSENTE ($P{Esercizio}),'%',$P{CDS}),$P{CDS})
 AND PROGRESSIVO between $P{DaNumero} and $P{ANumero}
 AND DATA_EMISSIONE between $P{DaData} and $P{AData}
-AND UO_EMITTENTE  LIKE $P{UO}
+AND uo_ori_accertamento like
+decode(fl_tesoreria_unica,'Y',decode( $P{CDS},CNRCTB020.GETCDCDSENTE ($P{Esercizio}),'%', $P{UO}), $P{UO})
 AND TIPOLOGIA in(decode($P{regolarizzazione},'true','R',''),decode($P{sospeso},'true','S',''),decode($P{reversale},'true','I',''),decode($P{accreditamento},'true','A',''))
-AND STATO LIKE $P{Stato}
-AND STATO_TRASMISSIONE LIKE $P{Stato_trasm}
+AND PRT_REVE_ELENCO_CNR.STATO LIKE $P{Stato}
+and (($P{Stato_trasm}='NT' and
+PRT_REVE_ELENCO_CNR.STATO_TRASMISSIONE in('P','F','N','I')) or
+($P{Stato_trasm}<>'NT' and PRT_REVE_ELENCO_CNR.STATO_TRASMISSIONE like  $P{Stato_trasm}) )
 ORDER BY PROGRESSIVO]]>
 	</queryString>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
@@ -99,6 +102,8 @@ ORDER BY PROGRESSIVO]]>
 	<field name="ANNO_ACCERTAMENTO" class="java.math.BigDecimal"/>
 	<field name="ANNO_ORI_ACCERTAMENTO" class="java.math.BigDecimal"/>
 	<field name="NUM_ACCERTAMENTO" class="java.math.BigDecimal"/>
+	<field name="CDS_ORI_ACCERTAMENTO" class="java.lang.String"/>
+	<field name="UO_ORI_ACCERTAMENTO" class="java.lang.String"/>
 	<field name="TERZO_COD" class="java.math.BigDecimal"/>
 	<field name="LORDO" class="java.math.BigDecimal"/>
 	<field name="COD_VOCE" class="java.lang.String"/>
@@ -413,7 +418,7 @@ ORDER BY PROGRESSIVO]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Accertametno]]></text>
+				<text><![CDATA[Accertamento]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-11" style="TNR10" x="412" y="53" width="35" height="14"/>
@@ -600,7 +605,7 @@ ORDER BY PROGRESSIVO]]>
 	<summary>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNRG9" x="730" y="2" width="50" height="14"/>
+				<reportElement key="textField" style="TNRG9" x="682" y="2" width="98" height="14"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
