@@ -11,6 +11,7 @@ COPY src/main/docker/standalone/configuration/  standalone/configuration/
 COPY src/main/docker/domain/configuration/  domain/configuration/
 COPY src/main/docker/modules/system/layers/base/com/informix/jdbc/ modules/system/layers/base/com/informix/jdbc/
 COPY src/main/docker/modules/system/layers/base/com/oracle/jdbc/ modules/system/layers/base/com/oracle/jdbc/
+COPY src/main/docker/modules/system/layers/base/it/cnr/sigla/configuration/main/ modules/system/layers/base/it/cnr/sigla/configuration/main/
 
 EXPOSE 9990
 
