@@ -39,8 +39,10 @@ public class V_cons_stato_invio_reversaliBase extends OggettoBulk implements Per
  
 //    DT_ANNULLAMENTO TIMESTAMP(7)
 	private java.sql.Timestamp dt_annullamento;
+	
+	private java.sql.Timestamp dt_incasso;
  
-//    PG_DISTINTA DECIMAL(22,0)
+	//    PG_DISTINTA DECIMAL(22,0)
 	private java.lang.Long pg_distinta;
 
 //  PG_DISTINTA_DEF DECIMAL(22,0)
@@ -144,5 +146,11 @@ public class V_cons_stato_invio_reversaliBase extends OggettoBulk implements Per
 	}
 	public void setDt_invio_dis(java.sql.Timestamp dt_invio_dis)  {
 		this.dt_invio_dis=dt_invio_dis;
+	}
+	public java.sql.Timestamp getDt_incasso() {
+		return dt_incasso;
+	}
+	public void setDt_incasso(java.sql.Timestamp dt_incasso) {
+		this.dt_incasso = dt_incasso;
 	}
 }
