@@ -10,8 +10,8 @@
 		<property name="locations">
 			<list>
 				<value>classpath*:META-INF/spring/*.properties</value>
-				<value>classpath*:*props/axis2.properties</value>
-				<value>classpath*:*/extension/repository.properties</value>
+				<value>classpath*:axis2.properties</value>
+				<value>classpath*:repository.properties</value>
 			</list>
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
