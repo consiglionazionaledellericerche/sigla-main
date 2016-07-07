@@ -36,7 +36,8 @@
                                 org.wildfly.extension.undertow,
                                 io.undertow.core,
                                 io.undertow.servlet,
-                                org.apache.cxf
+                                org.apache.cxf,
+                                it.cnr.sigla.configuration
                             </Dependencies>
             </manifestEntries>
           </archive>

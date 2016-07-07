@@ -59,6 +59,8 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	}
 	
 	public Document getDocument(SiglaCMISService service) throws ApplicationException {
+		if (!isNodePresent())
+			return null;
 		return (Document)service.getNodeByNodeRef(nodeRef);
 	}
 
