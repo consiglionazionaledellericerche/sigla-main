@@ -53,6 +53,10 @@ public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 	public boolean isNodePresent(){
 		return getDocument() == null;
 	}
+
+	public boolean isNodeNotPresent(){
+		return !isNodePresent();
+	}
 	
 	public Document getDocument() {
 		return node;
