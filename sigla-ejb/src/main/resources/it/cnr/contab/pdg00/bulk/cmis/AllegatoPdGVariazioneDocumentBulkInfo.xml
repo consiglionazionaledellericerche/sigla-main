@@ -49,7 +49,7 @@
 		enabledOnSearch="false"
 		enabledOnInsert="false"
 		enabledOnView="true"
-		readonlyProperty="nodePresent"
+		readonlyProperty="nodeNotPresent"
 		img="img/import24.gif"
 		href="javascript:doScaricaAllegato()"
 		label="Apri File" />
