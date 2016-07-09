@@ -354,6 +354,15 @@
 		maxLength="20"
 		inputSize="20"
 		label="Utente" />
+	<fieldProperty
+		name="dt_invio_pec"
+		property="dt_invio_pec"
+		inputType="TEXT"
+		label="Data invio pec" 
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />	
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
