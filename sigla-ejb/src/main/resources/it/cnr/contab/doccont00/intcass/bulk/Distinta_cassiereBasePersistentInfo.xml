@@ -98,13 +98,18 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
-			<columnMapping
+		<columnMapping
 			columnName="FL_SEPA"
 			propertyName="fl_sepa"
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_INVIO_PEC"
+			propertyName="dt_invio_pec"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_distinta_def" />
@@ -138,4 +143,6 @@
 		name="fl_flusso" />	
 	<persistentProperty
 		name="fl_sepa" />	
+	<persistentProperty
+		name="dt_invio_pec" />	
 </SQLPersistentInfo>

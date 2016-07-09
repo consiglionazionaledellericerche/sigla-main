@@ -5051,8 +5051,8 @@ public Forward doBringBackCompenso(ActionContext context) {
 		fp.setStato_cofi(fp.STATO_CONTABILIZZATO);
 		fp.setStato_coge(fp.NON_PROCESSARE_IN_COGE);
 		fp.setStato_coan(fp.NON_PROCESSARE_IN_COAN);
-		fp.setStato_liquidazione(fp.LIQ);
-		fp.setCausale(null);
+		//fp.setStato_liquidazione(fp.LIQ);
+		//fp.setCausale(null);
 		fp.setStato_pagamento_fondo_eco(fp.NO_FONDO_ECO);
 		fp.setCompenso(compenso);
 		for (java.util.Iterator i = fp.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
