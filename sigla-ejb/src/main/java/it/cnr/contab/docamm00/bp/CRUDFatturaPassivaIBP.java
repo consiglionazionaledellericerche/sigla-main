@@ -185,7 +185,7 @@ public boolean isGeneraNdCButtonEnabled() {
 	return 	isEditing() && fp != null &&
 			//fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 			// RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
-			//!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
+			!(fp.isEstera() && fp.getLettera_pagamento_estero() != null && !fp.isPagata() ) &&
 			!fp.isAnnullato() &&
 			!fp.isCongelata() &&
 			!fp.isByFondoEconomale() &&
@@ -210,7 +210,7 @@ public boolean isGeneraNdDButtonEnabled() {
 	return isEditing() && fp != null &&
 			//fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 			// RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
-			//!(fp.isEstera() && fp.getLettera_pagamento_estero() != null) &&
+			!(fp.isEstera() && fp.getLettera_pagamento_estero() != null && !fp.isPagata()) &&
 			!fp.isAnnullato() &&
 			!fp.isCongelata() &&
 			!fp.isByFondoEconomale() &&
