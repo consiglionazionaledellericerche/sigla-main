@@ -85,7 +85,7 @@
 		property="reversale"
 		inputType="CHECKBOX"
 		nullable="false"
-		label="Mandato di Pagamento" />
+		label="Reversale di Incasso" />
 	<fieldProperty
 		name="regolarizzazione"
 		property="regolarizzazione"

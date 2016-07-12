@@ -59,7 +59,7 @@ public class CRUDCupBP extends SimpleCRUDBP {
 	public void validainserimento(ActionContext context, CupBulk bulk) throws ValidationException{
 		if ( bulk.getCdCup()==null) 
 			throw new ValidationException("E' necessario inserire il Codice");
-		if ( bulk.getCdCup().length()!=15) 
+		if ( bulk.getCdCup().contains(" ")|| bulk.getCdCup().length()!=15) 
 			throw new ValidationException("La lunghezza del Codice non è valida");
 		if ( bulk.getDescrizione()==null) 
 			throw new ValidationException("E' necessario inserire la Descrizione");
