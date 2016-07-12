@@ -46,7 +46,7 @@ public class CRUDCodiciCIGBP extends SimpleCRUDBP {
 		CigBulk bulk=(CigBulk)this.getModel();
 		if ( bulk.getCdCig()==null) 
 			throw new ValidationException("E' necessario inserire il Codice");
-		if ( bulk.getCdCig().length()!=10) 
+		if ( bulk.getCdCig().contains(" ")|| bulk.getCdCig().length()!=10) 
 			throw new ValidationException("La lunghezza del Codice non è valida");
 	}
 }

@@ -11,6 +11,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
@@ -22,6 +23,7 @@ import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.gov.fatturapa.sdi.fatturapa.v1.AnagraficaType;
+import it.gov.fatturapa.sdi.fatturapa.v1.BolloVirtualeType;
 import it.gov.fatturapa.sdi.fatturapa.v1.CedentePrestatoreType;
 import it.gov.fatturapa.sdi.fatturapa.v1.CessionarioCommittenteType;
 import it.gov.fatturapa.sdi.fatturapa.v1.CondizioniPagamentoType;
@@ -29,6 +31,7 @@ import it.gov.fatturapa.sdi.fatturapa.v1.ContattiTrasmittenteType;
 import it.gov.fatturapa.sdi.fatturapa.v1.DatiAnagraficiCedenteType;
 import it.gov.fatturapa.sdi.fatturapa.v1.DatiAnagraficiCessionarioType;
 import it.gov.fatturapa.sdi.fatturapa.v1.DatiBeniServiziType;
+import it.gov.fatturapa.sdi.fatturapa.v1.DatiBolloType;
 import it.gov.fatturapa.sdi.fatturapa.v1.DatiDocumentiCorrelatiType;
 import it.gov.fatturapa.sdi.fatturapa.v1.DatiGeneraliDocumentoType;
 import it.gov.fatturapa.sdi.fatturapa.v1.DatiGeneraliType;
@@ -438,6 +441,14 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				datiGeneraliDocumento.setDivisa("EUR");
 				datiGeneraliDocumento.setData(convertDateToXmlGregorian(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
 				datiGeneraliDocumento.setNumero(fattura.recuperoIdFatturaAsString());
+				
+				List dettaglio = (List)((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).findDettagli(userContext, fattura);
+
+				if (dettaglio == null || dettaglio.isEmpty()){
+					throw new ApplicationException("Impossibile Procedere! La Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+" non ha dettagli"); 
+				}
+				Boolean esisteBollo = gestioneBollo(userContext, factory, datiGeneraliDocumento, dettaglio);
+				
 				datiGeneraliDocumento.setImportoTotaleDocumento(fattura.getIm_totale_fattura().setScale(2));
 				String descrizione = "";
 				if (fattura.getDs_fattura_attiva() != null){
@@ -467,13 +478,9 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				}
 
 				datiGeneraliDocumento.getCausale().addAll(listaCausali);
+				
 				datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
 				
-				List dettaglio = (List)((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).findDettagli(userContext, fattura);
-
-				if (dettaglio == null || dettaglio.isEmpty()){
-					throw new ApplicationException("Impossibile Procedere! La Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+" non ha dettagli"); 
-				}
 				DatiBeniServiziType datiBeniServizi = factory.createDatiBeniServiziType();
 				List<DettaglioLineeType> listaDettagli = new ArrayList<DettaglioLineeType>();
 				List<RiepilogoPerAliquotaIVA> listaRiepilogo = new ArrayList<DocAmmFatturazioneElettronicaComponent.RiepilogoPerAliquotaIVA>();
@@ -482,33 +489,35 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>> mappaDocumentiCollegati = new HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>>();
 				for (Iterator<Fattura_attiva_rigaBulk> i= dettaglio.iterator(); i.hasNext();) {
 					Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
-					DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
-					rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
-					if (riga.getDs_riga_fattura() != null){
-						rigaFattura.setDescrizione(riga.getDs_riga_fattura().replaceAll("\\u20AC", "E"));
-					} else {
-						rigaFattura.setDescrizione("Descrizione");
+					if (!esisteBollo || !isRigaFatturaConBollo(userContext, riga)){
+						DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
+						rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
+						if (riga.getDs_riga_fattura() != null){
+							rigaFattura.setDescrizione(riga.getDs_riga_fattura().replaceAll("\\u20AC", "E"));
+						} else {
+							rigaFattura.setDescrizione("Descrizione");
+						}
+						rigaFattura.setQuantita(riga.getQuantita().setScale(2));
+						if (riga.getTariffario()!=null && riga.getTariffario().getCd_tariffario()!=null) {
+							if (riga.getTariffario().getUnita_misura()==null)
+								riga.setTariffario((TariffarioBulk)findByPrimaryKey(userContext, riga.getTariffario()));
+							rigaFattura.setUnitaMisura(riga.getTariffario().getUnita_misura());
+						}
+						rigaFattura.setDataInizioPeriodo(convertDateToXmlGregorian(riga.getDt_da_competenza_coge()));
+						rigaFattura.setDataFinePeriodo(convertDateToXmlGregorian(riga.getDt_a_competenza_coge()));
+						rigaFattura.setPrezzoUnitario(riga.getPrezzo_unitario().setScale(2));
+						rigaFattura.setPrezzoTotale(rigaFattura.getPrezzoUnitario().multiply(rigaFattura.getQuantita()).setScale(2));
+						if (riga.getVoce_iva()!=null && riga.getVoce_iva().getCd_voce_iva()!=null && riga.getVoce_iva().getPercentuale()==null)
+							riga.setVoce_iva((Voce_ivaBulk)findByPrimaryKey(userContext, riga.getVoce_iva()));
+						rigaFattura.setAliquotaIVA(Utility.nvl(riga.getVoce_iva().getPercentuale()).setScale(2));
+						rigaFattura.setNatura(impostaDatiNatura(riga.getVoce_iva().getNaturaOperNonImpSdi()));
+						listaDettagli.add(rigaFattura);
+						if (fattura.getTi_fattura().equals(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)){
+							impostaDatiPerNoteCredito(userContext,mappaDocumentiCollegati, riga, dettagliNoteSenzaContratto);
+						}
+						preparaDatiContratto(userContext, mappaContratti, riga);
+						impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
 					}
-					rigaFattura.setQuantita(riga.getQuantita().setScale(2));
-					if (riga.getTariffario()!=null && riga.getTariffario().getCd_tariffario()!=null) {
-						if (riga.getTariffario().getUnita_misura()==null)
-							riga.setTariffario((TariffarioBulk)findByPrimaryKey(userContext, riga.getTariffario()));
-						rigaFattura.setUnitaMisura(riga.getTariffario().getUnita_misura());
-					}
-					rigaFattura.setDataInizioPeriodo(convertDateToXmlGregorian(riga.getDt_da_competenza_coge()));
-					rigaFattura.setDataFinePeriodo(convertDateToXmlGregorian(riga.getDt_a_competenza_coge()));
-					rigaFattura.setPrezzoUnitario(riga.getPrezzo_unitario().setScale(2));
-					rigaFattura.setPrezzoTotale(rigaFattura.getPrezzoUnitario().multiply(rigaFattura.getQuantita()).setScale(2));
-					if (riga.getVoce_iva()!=null && riga.getVoce_iva().getCd_voce_iva()!=null && riga.getVoce_iva().getPercentuale()==null)
-						riga.setVoce_iva((Voce_ivaBulk)findByPrimaryKey(userContext, riga.getVoce_iva()));
-					rigaFattura.setAliquotaIVA(Utility.nvl(riga.getVoce_iva().getPercentuale()).setScale(2));
-					rigaFattura.setNatura(impostaDatiNatura(riga.getVoce_iva().getNaturaOperNonImpSdi()));
-					listaDettagli.add(rigaFattura);
-					if (fattura.getTi_fattura().equals(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)){
-						impostaDatiPerNoteCredito(userContext,mappaDocumentiCollegati, riga, dettagliNoteSenzaContratto);
-					}
-					preparaDatiContratto(userContext, mappaContratti, riga);
-					impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
 				}
 				datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
 
@@ -568,6 +577,39 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 	}
 
+	private Boolean gestioneBollo(UserContext userContext,
+			ObjectFactory factory,
+			DatiGeneraliDocumentoType datiGeneraliDocumento, List dettaglio)
+			throws ComponentException, ApplicationException {
+		Boolean esisteBollo = false;
+		for (Iterator<Fattura_attiva_rigaBulk> i= dettaglio.iterator(); i.hasNext();) {
+			Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
+			if (isRigaFatturaConBollo(userContext, riga)){
+				if (esisteBollo){
+					throw new ApplicationException("Impossibile Procedere! Esistono più righe con tipo Bollo indicate in fattura"); 
+				}
+				DatiBolloType datiBollo = factory.createDatiBolloType();
+				datiBollo.setBolloVirtuale(BolloVirtualeType.SI);
+				datiBollo.setImportoBollo(riga.getIm_imponibile().setScale(2));
+				datiGeneraliDocumento.setDatiBollo(datiBollo);
+				esisteBollo = true;
+			}
+		}
+		return esisteBollo;
+	}
+
+	private Boolean isRigaFatturaConBollo(UserContext userContext, Fattura_attiva_rigaBulk riga) throws ComponentException {
+		Bene_servizioBulk beneServizio;
+		try {
+			beneServizio = ((Bene_servizioBulk)getHome(userContext, Bene_servizioBulk.class).findByPrimaryKey(riga.getBene_servizio()));
+		} catch (Exception e) {
+			throw handleException(e);
+		}
+		if (beneServizio != null && beneServizio.getFl_bollo()){
+			return true;
+		}
+		return false;
+	}
 	private void impostaDatiNonImponibile(Fattura_attivaBulk fattura, RiepilogoPerAliquotaIVA riepilogo, DatiRiepilogoType datiRiepilogo) throws ApplicationException{
 		if (datiRiepilogo.getAliquotaIVA().compareTo(BigDecimal.ZERO) == 0){
 			String msg = "Impossibile Procedere! Per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+" esiste almeno una riga con aliquota a 0 senza l'indicazione";
