@@ -190,6 +190,14 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />					
+		<columnMapping
+			columnName="FL_SOLO_INAIL_ENTE"
+			propertyName="fl_solo_inail_ente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />					
+
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_detrazioni_dipendente" />
@@ -247,4 +255,6 @@
 		name="fl_tipo_prestazione_obbl" />
 <persistentProperty
 		name="fl_agevolazioni_rientro_lav" />		
+<persistentProperty
+		name="fl_solo_inail_ente" />		
 </SQLPersistentInfo>

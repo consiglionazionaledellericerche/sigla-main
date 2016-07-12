@@ -171,6 +171,16 @@
 			propertyName="pg_contratto"
 			sqlTypeName="DECIMAL"
 			columnSize="10" />	
+		<columnMapping
+			columnName="DATA_DOCAMM"
+			propertyName="data_docamm"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DATA_PAGAMENTO"
+			propertyName="data_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
 		
 	</defaultColumnMap>	
 	<persistentProperty
@@ -201,6 +211,10 @@
 		name="cd_elemento_voce" />
 	<persistentProperty
 		name="dt_registrazione" />
+	<persistentProperty
+		name="data_docamm" />
+	<persistentProperty
+		name="data_pagamento" />
 	<persistentProperty
 		name="esercizio_originale" />
 	<persistentProperty
