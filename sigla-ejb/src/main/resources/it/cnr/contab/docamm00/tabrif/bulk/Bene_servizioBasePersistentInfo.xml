@@ -107,6 +107,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_BOLLO"
+			propertyName="fl_bollo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -140,4 +147,6 @@
 		name="fl_valido" />
 	<persistentProperty
 		name="fl_autofattura" />			
+	<persistentProperty
+		name="fl_bollo" />			
 </SQLPersistentInfo>
