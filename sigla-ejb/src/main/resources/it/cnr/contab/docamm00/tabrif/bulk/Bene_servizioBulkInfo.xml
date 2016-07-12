@@ -151,6 +151,13 @@
 		label="autofattura"
 		enabledOnFreeSearch="true"
 		enabledOnSearch="true"/>
+	<fieldProperty
+		name="fl_bollo"
+		property="fl_bollo"
+		inputType="CHECKBOX"
+		label="Bollo"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"/>
 	<form name="searchtool">
 		<formFieldProperty
 			name="cd_bene_servizio" />
@@ -191,6 +198,8 @@
 		name="fl_valido" />
 	<formFieldProperty
 		name="fl_autofattura" />	
+	<formFieldProperty
+		name="fl_bollo" />	
 		
 	<columnFieldProperty
 		name="cd_voce_iva" />
@@ -216,6 +225,8 @@
 		name="fl_valido" />
 	<columnFieldProperty
 		name="fl_autofattura" />	
+	<columnFieldProperty
+		name="fl_bollo" />	
 
 	<findFieldProperty
 		name="cd_voce_iva" />
@@ -239,4 +250,6 @@
 		name="fl_valido" />
 	<findFieldProperty
 		name="fl_autofattura" />	
+	<findFieldProperty
+		name="fl_bollo" />	
 </bulkInfo>

@@ -40,7 +40,10 @@ public class CnrIfacDettObbligazioniKey extends OggettoBulk implements KeyedPers
 //  CD_LINEA_ATTIVITA VARCHAR(10) NOT NULL
 	private java.lang.String cdLineaAttivita;
 
-	public CnrIfacDettObbligazioniKey(java.lang.String cdCds,java.lang.String cdCentroResponsabilita,java.lang.String cdLineaAttivita,java.lang.String cdVoce,java.lang.Integer esercizio,java.lang.Integer esercizioOriginale,java.lang.Long pgObbligazione,java.lang.Long pgObbligazioneScadenzario,java.lang.String tiAppartenenza,java.lang.String tiGestione) {
+//  PG_DOCAMM DECIMAL(10,0)
+	private java.lang.Long pgDocamm;
+
+	public CnrIfacDettObbligazioniKey(java.lang.String cdCds,java.lang.String cdCentroResponsabilita,java.lang.String cdLineaAttivita,java.lang.String cdVoce,java.lang.Integer esercizio,java.lang.Integer esercizioOriginale,java.lang.Long pgObbligazione,java.lang.Long pgObbligazioneScadenzario,java.lang.String tiAppartenenza,java.lang.String tiGestione,java.lang.Long pgDocamm) {
 		super();
 		this.cdCds = cdCds;
 		this.cdCentroResponsabilita = cdCentroResponsabilita;
@@ -52,6 +55,7 @@ public class CnrIfacDettObbligazioniKey extends OggettoBulk implements KeyedPers
 		this.pgObbligazioneScadenzario = pgObbligazioneScadenzario;
 		this.tiAppartenenza = tiAppartenenza;
 		this.tiGestione = tiGestione;
+		this.pgDocamm = pgDocamm;
 	}
 	public CnrIfacDettObbligazioniKey() {
 		super();
@@ -70,6 +74,7 @@ public class CnrIfacDettObbligazioniKey extends OggettoBulk implements KeyedPers
 		if(!compareKey(getPgObbligazioneScadenzario(),k.getPgObbligazioneScadenzario())) return false;
 		if(!compareKey(getTiAppartenenza(),k.getTiAppartenenza())) return false;
 		if(!compareKey(getTiGestione(),k.getTiGestione())) return false;
+		if(!compareKey(getPgDocamm(),k.getPgDocamm())) return false;
 		return true;
 	}
 	public int primaryKeyHashCode() {
@@ -83,7 +88,8 @@ public class CnrIfacDettObbligazioniKey extends OggettoBulk implements KeyedPers
 				calculateKeyHashCode(getPgObbligazione())+
 				calculateKeyHashCode(getPgObbligazioneScadenzario())+
 				calculateKeyHashCode(getTiAppartenenza())+
-				calculateKeyHashCode(getTiGestione());
+				calculateKeyHashCode(getTiGestione())+
+				calculateKeyHashCode(getPgDocamm());
 	}
 	public java.lang.String getCdCds() {
 		return cdCds;
@@ -145,5 +151,11 @@ public class CnrIfacDettObbligazioniKey extends OggettoBulk implements KeyedPers
 	}
 	public void setCdLineaAttivita(java.lang.String cdLineaAttivita) {
 		this.cdLineaAttivita = cdLineaAttivita;
+	}
+	public java.lang.Long getPgDocamm() {
+		return pgDocamm;
+	}
+	public void setPgDocamm(java.lang.Long pgDocamm) {
+		this.pgDocamm = pgDocamm;
 	}
 }

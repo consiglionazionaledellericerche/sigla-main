@@ -64,6 +64,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="10"
 			nullable="false" />
+		<columnMapping
+			columnName="PG_DOCAMM"
+			propertyName="pgDocamm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizioOriginale"
@@ -94,5 +100,8 @@
 		partOfOid="true"  />
 	<persistentProperty
 		name="cdLineaAttivita"
+		partOfOid="true"  />
+	<persistentProperty
+		name="pgDocamm" 
 		partOfOid="true"  />
 </SQLPersistentInfo>

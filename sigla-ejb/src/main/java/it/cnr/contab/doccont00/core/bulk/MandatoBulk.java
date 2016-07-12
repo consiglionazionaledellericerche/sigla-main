@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
+
 import java.math.*;
 
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -904,4 +905,20 @@ public boolean isDipendenteDaConguaglio()
 
 return false;
 }
+	public boolean isRequiredSospeso(){
+		return (this.isRegolamentoSospeso());
+	}
+	public boolean isSospesoTotalmenteAssociato(){
+		
+		BigDecimal imTotSospesi;
+		if (((MandatoIBulk) this).isFaiReversale())
+			imTotSospesi = this.getIm_mandato().subtract(
+					((MandatoIBulk) this).getImReversaleDiIncassoIVA());
+		else
+			imTotSospesi = this.getIm_mandato();
+		if(getImTotaleSospesi().compareTo(imTotSospesi)==0)
+				  return true;
+		else
+			return false;
+	}
 }
