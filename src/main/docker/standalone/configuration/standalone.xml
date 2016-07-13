@@ -133,7 +133,7 @@
             </thread-pool>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:bean-validation:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:datasources:4.0">
+        <subsystem xmlns="urn:jboss:domain:datasources:4.0" statistics-enabled="true">
             <datasources>
                 <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">
                     <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
@@ -143,7 +143,7 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jndi-name="java:/jdbc/CIR" pool-name="OracleDSSIGLAPool" enabled="true" use-java-context="true">
+                <datasource jndi-name="java:/jdbc/CIR" pool-name="OracleDSSIGLAPool" enabled="true" use-java-context="true" statistics-enabled="true">
                     <connection-url>jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF</connection-url>
                     <driver>ojdbc</driver>
                     <pool>
@@ -340,7 +340,7 @@
             <endpoint/>
             <http-connector name="http-remoting-connector" connector-ref="default" security-realm="ApplicationRealm"/>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:resource-adapters:4.0"/>
+        <subsystem xmlns="urn:jboss:domain:resource-adapters:4.0" statistics-enabled="true" />
         <subsystem xmlns="urn:jboss:domain:request-controller:1.0"/>
         <subsystem xmlns="urn:jboss:domain:sar:1.0"/>
         <subsystem xmlns="urn:jboss:domain:security-manager:1.0">
@@ -390,7 +390,7 @@
             </core-environment>
             <recovery-environment socket-binding="txn-recovery-environment" status-socket-binding="txn-status-manager"/>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:undertow:3.0">
+        <subsystem xmlns="urn:jboss:domain:undertow:3.0" statistics-enabled="true">
             <buffer-cache name="default"/>
             <server name="default-server">
                 <http-listener name="default" socket-binding="http" redirect-socket="https"/>
@@ -412,7 +412,7 @@
                 <response-header name="x-powered-by-header" header-name="X-Powered-By" header-value="Undertow/1"/>
             </filters>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:webservices:2.0">
+        <subsystem xmlns="urn:jboss:domain:webservices:2.0" statistics-enabled="true">
             <wsdl-host>${jboss.bind.address:127.0.0.1}</wsdl-host>
             <endpoint-config name="Standard-Endpoint-Config"/>
             <endpoint-config name="Recording-Endpoint-Config">
