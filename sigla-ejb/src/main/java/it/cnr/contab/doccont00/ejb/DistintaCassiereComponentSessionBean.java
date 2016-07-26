@@ -12,6 +12,7 @@ import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_logsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
+import it.cnr.contab.doccont00.intcass.bulk.MandatoBanca;
 import it.cnr.contab.doccont00.intcass.bulk.ReversaleBanca;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.jada.UserContext;
@@ -313,9 +314,9 @@ public ReversaleBanca recuperaDatiReversaleFlusso(UserContext param0,V_mandato_r
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public Mandato recuperaDatiMandatoFlusso(UserContext param0,V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException{ 
+public MandatoBanca recuperaDatiMandatoFlusso(UserContext param0,V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException{ 
 	try {
-		Mandato result = ((DistintaCassiereComponent)componentObj).recuperaDatiMandatoFlusso(param0,param1);
+		MandatoBanca result = ((DistintaCassiereComponent)componentObj).recuperaDatiMandatoFlusso(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
