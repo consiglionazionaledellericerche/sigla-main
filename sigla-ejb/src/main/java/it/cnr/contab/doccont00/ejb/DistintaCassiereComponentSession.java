@@ -10,6 +10,7 @@ import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
+import it.cnr.contab.doccont00.intcass.bulk.MandatoBanca;
 import it.cnr.contab.doccont00.intcass.bulk.ReversaleBanca;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.intcass.xmlbnl.*;
@@ -34,7 +35,7 @@ public RemoteIterator selectFileScarti(UserContext userContext, it.cnr.contab.do
 void caricaFile(it.cnr.jada.UserContext context,java.io.File file) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 ExtCassiereCdsBulk recuperaCodiciCdsCassiere(UserContext userContext,Distinta_cassiereBulk distinta) throws ComponentException, PersistencyException,RemoteException;
 BancaBulk recuperaIbanUo(UserContext userContext,Unita_organizzativaBulk uo) throws ComponentException, PersistencyException,java.rmi.RemoteException;
-Mandato recuperaDatiMandatoFlusso(UserContext userContext,V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException,java.rmi.RemoteException;
+MandatoBanca recuperaDatiMandatoFlusso(UserContext userContext,V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException,java.rmi.RemoteException;
 ReversaleBanca recuperaDatiReversaleFlusso(UserContext userContext,V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException,java.rmi.RemoteException;
 List dettagliDistinta(UserContext usercontext, Distinta_cassiereBulk distinta,String tipo) throws PersistencyException, ComponentException,RemoteException;
 Distinta_cassiereBulk inviaDistinta(UserContext userContext,Distinta_cassiereBulk distinta) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
