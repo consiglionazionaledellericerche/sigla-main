@@ -8,6 +8,7 @@ import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_logsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
+import it.cnr.contab.doccont00.intcass.bulk.ReversaleBanca;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.contab.doccont00.intcass.xmlbnl.*;
@@ -431,10 +432,10 @@ public Mandato recuperaDatiMandatoFlusso(UserContext param0,
 				}
 			}
 }
-public Reversale recuperaDatiReversaleFlusso(UserContext param0,
+public ReversaleBanca recuperaDatiReversaleFlusso(UserContext param0,
 		V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException, RemoteException {
 			try {
-				return (Reversale)invoke("recuperaDatiReversaleFlusso",new Object[] {
+				return (ReversaleBanca)invoke("recuperaDatiReversaleFlusso",new Object[] {
 					param0,
 					param1 });
 			} catch(java.rmi.RemoteException e) {
