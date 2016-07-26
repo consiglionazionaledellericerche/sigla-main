@@ -169,7 +169,10 @@ public class LdapLogin {
 		LdapContext ctxGC = getLdapContext(getLoginDN(), getPassword());
 		try {
 			Map<String, Object> amap = getLDAPAttributes(ctxGC, UID_ATTRIBUTE + "=" + userID);
-
+			
+			if(amap.get(CODICEFISCALE_ATTRIBUTE) != null)
+				utenteReale.setCodiceFiscaleLDAP(String.valueOf(amap.get(CODICEFISCALE_ATTRIBUTE)));
+			
             if (amap.isEmpty())
 				throw new Exception("L'utente con uid=" + userID
 						+ " non è stato trovato.");
