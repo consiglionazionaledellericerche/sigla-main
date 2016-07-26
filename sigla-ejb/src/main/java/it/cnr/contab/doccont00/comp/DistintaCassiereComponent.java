@@ -42,6 +42,7 @@ import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_logsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
+import it.cnr.contab.doccont00.intcass.bulk.ReversaleBanca;
 import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_distinta_cass_im_man_revBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_ext_cassiere00Bulk;
@@ -4176,11 +4177,11 @@ public class DistintaCassiereComponent extends
 		return 
 				(BancaBulk)getHome( userContext, BancaBulk.class ).fetchAll( sql ).get(0);
 	}
-	public it.cnr.contab.doccont00.intcass.xmlbnl.Reversale recuperaDatiReversaleFlusso(UserContext userContext,
+	public ReversaleBanca recuperaDatiReversaleFlusso(UserContext userContext,
 			V_mandato_reversaleBulk bulk)throws ComponentException,
 			PersistencyException {
 		try{
-	    it.cnr.contab.doccont00.intcass.xmlbnl.Reversale rev=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale();
+			ReversaleBanca rev=new ReversaleBanca();
 	    it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome home=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.setDistinctClause(true);
