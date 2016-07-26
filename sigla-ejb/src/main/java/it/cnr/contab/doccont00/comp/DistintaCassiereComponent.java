@@ -42,6 +42,7 @@ import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_logsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
+import it.cnr.contab.doccont00.intcass.bulk.MandatoBanca;
 import it.cnr.contab.doccont00.intcass.bulk.ReversaleBanca;
 import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_distinta_cass_im_man_revBulk;
@@ -4337,12 +4338,12 @@ public class DistintaCassiereComponent extends
 			   throw handleException(e);
 		 }
 	}
-	public it.cnr.contab.doccont00.intcass.xmlbnl.Mandato recuperaDatiMandatoFlusso(UserContext userContext,
+	public MandatoBanca recuperaDatiMandatoFlusso(UserContext userContext,
 			V_mandato_reversaleBulk bulk)throws ComponentException,
 			PersistencyException {
 		try{
 			BancaBulk bancauo=recuperaIbanUo(userContext,bulk.getUo());
-		 	it.cnr.contab.doccont00.intcass.xmlbnl.Mandato man=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato();
+			MandatoBanca man=new MandatoBanca();
 			it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome home=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.setDistinctClause(true);
