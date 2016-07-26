@@ -526,7 +526,7 @@ public void generaXML(ActionContext context) throws ComponentException, RemoteEx
 		Reversale currentReversale=null;
 		for(Iterator i=dettagliRev.iterator();i.hasNext();){
 	    	V_mandato_reversaleBulk bulk=(V_mandato_reversaleBulk) i.next();
-	    		currentReversale=(Reversale)((DistintaCassiereComponentSession)createComponentSession()).recuperaDatiReversaleFlusso(context.getUserContext(), bulk);
+	    		currentReversale=(ReversaleBanca)((DistintaCassiereComponentSession)createComponentSession()).recuperaDatiReversaleFlusso(context.getUserContext(), bulk);
 	    		if(bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA)==0){
 	    			// bisogna aggiornare l'iban se banca d'italia ma lo posso sapere solo in questo punto 
 	    			Liquid_coriComponentSession component = (Liquid_coriComponentSession)this.createComponentSession("CNRCORI00_EJB_Liquid_coriComponentSession",Liquid_coriComponentSession.class );
@@ -540,7 +540,7 @@ public void generaXML(ActionContext context) throws ComponentException, RemoteEx
 		Mandato currentMandato=null;
 		for(Iterator i=dettagliMan.iterator();i.hasNext();){
 	    	V_mandato_reversaleBulk bulk=(V_mandato_reversaleBulk) i.next();
-	    		currentMandato=(Mandato)((DistintaCassiereComponentSession)createComponentSession()).recuperaDatiMandatoFlusso(context.getUserContext(), bulk);
+	    		currentMandato=(MandatoBanca)((DistintaCassiereComponentSession)createComponentSession()).recuperaDatiMandatoFlusso(context.getUserContext(), bulk);
 	    		currentFlusso.getMandato().add(currentMandato);
 	    } 
 		String fileName =currentFlusso.getIdentificativoFlusso()+".xslt";
