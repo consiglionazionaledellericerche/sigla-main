@@ -515,10 +515,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,ContrattoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 		try {
 			ContrattoBulk testata = (ContrattoBulk)super.inizializzaBulkPerModifica(userContext,bulk);			
-			//ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
-			//testata.setAssociazioneUO(new it.cnr.jada.bulk.BulkList(testataHome.findAssociazioneUO(testata)));
-			//testata.setAssociazioneUODisponibili(new it.cnr.jada.bulk.BulkList(testataHome.findAssociazioneUODisponibili(testata)));
-			//getHomeCache(userContext).fetchAll();
+			testata=initializzaUnita_Organizzativa(userContext,testata);
 			return calcolaTotDocCont(userContext,testata);
 		} catch(Exception e) {
 				throw handleException(e);
@@ -573,6 +570,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contratto.setAssociazioneUODisponibili(new it.cnr.jada.bulk.BulkList(testataHome.findAssociazioneUODisponibili(contratto)));
 			if (contratto != null && contratto.getPg_contratto() != null)
 			  contratto.setAssociazioneUO(new it.cnr.jada.bulk.BulkList(testataHome.findAssociazioneUO(contratto)));
+			getHomeCache(usercontext).fetchAll(usercontext);
 			return contratto;  
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);

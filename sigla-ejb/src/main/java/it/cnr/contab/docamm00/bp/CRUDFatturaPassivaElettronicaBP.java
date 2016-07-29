@@ -444,9 +444,13 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 
         	fatturaPassivaBulk.setDt_da_competenza_coge(new Timestamp(gcDataMinima.getTime().getTime()));
 	    	fatturaPassivaBulk.setDt_a_competenza_coge(new Timestamp(gcDataMassima.getTime().getTime()));
-	    	
-	    	fatturaPassivaBulk.setIm_totale_fattura(documentoEleTestata.getImportoDocumento());
-	    	fatturaPassivaBulk.setIm_importo_totale_fattura_fornitore_euro(documentoEleTestata.getImportoDocumento());
+	    	if(fatturaPassivaBulk.getTi_fattura().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO)){
+	    		fatturaPassivaBulk.setIm_totale_fattura(documentoEleTestata.getImportoDocumento().abs());
+	    		fatturaPassivaBulk.setIm_importo_totale_fattura_fornitore_euro(documentoEleTestata.getImportoDocumento().abs());
+	    	}else{
+	    		fatturaPassivaBulk.setIm_totale_fattura(documentoEleTestata.getImportoDocumento());
+	    		fatturaPassivaBulk.setIm_importo_totale_fattura_fornitore_euro(documentoEleTestata.getImportoDocumento());
+	    	}
 	    	action.doCalcolaTotaleFatturaFornitoreInEur(context);
 	    	
 	    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());
