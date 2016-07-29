@@ -52,6 +52,7 @@ public class Stampa_giornale_mandatiBulk extends MandatoBulk {
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_INSERITO, "Inserito in distinta");
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_TRASMESSO, "Trasmesso");
 		statoTrasmissioneKeys.put(STATO_TRASMISSIONE_TUTTI, "Tutti");
+		statoTrasmissioneKeys.put("NT" , "Non tramessi");
 	}
 /**
  * Stampa_giornale_mandatiBulk constructor comment.
