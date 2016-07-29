@@ -45,6 +45,7 @@ import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
 import it.cnr.contab.doccont00.intcass.bulk.MandatoBanca;
 import it.cnr.contab.doccont00.intcass.bulk.ReversaleBanca;
 import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk;
+import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome;
 import it.cnr.contab.doccont00.intcass.bulk.V_distinta_cass_im_man_revBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_ext_cassiere00Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
@@ -4178,474 +4179,6 @@ public class DistintaCassiereComponent extends
 		return 
 				(BancaBulk)getHome( userContext, BancaBulk.class ).fetchAll( sql ).get(0);
 	}
-	public ReversaleBanca recuperaDatiReversaleFlusso(UserContext userContext,
-			V_mandato_reversaleBulk bulk)throws ComponentException,
-			PersistencyException {
-		try{
-			ReversaleBanca rev=new ReversaleBanca();
-	    it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome home=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class);
-		SQLBuilder sql = home.createSQLBuilder();
-		sql.setDistinctClause(true);
-		sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
-		sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
-		sql.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
-		sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
-		List list = home.fetchAll(sql);
-		rev.setTipoOperazione("INSERIMENTO");
-		GregorianCalendar gcdi = new GregorianCalendar();
-		
-		it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante infover=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante();
-		it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione();
-		it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Bollo bollo=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Bollo();
-		it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile=null;
-		it.cnr.contab.doccont00.intcass.xmlbnl.Versante versante =new  it.cnr.contab.doccont00.intcass.xmlbnl.Versante();
-		it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Sospeso sosp=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Sospeso();
-		
-		for (Iterator i = list.iterator(); i.hasNext();) {
-			docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
-			rev.setNumeroReversale(docContabile.getPgDocumento().intValue());
-			gcdi.setTime(docContabile.getDtEmissione());
-			XMLGregorianCalendar xgc=DatatypeFactory.newInstance().newXMLGregorianCalendar(gcdi);
-			xgc.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
-			xgc.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-			xgc.setSecond(DatatypeConstants.FIELD_UNDEFINED);
-			xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
-			xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
-			rev.setDataReversale(xgc);
-			rev.setImportoReversale(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
-			rev.setContoEvidenza(docContabile.getNumeroConto());
-			
-			infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
-			infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
-			// tipologia non gestita da committare
-//			if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
-//				infover.setTipoRiscossione("COMPENSAZIONE");
-			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO)==0)
-				infover.setTipoRiscossione("REGOLARIZZAZIONE");
-			// da committare
-//			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0 && bulk.getPg_documento_cont_padre().compareTo(bulk.getPg_documento_cont())==0)
-				if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0)
-					infover.setTipoRiscossione("CASSA");
-			// Classificazioni
-			it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
-			SQLBuilder sqlClass = homeClass.createSQLBuilder();
-			sqlClass.resetColumns();
-			sqlClass.addColumn("ESERCIZIO");
-			sqlClass.addColumn("CD_UNITA_ORGANIZZATIVA");
-			sqlClass.addColumn("PG_DOCUMENTO");
-			sqlClass.addColumn("CD_SIOPE");
-			sqlClass.addColumn("CD_CUP");// sempre null per le Revesali, non gestito dal flusso
-			sqlClass.addColumn("CD_TIPO_DOCUMENTO_AMM"); 
-			sqlClass.addColumn("PG_DOC_AMM");
-			sqlClass.addColumn("IM_DOCUMENTO"); 
-			sqlClass.addColumn("IMPORTO_CGE");
-			sqlClass.addColumn("IMPORTO_CUP"); //sempre 0  per le Revesali, non gestito dal flusso
-			sqlClass.setDistinctClause(true);
-			sqlClass.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
-			sqlClass.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
-			sqlClass.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
-			sqlClass.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
-			sqlClass.setOrderBy("cdSiope",it.cnr.jada.util.OrderConstants.ORDER_ASC);
-			//sqlClass.setOrderBy("cdCup",it.cnr.jada.util.OrderConstants.ORDER_ASC);
-			List listClass = homeClass.fetchAll(sqlClass);
-			VDocumentiFlussoBulk oldDoc=null;
-			for(Iterator c=listClass.iterator();c.hasNext();){
-				VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
-				if(doc.getCdSiope()!=null && oldDoc!=null && oldDoc.getCdSiope()!=null ){
-					if ((oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0)
-							||(oldDoc.getCdTipoDocumentoAmm()!=null && oldDoc.getCdTipoDocumentoAmm().compareTo(doc.getCdTipoDocumentoAmm())!=0)
-							||( oldDoc.getPgDocAmm()!=null && oldDoc.getPgDocAmm().compareTo(doc.getPgDocAmm())!=0)){				
-					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione();
-					clas.setCodiceCge(doc.getCdSiope());
-					clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
-					infover.getClassificazione().add(clas);
-					oldDoc=doc;
-					}
-				}else if(doc.getCdSiope()!=null ){
-					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione();
-					clas.setCodiceCge(doc.getCdSiope());
-					clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
-					infover.getClassificazione().add(clas);
-					oldDoc=doc;
-				}
-				if(infover.getCausale()!=null  && doc.getCdCup()!=null){
-					if (!infover.getCausale().contains(doc.getCdCup()))
-						infover.setCausale(infover.getCausale()+"-"+doc.getCdCup());
-				}else
-					if(doc.getCdCup()!=null)
-						infover.setCausale("CUP "+doc.getCdCup());
-			}
-			// Fine classificazioni		
-			bollo=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Bollo();
-			bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
-			bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
-			
-			infover.setBollo(bollo);
-			versante.setAnagraficaVersante(RemoveAccent.convert(docContabile.getDenominazioneSede()).replace('"',' ' ).replace('°',' '));
-			infover.setVersante(versante);
-			
-			// gestito inserimento cup nella CAUSALE 
-			if (infover.getCausale() !=null && (infover.getCausale()+docContabile.getDsDocumento()).length() >99)
-				infover.setCausale((infover.getCausale()+" "+docContabile.getDsDocumento()).substring(0, 98));
-			else if(infover.getCausale()!=null)
-				infover.setCausale(infover.getCausale()+" "+docContabile.getDsDocumento());
-			else
-				if (docContabile.getDsDocumento().length() >99)
-					infover.setCausale(docContabile.getDsDocumento().substring(0,98));
-				else 
-					infover.setCausale(docContabile.getDsDocumento());
-			infover.setCausale(RemoveAccent.convert(infover.getCausale()).replace('"',' ' ).replace('°',' '));
-			// SOSPESO			
-			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO)==0){
-				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
-				SQLBuilder sqlSosp = homeSosp.createSQLBuilder();
-				sqlSosp.resetColumns();
-				sqlSosp.addColumn("ESERCIZIO");
-				sqlSosp.addColumn("CD_UNITA_ORGANIZZATIVA");
-				sqlSosp.addColumn("PG_DOCUMENTO");
-				sqlSosp.addColumn("DT_REGISTRAZIONE_SOSP");
-				sqlSosp.addColumn("TI_ENTRATA_SPESA"); 
-				sqlSosp.addColumn("CD_SOSPESO");
-				sqlSosp.addColumn("IM_SOSPESO");
-				sqlSosp.addColumn("IM_ASSOCIATO");
-				sqlSosp.setDistinctClause(true);
-				sqlSosp.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
-				sqlSosp.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
-				sqlSosp.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
-				sqlSosp.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
-				sqlSosp.setOrderBy("cdSospeso",it.cnr.jada.util.OrderConstants.ORDER_ASC);
-
-				List listSosp = homeSosp.fetchAll(sqlSosp);
-				for(Iterator c=listSosp.iterator();c.hasNext();){
-					VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
-					if(doc.getCdSospeso()!=null){
-						sosp=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Sospeso();
-						try{
-							sosp.setNumeroProvvisorio(new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().lastIndexOf("."))).longValue());
-						}catch (NumberFormatException e) {
-							throw new ApplicationException("Formato del codice del sospeso non compatibile.");
-						}	
-						sosp.setImportoProvvisorio(doc.getImAssociato().setScale(2, BigDecimal.ROUND_HALF_UP));
-						infover.getSospeso().add(sosp);
-					}
-				}
-				// Fine sospeso
-			}
-			rev.getInformazioniVersante().add(infover);
-		}
-		return rev;
-		} catch (Exception e){
-			   throw handleException(e);
-		 }
-	}
-	public MandatoBanca recuperaDatiMandatoFlusso(UserContext userContext,
-			V_mandato_reversaleBulk bulk)throws ComponentException,
-			PersistencyException {
-		try{
-			BancaBulk bancauo=recuperaIbanUo(userContext,bulk.getUo());
-			MandatoBanca man=new MandatoBanca();
-			it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome home=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class);
-			SQLBuilder sql = home.createSQLBuilder();
-			sql.setDistinctClause(true);
-			sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
-			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
-			sql.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
-			sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
-			List list = home.fetchAll(sql);
-			man.setTipoOperazione("INSERIMENTO");
-			GregorianCalendar gcdi = new GregorianCalendar();
-			
-			boolean obb_iban=false;
-			boolean obb_conto=false;
-			boolean obb_dati_beneficiario=false;
-			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario infoben=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario();
-			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Bollo bollo=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Bollo();
-			it.cnr.contab.doccont00.intcass.xmlbnl.SepaCreditTransfer sepa= new it.cnr.contab.doccont00.intcass.xmlbnl.SepaCreditTransfer();
-			it.cnr.contab.doccont00.intcass.xmlbnl.Piazzatura piazzatura= new it.cnr.contab.doccont00.intcass.xmlbnl.Piazzatura();
-			it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile=null;
-			it.cnr.contab.doccont00.intcass.xmlbnl.Beneficiario benef =new it.cnr.contab.doccont00.intcass.xmlbnl.Beneficiario();
-			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso sosp=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
-			it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute riten=new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
-			it.cnr.contab.doccont00.intcass.xmlbnl.InformazioniAggiuntive aggiuntive=new it.cnr.contab.doccont00.intcass.xmlbnl.InformazioniAggiuntive();
-			for (Iterator i = list.iterator(); i.hasNext();) {
-				docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
-				obb_iban=false;
-				obb_conto=false;
-				obb_dati_beneficiario=false;
-				man.setNumeroMandato(docContabile.getPgDocumento().intValue());
-				gcdi.setTime(docContabile.getDtEmissione());
-				XMLGregorianCalendar xgc=DatatypeFactory.newInstance().newXMLGregorianCalendar(gcdi);
-				xgc.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
-				xgc.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-				xgc.setSecond(DatatypeConstants.FIELD_UNDEFINED);
-				xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
-				xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
-				man.setDataMandato(xgc);
-				man.setImportoMandato(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
-				man.setContoEvidenza(bancauo.getNumero_conto());
-				infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre 1 ?
-				infoben.setImportoBeneficiario(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
-				if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO)==0)
-					infoben.setTipoPagamento("REGOLARIZZAZIONE");
-				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getModalitaPagamento()!=null && 
-						(docContabile.getModalitaPagamento().compareTo("ASC")==0 ||docContabile.getModalitaPagamento().compareTo("ASCNT")==0)){
-					infoben.setTipoPagamento("ASSEGNO CIRCOLARE");
-					obb_dati_beneficiario=true;
-				}
-				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getCdIso()!=null && docContabile.getCdIso().compareTo("IT")==0){
-					//18/06/2014 BNL non gestisce sepa 
-					//infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
-					infoben.setTipoPagamento("BONIFICO BANCARIO E POSTALE");
-					//08/09/2014 resi obbligatori come da mail ricevuta da ANGELINI/MESSERE
-					obb_dati_beneficiario=true;
-					obb_iban =true;
-				}
-				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getCdIso()!=null && docContabile.getCdIso().compareTo("IT")!=0){
-						infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
-						//11/07/2015 Verificare se per i mandati circuito sepa escluso quelli italiani funziona  
-						//obb_dati_beneficiario=true;
-						obb_iban =true;
-				}else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getModalitaPagamento()!=null && docContabile.getModalitaPagamento().compareTo("RD")==0 ){
-					infoben.setTipoPagamento("CASSA");
-				}else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getModalitaPagamento()!=null && docContabile.getModalitaPagamento().compareTo("CCP")==0 ){
-					infoben.setTipoPagamento("ACCREDITO CONTO CORRENTE POSTALE");
-					obb_conto=true;
-				}
-				//19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo pagamento
-//				if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
-//					infoben.setTipoPagamento("COMPENSAZIONE");
-				// Classificazioni
-				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
-				SQLBuilder sqlClass = homeClass.createSQLBuilder();
-				sqlClass.resetColumns();
-				sqlClass.addColumn("ESERCIZIO");
-				sqlClass.addColumn("CD_UNITA_ORGANIZZATIVA");
-				sqlClass.addColumn("PG_DOCUMENTO");
-				sqlClass.addColumn("CD_SIOPE");
-				sqlClass.addColumn("CD_CUP");
-				sqlClass.addColumn("IM_DOCUMENTO"); 
-				sqlClass.addColumn("CD_TIPO_DOCUMENTO_AMM"); 
-				sqlClass.addColumn("PG_DOC_AMM");
-				sqlClass.addColumn("IMPORTO_CGE","IMPORTO_CGE");
-				sqlClass.addColumn("IMPORTO_CUP","IMPORTO_CUP"); 
-				sqlClass.setDistinctClause(true);
-				sqlClass.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
-				sqlClass.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
-				sqlClass.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
-				sqlClass.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
-				sqlClass.setOrderBy("cdSiope",it.cnr.jada.util.OrderConstants.ORDER_ASC);
-				sqlClass.setOrderBy("cdCup",it.cnr.jada.util.OrderConstants.ORDER_ASC);
-				List listClass = homeClass.fetchAll(sqlClass);
-				BigDecimal totAssSiope=BigDecimal.ZERO;
-				BigDecimal totAssCup=BigDecimal.ZERO;
-				VDocumentiFlussoBulk oldDoc=null;
-				for(Iterator c=listClass.iterator();c.hasNext();){
-					VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
-					if(doc.getCdSiope()!=null){
-						//cambio codice siope senza cup dovrebbe essere il resto
-						if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
-								clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-								clas.setCodiceCgu(oldDoc.getCdSiope());
-								clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
-								totAssCup=BigDecimal.ZERO; 
-								totAssSiope=BigDecimal.ZERO; 
-								infoben.getClassificazione().add(clas);
-							
-						}else
-						 //stesso codice siope senza cup resto
-							if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
-								clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-								clas.setCodiceCgu(oldDoc.getCdSiope());
-								clas.setImporto(totAssSiope.subtract(totAssCup).setScale(2, BigDecimal.ROUND_HALF_UP));
-								totAssCup=BigDecimal.ZERO;  
-								totAssSiope=BigDecimal.ZERO; 
-								infoben.getClassificazione().add(clas);
-							}
-							else //stesso codice siope con cup
-								if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 && doc.getCdCup()!=null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
-									clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-									clas.setCodiceCgu(doc.getCdSiope());
-									clas.setCodiceCup(doc.getCdCup());
-									clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
-									totAssCup=totAssCup.add(doc.getImportoCup());
-									// Causale  Cup
-									if(infoben.getCausale()!=null ){
-										if (!infoben.getCausale().contains(doc.getCdCup()))
-												infoben.setCausale(infoben.getCausale()+"-"+doc.getCdCup());
-									}else 
-										 infoben.setCausale("CUP "+doc.getCdCup());
-									infoben.getClassificazione().add(clas);
-								}
-								else//stesso siope con cup null precedente completamente associato a cup
-									if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)==0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
-										clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-										clas.setCodiceCgu(doc.getCdSiope());				
-										clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
-										totAssSiope=BigDecimal.ZERO; 
-										totAssCup=BigDecimal.ZERO; 
-										infoben.getClassificazione().add(clas);
-									}
-									else// diverso siope con cup null e precedente completamente associato a cup
-										if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)==0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
-											clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-											clas.setCodiceCgu(doc.getCdSiope());				
-											clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
-											totAssSiope=BigDecimal.ZERO; 
-											totAssCup=BigDecimal.ZERO; 
-											infoben.getClassificazione().add(clas);
-										}	
-							else
-								//primo inserimento
-								if(doc.getCdCup()!=null && doc.getImportoCup().compareTo(BigDecimal.ZERO)!=0){
-									clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-									clas.setCodiceCgu(doc.getCdSiope());
-									clas.setCodiceCup(doc.getCdCup());
-									clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
-									totAssCup=doc.getImportoCup();  
-									totAssSiope=doc.getImportoCge();
-									// Causale  Cup
-									if(infoben.getCausale()!=null ){
-										if (!infoben.getCausale().contains(doc.getCdCup()))
-												infoben.setCausale(infoben.getCausale()+"-"+doc.getCdCup());
-									}else 
-										 infoben.setCausale("CUP "+doc.getCdCup());
-									infoben.getClassificazione().add(clas);
-								} 
-						   else{
-							   clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-								clas.setCodiceCgu(doc.getCdSiope());								
-								clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
-								totAssSiope=doc.getImportoCge();  
-								infoben.getClassificazione().add(clas);
-						   }
-						   oldDoc=doc;
-					}
-				} 
-				// differenza ultimo
-				if(totAssSiope.subtract(totAssCup).compareTo(BigDecimal.ZERO)>0) {
-			    if(totAssCup.compareTo(BigDecimal.ZERO)!=0 && totAssCup.compareTo(totAssSiope)!=0 ){		    	
-						clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-						clas.setCodiceCgu(oldDoc.getCdSiope());
-						clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
-						infoben.getClassificazione().add(clas);
-					}
-				}
-				bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
-				bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
-				infoben.setBollo(bollo);
-				benef.setAnagraficaBeneficiario(RemoveAccent.convert(docContabile.getDenominazioneSede()).replace('"',' ' ).replace('°',' '));
-				//benef.setStatoBeneficiario(docContabile.getCdIso());
-				if(obb_dati_beneficiario){
-					benef.setIndirizzoBeneficiario(RemoveAccent.convert(docContabile.getViaSede()).replace('"',' ' ).replace('°',' '));
-					if(docContabile.getCapComuneSede()==null)
-						throw new ApplicationException("Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "+docContabile.getCdTerzo()+" cds "+docContabile.getCdCds()+" mandato "+docContabile.getPgDocumento());
-					benef.setCapBeneficiario(docContabile.getCapComuneSede());
-					benef.setLocalitaBeneficiario(RemoveAccent.convert(docContabile.getDsComune()).replace('"',' ' ).replace('°',' '));
-					benef.setProvinciaBeneficiario(docContabile.getCdProvincia());
-				}
-				infoben.setBeneficiario(benef);
-				if (obb_iban && docContabile.getCdIso().compareTo("IT")==0){
-					piazzatura.setAbiBeneficiario(docContabile.getAbi());
-					piazzatura.setCabBeneficiario(docContabile.getCab());
-					piazzatura.setNumeroContoCorrenteBeneficiario(docContabile.getNumeroConto());
-					piazzatura.setCaratteriControllo(docContabile.getCodiceIban().substring(2,4));
-					piazzatura.setCodiceCin(docContabile.getCin());
-					piazzatura.setCodicePaese(docContabile.getCdIso());
-					infoben.setPiazzatura(piazzatura);
-					//18/06/2014 BNL non gestisce sepa 
-					/* sepa.setIban(docContabile.getNumeroConto());
-					if(docContabile.getBic()!=null && docContabile.getNumeroConto()!=null && (docContabile.getBic().length()>=8 && docContabile.getBic().length()<=11  ))// && docContabile.getNumeroConto().substring(0, 2).compareTo("IT")!=0 ) 
-						sepa.setBic(docContabile.getBic());
-					else 
-						throw new ApplicationException("Formato del codice bic non valido.");
-					sepa.setIdentificativoEndToEnd(docContabile.getEsercizio().toString()+"-"+docContabile.getCdUoOrigine()+"-"+docContabile.getPgDocumento().toString());
-					infoben.setSepaCreditTransfer(sepa); */
-				}
-				if(obb_conto) {
-					aggiuntive.setRiferimentoDocumentoEsterno(docContabile.getNumeroConto().toString());
-					infoben.setInformazioniAggiuntive(aggiuntive);
-				}
-				if(obb_iban && docContabile.getCdIso().compareTo("IT")!=0){
-						//11/07/2015 BNL non gestisce sepa 
-						sepa.setIban(docContabile.getCodiceIban());
-						if(docContabile.getBic()!=null && docContabile.getCodiceIban()!=null && (docContabile.getBic().length()>=8 && docContabile.getBic().length()<=11  ))// && docContabile.getNumeroConto().substring(0, 2).compareTo("IT")!=0 ) 
-							sepa.setBic(docContabile.getBic());
-						else 
-							throw new ApplicationException("Formato del codice bic non valido.");
-						sepa.setIdentificativoEndToEnd(docContabile.getEsercizio().toString()+"-"+docContabile.getCdUoOrigine()+"-"+docContabile.getPgDocumento().toString());
-						infoben.setSepaCreditTransfer(sepa); 
-				}
-				if (infoben.getCausale() !=null && (infoben.getCausale()+docContabile.getDsDocumento()).length() >99)
-					infoben.setCausale((infoben.getCausale()+" "+docContabile.getDsDocumento()).substring(0, 98));
-				else if(infoben.getCausale()!=null)
-					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento());
-				else
-					if (docContabile.getDsDocumento().length() >99)
-						infoben.setCausale(docContabile.getDsDocumento().substring(0,98));
-					else 
-						infoben.setCausale(docContabile.getDsDocumento());
-				infoben.setCausale(RemoveAccent.convert(infoben.getCausale()).replace('"',' ' ).replace('°',' '));
-				// SOSPESO			
-				if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO)==0){
-					it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
-					SQLBuilder sqlSosp = homeSosp.createSQLBuilder();
-					sqlSosp.resetColumns();
-					sqlSosp.addColumn("ESERCIZIO");
-					sqlSosp.addColumn("CD_UNITA_ORGANIZZATIVA");
-					sqlSosp.addColumn("PG_DOCUMENTO");
-					sqlSosp.addColumn("DT_REGISTRAZIONE_SOSP");
-					sqlSosp.addColumn("TI_ENTRATA_SPESA"); 
-					sqlSosp.addColumn("CD_SOSPESO");
-					sqlSosp.addColumn("IM_SOSPESO");
-					sqlSosp.addColumn("IM_ASSOCIATO");
-					sqlSosp.setDistinctClause(true);
-					sqlSosp.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
-					sqlSosp.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
-					sqlSosp.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
-					sqlSosp.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
-					sqlSosp.setOrderBy("cdSospeso",it.cnr.jada.util.OrderConstants.ORDER_ASC);
-
-					List listSosp = homeSosp.fetchAll(sqlSosp);
-					for(Iterator c=listSosp.iterator();c.hasNext();){
-						VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
-						if(doc.getCdSospeso()!=null){
-							sosp=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
-							try{
-								sosp.setNumeroProvvisorio(new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().indexOf("."))).longValue());
-							}catch (NumberFormatException e) {
-								throw new ApplicationException("Formato del codice del sospeso non compatibile.");
-							}
-							sosp.setImportoProvvisorio(doc.getImAssociato().setScale(2, BigDecimal.ROUND_HALF_UP));
-							infoben.getSospeso().add(sosp);
-						}
-					}
-				}	
-				// Fine sospeso
-					
-				if(bulk.getIm_ritenute().compareTo(BigDecimal.ZERO)!=0){
-					SQLBuilder sql2 = getHome(userContext, V_mandato_reversaleBulk.class).createSQLBuilder();
-					sql2.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
-					sql2.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
-					sql2.addSQLClause("AND", "PG_DOCUMENTO_CONT_PADRE",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
-					sql2.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
-					List list_rev = getHome(userContext, V_mandato_reversaleBulk.class).fetchAll(sql2);
-					for (Iterator iRev=list_rev.iterator();iRev.hasNext();){
-						riten=new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
-						V_mandato_reversaleBulk rev=(V_mandato_reversaleBulk) iRev.next();
-						riten.setImportoRitenute(rev.getIm_documento_cont().setScale(2, BigDecimal.ROUND_HALF_UP));
-						riten.setNumeroReversale(rev.getPg_documento_cont().intValue());
-						riten.setProgressivoVersante(1);// ???
-						infoben.getRitenute().add(riten);
-					}
-				}			
-				man.getInformazioniBeneficiario().add(infoben);
-			}
-			return man;
-			} catch (Exception e){
-				   throw handleException(e);
-			 }
-	}
 	public List dettagliDistinta(UserContext usercontext, Distinta_cassiereBulk distinta,String tipo) throws PersistencyException, ComponentException{
 		try{
 		SQLBuilder sql = getHome(usercontext, V_mandato_reversaleBulk.class).createSQLBuilder();
@@ -4726,6 +4259,113 @@ public class DistintaCassiereComponent extends
 	public List<V_mandato_reversaleBulk> findReversaliCollegate(UserContext usercontext, V_mandato_reversaleBulk v_mandato_reversaleBulk) throws ComponentException{
 		try {
 			return ((V_mandato_reversaleHome)getHome(usercontext, V_mandato_reversaleBulk.class)).findReversaliCollegate(v_mandato_reversaleBulk);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	
+	public List findDocumentiFlusso(UserContext usercontext, V_mandato_reversaleBulk bulk) throws ComponentException{
+		it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome home=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(usercontext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.setDistinctClause(true);
+		sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
+		sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
+		sql.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
+		sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
+		try {
+			return home.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+	
+	public List findDocumentiFlussoClass(UserContext usercontext, V_mandato_reversaleBulk bulk) throws ComponentException{
+		it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(usercontext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
+		SQLBuilder sqlClass = homeClass.createSQLBuilder();
+		sqlClass.resetColumns();
+		sqlClass.addColumn("ESERCIZIO");
+		sqlClass.addColumn("CD_UNITA_ORGANIZZATIVA");
+		sqlClass.addColumn("PG_DOCUMENTO");
+		sqlClass.addColumn("CD_SIOPE");
+		sqlClass.addColumn("CD_CUP");
+		sqlClass.addColumn("IM_DOCUMENTO"); 
+		sqlClass.addColumn("CD_TIPO_DOCUMENTO_AMM"); 
+		sqlClass.addColumn("PG_DOC_AMM");
+		sqlClass.addColumn("IMPORTO_CGE","IMPORTO_CGE");
+		sqlClass.addColumn("IMPORTO_CUP","IMPORTO_CUP"); 
+		sqlClass.setDistinctClause(true);
+		sqlClass.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
+		sqlClass.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
+		sqlClass.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
+		sqlClass.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
+		sqlClass.setOrderBy("cdSiope",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		sqlClass.setOrderBy("cdCup",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		try {
+			return homeClass.fetchAll(sqlClass);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+	public List findDocumentiFlussoSospeso(UserContext usercontext, V_mandato_reversaleBulk bulk) throws ComponentException{
+		it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(usercontext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
+		SQLBuilder sqlSosp = homeSosp.createSQLBuilder();
+		sqlSosp.resetColumns();
+		sqlSosp.addColumn("ESERCIZIO");
+		sqlSosp.addColumn("CD_UNITA_ORGANIZZATIVA");
+		sqlSosp.addColumn("PG_DOCUMENTO");
+		sqlSosp.addColumn("DT_REGISTRAZIONE_SOSP");
+		sqlSosp.addColumn("TI_ENTRATA_SPESA"); 
+		sqlSosp.addColumn("CD_SOSPESO");
+		sqlSosp.addColumn("IM_SOSPESO");
+		sqlSosp.addColumn("IM_ASSOCIATO");
+		sqlSosp.setDistinctClause(true);
+		sqlSosp.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
+		sqlSosp.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
+		sqlSosp.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
+		sqlSosp.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
+		sqlSosp.setOrderBy("cdSospeso",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		try {
+			return homeSosp.fetchAll(sqlSosp);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+
+	}
+	public List findReversali(UserContext usercontext, V_mandato_reversaleBulk bulk) throws ComponentException{
+		SQLBuilder sql2 = getHome(usercontext, V_mandato_reversaleBulk.class).createSQLBuilder();
+		sql2.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
+		sql2.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
+		sql2.addSQLClause("AND", "PG_DOCUMENTO_CONT_PADRE",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
+		sql2.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
+		try {
+			return getHome(usercontext, V_mandato_reversaleBulk.class).fetchAll(sql2);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+	public List findDocumentiFlussoClassReversali(UserContext usercontext, V_mandato_reversaleBulk bulk) throws ComponentException{
+		it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(usercontext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
+		SQLBuilder sqlClass = homeClass.createSQLBuilder();
+		sqlClass.resetColumns();
+		sqlClass.addColumn("ESERCIZIO");
+		sqlClass.addColumn("CD_UNITA_ORGANIZZATIVA");
+		sqlClass.addColumn("PG_DOCUMENTO");
+		sqlClass.addColumn("CD_SIOPE");
+		sqlClass.addColumn("CD_CUP");// sempre null per le Revesali, non gestito dal flusso
+		sqlClass.addColumn("CD_TIPO_DOCUMENTO_AMM"); 
+		sqlClass.addColumn("PG_DOC_AMM");
+		sqlClass.addColumn("IM_DOCUMENTO"); 
+		sqlClass.addColumn("IMPORTO_CGE");
+		sqlClass.addColumn("IMPORTO_CUP"); //sempre 0  per le Revesali, non gestito dal flusso
+		sqlClass.setDistinctClause(true);
+		sqlClass.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio());
+		sqlClass.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
+		sqlClass.addSQLClause("AND", "PG_DOCUMENTO",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
+		sqlClass.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,bulk.getCd_tipo_documento_cont());
+		sqlClass.setOrderBy("cdSiope",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		try {
+			return homeClass.fetchAll(sqlClass);
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
