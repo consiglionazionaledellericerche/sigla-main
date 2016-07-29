@@ -516,8 +516,8 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 							impostaDatiPerNoteCredito(userContext,mappaDocumentiCollegati, riga, dettagliNoteSenzaContratto);
 						}
 						preparaDatiContratto(userContext, mappaContratti, riga);
-						impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
 					}
+					impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
 				}
 				datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
 
