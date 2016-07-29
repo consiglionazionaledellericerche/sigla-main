@@ -39,6 +39,8 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 	private java.lang.Boolean fl_flusso;
 	private java.lang.Boolean fl_sepa;
 
+	private java.sql.Timestamp dt_invio_pec;
+
 public Distinta_cassiereBase() {
 	super();
 }
@@ -164,5 +166,11 @@ public java.lang.Boolean getFl_sepa() {
 }
 public void setFl_sepa(java.lang.Boolean fl_sepa) {
 	this.fl_sepa = fl_sepa;
+}
+public java.sql.Timestamp getDt_invio_pec() {
+	return dt_invio_pec;
+}
+public void setDt_invio_pec(java.sql.Timestamp dt_invio_pec) {
+	this.dt_invio_pec = dt_invio_pec;
 }
 }
