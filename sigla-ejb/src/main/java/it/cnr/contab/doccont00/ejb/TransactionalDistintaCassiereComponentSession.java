@@ -415,42 +415,6 @@ public BancaBulk recuperaIbanUo(UserContext param0,
 			}
 		}
 }
-public MandatoBanca recuperaDatiMandatoFlusso(UserContext param0,
-		V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException, RemoteException {
-			try {
-				return (MandatoBanca)invoke("recuperaDatiMandatoFlusso",new Object[] {
-					param0,
-					param1 });
-			} catch(java.rmi.RemoteException e) {
-				throw e;
-			} catch(java.lang.reflect.InvocationTargetException e) {
-				try {
-					throw e.getTargetException();
-				} catch(it.cnr.jada.comp.ComponentException ex) {
-					throw ex;
-				} catch(Throwable ex) {
-					throw new java.rmi.RemoteException("Uncaugth exception",ex);
-				}
-			}
-}
-public ReversaleBanca recuperaDatiReversaleFlusso(UserContext param0,
-		V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException, RemoteException {
-			try {
-				return (ReversaleBanca)invoke("recuperaDatiReversaleFlusso",new Object[] {
-					param0,
-					param1 });
-			} catch(java.rmi.RemoteException e) {
-				throw e;
-			} catch(java.lang.reflect.InvocationTargetException e) {
-				try {
-					throw e.getTargetException();
-				} catch(it.cnr.jada.comp.ComponentException ex) {
-					throw ex;
-				} catch(Throwable ex) {
-					throw new java.rmi.RemoteException("Uncaugth exception",ex);
-				}
-			}
-}
 public List dettagliDistinta(UserContext param0,
 		Distinta_cassiereBulk param1, String param2)
 		throws PersistencyException, ComponentException, RemoteException {
@@ -514,6 +478,101 @@ public List<V_mandato_reversaleBulk> findReversaliCollegate(UserContext param0,
 		throws ComponentException, RemoteException {
 	try {
 		return (List)invoke("findReversaliCollegate",new Object[] {
+			param0,
+			param1});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public List findDocumentiFlusso(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (List)invoke("findDocumentiFlusso",new Object[] {
+			param0,
+			param1});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public List findDocumentiFlussoClass(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (List)invoke("findDocumentiFlussoClass",new Object[] {
+			param0,
+			param1});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public List findDocumentiFlussoSospeso(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (List)invoke("findDocumentiFlussoSospeso",new Object[] {
+			param0,
+			param1});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public List findReversali(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (List)invoke("findReversali",new Object[] {
+			param0,
+			param1});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public List findDocumentiFlussoClassReversali(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (List)invoke("findDocumentiFlussoClassReversali",new Object[] {
 			param0,
 			param1});
 	} catch(java.rmi.RemoteException e) {
