@@ -255,7 +255,7 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
  */
 public boolean isAbledToInsertLettera() {
 	
-	return	super.isAbledToInsertLettera() || hasStorni() || hasAddebiti();
+	return	super.isAbledToInsertLettera() ;//|| hasStorni() || hasAddebiti();
 }
 public boolean isAbledToModifyFlagsTipoFattura() {
 
