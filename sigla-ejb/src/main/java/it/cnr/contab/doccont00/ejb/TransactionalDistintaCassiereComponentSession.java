@@ -1,5 +1,5 @@
 package it.cnr.contab.doccont00.ejb;
-import java.rmi.*;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -7,15 +7,10 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_logsBulk;
-import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
-import it.cnr.contab.doccont00.intcass.bulk.MandatoBanca;
-import it.cnr.contab.doccont00.intcass.bulk.ReversaleBanca;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.contab.doccont00.intcass.xmlbnl.*;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.ejb.*;
 
 public class TransactionalDistintaCassiereComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements DistintaCassiereComponentSession {
 public void annullaModificaDettagliDistinta(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
