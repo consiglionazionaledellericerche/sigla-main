@@ -1131,7 +1131,7 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 					documentiContabiliService.inviaDistintaPEC(nodes,this.isSepa(),distinta.getEsercizio()+"/"+distinta.getPg_distinta_def());
 			else
 					documentiContabiliService.inviaDistintaPEC(nodes,this.isSepa(),null);
-					
+			
 			distinta = (Distinta_cassiereBulk)getModel();
 			distinta.setDt_invio_pec(DateServices.getDt_valida(context.getUserContext()));
 			distinta.setUser(((CNRUserContext) context.getUserContext()).getUser());
