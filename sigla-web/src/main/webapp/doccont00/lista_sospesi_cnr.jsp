@@ -30,6 +30,12 @@
 <% bp.openFormWindow(pageContext); %>
 
 	<table class="Panel">
+		<tr> 
+			<td>
+				<% bp.writeFormLabel(out,"statoTextForSearch"); %>
+				<% bp.writeFormInput(out,null,"statoTextForSearch",false,null,"onclick=\"javascript:submitForm('doCambiaVisibilita')\""); %>
+			</td>		
+		</tr>
 		<tr><td>
 		<% bp.writeHTMLTable(pageContext,"100%",null); %>
 		</td></tr>
