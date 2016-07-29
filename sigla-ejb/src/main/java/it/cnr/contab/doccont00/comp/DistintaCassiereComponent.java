@@ -1,5 +1,20 @@
 package it.cnr.contab.doccont00.comp;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.util.BitSet;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -42,16 +57,11 @@ import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_logsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
-import it.cnr.contab.doccont00.intcass.bulk.MandatoBanca;
-import it.cnr.contab.doccont00.intcass.bulk.ReversaleBanca;
-import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk;
-import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome;
 import it.cnr.contab.doccont00.intcass.bulk.V_distinta_cass_im_man_revBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_ext_cassiere00Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.blobs.bulk.Bframe_blobBulk;
@@ -75,25 +85,6 @@ import it.cnr.jada.persistency.sql.SQLQuery;
 import it.cnr.jada.persistency.sql.SQLUnion;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.util.BitSet;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import javax.ejb.EJBException;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 public class DistintaCassiereComponent extends
 		it.cnr.jada.comp.CRUDDetailComponent implements IDistintaCassiereMgr,
