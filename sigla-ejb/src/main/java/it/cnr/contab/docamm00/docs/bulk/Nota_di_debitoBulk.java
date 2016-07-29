@@ -129,7 +129,7 @@ public void copyFrom(
 	setCondizione_consegnaColl(fattura_passiva.getCondizione_consegnaColl());
 	setModalita_incassoColl(fattura_passiva.getModalita_incassoColl());
 	setModalita_erogazioneColl(fattura_passiva.getModalita_erogazioneColl());
-	
+	setDt_termine_creazione_docamm(fattura_passiva.getDt_termine_creazione_docamm());
 }
 /**
  * Insert the method's description here.

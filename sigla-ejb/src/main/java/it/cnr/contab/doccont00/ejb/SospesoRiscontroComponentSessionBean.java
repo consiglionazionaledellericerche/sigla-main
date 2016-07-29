@@ -1,8 +1,15 @@
 package it.cnr.contab.doccont00.ejb;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.doccont00.comp.SospesoRiscontroComponent;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.NoRollbackException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.RemoteIterator;
 @Stateless(name="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession")
 public class SospesoRiscontroComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements SospesoRiscontroComponentSession{
 @PostConstruct
@@ -64,5 +71,23 @@ public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext param0
 	} catch(Error e) {
 		throw uncaughtError(param0,componentObj,e);
 	}
+}
+public RemoteIterator cercaSospesiPerStato(UserContext usercontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk, String statoForSearch) throws ComponentException, EJBException{
+    pre_component_invocation(usercontext, componentObj);
+    try{
+        RemoteIterator remoteiterator = ((SospesoRiscontroComponent)componentObj).cercaSospesiPerStato(usercontext, compoundfindclause, oggettobulk, statoForSearch);
+        component_invocation_succes(usercontext, componentObj);
+        return remoteiterator;
+    }catch(NoRollbackException norollbackexception){
+        component_invocation_succes(usercontext, componentObj);
+        throw norollbackexception;
+    }catch(ComponentException componentexception){
+        component_invocation_failure(usercontext, componentObj);
+        throw componentexception;
+    }catch(RuntimeException runtimeexception){
+        throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+    }catch(Error error){
+        throw uncaughtError(usercontext, componentObj, error);
+    }
 }
 }
