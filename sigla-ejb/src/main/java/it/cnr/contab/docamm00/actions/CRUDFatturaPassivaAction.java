@@ -275,6 +275,7 @@ private Forward basicDoApriNotaDiCredito(
 			notaBp.edit(context, notaDiCredito);
 			notaDiCredito = (Nota_di_creditoBulk)notaBp.getModel();
 		} else {
+			notaDiCredito.setDt_termine_creazione_docamm(((Fattura_passivaBulk)notaBp.getModel()).getDt_termine_creazione_docamm());
 			notaBp.setModel(context,notaDiCredito);
 		}
 
@@ -316,6 +317,7 @@ private Forward basicDoApriNotaDiDebito(
 			notaBp.edit(context, notaDiDebito);
 			notaDiDebito = (Nota_di_debitoBulk)notaBp.getModel();
 		} else {
+			notaDiDebito.setDt_termine_creazione_docamm(((Fattura_passivaBulk)notaBp.getModel()).getDt_termine_creazione_docamm());
 			notaBp.setModel(context,notaDiDebito);
 		}
 		
@@ -2248,10 +2250,10 @@ public Forward doCreaLettera(ActionContext context) {
 				if (model instanceof Fattura_passiva_IBulk) {
 					Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)model;
 					// //RP 23/03/2010  ?? commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
-					if (fp.hasAddebiti() || fp.hasStorni())
+					/*if (fp.hasAddebiti() || fp.hasStorni())
 						return handleException(
 									context,
-									new it.cnr.jada.comp.ApplicationException("La lettera di pagamento estero non puo' essere creata se la fattura è ha storni o addebiti!"));
+									new it.cnr.jada.comp.ApplicationException("La lettera di pagamento estero non puo' essere creata se la fattura è ha storni o addebiti!")); */
 					if (fp.isByFondoEconomale())
 						return handleException(
 									context,
@@ -3372,6 +3374,15 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 			java.util.Collection coll = fpcs.findListabanche(context.getUserContext(), fattura);
 			fattura.setBanca((coll == null || coll.isEmpty()) ? null : (BancaBulk)new java.util.Vector(coll).firstElement());
 			fattura.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura));
+			if((getBusinessProcess(context).isInserting()) && (fattura.getFattura_passiva_dettColl().size()>0)){
+				for(Iterator i=fattura.getFattura_passiva_dettColl().iterator();i.hasNext();){
+					Fattura_passiva_rigaIBulk fattura_riga=(Fattura_passiva_rigaIBulk)	 i.next();
+					fattura_riga.setModalita_pagamento(fattura.getModalita_pagamento());
+					fattura_riga.setBanca((coll == null || coll.isEmpty()) ? null : (BancaBulk)new java.util.Vector(coll).firstElement());
+					fattura_riga.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura_riga));
+				}
+			}
+			
 		} else {
 			fattura.setBanca(null);
 			fattura.setCessionario(null);
@@ -4397,9 +4408,9 @@ private void scollegaDettagliDaObbligazione(ActionContext context, java.util.Lis
 
 	if (models != null) {
 		try {
-			if (!((CRUDFatturaPassivaBP)getBusinessProcess(context)).isDeleting() &&
-				hasRangeDetailWithDocAmmAssociated(context, models))
-				throw new it.cnr.jada.comp.ApplicationException("Uno o più dettagli hanno storni o addebiti collegati! Impossibile scollegare.");
+//			if (!((CRUDFatturaPassivaBP)getBusinessProcess(context)).isDeleting() &&
+//				hasRangeDetailWithDocAmmAssociated(context, models))
+//				throw new it.cnr.jada.comp.ApplicationException("Uno o più dettagli hanno storni o addebiti collegati! Impossibile scollegare.");
 
 			for (java.util.Iterator i = models.iterator(); i.hasNext();) {
 				Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
@@ -4735,6 +4746,13 @@ public Forward doBringBackSearchListabanchedett(ActionContext context,Fattura_pa
 				fattura.setBanca(banca);
 				if( banca.getCd_terzo_delegato()!=null)
 					fattura.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura));
+			}
+			if((getBusinessProcess(context).isInserting()) && (fattura.getFattura_passiva_dettColl().size()>0)){
+				for(Iterator i=fattura.getFattura_passiva_dettColl().iterator();i.hasNext();){
+				Fattura_passiva_rigaIBulk fattura_riga=(Fattura_passiva_rigaIBulk)	 i.next();
+					fattura_riga.setBanca(banca);
+					fattura_riga.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura_riga));
+				}
 			}
 			return context.findDefaultForward();
 	} catch (Throwable e) {
