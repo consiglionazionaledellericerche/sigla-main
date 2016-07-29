@@ -83,6 +83,12 @@
 		formatName="date_short"
 		label="Data annullamento" />
 	<fieldProperty
+		name="dt_incasso"
+		property="dt_incasso"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data incasso" />	
+	<fieldProperty
 		name="pg_distinta"
 		property="pg_distinta"
 		inputType="TEXT"
@@ -136,6 +142,8 @@
 	<formFieldProperty
 		name="dt_annullamento" />
 	<formFieldProperty
+		name="dt_incasso" />
+	<formFieldProperty
 		name="pg_distinta" />
 	<formFieldProperty
 		name="pg_distinta_def" />
@@ -166,6 +174,8 @@
 	<findFieldProperty
 		name="dt_annullamento" />
 	<findFieldProperty
+		name="dt_incasso" />	
+	<findFieldProperty
 		name="pg_distinta" />
 	<findFieldProperty
 		name="pg_distinta_def" />
@@ -195,6 +205,8 @@
 		name="dt_emis_rev" />
 	<columnFieldProperty
 		name="dt_annullamento" />
+	<columnFieldProperty
+		name="dt_incasso" />	
 	<columnFieldProperty
 		name="pg_distinta" />
 	<columnFieldProperty

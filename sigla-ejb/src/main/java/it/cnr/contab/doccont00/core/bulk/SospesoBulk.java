@@ -1,15 +1,21 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Iterator;
 
-import java.math.*;
-import java.util.*;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.OrderedHashtable;
 
 public class SospesoBulk extends SospesoBase {
+	public static final String STATO_DOCUMENTO_TUTTI = "TUTTI";
+
 	protected it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk v_man_rev = new it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk();
 	protected Sospeso_det_etrBulk dettaglio_etr;
 	protected Sospeso_det_uscBulk dettaglio_usc;	
@@ -59,6 +65,17 @@ public class SospesoBulk extends SospesoBase {
 		stato_sospesoCNRKeys.put(STATO_SOSP_IN_SOSPESO,	"In sospeso");
 	};
 
+	public final static Dictionary tiStatoTextForSearchKeys;
+	static 
+	{
+		tiStatoTextForSearchKeys = new OrderedHashtable();
+		tiStatoTextForSearchKeys.put(SospesoBulk.STATO_SOSP_INIZIALE, "Iniziale");
+		tiStatoTextForSearchKeys.put(SospesoBulk.STATO_SOSP_IN_SOSPESO, "In sospeso");
+		tiStatoTextForSearchKeys.put(SospesoBulk.STATO_SOSP_ASS_A_CDS, "Assegnato a CdS");
+		tiStatoTextForSearchKeys.put("LIBERO", "Libero");
+		tiStatoTextForSearchKeys.put("ANN", "Annullato");
+		tiStatoTextForSearchKeys.put(SospesoBulk.STATO_DOCUMENTO_TUTTI,SospesoBulk.STATO_DOCUMENTO_TUTTI);
+	};
 	
 	public final static Dictionary ti_entrata_spesaKeys;
 	static 
@@ -79,6 +96,8 @@ public class SospesoBulk extends SospesoBase {
 	protected BulkList sospesiFigliColl = new BulkList();
 
 	private boolean manRevRiportato;
+	private String statoText;
+	private String statoTextForSearch;
 	
 public SospesoBulk() {
 	super();
@@ -502,5 +521,17 @@ public void validateFiglio() throws ValidationException
 		throw new ValidationException( "Per ogni dettaglio deve essere specificato un importo positivo." );
 
 	
+}
+public String getStatoText() {
+	return statoText;
+}
+public void setStatoText(String statoText) {
+	this.statoText = statoText;
+}
+public String getStatoTextForSearch() {
+	return statoTextForSearch;
+}
+public void setStatoTextForSearch(String statoTextForSearch) {
+	this.statoTextForSearch = statoTextForSearch;
 }
 }
