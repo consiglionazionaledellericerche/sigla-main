@@ -1,6 +1,24 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.config00.sto.bulk.EnteBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.BusyResourceException;
+import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SQLExceptionHandler;
+
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -423,5 +441,34 @@ public class SospesoHome extends BulkHome {
 		 */
 		return sql;
 
+	}
+	@Override
+	public Persistent completeBulkRowByRow(UserContext userContext, Persistent persistent) throws PersistencyException {
+		try {
+			SospesoBulk sospeso = (SospesoBulk)persistent;
+			String currentStato=null;
+			if (sospeso.getFl_stornato()) {
+				currentStato = "ANN";
+			} else {
+				sospeso.setSospesiFigliColl(new BulkList(this.findSospesiFigliColl(userContext, sospeso)));
+				for (Iterator iterator = sospeso.getSospesiFigliColl().iterator(); iterator.hasNext();) {
+					SospesoBulk figlio = (SospesoBulk) iterator.next();
+					if (SospesoBulk.STATO_SOSP_IN_SOSPESO.equals(figlio.getStato_sospeso())) {
+						currentStato = figlio.getStato_sospeso();
+						break;
+					} else if (currentStato==null)
+						currentStato = figlio.getStato_sospeso();
+					else if (!currentStato.equals(figlio.getStato_sospeso())) {
+						currentStato = SospesoBulk.STATO_SOSP_INIZIALE;
+						break;
+					}
+//					if(figlio.getIm_associato().compareTo(BigDecimal.ZERO)==0 && (figlio.getIm_ass_mod_1210().compareTo(BigDecimal.ZERO)==0))
+//							currentStato = "LIBERO";
+				}
+			}
+			sospeso.setStatoText(currentStato!=null?currentStato:SospesoBulk.STATO_SOSP_INIZIALE);
+		} catch (IntrospectionException e) {
+		}
+		return super.completeBulkRowByRow(userContext, persistent);
 	}
 }
