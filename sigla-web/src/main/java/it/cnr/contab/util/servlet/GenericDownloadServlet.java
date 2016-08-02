@@ -68,7 +68,7 @@ public class GenericDownloadServlet extends HttpServlet {
 			} catch (IllegalAccessException e) {
 				throw new ServletException(e);
 			} catch (InvocationTargetException e) {
-				throw new ServletException(e.getTargetException().getMessage());
+				throw new ServletException(e.getTargetException().getMessage(), e);
 			}
 		}
 	}
