@@ -1,25 +1,5 @@
 package it.cnr.contab.docamm00.service;
 
-import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
-import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
-import it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
-import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
-import it.cnr.contab.utenze00.bp.WSUserContext;
-import it.cnr.contab.util.StringEncrypter;
-import it.cnr.contab.util.StringEncrypter.EncryptionException;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.DateUtils;
-import it.cnr.jada.util.SendMail;
-import it.cnr.jada.util.mail.SimplePECMail;
-import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -73,6 +53,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.oxm.XmlMappingException;
+
+import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
+import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
+import it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
+import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
+import it.cnr.contab.utenze00.bp.WSUserContext;
+import it.cnr.contab.util.StringEncrypter;
+import it.cnr.contab.util.StringEncrypter.EncryptionException;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.SendMail;
+import it.cnr.jada.util.mail.SimplePECMail;
+import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 
 public class FatturaPassivaElettronicaService implements InitializingBean{
 	private transient final static Logger logger = LoggerFactory.getLogger(FatturaPassivaElettronicaService.class);
@@ -347,7 +347,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	@SuppressWarnings("unchecked")
 	public void pecScan(String userName, String password) throws ComponentException {
 		logger.info("PEC SCAN for ricevi Fatture email: "+userName + "pwd :" +password);
-		Properties props = new Properties();
+		Properties props = System.getProperties();
 		props.putAll(pecMailConf);
 		try {
 			try {
@@ -355,64 +355,80 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			} catch (EncryptionException e1) {
 				new AuthenticationFailedException("Cannot decrypt password");
 			}
-			final Session session = Session.getInstance(props);
+			final Session session = Session.getDefaultInstance(props);
 			URLName urlName = new URLName(pecURLName);
-			final Store store = session.getStore(urlName);
-			store.connect(userName, password);
-			searchMailFromPec(userName, password, store);
-			searchMailFromSdi(userName, store);
-			searchMailFromReturn(userName, store);
-			store.close();
+			searchMailFromPec(userName, password, session, urlName);
+			searchMailFromSdi(userName, password, session, urlName);
+			searchMailFromReturn(userName, password, session, urlName);
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
 		} catch (NoSuchProviderException e) {
 			logger.error("Error while scan PEC email:" +userName, e);
 		} catch (MessagingException e) {
 			logger.error("Error while scan PEC email:" +userName, e);
-		}				
-	}
-	private void searchMailFromPec(String userName, String password, final Store store)
-			throws MessagingException {
-		List<Folder> folders = new ArrayList<Folder>();
-		for (String folderName : pecScanReceiptFolderName) {
-			folders.add(store.getFolder(folderName));
-		}
-		for (Folder folder : folders) {
-		    if (folder.exists()) {
-				folder.open(Folder.READ_WRITE);
-				processingMailFromHostPec(folder, userName, password);
-				folder.close(true);				
-		    } 
 		}
 	}
-	private void searchMailFromSdi(String userName, final Store store)
+	private void searchMailFromPec(String userName, String password, Session session, URLName urlName)
 			throws MessagingException {
-		List<Folder> folders = new ArrayList<Folder>();
-		for (String folderName : pecScanFolderName) {
-			folders.add(store.getFolder(folderName));
+		Store store = session.getStore(urlName);
+		try {
+			store.connect(userName, password);
+			List<Folder> folders = new ArrayList<Folder>();
+			for (String folderName : pecScanReceiptFolderName) {
+				folders.add(store.getFolder(folderName));
+			}
+			for (Folder folder : folders) {
+			    if (folder.exists()) {
+					folder.open(Folder.READ_WRITE);
+					processingMailFromHostPec(folder, userName, password);
+					folder.close(true);				
+			    } 
+			}			
+		} finally {
+			if (store.isConnected())
+				store.close();
 		}
-		for (Folder folder : folders) {
-		    if (folder.exists()) {
-				folder.open(Folder.READ_WRITE);
-				processingMailFromSdi(folder, userName);
-				folder.close(true);				
-		    }
+	}
+	private void searchMailFromSdi(String userName, String password, Session session, URLName urlName)
+			throws MessagingException {
+		Store store = session.getStore(urlName);
+		try {
+			List<Folder> folders = new ArrayList<Folder>();
+			for (String folderName : pecScanFolderName) {
+				folders.add(store.getFolder(folderName));
+			}
+			for (Folder folder : folders) {
+			    if (folder.exists()) {
+					folder.open(Folder.READ_WRITE);
+					processingMailFromSdi(folder, userName);
+					folder.close(true);				
+			    }
+			}
+		} finally {
+			if (store.isConnected())
+				store.close();
 		}
 	}
 
-	private void searchMailFromReturn(String userName, final Store store)
+	private void searchMailFromReturn(String userName, String password, Session session, URLName urlName)
 			throws MessagingException {
-		List<Folder> folders = new ArrayList<Folder>();
-		for (String folderName : pecScanFolderName) {
-			folders.add(store.getFolder(folderName));
-		}
-		for (Folder folder : folders) {
-		    if (folder.exists()) {
-				folder.open(Folder.READ_WRITE);
-				processingMailFromReturn(folder, userName);
-				folder.close(true);				
-		    }
-		}
+		Store store = session.getStore(urlName);
+		try {		
+			List<Folder> folders = new ArrayList<Folder>();
+			for (String folderName : pecScanFolderName) {
+				folders.add(store.getFolder(folderName));
+			}
+			for (Folder folder : folders) {
+			    if (folder.exists()) {
+					folder.open(Folder.READ_WRITE);
+					processingMailFromReturn(folder, userName);
+					folder.close(true);				
+			    }
+			}
+		} finally {
+			if (store.isConnected())
+				store.close();
+		}			
 	}
 	
 	private void processingMailFromSdi(Folder folder, String userName) throws MessagingException{
