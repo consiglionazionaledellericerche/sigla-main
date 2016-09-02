@@ -347,7 +347,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	@SuppressWarnings("unchecked")
 	public void pecScan(String userName, String password) throws ComponentException {
 		logger.info("PEC SCAN for ricevi Fatture email: "+userName + "pwd :" +password);
-		Properties props = System.getProperties();
+		Properties props = new Properties();
 		props.putAll(pecMailConf);
 		try {
 			try {
