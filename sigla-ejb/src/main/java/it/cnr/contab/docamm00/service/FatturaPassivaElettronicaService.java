@@ -393,6 +393,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			throws MessagingException {
 		Store store = session.getStore(urlName);
 		try {
+			store.connect(userName, password);
 			List<Folder> folders = new ArrayList<Folder>();
 			for (String folderName : pecScanFolderName) {
 				folders.add(store.getFolder(folderName));
@@ -413,7 +414,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private void searchMailFromReturn(String userName, String password, Session session, URLName urlName)
 			throws MessagingException {
 		Store store = session.getStore(urlName);
-		try {		
+		try {
+			store.connect(userName, password);
 			List<Folder> folders = new ArrayList<Folder>();
 			for (String folderName : pecScanFolderName) {
 				folders.add(store.getFolder(folderName));
