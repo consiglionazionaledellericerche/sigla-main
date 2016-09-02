@@ -355,7 +355,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			} catch (EncryptionException e1) {
 				new AuthenticationFailedException("Cannot decrypt password");
 			}
-			final Session session = Session.getDefaultInstance(props, null);
+			final Session session = Session.getInstance(props);
 			URLName urlName = new URLName(pecURLName);
 			final Store store = session.getStore(urlName);
 			store.connect(userName, password);
