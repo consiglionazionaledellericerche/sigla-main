@@ -88,7 +88,7 @@ public Forward doAddToCRUDMain_DettController(ActionContext context) {
 		/*  Non ci sono beni disponibili */
 		if (count == 0) {
 			bp.setMessage("Nessun Bene recuperato");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 		} else {
 			RicercaLiberaBP rlbp = (RicercaLiberaBP)context.createBusinessProcess("RicercaLibera");
 			rlbp.setCanPerformSearchWithoutClauses(false);
@@ -150,7 +150,7 @@ public Forward doAddToCRUDMain_DettagliFattura_RigheInventarioDaFattura(ActionCo
 		/* Non ci sono beni disponibili ad essere associati */
 		if (count == 0) {
 			bp_scarico.setMessage("Nessun Bene associabile");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 		} else {
 			//SelezionatoreListaBP slbp = select(context,ri,it.cnr.jada.bulk.BulkInfo.getBulkInfo(Inventario_beniBulk.class),null,"doSelezionaBeniScaricati",null,bp_scarico);
 			//slbp.setMultiSelection(true);
@@ -202,7 +202,7 @@ public Forward doBringBackAddBeni(ActionContext context) {
 		/* Non ci sono beni disponibili ad essere associati */
 		if (count == 0) {
 			bp.setMessage("Nessun Bene associabile");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(iterator);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, iterator);
 		} else{
 			SelezionatoreListaBP slbp = select(context,iterator,it.cnr.jada.bulk.BulkInfo.getBulkInfo(Inventario_beniBulk.class),null,"doSelezionaBeniScaricati",null,bp);
 			slbp.setMultiSelection(true);
@@ -493,7 +493,7 @@ public Forward doAddToCRUDMain_DettagliDocumento_RigheInventarioDaDocumento(Acti
 		/* Non ci sono beni disponibili ad essere associati */
 		if (count == 0) {
 			bp_scarico.setMessage("Nessun Bene associabile");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 		} else {
 			//SelezionatoreListaBP slbp = select(context,ri,it.cnr.jada.bulk.BulkInfo.getBulkInfo(Inventario_beniBulk.class),null,"doSelezionaBeniScaricati",null,bp_scarico);
 			//slbp.setMultiSelection(true);

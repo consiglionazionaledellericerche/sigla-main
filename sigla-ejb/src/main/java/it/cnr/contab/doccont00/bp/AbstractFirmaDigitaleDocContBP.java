@@ -249,7 +249,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			List<StatoTrasmissione> selectedElements = getSelectedElements(context);
 			if (selectedElements == null || selectedElements.isEmpty())
 					throw new ApplicationException("Selezionare almeno un elemento!");
-			EJBCommonServices.closeRemoteIterator(getIterator());
+			EJBCommonServices.closeRemoteIterator(context, getIterator());
 			for (StatoTrasmissione v_mandato_reversaleBulk : selectedElements) {				
 				aggiornaStato(context, MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO, v_mandato_reversaleBulk);
 			}
@@ -367,13 +367,13 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 		if (selectelElements == null || selectelElements.isEmpty()){
 			throw new ApplicationException("Selezionare almeno un documento contabile!");
 		}
-		EJBCommonServices.closeRemoteIterator(getIterator());
+		EJBCommonServices.closeRemoteIterator(actioncontext, getIterator());
 		addSomethingToSelectedElements(actioncontext, selectelElements);
 		executeSign(actioncontext, selectelElements, firmaOTPBulk);
 	}
 	
 	protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception{
-		EJBCommonServices.closeRemoteIterator(getIterator());		
+		EJBCommonServices.closeRemoteIterator(actioncontext, getIterator());		
 		String webScriptURL = documentiContabiliService.getRepositoyURL().concat("service/sigla/firma/doccont");
 		Map<String, String> subjectDN = documentiContabiliService.getCertSubjectDN(firmaOTPBulk.getUserName(), firmaOTPBulk.getPassword());
 		if (subjectDN == null)

@@ -28,7 +28,7 @@ public Forward doAddToCRUDMain_cdrAssociati(ActionContext context) {
 		int count = ri.countElements();
 		if (count == 0) {
 			bp.setMessage("Nessun cdr associabile");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 		} else {
 			SelezionatoreListaBP slbp = select(context,ri,it.cnr.jada.bulk.BulkInfo.getBulkInfo(CdrBulk.class),null,"doSelezionaCdr_associati",null,bp);
 			slbp.setMultiSelection(true);

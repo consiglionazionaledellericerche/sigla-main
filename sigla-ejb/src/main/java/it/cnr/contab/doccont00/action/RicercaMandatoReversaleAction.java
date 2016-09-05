@@ -56,7 +56,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		OggettoBulk model = bp.getModel();
 		it.cnr.jada.util.RemoteIterator ri = bp.find(context,null,model);
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("Nessun mandato/reversale da inserire in distinta.");
 			return context.findDefaultForward();
 		}/*

@@ -25,7 +25,7 @@ public Forward doAddToCRUDMain_Impegni(ActionContext context)
 		it.cnr.jada.util.RemoteIterator ri = bp.cercaImpegni(context);
 		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			return context.findDefaultForward();
 /*		}

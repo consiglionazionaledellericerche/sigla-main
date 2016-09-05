@@ -80,7 +80,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			// Non ci sono Commesse disponibili
 			if (roots.countElements()==0){
 				context.closeBusinessProcess();
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(roots);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, roots);
 				setErrorMessage(context,"Attenzione: non sono state trovati progetti disponibili");
 				return context.findDefaultForward();
 			}else {
@@ -284,7 +284,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 				Progetto_sipBulk progetto = new Progetto_sipBulk();
 				it.cnr.jada.util.RemoteIterator ri = bp.find(context, compoundfindclause, progetto, pdg_modulo, "progetto");
 				if (ri == null || ri.countElements() == 0) {
-					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 					bp.setMessage("La ricerca non ha fornito alcun risultato.");
 					return context.findDefaultForward();
 				} else {
