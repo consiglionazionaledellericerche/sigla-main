@@ -75,7 +75,7 @@ public Forward doCambiaVisibilita(ActionContext context)
 	try {
 		fillModel(context);
 		String statoSospeso = bulk.getStatoTextForSearch();
-		EJBCommonServices.closeRemoteIterator(bp.detachIterator());
+		EJBCommonServices.closeRemoteIterator(context, bp.detachIterator());
 		RemoteIterator iterator = ((SospesoRiscontroComponentSession)
 				bp.createComponentSession("CNRDOCCONT00_EJB_SospesoRiscontroComponentSession", SospesoRiscontroComponentSession.class)).
 				cercaSospesiPerStato(context.getUserContext(), bp.getFindclause(), (ListaSospesiBulk)bp.createModel( context ), statoSospeso);

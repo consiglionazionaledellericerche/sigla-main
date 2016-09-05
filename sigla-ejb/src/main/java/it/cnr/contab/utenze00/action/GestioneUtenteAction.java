@@ -148,7 +148,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 		try {
 			GestioneUtenteBP bp = (GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
 			context.setBusinessProcess(bp);
-			bp.closeAllChildren();
+			bp.closeAllChildren(context);
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 			return handleException(context,e);
@@ -360,7 +360,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 				bp.getUserInfo().getUnita_organizzativa().getCd_unita_organizzativa(),
 				bp.getUserInfo().getUnita_organizzativa().getCd_unita_padre(),
 				bp.getUserInfo().getCdr().getCd_centro_responsabilita()));
-			bp.setRadiceAlbero_main(getComponentSession().generaAlberoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo.getCd_unita_organizzativa(),null,(short)0));
+			bp.setRadiceAlbero_main(context, getComponentSession().generaAlberoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo.getCd_unita_organizzativa(),null,(short)0));
 			return context.findForward("desktop");
 		} catch(Throwable e) {
 			return handleException(context,e);

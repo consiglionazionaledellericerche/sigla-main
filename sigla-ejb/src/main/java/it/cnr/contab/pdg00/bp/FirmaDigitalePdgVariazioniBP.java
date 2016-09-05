@@ -309,7 +309,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 									((ArchiviaStampaPdgVariazioneBulk) getModel())
 											.getTiSigned(), Boolean.TRUE)));
 			else {
-				EJBCommonServices.closeRemoteIterator(getIterator());
+				EJBCommonServices.closeRemoteIterator(context, getIterator());
 				Pdg_variazioneBulk bulk = new Pdg_variazioneBulk();
 				CdsBulk cds = null;
 				Unita_organizzativaBulk uo = null;

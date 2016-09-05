@@ -95,7 +95,7 @@ protected Forward basicDoCerca(ActionContext context) throws java.rmi.RemoteExce
 		OggettoBulk model = (OggettoBulk)bp.getModel();
 		it.cnr.jada.util.RemoteIterator ri = bp.find(context,null,model);
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			return context.findDefaultForward();
 		//}

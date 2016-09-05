@@ -918,7 +918,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		    		return;
 				}
 			}
-			EJBCommonServices.closeRemoteIterator(newBp.detachIterator());
+			EJBCommonServices.closeRemoteIterator(context, newBp.detachIterator());
 		} catch (Exception e){
 			throw handleException(e);
 		}
@@ -1115,7 +1115,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 				arraylist.add((V_incarichi_elenco_fpBulk)sourceIterator.nextElement());
 			
 			generaXML(context, arraylist);
-			EJBCommonServices.closeRemoteIterator(sourceIterator);
+			EJBCommonServices.closeRemoteIterator(context, sourceIterator);
 		} catch (Exception e){
 			throw handleException(e);
 		}
@@ -1384,7 +1384,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 				arraylist.add((V_incarichi_elenco_fpBulk)sourceIterator.nextElement());
 			
 			generaXMLPerla(context, arraylist);
-			EJBCommonServices.closeRemoteIterator(sourceIterator);
+			EJBCommonServices.closeRemoteIterator(context, sourceIterator);
 		} catch (Exception e){
 			throw handleException(e);
 		}
