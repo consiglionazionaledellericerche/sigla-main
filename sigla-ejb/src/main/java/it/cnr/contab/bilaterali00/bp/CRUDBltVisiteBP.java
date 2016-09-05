@@ -845,7 +845,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setFirmatario((V_persona_fisicaBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			} catch (Exception e) {
 			}
 			
@@ -855,7 +855,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setAtto((Tipo_atto_amministrativoBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			} catch (Exception e) {
 			}
 
@@ -875,7 +875,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setTerzo_resp((V_persona_fisicaBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			} catch (Exception e) {
 			}
 
@@ -885,7 +885,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = incaricoProceduraBP.initializeProcedura_amministrativa(context, procedura, (Procedure_amministrativeBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			} catch (Exception e) {
 			}
 
@@ -895,7 +895,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setTipo_attivita((Tipo_attivitaBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			} catch (Exception e) {
 			}
 
@@ -905,7 +905,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = incaricoProceduraBP.initializeFind_tipo_incarico(context, procedura, (Tipo_incaricoBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			} catch (Exception e) {
 			}
 
@@ -942,7 +942,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 				if (ri != null && ri.countElements() == 1)
 					incarico = incaricoProceduraBP.initializeTerzo(context, incarico, (V_terzo_per_compensoBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			} catch (BusinessProcessException e) {
 				throw handleException(e);
 			} catch (Exception e) {
@@ -1063,7 +1063,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 					ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 					if (ri != null && ri.countElements() == 1)
 						obbligazione.setIncarico_repertorio((Incarichi_repertorioBulk)ri.nextElement());
-					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 				} catch (Exception e) {
 				}
 			}
@@ -1175,7 +1175,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 					ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 					if (ri != null && ri.countElements() == 1)
 						visita.getBltAutorizzatiDett().setBltAutorizzati((Blt_autorizzatiBulk)ri.nextElement());
-					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actioncontext,ri);
 				}
 			}
 		} catch (Exception e) {

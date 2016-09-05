@@ -100,7 +100,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		int count = ri.countElements();
 		if (count == 0) {
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 		} else {
 			SelezionatoreListaBP slbp = select(
 						context,

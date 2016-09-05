@@ -176,17 +176,17 @@ public Forward doCercaDocPassivi(ActionContext context)
 			it.cnr.jada.util.RemoteIterator ri = bp.find(context,null,mandato.getFind_doc_passivi().getTerzoAnag(),mandato,"find_doc_passivi.terzoAnag");
 			if (ri == null || ri.countElements() == 0) 
 			{
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 				bp.setMessage("Il terzo non e' presente nell'anagrafico.");
 				return context.findDefaultForward();
 			} else if (ri.countElements() == 1) 
 			{
 				FormField field = getFormField(context,"main.find_doc_passivi");			
 				doBringBackSearchResult(context,field,(OggettoBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			} else 
 			{
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 				bp.setMessage("Esite piu' di un terzo che soddisfa i criteri di ricerca.");
 				return context.findDefaultForward();
 			}	
@@ -207,16 +207,16 @@ public Forward doSearchFind_doc_passiviInAutomatico(ActionContext context)
 		MandatoIBulk mandato = (MandatoIBulk) bp.getModel();
 		it.cnr.jada.util.RemoteIterator ri = bp.find(context,null,mandato.getFind_doc_passivi().getTerzoAnag(),mandato,"find_doc_passivi.terzoAnag");
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("Il terzo non e' presente nell'anagrafico.");
 			return context.findDefaultForward();
 		} else if (ri.countElements() == 1) {
 			FormField field = getFormField(context,"main.find_doc_passivi");			
 			doBringBackSearchResult(context,field,(OggettoBulk)ri.nextElement());
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			return context.findDefaultForward();
 		} else {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("Esite piu' di un terzo che soddisfa i criteri di ricerca.");
 			return context.findDefaultForward();
 		}

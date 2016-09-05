@@ -56,7 +56,7 @@ public Forward doAddToCRUDMain_gruppiController(ActionContext context) {
 		int count = ri.countElements();
 		if (count == 0) {
 			bp.setMessage("Nessun Gruppo associabile");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 		} else {
 			SelezionatoreListaBP slbp = select(context,ri,it.cnr.jada.bulk.BulkInfo.getBulkInfo(Categoria_gruppo_inventBulk.class),null,"doSelezionaGruppi",null,bp);
 			slbp.setMultiSelection(true);

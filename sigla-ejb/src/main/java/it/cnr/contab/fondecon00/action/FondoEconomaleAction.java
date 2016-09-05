@@ -192,7 +192,7 @@ public it.cnr.jada.action.Forward doAssociaSpeseObbligazione(it.cnr.jada.action.
 								(Obbligazione_scadenzarioBulk)selezione);
 			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 			if (ri != null && ri.countElements() == 0) {
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 				if (filtroUtilizzato.getFl_associate() != null && filtroUtilizzato.getFl_associate().booleanValue())
 					getBusinessProcess(context).setMessage("Non esiste alcuna spesa non documentata associata all'impegno selezionato!");
 				else
@@ -848,7 +848,7 @@ public it.cnr.jada.action.Forward doRicercaSpeseAssociate(it.cnr.jada.action.Act
 											fondo.getScadenza_ricerca());
 		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			return context.findDefaultForward();
 		}
@@ -945,7 +945,7 @@ public it.cnr.jada.action.Forward doSelezionaSospesoDiChiusuraFondo(
 				it.cnr.jada.util.RemoteIterator ri = session.cercaSospesiDiChiusuraFondo(context.getUserContext(), fondo);
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 				if (ri == null || ri.countElements() == 0) {
-					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 					bp.setMessage("Non è stato trovato alcun sospeso valido per la chiusura del fondo economale! Operazione annullata.");
 					bp.rollbackUserTransaction();
 					return context.findDefaultForward();
@@ -1024,7 +1024,7 @@ private boolean hasSpese(
 		try {
 			return (ri != null && ri.countElements() != 0);
 		} finally {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 		}
 	}
 	return false;

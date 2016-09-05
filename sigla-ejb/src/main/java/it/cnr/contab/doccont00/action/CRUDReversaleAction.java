@@ -43,7 +43,7 @@ public Forward doAddToCRUDMain_SospesiSelezionati(ActionContext context)
 		it.cnr.jada.util.RemoteIterator ri = bp.cercaSospesi(context);
 		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			return context.findDefaultForward();
 /*		}
@@ -172,17 +172,17 @@ public Forward doCercaDocAttivi(ActionContext context)
 			it.cnr.jada.util.RemoteIterator ri = bp.find(context,null,reversale.getFind_doc_attivi().getTerzoAnag(),reversale,"find_doc_attivi.terzoAnag");
 			if (ri == null || ri.countElements() == 0) 
 			{
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 				bp.setMessage("Il terzo non e' presente nell'anagrafico.");
 				return context.findDefaultForward();
 			} else if (ri.countElements() == 1) 
 			{
 				FormField field = getFormField(context,"main.find_doc_attivi");			
 				doBringBackSearchResult(context,field,(OggettoBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			} else 
 			{
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 				bp.setMessage("Esite piu' di un terzo che soddisfa i criteri di ricerca.");
 				return context.findDefaultForward();
 			}	
@@ -265,16 +265,16 @@ public Forward doSearchFind_doc_attiviInAutomatico(ActionContext context)
 		ReversaleIBulk reversale = (ReversaleIBulk) bp.getModel();
 		it.cnr.jada.util.RemoteIterator ri = bp.find(context,null,reversale.getFind_doc_attivi().getTerzoAnag(),reversale,"find_doc_attivi.terzoAnag");
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("Il terzo non e' presente nell'anagrafico.");
 			return context.findDefaultForward();
 		} else if (ri.countElements() == 1) {
 			FormField field = getFormField(context,"main.find_doc_attivi");			
 			doBringBackSearchResult(context,field,(OggettoBulk)ri.nextElement());
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			return context.findDefaultForward();
 		} else {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("Esite piu' di un terzo che soddisfa i criteri di ricerca.");
 			return context.findDefaultForward();
 		}
@@ -424,7 +424,7 @@ public Forward doSelezionaSiopeDaCompletare(ActionContext actioncontext) throws 
        RemoteIterator remoteiterator = crudbp.find(actioncontext, clauses, oggettobulk);
        if(remoteiterator == null || remoteiterator.countElements() == 0)
             {
-                EJBCommonServices.closeRemoteIterator(remoteiterator);
+                EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
                 crudbp.setMessage("La ricerca non ha fornito alcun risultato.");
                 return actioncontext.findDefaultForward();
             }
@@ -432,7 +432,7 @@ public Forward doSelezionaSiopeDaCompletare(ActionContext actioncontext) throws 
             {
                 OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
                 ((ReversaleBulk)oggettobulk1).setSiopeDaCompletare(true);
-                EJBCommonServices.closeRemoteIterator(remoteiterator);
+                EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
                 crudbp.setMessage("La ricerca ha fornito un solo risultato.");
                 return doRiportaSelezioneSiopeDaCompletare(actioncontext, oggettobulk1);
             } else

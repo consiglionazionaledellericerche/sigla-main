@@ -144,7 +144,7 @@ public it.cnr.jada.action.Forward doSearchFind_nodo_padre(ActionContext context)
 		it.cnr.jada.util.RemoteIterator roots = bp.getProgettiTree(context).getChildren(context,null);
 		// Non ci sono Progetti disponibili ad essere utiilzzati come nodo padre
 		if (roots.countElements()==0){
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(roots);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, roots);
 			setErrorMessage(context,"Attenzione: non sono stati trovati Progetti disponibili");
 			return context.findDefaultForward();
 		}else {

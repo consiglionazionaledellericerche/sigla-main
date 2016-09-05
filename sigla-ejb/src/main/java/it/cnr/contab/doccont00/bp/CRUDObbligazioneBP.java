@@ -1132,7 +1132,7 @@ public void caricaTerzoDiversi(it.cnr.jada.action.ActionContext context) throws 
 	    RemoteIterator remoteiterator = find(context, null, new TerzoBulk(new Integer(config.getIm01().intValue())));
 	    if(remoteiterator != null && remoteiterator.countElements() == 1){
 	    	TerzoBulk terzo = (TerzoBulk)remoteiterator.nextElement();
-	        EJBCommonServices.closeRemoteIterator(remoteiterator);
+	        EJBCommonServices.closeRemoteIterator(context, remoteiterator);
 	        ((ObbligazioneBulk)getModel()).setCreditore(terzo);
 	    }
 	} 

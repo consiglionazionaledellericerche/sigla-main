@@ -9,6 +9,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utente00.nav.ejb.*;
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.Selection;
@@ -197,12 +198,12 @@ public class GestioneUtenteBP extends it.cnr.jada.util.action.FormBP {
 	 * @param newRadiceAlbero_main	Il valore da assegnare a 'radiceAlbero_main'
 	 * @throws BusinessProcessException	
 	 */
-	public void setRadiceAlbero_main(it.cnr.contab.utenze00.bulk.Albero_mainBulk newRadiceAlbero_main) throws it.cnr.jada.action.BusinessProcessException {
+	public void setRadiceAlbero_main(ActionContext context, it.cnr.contab.utenze00.bulk.Albero_mainBulk newRadiceAlbero_main) throws it.cnr.jada.action.BusinessProcessException {
 		radiceAlbero_main = newRadiceAlbero_main;
 		nodo_attivo = null;
 		nodi.clear();
 		nodiEspansi.clear();
-		closeAllChildren();
+		closeAllChildren(context);
 	}
 	/**
 	 * <!-- @TODO: da completare -->
