@@ -124,7 +124,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	}
 	@Override
 	protected void aggiornaStato(ActionContext actioncontext, String stato, StatoTrasmissione...bulks) throws ComponentException, RemoteException {
-		EJBCommonServices.closeRemoteIterator(getIterator());
+		EJBCommonServices.closeRemoteIterator(actioncontext, getIterator());
 		DistintaCassiereComponentSession distintaCassiereComponentSession = Utility.createDistintaCassiereComponentSession();
 		for (StatoTrasmissione v_mandato_reversaleBulk : bulks) {
 			if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {				
@@ -171,7 +171,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					throw new ApplicationException("Selezionare almeno un elemento!");
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			String message = "";
-			EJBCommonServices.closeRemoteIterator(getIterator());			
+			EJBCommonServices.closeRemoteIterator(actioncontext, getIterator());			
 			addSomethingToSelectedElements(actioncontext, selectedElements);
 			for (StatoTrasmissione statoTrasmissione : selectedElements) {
 				V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk)statoTrasmissione;

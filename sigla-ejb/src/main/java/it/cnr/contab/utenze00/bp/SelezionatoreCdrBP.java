@@ -69,7 +69,7 @@ public void selezionaCdr(ActionContext context) throws ComponentException, Remot
 	bp.setUserInfo((CNRUserInfo)getUserInfo());
 	context.setUserInfo(bp.getUserInfo());
 	context.setUserContext(userContext);
-	bp.setRadiceAlbero_main(getComponentSession().generaAlberoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),bp.getUserInfo().getUnita_organizzativa().getCd_unita_organizzativa(),null,(short)0));
+	bp.setRadiceAlbero_main(context, getComponentSession().generaAlberoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),bp.getUserInfo().getUnita_organizzativa().getCd_unita_organizzativa(),null,(short)0));
 	context.closeBusinessProcess();
 }
 

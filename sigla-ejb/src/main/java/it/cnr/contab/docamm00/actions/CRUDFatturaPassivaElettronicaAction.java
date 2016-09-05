@@ -49,14 +49,14 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	        RemoteIterator remoteiterator = fatturaPassivaElettronicaBP.find(actioncontext, null, bulk);
 	        if(remoteiterator == null || remoteiterator.countElements() == 0)
 	        {
-	            EJBCommonServices.closeRemoteIterator(remoteiterator);
+	            EJBCommonServices.closeRemoteIterator(actioncontext,remoteiterator);
 	            fatturaPassivaElettronicaBP.setMessage("La ricerca non ha fornito alcun risultato.");
 	            return actioncontext.findDefaultForward();
 	        }
 	        if(remoteiterator.countElements() == 1)
 	        {
 	            OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
-	            EJBCommonServices.closeRemoteIterator(remoteiterator);
+	            EJBCommonServices.closeRemoteIterator(actioncontext,remoteiterator);
 	            fatturaPassivaElettronicaBP.setMessage("La ricerca ha fornito un solo risultato.");
 	            return doRiportaSelezione(actioncontext, oggettobulk1);
 	        } else
@@ -91,7 +91,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				String statoDocumento = bulk.getStatoDocumento();
 				if (statoDocumento.equalsIgnoreCase(DocumentoEleTestataBulk.STATO_DOCUMENTO_TUTTI))
 					bulk.setStatoDocumento(null);				
-				EJBCommonServices.closeRemoteIterator(bp.detachIterator());
+				EJBCommonServices.closeRemoteIterator(actioncontext,bp.detachIterator());
 				bp.setIterator(actioncontext, ((FatturaElettronicaPassivaComponentSession)
 						bp.createComponentSession("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession", FatturaElettronicaPassivaComponentSession.class)).
 						cerca(actioncontext.getUserContext(), null, bulk));

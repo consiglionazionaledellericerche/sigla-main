@@ -79,7 +79,7 @@ public it.cnr.jada.action.Forward  doCercaDocDaRiportare( it.cnr.jada.action.Act
 //		model.validate();
 		it.cnr.jada.util.RemoteIterator ri = bp.cercaDocDaRiportare(context,model);
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			if(bp.isCdsRibaltato(context)) 
 				bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			else {
@@ -205,7 +205,7 @@ public it.cnr.jada.action.Forward doCercaResiduiForRiaccertamento( it.cnr.jada.a
 		V_obb_acc_xxxBulk model = (V_obb_acc_xxxBulk)bp.getModel();
 		it.cnr.jada.util.RemoteIterator ri = bp.cercaResiduiForRiaccertamento(context);
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			return context.findDefaultForward();
 		}
@@ -235,7 +235,7 @@ public it.cnr.jada.action.Forward doCercaGaeSenzaProgettiForRibaltamento( it.cnr
 		V_obb_acc_xxxBulk model = (V_obb_acc_xxxBulk)bp.getModel();
 		it.cnr.jada.util.RemoteIterator ri = bp.cercaGaeSenzaProgettiForRibaltamento(context);
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			return context.findDefaultForward();
 		}

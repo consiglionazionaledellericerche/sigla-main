@@ -101,7 +101,7 @@ public class StampaPdgVariazioneAction extends ParametricPrintAction {
 			it.cnr.jada.util.RemoteIterator ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,createPdgComponentSession().cercaForPrintRiepilogo(context.getUserContext(),clauses,pdg_variazione,bp.getModel()));
 			int count = ri.countElements();
 			if (count == 0) {
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);				
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);				
 				bp.setMessage("Nessuna variazione selezionabile.");
 			} else {
 				it.cnr.jada.util.action.SelezionatoreListaBP nbp = (it.cnr.jada.util.action.SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");

@@ -80,7 +80,7 @@ protected void completaSoggetto(ActionContext context)
 			else
 				throw new ValidationException("La ricerca ha fornito più di un risultato per il terzo!");
 		} finally {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(i);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,i);
 		}
 	}
 }
@@ -157,7 +157,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		it.cnr.jada.util.RemoteIterator ri = bp.find(context, null, instance);
 		IDocumentoAmministrativoBP docAmmBP = null;
 		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 			bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			return context.findDefaultForward();
 		/*}
@@ -402,7 +402,7 @@ protected Object[] getBPAndRealInstanceFor(
 		docAmm = (IDocumentoAmministrativoBulk)ri.nextElement();
 	} finally {
 		if (ri != null)
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 	}
 	if (docAmm == null)
 		throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare il documento amministrativo selezionato!");
