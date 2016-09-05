@@ -87,7 +87,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private Boolean pecScanDisable;
 	private Properties pecMailConf;
 	private List<String> listaMessageIdAlreadyScanned = new ArrayList<String>();
-
+	private Store store;
+	
 	private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
 		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
 		pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn, pecSDISubjectMancataConsegnaPecTerm;
@@ -249,7 +250,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			}
 			if (bodyParts.size() > 2) {
 				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-						" ha più di due file allegati.");
+						" ha piÃ¹ di due file allegati.");
 				return;
 			}
 			BodyPart bodyPartFattura = null, bodyPartMetadati = null;
@@ -277,7 +278,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 								IOUtils.toByteArray(bodyPartMetadati.getInputStream()), bodyPartMetadati.getContentType())));				    	    					    	    			
 			  	}
 			} else {
-				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName + " è stato precessato ma gli allegati presenti non sono conformi.");
+				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName + " Ã¨ stato precessato ma gli allegati presenti non sono conformi.");
 			}
 		} catch (Exception e) {
 			logger.error("PEC scan error while importing file.", e);
@@ -288,7 +289,6 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		Address[] repliesAddress = message.getReplyTo();
 		String replyTo = null;
 		if (repliesAddress != null){
-			logger.info("Replies: "+repliesAddress.toString());
 			if (repliesAddress.length > 0){
 				replyTo = repliesAddress[0].toString();
 			}
@@ -315,7 +315,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 						}
 						if (bodyParts.size() > 2) {
 							logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-									" ha più di due file allegati.");
+									" ha piï¿½ di due file allegati.");
 							return;
 						}
 						boolean trovatoFile = false;
@@ -328,7 +328,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 							}
 						}
 						if (!trovatoFile){
-							logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName + " è stato precessato ma gli allegati presenti non sono conformi.");
+							logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName + " Ã¨ stato precessato ma gli allegati presenti non sono conformi.");
 							SendMail.sendErrorMail("Fatture Elettroniche: Passive: Scarto Esito. Allegati non conformi. Mail:"+userName, message.getDescription());
 						}
 						listaMessageIdAlreadyScanned.add(messageIDWithUser);
@@ -343,8 +343,6 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 	}
 
-
-	@SuppressWarnings("unchecked")
 	public void pecScan(String userName, String password) throws ComponentException {
 		logger.info("PEC SCAN for ricevi Fatture email: "+userName + "pwd :" +password);
 		Properties props = System.getProperties();
@@ -357,12 +355,13 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			}
 			final Session session = Session.getInstance(props);
 			URLName urlName = new URLName(pecURLName);
-			final Store store = session.getStore(urlName);
-			store.connect(userName, password);
+			if (store == null)
+				store = session.getStore(urlName);
+			if (!store.isConnected())
+				store.connect(userName, password);
 			searchMailFromPec(userName, password, store);
 			searchMailFromSdi(userName, store);
 			searchMailFromReturn(userName, store);
-			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
 		} catch (NoSuchProviderException e) {
@@ -379,7 +378,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
-				folder.open(Folder.READ_WRITE);
+				folder.open(Folder.READ_ONLY);
 				processingMailFromHostPec(folder, userName, password);
 				folder.close(true);				
 		    } 
@@ -393,7 +392,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
-				folder.open(Folder.READ_WRITE);
+				folder.open(Folder.READ_ONLY);
 				processingMailFromSdi(folder, userName);
 				folder.close(true);				
 		    }
@@ -408,7 +407,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
-				folder.open(Folder.READ_WRITE);
+				folder.open(Folder.READ_ONLY);
 				processingMailFromReturn(folder, userName);
 				folder.close(true);				
 		    }
@@ -666,7 +665,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	
 	private void notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(Message message) throws ComponentException {
-		logger.info("Fatture Elettroniche: Attive: Inizio Avvenuta Trasmissione con impossibilità di recapito.");
+		logger.info("Fatture Elettroniche: Attive: Inizio Avvenuta Trasmissione con impossibilitï¿½ di recapito.");
 		try {
 			BodyPart bodyPartZip = estraiBodyPartZipNotificaFatturaAttiva(message);
 			if (bodyPartZip != null){
@@ -830,7 +829,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		email.setFrom(userName, userName);
 		email.setSubject(" Notifica di esito " + bulk.getIdentificativoSdi());
 		email.setMsg("Il file trasmesso con identificativo SdI:" + bulk.getIdentificativoSdi() + 
-				(bulk.isRifiutata() ? " è stato Rifiutato (EC02) poichè " + bulk.getMotivoRifiuto() :" è stato Accettato (EC01)") +
+				(bulk.isRifiutata() ? " Ã¨ stato Rifiutato (EC02) poichÃ© " + bulk.getMotivoRifiuto() :" Ã‰ stato Accettato (EC01)") +
 				", in allegato la notifica di esito.");
 
 		// add the attachment
@@ -883,8 +882,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	    		try {
 					ricezioneFattureService.notificaScartoMailNotificaNonRicevibile(mimemessage, identificativoSdi, getSystemDate());
 				} catch (ComponentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error("NotificaScartoMailNotificaNonRicevibile", e);
 				}
 			} else {
 				forwardedEmail(mimemessage.getContent(), bodyParts, perAllegati);
@@ -919,4 +917,4 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
     			new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),
     			null,null,null);		
 	}
-}			
+}
