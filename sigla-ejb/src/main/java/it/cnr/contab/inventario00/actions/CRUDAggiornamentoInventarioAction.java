@@ -146,7 +146,7 @@ public Forward doAddToCRUDMain_dettaglioCRUDController(ActionContext context) {
 		
 		if (count == 0) {
 			bp.setMessage("Nessun Bene aggiornabile");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);		
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);		
 			context.closeBusinessProcess();
 		} else {
 			
@@ -181,7 +181,7 @@ public Forward doBringBackAddBeni(ActionContext context) {
 		int count = iterator.countElements();
 		if (count == 0) {
 			bp.setMessage("Nessun Bene associabile");
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(iterator);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, iterator);
 		} else{		
 			SelezionatoreListaBP slbp = select(context,iterator,it.cnr.jada.bulk.BulkInfo.getBulkInfo(it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk.class),null,"doSelezionaBeni",null,bp);
 			slbp.setMultiSelection(true);

@@ -53,7 +53,7 @@ public Forward doDelete(ActionContext context) {
 			array[0] = (Print_spoolerBulk)bp.getFocusedElement();
 		}
 		if (array != null){
-			EJBCommonServices.closeRemoteIterator(bp.getIterator());			
+			EJBCommonServices.closeRemoteIterator(context, bp.getIterator());			
 			bp.createComponentSession().deleteJobs(context.getUserContext(),array);
 			for (int i = 0;i < array.length;i++) {
 				try {

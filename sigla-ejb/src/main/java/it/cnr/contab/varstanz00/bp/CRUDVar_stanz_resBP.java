@@ -505,20 +505,20 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			RemoteIterator remoteiterator = find(actioncontext, null, oggettobulk);
 			if(remoteiterator == null || remoteiterator.countElements() == 0)
 			{
-				EJBCommonServices.closeRemoteIterator(remoteiterator);
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
 				return;
 			}
 			if(remoteiterator.countElements() == 1)
 			{
 				OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
-				EJBCommonServices.closeRemoteIterator(remoteiterator);
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
 				if(oggettobulk1 != null) {
 					edit(actioncontext, oggettobulk1);
 				}
 				return;
 			}
 			else {
-				EJBCommonServices.closeRemoteIterator(remoteiterator);
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
 				//reset(actioncontext);
 				setStatus(SEARCH);
 			}

@@ -78,7 +78,7 @@ public it.cnr.jada.action.Forward doSearchFind_nodo_padre(ActionContext context)
 		it.cnr.jada.util.RemoteIterator roots = bp.getCategoriaGruppoInventTree(context).getChildren(context,bp.getModel());
 		//controllo che ci siano dei padri
 		if (roots.countElements()==0){
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(roots);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,roots);
 			setErrorMessage(context,"Non ci sono padri!");
 			return context.findDefaultForward();
 		}else {

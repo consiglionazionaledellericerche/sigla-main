@@ -346,20 +346,20 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 			RemoteIterator remoteiterator = find(actioncontext, null, oggettobulk);
 			if(remoteiterator == null || remoteiterator.countElements() == 0)
 			{
-				EJBCommonServices.closeRemoteIterator(remoteiterator);
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
 				return;
 			}
 			if(remoteiterator.countElements() == 1)
 			{
 				OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
-				EJBCommonServices.closeRemoteIterator(remoteiterator);
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
 				if(oggettobulk1 != null) {
 					edit(actioncontext, oggettobulk1);
 				}
 				return;
 			}
 			else {
-				EJBCommonServices.closeRemoteIterator(remoteiterator);
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
 				setStatus(SEARCH);
 			}
 		}

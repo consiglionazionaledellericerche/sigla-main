@@ -788,7 +788,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setProcedura_amministrativa((Procedure_amministrativeBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actioncontext, ri);
 			} catch (Exception e) {
 			}
 
@@ -808,7 +808,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = this.initializeProcedura_amministrativa(actioncontext, procedura, (Procedure_amministrativeBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actioncontext, ri);
 			}catch(java.rmi.RemoteException ex){
 				throw handleException(ex);
 			}
@@ -821,7 +821,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setTipo_attivita((Tipo_attivitaBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actioncontext, ri);
 			}catch(java.rmi.RemoteException ex){
 				throw handleException(ex);
 			}
@@ -835,11 +835,11 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				if (ri != null && ri.countElements() == 1)
 					procedura = this.initializeFind_tipo_incarico(actioncontext, procedura, (Tipo_incaricoBulk)ri.nextElement());
 				else {
-					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actioncontext, ri);
 					throw new it.cnr.jada.comp.ApplicationException("Errore di configurazione del tipo incarico relativamente alla tipologia "+
 							(this.isAssegniRicercaBP()?"Assegni di Ricerca":"Borse di Studio")+". Contattare il Customer Support Team.");
 				}
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actioncontext, ri);
 			}catch(it.cnr.jada.comp.ComponentException ex){
 				throw handleException(ex);
 			}catch(java.rmi.RemoteException ex){
@@ -1548,7 +1548,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura = this.initializeProcedura_amministrativa(actioncontext, procedura, (Procedure_amministrativeBulk)ri.nextElement());
-				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actioncontext, ri);
 			}catch(java.rmi.RemoteException ex){
 				throw handleException(ex);
 			}
