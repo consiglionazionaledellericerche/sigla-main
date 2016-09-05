@@ -510,7 +510,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			}
 			
 			context.setUserContext(userContext);
-			bp.setRadiceAlbero_main(getComponentSession().generaAlberoPerUtente(context.getUserContext(),utente,null,null,(short)0));
+			bp.setRadiceAlbero_main(context, getComponentSession().generaAlberoPerUtente(context.getUserContext(),utente,null,null,(short)0));
 			return context.findForward("desktop");
 		} else {
 			context.setUserContext(new CNRUserContext(

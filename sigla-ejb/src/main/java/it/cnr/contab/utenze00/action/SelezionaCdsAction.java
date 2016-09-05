@@ -128,7 +128,7 @@ protected Forward selectFromSearchResult(ActionContext actioncontext, FormField 
         remoteiterator = EJBCommonServices.openRemoteIterator(actioncontext, remoteiterator);
         if(remoteiterator == null || remoteiterator.countElements() == 0)
         {
-            EJBCommonServices.closeRemoteIterator(remoteiterator);
+            EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
             bulkbp.setMessage("La ricerca non ha fornito alcun risultato.");
             return actioncontext.findDefaultForward();
         }

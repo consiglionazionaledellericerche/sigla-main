@@ -111,14 +111,14 @@ public class BatchControlAction extends SelezionatoreListaAction
             remoteiterator = EJBCommonServices.openRemoteIterator(actioncontext, remoteiterator);
             if(remoteiterator.countElements() == 0)
             {
-                EJBCommonServices.closeRemoteIterator(remoteiterator);
+                EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
                 batchcontrolbp.setMessage("Nessun log trovato");
                 return actioncontext.findDefaultForward();
             }
             if(remoteiterator.countElements() == 1)
             {
                 Batch_log_tstaBulk batch_log_tstabulk = (Batch_log_tstaBulk)remoteiterator.nextElement();
-                EJBCommonServices.closeRemoteIterator(remoteiterator);
+                EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
                 return doConfirmShowLog(actioncontext, batch_log_tstabulk);
             } else
             {

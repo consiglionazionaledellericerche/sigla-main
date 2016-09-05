@@ -45,12 +45,12 @@ public it.cnr.jada.action.Forward doAddToCRUDMain_costiDipendenti_costiScaricati
 		Costi_dipendenteVBulk cdp = (Costi_dipendenteVBulk)bp.getModel();
 		it.cnr.jada.util.RemoteIterator i = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,bp.createComponentSession().listaCdr(context.getUserContext(),cdp.getUnita_organizzativa_filter().getCd_unita_organizzativa(),bp.getMese()));
 		if (i.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(i);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, i);
 			return context.findDefaultForward();
 		}
 		if (i.countElements() == 1) {
 			CdrBulk cdr = (CdrBulk)i.nextElement();
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(i);
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, i);
 			return doSelezionaCdrPerScarico(context,cdr);
 		}
 		return select(context,i,it.cnr.jada.bulk.BulkInfo.getBulkInfo(CdrBulk.class),null,"doSelezionaCdrPerScarico");

@@ -114,7 +114,7 @@ public class SelezionatoreAssestatoDocContBP extends SelezionatoreAssestatoBP{
 				if (ri.countElements()==1) {
 					assestato = (V_assestatoBulk)ri.nextElement();
 				}
-				EJBCommonServices.closeRemoteIterator(ri);
+				EJBCommonServices.closeRemoteIterator(actioncontext, ri);
 				if (assestato != null) {
 					assestato.setImp_da_assegnare((BigDecimal) hashRipartizione.get( key ));
 					for ( Enumeration old = oldHashRipartizione.keys(); old.hasMoreElements(); ) 

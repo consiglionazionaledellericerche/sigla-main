@@ -27,7 +27,7 @@ public class ListaMessaggiAction extends it.cnr.jada.util.action.SelezionatoreLi
 		it.cnr.contab.messaggio00.bulk.MessaggioBulk messaggio = (it.cnr.contab.messaggio00.bulk.MessaggioBulk)bp.getFocusedElement();
 		if (messaggio != null) 
 			try {
-				EJBCommonServices.closeRemoteIterator(bp.getIterator());
+				EJBCommonServices.closeRemoteIterator(context, bp.getIterator());
 				bp.createComponentSession().leggiMessaggi(context.getUserContext(),new it.cnr.contab.messaggio00.bulk.MessaggioBulk[] { messaggio });
 				bp.refresh(context);
 			} catch(Throwable e) {
@@ -44,7 +44,7 @@ public class ListaMessaggiAction extends it.cnr.jada.util.action.SelezionatoreLi
 
 		if (!messaggi.isEmpty()) 
 			try {
-				EJBCommonServices.closeRemoteIterator(bp.getIterator());
+				EJBCommonServices.closeRemoteIterator(context, bp.getIterator());
 				bp.createComponentSession().leggiMessaggi(context.getUserContext(),(MessaggioBulk[])messaggi.toArray(new MessaggioBulk[messaggi.size()]));
 				bp.refresh(context);
 			} catch(Throwable e) {
