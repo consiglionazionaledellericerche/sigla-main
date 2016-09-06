@@ -907,7 +907,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		} catch(SOAPFaultException _ex) {
 			if (_ex.getFault().getAttribute("cause").equalsIgnoreCase(CmisContentAlreadyExistsException.class.getName()))
 				throw new ApplicationException("Fattura già presente!");
-			throw _ex;
+			throw new ApplicationException("Error while riceviFatturaSIGLA", _ex);
 		}
 	}
 
