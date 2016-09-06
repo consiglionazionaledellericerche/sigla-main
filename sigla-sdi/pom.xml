@@ -209,5 +209,18 @@
 			<version>0.2</version>
 			<scope>provided</scope>
 		</dependency>
+ 		<dependency>
+ 			<groupId>com.sun.mail</groupId>
+ 			<artifactId>javax.mail</artifactId>
+ 			<version>1.5.5</version>
+ 			<scope>provided</scope>
+ 		</dependency>		
+ 		<dependency>
+			<groupId>bouncycastle</groupId>
+			<artifactId>bcmail-jdk16</artifactId>
+ 			<version>140</version>
+ 			<scope>provided</scope>
+ 		</dependency>		
+ 		
 	</dependencies>
 </project>

@@ -87,7 +87,6 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private Boolean pecScanDisable;
 	private Properties pecMailConf;
 	private List<String> listaMessageIdAlreadyScanned = new ArrayList<String>();
-	private Store store;
 	
 	private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
 		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
@@ -262,9 +261,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				}
 			}
 			if (bodyPartFattura != null && bodyPartMetadati != null) {
-			  	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
+			  	@SuppressWarnings("unchecked")
+				JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = ((JAXBElement<MetadatiInvioFileType>) 
 			  			fatturazioneElettronicaClient.getUnmarshaller().
-			  			unmarshal(new StreamSource(bodyPartMetadati.getInputStream()));				    	    	
+			  			unmarshal(new StreamSource(bodyPartMetadati.getInputStream())));				    	    	
 					String replyTo = getReplyTo(message);
 			  	if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(userContext, metadatiInvioFileType.getValue().getIdentificativoSdI().longValue())) {
 			    	ricezioneFattureService.riceviFatturaSIGLA(
@@ -280,8 +280,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			} else {
 				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName + " è stato precessato ma gli allegati presenti non sono conformi.");
 			}
-		} catch (Exception e) {
-			logger.error("PEC scan error while importing file.", e);
+		} catch (Throwable _ex) {
+			logger.error("PEC scan error while importing file.", _ex);
 		}
 	}
 
@@ -355,13 +355,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			}
 			final Session session = Session.getInstance(props);
 			URLName urlName = new URLName(pecURLName);
-			if (store == null)
-				store = session.getStore(urlName);
-			if (!store.isConnected())
-				store.connect(userName, password);
+			Store store = session.getStore(urlName);
+			store.connect(userName, password);
 			searchMailFromPec(userName, password, store);
 			searchMailFromSdi(userName, store);
 			searchMailFromReturn(userName, store);
+			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
 		} catch (NoSuchProviderException e) {
@@ -678,9 +677,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		            if (entry.getName().toLowerCase().endsWith("xml")){
 		            	String contentType = new MimetypesFileTypeMap().getContentType(entry.getName());
 		            	DataHandler dataHandler = createDataHandler(zis, contentType);
-//		            	InputStream streamXml = dataHandler.getInputStream();
 						trasmissioneFattureService.notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(userContext, entry.getName(), dataHandler);
-						return;
+						break;
 		            }
 		        }
 				
