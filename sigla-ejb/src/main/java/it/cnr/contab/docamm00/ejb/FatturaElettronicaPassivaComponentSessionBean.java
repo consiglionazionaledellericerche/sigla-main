@@ -109,7 +109,23 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
             throw uncaughtError(userContext, componentObj, error);
         }
 	}
-
+	public void unlockEmailPEC(UserContext userContext) throws it.cnr.jada.comp.ComponentException{
+        pre_component_invocation(userContext, componentObj);
+        try{
+        	((FatturaElettronicaPassivaComponent)componentObj).unlockEmailPEC(userContext);
+            component_invocation_succes(userContext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(userContext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(userContext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(userContext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(userContext, componentObj, error);
+        }
+	}
 	public void notificaEsito(UserContext usercontext, TipoIntegrazioneSDI tipoIntegrazioneSDI, DocumentoEleTestataBulk documentoEleTestataBulk) throws ComponentException, EJBException{
         pre_component_invocation(usercontext, componentObj);
         try{
