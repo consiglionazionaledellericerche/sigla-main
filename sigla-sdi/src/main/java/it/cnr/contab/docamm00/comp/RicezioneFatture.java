@@ -22,7 +22,6 @@ import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.firma.Verifica;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.fatturapa.EsitoRicezioneType;
@@ -158,23 +157,16 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 
 	private ByteArrayOutputStream estraiFirma(InputStream is, JAXBContext jc) throws CMSException, IOException {
 		byte[] inputBytes = IOUtils.toByteArray(is);
-		try {			
-			ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-			Verifica.verificaBustaFirmata(new ByteArrayInputStream(inputBytes), bStream);
-			jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
-			return bStream;
-		} catch(Exception _ex) {
-			ByteArrayOutputStream bStream = new ByteArrayOutputStream();	
-			try {
-				if (Base64.isArrayByteBase64(inputBytes))
-					inputBytes = Base64.decodeBase64(inputBytes);					
-			} catch(ArrayIndexOutOfBoundsException e) {			
-			}
-			CMSSignedData sdp = new CMSSignedData(inputBytes);
-			CMSProcessable cmsp = sdp.getSignedContent();
-			cmsp.write(bStream);
-			return bStream;			
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();	
+		try {
+			if (Base64.isArrayByteBase64(inputBytes))
+				inputBytes = Base64.decodeBase64(inputBytes);					
+		} catch(ArrayIndexOutOfBoundsException e) {			
 		}
+		CMSSignedData sdp = new CMSSignedData(inputBytes);
+		CMSProcessable cmsp = sdp.getSignedContent();
+		cmsp.write(bStream);
+		return bStream;			
 	}
 		
 	private void saveNotifica(DataHandler data, String nomeFile, String nodeRef, CMISDocAmmAspect aspect) throws ComponentException {
