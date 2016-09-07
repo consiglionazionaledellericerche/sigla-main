@@ -203,12 +203,6 @@
 		  <version>2.2</version>
 		  <scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>it.cnr.commons</groupId>
-			<artifactId>firmadigitale</artifactId>
-			<version>0.2</version>
-			<scope>provided</scope>
-		</dependency>
  		<dependency>
  			<groupId>com.sun.mail</groupId>
  			<artifactId>javax.mail</artifactId>

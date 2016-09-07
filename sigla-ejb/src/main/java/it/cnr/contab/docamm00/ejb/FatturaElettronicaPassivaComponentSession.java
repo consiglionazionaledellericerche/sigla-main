@@ -47,5 +47,5 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 			throws PersistencyException, ComponentException,java.rmi.RemoteException;
 	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc, Calendar dataRicevimentoMail) 
 			throws PersistencyException, ComponentException,java.rmi.RemoteException;
-
+	public void unlockEmailPEC(UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

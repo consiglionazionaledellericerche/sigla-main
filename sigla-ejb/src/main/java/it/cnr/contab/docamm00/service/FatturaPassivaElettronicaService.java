@@ -214,14 +214,18 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			} else {
 				logger.info("PEC SCAN for ricevi Fatture started at: "+new Date());
 				Configurazione_cnrBulk email = fatturaElettronicaPassivaComponentSession.getEmailPecSdi(userContext);
-				
-				pecScan(
-						email.getVal01(), 
-						email.getVal02());
+				if (email == null) {
+					logger.info("PEC SCAN for ricevi Fatture alredy started in another server.");									
+				} else {
+					try {
+						pecScan(email.getVal01(), email.getVal02());						
+					} finally {
+						fatturaElettronicaPassivaComponentSession.unlockEmailPEC(userContext);						
+					}
+				}
 				logger.info("PEC SCAN for ricevi Fatture finished at: "+new Date());				
-
 			}
-		}catch(Throwable _ex){
+		} catch(Throwable _ex){
 			logger.error("ScheduleExecutor error", _ex);
 		}
 	}
