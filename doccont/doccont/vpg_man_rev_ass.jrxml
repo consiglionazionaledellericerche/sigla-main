@@ -5,8 +5,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR10" isDefault="true" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10BOLD" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
@@ -17,22 +17,22 @@
 		<defaultValueExpression><![CDATA["/home/mspasiano/svn/SIGLAReports/reports/img/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aCd_cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["035"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["080"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aEs" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("2015")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("2016")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aPg_da" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("1006")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long("60284")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aPg_a" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("1006")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long("60284")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aDt_da" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2015/01/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2016/01/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aDt_a" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2015/12/31")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2016/12/31")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aCd_terzo" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
