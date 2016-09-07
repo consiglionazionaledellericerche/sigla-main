@@ -476,14 +476,4 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		document.close();
 		return lastPage;
 	}
-	@Override
-	protected void closed() throws BusinessProcessException {
-		super.closed();
-		try {
-			distintaCassiere1210LettereCollegate.closed();
-			distintaCassiere1210LettereDaCollegare.closed();
-		} catch (RemoteException e) {
-			handleException(e);
-		}
-	}	
 }
