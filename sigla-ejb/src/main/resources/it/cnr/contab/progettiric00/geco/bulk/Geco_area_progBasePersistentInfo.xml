@@ -195,8 +195,6 @@
 	<persistentProperty
 		name="denom_area" />
 	<persistentProperty
-		name="data_istituzione_prog" />
-	<persistentProperty
 		name="cod_3rzo_resp" />
 	<persistentProperty
 		name="matricola_resp" />
