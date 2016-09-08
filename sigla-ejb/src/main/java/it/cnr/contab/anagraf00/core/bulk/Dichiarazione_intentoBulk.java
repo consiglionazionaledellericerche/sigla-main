@@ -1,14 +1,8 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
-import iaik.asn1.BOOLEAN;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 /**
  * Gestione dei dati relativi alla tabella Dichiarazione_intento
