@@ -325,12 +325,6 @@
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>it.cnr.jada-libs</groupId>
-      <artifactId>capi-full-30-all14</artifactId>
-      <version>1.0.1</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>org.springframework.web</artifactId>
       <version>${spring.version}</version>
