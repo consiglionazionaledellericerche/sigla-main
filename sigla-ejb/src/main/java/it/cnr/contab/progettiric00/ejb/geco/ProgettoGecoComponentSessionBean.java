@@ -19,7 +19,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 @Stateless(name="CNRPROGETTIRIC00_EJB_GECO_ProgettoGecoComponentSession")
-@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class ProgettoGecoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ProgettoGecoComponentSession{
 	@PostConstruct
 	public void ejbCreate() {
