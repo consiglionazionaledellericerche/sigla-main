@@ -102,7 +102,7 @@
     <dependency>
       <groupId>it.cnr.commons</groupId>
       <artifactId>firmadigitale</artifactId>
-      <version>1.4</version>
+      <version>1.5</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
