@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiKey">
+	<defaultColumnMap
+		tableName="V_CONS_RIEP_COMPENSI">
+	</defaultColumnMap>
+</SQLPersistentInfo>
