@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUnitaOrganizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="pgCompenso"
+		property="pgCompenso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="pgCompenso" />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codiceFiscale" />
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdTerzo" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cognome" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="nome" />
+	<fieldProperty
+		name="dtDaCompetenzaCoge"
+		property="dtDaCompetenzaCoge"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtDaCompetenzaCoge" />
+	<fieldProperty
+		name="dtACompetenzaCoge"
+		property="dtACompetenzaCoge"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtACompetenzaCoge" />
+	<fieldProperty
+		name="dtTrasmissione"
+		property="dtTrasmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtTrasmissione" />
+	<fieldProperty
+		name="dtPagamento"
+		property="dtPagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtPagamento" />
+	<fieldProperty
+		name="imLordo"
+		property="imLordo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imLordo" />
+	<fieldProperty
+		name="imFiscale"
+		property="imFiscale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imFiscale" />
+	<fieldProperty
+		name="irapEnte"
+		property="irapEnte"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="irapEnte" />
+	<fieldProperty
+		name="inpsEnte"
+		property="inpsEnte"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="inpsEnte" />
+	<fieldProperty
+		name="inailEnte"
+		property="inailEnte"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="inailEnte" />
+	<fieldProperty
+		name="irpef"
+		property="irpef"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="irpef" />
+	<fieldProperty
+		name="bonusdl66"
+		property="bonusdl66"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="bonusdl66" />
+	<fieldProperty
+		name="inpsPercipiente"
+		property="inpsPercipiente"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="inpsPercipiente" />
+	<fieldProperty
+		name="inailPercipiente"
+		property="inailPercipiente"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="inailPercipiente" />
+	<fieldProperty
+		name="addReg"
+		property="addReg"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="addReg" />
+	<fieldProperty
+		name="addCom"
+		property="addCom"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="addCom" />
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pgCompenso" />
+	<formFieldProperty
+		name="codiceFiscale" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="dtDaCompetenzaCoge" />
+	<formFieldProperty
+		name="dtACompetenzaCoge" />
+	<formFieldProperty
+		name="dtTrasmissione" />
+	<formFieldProperty
+		name="dtPagamento" />
+	<formFieldProperty
+		name="imLordo" />
+	<formFieldProperty
+		name="imFiscale" />
+	<formFieldProperty
+		name="irapEnte" />
+	<formFieldProperty
+		name="inpsEnte" />
+	<formFieldProperty
+		name="inailEnte" />
+	<formFieldProperty
+		name="irpef" />
+	<formFieldProperty
+		name="bonusdl66" />
+	<formFieldProperty
+		name="inpsPercipiente" />
+	<formFieldProperty
+		name="inailPercipiente" />
+	<formFieldProperty
+		name="addReg" />
+	<formFieldProperty
+		name="addCom" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgCompenso" />
+	<findFieldProperty
+		name="codiceFiscale" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="dtDaCompetenzaCoge" />
+	<findFieldProperty
+		name="dtACompetenzaCoge" />
+	<findFieldProperty
+		name="dtTrasmissione" />
+	<findFieldProperty
+		name="dtPagamento" />
+	<findFieldProperty
+		name="imLordo" />
+	<findFieldProperty
+		name="imFiscale" />
+	<findFieldProperty
+		name="irapEnte" />
+	<findFieldProperty
+		name="inpsEnte" />
+	<findFieldProperty
+		name="inailEnte" />
+	<findFieldProperty
+		name="irpef" />
+	<findFieldProperty
+		name="bonusdl66" />
+	<findFieldProperty
+		name="inpsPercipiente" />
+	<findFieldProperty
+		name="inailPercipiente" />
+	<findFieldProperty
+		name="addReg" />
+	<findFieldProperty
+		name="addCom" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgCompenso" />
+	<columnFieldProperty
+		name="codiceFiscale" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="dtDaCompetenzaCoge" />
+	<columnFieldProperty
+		name="dtACompetenzaCoge" />
+	<columnFieldProperty
+		name="dtTrasmissione" />
+	<columnFieldProperty
+		name="dtPagamento" />
+	<columnFieldProperty
+		name="imLordo" />
+	<columnFieldProperty
+		name="imFiscale" />
+	<columnFieldProperty
+		name="irapEnte" />
+	<columnFieldProperty
+		name="inpsEnte" />
+	<columnFieldProperty
+		name="inailEnte" />
+	<columnFieldProperty
+		name="irpef" />
+	<columnFieldProperty
+		name="bonusdl66" />
+	<columnFieldProperty
+		name="inpsPercipiente" />
+	<columnFieldProperty
+		name="inailPercipiente" />
+	<columnFieldProperty
+		name="addReg" />
+	<columnFieldProperty
+		name="addCom" />
+</bulkInfo>
