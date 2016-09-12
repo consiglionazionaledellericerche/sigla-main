@@ -2,16 +2,10 @@ package it.cnr.contab.cori00.actions;
 
 import it.cnr.contab.cori00.bp.CRUDLiquidazioneCORIBP;
 import it.cnr.contab.cori00.bp.LiquidazioneCoriF24EPBP;
-import it.cnr.contab.cori00.bp.LiquidazioneMassaCoriBP;
 import it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk;
-import it.cnr.contab.pdg00.bp.ContabilizzazioneFlussoStipendialeMensileBP;
-import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.jada.util.action.OptionBP;
 
 
 public class LiquidazioneCoriF24EPAction extends it.cnr.jada.util.action.SelezionatoreListaAction {
@@ -71,15 +65,6 @@ public class LiquidazioneCoriF24EPAction extends it.cnr.jada.util.action.Selezio
 			bp.refresh(context);
 
 			return context.findDefaultForward();
-		} catch (Throwable e) {
-			return handleException(context, e);
-		}
-	}	
-	public Forward doCloseForm(ActionContext context) throws BusinessProcessException {
-		try {
-			LiquidazioneCoriF24EPBP bp= (LiquidazioneCoriF24EPBP) context.getBusinessProcess();
-			bp.refresh(context); 
-			return super.doCloseForm(context);
 		} catch (Throwable e) {
 			return handleException(context, e);
 		}
