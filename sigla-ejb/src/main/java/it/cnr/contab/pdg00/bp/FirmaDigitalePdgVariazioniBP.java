@@ -68,6 +68,7 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.io.IOUtils;
+import org.bouncycastle.cms.CMSException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -892,7 +893,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		File fOutput=null;
 		try {
 			fOutput = Verifica.estraiFile(file);
-		} catch (NotSignedEnvelopeException ex) {
+		} catch (NotSignedEnvelopeException|CMSException ex) {
 			throw new ValidationException(
 					"Il file non ha il formato richiesto \"busta di firma digitale\" p7m");
 		}
