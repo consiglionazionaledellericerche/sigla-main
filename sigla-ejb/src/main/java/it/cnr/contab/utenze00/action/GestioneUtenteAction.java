@@ -323,7 +323,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 				return optionbp;
 			}
 			it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = bp.getUserInfo().getUnita_organizzativa();
-			bp.closeAllChildren();
+			bp.closeAllChildren(context);
 			it.cnr.contab.utenze00.bulk.Albero_mainBulk nodo = getComponentSession().validaNodoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo == null ? null : uo.getCd_unita_organizzativa(),cd_nodo);
 			if (nodo == null) return context.findDefaultForward();
 			return startNodo(context,bp,nodo);
