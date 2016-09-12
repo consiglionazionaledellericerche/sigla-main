@@ -467,7 +467,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		else
 			documentiContabiliService.inviaDistintaPEC1210(nodes);
 		save(context);
-		basicEdit(context, distintaCassiere1210Bulk, false);
+		setStatus(VIEW);
 	}
 	
 	private Integer getLastPagePDF(InputStream stream) throws IOException {
