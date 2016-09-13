@@ -1,22 +1,20 @@
 package it.cnr.contab.config00.action;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.rmi.RemoteException;
-import java.text.ParseException;
-
-import it.cnr.contab.config00.bp.*;
+import it.cnr.contab.config00.bp.RicercaVoceBP;
 import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bp.GestioneUtenteBP;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.action.AbstractAction;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;
+
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.rmi.RemoteException;
+import java.text.ParseException;
 
 public class RicercaVoceAction extends AbstractAction {
 
@@ -26,7 +24,6 @@ public class RicercaVoceAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaVoceBP bp = null;
 		try {
-			((HttpActionContext)actioncontext).getSession(true).setMaxInactiveInterval(350);
 			String user;
 			bp = (RicercaVoceBP)actioncontext.createBusinessProcess("RicercaVoceBP");
 			actioncontext.addBusinessProcess(bp);

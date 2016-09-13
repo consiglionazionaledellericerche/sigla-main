@@ -26,7 +26,6 @@ public class RicercaCDRAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaCDRBP bp = null;
 		try {
-			((HttpActionContext)actioncontext).getSession(true).setMaxInactiveInterval(350);
 			String user;
 			bp = (RicercaCDRBP)actioncontext.createBusinessProcess("RicercaCDRBP");
 			actioncontext.addBusinessProcess(bp);
