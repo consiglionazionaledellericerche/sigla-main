@@ -1,10 +1,5 @@
 package it.cnr.contab.docamm00.actions;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.rmi.RemoteException;
-import java.text.ParseException;
-
 import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.docamm00.bp.RicercaFatturaPassivaBP;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -16,6 +11,11 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.rmi.RemoteException;
+import java.text.ParseException;
+
 public class RicercaFatturaPassivaAction extends AbstractAction {
 
 	public RicercaFatturaPassivaAction() {
@@ -24,7 +24,6 @@ public class RicercaFatturaPassivaAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaFatturaPassivaBP bp = null;
 		try {
-			((HttpActionContext)actioncontext).getSession(true).setMaxInactiveInterval(350);
 			String user;
 			bp = (RicercaFatturaPassivaBP)actioncontext.createBusinessProcess("RicercaFatturaPassivaBP");
 			actioncontext.addBusinessProcess(bp);
