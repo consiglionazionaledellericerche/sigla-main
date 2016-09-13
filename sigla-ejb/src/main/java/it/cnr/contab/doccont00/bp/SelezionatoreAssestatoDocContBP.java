@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.ejb.EJBException;
 
@@ -192,7 +191,7 @@ public class SelezionatoreAssestatoDocContBP extends SelezionatoreAssestatoBP{
 			}
 			else
 			{
-				voceSel.setPrc_da_assegnare(Utility.nvl(voceSel.getAssestato_iniziale()).divide(totAssestato, 4, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));
+				voceSel.setPrc_da_assegnare(Utility.nvl(voceSel.getAssestato_iniziale()).divide(totAssestato, 16, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));
 				totalePrcVoci = totalePrcVoci.add( voceSel.getPrc_da_assegnare() );
 			}
 			getAssestatoReplacer().put(voceSel,voceSel);
