@@ -26,7 +26,6 @@ public class RicercaGAEAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaGAEBP bp = null;
 		try {
-			((HttpActionContext)actioncontext).getSession(true).setMaxInactiveInterval(350);
 			String user;
 			bp = (RicercaGAEBP)actioncontext.createBusinessProcess("RicercaGAEBP");
 			actioncontext.addBusinessProcess(bp);
