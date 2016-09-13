@@ -1,10 +1,5 @@
 package it.cnr.contab.missioni00.actions;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.rmi.RemoteException;
-import java.text.ParseException;
-
 import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.missioni00.bp.RicercaMissioniBP;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -16,6 +11,11 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.rmi.RemoteException;
+import java.text.ParseException;
+
 public class RicercaMissioniAction extends AbstractAction {
 
 	public RicercaMissioniAction () {
@@ -24,7 +24,6 @@ public class RicercaMissioniAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaMissioniBP bp = null;
 		try {
-			((HttpActionContext)actioncontext).getSession(true).setMaxInactiveInterval(350);
 			String user;
 			bp = (RicercaMissioniBP)actioncontext.createBusinessProcess("RicercaMissioniBP");
 			actioncontext.addBusinessProcess(bp);
