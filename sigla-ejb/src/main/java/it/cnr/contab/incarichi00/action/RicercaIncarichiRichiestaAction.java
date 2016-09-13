@@ -1,10 +1,5 @@
 package it.cnr.contab.incarichi00.action;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.rmi.RemoteException;
-import java.text.ParseException;
-
 import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.incarichi00.bp.RicercaIncarichiRichiestaBP;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -12,10 +7,14 @@ import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.action.AbstractAction;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;
+
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.rmi.RemoteException;
+import java.text.ParseException;
 
 public class RicercaIncarichiRichiestaAction extends AbstractAction {
 
@@ -55,10 +54,9 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaIncarichiRichiestaBP bp = null;
 		try {
-			((HttpActionContext)actioncontext).getSession(true).setMaxInactiveInterval(0);
 			String user;
 			bp = (RicercaIncarichiRichiestaBP)actioncontext.createBusinessProcess("RicercaIncarichiRichiestaBP");
-			actioncontext.addBusinessProcess(bp);
+			actioncontext.setBusinessProcess(bp);
 			valorizzaParametri(actioncontext,bp,"tipofile");
 			valorizzaParametri(actioncontext,bp,"query");
 			valorizzaParametri(actioncontext,bp,"anno");
