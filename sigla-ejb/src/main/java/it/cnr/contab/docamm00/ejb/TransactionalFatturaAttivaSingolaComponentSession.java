@@ -1,12 +1,4 @@
 package it.cnr.contab.docamm00.ejb;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
-
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -15,7 +7,13 @@ import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.chemistry.opencmis.client.api.Document;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 
 public class TransactionalFatturaAttivaSingolaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements FatturaAttivaSingolaComponentSession {
 public it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk addebitaDettagli(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk param1,java.util.List param2,java.util.Hashtable param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
@@ -1257,10 +1255,10 @@ public it.cnr.jada.bulk.OggettoBulk completaOggetto(it.cnr.jada.UserContext auc,
 	
 }
 
-public Document gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext userContext, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk testata)
+public void gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext userContext, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk testata)
 		throws ComponentException, RemoteException {
 	try {
-		return (Document)invoke("gestioneAllegatiPerFatturazioneElettronica",new Object[] {
+		invoke("gestioneAllegatiPerFatturazioneElettronica",new Object[] {
 				userContext,
 				testata
 				});
