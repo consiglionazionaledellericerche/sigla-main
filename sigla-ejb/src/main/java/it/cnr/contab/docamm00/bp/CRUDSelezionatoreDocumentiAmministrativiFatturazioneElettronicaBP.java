@@ -134,16 +134,15 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 
 	private InputStream getStreamNewDocument(ActionContext actioncontext,
 			Integer esercizio, String cds, String cdUo, Long pgFattura)
-			throws BusinessProcessException, ComponentException,
-			RemoteException, PersistencyException {
+			throws Exception {
 		InputStream is;
 		FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
 				"CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
 				FatturaAttivaSingolaComponentSession.class);
 		UserContext userContext = actioncontext.getUserContext();
-		Fattura_attivaBulk fattura = componentFatturaAttiva.ricercaFatturaByKey(userContext, esercizio.longValue(), cds, cdUo, pgFattura);			
-		Document nodeDocument = componentFatturaAttiva.gestioneAllegatiPerFatturazioneElettronica(userContext, fattura);
-		is = documentiCollegatiDocAmmService.getResource(nodeDocument);
+		Fattura_attivaBulk fattura = componentFatturaAttiva.ricercaFatturaByKey(userContext, esercizio.longValue(), cds, cdUo, pgFattura);
+		componentFatturaAttiva.gestioneAllegatiPerFatturazioneElettronica(userContext, fattura);
+		is = documentiCollegatiDocAmmService.getStreamDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
 		return is;
 	}
 	
