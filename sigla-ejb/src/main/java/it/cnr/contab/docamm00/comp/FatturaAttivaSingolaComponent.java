@@ -1,5 +1,37 @@
 package it.cnr.contab.docamm00.comp;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.UUID;
+import java.util.Vector;
+
+import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -166,38 +198,6 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.UUID;
-import java.util.Vector;
-
-import javax.ejb.EJBException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FatturaAttivaSingolaComponent
     extends it.cnr.jada.comp.CRUDComponent
@@ -2607,14 +2607,13 @@ private void controlloCodiceIpaValorizzato(TerzoBulk terzo)
 	}
 }
 
-public Document gestioneAllegatiPerFatturazioneElettronica(UserContext userContext,
+public void gestioneAllegatiPerFatturazioneElettronica(UserContext userContext,
 		Fattura_attivaBulk fattura) throws ComponentException {
 	if (fattura.isDocumentoFatturazioneElettronica()){
 		DocumentiCollegatiDocAmmService cmisService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
 		File file = lanciaStampaFatturaElettronica(userContext, fattura);
-		return archiviaFileCMIS(userContext, cmisService, fattura, file);
+		archiviaFileCMIS(userContext, cmisService, fattura, file);
 	}
-	return null;
 }
 
 private Document archiviaFileCMIS(UserContext userContext, SiglaCMISService cmisService, Fattura_attivaBulk fattura, File file) throws ComponentException{
