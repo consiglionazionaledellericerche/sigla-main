@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_fattura_passiva"
+		property="pg_fattura_passiva"
+		inputType="TEXT"
+		label="Progressivo Fattura" />
+	<fieldProperty
+		name="dsFatturaPassiva"
+		property="dsFatturaPassiva"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		enabledOnEdit="false"
+		label="Descrizione Fattura" />
+	<fieldProperty
+		name="cdCdsOrigine"
+		property="cdCdsOrigine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCdsOrigine" />
+	<fieldProperty
+		name="cdUoOrigine"
+		property="cdUoOrigine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUoOrigine" />
+	<fieldProperty
+		name="tiFattura"
+		property="tiFattura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tiFattura" />
+	<fieldProperty
+		name="dtRegistrazione"
+		property="dtRegistrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtRegistrazione" />
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdTerzo" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cognome" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="nome" />
+	<fieldProperty
+		name="ragioneSociale"
+		property="ragioneSociale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="ragioneSociale" />
+	<fieldProperty
+		name="cambio"
+		property="cambio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cambio" />
+	<fieldProperty
+		name="cdDivisa"
+		property="cdDivisa"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdDivisa" />
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		label="Riga" />
+	<fieldProperty
+		name="cdVoceIva"
+		property="cdVoceIva"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdVoceIva" />
+	<fieldProperty
+		name="dsVoceIva"
+		property="dsVoceIva"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dsVoceIva" />
+	<fieldProperty
+		name="dsRigaFattura"
+		property="dsRigaFattura"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		enabledOnEdit="false"
+		label="dsRigaFattura" />
+	<fieldProperty
+		name="pgTrovato"
+		property="pgTrovato"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgTrovato" />
+	<fieldProperty
+		name="imImponibile"
+		property="imImponibile"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imImponibile" />
+	<fieldProperty
+		name="fcIva"
+		property="fcIva"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="fcIva" />
+	<fieldProperty
+		name="imIva"
+		property="imIva"
+		inputType="TEXT"
+		formatName="it.jada.stone.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imIva" />
+	<fieldProperty
+		name="esercizioObbligazione"
+		property="esercizioObbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioObbligazione" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgObbligazione" />
+	<fieldProperty
+		name="dtEmissioneObbligazione"
+		property="dtEmissioneObbligazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtEmissioneObbligazione" />
+	<fieldProperty
+		name="esercizioMandato"
+		property="esercizioMandato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="esercizioMandato" />
+	<fieldProperty
+		name="pgMandato"
+		property="pgMandato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="pgMandato" />
+	<fieldProperty
+		name="dtEmissioneMandato"
+		property="dtEmissioneMandato"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtEmissioneMandato" />
+	<fieldProperty
+		name="nr_fattura_fornitore"
+		property="nr_fattura_fornitore"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="N. Fattura"
+		nullable="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fattura_fornitore"
+		property="dt_fattura_fornitore"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Data emissione" />
+	<fieldProperty
+		name="dt_pagamento_fondo_eco"
+		property="dt_pagamento_fondo_eco"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		label="Data pagam. fondo econ." />
+	<fieldProperty
+		name="stato_pagamento_fondo_eco"
+		property="stato_pagamento_fondo_eco"
+		inputSize="10"
+		inputType="SELECT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		readonlyProperty="ROStato_pagamento_fondo_eco"
+		keysProperty="stato_pagamento_fondo_ecoKeys"
+		label="Fondo economale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Partita IVA"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitoreForSearch"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="16"
+		inputSize="16"
+		inputType="TEXT"
+		label="Cod. Fiscale"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitoreForSearch"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<form
+		name="searchtool">
+	</form>
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_fattura_passiva" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<formFieldProperty
+		name="dsFatturaPassiva" />
+	<formFieldProperty
+		name="cdCdsOrigine" />
+	<formFieldProperty
+		name="cdUoOrigine" />
+	<formFieldProperty
+		name="tiFattura" />
+	<formFieldProperty
+		name="dtRegistrazione" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="ragioneSociale" />
+	<formFieldProperty
+		name="cambio" />
+	<formFieldProperty
+		name="cdDivisa" />
+	<formFieldProperty
+		name="cdVoceIva" />
+	<formFieldProperty
+		name="dsVoceIva" />
+	<formFieldProperty
+		name="dsRigaFattura" />
+	<formFieldProperty
+		name="pgTrovato" />
+	<formFieldProperty
+		name="imImponibile" />
+	<formFieldProperty
+		name="fcIva" />
+	<formFieldProperty
+		name="imIva" />
+	<formFieldProperty
+		name="esercizioObbligazione" />
+	<formFieldProperty
+		name="pgObbligazione" />
+	<formFieldProperty
+		name="dtEmissioneObbligazione" />
+	<formFieldProperty
+		name="esercizioMandato" />
+	<formFieldProperty
+		name="pgMandato" />
+	<formFieldProperty
+		name="dtEmissioneMandato" />
+	<formFieldProperty name="nr_fattura_fornitore" />
+	<formFieldProperty name="dt_fattura_fornitore" />
+	<formFieldProperty name="dt_pagamento_fondo_eco" />
+	<formFieldProperty name="stato_pagamento_fondo_eco" />
+	<formFieldProperty name="partita_iva" />
+	<formFieldProperty name="codice_fiscale" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_fattura_passiva" />
+	<findFieldProperty
+		name="dsFatturaPassiva" />
+	<findFieldProperty
+		name="cdCdsOrigine" />
+	<findFieldProperty
+		name="cdUoOrigine" />
+	<findFieldProperty
+		name="tiFattura" />
+	<findFieldProperty
+		name="dtRegistrazione" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="ragioneSociale" />
+	<findFieldProperty
+		name="cambio" />
+	<findFieldProperty
+		name="cdDivisa" />
+	<findFieldProperty
+		name="progressivo_riga" />
+	<findFieldProperty
+		name="cdVoceIva" />
+	<findFieldProperty
+		name="dsVoceIva" />
+	<findFieldProperty
+		name="dsRigaFattura" />
+	<findFieldProperty
+		name="pgTrovato" />
+	<findFieldProperty
+		name="imImponibile" />
+	<findFieldProperty
+		name="fcIva" />
+	<findFieldProperty
+		name="imIva" />
+	<findFieldProperty
+		name="esercizioObbligazione" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="dtEmissioneObbligazione" />
+	<findFieldProperty
+		name="esercizioMandato" />
+	<findFieldProperty
+		name="pgMandato" />
+	<findFieldProperty
+		name="dtEmissioneMandato" />
+	<findFieldProperty name="nr_fattura_fornitore" />
+	<findFieldProperty name="dt_fattura_fornitore" />
+	<findFieldProperty name="dt_pagamento_fondo_eco" />
+	<findFieldProperty name="stato_pagamento_fondo_eco" />
+	<findFieldProperty name="partita_iva" />
+	<findFieldProperty name="codice_fiscale" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_fattura_passiva" />
+	<columnFieldProperty
+		name="dsFatturaPassiva" />
+	<columnFieldProperty
+		name="cdCdsOrigine" />
+	<columnFieldProperty
+		name="cdUoOrigine" />
+	<columnFieldProperty
+		name="tiFattura" />
+	<columnFieldProperty
+		name="dtRegistrazione" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="ragioneSociale" />
+	<columnFieldProperty
+		name="cambio" />
+	<columnFieldProperty
+		name="cdDivisa" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="cdVoceIva" />
+	<columnFieldProperty
+		name="dsVoceIva" />
+	<columnFieldProperty
+		name="dsRigaFattura" />
+	<columnFieldProperty
+		name="pgTrovato" />
+	<columnFieldProperty
+		name="imImponibile" />
+	<columnFieldProperty
+		name="fcIva" />
+	<columnFieldProperty
+		name="imIva" />
+	<columnFieldProperty
+		name="esercizioObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazione" />
+	<columnFieldProperty
+		name="dtEmissioneObbligazione" />
+	<columnFieldProperty
+		name="esercizioMandato" />
+	<columnFieldProperty
+		name="pgMandato" />
+	<columnFieldProperty
+		name="dtEmissioneMandato" />
+	<columnFieldProperty name="nr_fattura_fornitore" />
+	<columnFieldProperty name="dt_fattura_fornitore" />
+	<columnFieldProperty name="dt_pagamento_fondo_eco" />
+	<columnFieldProperty name="stato_pagamento_fondo_eco" />
+	<columnFieldProperty name="partita_iva" />
+	<columnFieldProperty name="codice_fiscale" />
+</bulkInfo>

@@ -4,13 +4,22 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 import it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk;
+import it.cnr.contab.client.docamm.FatturaAttiva;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaHome;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaHome;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaHome;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
@@ -62,6 +71,72 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 				if (!trovataCondizioneCdAnagrafica){
 					throw new ComponentException("Non e' possibile richiamare il servizio REST degli inquadramenti senza la condizione del codice anagrafico.");
 				}
+			}
+		} else if (oggettobulk instanceof Fattura_attivaBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				Boolean trovataCondizioneTrovato = false;
+    			CompoundFindClause newClauses = new CompoundFindClause();
+    			Enumeration e = compoundfindclause.getClauses();
+    			SQLBuilder sqlExists = null;
+				while(e.hasMoreElements() ){
+					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("pg_trovato") && 
+							operator == 8192){
+						trovataCondizioneTrovato = true;
+						Fattura_attiva_rigaHome home = (Fattura_attiva_rigaHome) getHome(userContext, Fattura_attiva_rigaBulk.class);
+						sqlExists = home.createSQLBuilder();
+						sqlExists.addTableToHeader("FATTURA_ATTIVA_RIGA", "B");		
+						sqlExists.addSQLJoin("FATTURA_ATTIVA.ESERCIZIO", "B.ESERCIZIO");
+						sqlExists.addSQLJoin("FATTURA_ATTIVA.CD_CDS", "B.CD_CDS");
+						sqlExists.addSQLJoin("FATTURA_ATTIVA.CD_UNITA_ORGANIZZATIVA", "B.CD_UNITA_ORGANIZZATIVA");
+						sqlExists.addSQLJoin("FATTURA_ATTIVA.PG_FATTURA_ATTIVA", "B.PG_FATTURA_ATTIVA");
+						sqlExists.addSQLClause("AND","B.PG_TROVATO",SQLBuilder.EQUALS, clause.getValue() );
+					} else {
+						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					}
+				}
+				if (trovataCondizioneTrovato){
+					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
+					sql.addSQLExistsClause("AND", sqlExists);
+				}
+			}
+			if ( !isUoEnte(userContext)){
+				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
+			}
+		} else if (oggettobulk instanceof Fattura_passivaBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				Boolean trovataCondizioneTrovato = false;
+    			CompoundFindClause newClauses = new CompoundFindClause();
+    			Enumeration e = compoundfindclause.getClauses();
+    			SQLBuilder sqlExists = null;
+				while(e.hasMoreElements() ){
+					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("pg_trovato") && 
+							operator == 8192){
+						trovataCondizioneTrovato = true;
+						Fattura_passiva_rigaHome home = (Fattura_passiva_rigaHome) getHome(userContext, Fattura_passiva_rigaBulk.class);
+						sqlExists = home.createSQLBuilder();
+						sqlExists.addTableToHeader("FATTURA_PASSIVA_RIGA", "B");		
+						sqlExists.addSQLJoin("FATTURA_PASSIVA.ESERCIZIO", "B.ESERCIZIO");
+						sqlExists.addSQLJoin("FATTURA_PASSIVA.CD_CDS", "B.CD_CDS");
+						sqlExists.addSQLJoin("FATTURA_PASSIVA.CD_UNITA_ORGANIZZATIVA", "B.CD_UNITA_ORGANIZZATIVA");
+						sqlExists.addSQLJoin("FATTURA_PASSIVA.PG_FATTURA_PASSIVA", "B.PG_FATTURA_PASSIVA");
+						sqlExists.addSQLClause("AND","B.PG_TROVATO",SQLBuilder.EQUALS, clause.getValue() );
+					} else {
+						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					}
+				}
+				if (trovataCondizioneTrovato){
+					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
+					sql.addSQLExistsClause("AND", sqlExists);
+				}
+			}
+			if ( !isUoEnte(userContext)){
+				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 			}
 		} else if (oggettobulk instanceof WorkpackageBulk){
 			if(!isUtenteEnte(userContext)){ 
