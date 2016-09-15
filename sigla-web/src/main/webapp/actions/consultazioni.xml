@@ -198,6 +198,18 @@
       path="/ConsFatturaPassivaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
   <action 
+      path="/ConsFatturaAttivaRigaBrevettiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <action 
+      path="/ConsultazioneFatturaAttivaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <action 
+      path="/ConsFatturaPassivaRigaBrevettiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <action 
+      path="/ConsultazioneFatturaPassivaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <action 
       path="/ConsDettObbligazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
   <action 
@@ -1430,5 +1442,33 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 	    <init-param name="defaultAction" value="ConsInquadramentoAction" />
 		<init-param name="searchResultColumnSet" value="restService"/>
+  </businessProcess>
+  <businessProcess
+      name="ConsFatturaAttivaRigaBrevettiBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaAttivaRigaBrevettiBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsFatturaAttivaRigaBrevettiAction" />
+  </businessProcess>
+  <businessProcess
+      name="ConsFatturaPassivaRigaBrevettiBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsFatturaPassivaRigaBrevettiAction" />
+  </businessProcess>
+  <businessProcess
+      name="ConsultazioneFatturaAttivaBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsultazioneFatturaAttivaAction" />
+  </businessProcess>
+  <businessProcess
+      name="ConsultazioneFatturaPassivaBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsultazioneFatturaPassivaAction" />
   </businessProcess>
 </action-mappings>
