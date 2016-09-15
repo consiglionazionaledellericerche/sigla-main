@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiBase"
+	keyClassName="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiKey"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiHome">
+	<defaultColumnMap
+		tableName="V_FATTURA_PASSIVA_RIGA_BREVETTI">
+		<columnMapping
+			columnName="DS_FATTURA_PASSIVA"
+			propertyName="dsFatturaPassiva"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cdCdsOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cdUoOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_FATTURA"
+			propertyName="tiFattura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dtRegistrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragioneSociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CAMBIO"
+			propertyName="cambio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cdDivisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cdVoceIva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_VOCE_IVA"
+			propertyName="dsVoceIva"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_RIGA_FATTURA"
+			propertyName="dsRigaFattura"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_TROVATO"
+			propertyName="pgTrovato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_IMPONIBILE"
+			propertyName="imImponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="FC_IVA"
+			propertyName="fcIva"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="imIva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizioObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pgObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_EMISSIONE_OBBLIGAZIONE"
+			propertyName="dtEmissioneObbligazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_MANDATO"
+			propertyName="esercizioMandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pgMandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_EMISSIONE_MANDATO"
+			propertyName="dtEmissioneMandato"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nr_fattura_fornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dt_fattura_fornitore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO_FONDO_ECO"
+			propertyName="dt_pagamento_fondo_eco"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="STATO_PAGAMENTO_FONDO_ECO"
+			propertyName="stato_pagamento_fondo_eco"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dsFatturaPassiva" />
+	<persistentProperty
+		name="cdCdsOrigine" />
+	<persistentProperty
+		name="cdUoOrigine" />
+	<persistentProperty
+		name="tiFattura" />
+	<persistentProperty
+		name="dtRegistrazione" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="ragioneSociale" />
+	<persistentProperty
+		name="cambio" />
+	<persistentProperty
+		name="cdDivisa" />
+	<persistentProperty
+		name="cdVoceIva" />
+	<persistentProperty
+		name="dsVoceIva" />
+	<persistentProperty
+		name="dsRigaFattura" />
+	<persistentProperty
+		name="pgTrovato" />
+	<persistentProperty
+		name="imImponibile" />
+	<persistentProperty
+		name="fcIva" />
+	<persistentProperty
+		name="imIva" />
+	<persistentProperty
+		name="esercizioObbligazione" />
+	<persistentProperty
+		name="pgObbligazione" />
+	<persistentProperty
+		name="dtEmissioneObbligazione" />
+	<persistentProperty
+		name="esercizioMandato" />
+	<persistentProperty
+		name="pgMandato" />
+	<persistentProperty
+		name="dtEmissioneMandato" />
+	<persistentProperty
+		name="nr_fattura_fornitore" />
+	<persistentProperty
+		name="dt_fattura_fornitore" />
+	<persistentProperty
+		name="dt_pagamento_fondo_eco" />
+	<persistentProperty
+		name="stato_pagamento_fondo_eco" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="codice_fiscale" />
+</SQLPersistentInfo>
