@@ -15,7 +15,7 @@ public class VFatturaPassivaRigaBrevettiBase extends VFatturaPassivaRigaBrevetti
 	private java.lang.String cdUoOrigine;
  
 //    TI_FATTURA CHAR(1) NOT NULL
-	private java.lang.String tiFattura;
+	private java.lang.String tipoFatturaCompenso;
  
 //    DT_REGISTRAZIONE TIMESTAMP(7) NOT NULL
 	private java.sql.Timestamp dtRegistrazione;
@@ -59,6 +59,15 @@ public class VFatturaPassivaRigaBrevettiBase extends VFatturaPassivaRigaBrevetti
 //    IM_IVA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imIva;
  
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imLordoPercipiente;
+
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imNettoPercipiente;
+
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imTotaleCompenso;
+
 //    ESERCIZIO_ACCERTAMENTO DECIMAL(4,0)
 	private java.lang.Integer esercizioObbligazione;
  
@@ -146,20 +155,6 @@ public class VFatturaPassivaRigaBrevettiBase extends VFatturaPassivaRigaBrevetti
 	 **/
 	public void setCdUoOrigine(java.lang.String cdUoOrigine)  {
 		this.cdUoOrigine=cdUoOrigine;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [tiFattura]
-	 **/
-	public java.lang.String getTiFattura() {
-		return tiFattura;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [tiFattura]
-	 **/
-	public void setTiFattura(java.lang.String tiFattura)  {
-		this.tiFattura=tiFattura;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -430,5 +425,29 @@ public class VFatturaPassivaRigaBrevettiBase extends VFatturaPassivaRigaBrevetti
 	}
 	public void setCodice_fiscale(java.lang.String codice_fiscale) {
 		this.codice_fiscale = codice_fiscale;
+	}
+	public java.lang.String getTipoFatturaCompenso() {
+		return tipoFatturaCompenso;
+	}
+	public void setTipoFatturaCompenso(java.lang.String tipoFatturaCompenso) {
+		this.tipoFatturaCompenso = tipoFatturaCompenso;
+	}
+	public java.math.BigDecimal getImLordoPercipiente() {
+		return imLordoPercipiente;
+	}
+	public void setImLordoPercipiente(java.math.BigDecimal imLordoPercipiente) {
+		this.imLordoPercipiente = imLordoPercipiente;
+	}
+	public java.math.BigDecimal getImNettoPercipiente() {
+		return imNettoPercipiente;
+	}
+	public void setImNettoPercipiente(java.math.BigDecimal imNettoPercipiente) {
+		this.imNettoPercipiente = imNettoPercipiente;
+	}
+	public java.math.BigDecimal getImTotaleCompenso() {
+		return imTotaleCompenso;
+	}
+	public void setImTotaleCompenso(java.math.BigDecimal imTotaleCompenso) {
+		this.imTotaleCompenso = imTotaleCompenso;
 	}
 }
