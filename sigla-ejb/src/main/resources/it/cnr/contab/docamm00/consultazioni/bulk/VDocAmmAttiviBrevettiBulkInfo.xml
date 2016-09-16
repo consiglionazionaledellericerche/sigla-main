@@ -55,14 +55,14 @@
 		nullable="false"
 		label="cdUoOrigine" />
 	<fieldProperty
-		name="tiFattura"
-		property="tiFattura"
+		name="tipoFattura"
+		property="tipoFattura"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
 		nullable="false"
-		label="tiFattura" />
+		label="tipoFattura" />
 	<fieldProperty
 		name="dtRegistrazione"
 		property="dtRegistrazione"
@@ -125,117 +125,6 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="cdDivisa" />
-	<fieldProperty
-		name="progressivo_riga"
-		property="progressivo_riga"
-		inputType="TEXT"
-		label="Riga" />
-	<fieldProperty
-		name="cdVoceIva"
-		property="cdVoceIva"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		nullable="false"
-		label="cdVoceIva" />
-	<fieldProperty
-		name="dsVoceIva"
-		property="dsVoceIva"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="300"
-		enabledOnEdit="false"
-		nullable="false"
-		label="dsVoceIva" />
-	<fieldProperty
-		name="dsRigaFattura"
-		property="dsRigaFattura"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="1000"
-		enabledOnEdit="false"
-		label="dsRigaFattura" />
-	<fieldProperty
-		name="pgTrovato"
-		property="pgTrovato"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="pgTrovato" />
-	<fieldProperty
-		name="imImponibile"
-		property="imImponibile"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		enabledOnEdit="false"
-		label="imImponibile" />
-	<fieldProperty
-		name="fcIva"
-		property="fcIva"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		enabledOnEdit="false"
-		label="fcIva" />
-	<fieldProperty
-		name="imIva"
-		property="imIva"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnEdit="false"
-		nullable="false"
-		label="imIva" />
-	<fieldProperty
-		name="esercizioAccertamento"
-		property="esercizioAccertamento"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		label="esercizioAccertamento" />
-	<fieldProperty
-		name="pgAccertamento"
-		property="pgAccertamento"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="pgAccertamento" />
-	<fieldProperty
-		name="dtEmissioneAccertamento"
-		property="dtEmissioneAccertamento"
-		inputType="TEXT"
-		formatName="date_short"
-		enabledOnEdit="false"
-		label="dtEmissioneAccertamento" />
-	<fieldProperty
-		name="esercizioReversale"
-		property="esercizioReversale"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		enabledOnEdit="false"
-		label="esercizioReversale" />
-	<fieldProperty
-		name="pgReversale"
-		property="pgReversale"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		enabledOnEdit="false"
-		label="pgReversale" />
-	<fieldProperty
-		name="dtEmissioneReversale"
-		property="dtEmissioneReversale"
-		inputType="TEXT"
-		formatName="date_short"
-		enabledOnEdit="false"
-		label="dtEmissioneReversale" />
 	<form
 		name="searchtool">
 	</form>
@@ -247,8 +136,6 @@
 		name="esercizio" />
 	<columnFieldProperty
 		name="pg_fattura_attiva" />
-	<columnFieldProperty
-		name="progressivo_riga" />
 	<formFieldProperty
 		name="dsFatturaAttiva" />
 	<formFieldProperty
@@ -256,7 +143,7 @@
 	<formFieldProperty
 		name="cdUoOrigine" />
 	<formFieldProperty
-		name="tiFattura" />
+		name="tipoFattura" />
 	<formFieldProperty
 		name="dtRegistrazione" />
 	<formFieldProperty
@@ -271,32 +158,6 @@
 		name="cambio" />
 	<formFieldProperty
 		name="cdDivisa" />
-	<formFieldProperty
-		name="cdVoceIva" />
-	<formFieldProperty
-		name="dsVoceIva" />
-	<formFieldProperty
-		name="dsRigaFattura" />
-	<formFieldProperty
-		name="pgTrovato" />
-	<formFieldProperty
-		name="imImponibile" />
-	<formFieldProperty
-		name="fcIva" />
-	<formFieldProperty
-		name="imIva" />
-	<formFieldProperty
-		name="esercizioAccertamento" />
-	<formFieldProperty
-		name="pgAccertamento" />
-	<formFieldProperty
-		name="dtEmissioneAccertamento" />
-	<formFieldProperty
-		name="esercizioReversale" />
-	<formFieldProperty
-		name="pgReversale" />
-	<formFieldProperty
-		name="dtEmissioneReversale" />
 	<findFieldProperty
 		name="cd_cds" />
 	<findFieldProperty
@@ -312,7 +173,7 @@
 	<findFieldProperty
 		name="cdUoOrigine" />
 	<findFieldProperty
-		name="tiFattura" />
+		name="tipoFattura" />
 	<findFieldProperty
 		name="dtRegistrazione" />
 	<findFieldProperty
@@ -327,34 +188,6 @@
 		name="cambio" />
 	<findFieldProperty
 		name="cdDivisa" />
-	<findFieldProperty
-		name="progressivo_riga" />
-	<findFieldProperty
-		name="cdVoceIva" />
-	<findFieldProperty
-		name="dsVoceIva" />
-	<findFieldProperty
-		name="dsRigaFattura" />
-	<findFieldProperty
-		name="pgTrovato" />
-	<findFieldProperty
-		name="imImponibile" />
-	<findFieldProperty
-		name="fcIva" />
-	<findFieldProperty
-		name="imIva" />
-	<findFieldProperty
-		name="esercizioAccertamento" />
-	<findFieldProperty
-		name="pgAccertamento" />
-	<findFieldProperty
-		name="dtEmissioneAccertamento" />
-	<findFieldProperty
-		name="esercizioReversale" />
-	<findFieldProperty
-		name="pgReversale" />
-	<findFieldProperty
-		name="dtEmissioneReversale" />
 	<columnFieldProperty
 		name="cd_cds" />
 	<columnFieldProperty
@@ -370,7 +203,7 @@
 	<columnFieldProperty
 		name="cdUoOrigine" />
 	<columnFieldProperty
-		name="tiFattura" />
+		name="tipoFattura" />
 	<columnFieldProperty
 		name="dtRegistrazione" />
 	<columnFieldProperty
@@ -385,32 +218,4 @@
 		name="cambio" />
 	<columnFieldProperty
 		name="cdDivisa" />
-	<columnFieldProperty
-		name="progressivo_riga" />
-	<columnFieldProperty
-		name="cdVoceIva" />
-	<columnFieldProperty
-		name="dsVoceIva" />
-	<columnFieldProperty
-		name="dsRigaFattura" />
-	<columnFieldProperty
-		name="pgTrovato" />
-	<columnFieldProperty
-		name="imImponibile" />
-	<columnFieldProperty
-		name="fcIva" />
-	<columnFieldProperty
-		name="imIva" />
-	<columnFieldProperty
-		name="esercizioAccertamento" />
-	<columnFieldProperty
-		name="pgAccertamento" />
-	<columnFieldProperty
-		name="dtEmissioneAccertamento" />
-	<columnFieldProperty
-		name="esercizioReversale" />
-	<columnFieldProperty
-		name="pgReversale" />
-	<columnFieldProperty
-		name="dtEmissioneReversale" />
 </bulkInfo>
