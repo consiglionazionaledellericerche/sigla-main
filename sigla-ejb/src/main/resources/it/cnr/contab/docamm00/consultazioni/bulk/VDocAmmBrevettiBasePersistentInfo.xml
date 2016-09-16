@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmBrevettiBase"
+	keyClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmBrevettiKey"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmBrevettiHome">
+	<defaultColumnMap
+		tableName="V_DOC_AMM_BREVETTI">
+		<columnMapping
+			columnName="DS_FATTURA_PASSIVA"
+			propertyName="dsFatturaPassiva"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cdCdsOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cdUoOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dtRegistrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragioneSociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CAMBIO"
+			propertyName="cambio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cdDivisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nr_fattura_fornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dt_fattura_fornitore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dsFatturaPassiva" />
+	<persistentProperty
+		name="cdCdsOrigine" />
+	<persistentProperty
+		name="cdUoOrigine" />
+	<persistentProperty
+		name="dtRegistrazione" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="ragioneSociale" />
+	<persistentProperty
+		name="cambio" />
+	<persistentProperty
+		name="cdDivisa" />
+	<persistentProperty
+		name="nr_fattura_fornitore" />
+	<persistentProperty
+		name="dt_fattura_fornitore" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="codice_fiscale" />
+</SQLPersistentInfo>
