@@ -24,7 +24,7 @@
 			columnSize="30"
 			nullable="false" />
 		<columnMapping
-			columnName="TI_FATTURA"
+			columnName="TIPO_FATTURA"
 			propertyName="tiFattura"
 			sqlTypeName="CHAR"
 			columnSize="1"

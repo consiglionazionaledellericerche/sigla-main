@@ -4,7 +4,7 @@
 	keyClassName="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiKey"
 	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiHome">
 	<defaultColumnMap
-		tableName="V_FATTURA_PASSIVA_RIGA_BREVETTI">
+		tableName="V_FATTURA_PASSIV_RIGA_BREVETTI">
 		<columnMapping
 			columnName="DS_FATTURA_PASSIVA"
 			propertyName="dsFatturaPassiva"

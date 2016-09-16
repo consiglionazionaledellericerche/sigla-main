@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAttiviBrevettiBulk"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAttiviBrevettiHome">
+	<defaultColumnMap
+		tableName="V_DOC_AMM_ATTIVI_BREVETTI">
+	</defaultColumnMap>
+</SQLPersistentInfo>

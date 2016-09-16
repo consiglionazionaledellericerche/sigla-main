@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiKey">
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAttiviBrevettiKey">
 	<defaultColumnMap
-		tableName="V_FATTURA_PASSIV_RIGA_BREVETTI">
+		tableName="V_DOC_AMM_ATTIVI_BREVETTI">
 		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="esercizio"
@@ -11,19 +11,19 @@
 			nullable="false"
 			primary="true" />
 		<columnMapping
-			columnName="PG_FATTURA_PASSIVA"
-			propertyName="pg_fattura_passiva"
+			columnName="PG_FATTURA_ATTIVA"
+			propertyName="pg_fattura_attiva"
 			sqlTypeName="DECIMAL"
 			columnSize="10"
 			nullable="false"
 			primary="true" />
 		<columnMapping
-			columnName="PROGRESSIVO_RIGA"
-			propertyName="progressivo_riga"
-			sqlTypeName="DECIMAL"
-			columnSize="10"
+			columnName="TIPO_FATTURA"
+			propertyName="tipoFattura"
+			sqlTypeName="CHAR"
+			columnSize="1"
 			nullable="false"
-			primary="true" />
+			primary="true"  />
 		<columnMapping
 			columnName="CD_UNITA_ORGANIZZATIVA"
 			propertyName="cd_unita_organizzativa"
@@ -43,10 +43,10 @@
 		name="esercizio"
 		partOfOid="true" />
 	<persistentProperty
-		name="pg_fattura_passiva"
+		name="pg_fattura_attiva"
 		partOfOid="true" />
 	<persistentProperty
-		name="progressivo_riga"
+		name="tipoFattura"
 		partOfOid="true" />
 	<persistentProperty
 		name="cd_unita_organizzativa"
