@@ -176,6 +176,9 @@ public class RESTServlet extends HttpServlet{
     	            	logger.error("IllegalAccessException", e);
     	                throw new ComponentException(e);
     				}
+    			} else {
+    	            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    	            resp.setHeader("WWW-Authenticate", "Basic realm=\"SIGLA\"");   
     			}
     	        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". End");
     		} catch (ComponentException e) {
@@ -184,7 +187,7 @@ public class RESTServlet extends HttpServlet{
     			Gson gson = new Gson();			
     		    Map<String, String> exc_map = new HashMap<String, String>();
     		    exc_map.put("message", e.toString());
-    		    exc_map.put("stacktrace", getStackTrace(e));		    
+    		    exc_map.put("stacktrace", getStackTrace(e));
     			resp.getWriter().append(gson.toJson(exc_map));
     		}
         }
@@ -467,8 +470,6 @@ public class RESTServlet extends HttpServlet{
         if (!authorized)
         {
            	logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Requesting authorization credentials");
-            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            res.setHeader("WWW-Authenticate", "Basic realm=\"SIGLA\"");   
             return null;
         }
         return utente;

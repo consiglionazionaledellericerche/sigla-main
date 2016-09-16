@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAttiviBrevettiBase"
+	keyClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAttiviBrevettiKey"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAttiviBrevettiHome">
+	<defaultColumnMap
+		tableName="V_DOC_AMM_ATTIVI_BREVETTI">
+		<columnMapping
+			columnName="DS_FATTURA_ATTIVA"
+			propertyName="dsFatturaAttiva"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cdCdsOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cdUoOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dtRegistrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragioneSociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CAMBIO"
+			propertyName="cambio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cdDivisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dsFatturaAttiva" />
+	<persistentProperty
+		name="cdCdsOrigine" />
+	<persistentProperty
+		name="cdUoOrigine" />
+	<persistentProperty
+		name="dtRegistrazione" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="ragioneSociale" />
+	<persistentProperty
+		name="cambio" />
+	<persistentProperty
+		name="cdDivisa" />
+</SQLPersistentInfo>
