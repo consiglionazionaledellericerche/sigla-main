@@ -24,8 +24,8 @@
 			columnSize="30"
 			nullable="false" />
 		<columnMapping
-			columnName="TI_FATTURA"
-			propertyName="tiFattura"
+			columnName="TIPO_FATTURA_COMPENSO"
+			propertyName="tipoFatturaCompenso"
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false" />
@@ -99,6 +99,24 @@
 		<columnMapping
 			columnName="IM_IMPONIBILE"
 			propertyName="imImponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_LORDO_PERCIPIENTE"
+			propertyName="imLordoPercipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_NETTO_PERCIPIENTE"
+			propertyName="imNettoPercipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_TOTALE_COMPENSO"
+			propertyName="imTotaleCompenso"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="true" />
@@ -192,7 +210,7 @@
 	<persistentProperty
 		name="cdUoOrigine" />
 	<persistentProperty
-		name="tiFattura" />
+		name="tipoFatturaCompenso" />
 	<persistentProperty
 		name="dtRegistrazione" />
 	<persistentProperty
@@ -217,6 +235,12 @@
 		name="pgTrovato" />
 	<persistentProperty
 		name="imImponibile" />
+	<persistentProperty
+		name="imLordoPercipiente" />
+	<persistentProperty
+		name="imNettoPercipiente" />
+	<persistentProperty
+		name="imTotaleCompenso" />
 	<persistentProperty
 		name="fcIva" />
 	<persistentProperty

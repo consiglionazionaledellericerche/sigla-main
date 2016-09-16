@@ -34,35 +34,6 @@
 	<findFieldProperty
 		name="pg_fattura_estera" />
 
-	<columnSet name="restServiceBrevetti" >
-		<columnFieldProperty name="cd_cds"/>
-		<columnFieldProperty name="cd_unita_organizzativa"/>
-		<columnFieldProperty name="esercizio"/>
-		<columnFieldProperty name="pg_fattura_passiva"/>
-		<columnFieldProperty name="numero_protocollo"/>
-		<columnFieldProperty name="data_protocollo"/>
-		<columnFieldProperty name="protocollo_iva"/>
-		<columnFieldProperty name="protocollo_iva_generale"/>
-		<columnFieldProperty name="progr_univoco"/>
-		<columnFieldProperty name="ds_fattura_passiva"/>
-		<columnFieldProperty name="dt_registrazione"/>
-		<columnFieldProperty name="ti_istituz_commerc"/>
-		<columnFieldProperty name="nr_fattura_fornitore"/>
-		<columnFieldProperty name="dt_fattura_fornitore"/>
-		<columnFieldProperty name="dt_scadenza"/>
-		<columnFieldProperty name="cd_fornitore"/>
-		<columnFieldProperty name="cognome"/>
-		<columnFieldProperty name="nome"/>
-		<columnFieldProperty name="ragione_sociale"/>
-		<columnFieldProperty name="im_totale_fattura"/>
-		<columnFieldProperty name="ds_divisa"/>
-		<columnFieldProperty name="stato_cofi"/>
-		<columnFieldProperty name="ti_associato_manrev"/>
-		<columnFieldProperty name="stato_liquidazione"/>
-		<columnFieldProperty name="causale"/>
-		<columnFieldProperty name="identificativoSdi"/>
-		<columnFieldProperty name="progressivo"/>
-	</columnSet>
 
 
 </bulkInfo>
