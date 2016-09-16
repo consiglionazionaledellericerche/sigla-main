@@ -55,14 +55,14 @@
 		nullable="false"
 		label="cdUoOrigine" />
 	<fieldProperty
-		name="tiFattura"
-		property="tiFattura"
+		name="tipoFatturaCompenso"
+		property="tipoFatturaCompenso"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
 		nullable="false"
-		label="tiFattura" />
+		label="tipoFatturaCompenso" />
 	<fieldProperty
 		name="dtRegistrazione"
 		property="dtRegistrazione"
@@ -302,6 +302,30 @@
 		readonlyPropertyOnSearch="ROfornitoreForSearch"
 		enabledOnSearch="true"
 		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="imLordoPercipiente"
+		property="imLordoPercipiente"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imLordoPercipiente" />
+	<fieldProperty
+		name="imNettoPercipiente"
+		property="imNettoPercipiente"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imNettoPercipiente" />
+	<fieldProperty
+		name="imTotaleCompenso"
+		property="imTotaleCompenso"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imTotaleCompenso" />
 	<form
 		name="searchtool">
 	</form>
@@ -322,7 +346,7 @@
 	<formFieldProperty
 		name="cdUoOrigine" />
 	<formFieldProperty
-		name="tiFattura" />
+		name="tipoFatturaCompenso" />
 	<formFieldProperty
 		name="dtRegistrazione" />
 	<formFieldProperty
@@ -351,6 +375,12 @@
 		name="fcIva" />
 	<formFieldProperty
 		name="imIva" />
+	<formFieldProperty
+		name="imLordoPercipiente" />
+	<formFieldProperty
+		name="imNettoPercipiente" />
+	<formFieldProperty
+		name="imTotaleCompenso" />
 	<formFieldProperty
 		name="esercizioObbligazione" />
 	<formFieldProperty
@@ -384,7 +414,7 @@
 	<findFieldProperty
 		name="cdUoOrigine" />
 	<findFieldProperty
-		name="tiFattura" />
+		name="tipoFatturaCompenso" />
 	<findFieldProperty
 		name="dtRegistrazione" />
 	<findFieldProperty
@@ -415,6 +445,12 @@
 		name="fcIva" />
 	<findFieldProperty
 		name="imIva" />
+	<findFieldProperty
+		name="imLordoPercipiente" />
+	<findFieldProperty
+		name="imNettoPercipiente" />
+	<findFieldProperty
+		name="imTotaleCompenso" />
 	<findFieldProperty
 		name="esercizioObbligazione" />
 	<findFieldProperty
@@ -448,7 +484,7 @@
 	<columnFieldProperty
 		name="cdUoOrigine" />
 	<columnFieldProperty
-		name="tiFattura" />
+		name="tipoFatturaCompenso" />
 	<columnFieldProperty
 		name="dtRegistrazione" />
 	<columnFieldProperty
@@ -475,6 +511,12 @@
 		name="pgTrovato" />
 	<columnFieldProperty
 		name="imImponibile" />
+	<columnFieldProperty
+		name="imLordoPercipiente" />
+	<columnFieldProperty
+		name="imNettoPercipiente" />
+	<columnFieldProperty
+		name="imTotaleCompenso" />
 	<columnFieldProperty
 		name="fcIva" />
 	<columnFieldProperty
