@@ -1,18 +1,25 @@
 package it.cnr.contab.docamm00.client;
 
 public class TrovatoProperties {
-	private String trovatoTargetEndpoint; //="http://siglaas4.cedrc.cnr.it:8480/";
-	private String trovatoSiglaWSClientPassword;
+	private String trovatoTargetEndpoint;
+	private String trovatoSiglaRestClientUser;
+	private String trovatoSiglaRestClientPassword;
 	public String getTrovatoTargetEndpoint() {
 		return trovatoTargetEndpoint;
 	}
 	public void setTrovatoTargetEndpoint(String trovatoTargetEndpoint) {
 		this.trovatoTargetEndpoint = trovatoTargetEndpoint;
 	}
-	public String getTrovatoSiglaWSClientPassword() {
-		return trovatoSiglaWSClientPassword;
+	public String getTrovatoSiglaRestClientPassword() {
+		return trovatoSiglaRestClientPassword;
 	}
-	public void setTrovatoSiglaWSClientPassword(String trovatoSiglaWSClientPassword) {
-		this.trovatoSiglaWSClientPassword = trovatoSiglaWSClientPassword;
+	public void setTrovatoSiglaRestClientPassword(String trovatoSiglaRestClientPassword) {
+		this.trovatoSiglaRestClientPassword = trovatoSiglaRestClientPassword;
+	}
+	public String getTrovatoSiglaRestClientUser() {
+		return trovatoSiglaRestClientUser;
+	}
+	public void setTrovatoSiglaRestClientUser(String trovatoSiglaRestClientUser) {
+		this.trovatoSiglaRestClientUser = trovatoSiglaRestClientUser;
 	}
 }

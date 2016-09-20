@@ -133,7 +133,7 @@ public class Fattura_passiva_rigaBase extends Fattura_passiva_rigaKey implements
 	private java.sql.Timestamp data_esigibilita_iva;
 	
 	// PG_TROVATO DECIMAL(10,0)
-	private java.lang.Long pg_trovato;
+	private java.lang.Integer pg_trovato;
 
 public Fattura_passiva_rigaBase() {
 	super();
@@ -609,10 +609,10 @@ public java.sql.Timestamp getData_esigibilita_iva() {
 public void setData_esigibilita_iva(java.sql.Timestamp data_esigibilita_iva) {
 	this.data_esigibilita_iva = data_esigibilita_iva;
 }
-public void setPg_trovato(java.lang.Long pg_trovato) {
+public void setPg_trovato(java.lang.Integer pg_trovato) {
 	this.pg_trovato = pg_trovato;
 }
-public java.lang.Long getPg_trovato() {
+public java.lang.Integer getPg_trovato() {
 	return pg_trovato;
 }
 }

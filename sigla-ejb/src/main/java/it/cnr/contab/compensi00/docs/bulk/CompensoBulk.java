@@ -43,9 +43,9 @@ import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.Vector;
-@CMISType(name="D:emppay:compenso", parentName="D:emppay:document")
-public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
-		IDocumentoAmministrativoSpesaBulk {
+
+@CMISType(name = "D:emppay:compenso", parentName = "D:emppay:document")
+public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk {
 
 	private BancaBulk banca;
 	private Rif_termini_pagamentoBulk terminiPagamento;
@@ -74,19 +74,21 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private java.math.BigDecimal importo_iniziale;
 	private java.math.BigDecimal importo_complessivo;
 	private java.math.BigDecimal importo_utilizzato;
-	
+
 	private ContrattoBulk contratto;
 	private java.lang.String oggetto_contratto;
 
 	private PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
 	private PrimaryKeyHashMap relationsDocContForSaldi = null;
-	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione necessaria per i bulk non persistenti
+	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione
+														// necessaria per i bulk
+														// non persistenti
 
 	private java.sql.Timestamp dataInizioFatturaElettronica;
 
 	private it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk voceIvaFattura;
 	private Fattura_passivaBulk fatturaPassiva;
-	
+
 	private int annoSolare;
 	private int esercizioScrivania;
 
@@ -127,19 +129,18 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 	// Tipo prestazione
 	/*
-	public final static String TIPO_PRESTAZIONE_SERVIZI = "C";
-	public final static String TIPO_PRESTAZIONE_COLLABORAZIONE_IND = "I";
-	public final static Dictionary TIPI_PRESTAZIONE;
-    */
-	
+	 * public final static String TIPO_PRESTAZIONE_SERVIZI = "C"; public final
+	 * static String TIPO_PRESTAZIONE_COLLABORAZIONE_IND = "I"; public final
+	 * static Dictionary TIPI_PRESTAZIONE;
+	 */
+
 	public final static Dictionary STATO_LIQUIDAZIONE;
 	public final static Dictionary CAUSALE;
 	static {
 		STATO_FONDO_ECO = new it.cnr.jada.util.OrderedHashtable();
 		STATO_FONDO_ECO.put(LIBERO_FONDO_ECO, "Non usare fondo economale");
 		STATO_FONDO_ECO.put(ASSEGNATO_FONDO_ECO, "Usa fondo economale");
-		STATO_FONDO_ECO.put(REGISTRATO_FONDO_ECO,
-				"Registrato in fondo economale");
+		STATO_FONDO_ECO.put(REGISTRATO_FONDO_ECO, "Registrato in fondo economale");
 
 		TI_ASSOCIATO_MANREV = new it.cnr.jada.util.OrderedHashtable();
 		TI_ASSOCIATO_MANREV.put(ASSOCIATO_MANREV, "Man/rev associato");
@@ -159,21 +160,21 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		TIPI_COMPENSO = new it.cnr.jada.util.OrderedHashtable();
 		TIPI_COMPENSO.put(TIPO_COMPENSO_COMMERCIALE, "Commerciale");
 		TIPI_COMPENSO.put(TIPO_COMPENSO_ISTITUZIONALE, "Istituzionale");
-        /*
-		TIPI_PRESTAZIONE = new it.cnr.jada.util.OrderedHashtable();
-		TIPI_PRESTAZIONE
-				.put(TIPO_PRESTAZIONE_SERVIZI, "Prestazione di Servizi");
-		TIPI_PRESTAZIONE.put(TIPO_PRESTAZIONE_COLLABORAZIONE_IND,
-				"Incarico di collaborazione individuale");
-        */
+		/*
+		 * TIPI_PRESTAZIONE = new it.cnr.jada.util.OrderedHashtable();
+		 * TIPI_PRESTAZIONE .put(TIPO_PRESTAZIONE_SERVIZI,
+		 * "Prestazione di Servizi");
+		 * TIPI_PRESTAZIONE.put(TIPO_PRESTAZIONE_COLLABORAZIONE_IND,
+		 * "Incarico di collaborazione individuale");
+		 */
 		STATO_LIQUIDAZIONE = new it.cnr.jada.util.OrderedHashtable();
 		STATO_LIQUIDAZIONE.put(LIQ, "Liquidabile");
 		STATO_LIQUIDAZIONE.put(NOLIQ, "Non Liquidabile");
 		STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
-		
-		CAUSALE= new it.cnr.jada.util.OrderedHashtable();
-		CAUSALE.put(ATTLIQ,"In attesa di liquidazione");
-		CAUSALE.put(CONT,"Contenzioso");
+
+		CAUSALE = new it.cnr.jada.util.OrderedHashtable();
+		CAUSALE.put(ATTLIQ, "In attesa di liquidazione");
+		CAUSALE.put(CONT, "Contenzioso");
 	}
 
 	// Stato compenso - mi serve per gestire i bottoni di Esegui Calcolo,
@@ -219,21 +220,19 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private Tipo_prestazione_compensoBulk tipoPrestazioneCompenso;
 	private java.util.Collection tipiPrestazioneCompenso;
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
-	
+
 	public CompensoBulk() {
 		super();
 	}
 
-	public CompensoBulk(java.lang.String cd_cds,
-			java.lang.String cd_unita_organizzativa,
-			java.lang.Integer esercizio, java.lang.Long pg_compenso) {
+	public CompensoBulk(java.lang.String cd_cds, java.lang.String cd_unita_organizzativa, java.lang.Integer esercizio,
+			java.lang.Long pg_compenso) {
 		super(cd_cds, cd_unita_organizzativa, esercizio, pg_compenso);
 	}
 
 	public boolean hasCompetenzaCOGEInAnnoPrecedente() {
 
-		return getDateCalendar(getDt_a_competenza_coge()).get(Calendar.YEAR) == getEsercizio()
-				.intValue() - 1;
+		return getDateCalendar(getDt_a_competenza_coge()).get(Calendar.YEAR) == getEsercizio().intValue() - 1;
 	}
 
 	/**
@@ -245,8 +244,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param map
 	 *            java.util.Map
 	 */
-	public void addToDefferredSaldi(IDocumentoContabileBulk docCont,
-			java.util.Map values) {
+	public void addToDefferredSaldi(IDocumentoContabileBulk docCont, java.util.Map values) {
 
 		if (docCont != null) {
 			if (deferredSaldi == null)
@@ -254,8 +252,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 			if (!deferredSaldi.containsKey(docCont))
 				deferredSaldi.put(docCont, values);
 			else {
-				java.util.Map firstValues = (java.util.Map) deferredSaldi
-						.get(docCont);
+				java.util.Map firstValues = (java.util.Map) deferredSaldi.get(docCont);
 				deferredSaldi.remove(docCont);
 				deferredSaldi.put(docCont, firstValues);
 			}
@@ -265,14 +262,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	/**
 	 * per interfaccia IDocumentoAmministrativoBulk
 	 */
-	public void addToDettagliCancellati(
-			it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk dettaglio) {
+	public void addToDettagliCancellati(it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk dettaglio) {
 
-		if (dettaglio != null
-				&& ((OggettoBulk) dettaglio).getCrudStatus() == OggettoBulk.NORMAL) {
+		if (dettaglio != null && ((OggettoBulk) dettaglio).getCrudStatus() == OggettoBulk.NORMAL) {
 			getDettagliCancellati().addElement(dettaglio);
-			addToDocumentiContabiliCancellati(dettaglio
-					.getScadenzaDocumentoContabile());
+			addToDocumentiContabiliCancellati(dettaglio.getScadenzaDocumentoContabile());
 		}
 	}
 
@@ -288,11 +282,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		// documentiContabiliCancellati contiene le scadenze non piu' agganciate
 		// al compenso
 		// che pero' devo essere inserite op aggiornate in tabella
-		if ((scadenza != null)
-				&& (((OggettoBulk) scadenza).getCrudStatus() == OggettoBulk.NORMAL)
-				&& (!BulkCollections.containsByPrimaryKey(
-						getDocumentiContabiliCancellati(),
-						(OggettoBulk) scadenza))) {
+		if ((scadenza != null) && (((OggettoBulk) scadenza).getCrudStatus() == OggettoBulk.NORMAL)
+				&& (!BulkCollections.containsByPrimaryKey(getDocumentiContabiliCancellati(), (OggettoBulk) scadenza))) {
 			// scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0));
 			getDocumentiContabiliCancellati().addElement(scadenza);
 		}
@@ -305,8 +296,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param docCont
 	 *            it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
 	 */
-	public void addToRelationsDocContForSaldi(
-			it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk docCont,
+	public void addToRelationsDocContForSaldi(it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk docCont,
 			Long progTemporaneo) {
 
 		if (docCont != null) {
@@ -327,8 +317,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 	public static java.sql.Timestamp decrementaData(java.sql.Timestamp data) {
 
-		java.util.GregorianCalendar gc = (java.util.GregorianCalendar) java.util.GregorianCalendar
-				.getInstance();
+		java.util.GregorianCalendar gc = (java.util.GregorianCalendar) java.util.GregorianCalendar.getInstance();
 		gc.setTime(data);
 		gc.add(java.util.Calendar.DATE, -1);
 		return new java.sql.Timestamp(gc.getTime().getTime());
@@ -385,20 +374,17 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public java.lang.String getCd_cdr_genrc() {
-		it.cnr.contab.config00.latt.bulk.WorkpackageBulk lineaAttivita = this
-				.getLineaAttivita();
+		it.cnr.contab.config00.latt.bulk.WorkpackageBulk lineaAttivita = this.getLineaAttivita();
 		if (lineaAttivita == null)
 			return null;
-		it.cnr.contab.config00.sto.bulk.CdrBulk centro_responsabilita = lineaAttivita
-				.getCentro_responsabilita();
+		it.cnr.contab.config00.sto.bulk.CdrBulk centro_responsabilita = lineaAttivita.getCentro_responsabilita();
 		if (centro_responsabilita == null)
 			return null;
 		return centro_responsabilita.getCd_centro_responsabilita();
 	}
 
 	public java.lang.String getCd_cds_missione() {
-		it.cnr.contab.missioni00.docs.bulk.MissioneBulk missione = this
-				.getMissione();
+		it.cnr.contab.missioni00.docs.bulk.MissioneBulk missione = this.getMissione();
 		if (missione == null)
 			return null;
 		return missione.getCd_cds();
@@ -409,8 +395,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 				.getObbligazioneScadenzario();
 		if (obbligazioneScadenzario == null)
 			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario
-				.getObbligazione();
+		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario.getObbligazione();
 		if (obbligazione == null)
 			return null;
 		it.cnr.contab.config00.sto.bulk.CdsBulk cds = obbligazione.getCds();
@@ -420,32 +405,28 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public java.lang.String getCd_linea_attivita_genrc() {
-		it.cnr.contab.config00.latt.bulk.WorkpackageBulk lineaAttivita = this
-				.getLineaAttivita();
+		it.cnr.contab.config00.latt.bulk.WorkpackageBulk lineaAttivita = this.getLineaAttivita();
 		if (lineaAttivita == null)
 			return null;
 		return lineaAttivita.getCd_linea_attivita();
 	}
 
 	public java.lang.String getCd_modalita_pag() {
-		it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalitaPagamento = this
-				.getModalitaPagamento();
+		it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalitaPagamento = this.getModalitaPagamento();
 		if (modalitaPagamento == null)
 			return null;
 		return modalitaPagamento.getCd_modalita_pag();
 	}
 
 	public java.lang.String getCd_regione_irap() {
-		it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk regioneIrap = this
-				.getRegioneIrap();
+		it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk regioneIrap = this.getRegioneIrap();
 		if (regioneIrap == null)
 			return null;
 		return regioneIrap.getCd_regione();
 	}
 
 	public java.lang.String getCd_termini_pag() {
-		it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk terminiPagamento = this
-				.getTerminiPagamento();
+		it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk terminiPagamento = this.getTerminiPagamento();
 		if (terminiPagamento == null)
 			return null;
 		return terminiPagamento.getCd_termini_pag();
@@ -463,16 +444,14 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public java.lang.String getCd_tipo_rapporto() {
-		it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk tipoRapporto = this
-				.getTipoRapporto();
+		it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk tipoRapporto = this.getTipoRapporto();
 		if (tipoRapporto == null)
 			return null;
 		return tipoRapporto.getCd_tipo_rapporto();
 	}
 
 	public java.lang.String getCd_trattamento() {
-		it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk tipoTrattamento = this
-				.getTipoTrattamento();
+		it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk tipoTrattamento = this.getTipoTrattamento();
 		if (tipoTrattamento == null)
 			return null;
 		return tipoTrattamento.getCd_trattamento();
@@ -490,16 +469,14 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public java.lang.String getCd_uo_missione() {
-		it.cnr.contab.missioni00.docs.bulk.MissioneBulk missione = this
-				.getMissione();
+		it.cnr.contab.missioni00.docs.bulk.MissioneBulk missione = this.getMissione();
 		if (missione == null)
 			return null;
 		return missione.getCd_unita_organizzativa();
 	}
 
 	public java.lang.String getCd_voce_iva() {
-		it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk voceIva = this
-				.getVoceIva();
+		it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk voceIva = this.getVoceIva();
 		if (voceIva == null)
 			return null;
 		return voceIva.getCd_voce_iva();
@@ -554,11 +531,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param map
 	 *            java.util.Map
 	 */
-	public static java.sql.Timestamp getDataOdierna()
-			throws it.cnr.jada.action.BusinessProcessException {
+	public static java.sql.Timestamp getDataOdierna() throws it.cnr.jada.action.BusinessProcessException {
 		try {
-			return getDataOdierna(it.cnr.jada.util.ejb.EJBCommonServices
-					.getServerDate());
+			return getDataOdierna(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
 		} catch (javax.ejb.EJBException e) {
 			throw new it.cnr.jada.action.BusinessProcessException(e);
 		}
@@ -573,8 +548,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param map
 	 *            java.util.Map
 	 */
-	public static java.sql.Timestamp getDataOdierna(
-			java.sql.Timestamp dataOdierna) {
+	public static java.sql.Timestamp getDataOdierna(java.sql.Timestamp dataOdierna) {
 
 		java.util.Calendar gc = java.util.Calendar.getInstance();
 		gc.setTime(dataOdierna);
@@ -620,16 +594,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param docCont
 	 *            it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
 	 */
-	public IDocumentoContabileBulk getDefferredSaldoFor(
-			IDocumentoContabileBulk docCont) {
+	public IDocumentoContabileBulk getDefferredSaldoFor(IDocumentoContabileBulk docCont) {
 
 		if (docCont != null && deferredSaldi != null)
-			for (java.util.Iterator i = deferredSaldi.keySet().iterator(); i
-					.hasNext();) {
-				IDocumentoContabileBulk key = (IDocumentoContabileBulk) i
-						.next();
-				if (((OggettoBulk) docCont)
-						.equalsByPrimaryKey((OggettoBulk) key))
+			for (java.util.Iterator i = deferredSaldi.keySet().iterator(); i.hasNext();) {
+				IDocumentoContabileBulk key = (IDocumentoContabileBulk) i.next();
+				if (((OggettoBulk) docCont).equalsByPrimaryKey((OggettoBulk) key))
 					return key;
 			}
 		return null;
@@ -707,8 +677,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public java.lang.Integer getEsercizio_missione() {
-		it.cnr.contab.missioni00.docs.bulk.MissioneBulk missione = this
-				.getMissione();
+		it.cnr.contab.missioni00.docs.bulk.MissioneBulk missione = this.getMissione();
 		if (missione == null)
 			return null;
 		return missione.getEsercizio();
@@ -719,8 +688,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 				.getObbligazioneScadenzario();
 		if (obbligazioneScadenzario == null)
 			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario
-				.getObbligazione();
+		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario.getObbligazione();
 		if (obbligazione == null)
 			return null;
 		return obbligazione.getEsercizio();
@@ -747,8 +715,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		java.math.BigDecimal importoNettoSpesa = getIm_netto_percipiente();
 
 		if (isDaMissione() && getMissione().getAnticipo() != null) {
-			java.math.BigDecimal imAnticipo = getMissione().getAnticipo()
-					.getIm_anticipo();
+			java.math.BigDecimal imAnticipo = getMissione().getAnticipo().getIm_anticipo();
 			importoNettoSpesa = importoNettoSpesa.add(imAnticipo.negate());
 		}
 		return importoNettoSpesa;
@@ -765,8 +732,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		java.math.BigDecimal importoSpesa = getIm_totale_compenso();
 
 		if (isDaMissione() && getMissione().getAnticipo() != null) {
-			java.math.BigDecimal imAnticipo = getMissione().getAnticipo()
-					.getIm_anticipo();
+			java.math.BigDecimal imAnticipo = getMissione().getAnticipo().getIm_anticipo();
 			importoSpesa = importoSpesa.add(imAnticipo.negate());
 		}
 		return importoSpesa;
@@ -777,14 +743,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		java.math.BigDecimal importoObbligazione = getIm_totale_compenso();
 
 		if (isDaMissione() && getMissione().getAnticipo() != null) {
-			java.math.BigDecimal imAnticipo = getMissione().getAnticipo()
-					.getIm_anticipo();
+			java.math.BigDecimal imAnticipo = getMissione().getAnticipo().getIm_anticipo();
 			if (imAnticipo.compareTo(getIm_netto_percipiente()) <= 0)
-				importoObbligazione = importoObbligazione.add(imAnticipo
-						.negate());
+				importoObbligazione = importoObbligazione.add(imAnticipo.negate());
 			else
-				importoObbligazione = importoObbligazione
-						.add(getIm_netto_percipiente().negate());
+				importoObbligazione = importoObbligazione.add(getIm_netto_percipiente().negate());
 		}
 
 		return importoObbligazione;
@@ -793,8 +756,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	/**
 	 * getImportoSignForDelete method comment.
 	 */
-	public java.math.BigDecimal getImportoSignForDelete(
-			java.math.BigDecimal importo) {
+	public java.math.BigDecimal getImportoSignForDelete(java.math.BigDecimal importo) {
 		return getIm_totale_compenso();
 	}
 
@@ -931,8 +893,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public java.lang.Long getPg_missione() {
-		it.cnr.contab.missioni00.docs.bulk.MissioneBulk missione = this
-				.getMissione();
+		it.cnr.contab.missioni00.docs.bulk.MissioneBulk missione = this.getMissione();
 		if (missione == null)
 			return null;
 		return missione.getPg_missione();
@@ -943,8 +904,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 				.getObbligazioneScadenzario();
 		if (obbligazioneScadenzario == null)
 			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario
-				.getObbligazione();
+		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario.getObbligazione();
 		if (obbligazione == null)
 			return null;
 		return obbligazione.getEsercizio_originale();
@@ -955,8 +915,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 				.getObbligazioneScadenzario();
 		if (obbligazioneScadenzario == null)
 			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario
-				.getObbligazione();
+		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario.getObbligazione();
 		if (obbligazione == null)
 			return null;
 		return obbligazione.getPg_obbligazione();
@@ -1002,8 +961,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public java.lang.Long getPgObbligazionePos() {
-		if (getPg_obbligazione() != null
-				&& getPg_obbligazione().longValue() < 0)
+		if (getPg_obbligazione() != null && getPg_obbligazione().longValue() < 0)
 			return null;
 
 		return getPg_obbligazione();
@@ -1065,8 +1023,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public java.util.Dictionary getStato_pagamento_fondo_ecoKeys() {
 
 		if (getStato_pagamento_fondo_eco() != null
-				&& REGISTRATO_FONDO_ECO
-						.equalsIgnoreCase(getStato_pagamento_fondo_eco())) {
+				&& REGISTRATO_FONDO_ECO.equalsIgnoreCase(getStato_pagamento_fondo_eco())) {
 			return STATO_FONDO_ECO;
 		}
 
@@ -1250,8 +1207,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public void impostaModalitaPagamento(Rif_modalita_pagamentoBulk newModPag) {
 
 		for (java.util.Iterator i = getModalita().iterator(); i.hasNext();) {
-			Rif_modalita_pagamentoBulk modPag = (Rif_modalita_pagamentoBulk) i
-					.next();
+			Rif_modalita_pagamentoBulk modPag = (Rif_modalita_pagamentoBulk) i.next();
 			if (modPag.equalsByPrimaryKey(newModPag))
 				setModalitaPagamento(modPag);
 		}
@@ -1266,8 +1222,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public void impostaTerminiPagamento(Rif_termini_pagamentoBulk newTermPag) {
 
 		for (java.util.Iterator i = getTermini().iterator(); i.hasNext();) {
-			Rif_termini_pagamentoBulk termPag = (Rif_termini_pagamentoBulk) i
-					.next();
+			Rif_termini_pagamentoBulk termPag = (Rif_termini_pagamentoBulk) i.next();
 			if (termPag.equalsByPrimaryKey(newTermPag))
 				setTerminiPagamento(termPag);
 		}
@@ -1290,8 +1245,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 	public void impostaTipoTratt(Tipo_trattamentoBulk newTipoTrattamento) {
 
-		for (java.util.Iterator i = getTipiTrattamento().iterator(); i
-				.hasNext();) {
+		for (java.util.Iterator i = getTipiTrattamento().iterator(); i.hasNext();) {
 			Tipo_trattamentoBulk tipo = (Tipo_trattamentoBulk) i.next();
 			if (tipo.equalsByPrimaryKey(newTipoTrattamento))
 				setTipoTrattamento(tipo);
@@ -1310,33 +1264,29 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		getTipiTrattamento().add(newTipoTrattamento);
 		setTipoTrattamento(newTipoTrattamento);
 	}
-	
+
 	public void impostaTipoPrestazioneCompenso(Tipo_prestazione_compensoBulk newTipoPrestazioneCompenso) {
 
 		setTipiPrestazioneCompenso(new java.util.Vector());
 		getTipiPrestazioneCompenso().add(newTipoPrestazioneCompenso);
 		setTipoPrestazioneCompenso(newTipoPrestazioneCompenso);
 	}
-	
+
 	public static java.sql.Timestamp incrementaData(java.sql.Timestamp data) {
 
-		java.util.GregorianCalendar gc = (java.util.GregorianCalendar) java.util.GregorianCalendar
-				.getInstance();
+		java.util.GregorianCalendar gc = (java.util.GregorianCalendar) java.util.GregorianCalendar.getInstance();
 		gc.setTime(data);
 		gc.add(java.util.Calendar.DATE, 1);
 		return new java.sql.Timestamp(gc.getTime().getTime());
 	}
 
-	public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,
-			it.cnr.jada.action.ActionContext context) {
+	public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
 
 		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = it.cnr.contab.utenze00.bulk.CNRUserInfo
 				.getUnita_organizzativa(context);
 		setCd_cds(unita_organizzativa.getCd_unita_padre());
-		setCd_unita_organizzativa(unita_organizzativa
-				.getCd_unita_organizzativa());
-		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo
-				.getEsercizio(context));
+		setCd_unita_organizzativa(unita_organizzativa.getCd_unita_organizzativa());
+		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
 		setCd_uo_origine(getCd_unita_organizzativa());
 		setCd_cds_origine(getCd_cds());
 
@@ -1442,11 +1392,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * 
 	 * @return boolean
 	 */
-	
+
 	public boolean isAssociatoADocumento() {
 
-		return isDaMissione() || isDaMinicarriera() || isDaConguaglio()
-				|| isDaBonus() || (isDaFatturaPassiva() && getFatturaPassiva()==null);
+		return isDaMissione() || isDaMinicarriera() || isDaConguaglio() || isDaBonus()
+				|| (isDaFatturaPassiva() && getFatturaPassiva() == null);
 	}
 
 	public boolean isAssociatoAMandato() {
@@ -1461,8 +1411,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @return boolean
 	 */
 	public boolean isCancellabile() {
-		return (getStato_cofi().equals(STATO_INIZIALE) || (getStato_cofi()
-				.equals(STATO_CONTABILIZZATO))
+		return (getStato_cofi().equals(STATO_INIZIALE) || (getStato_cofi().equals(STATO_CONTABILIZZATO))
 				&& getTi_associato_manrev().equals(NON_ASSOCIATO_MANREV));
 	}
 
@@ -1486,10 +1435,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		return (getBonus() != null);
 	}
 
-	public boolean isDaFatturaPassiva()
-	{
-		return (isGestione_doc_ele() && (getFl_generata_fattura()!=null && getFl_generata_fattura()));
+	public boolean isDaFatturaPassiva() {
+		return (isGestione_doc_ele() && (getFl_generata_fattura() != null && getFl_generata_fattura()));
 	}
+
 	/**
 	 * isDeleting method comment.
 	 */
@@ -1501,8 +1450,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * isEditable method comment.
 	 */
 	public boolean isEditable() {
-		return (getEsercizioScrivania() == getEsercizio().intValue())
-				&& !isRiportata();
+		return (getEsercizioScrivania() == getEsercizio().intValue()) && !isRiportata();
 	}
 
 	/**
@@ -1533,9 +1481,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isPagato() {
 
-		return (STATO_PAGATO.equals(getStato_cofi()) || (REGISTRATO_FONDO_ECO
-				.equals(getStato_pagamento_fondo_eco()) && STATO_CONTABILIZZATO
-				.equals(getStato_cofi())));
+		return (STATO_PAGATO.equals(getStato_cofi()) || (REGISTRATO_FONDO_ECO.equals(getStato_pagamento_fondo_eco())
+				&& STATO_CONTABILIZZATO.equals(getStato_cofi())));
 	}
 
 	public boolean isRiportata() {
@@ -1560,8 +1507,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public boolean isROCdLineaAttivita() {
 
 		return isROLineaAttivita()
-				|| (getLineaAttivita() == null || getLineaAttivita()
-						.getCrudStatus() == OggettoBulk.NORMAL);
+				|| (getLineaAttivita() == null || getLineaAttivita().getCrudStatus() == OggettoBulk.NORMAL);
 	}
 
 	/**
@@ -1572,8 +1518,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROCdTerzo() {
 
-		return isROTerzo()
-				|| (getV_terzo() == null || getV_terzo().getCrudStatus() == OggettoBulk.NORMAL);
+		return isROTerzo() || (getV_terzo() == null || getV_terzo().getCrudStatus() == OggettoBulk.NORMAL);
 	}
 
 	/**
@@ -1584,7 +1529,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isRODatiFattura() {
 
-		return isSenzaCalcoli() || isDaConguaglio() || isROPerChiusura()||isGestione_doc_ele();
+		return isSenzaCalcoli() || isDaConguaglio() || isROPerChiusura() || isGestione_doc_ele();
 	}
 
 	/**
@@ -1605,7 +1550,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isRODtACompetenzaCoge() {
 
-		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null)
 			return true;
 		return false;
 	}
@@ -1618,7 +1563,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isRODtDaCompetenzaCoge() {
 
-		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null)
 			return true;
 		return false;
 	}
@@ -1631,7 +1576,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isRODtRegistrazione() {
 
-		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null)
 			return true;
 		return false;
 	}
@@ -1675,7 +1620,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROFlagSenzaCalcoli() {
 
-		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null)
 			return true;
 		return false;
 	}
@@ -1705,8 +1650,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROLineaAttivita() {
 
-		if (isStatoCompensoNormale() || isStatoCompensoEseguiCalcolo()
-				|| isROPerChiusura())
+		if (isStatoCompensoNormale() || isStatoCompensoEseguiCalcolo() || isROPerChiusura())
 			return true;
 
 		return getImportoObbligazione().compareTo(new java.math.BigDecimal(0)) >= 0;
@@ -1719,7 +1663,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @return boolean
 	 */
 	public boolean isROModalitaPagamento() {
-		return isROPerChiusura() ||  isDaFatturaPassiva();
+		return isROPerChiusura() || isDaFatturaPassiva();
 	}
 
 	/**
@@ -1787,15 +1731,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public boolean isRORegioneIrap() {
 
 		return isROFindRegioneIrap()
-				|| (getRegioneIrap() == null || getRegioneIrap()
-						.getCrudStatus() == OggettoBulk.NORMAL);
+				|| (getRegioneIrap() == null || getRegioneIrap().getCrudStatus() == OggettoBulk.NORMAL);
 	}
 
 	public boolean isROStato_pagamento_fondo_eco() {
 
-		return REGISTRATO_FONDO_ECO.equals(getStato_pagamento_fondo_eco())
-				|| isROPerChiusura()
-				|| isElettronica();
+		return REGISTRATO_FONDO_ECO.equals(getStato_pagamento_fondo_eco()) || isROPerChiusura() || isElettronica();
 	}
 
 	/**
@@ -1816,7 +1757,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROTerzo() {
 
-		return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null;
+		return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
 	}
 
 	/**
@@ -1827,7 +1768,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROTi_istituz_commerc() {
 
-		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null)
 			return true;
 		return false;
 	}
@@ -1841,8 +1782,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public boolean isROTipologiaRischio() {
 
 		return isROFindTipologiaRischio()
-				|| (getTipologiaRischio() == null || getTipologiaRischio()
-						.getCrudStatus() == OggettoBulk.NORMAL);
+				|| (getTipologiaRischio() == null || getTipologiaRischio().getCrudStatus() == OggettoBulk.NORMAL);
 	}
 
 	/**
@@ -1864,13 +1804,14 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROTipoTrattamento() {
 
-		return isROTerzo() && getFatturaPassiva()==null;
+		return isROTerzo() && getFatturaPassiva() == null;
 	}
 
 	public boolean isROTipoPrestazioneCompenso() {
 
-		return isROTerzo() && getFatturaPassiva()==null;
+		return isROTerzo() && getFatturaPassiva() == null;
 	}
+
 	/**
 	 * Insert the method's description here. Creation date: (25/02/2002
 	 * 11.24.00)
@@ -1879,8 +1820,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROVoceIva() {
 
-		return isROFindVoceIva()
-				|| (getVoceIva() == null || getVoceIva().getCrudStatus() == OggettoBulk.NORMAL);
+		return isROFindVoceIva() || (getVoceIva() == null || getVoceIva().getCrudStatus() == OggettoBulk.NORMAL);
 	}
 
 	/**
@@ -1891,18 +1831,15 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @see it.cnr.jada.bulk.OggettoBulk#fillFromActionContext(it.cnr.jada.action.ActionContext,
 	 *      java.lang.String, int, it.cnr.jada.bulk.FieldValidationMap)
 	 */
-	public boolean fillFromActionContext(ActionContext actioncontext, String s,
-			int i, FieldValidationMap fieldvalidationmap) throws FillException {
-		if (getTipoRapporto() != null
-				&& getTipoRapporto().getCd_tipo_rapporto().equals(
-						it.cnr.contab.utenze00.bulk.CNRUserInfo
-								.getCd_tipo_rapporto(actioncontext))) {
+	public boolean fillFromActionContext(ActionContext actioncontext, String s, int i,
+			FieldValidationMap fieldvalidationmap) throws FillException {
+		if (getTipoRapporto() != null && getTipoRapporto().getCd_tipo_rapporto()
+				.equals(it.cnr.contab.utenze00.bulk.CNRUserInfo.getCd_tipo_rapporto(actioncontext))) {
 			roQuota_esente_inps = java.lang.Boolean.FALSE;
 		} else {
 			roQuota_esente_inps = java.lang.Boolean.TRUE;
 		}
-		return super.fillFromActionContext(actioncontext, s, i,
-				fieldvalidationmap);
+		return super.fillFromActionContext(actioncontext, s, i, fieldvalidationmap);
 	}
 
 	/**
@@ -2018,11 +1955,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param bulk
 	 *            it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
 	 */
-	public void removeFromDefferredSaldi(
-			it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk docCont) {
+	public void removeFromDefferredSaldi(it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk docCont) {
 
-		if (docCont != null && deferredSaldi != null
-				&& deferredSaldi.containsKey(docCont))
+		if (docCont != null && deferredSaldi != null && deferredSaldi.containsKey(docCont))
 			deferredSaldi.remove(docCont);
 	}
 
@@ -2032,11 +1967,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public int removeFromDettagliCancellati(
 			it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk dettaglio) {
 
-		if (BulkCollections.containsByPrimaryKey(getDettagliCancellati(),
-				(OggettoBulk) dettaglio))
-			getDettagliCancellati().remove(
-					BulkCollections.indexOfByPrimaryKey(
-							getDettagliCancellati(), (OggettoBulk) dettaglio));
+		if (BulkCollections.containsByPrimaryKey(getDettagliCancellati(), (OggettoBulk) dettaglio))
+			getDettagliCancellati()
+					.remove(BulkCollections.indexOfByPrimaryKey(getDettagliCancellati(), (OggettoBulk) dettaglio));
 
 		return getDettagliCancellati().size() - 1;
 	}
@@ -2051,13 +1984,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 			return -1;
 
 		if (scadenza != null
-				&& BulkCollections.containsByPrimaryKey(
-						getDocumentiContabiliCancellati(),
-						(OggettoBulk) scadenza))
+				&& BulkCollections.containsByPrimaryKey(getDocumentiContabiliCancellati(), (OggettoBulk) scadenza))
 			getDocumentiContabiliCancellati().remove(
-					BulkCollections.indexOfByPrimaryKey(
-							getDocumentiContabiliCancellati(),
-							(OggettoBulk) scadenza));
+					BulkCollections.indexOfByPrimaryKey(getDocumentiContabiliCancellati(), (OggettoBulk) scadenza));
 
 		return getDocumentiContabiliCancellati().size() - 1;
 	}
@@ -2069,11 +1998,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param docCont
 	 *            it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
 	 */
-	public void removeFromRelationsDocContForSaldi(
-			it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk docCont) {
+	public void removeFromRelationsDocContForSaldi(it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk docCont) {
 
-		if (docCont != null && relationsDocContForSaldi != null
-				&& relationsDocContForSaldi.containsKey(docCont))
+		if (docCont != null && relationsDocContForSaldi != null && relationsDocContForSaldi.containsKey(docCont))
 			relationsDocContForSaldi.remove(docCont);
 	}
 
@@ -2196,8 +2123,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newAperturaDaMinicarriera
 	 *            java.lang.Boolean
 	 */
-	public void setAperturaDaMinicarriera(
-			java.lang.Boolean newAperturaDaMinicarriera) {
+	public void setAperturaDaMinicarriera(java.lang.Boolean newAperturaDaMinicarriera) {
 		aperturaDaMinicarriera = newAperturaDaMinicarriera;
 	}
 
@@ -2213,8 +2139,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public void setCd_cdr_genrc(java.lang.String cd_cdr_genrc) {
-		this.getLineaAttivita().getCentro_responsabilita()
-				.setCd_centro_responsabilita(cd_cdr_genrc);
+		this.getLineaAttivita().getCentro_responsabilita().setCd_centro_responsabilita(cd_cdr_genrc);
 	}
 
 	public void setCd_cds_missione(java.lang.String cd_cds_missione) {
@@ -2222,12 +2147,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public void setCd_cds_obbligazione(java.lang.String cd_cds_obbligazione) {
-		this.getObbligazioneScadenzario().getObbligazione().getCds()
-				.setCd_unita_organizzativa(cd_cds_obbligazione);
+		this.getObbligazioneScadenzario().getObbligazione().getCds().setCd_unita_organizzativa(cd_cds_obbligazione);
 	}
 
-	public void setCd_linea_attivita_genrc(
-			java.lang.String cd_linea_attivita_genrc) {
+	public void setCd_linea_attivita_genrc(java.lang.String cd_linea_attivita_genrc) {
 		this.getLineaAttivita().setCd_linea_attivita(cd_linea_attivita_genrc);
 	}
 
@@ -2331,8 +2254,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		if (newDocContAssociati != null) {
 
 			docContAssociati = new java.util.LinkedList();
-			for (java.util.Iterator i = newDocContAssociati.iterator(); i
-					.hasNext();) {
+			for (java.util.Iterator i = newDocContAssociati.iterator(); i.hasNext();) {
 				V_doc_cont_compBulk docCont = (V_doc_cont_compBulk) i.next();
 				if (docCont.isDocumentoPrincipale())
 					setDocContPrincipale(docCont);
@@ -2360,8 +2282,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newDocumentiContabiliCancellati
 	 *            java.util.Vector
 	 */
-	public void setDocumentiContabiliCancellati(
-			java.util.Vector newDocumentiContabiliCancellati) {
+	public void setDocumentiContabiliCancellati(java.util.Vector newDocumentiContabiliCancellati) {
 		documentiContabiliCancellati = newDocumentiContabiliCancellati;
 	}
 
@@ -2369,10 +2290,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		this.getMissione().setEsercizio(esercizio_missione);
 	}
 
-	public void setEsercizio_obbligazione(
-			java.lang.Integer esercizio_obbligazione) {
-		this.getObbligazioneScadenzario().getObbligazione().setEsercizio(
-				esercizio_obbligazione);
+	public void setEsercizio_obbligazione(java.lang.Integer esercizio_obbligazione) {
+		this.getObbligazioneScadenzario().getObbligazione().setEsercizio(esercizio_obbligazione);
 	}
 
 	/**
@@ -2399,8 +2318,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newLineaAttivita
 	 *            it.cnr.contab.config00.latt.bulk.Linea_attivitaBulk
 	 */
-	public void setLineaAttivita(
-			it.cnr.contab.config00.latt.bulk.WorkpackageBulk newLineaAttivita) {
+	public void setLineaAttivita(it.cnr.contab.config00.latt.bulk.WorkpackageBulk newLineaAttivita) {
 		lineaAttivita = newLineaAttivita;
 	}
 
@@ -2422,8 +2340,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newMissione
 	 *            it.cnr.contab.missioni00.docs.bulk.MissioneBulk
 	 */
-	public void setMissione(
-			it.cnr.contab.missioni00.docs.bulk.MissioneBulk newMissione) {
+	public void setMissione(it.cnr.contab.missioni00.docs.bulk.MissioneBulk newMissione) {
 		missione = newMissione;
 	}
 
@@ -2445,8 +2362,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newModalitaPagamento
 	 *            it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk
 	 */
-	public void setModalitaPagamento(
-			Rif_modalita_pagamentoBulk newModalitaPagamento) {
+	public void setModalitaPagamento(Rif_modalita_pagamentoBulk newModalitaPagamento) {
 		modalitaPagamento = newModalitaPagamento;
 	}
 
@@ -2482,19 +2398,15 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public void setEsercizio_ori_obbligazione(Integer esercizio_ori_obbligazione) {
-		this.getObbligazioneScadenzario().getObbligazione()
-				.setEsercizio_originale(esercizio_ori_obbligazione);
+		this.getObbligazioneScadenzario().getObbligazione().setEsercizio_originale(esercizio_ori_obbligazione);
 	}
 
 	public void setPg_obbligazione(java.lang.Long pg_obbligazione) {
-		this.getObbligazioneScadenzario().getObbligazione().setPg_obbligazione(
-				pg_obbligazione);
+		this.getObbligazioneScadenzario().getObbligazione().setPg_obbligazione(pg_obbligazione);
 	}
 
-	public void setPg_obbligazione_scadenzario(
-			java.lang.Long pg_obbligazione_scadenzario) {
-		this.getObbligazioneScadenzario().setPg_obbligazione_scadenzario(
-				pg_obbligazione_scadenzario);
+	public void setPg_obbligazione_scadenzario(java.lang.Long pg_obbligazione_scadenzario) {
+		this.getObbligazioneScadenzario().setPg_obbligazione_scadenzario(pg_obbligazione_scadenzario);
 	}
 
 	/**
@@ -2530,8 +2442,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newRegioneIrap
 	 *            it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk
 	 */
-	public void setRegioneIrap(
-			it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk newRegioneIrap) {
+	public void setRegioneIrap(it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk newRegioneIrap) {
 		regioneIrap = newRegioneIrap;
 	}
 
@@ -2542,8 +2453,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newRelationsDocContForSaldi
 	 *            it.cnr.jada.bulk.PrimaryKeyHashMap
 	 */
-	public void setRelationsDocContForSaldi(
-			it.cnr.jada.bulk.PrimaryKeyHashMap newRelationsDocContForSaldi) {
+	public void setRelationsDocContForSaldi(it.cnr.jada.bulk.PrimaryKeyHashMap newRelationsDocContForSaldi) {
 		relationsDocContForSaldi = newRelationsDocContForSaldi;
 	}
 
@@ -2623,8 +2533,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newTerminiPagamento
 	 *            it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk
 	 */
-	public void setTerminiPagamento(
-			Rif_termini_pagamentoBulk newTerminiPagamento) {
+	public void setTerminiPagamento(Rif_termini_pagamentoBulk newTerminiPagamento) {
 		terminiPagamento = newTerminiPagamento;
 	}
 
@@ -2657,8 +2566,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newTipologiaRischio
 	 *            it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk
 	 */
-	public void setTipologiaRischio(
-			it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk newTipologiaRischio) {
+	public void setTipologiaRischio(it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk newTipologiaRischio) {
 		tipologiaRischio = newTipologiaRischio;
 		setCd_tipologia_rischio(newTipologiaRischio.getCd_tipologia_rischio());
 	}
@@ -2714,8 +2622,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newVisualizzaTipologiaRischio
 	 *            boolean
 	 */
-	public void setVisualizzaTipologiaRischio(
-			boolean newVisualizzaTipologiaRischio) {
+	public void setVisualizzaTipologiaRischio(boolean newVisualizzaTipologiaRischio) {
 		visualizzaTipologiaRischio = newVisualizzaTipologiaRischio;
 	}
 
@@ -2730,18 +2637,15 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		visualizzaVoceIva = newVisualizzaVoceIva;
 	}
 
-	public void setVisualizzaCodici_rapporti_inps(
-			boolean newVisualizzaCodici_rapporti_inps) {
+	public void setVisualizzaCodici_rapporti_inps(boolean newVisualizzaCodici_rapporti_inps) {
 		visualizzaCodici_rapporti_inps = newVisualizzaCodici_rapporti_inps;
 	}
 
-	public void setVisualizzaCodici_attivita_inps(
-			boolean newVisualizzaCodici_attivita_inps) {
+	public void setVisualizzaCodici_attivita_inps(boolean newVisualizzaCodici_attivita_inps) {
 		visualizzaCodici_attivita_inps = newVisualizzaCodici_attivita_inps;
 	}
 
-	public void setVisualizzaCodici_altra_forma_ass_inps(
-			boolean newVisualizzaCodici_altra_forma_ass_inps) {
+	public void setVisualizzaCodici_altra_forma_ass_inps(boolean newVisualizzaCodici_altra_forma_ass_inps) {
 		visualizzaCodici_altra_forma_ass_inps = newVisualizzaCodici_altra_forma_ass_inps;
 	}
 
@@ -2752,8 +2656,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @param newVoceIva
 	 *            it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk
 	 */
-	public void setVoceIva(
-			it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk newVoceIva) {
+	public void setVoceIva(it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk newVoceIva) {
 		voceIva = newVoceIva;
 	}
 
@@ -2764,34 +2667,27 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * trovare una delle mie scadenze cancellate tra quelle della obbligazione
 	 * significa che l'utente l'ha eliminata fisicamente.
 	 */
-	public void sincronizzaScadenzeCancellate(
-			Obbligazione_scadenzarioBulk newScadenza) {
-		if (getDocumentiContabiliCancellati() == null
-				|| getDocumentiContabiliCancellati().isEmpty())
+	public void sincronizzaScadenzeCancellate(Obbligazione_scadenzarioBulk newScadenza) {
+		if (getDocumentiContabiliCancellati() == null || getDocumentiContabiliCancellati().isEmpty())
 			return;
 
 		if (getObbligazioneScadenzario() == null)
 			return;
 
-		if (!newScadenza.getObbligazione().equalsByPrimaryKey(
-				getObbligazioneScadenzario().getObbligazione()))
+		if (!newScadenza.getObbligazione().equalsByPrimaryKey(getObbligazioneScadenzario().getObbligazione()))
 			return;
 
 		boolean trovata = false;
-		BulkList coll = newScadenza.getObbligazione()
-				.getObbligazione_scadenzarioColl();
+		BulkList coll = newScadenza.getObbligazione().getObbligazione_scadenzarioColl();
 		if (coll == null)
 			return;
 
-		for (Iterator c = ((Vector) getDocumentiContabiliCancellati().clone())
-				.iterator(); c.hasNext();) {
-			Obbligazione_scadenzarioBulk aScadCanc = (Obbligazione_scadenzarioBulk) c
-					.next();
+		for (Iterator c = ((Vector) getDocumentiContabiliCancellati().clone()).iterator(); c.hasNext();) {
+			Obbligazione_scadenzarioBulk aScadCanc = (Obbligazione_scadenzarioBulk) c.next();
 			trovata = false;
 
 			for (Iterator i = coll.iterator(); i.hasNext();) {
-				Obbligazione_scadenzarioBulk aScadenza = (Obbligazione_scadenzarioBulk) i
-						.next();
+				Obbligazione_scadenzarioBulk aScadenza = (Obbligazione_scadenzarioBulk) i.next();
 
 				if (aScadenza.equalsByPrimaryKey(aScadCanc)) {
 					getDocumentiContabiliCancellati().remove(aScadCanc);
@@ -2799,19 +2695,15 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 					trovata = true;
 				}
 			}
-			if (!trovata
-					&& aScadCanc.getObbligazione().equalsByPrimaryKey(
-							newScadenza.getObbligazione()))
+			if (!trovata && aScadCanc.getObbligazione().equalsByPrimaryKey(newScadenza.getObbligazione()))
 				getDocumentiContabiliCancellati().remove(aScadCanc);
 		}
 	}
 
-	public void validaDate() throws it.cnr.jada.comp.ApplicationException,
-			it.cnr.jada.action.BusinessProcessException,
+	public void validaDate() throws it.cnr.jada.comp.ApplicationException, it.cnr.jada.action.BusinessProcessException,
 			java.text.ParseException, javax.ejb.EJBException {
 		if (getDt_registrazione() == null)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"Inserire la data registrazione");
+			throw new it.cnr.jada.comp.ApplicationException("Inserire la data registrazione");
 
 		Calendar calendar = getDateCalendar(getDt_registrazione());
 		int annoDataRegistrazione = calendar.get(Calendar.YEAR);
@@ -2828,15 +2720,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 	public void validaDateCompetenzaCoge() throws ApplicationException {
 		if (getDt_da_competenza_coge() == null)
-			throw new ApplicationException(
-					"Inserire la Data Inizio Competenza COGE.");
+			throw new ApplicationException("Inserire la Data Inizio Competenza COGE.");
 		if (getDt_a_competenza_coge() == null)
-			throw new ApplicationException(
-					"Inserire la Data Fine Competenza COGE.");
+			throw new ApplicationException("Inserire la Data Fine Competenza COGE.");
 
 		if (getDt_a_competenza_coge().before(getDt_da_competenza_coge()))
-			throw new ApplicationException(
-					"La Data Inizio Competenza deve essere inferiore alla Data Fine Competenza");
+			throw new ApplicationException("La Data Inizio Competenza deve essere inferiore alla Data Fine Competenza");
 
 		Calendar competenzaDa = getDateCalendar(getDt_da_competenza_coge());
 		Calendar competenzaA = getDateCalendar(getDt_a_competenza_coge());
@@ -2851,43 +2740,41 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 					"La data di Fine Competenza deve appartenere all'esercizio di scrivania o al successivo!");
 	}
 
-	public void validaDatiFattura()
-			throws it.cnr.jada.comp.ApplicationException {
+	public void validaDatiFattura() throws it.cnr.jada.comp.ApplicationException {
 
 		// Non ho inserito nessun dato oppure ho inserito tutti i dati relativi
 		// alla fattura fornitore
-		boolean tuttiNull = getEsercizio_fattura_fornitore() == null
-				&& getNr_fattura_fornitore() == null
+		boolean tuttiNull = getEsercizio_fattura_fornitore() == null && getNr_fattura_fornitore() == null
 				&& getDt_fattura_fornitore() == null;
-		boolean tuttiNotNull = getEsercizio_fattura_fornitore() != null
-				&& getNr_fattura_fornitore() != null
+		boolean tuttiNotNull = getEsercizio_fattura_fornitore() != null && getNr_fattura_fornitore() != null
 				&& getDt_fattura_fornitore() != null;
 		if (tuttiNull && Boolean.TRUE.equals(getFl_generata_fattura()))
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Inserire gli estremi identificativi della fattura fornitore");
 		if (tuttiNotNull && Boolean.FALSE.equals(getFl_generata_fattura()))
-			throw new it.cnr.jada.comp.ApplicationException("Indicare generare fattura o eliminare gli estremi identificativi della fattura");
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Indicare generare fattura o eliminare gli estremi identificativi della fattura");
 		if (!(tuttiNull || tuttiNotNull))
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Completare gli estremi identificativi della fattura fornitore.");
-		
-		
-		if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)&& Boolean.TRUE.equals(getFl_generata_fattura() && Boolean.FALSE.equals(isGestione_doc_ele()))){ 
-			if(getDt_scadenza()== null)
+
+		if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)
+				&& Boolean.TRUE.equals(getFl_generata_fattura() && Boolean.FALSE.equals(isGestione_doc_ele()))) {
+			if (getDt_scadenza() == null)
 				throw new ApplicationException("Inserire la data di scadenza.");
-			if(getData_protocollo()== null)
-					throw new ApplicationException("Inserire la data di protocollo di entrata.");
-			if(getNumero_protocollo()== null)
-					throw new ApplicationException("Inserire il numero di protocollo di entrata!");
-			if(getData_protocollo()!= null && getData_protocollo().before(getDt_fattura_fornitore()))
-				throw new it.cnr.jada.comp.ApplicationException("La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");		
+			if (getData_protocollo() == null)
+				throw new ApplicationException("Inserire la data di protocollo di entrata.");
+			if (getNumero_protocollo() == null)
+				throw new ApplicationException("Inserire il numero di protocollo di entrata!");
+			if (getData_protocollo() != null && getData_protocollo().before(getDt_fattura_fornitore()))
+				throw new it.cnr.jada.comp.ApplicationException(
+						"La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");
 		}
-		
-		if(getData_protocollo()!=null && getData_protocollo().after(getDt_registrazione()))
+
+		if (getData_protocollo() != null && getData_protocollo().after(getDt_registrazione()))
 			throw new it.cnr.jada.comp.ApplicationException(
 					"La data protocollo di entrata non può essere superiore alla data registrazione del compenso");
-		if (getDt_fattura_fornitore() != null
-				&& getDt_fattura_fornitore().compareTo(getDt_registrazione()) > 0)
+		if (getDt_fattura_fornitore() != null && getDt_fattura_fornitore().compareTo(getDt_registrazione()) > 0)
 			throw new it.cnr.jada.comp.ApplicationException(
 					"La data fattura fornitore non può essere superiore alla data registrazione del compenso");
 
@@ -2895,8 +2782,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		// selezionato un tipo trattamento non compatibile
 		if (getTipoTrattamento() != null)
 			if (Boolean.TRUE.equals(getFl_generata_fattura())
-					&& Boolean.FALSE.equals(getTipoTrattamento()
-							.getFl_registra_fattura()))
+					&& Boolean.FALSE.equals(getTipoTrattamento().getFl_registra_fattura()))
 				throw new it.cnr.jada.comp.ApplicationException(
 						"Il Tipo Trattamento selezionato non prevede la gestione Genera Fattura");
 	}
@@ -2909,15 +2795,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		if (getV_terzo() == null)
 			throw new ValidationException("Selezionare un Terzo");
 
-		if (Utility.nvl(getIm_netto_da_trattenere()).compareTo(
-				new BigDecimal(0)) < 0) {
-			throw new ValidationException(
-					"L'importo Netto da sospendere non può essere negativo.");
+		if (Utility.nvl(getIm_netto_da_trattenere()).compareTo(new BigDecimal(0)) < 0) {
+			throw new ValidationException("L'importo Netto da sospendere non può essere negativo.");
 		}
-		if (Utility.nvl(getIm_netto_da_trattenere()).compareTo(
-				new BigDecimal(0)) > 0) {
-			if (Utility.nvl(getIm_netto_percipiente()).compareTo(
-					Utility.nvl(getIm_netto_da_trattenere())) < 0) {
+		if (Utility.nvl(getIm_netto_da_trattenere()).compareTo(new BigDecimal(0)) > 0) {
+			if (Utility.nvl(getIm_netto_percipiente()).compareTo(Utility.nvl(getIm_netto_da_trattenere())) < 0) {
 				throw new ValidationException(
 						"L'importo Netto da sospendere non può superare l'importo netto da pagare.");
 			}
@@ -2928,53 +2810,48 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 		// Controllo se il terzo è valido
 		if (getTerzo().getDt_fine_rapporto() != null)
-			if (getTerzo().getDt_fine_rapporto().compareTo(
-					getDt_registrazione()) < 0)
-				throw new it.cnr.jada.comp.ApplicationException(
-						"Il terzo selezionato non è valido");
+			if (getTerzo().getDt_fine_rapporto().compareTo(getDt_registrazione()) < 0)
+				throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non è valido");
 
 		// Controllo se ho inserito le modalità di pagamento
 		if (getModalitaPagamento() == null)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"Inserire le modalità di pagamento");
+			throw new it.cnr.jada.comp.ApplicationException("Inserire le modalità di pagamento");
 
 		// Controllo se ho inserito il tipo rapporto
 		if (getTipoRapporto() == null)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"Inserire il tipo rapporto");
+			throw new it.cnr.jada.comp.ApplicationException("Inserire il tipo rapporto");
 
 		// Controllo se ho inserito il tipo trattamento
 		if (getTipoTrattamento() == null)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"Inserire il tipo trattamento");
-		
+			throw new it.cnr.jada.comp.ApplicationException("Inserire il tipo trattamento");
+
 		// Controllo se ho inserito il tipo prestazione
 		/*
-		if (getTipoPrestazioneCompenso() == null && isPrestazioneCompensoEnabled())
-			throw new it.cnr.jada.comp.ApplicationException(
-					"Inserire il tipo prestazione");*/
+		 * if (getTipoPrestazioneCompenso() == null &&
+		 * isPrestazioneCompensoEnabled()) throw new
+		 * it.cnr.jada.comp.ApplicationException( "Inserire il tipo prestazione"
+		 * );
+		 */
 	}
 
 	public void validaTestata() throws it.cnr.jada.comp.ApplicationException,
-			it.cnr.jada.action.BusinessProcessException,
-			javax.ejb.EJBException, java.text.ParseException {
+			it.cnr.jada.action.BusinessProcessException, javax.ejb.EJBException, java.text.ParseException {
 		// Validazione Date
 		validaDate();
-		if (getMissione()!=null && getMissione().getDataInizioObbligoRegistroUnico()!=null){
+		if (getMissione() != null && getMissione().getDataInizioObbligoRegistroUnico() != null) {
 			setDataInizioObbligoRegistroUnico(getMissione().getDataInizioObbligoRegistroUnico());
 		}
-		if (dataInizioObbligoRegistroUnico!=null && (getDt_registrazione().after(dataInizioObbligoRegistroUnico)))
-		{
-			if(getStato_liquidazione()==null)
+		if (dataInizioObbligoRegistroUnico != null && (getDt_registrazione().after(dataInizioObbligoRegistroUnico))) {
+			if (getStato_liquidazione() == null)
 				throw new ApplicationException("Inserire lo stato della liquidazione!");
-			if(getStato_liquidazione()!=null && getStato_liquidazione().compareTo(this.LIQ)!=0 && getCausale()==null)
+			if (getStato_liquidazione() != null && getStato_liquidazione().compareTo(this.LIQ) != 0
+					&& getCausale() == null)
 				throw new ApplicationException("Inserire la causale.");
 		}
 
 		// Validazione Descrizione
 		if (getDs_compenso() == null)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"Inserire la Descrizione");
+			throw new it.cnr.jada.comp.ApplicationException("Inserire la Descrizione");
 	}
 
 	/**
@@ -3049,8 +2926,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	/**
 	 * @param bulk
 	 */
-	public void setCodici_altra_forma_ass_inps(
-			Codici_altra_forma_ass_inpsBulk bulk) {
+	public void setCodici_altra_forma_ass_inps(Codici_altra_forma_ass_inpsBulk bulk) {
 		codici_altra_forma_ass_inps = bulk;
 	}
 
@@ -3074,14 +2950,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		return comune_inps;
 	}
 
-	public void setComune_inps(
-			it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk newComune_inps) {
+	public void setComune_inps(it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk newComune_inps) {
 		comune_inps = newComune_inps;
 	}
 
 	public java.lang.Long getPg_comune_inps() {
-		it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk comune_inps = this
-				.getComune_inps();
+		it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk comune_inps = this.getComune_inps();
 		if (comune_inps == null)
 			return null;
 		return comune_inps.getPg_comune();
@@ -3092,16 +2966,14 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public boolean isROds_comune_inps() {
-		return comune_inps == null
-				|| comune_inps.getCrudStatus() == OggettoBulk.NORMAL;
+		return comune_inps == null || comune_inps.getCrudStatus() == OggettoBulk.NORMAL;
 	}
 
 	public Incarichi_repertorio_annoBulk getIncarichi_repertorio_anno() {
 		return incarichi_repertorio_anno;
 	}
 
-	public void setIncarichi_repertorio_anno(
-			Incarichi_repertorio_annoBulk incarichi_repertorio_anno) {
+	public void setIncarichi_repertorio_anno(Incarichi_repertorio_annoBulk incarichi_repertorio_anno) {
 		this.incarichi_repertorio_anno = incarichi_repertorio_anno;
 	}
 
@@ -3122,8 +2994,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public void setPg_repertorio(java.lang.Long pg_repertorio) {
-		this.getIncarichi_repertorio_anno().getIncarichi_repertorio()
-				.setPg_repertorio(pg_repertorio);
+		this.getIncarichi_repertorio_anno().getIncarichi_repertorio().setPg_repertorio(pg_repertorio);
 	}
 
 	public java.lang.Integer getEsercizio_limite_rep() {
@@ -3133,70 +3004,57 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public void setEsercizio_limite_rep(java.lang.Integer esercizio_limite) {
-		this.getIncarichi_repertorio_anno().setEsercizio_limite(
-				esercizio_limite);
+		this.getIncarichi_repertorio_anno().setEsercizio_limite(esercizio_limite);
 	}
 
 	public boolean isIncaricoEnabled() {
-		if (this.isDaMissione()
-				|| this.isSenzaCalcoli()
-				|| this.getTipoPrestazioneCompenso()==null
-				/*
-				|| (this.getTipoTrattamento() != null
-						&& this.getTipoTrattamento().getFl_incarico() != null && !this
-						.getTipoTrattamento().getFl_incarico())
-				*/		
-				/*		
-				|| (this.getTerzo() != null
-						&& this.getTerzo().isStudioAssociato() && (this
-						.getTi_prestazione() == null || this
-						.getTi_prestazione().equals(
-								CompensoBulk.TIPO_PRESTAZIONE_SERVIZI)))
-				*/
-				|| (this.isPrestazioneCompensoEnabled() 
-					&& this.getTipoPrestazioneCompenso()!=null
-					&& this.getTipoPrestazioneCompenso().getFl_incarico() != null 
-					&& !this.getTipoPrestazioneCompenso().getFl_incarico()))
+		if (this.isDaMissione() || this.isSenzaCalcoli() || this.getTipoPrestazioneCompenso() == null
+		/*
+		 * || (this.getTipoTrattamento() != null &&
+		 * this.getTipoTrattamento().getFl_incarico() != null && !this
+		 * .getTipoTrattamento().getFl_incarico())
+		 */
+		/*
+		 * || (this.getTerzo() != null && this.getTerzo().isStudioAssociato() &&
+		 * (this .getTi_prestazione() == null || this
+		 * .getTi_prestazione().equals( CompensoBulk.TIPO_PRESTAZIONE_SERVIZI)))
+		 */
+				|| (this.isPrestazioneCompensoEnabled() && this.getTipoPrestazioneCompenso() != null
+						&& this.getTipoPrestazioneCompenso().getFl_incarico() != null
+						&& !this.getTipoPrestazioneCompenso().getFl_incarico()))
 			return false;
 		return true;
 	}
 
 	public boolean isContrattoEnabled() {
-		if (this.isDaMissione()
-				|| this.isSenzaCalcoli()
-				|| this.getTipoPrestazioneCompenso()==null
-				|| (this.isPrestazioneCompensoEnabled() 
-					&& this.getTipoPrestazioneCompenso()!=null
-					&& this.getTipoPrestazioneCompenso().getFl_contratto() != null 
-					&& !this.getTipoPrestazioneCompenso().getFl_contratto()))
+		if (this.isDaMissione() || this.isSenzaCalcoli() || this.getTipoPrestazioneCompenso() == null
+				|| (this.isPrestazioneCompensoEnabled() && this.getTipoPrestazioneCompenso() != null
+						&& this.getTipoPrestazioneCompenso().getFl_contratto() != null
+						&& !this.getTipoPrestazioneCompenso().getFl_contratto()))
 			return false;
 		return true;
 	}
+
 	public boolean isPrestazioneCompensoEnabled() {
-		if (this.isDaMissione()
-				|| this.isSenzaCalcoli()
-				|| (this.getTipoTrattamento() != null
-						&& this.getTipoTrattamento().getFl_tipo_prestazione_obbl() != null && !this
-						.getTipoTrattamento().getFl_tipo_prestazione_obbl()))
+		if (this.isDaMissione() || this.isSenzaCalcoli()
+				|| (this.getTipoTrattamento() != null && this.getTipoTrattamento().getFl_tipo_prestazione_obbl() != null
+						&& !this.getTipoTrattamento().getFl_tipo_prestazione_obbl()))
 			return false;
 		return true;
 	}
-	
+
 	public java.lang.String getIncarichi_oggetto() {
 		if (this.getIncarichi_repertorio_anno() == null
-				|| this.getIncarichi_repertorio_anno()
-						.getIncarichi_repertorio() == null
-				|| this.getIncarichi_repertorio_anno()
-						.getIncarichi_repertorio().getIncarichi_procedura() == null)
+				|| this.getIncarichi_repertorio_anno().getIncarichi_repertorio() == null
+				|| this.getIncarichi_repertorio_anno().getIncarichi_repertorio().getIncarichi_procedura() == null)
 			return null;
-		return this.getIncarichi_repertorio_anno().getIncarichi_repertorio()
-				.getIncarichi_procedura().getOggetto();
+		return this.getIncarichi_repertorio_anno().getIncarichi_repertorio().getIncarichi_procedura().getOggetto();
 		// return incarichi_oggetto;
 	}
 
 	public void setIncarichi_oggetto(java.lang.String incarichi_oggetto) {
-		this.getIncarichi_repertorio_anno().getIncarichi_repertorio()
-				.getIncarichi_procedura().setOggetto(incarichi_oggetto);
+		this.getIncarichi_repertorio_anno().getIncarichi_repertorio().getIncarichi_procedura()
+				.setOggetto(incarichi_oggetto);
 		// this.incarichi_oggetto = incarichi_oggetto;
 	}
 
@@ -3207,8 +3065,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public void setImporto_complessivo(java.math.BigDecimal importo_complessivo) {
-		this.getIncarichi_repertorio_anno().setImporto_complessivo(
-				importo_complessivo);
+		this.getIncarichi_repertorio_anno().setImporto_complessivo(importo_complessivo);
 	}
 
 	public java.math.BigDecimal getImporto_iniziale() {
@@ -3218,8 +3075,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 
 	public void setImporto_iniziale(java.math.BigDecimal importo_iniziale) {
-		this.getIncarichi_repertorio_anno().setImporto_iniziale(
-				importo_iniziale);
+		this.getIncarichi_repertorio_anno().setImporto_iniziale(importo_iniziale);
 	}
 
 	/*
@@ -3250,11 +3106,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public boolean isROIm_netto_da_trattenere() {
 		return (isDaConguaglio() || isDaMissione());
 	}
-/*
-	public java.util.Dictionary getTi_prestazioneKeys() {
-		return TIPI_PRESTAZIONE;
-	}
-*/
+
+	/*
+	 * public java.util.Dictionary getTi_prestazioneKeys() { return
+	 * TIPI_PRESTAZIONE; }
+	 */
 	public BonusBulk getBonus() {
 		return bonus;
 	}
@@ -3290,64 +3146,70 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa) {
 		this.unitaOrganizzativa = unitaOrganizzativa;
 	}
-	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorg:descrizione"))	
-	public String getDsUnitaOrganizzativa(){
+
+	@CMISPolicy(name = "P:strorg:uo", property = @CMISProperty(name = "strorg:descrizione"))
+	public String getDsUnitaOrganizzativa() {
 		if (getUnitaOrganizzativa() == null)
 			return null;
 		return getUnitaOrganizzativa().getDs_unita_organizzativa();
 	}
+
 	public Tipo_prestazione_compensoBulk getTipoPrestazioneCompenso() {
 		return tipoPrestazioneCompenso;
 	}
 
-	public void setTipoPrestazioneCompenso(
-			Tipo_prestazione_compensoBulk tipoPrestazioneCompenso) {
+	public void setTipoPrestazioneCompenso(Tipo_prestazione_compensoBulk tipoPrestazioneCompenso) {
 		this.tipoPrestazioneCompenso = tipoPrestazioneCompenso;
 	}
+
 	public java.lang.String getTi_prestazione() {
-		Tipo_prestazione_compensoBulk tipoPrestazioneCompenso = this
-				.getTipoPrestazioneCompenso();
+		Tipo_prestazione_compensoBulk tipoPrestazioneCompenso = this.getTipoPrestazioneCompenso();
 		if (tipoPrestazioneCompenso == null)
 			return null;
 		return tipoPrestazioneCompenso.getCd_ti_prestazione();
 	}
+
 	public void setTi_prestazione(java.lang.String ti_prestazione) {
 		this.getTipoPrestazioneCompenso().setCd_ti_prestazione(ti_prestazione);
 	}
-	
+
 	public java.util.Collection getTipiPrestazioneCompenso() {
 		return tipiPrestazioneCompenso;
 	}
 
-	public void setTipiPrestazioneCompenso(
-			java.util.Collection tipiPrestazioneCompenso) {
+	public void setTipiPrestazioneCompenso(java.util.Collection tipiPrestazioneCompenso) {
 		this.tipiPrestazioneCompenso = tipiPrestazioneCompenso;
 	}
-		
+
 	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getPignorato() {
 		return pignorato;
 	}
 
 	public void setPignorato(it.cnr.contab.anagraf00.core.bulk.TerzoBulk pignorato) {
 		this.pignorato = pignorato;
-	}	
-	public java.lang.String getDs_pignorato() {
-		if ( pignorato != null )
-			return pignorato.getDenominazione_sede();
-		return "";	
 	}
+
+	public java.lang.String getDs_pignorato() {
+		if (pignorato != null)
+			return pignorato.getDenominazione_sede();
+		return "";
+	}
+
 	public void setCd_terzo_pignorato(java.lang.Integer cd_terzo_pignorato) {
 		this.getPignorato().setCd_terzo(cd_terzo_pignorato);
-	}	
+	}
+
 	public java.lang.Integer getCd_terzo_pignorato() {
 		it.cnr.contab.anagraf00.core.bulk.TerzoBulk pignorato = this.getPignorato();
 		if (pignorato == null)
 			return null;
 		return pignorato.getCd_terzo();
 	}
+
 	public boolean isROPignorato() {
 		return pignorato == null || pignorato.getCrudStatus() == NORMAL;
 	}
+
 	public boolean isVisualizzaPignorato() {
 		return visualizzaPignorato;
 	}
@@ -3355,13 +3217,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public void setVisualizzaPignorato(boolean visualizzaPignorato) {
 		this.visualizzaPignorato = visualizzaPignorato;
 	}
-	
+
 	public ContrattoBulk getContratto() {
 		return contratto;
 	}
 
-	public void setContratto(
-			ContrattoBulk contratto) {
+	public void setContratto(ContrattoBulk contratto) {
 		this.contratto = contratto;
 	}
 
@@ -3374,7 +3235,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public void setEsercizio_contratto(java.lang.Integer esercizio_contratto) {
 		this.getContratto().setEsercizio(esercizio_contratto);
 	}
-	
+
 	public java.lang.String getStato_contratto() {
 		if (getContratto() == null)
 			return null;
@@ -3403,8 +3264,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 	public void setOggetto_contratto(java.lang.String oggetto_contratto) {
 		this.oggetto_contratto = oggetto_contratto;
-		//this.getContratto().setOggetto(oggetto_contratto);
+		// this.getContratto().setOggetto(oggetto_contratto);
 	}
+
 	public TrovatoBulk getTrovato() {
 		return trovato;
 	}
@@ -3413,61 +3275,63 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		this.trovato = trovato;
 	}
 
-	public java.lang.Long getPg_trovato() {
+	public java.lang.Integer getPg_trovato() {
 		if (this.getTrovato() == null)
 			return null;
-		return this.getTrovato().getPg_trovato();
+		return this.getTrovato().getNsrif();
 	}
-	public void setPg_trovato(java.lang.Long pg_trovato) {
+
+	public void setPg_trovato(java.lang.Integer pg_trovato) {
 		if (this.getTrovato() != null)
-			this.getTrovato().setPg_trovato(pg_trovato);
+			this.getTrovato().setNsrif(pg_trovato);
 	}
 
 	public Boolean isCollegatoCapitoloPerTrovato() {
-//		return collegatoCapitoloPerTrovato;
+		// return collegatoCapitoloPerTrovato;
 		if (getObbligazioneScadenzario() == null || getObbligazioneScadenzario().getObbligazione() == null)
 			return false;
 		return getObbligazioneScadenzario().getObbligazione().getElemento_voce().isVocePerTrovati();
 	}
+
 	public java.sql.Timestamp getDataInizioObbligoRegistroUnico() {
 		return dataInizioObbligoRegistroUnico;
 	}
 
-	public void setDataInizioObbligoRegistroUnico(
-			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
+	public void setDataInizioObbligoRegistroUnico(java.sql.Timestamp dataInizioObbligoRegistroUnico) {
 		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
 	}
+
 	public Dictionary getStato_liquidazioneKeys() {
 		return STATO_LIQUIDAZIONE;
 	}
-	public Dictionary getCausaleKeys(){
+
+	public Dictionary getCausaleKeys() {
 		return CAUSALE;
 	}
+
 	public java.sql.Timestamp getDataInizioFatturaElettronica() {
 		return dataInizioFatturaElettronica;
 	}
-	public void setDataInizioFatturaElettronica(
-			java.sql.Timestamp dataInizioFatturaElettronica) {
+
+	public void setDataInizioFatturaElettronica(java.sql.Timestamp dataInizioFatturaElettronica) {
 		this.dataInizioFatturaElettronica = dataInizioFatturaElettronica;
 	}
 
 	public boolean isGestione_doc_ele() {
-		if(this.getDt_registrazione() != null && this.getDataInizioFatturaElettronica() != null)
-		{
-			if ((this.getDt_registrazione().compareTo(this.getDataInizioFatturaElettronica())<0))
+		if (this.getDt_registrazione() != null && this.getDataInizioFatturaElettronica() != null) {
+			if ((this.getDt_registrazione().compareTo(this.getDataInizioFatturaElettronica()) < 0))
 				return false;
 			else
 				return true;
 		}
-		return true;  //non dovrebbe mai verificarsi
+		return true; // non dovrebbe mai verificarsi
 	}
 
 	public it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk getVoceIvaFattura() {
 		return voceIvaFattura;
 	}
 
-	public void setVoceIvaFattura(
-			it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk voceIvaFattura) {
+	public void setVoceIvaFattura(it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk voceIvaFattura) {
 		this.voceIvaFattura = voceIvaFattura;
 	}
 
@@ -3478,12 +3342,13 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public void setFatturaPassiva(Fattura_passivaBulk fatturaPassiva) {
 		this.fatturaPassiva = fatturaPassiva;
 	}
-	
+
 	public boolean isElettronica() {
-        if (getFl_documento_ele()!= null && getFl_documento_ele())
-		      return	true;
-        return false;
+		if (getFl_documento_ele() != null && getFl_documento_ele())
+			return true;
+		return false;
 	}
+
 	public boolean isTrattamentoSoloEnte() {
 		return trattamentoSoloEnte;
 	}
@@ -3491,30 +3356,23 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public void setTrattamentoSoloEnte(boolean trattamentoSoloEnte) {
 		this.trattamentoSoloEnte = trattamentoSoloEnte;
 	}
+
 	public void impostaVoceIva(Fattura_passiva_IBulk fp) {
-		
-		for (java.util.Iterator i = fp.getFattura_passiva_dettColl()
-				.iterator(); i.hasNext();) {
-			Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk) i
-					.next();
-			
-			if (riga.getVoce_iva() != null && 
-				riga.getVoce_iva().getPercentuale().compareTo(new BigDecimal(0))!=0)
-			{
+
+		for (java.util.Iterator i = fp.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
+			Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk) i.next();
+
+			if (riga.getVoce_iva() != null && riga.getVoce_iva().getPercentuale().compareTo(new BigDecimal(0)) != 0) {
 				setVoceIva(riga.getVoce_iva());
 				setVoceIvaFattura(riga.getVoce_iva());
 			}
-		}	
-			
-		if (getVoceIva()==null)
-		{
-			for (java.util.Iterator i = fp.getFattura_passiva_dettColl()
-					.iterator(); i.hasNext();) {
-				Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk) i
-						.next();
-				
-				if (riga.getVoce_iva() != null)
-				{
+		}
+
+		if (getVoceIva() == null) {
+			for (java.util.Iterator i = fp.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
+				Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk) i.next();
+
+				if (riga.getVoce_iva() != null) {
 					setVoceIva(riga.getVoce_iva());
 					setVoceIvaFattura(riga.getVoce_iva());
 				}

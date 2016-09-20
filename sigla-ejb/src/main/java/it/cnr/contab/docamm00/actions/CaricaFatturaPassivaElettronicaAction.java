@@ -25,20 +25,24 @@ import it.gov.fatturapa.sdi.monitoraggio.v1.FattureRicevuteType;
 import it.gov.fatturapa.sdi.monitoraggio.v1.MonitoraggioFlussiType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
@@ -98,15 +102,15 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	    	fileSdIConMetadatiTypeBulk.setIdentificativoSdI(metadatiInvioFileType.getValue().getIdentificativoSdI());
 	    	String cuu = metadatiInvioFileType.getValue().getCodiceDestinatario();
 	    	//TODO
-	    	SpringUtil.getBean("ricezioneFattureService", RicezioneFatturePA.class).
+	    	
+	    	DataSource byteArrayDataSource = new UploadedFileDataSource(file);
+			DataSource byteArrayDataSource2 = new UploadedFileDataSource(fileMetadata);
+			
+			SpringUtil.getBean("ricezioneFattureService", RicezioneFatturePA.class).
 				riceviFatturaSIGLA(fileSdIConMetadatiTypeBulk.getIdentificativoSdI(), file.getName(), null, 
-						new DataHandler(new ByteArrayDataSource(
-								IOUtils.toByteArray(new FileInputStream(file.getFile())),
-								file.getContentType())), 
+						new DataHandler(byteArrayDataSource), 
 								fileMetadata.getName(), 
-								new DataHandler(new ByteArrayDataSource(
-								IOUtils.toByteArray(new FileInputStream(fileMetadata.getFile())), 
-								fileMetadata.getContentType())));
+								new DataHandler(byteArrayDataSource2));
 			caricaPassivaElettronicaBP.setMessage("File caricato correttamente");
 			fileSdIConMetadatiTypeBulk.setIdentificativoSdI(null);
 		} catch (FillException e) {
@@ -206,5 +210,40 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 		}
 		return actioncontext.findDefaultForward();
 	}	
+	
+	
+	
+	class UploadedFileDataSource implements DataSource {
+		
+		private UploadedFile file;
+		
+		public UploadedFileDataSource(UploadedFile file) {
+			this.file = file;
+		}
+		
+
+		@Override
+		public OutputStream getOutputStream() throws IOException {
+			throw new NotImplementedException("datasource file non implementato" + file.toString());
+		}
+		
+		@Override
+		public String getName() {
+			return file.getName();
+		}
+		
+		@Override
+		public InputStream getInputStream() throws IOException {
+			return new FileInputStream(file.getFile());
+		}
+		
+		@Override
+		public String getContentType() {
+			return file.getContentType();
+		}
+		
+		
+	}
+	
 	
 }

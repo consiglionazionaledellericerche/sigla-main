@@ -1,19 +1,16 @@
 package it.cnr.contab.compensi00.ejb;
 
 import java.math.BigDecimal;
-import java.rmi.*;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.ejb.*;
 
 public class TransactionalCompensoComponentSession extends
 		it.cnr.jada.ejb.TransactionalCRUDComponentSession implements
@@ -1156,7 +1153,7 @@ public class TransactionalCompensoComponentSession extends
 	}
 
 	public List<CompensoBulk> ricercaCompensiTrovato(UserContext userContext,
-			Long trovato) throws ComponentException, RemoteException,
+			Integer trovato) throws ComponentException, RemoteException,
 			PersistencyException {
 		try {
 			return ((List<CompensoBulk>) invoke("ricercaCompensiTrovato", new Object[] { userContext, trovato }));
