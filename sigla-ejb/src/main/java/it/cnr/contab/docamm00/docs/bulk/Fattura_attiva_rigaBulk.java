@@ -451,14 +451,14 @@ public void setTrovato(TrovatoBulk trovato) {
 public TrovatoBulk getTrovato() {
 	return trovato;
 }
-public java.lang.Long getPg_trovato() {
+public java.lang.Integer getPg_trovato() {
 	if (this.getTrovato() == null)
 		return null;
-	return this.getTrovato().getPg_trovato();
+	return this.getTrovato().getNsrif();
 }
-public void setPg_trovato(java.lang.Long pg_trovato) {
+public void setPg_trovato(java.lang.Integer pg_trovato) {
 	if (this.getTrovato() != null)
-		this.getTrovato().setPg_trovato(pg_trovato);
+		this.getTrovato().setNsrif(pg_trovato);
 }
 public Boolean getCollegatoCapitoloPerTrovato() {
 	return collegatoCapitoloPerTrovato;

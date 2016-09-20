@@ -10,7 +10,6 @@
 		<property name="locations">
 			<list>
 				<value>classpath*:META-INF/spring/*.properties</value>
-				<value>classpath*:axis2.properties</value>
 				<value>classpath*:repository.properties</value>
 			</list>
 		</property>
@@ -44,7 +43,8 @@
    			resource-ref="false"/>	
 	<bean id="trovatoProperties" class="it.cnr.contab.docamm00.client.TrovatoProperties">
 		<property name="trovatoTargetEndpoint" value="${TrovatoTargetEndpoint}" />
-		<property name="trovatoSiglaWSClientPassword" value="${TrovatoSiglaWSClientPassword}" />
+		<property name="trovatoSiglaRestClientUser" value="${TrovatoSiglaRestClientUser}" />
+		<property name="trovatoSiglaRestClientPassword" value="${TrovatoSiglaRestClientPassword}" />
 	</bean>
 
 	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
