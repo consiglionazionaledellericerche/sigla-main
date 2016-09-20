@@ -17,11 +17,13 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.mail.SimplePECMail;
+import it.cnr.jada.util.upload.UploadedFile;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +38,7 @@ import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import javax.activation.DataSource;
 import javax.activation.DataHandler;
 import javax.activation.MimetypesFileTypeMap;
 import javax.mail.Address;
@@ -64,8 +67,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
@@ -271,15 +274,15 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			  			unmarshal(new StreamSource(bodyPartMetadati.getInputStream())));				    	    	
 					String replyTo = getReplyTo(message);
 			  	if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(userContext, metadatiInvioFileType.getValue().getIdentificativoSdI().longValue())) {
+			    	DataSource byteArrayDataSourceFattura = new UploadedFileDataSource(bodyPartFattura);
+			    	DataSource byteArrayDataSourceMetadati = new UploadedFileDataSource(bodyPartMetadati);
 			    	ricezioneFattureService.riceviFatturaSIGLA(
 			    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
 			    			bodyPartFattura.getFileName(), 
 			    			replyTo,
-						new DataHandler(new ByteArrayDataSource(
-								IOUtils.toByteArray(bodyPartFattura.getInputStream()),bodyPartFattura.getContentType())), 
+						new DataHandler(byteArrayDataSourceFattura), 
 						bodyPartMetadati.getFileName(), 
-						new DataHandler(new ByteArrayDataSource(
-								IOUtils.toByteArray(bodyPartMetadati.getInputStream()), bodyPartMetadati.getContentType())));				    	    					    	    			
+						new DataHandler(byteArrayDataSourceMetadati));				    	    					    	    			
 			  	}
 			} else {
 				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName + " è stato precessato ma gli allegati presenti non sono conformi.");
@@ -715,12 +718,14 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	
 	private DataHandler createDataHandler(BodyPart bodyPart)
 			throws IOException, MessagingException {
-		return new DataHandler(new ByteArrayDataSource(IOUtils.toByteArray(bodyPart.getInputStream()),bodyPart.getContentType()));
+    	DataSource byteArrayDataSource = new UploadedFileDataSource(bodyPart);
+		return new DataHandler(byteArrayDataSource);
 	}
 	
 	private DataHandler createDataHandler(InputStream stream, String contentType)
 			throws IOException, MessagingException {
-		return new DataHandler(new ByteArrayDataSource(IOUtils.toByteArray(stream),contentType));
+    	DataSource byteArrayDataSource = new UploadedFileDataSourceStream(stream, contentType);
+		return new DataHandler(byteArrayDataSource);
 	}
 	
 	private void notificaFatturaAttivaEsito(Message message) throws ComponentException {
@@ -837,7 +842,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		// add the attachment
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		fatturazioneElettronicaClient.getMarshaller().marshal(notificaEsitoCommittenteType, new StreamResult(outputStream));
-		email.attach(new ByteArrayDataSource(outputStream.toByteArray()), bulk.getNomeFile("EC"), "", EmailAttachment.ATTACHMENT);
+    	DataSource byteArrayDataSource = new UploadedFileDataSourceOutputStream(outputStream);
+		email.attach(byteArrayDataSource, bulk.getNomeFile("EC"), "", EmailAttachment.ATTACHMENT);
 		// send the email
 		email.send();
 		logger.info("Inviata notifica di esito per IdentificativoSdi:"+bulk.getIdentificativoSdi());
@@ -918,5 +924,110 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
     	userContext = new WSUserContext("SDI",null, 
     			new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),
     			null,null,null);		
+	}
+
+	class UploadedFileDataSourceStream implements DataSource {
+		
+		private InputStream inputStream;
+		private String contentType;
+		
+		public UploadedFileDataSourceStream(InputStream inputStream, String contentType) {
+			this.inputStream = inputStream;
+			this.contentType = contentType;
+		}
+		
+		@Override
+		public OutputStream getOutputStream() throws IOException {
+			throw new NotImplementedException("datasource file non implementato Stream");
+		}
+		
+		@Override
+		public String getName() {
+			throw new NotImplementedException("Nome non implementato  Stream");
+		}
+		
+		@Override
+		public InputStream getInputStream() throws IOException {
+			return inputStream;
+		}
+		
+		@Override
+		public String getContentType() {
+			return contentType;
+		}
+	}
+	class UploadedFileDataSourceOutputStream implements DataSource {
+		
+		private OutputStream outputStream;
+		
+		public UploadedFileDataSourceOutputStream(OutputStream outputStream) {
+			this.outputStream = outputStream;
+		}
+		
+		@Override
+		public OutputStream getOutputStream() throws IOException {
+			return outputStream;
+		}
+		
+		@Override
+		public String getName() {
+			throw new NotImplementedException("Nome non implementato Output Stream");
+		}
+		
+		@Override
+		public InputStream getInputStream() throws IOException {
+			throw new NotImplementedException("Nome non implementato Output Stream");
+		}
+		
+		@Override
+		public String getContentType() {
+			throw new NotImplementedException("Nome non implementato Output Stream");
+		}
+	}
+	class UploadedFileDataSource implements DataSource {
+		
+		private BodyPart bodypart;
+		
+		public UploadedFileDataSource(BodyPart bodypart) {
+			this.bodypart = bodypart;
+		}
+		
+		@Override
+		public OutputStream getOutputStream() throws IOException {
+			throw new NotImplementedException("datasource file non implementato" + bodypart.toString());
+		}
+		
+		@Override
+		public String getName() {
+			try {
+				return bodypart.getFileName();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		@Override
+		public InputStream getInputStream() throws IOException {
+			try {
+				return bodypart.getInputStream();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		@Override
+		public String getContentType() {
+			try {
+				return bodypart.getContentType();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 }
