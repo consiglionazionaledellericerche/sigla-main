@@ -373,7 +373,7 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.math.BigDecimal im_tot_reddito_complessivo;		
 	
 		// PG_TROVATO DECIMAL(10,0)
-	private java.lang.Long pg_trovato;
+	private java.lang.Integer pg_trovato;
 	
 	private java.sql.Timestamp dt_scadenza;
 	
@@ -1768,10 +1768,10 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	public void setPg_contratto(java.lang.Long pg_contratto) {
 		this.pg_contratto = pg_contratto;
 	}
-	public java.lang.Long getPg_trovato() {
+	public java.lang.Integer getPg_trovato() {
 		return pg_trovato;
 	}
-	public void setPg_trovato(java.lang.Long pg_trovato) {
+	public void setPg_trovato(java.lang.Integer pg_trovato) {
 		this.pg_trovato = pg_trovato;
 	}
 	

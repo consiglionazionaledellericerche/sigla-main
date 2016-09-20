@@ -1262,7 +1262,7 @@ public  it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk ricercaFatturaByKey(
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext param0,Long param1) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
+public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext param0,Integer param1) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
 	pre_component_invocation(param0,componentObj);
 	try {
 		java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> result=((FatturaAttivaSingolaComponent)componentObj).ricercaFattureTrovato(param0,param1);

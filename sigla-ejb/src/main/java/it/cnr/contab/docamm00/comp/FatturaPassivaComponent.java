@@ -7030,7 +7030,7 @@ public Fattura_passivaBulk ricercaFatturaByKey(
 }
 public List<Fattura_passivaBulk> ricercaFattureTrovato(
 		UserContext userContext,
-		Long trovato) throws PersistencyException, ComponentException {
+		Integer trovato) throws PersistencyException, ComponentException {
 	try{
 		Fattura_passiva_rigaIBulk fatturaPassivaRiga = new Fattura_passiva_rigaIBulk();
 		fatturaPassivaRiga.setPg_trovato(trovato);
@@ -7066,7 +7066,7 @@ public List<Fattura_passivaBulk> ricercaFattureTrovato(
 	}
 }
 
-public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 	if (trovato != null){
 		RicercaTrovato ricercaTrovato;
 		try {
@@ -7086,7 +7086,7 @@ public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long t
 }
 
 
-public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 	if (trovato != null){
 		RicercaTrovato ricercaTrovato;
 		try {
