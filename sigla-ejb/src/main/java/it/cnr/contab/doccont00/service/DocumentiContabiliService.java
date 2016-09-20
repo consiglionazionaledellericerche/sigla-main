@@ -11,6 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.axiom.attachments.ByteArrayDataSource;
+import javax.activation.DataSource;
+
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
@@ -29,6 +31,7 @@ import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.pdfbox.exceptions.COSVisitorException;
@@ -223,7 +226,8 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		// add the attachment
 		for (String nodeRef : nodes) {
 			CmisObject cmisObject = getNodeByNodeRef(nodeRef);
-			email.attach(new ByteArrayDataSource(IOUtils.toByteArray(getResource(cmisObject))), cmisObject.getName(), "", EmailAttachment.ATTACHMENT);
+			DataSource dataSource = new CmisDataSource(cmisObject);
+			email.attach(dataSource, cmisObject.getName(), "", EmailAttachment.ATTACHMENT);
 		}
 		// send the email
 		email.send();
@@ -258,7 +262,8 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		// add the attachment
 		for (String nodeRef : nodes) {
 			CmisObject cmisObject = getNodeByNodeRef(nodeRef);
-			email.attach(new ByteArrayDataSource(IOUtils.toByteArray(getResource(cmisObject))), cmisObject.getName(), "", EmailAttachment.ATTACHMENT);
+			DataSource dataSource = new CmisDataSource(cmisObject);
+			email.attach(dataSource, cmisObject.getName(), "", EmailAttachment.ATTACHMENT);
 		}
 		// send the email
 		email.send();
@@ -273,4 +278,39 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		}		
 		return documents;
 	}	
+	
+	
+	class CmisDataSource implements DataSource {
+		
+		private CmisObject cmisObject;
+		
+		public CmisDataSource(CmisObject cmisObject) {
+			this.cmisObject = cmisObject;
+		}
+		
+
+		@Override
+		public OutputStream getOutputStream() throws IOException {
+			throw new NotImplementedException();
+		}
+		
+		@Override
+		public String getName() {
+			throw new NotImplementedException();
+		}
+		
+		@Override
+		public InputStream getInputStream() throws IOException {
+			return getResource(cmisObject);
+		}
+		
+		@Override
+		public String getContentType() {
+			throw new NotImplementedException();
+		}
+		
+		
+		
+	}
+	
 }

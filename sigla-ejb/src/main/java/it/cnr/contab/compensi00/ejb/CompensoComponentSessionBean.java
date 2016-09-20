@@ -1318,7 +1318,7 @@ public class CompensoComponentSessionBean extends
 		}
 	}
 
-	public java.util.List<CompensoBulk> ricercaCompensiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException{
+	public java.util.List<CompensoBulk> ricercaCompensiTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException{
 		pre_component_invocation(userContext, componentObj);
 		try {
 			List<CompensoBulk> result = ((CompensoComponent) componentObj).ricercaCompensiTrovato(userContext, trovato);

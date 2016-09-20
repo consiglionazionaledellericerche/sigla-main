@@ -3935,7 +3935,7 @@ public void inizializzaSelezionePerStampa(
 	}
 }
 
-public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 	if (trovato != null){
 		RicercaTrovato ricercaTrovato;
 		try {
@@ -6856,7 +6856,7 @@ public Fattura_attivaBulk ricercaFatturaByKey(
 }
 public List<Fattura_attivaBulk> ricercaFattureTrovato(
 		UserContext userContext,
-		Long trovato) throws PersistencyException, ComponentException {
+		Integer trovato) throws PersistencyException, ComponentException {
 	try{
 		Fattura_attiva_rigaIBulk fatturaAttivaRiga = new Fattura_attiva_rigaIBulk();
 		fatturaAttivaRiga.setPg_trovato(trovato);
