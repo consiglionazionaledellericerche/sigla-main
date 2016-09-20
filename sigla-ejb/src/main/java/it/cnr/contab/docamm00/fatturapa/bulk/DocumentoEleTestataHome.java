@@ -3,6 +3,38 @@
  * Date 25/02/2015
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.ejb.EJBException;
+import javax.mail.AuthenticationFailedException;
+import javax.mail.BodyPart;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.xml.bind.JAXBElement;
+import javax.xml.transform.stream.StreamResult;
+
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
+import org.apache.commons.lang.NotImplementedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -10,16 +42,14 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.StringEncrypter;
-import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -35,34 +65,6 @@ import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.RiferimentoFatturaType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.ObjectFactory;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
-import java.rmi.RemoteException;
-import java.sql.Connection;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.activation.DataHandler;
-import javax.ejb.EJBException;
-import javax.mail.AuthenticationFailedException;
-import javax.mail.PasswordAuthentication;
-import javax.xml.bind.JAXBElement;
-import javax.xml.transform.stream.StreamResult;
-
-import org.apache.axis2.builder.unknowncontent.InputStreamDataSource;
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 public class DocumentoEleTestataHome extends BulkHome {
 	private transient final static Logger logger = LoggerFactory.getLogger(DocumentoEleTestataHome.class);
 
@@ -251,7 +253,8 @@ public class DocumentoEleTestataHome extends BulkHome {
         	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();        	
         	client.getMarshaller().marshal(notificaEsitoCommittenteType, new StreamResult(outputStream));
         	ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-        	fileSdIType.setFile(new DataHandler(new InputStreamDataSource(inputStream)));
+        	DataSource ds = new UploadedFileDataSource(inputStream);
+        	fileSdIType.setFile(new DataHandler(ds));
         	JAXBElement<FileSdIType> notificaEsito = obj.createNotificaEsito(fileSdIType);
         	ByteArrayOutputStream outputStreamNotificaEsito = new ByteArrayOutputStream();
         	client.getMarshaller().marshal(notificaEsito, new StreamResult(outputStreamNotificaEsito));
@@ -260,6 +263,34 @@ public class DocumentoEleTestataHome extends BulkHome {
         					CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
         						CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());        		
     	}
-		
 	}	
+
+	class UploadedFileDataSource implements DataSource {
+		
+		private InputStream inputStream;
+		
+		public UploadedFileDataSource(InputStream inputStream) {
+			this.inputStream = inputStream;
+		}
+		
+		@Override
+		public OutputStream getOutputStream() throws IOException {
+			throw new NotImplementedException("datasource file non implementato" );
+		}
+		
+		@Override
+		public String getName() {
+			throw new NotImplementedException("nome file non implementato" );
+		}
+		
+		@Override
+		public InputStream getInputStream() throws IOException {
+			return inputStream;
+		}
+		
+		@Override
+		public String getContentType() {
+			throw new NotImplementedException("content type file non implementato" );
+		}
+	}
 }
