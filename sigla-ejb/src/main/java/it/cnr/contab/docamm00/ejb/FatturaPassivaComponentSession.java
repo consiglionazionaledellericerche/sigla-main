@@ -72,9 +72,9 @@ java.util.List findManRevRigaCollegati(UserContext param0, Fattura_passiva_rigaB
 it.cnr.jada.bulk.OggettoBulk rebuildDocumento(it.cnr.jada.UserContext param0, it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk ricercaFatturaTrovato(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura)throws ComponentException,java.rmi.RemoteException,PersistencyException;
-java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
-TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
-TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 void inserisciProgUnivoco(it.cnr.jada.UserContext userContext,it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk lancio)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 Fattura_passivaBulk caricaAllegatiBulk(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException,java.rmi.RemoteException;
 void validaFatturaPerCompenso(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;

@@ -1448,7 +1448,7 @@ public Fattura_attivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext userContex
 	}
 }
 public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext userContext,
-		Long trovato) throws ComponentException, RemoteException {
+		Integer trovato) throws ComponentException, RemoteException {
 	try {
 		return (java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk>)invoke("ricercaFattureTrovato",new Object[] {
 				userContext,
