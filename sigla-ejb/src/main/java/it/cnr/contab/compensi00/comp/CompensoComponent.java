@@ -2520,7 +2520,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				.inizializzaBulkPerInserimento(userContext, bulk);
 
 		try {
-			ricercaCompensiTrovato(userContext, new Long ("10221"));
+			ricercaCompensiTrovato(userContext, new Integer ("10221"));
 		} catch (NumberFormatException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -2647,7 +2647,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		return compenso;
 	}
 
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 		if (trovato != null){
 			RicercaTrovato ricercaTrovato;
 			try {
@@ -7084,7 +7084,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 	public List<CompensoBulk> ricercaCompensiTrovato(
 			UserContext userContext,
-			Long trovato) throws PersistencyException, ComponentException {
+			Integer trovato) throws PersistencyException, ComponentException {
 		CompensoBulk compenso = new CompensoBulk();
 		compenso.setPg_trovato(trovato);
 		List compensiList =(getHome(userContext, CompensoBulk.class).find(compenso));
