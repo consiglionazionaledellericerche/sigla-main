@@ -121,11 +121,6 @@
 		<version>3.1</version>
 		<type>jar</type>
 	</dependency>
-	<dependency>
-	    <groupId>xerces</groupId>
-    	<artifactId>xerces</artifactId>
-    	<version>2.4.0</version>
-	</dependency>
     <dependency>
       <groupId>org.jvnet.staxex</groupId>
       <artifactId>stax-ex</artifactId>
@@ -142,11 +137,6 @@
       <artifactId>sigla-ws-client</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>xalan</artifactId>
-      <version>2.7.1</version>
     </dependency>
     <dependency>
       <groupId>it.cnr</groupId>
@@ -347,7 +337,13 @@
 	<dependency>
 	    <groupId>org.springframework.ws</groupId>
 	    <artifactId>spring-ws-core</artifactId>
-	    <version>2.3.0.RELEASE</version>
+	    <version>2.4.0.RELEASE</version>
+<exclusions>
+<exclusion>
+<groupId>org.springframework</groupId>
+<artifactId>spring-webmvc</artifactId>
+</exclusion>
+</exclusions>
 	</dependency>
 	<dependency>
 	    <groupId>org.quartz-scheduler</groupId>
