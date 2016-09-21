@@ -6,8 +6,6 @@ import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.inventario00.docs.bulk.*;
 
 import java.io.Serializable;
-//import com.cai.joe.component.IComponent;
-//import com.cai.joe.component.IComponentContext;
 import java.rmi.RemoteException;
 import java.sql.CallableStatement;
 
