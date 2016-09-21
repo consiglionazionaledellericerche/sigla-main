@@ -2,8 +2,6 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import java.util.Dictionary;
 
-import com.sun.mail.imap.Utility;
-
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import 	it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
