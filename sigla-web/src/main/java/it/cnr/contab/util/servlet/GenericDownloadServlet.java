@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

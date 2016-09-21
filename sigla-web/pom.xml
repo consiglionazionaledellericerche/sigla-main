@@ -52,10 +52,16 @@
 			<groupId>it.cnr</groupId>
 			<artifactId>jada</artifactId>
 			<version>${jada.version}</version>
-			<classifier>wildfly</classifier>
 			<type>ejb</type>
 			<scope>provided</scope>
-		</dependency>	
+		</dependency>
+		<dependency>
+			<groupId>it.cnr</groupId>
+			<artifactId>sigla-ws-client</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>			
 	    <dependency>
 	      <groupId>org.apache.chemistry.opencmis</groupId>
 	      <artifactId>chemistry-opencmis-client-impl</artifactId>
@@ -116,11 +122,18 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-httpclient</groupId>
-			<artifactId>commons-httpclient</artifactId>
-			<version>3.1</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.4</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>		
 	</dependencies>
 </project>
