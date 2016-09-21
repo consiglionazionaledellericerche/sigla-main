@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.KeySpec;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -12,9 +13,6 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
 
-//import org.apache.commons.codec.binary.Base64;
-
-import org.apache.ws.security.util.Base64;
 
 public final class StringEncrypter  {
 	public static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
@@ -80,7 +78,7 @@ public final class StringEncrypter  {
 			byte[] cleartext = unencryptedString.getBytes( UNICODE_FORMAT );
 			byte[] ciphertext = cipher.doFinal( cleartext );
 
-			return Base64.encode(ciphertext);
+			return Base64.getEncoder().encodeToString(ciphertext);
 		}
 		catch (Exception e)
 		{
@@ -102,7 +100,7 @@ public final class StringEncrypter  {
 
 			SecretKey key = keyFactory.generateSecret( keySpec );
 			cipher.init( Cipher.DECRYPT_MODE, key );
-			byte[] cleartext = Base64.decode( encryptedString );
+			byte[] cleartext = Base64.getDecoder().decode( encryptedString );
 			byte[] ciphertext = cipher.doFinal( cleartext );
 
 			return bytes2String( ciphertext );

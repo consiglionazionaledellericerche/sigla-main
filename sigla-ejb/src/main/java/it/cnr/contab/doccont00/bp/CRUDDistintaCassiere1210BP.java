@@ -58,9 +58,8 @@ import java.util.UUID;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
 import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -391,7 +390,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		pdfSignApparence.setApparence(apparence);
 		String json = new GsonBuilder().create().toJson(pdfSignApparence);
 		try {		
-			UrlBuilder url = new UrlBuilder(URIUtil.encodePath(webScriptURL));
+			UrlBuilder url = new UrlBuilder(new URIBuilder(webScriptURL).build().toString());
 			Response response = documentiContabiliService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
 			int status = response.getResponseCode();
 			if (status == HttpStatus.SC_NOT_FOUND
@@ -403,8 +402,6 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 			    String jsonMessage = jsonObject.getString("message");
 				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
 			}
-		} catch (HttpException e) {
-			throw new BusinessProcessException(e);
 		} catch (IOException e) {
 			throw new BusinessProcessException(e);
 		} catch (Exception e) {
