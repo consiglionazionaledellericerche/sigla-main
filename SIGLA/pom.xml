@@ -31,7 +31,10 @@
             <manifestEntries>
               <Dependencies>
                                 com.oracle.jdbc, org.apache.xerces,
-                                org.apache.commons.collections, com.fasterxml.jackson.core.jackson-annotations,
+                                org.apache.commons.collections,
+                                com.fasterxml.jackson.core.jackson-annotations,
+                                com.fasterxml.jackson.core.jackson-core,
+                                com.fasterxml.jackson.core.jackson-databind,
                                 org.apache.commons.codec,
                                 org.apache.commons.lang,
                                 org.apache.commons.io,

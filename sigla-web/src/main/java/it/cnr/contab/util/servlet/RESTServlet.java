@@ -1,6 +1,14 @@
 package it.cnr.contab.util.servlet;
 
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
@@ -12,15 +20,7 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.ejb.AssBpAccessoComponentSession;
 import it.cnr.contab.util.servlet.JSONRequest.Clause;
 import it.cnr.contab.util.servlet.JSONRequest.OrderBy;
-import it.cnr.jada.action.ActionMapping;
-import it.cnr.jada.action.ActionMappings;
-import it.cnr.jada.action.ActionMappingsConfigurationException;
-import it.cnr.jada.action.ActionPerformingError;
-import it.cnr.jada.action.ActionUtil;
-import it.cnr.jada.action.AdminUserContext;
-import it.cnr.jada.action.BusinessProcess;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.UserInfo;
 import it.cnr.jada.comp.ApplicationException;
@@ -28,19 +28,8 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.action.ConsultazioniBP;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
@@ -48,18 +37,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
-
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.rmi.RemoteException;
+import java.util.*;
 
 public class RESTServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -224,9 +207,9 @@ public class RESTServlet extends HttpServlet{
 			Hashtable<String, AssBpAccessoBulk> actionsConAccesso,
 			Hashtable<String, ActionMapping> actionsSenzaAccesso,
 			JsonGenerator jGenerator) throws IOException,
-			JsonGenerationException, JsonMappingException {
+			JsonGenerationException {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
 		for (String key : actionsConAccesso.keySet()) {
 			AssBpAccessoBulk accesso = actionsConAccesso.get(key);
@@ -246,7 +229,7 @@ public class RESTServlet extends HttpServlet{
 	}
 
 	private void writeJsonForInfoSenzaAccesso(JsonGenerator jGenerator,
-			ObjectMapper mapper, String key, ActionMapping actionMapping)
+											  ObjectMapper mapper, String key, ActionMapping actionMapping)
 			throws IOException, JsonGenerationException, JsonMappingException {
 		jGenerator.writeStartObject();
 		jGenerator.writeFieldName("action");
