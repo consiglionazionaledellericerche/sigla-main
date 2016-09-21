@@ -2,17 +2,14 @@ package it.cnr.contab.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
-
 
 public final class StringEncrypter  {
 	public static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
