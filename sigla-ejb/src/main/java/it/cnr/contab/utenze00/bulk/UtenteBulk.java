@@ -6,8 +6,10 @@ package it.cnr.contab.utenze00.bulk;
  *	
  */
 import java.rmi.RemoteException;
+import java.util.Base64;
 
 import javax.ejb.EJBException;
+
 
 
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
@@ -141,7 +143,7 @@ public class UtenteBulk extends UtenteBase {
 				for (int j = 0;j < buser.length;j++)
 					bpassword[i] ^= buser[j] ^ h;
 			}
-			setPassword( com.ibm.util.Base64.toString(bpassword));
+			setPassword( Base64.getEncoder().encodeToString(bpassword));
 		}
 	}
 	/**

@@ -93,7 +93,6 @@
 			<groupId>it.cnr</groupId>
 			<artifactId>jada</artifactId>
 			<version>${jada.version}</version>
-			<classifier>wildfly</classifier>
 			<type>ejb</type>
 			<scope>provided</scope>
 		</dependency>
@@ -210,11 +209,10 @@
  			<scope>provided</scope>
  		</dependency>		
  		<dependency>
-			<groupId>bouncycastle</groupId>
-			<artifactId>bcmail-jdk16</artifactId>
- 			<version>140</version>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcmail-jdk15on</artifactId>
+ 			<version>1.52</version>
  			<scope>provided</scope>
- 		</dependency>		
- 		
+ 		</dependency> 		
 	</dependencies>
 </project>

@@ -296,7 +296,7 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		
 		@Override
 		public String getName() {
-			throw new NotImplementedException();
+			return cmisObject.getName();
 		}
 		
 		@Override
@@ -306,11 +306,10 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		
 		@Override
 		public String getContentType() {
-			throw new NotImplementedException();
+			if (cmisObject instanceof Document)
+				return ((Document)cmisObject).getContentStreamMimeType();
+			return "";
 		}
-		
-		
-		
 	}
 	
 }

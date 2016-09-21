@@ -53,23 +53,13 @@ import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import java.io.*;
-import java.rmi.RemoteException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP extends SelezionatoreListaBP {
 	private transient final static Logger logger = LoggerFactory.getLogger(CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP.class);
@@ -240,7 +230,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		    	    				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
 		    	    				+ "}";
 		    	    		try {		
-		    	    			UrlBuilder url = new UrlBuilder(URIUtil.encodePath(webScriptURL));
+		    	    			UrlBuilder url = new UrlBuilder(new URIBuilder(webScriptURL).build().toString());
 		    					logger.info("Prima di firma file XML");
 		    	    			Response response = documentiCollegatiDocAmmService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
 		    	    			int status = response.getResponseCode();
@@ -290,8 +280,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		    	    				}
 		    	    			}
 		    	    			commitUserTransaction();
-		    	    		} catch (HttpException e) {
-		    	    			throw new BusinessProcessException(e);
 		    	    		} catch (IOException e) {
 		    	    			throw new BusinessProcessException(e);
 		    	    		} catch (Exception e) {

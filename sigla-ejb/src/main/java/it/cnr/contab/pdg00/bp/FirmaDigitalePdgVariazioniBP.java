@@ -64,10 +64,9 @@ import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
 import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.utils.URIBuilder;
 import org.bouncycastle.cms.CMSException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -836,7 +835,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 				+ "}";
 		Document node = null;
 		try {		
-			UrlBuilder url = new UrlBuilder(URIUtil.encodePath(webScriptURL));
+			UrlBuilder url = new UrlBuilder(new URIBuilder(webScriptURL).build().toString());
 			Response response = pdgVariazioniService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
 			int status = response.getResponseCode();
 			if (status == HttpStatus.SC_NOT_FOUND
@@ -852,8 +851,6 @@ public class FirmaDigitalePdgVariazioniBP extends
 			    JSONObject jsonObject = new JSONObject(tokenizer);
 			    node = (Document) pdgVariazioniService.getNodeByNodeRef(jsonObject.getString("nodeRef"));
 			}
-		} catch (HttpException e) {
-			throw new BusinessProcessException(e);
 		} catch (IOException e) {
 			throw new BusinessProcessException(e);
 		} catch (Exception e) {
