@@ -11,8 +11,6 @@ import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 
 import java.io.Serializable;
-//import com.cai.joe.component.IComponent;
-//import com.cai.joe.component.IComponentContext;
 import java.rmi.RemoteException;
 public class IdInventarioComponent
 	extends it.cnr.jada.comp.CRUDComponent 

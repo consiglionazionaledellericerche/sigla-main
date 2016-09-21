@@ -1,6 +1,5 @@
 package it.cnr.contab.blobs.servlet;
 
-import java.awt.geom.Arc2D;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
