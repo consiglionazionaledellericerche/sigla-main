@@ -27,8 +27,6 @@ import java.sql.*;
 import java.util.*;
 
 import java.io.Serializable;
-//import com.cai.joe.component.IComponent;
-//import com.cai.joe.component.IComponentContext;
 import java.rmi.RemoteException;
 
 
