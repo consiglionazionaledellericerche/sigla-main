@@ -13,8 +13,6 @@ import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 
 import java.io.Serializable;
-//import com.cai.joe.component.IComponent;
-//import com.cai.joe.component.IComponentContext;
 import java.rmi.RemoteException;
 
 public class Tipo_ammortamentoComponent extends it.cnr.jada.comp.CRUDDetailComponent implements ITipo_ammortamentoMgr,ICRUDMgr,Cloneable,Serializable
