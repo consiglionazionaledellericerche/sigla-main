@@ -5,17 +5,6 @@
 package it.cnr.contab.docamm00.consultazioni.bulk;
 import it.cnr.jada.persistency.Keyed;
 public class VConsRiepCompensiBase extends VConsRiepCompensiKey implements Keyed {
-//    CD_CDS VARCHAR(30) NOT NULL
-	private java.lang.String cdCds;
- 
-//    CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL
-	private java.lang.String cdUnitaOrganizzativa;
- 
-//    ESERCIZIO DECIMAL(4,0) NOT NULL
-	private java.lang.Integer esercizio;
- 
-//    PG_COMPENSO DECIMAL(10,0) NOT NULL
-	private java.lang.Long pgCompenso;
  
 //    CODICE_FISCALE VARCHAR(20)
 	private java.lang.String codiceFiscale;
@@ -81,64 +70,8 @@ public class VConsRiepCompensiBase extends VConsRiepCompensiKey implements Keyed
 	public VConsRiepCompensiBase() {
 		super();
 	}
-	public VConsRiepCompensiBase() {
-		super();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [cdCds]
-	 **/
-	public java.lang.String getCdCds() {
-		return cdCds;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [cdCds]
-	 **/
-	public void setCdCds(java.lang.String cdCds)  {
-		this.cdCds=cdCds;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [cdUnitaOrganizzativa]
-	 **/
-	public java.lang.String getCdUnitaOrganizzativa() {
-		return cdUnitaOrganizzativa;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [cdUnitaOrganizzativa]
-	 **/
-	public void setCdUnitaOrganizzativa(java.lang.String cdUnitaOrganizzativa)  {
-		this.cdUnitaOrganizzativa=cdUnitaOrganizzativa;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [esercizio]
-	 **/
-	public java.lang.Integer getEsercizio() {
-		return esercizio;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [esercizio]
-	 **/
-	public void setEsercizio(java.lang.Integer esercizio)  {
-		this.esercizio=esercizio;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [pgCompenso]
-	 **/
-	public java.lang.Long getPgCompenso() {
-		return pgCompenso;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [pgCompenso]
-	 **/
-	public void setPgCompenso(java.lang.Long pgCompenso)  {
-		this.pgCompenso=pgCompenso;
+	public VConsRiepCompensiBase(java.lang.String cd_cds,java.lang.String cd_unita_organizzativa,java.lang.Integer esercizio,java.lang.Long pg_compenso) {
+		super(cd_cds,cd_unita_organizzativa,esercizio,pg_compenso);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
