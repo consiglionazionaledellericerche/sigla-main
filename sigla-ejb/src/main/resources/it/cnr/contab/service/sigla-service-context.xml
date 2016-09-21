@@ -46,17 +46,10 @@
 		<property name="trovatoSiglaRestClientUser" value="${TrovatoSiglaRestClientUser}" />
 		<property name="trovatoSiglaRestClientPassword" value="${TrovatoSiglaRestClientPassword}" />
 	</bean>
-
-	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
-		<constructor-arg>
-			<bean class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager"></bean>
-		</constructor-arg>
-	</bean>
 	<bean id="gson" class="com.google.gson.Gson"/>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
     	<property name="offlineReportComponent" ref="offlineReportComponent"/>
-    	<property name="httpClient" ref="httpClient"/>
     	<property name="gson" ref="gson"/>
     </bean>
 
@@ -128,12 +121,12 @@
 	<!-- here's where we use the Cron like scheduling expression
 	      to define when the bean is run. -->
 	<bean id="PECCronTriggerBean"
-	  class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 	  <property name="jobDetail" ref="PECCronTriggerBeanDetail" />
 	  <property name="cronExpression" value="${pec.cron.expression}"/>
 	</bean>
 	<bean id="AllineaNotificheCronTriggerBean"
-	  class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 	  <property name="jobDetail" ref="AllineaNotificheCronTriggerBeanDetail" />
 	  <property name="cronExpression" value="${allinea.notifiche.cron.expression}"/>
 	</bean>

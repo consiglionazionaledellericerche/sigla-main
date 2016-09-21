@@ -29,9 +29,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.DeleteMethod;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -199,12 +199,12 @@ public class UtilServlet extends HttpServlet {
 			  while (rs.next()){
 			  	try{
 				  StringBuffer reportServerURL = new StringBuffer(rs.getString("SERVER"));
-				  HttpClient httpclient = new HttpClient();
+				  HttpClient httpclient = HttpClientBuilder.create().build();
 				  reportServerURL.append("/").append(rs.getString("UTCR"));
 				  reportServerURL.append("/").append(rs.getString("NOME_FILE"));
-				  HttpMethod method = new DeleteMethod(reportServerURL.toString());
-				  method.setRequestHeader("Accept-Language", Locale.getDefault().toString());
-				  httpclient.executeMethod(method);
+				  HttpDelete method = new HttpDelete(reportServerURL.toString());
+				  method.addHeader("Accept-Language", Locale.getDefault().toString());
+				  httpclient.execute(method);
 				  //Cancelliamo la riga sul DB
 				  Print_spoolerBulk bulk = (Print_spoolerBulk)print_spoolerHome.findByPrimaryKey(new Print_spoolerBulk(new Long(rs.getLong("PG_STAMPA"))));
 				  print_spoolerHome.deleteRiga(bulk, null);

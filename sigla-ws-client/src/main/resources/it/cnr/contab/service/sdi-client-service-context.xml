@@ -36,17 +36,6 @@
         <constructor-arg ref="messageFactory" />
         <property name="marshaller" ref="baseMarshaller"></property>
         <property name="unmarshaller" ref="baseMarshaller"></property>
-        <property name="messageSender">
-             <bean class="org.springframework.ws.transport.http.CommonsHttpMessageSender">
-            <property name="credentials">
-                <bean class="org.apache.commons.httpclient.UsernamePasswordCredentials">
-                    <constructor-arg value="${it.cnr.contab.pdd.servizio.applicativo.credenziali.user}"/>
-                    <constructor-arg value="${it.cnr.contab.pdd.servizio.applicativo.credenziali.password}"/>
-                </bean>
-            </property>
-        </bean>
-        </property>
-        <property name="defaultUri" value="${it.cnr.contab.pdd.uri.porta.delegata}"/>
      </bean>
   
     <bean id="fatturazioneElettronicaClient" class="it.cnr.contab.pdd.ws.client.impl.FatturazioneElettronicaClientImpl">
