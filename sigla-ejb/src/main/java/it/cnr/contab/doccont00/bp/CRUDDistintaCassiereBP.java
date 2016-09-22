@@ -34,6 +34,7 @@ import org.json.JSONTokener;
 
 import com.google.gson.GsonBuilder;
 
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
@@ -516,7 +517,14 @@ public void generaXML(ActionContext context) throws ComponentException, RemoteEx
 		ExtCassiereCdsBulk extcas=((DistintaCassiereComponentSession)createComponentSession()).recuperaCodiciCdsCassiere(context.getUserContext(), (Distinta_cassiereBulk)getModel());
 		 
 		currentFlusso.setCodiceEnte(Formatta(extcas.getCodiceProto(),"D",6,"0"));
-		currentFlusso.setDescrizioneEnte(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getDs_unita_organizzativa());
+		Liquid_coriComponentSession component = (Liquid_coriComponentSession)this.createComponentSession("CNRCORI00_EJB_Liquid_coriComponentSession",Liquid_coriComponentSession.class );
+		AnagraficoBulk uoEnte=null;
+		if (Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),distinta.getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+			 uoEnte=(AnagraficoBulk)component.getAnagraficoEnte(context.getUserContext());
+			 currentFlusso.setDescrizioneEnte(uoEnte.getRagione_sociale());
+		}
+		else 
+			currentFlusso.setDescrizioneEnte(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getDs_unita_organizzativa());
 		BancaBulk banca =((DistintaCassiereComponentSession)createComponentSession()).recuperaIbanUo(context.getUserContext(), ((Distinta_cassiereBulk)getModel()).getUnita_organizzativa()); 
 		currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte()+"-"+banca.getCodice_iban()+ "-"+extcas.getCodiceSia());
 		currentFlusso.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
@@ -529,7 +537,6 @@ public void generaXML(ActionContext context) throws ComponentException, RemoteEx
 	    		currentReversale=(Reversale)((DistintaCassiereComponentSession)createComponentSession()).recuperaDatiReversaleFlusso(context.getUserContext(), bulk);
 	    		if(bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA)==0){
 	    			// bisogna aggiornare l'iban se banca d'italia ma lo posso sapere solo in questo punto 
-	    			Liquid_coriComponentSession component = (Liquid_coriComponentSession)this.createComponentSession("CNRCORI00_EJB_Liquid_coriComponentSession",Liquid_coriComponentSession.class );
 	    			currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte()+"-"+
 	    					component.getContoSpecialeEnteF24(context.getUserContext())+ "-"+extcas.getCodiceSia());
 	    		}

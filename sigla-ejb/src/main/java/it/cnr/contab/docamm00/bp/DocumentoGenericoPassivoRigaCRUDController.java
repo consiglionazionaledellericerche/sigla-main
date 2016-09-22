@@ -1,6 +1,7 @@
 package it.cnr.contab.docamm00.bp;
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.action.SimpleCRUDBP;
@@ -18,8 +19,8 @@ public boolean isGrowable() {
 	
 	Documento_genericoBulk doc = (Documento_genericoBulk)getParentModel();
 	return	super.isGrowable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() &&
-			!doc.STATO_PAGATO.equalsIgnoreCase(doc.getStato_cofi()) &&
-			!doc.isDoc1210Associato();
+			!doc.STATO_PAGATO.equalsIgnoreCase(doc.getStato_cofi()) && 
+		(!doc.isDoc1210Associato() || (doc.getLettera_pagamento_estero()!=null && doc.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)==0));
 }
 
 public boolean isShrinkable() {
@@ -27,7 +28,7 @@ public boolean isShrinkable() {
 	Documento_genericoBulk doc = (Documento_genericoBulk)getParentModel();
 	return	super.isShrinkable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() &&
 			!doc.STATO_PAGATO.equalsIgnoreCase(doc.getStato_cofi()) &&
-			!doc.isDoc1210Associato();
+			(!doc.isDoc1210Associato() || (doc.getLettera_pagamento_estero()!=null && doc.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)==0));
 }
 
 public void validate(ActionContext context,OggettoBulk model) throws ValidationException {

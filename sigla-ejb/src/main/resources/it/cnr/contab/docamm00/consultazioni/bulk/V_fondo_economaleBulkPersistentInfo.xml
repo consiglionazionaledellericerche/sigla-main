@@ -69,6 +69,27 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
+			columnName="IM_TOTALE_SPESE"
+			propertyName="im_totale_spese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_NETTO_SPESE"
+			propertyName="im_totale_netto_spese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_REINTEGRI"
+			propertyName="im_totale_reintegri"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />	
+		<columnMapping
 			columnName="CD_MODALITA_PAG"
 			propertyName="cd_modalita_pag"
 			sqlTypeName="VARCHAR"
@@ -143,6 +164,12 @@
 		name="im_ammontare_fondo" />
 	<persistentProperty
 		name="im_residuo_fondo" />
+	<persistentProperty
+		name="im_totale_spese" />
+	<persistentProperty
+		name="im_totale_netto_spese" />
+	<persistentProperty
+		name="im_totale_reintegri" />
 	<persistentProperty
 		name="cd_modalita_pag" />
 	<persistentProperty

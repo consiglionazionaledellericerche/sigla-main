@@ -87,6 +87,13 @@ public class SospesoBulk extends SospesoBase {
 
 	protected Collection reversaliAccertamentiColl = new java.util.ArrayList();
 	protected Collection mandatiImpegniColl = new java.util.ArrayList();
+	protected Collection lettereColl = new java.util.ArrayList();
+	public Collection getLettereColl() {
+		return lettereColl;
+	}
+	public void setLettereColl(Collection lettereColl) {
+		this.lettereColl = lettereColl;
+	}
 	public Collection getMandatiImpegniColl() {
 		return mandatiImpegniColl;
 	}

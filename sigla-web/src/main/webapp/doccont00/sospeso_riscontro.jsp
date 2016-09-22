@@ -93,10 +93,22 @@
 	</table>
    <% } %>
   <% if( sospeso.getMandatiImpegniColl() != null && ( sospeso.getMandatiImpegniColl().size() > 0) ) { %>
-	<table class="Panel">
+	<table class="Panel" >
 		<tr>
 			<td><% bp.getMandatiImpegni().writeHTMLTable(pageContext,null, false,false,false,"100%","100px", true); %></td>
 		</tr>
+	</table>
+   <% } %>
+   <% if( sospeso.getLettereColl() != null && ( sospeso.getLettereColl().size() > 0) ) { %>
+	<table class="Panel" >
+	<tr>	
+		<td colspan=2 ALIGN="LEFT">
+			<b ALIGN="CENTER"><big>Lettera 1210</big></b>
+		</td>
+	</tr>
+	<tr>
+		<td><% bp.getLettere().writeHTMLTable(pageContext,"all", false,false,false,"100%","100px", true); %></td>
+	</tr>
 	</table>
    <% } %>
 

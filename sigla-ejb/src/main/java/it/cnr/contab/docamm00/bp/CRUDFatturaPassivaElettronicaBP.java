@@ -109,6 +109,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		return isEditable() && getModel() != null && ((DocumentoEleTestataBulk)getModel()).getIdentificativoSdi() != null &&
 				((DocumentoEleTestataBulk)getModel()).getCrudStatus() == OggettoBulk.NORMAL &&
 				((DocumentoEleTestataBulk)getModel()).isCompilabile() &&
+				!((DocumentoEleTestataBulk)getModel()).isIrregistrabile() &&
 				((DocumentoEleTestataBulk)getModel()).getDocumentoEleTrasmissione().getUnitaOrganizzativa().equalsByPrimaryKey(uoScrivania) &&
 				this.isEsercizioAperto();
 		

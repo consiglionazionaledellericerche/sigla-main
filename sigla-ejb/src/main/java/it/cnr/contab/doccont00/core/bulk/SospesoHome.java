@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -286,13 +287,19 @@ public class SospesoHome extends BulkHome {
 	 * 
 	 */
 	public SQLBuilder selectSospesiDiEntrata(ReversaleBulk reversale,
-			it.cnr.jada.persistency.sql.CompoundFindClause clausole,boolean tesoreriaUnica) {
+			it.cnr.jada.persistency.sql.CompoundFindClause clausole,boolean tesoreriaUnica) throws PersistencyException{
 		SQLBuilder sql = createSQLBuilder();
+		Unita_organizzativa_enteBulk uoEnte=null;
 		if (clausole != null)
 			sql.addClause(clausole);
 		sql.addClause("AND", "esercizio", sql.EQUALS, reversale.getEsercizio());
 		if (!tesoreriaUnica)
 			sql.addClause("AND", "cd_cds", sql.EQUALS, reversale.getCd_cds());
+		else{
+			 uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
+			 if (uoEnte!=null)
+				 sql.addClause("AND", "cd_cds", sql.EQUALS, uoEnte.getCd_cds());
+		}
 		// sql.addClause( "AND", "cd_uo_origine", sql.EQUALS,
 		// reversale.getCd_uo_origine() );
 		sql.addClause("AND", "fl_stornato", sql.EQUALS, new Boolean(false));
@@ -358,11 +365,17 @@ public class SospesoHome extends BulkHome {
 	 *         spesa associati al mandato
 	 * 
 	 */
-	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato,boolean tesoreriaUnica) {
+	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato,boolean tesoreriaUnica) throws PersistencyException{
 		SQLBuilder sql = createSQLBuilder();
+		Unita_organizzativa_enteBulk uoEnte=null;
 		sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
 		if (!tesoreriaUnica)
 			sql.addClause("AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
+		else{
+			 uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
+			 if (uoEnte!=null)
+				 sql.addClause("AND", "cd_cds", sql.EQUALS, uoEnte.getCd_cds());
+		}
 		//altrimenti dovrebbe essere sempre 999
 		// sql.addClause( "AND", "cd_uo_origine", sql.EQUALS,
 		// mandato.getCd_uo_origine() );
