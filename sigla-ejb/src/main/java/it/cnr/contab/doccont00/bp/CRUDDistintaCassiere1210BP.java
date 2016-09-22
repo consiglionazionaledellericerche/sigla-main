@@ -24,6 +24,7 @@ import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
@@ -473,4 +474,17 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		document.close();
 		return lastPage;
 	}
+	
+	@Override
+	protected void closed(ActionContext context)
+			throws BusinessProcessException {
+		try {
+			distintaCassiere1210LettereCollegate.closed(context);
+			distintaCassiere1210LettereDaCollegare.closed(context);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
+		super.closed(context);
+	}
+	
 }
