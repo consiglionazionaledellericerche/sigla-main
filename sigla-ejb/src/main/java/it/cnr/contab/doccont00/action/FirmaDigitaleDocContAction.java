@@ -91,7 +91,6 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			} finally {
 				bp.openIterator(context);				
 			}
-			bp.openIterator(context);
 			return context.findDefaultForward();
 		} catch(Exception e) {
 			return handleException(context,e);
@@ -115,7 +114,6 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			} finally {
 				bp.openIterator(context);				
 			}			
-			bp.openIterator(context);
 			return context.findDefaultForward();
 		} catch(Exception e) {
 			return handleException(context,e);
