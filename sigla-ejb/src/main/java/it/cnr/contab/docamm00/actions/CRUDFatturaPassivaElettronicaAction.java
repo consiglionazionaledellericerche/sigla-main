@@ -310,16 +310,19 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 											"*","CRUDFatturaPassivaBP");
 				if (mode == null || mode.equals("V")) 
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle fatture. Impossibile continuare.");
-				
+				if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO)) {
+					if(bulk.getModalitaPagamento()==null)
+						throw new it.cnr.jada.action.MessageToUser("Prima di procedere indicare la modalità di pagamento!");
+				}
 				context.addHookForward("default",this,"doBringBackCompilaFattura");
 				nbp = (CRUDFatturaPassivaBP) context.addBusinessProcess(nbp);
 				if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO) ||
 						bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_DEBITO)) {
 					Fattura_passivaBulk fatturaPassivaBulk = ((FatturaElettronicaPassivaComponentSession)fatturaPassivaElettronicaBP.createComponentSession()).
 						cercaFatturaPassivaForNota(context.getUserContext(), bulk);
-					nbp.edit(context, fatturaPassivaBulk);
+					nbp.edit(context, fatturaPassivaBulk); 
 					CRUDFatturaPassivaBP notaBp = null;
-					if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO)) 
+					if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO))
 						notaBp = (CRUDFatturaPassivaBP)action.doGeneraNotaDiCredito(context);
 					else if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_DEBITO))
 						notaBp = (CRUDFatturaPassivaBP)action.doGeneraNotaDiDebito(context);

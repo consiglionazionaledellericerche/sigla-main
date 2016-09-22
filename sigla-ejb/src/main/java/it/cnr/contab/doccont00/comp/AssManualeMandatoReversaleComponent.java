@@ -310,10 +310,10 @@ public Query select(UserContext userContext, CompoundFindClause clauses, Oggetto
 */
 	
 	sql.addClause(clauses);
-
+ 
 	sql.addSQLClause("AND", "MANDATO.CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 	sql.addSQLClause("AND", "MANDATO.STATO", sql.EQUALS, mandato.STATO_MANDATO_EMESSO);
-	sql.addSQLClause("AND", "MANDATO.STATO_TRASMISSIONE", sql.NOT_EQUALS, mandato.STATO_TRASMISSIONE_TRASMESSO);
+	sql.addSQLClause("AND", "MANDATO.STATO_TRASMISSIONE", sql.EQUALS, mandato.STATO_TRASMISSIONE_NON_INSERITO);
 	sql.addSQLClause("AND", "MANDATO.TI_MANDATO", sql.NOT_EQUALS, mandato.TIPO_ACCREDITAMENTO);
 	sql.addSQLClause("AND", "MANDATO.TI_MANDATO", sql.NOT_EQUALS, mandato.TIPO_REGOLARIZZAZIONE);
 
