@@ -219,6 +219,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
 			if (optionbp.getOption() == OptionBP.NO_BUTTON)
 				return context.findDefaultForward();
+			bp.closeAllChildren(context);
 			it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = bp.getUserInfo().getUnita_organizzativa();			
 			it.cnr.contab.utenze00.bulk.Albero_mainBulk nodo = getComponentSession().validaNodoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo == null ? null : uo.getCd_unita_organizzativa(), (String)optionbp.getAttribute("cd_nodo"));
 			return startNodo(context,bp,nodo);
