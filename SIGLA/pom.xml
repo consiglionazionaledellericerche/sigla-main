@@ -128,6 +128,10 @@
       <artifactId>stax-ex</artifactId>
       <version>1.2</version>
       <exclusions>
+        <exclusion>
+      		<artifactId>junit</artifactId>
+      		<groupId>junit</groupId>
+      	</exclusion>
       	<exclusion>
       		<artifactId>activation</artifactId>
       		<groupId>javax.activation</groupId>
