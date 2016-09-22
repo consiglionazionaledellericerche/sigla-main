@@ -241,6 +241,9 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 		}
 		if (getDivisa() == null)
 			throw new ValidationException("Valorizzare la Divisa!");
+		for (int i = 0;i <getDivisa().length();i++)
+			if (!Character.isLetter(getDivisa().charAt(i)) && getDivisa().charAt(i)!=' ' )
+				throw new ValidationException( "La divisa può essere composta solo da lettere e non può contenere caratteri speciali." );
 		if (getBeneficiario() == null)
 			throw new ValidationException("Valorizzare il Beneficiario!");
 	}
