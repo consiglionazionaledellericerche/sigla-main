@@ -1,5 +1,6 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.jada.util.action.*;
@@ -11,6 +12,10 @@ public class CRUDSospesoBP extends it.cnr.jada.util.action.SimpleCRUDBP
 	private final SimpleDetailCRUDController reversaliAccertamenti = new SimpleDetailCRUDController("ReversaliAccertamenti",it.cnr.contab.doccont00.intcass.bulk.V_sospeso_rev_accertBulk.class,"reversaliAccertamentiColl",this);	
 	
 	private final SimpleDetailCRUDController mandatiImpegni = new SimpleDetailCRUDController("MandatiImpegni",it.cnr.contab.doccont00.intcass.bulk.V_sospeso_man_impBulk.class,"mandatiImpegniColl",this);
+	private final SimpleDetailCRUDController lettere = new SimpleDetailCRUDController("Lettere",Lettera_pagam_esteroBulk.class,"lettereColl",this);
+public SimpleDetailCRUDController getLettere() {
+		return lettere;
+	}
 public SimpleDetailCRUDController getMandatiImpegni() {
 		return mandatiImpegni;
 	}

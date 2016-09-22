@@ -412,18 +412,31 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 				break;
 			}
 		}
-    	if (numeroFatturaFornitore == null || dataFatturaFornitore == null) {
-			throw new ApplicationException("Fattura collegata alla nota non trovata! Informazioni mancanti!");    		
-    	}
+    	// Rospuc 22/09/2016 consentito registrazione nota credito anche senza riferimenti alla fattura collegata 
+    	/* if (numeroFatturaFornitore == null || dataFatturaFornitore == null) {
+				throw new ApplicationException("Fattura collegata alla nota non trovata! Informazioni mancanti!");    		
+    	} */
     	SQLBuilder sqlFatturaPassiva = fatturaPassivaHome.createSQLBuilder();
     	sqlFatturaPassiva.addClause(FindClause.AND, "fornitore", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getPrestatore());
-    	sqlFatturaPassiva.addClause(FindClause.AND, "nr_fattura_fornitore", SQLBuilder.EQUALS, numeroFatturaFornitore);
+    	// Rospuc 22/09/2016 consentito registrazione nota credito anche con riferimenti simili alla fattura collegata indicata
+    	sqlFatturaPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getCd_unita_organizzativa());
+    	sqlFatturaPassiva.addClause(FindClause.AND, "nr_fattura_fornitore", SQLBuilder.CONTAINS, numeroFatturaFornitore);
     	sqlFatturaPassiva.addClause(FindClause.AND, "dt_fattura_fornitore", SQLBuilder.EQUALS, dataFatturaFornitore);
     	try {    		
-    		List<?> fatture = fatturaPassivaHome.fetchAll(fatturaPassivaHome.createBroker(sqlFatturaPassiva));
-    		if (fatture.isEmpty())
-    			throw new ApplicationException("Fattura collegata alla nota non trovata!");
-			return (Fattura_passivaBulk) fatture.get(0);
+    		List<?> fattureCol = fatturaPassivaHome.fetchAll(fatturaPassivaHome.createBroker(sqlFatturaPassiva));
+    		if (fattureCol.isEmpty()||fattureCol.size()>1){
+    	    	// Rospuc 22/09/2016 consentito registrazione nota credito su ultima fattura registrata 
+    			sqlFatturaPassiva = fatturaPassivaHome.createSQLBuilder();
+    	    	sqlFatturaPassiva.addClause(FindClause.AND, "fornitore", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getPrestatore());
+    	    	sqlFatturaPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getCd_unita_organizzativa());
+    	    	sqlFatturaPassiva.setOrderBy("dt_registrazione",  it.cnr.jada.util.OrderConstants.ORDER_ASC);
+    	    	List<?> fatture = fatturaPassivaHome.fetchAll(fatturaPassivaHome.createBroker(sqlFatturaPassiva));
+    	    		if (fatture.isEmpty()){
+    	    			throw new ApplicationException("Fattura collegata alla nota non trovata!");
+    	    		}
+    	    		return (Fattura_passivaBulk) fatture.get(fatture.size()-1);
+    		}
+			return (Fattura_passivaBulk) fattureCol.get(0);
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
