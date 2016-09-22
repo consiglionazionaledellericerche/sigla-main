@@ -2841,6 +2841,8 @@ public class DistintaCassiereComponent extends
 	 */
 	public SQLBuilder selectDistintaCassiere1210LettereDaCollegareByClause(UserContext userContext, DistintaCassiere1210Bulk distinta, Class bulkClass, CompoundFindClause clauses) throws ComponentException {
 		SQLBuilder sql = getHome(userContext, Lettera_pagam_esteroBulk.class).createSQLBuilder();
+		if (clauses != null)
+			sql.addClause(clauses);
 		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
 		sql.addClause(FindClause.AND, "stato_trasmissione", SQLBuilder.EQUALS, MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
 		sql.addClause(FindClause.AND, "distintaCassiere", SQLBuilder.ISNULL, null);		
@@ -2858,6 +2860,8 @@ public class DistintaCassiereComponent extends
 	 */
 	public SQLBuilder selectDistintaCassiere1210LettereCollegateByClause(UserContext userContext, DistintaCassiere1210Bulk distinta, Class bulkClass, CompoundFindClause clauses) throws ComponentException {
 		SQLBuilder sql = getHome(userContext, Lettera_pagam_esteroBulk.class).createSQLBuilder();
+		if (clauses != null)
+			sql.addClause(clauses);		
 		if (distinta.getEsercizio() == null)
 			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, 0);			
 		sql.addClause(FindClause.AND, "distintaCassiere", SQLBuilder.EQUALS, distinta);			
