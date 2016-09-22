@@ -9,7 +9,7 @@
     	<artifactId>archetype</artifactId>
     	<groupId>it.cnr.si</groupId>
     	<version>1.0.3</version>
-  	</parent>	
+  	</parent>
 	<modules>
 		<module>sigla-ws-client</module>
 		<module>sigla-ejb</module>
@@ -25,7 +25,7 @@
 		<spring.version>4.3.3.RELEASE</spring.version>
 		<jada.version>4.0.5</jada.version>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
-		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>		
+		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
@@ -58,6 +58,15 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
 	</build>
   <scm>
     <connection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</connection>
