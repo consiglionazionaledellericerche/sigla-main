@@ -4,6 +4,7 @@
 	<groupId>it.cnr</groupId>
 	<version>4.0.3-SNAPSHOT</version>
 	<artifactId>sigla</artifactId>
+	<name>sigla</name>
 	<packaging>pom</packaging>
 	<parent>
     	<artifactId>archetype</artifactId>
