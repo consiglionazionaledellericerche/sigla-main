@@ -5,11 +5,13 @@
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.docamm00.tabrif.bulk.*,
 		it.cnr.contab.docamm00.docs.bulk.*,
+		it.cnr.contab.doccont00.core.bulk.*,
 		it.cnr.contab.docamm00.bp.*"
 %>
 
 <%	
 	CRUDDocumentoGenericoPassivoBP bp = (CRUDDocumentoGenericoPassivoBP)BusinessProcess.getBusinessProcess(request);
+	Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
 %>
 
 <table>
@@ -87,7 +89,7 @@
 						<tr>
 							<% bp.getController().writeFormField(out,"cd_sospeso"); %>
 							<td colspan="2">
-								<% bp.getController().writeFormInput(out, "sospeso"); %>
+								<% bp.getController().writeFormInput(out,null, "sospeso",(documento.getLettera_pagamento_estero()!=null && documento.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)!=0),null,""); %>
 							</td>
 						</tr>
 						<tr>
