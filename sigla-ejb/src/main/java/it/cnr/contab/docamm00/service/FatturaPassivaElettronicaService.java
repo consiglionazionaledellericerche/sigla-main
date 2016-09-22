@@ -364,9 +364,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			URLName urlName = new URLName(pecURLName);
 			Store store = session.getStore(urlName);
 			store.connect(userName, password);
-			//searchMailFromPec(userName, password, store);
+			searchMailFromPec(userName, password, store);
 			searchMailFromSdi(userName, store);
-			//searchMailFromReturn(userName, store);
+			searchMailFromReturn(userName, store);
 			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
@@ -421,30 +421,30 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	
 	private void processingMailFromSdi(Folder folder, String userName) throws MessagingException{
-//	    if (isDateForRecoveryNotifier()){
-//			List<SearchTerm> newTerms = createTermsForSearchSdi(true);
-//	    	Message newMessages[] = folder.search(new AndTerm(newTerms.toArray(new SearchTerm[newTerms.size()])));
-//	    	logger.info("Recuperati " + newMessages.length +" messaggi SDI dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
-//		    for (int i = 0; i < newMessages.length; i++) {
-//		    	try {
-//		    		Message message = newMessages[i];
-//					if (message.getSubject() != null){
-//						if (message.getSubject().contains(pecSDISubjectNotificaEsitoTerm)){
-//							notificaFatturaAttivaEsito(message);
-//						} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaNotificaScartoTerm)){
-//							notificaFatturaAttivaScarto(message);
-//						} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm)){
-//							notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(message);
-//						}
-//					}
-//				} catch (Exception e) {
-//					logger.error("PEC scan error while importing file.", e);
-//					java.io.StringWriter sw = new java.io.StringWriter();
-//					e.printStackTrace(new java.io.PrintWriter(sw));
-//					SendMail.sendErrorMail("Errore. Fatture Elettroniche: Processing mail SDI ", sw.toString());
-//				}
-//			}
-//	    } 
+	    if (isDateForRecoveryNotifier()){
+			List<SearchTerm> newTerms = createTermsForSearchSdi(true);
+	    	Message newMessages[] = folder.search(new AndTerm(newTerms.toArray(new SearchTerm[newTerms.size()])));
+	    	logger.info("Recuperati " + newMessages.length +" messaggi SDI dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
+		    for (int i = 0; i < newMessages.length; i++) {
+		    	try {
+		    		Message message = newMessages[i];
+					if (message.getSubject() != null){
+						if (message.getSubject().contains(pecSDISubjectNotificaEsitoTerm)){
+							notificaFatturaAttivaEsito(message);
+						} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaNotificaScartoTerm)){
+							notificaFatturaAttivaScarto(message);
+						} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm)){
+							notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(message);
+						}
+					}
+				} catch (Exception e) {
+					logger.error("PEC scan error while importing file.", e);
+					java.io.StringWriter sw = new java.io.StringWriter();
+					e.printStackTrace(new java.io.PrintWriter(sw));
+					SendMail.sendErrorMail("Errore. Fatture Elettroniche: Processing mail SDI ", sw.toString());
+				}
+			}
+	    } 
 	    List<SearchTerm> terms = createTermsForSearchSdi(false);
 	    Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
 	    logger.info("Recuperati " + messages.length +" messaggi SDI dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
