@@ -35,6 +35,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
@@ -451,7 +452,7 @@ public class CRUDDistintaCassiereBP extends
 	}
 
 	/**
-	 * è vero se è stato impostato il flag nei parametri generali
+	 * E' vero se è stato impostato il flag nei parametri generali
 	 * FL_VERSAMENTO_CORI che indica se inserire i mandati di versamento CORI in
 	 * modo obbligatorio e automatico
 	 */
@@ -679,10 +680,16 @@ public class CRUDDistintaCassiereBP extends
 
 			currentFlusso.setCodiceEnte(Formatta(extcas.getCodiceProto(), "D",
 					6, "0"));
-			currentFlusso
-					.setDescrizioneEnte(it.cnr.contab.utenze00.bulk.CNRUserInfo
-							.getUnita_organizzativa(context)
-							.getDs_unita_organizzativa());
+					
+					Liquid_coriComponentSession component = (Liquid_coriComponentSession)this.createComponentSession("CNRCORI00_EJB_Liquid_coriComponentSession",Liquid_coriComponentSession.class );
+					AnagraficoBulk uoEnte=null;
+			if (Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),distinta.getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+			 	uoEnte=(AnagraficoBulk)component.getAnagraficoEnte(context.getUserContext());
+			 	currentFlusso.setDescrizioneEnte(uoEnte.getRagione_sociale());
+			}
+			else 
+				currentFlusso.setDescrizioneEnte(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getDs_unita_organizzativa());
+
 			BancaBulk banca = ((DistintaCassiereComponentSession) createComponentSession())
 					.recuperaIbanUo(context.getUserContext(),
 							((Distinta_cassiereBulk) getModel())
@@ -707,10 +714,6 @@ public class CRUDDistintaCassiereBP extends
 				if (bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA) == 0) {
 					// bisogna aggiornare l'iban se banca d'italia ma lo posso
 					// sapere solo in questo punto
-					Liquid_coriComponentSession component = (Liquid_coriComponentSession) this
-							.createComponentSession(
-									"CNRCORI00_EJB_Liquid_coriComponentSession",
-									Liquid_coriComponentSession.class);
 					currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte()
 							+ "-"
 							+ component.getContoSpecialeEnteF24(context
@@ -1904,3 +1907,4 @@ public class CRUDDistintaCassiereBP extends
 		super.closed(context);
 	}
 }
+
