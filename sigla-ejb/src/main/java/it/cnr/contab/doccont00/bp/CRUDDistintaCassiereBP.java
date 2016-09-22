@@ -1886,10 +1886,21 @@ public class CRUDDistintaCassiereBP extends
 						.concat(distinta.getCd_unita_organizzativa() == null ? ""
 								: distinta.getCd_unita_organizzativa())
 						.concat("-")
-						.concat(String.valueOf(distinta.getPg_distinta_def()))
+						.concat(String.valueOf(distinta.getPg_distinta_def()))	
 						.concat("-I.xslt.p7m");
 		}
 		return null;
 	}
 
+	@Override
+	protected void closed(ActionContext context)
+			throws BusinessProcessException {
+		try {
+			distintaCassDet.closed(context);
+			distinteCassCollegateDet.closed(context);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
+		super.closed(context);
+	}
 }
