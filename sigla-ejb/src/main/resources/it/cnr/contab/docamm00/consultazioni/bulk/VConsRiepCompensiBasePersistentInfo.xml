@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiBase"
+	keyClassName="it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiKey"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiHome">
+	<defaultColumnMap
+		tableName="V_CONS_RIEP_COMPENSI">
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codiceFiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_COGE"
+			propertyName="dtDaCompetenzaCoge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_COGE"
+			propertyName="dtACompetenzaCoge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE"
+			propertyName="dtTrasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dtPagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_LORDO"
+			propertyName="imLordo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_FISCALE"
+			propertyName="imFiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IRAP_ENTE"
+			propertyName="irapEnte"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="INPS_ENTE"
+			propertyName="inpsEnte"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="INAIL_ENTE"
+			propertyName="inailEnte"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IRPEF"
+			propertyName="irpef"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="BONUSDL66"
+			propertyName="bonusdl66"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="INPS_PERCIPIENTE"
+			propertyName="inpsPercipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="INAIL_PERCIPIENTE"
+			propertyName="inailPercipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ADD_REG"
+			propertyName="addReg"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ADD_COM"
+			propertyName="addCom"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="codiceFiscale" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="dtDaCompetenzaCoge" />
+	<persistentProperty
+		name="dtACompetenzaCoge" />
+	<persistentProperty
+		name="dtTrasmissione" />
+	<persistentProperty
+		name="dtPagamento" />
+	<persistentProperty
+		name="imLordo" />
+	<persistentProperty
+		name="imFiscale" />
+	<persistentProperty
+		name="irapEnte" />
+	<persistentProperty
+		name="inpsEnte" />
+	<persistentProperty
+		name="inailEnte" />
+	<persistentProperty
+		name="irpef" />
+	<persistentProperty
+		name="bonusdl66" />
+	<persistentProperty
+		name="inpsPercipiente" />
+	<persistentProperty
+		name="inailPercipiente" />
+	<persistentProperty
+		name="addReg" />
+	<persistentProperty
+		name="addCom" />
+	<columnMap name="CONSULTAZIONE" 
+		tableName="V_CONS_RIEP_COMPENSI">
+		<columnMapping
+				columnName="CD_UNITA_ORGANIZZATIVA"
+				propertyName="cd_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="COGNOME"
+				propertyName="cognome"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="NOME"
+				propertyName="nome"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="CODICE_FISCALE"
+				propertyName="codice_fiscale"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_LORDO"
+				propertyName="imLordo"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="IRAP_ENTE"
+				propertyName="irapEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="INPS_ENTE"
+				propertyName="inpsEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="INAIL_ENTE"
+				propertyName="inailEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_FISCALE"
+				propertyName="imFiscale"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="IRPEF"
+				propertyName="irpef"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="BONUSDL66"
+				propertyName="bonusdl66"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="INPS_PERCIPIENTE"
+				propertyName="inpsPercipiente"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="INAIL_PERCIPIENTE"
+				propertyName="inailPercipiente"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="ADD_REG"
+				propertyName="addReg"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="ADD_COM"
+				propertyName="addCom"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+	</columnMap>
+</SQLPersistentInfo>
