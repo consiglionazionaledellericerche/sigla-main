@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
 @Stateless(name="CNRCOMPENSI00_EJB_ConsRiepilogoCompensiComponentSession")
 public class ConsRiepilogoCompensiComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ConsRiepilogoCompensiComponentSession {
 @PostConstruct
-	public void ejbCreate() throws javax.ejb.CreateException {
+	public void ejbCreate() {
 	componentObj = new ConsRiepilogoCompensiComponent();
 }
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {
