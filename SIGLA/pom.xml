@@ -7,7 +7,7 @@
   <parent>
     <groupId>it.cnr</groupId>
     <artifactId>sigla</artifactId>
-    <version>4.0.3-SNAPSHOT</version>
+    <version>4.0.4-SNAPSHOT</version>
   </parent>
   <build>
     <plugins>
@@ -51,7 +51,7 @@
           </archive>
           <earName>SIGLA</earName>
           <artifactTypeMappings>
-            <artifactTypeMapping type="mar" mapping="jar"/>
+            <artifactTypeMapping type="mar" mapping="jar" />
           </artifactTypeMappings>
           <modules>
             <ejbModule>
