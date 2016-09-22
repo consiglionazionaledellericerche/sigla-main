@@ -5,6 +5,7 @@
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.docamm00.tabrif.bulk.*,
 		it.cnr.contab.docamm00.docs.bulk.*,
+		it.cnr.contab.doccont00.core.bulk.*,
 		it.cnr.contab.docamm00.bp.*"
 %>
 
@@ -88,8 +89,9 @@
 						<tr>
 							<% bp.writeFormFieldDoc1210(out,"cd_sospeso"); %>
 							<td colspan="2">
-								<% bp.writeFormInputDoc1210(out, "sospeso"); %>
+								<% bp.writeFormInput(out,null, "sospeso",(fatturaPassiva.getLettera_pagamento_estero()!=null && fatturaPassiva.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)!=0),null,""); %>
 							</td>
+
 						</tr>
 						<tr>
 							<% bp.writeFormFieldDoc1210(out,"esercizio_sospeso"); %>
