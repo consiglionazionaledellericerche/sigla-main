@@ -54,6 +54,12 @@
 			columnSize="100"
 			nullable="true" />
 		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dt_emissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
 			columnName="CAMBIO"
 			propertyName="cambio"
 			sqlTypeName="DECIMAL"
@@ -83,6 +89,8 @@
 		name="nome" />
 	<persistentProperty
 		name="ragioneSociale" />
+	<persistentProperty
+		name="dt_emissione" />
 	<persistentProperty
 		name="cambio" />
 	<persistentProperty
