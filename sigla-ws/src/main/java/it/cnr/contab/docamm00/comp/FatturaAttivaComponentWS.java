@@ -86,7 +86,7 @@ import org.jboss.ws.api.annotation.WebContext;
 @WebService(endpointInterface="it.cnr.contab.docamm00.ejb.FatturaAttivaComponentSessionWS")
 @DeclareRoles({"WSUserRole","IITRole"})
 @WebContext(authMethod = "WSSE", contextRoot = "SIGLA-SIGLAEJB")
-@HandlerChain(file = "handlers.xml")
+@HandlerChain(file = "/it/cnr/contab/handler/handlers.xml")
 public class FatturaAttivaComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	@EJB Configurazione_cnrComponentSession configurazione_cnrComponentSession;
