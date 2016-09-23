@@ -72,6 +72,24 @@
 		nullable="false"
 		label="dtRegistrazione" />
 	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Partita Iva" />
+	<fieldProperty
 		name="cdTerzo"
 		property="cdTerzo"
 		inputType="TEXT"
@@ -260,6 +278,10 @@
 	<formFieldProperty
 		name="dtRegistrazione" />
 	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
 		name="cdTerzo" />
 	<formFieldProperty
 		name="cognome" />
@@ -327,6 +349,10 @@
 		name="cambio" />
 	<findFieldProperty
 		name="cdDivisa" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="partita_iva" />
 	<findFieldProperty
 		name="progressivo_riga" />
 	<findFieldProperty
@@ -373,6 +399,10 @@
 		name="tiFattura" />
 	<columnFieldProperty
 		name="dtRegistrazione" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="partita_iva" />
 	<columnFieldProperty
 		name="cdTerzo" />
 	<columnFieldProperty

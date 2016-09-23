@@ -29,6 +29,8 @@ public class VDocAmmAttiviBrevettiBase extends VDocAmmAttiviBrevettiKey implemen
 //    RAGIONE_SOCIALE VARCHAR(100)
 	private java.lang.String ragioneSociale;
  
+	private java.sql.Timestamp dt_emissione;
+
 //    CAMBIO DECIMAL(15,4) NOT NULL
 	private java.math.BigDecimal cambio;
  
@@ -184,5 +186,11 @@ public class VDocAmmAttiviBrevettiBase extends VDocAmmAttiviBrevettiKey implemen
 	 **/
 	public void setCdDivisa(java.lang.String cdDivisa)  {
 		this.cdDivisa=cdDivisa;
+	}
+	public java.sql.Timestamp getDt_emissione() {
+		return dt_emissione;
+	}
+	public void setDt_emissione(java.sql.Timestamp dt_emissione) {
+		this.dt_emissione = dt_emissione;
 	}
 }

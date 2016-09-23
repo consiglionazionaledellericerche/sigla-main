@@ -36,6 +36,18 @@
 			columnSize="7"
 			nullable="false" />
 		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
 			columnName="CD_TERZO"
 			propertyName="cdTerzo"
 			sqlTypeName="DECIMAL"
@@ -162,6 +174,10 @@
 		name="tiFattura" />
 	<persistentProperty
 		name="dtRegistrazione" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="partita_iva" />
 	<persistentProperty
 		name="cdTerzo" />
 	<persistentProperty
