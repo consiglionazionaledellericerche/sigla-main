@@ -24,7 +24,7 @@ public class MustUnderstandSOAPMessageHandler implements SOAPHandler<SOAPMessage
 
 	@Override
 	public boolean handleMessage(SOAPMessageContext context) {
-		return false;
+		return true;
 	}
 
 	@Override
