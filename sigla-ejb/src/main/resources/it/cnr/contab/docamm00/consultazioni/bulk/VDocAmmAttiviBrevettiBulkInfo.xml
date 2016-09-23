@@ -72,6 +72,14 @@
 		nullable="false"
 		label="dtRegistrazione" />
 	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data Emissione" />
+	<fieldProperty
 		name="cdTerzo"
 		property="cdTerzo"
 		inputType="TEXT"
@@ -153,6 +161,8 @@
 	<formFieldProperty
 		name="nome" />
 	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
 		name="ragioneSociale" />
 	<formFieldProperty
 		name="cambio" />
@@ -183,6 +193,8 @@
 	<findFieldProperty
 		name="nome" />
 	<findFieldProperty
+		name="dt_emissione" />
+	<findFieldProperty
 		name="ragioneSociale" />
 	<findFieldProperty
 		name="cambio" />
@@ -212,6 +224,8 @@
 		name="cognome" />
 	<columnFieldProperty
 		name="nome" />
+	<columnFieldProperty
+		name="dt_emissione" />
 	<columnFieldProperty
 		name="ragioneSociale" />
 	<columnFieldProperty
