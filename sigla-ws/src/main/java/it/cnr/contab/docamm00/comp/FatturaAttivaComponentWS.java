@@ -67,6 +67,7 @@ import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.soap.MessageFactory;
@@ -85,6 +86,7 @@ import org.jboss.ws.api.annotation.WebContext;
 @WebService(endpointInterface="it.cnr.contab.docamm00.ejb.FatturaAttivaComponentSessionWS")
 @DeclareRoles({"WSUserRole","IITRole"})
 @WebContext(authMethod = "WSSE", contextRoot = "SIGLA-SIGLAEJB")
+@HandlerChain(file = "/it/cnr/contab/handler/handlers.xml")
 public class FatturaAttivaComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	@EJB Configurazione_cnrComponentSession configurazione_cnrComponentSession;

@@ -71,6 +71,24 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Residuo Fondo" />
 	<fieldProperty
+		name="im_totale_spese"
+		property="im_totale_spese"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Spese da reintegrare" />
+	<fieldProperty
+		name="im_totale_netto_spese"
+		property="im_totale_netto_spese"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Spese" />
+	<fieldProperty
+		name="im_totale_reintegri"
+		property="im_totale_reintegri"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Reintegri" />	
+	<fieldProperty
 		name="cd_modalita_pag"
 		property="cd_modalita_pag"
 		inputType="TEXT"
@@ -158,6 +176,12 @@
 	<formFieldProperty
 		name="im_residuo_fondo" />
 	<formFieldProperty
+		name="im_totale_spese" />
+	<formFieldProperty
+		name="im_totale_netto_spese" />
+	<formFieldProperty
+		name="im_totale_reintegri" />	
+	<formFieldProperty
 		name="cd_modalita_pag" />
 	<formFieldProperty
 		name="ds_modalita_pag" />
@@ -197,6 +221,12 @@
 	<findFieldProperty
 		name="im_residuo_fondo" />
 	<findFieldProperty
+		name="im_totale_spese" />
+	<findFieldProperty
+		name="im_totale_netto_spese" />
+	<findFieldProperty
+		name="im_totale_reintegri" />		
+	<findFieldProperty
 		name="cd_modalita_pag" />
 	<findFieldProperty
 		name="ds_modalita_pag" />
@@ -235,6 +265,12 @@
 		name="im_ammontare_fondo" />
 	<columnFieldProperty
 		name="im_residuo_fondo" />
+	<columnFieldProperty
+		name="im_totale_spese" />
+	<columnFieldProperty
+		name="im_totale_netto_spese" />
+	<columnFieldProperty
+		name="im_totale_reintegri" />			
 	<columnFieldProperty
 		name="cd_modalita_pag" />
 	<columnFieldProperty
