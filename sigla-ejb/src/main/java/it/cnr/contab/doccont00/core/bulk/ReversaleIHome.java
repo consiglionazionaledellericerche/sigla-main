@@ -126,8 +126,8 @@ public ReversaleBulk loadReversale(it.cnr.jada.UserContext userContext,java.lang
 	SQLBuilder sql = createSQLBuilder();
 	sql.addClause("AND", "cd_cds",       sql.EQUALS, cdCds);
 	sql.addClause("AND", "esercizio",    sql.EQUALS, esercizio);
-	sql.addClause("AND", "pg_reversale", sql.EQUALS, pgReversale);
-
+	sql.addClause("AND", "pg_reversale", sql.EQUALS, pgReversale); 
+	sql.addClause("AND","ti_reversale", sql.EQUALS, ReversaleBulk.TIPO_INCASSO);
 	ReversaleIBulk rev = null;
 	Broker broker = createBroker(sql);
 	if(broker.next()){
