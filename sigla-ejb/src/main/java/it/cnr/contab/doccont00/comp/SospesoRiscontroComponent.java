@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.comp;
 
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.ejb.*;
 import java.sql.*;
 import java.math.*;
@@ -988,7 +989,16 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				sql.addSQLClause( "AND", "ti_entrata_spesa", sql.EQUALS, sospeso.getTi_entrata_spesa() );
 				sql.addSQLClause( "AND", "cd_sospeso_padre", sql.EQUALS, sospeso.getCd_sospeso() );
 				
-				sospeso.setMandatiImpegniColl(getHome( aUC, V_sospeso_man_impBulk.class).fetchAll( sql ));			
+				sospeso.setMandatiImpegniColl(getHome( aUC, V_sospeso_man_impBulk.class).fetchAll( sql ));
+				
+				SQLBuilder sql1210 = getHome( aUC, Lettera_pagam_esteroBulk.class).createSQLBuilder();
+				sql1210.setDistinctClause(true);
+				sql1210.addSQLClause( "AND", "esercizio", sql.EQUALS, sospeso.getEsercizio() );
+				sql1210.addSQLClause( "AND", "cd_cds_sospeso", sql.EQUALS, sospeso.getCd_cds() );
+				sql1210.addSQLClause( "AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.getTi_sospeso_riscontro() );
+				sql1210.addSQLClause( "AND", "ti_entrata_spesa", sql.EQUALS, sospeso.getTi_entrata_spesa() );
+				sql1210.addSQLClause( "AND", "cd_sospeso", sql.CONTAINS, sospeso.getCd_sospeso() );
+				sospeso.setLettereColl(getHome( aUC, Lettera_pagam_esteroBulk.class).fetchAll( sql1210 ));
 			}
 		}
 	}
@@ -2612,6 +2622,8 @@ public RemoteIterator cercaSospesiPerStato(UserContext usercontext, CompoundFind
 		    	    sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
 		    	} else if("LIBERO".equals(statoForSearch)) {
 		    		sql.addSQLJoin("V_SOSPESO_IM_FIGLI.IM_ASSOCIATO_FIGLI", SQLBuilder.NOT_EQUALS, "SOSPESO.IM_SOSPESO");
+		    		sqlExists.addSQLClause(FindClause.AND, "SOSPESO_FIGLIO.IM_ASS_MOD_1210", SQLBuilder.EQUALS, BigDecimal.ZERO);
+		    		sql.addSQLExistsClause(FindClause.AND, sqlExists);	    		
 		    	}
     		}
     	} else
