@@ -38,8 +38,17 @@ public class V_fondo_economaleBulk extends OggettoBulk implements Persistent{
  
 //    IM_RESIDUO_FONDO DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_residuo_fondo;
- 
-//    CD_MODALITA_PAG VARCHAR(10) NOT NULL
+	
+//  IM_AMMONTARE_INIZIALE DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal im_totale_spese;
+
+//  IM_AMMONTARE_FONDO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal im_totale_netto_spese;
+
+//  IM_RESIDUO_FONDO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal im_totale_reintegri;
+
+	//    CD_MODALITA_PAG VARCHAR(10) NOT NULL
 	private java.lang.String cd_modalita_pag;
  
 //    DS_MODALITA_PAG VARCHAR(100) NOT NULL
@@ -184,5 +193,27 @@ public class V_fondo_economaleBulk extends OggettoBulk implements Persistent{
 	public void setCodice_swift(java.lang.String codice_swift)  {
 		this.codice_swift=codice_swift;
 	}
+	public java.math.BigDecimal getIm_totale_spese() {
+		return im_totale_spese;
+	}
 
+	public void setIm_totale_spese(java.math.BigDecimal im_totale_spese) {
+		this.im_totale_spese = im_totale_spese;
+	}
+
+	public java.math.BigDecimal getIm_totale_netto_spese() {
+		return im_totale_netto_spese;
+	}
+
+	public void setIm_totale_netto_spese(java.math.BigDecimal im_totale_netto_spese) {
+		this.im_totale_netto_spese = im_totale_netto_spese;
+	}
+
+	public java.math.BigDecimal getIm_totale_reintegri() {
+		return im_totale_reintegri;
+	}
+
+	public void setIm_totale_reintegri(java.math.BigDecimal im_totale_reintegri) {
+		this.im_totale_reintegri = im_totale_reintegri;
+	}
 }
