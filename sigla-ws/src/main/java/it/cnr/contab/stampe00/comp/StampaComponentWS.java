@@ -16,6 +16,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.Name;
@@ -33,6 +34,7 @@ import org.jboss.ws.api.annotation.WebContext;
 @WebService(endpointInterface = "it.cnr.contab.stampe00.comp.StampaComponentSessionWS")
 @DeclareRoles({ "WSUserRole", "IITRole" })
 @WebContext(authMethod = "WSSE", contextRoot = "SIGLA-SIGLAEJB")
+@HandlerChain(file = "/it/cnr/contab/handler/handlers.xml")
 public class StampaComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	
