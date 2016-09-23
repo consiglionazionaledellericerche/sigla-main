@@ -20,6 +20,12 @@ public class VFatturaAttivaRigaBrevettiBase extends VFatturaAttivaRigaBrevettiKe
 //    DT_REGISTRAZIONE TIMESTAMP(7) NOT NULL
 	private java.sql.Timestamp dtRegistrazione;
  
+	// PARTITA_IVA VARCHAR(20)
+	private java.lang.String partita_iva;
+
+	// CODICE_FISCALE VARCHAR(20)
+	private java.lang.String codice_fiscale;
+
 //    CD_TERZO DECIMAL(8,0) NOT NULL
 	private java.lang.Integer cdTerzo;
  
@@ -422,5 +428,17 @@ public class VFatturaAttivaRigaBrevettiBase extends VFatturaAttivaRigaBrevettiKe
 	 **/
 	public void setDtEmissioneReversale(java.sql.Timestamp dtEmissioneReversale)  {
 		this.dtEmissioneReversale=dtEmissioneReversale;
+	}
+	public java.lang.String getPartita_iva() {
+		return partita_iva;
+	}
+	public void setPartita_iva(java.lang.String partita_iva) {
+		this.partita_iva = partita_iva;
+	}
+	public java.lang.String getCodice_fiscale() {
+		return codice_fiscale;
+	}
+	public void setCodice_fiscale(java.lang.String codice_fiscale) {
+		this.codice_fiscale = codice_fiscale;
 	}
 }
