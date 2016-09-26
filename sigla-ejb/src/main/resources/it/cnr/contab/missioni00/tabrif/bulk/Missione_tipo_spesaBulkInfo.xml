@@ -254,6 +254,7 @@
 		enabledOnFreeSearch="true" />		
 /**************************/			
 
+	<formFieldProperty name="pg_rif_inquadramento" />	
 	<formFieldProperty name="cd_ti_spesa" />
 	<formFieldProperty name="ti_area_geografica" />
 	<formFieldProperty name="pg_nazione" />
@@ -277,6 +278,7 @@
 	<formFieldProperty name="tipoSpeseRadioGroup" />
 	<formFieldProperty name="fl_ammissibile_con_rimborso" />
 
+	<columnFieldProperty name="pg_rif_inquadramento" />	
 	<columnFieldProperty name="cd_ti_spesa" />
 	<columnFieldProperty name="ds_ti_spesa" />
 	<columnFieldProperty name="ti_area_geografica" />
@@ -315,4 +317,25 @@
 	<findFieldProperty name="fl_alloggio" />
 	<findFieldProperty name="fl_ammissibile_con_rimborso" />
 
+	<columnSet name="restService">
+		<columnFieldProperty name="pg_rif_inquadramento" />
+		<columnFieldProperty name="cd_ti_spesa" />
+		<columnFieldProperty name="ds_ti_spesa" />
+		<columnFieldProperty name="ti_area_geografica" />
+		<columnFieldProperty name="pg_nazione" />
+		<columnFieldProperty name="ds_nazione" />
+		<columnFieldProperty name="dt_inizio_validita" />
+		<columnFieldProperty name="dataFineValidita" />
+		<columnFieldProperty name="fl_giustificativo_richiesto" />
+		<columnFieldProperty name="fl_pasto" />
+		<columnFieldProperty name="fl_trasporto" />
+		<columnFieldProperty name="fl_rimborso_km" />
+		<columnFieldProperty name="fl_alloggio" />
+		<columnFieldProperty name="cd_divisa" />
+		<columnFieldProperty name="ds_divisa" />
+		<columnFieldProperty name="percentuale_maggiorazione" />
+		<columnFieldProperty name="limite_max_spesa" />
+		<columnFieldProperty name="dt_cancellazione" />
+		<columnFieldProperty name="fl_ammissibile_con_rimborso" />
+	</columnSet>
 </bulkInfo>
