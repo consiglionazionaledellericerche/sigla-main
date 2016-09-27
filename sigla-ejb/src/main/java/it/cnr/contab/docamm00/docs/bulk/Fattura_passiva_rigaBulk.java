@@ -589,11 +589,18 @@ public TrovatoBulk getTrovato() {
 public java.lang.Integer getPg_trovato() {
 	if (this.getTrovato() == null)
 		return null;
-	return this.getTrovato().getNsrif();
+	if (this.getTrovato().getNsrif() != null){
+		return this.getTrovato().getNsrif();
+	}
+	if (this.getTrovato().getPg_trovato() != null){
+		return new Integer(this.getTrovato().getPg_trovato().toString());
+	}
+	return null;
 }
 public void setPg_trovato(java.lang.Integer pg_trovato) {
 	if (this.getTrovato() != null)
 		this.getTrovato().setNsrif(pg_trovato);
+	super.setPg_trovato(pg_trovato);
 }
 public Boolean getCollegatoCapitoloPerTrovato() {
 		return collegatoCapitoloPerTrovato;
