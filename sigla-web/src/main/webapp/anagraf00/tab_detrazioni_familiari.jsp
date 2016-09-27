@@ -36,7 +36,8 @@
 		</tr>
 		<tr>
 			<td><% bp.getCrudCarichi_familiari_anag().writeFormLabel(out,"prc_carico"); %></td>
-			<td><% bp.getCrudCarichi_familiari_anag().writeFormInput(out,null,"prc_carico",bp.getCrudCarichi_familiari_anag().getModel() != null && ((Carico_familiare_anagBulk)bp.getCrudCarichi_familiari_anag().getModel()).isConiuge(),null,null);%></td>
+			<!-- <td><% bp.getCrudCarichi_familiari_anag().writeFormInput(out,null,"prc_carico",bp.getCrudCarichi_familiari_anag().getModel() != null && ((Carico_familiare_anagBulk)bp.getCrudCarichi_familiari_anag().getModel()).isConiuge(),null,null);%></td> --> 
+			<td><% bp.getCrudCarichi_familiari_anag().writeFormInput(out,"prc_carico");%></td>
 		</tr>
 <% if(bp.getCrudCarichi_familiari_anag().getModel() != null &&
 	((Carico_familiare_anagBulk)bp.getCrudCarichi_familiari_anag().getModel()).isFiglio() ) {%>
