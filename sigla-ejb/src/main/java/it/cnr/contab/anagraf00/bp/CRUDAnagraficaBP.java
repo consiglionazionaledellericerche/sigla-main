@@ -523,12 +523,12 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 			if (carico.isConiuge()|| carico.isFiglio()){
 				sess.checkConiugeAlreadyExistFor(context.getUserContext(),carico.getAnagrafico(),carico);
 			}
-			if (carico.isFiglio() && 
-				!carico.getFl_primo_figlio_manca_con() && 
-				carico.getPrc_carico().compareTo(new java.math.BigDecimal(100))==0 &&
-				//!sess.esisteConiugeValido(context.getUserContext(),carico.getAnagrafico(),carico) &&
-				carico.getCodice_fiscale_altro_gen() == null)
-				throw new ValidationException("Attenzione: è necessario specificare il Codice fiscale dell'altro genitore");
+//			if (carico.isFiglio() && 
+//				!carico.getFl_primo_figlio_manca_con() && 
+//				carico.getPrc_carico().compareTo(new java.math.BigDecimal(100))==0 &&
+//				//!sess.esisteConiugeValido(context.getUserContext(),carico.getAnagrafico(),carico) &&
+//				carico.getCodice_fiscale_altro_gen() == null)
+//				throw new ValidationException("Attenzione: è necessario specificare il Codice fiscale dell'altro genitore");
 			java.util.GregorianCalendar data_da = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 			java.util.GregorianCalendar data_a = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 			data_da.setTime(carico.getDt_ini_validita());
