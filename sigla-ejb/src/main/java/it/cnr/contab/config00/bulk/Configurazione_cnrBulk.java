@@ -63,6 +63,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_ANNI_RESIDUI_IM_RES_PRO = "ANNI_RESIDUI_IM_RES_PRO";
 	public final static String SK_MODELLO_INTRA_12="MODELLO_INTRA_12";
 	public final static String SK_MODELLO_INTRASTAT="MODELLO_INTRASTAT";
+	public final static String SK_BLACKLIST="BLACKLIST";
 	public final static String PK_INCARICHI_MODIFICA_ALLEGATI = "INCARICHI_MODIFICA_ALLEGATI";
 	public final static String SK_INCARICHI_MOD_CONTRATTO = "INCARICHI_MOD_CONTRATTO";
 	

@@ -68,13 +68,6 @@
 		maxLength="3"
 		label="sede_svol_uo" />
 	<fieldProperty
-		name="cod_tip"
-		property="cod_tip"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		label="cod_tip" />
-	<fieldProperty
 		name="cod_3rzo_resp"
 		property="cod_3rzo_resp"
 		inputType="TEXTAREA"
@@ -327,8 +320,6 @@
 	<formFieldProperty
 		name="sede_svol_uo" />
 	<formFieldProperty
-		name="cod_tip" />
-	<formFieldProperty
 		name="cod_3rzo_resp" />
 	<formFieldProperty
 		name="matricola_resp" />
@@ -412,8 +403,6 @@
 	<findFieldProperty
 		name="sede_svol_uo" />
 	<findFieldProperty
-		name="cod_tip" />
-	<findFieldProperty
 		name="cod_3rzo_resp" />
 	<findFieldProperty
 		name="matricola_resp" />
@@ -496,8 +485,6 @@
 		name="cds" />
 	<columnFieldProperty
 		name="sede_svol_uo" />
-	<columnFieldProperty
-		name="cod_tip" />
 	<columnFieldProperty
 		name="cod_3rzo_resp" />
 	<columnFieldProperty

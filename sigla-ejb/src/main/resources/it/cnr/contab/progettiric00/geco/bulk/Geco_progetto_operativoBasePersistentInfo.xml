@@ -42,12 +42,6 @@
 			columnSize="3"
 			nullable="true" />
 		<columnMapping
-			columnName="cod_tip"
-			propertyName="cod_tip"
-			sqlTypeName="DECIMAL"
-			columnSize="10"
-			nullable="true" />
-		<columnMapping
 			columnName="cod_3rzo_resp"
 			propertyName="cod_3rzo_resp"
 			sqlTypeName="VARCHAR"
@@ -252,8 +246,6 @@
 		name="cds" />
 	<persistentProperty
 		name="sede_svol_uo" />
-	<persistentProperty
-		name="cod_tip" />
 	<persistentProperty
 		name="cod_3rzo_resp" />
 	<persistentProperty
