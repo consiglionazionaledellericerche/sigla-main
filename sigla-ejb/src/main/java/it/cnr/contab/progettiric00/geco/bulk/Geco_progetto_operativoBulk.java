@@ -31,7 +31,7 @@ public class Geco_progetto_operativoBulk extends Geco_progetto_operativoBase imp
 			progetto_sip.setDs_progetto(getDescr_comm());
 			progetto_sip.setToBeUpdated();
 		}
-		if (getCod_tip() != null){
+		/*if (getCod_tip() != null){
 			if (getCod_tip().equals(new Long(1)) && (progetto_sip.getCd_tipo_progetto() == null || !progetto_sip.getCd_tipo_progetto().equals("PS"))){
 				progetto_sip.setTipo(new Tipo_progettoBulk("PS"));
 				progetto_sip.setToBeUpdated();
@@ -42,7 +42,7 @@ public class Geco_progetto_operativoBulk extends Geco_progetto_operativoBase imp
 				progetto_sip.setTipo(new Tipo_progettoBulk("MG"));
 				progetto_sip.setToBeUpdated();
 			}
-		}
+		}*/
 		if (getCds() != null && getSede_svol_uo() != null && !((getCds()+"."+getSede_svol_uo()).equals(progetto_sip.getCd_unita_organizzativa()))){
 			progetto_sip.setUnita_organizzativa(new Unita_organizzativaBulk(getCds()+"."+getSede_svol_uo()));
 			progetto_sip.setToBeUpdated();

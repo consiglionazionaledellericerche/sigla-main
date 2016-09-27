@@ -26,7 +26,7 @@ public class Geco_progetto_operativoBase extends Geco_progetto_operativoKey impl
 	private java.lang.String sede_svol_uo;
  
 //    cod_tip DECIMAL(10,0)
-	private java.lang.Long cod_tip;
+	//private java.lang.Long cod_tip;
  
 //    cod_3rzo_resp VARCHAR(255)
 	private java.lang.String cod_3rzo_resp;
@@ -166,12 +166,7 @@ public class Geco_progetto_operativoBase extends Geco_progetto_operativoKey impl
 	public void setSede_svol_uo(java.lang.String sede_svol_uo)  {
 		this.sede_svol_uo=sede_svol_uo;
 	}
-	public java.lang.Long getCod_tip() {
-		return cod_tip;
-	}
-	public void setCod_tip(java.lang.Long cod_tip)  {
-		this.cod_tip=cod_tip;
-	}
+	
 	public java.lang.String getCod_3rzo_resp() {
 		return cod_3rzo_resp;
 	}

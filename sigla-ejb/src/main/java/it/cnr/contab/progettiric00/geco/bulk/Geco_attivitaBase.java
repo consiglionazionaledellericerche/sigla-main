@@ -29,7 +29,7 @@ public class Geco_attivitaBase extends Geco_attivitaKey implements Keyed {
 	private java.lang.String sede_princ_cdsuo;
  
 //    cod_tip DECIMAL(10,0)
-	private java.lang.Long cod_tip;
+	//private java.lang.Long cod_tip;
  
 //    cod_3rzo_refe VARCHAR(255)
 	private java.lang.String cod_3rzo_refe;
@@ -166,12 +166,7 @@ public class Geco_attivitaBase extends Geco_attivitaKey implements Keyed {
 	public void setSede_princ_cdsuo(java.lang.String sede_princ_cdsuo)  {
 		this.sede_princ_cdsuo=sede_princ_cdsuo;
 	}
-	public java.lang.Long getCod_tip() {
-		return cod_tip;
-	}
-	public void setCod_tip(java.lang.Long cod_tip)  {
-		this.cod_tip=cod_tip;
-	}
+	
 	public java.lang.String getCod_3rzo_refe() {
 		return cod_3rzo_refe;
 	}

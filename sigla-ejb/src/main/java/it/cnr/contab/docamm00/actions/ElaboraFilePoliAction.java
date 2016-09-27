@@ -66,8 +66,9 @@ public Forward doElaboraFile(ActionContext context) throws ComponentException, P
 		VSpesometroBulk dett = (VSpesometroBulk)bp.getModel();
 		if(!dett.isFlBlacklist() && !dett.isComunicazionePoliv())
 			return handleException(context, new it.cnr.jada.bulk.ValidationException("Selezionare il tipo di elaborazione."));
-		if (dett.isFlBlacklist() && dett.getMese() == null )
-			return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: specificare il Mese"));
+		// Controllo spostato nel Bp perchè dipende dalla configurazione nell'anno se l'estrazione è annuale o mensile
+//		if (dett.isFlBlacklist() && dett.getMese() == null )
+//			return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: specificare il Mese"));
 		try {
 				bp.doElaboraFile(context,dett);
 		} catch (Exception e) { 

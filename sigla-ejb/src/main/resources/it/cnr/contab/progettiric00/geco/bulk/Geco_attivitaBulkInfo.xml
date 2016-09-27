@@ -75,13 +75,6 @@
 		maxLength="7"
 		label="sede_princ_cdsuo" />
 	<fieldProperty
-		name="cod_tip"
-		property="cod_tip"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		label="cod_tip" />
-	<fieldProperty
 		name="cod_3rzo_refe"
 		property="cod_3rzo_refe"
 		inputType="TEXTAREA"
@@ -307,8 +300,6 @@
 	<formFieldProperty
 		name="sede_princ_cdsuo" />
 	<formFieldProperty
-		name="cod_tip" />
-	<formFieldProperty
 		name="cod_3rzo_refe" />
 	<formFieldProperty
 		name="matricola_refe" />
@@ -388,8 +379,6 @@
 	<findFieldProperty
 		name="sede_princ_cdsuo" />
 	<findFieldProperty
-		name="cod_tip" />
-	<findFieldProperty
 		name="cod_3rzo_refe" />
 	<findFieldProperty
 		name="matricola_refe" />
@@ -468,8 +457,6 @@
 		name="cds_esec" />
 	<columnFieldProperty
 		name="sede_princ_cdsuo" />
-	<columnFieldProperty
-		name="cod_tip" />
 	<columnFieldProperty
 		name="cod_3rzo_refe" />
 	<columnFieldProperty
