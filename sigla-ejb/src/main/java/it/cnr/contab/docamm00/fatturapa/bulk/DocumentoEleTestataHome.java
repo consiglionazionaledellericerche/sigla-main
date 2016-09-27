@@ -22,8 +22,6 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.ejb.EJBException;
 import javax.mail.AuthenticationFailedException;
-import javax.mail.BodyPart;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
@@ -31,7 +29,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -275,12 +273,14 @@ public class DocumentoEleTestataHome extends BulkHome {
 		
 		@Override
 		public OutputStream getOutputStream() throws IOException {
-			throw new NotImplementedException("datasource file non implementato" );
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+ 			IOUtils.copy(inputStream, output);
+			return output;
 		}
 		
 		@Override
 		public String getName() {
-			throw new NotImplementedException("nome file non implementato" );
+			return "DATASOURCE";
 		}
 		
 		@Override
@@ -290,7 +290,7 @@ public class DocumentoEleTestataHome extends BulkHome {
 		
 		@Override
 		public String getContentType() {
-			throw new NotImplementedException("content type file non implementato" );
+			return "www/unknow";
 		}
 	}
 }
