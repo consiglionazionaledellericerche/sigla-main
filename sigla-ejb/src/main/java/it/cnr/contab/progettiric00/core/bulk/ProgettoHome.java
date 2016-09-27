@@ -569,8 +569,9 @@ public class ProgettoHome extends BulkHome {
 				progetto_sip.setProgettopadre(new Progetto_sipBulk(geco_modulo.getEsercizio().intValue(),geco_modulo.getId_comm().intValue(),geco_modulo.getFase()));
 				progetto_sip.setCd_progetto(geco_modulo.getCod_mod());
 				progetto_sip.setDs_progetto(geco_modulo.getDescr_mod());
-				if (geco_modulo.getCod_tip() != null)
+				/*if (geco_modulo.getCod_tip() != null)
 					progetto_sip.setStato(geco_modulo.getCod_tip().equals(new Long(1))?"PS":geco_modulo.getCod_tip().equals(new Long(2))?"SC":null);
+					*/
 				progetto_sip.setUnita_organizzativa((Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(geco_modulo.getSede_princ_cdsuo())));
 				if (geco_modulo.getCod_3rzo_gest() != null)
 					progetto_sip.setResponsabile((TerzoBulk)getHomeCache().getHome(TerzoBulk.class).findByPrimaryKey(new TerzoBulk(new Integer(geco_modulo.getCod_3rzo_gest()))));				

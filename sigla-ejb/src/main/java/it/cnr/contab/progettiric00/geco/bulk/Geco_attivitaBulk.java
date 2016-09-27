@@ -31,6 +31,7 @@ public class Geco_attivitaBulk extends Geco_attivitaBase implements Geco_moduloI
 			progetto_sip.setDs_progetto(getDescr_mod());
 			progetto_sip.setToBeUpdated();
 		}
+		/*
 		if (getCod_tip() != null){
 			if (getCod_tip().equals(new Long(1)) && (progetto_sip.getCd_tipo_progetto() == null || !progetto_sip.getCd_tipo_progetto().equals("PS"))){
 				progetto_sip.setTipo(new Tipo_progettoBulk("PS"));
@@ -42,7 +43,7 @@ public class Geco_attivitaBulk extends Geco_attivitaBase implements Geco_moduloI
 				progetto_sip.setTipo(new Tipo_progettoBulk("MG"));
 				progetto_sip.setToBeUpdated();
 			}
-		}
+		}*/
 		if (getSede_princ_cdsuo() != null && !(getSede_princ_cdsuo().equals(progetto_sip.getCd_unita_organizzativa()))){
 			progetto_sip.setUnita_organizzativa(new Unita_organizzativaBulk(getSede_princ_cdsuo()));
 			progetto_sip.setToBeUpdated();
