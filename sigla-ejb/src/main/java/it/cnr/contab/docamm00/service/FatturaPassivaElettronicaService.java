@@ -21,6 +21,7 @@ import it.cnr.jada.util.upload.UploadedFile;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -978,7 +979,14 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		
 		@Override
 		public InputStream getInputStream() throws IOException {
-			throw new NotImplementedException("getInputStream non implementato Output Stream");
+			logger.error("getInputStream non implementato Output Stream");
+			if (outputStream != null){
+				ByteArrayOutputStream bos = (ByteArrayOutputStream)outputStream;
+				byte[] byteArray = bos.toByteArray();
+				ByteArrayInputStream inStream = new ByteArrayInputStream( byteArray );
+				return inStream;
+			}
+			return null;
 		}
 		
 		@Override
