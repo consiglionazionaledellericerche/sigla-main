@@ -552,6 +552,40 @@
 		label="Data di Firma" />			
 	</columnSet> 
 	
+	<columnSet
+        name="restService">
+	    <columnFieldProperty
+		name="cd_tipo_documento_cont" />
+		<columnFieldProperty
+		name="pg_documento_cont" />
+		<columnFieldProperty
+		name="ti_documento_cont" />
+		<columnFieldProperty
+		name="im_documento_cont" />
+		<columnFieldProperty
+		name="ds_documento_cont" />
+		<columnFieldProperty
+		name="dt_trasmissione" />
+		<columnFieldProperty
+		name="dt_pagamento_incasso" />
+		<columnFieldProperty
+		name="cd_terzo" />
+		<columnFieldProperty
+		name="cd_anag" />
+		<columnFieldProperty
+		name="cd_cds" />
+		<columnFieldProperty
+		name="esercizio" />
+		<columnFieldProperty
+		name="im_pagato_incassato" />
+		<columnFieldProperty
+		name="cd_unita_organizzativa" />
+		<columnFieldProperty
+		name="cd_cds_origine" />
+		<columnFieldProperty
+		name="cd_uo_origine" />
+	</columnSet>	
+
 	<findFieldProperty
 		name="dt_trasmissione" />
 	<findFieldProperty
