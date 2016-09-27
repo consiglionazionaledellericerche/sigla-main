@@ -5779,24 +5779,24 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 			 * if ( riga.getBanca() == null || riga.getBanca().getNumero_conto()
 			 * == null) //mandato di regolarizzazione return;
 			 */
-		
-		if (riga.getBanca() == null
-					|| Rif_modalita_pagamentoBulk.ALTRO.equals(riga.getBanca()
-							.getTi_pagamento())
-							|| Rif_modalita_pagamentoBulk.IBAN.equals(riga.getBanca()
-									.getTi_pagamento()))
-				return;
-		if (riga.getBanca() == null
-					|| mandato.TIPO_REGOLARIZZAZIONE.equals(mandato
-							.getTi_mandato())) // mandato di regolarizzazione
-				return;
-	
-		Rif_modalita_pagamentoBulk rifModPag = (Rif_modalita_pagamentoBulk) getHome(aUC,
+			Rif_modalita_pagamentoBulk rifModPag = (Rif_modalita_pagamentoBulk) getHome(aUC,
 					Rif_modalita_pagamentoBulk.class).findByPrimaryKey(
 					new Rif_modalita_pagamentoBulk(riga.getModalita_pagamento().getCd_modalita_pag()));
 			if( rifModPag.isMandatoRegSospeso() && !mandato.isRegolamentoSospeso())
 				throw new ApplicationException(
 					"Attenzione per la modalità di pagamento indicata il mandato deve essere a regolamento sospeso.");
+		
+			if (riga.getBanca() == null
+					|| Rif_modalita_pagamentoBulk.ALTRO.equals(riga.getBanca()
+							.getTi_pagamento())
+							|| Rif_modalita_pagamentoBulk.IBAN.equals(riga.getBanca()
+									.getTi_pagamento()))
+				return;
+			if (riga.getBanca() == null
+					|| mandato.TIPO_REGOLARIZZAZIONE.equals(mandato
+							.getTi_mandato())) // mandato di regolarizzazione
+				return;
+	
 		
 			BancaBulk banca = riga.getBanca();
 

@@ -509,7 +509,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 
 	public List EstraiBlacklist(UserContext context, OggettoBulk bulk,OggettoBulk bulkterzo)  throws ComponentException {
 		if(bulk instanceof VFatcomBlacklistBulk){
-		
+		// Estrazione antecedente al 2014
 				VFatcomBlacklistHome home = (VFatcomBlacklistHome)getHome(context,VFatcomBlacklistBulk.class);
 				SQLBuilder sql = home.createSQLBuilder();
 				sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
@@ -526,14 +526,18 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 					handleException(e);
 				}
 		}else if (bulk instanceof VSpesometroBulk){
+			//nuova versione Comunicazione Polivalente anche per BlackList
 			VSpesometroHome home = (VSpesometroHome)getHome(context,VSpesometroBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
-			if(((VSpesometroBulk)bulk).getMese()!=null){
-				sql.addClause("AND", "mese",sql.EQUALS,((VSpesometroBulk)bulk).getMese());
+			if(((VSpesometroBulk)bulk).isFlBlacklist()){
+				if(((VSpesometroBulk)bulk).getMese()!=null)
+					sql.addClause("AND", "mese",sql.EQUALS,((VSpesometroBulk)bulk).getMese());
 				sql.addClause("AND", "tipoFiscalita",sql.EQUALS,"FS");
-			}else
+			}else{
+				sql.addClause("AND", "tipoFiscalita",sql.NOT_EQUALS,"FS");
 				sql.addClause("AND", "mese",sql.ISNULL,null);
+			}
 			sql.addOrderBy("esercizio,quadro,tipo,ti_bene_servizio,prog");
 			try {
 				return home.fetchAll(sql);
