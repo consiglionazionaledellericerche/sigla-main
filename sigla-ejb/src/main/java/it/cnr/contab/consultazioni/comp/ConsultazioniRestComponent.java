@@ -22,6 +22,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaHome;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -148,10 +149,10 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					sql.addTableToHeader("V_CDR_VALIDO");
 					sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
 					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-						sql.openParenthesis("AND");
-						sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-						sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-						sql.closeParenthesis();
+					sql.openParenthesis("AND");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					sql.closeParenthesis();
 				}else{
 					sql.addTableToHeader("V_CDR_VALIDO");
 					sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
@@ -162,6 +163,12 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					sql.closeParenthesis();
 				}
 				((SQLBuilder)sql).addSQLExistsClause(FindClause.AND, sqlExists);
+			} 
+		} else if (oggettobulk instanceof V_mandato_reversaleBulk){
+
+			if ( !isUoEnte(userContext)){
+				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 			}
 		} else if (oggettobulk instanceof ProgettoGestBulk){
 			ProgettoGestHome home = (ProgettoGestHome) getHome(userContext, oggettobulk);
