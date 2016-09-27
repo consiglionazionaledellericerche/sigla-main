@@ -25,6 +25,7 @@ import it.gov.fatturapa.sdi.monitoraggio.v1.FattureRicevuteType;
 import it.gov.fatturapa.sdi.monitoraggio.v1.MonitoraggioFlussiType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -224,7 +225,9 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 
 		@Override
 		public OutputStream getOutputStream() throws IOException {
-			throw new NotImplementedException("datasource file non implementato" + file.toString());
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+ 			IOUtils.copy(getInputStream(), output);
+			return output;
 		}
 		
 		@Override
