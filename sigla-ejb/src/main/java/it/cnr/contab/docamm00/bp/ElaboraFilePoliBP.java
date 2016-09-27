@@ -78,6 +78,25 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 		  Integer conta_fa=0;
 		  AnagraficoComponentSession sess = (AnagraficoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRANAGRAF00_EJB_AnagraficoComponentSession", AnagraficoComponentSession.class);
 	      AnagraficoBulk ente = sess.getAnagraficoEnte(context.getUserContext());
+	      // configurato dal  2014 - versione precedente gestita da altro Bp e su altra view altro tracciato
+	      it.cnr.contab.config00.bulk.Configurazione_cnrBulk configblack = null;
+			try {
+				configblack = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context.getUserContext(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()), null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_COSTANTI, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_BLACKLIST);
+			} catch (RemoteException e) {
+				throw new ComponentException(e);
+			} catch (EJBException e) {
+				throw new ComponentException(e);
+			}
+	      
+	      if (configblack.getVal01().compareTo("M")==0){
+	    	  if (dett.isFlBlacklist() && dett.getMese() == null )
+	    		  throw new ApplicationException("Attenzione: specificare il Mese");
+	      }
+	      else if(configblack.getVal01().compareTo("M")!=0){
+	    	  if (dett.isFlBlacklist() && dett.getMese() != null )
+	    		  throw new ApplicationException("In caso di comunicazione annuale, il mese non deve essere indicato!");
+	      }
+			
 	      java.util.List lista=((ElaboraFileIntraComponentSession)createComponentSession()).EstraiBlacklist(context.getUserContext(),getModel(),null);
    		  it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 			try {
@@ -97,6 +116,7 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 			else
 				f = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/",
 						   ente.getCodice_fiscale()+"_"+//codice fiscale
+								   (dett.isFlBlacklist()?"BL_":"")+
 								   (CNRUserContext.getEsercizio(context.getUserContext())).toString()+		   
 								   ".ccf");
 			
@@ -144,8 +164,8 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 	    	bw.append(Formatta(null,"D",6,"0"));  // da indicare per sostitutiva
 	    	bw.append("1");  // fisso dati aggregati
 	    	bw.append("0"); // dati analitici
-	    	// quadri compilati
-	    	if (dett.getMese()!=null){
+	    	// quadri compilati sia annuale che mensile
+	    	if (dett.isFlBlacklist()){
 	    		bw.append("0"); // quadro FA
 	    		bw.append("0"); // quadro SA
 	    		bw.append("1"); // quadro BL
@@ -285,7 +305,7 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 						   //if (det.getPartitaIva()!=null)
 							 //  num_col=Formatta(det.getPartitaIva(),"S",16," ",bw,"BL002001",num_col);
 						   // valorizzazione del mese nella view solo per BL Fiscalità speciale
-						   if(det.getMese()!=null){ 
+						   if(det.getTipoFiscalita().compareTo("FS")==0){ 
 							   num_col=Formatta("1","D",16," ",bw,"BL002002",num_col);
 							   //num_col=Formatta("1","D",16," ",bw,"BL002003",num_col);
 							   //num_col=Formatta("1","D",16," ",bw,"BL002004",num_col);
@@ -400,7 +420,7 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 	    	bw.append(Formatta(null,"S",16," "));
 	    	num_col=0;
 	    	// campi non posizionali
-	    	if (dett.getMese()!=null){
+	    	if(dett.isFlBlacklist()){
 	    		if(lista!=null && lista.size()!=0){
 	    			bw.append("TA003001");
 	    			// numero contraparti blacklist BL002002

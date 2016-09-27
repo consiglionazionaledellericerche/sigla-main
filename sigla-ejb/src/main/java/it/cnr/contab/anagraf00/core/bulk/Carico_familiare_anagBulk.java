@@ -120,9 +120,13 @@ public void validate(OggettoBulk parent) throws ValidationException {
 	if (isFiglio() && getPrc_carico() != null && 
 			getPrc_carico().compareTo(new java.math.BigDecimal(0))!=0 && 
 			getPrc_carico().compareTo(new java.math.BigDecimal(50))!=0 &&
-			getPrc_carico().compareTo(new java.math.BigDecimal(100))!=0 ){
+			getPrc_carico().compareTo(new java.math.BigDecimal(100))!=0 )
 		throw new ValidationException("Carichi familiari: percentuale di carico non valida per il figlio. Consentite solo 0%, 50%, 100%.");
-	}
+
+	if (isConiuge() && getPrc_carico() != null && 
+				getPrc_carico().compareTo(new java.math.BigDecimal(0))!=0 && 
+				getPrc_carico().compareTo(new java.math.BigDecimal(100))!=0 )
+			throw new ValidationException("Carichi familiari: percentuale di carico non valida per il coniuge. Consentite solo 0%, 100%.");
 
 	/* Carichi Familiari verifica esattezza carattere di controllo del codice fiscale */
 	if (getCodice_fiscale_altro_gen() != null &&
