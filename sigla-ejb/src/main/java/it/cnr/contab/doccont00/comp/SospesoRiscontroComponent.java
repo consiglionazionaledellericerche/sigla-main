@@ -1584,7 +1584,7 @@ public Query select(UserContext userContext, CompoundFindClause clauses, Oggetto
 	}
 	else if ( bulk instanceof ListaSospesiBulk ) {
 		SQLBuilder sql = (SQLBuilder)selectForListaSospesi(userContext, clauses, bulk);
-		sql.addSQLClause( "AND", "sospeso.fl_stornato", SQLBuilder.EQUALS, "N" );
+		//sql.addSQLClause( "AND", "sospeso.fl_stornato", SQLBuilder.EQUALS, "N" );
 		return sql;
 	}
 
