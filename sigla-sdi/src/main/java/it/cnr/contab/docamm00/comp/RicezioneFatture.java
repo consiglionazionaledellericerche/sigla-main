@@ -94,6 +94,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.cms.CMSProcessable;
 import org.bouncycastle.cms.CMSSignedData;
+import org.bouncycastle.cms.CMSTypedData;
 import org.jboss.wsf.spi.annotation.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -164,7 +165,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		} catch(ArrayIndexOutOfBoundsException e) {			
 		}
 		CMSSignedData sdp = new CMSSignedData(inputBytes);
-		CMSProcessable cmsp = sdp.getSignedContent();
+		CMSTypedData cmsp = sdp.getSignedContent();
 		cmsp.write(bStream);
 		return bStream;			
 	}

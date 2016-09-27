@@ -7,7 +7,7 @@
   <parent>
     <groupId>it.cnr</groupId>
     <artifactId>sigla</artifactId>
-    <version>4.0.7-SNAPSHOT</version>
+    <version>4.0.8-SNAPSHOT</version>
   </parent>
   <build>
     <plugins>
@@ -109,7 +109,7 @@
     <dependency>
       <groupId>it.cnr.commons</groupId>
       <artifactId>firmadigitale</artifactId>
-      <version>1.5</version>
+      <version>1.6</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
