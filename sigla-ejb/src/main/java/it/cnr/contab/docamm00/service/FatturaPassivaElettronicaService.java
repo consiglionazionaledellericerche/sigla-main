@@ -938,12 +938,14 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		
 		@Override
 		public OutputStream getOutputStream() throws IOException {
-			throw new NotImplementedException("datasource file non implementato Stream");
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			IOUtils.copy(inputStream, output);
+			return output;
 		}
 		
 		@Override
 		public String getName() {
-			throw new NotImplementedException("Nome non implementato  Stream");
+			return "DATASOURCE";
 		}
 		
 		@Override
@@ -971,17 +973,17 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		
 		@Override
 		public String getName() {
-			throw new NotImplementedException("Nome non implementato Output Stream");
+			return "DATASOURCE";
 		}
 		
 		@Override
 		public InputStream getInputStream() throws IOException {
-			throw new NotImplementedException("Nome non implementato Output Stream");
+			throw new NotImplementedException("getInputStream non implementato Output Stream");
 		}
 		
 		@Override
 		public String getContentType() {
-			throw new NotImplementedException("Nome non implementato Output Stream");
+			return "www/unknow";
 		}
 	}
 	class UploadedFileDataSource implements DataSource {
@@ -994,7 +996,13 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		
 		@Override
 		public OutputStream getOutputStream() throws IOException {
-			throw new NotImplementedException("datasource file non implementato" + bodypart.toString());
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			try {
+				IOUtils.copy(bodypart.getInputStream(), output);
+			} catch (MessagingException e) {
+				logger.error("UploadedFileDataSource::getOutputStream", e);
+			}
+			return output;			
 		}
 		
 		@Override
@@ -1002,8 +1010,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			try {
 				return bodypart.getFileName();
 			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("UploadedFileDataSource::getName", e);
 			}
 			return null;
 		}
@@ -1013,8 +1020,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			try {
 				return bodypart.getInputStream();
 			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("UploadedFileDataSource::getInputStream", e);
 			}
 			return null;
 		}
@@ -1024,8 +1030,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			try {
 				return bodypart.getContentType();
 			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("UploadedFileDataSource::getContentType", e);
 			}
 			return null;
 		}
