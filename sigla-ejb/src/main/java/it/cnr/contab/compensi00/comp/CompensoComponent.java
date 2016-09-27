@@ -2520,16 +2520,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				.inizializzaBulkPerInserimento(userContext, bulk);
 
 		try {
-			ricercaCompensiTrovato(userContext, new Integer ("10221"));
-		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (PersistencyException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
 			if (!verificaStatoEsercizio(
 					userContext,
 					new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk(
