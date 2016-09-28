@@ -104,11 +104,15 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.resetColumns();
 
+		addColumn(sql,"CD_UNITA_ORGANIZZATIVA",true);
+		addColumn(sql,"DS_UNITA_ORGANIZZATIVA",true);
 		addColumn(sql,"CD_TERZO",true);
 		addColumn(sql,"COGNOME",true);
 		addColumn(sql,"NOME",true);
 		addColumn(sql,"CODICE_FISCALE",true);
 
+		addSQLGroupBy(sql,"CD_UNITA_ORGANIZZATIVA",true);
+		addSQLGroupBy(sql,"DS_UNITA_ORGANIZZATIVA",true);
 		addSQLGroupBy(sql,"COGNOME",true);
 		addSQLGroupBy(sql,"NOME",true);
 		addSQLGroupBy(sql,"CODICE_FISCALE",true);
@@ -127,6 +131,7 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 		sql.addColumn("NVL(SUM(ADD_COM),0)", "ADD_COM");
 		sql.addColumn("NVL(SUM(IM_LORDO),0) + NVL(SUM(IRAP_ENTE),0) + NVL(SUM(INPS_ENTE),0) + NVL(SUM(INAIL_ENTE),0)", "TOT_COSTO");
 
+		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
 		sql.addOrderBy("COGNOME");
 		sql.addOrderBy("NOME");
 
@@ -136,6 +141,17 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 
 		if (riepilogCompensi.getUoForPrint() != null){
 			sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,riepilogCompensi.getUoForPrint().getCd_unita_organizzativa());
+		} else {
+			Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
+			boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
+			boolean isUoSac  = uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0;
+
+			if (!isUoEnte){
+				sql.addClause( "AND", "cd_cds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+			}
+			if (isUoSac){
+				sql.addClause(FindClause.AND, "cdUnitaOrganizzativa", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+			}
 		}
 
 		if (riepilogCompensi.getDa_dt_pagamento() != null){
