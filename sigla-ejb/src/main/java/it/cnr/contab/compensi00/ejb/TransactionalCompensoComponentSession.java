@@ -1153,7 +1153,7 @@ public class TransactionalCompensoComponentSession extends
 	}
 
 	public List<CompensoBulk> ricercaCompensiTrovato(UserContext userContext,
-			Integer trovato) throws ComponentException, RemoteException,
+			Long trovato) throws ComponentException, RemoteException,
 			PersistencyException {
 		try {
 			return ((List<CompensoBulk>) invoke("ricercaCompensiTrovato", new Object[] { userContext, trovato }));
