@@ -80,6 +80,9 @@ public class VConsRiepCompensiBulk extends OggettoBulk implements Persistent {
 	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL (PK)
 	private java.lang.String cd_unita_organizzativa;
 
+	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL (PK)
+	private java.lang.String ds_unita_organizzativa;
+
 	// ESERCIZIO DECIMAL(4,0) NOT NULL (PK)
 	private java.lang.Integer esercizio;
 
@@ -446,6 +449,12 @@ public class VConsRiepCompensiBulk extends OggettoBulk implements Persistent {
 	}
 	public void setTotCosto(java.math.BigDecimal totCosto) {
 		this.totCosto = totCosto;
+	}
+	public java.lang.String getDs_unita_organizzativa() {
+		return ds_unita_organizzativa;
+	}
+	public void setDs_unita_organizzativa(java.lang.String ds_unita_organizzativa) {
+		this.ds_unita_organizzativa = ds_unita_organizzativa;
 	}
 
 }
