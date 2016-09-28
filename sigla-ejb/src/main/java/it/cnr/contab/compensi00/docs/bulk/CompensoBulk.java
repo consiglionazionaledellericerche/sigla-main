@@ -3275,24 +3275,16 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		this.trovato = trovato;
 	}
 
-	public java.lang.Integer getPg_trovato() {
+	public java.lang.Long getPg_trovato() {
 		if (this.getTrovato() == null)
 			return null;
-		if (this.getTrovato().getNsrif() != null){
-			return this.getTrovato().getNsrif();
-		}
-		if (this.getTrovato().getPg_trovato() != null){
-			return new Integer(this.getTrovato().getPg_trovato().toString());
-		}
-		return null;
+		return this.getTrovato().getPg_trovato();
 	}
-
-	public void setPg_trovato(java.lang.Integer pg_trovato) {
+	public void setPg_trovato(java.lang.Long pg_trovato) {
 		if (this.getTrovato() != null)
-			this.getTrovato().setNsrif(pg_trovato);
-		super.setPg_trovato(pg_trovato);
+			this.getTrovato().setPg_trovato(pg_trovato);
 	}
-
+	
 	public Boolean isCollegatoCapitoloPerTrovato() {
 		// return collegatoCapitoloPerTrovato;
 		if (getObbligazioneScadenzario() == null || getObbligazioneScadenzario().getObbligazione() == null)

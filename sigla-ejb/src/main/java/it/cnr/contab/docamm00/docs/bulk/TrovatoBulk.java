@@ -1,72 +1,59 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+
 public class TrovatoBulk extends it.cnr.jada.bulk.OggettoBulk {
 
-	private Long pg_trovato;
-	private Integer nsrif;
-	private String titolo;
-	private String inventore;
+	private CdsBulk cds;
 
-	/**
-	*
-	* @return
-	* The nsrif
-	*/
-	public Integer getNsrif() {
-	return nsrif;
+	private Unita_organizzativaBulk uo;
+
+	private java.lang.Long pg_trovato;
+
+	private java.lang.String titolo;
+	
+	private java.lang.String inventore;
+	
+//	private java.lang.Long nsrif;
+	
+	public TrovatoBulk() {
+		super();
 	}
-
-	/**
-	*
-	* @param nsrif
-	* The nsrif
-	*/
-	public void setNsrif(Integer nsrif) {
-	this.nsrif = nsrif;
+	public void setCds(CdsBulk cds) {
+		this.cds = cds;
 	}
-
-	/**
-	*
-	* @return
-	* The titolo
-	*/
-	public String getTitolo() {
-	return titolo;
+	public CdsBulk getCds() {
+		return cds;
 	}
-
-	/**
-	*
-	* @param titolo
-	* The titolo
-	*/
-	public void setTitolo(String titolo) {
-	this.titolo = titolo;
+	public void setUo(Unita_organizzativaBulk uo) {
+		this.uo = uo;
 	}
-
-	/**
-	*
-	* @return
-	* The inventore
-	*/
-	public String getInventore() {
-	return inventore;
+	public Unita_organizzativaBulk getUo() {
+		return uo;
 	}
-
-	/**
-	*
-	* @param inventore
-	* The inventore
-	*/
-	public void setInventore(String inventore) {
-	this.inventore = inventore;
-	}
-
-	public Long getPg_trovato() {
-		return pg_trovato;
-	}
-
-	public void setPg_trovato(Long pg_trovato) {
+	public void setPg_trovato(java.lang.Long pg_trovato) {
 		this.pg_trovato = pg_trovato;
 	}
-
+	public java.lang.Long getPg_trovato() {
+		return pg_trovato;
+	}
+	public void setTitolo(java.lang.String titolo) {
+		this.titolo = titolo;
+	}
+	public java.lang.String getTitolo() {
+		return titolo;
+	}
+//	public java.lang.Long getNsrif() {
+//		return nsrif;
+//	}
+//	public void setNsrif(java.lang.Long nsrif) {
+//		this.nsrif = nsrif;
+//	}
+	public java.lang.String getInventore() {
+		return inventore;
+	}
+	public void setInventore(java.lang.String inventore) {
+		this.inventore = inventore;
+	}
 }
