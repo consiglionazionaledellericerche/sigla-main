@@ -1062,7 +1062,7 @@ public  it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk ricercaFatturaByKey
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 	pre_component_invocation(userContext,componentObj);
 	try {
 		TrovatoBulk trovatoBulk =((FatturaPassivaComponent)componentObj).ricercaDatiTrovato(userContext,trovato);
@@ -1081,7 +1081,7 @@ public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Intege
 	}
 }
 
-public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 	pre_component_invocation(userContext,componentObj);
 	try {
 		TrovatoBulk trovatoBulk =((FatturaPassivaComponent)componentObj).ricercaDatiTrovatoValido(userContext,trovato);
@@ -1100,7 +1100,7 @@ public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,
 	}
 }
 
-public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext param0,Integer param1) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
+public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext param0,Long param1) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
 	pre_component_invocation(param0,componentObj);
 	try {
 		java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> result=((FatturaPassivaComponent)componentObj).ricercaFattureTrovato(param0,param1);
