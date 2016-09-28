@@ -1,8 +1,6 @@
 package it.cnr.si.undertow.wsse.security;
 
 
-import static io.undertow.UndertowMessages.MESSAGES;
-import static io.undertow.util.StatusCodes.UNAUTHORIZED;
 import io.undertow.security.api.AuthenticationMechanism;
 import io.undertow.security.api.AuthenticationMechanismFactory;
 import io.undertow.security.api.SecurityContext;
@@ -13,26 +11,21 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.form.FormParserFactory;
 import io.undertow.servlet.handlers.ServletRequestContext;
 import io.undertow.servlet.spec.HttpServletRequestImpl;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Iterator;
-import java.util.Map;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import javax.xml.soap.MessageFactory;
-import javax.xml.soap.Name;
-import javax.xml.soap.SOAPElement;
-import javax.xml.soap.SOAPEnvelope;
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPHeader;
-import javax.xml.soap.SOAPMessage;
-import javax.xml.soap.SOAPPart;
+import javax.xml.soap.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
+
+import static io.undertow.UndertowMessages.MESSAGES;
+import static io.undertow.util.StatusCodes.UNAUTHORIZED;
 
 /**
  * The authentication handler responsible for WSSE authentication
@@ -52,6 +45,8 @@ public class WSSEAuthenticationMechanism implements AuthenticationMechanism {
 
     /** The Constant PASSWORD_STRING. */
     private static final String PASSWORD_STRING = "Password";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(WSSEAuthenticationMechanism.class);
 
 
     private final IdentityManager identityManager;
@@ -93,38 +88,19 @@ public class WSSEAuthenticationMechanism implements AuthenticationMechanism {
     }
 
     private static class AuthenticationRequestWrapper extends HttpServletRequestWrapper {  
-	    private final String xmlPayload;	     
+	    private String xmlPayload;
+
 	    public AuthenticationRequestWrapper (HttpServletRequest request){	         
-	        super(request);         
-	        // read the original payload into the xmlPayload variable
-	        StringBuilder stringBuilder = new StringBuilder();
-	        BufferedReader bufferedReader = null;
-	        try {
-	            // read the payload into the StringBuilder
-	            InputStream inputStream = request.getInputStream();
-	            if (inputStream != null) {
-	                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-	                char[] charBuffer = new char[128];
-	                int bytesRead = -1;
-	                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-	                    stringBuilder.append(charBuffer, 0, bytesRead);
-	                }
-	            } else {
-	                // make an empty string since there is no payload
-	                stringBuilder.append("");
-	            }
-	        } catch (IOException ex) {
-	
-	        } finally {
-	            if (bufferedReader != null) {
-	                try {
-	                    bufferedReader.close();
-	                } catch (IOException iox) {
-	                    // ignore
-	                }
-	            }
-	        }
-	        xmlPayload = stringBuilder.toString();
+	        super(request);
+
+            try {
+                xmlPayload = IOUtils.toString(request.getInputStream());
+            } catch (IOException e) {
+                xmlPayload = "";
+                LOGGER.error("unable to authenticate request", e);
+            }
+            LOGGER.debug("xmlPayload: {}", xmlPayload);
+
 	    }
   
 	    public boolean isRequestPresent() {
