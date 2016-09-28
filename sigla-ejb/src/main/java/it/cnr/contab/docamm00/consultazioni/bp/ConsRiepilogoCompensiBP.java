@@ -106,6 +106,9 @@ public class ConsRiepilogoCompensiBP extends ConsultazioniBP
 		if (!bulk.almenoUnaDataSelezionata()){
 			throw new ValidationException("E' necessario selezionare almeno un periodo di filtro sulle date.");
 		}
+		if (bulk.getFiltroSoggetto() == null || bulk.getFiltroSoggetto().getCd_terzo() == null ){
+			throw new ValidationException("E' necessario selezionare almeno un terzo.");
+		}
 	}
 
 	
