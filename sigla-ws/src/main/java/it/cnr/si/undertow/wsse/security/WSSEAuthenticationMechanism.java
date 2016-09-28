@@ -88,7 +88,7 @@ public class WSSEAuthenticationMechanism implements AuthenticationMechanism {
     }
 
     private static class AuthenticationRequestWrapper extends HttpServletRequestWrapper {  
-	    private String xmlPayload;
+	    private static String xmlPayload;
 
 	    public AuthenticationRequestWrapper (HttpServletRequest request){	         
 	        super(request);
