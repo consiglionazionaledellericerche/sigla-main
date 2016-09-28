@@ -7,7 +7,10 @@
 		label="cdCds" />
 	<fieldProperty name="cdUnitaOrganizzativa" property="cd_unita_organizzativa"
 		inputType="TEXT" inputSize="30" maxLength="30" enabledOnEdit="false"
-		nullable="false" label="cdUnitaOrganizzativa" />
+		nullable="false" label="Codice UO" />
+	<fieldProperty name="dsUnitaOrganizzativa" property="ds_unita_organizzativa"
+		inputType="TEXT" inputSize="300" maxLength="300" enabledOnEdit="false"
+		nullable="false" label="Descrizione UO" />
 	<fieldProperty name="esercizio" property="esercizio"
 		inputType="TEXT" inputSize="4" maxLength="4" enabledOnEdit="false"
 		nullable="false" label="esercizio" />
@@ -178,6 +181,7 @@
 	</form>
 	<formFieldProperty name="cd_cds" />
 	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="ds_unita_organizzativa" />
 	<formFieldProperty name="esercizio" />
 	<formFieldProperty name="pg_compenso" />
 	<formFieldProperty name="codiceFiscale" />
@@ -215,6 +219,7 @@
 	<formFieldProperty name="a_dt_pagamento" />
 	<findFieldProperty name="cd_cds" />
 	<findFieldProperty name="cd_unita_organizzativa" />
+	<findFieldProperty name="ds_unita_organizzativa" />
 	<findFieldProperty name="esercizio" />
 	<findFieldProperty name="pg_compenso" />
 	<findFieldProperty name="codiceFiscale" />
@@ -249,6 +254,7 @@
 	<findFieldProperty name="a_dt_pagamento" />
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
+	<columnFieldProperty name="ds_unita_organizzativa" />
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="pg_compenso" />
 	<columnFieldProperty name="codiceFiscale" />
@@ -272,6 +278,8 @@
 	<columnFieldProperty name="addReg" />
 	<columnFieldProperty name="addCom" />
 	<columnSet name="CONSULTAZIONE">
+		<columnFieldProperty name="cdUnitaOrganizzativa" />
+		<columnFieldProperty name="dsUnitaOrganizzativa" />
 		<columnFieldProperty name="cognome" />
 		<columnFieldProperty name="nome" />
 		<columnFieldProperty name="codiceFiscale" />
@@ -289,6 +297,8 @@
 		<columnFieldProperty name="addCom" />
 	</columnSet>
 	<freeSearchSet name="CONSULTAZIONE">
+		<findFieldProperty name="cd_unita_organizzativa" />
+		<findFieldProperty name="ds_unita_organizzativa" />
 		<findFieldProperty name="cognome" />
 		<findFieldProperty name="nome" />
 		<findFieldProperty name="codiceFiscale" />
