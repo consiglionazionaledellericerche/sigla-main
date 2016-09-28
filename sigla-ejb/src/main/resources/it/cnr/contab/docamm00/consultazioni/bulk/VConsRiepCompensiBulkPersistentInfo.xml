@@ -23,6 +23,12 @@
 			columnSize="30"
 			nullable="false"/>
 		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="ds_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false"/>
+		<columnMapping
 			columnName="CD_CDS"
 			propertyName="cd_cds"
 			sqlTypeName="VARCHAR"
@@ -208,9 +214,23 @@
 	<persistentProperty
 		name="cd_unita_organizzativa" />
 	<persistentProperty
+		name="ds_unita_organizzativa" />
+	<persistentProperty
 		name="cd_cds" />
 	<columnMap name="CONSULTAZIONE" 
 		tableName="V_CONS_RIEP_COMPENSI">
+		<columnMapping
+				columnName="CD_UNITA_ORGANIZZATIVA"
+				propertyName="cd_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_UNITA_ORGANIZZATIVA"
+				propertyName="ds_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
 		<columnMapping
 				columnName="COGNOME"
 				propertyName="cognome"

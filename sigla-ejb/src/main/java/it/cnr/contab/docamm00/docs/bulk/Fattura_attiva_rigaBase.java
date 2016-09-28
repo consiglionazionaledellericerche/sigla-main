@@ -105,7 +105,7 @@ public class Fattura_attiva_rigaBase extends Fattura_attiva_rigaKey implements K
 	private java.lang.String cd_bene_servizio;
 
 	// PG_TROVATO DECIMAL(10,0)
-	private java.lang.Integer pg_trovato;
+	private java.lang.Long pg_trovato;
 
 public Fattura_attiva_rigaBase() {
 	super();
@@ -550,11 +550,11 @@ public void setCd_bene_servizio(java.lang.String cd_bene_servizio) {
 	this.cd_bene_servizio = cd_bene_servizio;
 }
 
-public void setPg_trovato(java.lang.Integer pg_trovato) {
+public void setPg_trovato(java.lang.Long pg_trovato) {
 	this.pg_trovato = pg_trovato;
 }
 
-public java.lang.Integer getPg_trovato() {
+public java.lang.Long getPg_trovato() {
 	return pg_trovato;
 }
 }
