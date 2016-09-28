@@ -2637,7 +2637,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		return compenso;
 	}
 
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 		if (trovato != null){
 			RicercaTrovato ricercaTrovato;
 			try {
@@ -7074,7 +7074,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 	public List<CompensoBulk> ricercaCompensiTrovato(
 			UserContext userContext,
-			Integer trovato) throws PersistencyException, ComponentException {
+			Long trovato) throws PersistencyException, ComponentException {
 		CompensoBulk compenso = new CompensoBulk();
 		compenso.setPg_trovato(trovato);
 		List compensiList =(getHome(userContext, CompensoBulk.class).find(compenso));

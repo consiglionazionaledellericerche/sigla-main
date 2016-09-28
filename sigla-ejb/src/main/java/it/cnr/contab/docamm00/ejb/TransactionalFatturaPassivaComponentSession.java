@@ -1042,7 +1042,7 @@ public Fattura_passivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext userConte
 	}
 }
 public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext userContext,
-		Integer trovato) throws ComponentException, RemoteException {
+		Long trovato) throws ComponentException, RemoteException {
 	try {
 		return (java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk>)invoke("ricercaFattureTrovato",new Object[] {
 				userContext,
@@ -1060,7 +1060,7 @@ public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> rice
 	}
 }
 
-public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 	try {
 		return (TrovatoBulk)invoke("ricercaDatiTrovato",new Object[] {userContext,trovato});
 	} catch(java.rmi.RemoteException e) {
@@ -1075,7 +1075,7 @@ public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Intege
 		}
 	}
 }
-public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Integer trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
 	try {
 		return (TrovatoBulk)invoke("ricercaDatiTrovatoValido",new Object[] {userContext,trovato});
 	} catch(java.rmi.RemoteException e) {

@@ -979,7 +979,6 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		
 		@Override
 		public InputStream getInputStream() throws IOException {
-			logger.error("getInputStream non implementato Output Stream");
 			if (outputStream != null){
 				ByteArrayOutputStream bos = (ByteArrayOutputStream)outputStream;
 				byte[] byteArray = bos.toByteArray();

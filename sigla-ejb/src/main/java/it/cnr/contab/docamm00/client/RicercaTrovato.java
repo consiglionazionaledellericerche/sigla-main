@@ -31,7 +31,7 @@ public class RicercaTrovato {
 	}
 
 
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato, Boolean soloValidi) throws Exception {
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato, Boolean soloValidi) throws Exception {
 		TrovatoBulk trovatoBulk = new TrovatoBulk();
 		if (trovato == null){
 			throw new ApplicationException("Identificativo del trovato non indicato.");
@@ -41,13 +41,13 @@ public class RicercaTrovato {
 		return trovatoBulk;
 	}
 
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Integer trovato) throws Exception {
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato) throws Exception {
 		return ricercaDatiTrovato(userContext, trovato, false);
 	}
 
-	private TrovatoBulk cerca(Integer pgTrovato, Boolean soloValidi) throws Exception {
+	private TrovatoBulk cerca(Long pgTrovato, Boolean soloValidi) throws Exception {
 
-    	TrovatoBulk trovato = null;
+    	TrovatoBulk trovato = new TrovatoBulk();
         String url = "";
         url = getTargetEndpoint()+"/brevetti/rest/trovato/";
         if (soloValidi){
@@ -67,20 +67,19 @@ public class RicercaTrovato {
         	if (trovatoRest == null ){
     			throw new ApplicationException("Identificativo del trovato indicato non esiste.");
         	}  else {
-        		trovato = caricaTrovato(trovatoRest);
+        		valorizzaTrovato(trovato, trovatoRest);
         	}
 		
 	    return trovato;
 	}
 	
-	private TrovatoBulk caricaTrovato(TrovatoRest trovato){
-		TrovatoBulk trovatoBulk = new TrovatoBulk();
-		trovatoBulk.setInventore(trovato.getInventore());
-		trovatoBulk.setTitolo(trovato.getTitolo());
-		trovatoBulk.setNsrif(trovato.getNsrif());
-		trovatoBulk.setPg_trovato(new Long(trovato.getNsrif()));
-		return trovatoBulk;
+	private void valorizzaTrovato(TrovatoBulk trovatoBulk,
+			TrovatoRest trovatoBean) {
+		trovatoBulk.setPg_trovato(new Long(trovatoBean.getNsrif()));
+		trovatoBulk.setInventore(trovatoBean.getInventore());
+		trovatoBulk.setTitolo(trovatoBean.getTitolo());
 	}
+
 	public synchronized void loadProperties() throws FileNotFoundException, IOException {
 		TrovatoProperties trovatoProperties = recuperoTrovatoProperties();
 		setTargetEndpoint(trovatoProperties.getTrovatoTargetEndpoint());
