@@ -413,8 +413,11 @@
                 <response-header name="x-powered-by-header" header-name="X-Powered-By" header-value="Undertow/1"/>
             </filters>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:webservices:2.0" statistics-enabled="true">
-            <wsdl-host>${jboss.bind.address:127.0.0.1}</wsdl-host>
+       <subsystem xmlns="urn:jboss:domain:webservices:2.0" statistics-enabled="true">
+            <wsdl-host>contab.cnr.it</wsdl-host>
+            <wsdl-secure-port>9090</wsdl-secure-port>
+            <wsdl-port>9090</wsdl-port>
+            <wsdl-uri-scheme>http</wsdl-uri-scheme>
             <endpoint-config name="Standard-Endpoint-Config"/>
             <endpoint-config name="Recording-Endpoint-Config">
                 <pre-handler-chain name="recording-handlers" protocol-bindings="##SOAP11_HTTP ##SOAP11_HTTP_MTOM ##SOAP12_HTTP ##SOAP12_HTTP_MTOM">
