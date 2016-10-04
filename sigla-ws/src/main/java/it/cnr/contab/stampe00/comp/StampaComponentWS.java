@@ -71,7 +71,8 @@ public class StampaComponentWS {
 	private SOAPFault faultGenerazioneStampa() throws SOAPException {
 		return generaFault("004", "Generazione stampa non riuscita");
 	}
-
+	
+	@RolesAllowed({ "WSUserRole", "IITRole" })
 	public Long inserisciDatiPerStampa(String user, String esercizio,
 			String cds, String uo, String pg) throws NumberFormatException,
 			PersistencyException, ComponentException, RemoteException,
