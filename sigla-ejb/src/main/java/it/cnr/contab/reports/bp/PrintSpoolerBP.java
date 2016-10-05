@@ -116,11 +116,8 @@ protected void setFocusedElement(it.cnr.jada.action.ActionContext context,Object
 public void writeToolbar(javax.servlet.jsp.PageContext pageContext) throws java.io.IOException,javax.servlet.ServletException {
 	Button[] toolbar = getToolbar();
 	Print_spoolerBulk print_spool = (Print_spoolerBulk)getFocusedElement();
-	if (print_spool != null && print_spool.STATO_ESEGUITA.equalsIgnoreCase(print_spool.getStato()))
-		toolbar[1].setHref("doPrint('"+JSPUtils.buildAbsoluteUrl(
-			pageContext,
-			null,
-			"offline_report/"+print_spool.getNomeFile()+"?pg="+print_spool.getPgStampa().longValue()+"')"));
+	if (print_spool != null && Print_spoolerBulk.STATO_ESEGUITA.equalsIgnoreCase(print_spool.getStato()))
+		toolbar[1].setHref("doPrint('offline_report/"+print_spool.getNomeFile()+"?pg="+print_spool.getPgStampa().longValue()+"')");
 	else
 		toolbar[1].setHref(null);
 	writeToolbar(pageContext.getOut(),toolbar);
