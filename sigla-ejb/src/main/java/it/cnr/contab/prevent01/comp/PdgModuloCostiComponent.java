@@ -344,10 +344,27 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 			sqlExists.addSQLClause(FindClause.AND, "ASS_PDG_MISSIONE_TIPO_UO.CD_TIPO_UNITA",SQLBuilder.EQUALS,cds.getCd_tipo_unita());
 		else
 			sqlExists.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
-			
-
 		sql.addSQLExistsClause(FindClause.AND, sqlExists);
-
+	    sql.openParenthesis("AND");
+		sql.openParenthesis("AND");
+		Pdg_modulo_speseHome spesehome = (Pdg_modulo_speseHome)getHome(userContext, Pdg_modulo_speseBulk.class);
+		
+		SQLBuilder sqlNotExistsprogMis = spesehome.createSQLBuilder();    	
+		sqlNotExistsprogMis.addSQLClause(FindClause.AND, "PDG_MODULO_SPESE.PG_PROGETTO",SQLBuilder.EQUALS,dettaglio.getPg_progetto());
+		sqlNotExistsprogMis.addSQLClause(FindClause.AND, "PDG_MODULO_SPESE.ESERCIZIO",SQLBuilder.EQUALS,dettaglio.getEsercizio());
+		sqlNotExistsprogMis.addSQLJoin("PDG_MODULO_SPESE.CD_MISSIONE",SQLBuilder.NOT_EQUALS,"PDG_MISSIONE.CD_MISSIONE");
+		sql.addSQLNotExistsClause(FindClause.AND, sqlNotExistsprogMis);
+		
+		sql.closeParenthesis();
+		sql.openParenthesis("OR");
+		SQLBuilder sqlNotExistsprog = spesehome.createSQLBuilder();    	
+		sqlNotExistsprog.addSQLClause(FindClause.AND, "PDG_MODULO_SPESE.PG_PROGETTO",SQLBuilder.EQUALS,dettaglio.getPg_progetto());
+		sqlNotExistsprog.addSQLClause(FindClause.AND, "PDG_MODULO_SPESE.ESERCIZIO",SQLBuilder.EQUALS,dettaglio.getEsercizio());
+		sql.addSQLNotExistsClause(FindClause.AND, sqlNotExistsprog);
+		
+		sql.closeParenthesis();
+		sql.closeParenthesis();  
+		
 		if (clause != null) 
 			sql.addClause(clause);
 		return sql;
