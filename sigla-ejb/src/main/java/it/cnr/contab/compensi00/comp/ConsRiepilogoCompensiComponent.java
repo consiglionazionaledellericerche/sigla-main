@@ -18,6 +18,8 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 
 
@@ -84,6 +86,7 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 
 		incarichi.setUoForPrint(new Unita_organizzativaBulk());
 		incarichi.setUOForPrintEnabled(true);
+		incarichi.setGroupTrattamento(true);
 		incarichi.setFiltroSoggetto(new TerzoBulk());
 		return incarichi;
 	}
@@ -100,12 +103,17 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 
 	public it.cnr.jada.util.RemoteIterator findRiepilogoCompensi(UserContext userContext, VConsRiepCompensiBulk riepilogCompensi) throws PersistencyException, IntrospectionException, ComponentException, RemoteException
 	{
-		VConsRiepCompensiHome home = (VConsRiepCompensiHome)getHome(userContext, VConsRiepCompensiBulk.class, "CONSULTAZIONE");
+		
+		VConsRiepCompensiHome home = (VConsRiepCompensiHome)getHome(userContext, VConsRiepCompensiBulk.class, riepilogCompensi.getGroupTrattamento() ? "CONSULTAZIONE" : "CONSULTAZIONE_SENZA_TRATTAMENTO");
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.resetColumns();
 
 		addColumn(sql,"CD_UNITA_ORGANIZZATIVA",true);
 		addColumn(sql,"DS_UNITA_ORGANIZZATIVA",true);
+		if (riepilogCompensi.getGroupTrattamento()){
+			addColumn(sql,"CD_TRATTAMENTO",true);
+			addColumn(sql,"DS_TI_TRATTAMENTO",true);
+		}
 		addColumn(sql,"CD_TERZO",true);
 		addColumn(sql,"COGNOME",true);
 		addColumn(sql,"NOME",true);
@@ -113,6 +121,10 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 
 		addSQLGroupBy(sql,"CD_UNITA_ORGANIZZATIVA",true);
 		addSQLGroupBy(sql,"DS_UNITA_ORGANIZZATIVA",true);
+		if (riepilogCompensi.getGroupTrattamento()){
+			addSQLGroupBy(sql,"CD_TRATTAMENTO",true);
+			addSQLGroupBy(sql,"DS_TI_TRATTAMENTO",true);
+		}
 		addSQLGroupBy(sql,"COGNOME",true);
 		addSQLGroupBy(sql,"NOME",true);
 		addSQLGroupBy(sql,"CODICE_FISCALE",true);
@@ -129,7 +141,14 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 		sql.addColumn("NVL(SUM(INAIL_PERCIPIENTE),0)", "INAIL_PERCIPIENTE");
 		sql.addColumn("NVL(SUM(ADD_REG),0)", "ADD_REG");
 		sql.addColumn("NVL(SUM(ADD_COM),0)", "ADD_COM");
-		sql.addColumn("NVL(SUM(IM_LORDO),0) + NVL(SUM(IRAP_ENTE),0) + NVL(SUM(INPS_ENTE),0) + NVL(SUM(INAIL_ENTE),0)", "TOT_COSTO");
+		sql.addColumn("NVL(SUM(INPGI_ENTE),0)", "INPGI_ENTE");
+		sql.addColumn("NVL(SUM(ENPAPI_ENTE),0)", "ENPAPI_ENTE");
+		sql.addColumn("NVL(SUM(INPGI_PERCIPIENTE),0)", "INPGI_PERCIPIENTE");
+		sql.addColumn("NVL(SUM(ENPAPI_PERCIPIENTE),0)", "ENPAPI_PERCIPIENTE");
+		sql.addColumn("NVL(SUM(IMPONIBILE_IVA),0)", "IMPONIBILE_IVA");
+		sql.addColumn("NVL(SUM(IMPORTO_IVA),0)", "IMPORTO_IVA");
+		sql.addColumn("NVL(SUM(CASSA_RIVALSA),0)", "CASSA_RIVALSA");
+		sql.addColumn("NVL(SUM(IM_LORDO),0) + NVL(SUM(IRAP_ENTE),0) + NVL(SUM(INPS_ENTE),0) + NVL(SUM(ENPAPI_ENTE),0) + NVL(SUM(INPGI_ENTE),0) + NVL(SUM(INAIL_ENTE),0)", "TOT_COSTO");
 
 		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
 		sql.addOrderBy("COGNOME");
@@ -156,11 +175,32 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 
 		if (riepilogCompensi.getDa_dt_pagamento() != null){
 			sql.addSQLClause("AND","DT_TRASMISSIONE",SQLBuilder.GREATER_EQUALS,riepilogCompensi.getDa_dt_pagamento());
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			String data = formatter.format(riepilogCompensi.getDa_dt_pagamento());
+			sql.addColumn("'"+data+"'", "DA_DATA");
+			addSQLGroupBy(sql,"'"+data+"'",true);
 		}
+		
 		if (riepilogCompensi.getA_dt_pagamento() != null){
 			sql.addSQLClause("AND","DT_TRASMISSIONE",SQLBuilder.LESS_EQUALS,riepilogCompensi.getA_dt_pagamento());
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			String data = formatter.format(riepilogCompensi.getA_dt_pagamento());
+			sql.addColumn("'"+data+"'", "A_DATA");
+			addSQLGroupBy(sql,"'"+data+"'",true);
 		}
 		if (riepilogCompensi.getDa_dt_competenza() != null && riepilogCompensi.getA_dt_competenza() != null){
+			if (riepilogCompensi.getDa_dt_pagamento() == null){
+				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				String data = formatter.format(riepilogCompensi.getDa_dt_competenza());
+				sql.addColumn("'"+data+"'", "DA_DATA");
+				addSQLGroupBy(sql,"'"+data+"'",true);
+			}
+			if (riepilogCompensi.getA_dt_pagamento() == null){
+				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				String data = formatter.format(riepilogCompensi.getA_dt_competenza());
+				sql.addColumn("'"+data+"'", "DA_DATA");
+				addSQLGroupBy(sql,"'"+data+"'",true);
+			}
 			sql.openParenthesis(FindClause.AND);
 
 			sql.openParenthesis(FindClause.OR);
