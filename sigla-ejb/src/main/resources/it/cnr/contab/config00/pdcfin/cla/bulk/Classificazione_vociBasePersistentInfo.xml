@@ -162,6 +162,13 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_PREV_OBB_ANNO_SUC"
+			propertyName="fl_prev_obb_anno_suc"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio" />
@@ -199,6 +206,8 @@
 		name="fl_decentrato" />
 	<persistentProperty
 		name="fl_esterna_da_quadrare_sac" />
+	<persistentProperty
+		name="fl_prev_obb_anno_suc"/>	
 	<persistentProperty
 		name="cdr_accentratore" />
 	<persistentProperty

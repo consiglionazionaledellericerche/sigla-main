@@ -166,7 +166,13 @@
 			propertyName="cd_cofog"
 			sqlTypeName="VARCHAR"
 			columnSize="10"
-			nullable="true" />		
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MISSIONE"
+			propertyName="cd_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio" />
@@ -218,4 +224,6 @@
 		name="pg_dettaglio" />	
 	<persistentProperty
 		name="cd_cofog" />		
+	<persistentProperty
+		name="cd_missione" />				
 </SQLPersistentInfo>
