@@ -27,6 +27,10 @@
 
 	<div class="Group" style="width:100%">
 		<table width="100%">
+		  	<tr>
+				<td><% bp.getController().writeFormLabel(out,"groupTrattamento"); %></td>
+				<td><% bp.getController().writeFormInput(out,"groupTrattamento"); %></td>
+	  	  	</tr>
 		    <tr>
 	  			<td> <% bp.getController().writeFormLabel(out,"findUoForPrint"); %></td>
 				<td>

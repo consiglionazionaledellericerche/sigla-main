@@ -83,10 +83,41 @@ public class VConsRiepCompensiBulk extends OggettoBulk implements Persistent {
 	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL (PK)
 	private java.lang.String ds_unita_organizzativa;
 
+	// CD_TRATTAMENTO VARCHAR(10) NOT NULL (PK)
+	private java.lang.String cd_trattamento;
+
+	// DS_TI_TRATTAMENTO VARCHAR(100) NOT NULL (PK)
+	private java.lang.String ds_ti_trattamento;
+
 	// ESERCIZIO DECIMAL(4,0) NOT NULL (PK)
 	private java.lang.Integer esercizio;
 
 	private java.math.BigDecimal totCosto;
+
+//  IMPONIBILE_IVA DECIMAL(22,0)
+	private java.math.BigDecimal imponibileIva;
+
+//  IMPORTO_IVA DECIMAL(22,0)
+	private java.math.BigDecimal importoIva;
+
+//  CASSA_RIVALSA DECIMAL(22,0)
+	private java.math.BigDecimal cassaRivalsa;
+
+//  INPGI_ENTE DECIMAL(22,0)
+	private java.math.BigDecimal inpgiEnte;
+
+//  ENPAPI_ENTE DECIMAL(22,0)
+	private java.math.BigDecimal enpapiEnte;
+
+//  INAIL_PERCIPIENTE DECIMAL(22,0)
+	private java.math.BigDecimal inpgiPercipiente;
+
+//  INAIL_PERCIPIENTE DECIMAL(22,0)
+	private java.math.BigDecimal enpapiPercipiente;
+
+	private java.lang.String daData;
+
+	private java.lang.String aData;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -365,6 +396,7 @@ public class VConsRiepCompensiBulk extends OggettoBulk implements Persistent {
 	private java.sql.Timestamp da_dt_competenza = null;
 	private java.sql.Timestamp a_dt_competenza = null;
 	private boolean isUOForPrintEnabled;
+	private Boolean groupTrattamento;
 	public Unita_organizzativaBulk getUoForPrint() {
 		return uoForPrint;
 	}
@@ -455,6 +487,78 @@ public class VConsRiepCompensiBulk extends OggettoBulk implements Persistent {
 	}
 	public void setDs_unita_organizzativa(java.lang.String ds_unita_organizzativa) {
 		this.ds_unita_organizzativa = ds_unita_organizzativa;
+	}
+	public java.lang.String getCd_trattamento() {
+		return cd_trattamento;
+	}
+	public void setCd_trattamento(java.lang.String cd_trattamento) {
+		this.cd_trattamento = cd_trattamento;
+	}
+	public java.lang.String getDs_ti_trattamento() {
+		return ds_ti_trattamento;
+	}
+	public void setDs_ti_trattamento(java.lang.String ds_ti_trattamento) {
+		this.ds_ti_trattamento = ds_ti_trattamento;
+	}
+	public java.math.BigDecimal getImponibileIva() {
+		return imponibileIva;
+	}
+	public void setImponibileIva(java.math.BigDecimal imponibileIva) {
+		this.imponibileIva = imponibileIva;
+	}
+	public java.math.BigDecimal getImportoIva() {
+		return importoIva;
+	}
+	public void setImportoIva(java.math.BigDecimal importoIva) {
+		this.importoIva = importoIva;
+	}
+	public java.math.BigDecimal getCassaRivalsa() {
+		return cassaRivalsa;
+	}
+	public void setCassaRivalsa(java.math.BigDecimal cassaRivalsa) {
+		this.cassaRivalsa = cassaRivalsa;
+	}
+	public java.math.BigDecimal getInpgiEnte() {
+		return inpgiEnte;
+	}
+	public void setInpgiEnte(java.math.BigDecimal inpgiEnte) {
+		this.inpgiEnte = inpgiEnte;
+	}
+	public java.math.BigDecimal getEnpapiEnte() {
+		return enpapiEnte;
+	}
+	public void setEnpapiEnte(java.math.BigDecimal enpapiEnte) {
+		this.enpapiEnte = enpapiEnte;
+	}
+	public java.math.BigDecimal getInpgiPercipiente() {
+		return inpgiPercipiente;
+	}
+	public void setInpgiPercipiente(java.math.BigDecimal inpgiPercipiente) {
+		this.inpgiPercipiente = inpgiPercipiente;
+	}
+	public java.math.BigDecimal getEnpapiPercipiente() {
+		return enpapiPercipiente;
+	}
+	public void setEnpapiPercipiente(java.math.BigDecimal enpapiPercipiente) {
+		this.enpapiPercipiente = enpapiPercipiente;
+	}
+	public java.lang.String getDaData() {
+		return daData;
+	}
+	public void setDaData(java.lang.String daData) {
+		this.daData = daData;
+	}
+	public java.lang.String getaData() {
+		return aData;
+	}
+	public void setaData(java.lang.String aData) {
+		this.aData = aData;
+	}
+	public Boolean getGroupTrattamento() {
+		return groupTrattamento;
+	}
+	public void setGroupTrattamento(Boolean groupTrattamento) {
+		this.groupTrattamento = groupTrattamento;
 	}
 
 }
