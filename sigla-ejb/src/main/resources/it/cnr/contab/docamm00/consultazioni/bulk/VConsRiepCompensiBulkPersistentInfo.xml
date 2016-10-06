@@ -29,6 +29,18 @@
 			columnSize="300"
 			nullable="false"/>
 		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"/>
+		<columnMapping
+			columnName="DS_TI_TRATTAMENTO"
+			propertyName="ds_ti_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false"/>
+		<columnMapping
 			columnName="CD_CDS"
 			propertyName="cd_cds"
 			sqlTypeName="VARCHAR"
@@ -166,6 +178,55 @@
 			columnSize="22"
 			columnScale="2"
 			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE_IVA"
+			propertyName="imponibileIva"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_IVA"
+			propertyName="importoIva"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CASSA_RIVALSA"
+			propertyName="cassaRivalsa"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="INPGI_ENTE"
+			propertyName="inpgiEnte"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ENPAPI_ENTE"
+			propertyName="enpapiEnte"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="INPGI_PERCIPIENTE"
+			propertyName="inpgiPercipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ENPAPI_PERCIPIENTE"
+			propertyName="enpapiPercipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="codiceFiscale" />
@@ -208,6 +269,20 @@
 	<persistentProperty
 		name="addCom" />
 	<persistentProperty
+		name="imponibileIva" />
+	<persistentProperty
+		name="importoIva" />
+	<persistentProperty
+		name="cassaRivalsa" />
+	<persistentProperty
+		name="inpgiEnte" />
+	<persistentProperty
+		name="enpapiEnte" />
+	<persistentProperty
+		name="inpgiPercipiente" />
+	<persistentProperty
+		name="enpapiPercipiente" />
+	<persistentProperty
 		name="pg_compenso" />
 	<persistentProperty
 		name="esercizio"/>
@@ -216,8 +291,206 @@
 	<persistentProperty
 		name="ds_unita_organizzativa" />
 	<persistentProperty
+		name="cd_trattamento" />
+	<persistentProperty
+		name="ds_ti_trattamento" />
+	<persistentProperty
 		name="cd_cds" />
+	<persistentProperty
+		name="daData" />
+	<persistentProperty
+		name="aData" />
 	<columnMap name="CONSULTAZIONE" 
+		tableName="V_CONS_RIEP_COMPENSI">
+		<columnMapping
+				columnName="CD_UNITA_ORGANIZZATIVA"
+				propertyName="cd_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_UNITA_ORGANIZZATIVA"
+				propertyName="ds_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_TRATTAMENTO"
+				propertyName="cd_trattamento"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_TI_TRATTAMENTO"
+				propertyName="ds_ti_trattamento"
+				sqlTypeName="VARCHAR"
+				columnSize="100"
+				nullable="true" />
+		<columnMapping
+				columnName="COGNOME"
+				propertyName="cognome"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="NOME"
+				propertyName="nome"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="CODICE_FISCALE"
+				propertyName="codiceFiscale"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_LORDO"
+				propertyName="imLordo"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IRAP_ENTE"
+				propertyName="irapEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="INPS_ENTE"
+				propertyName="inpsEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="INAIL_ENTE"
+				propertyName="inailEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="TOT_COSTO"
+				propertyName="totCosto"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_FISCALE"
+				propertyName="imFiscale"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IRPEF"
+				propertyName="irpef"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="BONUSDL66"
+				propertyName="bonusdl66"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="INPS_PERCIPIENTE"
+				propertyName="inpsPercipiente"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="INAIL_PERCIPIENTE"
+				propertyName="inailPercipiente"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="ADD_REG"
+				propertyName="addReg"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="ADD_COM"
+				propertyName="addCom"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="INPGI_ENTE"
+				propertyName="inpgiEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="ENPAPI_ENTE"
+				propertyName="enpapiEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPONIBILE_IVA"
+				propertyName="imponibileIva"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPORTO_IVA"
+				propertyName="importoIva"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="CASSA_RIVALSA"
+				propertyName="cassaRivalsa"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="INPGI_PERCIPIENTE"
+				propertyName="inpgiPercipiente"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="ENPAPI_PERCIPIENTE"
+				propertyName="enpapiPercipiente"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+			columnName="DA_DATA"
+			propertyName="daData"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="A_DATA"
+			propertyName="aData"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+	</columnMap>
+	<columnMap name="CONSULTAZIONE_SENZA_TRATTAMENTO" 
 		tableName="V_CONS_RIEP_COMPENSI">
 		<columnMapping
 				columnName="CD_UNITA_ORGANIZZATIVA"
@@ -333,5 +606,66 @@
 				columnSize="22"
 				columnScale="2"
 				nullable="true" />
+		<columnMapping
+				columnName="INPGI_ENTE"
+				propertyName="inpgiEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="ENPAPI_ENTE"
+				propertyName="enpapiEnte"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPONIBILE_IVA"
+				propertyName="imponibileIva"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPORTO_IVA"
+				propertyName="importoIva"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="CASSA_RIVALSA"
+				propertyName="cassaRivalsa"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="INPGI_PERCIPIENTE"
+				propertyName="inpgiPercipiente"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="ENPAPI_PERCIPIENTE"
+				propertyName="enpapiPercipiente"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+			columnName="DA_DATA"
+			propertyName="daData"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="A_DATA"
+			propertyName="aData"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
 	</columnMap>
 </SQLPersistentInfo>
