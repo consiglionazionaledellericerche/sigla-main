@@ -283,7 +283,31 @@
         nullable="false"
      	readonlyPropertyOnEdit="ROCd_cds_area"
         label="Area" />		
-
+	<fieldProperty
+		name="missione"
+		property="linea_attivita.pdgMissione.cd_missione"
+		descProperty="linea_attivita.pdgMissione.ds_missione"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		readonlyProperty="ROLinea_attivita"
+		nullable="false"
+		columnSet="prg_liv2"
+		label="Missione" />
+	<fieldProperty
+		name="programma"
+		property="linea_attivita.pdgProgramma.cd_programma"
+		descProperty="linea_attivita.pdgProgramma.ds_programma"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		readonlyProperty="ROLinea_attivita"
+		nullable="false"
+		columnSet="prg_liv2"
+		label="Programma" />
+		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -335,7 +359,10 @@
 		name="commessa" />	
 	<formFieldProperty
 		name="modulo" />	
-
+	<formFieldProperty
+		name="missione" />
+	<formFieldProperty
+		name="programma" />	
 	<formFieldProperty
 		name="find_elemento_voce" />
 	<formFieldProperty

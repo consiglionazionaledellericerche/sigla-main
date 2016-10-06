@@ -64,6 +64,26 @@
         enabledOnSearch="true"
         label="G.A.E." />
     <fieldProperty
+		name="missione"
+		property="linea_di_attivita.pdgMissione.cd_missione"
+		descProperty="linea_di_attivita.pdgMissione.ds_missione"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		nullable="false"
+		label="Missione" />         
+    <fieldProperty
+		name="programma"
+		property="linea_di_attivita.pdgProgramma.cd_programma"
+		descProperty="linea_di_attivita.pdgProgramma.ds_programma"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		nullable="false"
+		label="Programma" />    
+    <fieldProperty
         name="modulo_di_attivita"
         property="linea_di_attivita.progetto"
         inputType="SEARCHTOOL"
@@ -179,7 +199,10 @@
 		name="im_variazione" />
 	<formFieldProperty
 		name="disponibilita_stanz_res" />
-
+	<formFieldProperty
+		name="missione" />	
+	<formFieldProperty
+		name="programma" />		
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
