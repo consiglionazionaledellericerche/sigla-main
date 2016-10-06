@@ -11,6 +11,8 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -24,7 +26,8 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 	private CdsBulk area;
 	private Boolean fl_riga_vistabile = Boolean.FALSE;
 	private ProgettoBulk progetto = new ProgettoBulk();
-
+	private Pdg_missioneBulk missione = new Pdg_missioneBulk();
+	private Pdg_programmaBulk programma =new Pdg_programmaBulk();
 	public Pdg_variazione_riga_gestBulk() {
 		super();
 	}
@@ -322,5 +325,17 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 	
 	public void setProgetto(ProgettoBulk progetto) {
 		this.progetto = progetto;
+	}
+	public Pdg_missioneBulk getMissione() {
+		return missione;
+	}
+	public void setMissione(Pdg_missioneBulk missione) {
+		this.missione = missione;
+	}
+	public Pdg_programmaBulk getProgramma() {
+		return programma;
+	}
+	public void setProgramma(Pdg_programmaBulk programma) {
+		this.programma = programma;
 	}
 }

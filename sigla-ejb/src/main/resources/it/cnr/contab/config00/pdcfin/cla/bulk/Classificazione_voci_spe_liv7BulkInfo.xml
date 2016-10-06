@@ -33,6 +33,9 @@
        	<columnFieldProperty
        		name="cdr_accentratore" 
        		label="CDR"/>
+       	<columnFieldProperty
+       		name="fl_prev_obb_anno_suc" 
+       		label="Obblig.prev anno suc."/>	
 	</columnSet>        	
 
 	<columnSet

@@ -230,9 +230,9 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 			assGaeEsercizio2015.setToBeCreated();
 			makeBulkPersistent(uc, assGaeEsercizio2015);
 			latt.setModulo2015(assGaeEsercizio2015.getProgetto());
-		}
+		} 
 		if (progetto2016!=null) {
-			Ass_linea_attivita_esercizioBulk assGaeEsercizio2016 = new Ass_linea_attivita_esercizioBulk(Integer.valueOf(2016),latt.getCd_centro_responsabilita(), latt.getCd_linea_attivita());
+			Ass_linea_attivita_esercizioBulk assGaeEsercizio2016 = new Ass_linea_attivita_esercizioBulk(CNRUserContext.getEsercizio(uc),latt.getCd_centro_responsabilita(), latt.getCd_linea_attivita());
 			assGaeEsercizio2016.setProgetto(progetto2016);
 			assGaeEsercizio2016.setEsercizio_fine(latt.getEsercizio_fine());
 			assGaeEsercizio2016.setToBeCreated();
@@ -748,6 +748,10 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
 						throw new ApplicationException( "Il Progetto non può essere eliminato in quanto la GAE risulta già utilizzata." );
 					assGaeEsercizio2016.setToBeDeleted();
+				}else if (linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) &&
+					linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio.getEsercizio_fine()) <0) {
+				assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
+				assGaeEsercizio2016.setToBeUpdated();
 				} else if (!linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) ||
 						!linea_attivita.getEsercizio_fine().equals(assGaeEsercizio.getEsercizio_fine())) {
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
@@ -755,6 +759,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 					assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
 					assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
 					assGaeEsercizio2016.setToBeUpdated();
+				
 				}
 			}
 		}

@@ -13,8 +13,10 @@ import java.util.Iterator;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.CofogBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk;
@@ -44,6 +46,7 @@ import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SQLUnion;
@@ -330,26 +333,54 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 			sql.closeParenthesis(); 
 			return sql;
 	}
-	
+	public SQLBuilder selectPdgMissioneByClause (UserContext userContext, Pdg_modulo_speseBulk dettaglio, Pdg_missioneBulk pdgMissione, CompoundFindClause clause) throws ComponentException, PersistencyException, EJBException, RemoteException {
+		Pdg_missioneHome pdgMissionehome = (Pdg_missioneHome)getHome(userContext, Pdg_missioneBulk.class);
+		SQLBuilder sql = pdgMissionehome.createSQLBuilder();
+		CdsBulk cds = Utility.createParametriEnteComponentSession().getCds(userContext,CNRUserContext.getCd_cds(userContext));
+		Ass_pdg_missione_tipo_uoHome asshome = (Ass_pdg_missione_tipo_uoHome)getHome(userContext, Ass_pdg_missione_tipo_uoBulk.class);
+		SQLBuilder sqlExists = asshome.createSQLBuilder();    	
+		sqlExists.addSQLJoin("ASS_PDG_MISSIONE_TIPO_UO.CD_MISSIONE","PDG_MISSIONE.CD_MISSIONE");
+		if (dettaglio!=null && cds.getCd_tipo_unita()!=null)
+			sqlExists.addSQLClause(FindClause.AND, "ASS_PDG_MISSIONE_TIPO_UO.CD_TIPO_UNITA",SQLBuilder.EQUALS,cds.getCd_tipo_unita());
+		else
+			sqlExists.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
+			
+
+		sql.addSQLExistsClause(FindClause.AND, sqlExists);
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql;
+	}
+
 	@Override
 	protected void validaCreaModificaConBulk(UserContext usercontext,
 			OggettoBulk oggettobulk) throws ComponentException {
 		Pdg_modulo_costiBulk bulk =null;
-		
-		boolean cofog_obb=false;
+		Pdg_modulo_speseBulk spesebulk =null;
 		try {
-			cofog_obb=(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(usercontext));
-		} catch (RemoteException e) {
-			throw handleException(e);
-		}
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(usercontext, CNRUserContext.getEsercizio(usercontext)); 
 		if (oggettobulk instanceof Pdg_modulo_costiBulk){
 			 bulk= (Pdg_modulo_costiBulk) oggettobulk;
 			for (Iterator i=bulk.getDettagliSpese().iterator();i.hasNext();){
 				 Pdg_modulo_speseBulk pdg_modulo_spese = (Pdg_modulo_speseBulk)i.next();
-			 if (pdg_modulo_spese!=null && cofog_obb && (pdg_modulo_spese.getCofog()==null||pdg_modulo_spese.getCd_cofog()==null)) 
-				 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la classificazione Cofog.");
+				 if (pdg_modulo_spese!=null && parCnr.isCofogObbligatorio() && (pdg_modulo_spese.getCofog()==null||pdg_modulo_spese.getCd_cofog()==null)) 
+					 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la classificazione Cofog.");
+				 if (pdg_modulo_spese!=null && parCnr.getFl_nuovo_pdg() && (pdg_modulo_spese.getPdgMissione()==null||pdg_modulo_spese.getCd_missione()==null)) 
+					 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la missione.");
+				 if (pdg_modulo_spese.getClassificazione()!=null){
+					 if(pdg_modulo_spese.isPrevAnnoSucObb() && pdg_modulo_spese.getIm_spese_a2()==null)
+						 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la previsione dell'anno successivo.");
+					 else
+						 if(!pdg_modulo_spese.isPrevAnnoSucObb() && pdg_modulo_spese.getIm_spese_a2()==null)
+							 pdg_modulo_spese.setIm_spese_a2(BigDecimal.ZERO);
+			 }
 			}
 		}
-		super.validaCreaModificaConBulk(usercontext, oggettobulk);	
+		
+		super.validaCreaModificaConBulk(usercontext, oggettobulk);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
 	}
 }

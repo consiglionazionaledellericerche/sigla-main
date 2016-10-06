@@ -56,15 +56,22 @@
 		<table class="Panel">
 			<tr>
 		        <td><% controller.writeFormLabel(out,"linea_di_attivita"); %></td>
-		        <td><% controller.writeFormInput(out,"linea_di_attivita"); %></td>
-			</tr>
+		        <td colspan="3"><% controller.writeFormInput(out,"linea_di_attivita"); %></td>
+			</tr>  
+			 <% if (bp.getParametriCnr().getFl_nuovo_pdg().booleanValue()) { %>
+			   <tr>
+					<td><% controller.writeFormLabel(out,"missione"); %></td>
+					<td><% controller.writeFormInput(out,"missione"); %></td>
+		        	<td><% controller.writeFormField(out,"programma"); %></td>
+		        </tr>   
+	        <% } %>
 			<tr>
 				<% if (!bp.getParametriCnr().getFl_nuovo_pdg()) { %> 	
 		        	<td><% controller.writeFormLabel(out,"modulo_di_attivita"); %></td>
-		        	<td><% controller.writeFormInput(out,"modulo_di_attivita"); %></td>
+		        	<td colspan="3"><% controller.writeFormInput(out,"modulo_di_attivita"); %></td>
 		        <% } else { %>
 		        	<td><% controller.writeFormLabel(out,"progetto_liv2"); %></td>
-		        	<td><% controller.writeFormInput(out,"progetto_liv2"); %></td>
+		        	<td colspan="3"><% controller.writeFormInput(out,"progetto_liv2"); %></td>
 				<% } %>
 			</tr>
 			<tr>
