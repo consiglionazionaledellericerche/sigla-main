@@ -25,6 +25,7 @@ public class Pdg_modulo_speseBase extends Pdg_modulo_speseKey implements Keyed {
 	private java.math.BigDecimal im_spese_a3;
 	
 	private String cd_cofog;
+	private String cd_missione;
  
 	public Pdg_modulo_speseBase() {
 		super();
@@ -73,6 +74,12 @@ public class Pdg_modulo_speseBase extends Pdg_modulo_speseKey implements Keyed {
 	}
 	public void setCd_cofog(String cd_cofog) {
 		this.cd_cofog = cd_cofog;
+	}
+	public String getCd_missione() {
+		return cd_missione;
+	}
+	public void setCd_missione(String cd_missione) {
+		this.cd_missione = cd_missione;
 	}
 	
 }

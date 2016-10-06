@@ -59,7 +59,10 @@
 		<% if (!bp.isFlNuovoPdg()) { %>
 			<td><% bp.getController().writeFormLabel(out,"desctool_area"); %></td>
 			<td><% bp.getController().writeFormInput(out,"desctool_area"); %></td>
-		<% } %>		
+		<% } else{ %>
+			<td><% bp.getController().writeFormLabel(out,"desctool_missione"); %></td>
+			<td><% bp.getController().writeFormInput(out,"desctool_missione"); %></td>
+		<% } %>
 	  	<td><% bp.getController().writeFormLabel(out,"desctool_cofog");%></td>
 		<td><% bp.getController().writeFormInput(out,"desctool_cofog");%></td>
 	</tr>
