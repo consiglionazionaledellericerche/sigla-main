@@ -399,6 +399,12 @@ public class CRUDDettagliModuloCostiAction extends CRUDAction {
 				if(classificazione.getFl_mastrino().booleanValue()){
 					pdg_modulo_spese.setLimiteInt(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_INTERNA));
 					pdg_modulo_spese.setLimiteEst(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_ESTERNA));
+					pdg_modulo_spese.setPrevAnnoSucObb(classificazione.getFl_prev_obb_anno_suc());
+					if(pdg_modulo_spese.isPrevAnnoSucObb())
+						pdg_modulo_spese.setIm_spese_a2(null);
+					else
+						if (pdg_modulo_spese.getIm_spese_a2()==null)
+							pdg_modulo_spese.setIm_spese_a2(Utility.ZERO);
 				}
 				bp.setModel(context,((PdgModuloCostiComponentSession)bp.createComponentSession()).calcolaPrevisioneAssestataRowByRow(context.getUserContext(),(Pdg_modulo_costiBulk)bp.getModel() ,pdg_modulo_spese,new Integer(CNRUserContext.getEsercizio(context.getUserContext()).intValue() - 1)));
 			}

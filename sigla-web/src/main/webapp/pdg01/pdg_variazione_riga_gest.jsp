@@ -76,7 +76,7 @@
 		</td>
 	  </tr>
 </table>
-<table>
+<table> 
 	<tr>
 		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) 
 				bp.getRigheVariazioneGestionale().writeFormField(out,null,"searchtool_progetto_liv2",1,3);
@@ -85,19 +85,27 @@
 		%>
 	</tr>
 	<tr>
-		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) { %> 
+		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) { %>   
 			<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_linea_attivita_liv2");%></td>
 			<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita_liv2",isDettaglioGestionaleEnable,null,null);%></td>
-		<% } else { %>
+		
+		<% } else { %> 
 			<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_linea_attivita");%></td>
 			<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
 		<% } %>
 	</tr>
-	<tr>
+	<%	if (bp.getParametriCnr().getFl_nuovo_pdg().booleanValue()) { %> 
+			<tr>   
+			<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"missione");%></td>
+			<td><% bp.getRigheVariazioneGestionale().writeFormInput(out,"missione");%></td>
+			<td><% bp.getRigheVariazioneGestionale().writeFormField(out,"programma");%></td>
+			</tr>
+		<% } %>
+	<tr> 
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_elemento_voce");%></td>
 		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_elemento_voce",(isDettaglioGestionaleEnable || bulk.getPdg_variazione().isApprovata()),null,null);%></td>
 	</tr>
-<% 	if (!bp.isUoArea() && !bp.getParametriCnr().getFl_nuovo_pdg()) { %>
+<% 	if (!bp.isUoArea() && !bp.getParametriCnr().getFl_nuovo_pdg()) { %> 
 	<tr>
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"searchtool_area");%></td>
 		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,"searchtool_area");%></td>

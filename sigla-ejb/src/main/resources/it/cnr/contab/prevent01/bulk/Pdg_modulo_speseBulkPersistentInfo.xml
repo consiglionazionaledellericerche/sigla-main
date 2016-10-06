@@ -22,6 +22,9 @@
 		<columnMapping
 			columnName="CD_COFOG"
 			propertyName="cofog.cd_cofog"/>	
+		<columnMapping
+			columnName="CD_MISSIONE"
+			propertyName="pdgMissione.cd_missione"/>	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pdg_modulo_costi"
@@ -34,5 +37,8 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="cofog"
+		partOfOid="false" />	
+	<persistentProperty
+		name="pdgMissione" 
 		partOfOid="false" />	
 </SQLPersistentInfo>

@@ -68,6 +68,7 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 		dett.setCd_livello5(this.getCd_livello5());
 		dett.setCd_livello6(this.getCd_livello6());		
 		dett.setCd_livello7(this.getCd_livello7());
+		dett.setFl_prev_obb_anno_suc(Boolean.FALSE);
 		getClassVociAssociate().add(dett);
 		return getClassVociAssociate().size()-1;
 	}	
@@ -260,6 +261,7 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 			setFl_accentrato(Boolean.FALSE);
 			setFl_decentrato(Boolean.FALSE);
 			setFl_esterna_da_quadrare_sac(Boolean.FALSE);
+			setFl_prev_obb_anno_suc(Boolean.FALSE);
 		}
 		return super.initialize(crudbp, actioncontext);
 	}
