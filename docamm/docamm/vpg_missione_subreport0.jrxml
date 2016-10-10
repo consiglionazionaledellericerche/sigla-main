@@ -21,7 +21,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM VPG_MISSIONE
+		<![CDATA[SELECT * FROM VPG_MISSIONE_ERROR
 ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
          ESERCIZIO,PG_MISSIONE,TI_RECORD_L1,
          TI_RECORD_L2,SEQUENZA]]>
