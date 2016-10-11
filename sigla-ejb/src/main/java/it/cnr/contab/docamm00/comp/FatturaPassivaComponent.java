@@ -1,4 +1,25 @@
 package it.cnr.contab.docamm00.comp;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
+import javax.ejb.EJBException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaHome;
@@ -8,8 +29,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -21,8 +42,8 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
-import it.cnr.contab.config00.tabnum.bulk.Numerazione_baseBulk;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
+import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
 import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
 import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
@@ -31,13 +52,11 @@ import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIHome;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_ammVBulk;
@@ -47,7 +66,6 @@ import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoHome;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaHome;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
@@ -61,19 +79,17 @@ import it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPBulk;
 import it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPHome;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.ejb.AutoFatturaComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleScontoMaggBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataHome;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaHome;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTributiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
@@ -142,14 +158,11 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettHome;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_ass_comp_per_dataBulk;
-import it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_ass_comp_per_dataHome;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
@@ -168,28 +181,6 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import javax.ejb.EJBException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent 
 	implements IFatturaPassivaMgr, Cloneable,Serializable {
@@ -2965,9 +2956,17 @@ public OggettoBulk creaConBulk(
 	} catch(PersistencyException _ex) {
 		throw handleException(_ex);
 	}
+	if (fattura_passiva.getDocumentoEleTestata() != null && fattura_passiva.getDocumentoEleTestata().getIdentificativoSdi() != null) {
+		aggiornaMetadatiDocumentale(fattura_passiva);
+	}
 	if (messaggio != null)
 		return asMTU(fattura_passiva, messaggio);
 	return fattura_passiva;
+}
+private void aggiornaMetadatiDocumentale(Fattura_passivaBulk fattura_passiva) throws ComponentException {
+	CMISFolderFatturaPassiva folder = new CMISFolderFatturaPassiva(fattura_passiva, fattura_passiva.getDocumentoEleTestata());	
+	SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
+	folder.updateMetadataPropertiesCMIS(cmisService);
 }
 private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_passiva_rigaBulk dettaglio)
 	throws ComponentException {
@@ -4887,6 +4886,10 @@ public OggettoBulk modificaConBulk(
 	
 	fatturaPassiva = (Fattura_passivaBulk)super.modificaConBulk(aUC, fatturaPassiva);
 
+	if (fatturaPassiva.getDocumentoEleTestata() != null && fatturaPassiva.getDocumentoEleTestata().getIdentificativoSdi() != null) {
+		aggiornaMetadatiDocumentale(fatturaPassiva);
+	}
+	
 	aggiornaCarichiInventario(aUC, fatturaPassiva);
 	
 	// Le operazioni che rendono persistenti le modifiche fatte sull'Inventario,
