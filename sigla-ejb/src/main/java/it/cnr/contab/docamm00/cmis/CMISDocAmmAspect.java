@@ -28,7 +28,11 @@ public enum CMISDocAmmAspect {
 	SIGLA_FATTURE_CODICE_FISCALE("P:sigla_commons_aspect:terzi_pf_codfis"),
 	SIGLA_FATTURE_DENOMINAZIONE("P:sigla_commons_aspect:terzi_pg_denominazione"),
 	SIGLA_FATTURE_COGNOME("P:sigla_commons_aspect:terzi_pf_cognome"),
-	SIGLA_FATTURE_NOME("P:sigla_commons_aspect:terzi_pf_nome");
+	SIGLA_FATTURE_NOME("P:sigla_commons_aspect:terzi_pf_nome"),
+	SIGLA_FATTURE_CDS_ORIGINE("P:sigla_commons_aspect:cds_origine_codice"),
+	SIGLA_FATTURE_DESCR_CDS_ORIGINE("P:sigla_commons_aspect:cds_origine_descrizione"),
+	SIGLA_FATTURE_UO_ORIGINE("P:sigla_commons_aspect:uo_origine_codice"),
+	SIGLA_FATTURE_DESCR_UO_ORIGINE("P:sigla_commons_aspect:uo_origine_descrizione");
 	
 	
 	private final String value;
