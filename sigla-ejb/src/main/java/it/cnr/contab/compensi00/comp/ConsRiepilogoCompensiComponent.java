@@ -198,7 +198,7 @@ public class ConsRiepilogoCompensiComponent extends CRUDComponent{
 			if (riepilogCompensi.getA_dt_pagamento() == null){
 				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 				String data = formatter.format(riepilogCompensi.getA_dt_competenza());
-				sql.addColumn("'"+data+"'", "DA_DATA");
+				sql.addColumn("'"+data+"'", "A_DATA");
 				addSQLGroupBy(sql,"'"+data+"'",true);
 			}
 			sql.openParenthesis(FindClause.AND);
