@@ -276,6 +276,20 @@ public class CMISFolderFatturaAttiva extends OggettoBulk {
 		return dpProperties.getDigitalPreservationCodRegFA();
 	}
 
+	@CMISPolicy(name="P:sigla_commons_aspect:cds_origine", property=@CMISProperty(name="sigla_commons_aspect:cds_origine_codice"))
+	public String getCdsOrigine() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getCd_cds_origine();
+	}
+
+	@CMISPolicy(name="P:sigla_commons_aspect:uo_origine", property=@CMISProperty(name="sigla_commons_aspect:uo_origine_codice"))
+	public String getUoOrigine() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getCd_uo_origine();
+	}
+
 	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathFatture",CMISPath.class);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine());
