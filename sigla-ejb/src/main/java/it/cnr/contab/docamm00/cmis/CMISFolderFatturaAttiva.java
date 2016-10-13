@@ -1,29 +1,37 @@
 package it.cnr.contab.docamm00.cmis;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.dp.DigitalPreservationProperties;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 @CMISType(name="F:sigla_fatture:fatture_attive")
 public class CMISFolderFatturaAttiva extends OggettoBulk {
 	private static final long serialVersionUID = 4110702628275029148L;
 
 	private Fattura_attivaBulk fattura_attivaBulk;
-
+	private DigitalPreservationProperties dpProperties;
+	
 	public CMISFolderFatturaAttiva(Fattura_attivaBulk fattura_attivaBulk) {
     	super();
     	setFattura_attivaBulk(fattura_attivaBulk);
-    }
+    	loadProperties();
+	}
+	
+	public void loadProperties(){
+		if (dpProperties == null)
+			dpProperties = SpringUtil.getBean("digitalPreservationProperties",DigitalPreservationProperties.class);
+	}
 
 	@CMISProperty(name="sigla_fatture:esercizio")
     public Integer getEsercizioFattura() {
@@ -201,6 +209,87 @@ public class CMISFolderFatturaAttiva extends OggettoBulk {
 		return this.getFattura_attivaBulk().getModalita_pagamento_uo().getCd_modalita_pag();
 	}
 
+	@CMISProperty(name="sigla_fatture:prog_univoco_anno", converterBeanName="cmis.converter.longToIntegerConverter")
+    public Long getProgrUnivocoAnno() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getProgrUnivocoAnno();
+    }
+	
+	@CMISProperty(name="sigla_fatture:tipo_documento")
+	public String getTipoDocumento() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getTi_fattura();
+	}
+
+	@CMISPolicy(name="P:sigla_commons_aspect:terzi_pg", property=@CMISProperty(name="sigla_commons_aspect:terzi_pg_denominazione"))
+	public String getRagioneSociale() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getRagione_sociale();
+	}
+
+	@CMISPolicy(name="P:sigla_commons_aspect:terzi_pg", property=@CMISProperty(name="sigla_commons_aspect:terzi_pg_pariva"))
+	public String getPariva() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getPartita_iva();
+	}
+
+	@CMISPolicy(name="P:sigla_commons_aspect:terzi_pf", property=@CMISProperty(name="sigla_commons_aspect:terzi_pf_cognome"))
+	public String getCognome() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getCognome();
+	}
+
+	@CMISPolicy(name="P:sigla_commons_aspect:terzi_pf", property=@CMISProperty(name="sigla_commons_aspect:terzi_pf_nome"))
+	public String getNome() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getNome();
+	}
+
+	@CMISPolicy(name="P:sigla_commons_aspect:terzi_pf", property=@CMISProperty(name="sigla_commons_aspect:terzi_pf_codfis"))
+	public String getCodfis() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getCodice_fiscale();
+	}
+
+	@CMISProperty(name="sigla_fatture:cod_amministrazione")
+	public String getCodiceAmministrazione() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		if (dpProperties == null)
+			return null;
+		return dpProperties.getDigitalPreservationCodAmm();
+	}
+
+	@CMISProperty(name="sigla_fatture:cod_registro")
+	public String getCodiceRegistro() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		if (dpProperties == null)
+			return null;
+		return dpProperties.getDigitalPreservationCodRegFA();
+	}
+
+	@CMISPolicy(name="P:sigla_commons_aspect:cds_origine", property=@CMISProperty(name="sigla_commons_aspect:cds_origine_codice"))
+	public String getCdsOrigine() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getCd_cds_origine();
+	}
+
+	@CMISPolicy(name="P:sigla_commons_aspect:uo_origine", property=@CMISProperty(name="sigla_commons_aspect:uo_origine_codice"))
+	public String getUoOrigine() {
+		if (this.getFattura_attivaBulk()==null)
+			return null;
+		return this.getFattura_attivaBulk().getCd_uo_origine();
+	}
+
 	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathFatture",CMISPath.class);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine());
@@ -214,6 +303,7 @@ public class CMISFolderFatturaAttiva extends OggettoBulk {
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getEsercizioFattura().toString(), "Esercizio "+this.getEsercizioFattura().toString(), "Esercizio "+this.getEsercizioFattura().toString());
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Fattura "+this.getEsercizioFattura().toString()+Utility.lpad(this.getPgFattura().toString(),10,'0'), "Fattura "+this.getEsercizioFattura().toString()+"/"+this.getPgFattura().toString(), "Fattura "+this.getEsercizioFattura().toString()+"/"+this.getPgFattura().toString(), this);
 			cmisService.setInheritedPermission(cmisPath, Boolean.FALSE);
+
 		}
 		return cmisPath;
 	}
