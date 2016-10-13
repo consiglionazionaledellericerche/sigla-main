@@ -53,6 +53,12 @@
 			columnSize="7"
 			nullable="true" />
 		<columnMapping
+			columnName="DS_OBBL"
+			propertyName="ds_obbl"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />	
+		<columnMapping
 			columnName="DS_SCAD"
 			propertyName="ds_scad"
 			sqlTypeName="VARCHAR"
@@ -102,6 +108,8 @@
 		name="voce_bilancio" />
 	<persistentProperty
 		name="data_scad" />
+	<persistentProperty
+		name="ds_obbl" />	
 	<persistentProperty
 		name="ds_scad" />
 	<persistentProperty
