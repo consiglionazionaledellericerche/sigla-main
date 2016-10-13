@@ -44,6 +44,8 @@ public class V_cons_scad_obblBulk extends OggettoBulk implements Persistent {
  
 //    CREDITORE VARCHAR(200) NOT NULL
 	private java.lang.String creditore;
+	
+	private java.lang.String ds_obbl;
  
 	public V_cons_scad_obblBulk() {
 		super();
@@ -126,6 +128,14 @@ public class V_cons_scad_obblBulk extends OggettoBulk implements Persistent {
 	}
 	public void setCreditore(java.lang.String creditore)  {
 		this.creditore=creditore;
+	}
+
+	public java.lang.String getDs_obbl() {
+		return ds_obbl;
+	}
+
+	public void setDs_obbl(java.lang.String ds_obbl) {
+		this.ds_obbl = ds_obbl;
 	}
 
 	
