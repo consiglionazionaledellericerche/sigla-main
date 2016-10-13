@@ -48,6 +48,11 @@
 		<property name="trovatoSiglaRestClientUser" value="${TrovatoSiglaRestClientUser}" />
 		<property name="trovatoSiglaRestClientPassword" value="${TrovatoSiglaRestClientPassword}" />
 	</bean>
+	<bean id="digitalPreservationProperties" class="it.cnr.contab.dp.DigitalPreservationProperties">
+		<property name="digitalPreservationCodAmm" value="${DigitalPreservationCodAmm}" />
+		<property name="digitalPreservationCodRegFA" value="${DigitalPreservationCodRegFA}" />
+		<property name="digitalPreservationCodRegFP" value="${DigitalPreservationCodRegFP}" />
+	</bean>
 	<bean id="gson" class="com.google.gson.Gson"/>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
