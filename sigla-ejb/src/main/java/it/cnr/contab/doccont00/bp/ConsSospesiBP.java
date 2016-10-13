@@ -10,11 +10,11 @@ import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.jsp.Button;
-
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.ejb.ConsSospesiEntSpeComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 
 
 public class ConsSospesiBP extends ConsultazioniBP {
@@ -29,20 +29,30 @@ public class ConsSospesiBP extends ConsultazioniBP {
 	
 	private String livelloConsultazione;
 	private String pathConsultazione;	
+	private boolean tesoreria_unica=false;
 	
+
 	public ConsSospesiEntSpeComponentSession createConsSospesiEntSpeComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		return (ConsSospesiEntSpeComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsSospesiEntSpeComponentSession", ConsSospesiEntSpeComponentSession.class);
 }
-	
 	protected void init(it.cnr.jada.action.Config config,ActionContext context) throws BusinessProcessException {
+		  try {
 		   Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());
 		   String cds = CNRUserContext.getCd_cds(context.getUserContext());
 		   CompoundFindClause clauses = new CompoundFindClause();
 		   String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(context.getUserContext());
-		  
+		   setTesoreria_unica(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),CNRUserContext.getEsercizio(context.getUserContext())).getFl_tesoreria_unica().booleanValue());
 		   Unita_organizzativaBulk uo = new Unita_organizzativaBulk(uo_scrivania);
 		   	clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-		   	clauses.addClause("AND", "cd_cds",SQLBuilder.EQUALS, cds);
+		   	if(!tesoreria_unica)
+		   		clauses.addClause("AND", "cd_cds",SQLBuilder.EQUALS, cds);
+		   	else
+		   		if(!isUoEnte(context)){
+		   			clauses.addClause("AND", "cd_cds_origine",SQLBuilder.EQUALS, cds);		   				
+		   		}else
+		   			clauses.addClause("AND", "cd_cds",SQLBuilder.EQUALS, cds);
+		   			
+		   	
 			/* if(!isUoEnte(context) && !uo.isUoCds())	 {					
 					clauses.addClause("AND", "cd_cds",SQLBuilder.EQUALS, cds);
 				}
@@ -65,6 +75,9 @@ public class ConsSospesiBP extends ConsultazioniBP {
 				
 			super.init(config,context);
 			initVariabili(context,null,getPathConsultazione()); 
+		  }catch(Throwable e) {
+			   	throw new BusinessProcessException(e);
+		   }  
 		}
 
 	   public void initVariabili(ActionContext context, String pathProvenienza, String livello_destinazione) throws BusinessProcessException {
@@ -133,7 +146,14 @@ public class ConsSospesiBP extends ConsultazioniBP {
 			    CompoundFindClause parzclause = new CompoundFindClause();
 			   
 				    parzclause.addClause("AND","cd_cds",SQLBuilder.EQUALS,bulk.getCd_cds());
-				    parzclause.addClause("AND","cd_sospeso_padre",SQLBuilder.EQUALS,bulk.getCd_sospeso());
+				    
+				    if(!tesoreria_unica)
+				    	parzclause.addClause("AND","cd_sospeso_padre",SQLBuilder.EQUALS,bulk.getCd_sospeso());
+				   	else
+				   		if(!isUoEnte(context)){
+				   			parzclause.addClause("AND","cd_sospeso",SQLBuilder.EQUALS,bulk.getCd_sospeso());		   				
+				   		}else
+				   			parzclause.addClause("AND","cd_sospeso_padre",SQLBuilder.EQUALS,bulk.getCd_sospeso());
 				   
 			    clauses = clauses.or(clauses, parzclause);
 			   }
@@ -197,5 +217,11 @@ public class ConsSospesiBP extends ConsultazioniBP {
 	   return getLivelloConsultazione().equals(LIV_SOSMANMDETTMAN);
 	}
 	
-	
+	public boolean isTesoreria_unica() {
+		return tesoreria_unica;
+	}
+
+	public void setTesoreria_unica(boolean tesoreria_unica) {
+		this.tesoreria_unica = tesoreria_unica;
+	}
 }
