@@ -7,6 +7,8 @@ import java.rmi.RemoteException;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.doccont00.bp.ConsSospesiBP;
 import it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.*;
@@ -28,10 +30,14 @@ public class ConsSospesiEntSpeComponent extends CRUDComponent {
 				BulkHome home = getHome(userContext, V_cons_sospesiBulk.class, pathDestinazione);
 				SQLBuilder sql = home.createSQLBuilder();
 				sql.addSQLClause("AND","TI_ENTRATA_SPESA",  SQLBuilder.EQUALS,TIPO_ETR);
-				
-				if (livelloDestinazione.equals(ConsSospesiBP.LIV_SOSREV))
+				if(!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,CNRUserContext.getEsercizio(userContext)).getFl_tesoreria_unica().booleanValue()){
+					if (livelloDestinazione.equals(ConsSospesiBP.LIV_SOSREV))
 						sql.addSQLClause("AND", "LIVELLO", SQLBuilder.EQUALS, LIVELLO_1);
-
+				}else
+					if(isUtenteEnte(userContext))
+						if (livelloDestinazione.equals(ConsSospesiBP.LIV_SOSREV))
+							sql.addSQLClause("AND", "LIVELLO", SQLBuilder.EQUALS, LIVELLO_1);
+					
 				if (livelloDestinazione.equals(ConsSospesiBP.LIV_SOSREVRDETT))
 						sql.addSQLClause("AND", "LIVELLO", SQLBuilder.EQUALS, LIVELLO_2);
 						
@@ -48,9 +54,13 @@ public class ConsSospesiEntSpeComponent extends CRUDComponent {
 				BulkHome home = getHome(userContext, V_cons_sospesiBulk.class, pathDestinazione);
 				SQLBuilder sql = home.createSQLBuilder();
 				sql.addSQLClause("AND","TI_ENTRATA_SPESA",  SQLBuilder.EQUALS,TIPO_SPE);
-				
-				if (livelloDestinazione.equals(ConsSospesiBP.LIV_SOSMAN))
-					sql.addSQLClause("AND", "LIVELLO", SQLBuilder.EQUALS, LIVELLO_1);
+				if(!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,CNRUserContext.getEsercizio(userContext)).getFl_tesoreria_unica().booleanValue()){
+					if (livelloDestinazione.equals(ConsSospesiBP.LIV_SOSMAN))
+						sql.addSQLClause("AND", "LIVELLO", SQLBuilder.EQUALS, LIVELLO_1);
+				}else 
+					if(isUtenteEnte(userContext))
+						if (livelloDestinazione.equals(ConsSospesiBP.LIV_SOSMAN))
+							sql.addSQLClause("AND", "LIVELLO", SQLBuilder.EQUALS, LIVELLO_1);
 
 				if (livelloDestinazione.equals(ConsSospesiBP.LIV_SOSMANMDETT))
 						sql.addSQLClause("AND", "LIVELLO", SQLBuilder.EQUALS, LIVELLO_2);
