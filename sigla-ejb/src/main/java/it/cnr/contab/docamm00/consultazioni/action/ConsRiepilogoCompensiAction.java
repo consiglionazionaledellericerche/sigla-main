@@ -55,15 +55,15 @@ public Forward doSeleziona(ActionContext context) {
 public Forward doCerca(ActionContext context) throws RemoteException, InstantiationException, RemoveException{
 	ConsRiepilogoCompensiBP bp= (ConsRiepilogoCompensiBP) context.getBusinessProcess();
 	try {
-		VConsRiepCompensiBulk incarichi = (VConsRiepCompensiBulk)bp.getModel();
+		VConsRiepCompensiBulk consRiepilogo = (VConsRiepCompensiBulk)bp.getModel();
 		bp.fillModel(context); 
-		bp.controlloSelezioni(context,incarichi);
+		bp.controlloSelezioni(context,consRiepilogo);
 //		bp.valorizzaTotVariazione(context,variazioni);
 //		bp.valorizzaTi_Gestione(context,incarichi);
 //		bp.valorizzaCd_livello1(context,variazioni);
 		
 	
-			it.cnr.jada.util.RemoteIterator ri = ((ConsRiepilogoCompensiComponentSession)bp.createComponentSession()).findRiepilogoCompensi(context.getUserContext(),incarichi);
+			it.cnr.jada.util.RemoteIterator ri = ((ConsRiepilogoCompensiComponentSession)bp.createComponentSession()).findRiepilogoCompensi(context.getUserContext(),consRiepilogo);
 			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 			if (ri.countElements() == 0) {
 					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
@@ -73,8 +73,13 @@ public Forward doCerca(ActionContext context) throws RemoteException, Instantiat
 			nbp.setIterator(context,ri);
 			nbp.disableSelection();
 			nbp.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(VConsRiepCompensiBulk.class)); 
-			nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("CONSULTAZIONE"));
-			nbp.setFreeSearchSet("CONSULTAZIONE");
+			if (consRiepilogo.getGroupTrattamento()){
+				nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("CONSULTAZIONE"));
+				nbp.setFreeSearchSet("CONSULTAZIONE");
+			} else {
+				nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("CONSULTAZIONE_SENZA_TRATTAMENTO"));
+				nbp.setFreeSearchSet("CONSULTAZIONE_SENZA_TRATTAMENTO");
+			}
 			HookForward hook = (HookForward)context.findForward("seleziona"); 
 			return context.addBusinessProcess(nbp); 
 				

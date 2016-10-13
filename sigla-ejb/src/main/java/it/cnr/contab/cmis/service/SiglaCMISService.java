@@ -247,6 +247,33 @@ public class SiglaCMISService implements Serializable{
 		return createFolderIfNotPresent(cmisPath, folderName, title, description, oggettoBulk, null);
 	}
 
+	public CMISPath updateMetadataFromBulk(Folder folder, OggettoBulk oggettoBulk) throws ApplicationException{
+		if (oggettoBulk != null){
+			Map<String, Object> metadataProperties = new HashMap<String, Object>();
+			List<String> aspectsToAdd = new ArrayList<String>();
+	        List<String> aspects = folder.getPropertyValue(PropertyIds.SECONDARY_OBJECT_TYPE_IDS);
+	        try {
+
+	        	if (cmisBulkInfo.getType(getSiglaSession(), oggettoBulk)!=null )
+	        		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, cmisBulkInfo.getType(getSiglaSession(), oggettoBulk).getId());
+	        	for (Property<?> property : cmisBulkInfo.getProperty(getSiglaSession(), oggettoBulk)) {
+	        		metadataProperties.put(property.getId(), property.getValue());
+	        	}
+	        	aspectsToAdd.addAll(cmisBulkInfo.getAspect(getSiglaSession(), oggettoBulk));
+	        	for (Property<?> property : cmisBulkInfo.getAspectProperty(getSiglaSession(), oggettoBulk)) {
+	        		metadataProperties.put(property.getId(), property.getValue());
+	        	}
+	        } catch (Exception e) {
+	        	throw new RuntimeException(e);
+	        }
+	        metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspectsToAdd);
+	        aspects.addAll(aspectsToAdd);
+	        metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspects);
+			folder.updateProperties(metadataProperties, true);
+		}
+		return CMISPath.construct(folder.getPath());
+	}
+
 	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk, String objectTypeName) throws ApplicationException{
 		CmisObject cmisObject = getNodeByPath(cmisPath);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
