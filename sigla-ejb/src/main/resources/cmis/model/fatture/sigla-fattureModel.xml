@@ -8,7 +8,7 @@
 	<!-- Optional meta-data about the model -->
 	<description>SIGLA extension Content Model - Fatture</description>
 	<author>Gianfranco Gasparro</author>
-	<version>1.0</version>
+	<version>2.3</version>
 
 	<!--
 		Imports are required to allow references to definitions in other
@@ -86,6 +86,22 @@
 					<title>Data Competenza al</title>
 					<type>d:datetime</type>
 				</property>
+				<property name="sigla_fatture:prog_univoco_anno">
+					<title>Progressivo Univoco per anno</title>
+					<type>d:long</type>
+				</property>
+				<property name="sigla_fatture:tipo_documento">
+					<title>Tipo Documento</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:cod_amministrazione">
+					<title>Codice Amministrazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:cod_registro">
+					<title>Codice Registro</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>strorg:cds</aspect>
@@ -102,6 +118,23 @@
 				<property name="sigla_fatture:identificativoSdI">
 					<title>Identificativo SdI</title>
 					<type>d:long</type>
+				</property>
+				<property name="sigla_fatture:numero_documento">
+					<title>Numero Documento</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_fatture:data_documento">
+					<title>Data Documento</title>
+					<type>d:datetime</type>
+				</property>
+				<property name="sigla_fatture:progressivo_sdi">
+					<title>Progressivo SdI</title>
+					<type>d:long</type>
+				</property>
+				<property name="sigla_fatture:cuu">
+					<title>CUU</title>
+					<description>CUU</description>
+					<type>d:text</type>
 				</property>
 			</properties>
 		</type>

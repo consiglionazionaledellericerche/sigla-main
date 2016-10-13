@@ -8,7 +8,7 @@
 	<!-- Optional meta-data about the model -->
 	<description>SIGLA extension Content Model - Dati Comuni</description>
 	<author>Gianfranco Gasparro</author>
-	<version>1.0</version>
+	<version>1.1</version>
 
 	<!--
 		Imports are required to allow references to definitions in other
@@ -72,6 +72,32 @@
 				</property>
 				<property name="sigla_commons_aspect:terzi_pg_pariva">
 					<title>Partita Iva</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_commons_aspect:cds_origine">
+			<title>CDS di origine</title>
+			<properties>
+				<property name="sigla_commons_aspect:cds_origine_codice">
+					<title>Codice CDS</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_commons_aspect:cds_origine_descrizione">
+					<title>Descrizione CDS</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_commons_aspect:uo_origine">
+			<title>UO di origine</title>
+			<properties>
+				<property name="sigla_commons_aspect:uo_origine_codice">
+					<title>Codice UO</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_commons_aspect:uo_origine_descrizione">
+					<title>Descrizione UO</title>
 					<type>d:text</type>
 				</property>
 			</properties>
