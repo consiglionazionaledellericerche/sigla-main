@@ -59,12 +59,19 @@
 		formatName="date_short"
 		label="Data Scadenza" />
 	<fieldProperty
+		name="ds_obbl"
+		property="ds_obbl"
+		inputType="TEXT"
+		maxLength="300"
+		inputSize="50"
+		label="Descrizione"/>	
+	<fieldProperty
 		name="ds_scad"
 		property="ds_scad"
 		inputType="TEXT"
 		maxLength="300"
 		inputSize="50"
-		label="Descrizione"/>	
+		label="Desc. scadenza"/>	
 	<fieldProperty
 		name="im_scad"
 		property="im_scad"
@@ -116,6 +123,8 @@
 	<formFieldProperty
 		name="data_scad" />
 	<formFieldProperty
+		name="ds_obbl" />	
+	<formFieldProperty
 		name="ds_scad" />
 	<formFieldProperty
 		name="im_scad" />
@@ -143,6 +152,8 @@
 	<findFieldProperty
 		name="data_scad" />
 	<findFieldProperty
+		name="ds_obbl" />	
+	<findFieldProperty
 		name="ds_scad" />
 	<findFieldProperty
 		name="im_scad" />
@@ -170,6 +181,8 @@
 		name="voce_bilancio" />
 	<columnFieldProperty
 		name="data_scad" />
+	<columnFieldProperty
+		name="ds_obbl" />	
 	<columnFieldProperty
 		name="ds_scad" />
 	<columnFieldProperty
