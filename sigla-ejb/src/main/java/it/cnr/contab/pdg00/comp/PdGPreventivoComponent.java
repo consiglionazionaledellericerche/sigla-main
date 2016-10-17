@@ -4665,8 +4665,33 @@ private boolean isCdsEnte(UserContext userContext) throws ComponentException {
 	}
 }
 	
-	
-
+public SQLBuilder selectCentro_responsabilitaByClause (UserContext userContext,
+			Stampa_situazione_sintetica_x_progettoBulk stampa,
+			CdrBulk cdr,
+			CompoundFindClause clause) throws ComponentException, PersistencyException {
+	SQLBuilder aSQL = (listaCdrPdGPerUtente (userContext));
+	if(clause != null)
+		aSQL.addClause(clause);
+	return aSQL; 
+}	
+public SQLBuilder selectProgettoByClause (UserContext userContext, 
+		Stampa_situazione_sintetica_x_progettoBulk stampa, 
+		ProgettoBulk progetto, 
+		CompoundFindClause clause) throws ComponentException, PersistencyException
+{	
+	ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+	SQLBuilder sql = progettohome.createSQLBuilder();
+	sql.addClause( clause );
+	sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+	sql.addSQLClause("AND", "V_PROGETTO_PADRE.TIPO_FASE", sql.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+	sql.addSQLClause("AND", "V_PROGETTO_PADRE.LIVELLO", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+	// Se uo 999.000 in scrivania: visualizza tutti i progetti
+	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+		sql.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(userContext));
+	}
+	return sql;
+}		
 }	
 	
 
