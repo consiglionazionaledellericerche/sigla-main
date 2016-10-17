@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="2"		
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="centro_responsabilita"
+		property="centro_responsabilita"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Centro di responsabilita" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice CDR"/>
+	<fieldProperty
+		name="find_nodo_padre"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"
+		columnSet="nuovoPdg"
+		label="Area Progettuale"/>
+	<fieldProperty
+		name="cd_progetto"
+		property="progetto.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Progetto"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="ds_progetto"
+		property="progetto.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>	
+
+	<formFieldProperty name="esercizio"/>
+	<formFieldProperty name="centro_responsabilita" />
+	<formFieldProperty name="cd_centro_responsabilita" />
+	<formFieldProperty name="find_nodo_padre" />
+	<formFieldProperty name="cd_progetto" />		
+	<formFieldProperty name="ds_progetto" />
+
+	<printForm
+		name="/cnrpreventivo/pdg/situazione_sintetica_x_progetto.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="P_ESERCIZIO"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cd_unita_organizzativa"
+			property="cd_unita_organizzativa"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="P_UO"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="pg_progetto"
+			property="pg_progetto"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="P_PROGETTO"
+			paramTypeJR="java.lang.Integer" />	
+	</printForm>	
+</bulkInfo>
