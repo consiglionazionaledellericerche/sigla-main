@@ -35,6 +35,7 @@ import it.cnr.contab.pdg00.bulk.Pdg_variazione_archivioBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazione_archivioHome;
 import it.cnr.contab.pdg00.bulk.Stampa_pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Stampa_pdg_variazione_riepilogoBulk;
+import it.cnr.contab.pdg00.bulk.Stampa_situazione_sintetica_x_progettoBulk;
 import it.cnr.contab.pdg00.bulk.Stampa_var_stanz_resBulk;
 import it.cnr.contab.pdg00.bulk.V_stm_paramin_pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Var_stanz_resBulk;
@@ -1897,6 +1898,8 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		else if (bulk instanceof Stampa_var_stanz_resBulk)
 			inizializzaBulkPerStampa(userContext,
 					(Stampa_var_stanz_resBulk) bulk);
+		else if (bulk instanceof Stampa_situazione_sintetica_x_progettoBulk)
+			((Stampa_situazione_sintetica_x_progettoBulk)bulk).setEsercizio(CNRUserContext.getEsercizio(userContext));
 
 		return bulk;
 	}
