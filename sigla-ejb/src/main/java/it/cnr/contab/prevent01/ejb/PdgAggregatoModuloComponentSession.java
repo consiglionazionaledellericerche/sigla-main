@@ -3,7 +3,7 @@ package it.cnr.contab.prevent01.ejb;
 import javax.ejb.Remote;
 
 @Remote
-public interface PdgAggregatoModuloComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
+public interface PdgAggregatoModuloComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.jada.ejb.PrintComponentSession{
 it.cnr.contab.config00.sto.bulk.CdrBulk cdrFromUserContext(it.cnr.jada.UserContext userContext) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 it.cnr.jada.bulk.OggettoBulk modificaStatoPdg_aggregato(it.cnr.jada.UserContext param0,it.cnr.contab.prevent01.bulk.Pdg_moduloBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isPdGAggregatoModificabile(it.cnr.jada.UserContext param0,it.cnr.contab.prevent01.bulk.Pdg_moduloBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;

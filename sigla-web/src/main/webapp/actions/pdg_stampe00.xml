@@ -309,7 +309,7 @@
       name="StampaSituazioneSinteticaRendGAEBP" className="it.cnr.contab.consultazioni.bp.ConsWorkpackageBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.latt.bulk.WorkpackageBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 	    <init-param name="defaultAction" value="StampaSituazioneSinteticaXGaeAction" />
   </businessProcess>
   
@@ -337,6 +337,4 @@
 	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
 	    <init-param name="reportName" value="/cnrpreventivo/pdg/situazione_analitica_gae_res_uscite_x_esercizio_voce.jasper" />
 	</businessProcess>
-	
-	
 </action-mappings>
