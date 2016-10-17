@@ -72,5 +72,18 @@
     <init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Pdg_missioneBulk" />
     <init-param name="componentSessionName" value="CNRPREVENT01_EJB_PdgMissioneComponentSession" />               
     <init-param name="defaultAction" value="CRUDPdgMissioneAction" />
-  </businessProcess>  
+  </businessProcess>
+  
+    	
+  <businessProcess name="StampaPdgPBilancioBP" className="it.cnr.contab.prevent01.bp.StampaPdgpBilancioBP">
+	<forward name="default" path="/prevent01/stampa_pdgp_bilancio.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk" />
+	<init-param name="printbp" value="OfflineReportPrintBP"/>
+	<init-param name="defaultAction" value="StampaPdgpBilancioAction" />
+    <init-param name="componentSessionName" value="CNRPREVENT01_EJB_PdgAggregatoModuloComponentSession" />               
+	<init-param name="reportName" value="/preventivo/preventivo/stampa_pdgp_bilancio.jasper" />
+  </businessProcess> 
+  <action
+	path="/StampaPdgpBilancioAction" actionClass="it.cnr.contab.prevent01.action.StampaPdgpBilancioAction">
+  </action>
 </action-mappings>
