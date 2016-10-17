@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="2"		
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+        name="ti_gestione"
+        property="ti_gestione"
+        inputType="RADIOGROUP"
+        keysProperty="ti_gestioneKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        layout="HORIZONTAL"        
+        label="Tipo Stampa" />
+	<fieldProperty
+        name="ti_fonte"
+        property="ti_fonte"
+        inputType="RADIOGROUP"
+        keysProperty="ti_fonteKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        layout="HORIZONTAL"        
+        label="Tipo Bilancio" />
+	<fieldProperty
+		name="ti_livello"
+		property="ti_livello"
+		inputType="SELECT"
+        optionsProperty="livelliOptions"
+        nullable="false"
+        enabledOnSearch="true"        
+        label="Livello Stampa" />
+	<fieldProperty
+		name="nr_livello"
+		property="nr_livello"
+		inputType="ROTEXT"/>
+				
+	<formFieldProperty name="esercizio"/>
+	<formFieldProperty name="ti_gestione" />
+	<formFieldProperty name="ti_fonte" />
+	<formFieldProperty name="ti_livello" />
+	<formFieldProperty name="nr_livello" />
+
+	<printForm
+		name="/preventivo/preventivo/stampa_pdgp_bilancio.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="P_ESERCIZIO"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="ti_gestione"
+			property="ti_gestione"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="P_TIPO"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="ti_fonte"
+			property="ti_fonte"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="P_FONTE"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="nr_livello"
+			property="nr_livello"
+			parameterPosition="4"
+			parameterType="INTEGER"
+			paramNameJR="P_NUM_LIV"
+			paramTypeJR="java.lang.Integer" />	
+	</printForm>	
+</bulkInfo>

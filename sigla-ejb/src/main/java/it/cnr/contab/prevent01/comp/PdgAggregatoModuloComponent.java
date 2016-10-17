@@ -1,5 +1,6 @@
 package it.cnr.contab.prevent01.comp;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
@@ -48,6 +49,7 @@ import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -57,7 +59,7 @@ import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
-public class PdgAggregatoModuloComponent extends CRUDComponent {
+public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrintMgr {
 /**
  * PdgAggregatoComponent constructor comment.
  */
@@ -927,5 +929,15 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 		} catch (ComponentException e) {
 			throw handleException(e);
 		}
+	}
+
+	@Override
+	public OggettoBulk inizializzaBulkPerStampa(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+		return oggettobulk;
+	}
+
+	@Override
+	public OggettoBulk stampaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+		return oggettobulk;
 	}
 }
