@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CFPREVDEC05_TOTALE_TITOLI" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="117dd614-8ae8-4fce-aa12-fbaf09f84d57">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdgp_bilancio_totale_titoli" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="117dd614-8ae8-4fce-aa12-fbaf09f84d57">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -8,21 +8,20 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="VER6" fontName="DejaVu Sans" fontSize="6" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" isPdfEmbedded="false"/>
-	<style name="VERB6" fontName="DejaVu Sans" fontSize="6" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERBI6" fontName="DejaVu Sans" fontSize="6" isBold="true" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-BoldOblique.ttf" isPdfEmbedded="false"/>
-	<style name="VERI6" fontName="DejaVu Sans" fontSize="6" isBold="false" isUnderline="false" isStrikeThrough="false" pdfFontName="verdanai.ttf" isPdfEmbedded="false"/>
-	<style name="VER7" fontName="DejaVu Sans" fontSize="7" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" isPdfEmbedded="false"/>
-	<style name="VERBI7" fontName="DejaVu Sans" fontSize="7" isBold="true" isItalic="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-BoldOblique.ttf" isPdfEmbedded="false"/>
-	<style name="VERB7" fontName="DejaVu Sans" fontSize="7" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERB8" fontName="DejaVu Sans" fontSize="8" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERBI8" fontName="DejaVu Sans" fontSize="8" isBold="true" isItalic="true" pdfFontName="verdanabi.ttf" isPdfEmbedded="false"/>
-	<style name="VER10" fontName="DejaVu Sans" fontSize="10" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" isPdfEmbedded="false"/>
-	<style name="VERB12" fontName="DejaVu Sans" fontSize="12" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERBI14" fontName="DejaVu Sans" fontSize="14" isBold="true" isItalic="true" pdfFontName="verdanabi.ttf" isPdfEmbedded="false"/>
-	<style name="VER16" fontName="DejaVu Sans" fontSize="16" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" isPdfEmbedded="false"/>
-	<style name="VERB20" fontName="DejaVu Sans" fontSize="20" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERB10" fontName="DejaVu Sans" fontSize="10" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<subDataset name="ALL_TITOLI" uuid="3de854c9-d9e9-48e5-859c-43ea39d9ad67">
 		<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
 			<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>

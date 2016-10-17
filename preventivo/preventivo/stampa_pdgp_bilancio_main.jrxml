@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BILANCIOPREVDEC_MAIN" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdgp_bilancio_main" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.3995221406291998"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="53"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="VER6" fontName="DejaVu Sans" fontSize="6" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" isPdfEmbedded="false"/>
-	<style name="VERB6" fontName="DejaVu Sans" fontSize="6" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VER7" fontName="DejaVu Sans" fontSize="7" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" isPdfEmbedded="false"/>
-	<style name="VERBI7" fontName="DejaVu Sans" fontSize="7" isBold="true" isItalic="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-BoldOblique.ttf" isPdfEmbedded="false"/>
-	<style name="VERB7" fontName="DejaVu Sans" fontSize="7" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERB8" fontName="DejaVu Sans" fontSize="8" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERBI8" fontName="DejaVu Sans" fontSize="8" isBold="true" isItalic="true" pdfFontName="verdanabi.ttf" isPdfEmbedded="false"/>
-	<style name="VER10" fontName="DejaVu Sans" fontSize="10" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" isPdfEmbedded="false"/>
-	<style name="VERB12" fontName="DejaVu Sans" fontSize="12" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERBI14" fontName="DejaVu Sans" fontSize="14" isBold="true" isItalic="true" pdfFontName="verdanabi.ttf" isPdfEmbedded="false"/>
-	<style name="VER16" fontName="DejaVu Sans" fontSize="16" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" isPdfEmbedded="false"/>
-	<style name="VERB20" fontName="DejaVu Sans" fontSize="20" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
-	<style name="VERB10" fontName="DejaVu Sans" fontSize="10" isBold="true" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" isPdfEmbedded="false"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -428,7 +428,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 					<returnValue subreportVariable="IMPORTO_DISAVANZO_N_PREC" toVariable="IMPORTO_DISAVANZO_N_PREC"/>
 					<returnValue subreportVariable="IMPORTO_AVANZO_N_PREC" toVariable="IMPORTO_AVANZO_N_PREC"/>
 					<returnValue subreportVariable="IMPORTO_FCA_N_PREC" toVariable="IMPORTO_FCA_N_PREC"/>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"/BILANCIOPREVDEC_UTILIZZATO.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"/stampa_pdgp_bilancio_utilizzato.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupFooter>
@@ -478,7 +478,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/BILANCIOPREVDEC_TOTALE_TITOLI.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/stampa_pdgp_bilancio_totale_titoli.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 			<band height="17">
@@ -522,7 +522,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/BILANCIOPREVDEC_RIEPILOGO.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/stampa_pdgp_bilancio_riepilogo.jasper"]]></subreportExpression>
 				</subreport>
 				<break>
 					<reportElement x="0" y="2" width="100" height="1" uuid="b4a01ebe-3c8b-4368-9f96-9acf962b49e1"/>
@@ -1238,7 +1238,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="DejaVu Sans" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" pdfEncoding="Cp1252"/>
+					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PREVENTIVO FINANZIARIO DECISIONALE"]]></textFieldExpression>
@@ -1305,7 +1305,7 @@ di cassa]]></text>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
-					<font fontName="DejaVu Sans" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" pdfEncoding="Cp1252"/>
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Residui iniziali dell'anno "+new Integer($P{P_ESERCIZIO}.intValue()-1)]]></textFieldExpression>
@@ -1386,7 +1386,7 @@ di cassa]]></text>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="DejaVu Sans" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" pdfEncoding="Cp1252"/>
+					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PARTE I"+
@@ -1402,7 +1402,7 @@ di cassa]]></text>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
-					<font fontName="DejaVu Sans" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" pdfEncoding="Cp1252"/>
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Residui presunti alla fine dell'anno in corso (iniziali anno "+new Integer($P{P_ESERCIZIO}.intValue())+")"]]></textFieldExpression>
@@ -1416,7 +1416,7 @@ di cassa]]></text>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="DejaVu Sans" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" pdfEncoding="Cp1252"/>
+					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NOME_EST}+" - "+$P{DESCR_AGG_ENTE}]]></textFieldExpression>
@@ -1465,7 +1465,7 @@ di cassa]]></text>
 					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"BILANCIOPREVDEC_PRESUNTO.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdgp_bilancio_presunto.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</columnHeader>
