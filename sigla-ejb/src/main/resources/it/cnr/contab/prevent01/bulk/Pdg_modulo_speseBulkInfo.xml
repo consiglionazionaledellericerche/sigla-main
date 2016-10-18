@@ -412,6 +412,32 @@
 		nullable="false"
 		label="Cofog" />	
 	<fieldProperty
+		name="pdgMissione"
+		property="pdgMissione"
+		label="Missione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_missione"
+		property="pdgMissione.cd_missione"
+		label="Missione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="desctool_missione"
+		property="pdgMissione.cd_missione"
+		descProperty="pdgMissione.ds_missione"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="30"
+		maxLength="40"
+		nullable="false"
+		label="missione" />				
+	<fieldProperty
 		name="label_gestione_decentrata"
 		label="Gestione Decentrata" />
 	<fieldProperty
@@ -488,6 +514,10 @@
 	<formFieldProperty
 		name="area" />		
 	<formFieldProperty
+		name="pdgMissione"/>
+	<formFieldProperty
+		name="cd_missione"/>
+	<formFieldProperty
 		name="im_spese_gest_decentrata_int"
 		command="doOnIm_spese_gest_decentrata_intChange" />
 	<formFieldProperty
@@ -539,6 +569,8 @@
 		name="desctool_area" />	
 	<formFieldProperty
 		name="desctool_cofog" />		
+	<formFieldProperty
+		name="desctool_missione" />	
 	<formFieldProperty
 		name="label_previsione_assestata_impegno"/>		
 	<formFieldProperty
@@ -617,7 +649,8 @@
 		name="im_spese_a2" />
 	<findFieldProperty
 		name="im_spese_a3" />
-		
+	<findFieldProperty
+		name="cd_missione"/>			
 	<columnFieldProperty
 		name="cd_classificazione"
 		descProperty="classificazione.ds_classificazione"
@@ -672,7 +705,8 @@
 		columnStyle="valign:center;"/>
 	<columnFieldProperty
 		name="cd_cofog"/>	
-		
+	<columnFieldProperty
+		name="cd_missione"/>	
 	<columnSet name="without_area">
 		<columnFieldProperty
 			name="cd_classificazione"
@@ -725,5 +759,7 @@
 			headerLabel="Totale Competenza" />
 		<columnFieldProperty
 			name="cd_cofog"/>
+		<columnFieldProperty
+			name="cd_missione"/>
 	</columnSet>  			
 </bulkInfo>

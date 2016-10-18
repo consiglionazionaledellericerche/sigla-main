@@ -15,6 +15,8 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +27,14 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	private CdrBulk centroTestata;
 	private BigDecimal disponibilita_stanz_res;
 	private ProgettoBulk progetto = new ProgettoBulk();
-	
+	private Pdg_missioneBulk missione = new Pdg_missioneBulk();
+	public Pdg_missioneBulk getMissione() {
+		return missione;
+	}
+	public void setMissione(Pdg_missioneBulk missione) {
+		this.missione = missione;
+	}
+	public Pdg_programmaBulk programma =new Pdg_programmaBulk();
 	public Var_stanz_res_rigaBulk() {
 		super();
 	}
@@ -273,5 +282,11 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	
 	public void setProgetto(ProgettoBulk progetto) {
 		this.progetto = progetto;
+	}
+	public Pdg_programmaBulk getProgramma() {
+		return programma;
+	}
+	public void setProgramma(Pdg_programmaBulk programma) {
+		this.programma = programma;
 	}
 }

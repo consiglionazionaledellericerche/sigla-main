@@ -66,7 +66,11 @@
 	<tr>
 	  <% bp.getCrudDettagliSpese().writeFormField(out,"area");%>
 	</tr>
- <% } %>
+ <% } else{%>
+ 	<tr>
+	  <% bp.getCrudDettagliSpese().writeFormField(out,"pdgMissione");%>
+	</tr>
+	<% }%>	
  <% if (bp.isCofogObb()){%>
 	<tr>
 	  <% bp.getCrudDettagliSpese().writeFormField(out,"cofog");%>
