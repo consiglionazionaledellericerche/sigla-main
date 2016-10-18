@@ -85,6 +85,8 @@ public class V_cons_pdgp_pdgg_speBulk extends OggettoBulk implements Persistent 
     private Integer pg_dettaglio;
     
     private java.lang.String cd_cofog;
+    
+    private java.lang.String cd_missione;
 
 	public java.lang.Integer getEsercizio () {
 		return esercizio;
@@ -235,6 +237,12 @@ public class V_cons_pdgp_pdgg_speBulk extends OggettoBulk implements Persistent 
 	}
 	public void setCd_cofog(java.lang.String cd_cofog) {
 		this.cd_cofog = cd_cofog;
+	}
+	public java.lang.String getCd_missione() {
+		return cd_missione;
+	}
+	public void setCd_missione(java.lang.String cd_missione) {
+		this.cd_missione = cd_missione;
 	}
 	
 }

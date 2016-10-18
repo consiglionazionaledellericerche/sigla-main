@@ -14,7 +14,7 @@
 
     // Se c'è un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
   	boolean isTableEnabled = true;
-	boolean isFirstTab = bp.getTabCorrente().intValue()==1;
+	boolean isFirstTab = bp.getTabCorrente().intValue()==1; 
 	boolean isFieldReadOnly = !isFirstTab;
 %>
 
@@ -46,7 +46,8 @@
 				<TD><%bp.getController().writeFormField(out,"fl_class_sac"); %></TD>
 				<TD><%bp.getController().writeFormField(out,"fl_solo_gestione"); %></TD>
 				<% if (bp.getModel() instanceof Classificazione_voci_speBulk) { %>
-				<TD><%bp.getController().writeFormField(out,"fl_piano_riparto"); %></TD>
+					<TD><%bp.getController().writeFormField(out,"fl_piano_riparto"); %></TD>
+					<TD><%bp.getController().writeFormField(out,"fl_prev_obb_anno_suc"); %></TD>
 				<%}%>
 				<TD><%bp.getController().writeFormField(out,"fl_esterna_da_quadrare_sac"); %></TD>
 			</TR>
@@ -97,7 +98,8 @@
 				<TD><%controller.writeFormField(out,"fl_class_sac"); %></TD>
 				<TD><%controller.writeFormField(out,"fl_solo_gestione"); %></TD>
 				<% if (bp.getModel() instanceof Classificazione_voci_speBulk) { %>
-				<TD><%controller.writeFormField(out,"fl_piano_riparto"); %></TD>
+					<TD><%controller.writeFormField(out,"fl_piano_riparto"); %></TD>
+					<TD><%controller.writeFormField(out,"fl_prev_obb_anno_suc"); %></TD>
 				<%}%>
 				<TD><%controller.writeFormField(out,"fl_esterna_da_quadrare_sac"); %></TD>
 			</TR>
