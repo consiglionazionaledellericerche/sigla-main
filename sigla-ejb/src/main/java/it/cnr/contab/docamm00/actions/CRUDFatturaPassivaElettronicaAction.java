@@ -17,7 +17,6 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.action.MessageToUser;
-import it.cnr.jada.action.StaticForward;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -32,7 +31,6 @@ import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
-
 import javax.ejb.RemoveException;
 
 public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
@@ -333,8 +331,11 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				}
 				return nbp;
 			} catch(Throwable e) {
-				if (nbp != null)
+				if (nbp != null){
 					context.closeBusinessProcess(nbp);
+					if(nbp.getMessage()!=null)
+							throw new it.cnr.jada.action.MessageToUser(nbp.getMessage());
+				}
 				return handleException(context,e);
 			}		
 		}

@@ -201,6 +201,14 @@
 		maxLength="10"
 		enabledOnFreeSearch="false"
 		label="cofog" />	
+	<fieldProperty
+		name="cd_missione"
+		property="cd_missione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="10"
+		enabledOnFreeSearch="false"
+		label="missione" />		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -251,7 +259,8 @@
 		name="pg_dettaglio" />	
 	<formFieldProperty
 		name="cd_cofog" />		
-
+	<formFieldProperty
+		name="cd_missione" />	
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -314,6 +323,8 @@
 	<columnFieldProperty
 		name="cd_cofog" />	
 	<columnFieldProperty
+		name="cd_missione" />		
+	<columnFieldProperty
 		name="cd_cds_area" />
 	<columnFieldProperty
 		name="im_spese_gest_acc_est_pdgp" />
@@ -351,7 +362,9 @@
 		<columnFieldProperty
 			name="ds_classificazione" />
 		<columnFieldProperty
-			name="cd_cofog" />	
+			name="cd_cofog" />
+		<columnFieldProperty
+			name="cd_missione" />		
        	<columnFieldProperty
        		name="im_spese_gest_dec_int_pdgp"
        		label="Prev."
