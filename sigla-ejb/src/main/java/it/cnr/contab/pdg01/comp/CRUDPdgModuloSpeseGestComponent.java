@@ -188,6 +188,8 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 		if (parCnrBulk!=null && parCnrBulk.getFl_nuovo_pdg()) {
 			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
 			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
+			if (dett.getPdg_modulo_spese().getCd_missione()!=null)
+				sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",sql.EQUALS,dett.getPdg_modulo_spese().getCd_missione());
 		}
 		
 		sql.addTableToHeader("NATURA");

@@ -32,7 +32,9 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 	private java.math.BigDecimal totale_spese_accentrate_esterne_gest;
 	private boolean limiteInt=false;
 	private boolean limiteEst=false;
+	private boolean prevAnnoSucObb=false;
 	private CofogBulk cofog;
+	private Pdg_missioneBulk pdgMissione;
 	public Pdg_modulo_speseBulk() {
 		super();
 	}
@@ -140,7 +142,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 		return super.initializeForInsert(crudbp, actioncontext);
 	}	
 	private void inizializzaImporti(){
-		setIm_spese_a2(Utility.ZERO);
+		setIm_spese_a2(null);
 		setIm_spese_a3(Utility.ZERO);
 		setIm_spese_gest_accentrata_est(Utility.ZERO);
 		setIm_spese_gest_accentrata_int(Utility.ZERO);
@@ -420,4 +422,30 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 		// TODO Auto-generated method stub
 		getCofog().setCd_cofog(cd_cofog);
 	}
+	public Pdg_missioneBulk getPdgMissione() {
+		return pdgMissione;
+	}
+	
+	public void setPdgMissione(Pdg_missioneBulk pdgMissione) {
+		this.pdgMissione = pdgMissione;
+	}
+	@Override
+	public String getCd_missione() {
+		Pdg_missioneBulk pdgMissione = this.getPdgMissione();
+		if (pdgMissione == null)
+			return null;
+		return pdgMissione.getCd_missione();
+	}
+	
+	@Override
+	public void setCd_missione(String cd_missione) {
+		this.getPdgMissione().setCd_missione(cd_missione);
+	}
+	public boolean isPrevAnnoSucObb() {
+		return prevAnnoSucObb;
+	}
+	public void setPrevAnnoSucObb(boolean prevAnnoSucObb) {
+		this.prevAnnoSucObb = prevAnnoSucObb;
+	}
+
 }
