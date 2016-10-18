@@ -228,6 +228,13 @@
 		label="Esterna da quadrare SAC" 
 		nullable="false" />
 	<fieldProperty
+		name="fl_prev_obb_anno_suc"
+		property="fl_prev_obb_anno_suc"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Obblig.prev anno suc." 
+		nullable="false" />	
+	<fieldProperty
 		name="cdr_accentratore"
 		property="centro_responsabilita.cd_centro_responsabilita"
 		inputType="TEXT"
@@ -319,6 +326,8 @@
 	<formFieldProperty
 		name="fl_esterna_da_quadrare_sac" />
 	<formFieldProperty
+		name="fl_prev_obb_anno_suc" />	
+	<formFieldProperty
 		name="cdr_accentratore" />
 	<formFieldProperty
 		name="ds_cdr" />
@@ -364,6 +373,8 @@
 	<findFieldProperty
 		name="fl_esterna_da_quadrare_sac" />
 	<findFieldProperty
+		name="fl_prev_obb_anno_suc" />		
+	<findFieldProperty
 		name="cdr_accentratore" 
 		label="Centro di Responsabilità Accentratore"/>
 
@@ -395,6 +406,8 @@
 		name="fl_decentrato" />
 	<columnFieldProperty
 		name="fl_esterna_da_quadrare_sac" />
+	<columnFieldProperty
+		name="fl_prev_obb_anno_suc" />			
 	<columnFieldProperty
 		name="cdr_accentratore" />
 	<columnFieldProperty

@@ -64,6 +64,8 @@ public class Classificazione_vociBase extends Classificazione_vociKey implements
 
 //	  TI_CLASSIFICAZIONE CHAR(4)
     private java.lang.String ti_classificazione;
+    
+    private java.lang.Boolean fl_prev_obb_anno_suc;
 
   public Classificazione_vociBase() {
 		super();
@@ -190,5 +192,11 @@ public class Classificazione_vociBase extends Classificazione_vociKey implements
 	}
 	public void setTi_classificazione(java.lang.String ti_classificazione) {
 		this.ti_classificazione = ti_classificazione;
+	}
+	public java.lang.Boolean getFl_prev_obb_anno_suc() {
+		return fl_prev_obb_anno_suc;
+	}
+	public void setFl_prev_obb_anno_suc(java.lang.Boolean fl_prev_obb_anno_suc) {
+		this.fl_prev_obb_anno_suc = fl_prev_obb_anno_suc;
 	}
 }
