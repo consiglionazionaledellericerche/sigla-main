@@ -847,7 +847,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 			for(Iterator dettagli = list.iterator(); dettagli.hasNext();){
 				Pdg_Modulo_EntrateBulk entrata = (Pdg_Modulo_EntrateBulk)dettagli.next();
 				if (Utility.nvl(entrata.getIm_entrata()).compareTo(Utility.nvl(entrata.getIm_entrata_app()))!=0)
-					throw new ApplicationException("L'importo proposto modificato non è uguale all'importo approvato. Impossibile procedere.");
+					throw new ApplicationException("L'importo delle entrate proposto modificato non è uguale all'importo approvato. Impossibile procedere.");
 			}
 
 		} catch (PersistencyException e) {
