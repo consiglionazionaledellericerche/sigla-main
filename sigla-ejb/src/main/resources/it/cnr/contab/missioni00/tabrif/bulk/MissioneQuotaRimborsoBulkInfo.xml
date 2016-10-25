@@ -60,7 +60,7 @@
 		name="im_rimborso"
 		property="im_rimborso"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="Quota Rimborso" />
