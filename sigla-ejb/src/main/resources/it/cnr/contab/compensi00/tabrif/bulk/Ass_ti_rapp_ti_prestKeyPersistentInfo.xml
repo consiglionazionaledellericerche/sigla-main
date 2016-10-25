@@ -19,7 +19,7 @@
 			primary="true" />			
 	</defaultColumnMap>
 	<persistentProperty
-		name="cd_trattamento"
+		name="cd_tipo_rapporto"
 		partOfOid="true" />
 	<persistentProperty
 		name="cd_ti_prestazione"
