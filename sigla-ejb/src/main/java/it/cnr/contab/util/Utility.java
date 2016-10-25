@@ -26,12 +26,22 @@ import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
 import it.cnr.contab.progettiric00.ejb.geco.ProgettoGecoComponentSession;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.ejb.AdminSession;
+import it.cnr.jada.persistency.sql.SQLPersistentInfo;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 import javax.ejb.EJBException;
+import javax.servlet.ServletException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AssignableTypeFilter;
 
 /**
  * @author mspasiano
@@ -40,6 +50,8 @@ import javax.ejb.EJBException;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public final class Utility {
+	private transient static final Logger logger = LoggerFactory.getLogger(Utility.class);
+
 	public static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	public static String TIPO_GESTIONE_SPESA = "S";
 	public static String TIPO_GESTIONE_ENTRATA = "E";
@@ -145,6 +157,27 @@ public final class Utility {
 		}
 	}
 
+	public static synchronized void loadPersistentInfos() throws ServletException{
+		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(true);
+		provider.addIncludeFilter(new AssignableTypeFilter(OggettoBulk.class));
+		AdminSession adminSession = (AdminSession) EJBCommonServices.createEJB("JADAEJB_AdminSession");
+		Set<BeanDefinition> components = provider.findCandidateComponents("it/cnr");
+		for (BeanDefinition component : components){
+			try {
+			    Class<?> clazz = Class.forName(component.getBeanClassName());
+				logger.info("Load PersistentInfo for class: {}",clazz.getName());
+				adminSession.loadPersistentInfos(clazz);
+				if(clazz.getName().endsWith("Bulk")) {
+					logger.info("Load BulkInfo for class: {}",clazz.getName());
+					adminSession.loadBulkInfos(clazz);					
+				}
+			} catch (Exception e) {
+				logger.error("Cannot load persistentInfo for class : {}", component.getBeanClassName(), e);
+			}
+
+		}		
+	}
+	
 	private static String NumberToTextRicorsiva(int n) {
 		if (n < 0) {
 			return "meno " + NumberToTextRicorsiva(-n);
