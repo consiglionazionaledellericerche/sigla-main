@@ -49,6 +49,23 @@
 	<parameter name="P_PROGETTO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_GAE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_PRINT_GAE" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_VOCE" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_ANNO" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_MOVIMENTAZIONE" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ORDINE" class="java.lang.String">
+		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
+		<defaultValueExpression><![CDATA["A"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT distinct A.CD_CENTRO_RESPONSABILITA, A.PG_PROGETTO PG_PROGLIV2,
 B.CD_PROGETTO CD_PROGLIV2, B.DS_PROGETTO DS_PROGLIV2,
@@ -68,54 +85,63 @@ AND B.TIPO_FASE='X']]>
 	<field name="DS_PROGLIV2" class="java.lang.String"/>
 	<field name="CD_PROGLIV1" class="java.lang.String"/>
 	<field name="DS_PROGLIV1" class="java.lang.String"/>
-	<group name="MAIN" isStartNewPage="true">
-		<groupExpression><![CDATA[$F{CD_PROGLIV2}]]></groupExpression>
-		<groupHeader>
-			<band/>
-		</groupHeader>
-	</group>
-	<title>
-		<band/>
-	</title>
 	<detail>
 		<band height="25">
 			<subreport>
 				<reportElement x="6" y="8" width="830" height="10" isRemoveLineWhenBlank="true" uuid="2a15b921-aa04-4dc5-84b0-9656266ba147"/>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO">
-					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_DS_PROGLIV2">
 					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV2}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="NOME_EST">
-					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="PATH_LOGO_FORNITORE">
 					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="UTENTE">
-					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO1">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_CENTRO_RESPONSABILITA">
 					<subreportParameterExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_PG_PROGLIV2">
-					<subreportParameterExpression><![CDATA[$F{PG_PROGLIV2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_DS_PROGLIV1">
 					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV1}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="P_DETAIL">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_MOVIMENTAZIONE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ORDINE">
+					<subreportParameterExpression><![CDATA[$P{P_ORDINE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_ANNO">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_ANNO}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="DESCR_AGG_ENTE">
 					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_GAE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="P_CD_PROGLIV1">
 					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_VOCE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_VOCE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_GAE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_CD_PROGLIV2">
 					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV2}]]></subreportParameterExpression>
@@ -123,6 +149,11 @@ AND B.TIPO_FASE='X']]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/situazione_sintetica_x_progetto_main.jasper"]]></subreportExpression>
 			</subreport>
+			<break>
+				<reportElement x="0" y="22" width="100" height="1" uuid="0daf11d4-3050-4e8f-813b-726733abf346">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}>1]]></printWhenExpression>
+				</reportElement>
+			</break>
 		</band>
 	</detail>
 </jasperReport>
