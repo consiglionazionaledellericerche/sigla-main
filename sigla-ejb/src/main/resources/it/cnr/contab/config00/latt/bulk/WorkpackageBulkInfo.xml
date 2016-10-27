@@ -374,6 +374,7 @@
 		property="pdgMissione"
 		label="Missione"
 		inputType="SEARCHTOOL"
+		enabledOnEdit="false"
 		formName="searchtool"
 		enabledOnSearch="true" />
 	<fieldProperty
@@ -383,6 +384,7 @@
 		inputType="TEXT"
 		inputSize="20"
 		maxLength="20"
+		enabledOnEdit="false"
 		enabledOnFreeSearch="true" />	
 
 
