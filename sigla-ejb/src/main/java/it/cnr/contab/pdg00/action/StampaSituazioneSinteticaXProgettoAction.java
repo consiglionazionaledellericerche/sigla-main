@@ -6,26 +6,42 @@
  */
 package it.cnr.contab.pdg00.action;
 
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg00.bulk.Stampa_situazione_sintetica_x_progettoBulk;
 import it.cnr.contab.reports.bp.ParametricPrintBP;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 
 public class StampaSituazioneSinteticaXProgettoAction extends it.cnr.contab.reports.action.ParametricPrintAction {
-
 	public StampaSituazioneSinteticaXProgettoAction() {
 		super();
 	}
-	
-	@Override
-	public Forward doPrint(ActionContext context) {
+
+	public Forward doBlankSearchFindUoForPrint(ActionContext context, Stampa_situazione_sintetica_x_progettoBulk stampa){
 		ParametricPrintBP bp = (ParametricPrintBP)context.getBusinessProcess();
-		Stampa_situazione_sintetica_x_progettoBulk model = (Stampa_situazione_sintetica_x_progettoBulk)bp.getModel();
-		model.setEsercizio(CNRUserContext.getEsercizio(context.getUserContext()));
-		model.setCd_unita_organizzativa(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
-		// TODO Auto-generated method stub
-		return super.doPrint(context);
+		Stampa_situazione_sintetica_x_progettoBulk stampa_gae = ((Stampa_situazione_sintetica_x_progettoBulk)bp.getModel());
+		stampa_gae.setUoForPrint(new Unita_organizzativaBulk());
+		
+		return context.findDefaultForward();
+	}
+	
+	public Forward doBlankSearchFindCdsForPrint(ActionContext context, Stampa_situazione_sintetica_x_progettoBulk stampa){
+		ParametricPrintBP bp = (ParametricPrintBP)context.getBusinessProcess();
+		Stampa_situazione_sintetica_x_progettoBulk stampa_gae = ((Stampa_situazione_sintetica_x_progettoBulk)bp.getModel());
+		stampa_gae.setCdsForPrint(new CdsBulk());
+		stampa_gae.setUoForPrint(new Unita_organizzativaBulk());
+		
+		return context.findDefaultForward();
 	}
 
+	public Forward doBringBackSearchFindGaeForPrint(ActionContext context, Stampa_situazione_sintetica_x_progettoBulk stampa, WorkpackageBulk gae){
+		ParametricPrintBP bp = (ParametricPrintBP)context.getBusinessProcess();
+		Stampa_situazione_sintetica_x_progettoBulk stampa_gae = ((Stampa_situazione_sintetica_x_progettoBulk)bp.getModel());
+
+		stampa_gae.setGaeForPrint(gae);
+		stampa_gae.setProgettoForPrint(gae.getProgetto());
+		return context.findDefaultForward();
+	}
 }
