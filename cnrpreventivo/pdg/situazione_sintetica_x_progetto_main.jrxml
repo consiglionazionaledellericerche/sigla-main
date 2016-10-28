@@ -786,7 +786,7 @@ $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Codice]]></text>
+				<text><![CDATA[Codice Lello]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-54" style="VERB6" x="43" y="32" width="389" height="31" uuid="709515ee-cd1e-448a-bdac-814bfc90073a"/>
