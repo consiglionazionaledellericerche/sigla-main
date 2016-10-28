@@ -78,7 +78,6 @@
 		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
 		<defaultValueExpression><![CDATA["A"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TEST" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT p.tipo, p.esercizio_res, p.cd_linea_attivita cd_gae,
        CASE WHEN $P{P_ROTTURA_GAE}='S'
@@ -786,7 +785,7 @@ $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Codice Lello]]></text>
+				<text><![CDATA[Codice]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-54" style="VERB6" x="43" y="32" width="389" height="31" uuid="709515ee-cd1e-448a-bdac-814bfc90073a"/>
@@ -1045,7 +1044,7 @@ $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}:null]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/situazione_sintetica_x_progetto_detail.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_detail.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

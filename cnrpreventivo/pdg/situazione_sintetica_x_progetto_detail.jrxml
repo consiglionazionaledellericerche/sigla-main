@@ -61,7 +61,6 @@
 	<parameter name="P_PG_PROGLIV2" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[Integer.valueOf(18577)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TEST" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT A.ESERCIZIO, A.TI_GESTIONE, A.CD_VOCE, A.ESERCIZIO_OBBACC, A.PG_OBBACC, A.CD_TERZO,
        (SELECT TERZO.DENOMINAZIONE_SEDE FROM TERZO WHERE TERZO.CD_TERZO = A.CD_TERZO) DS_TERZO,
