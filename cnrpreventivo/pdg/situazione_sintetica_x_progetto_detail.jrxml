@@ -62,177 +62,66 @@
 		<defaultValueExpression><![CDATA[Integer.valueOf(18577)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT A.ESERCIZIO, A.TI_GESTIONE, A.CD_VOCE, A.ESERCIZIO_OBBACC, A.PG_OBBACC, A.CD_TERZO,
-       (SELECT TERZO.DENOMINAZIONE_SEDE FROM TERZO WHERE TERZO.CD_TERZO = A.CD_TERZO) DS_TERZO,
-       A.CD_TIPO_DOCUMENTO_AMM, A.ESERCIZIO_DOCAMM, A.PG_DOCUMENTO_AMM,
-       A.ESERCIZIO_MANREV, A.PG_MANREV, SUM(A.IM_VOCE) IMPORTO
+		<![CDATA[SELECT A.ESERCIZIO_VAR, A.PG_VAR, A.DS_VAR, SUM(A.IMPORTO_VAR) IMPORTO_VAR
 FROM (
-select ACC.ESERCIZIO, ACC.TI_GESTIONE, ACC.CD_VOCE, ACC.CD_TERZO,
-       ACC.ESERCIZIO_ORIGINALE ESERCIZIO_OBBACC, ACC.PG_ACCERTAMENTO PG_OBBACC,
-       DOC.CD_TIPO_DOCUMENTO_AMM, DOC.ESERCIZIO ESERCIZIO_DOCAMM, DOC.PG_DOCUMENTO_AMM,
-       REV.ESERCIZIO ESERCIZIO_MANREV, REV.PG_REVERSALE PG_MANREV, ASV.IM_VOCE
-from ACCERTAMENTO_SCAD_VOCE ASV, ACCERTAMENTO ACC, V_DOC_ATTIVO_ACCERTAMENTO DOC, REVERSALE_RIGA REV
-where $P{P_TIPO} = 'E'
-and   ASV.ESERCIZIO < $P{P_ESERCIZIO}
-and   ASV.ESERCIZIO_ORIGINALE = NVL($P{P_ESERCIZIO_RES}, ASV.ESERCIZIO_ORIGINALE)
-and   ASV.CD_CENTRO_RESPONSABILITA = $P{P_CENTRO_RESPONSABILITA}
-and   ASV.CD_LINEA_ATTIVITA in (
-	SELECT cd_linea_attivita
-	FROM v_linea_attivita_valida
-	WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-	AND   pg_progetto=$P{P_PG_PROGLIV2}
-          AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
-and   ASV.CD_CDS = ACC.CD_CDS
-and   ASV.ESERCIZIO = ACC.ESERCIZIO
-and   ASV.ESERCIZIO_ORIGINALE = ACC.ESERCIZIO_ORIGINALE
-and   ASV.PG_ACCERTAMENTO = ACC.PG_ACCERTAMENTO
+SELECT A.ESERCIZIO ESERCIZIO_VAR, A.PG_VARIAZIONE_PDG PG_VAR, B.DS_VARIAZIONE DS_VAR,
+       CASE WHEN A.TI_GESTIONE = 'E'
+          THEN NVL(A.IM_ENTRATA,0)
+          ELSE NVL(A.IM_SPESE_GEST_DECENTRATA_INT, 0)+
+               NVL(A.IM_SPESE_GEST_ACCENTRATA_INT, 0)+
+               NVL(A.IM_SPESE_GEST_DECENTRATA_EST, 0)+
+               NVL(A.IM_SPESE_GEST_ACCENTRATA_EST, 0)
+          END IMPORTO_VAR
+FROM PDG_VARIAZIONE_RIGA_GEST A, PDG_VARIAZIONE B
+WHERE A.ESERCIZIO = B.ESERCIZIO
+AND   A.PG_VARIAZIONE_PDG = B.PG_VARIAZIONE_PDG
+AND   A.TI_GESTIONE = $P{P_TIPO}
+and   A.ESERCIZIO <= $P{P_ESERCIZIO}
+and   A.ESERCIZIO = NVL($P{P_ESERCIZIO_RES}, A.ESERCIZIO)
+and   A.CD_CDR_ASSEGNATARIO = $P{P_CENTRO_RESPONSABILITA}
+and   A.CD_LINEA_ATTIVITA in (
+    SELECT cd_linea_attivita
+    FROM v_linea_attivita_valida
+    WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+    AND   pg_progetto=$P{P_PG_PROGLIV2}
+    AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
 and   ($P{P_VOCE} IS NULL or
-      NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
-           FROM ass_evold_evnew b
-           WHERE b.esercizio_old = ACC.ESERCIZIO
-           AND   b.ti_gestione_old = 'E'
-           AND   b.cd_elemento_voce_old = ACC.CD_ELEMENTO_VOCE
-           AND   b.esercizio_new = $P{P_ESERCIZIO}
-           AND   b.ti_gestione_new = 'E'),ACC.CD_ELEMENTO_VOCE) = $P{P_VOCE})
-and   ACC.CD_CDS = DOC.CD_CDS_ACCERTAMENTO
-and   ACC.ESERCIZIO = DOC.ESERCIZIO_ACCERTAMENTO
-and   ACC.ESERCIZIO_ORIGINALE = DOC.ESERCIZIO_ORI_ACCERTAMENTO
-and   ACC.PG_ACCERTAMENTO = DOC.PG_ACCERTAMENTO
-and   DOC.CD_CDS_ACCERTAMENTO = REV.CD_CDS
-and   DOC.ESERCIZIO_ACCERTAMENTO = REV.ESERCIZIO_ACCERTAMENTO
-and   DOC.ESERCIZIO_ORI_ACCERTAMENTO = REV.ESERCIZIO_ORI_ACCERTAMENTO
-and   DOC.PG_ACCERTAMENTO = REV.PG_ACCERTAMENTO
-and   DOC.CD_CDS = REV.CD_CDS_DOC_AMM
-and   DOC.CD_UNITA_ORGANIZZATIVA = REV.CD_UO_DOC_AMM
-and   DOC.ESERCIZIO = REV.ESERCIZIO_DOC_AMM
-and   DOC.CD_TIPO_DOCUMENTO_AMM = REV.CD_TIPO_DOCUMENTO_AMM
-and   DOC.PG_DOCUMENTO_AMM = REV.PG_DOC_AMM
+      NVL((SELECT C.CD_ELEMENTO_VOCE_NEW
+           FROM ass_evold_evnew C
+           WHERE C.esercizio_old = A.ESERCIZIO
+           AND   C.ti_gestione_old = A.TI_GESTIONE
+           AND   C.cd_elemento_voce_old = A.CD_ELEMENTO_VOCE
+           AND   C.esercizio_new = $P{P_ESERCIZIO}
+           AND   C.ti_gestione_new = A.TI_GESTIONE),A.CD_ELEMENTO_VOCE) = $P{P_VOCE})
 UNION ALL
-select ACC.ESERCIZIO, ACC.TI_GESTIONE, ACC.CD_VOCE, ACC.CD_TERZO,
-       ACC.ESERCIZIO_ORIGINALE ESERCIZIO_OBBACC, ACC.PG_ACCERTAMENTO PG_OBBACC,
-       DOC.CD_TIPO_DOCUMENTO_AMM, DOC.ESERCIZIO ESERCIZIO_DOCAMM, DOC.PG_DOCUMENTO_AMM,
-       REV.ESERCIZIO ESERCIZIO_MANREV, REV.PG_REVERSALE PG_MANREV, ASV.IM_VOCE
-from ACCERTAMENTO_SCAD_VOCE ASV, ACCERTAMENTO ACC, V_DOC_ATTIVO_ACCERTAMENTO DOC, REVERSALE_RIGA REV
-where $P{P_TIPO} = 'E'
-and   ASV.ESERCIZIO = $P{P_ESERCIZIO}
-and   ASV.ESERCIZIO_ORIGINALE = NVL($P{P_ESERCIZIO_RES}, ASV.ESERCIZIO_ORIGINALE)
-and   ASV.CD_CENTRO_RESPONSABILITA = $P{P_CENTRO_RESPONSABILITA}
-and   ASV.CD_LINEA_ATTIVITA in (
-	SELECT cd_linea_attivita
-	FROM v_linea_attivita_valida
-	WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-	AND   pg_progetto=$P{P_PG_PROGLIV2}
-          AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
-and   ASV.CD_CDS = ACC.CD_CDS
-and   ASV.ESERCIZIO = ACC.ESERCIZIO
-and   ASV.ESERCIZIO_ORIGINALE = ACC.ESERCIZIO_ORIGINALE
-and   ASV.PG_ACCERTAMENTO = ACC.PG_ACCERTAMENTO
-and   ACC.CD_ELEMENTO_VOCE = NVL($P{P_VOCE},ACC.CD_ELEMENTO_VOCE)
-and   ACC.CD_CDS = DOC.CD_CDS_ACCERTAMENTO (+)
-and   ACC.ESERCIZIO = DOC.ESERCIZIO_ACCERTAMENTO (+)
-and   ACC.ESERCIZIO_ORIGINALE = DOC.ESERCIZIO_ORI_ACCERTAMENTO (+)
-and   ACC.PG_ACCERTAMENTO = DOC.PG_ACCERTAMENTO (+)
-and   DOC.CD_CDS_ACCERTAMENTO = REV.CD_CDS (+)
-and   DOC.ESERCIZIO_ACCERTAMENTO = REV.ESERCIZIO_ACCERTAMENTO (+)
-and   DOC.ESERCIZIO_ORI_ACCERTAMENTO = REV.ESERCIZIO_ORI_ACCERTAMENTO (+)
-and   DOC.PG_ACCERTAMENTO = REV.PG_ACCERTAMENTO (+)
-and   DOC.CD_CDS = REV.CD_CDS_DOC_AMM (+)
-and   DOC.CD_UNITA_ORGANIZZATIVA = REV.CD_UO_DOC_AMM (+)
-and   DOC.ESERCIZIO = REV.ESERCIZIO_DOC_AMM (+)
-and   DOC.CD_TIPO_DOCUMENTO_AMM = REV.CD_TIPO_DOCUMENTO_AMM (+)
-and   DOC.PG_DOCUMENTO_AMM = REV.PG_DOC_AMM (+)
-UNION ALL
-select OSV.ESERCIZIO, OSV.TI_GESTIONE, OSV.CD_VOCE, OBB.CD_TERZO,
-       OSV.ESERCIZIO_ORIGINALE ESERCIZIO_OBBACC, OSV.PG_OBBLIGAZIONE PGOBBACC,
-       DOC.CD_TIPO_DOCUMENTO_AMM, DOC.ESERCIZIO ESERCIZIO_DOCAMM, DOC.PG_DOCUMENTO_AMM,
-       MAN.ESERCIZIO ESERCIZIO_MANREV, MAN.PG_MANDATO PG_MANREV, OSV.IM_VOCE
-from OBBLIGAZIONE_SCAD_VOCE OSV, OBBLIGAZIONE OBB, V_DOC_PASSIVO_OBBLIGAZIONE DOC, MANDATO_RIGA MAN
-where $P{P_TIPO} = 'S'
-and   OSV.ESERCIZIO < $P{P_ESERCIZIO}
-and   OSV.ESERCIZIO_ORIGINALE = NVL($P{P_ESERCIZIO_RES}, OSV.ESERCIZIO_ORIGINALE)
-and   OSV.CD_CENTRO_RESPONSABILITA = $P{P_CENTRO_RESPONSABILITA}
-and   OSV.CD_LINEA_ATTIVITA in (
-	SELECT cd_linea_attivita
-	FROM v_linea_attivita_valida
-	WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-	AND   pg_progetto=$P{P_PG_PROGLIV2}
-          AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
-and   OSV.CD_CDS = OBB.CD_CDS
-and   OSV.ESERCIZIO = OBB.ESERCIZIO
-and   OSV.ESERCIZIO_ORIGINALE = OBB.ESERCIZIO_ORIGINALE
-and   OSV.PG_OBBLIGAZIONE = OBB.PG_OBBLIGAZIONE
-and   ($P{P_VOCE} IS NULL OR
-       NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
-           FROM ass_evold_evnew b
-           WHERE b.esercizio_old = OBB.ESERCIZIO
-           AND   b.ti_gestione_old = 'S'
-           AND   b.cd_elemento_voce_old = OBB.CD_ELEMENTO_VOCE
-           AND   b.esercizio_new = $P{P_ESERCIZIO}
-           AND   b.ti_gestione_new = 'S'),OBB.CD_ELEMENTO_VOCE) = $P{P_VOCE})
-and   OSV.CD_CDS = DOC.CD_CDS_OBBLIGAZIONE
-and   OSV.ESERCIZIO = DOC.ESERCIZIO_OBBLIGAZIONE
-and   OSV.ESERCIZIO_ORIGINALE = DOC.ESERCIZIO_ORI_OBBLIGAZIONE
-and   OSV.PG_OBBLIGAZIONE = DOC.PG_OBBLIGAZIONE
-and   DOC.CD_CDS_OBBLIGAZIONE = MAN.CD_CDS
-and   DOC.ESERCIZIO_OBBLIGAZIONE = MAN.ESERCIZIO_OBBLIGAZIONE
-and   DOC.ESERCIZIO_ORI_OBBLIGAZIONE = MAN.ESERCIZIO_ORI_OBBLIGAZIONE
-and   DOC.PG_OBBLIGAZIONE = MAN.PG_OBBLIGAZIONE
-and   DOC.CD_CDS = MAN.CD_CDS_DOC_AMM
-and   DOC.CD_UNITA_ORGANIZZATIVA = MAN.CD_UO_DOC_AMM
-and   DOC.ESERCIZIO = MAN.ESERCIZIO_DOC_AMM
-and   DOC.CD_TIPO_DOCUMENTO_AMM = MAN.CD_TIPO_DOCUMENTO_AMM
-and   DOC.PG_DOCUMENTO_AMM = MAN.PG_DOC_AMM
-UNION ALL
-select OSV.ESERCIZIO, OSV.TI_GESTIONE, OSV.CD_VOCE, OBB.CD_TERZO,
-       OSV.ESERCIZIO_ORIGINALE ESERCIZIO_OBBACC, OSV.PG_OBBLIGAZIONE PGOBBACC,
-       DOC.CD_TIPO_DOCUMENTO_AMM, DOC.ESERCIZIO ESERCIZIO_DOCAMM, DOC.PG_DOCUMENTO_AMM,
-       MAN.ESERCIZIO ESERCIZIO_MANREV, MAN.PG_MANDATO PG_MANREV, OSV.IM_VOCE
-from OBBLIGAZIONE_SCAD_VOCE OSV, OBBLIGAZIONE OBB, V_DOC_PASSIVO_OBBLIGAZIONE DOC, MANDATO_RIGA MAN
-where $P{P_TIPO} = 'S'
-and   OSV.ESERCIZIO = $P{P_ESERCIZIO}
-and   OSV.ESERCIZIO_ORIGINALE = NVL($P{P_ESERCIZIO_RES},OSV.ESERCIZIO_ORIGINALE)
-and   OSV.CD_CENTRO_RESPONSABILITA = $P{P_CENTRO_RESPONSABILITA}
-and   OSV.CD_LINEA_ATTIVITA in (
-	SELECT cd_linea_attivita
-	FROM v_linea_attivita_valida
-	WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-	AND   pg_progetto=$P{P_PG_PROGLIV2}
-          AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
-and   OSV.CD_CDS = OBB.CD_CDS
-and   OSV.ESERCIZIO = OBB.ESERCIZIO
-and   OSV.ESERCIZIO_ORIGINALE = OBB.ESERCIZIO_ORIGINALE
-and   OSV.PG_OBBLIGAZIONE = OBB.PG_OBBLIGAZIONE
-and   OBB.CD_ELEMENTO_VOCE = NVL($P{P_VOCE},OBB.CD_ELEMENTO_VOCE)
-and   OSV.CD_CDS = DOC.CD_CDS_OBBLIGAZIONE (+)
-and   OSV.ESERCIZIO = DOC.ESERCIZIO_OBBLIGAZIONE (+)
-and   OSV.ESERCIZIO_ORIGINALE = DOC.ESERCIZIO_ORI_OBBLIGAZIONE (+)
-and   OSV.PG_OBBLIGAZIONE = DOC.PG_OBBLIGAZIONE (+)
-and   DOC.CD_CDS_OBBLIGAZIONE = MAN.CD_CDS (+)
-and   DOC.ESERCIZIO_OBBLIGAZIONE = MAN.ESERCIZIO_OBBLIGAZIONE (+)
-and   DOC.ESERCIZIO_ORI_OBBLIGAZIONE = MAN.ESERCIZIO_ORI_OBBLIGAZIONE (+)
-and   DOC.PG_OBBLIGAZIONE = MAN.PG_OBBLIGAZIONE (+)
-and   DOC.CD_CDS = MAN.CD_CDS_DOC_AMM (+)
-and   DOC.CD_UNITA_ORGANIZZATIVA = MAN.CD_UO_DOC_AMM (+)
-and   DOC.ESERCIZIO = MAN.ESERCIZIO_DOC_AMM (+)
-and   DOC.CD_TIPO_DOCUMENTO_AMM = MAN.CD_TIPO_DOCUMENTO_AMM (+)
-and   DOC.PG_DOCUMENTO_AMM = MAN.PG_DOC_AMM (+)) A
-GROUP BY  A.ESERCIZIO, A.TI_GESTIONE, A.CD_VOCE, A.ESERCIZIO_OBBACC, A.PG_OBBACC, A.CD_TERZO,
-       A.CD_TIPO_DOCUMENTO_AMM, A.ESERCIZIO_DOCAMM, A.PG_DOCUMENTO_AMM,
-       A.ESERCIZIO_MANREV, A.PG_MANREV]]>
+SELECT A.ESERCIZIO_RES ESERCIZIO_RES, A.PG_VARIAZIONE PG_VAR, B.DS_VARIAZIONE, NVL(A.IM_VARIAZIONE,0) IM_VOCE
+FROM VAR_STANZ_RES_RIGA A, VAR_STANZ_RES B
+WHERE A.ESERCIZIO = B.ESERCIZIO
+AND   A.PG_VARIAZIONE = B.PG_VARIAZIONE
+AND   A.TI_GESTIONE = $P{P_TIPO}
+and   A.ESERCIZIO <= $P{P_ESERCIZIO}
+and   A.ESERCIZIO_RES = NVL($P{P_ESERCIZIO_RES}, A.ESERCIZIO_RES)
+and   A.CD_CDR = $P{P_CENTRO_RESPONSABILITA}
+and   A.CD_LINEA_ATTIVITA in (
+    SELECT cd_linea_attivita
+    FROM v_linea_attivita_valida
+    WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+    AND   pg_progetto=$P{P_PG_PROGLIV2}
+    AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
+and   ($P{P_VOCE} IS NULL or
+      NVL((SELECT C.CD_ELEMENTO_VOCE_NEW
+           FROM ass_evold_evnew C
+           WHERE C.esercizio_old = A.ESERCIZIO
+           AND   C.ti_gestione_old = A.TI_GESTIONE
+           AND   C.cd_elemento_voce_old = A.CD_ELEMENTO_VOCE
+           AND   C.esercizio_new = $P{P_ESERCIZIO}
+           AND   C.ti_gestione_new = A.TI_GESTIONE),A.CD_ELEMENTO_VOCE) = $P{P_VOCE})) A
+GROUP BY  A.ESERCIZIO_VAR, A.PG_VAR, A.DS_VAR]]>
 	</queryString>
-	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
-	<field name="TI_GESTIONE" class="java.lang.String"/>
-	<field name="CD_VOCE" class="java.lang.String"/>
-	<field name="ESERCIZIO_OBBACC" class="java.math.BigDecimal"/>
-	<field name="PG_OBBACC" class="java.math.BigDecimal"/>
-	<field name="CD_TERZO" class="java.math.BigDecimal"/>
-	<field name="DS_TERZO" class="java.lang.String"/>
-	<field name="CD_TIPO_DOCUMENTO_AMM" class="java.lang.String"/>
-	<field name="ESERCIZIO_DOCAMM" class="java.math.BigDecimal"/>
-	<field name="PG_DOCUMENTO_AMM" class="java.math.BigDecimal"/>
-	<field name="ESERCIZIO_MANREV" class="java.math.BigDecimal"/>
-	<field name="PG_MANREV" class="java.math.BigDecimal"/>
-	<field name="IMPORTO" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO_VAR" class="java.math.BigDecimal"/>
+	<field name="PG_VAR" class="java.math.BigDecimal"/>
+	<field name="DS_VAR" class="java.lang.String"/>
+	<field name="IMPORTO_VAR" class="java.math.BigDecimal"/>
 	<background>
 		<band/>
 	</background>
@@ -246,8 +135,10 @@ GROUP BY  A.ESERCIZIO, A.TI_GESTIONE, A.CD_VOCE, A.ESERCIZIO_OBBACC, A.PG_OBBACC
 					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["E".equals($P{P_TIPO})?"Accertamento":"Impegno"]]></textFieldExpression>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Variazione"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-44" style="VERB6" x="65" y="0" width="65" height="14" uuid="562773b9-9812-40af-ac80-c09cc32c7b2b"/>
@@ -257,52 +148,23 @@ GROUP BY  A.ESERCIZIO, A.TI_GESTIONE, A.CD_VOCE, A.ESERCIZIO_OBBACC, A.PG_OBBACC
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
 				<text><![CDATA[Importo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-45" style="VERB6" x="130" y="0" width="65" height="14" uuid="0da722e1-dd3b-494e-b2a9-5fc958d9f0dd"/>
+				<reportElement key="staticText-45" style="VERB6" x="130" y="0" width="370" height="14" uuid="8e36f58d-4324-460b-a7dd-fa7f12b24e9d"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Tipo Documento]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-45" style="VERB6" x="195" y="0" width="65" height="14" uuid="442a5332-d0bf-4187-8f54-b8574b88d64c"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Nr. Documento]]></text>
-			</staticText>
-			<textField>
-				<reportElement style="VERB6" x="260" y="0" width="65" height="14" uuid="17f6aa8e-6a8b-4534-9f55-2bdc3a65b564"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["E".equals($P{P_TIPO})?"Reversale":"Mandato"]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-45" style="VERB6" x="325" y="0" width="175" height="14" uuid="8e36f58d-4324-460b-a7dd-fa7f12b24e9d"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Terzo]]></text>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Descrizione]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -316,8 +178,10 @@ GROUP BY  A.ESERCIZIO, A.TI_GESTIONE, A.CD_VOCE, A.ESERCIZIO_OBBACC, A.PG_OBBACC
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{ESERCIZIO_OBBACC}+"/"+$F{PG_OBBACC}]]></textFieldExpression>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESERCIZIO_VAR}+"/"+$F{PG_VAR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-42" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="65" y="0" width="65" height="13" uuid="24f88b25-6eaf-4991-99d5-1f7b7429e158"/>
@@ -327,60 +191,23 @@ GROUP BY  A.ESERCIZIO, A.TI_GESTIONE, A.CD_VOCE, A.ESERCIZIO_OBBACC, A.PG_OBBACC
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{IMPORTO}]]></textFieldExpression>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPORTO_VAR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-41" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="130" y="0" width="65" height="13" uuid="1a1f09d8-9be7-4a60-a820-a7b80106023a">
-					<printWhenExpression><![CDATA[$F{CD_TIPO_DOCUMENTO_AMM}!=null]]></printWhenExpression>
-				</reportElement>
+				<reportElement key="textField-41" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="130" y="0" width="370" height="13" uuid="171b28c3-0146-4549-a33c-7549d07129bb"/>
 				<box topPadding="4" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CD_TIPO_DOCUMENTO_AMM}]]></textFieldExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-41" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="195" y="0" width="65" height="13" uuid="afd111f6-25c4-4b7a-ac4e-71242d127280">
-					<printWhenExpression><![CDATA[$F{ESERCIZIO_DOCAMM}!=null||$F{PG_DOCUMENTO_AMM}!=null]]></printWhenExpression>
-				</reportElement>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{ESERCIZIO_DOCAMM}+"/"+$F{PG_DOCUMENTO_AMM}]]></textFieldExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-41" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="260" y="0" width="65" height="13" uuid="5fcc5959-cbee-44b2-b023-2ea459cd82a8">
-					<printWhenExpression><![CDATA[$F{ESERCIZIO_MANREV}!=null||$F{PG_MANREV}!=null]]></printWhenExpression>
-				</reportElement>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{ESERCIZIO_MANREV}+"/"+$F{PG_MANREV}]]></textFieldExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-41" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="325" y="0" width="175" height="13" uuid="171b28c3-0146-4549-a33c-7549d07129bb">
-					<printWhenExpression><![CDATA[$F{CD_TERZO}!=null]]></printWhenExpression>
-				</reportElement>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CD_TERZO}+" - "+$F{DS_TERZO}]]></textFieldExpression>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DS_VAR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
