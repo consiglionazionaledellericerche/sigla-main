@@ -66,6 +66,7 @@
 		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
 		<defaultValueExpression><![CDATA["A"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_TEST" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT distinct A.CD_CENTRO_RESPONSABILITA, A.PG_PROGETTO PG_PROGLIV2,
 B.CD_PROGETTO CD_PROGLIV2, B.DS_PROGETTO DS_PROGLIV2,
