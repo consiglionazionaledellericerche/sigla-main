@@ -773,7 +773,7 @@
 		<init-param name="defaultAction" value="ConsVarBilancioAction" />
 	</businessProcess>
 	<businessProcess name="ConsVarCompResBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
 			value="it.cnr.contab.pdg01.consultazioni.bulk.VConsVarCompResBulk" />
