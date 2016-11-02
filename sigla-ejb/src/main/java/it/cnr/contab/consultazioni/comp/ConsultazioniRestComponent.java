@@ -3,6 +3,7 @@ package it.cnr.contab.consultazioni.comp;
 import java.util.Enumeration;
 
 import it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -22,6 +23,8 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaHome;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
+import it.cnr.contab.pdg01.consultazioni.bulk.VConsVarCompResBulk;
+import it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_bilancioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -69,6 +72,32 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 				}
 				if (!trovataCondizioneCdAnagrafica){
 					throw new ComponentException("Non e' possibile richiamare il servizio REST degli inquadramenti senza la condizione del codice anagrafico.");
+				}
+			}
+		} else if (oggettobulk instanceof VConsVarCompResBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				Boolean trovataCondizioneCdrPersonale = false;
+    			CompoundFindClause newClauses = new CompoundFindClause();
+    			Enumeration e = compoundfindclause.getClauses();
+    			SQLBuilder sqlCDR = null;
+				while(e.hasMoreElements() ){
+					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("cdrPersonale") && 
+							operator == 8192 && "S".equals((String)clause.getValue())){
+						trovataCondizioneCdrPersonale = true;
+						sqlCDR = getHome(userContext, Configurazione_cnrBulk.class).createSQLBuilder();
+						sqlCDR.resetColumns();
+						sqlCDR.addColumn("VAL01");
+						sqlCDR.addSQLClause("AND", "CD_CHIAVE_PRIMARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.PK_CDR_SPECIALE);
+						sqlCDR.addSQLClause("AND", "CD_CHIAVE_SECONDARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.SK_CDR_PERSONALE);
+					} else {
+						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					}
+				}
+				if (trovataCondizioneCdrPersonale){
+					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
+					sql.addSQLClause("AND", "CDR_ASSEGN", sql.EQUALS, sqlCDR);
 				}
 			}
 		} else if (oggettobulk instanceof VDocAmmAttiviBrevettiBulk){
