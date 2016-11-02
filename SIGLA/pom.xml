@@ -78,11 +78,6 @@
             </ejbModule>
             <ejbModule>
               <groupId>it.cnr</groupId>
-              <artifactId>sigla-ws-ns</artifactId>
-              <bundleFileName>sigla-ws-ns.jar</bundleFileName>
-            </ejbModule>
-            <ejbModule>
-              <groupId>it.cnr</groupId>
               <artifactId>sigla-sdi</artifactId>
               <bundleFileName>sigla-sdi.jar</bundleFileName>
             </ejbModule>
@@ -172,19 +167,6 @@
       <version>${project.version}</version>
       <type>ejb</type>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>it.cnr</groupId>
-      <artifactId>sigla-ws-ns</artifactId>
-      <version>${project.version}</version>
-      <type>ejb</type>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>log4j</artifactId>
-          <groupId>log4j</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>it.cnr</groupId>
