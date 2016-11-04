@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_man_rev_ass" pageWidth="595" pageHeight="842" columnWidth="573" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Vpg_man_rev_assScriptlet">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_man_rev_ass" pageWidth="595" pageHeight="842" columnWidth="573" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Vpg_man_rev_assScriptlet" uuid="6a1e2611-d2e0-4256-898d-5eb380a46f94">
 	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -14,19 +14,19 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/mspasiano/svn/SIGLAReports/reports/img/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:/git/sigla-reports/img/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aCd_cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["080"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aEs" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer("2016")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aPg_da" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("60284")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long("3170")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aPg_a" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("60284")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long("3170")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aDt_da" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2016/01/01")]]></defaultValueExpression>
@@ -104,7 +104,7 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 			<band height="16" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("MANDATO"))]]></printWhenExpression>
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="1" y="0" width="572" height="16" isRemoveLineWhenBlank="true">
+					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="1" y="0" width="572" height="16" isRemoveLineWhenBlank="true" uuid="8d5db750-efd3-4b1d-aa57-c002816821d8">
 						<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("MANDATO"))]]></printWhenExpression>
 					</reportElement>
 					<subreportParameter name="aEs">
@@ -135,7 +135,7 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 						<subreportParameterExpression><![CDATA[$F{PG_MANDATO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT}+"vpg_man_rev_ass_subreport0.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{DIR_SUBREPORT}+"vpg_man_rev_ass_subreport0.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -149,7 +149,7 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 			<band height="16" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("REVERSALE"))]]></printWhenExpression>
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-2" positionType="Float" x="1" y="0" width="572" height="16" isRemoveLineWhenBlank="true">
+					<reportElement key="subreport-2" positionType="Float" x="1" y="0" width="572" height="16" isRemoveLineWhenBlank="true" uuid="968a395d-9bc8-4887-9b6e-a8217be2fa27">
 						<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("REVERSALE"))]]></printWhenExpression>
 					</reportElement>
 					<subreportParameter name="aEs">
@@ -168,7 +168,7 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 						<subreportParameterExpression><![CDATA[$F{PG_REVERSALE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT}+"vpg_man_rev_ass_subreport1.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{DIR_SUBREPORT}+"vpg_man_rev_ass_subreport1.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -197,7 +197,7 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 	<pageFooter>
 		<band height="97" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-6" style="TNR10" x="353" y="77" width="187" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-6" style="TNR10" x="353" y="77" width="187" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="8810a513-5323-4f45-bbb2-3b7c9dbfd7e5"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -207,10 +207,10 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 				<textElement textAlignment="Right">
 					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pag. " + $V{PAGE_NUMBER} + " / "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pag. " + $V{PAGE_NUMBER} + " / "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="TIPO" pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-7" x="543" y="77" width="27" height="15"/>
+				<reportElement key="textField-7" x="543" y="77" width="27" height="15" uuid="e98aa28d-a0bb-4bb6-b60c-3ef1a018c6bb"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -220,22 +220,10 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 				<textElement>
 					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
-				<reportElement key="textField-8" style="TNR10" x="7" y="77" width="239" height="15"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement markup="styled"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Emesso il "+(new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DACR})+
-" dall'utente "+$F{UTCR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-5" style="TNR10" x="354" y="4" width="214" height="36">
+				<reportElement key="staticText-5" style="TNR10" x="354" y="4" width="214" height="36" uuid="ef306de9-08b1-4b22-a56b-40fa2951b7f0">
 					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -250,12 +238,12 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 .....................................................................]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement key="rectangle-3" style="TNR10" x="6" y="48" width="562" height="20">
+				<reportElement key="rectangle-3" style="TNR10" x="6" y="48" width="562" height="20" uuid="93da4914-5c7d-4ad8-9f5d-534259224f8c">
 					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 			</rectangle>
 			<staticText>
-				<reportElement key="staticText-6" style="TNR10" x="8" y="51" width="556" height="14">
+				<reportElement key="staticText-6" style="TNR10" x="8" y="51" width="556" height="14" uuid="da1e11e4-04d1-4eb9-8f7f-73bc4de86c6e">
 					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -264,9 +252,20 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Visto il Cassiere: ..............................................................................................................................   Data: ..........................................]]></text>
 			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
+				<reportElement key="textField-8" style="TNR10" x="7" y="77" width="332" height="15" uuid="c1e23dbd-2ef2-4827-ad89-efd9f8a77d37"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA["Emesso il "+(new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DACR})+
+" dall'utente "+$F{UTCR}+($F{DT_ANNULLAMENTO}==null?"":"    Annullato il "+(new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DT_ANNULLAMENTO}))]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
