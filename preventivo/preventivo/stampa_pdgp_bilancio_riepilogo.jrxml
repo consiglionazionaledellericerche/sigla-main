@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdgp_bilancio_riepilogo" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b3228f45-782e-4267-bea5-1ed4c9dd6c3e">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="441"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -25,17 +25,6 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ENTE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_DESC_ENTE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
@@ -49,16 +38,15 @@
 		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT esercizio, tipo, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
+		<![CDATA[SELECT tipo, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
 cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
 ds_livello1, ds_livello2, ds_livello3, ds_livello4, ds_livello5, ds_livello6, ds_livello7,
 ds_livello8, ds_livello9,
-SUM(res_pres_ac) res_pres_ac, SUM(prev_competenza_ac) prev_competenza_ac,
-SUM(prev_full_ac) prev_full_ac, SUM(prev_cassa_ac) prev_cassa_ac,
-SUM(res_iniz_reali_ap) res_iniz_reali_ap, SUM(prev_ass_comp_ap) prev_ass_comp_ap,
-SUM(prev_ass_full_ap) prev_ass_full_ap, SUM(prev_ass_cassa_ap) prev_ass_cassa_ap
+SUM(im_residui_ac) im_residui_ac, SUM(im_previsione_ac) im_previsione_ac,
+SUM(im_cassa_ac) im_cassa_ac, SUM(im_residui_ap) im_residui_ap,
+SUM(im_previsione_ap) im_previsione_ap, SUM(im_cassa_ap) im_cassa_ap
 FROM (
-SELECT a.esercizio, a.tipo,
+SELECT a.tipo,
 CASE WHEN $P{P_NUM_LIV}>0 THEN a.cd_livello1 ELSE null END cd_livello1,
 CASE WHEN $P{P_NUM_LIV}>1 THEN a.cd_livello2 ELSE null END cd_livello2,
 CASE WHEN $P{P_NUM_LIV}>2 THEN a.cd_livello3 ELSE null END cd_livellO3,
@@ -77,20 +65,43 @@ CASE WHEN $P{P_NUM_LIV}>5 THEN a.ds_livello6 ELSE null END ds_livello6,
 CASE WHEN $P{P_NUM_LIV}>6 THEN a.ds_livello7 ELSE null END ds_livello7,
 CASE WHEN $P{P_NUM_LIV}>7 THEN a.ds_livello8 ELSE null END ds_livello8,
 CASE WHEN $P{P_NUM_LIV}>8 THEN a.ds_livello9 ELSE null END ds_livello9,
-a.res_pres_ac, a.prev_competenza_ac, a.prev_full_ac,
-a.prev_cassa_ac, a.res_iniz_reali_ap, a.prev_ass_comp_ap,
-a.prev_ass_full_ap, a.prev_ass_cassa_ap
+a.im_residui_ac, a.im_previsione_ac, a.im_cassa_ac,
+a.im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap
 FROM V_STAMPA_BILANCIO_PREVDEC a
 WHERE a.ESERCIZIO = $P{P_ESERCIZIO}
 AND a.TIPO = $P{P_TIPO}
+AND a.FONTE = $P{P_FONTE}
+UNION ALL
+SELECT a.tipo,
+CASE WHEN $P{P_NUM_LIV}>0 THEN a.cd_livello1 ELSE null END cd_livello1,
+CASE WHEN $P{P_NUM_LIV}>1 THEN a.cd_livello2 ELSE null END cd_livello2,
+CASE WHEN $P{P_NUM_LIV}>2 THEN a.cd_livello3 ELSE null END cd_livellO3,
+CASE WHEN $P{P_NUM_LIV}>3 THEN a.cd_livello4 ELSE null END cd_livello4,
+CASE WHEN $P{P_NUM_LIV}>4 THEN a.cd_livello5 ELSE null END cd_livello5,
+CASE WHEN $P{P_NUM_LIV}>5 THEN a.cd_livello6 ELSE null END cd_livello6,
+CASE WHEN $P{P_NUM_LIV}>6 THEN a.cd_livello7 ELSE null END cd_livello7,
+CASE WHEN $P{P_NUM_LIV}>7 THEN a.cd_livello8 ELSE null END cd_livello8,
+CASE WHEN $P{P_NUM_LIV}>8 THEN a.cd_livello9 ELSE null END cd_livello9,
+CASE WHEN $P{P_NUM_LIV}>0 THEN a.ds_livello1 ELSE null END ds_livello1,
+CASE WHEN $P{P_NUM_LIV}>1 THEN a.ds_livello2 ELSE null END ds_livello2,
+CASE WHEN $P{P_NUM_LIV}>2 THEN a.ds_livello3 ELSE null END ds_livellO3,
+CASE WHEN $P{P_NUM_LIV}>3 THEN a.ds_livello4 ELSE null END ds_livello4,
+CASE WHEN $P{P_NUM_LIV}>4 THEN a.ds_livello5 ELSE null END ds_livello5,
+CASE WHEN $P{P_NUM_LIV}>5 THEN a.ds_livello6 ELSE null END ds_livello6,
+CASE WHEN $P{P_NUM_LIV}>6 THEN a.ds_livello7 ELSE null END ds_livello7,
+CASE WHEN $P{P_NUM_LIV}>7 THEN a.ds_livello8 ELSE null END ds_livello8,
+CASE WHEN $P{P_NUM_LIV}>8 THEN a.ds_livello9 ELSE null END ds_livello9,
+0, 0, 0, 0, a.im_previsione_ac, a.im_cassa_ac
+FROM V_STAMPA_BILANCIO_PREVDEC a
+WHERE a.ESERCIZIO = $P{P_ESERCIZIO}-1
+AND a.TIPO = $P{P_TIPO}
 AND a.FONTE = $P{P_FONTE})
-GROUP BY esercizio, tipo, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
+GROUP BY tipo, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
 cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
 ds_livello1, ds_livello2, ds_livello3, ds_livello4, ds_livello5, ds_livello6, ds_livello7,
 ds_livello8, ds_livello9
 ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7, CD_LIVELLO8, CD_LIVELLO9]]>
 	</queryString>
-	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="TIPO" class="java.lang.String"/>
 	<field name="CD_LIVELLO1" class="java.lang.String"/>
 	<field name="CD_LIVELLO2" class="java.lang.String"/>
@@ -110,91 +121,71 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 	<field name="DS_LIVELLO7" class="java.lang.String"/>
 	<field name="DS_LIVELLO8" class="java.lang.String"/>
 	<field name="DS_LIVELLO9" class="java.lang.String"/>
-	<field name="RES_PRES_AC" class="java.math.BigDecimal"/>
-	<field name="PREV_COMPETENZA_AC" class="java.math.BigDecimal"/>
-	<field name="PREV_FULL_AC" class="java.math.BigDecimal"/>
-	<field name="PREV_CASSA_AC" class="java.math.BigDecimal"/>
-	<field name="RES_INIZ_REALI_AP" class="java.math.BigDecimal"/>
-	<field name="PREV_ASS_COMP_AP" class="java.math.BigDecimal"/>
-	<field name="PREV_ASS_FULL_AP" class="java.math.BigDecimal"/>
-	<field name="PREV_ASS_CASSA_AP" class="java.math.BigDecimal"/>
+	<field name="IM_RESIDUI_AC" class="java.math.BigDecimal"/>
+	<field name="IM_PREVISIONE_AC" class="java.math.BigDecimal"/>
+	<field name="IM_CASSA_AC" class="java.math.BigDecimal"/>
+	<field name="IM_RESIDUI_AP" class="java.math.BigDecimal"/>
+	<field name="IM_PREVISIONE_AP" class="java.math.BigDecimal"/>
+	<field name="IM_CASSA_AP" class="java.math.BigDecimal"/>
 	<sortField name="CD_LIVELLO1"/>
 	<sortField name="CD_LIVELLO2"/>
 	<sortField name="CD_LIVELLO3"/>
 	<sortField name="CD_LIVELLO4"/>
 	<sortField name="CD_LIVELLO5"/>
 	<sortField name="CD_LIVELLO6"/>
-	<variable name="SUM_PREV_FULL_AC_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_FULL_AC}]]></variableExpression>
+	<variable name="SUM_IM_RESIDUI_AC_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_RESIDUI_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_RES_PRES_AC_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$F{RES_PRES_AC}]]></variableExpression>
+	<variable name="SUM_IM_RESIDUI_AC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_RESIDUI_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_COMPETENZA_AC_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_COMPETENZA_AC}]]></variableExpression>
+	<variable name="SUM_IM_RESIDUI_AC_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_RESIDUI_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_CASSA_AC_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_CASSA_AC}]]></variableExpression>
+	<variable name="SUM_IM_PREVISIONE_AC_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_ASS_FULL_AP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_FULL_AP}]]></variableExpression>
+	<variable name="SUM_IM_PREVISIONE_AC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_RES_INIZ_REALI_AP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$F{RES_INIZ_REALI_AP}]]></variableExpression>
+	<variable name="SUM_IM_PREVISIONE_AC_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_ASS_COMP_AP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_COMP_AP}]]></variableExpression>
+	<variable name="SUM_IM_CASSA_AC_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_CASSA_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_ASS_CASSA_AP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_CASSA_AP}]]></variableExpression>
+	<variable name="SUM_IM_CASSA_AC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_CASSA_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_FULL_AC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_FULL_AC}]]></variableExpression>
+	<variable name="SUM_IM_CASSA_AC_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_CASSA_AC}]]></variableExpression>
 	</variable>
-	<variable name="SUM_RES_PRES_AC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$F{RES_PRES_AC}]]></variableExpression>
+	<variable name="SUM_IM_RESIDUI_AP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_RESIDUI_AP}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_COMPETENZA_AC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_COMPETENZA_AC}]]></variableExpression>
+	<variable name="SUM_IM_RESIDUI_AP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_RESIDUI_AP}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_CASSA_AC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_CASSA_AC}]]></variableExpression>
+	<variable name="SUM_IM_RESIDUI_AP_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_RESIDUI_AP}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_ASS_FULL_AP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_FULL_AP}]]></variableExpression>
+	<variable name="SUM_IM_PREVISIONE_AP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AP}]]></variableExpression>
 	</variable>
-	<variable name="SUM_RES_INIZ_REALI_AP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$F{RES_INIZ_REALI_AP}]]></variableExpression>
+	<variable name="SUM_IM_PREVISIONE_AP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AP}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_ASS_COMP_AP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_COMP_AP}]]></variableExpression>
+	<variable name="SUM_IM_PREVISIONE_AP_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AP}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_ASS_CASSA_AP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_CASSA_AP}]]></variableExpression>
+	<variable name="SUM_IM_CASSA_AP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_CASSA_AP}]]></variableExpression>
 	</variable>
-	<variable name="SUM_PREV_FULL_AC_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_FULL_AC}]]></variableExpression>
+	<variable name="SUM_IM_CASSA_AP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_CASSA_AP}]]></variableExpression>
 	</variable>
-	<variable name="SUM_RES_PRES_AC_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{RES_PRES_AC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_PREV_COMPETENZA_AC_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_COMPETENZA_AC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_PREV_CASSA_AC_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_CASSA_AC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_PREV_ASS_FULL_AP_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_FULL_AP}]]></variableExpression>
-	</variable>
-	<variable name="SUM_RES_INIZ_REALI_AP_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{RES_INIZ_REALI_AP}]]></variableExpression>
-	</variable>
-	<variable name="SUM_PREV_ASS_COMP_AP_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_COMP_AP}]]></variableExpression>
-	</variable>
-	<variable name="SUM_PREV_ASS_CASSA_AP_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{PREV_ASS_CASSA_AP}]]></variableExpression>
+	<variable name="SUM_IM_CASSA_AP_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_CASSA_AP}]]></variableExpression>
 	</variable>
 	<group name="LIVELLO1">
 		<groupExpression><![CDATA[$F{CD_LIVELLO1}]]></groupExpression>
@@ -239,7 +230,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_RES_PRES_AC_LIV1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_RESIDUI_AC_LIV1}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-62" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="497" y="0" width="65" height="13" uuid="4a8cedb9-af8d-48e6-a7e7-d794b371cd9e"/>
@@ -250,7 +241,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_COMPETENZA_AC_LIV1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AC_LIV1}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="562" y="0" width="65" height="13" uuid="a8eb5543-9d1d-4372-8e8a-d129ca48d534"/>
@@ -261,7 +252,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_CASSA_AC_LIV1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_CASSA_AC_LIV1}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="e2b591f4-97cf-44db-b19f-1bb2dfe340f6"/>
@@ -272,7 +263,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_RES_INIZ_REALI_AP_LIV1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_RESIDUI_AP_LIV1}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="692" y="0" width="65" height="13" uuid="baa6b731-8471-4ebf-94de-502d1b45332d"/>
@@ -283,7 +274,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_ASS_COMP_AP_LIV1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AP_LIV1}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="6e38ea86-e5ae-45d9-ad88-98fa0f16f688"/>
@@ -294,7 +285,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_ASS_CASSA_AP_LIV1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_CASSA_AP_LIV1}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -324,7 +315,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_RES_PRES_AC_LIV2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_RESIDUI_AC_LIV2}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-62" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="497" y="0" width="65" height="13" uuid="2c78b7cc-34af-4263-adcc-9da6db2a9fb4"/>
@@ -335,7 +326,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_COMPETENZA_AC_LIV2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AC_LIV2}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="562" y="0" width="65" height="13" uuid="9bccecdf-4600-4b45-859b-fa6b68483ba1"/>
@@ -346,7 +337,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_CASSA_AC_LIV2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_CASSA_AC_LIV2}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="eee5f3df-1b26-4298-89ab-ac8ffab1312e"/>
@@ -357,7 +348,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_RES_INIZ_REALI_AP_LIV2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_RESIDUI_AP_LIV2}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="692" y="0" width="65" height="13" uuid="6e162e26-dd72-47e2-b330-231dfd4b1d8c"/>
@@ -368,7 +359,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_ASS_COMP_AP_LIV2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AP_LIV2}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="9c21fd36-99fb-41d4-b198-010259005dfb"/>
@@ -379,7 +370,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_ASS_CASSA_AP_LIV2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_IM_CASSA_AP_LIV2}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -403,29 +394,14 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 				<subreportParameter name="P_TIPO">
 					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="PATH_LOGO_FORNITORE">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO1">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="UTENTE">
-					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_NUM_LIV">
 					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_ENTE">
-					<subreportParameterExpression><![CDATA[$P{P_ENTE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_DESC_ENTE">
-					<subreportParameterExpression><![CDATA[$P{P_DESC_ENTE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_FONTE">
 					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/stampa_pdgp_bilancio_riepilogo_all_titoli.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdgp_bilancio_riepilogo_all_titoli.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>

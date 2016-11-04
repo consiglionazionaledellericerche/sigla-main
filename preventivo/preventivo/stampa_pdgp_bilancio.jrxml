@@ -24,20 +24,17 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_TIPO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_FONTE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_NUM_LIV" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
@@ -45,17 +42,11 @@
 	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_NUM_LIV" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
-	</parameter>
 	<parameter name="RIEPILOGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["N"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["5"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_FONTE" class="java.lang.String">
-		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[Select 1 from DUAL]]>
@@ -80,15 +71,6 @@
 				<subreportParameter name="ROTTURA">
 					<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="PATH_LOGO_FORNITORE">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_NUM_LIV">
-					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_FONTE">
-					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -101,17 +83,17 @@
 				<subreportParameter name="P_TIPO">
 					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="PATH_LOGO1">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="UTENTE">
-					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="DESCR_AGG_ENTE">
 					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="P_NUM_LIV">
+					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="RIEPILOGO">
 					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_FONTE">
+					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/stampa_pdgp_bilancio_main.jasper"]]></subreportExpression>

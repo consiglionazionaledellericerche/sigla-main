@@ -46,17 +46,6 @@ AND FONTE = $P{P_FONTE}]]>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ENTE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_DESC_ENTE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>

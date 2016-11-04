@@ -37,23 +37,11 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_FONTE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["ASS"]]></defaultValueExpression>
@@ -61,6 +49,7 @@
 	<parameter name="P_NUM_LIV" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT SUM(res_pres_ac) res_pres_ac, SUM(prev_competenza_ac) prev_competenza_ac,
 SUM(prev_full_ac) prev_full_ac, SUM(prev_cassa_ac) prev_cassa_ac,

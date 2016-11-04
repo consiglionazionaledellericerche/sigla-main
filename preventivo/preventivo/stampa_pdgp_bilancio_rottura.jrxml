@@ -25,38 +25,17 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	<parameter name="P_FONTE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_NUM_LIV" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
-	</parameter>
-	<parameter name="RIEPILOGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_FONTE" class="java.lang.String">
-		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="LIVELLO2" class="java.lang.String"/>
 	<queryString>

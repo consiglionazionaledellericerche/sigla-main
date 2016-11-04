@@ -25,98 +25,64 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/media/truecrypt1/DPR/"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ENTE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_DESC_ENTE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="MODULO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["cofi"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="MODULO_COND" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["cond"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_AZI" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_ANNO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2010)]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_DIP" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_UO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["XXXX"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_AZI_UO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_AZI_DIP" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_NUM_LIV" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(3)]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_COD_BAP" class="java.lang.String">
-		<defaultValueExpression><![CDATA["999"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_TIPO_BAP" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["E1"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_TIPO_PREVENTIVO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_DA_VOCE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_A_VOCE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="RIEPILOGO" class="java.lang.String">
-		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="P_TIPO" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT 0 ANNOBIL_C,
-0 FONDO_INIZ_CASSA_N,
-0 AVANZO_N,
-0 DISAVANZO_N,
-0 FONDO_INIZ_CASSA_PREC_N,
-0 AVANZO_PREC_N,
-0 DISAVANZO_PREC_N,
-0 FONDO_INIZ_CASSA_REND_N,
-0 AVANZO_REND_N,
-0 DISAVANZO_REND_N,
-0 QUOTE_CONTO_CAP_N,
-0 QUOTE_CONTO_CASSA_N,
-0 ENTRATE_PRESUNTE_N,
-0 USCITE_PRESUNTE_N,
-0 VAR_RES_ATT_N,
-0 VAR_RES_PASS_N
-FROM DUAL]]>
+		<![CDATA[SELECT NVL(SUM(FONDO_CASSA), 0) FONDO_INIZ_CASSA_N,
+NVL(SUM(FONDO_CASSA_PRE),0) FONDO_INIZ_CASSA_PREC_N,
+NVL(SUM(CASE WHEN NVL(AVANZO,0)>0
+             THEN AVANZO
+             ELSE 0
+             END), 0) AVANZO_N,
+NVL(SUM(CASE WHEN NVL(AVANZO_PRE,0)>0
+             THEN AVANZO_PRE
+             ELSE 0
+             END), 0) AVANZO_PREC_N,
+NVL(SUM(CASE WHEN NVL(AVANZO,0)<0
+             THEN ABS(AVANZO)
+             ELSE 0
+             END), 0) DISAVANZO_N,
+NVL(SUM(CASE WHEN NVL(AVANZO_PRE,0)<0
+             THEN ABS(AVANZO_PRE)
+             ELSE 0
+             END), 0) DISAVANZO_PREC_N
+FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, IM01 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, IM01 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, IM01 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO')]]>
 	</queryString>
-	<field name="ANNOBIL_C" class="java.math.BigDecimal"/>
 	<field name="FONDO_INIZ_CASSA_N" class="java.math.BigDecimal"/>
-	<field name="AVANZO_N" class="java.math.BigDecimal"/>
-	<field name="DISAVANZO_N" class="java.math.BigDecimal"/>
 	<field name="FONDO_INIZ_CASSA_PREC_N" class="java.math.BigDecimal"/>
+	<field name="AVANZO_N" class="java.math.BigDecimal"/>
 	<field name="AVANZO_PREC_N" class="java.math.BigDecimal"/>
+	<field name="DISAVANZO_N" class="java.math.BigDecimal"/>
 	<field name="DISAVANZO_PREC_N" class="java.math.BigDecimal"/>
-	<field name="FONDO_INIZ_CASSA_REND_N" class="java.math.BigDecimal"/>
-	<field name="AVANZO_REND_N" class="java.math.BigDecimal"/>
-	<field name="DISAVANZO_REND_N" class="java.math.BigDecimal"/>
-	<field name="QUOTE_CONTO_CAP_N" class="java.math.BigDecimal"/>
-	<field name="QUOTE_CONTO_CASSA_N" class="java.math.BigDecimal"/>
-	<field name="ENTRATE_PRESUNTE_N" class="java.math.BigDecimal"/>
-	<field name="USCITE_PRESUNTE_N" class="java.math.BigDecimal"/>
-	<field name="VAR_RES_ATT_N" class="java.math.BigDecimal"/>
-	<field name="VAR_RES_PASS_N" class="java.math.BigDecimal"/>
 	<detail>
 		<band height="13" splitType="Stretch">
-			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E")&&
+$F{AVANZO_N}.compareTo(BigDecimal.ZERO)!=0 &&
+$F{AVANZO_PREC_N}.compareTo(BigDecimal.ZERO)!=0)]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="593f9d5b-ec11-4bfd-85a3-63ac83484f72"/>
 				<box>
@@ -198,7 +164,9 @@ FROM DUAL]]>
 			</textField>
 		</band>
 		<band height="13">
-			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E") &&
+$F{FONDO_INIZ_CASSA_N}.compareTo(BigDecimal.ZERO)!=0 &&
+$F{FONDO_INIZ_CASSA_PREC_N}.compareTo(BigDecimal.ZERO)!=0)]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="b8dba8af-8788-4af2-92f8-e60ce955e806"/>
 				<box>
@@ -280,7 +248,10 @@ FROM DUAL]]>
 			</textField>
 		</band>
 		<band height="13">
-			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("S"))]]></printWhenExpression>
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("S") &&
+$F{DISAVANZO_N}.compareTo(BigDecimal.ZERO)!=0 &&
+$F{DISAVANZO_PREC_N}.compareTo(BigDecimal.ZERO)!=0)
+]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="fd8e9646-4d8c-4720-bb26-b9809a8a4ebd"/>
 				<box>
