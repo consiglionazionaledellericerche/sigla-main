@@ -92,7 +92,7 @@
         AND B.CD_ELEMENTO_VOCE = P.CD_ELEMENTO_VOCE
         and ROWNUM<2) ds_elemento_voce,
        p.stanziamento, p.variazioni,
-       p.impacc, p.pagris
+       p.impacc, p.pagris, p.nummov
 FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
               sum(a.stanziamento) stanziamento,
               sum(a.variazioni) variazioni,
@@ -103,7 +103,8 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
 			   ELSE a.pagris
                                   END)
                        END) impacc,
-              sum(a.pagris) pagris
+              sum(a.pagris) pagris,
+              count(0) nummov
       FROM
         (SELECT  esercizio,
 	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
@@ -197,7 +198,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                        AND   pg_progetto=$P{P_PG_PROGLIV2}
                        AND   cd_linea_attivita=NVL($P{P_GAE}, cd_linea_attivita))) a
       GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce) P
-WHERE p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0
+WHERE p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov>1
 ORDER BY p.tipo, p.cd_linea_attivita,
 CASE WHEN $P{P_ORDINE}='V' THEN p.cd_elemento_voce ELSE TO_CHAR(p.esercizio_res) END,
 CASE WHEN $P{P_ORDINE}='V' THEN TO_CHAR(p.esercizio_res) ELSE p.cd_elemento_voce END]]>
@@ -212,6 +213,7 @@ CASE WHEN $P{P_ORDINE}='V' THEN TO_CHAR(p.esercizio_res) ELSE p.cd_elemento_voce
 	<field name="VARIAZIONI" class="java.math.BigDecimal"/>
 	<field name="IMPACC" class="java.math.BigDecimal"/>
 	<field name="PAGRIS" class="java.math.BigDecimal"/>
+	<field name="NUMMOV" class="java.math.BigDecimal"/>
 	<variable name="SUM_STANZIAMENTO_TIPOVOCE" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOVOCE" calculation="Sum">
 		<variableExpression><![CDATA[$F{STANZIAMENTO}]]></variableExpression>
 	</variable>
@@ -881,11 +883,7 @@ $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 	</pageHeader>
 	<detail>
 		<band height="13" splitType="Stretch">
-			<printWhenExpression><![CDATA[("S".equals($P{P_ROTTURA_VOCE}) || "S".equals($P{P_ROTTURA_ANNO})) &&
-(!$F{STANZIAMENTO}.equals( BigDecimal.ZERO ) ||
-!$F{VARIAZIONI}.equals( BigDecimal.ZERO ) ||
-!$F{IMPACC}.equals( BigDecimal.ZERO ) ||
-!$F{PAGRIS}.equals( BigDecimal.ZERO ))]]></printWhenExpression>
+			<printWhenExpression><![CDATA["S".equals($P{P_ROTTURA_VOCE}) || "S".equals($P{P_ROTTURA_ANNO})]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-8" style="VERB6" x="4" y="2" width="39" height="9" uuid="7a285d73-f06d-4285-94e0-4b9b1a734e60">
 					<printWhenExpression><![CDATA["S".equals( $P{P_ROTTURA_VOCE} ) &&
