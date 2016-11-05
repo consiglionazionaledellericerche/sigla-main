@@ -81,8 +81,8 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 	<detail>
 		<band height="13" splitType="Stretch">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E")&&
-$F{AVANZO_N}.compareTo(BigDecimal.ZERO)!=0 &&
-$F{AVANZO_PREC_N}.compareTo(BigDecimal.ZERO)!=0)]]></printWhenExpression>
+($F{AVANZO_N}.compareTo(BigDecimal.ZERO)!=0 ||
+$F{AVANZO_PREC_N}.compareTo(BigDecimal.ZERO)!=0))]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="593f9d5b-ec11-4bfd-85a3-63ac83484f72"/>
 				<box>
@@ -165,8 +165,8 @@ $F{AVANZO_PREC_N}.compareTo(BigDecimal.ZERO)!=0)]]></printWhenExpression>
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E") &&
-$F{FONDO_INIZ_CASSA_N}.compareTo(BigDecimal.ZERO)!=0 &&
-$F{FONDO_INIZ_CASSA_PREC_N}.compareTo(BigDecimal.ZERO)!=0)]]></printWhenExpression>
+($F{FONDO_INIZ_CASSA_N}.compareTo(BigDecimal.ZERO)!=0 ||
+$F{FONDO_INIZ_CASSA_PREC_N}.compareTo(BigDecimal.ZERO)!=0))]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="b8dba8af-8788-4af2-92f8-e60ce955e806"/>
 				<box>
@@ -249,9 +249,8 @@ $F{FONDO_INIZ_CASSA_PREC_N}.compareTo(BigDecimal.ZERO)!=0)]]></printWhenExpressi
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("S") &&
-$F{DISAVANZO_N}.compareTo(BigDecimal.ZERO)!=0 &&
-$F{DISAVANZO_PREC_N}.compareTo(BigDecimal.ZERO)!=0)
-]]></printWhenExpression>
+($F{DISAVANZO_N}.compareTo(BigDecimal.ZERO)!=0 ||
+$F{DISAVANZO_PREC_N}.compareTo(BigDecimal.ZERO)!=0))]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="fd8e9646-4d8c-4720-bb26-b9809a8a4ebd"/>
 				<box>
