@@ -1,9 +1,9 @@
 package it.cnr.contab.prevent01.ejb;
-import it.cnr.contab.prevent01.comp.PdgAggregatoModuloComponent;
-import it.cnr.contab.segnalazioni00.comp.StampaConfrontoSiglaDwhComponent;
-
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+
+import it.cnr.contab.prevent01.comp.PdgAggregatoModuloComponent;
 @Stateless(name="CNRPREVENT01_EJB_PdgAggregatoModuloComponentSession")
 public class PdgAggregatoModuloComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PdgAggregatoModuloComponentSession {
 @PostConstruct
@@ -182,6 +182,23 @@ public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext param0
 		it.cnr.jada.bulk.OggettoBulk result = ((PdgAggregatoModuloComponent)componentObj).stampaConBulk(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public void stampaBilancioCallAggiornaDati(it.cnr.jada.UserContext param0, it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk param1, boolean param2, boolean param3, boolean param4, boolean param5) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((PdgAggregatoModuloComponent)componentObj).stampaBilancioCallAggiornaDati(param0,param1,param2,param3,param4,param5);
+		component_invocation_succes(param0,componentObj);
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;

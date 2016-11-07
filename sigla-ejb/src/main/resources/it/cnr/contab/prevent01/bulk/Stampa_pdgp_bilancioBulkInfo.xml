@@ -20,14 +20,32 @@
         layout="HORIZONTAL"        
         label="Tipo Stampa" />
 	<fieldProperty
-        name="ti_fonte"
-        property="ti_fonte"
+        name="ti_stampa"
+        property="ti_stampa"
         inputType="RADIOGROUP"
-        keysProperty="ti_fonteKeys"
+        keysProperty="ti_stampaKeys"
         nullable="false"
         enabledOnSearch="true"
         layout="HORIZONTAL"        
         label="Tipo Bilancio" />
+	<fieldProperty
+        name="ti_aggregazione"
+        property="ti_aggregazione"
+        inputType="RADIOGROUP"
+        keysProperty="ti_aggregazioneKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        layout="HORIZONTAL"        
+        label="Tipo Aggregazione" />
+	<fieldProperty
+        name="ti_origine"
+        property="ti_origine"
+        inputType="RADIOGROUP"
+        keysProperty="ti_origineKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        layout="HORIZONTAL"        
+        label="Fonte Dati" />
 	<fieldProperty
 		name="ti_livello"
 		property="ti_livello"
@@ -37,15 +55,29 @@
         enabledOnSearch="true"        
         label="Livello Stampa" />
 	<fieldProperty
+		name="ti_riepilogo"
+		property="ti_riepilogo"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Riepilogo Titoli" />
+	<fieldProperty
 		name="nr_livello"
 		property="nr_livello"
+		inputType="ROTEXT"/>
+	<fieldProperty
+		name="riepilogo"
+		property="riepilogo"
 		inputType="ROTEXT"/>
 				
 	<formFieldProperty name="esercizio"/>
 	<formFieldProperty name="ti_gestione" />
-	<formFieldProperty name="ti_fonte" />
+	<formFieldProperty name="ti_stampa" />
+	<formFieldProperty name="ti_aggregazione" />
+	<formFieldProperty name="ti_origine" />
 	<formFieldProperty name="ti_livello" />
+	<formFieldProperty name="ti_riepilogo" />
 	<formFieldProperty name="nr_livello" />
+	<formFieldProperty name="riepilogo" />
 
 	<printForm
 		name="/preventivo/preventivo/stampa_pdgp_bilancio.jasper">
@@ -76,5 +108,12 @@
 			parameterType="INTEGER"
 			paramNameJR="P_NUM_LIV"
 			paramTypeJR="java.lang.Integer" />	
+		<printFieldProperty 
+			name="riepilogo"
+			property="riepilogo"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="RIEPILOGO"
+			paramTypeJR="java.lang.String" />	
 	</printForm>	
 </bulkInfo>
