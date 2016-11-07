@@ -426,6 +426,9 @@
 		<columnFieldProperty
 			name="ds_terzo_delegato"
 			/>	
+		<columnFieldProperty
+			name="ds_abicab"
+			/>	
 	</columnSet>
 
 	<formFieldProperty
