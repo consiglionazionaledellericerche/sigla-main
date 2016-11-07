@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.2722928551174553"/>
-	<property name="ireport.x" value="295"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -150,7 +150,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                        FROM v_linea_attivita_valida
                        WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
                        AND   pg_progetto=$P{P_PG_PROGLIV2}
-                       AND   cd_linea_attivita=NVL($P{P_GAE}, cd_linea_attivita))
+                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
          UNION ALL
          SELECT  esercizio,
 	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
@@ -196,7 +196,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                        FROM v_linea_attivita_valida
                        WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
                        AND   pg_progetto=$P{P_PG_PROGLIV2}
-                       AND   cd_linea_attivita=NVL($P{P_GAE}, cd_linea_attivita))) a
+                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))) a
       GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce) P
 WHERE p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov>1
 ORDER BY p.tipo, p.cd_linea_attivita,

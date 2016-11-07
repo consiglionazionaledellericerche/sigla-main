@@ -49,7 +49,9 @@
 	<parameter name="P_PROGETTO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_GAE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_GAE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
 	<parameter name="P_PRINT_GAE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
