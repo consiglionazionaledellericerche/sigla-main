@@ -57,7 +57,7 @@
 		<columnMapping
 			columnName="ESERCIZIO_ORIGINALE"
 			propertyName="esercizio_originale"
-			sqlTypeName="NUMBER"
+			sqlTypeName="DECIMAL"
 			columnSize="4" />									
 		<columnMapping
 			columnName="CD_TIPO_DOCUMENTO_CONT"
@@ -67,7 +67,7 @@
 		<columnMapping
 			columnName="IM_VOCE"
 			propertyName="im_voce"
-			sqlTypeName="NUMBER"
+			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"/>						
 	</defaultColumnMap>

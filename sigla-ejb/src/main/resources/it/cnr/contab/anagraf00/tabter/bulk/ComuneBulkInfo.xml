@@ -91,7 +91,7 @@
 		inputType="TEXT"
 		nullable="false"
 		enabledOnInsert="true"
-		enabledOnEdit="true"
+		enabledOnEdit="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		label="Progr. nazione" />
@@ -111,7 +111,7 @@
 		property="nazione"
 		inputType="SEARCHTOOL"
 		enabledOnInsert="true"
-		enabledOnEdit="true"
+		enabledOnEdit="false"
 		enabledOnSearch="true"
 		label="Nazione" />
 /* *********** ******* *********** */
