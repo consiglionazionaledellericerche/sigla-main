@@ -43,7 +43,7 @@
 		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
 	</parameter>
 	<parameter name="RIEPILOGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["N"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["5"]]></defaultValueExpression>

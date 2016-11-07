@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.5394743546921208"/>
-	<property name="ireport.x" value="6"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -435,7 +435,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 				</subreport>
 			</band>
 			<band height="17">
-				<printWhenExpression><![CDATA[Boolean.valueOf($P{RIEPILOGO}.equals("S"))]]></printWhenExpression>
+				<printWhenExpression><![CDATA["S".equals($P{RIEPILOGO})]]></printWhenExpression>
 				<subreport>
 					<reportElement x="0" y="4" width="842" height="10" isRemoveLineWhenBlank="true" uuid="95ed5840-e1c6-48b9-9572-aa45bd6b91e8"/>
 					<subreportParameter name="ROTTURA">
