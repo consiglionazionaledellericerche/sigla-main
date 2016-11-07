@@ -40,7 +40,7 @@
 	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_ESERCIZIO_RES" class="java.math.BigDecimal" isForPrompting="false">

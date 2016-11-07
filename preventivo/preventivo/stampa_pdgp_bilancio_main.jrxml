@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.5394743546921208"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="373"/>
+	<property name="ireport.y" value="372"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
