@@ -25,10 +25,10 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(2017)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_TIPO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_FONTE" class="java.lang.String">

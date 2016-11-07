@@ -25,7 +25,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2017)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
