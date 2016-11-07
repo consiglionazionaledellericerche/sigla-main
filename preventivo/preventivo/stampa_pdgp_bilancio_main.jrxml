@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.5394743546921208"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.x" value="6"/>
+	<property name="ireport.y" value="336"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -409,7 +409,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 		<groupFooter>
 			<band height="17" splitType="Stretch">
 				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E")  &&
-    $P{P_NUM_LIV}.compareTo(new Integer(2)) >= 0)]]></printWhenExpression>
+    $P{P_NUM_LIV}.compareTo(new Integer(8)) >= 0)]]></printWhenExpression>
 				<subreport>
 					<reportElement x="0" y="4" width="842" height="10" isRemoveLineWhenBlank="true" uuid="c4ec2f95-9e3f-4e6e-9299-2fbadb385fbb"/>
 					<subreportParameter name="ROTTURA">
@@ -1427,6 +1427,22 @@ competenza]]></text>
 definitive
 di cassa]]></text>
 			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-184" style="VER6" x="756" y="0" width="65" height="11" uuid="e6a3ff38-2b05-4a8d-9413-22efa2b6d6eb">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.equals(1)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FONTE}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
