@@ -66,6 +66,7 @@ import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.client.api.SecondaryType;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
 /**
  * Gestisce le catene di elementi correlate con la fattura passiva in uso.
@@ -1596,7 +1597,7 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 				return CMISPath.construct(
 						((Folder)SpringUtil.getBean("cmisService", SiglaCMISService.class).getNodeByNodeRef(fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCmisNodeRef())).getPath()
 				);
-			} catch (ApplicationException e) {
+			} catch (ApplicationException|CmisObjectNotFoundException e) {
 				return null;
 			}
 		}
