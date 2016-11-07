@@ -22,6 +22,8 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaHome;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestHome;
@@ -97,6 +99,37 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					}
 				}
 				if (trovataCondizioneTrovato){
+					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
+					sql.addSQLExistsClause("AND", sqlExists);
+				}
+			}
+			if ( !isUoEnte(userContext)){
+				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
+			}
+		} else if (oggettobulk instanceof V_mandato_reversaleBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				Boolean trovataCondizioneSoloAnticipi = false;
+    			CompoundFindClause newClauses = new CompoundFindClause();
+    			Enumeration e = compoundfindclause.getClauses();
+    			SQLBuilder sqlExists = null;
+				while(e.hasMoreElements() ){
+					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("soloAnticipi") && 
+							operator == 8192){
+						trovataCondizioneSoloAnticipi = true;
+						Mandato_rigaHome home = (Mandato_rigaHome) getHome(userContext, Mandato_rigaBulk.class);
+						sqlExists = home.createSQLBuilder();
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
+						sqlExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
+					} else {
+						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					}
+				}
+				if (trovataCondizioneSoloAnticipi){
 					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
 					sql.addSQLExistsClause("AND", sqlExists);
 				}
