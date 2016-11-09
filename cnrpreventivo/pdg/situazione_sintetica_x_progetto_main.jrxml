@@ -121,8 +121,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                            THEN cd_elemento_voce
                            ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
                                      FROM ass_evold_evnew b
-                                     WHERE b.esercizio_old = esercizio
-                                     AND   b.ti_gestione_old = 'E'
+                                     WHERE b.ti_gestione_old = 'E'
                                      AND   b.cd_elemento_voce_old = cd_elemento_voce), cd_elemento_voce)
                            END
                       ELSE 'VOCE_UNICA'
@@ -167,8 +166,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                            THEN cd_elemento_voce
                            ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
                                      FROM ass_evold_evnew b
-                                     WHERE b.esercizio_old = esercizio
-                                     AND   b.ti_gestione_old = 'S'
+                                     WHERE b.ti_gestione_old = 'S'
                                      AND   b.cd_elemento_voce_old = cd_elemento_voce), cd_elemento_voce)
                            END
                       ELSE 'VOCE_UNICA'
@@ -196,7 +194,118 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                        FROM v_linea_attivita_valida
                        WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
                        AND   pg_progetto=$P{P_PG_PROGLIV2}
-                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))) a
+                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
+         UNION ALL
+         SELECT  c.esercizio, c.esercizio_originale esercizio_res, 'S' tipo, a.CD_LINEA_ATTIVITA,
+                 CASE WHEN c.esercizio>=2016
+                      THEN c.cd_elemento_voce
+                      ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
+                                FROM ass_evold_evnew b
+                                WHERE b.ti_gestione_old = 'S'
+                                AND   b.cd_elemento_voce_old = c.cd_elemento_voce), c.cd_elemento_voce)
+                      END cd_elemento_voce,
+                 0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
+                 0 impegnato, 0 pagato
+         FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c
+         WHERE a.cd_cds = b.cd_cds
+         and   a.esercizio=b.esercizio
+         and   a.esercizio_originale=b.esercizio_originale
+         and   a.pg_obbligazione = b.pg_obbligazione
+         and   a.pg_obbligazione_scadenzario = b.pg_obbligazione_scadenzario
+         and   a.cd_cds = c.cd_cds
+         and   a.esercizio=c.esercizio
+         and   a.esercizio_originale=c.esercizio_originale
+         and   a.pg_obbligazione = c.pg_obbligazione
+         and   c.cd_elemento_voce_next is not null
+         and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+         and   a.cd_linea_attivita in (SELECT cd_linea_attivita
+                                       FROM v_linea_attivita_valida
+                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
+                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
+         UNION ALL
+         SELECT  c.esercizio, c.esercizio_originale esercizio_res, 'S' tipo, a.CD_LINEA_ATTIVITA,
+                 cd_elemento_voce_next cd_elemento_voce,
+                 0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
+                 0 impegnato, 0 pagato
+         FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c
+         WHERE a.cd_cds = b.cd_cds
+         and   a.esercizio=b.esercizio
+         and   a.esercizio_originale=b.esercizio_originale
+         and   a.pg_obbligazione = b.pg_obbligazione
+         and   a.pg_obbligazione_scadenzario = b.pg_obbligazione_scadenzario
+         and   a.cd_cds = c.cd_cds
+         and   a.esercizio=c.esercizio
+         and   a.esercizio_originale=c.esercizio_originale
+         and   a.pg_obbligazione = c.pg_obbligazione
+         and   c.cd_elemento_voce_next is not null
+         and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+         and   a.cd_linea_attivita in (SELECT cd_linea_attivita
+                                       FROM v_linea_attivita_valida
+                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
+                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
+         UNION ALL
+         SELECT  c.esercizio, c.esercizio_originale esercizio_res, 'E' tipo, a.CD_LINEA_ATTIVITA,
+                 CASE WHEN c.esercizio>=2016
+                      THEN c.cd_elemento_voce
+                      ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
+                                FROM ass_evold_evnew b
+                                WHERE b.ti_gestione_old = 'S'
+                                AND   b.cd_elemento_voce_old = c.cd_elemento_voce), c.cd_elemento_voce)
+                      END cd_elemento_voce,
+                 0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
+                 0 impegnato, 0 pagato
+         FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c
+         WHERE a.cd_cds = b.cd_cds
+         and   a.esercizio=b.esercizio
+         and   a.esercizio_originale=b.esercizio_originale
+         and   a.pg_accertamento = b.pg_accertamento
+         and   a.pg_accertamento_scadenzario = b.pg_accertamento_scadenzario
+         and   a.cd_cds = c.cd_cds
+         and   a.esercizio=c.esercizio
+         and   a.esercizio_originale=c.esercizio_originale
+         and   a.pg_accertamento = c.pg_accertamento
+         and   c.cd_elemento_voce_next is not null
+         and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+         and   a.cd_linea_attivita in (SELECT cd_linea_attivita
+                                       FROM v_linea_attivita_valida
+                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
+                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
+         UNION ALL
+         SELECT  c.esercizio, c.esercizio_originale esercizio_res, 'S' tipo, a.CD_LINEA_ATTIVITA,
+                 cd_elemento_voce_next cd_elemento_voce,
+                 0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
+                 0 impegnato, 0 pagato
+         FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c
+         WHERE a.cd_cds = b.cd_cds
+         and   a.esercizio=b.esercizio
+         and   a.esercizio_originale=b.esercizio_originale
+         and   a.pg_accertamento = b.pg_accertamento
+         and   a.pg_accertamento_scadenzario = b.pg_accertamento_scadenzario
+         and   a.cd_cds = c.cd_cds
+         and   a.esercizio=c.esercizio
+         and   a.esercizio_originale=c.esercizio_originale
+         and   a.pg_accertamento = c.pg_accertamento
+         and   c.cd_elemento_voce_next is not null
+         and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+         and   a.cd_linea_attivita in (SELECT cd_linea_attivita
+                                       FROM v_linea_attivita_valida
+                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
+                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
+
+
+
+
+
+
+
+
+
+
+) a
       GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce) P
 WHERE p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov>1
 ORDER BY p.tipo, p.cd_linea_attivita,
@@ -415,7 +524,7 @@ BigDecimal.ZERO]]></textFieldExpression>
 	<group name="TIPOVOCE">
 		<groupExpression><![CDATA[$F{TIPO}]]></groupExpression>
 		<groupHeader>
-			<band height="17">
+			<band height="18">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-36" style="VERB6" x="6" y="1" width="816" height="15" uuid="4fd92f0f-75d1-4bc9-8098-66331ab3cb70"/>
 					<box topPadding="4">
@@ -748,7 +857,7 @@ $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 		<band/>
 	</title>
 	<pageHeader>
-		<band height="68">
+		<band height="72">
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-184" style="VERB7" x="30" y="5" width="547" height="11" uuid="0eea1766-23cc-428c-a600-04ea1480e1ec"/>
 				<box>

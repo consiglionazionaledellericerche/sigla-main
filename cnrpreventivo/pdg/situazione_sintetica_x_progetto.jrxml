@@ -49,7 +49,7 @@
 	<parameter name="P_PROGETTO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_GAE" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_GAE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[new String("*")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PRINT_GAE" class="java.lang.Boolean">
@@ -88,7 +88,7 @@ AND B.TIPO_FASE='X']]>
 	<field name="CD_PROGLIV1" class="java.lang.String"/>
 	<field name="DS_PROGLIV1" class="java.lang.String"/>
 	<detail>
-		<band height="25">
+		<band height="27">
 			<subreport>
 				<reportElement x="6" y="8" width="830" height="10" isRemoveLineWhenBlank="true" uuid="2a15b921-aa04-4dc5-84b0-9656266ba147"/>
 				<subreportParameter name="P_DS_PROGLIV2">
@@ -158,4 +158,7 @@ AND B.TIPO_FASE='X']]>
 			</break>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="20"/>
+	</pageFooter>
 </jasperReport>
