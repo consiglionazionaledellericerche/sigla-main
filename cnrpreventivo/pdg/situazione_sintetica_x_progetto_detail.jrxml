@@ -49,7 +49,7 @@
 	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["020.003.000"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_LINEA_ATTIVITA" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_GAE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
@@ -84,7 +84,7 @@ and   A.CD_LINEA_ATTIVITA in (
     FROM v_linea_attivita_valida
     WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
     AND   pg_progetto=$P{P_PG_PROGLIV2}
-    AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
+    AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
 and   ($P{P_VOCE} IS NULL or
       NVL((SELECT C.CD_ELEMENTO_VOCE_NEW
            FROM ass_evold_evnew C
@@ -107,7 +107,7 @@ and   A.CD_LINEA_ATTIVITA in (
     FROM v_linea_attivita_valida
     WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
     AND   pg_progetto=$P{P_PG_PROGLIV2}
-    AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
+    AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
 and   ($P{P_VOCE} IS NULL or
       NVL((SELECT C.CD_ELEMENTO_VOCE_NEW
            FROM ass_evold_evnew C

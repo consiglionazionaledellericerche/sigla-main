@@ -43,19 +43,19 @@
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ESERCIZIO_RES" class="java.math.BigDecimal" isForPrompting="false">
+	<parameter name="P_ESERCIZIO_RES" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String">
 		<defaultValueExpression><![CDATA["020.003.000"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_LINEA_ATTIVITA" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_GAE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_TIPO" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_VOCE" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_VOCE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PG_PROGLIV2" class="java.lang.Integer" isForPrompting="false">
@@ -81,7 +81,7 @@ and   ASV.CD_LINEA_ATTIVITA in (
 	FROM v_linea_attivita_valida
 	WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
 	AND   pg_progetto=$P{P_PG_PROGLIV2}
-          AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
+          AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
 and   ASV.CD_CDS = ACC.CD_CDS
 and   ASV.ESERCIZIO = ACC.ESERCIZIO
 and   ASV.ESERCIZIO_ORIGINALE = ACC.ESERCIZIO_ORIGINALE
@@ -122,7 +122,7 @@ and   ASV.CD_LINEA_ATTIVITA in (
 	FROM v_linea_attivita_valida
 	WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
 	AND   pg_progetto=$P{P_PG_PROGLIV2}
-          AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
+          AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
 and   ASV.CD_CDS = ACC.CD_CDS
 and   ASV.ESERCIZIO = ACC.ESERCIZIO
 and   ASV.ESERCIZIO_ORIGINALE = ACC.ESERCIZIO_ORIGINALE
@@ -156,7 +156,7 @@ and   OSV.CD_LINEA_ATTIVITA in (
 	FROM v_linea_attivita_valida
 	WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
 	AND   pg_progetto=$P{P_PG_PROGLIV2}
-          AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
+          AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
 and   OSV.CD_CDS = OBB.CD_CDS
 and   OSV.ESERCIZIO = OBB.ESERCIZIO
 and   OSV.ESERCIZIO_ORIGINALE = OBB.ESERCIZIO_ORIGINALE
@@ -197,7 +197,7 @@ and   OSV.CD_LINEA_ATTIVITA in (
 	FROM v_linea_attivita_valida
 	WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
 	AND   pg_progetto=$P{P_PG_PROGLIV2}
-          AND   cd_linea_attivita = nvl($P{P_LINEA_ATTIVITA},cd_linea_attivita))
+          AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
 and   OSV.CD_CDS = OBB.CD_CDS
 and   OSV.ESERCIZIO = OBB.ESERCIZIO
 and   OSV.ESERCIZIO_ORIGINALE = OBB.ESERCIZIO_ORIGINALE

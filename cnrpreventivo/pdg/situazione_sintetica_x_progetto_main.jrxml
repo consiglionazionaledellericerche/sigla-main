@@ -217,6 +217,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
          and   a.esercizio_originale=c.esercizio_originale
          and   a.pg_obbligazione = c.pg_obbligazione
          and   c.cd_elemento_voce_next is not null
+         and   nvl(b.im_scadenza,0)!=0
          and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
          and   a.cd_linea_attivita in (SELECT cd_linea_attivita
                                        FROM v_linea_attivita_valida
@@ -239,6 +240,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
          and   a.esercizio_originale=c.esercizio_originale
          and   a.pg_obbligazione = c.pg_obbligazione
          and   c.cd_elemento_voce_next is not null
+         and   nvl(b.im_scadenza,0)!=0
          and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
          and   a.cd_linea_attivita in (SELECT cd_linea_attivita
                                        FROM v_linea_attivita_valida
@@ -267,6 +269,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
          and   a.esercizio_originale=c.esercizio_originale
          and   a.pg_accertamento = c.pg_accertamento
          and   c.cd_elemento_voce_next is not null
+         and   nvl(b.im_scadenza,0)!=0
          and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
          and   a.cd_linea_attivita in (SELECT cd_linea_attivita
                                        FROM v_linea_attivita_valida
@@ -289,6 +292,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
          and   a.esercizio_originale=c.esercizio_originale
          and   a.pg_accertamento = c.pg_accertamento
          and   c.cd_elemento_voce_next is not null
+         and   nvl(b.im_scadenza,0)!=0
          and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
          and   a.cd_linea_attivita in (SELECT cd_linea_attivita
                                        FROM v_linea_attivita_valida
