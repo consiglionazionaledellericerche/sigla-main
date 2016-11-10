@@ -1189,7 +1189,7 @@ private void basicAggiornaLetteraPagamentoEstero(
 			lettera.setSospeso(null);
 		else {
 			lettera.getSospeso().setIm_ass_mod_1210(impAssDoc1210);
-			lettera.getSospeso().setToBeUpdated();
+			lettera.getSospeso().setToBeUpdated();			
 		}
 	}
 }
@@ -3303,7 +3303,7 @@ private void eliminaFattura(UserContext aUC,Fattura_passivaBulk fatturaPassiva)
 
 public Fattura_passivaBulk eliminaLetteraPagamentoEstero(
 	UserContext context,
-	Fattura_passivaBulk fatturaPassiva)
+	Fattura_passivaBulk fatturaPassiva,boolean cancella)
 	throws ComponentException {
 
 	if (fatturaPassiva != null &&
@@ -3311,9 +3311,20 @@ public Fattura_passivaBulk eliminaLetteraPagamentoEstero(
 
 		Lettera_pagam_esteroBulk lettera = fatturaPassiva.getLettera_pagamento_estero();
 		try {
-			basicAggiornaLetteraPagamentoEstero(context, lettera, null);
-			lettera.setToBeDeleted();
-			makeBulkPersistent(context, lettera);
+			if(cancella){
+				basicAggiornaLetteraPagamentoEstero(context, lettera, null);
+				lettera.setToBeDeleted();
+				makeBulkPersistent(context, lettera);
+			}else{
+				java.sql.Timestamp dataAnnullamento = getHome(context, fatturaPassiva).getServerDate();
+				lettera.setToBeUpdated();
+				lettera.setDt_cancellazione(dataAnnullamento);
+				if(lettera.getSospeso()!=null){
+					liberaSospeso(context, lettera.getSospeso());
+					lettera.setSospeso(null);
+				}
+				makeBulkPersistent(context, lettera);
+			}
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw handleException(lettera, e);
 		}
@@ -7642,5 +7653,11 @@ private void setDt_termine_creazione_docamm(
 		} catch (Throwable e) {
 			throw handleException(e);
 		}
+	}
+public Fattura_passivaBulk eliminaLetteraPagamentoEstero(
+		UserContext context,
+		Fattura_passivaBulk fatturaPassiva)
+		throws ComponentException {
+	return eliminaLetteraPagamentoEstero(context, fatturaPassiva,true);
 	}
 }

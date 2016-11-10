@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.ejb;
 import java.rmi.*;
 
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -546,5 +547,85 @@ public byte[] lanciaStampa(UserContext userContext, String cds,	Integer esercizi
 		}
 	}
 	
+}
+@Override
+public ReversaleBulk annullaReversale(UserContext param0, ReversaleBulk param1,
+		boolean param2, boolean param3) throws ComponentException,
+		RemoteException {
+	try {
+		return (it.cnr.contab.doccont00.core.bulk.ReversaleBulk)invoke("annullaReversale",new Object[] {
+			param0,
+			param1,
+			new Boolean(param2),
+			new Boolean(param3)});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+@Override
+public String isAnnullabile(UserContext param0, ReversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (java.lang.String)invoke("isAnnullabile",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+ }
+@Override
+public Boolean esisteAnnullodaRiemettereNonCollegato(UserContext param0,
+		Integer param1, String param2) throws ComponentException,
+		RemoteException {
+	try {
+		return (java.lang.Boolean)invoke("esisteAnnullodaRiemettereNonCollegato",new Object[] {
+			param0,
+			param1,param2 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+@Override
+public Boolean isReversaleCollegataAnnullodaRiemettere(UserContext param0,
+		ReversaleBulk param1) throws ComponentException, RemoteException {
+	try {
+		return (java.lang.Boolean)invoke("isReversaleCollegataAnnullodaRiemettere",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
 }
 }
