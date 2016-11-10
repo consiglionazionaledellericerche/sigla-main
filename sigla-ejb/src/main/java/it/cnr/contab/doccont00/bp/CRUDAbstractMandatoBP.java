@@ -99,17 +99,21 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 				setStatus(VIEW);
 				setMessage("Mandato creato dall'Unità Organizzativa " + mandato.getCd_uo_origine() + ". Non consentita la modifica.");
 			}
-			else if ( mandato != null && mandato.getStato().equals( mandato.STATO_MANDATO_ANNULLATO ) )
+			else if ( mandato != null && mandato.getStato().equals( mandato.STATO_MANDATO_ANNULLATO ) && (mandato.getFl_riemissione()==null || !mandato.getFl_riemissione()))
 			{
 				setStatus(VIEW);
 				setMessage("Mandato annullato. Non consentita la modifica.");
 			}
 			else if ( mandato != null && !mandato.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) &&
-					!mandato.isMandatoAccreditamento()) {
+					!mandato.isMandatoAccreditamento() && !mandato.getStato().equals( mandato.STATO_MANDATO_ANNULLATO ) ) {
 				setStatus(VIEW);
-			setMessage("Verificare lo stato di trasmissione del mandato. Non consentita la modifica.");
+				setMessage("Verificare lo stato di trasmissione del mandato. Non consentita la modifica.");
 			}
-		}
+			else if( mandato != null  && mandato.getStato().equals( mandato.STATO_MANDATO_ANNULLATO ) && mandato.getFl_riemissione()!=null && mandato.getFl_riemissione() && !mandato.getStato_trasmissione_annullo().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)){
+				setStatus(VIEW);
+				setMessage("Verificare lo stato di trasmissione del mandato annullato. Non consentita la modifica.");
+			}
+		} 
 	}
 	/**
 	 * Metodo utilizzato per gestire il caricamento dei sospesi.
@@ -299,7 +303,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	 *				= TRUE se il mandato non e' stato pagato o annullato
 	 */
 	public boolean isSaveButtonEnabled() {
-		return super.isSaveButtonEnabled() && !((MandatoBulk)getModel()).isAnnullato() ;
+		return super.isSaveButtonEnabled();// && !((MandatoBulk)getModel()).isAnnullato() ;
 	}
 	public void esistonoPiuModalitaPagamento(ActionContext context)throws it.cnr.jada.action.BusinessProcessException {
 		try {
@@ -363,7 +367,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		}
 		return null;
 	}
-
+ 
 	public void scaricaContabile(ActionContext actioncontext) throws Exception {
 		MandatoBulk mandato = (MandatoBulk)getModel();
 		InputStream is = contabiliService.getStreamContabile(mandato);
@@ -395,6 +399,28 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 			}
 			is.close();
 			os.flush();
+		}
+	}
+	public boolean isAnnullabileEnte(it.cnr.jada.action.ActionContext context,MandatoBulk mandato) throws it.cnr.jada.action.BusinessProcessException {
+		try { 
+			return  (((MandatoComponentSession) createComponentSession()).isAnnullabile(context.getUserContext(),mandato).compareTo("F")==0);
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			throw handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(e);
+		}
+
+	}
+	public void deleteRiemissione(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+		int crudStatus = getModel().getCrudStatus();
+		try {
+			validate(context);
+			getModel().setToBeUpdated();
+			setModel( context, ((MandatoComponentSession) createComponentSession()).annullaMandato(context.getUserContext(),(MandatoBulk)getModel(), true));
+			setStatus(VIEW);			
+		} catch(Exception e) {
+			getModel().setCrudStatus(crudStatus);
+			throw handleException(e);
 		}
 	}
 

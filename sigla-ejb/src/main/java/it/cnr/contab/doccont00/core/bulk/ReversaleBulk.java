@@ -101,7 +101,7 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
 	protected String cd_uo_ente;
 	protected BulkList mandatiColl = new BulkList();
 	protected Collection doc_contabili_collColl; //documenti contabili collegati
-	
+	protected it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk v_man_rev = new it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk();
 	private java.math.BigDecimal im_residuo_reversale;
 	private boolean siopeDaCompletare=false;
 
@@ -758,4 +758,21 @@ public boolean isSiopeDaCompletare() {
 public void setSiopeDaCompletare(boolean siopeDaCompletare) {
 	this.siopeDaCompletare = siopeDaCompletare;
 }
+public it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk getV_man_rev() {
+		return v_man_rev;
+	}
+	public void setV_man_rev(
+			it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk v_man_rev) {
+		this.v_man_rev = v_man_rev;
+	}
+	public Long getPg_reversale_riemissione() {
+		if (v_man_rev == null)
+			return null;
+		return v_man_rev.getPg_documento_cont();
+	}
+	@Override
+	public void setPg_reversale_riemissione(Long pg_reversale_riemissione) {
+	if(getV_man_rev()!=null)
+		getV_man_rev().setPg_documento_cont(pg_reversale_riemissione);
+	}
 }

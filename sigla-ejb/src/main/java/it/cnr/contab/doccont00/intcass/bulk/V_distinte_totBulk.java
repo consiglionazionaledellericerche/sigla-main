@@ -15,6 +15,7 @@ public class V_distinte_totBulk extends  V_distinte_totBase {
 		tipoKeys.put("Altro","Altro");
 		tipoKeys.put("Flusso","Flusso");
 		tipoKeys.put("Sepa","Sepa");
+		tipoKeys.put("Annulli","Annulli");
 	};
 	public V_distinte_totBulk() {
 		super();

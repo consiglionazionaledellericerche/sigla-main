@@ -128,6 +128,10 @@ public Forward doConfermaElimina(ActionContext context, int choice ) throws java
 		if ( choice == OptionBP.YES_BUTTON )
 		{
 			CRUDBP bp = getBusinessProcess(context);
+			CRUDAbstractMandatoBP bpm = (CRUDAbstractMandatoBP)context.getBusinessProcess();
+			MandatoIBulk mandato = (MandatoIBulk) bp.getModel();
+			if(bpm.isAnnullabileEnte(context, mandato))
+				return openConfirm(context,"All'annullamento del mandato seguirà la riemissione?",OptionBP.CONFIRM_YES_NO,"doConfermaRiemissione");			
 			bp.delete(context);
 			bp.setMessage("Annullamento effettuato");
 		}	
@@ -136,6 +140,29 @@ public Forward doConfermaElimina(ActionContext context, int choice ) throws java
 		return handleException(context,e);
 	}
 }
+public Forward doConfermaRiemissione(ActionContext context, int choice ) throws java.rmi.RemoteException 
+{
+	try 
+	{
+		fillModel(context);
+		CRUDBP bp = getBusinessProcess(context);
+		CRUDAbstractMandatoBP bpm = (CRUDAbstractMandatoBP)context.getBusinessProcess();
+		if ( choice == OptionBP.YES_BUTTON )
+		{
+			bpm.deleteRiemissione(context);
+			bp.setMessage("Annullamento effettuato");
+		}
+		else
+		{
+			bp.delete(context);
+			bp.setMessage("Annullamento effettuato");
+		}
+	return context.findDefaultForward();
+} catch(Throwable e) {
+	return handleException(context,e);
+}
+}
+
 /**
  * Gestisce un comando di cancellazione.
  */

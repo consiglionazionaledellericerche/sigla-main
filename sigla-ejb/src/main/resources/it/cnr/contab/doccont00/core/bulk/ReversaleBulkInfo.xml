@@ -239,7 +239,48 @@
 		inputType="TEXT"
 		label="Importo da Associare"
 		formatName = "it.cnr.contab.util.EuroFormat"/>
-
+	<fieldProperty
+		name="stato_trasmissione_annullo"
+		property="stato_trasmissione_annullo"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="stato_trasmissioneKeys"
+		label="Stato Trasmissione annullo"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="fl_riemissione"
+		property="fl_riemissione"
+		label="riemissione"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"/>	
+	<fieldProperty
+		name="find_documento_cont"
+		property="v_man_rev"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Doc.Contabile Riemissione"
+		/>
+	<fieldProperty
+		name="pg_reversale_riemissione"
+		property="v_man_rev.pg_documento_cont"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		label="Doc.Contabile Riemissione"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ds_documento_cont"
+		property="v_man_rev.ds_documento_cont"
+		maxLength="200"
+		inputSize="50"
+		inputType="ROTEXT"
+		label=""
+		caseSensitiveSearch="false" />		
 	<formFieldProperty
 		name="dt_trasmissione" />
 	<formFieldProperty
@@ -290,7 +331,15 @@
 		name="im_associato_siope" />
 	<formFieldProperty
 		name="im_da_associare_siope" />
-	
+	<formFieldProperty
+		name="stato_trasmissione_annullo" />
+	<formFieldProperty
+		name="pg_reversale_riemissione" />		
+	<formFieldProperty
+		name="ds_documento_cont" />
+	<formFieldProperty
+		name="find_documento_cont" />	
+		
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -361,7 +410,8 @@
 		name="dt_ritrasmissione"/>
 	<findFieldProperty
 		name="ti_competenza_residuo" />
-		
-		
-
+	<findFieldProperty
+		name="fl_riemissione" />	
+	<findFieldProperty
+		name="pg_reversale_riemissione" />		
 </bulkInfo>

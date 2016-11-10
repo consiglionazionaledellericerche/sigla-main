@@ -80,4 +80,5 @@ Fattura_passivaBulk caricaAllegatiBulk(UserContext userContext, Fattura_passivaB
 void validaFatturaPerCompenso(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk valorizzaInfoDocEle(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void aggiornaObblSuCancPerCompenso(UserContext userContext,Fattura_passivaBulk fatturaPassiva,java.util.Vector scadenzeDaCancellare,OptionRequestParameter status) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk eliminaLetteraPagamentoEstero(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1,boolean param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
