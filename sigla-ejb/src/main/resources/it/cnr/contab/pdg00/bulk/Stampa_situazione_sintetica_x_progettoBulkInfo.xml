@@ -105,6 +105,7 @@
 		property="printGae"
 		inputType="CHECKBOX"
 		nullable="false"
+		command="doCheckPrintGae"
 		label="GAE" />
 	<fieldProperty
 		name="printVoce"
@@ -126,6 +127,12 @@
 		inputType="CHECKBOX"
 		nullable="false"
 		label="Movimentazione" />
+	<fieldProperty
+		name="printSoloGaeAttive"
+		property="printSoloGaeAttive"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Solo GAE movimentate nell'esercizio" />
 	<fieldProperty
 		name="ti_ordine_stampa"
 		property="ti_ordine_stampa"
@@ -162,6 +169,7 @@
 	<formFieldProperty name="printVoce" />
 	<formFieldProperty name="printAnno" />
 	<formFieldProperty name="printMovimentazione" />
+	<formFieldProperty name="printSoloGaeAttive" />
 	<formFieldProperty name="ti_ordine_stampa" />
 
 	<printForm
@@ -216,6 +224,12 @@
 			parameterPosition="8"
 			parameterType="STRING"
 			paramNameJR="P_PRINT_MOVIMENTAZIONE"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty 
+			name="printSoloGaeAttive"
+			parameterPosition="8"
+			parameterType="STRING"
+			paramNameJR="P_PRINT_SOLO_GAE_ATTIVE"
 			paramTypeJR="java.lang.Boolean" />
 		<printFieldProperty 
 			name="ti_ordine_stampa"
