@@ -37,6 +37,7 @@
                                 org.apache.commons.codec,
                                 org.apache.commons.lang,
                                 org.apache.commons.io,
+                                org.jboss.resteasy.resteasy-jaxrs,
                                 com.informix.jdbc,
                                 org.wildfly.extension.undertow,
                                 io.undertow.core,

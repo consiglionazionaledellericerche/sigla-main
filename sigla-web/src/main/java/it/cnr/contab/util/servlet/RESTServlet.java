@@ -18,6 +18,7 @@ import it.cnr.contab.utenze00.bulk.AssBpAccessoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.ejb.AssBpAccessoComponentSession;
+import it.cnr.contab.util.rest.BasicAuthentication;
 import it.cnr.contab.util.servlet.JSONRequest.Clause;
 import it.cnr.contab.util.servlet.JSONRequest.OrderBy;
 import it.cnr.jada.action.*;
@@ -92,7 +93,7 @@ public class RESTServlet extends HttpServlet{
             UtenteBulk utente = null;
     		try {
     			if (actionmapping.needExistingSession())
-    				utente = authenticate(req, resp);
+    				utente = BasicAuthentication.authenticate(req.getHeader("Authorization"));
     			if (utente != null || !actionmapping.needExistingSession()) {
     				JSONRequest jsonRequest = null;
     	            HttpActionContext httpactioncontext = new HttpActionContext(this, req, resp);
@@ -408,54 +409,6 @@ public class RESTServlet extends HttpServlet{
         }catch(ActionMappingsConfigurationException actionmappingsconfigurationexception){
             throw new ServletException("Action mappings configuration exception", actionmappingsconfigurationexception);
         }		
-	}
-	public UtenteBulk authenticate(HttpServletRequest req, HttpServletResponse res) throws ComponentException{
-        boolean authorized = false;
-		UtenteBulk utente = new UtenteBulk();
-        String authorization = req.getHeader("Authorization");
-        // authenticate as specified by HTTP Basic Authentication
-        if (authorization != null && authorization.length() != 0)
-        {
-            String[] authorizationParts = authorization.split(" ");
-            if (!authorizationParts[0].equalsIgnoreCase("basic"))
-            {
-                throw new ApplicationException("Authorization '" + authorizationParts[0] + "' not supported.");
-            }
-            String decodedAuthorisation = new String(DatatypeConverter.parseBase64Binary(authorizationParts[1]));
-            logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Decoded Authorisation: " + decodedAuthorisation);
-            String[] parts = decodedAuthorisation.split(":");
-            
-            if (parts.length == 2)
-            {
-                // assume username and password passed as the parts
-                String username = parts[0];
-                String password = parts[1];
-                
-                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Username: " + username + ". Password: "+password);
-                
-				utente = new UtenteBulk();
-				utente.setCd_utente(username.toUpperCase());
-				utente.setLdap_password(password);
-				utente.setPasswordInChiaro(password.toUpperCase());
-				try {
-					utente = loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente);
-					if (utente != null)
-						authorized = true;
-				} catch (RemoteException e) {
-					throw new ApplicationException(e.getMessage());
-				} catch (EJBException e) {
-					throw new ApplicationException(e.getMessage());				
-				}
-            }
-        }
-        
-        // request credentials if not authorized
-        if (!authorized)
-        {
-           	logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Requesting authorization credentials");
-            return null;
-        }
-        return utente;
 	}
 	public static AssBpAccessoComponentSession assBpAccessoComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (AssBpAccessoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_EJB_AssBpAccessoComponentSession");

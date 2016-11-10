@@ -8,6 +8,7 @@ import java.util.List;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalMissioneComponentSession extends
@@ -989,6 +990,22 @@ public class TransactionalMissioneComponentSession extends
 		}
 	}
 
+	public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile) throws ComponentException, RemoteException, PersistencyException{
+		try {
+			return (List) invoke("recuperoTipiSpesa", new Object[] {
+					aUC, dataInizioTappa, nazione, inquadramento, rimborsoAmmissibile });
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
 	public List findListaMissioniSIP(UserContext userContext, String query,
 			String dominio, String uo, String terzo, String voce, String cdr,
 			String gae, String tipoRicerca, Timestamp data_inizio,
