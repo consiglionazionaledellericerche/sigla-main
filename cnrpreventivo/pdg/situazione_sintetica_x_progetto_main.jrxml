@@ -74,6 +74,10 @@
 	<parameter name="P_ROTTURA_ANNO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_SOLO_GAE_ATTIVE" class="java.lang.String">
+		<parameterDescription><![CDATA[Stampa solo GAE ancora attive nell'anno. Valori possibili: "S" o "N"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["N"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="P_ORDINE" class="java.lang.String">
 		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
 		<defaultValueExpression><![CDATA["A"]]></defaultValueExpression>
@@ -81,7 +85,7 @@
 	<queryString>
 		<![CDATA[SELECT p.tipo, p.esercizio_res, p.cd_linea_attivita cd_gae,
        CASE WHEN $P{P_ROTTURA_GAE}='S'
-	  THEN (SELECT q.ds_linea_attivita from linea_attivita q
+	  THEN (SELECT nvl(q.ds_linea_attivita,q.denominazione) from linea_attivita q
 	        WHERE q.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
 	        AND   q.cd_linea_attivita = p.cd_linea_attivita)
             ELSE 'DS_GAE_UNICA'
@@ -298,20 +302,17 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                                        FROM v_linea_attivita_valida
                                        WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
                                        AND   pg_progetto=$P{P_PG_PROGLIV2}
-                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-
-
-
-
-
-
-
-
-
-
-) a
+                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))) a
       GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce) P
-WHERE p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov>1
+WHERE (p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov>1)
+AND ($P{P_SOLO_GAE_ATTIVE}='N' OR
+     EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+            WHERE SALDI.ESERCIZIO = $P{P_ESERCIZIO}
+            AND   SALDI.ESERCIZIO_RES = P.ESERCIZIO_RES
+            AND   SALDI.CD_CENTRO_RESPONSABILITA = $P{P_CENTRO_RESPONSABILITA}
+            AND   SALDI.CD_LINEA_ATTIVITA = P.CD_LINEA_ATTIVITA
+            AND   SALDI.TI_GESTIONE = P.TIPO
+            AND   SALDI.CD_ELEMENTO_VOCE = P.CD_ELEMENTO_VOCE))
 ORDER BY p.tipo, p.cd_linea_attivita,
 CASE WHEN $P{P_ORDINE}='V' THEN p.cd_elemento_voce ELSE TO_CHAR(p.esercizio_res) END,
 CASE WHEN $P{P_ORDINE}='V' THEN TO_CHAR(p.esercizio_res) ELSE p.cd_elemento_voce END]]>
@@ -874,7 +875,7 @@ $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["SITUAZIONE SINTETICA PROGETTO: "+$P{P_CD_PROGLIV2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["SITUAZIONE PROGETTO: "+$P{P_CD_PROGLIV2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-184" style="VER7" x="54" y="17" width="768" height="11" uuid="f99d002d-80e9-4e0f-b9d5-756716ab6060"/>
