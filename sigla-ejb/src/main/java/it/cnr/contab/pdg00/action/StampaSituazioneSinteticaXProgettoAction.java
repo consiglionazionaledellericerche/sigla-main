@@ -44,4 +44,18 @@ public class StampaSituazioneSinteticaXProgettoAction extends it.cnr.contab.repo
 		stampa_gae.setProgettoForPrint(gae.getProgetto());
 		return context.findDefaultForward();
 	}
+
+	public Forward doCheckPrintGae(ActionContext context){
+		try {
+			fillModel(context);
+			ParametricPrintBP bp = (ParametricPrintBP)context.getBusinessProcess();
+			Stampa_situazione_sintetica_x_progettoBulk stampa = ((Stampa_situazione_sintetica_x_progettoBulk)bp.getModel());
+			
+			if (!stampa.getPrintGae())
+				stampa.setPrintSoloGaeAttive(Boolean.FALSE);
+			return context.findDefaultForward();
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
 }
