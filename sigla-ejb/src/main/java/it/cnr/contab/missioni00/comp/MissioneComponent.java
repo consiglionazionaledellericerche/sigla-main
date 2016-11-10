@@ -23,6 +23,9 @@ import it.cnr.contab.compensi00.tabrif.bulk.*;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import java.util.*;
+
+import org.bouncycastle.util.Times;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -3334,24 +3337,40 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC,Missione_dettaglioBul
 	else		
 		primoGG = missione.getPrimoGiornoSpesaSelezionato();
 		
+	
 	Missione_tappaBulk tappa = (Missione_tappaBulk) missione.getTappeMissioneHash().get(primoGG);
     NazioneHome nazionehome=(NazioneHome)getHome(aUC,NazioneBulk.class);
     
 	tappa.setNazione((NazioneBulk)nazionehome.findByPrimaryKey(tappa.getNazione()));
+	
+	return selectTipo_spesaByClause(aUC, tappa.getDt_inizio_tappa(), missione.getPg_rif_inquadramento(), tappa.getNazione(), tappa.getFl_rimborso(), dettaglioSpesa.getCd_ti_spesa(), clauses) ;
+}
+
+public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile) throws ComponentException, PersistencyException
+{
+    NazioneHome nazionehome=(NazioneHome)getHome(aUC,NazioneBulk.class);
+	NazioneBulk nazioneBulk = new NazioneBulk(nazione);
+	nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+	
+	SQLBuilder sql = selectTipo_spesaByClause(aUC, dataInizioTappa, inquadramento, nazioneBulk, rimborsoAmmissibile, null, new CompoundFindClause()) ;
+	Missione_tipo_spesaHome tipoSpesaHome = (Missione_tipo_spesaHome)getHome(aUC, Missione_tipo_spesaBulk.class);
+	return tipoSpesaHome.fetchAll(sql);
+}
+
+private SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, PersistencyException
+{
 	
 	Missione_tipo_spesaHome tipoSpesaHome = (Missione_tipo_spesaHome)getHome(aUC, Missione_tipo_spesaBulk.class);
 	SQLBuilder sql = tipoSpesaHome.createSQLBuilder();
 	
 	sql.addClause(clauses);
 	
-	//sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,missione.getDt_inizio_missione());
-	//sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,missione.getDt_inizio_missione());
-	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,tappa.getDt_inizio_tappa());
-	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,tappa.getDt_inizio_tappa());
+	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,dataTappa);
+	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,dataTappa);
 
 
 	sql.openParenthesis("AND");	
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "I");
 	else
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "E");
@@ -3359,31 +3378,31 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC,Missione_dettaglioBul
 	sql.closeParenthesis();		
 
 	sql.openParenthesis("AND");
-	sql.addClause("AND","pg_nazione",sql.EQUALS, tappa.getPg_nazione());
+	sql.addClause("AND","pg_nazione",sql.EQUALS, nazione.getPg_nazione());
 	sql.addClause("OR","pg_nazione",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 
 	sql.openParenthesis("AND");	
-	sql.addClause("AND","pg_rif_inquadramento",sql.EQUALS, missione.getPg_rif_inquadramento());
+	sql.addClause("AND","pg_rif_inquadramento",sql.EQUALS, inquadramento);
 	sql.addClause("OR","pg_rif_inquadramento",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 	
-	if (tappa.getFl_rimborso())
-	    sql.addClause("AND","fl_ammissibile_con_rimborso",sql.EQUALS, tappa.getFl_rimborso());	
+	if (ammissibileConRimborso)
+	    sql.addClause("AND","fl_ammissibile_con_rimborso",sql.EQUALS, ammissibileConRimborso);	
 
-	sql.addClause("AND","cd_ti_spesa",sql.EQUALS, dettaglioSpesa.getCd_ti_spesa());					
+	sql.addClause("AND","cd_ti_spesa",sql.EQUALS, tipoSpesa);					
 
 	sql.addSQLClause("AND","(cd_ti_spesa || ti_area_geografica || pg_nazione || pg_rif_inquadramento || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('01', cd_ti_spesa, ?, ?, ?, ?)");
 
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addParameter("I", java.sql.Types.CHAR, 7);
 	else
 		sql.addParameter("E", java.sql.Types.CHAR, 7);
-	sql.addParameter(tappa.getPg_nazione(), java.sql.Types.NUMERIC, 8);
-	sql.addParameter(missione.getPg_rif_inquadramento(), java.sql.Types.NUMERIC, 9);
+	sql.addParameter(nazione.getPg_nazione(), java.sql.Types.NUMERIC, 8);
+	sql.addParameter(inquadramento, java.sql.Types.NUMERIC, 9);
 	//sql.addParameter(missione.getDt_inizio_missione(), java.sql.Types.TIMESTAMP, 10);	
-	sql.addParameter(tappa.getDt_inizio_tappa(), java.sql.Types.TIMESTAMP, 10);
+	sql.addParameter(dataTappa, java.sql.Types.TIMESTAMP, 10);
 	sql.addPreOrderBy(" cd_ti_spesa, pg_rif_inquadramento desc, pg_nazione desc, ti_area_geografica");
 	
 	return sql;
