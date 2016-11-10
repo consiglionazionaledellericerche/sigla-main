@@ -4,6 +4,7 @@
  ?ResourceEdition "1.0"
 -->
 
+<%@page import="it.cnr.contab.doccont00.core.bulk.MandatoBulk"%>
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*, it.cnr.jada.util.action.*,it.cnr.contab.doccont00.bp.*"
 %>
@@ -63,11 +64,26 @@
 				<% bp.getController().writeFormInput( out, "dt_ritrasmissione"); %></td>
 			<td><% bp.getController().writeFormLabel( out, "stato_trasmissione"); %></td>
 			<td><% bp.getController().writeFormInput( out, "stato_trasmissione"); %></td>
-	</tr>
-	<tr colspan=2>
+	</tr> 
+	<tr> 
 			<td><% bp.getController().writeFormLabel( out, "ds_mandato"); %></td>
-			<td><% bp.getController().writeFormInput( out, "ds_mandato"); %></td>
-	</tr>
+			<td colspan=3><% bp.getController().writeFormInput( out,"default", "ds_mandato",mandato.isAnnullato(),"FormInput",null); %></td> 
+	</tr> 
+	<% if (!bp.isSearching() && mandato!=null && mandato.getStato().equals(MandatoBulk.STATO_MANDATO_ANNULLATO) && mandato.getDt_trasmissione() !=null) {%>
+	<tr>
+		<td><% bp.getController().writeFormLabel( out, "stato_trasmissione_annullo"); %></td>
+		<td><% bp.getController().writeFormInput( out, "stato_trasmissione_annullo"); %></td>
+	</tr>	
+		<% if ( mandato.getFl_riemissione().booleanValue()) {%>
+		<tr>
+			<td><% bp.getController().writeFormLabel( out, "pg_mandato_riemissione"); %></td>
+			<td colspan=3><% bp.getController().writeFormInput( out, "default","pg_mandato_riemissione",!(mandato.getStato_trasmissione_annullo().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)),"FormInput",null); %>
+				<% bp.getController().writeFormInput( out, "ds_documento_cont"); %>
+				<% bp.getController().writeFormInput( out, "default","find_documento_cont",!(mandato.getStato_trasmissione_annullo().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)),"FormInput",null); %>
+			</td> 
+		</tr>	
+		<% } %>
+	<% } %>
   </table>
   </div>
 

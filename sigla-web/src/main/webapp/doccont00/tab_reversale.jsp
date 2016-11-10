@@ -3,8 +3,9 @@
  ?ResourceTimestamp "08/11/00 16.43.22"
  ?ResourceEdition "1.0"
 -->
-
-<%@ page 
+<%@page import="it.cnr.contab.doccont00.core.bulk.ReversaleBulk"%>
+<%@ page
+ 
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*, it.cnr.jada.util.action.*,it.cnr.contab.doccont00.bp.*"
 %>
 
@@ -59,10 +60,26 @@
 			<td><% bp.getController().writeFormLabel( out, "stato_trasmissione"); %></td>
 			<td><% bp.getController().writeFormInput( out, "stato_trasmissione"); %></td>
 	</tr>
-	<tr colspan=2>
+	<tr>
 			<td><% bp.getController().writeFormLabel( out, "ds_reversale"); %></td>
-			<td><% bp.getController().writeFormInput( out, "ds_reversale"); %></td>
+			<td colspan=3><% bp.getController().writeFormInput( out,"default", "ds_reversale",reversale.isAnnullato(),"FormInput",null); %></td> 
 	</tr>
+	
+	<% if (!bp.isSearching() && reversale!=null && reversale.getStato().equals(ReversaleBulk.STATO_REVERSALE_ANNULLATO) && reversale.getDt_trasmissione() !=null) {%>
+	<tr>
+		<td><% bp.getController().writeFormLabel( out, "stato_trasmissione_annullo"); %></td>
+		<td><% bp.getController().writeFormInput( out, "stato_trasmissione_annullo"); %></td>
+	</tr>	
+		<% if ( reversale.getFl_riemissione().booleanValue()) {%>
+		<tr>
+			<td><% bp.getController().writeFormLabel( out, "pg_reversale_riemissione"); %></td>
+			<td colspan=3><% bp.getController().writeFormInput( out, "default","pg_reversale_riemissione",!(reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)),"FormInput",null); %>
+				<% bp.getController().writeFormInput( out, "ds_documento_cont"); %>
+				<% bp.getController().writeFormInput( out, "default","find_documento_cont",!(reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)),"FormInput",null); %>
+			</td>
+		</tr>	
+		<% } %>
+	<% } %>
   </table>
   </div>
 

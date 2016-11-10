@@ -95,11 +95,11 @@ public SQLBuilder selectObbligazioniPer(
 
 		sql.addSQLClause("AND","FATTURA_PASSIVA.TI_FATTURA",sql.EQUALS, Fattura_passiva_IBulk.TIPO_FATTURA_PASSIVA);
 		sql.addSQLClause("AND","FATTURA_PASSIVA.CD_TERZO",sql.EQUALS, fornitore.getCd_terzo());
-		sql.addSQLClause("AND","FATTURA_PASSIVA.PG_LETTERA",sql.ISNULL, null);
+		//sql.addSQLClause("AND","FATTURA_PASSIVA.PG_LETTERA",sql.ISNULL, null);
 		//sql.addSQLClause("AND","FATTURA_PASSIVA.PROTOCOLLO_IVA",sql.ISNULL, null);
 		//sql.addSQLClause("AND","FATTURA_PASSIVA.PROTOCOLLO_IVA_GENERALE",sql.ISNULL, null);
 		sql.addSQLClause("AND","FATTURA_PASSIVA.STATO_PAGAMENTO_FONDO_ECO",sql.EQUALS, Fattura_passiva_IBulk.NO_FONDO_ECO);
-		sql.addSQLClause("AND","FATTURA_PASSIVA_RIGA.STATO_COFI",sql.EQUALS, Fattura_passiva_rigaBulk.STATO_CONTABILIZZATO);
+		//sql.addSQLClause("AND","FATTURA_PASSIVA_RIGA.STATO_COFI",sql.EQUALS, Fattura_passiva_rigaBulk.STATO_CONTABILIZZATO);
 		sql.addSQLClause("AND","FATTURA_PASSIVA.CD_CDS", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
 		sql.addSQLClause("AND","FATTURA_PASSIVA.CD_UNITA_ORGANIZZATIVA", sql.EQUALS, fatturaPassiva.getCd_uo_origine());
 		sql.addSQLClause("AND","FATTURA_PASSIVA.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));

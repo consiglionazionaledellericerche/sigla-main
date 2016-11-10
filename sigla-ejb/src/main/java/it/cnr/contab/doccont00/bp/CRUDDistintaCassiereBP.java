@@ -121,6 +121,8 @@ public class CRUDDistintaCassiereBP extends
 	public boolean elencoConUo;
 	public Boolean flusso;
 	public Boolean sepa;
+	public Boolean annulli;
+	
 	private String file;
 	private Unita_organizzativaBulk uoSrivania;
 	protected SiglaCMISService cmisService;
@@ -247,6 +249,8 @@ public class CRUDDistintaCassiereBP extends
 					"CRUDDistintaCassiereBP");
 			this.setFlusso(new Boolean(config.getInitParameter("flusso")));
 			this.setSepa(new Boolean(config.getInitParameter("sepa")));
+			this.setAnnulli(new Boolean(config.getInitParameter("annulli")));
+			
 			setParametriCnr(Utility.createParametriCnrComponentSession()
 					.getParametriCnr(
 							context.getUserContext(),
@@ -554,6 +558,7 @@ public class CRUDDistintaCassiereBP extends
 		if (this.isEditable()) {
 			((Distinta_cassiereBulk) this.getModel()).setFl_flusso(flusso);
 			((Distinta_cassiereBulk) this.getModel()).setFl_sepa(sepa);
+			((Distinta_cassiereBulk) this.getModel()).setFl_annulli(annulli);
 		}
 	}
 
@@ -565,6 +570,7 @@ public class CRUDDistintaCassiereBP extends
 		if (this.isEditable()) {
 			fs.setFl_flusso(isFlusso());
 			fs.setFl_sepa(isSepa());
+			fs.setFl_annulli(isAnnulli());
 		}
 		return fs;
 	}
@@ -1440,6 +1446,7 @@ public class CRUDDistintaCassiereBP extends
 		UtenteBulk utente = ((CNRUserInfo) context.getUserInfo()).getUtente();
 		if (controlloCodiceFiscale != null
 				&& controlloCodiceFiscale.equalsIgnoreCase("Y")
+				&& utente.getCodiceFiscaleLDAP() != null 
 				&& !utente.getCodiceFiscaleLDAP().equalsIgnoreCase(
 						codiceFiscale)) {
 			throw new ApplicationException("Il codice fiscale \""
@@ -1526,16 +1533,16 @@ public class CRUDDistintaCassiereBP extends
 					throw new ApplicationException(
 							FirmaOTPBulk.errorMessage(jsonMessage));
 				}
-
-				if (distinta.getEsercizio() != null
-						&& distinta.getPg_distinta_def() != null)
-					documentiContabiliService.inviaDistintaPEC(nodes,
-							this.isSepa(), distinta.getEsercizio() + "/"
-									+ distinta.getPg_distinta_def());
-				else
-					documentiContabiliService.inviaDistintaPEC(nodes,
-							this.isSepa(), null);
-
+				if(!this.isAnnulli()){
+					if (distinta.getEsercizio() != null
+							&& distinta.getPg_distinta_def() != null)
+						documentiContabiliService.inviaDistintaPEC(nodes,
+								this.isSepa(), distinta.getEsercizio() + "/"
+										+ distinta.getPg_distinta_def());
+					else
+						documentiContabiliService.inviaDistintaPEC(nodes,
+								this.isSepa(), null);
+				}	
 				distinta = (Distinta_cassiereBulk) getModel();
 				distinta.setDt_invio_pec(DateServices.getDt_valida(context
 						.getUserContext()));
@@ -1906,5 +1913,12 @@ public class CRUDDistintaCassiereBP extends
 		}
 		super.closed(context);
 	}
+
+public void setAnnulli(Boolean annulli) {
+	this.annulli = annulli;
+}
+public Boolean isAnnulli() {
+	return annulli;
+}
 }
 
