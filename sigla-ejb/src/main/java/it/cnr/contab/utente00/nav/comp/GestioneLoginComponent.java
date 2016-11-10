@@ -55,6 +55,8 @@ import it.cnr.contab.utenze00.bulk.SessionTraceHome;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteComuneBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
+import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloBulk;
+import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -1166,5 +1168,27 @@ public class GestioneLoginComponent
 			throw handleException(e);
 		}
 	}
-	
+
+	public List getRuoli(UserContext userContext, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException {
+		try {
+			Utente_unita_ruoloHome home = (Utente_unita_ruoloHome)getHome(userContext,Utente_unita_ruoloBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+	 		sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
+			List result = getHome(userContext, Utente_unita_ruoloBulk.class).fetchAll(sql);
+			return result;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
+	public List getUnitaRuolo(UserContext userContext, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException {
+		try {
+			Utente_unita_ruoloHome home = (Utente_unita_ruoloHome)getHome(userContext,Utente_unita_ruoloBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+	 		sql.addClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
+			List result = getHome(userContext, UtenteBulk.class).fetchAll(sql);
+			return result;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
 }

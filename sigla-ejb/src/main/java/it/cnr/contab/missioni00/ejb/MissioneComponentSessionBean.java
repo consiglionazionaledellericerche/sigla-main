@@ -4,6 +4,7 @@ import it.cnr.contab.missioni00.comp.MissioneComponent;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -842,6 +843,26 @@ public class MissioneComponentSessionBean extends
 			throw uncaughtRuntimeException(param0, componentObj, e);
 		} catch (Error e) {
 			throw uncaughtError(param0, componentObj, e);
+		}
+	}
+
+	public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile) throws ComponentException, java.rmi.RemoteException, PersistencyException{
+		pre_component_invocation(aUC, componentObj);
+		try {
+			java.util.List result = ((MissioneComponent) componentObj)
+					.recuperoTipiSpesa(aUC, dataInizioTappa, nazione, inquadramento, rimborsoAmmissibile);
+			component_invocation_succes(aUC, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(aUC, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(aUC, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(aUC, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(aUC, componentObj, e);
 		}
 	}
 
