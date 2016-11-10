@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.doccont00.comp.MandatoComponent;
 import it.cnr.contab.doccont00.comp.ReversaleComponent;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -360,4 +361,84 @@ public  byte[] lanciaStampa( it.cnr.jada.UserContext userContext, String cds, In
 		throw uncaughtError(userContext,componentObj,e);
 	}
 }
+@Override
+public ReversaleBulk annullaReversale(UserContext param0, ReversaleBulk param1,
+		boolean param2, boolean param3) throws ComponentException,
+		RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.doccont00.core.bulk.ReversaleBulk result = ((ReversaleComponent)componentObj).annullaReversale(param0,param1,param2,param3);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+@Override
+public String isAnnullabile(UserContext param0, ReversaleBulk param1)
+		throws ComponentException, RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		java.lang.String result = ((ReversaleComponent)componentObj).isAnnullabile(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+public java.lang.Boolean esisteAnnullodaRiemettereNonCollegato(UserContext param0,Integer param1, String param2 ) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		java.lang.Boolean result = ((ReversaleComponent)componentObj).esisteAnnullodaRiemettereNonCollegato(param0,param1,param2);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+public java.lang.Boolean isReversaleCollegataAnnullodaRiemettere(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		java.lang.Boolean result = ((ReversaleComponent)componentObj).isReversaleCollegataAnnullodaRiemettere(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
 }

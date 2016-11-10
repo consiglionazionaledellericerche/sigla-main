@@ -121,6 +121,7 @@ public class DocumentiContabiliService extends SiglaCMISService {
 			query.append(" and cds.strorgcds:codice = '").append(cds).append("'");
 		query.append(" and doc.doccont:tipo = '").append(tipo).append("'");
 		query.append(" and doc.doccont:numDoc = ").append(pgDocumento);
+		query.append(" order by doc.cmis:creationDate DESC");
 		try {
 			ItemIterable<QueryResult> results = search(query);
 			if (results.getTotalNumItems() == 0)

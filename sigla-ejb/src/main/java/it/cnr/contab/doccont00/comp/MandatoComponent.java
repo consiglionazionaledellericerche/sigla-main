@@ -1261,8 +1261,8 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 	 */
 
 	public MandatoBulk annullaMandato(UserContext userContext,
-			MandatoBulk mandato, CompensoOptionRequestParameter param,
-			boolean annullaCollegati) throws ComponentException {
+			MandatoBulk mandato, CompensoOptionRequestParameter p,
+			boolean annullaCollegati,boolean riemissione) throws ComponentException {
 		try {
 			/*
 			 * if ( param == null ) { // if ( stored procedure.... ) throw new
@@ -1309,12 +1309,15 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 								"Annullamento impossibile! Esiste una variazione di bilancio Ente associata al mandato di regolarizzazione");
 				}
 			}
-
+			
 			verificaMandatoSuAnticipo(userContext, mandato);
 
 			checkAnnullabilita(userContext, mandato);
-			
-			if(!isAnnullabile(userContext,mandato))
+			if(isMandatoCollegatoAnnullodaRiemettere(userContext,mandato).booleanValue() )
+				throw new ApplicationException(
+						"Annullamento impossibile! Esiste un mandato annullato associato al mandato.");
+		
+			if(isAnnullabile(userContext,mandato).compareTo("N")==0)
 				throw new ApplicationException(
 						"Verificare lo stato di trasmissione del mandato. Annullamento impossibile!");
 
@@ -1341,7 +1344,11 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 
 			if (mandato.getStato_coge().equals(mandato.STATO_COGE_C))
 				mandato.setStato_coge(mandato.STATO_COGE_R);
-
+			if (!MandatoBulk.TIPO_REGOLARIZZAZIONE.equals(mandato
+					.getTi_mandato())) {
+				mandato.setFl_riemissione(riemissione);
+				mandato.setStato_trasmissione_annullo(MandatoIBulk.STATO_TRASMISSIONE_NON_INSERITO);
+			}	
 			mandato.annulla();
 			annullaImportoSospesi(userContext, mandato);
 
@@ -3847,7 +3854,11 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 					&& mandato.getIm_ritenute().compareTo(new BigDecimal(0)) > 0)
 				mandato = inizializzaFlagFaiReversale(aUC,
 						(MandatoIBulk) mandato);
-
+			if(mandato.getPg_mandato_riemissione()!=null) {
+				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato_riemissione()));
+				if ( man_rev != null )
+					mandato.setV_man_rev( man_rev );
+			}
 		} catch (Exception e) {
 			throw handleException(mandato, e);
 		}
@@ -4667,7 +4678,8 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 					.getCd_cds());
 			lockBulk(userContext, mandato);
 			// mandato.refreshImporto();
-			verificaMandato(userContext, mandato);
+			if(!mandato.isAnnullato())
+				verificaMandato(userContext, mandato);
 			if (mandato instanceof MandatoAccreditamentoBulk) {
 				// verifica importo = somma delle righe
 				// verifica che tutti gli impegni selezioanti siano a competenza
@@ -6499,22 +6511,24 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 			throw handleException(e);
 		}
 	}
-public java.lang.Boolean isAnnullabile(
+public java.lang.String isAnnullabile(
 		UserContext userContext, MandatoBulk mandato)
 		throws ComponentException {
 	try {
 		  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(mandato.getEsercizio()));
 		     if (parametriCnr.getFl_tesoreria_unica()){
 		    	 UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
-				if (utente.isSupervisore()) {
-					return Boolean.TRUE;
-				}else
-					if(mandato.getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)==0)
-						return Boolean.TRUE;
-					else
-						return Boolean.FALSE;
+		    	 if(mandato.getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)==0)
+					return new String("S");
+				else
+						 if(mandato.getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)==0 && 
+							utente.isSupervisore()){
+							return new String("F");
+						}
+						else
+							return new String("N");
 		     }
-		return Boolean.TRUE;
+		     return new String("S");
 	} catch (Exception e) {
 		throw handleException(e);
 	}
@@ -6542,6 +6556,75 @@ public Boolean isCollegamentoSospesoCompleto(UserContext userContext,
 			return mandato.isSospesoTotalmenteAssociato();
 		}
 		return Boolean.TRUE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
+
+public MandatoBulk annullaMandato(UserContext userContext,
+		MandatoBulk mandato,
+		boolean riemissione) throws ComponentException {
+	try {
+		return annullaMandato(userContext, mandato, null, true,riemissione);
+	} catch (Exception e) {
+		throw handleException(mandato, e);
+	}
+	}
+
+@Override
+public MandatoBulk annullaMandato(UserContext userContext, MandatoBulk mandato,
+		CompensoOptionRequestParameter param, boolean annullaCollegati)
+		throws ComponentException {
+	try {
+		return annullaMandato(userContext, mandato, param, true,false);
+	} catch (Exception e) {
+		throw handleException(mandato, e);
+	}
+}
+public SQLBuilder selectV_man_revByClause( UserContext userContext, MandatoBulk bulk, V_mandato_reversaleBulk v_man_rev, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+{
+	SQLBuilder sql = getHome( userContext, V_mandato_reversaleBulk.class ).createSQLBuilder();
+	sql.addClause( "AND", "cd_tipo_documento_cont", sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN );
+    sql.addClause( "AND", "esercizio", sql.EQUALS, bulk.getEsercizio() );
+	sql.addClause( "AND", "cd_cds", sql.EQUALS, bulk.getCd_cds() );
+	sql.addClause( "AND", "cd_unita_organizzativa", sql.EQUALS, ((CNRUserContext) userContext).getCd_unita_organizzativa() );
+	sql.addClause( "AND", "ti_documento_cont", sql.NOT_EQUALS, MandatoBulk.TIPO_REGOLARIZZAZIONE );		
+	sql.addClause( "AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_EMESSO );
+	sql.addSQLClause( "AND", "dt_trasmissione" , sql.ISNULL, null );		
+	sql.addClause( clauses );
+	return sql;
+}
+public Boolean esisteAnnullodaRiemettereNonCollegato(UserContext userContext,
+		Integer esercizio, String cds ) throws ComponentException {
+	try{
+		SQLBuilder sql = getHome( userContext, MandatoIBulk.class ).createSQLBuilder();
+		sql.addClause( "AND", "esercizio", sql.EQUALS,esercizio);
+		sql.addClause( "AND", "cd_cds", sql.EQUALS,cds );
+		sql.addClause( "AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO );	
+		sql.addSQLClause( "AND", "pg_mandato_riemissione" , sql.ISNULL, null );
+		sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
+		if(sql.executeCountQuery(getConnection(userContext))>0) 
+			return Boolean.TRUE;
+		else
+			return Boolean.FALSE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
+public Boolean isMandatoCollegatoAnnullodaRiemettere(UserContext userContext,
+		 MandatoBulk mandato ) throws ComponentException {
+	try{
+		SQLBuilder sql = getHome( userContext, MandatoIBulk.class ).createSQLBuilder();
+		sql.addClause( "AND", "esercizio", sql.EQUALS,mandato.getEsercizio());
+		sql.addClause( "AND", "cd_cds", sql.EQUALS,mandato.getCd_cds() );
+		sql.addClause( "AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO );	
+		sql.addSQLClause( "AND", "pg_mandato_riemissione" ,sql.EQUALS,mandato.getPg_mandato());
+		sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
+		sql.addClause("AND", "stato_trasmissione_annullo", sql.NOT_EQUALS, MandatoBulk.STATO_TRASMISSIONE_TRASMESSO );
+		if(sql.executeCountQuery(getConnection(userContext))>0) 
+			return Boolean.TRUE;
+		else
+			return Boolean.FALSE;
 	} catch (Exception e) {
 		throw handleException(e);
 	}

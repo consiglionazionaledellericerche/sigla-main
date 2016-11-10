@@ -25,6 +25,12 @@
 		tableName="V_MANDATO_REVERSALE_DIST_SEPA"
 		extends="default" >
 	</columnMap>
+	<columnMap
+		name="V_MANDATO_REVERSALE_DIST_ANN"
+		tableName="V_MANDATO_REVERSALE_DIST_ANN"
+		extends="default" >
+	</columnMap>
+	
 	<persistentProperty
 		name="terzo" />
 </SQLPersistentInfo>
