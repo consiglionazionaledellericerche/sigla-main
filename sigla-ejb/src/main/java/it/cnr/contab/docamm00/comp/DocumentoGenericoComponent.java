@@ -711,6 +711,7 @@ private void basicAggiornaLetteraPagamentoEstero(
 		else {
 			lettera.getSospeso().setIm_ass_mod_1210(impAssDoc1210);
 			lettera.getSospeso().setToBeUpdated();
+			
 		}
 	}
 }
@@ -2560,17 +2561,30 @@ private void eliminaDocumento(UserContext aUC,Documento_genericoBulk documento)
 
 public Documento_genericoBulk eliminaLetteraPagamentoEstero(
 	UserContext context,
-	Documento_genericoBulk docGen)
+	Documento_genericoBulk docGen,boolean cancella)
 	throws ComponentException {
-
+	
 	if (docGen != null &&
 		docGen.getLettera_pagamento_estero() != null) {
 
 		Lettera_pagam_esteroBulk lettera = docGen.getLettera_pagamento_estero();
 		try {
-			basicAggiornaLetteraPagamentoEstero(context, lettera, null);
-			lettera.setToBeDeleted();
-			makeBulkPersistent(context, lettera);
+			
+			if(cancella){
+				basicAggiornaLetteraPagamentoEstero(context, lettera, null);
+				lettera.setToBeDeleted();
+				makeBulkPersistent(context, lettera);
+			}else{
+				java.sql.Timestamp dataAnnullamento = getHome(context, docGen).getServerDate();
+				lettera.setToBeUpdated();
+				lettera.setDt_cancellazione(dataAnnullamento);
+				if(lettera.getSospeso()!=null){
+					liberaSospeso(context, lettera.getSospeso());
+					lettera.setSospeso(null);
+				}
+				makeBulkPersistent(context, lettera);
+			}
+					
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw handleException(lettera, e);
 		}
@@ -5992,4 +6006,52 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_el
 		throw new ApplicationException(ex);
 	}
 }
+public TerzoBulk getTerzoUnivoco(UserContext userContext,Documento_genericoBulk documento) throws ComponentException {
+
+        TerzoBulk terzo= null;
+        Integer cd_terzo =null;
+    	List terziCol;
+    try {
+    	Documento_generico_rigaHome home=(Documento_generico_rigaHome)getHome( userContext, Documento_generico_rigaBulk.class );
+    	SQLBuilder sql = home.createSQLBuilder();
+    	sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, documento.getCd_cds() );
+		sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, documento.getCd_unita_organizzativa() );
+		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, documento.getEsercizio() );
+		sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, documento.getCd_tipo_documento_amm() );
+		sql.addClause(FindClause.AND, "pg_documento_generico", SQLBuilder.EQUALS, documento.getPg_documento_generico() );
+		if(sql.executeCountQuery(connection)==0)
+			return null;
+		else
+			terziCol=home.fetchAll(sql);
+			cd_terzo=((Documento_generico_rigaBulk)terziCol.get(0)).getCd_terzo();
+		for(Iterator i=terziCol.iterator();i.hasNext();){
+			Documento_generico_rigaBulk riga=(Documento_generico_rigaBulk)i.next();
+			if (riga.getCd_terzo().compareTo(cd_terzo)!=0)
+				cd_terzo=null;
+		}
+			 if(cd_terzo!=null){
+				 it.cnr.jada.bulk.BulkHome homet= getHome(userContext, TerzoBulk.class);
+				 it.cnr.jada.persistency.sql.SQLBuilder sql_terzo= homet.createSQLBuilder();
+				 sql_terzo.addClause("AND", "cd_terzo", sql.EQUALS, cd_terzo);
+	
+				 it.cnr.jada.persistency.Broker broker= homet.createBroker(sql_terzo);
+				 if (!broker.next())
+					 return null;
+	
+				 terzo= (TerzoBulk) broker.fetch(TerzoBulk.class);
+				 broker.close();
+			 }
+    } catch (it.cnr.jada.persistency.PersistencyException e) {
+        handleException(e);
+    } catch (java.sql.SQLException e) {
+        handleException(e);
+	}
+    return terzo;
+}
+	public Documento_genericoBulk eliminaLetteraPagamentoEstero(
+			UserContext context,
+			Documento_genericoBulk docGen) throws ComponentException{
+		return eliminaLetteraPagamentoEstero(context,docGen,true);
+	}
+	
 }

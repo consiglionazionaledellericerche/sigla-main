@@ -296,6 +296,7 @@
 			<init-param name="printbp" value="OfflineReportPrintBP" />
 			<init-param name="flusso" value="false" />
 			<init-param name="sepa" value="false" />	
+			<init-param name="annulli" value="false" />	
 	</businessProcess>
   <businessProcess
 		name="CRUDDistintaCassiere1210BP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiere1210BP">
@@ -475,6 +476,7 @@
 			<init-param name="printbp" value="OfflineReportPrintBP" />
 			<init-param name="flusso" value="true" />	
 			<init-param name="sepa" value="false" />	
+			<init-param name="annulli" value="false" />	
 	</businessProcess>
 	 <businessProcess
 		name="CRUDDistintaCassiereSBP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
@@ -484,6 +486,18 @@
 			<init-param name="defaultAction" value="CRUDDistintaCassiereAction" />
 			<init-param name="printbp" value="OfflineReportPrintBP" />
 			<init-param name="flusso" value="false"/>
-			<init-param name="sepa" value="true" />	
+			<init-param name="sepa" value="true" />
+			<init-param name="annulli" value="false" />		
+	</businessProcess>
+	<businessProcess
+		name="CRUDDistintaCassiereABP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
+		<forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
+			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
+			<init-param name="defaultAction" value="CRUDDistintaCassiereAction" />
+			<init-param name="printbp" value="OfflineReportPrintBP" />
+			<init-param name="flusso" value="false"/>
+			<init-param name="sepa" value="false" />
+			<init-param name="annulli" value="true" />		
 	</businessProcess>
 </action-mappings>
