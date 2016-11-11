@@ -21,6 +21,7 @@ import it.cnr.contab.utenze00.ejb.AssBpAccessoComponentSession;
 import it.cnr.contab.util.rest.BasicAuthentication;
 import it.cnr.contab.util.servlet.JSONRequest.Clause;
 import it.cnr.contab.util.servlet.JSONRequest.OrderBy;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.UserInfo;
@@ -101,7 +102,8 @@ public class RESTServlet extends HttpServlet{
     	            if (command.equals(COMMAND_POST)) {
     	            	jsonRequest = new Gson().fromJson(new JsonParser().parse(req.getReader()), JSONRequest.class);
     	            	if (actionmapping.needExistingSession()) {
-    			            httpactioncontext.setUserContext(getContextFromRequest(jsonRequest, utente.getCd_utente(), httpactioncontext.getSessionId(), req));
+    			            httpactioncontext.setUserContext(BasicAuthentication.getContextFromRequest(jsonRequest, utente.getCd_utente(), httpactioncontext.getSessionId()));
+    	                    logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Context: Anno:" + jsonRequest.getContext().getEsercizio() + ", CDS:"+ jsonRequest.getContext().getCd_cds() + ", UO:"+ jsonRequest.getContext().getCd_unita_organizzativa() + ", CDR:"+ jsonRequest.getContext().getCd_cdr());
     			            httpactioncontext.setUserInfo(getUserInfo(utente, (CNRUserContext) httpactioncontext.getUserContext()));	            		            		
     	            	} else {
     	            		httpactioncontext.setUserContext(new RESTUserContext());
@@ -369,27 +371,6 @@ public class RESTServlet extends HttpServlet{
 		}
 		return cnrUserInfo;
 	}
-	private CNRUserContext getContextFromRequest(JSONRequest jsonRequest, String user, String sessionId, HttpServletRequest req) throws IOException, ApplicationException {
-		if (jsonRequest != null && jsonRequest.getContext() != null) {
-			if (jsonRequest.getContext().getEsercizio() == null)
-				throw new ApplicationException("Esercizio non puo essere vuoto");
-			if (jsonRequest.getContext().getCd_cds() == null)
-				throw new ApplicationException("Il codice del CdS non puo essere vuoto");
-			if (jsonRequest.getContext().getCd_unita_organizzativa() == null)
-				throw new ApplicationException("Il codice della UO non puo essere vuoto");
-			if (jsonRequest.getContext().getCd_cdr() == null)
-				throw new ApplicationException("Il codice del CdR non puo essere vuoto");
-
-            logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Context: Anno:" + jsonRequest.getContext().getEsercizio() + ", CDS:"+ jsonRequest.getContext().getCd_cds() + ", UO:"+ jsonRequest.getContext().getCd_unita_organizzativa() + ", CDR:"+ jsonRequest.getContext().getCd_cdr());
-			return new CNRUserContext(user, sessionId, jsonRequest.getContext().getEsercizio(), 
-					jsonRequest.getContext().getCd_unita_organizzativa(), 
-					jsonRequest.getContext().getCd_cds(), 
-					jsonRequest.getContext().getCd_cdr());			
-		} else {
-			throw new ApplicationException("E' necessario valorizzare il contesto utente.");
-		}
-	}
-    
 	@Override
 	public void init() throws ServletException {
 		super.init();
