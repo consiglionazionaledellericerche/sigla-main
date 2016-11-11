@@ -25,21 +25,6 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
-	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
@@ -75,6 +60,7 @@ SELECT A.ESERCIZIO ESERCIZIO_VAR, A.PG_VARIAZIONE_PDG PG_VAR, B.DS_VARIAZIONE DS
 FROM PDG_VARIAZIONE_RIGA_GEST A, PDG_VARIAZIONE B
 WHERE A.ESERCIZIO = B.ESERCIZIO
 AND   A.PG_VARIAZIONE_PDG = B.PG_VARIAZIONE_PDG
+AND   B.STATO IN ('APP','APF')
 AND   A.TI_GESTIONE = $P{P_TIPO}
 and   A.ESERCIZIO <= $P{P_ESERCIZIO}
 and   A.ESERCIZIO = NVL($P{P_ESERCIZIO_RES}, A.ESERCIZIO)
@@ -82,22 +68,23 @@ and   A.CD_CDR_ASSEGNATARIO = $P{P_CENTRO_RESPONSABILITA}
 and   A.CD_LINEA_ATTIVITA in (
     SELECT cd_linea_attivita
     FROM v_linea_attivita_valida
-    WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+    WHERE cd_centro_responsabilita = A.CD_CDR_ASSEGNATARIO
     AND   pg_progetto=$P{P_PG_PROGLIV2}
     AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
 and   ($P{P_VOCE} IS NULL or
       NVL((SELECT C.CD_ELEMENTO_VOCE_NEW
            FROM ass_evold_evnew C
-           WHERE C.esercizio_old = A.ESERCIZIO
-           AND   C.ti_gestione_old = A.TI_GESTIONE
+           WHERE C.ti_gestione_old = A.TI_GESTIONE
            AND   C.cd_elemento_voce_old = A.CD_ELEMENTO_VOCE
            AND   C.esercizio_new = $P{P_ESERCIZIO}
-           AND   C.ti_gestione_new = A.TI_GESTIONE),A.CD_ELEMENTO_VOCE) = $P{P_VOCE})
+           AND   C.ti_gestione_new = A.TI_GESTIONE
+           AND   rownum < 2), A.CD_ELEMENTO_VOCE) = $P{P_VOCE})
 UNION ALL
 SELECT A.ESERCIZIO_RES ESERCIZIO_RES, A.PG_VARIAZIONE PG_VAR, B.DS_VARIAZIONE, NVL(A.IM_VARIAZIONE,0) IM_VOCE
 FROM VAR_STANZ_RES_RIGA A, VAR_STANZ_RES B
 WHERE A.ESERCIZIO = B.ESERCIZIO
 AND   A.PG_VARIAZIONE = B.PG_VARIAZIONE
+AND   B.STATO IN ('APP','APF')
 AND   A.TI_GESTIONE = $P{P_TIPO}
 and   A.ESERCIZIO <= $P{P_ESERCIZIO}
 and   A.ESERCIZIO_RES = NVL($P{P_ESERCIZIO_RES}, A.ESERCIZIO_RES)
@@ -105,17 +92,17 @@ and   A.CD_CDR = $P{P_CENTRO_RESPONSABILITA}
 and   A.CD_LINEA_ATTIVITA in (
     SELECT cd_linea_attivita
     FROM v_linea_attivita_valida
-    WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+    WHERE cd_centro_responsabilita = A.CD_CDR
     AND   pg_progetto=$P{P_PG_PROGLIV2}
     AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
 and   ($P{P_VOCE} IS NULL or
       NVL((SELECT C.CD_ELEMENTO_VOCE_NEW
            FROM ass_evold_evnew C
-           WHERE C.esercizio_old = A.ESERCIZIO
-           AND   C.ti_gestione_old = A.TI_GESTIONE
+           WHERE C.ti_gestione_old = A.TI_GESTIONE
            AND   C.cd_elemento_voce_old = A.CD_ELEMENTO_VOCE
            AND   C.esercizio_new = $P{P_ESERCIZIO}
-           AND   C.ti_gestione_new = A.TI_GESTIONE),A.CD_ELEMENTO_VOCE) = $P{P_VOCE})) A
+           AND   C.ti_gestione_new = A.TI_GESTIONE
+           AND   rownum < 2), A.CD_ELEMENTO_VOCE) = $P{P_VOCE})) A
 GROUP BY  A.ESERCIZIO_VAR, A.PG_VAR, A.DS_VAR]]>
 	</queryString>
 	<field name="ESERCIZIO_VAR" class="java.math.BigDecimal"/>

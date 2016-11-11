@@ -1122,35 +1122,17 @@ $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 				<subreportParameter name="P_TIPO">
 					<subreportParameterExpression><![CDATA[$F{TIPO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="NOME_EST">
-					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO_FORNITORE">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_PG_PROGLIV2">
 					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="PATH_LOGO1">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="UTENTE">
-					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_CENTRO_RESPONSABILITA">
 					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DESCR_AGG_ENTE">
-					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_VOCE">
 					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_VOCE})?$F{CD_ELEMENTO_VOCE}:null]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_ESERCIZIO_RES">
 					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_ANNO})?$F{ESERCIZIO_RES}:null]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_DETAIL">
-					<subreportParameterExpression><![CDATA[$P{P_DETAIL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_GAE">
 					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}:null]]></subreportParameterExpression>
@@ -1174,35 +1156,17 @@ $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 				<subreportParameter name="P_TIPO">
 					<subreportParameterExpression><![CDATA[$F{TIPO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="NOME_EST">
-					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO_FORNITORE">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_PG_PROGLIV2">
 					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="PATH_LOGO1">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="UTENTE">
-					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_CENTRO_RESPONSABILITA">
 					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DESCR_AGG_ENTE">
-					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_VOCE">
 					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_VOCE})?$F{CD_ELEMENTO_VOCE}:null]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_ESERCIZIO_RES">
 					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_ANNO})?$F{ESERCIZIO_RES}:null]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_DETAIL">
-					<subreportParameterExpression><![CDATA[$P{P_DETAIL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_GAE">
 					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}:null]]></subreportParameterExpression>
