@@ -1,9 +1,9 @@
 package it.cnr.contab.util.rest;
 
-public class JSONRequest {
+public class JSONRESTRequest {
 	private Context context;
 	
-	public JSONRequest() {
+	public JSONRESTRequest() {
 		super();
 	}
 	public Context getContext() {
