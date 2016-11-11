@@ -26,11 +26,6 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloBulk;
 import it.cnr.jada.UserContext;
 
-/**
- * @author Edward P. Legaspi
- * 
- *         http://java.dzone.com/articles/java-ee-7-and-jax-rs-20
- **/
 @Provider
 public class RESTSecurityInterceptor implements
 		javax.ws.rs.container.ContainerRequestFilter,

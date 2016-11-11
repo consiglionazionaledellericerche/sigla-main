@@ -1,13 +1,13 @@
 package it.cnr.contab.util.servlet;
 
+import it.cnr.contab.util.rest.JSONRESTRequest;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.util.List;
 
-public class JSONRequest {
+public class JSONRequest extends JSONRESTRequest{
 	private Integer activePage;
 	private Integer maxItemsPerPage;
-	private Context context;
 	private List<OrderBy> orderBy;
 	private List<Clause> clauses;
 	
@@ -26,12 +26,6 @@ public class JSONRequest {
 	public void setMaxItemsPerPage(Integer maxItemsPerPage) {
 		this.maxItemsPerPage = maxItemsPerPage;
 	}
-	public Context getContext() {
-		return context;
-	}
-	public void setContext(Context context) {
-		this.context = context;
-	}
 	public List<OrderBy> getOrderBy() {
 		return orderBy;
 	}
@@ -46,38 +40,6 @@ public class JSONRequest {
 		this.clauses = clauses;
 	}
 
-	public static class Context {
-		private Integer esercizio;
-		private String cd_cds, cd_unita_organizzativa, cd_cdr;
-		
-		public Context() {
-			super();
-		}
-		public Integer getEsercizio() {
-			return esercizio;
-		}
-		public void setEsercizio(Integer esercizio) {
-			this.esercizio = esercizio;
-		}
-		public String getCd_cds() {
-			return cd_cds;
-		}
-		public void setCd_cds(String cd_cds) {
-			this.cd_cds = cd_cds;
-		}
-		public String getCd_unita_organizzativa() {
-			return cd_unita_organizzativa;
-		}
-		public void setCd_unita_organizzativa(String cd_unita_organizzativa) {
-			this.cd_unita_organizzativa = cd_unita_organizzativa;
-		}
-		public String getCd_cdr() {
-			return cd_cdr;
-		}
-		public void setCd_cdr(String cd_cdr) {
-			this.cd_cdr = cd_cdr;
-		}		
-	}
 	public static class OrderBy {
 		String name, type;
 
