@@ -1,6 +1,9 @@
 package it.cnr.contab.prevent01.comp;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +19,7 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.pdg00.ejb.CostiDipendenteComponentSession;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrBulk;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrHome;
@@ -33,6 +37,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
+import it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
@@ -48,6 +53,7 @@ import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -57,7 +63,7 @@ import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
-public class PdgAggregatoModuloComponent extends CRUDComponent {
+public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrintMgr {
 /**
  * PdgAggregatoComponent constructor comment.
  */
@@ -928,4 +934,50 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 			throw handleException(e);
 		}
 	}
+
+	@Override
+	public OggettoBulk inizializzaBulkPerStampa(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+		return oggettobulk;
+	}
+
+	@Override
+	public OggettoBulk stampaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+		return oggettobulk;
+	}
+	
+	public void stampaBilancioCallAggiornaDati(UserContext userContext, Stampa_pdgp_bilancioBulk bulk, 
+			boolean aggPrevAC, boolean aggResiduiAC, boolean aggResiduiAP, boolean aggCassaAC) throws it.cnr.jada.comp.ComponentException {
+		try
+		{
+			LoggableStatement cs = new LoggableStatement(getConnection( userContext ), 
+				"call " +
+				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +			
+				"PRC_LOAD_TABLE_STAMPA_BILANCIO(?, ?, ?, ?, ?, ?, ?)",false,this.getClass());
+				try
+				{
+					cs.setInt( 1, bulk.getEsercizio().intValue());
+					cs.setString( 2, aggPrevAC?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 3, aggResiduiAC?String.valueOf("Y"):String.valueOf("N"));
+					cs.setString( 4, aggResiduiAP?String.valueOf("Y"):String.valueOf("N"));
+					cs.setString( 5, aggCassaAC?String.valueOf("Y"):String.valueOf("N"));
+					cs.setInt( 6, bulk.getPercCassa()!=null?bulk.getPercCassa():Integer.valueOf(0).intValue());
+					cs.setString( 7, userContext.getUser());
+
+					cs.executeQuery();
+				}
+				catch ( SQLException e )
+				{
+					throw handleException( e );
+				}	
+				finally
+				{
+					cs.close();
+				}
+			}
+			catch ( SQLException e )
+			{
+				throw handleException( e );
+			}	
+		}
+
 }
