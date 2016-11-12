@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="2"		
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="findCdsForPrint"
+		property="cdsForPrint"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFindCdsForPrint"
+		completeOnSave="true"
+		label="Cds" />
+	<fieldProperty
+		name="cdCdsForPrint"
+		property="cdsForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdsForPrint"
+		label="Codice CDS" />
+	<fieldProperty
+		name="dsCdsForPrint"
+		property="cdsForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione CDS" />
+	<fieldProperty
+		name="findUoForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		readonlyProperty="ROFindUoForPrint"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUoForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+	<fieldProperty
+		name="findProgettoForPrint"
+		property="progettoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		readonlyProperty="ROFindProgettoForPrint"
+		columnSet="nuovoPdg"
+		label="Progetto"/>
+	<fieldProperty
+		name="cdProgettoForPrint"
+		property="progettoForPrint.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROProgettoForPrint"
+		label="Progetto"/>		
+	<fieldProperty
+		name="dsProgettoForPrint"
+		property="progettoForPrint.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Descrizione Progetto" />	
+	<fieldProperty
+		name="findGaeForPrint"
+		property="gaeForPrint"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		readonlyProperty="ROFindGaeForPrint"
+		label="G.a.e." />
+	<fieldProperty
+		name="cdGaeForPrint"
+		property="gaeForPrint.cd_linea_attivita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROGaeForPrint"
+		label="G.a.e."/>		
+	<fieldProperty
+		name="dsGaeForPrint"
+		property="gaeForPrint.ds_linea_attivita"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Descrizione Gae" />	
+	<fieldProperty
+		name="printGae"
+		property="printGae"
+		inputType="CHECKBOX"
+		nullable="false"
+		command="doCheckPrintGae"
+		label="GAE" />
+	<fieldProperty
+		name="printVoce"
+		property="printVoce"
+		inputType="CHECKBOX"
+		nullable="false"
+		command="doDefault"
+		label="Voce" />
+	<fieldProperty
+		name="printAnno"
+		property="printAnno"
+		inputType="CHECKBOX"
+		nullable="false"
+		command="doDefault"
+		label="Anno" />
+	<fieldProperty
+		name="printMovimentazione"
+		property="printMovimentazione"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Movimentazione" />
+	<fieldProperty
+		name="printSoloGaeAttive"
+		property="printSoloGaeAttive"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Solo GAE movimentate nell'esercizio" />
+	<fieldProperty
+		name="ti_ordine_stampa"
+		property="ti_ordine_stampa"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		label="Ordine Stampa"
+		layout="HORIZONTAL"
+		keysProperty="ti_ordine_stampaKeys"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"/>
+
+	<formFieldProperty name="esercizio"/>
+
+	<formFieldProperty name="findCdsForPrint" />
+	<formFieldProperty name="cdCdsForPrint" />
+	<formFieldProperty name="dsCdsForPrint" />
+
+	<formFieldProperty name="findUoForPrint" />
+	<formFieldProperty name="cdUoForPrint" />
+	<formFieldProperty name="dsUoForPrint" />
+
+	<formFieldProperty name="findProgettoForPrint" />
+	<formFieldProperty name="cdProgettoForPrint" />
+	<formFieldProperty name="dsProgettoForPrint" />
+
+	<formFieldProperty name="findGaeForPrint" />
+	<formFieldProperty name="cdGaeForPrint" />
+	<formFieldProperty name="dsGaeForPrint" />
+
+	<formFieldProperty name="printGae" />
+	<formFieldProperty name="printVoce" />
+	<formFieldProperty name="printAnno" />
+	<formFieldProperty name="printMovimentazione" />
+	<formFieldProperty name="printSoloGaeAttive" />
+	<formFieldProperty name="ti_ordine_stampa" />
+
+	<printForm
+		name="/cnrpreventivo/pdg/situazione_sintetica_x_progetto.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="P_ESERCIZIO"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cdsuo"
+			property="cdsUoForPrint"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="P_UO"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="pg_progetto"
+			property="pgProgettoForPrint"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="P_PROGETTO"
+			paramTypeJR="java.lang.Integer" />	
+		<printFieldProperty 
+			name="cdGae"
+			property="cdGaeForPrint"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="P_GAE"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="printGae"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="P_PRINT_GAE"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty 
+			name="printVoce"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="P_PRINT_VOCE"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty 
+			name="printAnno"
+			parameterPosition="7"
+			parameterType="STRING"
+			paramNameJR="P_PRINT_ANNO"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty 
+			name="printMovimentazione"
+			parameterPosition="8"
+			parameterType="STRING"
+			paramNameJR="P_PRINT_MOVIMENTAZIONE"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty 
+			name="printSoloGaeAttive"
+			parameterPosition="8"
+			parameterType="STRING"
+			paramNameJR="P_PRINT_SOLO_GAE_ATTIVE"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty 
+			name="ti_ordine_stampa"
+			parameterPosition="9"
+			parameterType="STRING"
+			paramNameJR="P_ORDINE"
+			paramTypeJR="java.lang.String" />
+
+	</printForm>	
+</bulkInfo>

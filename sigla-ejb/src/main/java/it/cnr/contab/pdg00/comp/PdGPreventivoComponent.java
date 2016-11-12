@@ -12,7 +12,8 @@ import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -2460,6 +2461,8 @@ public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(it.cnr.jada.UserCon
 		inizializzaBulkPerStampa(userContext, (Stampa_situazione_analitica_x_GAEBulk)bulk);
 	else if (bulk instanceof Stampa_rendiconto_finanziarioVBulk)
 		inizializzaBulkPerStampa(userContext, (Stampa_rendiconto_finanziarioVBulk)bulk);
+	else if (bulk instanceof Stampa_situazione_sintetica_x_progettoBulk)
+		inizializzaBulkPerStampa(userContext, (Stampa_situazione_sintetica_x_progettoBulk)bulk);
 	return bulk;
 }
 	
@@ -4036,6 +4039,26 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 				return sql;
 			}	
 	
+	public SQLBuilder selectCdsForPrintByClause (UserContext userContext, Stampa_situazione_sintetica_x_progettoBulk stampa, it.cnr.contab.config00.sto.bulk.CdsBulk cds, CompoundFindClause clause) throws ComponentException, PersistencyException
+	{	
+		SQLBuilder sql =  ((CdsHome) getHome(userContext, cds.getClass(),"V_CDS_VALIDO")).createSQLBuilderIncludeEnte();
+		sql.addClause( clause );
+		
+		String cd_cds_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);			
+		it.cnr.contab.config00.sto.bulk.CdsHome cds_home = (CdsHome)getHome(userContext, CdsBulk.class);
+		it.cnr.contab.config00.sto.bulk.CdsBulk	cds_scrivania = (CdsBulk)cds_home.findByPrimaryKey(new CdsBulk(cd_cds_scrivania));
+
+		if (cds_scrivania.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
+			sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+		}
+		else{
+			sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_cds());
+			sql.addClause("AND","FL_CDS",sql.EQUALS, new Boolean(true) );
+		}
+		return sql;
+	}	
+
 	public SQLBuilder selectElementoVoceForPrintByClause(UserContext userContext, Stampa_pdg_etr_speVBulk stampa, Elemento_voceBulk elementoVoce, CompoundFindClause clauses) throws ComponentException {
 
 		Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, elementoVoce);
@@ -4182,6 +4205,45 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 				
 				}		
 
+	public SQLBuilder selectUoForPrintByClause (CNRUserContext userContext,  Stampa_situazione_sintetica_x_progettoBulk stampa, Unita_organizzativaBulk uo, CompoundFindClause clause) throws ComponentException, PersistencyException {	
+		String cd_cds_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);
+		it.cnr.contab.config00.sto.bulk.CdsHome cds_home = (CdsHome)getHome(userContext, CdsBulk.class);
+		it.cnr.contab.config00.sto.bulk.CdsBulk	cds_scrivania = (CdsBulk)cds_home.findByPrimaryKey(new CdsBulk(cd_cds_scrivania));
+
+		if (clause == null) 
+			clause = uo.buildFindClauses(null);
+
+		SQLBuilder sql = ((Unita_organizzativaHome) getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA")).createSQLBuilderEsteso();
+		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+		sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, stampa.getCdCdsForPrint()!=null?stampa.getCdCdsForPrint():"*");
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql;
+	}		
+
+	public SQLBuilder selectGaeForPrintByClause(UserContext userContext, Stampa_situazione_sintetica_x_progettoBulk stampa, it.cnr.contab.config00.latt.bulk.WorkpackageBulk gae, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		if (clause == null) 
+			clause = ((OggettoBulk)gae).buildFindClauses(null);
+		
+		SQLBuilder sql = getHome(userContext,gae, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
+		if (clause != null) 
+			sql.addClause(clause);
+		
+		sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+
+		if (stampa.getPgProgettoForPrint()!=null) 
+			sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, stampa.getPgProgettoForPrint());
+
+		sql.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
+		sql.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO");
+		sql.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_ROOT", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA");
+
+		sql.addSQLClause("AND", "V_STRUTTURA_ORGANIZZATIVA.CD_TIPO_LIVELLO", SQLBuilder.EQUALS, V_struttura_organizzativaHome.LIVELLO_CDR);
+		sql.addSQLClause("AND", "V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, stampa.getCdUoForPrint());
+
+		return sql;
+	}
 //^^@@
 /** 
   *  Normale
@@ -4262,7 +4324,6 @@ public SQLBuilder selectCdrForPrintByClause (UserContext userContext, Stampa_sit
 	 	 aSQL.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,stampa.getCdUoForPrint());
 	 	return aSQL; 
 	}
-
 
 //^^@@
 /** 
@@ -4665,11 +4726,77 @@ private boolean isCdsEnte(UserContext userContext) throws ComponentException {
 	}
 }
 	
-	
-
+public SQLBuilder selectCentro_responsabilitaByClause (UserContext userContext,
+			Stampa_situazione_sintetica_x_progettoBulk stampa,
+			CdrBulk cdr,
+			CompoundFindClause clause) throws ComponentException, PersistencyException {
+	SQLBuilder aSQL = (listaCdrPdGPerUtente (userContext));
+	if(clause != null)
+		aSQL.addClause(clause);
+	return aSQL; 
 }	
+
+public SQLBuilder selectProgettoForPrintByClause (UserContext userContext, Stampa_situazione_sintetica_x_progettoBulk stampa, ProgettoBulk progetto, CompoundFindClause clause) throws ComponentException, PersistencyException
+{	
+	ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+	SQLBuilder sql = progettohome.createSQLBuilder();
+	sql.addClause( clause );
+	sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+	sql.addSQLClause("AND", "V_PROGETTO_PADRE.TIPO_FASE", sql.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+	sql.addSQLClause("AND", "V_PROGETTO_PADRE.LIVELLO", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 	
+	if (stampa.getGaeForPrint()!=null && stampa.getGaeForPrint().getPg_progetto()!=null) 
+		sql.addSQLClause("AND", "V_PROGETTO_PADRE.PG_PROGETTO", SQLBuilder.EQUALS, stampa.getGaeForPrint().getPg_progetto());
+	
+	// Se uo 999.000 in scrivania: visualizza tutti i progetti
+	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 
+	SQLBuilder sqlAbilitazioni;
+	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+		sqlAbilitazioni = progettohome.abilitazioniCommesse(userContext);
+		if (stampa.getCdUoForPrint()!=null)
+			sqlAbilitazioni.addSQLClause("AND", "V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA", sql.EQUALS, stampa.getCdUoForPrint());
+	} else {
+		ProgettoHome progettoAbilhome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_ABIL_PROGETTI");    	
+		sqlAbilitazioni = progettoAbilhome.createSQLBuilder();
+		sqlAbilitazioni.addSQLJoin("V_ABIL_PROGETTI.ESERCIZIO_COMMESSA","V_PROGETTO_PADRE.ESERCIZIO");
+		sqlAbilitazioni.addSQLJoin("V_ABIL_PROGETTI.PG_COMMESSA","V_PROGETTO_PADRE.PG_PROGETTO");
+		sqlAbilitazioni.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_COMMESSA","V_PROGETTO_PADRE.TIPO_FASE");
+		sqlAbilitazioni.addSQLClause("AND","V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,stampa.getCdUoForPrint());
+
+	}
+	sql.addSQLExistsClause("AND",sqlAbilitazioni);
+	
+	return sql;
+}	
+
+private void inizializzaBulkPerStampa(UserContext userContext, Stampa_situazione_sintetica_x_progettoBulk stampa) throws ComponentException {
+	stampa.setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+	try{
+		String cdCds = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);
+		String cdUo = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
 		
+		CdsHome cdsHome = (CdsHome)getHome(userContext, CdsBulk.class);
+		CdsBulk cds = (CdsBulk)cdsHome.findByPrimaryKey(new CdsBulk(cdCds));
+		Unita_organizzativaBulk uo = (Unita_organizzativaBulk) getHome( userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdUo));
+		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 
+		stampa.setCdsForPrintEnabled(true);
+		stampa.setUoForPrintEnabled(true);
+		stampa.setProgettoForPrintEnabled(true);
+		stampa.setGaeForPrintEnabled(true);
+		stampa.setTi_ordine_stampa(Stampa_situazione_sintetica_x_progettoBulk.TI_ORDINE_GAE_VOCE_ANNO);
 
+		if (!Tipo_unita_organizzativaHome.TIPO_UO_ENTE.equals(uo.getCd_tipo_unita())){
+			stampa.setCdsForPrint(cds);
+			stampa.setCdsForPrintEnabled(false);
+			if (!uo.getFl_uo_cds().equals(Boolean.TRUE)) {
+				stampa.setUoForPrint(uo);
+				stampa.setUoForPrintEnabled(false);
+			}
+		}
+	} catch (it.cnr.jada.persistency.PersistencyException pe){
+		throw new ComponentException(pe);
+	}	
+}	
+}

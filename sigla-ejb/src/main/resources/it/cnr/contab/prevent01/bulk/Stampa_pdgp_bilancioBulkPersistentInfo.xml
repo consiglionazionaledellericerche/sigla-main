@@ -1,0 +1,5 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.stampa_pdgp_bilancioBulk"
+	homeClassName="it.cnr.contab.pdg00.prevent01.stampa_pdgp_bilancioHome" >
+
+</SQLPersistentInfo>
