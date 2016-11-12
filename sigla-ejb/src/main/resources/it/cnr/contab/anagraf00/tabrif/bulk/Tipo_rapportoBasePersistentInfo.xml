@@ -47,6 +47,13 @@
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_VISIBILE_A_TUTTI"
+			propertyName="fl_visibile_a_tutti"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
 			columnName="CD_TRATTAMENTO"
 			propertyName="cd_trattamento"
 			sqlTypeName="VARCHAR"
@@ -85,6 +92,8 @@
 		name="fl_inquadramento" />
 	<persistentProperty
 		name="fl_bonus" />
+	<persistentProperty
+		name="fl_visibile_a_tutti" />	
 	<persistentProperty
 		name="cd_trattamento" />			
 	<persistentProperty
