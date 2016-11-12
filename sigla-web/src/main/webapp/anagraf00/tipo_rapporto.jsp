@@ -50,6 +50,10 @@
 	<td><% bp.getController().writeFormLabel(out,"fl_bonus"); %></td>
 	<td><% bp.getController().writeFormInput(out,"fl_bonus"); %></td>
   </tr>
+  <tr>
+	<td><% bp.getController().writeFormLabel(out,"fl_visibile_a_tutti"); %></td>
+	<td><% bp.getController().writeFormInput(out,"fl_visibile_a_tutti"); %></td>
+  </tr>
 </table>
 
 <% bp.closeFormWindow(pageContext); %>
