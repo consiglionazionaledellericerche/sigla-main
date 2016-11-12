@@ -1390,7 +1390,19 @@ public java.util.List findListaGAEFEWS(UserContext userContext,String cdr,Intege
 				sqlVarPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
 			sqlVarPDG.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
 
-			return sqlVarPDG.executeExistsQuery(getConnection(userContext));
+			if (sqlVarPDG.executeExistsQuery(getConnection(userContext)))
+				return true;
+
+			//Controllo Var_stanz_res_riga
+			Var_stanz_res_rigaHome homeVarResPDG =  (Var_stanz_res_rigaHome)getHome(userContext, Var_stanz_res_rigaBulk.class);
+			SQLBuilder sqlVarResPDG = homeVarResPDG.createSQLBuilder();
+			if (ante2015)
+				sqlVarResPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
+			else
+				sqlVarResPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
+			sqlVarResPDG.addClause(FindClause.AND, "linea_di_attivita", SQLBuilder.EQUALS, gae);
+
+			return sqlVarResPDG.executeExistsQuery(getConnection(userContext));
 		} else {
 			Pdg_modulo_entrate_gestHome homePDG =  (Pdg_modulo_entrate_gestHome)getHome(userContext, Pdg_modulo_entrate_gestBulk.class);
 			SQLBuilder sqlPDG = homePDG.createSQLBuilder();
@@ -1412,7 +1424,19 @@ public java.util.List findListaGAEFEWS(UserContext userContext,String cdr,Intege
 				sqlVarPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
 			sqlVarPDG.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
 
-			return sqlVarPDG.executeExistsQuery(getConnection(userContext));
+			if (sqlVarPDG.executeExistsQuery(getConnection(userContext)))
+				return true;
+
+			//Controllo Var_stanz_res_riga
+			Var_stanz_res_rigaHome homeVarResPDG =  (Var_stanz_res_rigaHome)getHome(userContext, Var_stanz_res_rigaBulk.class);
+			SQLBuilder sqlVarResPDG = homeVarResPDG.createSQLBuilder();
+			if (ante2015)
+				sqlVarResPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
+			else
+				sqlVarResPDG.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
+			sqlVarResPDG.addClause(FindClause.AND, "linea_di_attivita", SQLBuilder.EQUALS, gae);
+
+			return sqlVarResPDG.executeExistsQuery(getConnection(userContext));
 		}
 	}
 }
