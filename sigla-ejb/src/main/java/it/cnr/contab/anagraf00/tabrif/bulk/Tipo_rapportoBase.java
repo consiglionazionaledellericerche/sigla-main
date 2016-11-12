@@ -17,6 +17,9 @@ public class Tipo_rapportoBase extends Tipo_rapportoKey implements Keyed {
 	private Boolean fl_inquadramento;
 	private Boolean fl_bonus;
 	private String cd_trattamento;
+	// FL_VISIBILE_A_TUTTI CHAR(1) NOT NULL
+	private java.lang.Boolean fl_visibile_a_tutti;
+
 public Tipo_rapportoBase() {
 	super();
 }
@@ -76,6 +79,12 @@ public String getCd_trattamento() {
 }
 public void setCd_trattamento(String cd_trattamento) {
 	this.cd_trattamento = cd_trattamento;
+}
+public java.lang.Boolean getFl_visibile_a_tutti() {
+	return fl_visibile_a_tutti;
+}
+public void setFl_visibile_a_tutti(java.lang.Boolean fl_visibile_a_tutti) {
+	this.fl_visibile_a_tutti = fl_visibile_a_tutti;
 }
 
 }
