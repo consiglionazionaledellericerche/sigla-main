@@ -75,7 +75,15 @@
 		enabledOnInsert="true"
 		enabledOnEdit="true"
 		enabledOnSearch="true" />
-    <form 
+	<fieldProperty
+		name="fl_visibile_a_tutti"
+		property="fl_visibile_a_tutti"
+		inputType="CHECKBOX"
+		label="Visibile a tutti"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />	
+    <form  
        name="searchtool">
        <formFieldProperty
 		 name="cd_tipo_rapporto"/>
@@ -88,6 +96,7 @@
 	<formFieldProperty name="ti_rapporto_altro" />
 	<formFieldProperty name="fl_inquadramento" />
 	<formFieldProperty name="fl_bonus" />
+	<formFieldProperty name="fl_visibile_a_tutti" />	
 	<formFieldProperty name="cd_trattamento" />
 	
 	<columnFieldProperty name="cd_tipo_rapporto" />
@@ -96,6 +105,7 @@
 	<columnFieldProperty name="ti_rapporto_altro" />
 	<columnFieldProperty name="fl_inquadramento" />
 	<columnFieldProperty name="fl_bonus" />
+	<columnFieldProperty name="fl_visibile_a_tutti" />	
 	<columnFieldProperty name="cd_trattamento" />
 	
 	<findFieldProperty name="cd_tipo_rapporto" />
@@ -106,5 +116,6 @@
 		readonlyProperty="findTipoRapportoRO" />
 	<findFieldProperty name="fl_inquadramento" />
 	<findFieldProperty name="fl_bonus" />
+	<findFieldProperty name="fl_visibile_a_tutti" />	
 	<findFieldProperty name="cd_trattamento" />
 </bulkInfo>
