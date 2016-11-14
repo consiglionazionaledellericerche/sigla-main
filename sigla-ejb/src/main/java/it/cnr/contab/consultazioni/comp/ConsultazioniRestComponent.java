@@ -1,8 +1,17 @@
 package it.cnr.contab.consultazioni.comp;
 
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 
+import javax.ejb.EJBException;
+
 import it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -25,6 +34,8 @@ import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
+import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -106,6 +117,60 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 			if ( !isUoEnte(userContext)){
 				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
 				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
+			}
+		} else if (oggettobulk instanceof Missione_tipo_spesaBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				CompoundFindClause newClauses = new CompoundFindClause();
+				Enumeration e = compoundfindclause.getClauses();
+				Enumeration e1 = compoundfindclause.getClauses();
+				SQLBuilder sqlExists = null;
+				if (isCondizioneTipiSpesaMissione(e)){
+					NazioneBulk nazioneBulk = null;
+					Timestamp dataTappa = null;
+					Long inquadramento = null;
+					Boolean ammissibileConRimborso = null;
+
+					while(e1.hasMoreElements() ){
+						SimpleFindClause clause = (SimpleFindClause) e1.nextElement();
+						int operator = clause.getOperator();
+						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
+								operator == 8192){
+							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
+							String str = (String)clause.getValue();
+							nazioneBulk = new NazioneBulk(new Long(str));
+							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
+								operator == 8192)	{
+							String str = (String)clause.getValue();
+							inquadramento = new Long(str);
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
+								operator == 8192)	{
+							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+							Date parsedDate;
+							try {
+								parsedDate = dateFormat.parse((String) clause.getValue());
+								dataTappa = new Timestamp(parsedDate.getTime());
+							} catch (ParseException e2) {
+								e2.printStackTrace();
+							}
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("ammissibileRimborso") && 
+								operator == 8192)	{
+							String str = (String)clause.getValue();
+							ammissibileConRimborso = new Boolean(str);
+
+						} else {
+							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+						}
+					}
+					if (nazioneBulk != null && dataTappa != null && inquadramento != null && ammissibileConRimborso != null){
+						try {
+							sql = missioneComponent().selectTipo_spesaByClause(userContext, dataTappa, inquadramento, nazioneBulk, ammissibileConRimborso, null, new CompoundFindClause());
+						} catch (RemoteException | EJBException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+					}
+				}
 			}
 		} else if (oggettobulk instanceof V_mandato_reversaleBulk){
 			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
@@ -214,6 +279,17 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 		return sql;
 	}
 
+	private Boolean isCondizioneTipiSpesaMissione(Enumeration e) {
+		while(e.hasMoreElements() ){
+				SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+				int operator = clause.getOperator();
+				if (clause.getPropertyName() != null && clause.getPropertyName().equals("condizioneTipiSpesaMissione") ){
+					return true;
+				}
+			}
+		return false;
+	}
+
 	private Boolean isUoEnte(UserContext userContext) throws PersistencyException, ComponentException{
 		Unita_organizzativa_enteBulk uoEnte = getUoEnte(userContext);
 		if ( ((CNRUserContext)userContext).getCd_unita_organizzativa().equals ( uoEnte.getCd_unita_organizzativa() )){
@@ -265,4 +341,8 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 	private boolean isUtenteEnte(UserContext userContext) throws ComponentException {
 			return isCdrEnte(userContext,cdrFromUserContext(userContext));
 	}	
+	private MissioneComponentSession missioneComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
+		return (MissioneComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession");
+	}
+
 }
