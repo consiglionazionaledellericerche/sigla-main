@@ -5,10 +5,13 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalMissioneComponentSession extends
@@ -1080,4 +1083,19 @@ public it.cnr.contab.config00.bulk.Parametri_cnrBulk parametriCnr(it.cnr.jada.Us
 				}
 	}
 
+	public SQLBuilder selectTipo_spesaByClause(UserContext param0, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, RemoteException, PersistencyException{
+		try {
+			return ((SQLBuilder) invoke("selectTipo_spesaByClause", new Object[] { param0, dataTappa, inquadramento, nazione, ammissibileConRimborso, tipoSpesa, clauses}));
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
 }

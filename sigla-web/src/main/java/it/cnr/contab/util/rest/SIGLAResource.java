@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -74,6 +75,10 @@ public class SIGLAResource {
         Timestamp dataTappa = new Timestamp(parsedDate.getTime());
     	List lista = missioneComponent().recuperoTipiSpesa(userContext, dataTappa, nazione, inquadramento, new Boolean (ammissibileRimborso));
     	String resp = new Gson().toJson(lista);
+    	resp = new GsonBuilder()
+                .setDateFormat("dd-MM-yyyy")
+                .create()
+                .toJson(lista);
     	ResponseBuilder rb;
 		JsonObject labels = new JsonObject();
 		try {

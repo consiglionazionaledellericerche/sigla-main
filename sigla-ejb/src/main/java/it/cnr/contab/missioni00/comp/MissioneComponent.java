@@ -3357,25 +3357,11 @@ public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTap
 	return tipoSpesaHome.fetchAll(sql);
 }
 
-private SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, PersistencyException
+public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, PersistencyException
 {
 	
 	Missione_tipo_spesaHome tipoSpesaHome = (Missione_tipo_spesaHome)getHome(aUC, Missione_tipo_spesaBulk.class);
 	SQLBuilder sql = tipoSpesaHome.createSQLBuilder();
-//	sql.resetColumns();
-//	sql.addColumn("DS_TI_SPESA");
-//	sql.addColumn("FL_GIUSTIFICATIVO_RICHIESTO");
-//	sql.addColumn("FL_RIMBORSO_KM");
-//	sql.addColumn("FL_PASTO");
-//	sql.addColumn("FL_TRASPORTO");
-//	sql.addColumn("FL_ALLOGGIO");
-//	sql.addColumn("DT_FINE_VALIDITA");
-//	sql.addColumn("DT_INIZIO_VALIDITA");
-//	sql.addColumn("CD_DIVISA");
-//	sql.addColumn("PERCENTUALE_MAGGIORAZIONE");
-//	sql.addColumn("FL_AMMISSIBILE_CON_RIMBORSO");
-//	sql.addColumn("LIMITE_MAX_SPESA");
-//	sql.addColumn("DT_CANCELLAZIONE");
 
 	sql.addClause(clauses);
 	
