@@ -136,12 +136,12 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
 								operator == 8192){
 							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
-							String str = (String)clause.getValue();
+							Integer str = (Integer)clause.getValue();
 							nazioneBulk = new NazioneBulk(new Long(str));
 							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
 						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
 								operator == 8192)	{
-							String str = (String)clause.getValue();
+							Integer str = (Integer)clause.getValue();
 							inquadramento = new Long(str);
 						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
 								operator == 8192)	{
@@ -155,8 +155,8 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 							}
 						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("ammissibileRimborso") && 
 								operator == 8192)	{
-							String str = (String)clause.getValue();
-							ammissibileConRimborso = new Boolean(str);
+							Boolean str = (Boolean)clause.getValue();
+							ammissibileConRimborso = str;
 
 						} else {
 							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
