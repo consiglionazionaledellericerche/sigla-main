@@ -115,7 +115,7 @@ AND (($P{P_FONTE}='DECSCI' AND $P{P_ESERCIZIO}=2017 AND a.FONTE = 'GESTSCI') OR
 							<textElement textAlignment="Left" verticalAlignment="Top">
 								<font isItalic="false"/>
 							</textElement>
-							<textFieldExpression><![CDATA["TOTALE GENERALE "+$F{CODICE}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["TOTALE GENERALE"]]></textFieldExpression>
 						</textField>
 					</jr:listContents>
 				</jr:list>
