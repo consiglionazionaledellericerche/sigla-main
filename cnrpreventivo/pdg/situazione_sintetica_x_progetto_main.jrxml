@@ -302,6 +302,22 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                                        FROM v_linea_attivita_valida
                                        WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
                                        AND   pg_progetto=$P{P_PG_PROGLIV2}
+                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
+         UNION ALL
+         SELECT a.esercizio, 2005 esercizio_res, 'S' tipo, a.cd_linea_attivita,
+                NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
+                     FROM ass_evold_evnew b
+                     WHERE b.ti_gestione_old = 'S'
+                     AND   b.cd_elemento_voce_old = a.cd_elemento_voce), a.cd_elemento_voce) cd_elemento_voce,
+                NVL(a.im_residuo, 0), 0 variazioni, 0 impegnato, 0 pagato
+         FROM pdg_residuo_det a
+         WHERE a.esercizio = 2005
+         AND   a.stato != 'A'
+         AND   a.cd_cdr_linea = $P{P_CENTRO_RESPONSABILITA}
+         AND   a.cd_linea_attivita in (SELECT cd_linea_attivita
+                                       FROM v_linea_attivita_valida
+                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
                                        AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))) a
       GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce) P
 WHERE (p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov>1)
