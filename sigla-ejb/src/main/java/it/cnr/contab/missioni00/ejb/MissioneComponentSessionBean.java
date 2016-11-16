@@ -1,6 +1,7 @@
 package it.cnr.contab.missioni00.ejb;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.missioni00.comp.MissioneComponent;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
@@ -951,6 +952,48 @@ public java.math.BigDecimal calcolaMinutiTappa(it.cnr.jada.UserContext param0,
 		throw uncaughtRuntimeException(param0, componentObj, e);
 	} catch (Error e) {
 		throw uncaughtError(param0, componentObj, e);
+	}
+}
+
+public java.math.BigDecimal recuperoCambio(it.cnr.jada.UserContext param0,
+		String divisa, Timestamp dataInizioMissione) throws it.cnr.jada.comp.ComponentException,
+		javax.ejb.EJBException {
+	pre_component_invocation(param0, componentObj);
+	try {
+		java.math.BigDecimal result = ((MissioneComponent) componentObj).recuperoCambio(param0,
+				divisa, dataInizioMissione);
+		component_invocation_succes(param0, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(param0, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(param0, componentObj, e);
+	}
+}
+
+public DivisaBulk recuperoDivisa(it.cnr.jada.UserContext param0, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws it.cnr.jada.comp.ComponentException{
+	pre_component_invocation(param0,componentObj);
+	try {
+		DivisaBulk result = ((MissioneComponent)componentObj).recuperoDivisa(param0, nazione, gruppoInquadramento, dataInizioMissione);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(javax.ejb.EJBException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
 	}
 }
 public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, PersistencyException{

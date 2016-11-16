@@ -1,6 +1,7 @@
 package it.cnr.contab.docamm00.tabrif.bulk;
 
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
@@ -133,8 +134,15 @@ public CambioBulk getCambio(DivisaBulk valuta, java.sql.Timestamp dataCambio) th
 	if (valuta==null || valuta.getCd_divisa()==null)
 		throw new it.cnr.jada.comp.ApplicationException("Inserire una valuta per il periodo specificato!");
 
+	return getCambio(valuta.getCd_divisa(), dataCambio);
+}
+//
+//	Data una divisa mi ritorna il cambio valido alla data specificata
+//
+public CambioBulk getCambio(String divisa, java.sql.Timestamp dataCambio)
+		throws PersistencyException, ApplicationException {
 	SQLBuilder sql = createSQLBuilder();
-	sql.addSQLClause("AND", "CD_DIVISA", sql.EQUALS, valuta.getCd_divisa());
+	sql.addSQLClause("AND", "CD_DIVISA", sql.EQUALS, divisa);
 	sql.addSQLClause("AND", "? BETWEEN DT_INIZIO_VALIDITA AND DT_FINE_VALIDITA");
 	sql.addParameter(dataCambio, java.sql.Types.TIMESTAMP, 0);
 
@@ -154,9 +162,6 @@ public CambioBulk getCambio(DivisaBulk valuta, java.sql.Timestamp dataCambio) th
 
 	return cambioValido;
 }
-//
-//	Data una divisa mi ritorna il cambio valido alla data specificata
-//
 
 public CambioBulk getCambio(it.cnr.jada.UserContext uc, DivisaBulk valuta, java.sql.Timestamp dataCambio) throws PersistencyException
 {

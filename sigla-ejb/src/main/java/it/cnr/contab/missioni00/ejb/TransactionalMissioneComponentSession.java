@@ -1,11 +1,13 @@
 package it.cnr.contab.missioni00.ejb;
 
+import java.math.BigDecimal;
 import java.rmi.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -1081,6 +1083,41 @@ public it.cnr.contab.config00.bulk.Parametri_cnrBulk parametriCnr(it.cnr.jada.Us
 						throw new java.rmi.RemoteException("Uncaugth exception", ex);
 					}
 				}
+	}
+
+	public java.math.BigDecimal recuperoCambio(UserContext param0, String divisa, Timestamp dataInizioMissione) throws RemoteException,
+					it.cnr.jada.comp.ComponentException {
+				try {
+					return ((java.math.BigDecimal) invoke("recuperoCambio", new Object[] { param0,
+							divisa, dataInizioMissione}));
+				} catch (java.rmi.RemoteException e) {
+					throw e;
+				} catch (java.lang.reflect.InvocationTargetException e) {
+					try {
+						throw e.getTargetException();
+					} catch (it.cnr.jada.comp.ComponentException ex) {
+						throw ex;
+					} catch (Throwable ex) {
+						throw new java.rmi.RemoteException("Uncaugth exception", ex);
+					}
+				}
+	}
+
+	public DivisaBulk recuperoDivisa(it.cnr.jada.UserContext param0, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (DivisaBulk)invoke("recuperoDivisa",new Object[] {
+				param0, nazione, gruppoInquadramento, dataInizioMissione});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
 	}
 
 	public SQLBuilder selectTipo_spesaByClause(UserContext param0, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, RemoteException, PersistencyException{
