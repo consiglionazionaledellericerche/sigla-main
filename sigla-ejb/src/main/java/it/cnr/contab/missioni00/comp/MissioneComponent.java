@@ -5,8 +5,8 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.*;
-import java.io.Serializable;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
@@ -22,10 +22,8 @@ import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+
 import java.util.*;
-
-import org.bouncycastle.util.Times;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -1265,8 +1263,24 @@ public void eliminaConBulk (UserContext aUC, OggettoBulk bulk) throws ComponentE
 public CambioBulk findCambio(UserContext uc, DivisaBulk divisa, java.sql.Timestamp dataCambio) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	CambioHome cambioHome = (CambioHome)getHome(uc, CambioBulk.class);
-	CambioBulk aCambio = cambioHome.getCambio(divisa, dataCambio);
+	CambioBulk aCambio = null;
+	if (divisa != null){
+		return findCambio(uc, divisa.getCd_divisa(), dataCambio);
+	} else {
+		aCambio =cambioHome.getCambio(divisa, dataCambio);
+	}
+	if(aCambio == null)
+		return null;
 
+	return aCambio;
+}
+
+public CambioBulk findCambio(UserContext uc, String divisa, java.sql.Timestamp dataCambio) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+{
+	CambioHome cambioHome = (CambioHome)getHome(uc, CambioBulk.class);
+	CambioBulk aCambio = null;
+	aCambio =cambioHome.getCambio(divisa, dataCambio);
+	
 	if(aCambio == null)
 		return null;
 
@@ -1893,16 +1907,16 @@ private DivisaBulk getDivisaDefault(UserContext aUC) throws it.cnr.jada.comp.Com
  * @return la DivisaBulk oppure null se non esiste nessuna divisa per il codice specificato
  */	
 
-private String getDivisaTappaDaDiaria(UserContext userContext, MissioneBulk missione, Missione_tappaBulk tappa) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+private String getDivisaTappaDaDiaria(UserContext userContext, Long nazione, String gruppoInqudramento, Timestamp data) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	Missione_diariaHome diariaHome = (Missione_diariaHome)getHome(userContext, Missione_diariaBulk.class);
 	Missione_diariaBulk aDiaria = new Missione_diariaBulk();
 
 	SQLBuilder sql = diariaHome.createSQLBuilder();
-	sql.addSQLClause("AND","PG_NAZIONE", sql.EQUALS, tappa.getPg_nazione());
-	sql.addSQLClause("AND","CD_GRUPPO_INQUADRAMENTO", sql.EQUALS, missione.getRif_inquadramento().getCd_gruppo_inquadramento());		
-	sql.addSQLClause("AND","DT_INIZIO_VALIDITA", sql.LESS_EQUALS, missione.getDt_inizio_missione());
-	sql.addSQLClause("AND","DT_FINE_VALIDITA", sql.GREATER_EQUALS, missione.getDt_inizio_missione());	
+	sql.addSQLClause("AND","PG_NAZIONE", sql.EQUALS, nazione);
+	sql.addSQLClause("AND","CD_GRUPPO_INQUADRAMENTO", sql.EQUALS, gruppoInqudramento);		
+	sql.addSQLClause("AND","DT_INIZIO_VALIDITA", sql.LESS_EQUALS, data);
+	sql.addSQLClause("AND","DT_FINE_VALIDITA", sql.GREATER_EQUALS, data);	
 	
 	SQLBroker broker = diariaHome.createBroker(sql);
 	if (broker.next())
@@ -3461,19 +3475,12 @@ public MissioneBulk setDivisaCambio(UserContext userContext, MissioneBulk missio
 {
 	try
 	{
-		CambioBulk cambio = null;
-		String cdDivisaDiaria = getDivisaTappaDaDiaria(userContext, missione, tappa);
-		if(cdDivisaDiaria == null)
-			throw new ApplicationException("Non trovata la divisa per la tappa !");
-		
-		DivisaBulk divisaDiaria = findDivisa(userContext, cdDivisaDiaria);
-		if(divisaDiaria == null)
-			throw new ApplicationException("Non trovata la divisa per la tappa !");
 			
-		tappa.setDivisa_tappa(divisaDiaria);
-
-		try{cambio = findCambio(userContext, tappa.getDivisa_tappa(), missione.getDt_inizio_missione());}
-		catch(ApplicationException e){}
+		tappa.setDivisa_tappa(recuperoDivisa(userContext, tappa.getPg_nazione(), missione.getRif_inquadramento().getCd_gruppo_inquadramento(), missione.getDt_inizio_missione()));
+		CambioBulk cambio = null;
+		if (tappa.getDivisa_tappa() != null){
+			cambio = getCambioDivisa(userContext, tappa.getDivisa_tappa().getCd_divisa(), missione.getDt_inizio_missione());
+		}
 		
 		if(cambio == null)
 			tappa.setCambio_tappa(null);
@@ -3487,6 +3494,55 @@ public MissioneBulk setDivisaCambio(UserContext userContext, MissioneBulk missio
 		throw handleException(ex);
 	}
 }	
+
+public DivisaBulk recuperoDivisa(UserContext userContext, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws ComponentException
+{
+	try
+	{
+		String cdDivisaDiaria = getDivisaTappaDaDiaria(userContext, nazione, gruppoInquadramento, dataInizioMissione);
+		if(cdDivisaDiaria == null)
+			throw new ApplicationException("Non trovata la divisa per la tappa !");
+		
+		DivisaBulk divisaDiaria = findDivisa(userContext, cdDivisaDiaria);
+		if(divisaDiaria == null)
+			throw new ApplicationException("Non trovata la divisa per la tappa !");
+			
+		return divisaDiaria;
+	}
+	catch(Throwable ex)
+	{
+		throw handleException(ex);
+	}
+}	
+
+public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException
+{
+	try
+	{
+		CambioBulk cambio = getCambioDivisa(userContext, divisa,dataInizioMissione);
+		
+		if(cambio == null)
+			return null;
+		else	
+			return cambio.getCambio();
+	}
+	catch(Throwable ex)
+	{
+		throw handleException(ex);
+	}
+}
+private CambioBulk getCambioDivisa(UserContext userContext, String divisa,
+		Timestamp dataInizioMissione) throws ComponentException,
+		PersistencyException {
+	CambioBulk cambio = null;
+	if (divisa == null){
+		return null;
+	}
+	try{cambio = findCambio(userContext, divisa, dataInizioMissione);}
+	catch(ApplicationException e){}
+	return cambio;
+}	
+
 /**
  * Inzializzazione tappa
  *
