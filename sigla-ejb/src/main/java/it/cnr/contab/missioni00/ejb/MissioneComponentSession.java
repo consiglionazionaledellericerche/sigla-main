@@ -1,10 +1,13 @@
 package it.cnr.contab.missioni00.ejb;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -52,4 +55,6 @@ void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, Miss
 java.math.BigDecimal calcolaMinutiTappa(it.cnr.jada.UserContext param0,it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile) throws ComponentException, java.rmi.RemoteException, PersistencyException;
 public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException,java.rmi.RemoteException, PersistencyException;
+public DivisaBulk recuperoDivisa(UserContext userContext, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
+public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
 }
