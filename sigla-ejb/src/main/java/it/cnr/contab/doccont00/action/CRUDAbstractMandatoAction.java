@@ -1,7 +1,9 @@
 package it.cnr.contab.doccont00.action;
 
 import it.cnr.contab.doccont00.core.bulk.*;
+
 import java.util.*;
+
 import it.cnr.contab.doccont00.bp.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
@@ -45,7 +47,7 @@ public Forward doAddToCRUDMain_SospesiSelezionati(ActionContext context)
 		} else {
 	//		bp.setModel(context,filtro);
 			BulkInfo bulkInfo = BulkInfo.getBulkInfo(SospesoBulk.class);
-			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");
+			ListaSospesiSpesaBP nbp = (ListaSospesiSpesaBP)context.createBusinessProcess("ListaSospesiSpesaBP");
 			nbp.setColumns( bulkInfo.getColumnFieldPropertyDictionary("SospesiMandato"));
 			nbp.setIterator(context,ri);
 			nbp.setMultiSelection( true );
@@ -95,8 +97,8 @@ public Forward doCercaSospesi(ActionContext context)
 		} else {
 	//		bp.setModel(context,filtro);
 			BulkInfo bulkInfo = BulkInfo.getBulkInfo(SospesoBulk.class);
-			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");
-			nbp.setColumns( bulkInfo.getColumnFieldPropertyDictionary("SospesiDocCont"));
+			ListaSospesiSpesaBP nbp = (ListaSospesiSpesaBP)context.createBusinessProcess("ListaSospesiSpesaBP");
+			nbp.setColumns( bulkInfo.getColumnFieldPropertyDictionary("SospesiMandato"));
 			nbp.setIterator(context,ri);
 			nbp.setMultiSelection( true );
 //			nbp.setBulkInfo(bulkInfo);

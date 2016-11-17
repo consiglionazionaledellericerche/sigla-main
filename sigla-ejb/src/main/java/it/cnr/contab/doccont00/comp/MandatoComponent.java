@@ -1554,7 +1554,7 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 		try {
 			
 			return iterator(userContext, ((SospesoHome) getHome(userContext,
-					SospesoBulk.class)).selectSospesiDiSpesa(mandato,Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()),
+					SospesoBulk.class)).selectSospesiDiSpesa(mandato,clausole,Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()),
 					SospesoBulk.class, getFetchPolicyName("find"));
 		} catch (Throwable e) {
 			throw handleException(e);
