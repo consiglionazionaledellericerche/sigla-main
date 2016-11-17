@@ -177,7 +177,7 @@ AND   SUBSTR($P{P_FONTE},-3) = 'SCI']]>
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO7S}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/stampa_pdgp_bilancio_main.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdgp_bilancio_main.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

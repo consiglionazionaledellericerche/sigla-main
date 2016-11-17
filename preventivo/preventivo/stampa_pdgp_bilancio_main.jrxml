@@ -1588,7 +1588,7 @@ ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIV
 					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["PREVENTIVO FINANZIARIO DECISIONALE LELLO"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PREVENTIVO FINANZIARIO DECISIONALE"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-184" style="VERB7" x="55" y="12" width="521" height="11" uuid="2d60c71d-837e-46fc-ac0b-9c504cac20aa"/>
