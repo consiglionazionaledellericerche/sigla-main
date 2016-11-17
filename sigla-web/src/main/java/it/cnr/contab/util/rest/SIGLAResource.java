@@ -1,11 +1,12 @@
 package it.cnr.contab.util.rest;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
@@ -29,9 +30,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoHome;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.sql.HomeCache;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 @Path("/servizirest")
 @DeclareRoles({"MISSIONI"})
@@ -39,6 +45,7 @@ import it.cnr.jada.comp.ComponentException;
 @Produces({ "application/json" })
 public class SIGLAResource {
     private final Logger log = LoggerFactory.getLogger(SIGLAResource.class);
+    public final static String DATE_FORMAT = "dd/MM/yyyy";
 
     /**
      * GET  /rest/ordineMissione -> get Ordini di missione per l'utente 
@@ -64,31 +71,99 @@ public class SIGLAResource {
 	@RolesAllowed({"MISSIONI"})
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @Path(value = "/getTipiSpesa")
-    public Response getTipiSpesa(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("nazione") Long nazione,@QueryParam("inquadramento") Long inquadramento, @QueryParam("ammissibileRimborso") String ammissibileRimborso) throws Exception {
-        log.debug("REST request per visualizzare i dati degli Ordini di Missione " );
+    @Path(value = "/getDivisa")
+    public Response getDivisa(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("nazione") Long nazione,@QueryParam("inquadramento") Long inquadramento) throws Exception {
+        log.debug("REST request per visualizzare la divisa per nazione" );
     	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
     	
     	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         Date parsedDate = dateFormat.parse(data);
         Timestamp dataTappa = new Timestamp(parsedDate.getTime());
-    	List lista = missioneComponent().recuperoTipiSpesa(userContext, dataTappa, nazione, inquadramento, new Boolean (ammissibileRimborso));
-    	String resp = new Gson().toJson(lista);
-    	resp = new GsonBuilder()
-                .setDateFormat("dd-MM-yyyy")
-                .create()
-                .toJson(lista);
+        
+		Connection conn = EJBCommonServices.getConnection(userContext);
+		HomeCache homeCache = new HomeCache(conn);			   
+		Rif_inquadramentoHome home=(Rif_inquadramentoHome)homeCache.getHome(Rif_inquadramentoBulk.class);
+		Rif_inquadramentoBulk rifInquadramento = (Rif_inquadramentoBulk)home.findByPrimaryKey(new Rif_inquadramentoBulk(inquadramento));
+        
     	ResponseBuilder rb;
-		JsonObject labels = new JsonObject();
-		try {
-			rb = Response.ok(resp);
-		} catch (Exception e) {
-			log.error("error getting json labels {}", "1", e);
-			rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
+		if (rifInquadramento != null){
+	    	DivisaBulk divisa = missioneComponent().recuperoDivisa(userContext, nazione, rifInquadramento.getCd_gruppo_inquadramento(), dataTappa);
+	    	String resp = new Gson().toJson(divisa);
+	    	resp = new GsonBuilder()
+	                .setDateFormat(DATE_FORMAT)
+	                .registerTypeAdapter(Timestamp.class, new SqlTimestampConverter())
+	                .create()
+	                .toJson(divisa);
+			try {
+				rb = Response.ok(resp);
+			} catch (Exception e) {
+				log.error("error getting json labels {}", "1", e);
+				rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
+			}
+		} else {
+			rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity("Errore! Inquadramento non esistente.");
 		}
 		return rb.build();		
 	}
+    
+    @POST
+	@RolesAllowed({"MISSIONI"})
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Path(value = "/getCambio")
+    public Response getCambio(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("divisa") String divisa) throws Exception {
+        log.debug("REST request per visualizzare la divisa per nazione" );
+    	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
+    	
+    	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Date parsedDate = dateFormat.parse(data);
+        Timestamp dataMissione = new Timestamp(parsedDate.getTime());
+        
+    	BigDecimal cambio = missioneComponent().recuperoCambio(userContext, divisa, dataMissione);
+    	String resp = new Gson().toJson(divisa);
+    	resp = new GsonBuilder()
+    			.create()
+    			.toJson(cambio);
+    	return response(resp);		
+	}
+
+    @POST
+	@RolesAllowed({"MISSIONI"})
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Path(value = "/getDivisaDefault")
+    public Response getDivisaDefault(@Context HttpServletRequest request) throws Exception {
+        log.debug("REST request per visualizzare la divisa per nazione" );
+    	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
+    	
+    	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
+        
+    	DivisaBulk divisa = missioneComponent().getDivisaDefault(userContext);
+    	String resp = new Gson().toJson(divisa);
+    	resp = new GsonBuilder()
+                .setDateFormat(DATE_FORMAT)
+                .registerTypeAdapter(Timestamp.class, new SqlTimestampConverter())
+                .create()
+                .toJson(divisa);
+    	return response(resp);		
+	}
+
+	private Response response(String resp) {
+		ResponseBuilder rb;
+		try {
+    		rb = Response.ok(resp);
+    	} catch (Exception e) {
+    		log.error("error getting json labels {}", "1", e);
+    		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
+    	}
+		return rb.build();
+	}
+    public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException{
+		return BigDecimal.ZERO;		
+    }
+
 	private MissioneComponentSession missioneComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (MissioneComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession");
 	}
@@ -97,4 +172,5 @@ public class SIGLAResource {
 		String authorization = request.getHeader("Authorization");
 		return BasicAuthentication.getUsername(authorization);
 	}
+
 }

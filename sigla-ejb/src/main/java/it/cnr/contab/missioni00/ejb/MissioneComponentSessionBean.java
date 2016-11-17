@@ -996,6 +996,25 @@ public DivisaBulk recuperoDivisa(it.cnr.jada.UserContext param0, Long nazione, S
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+public DivisaBulk getDivisaDefault(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, it.cnr.jada.persistency.PersistencyException{
+	pre_component_invocation(param0,componentObj);
+	try {
+		DivisaBulk result = ((MissioneComponent)componentObj).getDivisaDefault(param0);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(javax.ejb.EJBException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
 public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, PersistencyException{
 	
 	pre_component_invocation(aUC, componentObj);
