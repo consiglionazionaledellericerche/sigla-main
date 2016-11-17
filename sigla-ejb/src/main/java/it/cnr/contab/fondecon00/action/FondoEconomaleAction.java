@@ -1,5 +1,6 @@
 package it.cnr.contab.fondecon00.action;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
@@ -21,6 +22,7 @@ import it.cnr.jada.action.HookForward;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.FormField;
+import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelectionIterator;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
@@ -580,11 +582,26 @@ public it.cnr.jada.action.Forward doChiudiFondo(it.cnr.jada.action.ActionContext
 public it.cnr.jada.action.Forward doChiudiSpese(it.cnr.jada.action.ActionContext context) {
 
 	try {
-		return openConfirm(
-					context,
-					"Sei sicuro di voler chiudere tutte le spese del fondo economale non ancora reintegrate?",
-					it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,
-					"doConfermaChiudiSpese");
+		FondoEconomaleBP bp = (FondoEconomaleBP)getBusinessProcess(context);
+		Fondo_economaleBulk fondo = (Fondo_economaleBulk)bp.getModel();
+		
+		if (((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(context.getUserContext(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()), "*", "FONDO_ECONOMALE", "REINTEGRO_OBBLIGATORIO")!=null && 
+		   (((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(context.getUserContext(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()), "*", "FONDO_ECONOMALE", "REINTEGRO_OBBLIGATORIO").compareTo("S")==0)){
+			if(fondo.getIm_totale_spese()!= null && fondo.getIm_totale_spese().compareTo(BigDecimal.ZERO)!=0)
+				throw new it.cnr.jada.comp.ApplicationException("Prima di procedere è necessario reintegrare tutte le spese. Operazione annullata!");
+			else
+				return doConfermaChiudiSpese(context,OptionBP.YES_BUTTON);			
+		}else{
+			if(fondo.getIm_totale_spese()!= null && fondo.getIm_totale_spese().compareTo(BigDecimal.ZERO)!=0)
+				return openConfirm(
+						context,
+						"Sei sicuro di voler chiudere tutte le spese del fondo economale non ancora reintegrate?",
+						it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,
+						"doConfermaChiudiSpese");
+			else
+				return doConfermaChiudiSpese(context,OptionBP.YES_BUTTON);
+				
+		}
 	} catch (Throwable e) {
 		return handleException(context, e);
 	}
@@ -634,6 +651,7 @@ public it.cnr.jada.action.Forward doConfermaChiudiSpese(
 			fondo = session.chiudeSpese(context.getUserContext(), fondo);
 			bp.commitUserTransaction();
 			bp.edit(context, fondo);
+			bp.setMessage("Operazione Completata");
 		} catch(Throwable e) {
 			try {
 				bp.rollbackUserTransaction();
