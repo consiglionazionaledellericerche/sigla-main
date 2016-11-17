@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documenti attivi da Riscontrare"
+	longDescription="Documenti attivi da Riscontrare">
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="cd_modalita_pag"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Modalità incasso" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="progressivo_documento"
+		property="progressivo_documento"
+		inputType="TEXT"
+		label="Progressivo documento" />
+	<fieldProperty
+		name="protocollo_iva"
+		property="protocollo_iva"
+		inputType="TEXT"
+		label="N. Registrazione IVA" />	
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Tipo Doc." />
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Uo Orig." />
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data Emissione" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Terzo" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cognome" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="nome" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="ragione sociale" />
+	<fieldProperty 
+		name="im_totale_doc_amm" 
+		property="im_totale_doc_amm"
+		inputType="TEXT" 
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Doc." />
+	<fieldProperty 
+		name="da_riscontrare" 
+		property="da_riscontrare"
+		inputType="TEXT" 
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Da Riscontrare" />	
+	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="progressivo_documento" />
+	<formFieldProperty
+		name="protocollo_iva" />
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="cd_uo_origine" />		
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="ragione_sociale" />
+	<formFieldProperty
+		name="cd_modalita_pag" />
+	<formFieldProperty
+		name="im_totale_doc_amm" />	
+	<formFieldProperty
+		name="da_riscontrare" />
+	
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="progressivo_documento" />
+	<columnFieldProperty
+		name="protocollo_iva" />
+	<columnFieldProperty
+		name="dt_emissione" />
+	<columnFieldProperty
+		name="cd_uo_origine" />		
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="ragione_sociale" />
+	<columnFieldProperty
+		name="cd_modalita_pag" />
+	<columnFieldProperty
+		name="im_totale_doc_amm" />	
+	<columnFieldProperty
+		name="da_riscontrare" />
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="progressivo_documento" />
+	<findFieldProperty
+		name="protocollo_iva" />
+	<findFieldProperty
+		name="dt_emissione" />
+	<findFieldProperty
+		name="cd_uo_origine" />		
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="ragione_sociale" />
+	<findFieldProperty
+		name="cd_modalita_pag" />
+	<findFieldProperty
+		name="im_totale_doc_amm" />	
+	<findFieldProperty
+		name="da_riscontrare" />
+	
+</bulkInfo>
