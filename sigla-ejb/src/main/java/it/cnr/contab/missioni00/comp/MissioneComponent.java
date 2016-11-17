@@ -1886,7 +1886,7 @@ public MissioneBulk generaRimborso (UserContext aUC, MissioneBulk missione) thro
  * @return la DivisaBulk di default oppure null se non esiste nessuna divisa di default
  */	
 
-private DivisaBulk getDivisaDefault(UserContext aUC) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException
+public DivisaBulk getDivisaDefault(UserContext aUC) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException
 {
 	DivisaHome divisaHome = (DivisaHome)getHome(aUC, DivisaBulk.class);
 	DivisaBulk divisaDefault = divisaHome.getDivisaDefault(aUC);
