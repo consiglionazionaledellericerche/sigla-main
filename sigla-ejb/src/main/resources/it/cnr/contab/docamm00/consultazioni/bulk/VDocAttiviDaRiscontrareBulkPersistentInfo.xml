@@ -63,7 +63,7 @@
 			nullable="false" />
 		<columnMapping
 			columnName="RAGIONE_SOCIALE"
-			propertyName="ragione_Sociale"
+			propertyName="ragione_sociale"
 			sqlTypeName="VARCHAR"
 			columnSize="100"
 			nullable="true" />
