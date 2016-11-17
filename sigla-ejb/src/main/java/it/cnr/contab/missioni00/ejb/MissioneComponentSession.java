@@ -57,4 +57,5 @@ public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTap
 public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException,java.rmi.RemoteException, PersistencyException;
 public DivisaBulk recuperoDivisa(UserContext userContext, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
 public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
+public DivisaBulk getDivisaDefault(UserContext userContext) throws ComponentException,java.rmi.RemoteException, it.cnr.jada.persistency.PersistencyException;
 }

@@ -1119,6 +1119,23 @@ public it.cnr.contab.config00.bulk.Parametri_cnrBulk parametriCnr(it.cnr.jada.Us
 			}
 		}
 	}
+	public DivisaBulk getDivisaDefault(it.cnr.jada.UserContext param0) throws RemoteException,it.cnr.jada.comp.ComponentException, it.cnr.jada.persistency.PersistencyException {
+		try {
+			return (DivisaBulk)invoke("getDivisaDefault",new Object[] {
+				param0});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	
 
 	public SQLBuilder selectTipo_spesaByClause(UserContext param0, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, RemoteException, PersistencyException{
 		try {
