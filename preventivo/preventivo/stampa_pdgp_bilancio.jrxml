@@ -39,7 +39,7 @@
 	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
+	<parameter name="DESCR_AGG_ENTE" class="java.lang.String">
 		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
 	</parameter>
 	<parameter name="RIEPILOGO" class="java.lang.String" isForPrompting="false">

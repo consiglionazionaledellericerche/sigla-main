@@ -43,7 +43,7 @@
 	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
 	</parameter>
-	<parameter name="RIEPILOGO" class="java.lang.String" isForPrompting="false">
+	<parameter name="RIEPILOGO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DS_LIVELLO1E" class="java.lang.String" isForPrompting="false"/>

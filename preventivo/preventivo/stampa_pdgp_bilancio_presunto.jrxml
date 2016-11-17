@@ -25,10 +25,10 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/media/truecrypt1/DPR/"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String"/>
+	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT NVL(SUM(FONDO_CASSA), 0) FONDO_INIZ_CASSA_N,
 NVL(SUM(FONDO_CASSA_PRE),0) FONDO_INIZ_CASSA_PREC_N,
