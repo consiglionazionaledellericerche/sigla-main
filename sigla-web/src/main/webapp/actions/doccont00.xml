@@ -500,4 +500,14 @@
 			<init-param name="sepa" value="false" />
 			<init-param name="annulli" value="true" />		
 	</businessProcess>
+	<action 
+      path="/ListaSospesiSpesaAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiSpesaAction">
+  </action>
+	 <businessProcess
+      name="ListaSospesiSpesaBP" className="it.cnr.contab.doccont00.bp.ListaSospesiSpesaBP">
+    <forward name="default" path="/util/form_lista.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
+	<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />    
+    <init-param name="defaultAction" value="ListaSospesiSpesaAction" />
+  </businessProcess>	
 </action-mappings>
