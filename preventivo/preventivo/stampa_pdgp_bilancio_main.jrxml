@@ -650,7 +650,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="66" y="2" width="365" height="9" uuid="886b54c3-68b3-4332-b3c6-645876ee2e34">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")==0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")<=0]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -789,7 +789,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="66" y="2" width="365" height="9" uuid="16c238f4-5e2b-4b7e-89ce-fb34dad9c37e">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")==0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")<=0]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
