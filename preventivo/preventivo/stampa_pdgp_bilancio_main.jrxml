@@ -77,7 +77,7 @@ FROM (
 SELECT tipo,
 CASE WHEN SUBSTR($P{P_FONTE},-3)='FIN'
      THEN 1
-     ELSE DECODE(cd_livello1,'RI',1,'SIG',2,'DIP',3,'FO',4,5)
+     ELSE DECODE(cd_livello1,'RI',1,'SIG',2,'DP',3,'FO',4,5)
      END peso_livello1,
 CASE WHEN SUBSTR($P{P_FONTE},-3)='FIN'
      THEN 1
@@ -632,8 +632,42 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 			<band height="11">
 				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(1))>0 && $F{CD_LIVELLO1} != null)]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="30c169c2-59e9-4dc7-8e9f-63162c177e35">
+					<reportElement key="textField-5" style="VERB8" x="66" y="2" width="365" height="9" uuid="8df30490-cceb-4e27-acb5-b3ebf6b31e39">
 						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[($P{P_FONTE}.indexOf("SCI")>0?$F{CD_LIVELLO1}+" - ":"")+
+("E".equals($F{TIPO})?
+  $P{DS_LIVELLO1E}:$P{DS_LIVELLO1S})+" "+
+($P{P_FONTE}.indexOf("FIN")>0?$F{CD_LIVELLO1}+" - ":"")
++$F{DS_LIVELLO1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="66" y="2" width="365" height="9" uuid="886b54c3-68b3-4332-b3c6-645876ee2e34">
+						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")==0]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[($P{P_FONTE}.indexOf("SCI")>0?$F{CD_LIVELLO1}+" - ":"")+
+("E".equals($F{TIPO})?
+  $P{DS_LIVELLO1E}:$P{DS_LIVELLO1S})+" "+
+($P{P_FONTE}.indexOf("FIN")>0?$F{CD_LIVELLO1}+" - ":"")
++$F{DS_LIVELLO1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="30c169c2-59e9-4dc7-8e9f-63162c177e35">
+						<printWhenExpression><![CDATA[new Boolean(false)]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -643,20 +677,6 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{CD_LIVELLO1}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="VERB6" x="66" y="2" width="365" height="9" uuid="886b54c3-68b3-4332-b3c6-645876ee2e34"/>
-					<box>
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[("E".equals($F{TIPO})?
-  $P{DS_LIVELLO1E}:$P{DS_LIVELLO1S})+" "+
-($P{P_FONTE}.indexOf("FIN")>0?$F{CD_LIVELLO1}+" - ":"")
-+$F{DS_LIVELLO1}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -751,7 +771,9 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 			<band height="11">
 				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(2)) > 0 && $F{CD_LIVELLO2} != null)]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="VERB6" x="66" y="2" width="365" height="9" uuid="16c238f4-5e2b-4b7e-89ce-fb34dad9c37e"/>
+					<reportElement key="textField-5" style="VER7" x="66" y="2" width="365" height="9" uuid="e288ce2a-fa11-4118-8cb0-fc6ee22ef904">
+						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -759,14 +781,32 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[("E".equals($F{TIPO})?
+					<textFieldExpression><![CDATA[($P{P_FONTE}.indexOf("SCI")>0?$F{CD_LIVELLO2}+" - ":"")+
+("E".equals($F{TIPO})?
+  $P{DS_LIVELLO2E}:$P{DS_LIVELLO2S})+" "+
+($P{P_FONTE}.indexOf("FIN")>0?$F{CD_LIVELLO1}+"."+$F{CD_LIVELLO2}+" - ":"")
++$F{DS_LIVELLO2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="66" y="2" width="365" height="9" uuid="16c238f4-5e2b-4b7e-89ce-fb34dad9c37e">
+						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")==0]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[($P{P_FONTE}.indexOf("SCI")>0?$F{CD_LIVELLO2}+" - ":"")+
+("E".equals($F{TIPO})?
   $P{DS_LIVELLO2E}:$P{DS_LIVELLO2S})+" "+
 ($P{P_FONTE}.indexOf("FIN")>0?$F{CD_LIVELLO1}+"."+$F{CD_LIVELLO2}+" - ":"")
 +$F{DS_LIVELLO2}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="ee568a5d-8780-4172-a21d-d4dd1ed678af">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean(false)]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -885,7 +925,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="547c257c-de1c-4cf4-b3d3-ea2a22181e86">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean(false)]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -1004,7 +1044,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="005fb50f-5096-4e9b-bd44-739f8199323c">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean(false)]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -1124,7 +1164,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="7473f075-e3ec-4556-aa7d-854fbbb35964">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean(false)]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -1244,7 +1284,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="ec91cf79-6fe4-4a51-817f-c0e5ae3e7e20">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean(false)]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -1366,7 +1406,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="a6ece1b9-199a-4bf2-97f3-26fcb15c9444">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean(false)]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -1489,7 +1529,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-5" style="VERB6" x="1" y="2" width="63" height="9" uuid="02d626f1-dc75-4ffa-ad07-d45a1a8b8aeb">
-						<printWhenExpression><![CDATA[$P{P_FONTE}.indexOf("SCI")>0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean(false)]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineColor="#000000"/>
