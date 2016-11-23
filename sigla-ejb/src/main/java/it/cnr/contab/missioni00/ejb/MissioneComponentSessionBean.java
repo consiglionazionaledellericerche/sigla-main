@@ -1051,6 +1051,23 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, 
 	} catch (Error e) {
 		throw uncaughtError(aUC, componentObj, e);
 	}
-	
+}
+public SQLBuilder selectTipo_autoByClause(UserContext aUC,Timestamp dataTappa, NazioneBulk nazione, String tipoAuto, CompoundFindClause clauses) throws ComponentException{
+	pre_component_invocation(aUC, componentObj);
+	try {
+		SQLBuilder result = ((MissioneComponent) componentObj).selectTipo_autoByClause(aUC, dataTappa, nazione, tipoAuto, clauses);
+		component_invocation_succes(aUC, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(aUC, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(aUC, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(aUC, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(aUC, componentObj, e);
+	}
 }
 }

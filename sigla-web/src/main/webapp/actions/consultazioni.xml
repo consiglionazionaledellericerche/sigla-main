@@ -171,6 +171,8 @@
 	<action path="/ConsCdSAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
 		needExistingSession="false">
 	</action>
+	<action path="/ConsMissioneRimborsoKmAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
 	<action path="/ConsMissioneTipoPastoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsMissioneTipoSpesaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
@@ -1657,6 +1659,15 @@
 			value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMissioneTipoSpesaAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="MissioneRimborsoBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsMissioneRimborsoKmAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="MissioneTipoPastoBP"
