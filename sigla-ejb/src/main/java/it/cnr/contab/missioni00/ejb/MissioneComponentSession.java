@@ -56,6 +56,7 @@ java.math.BigDecimal calcolaMinutiTappa(it.cnr.jada.UserContext param0,it.cnr.co
 public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile) throws ComponentException, java.rmi.RemoteException, PersistencyException;
 public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException,java.rmi.RemoteException, PersistencyException;
 public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException, java.rmi.RemoteException, PersistencyException;
+public SQLBuilder selectTipo_autoByClause(UserContext aUC,Timestamp dataTappa, NazioneBulk nazione, String tipoAuto, CompoundFindClause clauses) throws ComponentException, java.rmi.RemoteException;
 public DivisaBulk recuperoDivisa(UserContext userContext, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
 public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
 public DivisaBulk getDivisaDefault(UserContext userContext) throws ComponentException,java.rmi.RemoteException, it.cnr.jada.persistency.PersistencyException;

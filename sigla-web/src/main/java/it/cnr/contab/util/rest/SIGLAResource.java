@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
@@ -32,6 +33,8 @@ import com.google.gson.JsonParser;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoHome;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
@@ -44,7 +47,10 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaHome;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaKey;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.HomeCache;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 @Path("/servizirest")
@@ -186,48 +192,85 @@ public class SIGLAResource {
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @Path(value = "/validaMassimaleSpesa")
-    public Response validaMassimaleSpesa(@Context HttpServletRequest request, @QueryParam("cdTipoSpesa") String cdTipoSpesa, @QueryParam("km") String km,
-    		@QueryParam("importoSpesa") String importoSpesa, @QueryParam("cdTipoPasto") String cdTipoPasto, @QueryParam("data") String data,
-    		@QueryParam("area") String area, @QueryParam("areaEstera") String areaEstera, @QueryParam("nazione") Long nazione,
-    		@QueryParam("inquadramento") Long inquadramento) throws Exception {
-        log.debug("REST request per visualizzare la divisa per nazione" );
-    	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
+    public Response validaMassimaleSpesa(@Context HttpServletRequest request) throws Exception {
 		ResponseBuilder rb;
+    	try{
+            log.debug("REST request per visualizzare la divisa per nazione" );
+        	JSONRESTMissioniRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTMissioniRequest.class);
 
-    	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
-		
-    	Connection conn = EJBCommonServices.getConnection(userContext);
-		HomeCache homeCache = new HomeCache(conn);
+        	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
+    		
+        	Connection conn = EJBCommonServices.getConnection(userContext);
+    		HomeCache homeCache = new HomeCache(conn);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-        Date parsedDate = dateFormat.parse(data);
-        Timestamp dataMissione = new Timestamp(parsedDate.getTime());
+        	if (jsonRequest.getData() == null){
+				throw new Exception("Errore, data dettaglio spesa obbligatoria.");
+        	}
+    		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+            Date parsedDate = dateFormat.parse(jsonRequest.getData());
+            Timestamp dataMissione = new Timestamp(parsedDate.getTime());
 
-		Missione_tipo_spesaBulk tipoSpesa = null;
-    	if (cdTipoSpesa != null){
-        	Missione_tipo_spesaKey keySpesa = new Missione_tipo_spesaKey(cdTipoSpesa, dataMissione, nazione, inquadramento, area);
-    		Missione_tipo_spesaHome homeSpesa=(Missione_tipo_spesaHome)homeCache.getHome(Missione_tipo_spesaBulk.class);
-    		tipoSpesa = (Missione_tipo_spesaBulk)homeSpesa.findByPrimaryKey(keySpesa);
-    	} else {
-    		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", "Errore, parametro tipo spesa obbligatorio."));
+    		Missione_tipo_spesaBulk tipoSpesa = null;
+        	if (jsonRequest.getImportoSpesa() == null){
+				throw new Exception("Errore, importo dettaglio spesa obbligatorio.");
+        	}
+        	if (jsonRequest.getDivisa() == null){
+				throw new Exception("Errore, divisa dettaglio spesa obbligatoria.");
+        	}
+        	if (jsonRequest.getCdTipoSpesa() != null){
+    			NazioneBulk nazioneBulk = getNazione(jsonRequest.getNazione(), homeCache); 
+    			SQLBuilder sql = missioneComponent().selectTipo_spesaByClause(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk, false, jsonRequest.getCdTipoSpesa(), new CompoundFindClause());
+
+        		Missione_tipo_spesaHome homeSpesa=(Missione_tipo_spesaHome)homeCache.getHome(Missione_tipo_spesaBulk.class);
+    			List lista = homeSpesa.fetchAll(sql);
+    			if (lista != null && !lista.isEmpty()){
+    	    		tipoSpesa = (Missione_tipo_spesaBulk)lista.get(0);
+    			}
+    			if (tipoSpesa == null){
+    				throw new Exception("Tipo Spesa non trovato in SIGLA.");
+    			}
+        	} else {
+				throw new Exception("Errore, parametro tipo spesa obbligatorio.");
+        	}
+
+    		Missione_tipo_pastoBulk tipoPasto = null;
+    		if (jsonRequest.getCdTipoPasto() != null){
+    			Missione_tipo_pastoHome home=(Missione_tipo_pastoHome)homeCache.getHome(Missione_tipo_pastoBulk.class);
+    			NazioneBulk nazioneBulk = getNazione(jsonRequest.getNazione(), homeCache); 
+    			SQLBuilder sql = missioneComponent().selectTipo_pastoByClause(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk, jsonRequest.getCdTipoPasto(), null);    			
+    			List lista = home.fetchAll(sql);
+    			if (lista != null && !lista.isEmpty()){
+    	    		tipoPasto = (Missione_tipo_pastoBulk)lista.get(0);
+    			}
+    			if (tipoPasto == null){
+    				throw new Exception("Tipo Pasto non trovato in SIGLA.");
+    			}
+    		}
+
+    		MissioneBulk missioneBulk = new MissioneBulk();
+    		Missione_dettaglioBulk dettaglio = new Missione_dettaglioBulk();
+    		dettaglio.setTipo_pasto(tipoPasto);
+    		dettaglio.setTipo_spesa(tipoSpesa);
+    		dettaglio.setChilometri(new BigDecimal(jsonRequest.getKm() == null ? "0" : jsonRequest.getKm()));
+    		dettaglio.setPercentuale_maggiorazione(BigDecimal.ZERO);
+    		dettaglio.setIm_base_maggiorazione(BigDecimal.ZERO);
+    		dettaglio.setIm_spesa_euro(new BigDecimal(jsonRequest.getImportoSpesa()));
+    		dettaglio.setIm_spesa_divisa(dettaglio.getIm_spesa_euro());
+    		dettaglio.setCd_divisa_spesa(jsonRequest.getDivisa());
+    		missioneComponent().validaMassimaliSpesa(userContext, missioneBulk, dettaglio);
+    		rb = Response.ok("OK");
+    	} catch (Exception e) {
+    		log.error("error rest validaMassimaleSpesa", "1", e);
+    		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
     	}
+    	return rb.build();		
+	}
 
-		Missione_tipo_pastoBulk tipoPasto = null;
-		if (cdTipoPasto != null){
-			Missione_tipo_pastoKey keyPasto = new Missione_tipo_pastoKey(cdTipoPasto, dataMissione, nazione, inquadramento, area, areaEstera);
-			Missione_tipo_pastoHome home=(Missione_tipo_pastoHome)homeCache.getHome(Missione_tipo_pastoBulk.class);
-			tipoPasto = (Missione_tipo_pastoBulk)home.findByPrimaryKey(keyPasto);
-		}
-
-		MissioneBulk missioneBulk = new MissioneBulk();
-		Missione_dettaglioBulk dettaglio = new Missione_dettaglioBulk();
-		dettaglio.setTipo_pasto(tipoPasto);
-		dettaglio.setTipo_spesa(tipoSpesa);
-		dettaglio.setChilometri(new BigDecimal(km));
-		dettaglio.setIm_spesa_euro(new BigDecimal(importoSpesa));
-		dettaglio.setIm_spesa_divisa(dettaglio.getIm_spesa_euro());
-		missioneComponent().validaMassimaliSpesa(userContext, missioneBulk, dettaglio);
-    	return response("");		
+	private NazioneBulk getNazione(Long nazione, HomeCache homeCache) throws PersistencyException {
+		NazioneHome nazionehome=(NazioneHome)homeCache.getHome(NazioneBulk.class);
+		NazioneBulk nazioneBulk = new NazioneBulk(nazione);
+		nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk);
+		return nazioneBulk;
 	}
 
 }
