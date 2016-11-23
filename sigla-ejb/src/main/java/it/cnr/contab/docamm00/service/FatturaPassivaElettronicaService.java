@@ -17,14 +17,12 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.mail.SimplePECMail;
-import it.cnr.jada.util.upload.UploadedFile;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,8 +37,8 @@ import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import javax.activation.DataSource;
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.activation.MimetypesFileTypeMap;
 import javax.mail.Address;
 import javax.mail.AuthenticationFailedException;
@@ -69,7 +67,6 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
@@ -211,7 +208,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			String pecHostAddressReturn) {
 		this.pecHostAddressReturn = pecHostAddressReturn;
 	}
+	
 	public void execute() {
+		caricaFatture(-1);
+	}
+	
+	public void caricaFatture(Integer daysBefore) {
 		try{
 			if (pecScanDisable){
 				logger.info("PEC scan is disabled");
@@ -222,7 +224,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 					logger.info("PEC SCAN for ricevi Fatture alredy started in another server.");									
 				} else {
 					try {
-						pecScan(email.getVal01(), email.getVal02());						
+						pecScan(email.getVal01(), email.getVal02(), daysBefore);						
 					} finally {
 						fatturaElettronicaPassivaComponentSession.unlockEmailPEC(userContext);						
 					}
@@ -233,6 +235,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			logger.error("ScheduleExecutor error", _ex);
 		}
 	}
+	
 	public void allineaNotificheExecute() {
 		try{
 			if (pecScanDisable){
@@ -351,7 +354,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 	}
 
-	public void pecScan(String userName, String password) throws ComponentException {
+	public void pecScan(String userName, String password, Integer daysBefore) throws ComponentException {
 		logger.info("PEC SCAN for ricevi Fatture email: "+userName + "pwd :" +password);
 		Properties props = System.getProperties();
 		props.putAll(pecMailConf);
@@ -365,9 +368,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			URLName urlName = new URLName(pecURLName);
 			Store store = session.getStore(urlName);
 			store.connect(userName, password);
-			searchMailFromPec(userName, password, store);
-			searchMailFromSdi(userName, store);
-			searchMailFromReturn(userName, store);
+			searchMailFromPec(userName, password, store, daysBefore);
+			searchMailFromSdi(userName, store, daysBefore);
+			searchMailFromReturn(userName, store, daysBefore);
 			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
@@ -377,7 +380,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			logger.error("Error while scan PEC email:" +userName, e);
 		}				
 	}
-	private void searchMailFromPec(String userName, String password, final Store store)
+	private void searchMailFromPec(String userName, String password, final Store store, Integer daysBefore)
 			throws MessagingException {
 		List<Folder> folders = new ArrayList<Folder>();
 		for (String folderName : pecScanReceiptFolderName) {
@@ -386,12 +389,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
 				folder.open(Folder.READ_ONLY);
-				processingMailFromHostPec(folder, userName, password);
+				processingMailFromHostPec(folder, userName, password, daysBefore);
 				folder.close(true);				
 		    } 
 		}
 	}
-	private void searchMailFromSdi(String userName, final Store store)
+	private void searchMailFromSdi(String userName, final Store store, Integer daysBefore)
 			throws MessagingException {
 		List<Folder> folders = new ArrayList<Folder>();
 		for (String folderName : pecScanFolderName) {
@@ -400,13 +403,13 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
 				folder.open(Folder.READ_ONLY);
-				processingMailFromSdi(folder, userName);
+				processingMailFromSdi(folder, userName, daysBefore);
 				folder.close(true);				
 		    }
 		}
 	}
 
-	private void searchMailFromReturn(String userName, final Store store)
+	private void searchMailFromReturn(String userName, final Store store, Integer daysBefore)
 			throws MessagingException {
 		List<Folder> folders = new ArrayList<Folder>();
 		for (String folderName : pecScanFolderName) {
@@ -415,15 +418,15 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
 				folder.open(Folder.READ_ONLY);
-				processingMailFromReturn(folder, userName);
+				processingMailFromReturn(folder, userName, daysBefore);
 				folder.close(true);				
 		    }
 		}
 	}
 	
-	private void processingMailFromSdi(Folder folder, String userName) throws MessagingException{
+	private void processingMailFromSdi(Folder folder, String userName, Integer daysBefore) throws MessagingException{
 	    if (isDateForRecoveryNotifier()){
-			List<SearchTerm> newTerms = createTermsForSearchSdi(true);
+			List<SearchTerm> newTerms = createTermsForSearchSdi(true, daysBefore);
 	    	Message newMessages[] = folder.search(new AndTerm(newTerms.toArray(new SearchTerm[newTerms.size()])));
 	    	logger.info("Recuperati " + newMessages.length +" messaggi SDI dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
 		    for (int i = 0; i < newMessages.length; i++) {
@@ -446,7 +449,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				}
 			}
 	    } 
-	    List<SearchTerm> terms = createTermsForSearchSdi(false);
+	    List<SearchTerm> terms = createTermsForSearchSdi(false, daysBefore);
 	    Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
 	    logger.info("Recuperati " + messages.length +" messaggi SDI dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
 	    for (int i = 0; i < messages.length; i++) {
@@ -492,8 +495,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	    return false;
 	}
 	    
-	private void processingMailFromReturn(Folder folder, String userName) throws MessagingException{
-    	List<SearchTerm> terms = createTermsForSearchReturn();
+	private void processingMailFromReturn(Folder folder, String userName, Integer daysBefore) throws MessagingException{
+    	List<SearchTerm> terms = createTermsForSearchReturn(daysBefore);
     	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
     	logger.info("Recuperati " + messages.length +" messaggi di mail non recapitate dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
 	    for (int i = 0; i < messages.length; i++) {
@@ -531,22 +534,22 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			}
 		}
 	}
-	public List<SearchTerm> createTermsForSearchSdi(Boolean dateForRecoveryNotifier) {
+	public List<SearchTerm> createTermsForSearchSdi(Boolean dateForRecoveryNotifier, Integer daysBefore) {
 		List<SearchTerm> terms = new ArrayList<SearchTerm>();
-    	addConditionDate(terms,dateForRecoveryNotifier);
+    	addConditionDate(terms,dateForRecoveryNotifier, daysBefore);
     	terms.add(new FromStringTerm(pecSDIFromStringTerm));
 		return terms;
 	}
 	
-	public List<SearchTerm> createTermsForSearchReturn() {
+	public List<SearchTerm> createTermsForSearchReturn(Integer daysBefore) {
 		List<SearchTerm> terms = new ArrayList<SearchTerm>();
-    	addConditionDate(terms);
+    	addConditionDate(terms, daysBefore);
     	terms.add(new FromStringTerm(pecHostAddressReturn));
 		return terms;
 	}
 	
-	private void processingMailFromHostPec(Folder folder, String userName, String password) throws MessagingException{
-		List<SearchTerm> terms = createTermsForSearchPec();
+	private void processingMailFromHostPec(Folder folder, String userName, String password, Integer daysBefore) throws MessagingException{
+		List<SearchTerm> terms = createTermsForSearchPec(daysBefore);
     	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
     	logger.info("Recuperati " + messages.length +" messaggi PEC dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
 	    for (int i = 0; i < messages.length; i++) {
@@ -596,9 +599,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		String [] headerMessage = message.getHeader("Message-ID");
 		return headerMessage;
 	}
-	public List<SearchTerm> createTermsForSearchPec() {
+	public List<SearchTerm> createTermsForSearchPec(Integer daysBefore) {
 		List<SearchTerm> terms = new ArrayList<SearchTerm>();
-    	addConditionDate(terms);
+    	addConditionDate(terms, daysBefore);
 		addConditionFromAddress(terms);
 		addConditionSubject(terms);
 		return terms;
@@ -631,11 +634,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		String subjectTerm = pecSDISubjectNotificaPecTerm+" "+pecSDISubjectNotificaEsitoTerm;
 		return subjectTerm;
 	}
-	public void addConditionDate(List<SearchTerm> terms) {
-		addConditionDate(terms, false);
+	public void addConditionDate(List<SearchTerm> terms, Integer daysBefore) {
+		addConditionDate(terms, false, daysBefore);
 	}
 	
-	public void addConditionDate(List<SearchTerm> terms, Boolean dateForRecoveryNotifier) {
+	public void addConditionDate(List<SearchTerm> terms, Boolean dateForRecoveryNotifier, Integer daysBefore) {
 		Calendar cal = Calendar.getInstance();
     	cal.setTime(new Date());
     	Date dateFromSearch = null;
@@ -643,7 +646,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
     		dateFromSearch = DateUtils.dataContabile(cal.getTime(), cal.get(Calendar.YEAR) - 1);
     		dateFromSearch = cal.getTime();
     	} else {
-        	cal.add(Calendar.DATE, -1);
+        	cal.add(Calendar.DATE, daysBefore);
         	dateFromSearch = cal.getTime();
     	}
     				    	
