@@ -1034,4 +1034,23 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa,
 		throw uncaughtError(aUC, componentObj, e);
 	}
 }
+public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException, PersistencyException{
+	pre_component_invocation(aUC, componentObj);
+	try {
+		SQLBuilder result = ((MissioneComponent) componentObj).selectTipo_pastoByClause(aUC, dataTappa, inquadramento, nazione, tipoPasto, clauses);
+		component_invocation_succes(aUC, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(aUC, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(aUC, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(aUC, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(aUC, componentObj, e);
+	}
+	
+}
 }
