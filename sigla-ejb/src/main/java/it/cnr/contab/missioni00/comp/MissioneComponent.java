@@ -3197,14 +3197,20 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Missione_dettaglioBulk
 	
 	Missione_tappaBulk tappa = (Missione_tappaBulk) missione.getTappeMissioneHash().get(primoGG);
 
+	return selectTipo_autoByClause(aUC, missione.getDt_inizio_missione(), tappa.getNazione(), dettaglioSpesa.getTi_auto(), clauses);
+	
+}
+
+public SQLBuilder selectTipo_autoByClause(UserContext aUC,Timestamp dataTappa, NazioneBulk nazione, String tipoAuto, CompoundFindClause clauses) throws ComponentException
+{
 	Missione_rimborso_kmHome aTipoAutoHome = (Missione_rimborso_kmHome)getHome(aUC, Missione_rimborso_kmBulk.class);
 	SQLBuilder sql = aTipoAutoHome.createSQLBuilder();
 	
-	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,missione.getDt_inizio_missione());
-	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,missione.getDt_inizio_missione());
+	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,dataTappa);
+	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,dataTappa);
 
 	sql.openParenthesis("AND");	
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "I");
 	else
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "E");
@@ -3212,22 +3218,22 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Missione_dettaglioBulk
 	sql.closeParenthesis();		
 	
 	sql.openParenthesis("AND");
-	sql.addClause("AND","pg_nazione",sql.EQUALS, tappa.getPg_nazione());
+	sql.addClause("AND","pg_nazione",sql.EQUALS, nazione.getPg_nazione());
 	sql.addClause("OR","pg_nazione",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 
-	sql.addClause("AND","ti_auto",sql.EQUALS, dettaglioSpesa.getTi_auto());
+	sql.addClause("AND","ti_auto",sql.EQUALS, tipoAuto);
 
 	sql.addSQLClause("AND","(ti_auto || ti_area_geografica || pg_nazione || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('03', ti_auto, ?, ?, null, ?)");
 	
 
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addParameter("I", java.sql.Types.CHAR, 5);
 	else
 		sql.addParameter("E", java.sql.Types.CHAR, 5);
-	sql.addParameter(tappa.getPg_nazione(), java.sql.Types.NUMERIC, 6);
-	sql.addParameter(missione.getDt_inizio_missione(), java.sql.Types.TIMESTAMP, 7);
+	sql.addParameter(nazione.getPg_nazione(), java.sql.Types.NUMERIC, 6);
+	sql.addParameter(dataTappa, java.sql.Types.TIMESTAMP, 7);
 
 	sql.addPreOrderBy(" ti_auto, pg_nazione desc, ti_area_geografica");
 		
