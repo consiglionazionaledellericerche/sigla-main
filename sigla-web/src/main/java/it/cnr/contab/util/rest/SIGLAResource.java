@@ -192,6 +192,7 @@ public class SIGLAResource {
     		@QueryParam("inquadramento") Long inquadramento) throws Exception {
         log.debug("REST request per visualizzare la divisa per nazione" );
     	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
+		ResponseBuilder rb;
 
     	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
 		
@@ -226,11 +227,7 @@ public class SIGLAResource {
 		dettaglio.setIm_spesa_euro(new BigDecimal(importoSpesa));
 		dettaglio.setIm_spesa_divisa(dettaglio.getIm_spesa_euro());
 		missioneComponent().validaMassimaliSpesa(userContext, missioneBulk, dettaglio);
-		String resp = new Gson().toJson(divisa);
-    	resp = new GsonBuilder()
-    			.create()
-    			.toJson(cambio);
-    	return response(resp);		
+    	return response("");		
 	}
 
 }
