@@ -33,7 +33,15 @@ import com.google.gson.JsonParser;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoHome;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoKey;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaHome;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaKey;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.HomeCache;
@@ -171,6 +179,58 @@ public class SIGLAResource {
 	private String getUser(HttpServletRequest request) throws ComponentException, IOException{
 		String authorization = request.getHeader("Authorization");
 		return BasicAuthentication.getUsername(authorization);
+	}
+
+    @POST
+	@RolesAllowed({"MISSIONI"})
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Path(value = "/validaMassimaleSpesa")
+    public Response validaMassimaleSpesa(@Context HttpServletRequest request, @QueryParam("cdTipoSpesa") String cdTipoSpesa, @QueryParam("km") String km,
+    		@QueryParam("importoSpesa") String importoSpesa, @QueryParam("cdTipoPasto") String cdTipoPasto, @QueryParam("data") String data,
+    		@QueryParam("area") String area, @QueryParam("areaEstera") String areaEstera, @QueryParam("nazione") Long nazione,
+    		@QueryParam("inquadramento") Long inquadramento) throws Exception {
+        log.debug("REST request per visualizzare la divisa per nazione" );
+    	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
+
+    	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
+		
+    	Connection conn = EJBCommonServices.getConnection(userContext);
+		HomeCache homeCache = new HomeCache(conn);
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Date parsedDate = dateFormat.parse(data);
+        Timestamp dataMissione = new Timestamp(parsedDate.getTime());
+
+		Missione_tipo_spesaBulk tipoSpesa = null;
+    	if (cdTipoSpesa != null){
+        	Missione_tipo_spesaKey keySpesa = new Missione_tipo_spesaKey(cdTipoSpesa, dataMissione, nazione, inquadramento, area);
+    		Missione_tipo_spesaHome homeSpesa=(Missione_tipo_spesaHome)homeCache.getHome(Missione_tipo_spesaBulk.class);
+    		tipoSpesa = (Missione_tipo_spesaBulk)homeSpesa.findByPrimaryKey(keySpesa);
+    	} else {
+    		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", "Errore, parametro tipo spesa obbligatorio."));
+    	}
+
+		Missione_tipo_pastoBulk tipoPasto = null;
+		if (cdTipoPasto != null){
+			Missione_tipo_pastoKey keyPasto = new Missione_tipo_pastoKey(cdTipoPasto, dataMissione, nazione, inquadramento, area, areaEstera);
+			Missione_tipo_pastoHome home=(Missione_tipo_pastoHome)homeCache.getHome(Missione_tipo_pastoBulk.class);
+			tipoPasto = (Missione_tipo_pastoBulk)home.findByPrimaryKey(keyPasto);
+		}
+
+		MissioneBulk missioneBulk = new MissioneBulk();
+		Missione_dettaglioBulk dettaglio = new Missione_dettaglioBulk();
+		dettaglio.setTipo_pasto(tipoPasto);
+		dettaglio.setTipo_spesa(tipoSpesa);
+		dettaglio.setChilometri(new BigDecimal(km));
+		dettaglio.setIm_spesa_euro(new BigDecimal(importoSpesa));
+		dettaglio.setIm_spesa_divisa(dettaglio.getIm_spesa_euro());
+		missioneComponent().validaMassimaliSpesa(userContext, missioneBulk, dettaglio);
+		String resp = new Gson().toJson(divisa);
+    	resp = new GsonBuilder()
+    			.create()
+    			.toJson(cambio);
+    	return response(resp);		
 	}
 
 }

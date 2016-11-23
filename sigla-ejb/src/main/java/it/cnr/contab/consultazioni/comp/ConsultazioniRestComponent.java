@@ -35,6 +35,7 @@ import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestHome;
@@ -172,6 +173,54 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					}
 				}
 			}
+		} else if (oggettobulk instanceof Missione_tipo_pastoBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				CompoundFindClause newClauses = new CompoundFindClause();
+				Enumeration e = compoundfindclause.getClauses();
+				Enumeration e1 = compoundfindclause.getClauses();
+				SQLBuilder sqlExists = null;
+				if (isCondizioneTipiPastoMissione(e)){
+					NazioneBulk nazioneBulk = null;
+					Timestamp dataTappa = null;
+					Long inquadramento = null;
+
+					while(e1.hasMoreElements() ){
+						SimpleFindClause clause = (SimpleFindClause) e1.nextElement();
+						int operator = clause.getOperator();
+						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
+								operator == 8192){
+							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
+							Integer str = (Integer)clause.getValue();
+							nazioneBulk = new NazioneBulk(new Long(str));
+							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
+								operator == 8192)	{
+							Integer str = (Integer)clause.getValue();
+							inquadramento = new Long(str);
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
+								operator == 8192)	{
+							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+							Date parsedDate;
+							try {
+								parsedDate = dateFormat.parse((String) clause.getValue());
+								dataTappa = new Timestamp(parsedDate.getTime());
+							} catch (ParseException e2) {
+								e2.printStackTrace();
+							}
+						} else {
+							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+						}
+					}
+					if (nazioneBulk != null && dataTappa != null && inquadramento != null){
+						try {
+							sql = missioneComponent().selectTipo_pastoByClause(userContext, dataTappa, inquadramento, nazioneBulk, null, new CompoundFindClause());
+						} catch (RemoteException | EJBException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+					}
+				}
+			}
 		} else if (oggettobulk instanceof V_mandato_reversaleBulk){
 			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
 				Boolean trovataCondizioneSoloAnticipi = false;
@@ -284,6 +333,17 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 				SimpleFindClause clause = (SimpleFindClause) e.nextElement();
 				int operator = clause.getOperator();
 				if (clause.getPropertyName() != null && clause.getPropertyName().equals("condizioneTipiSpesaMissione") ){
+					return true;
+				}
+			}
+		return false;
+	}
+
+	private Boolean isCondizioneTipiPastoMissione(Enumeration e) {
+		while(e.hasMoreElements() ){
+				SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+				int operator = clause.getOperator();
+				if (clause.getPropertyName() != null && clause.getPropertyName().equals("condizioneTipiPastoMissione") ){
 					return true;
 				}
 			}

@@ -3253,7 +3253,7 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Missione_dettaglioBulk
  * @return  il SQLBuilder con tutte le clausole
  */	
 
-public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBulk dettaglioSpesa, Missione_tipo_pastoBulk tipoPasto, CompoundFindClause clauses) throws ComponentException
+public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBulk dettaglioSpesa, Missione_tipo_pastoBulk tipoPasto, CompoundFindClause clauses) throws ComponentException, PersistencyException
 {
 	MissioneBulk missione = dettaglioSpesa.getMissione();
 
@@ -3270,16 +3270,25 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBul
 		
 	Missione_tappaBulk tappa = (Missione_tappaBulk) missione.getTappeMissioneHash().get(primoGG);
 
+    NazioneHome nazionehome=(NazioneHome)getHome(aUC,NazioneBulk.class);
+    
+	tappa.setNazione((NazioneBulk)nazionehome.findByPrimaryKey(tappa.getNazione()));
+
+	return selectTipo_pastoByClause(aUC, tappa.getDt_inizio_tappa(), missione.getPg_rif_inquadramento(), tappa.getNazione(), dettaglioSpesa.getCd_ti_pasto(), clauses);
+}
+
+public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException
+{
 	Missione_tipo_pastoHome tipoPastoHome = (Missione_tipo_pastoHome)getHome(aUC, Missione_tipo_pastoBulk.class);
 	SQLBuilder sql = tipoPastoHome.createSQLBuilder();
 
 	//sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,missione.getDt_inizio_missione());
 	//sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,missione.getDt_inizio_missione());
-	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,tappa.getDt_inizio_tappa());
-	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,tappa.getDt_inizio_tappa());
+	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,dataTappa);
+	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,dataTappa);
 	
 	sql.openParenthesis("AND");	
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "I");
 	else
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "E");
@@ -3287,29 +3296,29 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBul
 	sql.closeParenthesis();		
 	
 	sql.openParenthesis("AND");
-	sql.addClause("AND","pg_nazione",sql.EQUALS, tappa.getPg_nazione());
+	sql.addClause("AND","pg_nazione",sql.EQUALS, nazione.getPg_nazione());
 	sql.addClause("OR","pg_nazione",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 
 	sql.openParenthesis("AND");	
-	sql.addClause("AND","pg_rif_inquadramento",sql.EQUALS, missione.getPg_rif_inquadramento());
+	sql.addClause("AND","pg_rif_inquadramento",sql.EQUALS, inquadramento);
 	sql.addClause("OR","pg_rif_inquadramento",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 
-	sql.addClause("AND","cd_ti_pasto",sql.EQUALS, dettaglioSpesa.getCd_ti_pasto());
+	sql.addClause("AND","cd_ti_pasto",sql.EQUALS, tipoPasto);
 
-	sql.addClause("AND","cd_area_estera",sql.EQUALS,tappa.getNazione().getCd_area_estera());
+	sql.addClause("AND","cd_area_estera",sql.EQUALS,nazione.getCd_area_estera());
 
 	sql.addSQLClause("AND","(cd_ti_pasto || ti_area_geografica || pg_nazione || pg_rif_inquadramento || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('02', cd_ti_pasto, ?, ?, ?, ?)");
 		
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addParameter("I", java.sql.Types.CHAR, 6);
 	else
 		sql.addParameter("E", java.sql.Types.CHAR, 6);
-	sql.addParameter(tappa.getPg_nazione(), java.sql.Types.NUMERIC, 7);
-	sql.addParameter(missione.getPg_rif_inquadramento(), java.sql.Types.NUMERIC, 8);
-	sql.addParameter(tappa.getDt_inizio_tappa(), java.sql.Types.TIMESTAMP, 9);
+	sql.addParameter(nazione, java.sql.Types.NUMERIC, 7);
+	sql.addParameter(inquadramento, java.sql.Types.NUMERIC, 8);
+	sql.addParameter(dataTappa, java.sql.Types.TIMESTAMP, 9);
 
 	sql.addPreOrderBy(" cd_ti_pasto, pg_rif_inquadramento desc, pg_nazione desc, ti_area_geografica");
 		
