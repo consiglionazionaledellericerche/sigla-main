@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_sintetica_x_progetto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="339"/>
+	<property name="ireport.y" value="61"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_UO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PROGETTO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_GAE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_GAE" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_VOCE" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_ANNO" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_MOVIMENTAZIONE" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_SOLO_GAE_ATTIVE" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Stampa solo GAE movimentate nell'anno]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ORDINE" class="java.lang.String">
+		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
+		<defaultValueExpression><![CDATA["A"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT distinct A.CD_CENTRO_RESPONSABILITA, A.PG_PROGETTO PG_PROGLIV2,
+B.CD_PROGETTO CD_PROGLIV2, B.DS_PROGETTO DS_PROGLIV2,
+B.P_CD_PROGETTO CD_PROGLIV1, B.P_DS_PROGETTO DS_PROGLIV1
+FROM V_LINEA_ATTIVITA_VALIDA A, V_PROGETTO_PADRE B
+WHERE A.ESERCIZIO = $P{P_ESERCIZIO}
+AND ($P{P_UO} IS NULL OR A.CD_CENTRO_RESPONSABILITA LIKE $P{P_UO}||'%')
+AND ($P{P_PROGETTO} IS NULL OR A.PG_PROGETTO=$P{P_PROGETTO})
+AND A.ESERCIZIO >= 2016
+AND A.ESERCIZIO = B.ESERCIZIO
+AND A.PG_PROGETTO = B.PG_PROGETTO
+AND B.TIPO_FASE='X']]>
+	</queryString>
+	<field name="CD_CENTRO_RESPONSABILITA" class="java.lang.String"/>
+	<field name="PG_PROGLIV2" class="java.lang.Integer"/>
+	<field name="CD_PROGLIV2" class="java.lang.String"/>
+	<field name="DS_PROGLIV2" class="java.lang.String"/>
+	<field name="CD_PROGLIV1" class="java.lang.String"/>
+	<field name="DS_PROGLIV1" class="java.lang.String"/>
+	<title>
+		<band height="209">
+			<staticText>
+				<reportElement x="6" y="8" width="830" height="48" uuid="ee77c521-8172-420a-ad28-dae457243906"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stampa Situazione Progetto]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="206" width="100" height="1" uuid="637933de-3cc6-4a99-86db-6274bfbf1998"/>
+			</break>
+			<textField>
+				<reportElement x="6" y="74" width="830" height="20" uuid="6a88edc3-d1d6-4351-a9e5-ad02e17f8d5a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["ESERCIZIO: "+$P{P_ESERCIZIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="96" width="830" height="20" uuid="87712806-4968-49f0-b4c6-138e5dd69c15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["CENTRO RESPONSABILITA': "+$P{P_UO}+".000"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="140" width="830" height="20" uuid="f720df77-d4e6-480d-ab89-f1f10e5d4cf7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[("".equals($P{P_GAE}) || "*".equals($P{P_GAE}))?"TUTTE LE GAE":"GAE: "+$P{P_GAE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="184" width="830" height="20" uuid="e411b11a-ffb8-43e5-ad7e-d6a5e45e1e97">
+					<printWhenExpression><![CDATA[$P{P_PRINT_SOLO_GAE_ATTIVE}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["SOLO GAE MOVIMENTATE NELL'ESERCIZIO"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="118" width="830" height="20" uuid="7b168d01-248e-49b3-81b5-d14ca31520a2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["AREA PROGETTUALE: "+$F{CD_PROGLIV1}+" - PROGETTO: "+$F{CD_PROGLIV2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="162" width="830" height="20" uuid="26d9f49c-7ed1-4f43-873c-e2665aaaa956"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($P{P_PRINT_ANNO}||$P{P_PRINT_VOCE})?
+"ORDINATA PER "+("V".equals($P{P_ORDINE})?"VOCE/ANNO":"ANNO/VOCE"):""]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="27">
+			<subreport>
+				<reportElement x="6" y="8" width="830" height="10" isRemoveLineWhenBlank="true" uuid="2a15b921-aa04-4dc5-84b0-9656266ba147"/>
+				<subreportParameter name="P_DS_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DS_PROGLIV1">
+					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DETAIL">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_MOVIMENTAZIONE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_SOLO_GAE_ATTIVE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_SOLO_GAE_ATTIVE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ORDINE">
+					<subreportParameterExpression><![CDATA[$P{P_ORDINE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_ANNO">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_ANNO}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_GAE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_VOCE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_VOCE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV1">
+					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_GAE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_main.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="22" width="100" height="1" uuid="0daf11d4-3050-4e8f-813b-726733abf346">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}>1]]></printWhenExpression>
+				</reportElement>
+			</break>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20"/>
+	</pageFooter>
+</jasperReport>

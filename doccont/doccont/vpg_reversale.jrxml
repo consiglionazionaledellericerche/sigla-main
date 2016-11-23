@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_reversale" pageWidth="595" pageHeight="842" columnWidth="573" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Vpg_reversaleScriptlet">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_reversale" pageWidth="595" pageHeight="842" columnWidth="573" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Vpg_reversaleScriptlet" uuid="9dd5ef02-51df-4274-bc41-82a79079061c">
 	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR10" isDefault="true" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10BOLD" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
@@ -83,7 +83,7 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 		<groupHeader>
 			<band height="16" splitType="Stretch">
 				<subreport isUsingCache="false">
-					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="1" y="0" width="572" height="16" isRemoveLineWhenBlank="true"/>
+					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="1" y="0" width="572" height="16" isRemoveLineWhenBlank="true" uuid="23081059-c64e-4083-b010-384648d95f05"/>
 					<subreportParameter name="DIR_IMAGE">
 						<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -97,7 +97,7 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 						<subreportParameterExpression><![CDATA[$P{aEs}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT}+"vpg_reversale_subreport0.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{DIR_SUBREPORT}+"vpg_reversale_subreport0.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -126,7 +126,7 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 	<pageFooter>
 		<band height="97" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-1" style="TNR10" x="353" y="77" width="187" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-1" style="TNR10" x="353" y="77" width="187" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="087f50ce-edd4-4277-bc56-65ee143f4380"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -136,10 +136,10 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 				<textElement textAlignment="Right">
 					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pag. " + $V{PAGE_NUMBER} + " / "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pag. " + $V{PAGE_NUMBER} + " / "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="PG_REVERSALE" pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-2" x="543" y="77" width="27" height="15"/>
+				<reportElement key="textField-2" x="543" y="77" width="27" height="15" uuid="b2fcc831-573b-48bd-92e0-324062e2c5ba"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -149,22 +149,10 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 				<textElement>
 					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="7" y="77" width="239" height="15"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement markup="styled"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Emesso il "+(new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DACR})+
-" dall'utente "+$F{UTCR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-1" style="TNR10" x="354" y="4" width="214" height="36">
+				<reportElement key="staticText-1" style="TNR10" x="354" y="4" width="214" height="36" uuid="2a0c453d-8cde-49ba-a1a4-75f03564ed05">
 					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -179,12 +167,12 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 .....................................................................]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement key="rectangle-1" style="TNR10" x="6" y="48" width="562" height="20">
+				<reportElement key="rectangle-1" style="TNR10" x="6" y="48" width="562" height="20" uuid="0066ea57-1e1a-4f63-8d05-3a52d3fe384f">
 					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 			</rectangle>
 			<staticText>
-				<reportElement key="staticText-2" style="TNR10" x="8" y="51" width="556" height="14">
+				<reportElement key="staticText-2" style="TNR10" x="8" y="51" width="556" height="14" uuid="19662822-2d05-448e-b24f-1222ab591972">
 					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -193,9 +181,20 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Visto il Cassiere: ..............................................................................................................................   Data: ..........................................]]></text>
 			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
+				<reportElement key="textField-8" style="TNR10" x="9" y="76" width="332" height="15" uuid="04722c9d-d64d-4ffc-b94d-a7af198e1271"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA["Emesso il "+(new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DACR})+
+" dall'utente "+$F{UTCR}+($F{DT_ANNULLAMENTO}==null?"":"    Annullato il "+(new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DT_ANNULLAMENTO}))]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
