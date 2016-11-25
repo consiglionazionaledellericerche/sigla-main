@@ -57,6 +57,14 @@ public class ReversaleBase extends ReversaleKey implements Keyed {
 	// DT_FIRMA TIMESTAMP
 	private java.sql.Timestamp dt_firma;
 
+	private java.lang.String stato_trasmissione_annullo;
+	
+	private java.lang.Boolean fl_riemissione;
+	
+	private java.sql.Timestamp dt_firma_annullo;
+	
+	private java.lang.Long pg_reversale_riemissione;
+
 	public ReversaleBase() {
 		super();
 	}
@@ -272,5 +280,30 @@ public class ReversaleBase extends ReversaleKey implements Keyed {
 	}
 	public void setDt_firma(java.sql.Timestamp dt_firma) {
 		this.dt_firma = dt_firma;
+	}
+	public java.lang.String getStato_trasmissione_annullo() {
+		return stato_trasmissione_annullo;
+	}
+	public void setStato_trasmissione_annullo(
+			java.lang.String stato_trasmissione_annullo) {
+		this.stato_trasmissione_annullo = stato_trasmissione_annullo;
+	}
+	public java.lang.Boolean getFl_riemissione() {
+		return fl_riemissione;
+	}
+	public void setFl_riemissione(java.lang.Boolean fl_riemissione) {
+		this.fl_riemissione = fl_riemissione;
+	}
+	public java.sql.Timestamp getDt_firma_annullo() {
+		return dt_firma_annullo;
+	}
+	public void setDt_firma_annullo(java.sql.Timestamp dt_firma_annullo) {
+		this.dt_firma_annullo = dt_firma_annullo;
+	}
+	public java.lang.Long getPg_reversale_riemissione() {
+		return pg_reversale_riemissione;
+	}
+	public void setPg_reversale_riemissione(java.lang.Long pg_reversale_riemissione) {
+		this.pg_reversale_riemissione = pg_reversale_riemissione;
 	}
 }

@@ -88,7 +88,9 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 		}
 	}
 		sql.addSQLClause( "AND", "dt_annullamento > dt_trasmissione" );
-		sql.addClause( "AND", "dt_ritrasmissione", sql.ISNULL, null );	
+		sql.addClause( "AND", "dt_ritrasmissione", sql.ISNULL, null );
+		if(tesoreria)
+			sql.addClause( "AND", "stato_trasmissione",  sql.EQUALS, MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA );	
 		return fetchAll( sql );
 				
 	}
@@ -185,7 +187,7 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 		sql.addClause( "AND", "cd_uo_origine", sql.EQUALS, mandato.getCd_uo_origine());
 		
 		sql.addClause( "AND", "stato", sql.EQUALS, ReversaleIBulk.STATO_REVERSALE_EMESSO);
-		sql.addClause( "AND", "stato_trasmissione", sql.NOT_EQUALS, ReversaleIBulk.STATO_TRASMISSIONE_TRASMESSO);
+		sql.addClause( "AND", "stato_trasmissione", sql.EQUALS, ReversaleIBulk.STATO_TRASMISSIONE_NON_INSERITO);
 	
 		MandatoHome home = (MandatoHome)getHomeCache().getHome(mandato.getClass());
 		Mandato_terzoBulk terzo = home.findMandato_terzo(userContext,mandato);
@@ -253,7 +255,7 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 			V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk)persistent;
 			if (!bulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)){
 				bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-					"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
+						"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
 					"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
 					"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");			
 			}		

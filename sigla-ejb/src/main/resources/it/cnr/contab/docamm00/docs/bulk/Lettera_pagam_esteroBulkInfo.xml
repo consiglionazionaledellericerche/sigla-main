@@ -115,7 +115,14 @@
 		property="pg_distinta"
 		inputType="TEXT"
 		label="N. Distinta" />
-			
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		label="Data cancellazione" />		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -253,6 +260,8 @@
 		<columnFieldProperty
 			name="dt_registrazione" />
 		<columnFieldProperty
+			name="dt_cancellazione" />
+		<columnFieldProperty
 			name="documento"
 			property="documento"
 			inputType="TEXT"
@@ -283,6 +292,8 @@
 			name="im_pagamento" />
 		<columnFieldProperty
 			name="dt_registrazione" />
+		<columnFieldProperty
+			name="dt_cancellazione" />
 		<columnFieldProperty
 			name="dt_firma"
 			property="dt_firma"
