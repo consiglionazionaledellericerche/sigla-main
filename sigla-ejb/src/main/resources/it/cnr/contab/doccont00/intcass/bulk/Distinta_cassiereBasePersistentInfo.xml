@@ -106,6 +106,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_ANNULLI"
+			propertyName="fl_annulli"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
 			columnName="DT_INVIO_PEC"
 			propertyName="dt_invio_pec"
 			sqlTypeName="TIMESTAMP"
@@ -142,7 +149,9 @@
 	<persistentProperty
 		name="fl_flusso" />	
 	<persistentProperty
-		name="fl_sepa" />	
+		name="fl_sepa" />
+	<persistentProperty
+		name="fl_annulli" />			
 	<persistentProperty
 		name="dt_invio_pec" />	
 </SQLPersistentInfo>

@@ -467,4 +467,5 @@ public abstract it.cnr.contab.doccont00.core.bulk.RicercaMandatoAccreditamentoBu
 */
 
 public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
+public abstract MandatoBulk annullaMandato(UserContext userContext, MandatoBulk mandato, CompensoOptionRequestParameter param, boolean annullaCollegati,boolean riemissione ) throws ComponentException;
 }

@@ -2,43 +2,23 @@ package it.cnr.contab.docamm00.actions;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
+
 import java.math.*;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.GregorianCalendar;
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.util.GregorianCalendar;
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.util.GregorianCalendar;
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-
-import java.rmi.RemoteException;
-import java.sql.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 import javax.ejb.EJBException;
 
 import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-
-/**
- * Documento generico Action
- */
-
-import it.cnr.contab.docamm00.comp.DocumentoGenericoComponent;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.docamm00.bp.*;
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.inventario00.bp.AssBeneFatturaBP;
@@ -50,8 +30,8 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.jada.action.*;
@@ -470,7 +450,10 @@ protected Forward basicDoRiportaSelezione(ActionContext context, it.cnr.jada.bul
 			}
 			//richiamo del terzo di default per la spesa..
 			DocumentoGenericoComponentSession h= (DocumentoGenericoComponentSession) bp.createComponentSession();
-            selezioneBulk.setTerzo_spesa(h.getTerzoDefault(context.getUserContext()));
+			if(h.getTerzoUnivoco(context.getUserContext(),selezioneBulk)!= null)
+					selezioneBulk.setTerzo_spesa(h.getTerzoUnivoco(context.getUserContext(),selezioneBulk));
+			else
+					selezioneBulk.setTerzo_spesa(h.getTerzoDefault(context.getUserContext()));
             
 			context.closeBusinessProcess();
 			HookForward forward = (HookForward)context.findForward("bringback");
@@ -1522,6 +1505,27 @@ public Forward doCreaLettera(ActionContext context) {
 							new it.cnr.jada.comp.ApplicationException("La lettera per il pagamento estero è già stata creata!"));
 			}
 		}
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doDisassociaLettera(ActionContext context) {
+
+	try {
+		fillModel(context);
+			CRUDDocumentoGenericoPassivoBP bp = (CRUDDocumentoGenericoPassivoBP)getBusinessProcess(context);
+			Documento_genericoBulk model = (Documento_genericoBulk)bp.getModel();
+			CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
+			UtenteBulk utente = ui.getUtente();
+			if (utente.isSupervisore()){
+				if (model != null) {
+					if (model.getLettera_pagamento_estero() != null) {
+						model = ((DocumentoGenericoComponentSession)bp.createComponentSession()).eliminaLetteraPagamentoEstero(context.getUserContext(), model,false);
+						bp.setModel(context, model);
+					}
+				}
+			}else throw new it.cnr.jada.comp.ApplicationException("Utente non abilitato!");
 		return context.findDefaultForward();
 	} catch(Throwable e) {
 		return handleException(context,e);
