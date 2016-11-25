@@ -237,16 +237,17 @@
 
 	<columnSet name="restService">
 		<columnFieldProperty name="cd_ti_pasto"/>
-		<columnFieldProperty name="inquadramento"/>
-		<columnFieldProperty name="ti_area_geografica"/>
-		<columnFieldProperty name="pg_nazione"/>
-		<columnFieldProperty name="ds_nazione"/>
-		<columnFieldProperty name="cd_divisa"/>
-		<columnFieldProperty name="limite_max_pasto"/>
-		<columnFieldProperty name="dt_inizio_validita"/>
-		<columnFieldProperty name="dt_fine_validita"/>
-		<columnFieldProperty name="dt_cancellazione"/>
-		<columnFieldProperty name="cd_area_estera"/>
-		<columnFieldProperty name="ds_area_estera"/>
+		<columnFieldProperty name="limite_max_pasto" />
+		<columnFieldProperty name="ti_area_geografica" />
+		<columnFieldProperty name="pg_nazione" />
+		<columnFieldProperty name="ds_nazione" />
+		<columnFieldProperty name="cd_divisa" />
+		<columnFieldProperty name="ds_divisa" />
+		<columnFieldProperty name="inquadramento" />
+		<columnFieldProperty name="dt_inizio_validita" />
+		<columnFieldProperty name="dataFineValidita" />
+		<columnFieldProperty name="dt_cancellazione" />
+		<columnFieldProperty name="cd_area_estera" />
+		<columnFieldProperty name="ds_area_estera" />
 	</columnSet>
 </bulkInfo>
