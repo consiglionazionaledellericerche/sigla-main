@@ -3283,6 +3283,11 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBul
 	return selectTipo_pastoByClause(aUC, tappa.getDt_inizio_tappa(), missione.getPg_rif_inquadramento(), tappa.getNazione(), dettaglioSpesa.getCd_ti_pasto(), clauses);
 }
 
+public List recuperoTipi_pasto(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException, PersistencyException
+{
+	Missione_tipo_pastoHome tipoPastoHome = (Missione_tipo_pastoHome)getHome(aUC, Missione_tipo_pastoBulk.class);
+	return tipoPastoHome.fetchAll(selectTipo_pastoByClause(aUC, dataTappa, inquadramento, nazione, tipoPasto, clauses));
+}
 public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException
 {
 	Missione_tipo_pastoHome tipoPastoHome = (Missione_tipo_pastoHome)getHome(aUC, Missione_tipo_pastoBulk.class);
@@ -3375,13 +3380,13 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC,Missione_dettaglioBul
 	return selectTipo_spesaByClause(aUC, tappa.getDt_inizio_tappa(), missione.getPg_rif_inquadramento(), tappa.getNazione(), tappa.getFl_rimborso(), dettaglioSpesa.getCd_ti_spesa(), clauses) ;
 }
 
-public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile) throws ComponentException, PersistencyException
+public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile, String cdTipoSpesa) throws ComponentException, PersistencyException
 {
     NazioneHome nazionehome=(NazioneHome)getHome(aUC,NazioneBulk.class);
 	NazioneBulk nazioneBulk = new NazioneBulk(nazione);
 	nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
 	
-	SQLBuilder sql = selectTipo_spesaByClause(aUC, dataInizioTappa, inquadramento, nazioneBulk, rimborsoAmmissibile, null, new CompoundFindClause()) ;
+	SQLBuilder sql = selectTipo_spesaByClause(aUC, dataInizioTappa, inquadramento, nazioneBulk, rimborsoAmmissibile, cdTipoSpesa, new CompoundFindClause()) ;
 	Missione_tipo_spesaHome tipoSpesaHome = (Missione_tipo_spesaHome)getHome(aUC, Missione_tipo_spesaBulk.class);
 	return tipoSpesaHome.fetchAll(sql);
 }

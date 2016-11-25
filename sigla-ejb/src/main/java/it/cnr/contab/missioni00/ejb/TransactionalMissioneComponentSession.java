@@ -995,10 +995,26 @@ public class TransactionalMissioneComponentSession extends
 		}
 	}
 
-	public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile) throws ComponentException, RemoteException, PersistencyException{
+	public List recuperoTipi_pasto(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException, java.rmi.RemoteException, PersistencyException{
+		try {
+			return (List) invoke("recuperoTipi_pasto", new Object[] {
+					aUC,  dataTappa, inquadramento, nazione, tipoPasto, clauses });
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
+	public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile, String cdTipoSpesa) throws ComponentException, RemoteException, PersistencyException{
 		try {
 			return (List) invoke("recuperoTipiSpesa", new Object[] {
-					aUC, dataInizioTappa, nazione, inquadramento, rimborsoAmmissibile });
+					aUC, dataInizioTappa, nazione, inquadramento, rimborsoAmmissibile, cdTipoSpesa });
 		} catch (java.rmi.RemoteException e) {
 			throw e;
 		} catch (java.lang.reflect.InvocationTargetException e) {

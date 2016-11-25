@@ -2,6 +2,7 @@ package it.cnr.contab.util.rest;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJBException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -48,6 +50,7 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaKey;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.HomeCache;
@@ -183,6 +186,10 @@ public class SIGLAResource {
 		return (MissioneComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession");
 	}
 
+	private CRUDComponentSession getComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
+		return (CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
+	}
+
 	private String getUser(HttpServletRequest request) throws ComponentException, IOException{
 		String authorization = request.getHeader("Authorization");
 		return BasicAuthentication.getUsername(authorization);
@@ -200,9 +207,6 @@ public class SIGLAResource {
         	JSONRESTMissioniRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTMissioniRequest.class);
 
         	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
-    		
-        	Connection conn = EJBCommonServices.getConnection(userContext);
-    		HomeCache homeCache = new HomeCache(conn);
 
         	if (jsonRequest.getData() == null){
 				throw new RestException(Status.BAD_REQUEST, "Errore, data dettaglio spesa obbligatoria.");
@@ -218,12 +222,9 @@ public class SIGLAResource {
         	if (jsonRequest.getDivisa() == null){
 				throw new RestException(Status.BAD_REQUEST, "Errore, divisa dettaglio spesa obbligatoria.");
         	}
+			NazioneBulk nazioneBulk = getNazione(userContext, jsonRequest.getNazione()); 
         	if (jsonRequest.getCdTipoSpesa() != null){
-    			NazioneBulk nazioneBulk = getNazione(jsonRequest.getNazione(), homeCache); 
-    			SQLBuilder sql = missioneComponent().selectTipo_spesaByClause(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk, false, jsonRequest.getCdTipoSpesa(), new CompoundFindClause());
-
-        		Missione_tipo_spesaHome homeSpesa=(Missione_tipo_spesaHome)homeCache.getHome(Missione_tipo_spesaBulk.class);
-    			List lista = homeSpesa.fetchAll(sql);
+        		List lista = missioneComponent().recuperoTipiSpesa(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk.getPg_nazione(), false, jsonRequest.getCdTipoSpesa());
     			if (lista != null && !lista.isEmpty()){
     	    		tipoSpesa = (Missione_tipo_spesaBulk)lista.get(0);
     			}
@@ -236,10 +237,7 @@ public class SIGLAResource {
 
     		Missione_tipo_pastoBulk tipoPasto = null;
     		if (jsonRequest.getCdTipoPasto() != null){
-    			Missione_tipo_pastoHome home=(Missione_tipo_pastoHome)homeCache.getHome(Missione_tipo_pastoBulk.class);
-    			NazioneBulk nazioneBulk = getNazione(jsonRequest.getNazione(), homeCache); 
-    			SQLBuilder sql = missioneComponent().selectTipo_pastoByClause(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk, jsonRequest.getCdTipoPasto(), null);    			
-    			List lista = home.fetchAll(sql);
+    			List lista = missioneComponent().recuperoTipi_pasto(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk, jsonRequest.getCdTipoPasto(), null);    			
     			if (lista != null && !lista.isEmpty()){
     	    		tipoPasto = (Missione_tipo_pastoBulk)lista.get(0);
     			}
@@ -274,10 +272,9 @@ public class SIGLAResource {
     	return rb.build();		
 	}
 
-	private NazioneBulk getNazione(Long nazione, HomeCache homeCache) throws PersistencyException {
-		NazioneHome nazionehome=(NazioneHome)homeCache.getHome(NazioneBulk.class);
+	private NazioneBulk getNazione(UserContext userContext, Long nazione) throws PersistencyException, ComponentException, RemoteException, EJBException {
 		NazioneBulk nazioneBulk = new NazioneBulk(nazione);
-		nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk);
+		nazioneBulk = (NazioneBulk)getComponent().findByPrimaryKey(userContext, nazioneBulk);
 		return nazioneBulk;
 	}
 
