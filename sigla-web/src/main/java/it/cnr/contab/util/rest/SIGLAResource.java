@@ -46,6 +46,7 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaHome;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaKey;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -204,7 +205,7 @@ public class SIGLAResource {
     		HomeCache homeCache = new HomeCache(conn);
 
         	if (jsonRequest.getData() == null){
-				throw new Exception("Errore, data dettaglio spesa obbligatoria.");
+				throw new RestException(Status.BAD_REQUEST, "Errore, data dettaglio spesa obbligatoria.");
         	}
     		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
             Date parsedDate = dateFormat.parse(jsonRequest.getData());
@@ -212,10 +213,10 @@ public class SIGLAResource {
 
     		Missione_tipo_spesaBulk tipoSpesa = null;
         	if (jsonRequest.getImportoSpesa() == null){
-				throw new Exception("Errore, importo dettaglio spesa obbligatorio.");
+				throw new RestException(Status.BAD_REQUEST, "Errore, importo dettaglio spesa obbligatorio.");
         	}
         	if (jsonRequest.getDivisa() == null){
-				throw new Exception("Errore, divisa dettaglio spesa obbligatoria.");
+				throw new RestException(Status.BAD_REQUEST, "Errore, divisa dettaglio spesa obbligatoria.");
         	}
         	if (jsonRequest.getCdTipoSpesa() != null){
     			NazioneBulk nazioneBulk = getNazione(jsonRequest.getNazione(), homeCache); 
@@ -227,10 +228,10 @@ public class SIGLAResource {
     	    		tipoSpesa = (Missione_tipo_spesaBulk)lista.get(0);
     			}
     			if (tipoSpesa == null){
-    				throw new Exception("Tipo Spesa non trovato in SIGLA.");
+    				throw new RestException(Status.BAD_REQUEST, "Tipo Spesa non trovato in SIGLA.");
     			}
         	} else {
-				throw new Exception("Errore, parametro tipo spesa obbligatorio.");
+				throw new RestException(Status.BAD_REQUEST, "Errore, parametro tipo spesa obbligatorio.");
         	}
 
     		Missione_tipo_pastoBulk tipoPasto = null;
@@ -243,7 +244,7 @@ public class SIGLAResource {
     	    		tipoPasto = (Missione_tipo_pastoBulk)lista.get(0);
     			}
     			if (tipoPasto == null){
-    				throw new Exception("Tipo Pasto non trovato in SIGLA.");
+    				throw new RestException(Status.BAD_REQUEST, "Tipo Pasto non trovato in SIGLA.");
     			}
     		}
 
@@ -257,8 +258,15 @@ public class SIGLAResource {
     		dettaglio.setIm_spesa_euro(new BigDecimal(jsonRequest.getImportoSpesa()));
     		dettaglio.setIm_spesa_divisa(dettaglio.getIm_spesa_euro());
     		dettaglio.setCd_divisa_spesa(jsonRequest.getDivisa());
-    		missioneComponent().validaMassimaliSpesa(userContext, missioneBulk, dettaglio);
+        	try{
+        		missioneComponent().validaMassimaliSpesa(userContext, missioneBulk, dettaglio);
+        	}
+        	catch (ValidationException e) {
+        		throw new RestException(Status.BAD_REQUEST, e.getMessage());
+        	} 	
     		rb = Response.ok("OK");
+    	} catch (RestException restException) {
+    		rb = Response.status(restException.getStatus()).entity(Collections.singletonMap("message",restException.getMessage()));
     	} catch (Exception e) {
     		log.error("error rest validaMassimaleSpesa", "1", e);
     		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
