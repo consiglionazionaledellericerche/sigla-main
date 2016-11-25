@@ -266,10 +266,10 @@ public class SIGLAResource {
         	} 	
     		rb = Response.ok("OK");
     	} catch (RestException restException) {
-    		rb = Response.status(restException.getStatus()).entity(Collections.singletonMap("message",restException.getMessage()));
+    		rb = Response.status(restException.getStatus()).entity(restException.getMessage());
     	} catch (Exception e) {
     		log.error("error rest validaMassimaleSpesa", "1", e);
-    		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
+    		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage());
     	}
     	return rb.build();		
 	}
