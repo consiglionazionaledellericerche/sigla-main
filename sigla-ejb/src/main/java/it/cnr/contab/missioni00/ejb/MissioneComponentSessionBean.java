@@ -12,6 +12,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -850,11 +851,30 @@ public class MissioneComponentSessionBean extends
 		}
 	}
 
-	public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile) throws ComponentException, java.rmi.RemoteException, PersistencyException{
+	public List recuperoTipi_pasto(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException, java.rmi.RemoteException, PersistencyException{
 		pre_component_invocation(aUC, componentObj);
 		try {
 			java.util.List result = ((MissioneComponent) componentObj)
-					.recuperoTipiSpesa(aUC, dataInizioTappa, nazione, inquadramento, rimborsoAmmissibile);
+					.recuperoTipi_pasto(aUC, dataTappa, inquadramento, nazione, tipoPasto, clauses);
+			component_invocation_succes(aUC, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(aUC, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(aUC, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(aUC, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(aUC, componentObj, e);
+		}
+	}
+	public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile, String cdTipoSpesa) throws ComponentException, java.rmi.RemoteException, PersistencyException{
+		pre_component_invocation(aUC, componentObj);
+		try {
+			java.util.List result = ((MissioneComponent) componentObj)
+					.recuperoTipiSpesa(aUC, dataInizioTappa, nazione, inquadramento, rimborsoAmmissibile, cdTipoSpesa);
 			component_invocation_succes(aUC, componentObj);
 			return result;
 		} catch (it.cnr.jada.comp.NoRollbackException e) {
