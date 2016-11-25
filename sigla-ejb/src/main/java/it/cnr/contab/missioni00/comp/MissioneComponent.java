@@ -3327,7 +3327,7 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, 
 		sql.addParameter("I", java.sql.Types.CHAR, 6);
 	else
 		sql.addParameter("E", java.sql.Types.CHAR, 6);
-	sql.addParameter(nazione, java.sql.Types.NUMERIC, 7);
+	sql.addParameter(nazione.getPg_nazione(), java.sql.Types.NUMERIC, 7);
 	sql.addParameter(inquadramento, java.sql.Types.NUMERIC, 8);
 	sql.addParameter(dataTappa, java.sql.Types.TIMESTAMP, 9);
 
