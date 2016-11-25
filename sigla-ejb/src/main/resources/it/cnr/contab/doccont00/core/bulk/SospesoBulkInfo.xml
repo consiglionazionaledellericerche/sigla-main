@@ -433,6 +433,8 @@
 		<columnFieldProperty
 			name="dt_registrazione" />
 		<columnFieldProperty
+			name="ti_cc_bi" />	
+		<columnFieldProperty
 			name="causale" />
 		<columnFieldProperty
 			name="ds_anagrafico" />
