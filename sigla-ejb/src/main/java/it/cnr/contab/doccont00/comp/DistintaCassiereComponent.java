@@ -317,13 +317,15 @@ public class DistintaCassiereComponent extends
 		// throw new ApplicationException("Attenzione! Il mandato " +
 		// mandato.getPg_mandato() +
 		// " non e' più valido perche' stato modificato." );
-
-		mandato.setStato_trasmissione(stato_trasmissione);
+		if(mandato.isAnnullato())
+			mandato.setStato_trasmissione_annullo(stato_trasmissione);
+		else
+			mandato.setStato_trasmissione(stato_trasmissione);
 
 		// se si tratta di una prima trasmissione aggiorna la dt_trasmissione
 		if (MandatoBulk.STATO_TRASMISSIONE_TRASMESSO.equals(mandato
-				.getStato_trasmissione())
-				&& mandato.getDt_trasmissione() == null) {
+				.getStato_trasmissione())){
+			if( mandato.getDt_trasmissione() == null) {
 			// Se la data di annullamento NON E' NULLA, e siamo in esercizio
 			// successivo, metto
 			// la data di trasmissione = ad istante successivo a quella di
@@ -343,27 +345,29 @@ public class DistintaCassiereComponent extends
 						.getTs_valido(userContext));
 			}
 			// se si tratta di una ritrasmissione aggiorna la dt_ritrasmissione
-		} else if (MandatoBulk.STATO_TRASMISSIONE_TRASMESSO.equals(mandato
-				.getStato_trasmissione())
-				&& mandato.getDt_trasmissione() != null) {
-			if (DateServices.isAnnoMaggEsScriv(userContext)) {
-				if (mandato.getDt_trasmissione().after(
-						mandato.getDt_annullamento()))
-					mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
-							userContext, mandato.getDt_trasmissione()));
-				else
-					mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
-							userContext, mandato.getDt_annullamento()));
-			} else {
-				mandato.setDt_ritrasmissione(DateServices
-						.getTs_valido(userContext));
-			}
+		} else if (mandato.getDt_trasmissione() != null) {
+			if (MandatoBulk.STATO_TRASMISSIONE_TRASMESSO.equals(mandato
+					.getStato_trasmissione_annullo()) || mandato
+					.getStato_trasmissione_annullo() ==null){
+				if (DateServices.isAnnoMaggEsScriv(userContext)) {
+					if (mandato.getDt_trasmissione().after(
+							mandato.getDt_annullamento()))
+						mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
+								userContext, mandato.getDt_trasmissione()));
+					else
+						mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
+								userContext, mandato.getDt_annullamento()));
+				} else  {
+							mandato.setDt_ritrasmissione(DateServices
+							.getTs_valido(userContext));
+				}
+			}else mandato.setDt_ritrasmissione( null);
 		}
-
-		mandato.setUser(userContext.getUser());
-		updateBulk(userContext, mandato);
-
 	}
+	mandato.setUser(userContext.getUser());
+	updateBulk(userContext, mandato);
+
+}
 
 	/**
 	 * Assegna lo stato trasmissione di un mandato con tipologia accreditamento
@@ -414,8 +418,8 @@ public class DistintaCassiereComponent extends
 
 		// se si tratta di una prima trasmissione aggiorna la dt_trasmissione
 		if (MandatoBulk.STATO_TRASMISSIONE_TRASMESSO.equals(mandato
-				.getStato_trasmissione())
-				&& mandato.getDt_trasmissione() == null) {
+				.getStato_trasmissione())){
+			if( mandato.getDt_trasmissione() == null) {
 			// Se la data di annullamento NON E' NULLA, e siamo in esercizio
 			// successivo, metto
 			// la data di trasmissione = ad istante successivo a quella di
@@ -435,27 +439,32 @@ public class DistintaCassiereComponent extends
 						.getTs_valido(userContext));
 			}
 			// se si tratta di una ritrasmissione aggiorna la dt_ritrasmissione
-		} else if (MandatoBulk.STATO_TRASMISSIONE_TRASMESSO.equals(mandato
-				.getStato_trasmissione())
-				&& mandato.getDt_trasmissione() != null) {
-			if (DateServices.isAnnoMaggEsScriv(userContext)) {
-				if (mandato.getDt_annullamento() == null
-						|| mandato.getDt_trasmissione().after(
-								mandato.getDt_annullamento()))
-					mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
-							userContext, mandato.getDt_trasmissione()));
-				else
-					mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
-							userContext, mandato.getDt_annullamento()));
-			} else {
-				mandato.setDt_ritrasmissione(DateServices
-						.getTs_valido(userContext));
-			}
+		} else if ( mandato.getDt_trasmissione() != null) {
+			if (MandatoBulk.STATO_TRASMISSIONE_TRASMESSO.equals(mandato
+					.getStato_trasmissione_annullo()) || mandato
+					.getStato_trasmissione_annullo() ==null){
+			
+				if (DateServices.isAnnoMaggEsScriv(userContext)) {
+					if (mandato.getDt_annullamento() == null
+							|| mandato.getDt_trasmissione().after(
+									mandato.getDt_annullamento()))
+						mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
+								userContext, mandato.getDt_trasmissione()));
+					else
+						mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
+								userContext, mandato.getDt_annullamento()));
+				} else {
+					mandato.setDt_ritrasmissione(DateServices
+							.getTs_valido(userContext));
+				}
+					
+			 }else mandato.setDt_ritrasmissione( null);
 		}
-		mandato.setUser(userContext.getUser());
-		updateBulk(userContext, mandato);
-
 	}
+	mandato.setUser(userContext.getUser());
+	updateBulk(userContext, mandato);
+
+}
 
 	/**
 	 * Assegna lo stato trasmissione di una reversale
@@ -500,13 +509,16 @@ public class DistintaCassiereComponent extends
 		// throw new ApplicationException("Attenzione! La reversale " +
 		// reversale.getPg_reversale() +
 		// " non e' più valida perche' stata modificata." );
-
-		reversale.setStato_trasmissione(stato_trasmissione);
+		if(reversale.isAnnullato())
+			reversale.setStato_trasmissione_annullo(stato_trasmissione);
+		else
+			reversale.setStato_trasmissione(stato_trasmissione);
 
 		// se si tratta di una prima trasmissione aggiorna la dt_trasmissione
 		if (ReversaleBulk.STATO_TRASMISSIONE_TRASMESSO.equals(reversale
-				.getStato_trasmissione())
-				&& reversale.getDt_trasmissione() == null) {
+				.getStato_trasmissione())){
+
+			if(reversale.getDt_trasmissione() == null) {
 			// Se la data di annullamento NON E' NULLA, e siamo in esercizio
 			// successivo, metto
 			// la data di trasmissione = ad istante successivo a quella di
@@ -522,13 +534,14 @@ public class DistintaCassiereComponent extends
 											.getTs_valido(userContext)));
 				}
 			} else {
-				reversale.setDt_trasmissione(DateServices
+					reversale.setDt_trasmissione(DateServices
 						.getTs_valido(userContext));
 			}
 			// se si tratta di una ritrasmissione aggiorna la dt_ritrasmissione
-		} else if (ReversaleBulk.STATO_TRASMISSIONE_TRASMESSO.equals(reversale
-				.getStato_trasmissione())
-				&& reversale.getDt_trasmissione() != null) {
+		} else if (reversale.getDt_trasmissione() != null) {
+			if (ReversaleBulk.STATO_TRASMISSIONE_TRASMESSO.equals(reversale
+					.getStato_trasmissione_annullo()) || reversale
+					.getStato_trasmissione_annullo() ==null){
 			if (DateServices.isAnnoMaggEsScriv(userContext)) {
 
 				if (reversale.getDt_annullamento() == null
@@ -542,7 +555,9 @@ public class DistintaCassiereComponent extends
 			} else {
 				reversale.setDt_ritrasmissione(DateServices
 						.getTs_valido(userContext));
-			}
+				}
+			}else reversale.setDt_ritrasmissione( null);		
+		}
 		}
 		reversale.setUser(userContext.getUser());
 		updateBulk(userContext, reversale);
@@ -1446,7 +1461,50 @@ public class DistintaCassiereComponent extends
 					sql.addClause(docPassivo.buildFindClauses(null));
 					return sql;
 				}
-			else  //no flusso e no sepa
+		 else if (distinta.getFl_annulli()){  //annulli
+			SQLBuilder sql = getHome(userContext,
+					V_mandato_reversaleBulk.class,
+					"V_MANDATO_REVERSALE_DIST_ANN").createSQLBuilder();
+			sql.addClause(clausole);
+			sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.esercizio", SQLBuilder.EQUALS,
+					((CNRUserContext) userContext).getEsercizio());
+			// Da condizionare 02/12/2015
+			if(!tesoreriaUnica(userContext, distinta)){
+				sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.cd_cds", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_cds());
+				sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
+						MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+			}
+			else{
+				sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.dt_firma", SQLBuilder.ISNOTNULL,null);
+				sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
+				MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+			}
+			sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.ti_documento_cont", SQLBuilder.NOT_EQUALS,
+					MandatoBulk.TIPO_REGOLARIZZAZIONE);
+//			sql.addSQLClause("AND", "v_mandato_reversale_dist_sepa.stato", SQLBuilder.NOT_EQUALS,
+//					MandatoBulk.STATO_MANDATO_ANNULLATO);
+//			
+			sql.addSQLJoin("v_mandato_reversale_dist_ann.CD_TIPO_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_ann.CD_TIPO_DOCUMENTO_CONT");
+			sql.addSQLJoin("v_mandato_reversale_dist_ann.PG_DOCUMENTO_CONT_PADRE","v_mandato_reversale_dist_ann.PG_DOCUMENTO_CONT");
+							if (Utility.createParametriCnrComponentSession().getParametriCnr(
+					userContext, docPassivo.getEsercizio()).getFl_siope()
+					.booleanValue()) {
+				Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
+						userContext, Unita_organizzativa_enteBulk.class)
+						.findAll().get(0);
+				if (!((CNRUserContext) userContext).getCd_cds().equals(
+						ente.getUnita_padre().getCd_unita_organizzativa()))
+					sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.ti_documento_cont",
+							SQLBuilder.NOT_EQUALS,
+							MandatoBulk.TIPO_ACCREDITAMENTO);
+			}
+			if (docPassivo != null) // (1) clausole sull'esercizio,
+									// cd_unita_organizzativa + clausole
+									// dell'utente
+				sql.addClause(docPassivo.buildFindClauses(null));
+				return sql;
+			}
+			else  //no flusso e no sepa e no annulli
 			{
 			SQLBuilder sql = getHome(userContext,
 					V_mandato_reversaleBulk.class,
@@ -1492,6 +1550,20 @@ public class DistintaCassiereComponent extends
 				sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
 						"V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
 				sql.addSQLNotExistsClause("AND", sql3);
+				
+				SQLBuilder sql4 = getHome(userContext,V_mandato_reversaleBulk.class,
+						"V_MANDATO_REVERSALE_DIST_ANN").createSQLBuilder();
+				sql4.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_ANN.esercizio", SQLBuilder.EQUALS,
+						((CNRUserContext) userContext).getEsercizio());
+				sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+						"V_MANDATO_REVERSALE_DIST_ANN.ESERCIZIO");
+				sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+						"V_MANDATO_REVERSALE_DIST_ANN.CD_CDS");
+				sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+						"V_MANDATO_REVERSALE_DIST_ANN.CD_TIPO_DOCUMENTO_CONT");
+				sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+						"V_MANDATO_REVERSALE_DIST_ANN.PG_DOCUMENTO_CONT");
+				sql.addSQLNotExistsClause("AND", sql4);
 			}
 			sql.addSQLClause("AND", "v_mandato_reversale_distinta.ti_documento_cont", SQLBuilder.NOT_EQUALS,
 					MandatoBulk.TIPO_REGOLARIZZAZIONE);
@@ -2782,6 +2854,9 @@ public class DistintaCassiereComponent extends
 			sql.addClause("AND","fl_flusso", sql.EQUALS, ((Distinta_cassiereBulk)bulk).getFl_flusso().booleanValue());
 		if (bulk instanceof Distinta_cassiereBulk && ((Distinta_cassiereBulk)bulk).getFl_sepa()!=null)
 			sql.addClause("AND","fl_sepa", sql.EQUALS, ((Distinta_cassiereBulk)bulk).getFl_sepa().booleanValue());
+		if (bulk instanceof Distinta_cassiereBulk && ((Distinta_cassiereBulk)bulk).getFl_annulli()!=null)
+			sql.addClause("AND","fl_annulli", sql.EQUALS, ((Distinta_cassiereBulk)bulk).getFl_annulli().booleanValue());
+	
 		sql.addOrderBy("pg_distinta");
 		return sql;
 	}
@@ -3138,6 +3213,8 @@ public class DistintaCassiereComponent extends
 
 			// Controlla i documenti inseriti nella distinta
 			validaDocumentiContabiliAssociati(userContext, distinta);
+			if(distinta.getFl_annulli().booleanValue())
+				callCheckDocContForDistintaAnn(userContext, distinta);
 			callCheckDocContForDistinta(userContext, distinta);
 		} catch (Exception e) {
 			throw handleException(e);
@@ -3598,11 +3675,13 @@ public class DistintaCassiereComponent extends
 				SQLBuilder sql = selectDistinta_cassiere_detCollByClause(
 						userContext, distinta, V_mandato_reversaleBulk.class,
 						null);
-				List list = home.fetchAll(sql);
-
-				for (Iterator i = list.iterator(); i.hasNext();)
-					eliminaDettaglioDistinteCollegate(userContext, distinta,
-							(V_mandato_reversaleBulk) i.next());
+				if(sql!=null){
+					List list = home.fetchAll(sql);
+	
+					for (Iterator i = list.iterator(); i.hasNext();)
+						eliminaDettaglioDistinteCollegate(userContext, distinta,
+								(V_mandato_reversaleBulk) i.next());
+				}
 			}
 		} catch (Exception e) {
 			throw handleException(e);
@@ -4365,5 +4444,34 @@ public class DistintaCassiereComponent extends
 			throw handleException(e);
 		}
 	}
+	private void callCheckDocContForDistintaAnn(UserContext userContext,
+			Distinta_cassiereBulk distinta)
+			throws it.cnr.jada.comp.ComponentException {
+
+		LoggableStatement cs = null;
+		try {
+			cs = new LoggableStatement(getConnection(userContext), "{ call "
+					+ it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+					+ "CNRCTB750.checkDocContForDistCasAnn(?,?,?,?) }", false,
+					this.getClass());
+
+			cs.setString(1, distinta.getCd_cds());
+			cs.setInt(2, distinta.getEsercizio().intValue());
+			cs.setString(3, distinta.getCd_unita_organizzativa());
+			cs.setLong(4, distinta.getPg_distinta().longValue());
+
+			cs.executeQuery();
+		} catch (Throwable e) {
+			throw handleException(e);
+		} finally {
+			try {
+				if (cs != null)
+					cs.close();
+			} catch (java.sql.SQLException e) {
+				throw handleException(e);
+			}
+		}
+	}
+
 
 }
