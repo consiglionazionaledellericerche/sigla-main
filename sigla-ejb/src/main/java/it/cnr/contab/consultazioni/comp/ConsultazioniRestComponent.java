@@ -167,6 +167,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					if (nazioneBulk != null && dataTappa != null && inquadramento != null && ammissibileConRimborso != null){
 						try {
 							sql = missioneComponent().selectTipo_spesaByClause(userContext, dataTappa, inquadramento, nazioneBulk, ammissibileConRimborso, null, new CompoundFindClause());
+							sql.addPreOrderBy(" ds_ti_spesa");
 						} catch (RemoteException | EJBException e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
