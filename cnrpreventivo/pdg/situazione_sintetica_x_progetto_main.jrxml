@@ -257,7 +257,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                       THEN c.cd_elemento_voce
                       ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
                                 FROM ass_evold_evnew b
-                                WHERE b.ti_gestione_old = 'S'
+                                WHERE b.ti_gestione_old = 'E'
                                 AND   b.cd_elemento_voce_old = c.cd_elemento_voce), c.cd_elemento_voce)
                       END cd_elemento_voce,
                  0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
@@ -281,7 +281,7 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                                        AND   pg_progetto=$P{P_PG_PROGLIV2}
                                        AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
          UNION ALL
-         SELECT  c.esercizio, c.esercizio_originale esercizio_res, 'S' tipo, a.CD_LINEA_ATTIVITA,
+         SELECT  c.esercizio, c.esercizio_originale esercizio_res, 'E' tipo, a.CD_LINEA_ATTIVITA,
                  cd_elemento_voce_next cd_elemento_voce,
                  0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
                  0 impegnato, 0 pagato
