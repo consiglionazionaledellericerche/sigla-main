@@ -3377,7 +3377,9 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC,Missione_dettaglioBul
     
 	tappa.setNazione((NazioneBulk)nazionehome.findByPrimaryKey(tappa.getNazione()));
 	
-	return selectTipo_spesaByClause(aUC, tappa.getDt_inizio_tappa(), missione.getPg_rif_inquadramento(), tappa.getNazione(), tappa.getFl_rimborso(), dettaglioSpesa.getCd_ti_spesa(), clauses) ;
+	SQLBuilder sql = selectTipo_spesaByClause(aUC, tappa.getDt_inizio_tappa(), missione.getPg_rif_inquadramento(), tappa.getNazione(), tappa.getFl_rimborso(), dettaglioSpesa.getCd_ti_spesa(), clauses) ;
+	sql.addPreOrderBy(" cd_ti_spesa, pg_rif_inquadramento desc, pg_nazione desc, ti_area_geografica");
+	return sql;
 }
 
 public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile, String cdTipoSpesa) throws ComponentException, PersistencyException
@@ -3437,7 +3439,6 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa,
 	sql.addParameter(inquadramento, java.sql.Types.NUMERIC, 9);
 	//sql.addParameter(missione.getDt_inizio_missione(), java.sql.Types.TIMESTAMP, 10);	
 	sql.addParameter(dataTappa, java.sql.Types.TIMESTAMP, 10);
-	sql.addPreOrderBy(" cd_ti_spesa, pg_rif_inquadramento desc, pg_nazione desc, ti_area_geografica");
 	
 	return sql;
 }
