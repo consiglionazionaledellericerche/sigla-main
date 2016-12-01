@@ -4,9 +4,9 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.100000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="302"/>
-	<import value="net.sf.jasperreports.engine.*"/>
+	<property name="ireport.y" value="205"/>
 	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
 	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -61,6 +61,7 @@ e.nome_ente_str, e.data_firma_accordo, e.data_firma_addendum, e.num_prot_dec_con
 (select b.denominazione_sede from terzo b where g.cd_respons_ita = b.cd_terzo) ds_responsabile_ita,
 (select b.denominazione_sede from terzo b where a.cd_terzo_ente = b.cd_terzo) ds_terzo_ente_da_pagare,
 (select s.codice_iban from banca s where s.pg_banca = a.pg_banca and s.cd_terzo = b.cd_terzo) codice_iban,
+(select s.intestazione from banca s where s.pg_banca = a.pg_banca and s.cd_terzo = e.cd_terzo_ente) intestazione,
 (select s.codice_iban from banca s where s.pg_banca = a.pg_banca and s.cd_terzo = e.cd_terzo_ente) codice_iban,
 (select s.codice_iban from banca s where s.pg_banca = a.pg_banca and s.cd_terzo = a.cd_terzo_ente) codice_iban_ente_da_pagare,
 (select s.codice_swift from banca s where s.pg_banca = a.pg_banca and s.cd_terzo = e.cd_terzo_ente) codice_swift,
@@ -167,6 +168,7 @@ and b.cd_anag = s.cd_anag]]>
 	<field name="IMPORTO_DIARIA_STR" class="java.math.BigDecimal"/>
 	<field name="DS_TERZO_ENTE_DA_PAGARE" class="java.lang.String"/>
 	<field name="CODICE_IBAN" class="java.lang.String"/>
+	<field name="INTESTAZIONE" class="java.lang.String"/>
 	<field name="CODICE_IBAN_ENTE_DA_PAGARE" class="java.lang.String"/>
 	<field name="CODICE_SWIFT" class="java.lang.String"/>
 	<field name="CODICE_SWIFT_ENTE_DA_PAGARE" class="java.lang.String"/>
