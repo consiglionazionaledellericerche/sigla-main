@@ -1498,7 +1498,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					cs.setNull(11, java.sql.Types.NUMERIC);
 					cs.setNull(12, java.sql.Types.NUMERIC);
 				}
-				if (compenso.isElettronica()) {
+				if (compenso.isElettronica() && !compenso.isSenzaCalcoli()) {
 					cs.setObject(13, compenso.getFatturaPassiva().getDocumentoEleTestata().getIdPaese());
 					cs.setObject(14, compenso.getFatturaPassiva().getDocumentoEleTestata().getIdCodice());
 					cs.setObject(15, compenso.getFatturaPassiva().getDocumentoEleTestata().getIdentificativoSdi());
@@ -2544,8 +2544,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw handleException(compenso, e);
 		} catch (java.text.ParseException e) {
 			throw handleException(compenso, e);
-		}
-
+		} 
+		
 		return compenso;
 	}
 
@@ -3083,6 +3083,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 		compenso.setFl_documento_ele(fp.isElettronica());
 		compenso.setTi_istituz_commerc(fp.getTi_istituz_commerc());
+		if(compenso.isElettronica())
+		try {
+			compenso.setUserAbilitatoSenzaCalcolo(((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(userContext, "AMMFATTURDOCSFATPASA"));
+		} catch (RemoteException e) {
+			throw handleException(compenso, e);
+		}
 		
 		// Settaggio Terzo
 		completaTerzo(userContext, compenso);
@@ -4095,7 +4101,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			getHomeCache(userContext).fetchAll(userContext);
 
 			if (compenso !=null && compenso.getIm_totale_compenso()!=null && bulk.getFatturaPassiva() != null && bulk.getFatturaPassiva().getIm_totale_fattura()!=null &&
-					compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_fattura())!=0)
+					compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_fattura())!=0 && !compenso.isSenzaCalcoli())
 					throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_fattura());
 			
 			compenso.setPgCompensoPerClone(pgTmp);
@@ -4935,7 +4941,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			if ((compenso.getDt_fattura_fornitore().compareTo(data_limite) < 0)||(data_limite_sup!=null && compenso.getDt_fattura_fornitore().compareTo(data_limite_sup) > 0)) {
 				compenso.setFl_liquidazione_differita(false);
 				throw new it.cnr.jada.comp.ApplicationException(
-						"Non ï¿½ possibile indicare la liquidazione differita con la data fattura fornitore indicata.");
+						"Non è possibile indicare la liquidazione differita con la data fattura fornitore indicata.");
 			}
 		}
 		// Controlli aggiunti per l'Art.35 DL n.223/2006
@@ -4944,23 +4950,28 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				&& !compenso.LIBERO_FONDO_ECO.equals(compenso
 						.getStato_pagamento_fondo_eco()))
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Il compenso non puï¿½ essere associato a fondo economale per il tipo di trattamento prescelto");
+					"Il compenso non può essere associato a fondo economale per il tipo di trattamento prescelto");
 		if (compenso.getFl_generata_fattura()
 				&& compenso.getPartita_iva() == null
 				&& !((TerzoBulk) compenso.getTerzo()).getAnagrafico()
 						.getFl_non_obblig_p_iva())
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Per poter generare la fattura ï¿½ necessario che il terzo abbia la Partita Iva");
+					"Per poter generare la fattura è necessario che il terzo abbia la Partita Iva");
 		if (compenso.getFl_generata_fattura()
 				&& compenso.getCodice_fiscale() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Per poter generare la fattura ï¿½ necessario che il terzo abbia il Codice Fiscale valorizzato");
+					"Per poter generare la fattura è necessario che il terzo abbia il Codice Fiscale valorizzato");
 
 		validaDatiLiquidazione(compenso);
 
 		if (compenso.isStatoCompensoEseguiCalcolo())
 			throw new it.cnr.jada.comp.ApplicationException(
 					"E' necessario eseguire il calcolo prima di continuare");
+		// controllo omesso sull'esegui calcolo per  !compenso.isSenzaCalcoli() da fare al riporta 
+		if (compenso !=null && compenso.getIm_totale_compenso()!=null && compenso.getFatturaPassiva() != null && compenso.getFatturaPassiva().getIm_totale_fattura()!=null &&
+				compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_fattura())!=0)
+				throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ compenso.getFatturaPassiva().getIm_totale_fattura());
+		
 
 		validaObbligazione(userContext, compenso.getObbligazioneScadenzario(),
 				compenso);
@@ -4974,7 +4985,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		    	compenso.setPg_trovato(null);
 		    if (isObbligatoriaIndicazioneTrovato(voce) && compenso.getPg_trovato()==null )
 		        throw new it.cnr.jada.comp.ApplicationException(
-		            "Attenzione! Non ï¿½ stato inserito il Brevetto/Trovato mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
+		            "Attenzione! Non è stato inserito il Brevetto/Trovato mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
 		}
 	}
 
@@ -5256,7 +5267,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						"Inserire la Tipologia di Rischio");
 			if (compenso.getImponibile_inail() == null)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"L'imponibile INAIL non puï¿½ essere vuoto");
+						"L'imponibile INAIL non può essere vuoto");
 		}
 	}
 
@@ -5332,10 +5343,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 			if (obblig.getIm_obbligazione() == null)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"L'Importo dell'impegno ï¿½ un dato obbligatorio");
+						"L'Importo dell'impegno è un dato obbligatorio");
 			if (scadenza.getIm_scadenza() == null)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"L'Importo della scadenza ï¿½ un dato obbligatorio");
+						"L'Importo della scadenza è un dato obbligatorio");
 
 			// Importo della scadenza diverso da quello del compenso
 			if (scadenza.getIm_scadenza().compareTo(
