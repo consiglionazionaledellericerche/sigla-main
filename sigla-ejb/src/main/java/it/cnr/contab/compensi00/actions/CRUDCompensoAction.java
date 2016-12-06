@@ -1144,7 +1144,8 @@ public Forward doOnFlSenzaCalcoliChange(ActionContext context) {
 		compenso.setIncarichi_repertorio_anno(null);
 		compenso.setContratto(null);
 		compenso.setOggetto_contratto(null);
-		compenso.resetDatiFattura();
+		if(!compenso.getFl_generata_fattura())
+			compenso.resetDatiFattura();
 
 		// Puo' valere TRUE solo se il compenso è senza calcoli
 		if(!compenso.isSenzaCalcoli() && compenso.getFl_recupero_rate().booleanValue())		
@@ -1745,7 +1746,7 @@ private void impostaStatoCompenso(ActionContext context) throws BusinessProcessE
 
 	CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
 	CompensoBulk compenso = (CompensoBulk)bp.getModel();
-
+	
 	if (compenso.getImportoObbligazione().compareTo(new java.math.BigDecimal(0))<=0){
 		if (compenso.getObbligazioneScadenzario()!=null)
 			compenso = bp.doEliminaObbligazione(context);
