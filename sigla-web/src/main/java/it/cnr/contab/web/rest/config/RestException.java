@@ -1,4 +1,4 @@
-package it.cnr.contab.util.rest;
+package it.cnr.contab.web.rest.config;
 
 import javax.ws.rs.core.Response.Status;
 

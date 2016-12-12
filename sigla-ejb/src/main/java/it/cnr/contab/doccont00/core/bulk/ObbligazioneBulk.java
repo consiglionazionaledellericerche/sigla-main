@@ -449,18 +449,8 @@ public java.math.BigDecimal getIm_parz_scadenze()
  */
 public java.math.BigDecimal getIm_residuo_obbligazione() 
 {
-	return this.getIm_obbligazione().subtract( this.getIm_parz_scadenze()) ;
-	/*
-		Obbligazione_scadenzarioBulk scadenza ;
-		im_residuo_obbligazione = new java.math.BigDecimal( 0 );
-		for ( Iterator i = getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
-		{
-			scadenza = (Obbligazione_scadenzarioBulk)i.next();
-			if ( scadenza.getIm_scadenza() != null )
-				im_residuo_obbligazione = this.getIm_obbligazione().subtract( this.getIm_parz_scadenze() );
-		}	
-		return im_residuo_obbligazione;
-	*/
+	return Optional.ofNullable(getIm_obbligazione()).orElse(BigDecimal.ZERO).subtract(
+			Optional.ofNullable(getIm_parz_scadenze()).orElse(BigDecimal.ZERO));
 }
 /**
  * <!-- @TODO: da completare -->

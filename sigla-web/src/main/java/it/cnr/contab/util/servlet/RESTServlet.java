@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
+
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
@@ -18,9 +19,9 @@ import it.cnr.contab.utenze00.bulk.AssBpAccessoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.ejb.AssBpAccessoComponentSession;
-import it.cnr.contab.util.rest.BasicAuthentication;
 import it.cnr.contab.util.servlet.JSONRequest.Clause;
 import it.cnr.contab.util.servlet.JSONRequest.OrderBy;
+import it.cnr.contab.web.rest.config.BasicAuthentication;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -30,6 +31,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.action.ConsultazioniBP;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;

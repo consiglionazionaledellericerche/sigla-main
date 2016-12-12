@@ -1,5 +1,6 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import it.cnr.jada.bulk.*;
@@ -143,8 +144,9 @@ public java.lang.Boolean getFl_aggiorna_scad_successiva() {
  * @author: Alfonso Ardire
  * @return java.math.BigDecimal
  */
-public java.math.BigDecimal getImportoDisponibile() {
-	return getIm_scadenza().subtract(getIm_associato_doc_amm());
+public java.math.BigDecimal getImportoDisponibile() {	
+	return Optional.ofNullable(getIm_scadenza()).orElse(BigDecimal.ZERO).subtract(
+			Optional.ofNullable(getIm_associato_doc_amm()).orElse(BigDecimal.ZERO));
 }
 /**
  * @return it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk
