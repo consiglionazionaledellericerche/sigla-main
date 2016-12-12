@@ -3,6 +3,9 @@ package it.cnr.contab.anagraf00.tabter.bulk;
 import java.util.Optional;
 import java.util.StringTokenizer;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
@@ -15,7 +18,7 @@ import it.cnr.jada.util.action.*;
 /**
  * Gestione dei dati relativi ai comuni esteri nella tabella Nazione
  */
-
+@JsonInclude(value=Include.NON_NULL)
 public class NazioneBulk extends NazioneBase {
 
 	private final static Integer MARGINE = 0;
