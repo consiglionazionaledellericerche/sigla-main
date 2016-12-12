@@ -1,4 +1,28 @@
-package it.cnr.contab.util.rest;
+package it.cnr.contab.web.rest;
+
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoHome;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
+import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
+import it.cnr.contab.web.rest.config.BasicAuthentication;
+import it.cnr.contab.web.rest.config.JSONRESTMissioniRequest;
+import it.cnr.contab.web.rest.config.JSONRESTRequest;
+import it.cnr.contab.web.rest.config.RestException;
+import it.cnr.contab.web.rest.config.SIGLARoles;
+import it.cnr.contab.web.rest.config.SqlTimestampConverter;
+import it.cnr.contab.web.rest.model.UserContextBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.HomeCache;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -9,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
@@ -17,10 +42,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
@@ -33,65 +60,37 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoHome;
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
-import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
-import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoHome;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoKey;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaHome;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaKey;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.HomeCache;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.ejb.EJBCommonServices;
-
-@Path("/servizirest")
+@Path("/missioni")
 @DeclareRoles({"MISSIONI"})
-@Consumes({ "application/json" })
-@Produces({ "application/json" })
-public class SIGLAResource {
-    private final Logger log = LoggerFactory.getLogger(SIGLAResource.class);
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@RolesAllowed(SIGLARoles.MISSIONI)
+public class MissioneResource {
+    private final Logger LOGGER = LoggerFactory.getLogger(MissioneResource.class);
     public final static String DATE_FORMAT = "dd/MM/yyyy";
 
     /**
      * GET  /rest/ordineMissione -> get Ordini di missione per l'utente 
      */
     @GET
-	@RolesAllowed({"MISSIONI"})
     @Path(value = "/verificaValiditaDettaglio")
     public Response rigaValida(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("nazione") Long nazione,@QueryParam("inquadramento") Long inquadramento) throws Exception {
-        log.debug("REST request per visualizzare i dati degli Ordini di Missione " );
-        JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
+        LOGGER.debug("REST request per visualizzare i dati degli Ordini di Missione " );
     	ResponseBuilder rb;
 		JsonObject labels = new JsonObject();
 		try {
-			rb = Response.ok(labels != null ? labels.toString() : "");
+			rb = Response.ok(Optional.ofNullable(labels).map(JsonObject::toString).orElse(""));
 		} catch (Exception e) {
-			log.error("error getting json labels {}", "1", e);
+			LOGGER.error("error getting json labels {}", "1", e);
 			rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
 		}
 		return rb.build();		
 	}
 
     @POST
-	@RolesAllowed({"MISSIONI"})
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     @Path(value = "/getDivisa")
     public Response getDivisa(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("nazione") Long nazione,@QueryParam("inquadramento") Long inquadramento) throws Exception {
-        log.debug("REST request per visualizzare la divisa per nazione" );
+        LOGGER.debug("REST request per visualizzare la divisa per nazione" );
     	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
     	
     	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
@@ -116,7 +115,7 @@ public class SIGLAResource {
 			try {
 				rb = Response.ok(resp);
 			} catch (Exception e) {
-				log.error("error getting json labels {}", "1", e);
+				LOGGER.error("error getting json labels {}", "1", e);
 				rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
 			}
 		} else {
@@ -126,12 +125,9 @@ public class SIGLAResource {
 	}
     
     @POST
-	@RolesAllowed({"MISSIONI"})
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     @Path(value = "/getCambio")
     public Response getCambio(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("divisa") String divisa) throws Exception {
-        log.debug("REST request per visualizzare la divisa per nazione" );
+        LOGGER.debug("REST request per visualizzare la divisa per nazione" );
     	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
     	
     	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
@@ -148,12 +144,9 @@ public class SIGLAResource {
 	}
 
     @POST
-	@RolesAllowed({"MISSIONI"})
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     @Path(value = "/getDivisaDefault")
     public Response getDivisaDefault(@Context HttpServletRequest request) throws Exception {
-        log.debug("REST request per visualizzare la divisa per nazione" );
+        LOGGER.debug("REST request per visualizzare la divisa per nazione" );
     	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
     	
     	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
@@ -168,42 +161,12 @@ public class SIGLAResource {
     	return response(resp);		
 	}
 
-	private Response response(String resp) {
-		ResponseBuilder rb;
-		try {
-    		rb = Response.ok(resp);
-    	} catch (Exception e) {
-    		log.error("error getting json labels {}", "1", e);
-    		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
-    	}
-		return rb.build();
-	}
-    public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException{
-		return BigDecimal.ZERO;		
-    }
-
-	private MissioneComponentSession missioneComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
-		return (MissioneComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession");
-	}
-
-	private CRUDComponentSession getComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
-		return (CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
-	}
-
-	private String getUser(HttpServletRequest request) throws ComponentException, IOException{
-		String authorization = request.getHeader("Authorization");
-		return BasicAuthentication.getUsername(authorization);
-	}
-
     @POST
-	@RolesAllowed({"MISSIONI"})
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     @Path(value = "/validaMassimaleSpesa")
     public Response validaMassimaleSpesa(@Context HttpServletRequest request) throws Exception {
 		ResponseBuilder rb;
     	try{
-            log.debug("REST request per visualizzare la divisa per nazione" );
+            LOGGER.debug("REST request per visualizzare la divisa per nazione" );
         	JSONRESTMissioniRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTMissioniRequest.class);
 
         	UserContext userContext = BasicAuthentication.getContextFromRequest(jsonRequest, getUser(request), request.getRequestedSessionId());
@@ -224,7 +187,7 @@ public class SIGLAResource {
         	}
 			NazioneBulk nazioneBulk = getNazione(userContext, jsonRequest.getNazione()); 
         	if (jsonRequest.getCdTipoSpesa() != null){
-        		List lista = missioneComponent().recuperoTipiSpesa(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk.getPg_nazione(), false, jsonRequest.getCdTipoSpesa());
+        		List<?> lista = missioneComponent().recuperoTipiSpesa(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk.getPg_nazione(), false, jsonRequest.getCdTipoSpesa());
     			if (lista != null && !lista.isEmpty()){
     	    		tipoSpesa = (Missione_tipo_spesaBulk)lista.get(0);
     			}
@@ -237,7 +200,7 @@ public class SIGLAResource {
 
     		Missione_tipo_pastoBulk tipoPasto = null;
     		if (jsonRequest.getCdTipoPasto() != null){
-    			List lista = missioneComponent().recuperoTipi_pasto(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk, jsonRequest.getCdTipoPasto(), null);    			
+    			List<?> lista = missioneComponent().recuperoTipi_pasto(userContext, dataMissione, jsonRequest.getInquadramento(), nazioneBulk, jsonRequest.getCdTipoPasto(), null);    			
     			if (lista != null && !lista.isEmpty()){
     	    		tipoPasto = (Missione_tipo_pastoBulk)lista.get(0);
     			}
@@ -266,16 +229,66 @@ public class SIGLAResource {
     	} catch (RestException restException) {
     		rb = Response.status(restException.getStatus()).entity(restException.getMessage());
     	} catch (Exception e) {
-    		log.error("error rest validaMassimaleSpesa", "1", e);
+    		LOGGER.error("error rest validaMassimaleSpesa", "1", e);
     		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage());
     	}
     	return rb.build();		
 	}
+    
+    @PUT
+    public Response insert(@Context HttpServletRequest request, UserContextBulk<MissioneBulk> userContextMissione) throws Exception {
+    	final MissioneBulk missione = (MissioneBulk) missioneComponent().inizializzaBulkPerInserimento(userContextMissione.getUserContext(), userContextMissione.getOggettoBulk());
+    	missione.setToBeCreated();
+    	missione.getTappeMissioneColl().stream().forEach(x -> {
+    		x.setToBeCreated();
+    		x.setMissione(missione);	
+    	});
+    	missione.getSpeseMissioneColl().stream().forEach(x -> {
+    		x.setToBeCreated();
+    		x.setMissione(missione);	
+    	});
+    	missione.getDiariaMissioneColl().stream().forEach(x -> {
+    		x.setToBeCreated();
+    		x.setMissione(missione);	
+    	});
+    	missione.getRimborsoMissioneColl().stream().forEach(x -> {
+    		x.setToBeCreated();
+    		x.setMissione(missione);	
+    	});
+    	return Response.status(Status.CREATED).entity(missioneComponent().creaConBulk(userContextMissione.getUserContext(), missione)).build();
+    }
 
-	private NazioneBulk getNazione(UserContext userContext, Long nazione) throws PersistencyException, ComponentException, RemoteException, EJBException {
+
+	private Response response(String resp) {
+		ResponseBuilder rb;
+		try {
+    		rb = Response.ok(resp);
+    	} catch (Exception e) {
+    		LOGGER.error("error getting json labels {}", "1", e);
+    		rb = Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("message", e.getMessage()));
+    	}
+		return rb.build();
+	}
+    public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException{
+		return BigDecimal.ZERO;		
+    }
+
+	private MissioneComponentSession missioneComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
+		return (MissioneComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession");
+	}
+
+	private CRUDComponentSession getComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
+		return (CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
+	}
+
+	private String getUser(HttpServletRequest request) throws ComponentException, IOException{
+		String authorization = request.getHeader("Authorization");
+		return BasicAuthentication.getUsername(authorization);
+	}
+    
+    private NazioneBulk getNazione(UserContext userContext, Long nazione) throws PersistencyException, ComponentException, RemoteException, EJBException {
 		NazioneBulk nazioneBulk = new NazioneBulk(nazione);
 		nazioneBulk = (NazioneBulk)getComponent().findByPrimaryKey(userContext, nazioneBulk);
 		return nazioneBulk;
 	}
-
 }

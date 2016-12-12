@@ -1,4 +1,6 @@
-package it.cnr.contab.util.rest;
+package it.cnr.contab.web.rest.config;
+
+import it.cnr.contab.web.rest.MissioneResource;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
@@ -10,7 +12,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 public class SqlTimestampConverter implements JsonSerializer<Timestamp>{
-		static SimpleDateFormat sdf = new SimpleDateFormat(SIGLAResource.DATE_FORMAT);
+		static SimpleDateFormat sdf = new SimpleDateFormat(MissioneResource.DATE_FORMAT);
 
 		@Override
 		public JsonElement serialize(Timestamp src, Type typeOfSrc, JsonSerializationContext context) {

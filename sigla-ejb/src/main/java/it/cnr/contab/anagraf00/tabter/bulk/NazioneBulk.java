@@ -1,5 +1,6 @@
 package it.cnr.contab.anagraf00.tabter.bulk;
 
+import java.util.Optional;
 import java.util.StringTokenizer;
 
 import it.cnr.contab.docamm00.tabrif.bulk.*;
@@ -172,9 +173,9 @@ public void validate() throws ValidationException {
 }
 public String getStrutturaIbanLivello(int livello){
 	int nrLivello = 0;
-	String aLivello=null;
+	String aLivello = "";
 
-	StringTokenizer stLivelli=new StringTokenizer(getStruttura_iban(),IBAN_SEPARATORE);
+	StringTokenizer stLivelli= new StringTokenizer(Optional.ofNullable(getStruttura_iban()).orElse(""), IBAN_SEPARATORE);
 
 	while (stLivelli.hasMoreTokens()) {
 		nrLivello++;
@@ -185,7 +186,7 @@ public String getStrutturaIbanLivello(int livello){
 	return aLivello;
 }
 public int getStrutturaIbanNrLivelli(){
-	return new StringTokenizer(getStruttura_iban(),IBAN_SEPARATORE).countTokens();
+	return new StringTokenizer(Optional.ofNullable(getStruttura_iban()).orElse(""),IBAN_SEPARATORE).countTokens();
 }
 public int getStruttura_iban_parte1MaxLength(){
 	return getStrutturaIbanLivello(1).length();
@@ -238,7 +239,7 @@ public String getStrutturaPivaModello(int livello){
 	return aLivello;
 }
 public int getStrutturaPivaModelliPossibili(){
-	return new StringTokenizer(getStruttura_piva(),IBAN_SEPARATORE).countTokens();
+	return new StringTokenizer(Optional.ofNullable(getStruttura_piva()).orElse(""),IBAN_SEPARATORE).countTokens();
 }
 
 }

@@ -3,6 +3,10 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.Transient;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -11,6 +15,7 @@ import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
@@ -100,7 +105,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		return getStato()!=null && !isDefinitivo();
 	}	
 	public boolean isCessato(){
-		return getStato().equals(ContrattoBulk.STATO_CESSSATO);
+		return ContrattoBulk.STATO_CESSSATO.equals(getStato());
 	}
 	public boolean isDs_atto_non_definitoVisible(){
 		return (getAtto() != null && getAtto().getFl_non_definito() != null && getAtto().getFl_non_definito().booleanValue());
@@ -196,7 +201,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	
 	@CMISProperty(name="sigla_contratti:natura_contabile")
 	public String getDescrizioneNaturaContabile(){
-		return (String) ti_natura_contabileKeys.get(getNatura_contabile());
+		return (String) Optional.ofNullable(getNatura_contabile()).map(x -> ti_natura_contabileKeys.get(x)).orElse(null);
 	}
 	/**
 	 * @return
@@ -364,9 +369,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		this.getTipo_contratto().setCd_tipo_contratto(cd_tipo_contratto);
 	}
 	public boolean isCancellatoLogicamente(){
-		if (getStato().equals(STATO_CESSSATO))
-		  return true;
-		return false;   			
+		return Optional.ofNullable(getStato()).map(x -> x.equals(STATO_CESSSATO)).orElse(false);
 	}
 	/**
 	 * @return
@@ -515,28 +518,28 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#getCd_tipo_organo()
 	 */
 	public java.lang.String getCd_organo() {
-		return getOrgano().getCd_organo();
+		return Optional.ofNullable(getOrgano()).map(OrganoBulk::getCd_organo).orElse(null);
 	}
 	/*
 	 *  (non-Javadoc)
 	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#getCd_tipo_organo_ann()
 	 */
 	public java.lang.String getCd_organo_ann() {
-		return getOrgano_annullamento().getCd_organo();
+		return Optional.ofNullable(getOrgano_annullamento()).map(OrganoBulk::getCd_organo).orElse(null);
 	}
 	/*
 	 *  (non-Javadoc)
 	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#getCd_tipo_atto()
 	 */
 	public java.lang.String getCd_tipo_atto() {
-		return getAtto().getCd_tipo_atto();
+		return Optional.ofNullable(getAtto()).map(Tipo_atto_amministrativoBulk::getCd_tipo_atto).orElse(null);
 	}
 	/*
 	 *  (non-Javadoc)
 	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#getCd_tipo_atto_ann()
 	 */
 	public java.lang.String getCd_tipo_atto_ann() {
-		return getAtto_annullamento().getCd_tipo_atto();
+		return Optional.ofNullable(getAtto_annullamento()).map(Tipo_atto_amministrativoBulk::getCd_tipo_atto).orElse(null);
 	}
 	/**
 	 * @return
@@ -598,7 +601,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#getCd_terzo_firmatario()
 	 */
 	public java.lang.Integer getCd_terzo_firmatario() {
-		return getFirmatario().getCd_terzo();
+		return Optional.ofNullable(getFirmatario()).map(V_persona_fisicaBulk::getCd_terzo).orElse(null);
 	}
 	/*
 	 *  (non-Javadoc)
@@ -623,7 +626,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#getCd_proc_amm()
 	 */
 	public java.lang.String getCd_proc_amm () {
-		return getProcedura_amministrativa().getCd_proc_amm();
+		return Optional.ofNullable(getProcedura_amministrativa()).map(Procedure_amministrativeBulk::getCd_proc_amm).orElse(null);
 	}
 	/*
 	 *  (non-Javadoc)
@@ -711,7 +714,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	@CMISProperty(name="cmis:name")
 	public String getCMISFolderName(){
-		return "Contratto ".concat(String.valueOf(getEsercizio())).concat(getStato()).concat(Utility.lpad(getPg_contratto(), 9, '0'));
+		return Arrays.asList(
+				"Contratto ", 
+				String.valueOf(getEsercizio()), 
+				getStato(), 
+				Utility.lpad(Optional.ofNullable(getPg_contratto()).map(x -> x.toString()).orElse(""), 9, '0')
+		).stream().filter(x -> x != null).collect(Collectors.joining());
 	}
 	
 	public boolean isAllegatoContrattoPresent(){
@@ -724,22 +732,24 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	
 	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:codice"))
 	public String getCd_cds(){
-		return getUnita_organizzativa().getUnita_padre().getCd_unita_organizzativa();
+		return Optional.ofNullable(Optional.ofNullable(getUnita_organizzativa()).
+				map(Unita_organizzativaBulk::getUnita_padre).orElse(new CdsBulk())).map(CdsBulk::getCd_unita_organizzativa).orElse("");
 	}
 
 	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:descrizione"))
 	public String getDs_cds(){
-		return getUnita_organizzativa().getUnita_padre().getDs_unita_organizzativa();
+		return Optional.ofNullable(Optional.ofNullable(getUnita_organizzativa()).
+			map(Unita_organizzativaBulk::getUnita_padre).orElse(new CdsBulk())).map(CdsBulk::getDs_unita_organizzativa).orElse("");
 	}
 	
 	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:codice"))
 	public String getCd_unita_organizzativa(){
-		return getUnita_organizzativa().getCd_unita_organizzativa();
+		return Optional.ofNullable(getUnita_organizzativa()).map(Unita_organizzativaBulk::getCd_unita_organizzativa).orElse(null);
 	}
 
 	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:descrizione"))
 	public String getDs_unita_organizzativa(){
-		return getUnita_organizzativa().getDs_unita_organizzativa();
+		return Optional.ofNullable(getUnita_organizzativa()).map(Unita_organizzativaBulk::getDs_unita_organizzativa).orElse("");
 	}
 	
 	@CMISProperty(name="sigla_contratti:fig_giu_esterna_codice")

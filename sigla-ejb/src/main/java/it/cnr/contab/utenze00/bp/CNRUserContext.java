@@ -12,6 +12,11 @@ import java.util.Hashtable;
 public class CNRUserContext implements it.cnr.jada.UserContext {
 	private static final long serialVersionUID = 1L;
 	private Hashtable<String, Serializable> attributes;
+	
+	public CNRUserContext() {
+		super();
+		attributes = new Hashtable<String, Serializable>(7);
+	}
 	/**
 	 * Costruttore dello User Context
 	 * 
@@ -109,6 +114,10 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 
 	public final java.lang.String getSessionId() {
 		return (String) attributes.get("sessionId");
+	}
+
+	public void setUser(java.lang.String user) {
+		attributes.put("user", user);
 	}
 
 	public final java.lang.String getUser() {
