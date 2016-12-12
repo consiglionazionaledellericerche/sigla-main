@@ -1,6 +1,9 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
@@ -10,7 +13,7 @@ import it.cnr.jada.persistency.sql.*;
 /**
  * Gestione dei dati relativi alla tabella Modalita_pagamento
  */
-
+@JsonInclude(value=Include.NON_NULL)
 public class Modalita_pagamentoBulk extends Modalita_pagamentoBase {
 
 	protected TerzoBulk terzo = new TerzoBulk();

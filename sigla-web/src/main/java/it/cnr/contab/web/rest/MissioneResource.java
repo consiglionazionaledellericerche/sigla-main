@@ -61,9 +61,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Path("/missioni")
-@DeclareRoles({"MISSIONI"})
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@DeclareRoles(SIGLARoles.MISSIONI)
 @RolesAllowed(SIGLARoles.MISSIONI)
 public class MissioneResource {
     private final Logger LOGGER = LoggerFactory.getLogger(MissioneResource.class);
@@ -242,7 +242,7 @@ public class MissioneResource {
     	missione.getTappeMissioneColl().stream().forEach(x -> {
     		x.setToBeCreated();
     		x.setMissione(missione);	
-    	});
+    	});    	
     	missione.getSpeseMissioneColl().stream().forEach(x -> {
     		x.setToBeCreated();
     		x.setMissione(missione);	
