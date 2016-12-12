@@ -1,5 +1,8 @@
 package it.cnr.contab.anagraf00.tabrif.bulk;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
@@ -10,7 +13,7 @@ import it.gov.fatturapa.sdi.fatturapa.v1.ModalitaPagamentoType;
 /**
  * Gestione dei dati relativi alla tabella Progressione
  */
-
+@JsonInclude(value=Include.NON_NULL)
 public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
 	public final static java.util.Dictionary TI_PAGAMENTO_KEYS;
 	public final static java.util.Dictionary TIPO_PAGAMENTO_SDI_KEYS;
