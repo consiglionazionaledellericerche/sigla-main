@@ -1,5 +1,9 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(value=Include.NON_NULL)
 public class TrovatoBulk extends it.cnr.jada.bulk.OggettoBulk {
 
 	private Long pg_trovato;

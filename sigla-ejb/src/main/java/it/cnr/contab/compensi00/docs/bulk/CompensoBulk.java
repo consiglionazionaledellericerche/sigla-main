@@ -45,7 +45,11 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.Vector;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @CMISType(name = "D:emppay:compenso", parentName = "D:emppay:document")
+@JsonInclude(value=Include.NON_NULL)
 public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk {
 
 	private BancaBulk banca;
