@@ -3,8 +3,11 @@ package it.cnr.contab.doccont00.core.bulk;
 import java.math.BigDecimal;
 import java.util.*;
 
-import it.cnr.jada.bulk.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import it.cnr.jada.bulk.*;
+@JsonInclude(value=Include.NON_NULL)
 public class Obbligazione_scadenzarioBulk extends Obbligazione_scadenzarioBase implements Cloneable, IScadenzaDocumentoContabileBulk {
 
 	private BulkList obbligazione_scad_voceColl = new BulkList();

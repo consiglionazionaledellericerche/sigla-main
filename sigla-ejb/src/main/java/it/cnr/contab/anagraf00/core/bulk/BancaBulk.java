@@ -2,6 +2,9 @@ package it.cnr.contab.anagraf00.core.bulk;
 
 import java.util.StringTokenizer;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.jada.action.ActionContext;
@@ -11,7 +14,7 @@ import it.cnr.jada.util.StrServ;
 /**
  * Gestione dei dati relativi alla tabella Banca
  */
-
+@JsonInclude(value=Include.NON_NULL)
 public class BancaBulk extends BancaBase {
 
 	private TerzoBulk terzo;
