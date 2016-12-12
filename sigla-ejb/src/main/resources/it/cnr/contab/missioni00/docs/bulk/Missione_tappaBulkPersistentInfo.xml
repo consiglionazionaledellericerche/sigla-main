@@ -6,14 +6,30 @@
 	<defaultColumnMap tableName="MISSIONE_TAPPA">		
 		<columnMapping
 			columnName="PG_NAZIONE"
-			propertyName="nazione.pg_nazione" />
-			
+			propertyName="nazione.pg_nazione" />			
 		<columnMapping
 			columnName="CD_DIVISA_TAPPA"
 			propertyName="divisa_tappa.cd_divisa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="missione.esercizio" />
+		<columnMapping
+			columnName="PG_MISSIONE"
+			propertyName="missione.pg_missione"/>
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="missione.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="missione.cd_cds"/>			
 	</defaultColumnMap>
 	
-	<persistentProperty name="nazione" />
-	<persistentProperty	name="divisa_tappa" />		
+	<persistentProperty 
+		name="missione" 
+		partOfOid="true"/>	
+	<persistentProperty 
+		name="nazione" />
+	<persistentProperty	
+		name="divisa_tappa" />		
 	
 </SQLPersistentInfo>
