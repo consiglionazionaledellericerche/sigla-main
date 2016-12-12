@@ -3,6 +3,7 @@ package it.cnr.contab.web.rest.config;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.AdminUserContext;
 import it.cnr.jada.comp.ApplicationException;
@@ -37,7 +38,7 @@ public class BasicAuthentication {
                 String username = parts[0];
                 String password = parts[1];
                 
-                logger.info("Username: " + username + ". Password: "+password);
+                logger.debug("Username: {} Password: {}", username, password);
                 
 				utente = new UtenteBulk();
 				utente.setCd_utente(username.toUpperCase());
@@ -103,8 +104,7 @@ public class BasicAuthentication {
 		final String password = tokenizer.nextToken();
 
 		// Verifying Username and password
-		logger.info(username);
-		logger.info(password);
+		logger.debug("UserName: {} Password: {}", username, password);
 		return authenticate(username, password);
 	}
 
@@ -154,7 +154,8 @@ public class BasicAuthentication {
 		}
 	}
     
-	public static List getRuoli(UserContext userContext, UtenteBulk utente) throws IOException, ComponentException{
+	@SuppressWarnings("unchecked")
+	public static List<Utente_unita_ruoloBulk> getRuoli(UserContext userContext, UtenteBulk utente) throws IOException, ComponentException{
 		return loginComponentSession().getRuoli(userContext, utente);
 	}
 	public static GestioneLoginComponentSession loginComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
