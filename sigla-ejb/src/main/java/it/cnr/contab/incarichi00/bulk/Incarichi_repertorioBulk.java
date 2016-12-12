@@ -6,11 +6,6 @@ package it.cnr.contab.incarichi00.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
@@ -21,20 +16,20 @@ import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderAssegniRicerca;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderBorseStudio;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderContrattiModel;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderIncarico;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderProcedura;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Dictionary;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonInclude(value=Include.NON_NULL)
 public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	public final static Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
 	public final static Dictionary ti_esitoCorteContiKeys = new it.cnr.jada.util.OrderedHashtable();
