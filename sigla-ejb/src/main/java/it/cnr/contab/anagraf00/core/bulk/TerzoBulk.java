@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Gestione dei dati relativi alla tabella Terzo
@@ -865,7 +866,7 @@ public void setTerzo_speciale(boolean newTerzo_speciale) {
 		unita_organizzativa = newUnita_organizzativa;
 	}
 	public boolean isStudioAssociato() {
-		return getAnagrafico().getFl_studio_associato();
+		return Optional.ofNullable(getAnagrafico()).map(AnagraficoBulk::getFl_studio_associato).orElse(false);
 	}
 	public java.lang.String getCodice_fiscale_anagrafico() {
 		it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk anagrafico = this.getAnagrafico();

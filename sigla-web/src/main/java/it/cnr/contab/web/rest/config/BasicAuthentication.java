@@ -1,4 +1,12 @@
-package it.cnr.contab.util.rest;
+package it.cnr.contab.web.rest.config;
+
+import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.action.AdminUserContext;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -6,21 +14,11 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.ejb.EJBException;
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
 import org.jboss.resteasy.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.util.servlet.JSONRequest;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.AdminUserContext;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
 
 public class BasicAuthentication {
 	private static final Logger logger = LoggerFactory.getLogger(BasicAuthentication.class);
