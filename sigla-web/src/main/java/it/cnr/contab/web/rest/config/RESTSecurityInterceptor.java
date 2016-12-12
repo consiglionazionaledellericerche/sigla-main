@@ -1,4 +1,4 @@
-package it.cnr.contab.util.rest;
+package it.cnr.contab.web.rest.config;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -12,6 +12,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -31,7 +32,7 @@ public class RESTSecurityInterceptor implements
 		javax.ws.rs.container.ContainerRequestFilter,
 		ExceptionMapper<Exception> {
 
-	private Log log = LogFactory.getLog(RESTSecurityInterceptor.class);
+	private Log LOGGER = LogFactory.getLog(RESTSecurityInterceptor.class);
 
 	private static final String AUTHORIZATION_PROPERTY = "Authorization";
 	private static final ServerResponse ACCESS_DENIED = new ServerResponse(
@@ -43,7 +44,7 @@ public class RESTSecurityInterceptor implements
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) {
-		log.info("filter");
+		LOGGER.info("filter");
 
 		ResourceMethodInvoker methodInvoker = (ResourceMethodInvoker) requestContext
 				.getProperty("org.jboss.resteasy.core.ResourceMethodInvoker");
@@ -97,7 +98,7 @@ public class RESTSecurityInterceptor implements
 
 		UserContext userContext = new RESTUserContext();
 		try {
-			List lista = BasicAuthentication.getRuoli(userContext, utente);
+			List<?> lista = BasicAuthentication.getRuoli(userContext, utente);
 			if (lista != null){
 				for (Object obj:lista){
 					Utente_unita_ruoloBulk ruolo = (Utente_unita_ruoloBulk)obj;
@@ -116,8 +117,7 @@ public class RESTSecurityInterceptor implements
 
 	@Override
 	public Response toResponse(Exception exception) {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.error("ERROR for REST SERVICE", exception);
+		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(exception).build();
 	}
-
 }

@@ -1,9 +1,9 @@
-package it.cnr.contab.util.rest;
+package it.cnr.contab.web.rest.config;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@ApplicationPath("/restservice")
+@ApplicationPath("/restapi")
 public class JaxRsActivator extends Application {
 
 }
