@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
@@ -64,7 +65,6 @@ import com.google.gson.JsonParser;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @DeclareRoles(SIGLARoles.MISSIONI)
-@RolesAllowed(SIGLARoles.MISSIONI)
 public class MissioneResource {
     private final Logger LOGGER = LoggerFactory.getLogger(MissioneResource.class);
     public final static String DATE_FORMAT = "dd/MM/yyyy";
@@ -74,6 +74,7 @@ public class MissioneResource {
      */
     @GET
     @Path(value = "/verificaValiditaDettaglio")
+    @RolesAllowed(SIGLARoles.MISSIONI)
     public Response rigaValida(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("nazione") Long nazione,@QueryParam("inquadramento") Long inquadramento) throws Exception {
         LOGGER.debug("REST request per visualizzare i dati degli Ordini di Missione " );
     	ResponseBuilder rb;
@@ -89,6 +90,7 @@ public class MissioneResource {
 
     @POST
     @Path(value = "/getDivisa")
+    @RolesAllowed(SIGLARoles.MISSIONI)
     public Response getDivisa(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("nazione") Long nazione,@QueryParam("inquadramento") Long inquadramento) throws Exception {
         LOGGER.debug("REST request per visualizzare la divisa per nazione" );
     	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
@@ -126,6 +128,7 @@ public class MissioneResource {
     
     @POST
     @Path(value = "/getCambio")
+    @RolesAllowed(SIGLARoles.MISSIONI)
     public Response getCambio(@Context HttpServletRequest request, @QueryParam("data") String data,@QueryParam("divisa") String divisa) throws Exception {
         LOGGER.debug("REST request per visualizzare la divisa per nazione" );
     	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
@@ -145,6 +148,7 @@ public class MissioneResource {
 
     @POST
     @Path(value = "/getDivisaDefault")
+    @RolesAllowed(SIGLARoles.MISSIONI)
     public Response getDivisaDefault(@Context HttpServletRequest request) throws Exception {
         LOGGER.debug("REST request per visualizzare la divisa per nazione" );
     	JSONRESTRequest jsonRequest = new Gson().fromJson(new JsonParser().parse(request.getReader()), JSONRESTRequest.class);
@@ -163,6 +167,7 @@ public class MissioneResource {
 
     @POST
     @Path(value = "/validaMassimaleSpesa")
+    @RolesAllowed(SIGLARoles.MISSIONI)
     public Response validaMassimaleSpesa(@Context HttpServletRequest request) throws Exception {
 		ResponseBuilder rb;
     	try{
@@ -236,26 +241,30 @@ public class MissioneResource {
 	}
     
     @PUT
+    @RolesAllowed(SIGLARoles.MISSIONI)
     public Response insert(@Context HttpServletRequest request, UserContextBulk<MissioneBulk> userContextMissione) throws Exception {
-    	final MissioneBulk missione = (MissioneBulk) missioneComponent().inizializzaBulkPerInserimento(userContextMissione.getUserContext(), userContextMissione.getOggettoBulk());
+    	final MissioneBulk missione = (MissioneBulk) missioneComponent().inizializzaBulkPerInserimento(
+    			userContextMissione.getUserContext(), 
+    			userContextMissione.getOggettoBulk());
     	missione.setToBeCreated();
     	missione.getTappeMissioneColl().stream().forEach(x -> {
     		x.setToBeCreated();
     		x.setMissione(missione);	
     	});    	
-    	missione.getSpeseMissioneColl().stream().forEach(x -> {
+    	Stream.concat(
+    			Stream.concat(
+					missione.getSpeseMissioneColl().stream(), 
+					missione.getDiariaMissioneColl().stream()
+    			),
+    			missione.getRimborsoMissioneColl().stream()).forEach((x -> {
     		x.setToBeCreated();
-    		x.setMissione(missione);	
-    	});
-    	missione.getDiariaMissioneColl().stream().forEach(x -> {
-    		x.setToBeCreated();
-    		x.setMissione(missione);	
-    	});
-    	missione.getRimborsoMissioneColl().stream().forEach(x -> {
-    		x.setToBeCreated();
-    		x.setMissione(missione);	
-    	});
-    	return Response.status(Status.CREATED).entity(missioneComponent().creaConBulk(userContextMissione.getUserContext(), missione)).build();
+    		x.setMissione(missione);
+    	}));
+    	MissioneBulk missioneCreated = (MissioneBulk) missioneComponent().creaConBulk(userContextMissione.getUserContext(), missione);
+    	missioneCreated.setToBeUpdated();
+    	missioneCreated.setMissioneIniziale(missioneCreated);
+    	missioneCreated = (MissioneBulk) missioneComponent().creaConBulk(userContextMissione.getUserContext(), missioneCreated);
+    	return Response.status(Status.CREATED).entity(missioneCreated).build();
     }
 
 

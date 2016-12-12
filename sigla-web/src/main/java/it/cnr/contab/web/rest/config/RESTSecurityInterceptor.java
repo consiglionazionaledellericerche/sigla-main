@@ -1,9 +1,15 @@
 package it.cnr.contab.web.rest.config;
 
+import it.cnr.contab.utenze00.bp.RESTUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.security.DenyAll;
@@ -18,14 +24,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jboss.resteasy.core.Headers;
 import org.jboss.resteasy.core.ResourceMethodInvoker;
-import org.jboss.resteasy.core.ServerResponse;
-
-import it.cnr.contab.utenze00.bp.RESTUserContext;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloBulk;
-import it.cnr.jada.UserContext;
 
 @Provider
 public class RESTSecurityInterceptor implements
@@ -35,25 +34,17 @@ public class RESTSecurityInterceptor implements
 	private Log LOGGER = LogFactory.getLog(RESTSecurityInterceptor.class);
 
 	private static final String AUTHORIZATION_PROPERTY = "Authorization";
-	private static final ServerResponse ACCESS_DENIED = new ServerResponse(
-			"Access denied for this resource", 401, new Headers<Object>());;
-	private static final ServerResponse ACCESS_FORBIDDEN = new ServerResponse(
-			"Nobody can access this resource", 403, new Headers<Object>());;
-	private static final ServerResponse SERVER_ERROR = new ServerResponse(
-			"INTERNAL SERVER ERROR", 500, new Headers<Object>());
-
+	private final static Map<String, String> UNAUTHORIZED_MAP = Collections.singletonMap("ERROR", "User cannot access the resource.");
 	@Override
-	public void filter(ContainerRequestContext requestContext) {
-		LOGGER.info("filter");
-
+	public void filter(ContainerRequestContext requestContext) {	
 		ResourceMethodInvoker methodInvoker = (ResourceMethodInvoker) requestContext
-				.getProperty("org.jboss.resteasy.core.ResourceMethodInvoker");
+				.getProperty(ResourceMethodInvoker.class.getName());
 		Method method = methodInvoker.getMethod();
 		// Access allowed for all
 		if (!method.isAnnotationPresent(PermitAll.class)) {
 			// Access denied for all
 			if (method.isAnnotationPresent(DenyAll.class)) {
-				requestContext.abortWith(ACCESS_FORBIDDEN);
+				requestContext.abortWith(Response.status(Status.FORBIDDEN).entity(UNAUTHORIZED_MAP).build());
 				return;
 			}
 
@@ -68,10 +59,11 @@ public class RESTSecurityInterceptor implements
 			try {
 				utenteBulk = BasicAuthentication.authenticate(authorization);
 				if (utenteBulk == null){
-					requestContext.abortWith(ACCESS_DENIED);
+					requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(UNAUTHORIZED_MAP).build());
 				}
 			} catch (Exception e) {
-				requestContext.abortWith(SERVER_ERROR);
+				LOGGER.error("ERROR for REST SERVICE", e);
+				requestContext.abortWith(Response.status(Status.INTERNAL_SERVER_ERROR).entity(e).build());
 			}
 
 			// Verify user access
@@ -82,11 +74,11 @@ public class RESTSecurityInterceptor implements
 						Arrays.asList(rolesAnnotation.value()));
 				try {
 					if (!isUserAllowed(utenteBulk, rolesSet)) {
-						requestContext.abortWith(ACCESS_DENIED);
+						requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(UNAUTHORIZED_MAP).build());
 						return;
 					}
 				} catch (Exception e) {
-					requestContext.abortWith(SERVER_ERROR);
+					requestContext.abortWith(Response.status(Status.INTERNAL_SERVER_ERROR).entity(e).build());
 				}
 			}
 		}
@@ -94,25 +86,14 @@ public class RESTSecurityInterceptor implements
 
 	private boolean isUserAllowed(final UtenteBulk utente,
 			final Set<String> rolesSet) throws Exception{
-		boolean isAllowed = false;
-
-		UserContext userContext = new RESTUserContext();
 		try {
-			List<?> lista = BasicAuthentication.getRuoli(userContext, utente);
-			if (lista != null){
-				for (Object obj:lista){
-					Utente_unita_ruoloBulk ruolo = (Utente_unita_ruoloBulk)obj;
-					if (rolesSet.contains(ruolo.getCd_ruolo())) {
-						isAllowed = true;
-					}
-				}
-			}
+			return Optional.ofNullable(BasicAuthentication.getRuoli(new RESTUserContext(), utente))
+				.map(x -> x.stream())
+				.get()
+				.filter(x -> rolesSet.contains(x.getCd_ruolo())).count() > 0;
 		} catch (Exception e) {
 			throw e;
 		}
-
-		// Step 2. Verify user role
-		return isAllowed;
 	}
 
 	@Override

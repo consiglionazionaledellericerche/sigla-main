@@ -66,6 +66,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	public final static String TIPO_ISTITUZIONALE = "I";
 	public final static String TIPO_COMMERCIALE = "C";		
 	public final static Dictionary<String, String> ti_istituz_commKeys;
+	@JsonIgnore
 	private MissioneBulk missioneIniziale;
 	public final static int CANCELLAZIONE_FISICA = 2;
 	public final static int CANCELLAZIONE_LOGICA = 1;	
