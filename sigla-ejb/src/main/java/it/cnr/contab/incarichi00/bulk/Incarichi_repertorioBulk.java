@@ -33,6 +33,7 @@ import java.sql.Timestamp;
 import java.util.Dictionary;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Optional;
 
 public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	public final static Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -563,7 +564,8 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		return getImporto_complessivo_incarico().subtract(getIm_complessivo_ripartito());
 	}
 	public java.math.BigDecimal getImporto_complessivo_incarico() {
-		return getImporto_complessivo().add(getImporto_complessivo_variazioni());
+		return Optional.ofNullable(getImporto_complessivo()).map(map -> map).orElse(BigDecimal.ZERO).
+				add(Optional.ofNullable(getImporto_complessivo_variazioni()).map(map -> map).orElse(BigDecimal.ZERO));
 	}
 	public boolean hasVariazioni() {
 		if (getImporto_complessivo_variazioni().compareTo(BigDecimal.ZERO)!=0)
@@ -682,13 +684,13 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		return dett;
 	}
 
-	public CMISFolderContrattiModel getCMISFolder() {
-		if (this.getIncarichi_procedura().isProceduraForBorseStudio()) 
+	public CMISFolderContrattiModel getCMISFolder() {		
+		if (Optional.ofNullable(getIncarichi_procedura()).map(Incarichi_proceduraBulk::isProceduraForBorseStudio).orElse(false)) 
 			return new CMISFolderBorseStudio(this);
-		else if (this.getIncarichi_procedura().isProceduraForAssegniRicerca()) 
+		else if (Optional.ofNullable(getIncarichi_procedura()).map(Incarichi_proceduraBulk::isProceduraForAssegniRicerca).orElse(false)) 
 			return new CMISFolderAssegniRicerca(this);
 		else
-			return new CMISFolderIncarico(this);
+			return Optional.ofNullable(getIncarichi_procedura()).map(map -> new CMISFolderIncarico(this)).orElse(null) ;
 	}
 
 }

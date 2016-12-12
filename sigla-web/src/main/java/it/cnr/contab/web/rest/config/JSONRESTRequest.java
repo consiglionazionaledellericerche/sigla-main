@@ -1,4 +1,4 @@
-package it.cnr.contab.util.rest;
+package it.cnr.contab.web.rest.config;
 
 public class JSONRESTRequest {
 	private Context context;
