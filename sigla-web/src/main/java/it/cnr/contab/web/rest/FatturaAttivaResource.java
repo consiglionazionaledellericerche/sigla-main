@@ -37,12 +37,11 @@ public class FatturaAttivaResource {
      */
     @POST
     @Path(value = "/ricerca")
-    public Response ricercaFattura(@Context HttpServletRequest request, CNRUserContext userContext, @QueryParam ("esercizio") Long esercizio, 
-    		@QueryParam ("cds") String cds, @QueryParam ("uo") String uo,
-    		@QueryParam ("pg") Long pg) throws Exception {
+    public Response ricercaFattura(@Context HttpServletRequest request, CNRUserContext userContext, @QueryParam ("pg") Long pg) throws Exception {
         LOGGER.debug("REST request per ricercare una fattura attiva." );
         try {
-            Fattura_attivaBulk fatturaAttiva = fatturaComponent().ricercaFattura(userContext,esercizio, cds, uo, pg);		
+            Fattura_attivaBulk fatturaAttiva = fatturaComponent().ricercaFattura(userContext, userContext.getEsercizio().longValue(), 
+            		userContext.getCd_cds(), userContext.getCd_unita_organizzativa(), pg);		
             return Response.ok(Optional.ofNullable(fatturaAttiva).orElseThrow(() -> new FatturaNonTrovataException(FATTURA_ATTIVA_NON_PRESENTE))).build();        	
         } catch(FatturaNonTrovataException _ex) {
         	return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PRESENTE)).build();
