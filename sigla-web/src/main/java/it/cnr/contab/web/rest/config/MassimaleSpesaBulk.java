@@ -1,24 +1,30 @@
 package it.cnr.contab.web.rest.config;
 
-public class JSONRESTMissioniRequest extends JSONRESTRequest{
+import java.math.BigDecimal;
+import java.util.Date;
 
-	String data;
-	Long nazione;
-	Long inquadramento;
-	String cdTipoSpesa;
-	String cdTipoPasto;
-	String divisa;
-	String km;
-	String importoSpesa;
-	public JSONRESTMissioniRequest() {
+import it.cnr.jada.bulk.OggettoBulk;
+
+public class MassimaleSpesaBulk extends OggettoBulk{
+	private static final long serialVersionUID = 1L;
+	private Date data;
+	private Long nazione;
+	private Long inquadramento;
+	private String cdTipoSpesa;
+	private String cdTipoPasto;
+	private String divisa;
+	private BigDecimal km;
+	private BigDecimal importoSpesa;
+	
+	public MassimaleSpesaBulk() {
 		super();
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 
@@ -62,19 +68,19 @@ public class JSONRESTMissioniRequest extends JSONRESTRequest{
 		this.divisa = divisa;
 	}
 
-	public String getKm() {
+	public BigDecimal getKm() {
 		return km;
 	}
 
-	public void setKm(String km) {
+	public void setKm(BigDecimal km) {
 		this.km = km;
 	}
 
-	public String getImportoSpesa() {
+	public BigDecimal getImportoSpesa() {
 		return importoSpesa;
 	}
 
-	public void setImportoSpesa(String importoSpesa) {
+	public void setImportoSpesa(BigDecimal importoSpesa) {
 		this.importoSpesa = importoSpesa;
 	}
 }

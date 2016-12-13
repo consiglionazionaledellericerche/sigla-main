@@ -16,37 +16,41 @@ import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import javax.ws.rs.ext.Providers;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jboss.resteasy.core.ResourceMethodInvoker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Provider
-public class RESTSecurityInterceptor implements
-javax.ws.rs.container.ContainerRequestFilter,
-ExceptionMapper<Exception> {
+public class RESTSecurityInterceptor implements ContainerRequestFilter, ExceptionMapper<Exception> {
 
-	private Log LOGGER = LogFactory.getLog(RESTSecurityInterceptor.class);
-
+	private Logger LOGGER = LoggerFactory.getLogger(RESTSecurityInterceptor.class);
+	@Context
+	private ResourceInfo resourceInfo;
+    @Context
+    private Providers providers;
+    
 	private static final String AUTHORIZATION_PROPERTY = "Authorization";
 	private final static Map<String, String> UNAUTHORIZED_MAP = Collections.singletonMap("ERROR", "User cannot access the resource.");
 	@Override
 	public void filter(ContainerRequestContext requestContext) {	
-		ResourceMethodInvoker methodInvoker = (ResourceMethodInvoker) requestContext
-				.getProperty(ResourceMethodInvoker.class.getName());
-		final Method method = methodInvoker.getMethod();
-		final Class<?> declaring = method.getDeclaringClass();
+
+		final Method method = resourceInfo.getResourceMethod();
+		final Class<?> declaring = resourceInfo.getResourceClass();
 		
 		String[] rolesAllowed = null;
 		boolean denyAll;
 		boolean permitAll;
-		RolesAllowed allowed = (RolesAllowed) declaring.getAnnotation(RolesAllowed.class);
-		RolesAllowed methodAllowed = method.getAnnotation(RolesAllowed.class);
+		RolesAllowed allowed = declaring.getAnnotation(RolesAllowed.class),
+			methodAllowed = method.getAnnotation(RolesAllowed.class);
 		if (methodAllowed != null) allowed = methodAllowed;
 		if (allowed != null)
 		{
@@ -95,7 +99,7 @@ ExceptionMapper<Exception> {
 		    }			
 		}
 	}
-
+    
 	private boolean isUserAllowed(final UtenteBulk utente,
 			final Set<String> rolesSet) throws Exception{
 		try {
