@@ -2,6 +2,10 @@ package it.cnr.contab.docamm00.docs.bulk;
 
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -13,10 +17,11 @@ import it.cnr.contab.doccont00.core.bulk.*;
  * Creation date: (10/25/2001 11:52:43 AM)
  * @author: Roberto Peli
  */
+@JsonInclude(value=Include.NON_NULL)
 public class Nota_di_credito_rigaBulk extends Fattura_passiva_rigaBulk {
-
+	@JsonIgnore
 	private Nota_di_creditoBulk notaDiCredito;
-	
+	@JsonIgnore
 	private Fattura_passiva_rigaIBulk riga_fattura_origine;
 	private Fattura_passiva_rigaIBulk riga_fattura_associata;
 	private Accertamento_scadenzarioBulk accertamento_scadenzario = null;
