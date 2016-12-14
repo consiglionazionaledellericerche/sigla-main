@@ -145,24 +145,24 @@ public class FirmaDigitalePdgVariazioniBP extends
 	}
 	
 	public it.cnr.jada.util.jsp.Button[] createToolbar() {
-		Button[] toolbar = new Button[8];
+		Button[] toolbar = new Button[3];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.refresh");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-				.getHandler().getProperties(getClass()), "Toolbar.print");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-				.getHandler().getProperties(getClass()), "Toolbar.download");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-				.getHandler().getProperties(getClass()), "Toolbar.sign");
+//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+//				.getHandler().getProperties(getClass()), "Toolbar.print");
+//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+//				.getHandler().getProperties(getClass()), "Toolbar.download");
+//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+//				.getHandler().getProperties(getClass()), "Toolbar.sign");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.signOTP");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-				.getHandler().getProperties(getClass()), "Toolbar.upload");
+//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+//				.getHandler().getProperties(getClass()), "Toolbar.upload");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.printSigned");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-				.getHandler().getProperties(getClass()), "Toolbar.installa");
+//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+//				.getHandler().getProperties(getClass()), "Toolbar.installa");
 		toolbar[i-1].setSeparator(true);
 		return toolbar;
 	}
@@ -178,26 +178,26 @@ public class FirmaDigitalePdgVariazioniBP extends
 			else
 				nomeFileAllegato = nomeFileTest;
 
-			toolbar[1]
-					.setHref("doPrint('"
-							+ JSPUtils
-									.buildAbsoluteUrl(
-											pageContext,
-											null,
-											"genericdownload/"
-													+ nomeFileAllegato
-													+ "?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess="
-													+ getPath()) + "')");
-			toolbar[2]
-					.setHref("doPrint('"
-							+ JSPUtils
-									.buildAbsoluteUrl(
-											pageContext,
-											null,
-											"genericdownload/"
-													+ nomeFileAllegato
-													+ "?methodName=scaricaFileGenerico&it.cnr.jada.action.BusinessProcess="
-													+ getPath()) + "')");
+//			toolbar[1]
+//					.setHref("doPrint('"
+//							+ JSPUtils
+//									.buildAbsoluteUrl(
+//											pageContext,
+//											null,
+//											"genericdownload/"
+//													+ nomeFileAllegato
+//													+ "?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess="
+//													+ getPath()) + "')");
+//			toolbar[2]
+//					.setHref("doPrint('"
+//							+ JSPUtils
+//									.buildAbsoluteUrl(
+//											pageContext,
+//											null,
+//											"genericdownload/"
+//													+ nomeFileAllegato
+//													+ "?methodName=scaricaFileGenerico&it.cnr.jada.action.BusinessProcess="
+//													+ getPath()) + "')");
 			Document nodeSignedFile = null;
 			try {
 				nodeSignedFile = getNodeFileFirmato(bulk
@@ -215,7 +215,8 @@ public class FirmaDigitalePdgVariazioniBP extends
 						signedFileName= signedFileName.replace("\\", "/");
 				}
 				if (signedFileName!=null)
-					toolbar[6]
+					//toolbar[6]
+					toolbar[2]
 						.setHref("doPrint('"
 								+ JSPUtils
 										.buildAbsoluteUrl(
@@ -230,9 +231,9 @@ public class FirmaDigitalePdgVariazioniBP extends
 			}
 		}
 		else {
-			toolbar[1].setHref(null);
+//			toolbar[1].setHref(null);
 			toolbar[2].setHref(null);
-			toolbar[6].setHref(null);
+//			toolbar[6].setHref(null);
 		}
 		writeToolbar(pageContext.getOut(), toolbar);
 	}
