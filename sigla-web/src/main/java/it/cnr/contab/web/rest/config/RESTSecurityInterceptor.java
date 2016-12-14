@@ -44,8 +44,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Exceptio
 	public void filter(ContainerRequestContext requestContext) {	
 
 		final Method method = resourceInfo.getResourceMethod();
-		final Class<?> declaring = resourceInfo.getResourceClass();
-		
+		final Class<?> declaring = resourceInfo.getResourceClass();		
 		String[] rolesAllowed = null;
 		boolean denyAll;
 		boolean permitAll;
@@ -81,6 +80,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Exceptio
 						requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(UNAUTHORIZED_MAP).build());
 						return;
 					}
+			    	requestContext.setSecurityContext(new SIGLASecurityContext(requestContext, utenteBulk.getCd_utente()));
 				} catch (Exception e) {
 					LOGGER.error("ERROR for REST SERVICE", e);
 					requestContext.abortWith(Response.status(Status.INTERNAL_SERVER_ERROR).entity(e).build());
