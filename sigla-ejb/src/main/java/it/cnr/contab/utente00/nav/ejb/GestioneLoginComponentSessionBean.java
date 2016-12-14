@@ -524,4 +524,23 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
+	
+	public java.lang.Boolean isUserAccessoAllowed(UserContext param0, String...param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.lang.Boolean result = componentObj.isUserAccessoAllowed(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
 }
