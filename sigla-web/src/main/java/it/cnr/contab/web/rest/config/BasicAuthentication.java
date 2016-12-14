@@ -1,8 +1,10 @@
 package it.cnr.contab.web.rest.config;
 
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloBulk;
+import it.cnr.contab.util.servlet.JSONRESTRequest;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.AdminUserContext;
 import it.cnr.jada.comp.ApplicationException;
@@ -132,7 +134,27 @@ public class BasicAuthentication {
 				usernameAndPassword, ":");
 		return tokenizer;
 	}
-    
+	
+	public static CNRUserContext getContextFromRequest(JSONRESTRequest jsonRequest, String user, String sessionId) throws IOException, ApplicationException {
+ 		if (jsonRequest != null && jsonRequest.getContext() != null) {
+ 			if (jsonRequest.getContext().getEsercizio() == null)
+ 				throw new ApplicationException("Esercizio non puo essere vuoto");
+	
+ 			if (jsonRequest.getContext().getCd_cds() == null)
+ 				throw new ApplicationException("Il codice del CdS non puo essere vuoto");
+ 			if (jsonRequest.getContext().getCd_unita_organizzativa() == null)
+ 				throw new ApplicationException("Il codice della UO non puo essere vuoto");
+ 			if (jsonRequest.getContext().getCd_cdr() == null)
+ 				throw new ApplicationException("Il codice del CdR non puo essere vuoto");
+ 
+ 			return new CNRUserContext(user, sessionId, jsonRequest.getContext().getEsercizio(), 
+ 					jsonRequest.getContext().getCd_unita_organizzativa(), 
+ 					jsonRequest.getContext().getCd_cds(), 
+ 					jsonRequest.getContext().getCd_cdr());			
+ 		} else {
+ 			throw new ApplicationException("E' necessario valorizzare il contesto utente.");
+ 		}
+ 	}    
 	@SuppressWarnings("unchecked")
 	public static List<Utente_unita_ruoloBulk> getRuoli(UserContext userContext, UtenteBulk utente) throws IOException, ComponentException{
 		return loginComponentSession().getRuoli(userContext, utente);
