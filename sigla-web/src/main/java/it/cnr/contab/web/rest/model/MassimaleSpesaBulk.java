@@ -1,4 +1,4 @@
-package it.cnr.contab.web.rest.config;
+package it.cnr.contab.web.rest.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
