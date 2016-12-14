@@ -2,10 +2,9 @@
 
 ## SERVIZIO REST PER CREARE UNA MISSIONE
 
-### HEADER HTTP 
-
+### HEADER HTTP
 * PUT /SIGLA/restapi/missioni HTTP/1.1
-* Host: localhost:8080
+* Host: sigla-main.test.si.cnr.it
 * Authorization: Basic ????????????
 * Content-Type: application/json
 * X-sigla-esercizio: 2016
@@ -14,9 +13,8 @@
 * X-sigla-cd-cdr: 084.000.000
 * Cache-Control: no-cache
 
-### BODY JSON
-`  
-{
+### BODY JSON  
+`{
 		"esercizio" : 2016,
 		"cd_cds": "084",
 		"cd_unita_organizzativa": "084.000",
@@ -105,3 +103,40 @@
 			}
 		]
 }`
+
+## SERVIZIO REST PER MASSIMALE SPESA
+
+### HEADER HTTP
+* POST /SIGLA/restapi/missioni/validaMassimaleSpesa HTTP/1.1
+* Host: sigla-main.test.si.cnr.it
+* Authorization: Basic ????????????
+* Content-Type: application/json
+* X-sigla-esercizio: 2016
+* X-sigla-cd-unita-organizzativa: 084.000
+* X-sigla-cd-cds: 084
+* X-sigla-cd-cdr: 084.000.000
+* Cache-Control: no-cache
+
+### BODY JSON  
+`{
+	"data": "2016-09-12",
+	"nazione": 36,
+	"inquadramento": 6,
+	"cdTipoSpesa": "AEREO",
+	"divisa": "EURO",
+	"importoSpesa": 9999999999
+}`
+
+## SERVIZIO REST PER RICERCARE UNA FATTURA ATTIVA
+
+### HEADER HTTP
+* GET /SIGLA/restapi/fatturaattiva/ricerca?pg=4394 HTTP/1.1
+* Host: sigla-main.test.si.cnr.it
+* Authorization: Basic ????????????
+* Content-Type: application/json
+* X-sigla-esercizio: 2016
+* X-sigla-cd-unita-organizzativa: 084.000
+* X-sigla-cd-cds: 084
+* X-sigla-cd-cdr: 084.000.000
+* Cache-Control: no-cache
+
