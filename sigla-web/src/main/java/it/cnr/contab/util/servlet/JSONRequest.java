@@ -1,6 +1,5 @@
 package it.cnr.contab.util.servlet;
 
-import it.cnr.contab.web.rest.config.JSONRESTRequest;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.util.List;
