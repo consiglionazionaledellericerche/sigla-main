@@ -103,6 +103,5 @@
 				"im_spesa_max_divisa": 0,
 				"im_quota_esente" : 0
 			}
-
 		]
 }`
