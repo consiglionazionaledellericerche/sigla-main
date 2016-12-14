@@ -8,7 +8,6 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.UserContext;
 
 import java.rmi.RemoteException;
-import java.util.Hashtable;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -43,4 +42,5 @@ List<PreferitiBulk> preferitiList(it.cnr.jada.UserContext param0) throws it.cnr.
 public String[] getLdapUserFromMatricola(UserContext param0, Integer param1)  throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 public List getUnitaRuolo(UserContext param0, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException, RemoteException;
 public List getRuoli(UserContext param0, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException, RemoteException;
+java.lang.Boolean isUserAccessoAllowed(UserContext userContext, String...accessi) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
