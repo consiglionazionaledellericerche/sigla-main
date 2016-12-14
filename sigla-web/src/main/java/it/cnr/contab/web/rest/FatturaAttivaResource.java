@@ -20,6 +20,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.SecurityContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +32,15 @@ import org.slf4j.LoggerFactory;
 public class FatturaAttivaResource {
     private static final String FATTURA_ATTIVA_NON_PRESENTE = "Fattura attiva non presente.";
 	private final Logger LOGGER = LoggerFactory.getLogger(FatturaAttivaResource.class);
-
+	@Context SecurityContext securityContext;
     /**
      * POST  /restapi/fatturaattiva/ricerca -> return Fattura attiva
      */
     @POST
     @Path(value = "/ricerca")
-    public Response ricercaFattura(@Context HttpServletRequest request, CNRUserContext userContext, @QueryParam ("pg") Long pg) throws Exception {
+    public Response ricercaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception {
         LOGGER.debug("REST request per ricercare una fattura attiva." );
+        CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();        
         try {
             Fattura_attivaBulk fatturaAttiva = fatturaComponent().ricercaFattura(userContext, userContext.getEsercizio().longValue(), 
             		userContext.getCd_cds(), userContext.getCd_unita_organizzativa(), pg);		

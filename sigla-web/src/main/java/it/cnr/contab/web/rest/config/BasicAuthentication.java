@@ -12,13 +12,13 @@ import it.cnr.jada.comp.ComponentException;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Base64;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.ejb.EJBException;
 import javax.xml.bind.DatatypeConverter;
 
-import org.jboss.resteasy.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -127,7 +127,7 @@ public class BasicAuthentication {
 
 		// Decode username and password
 		String usernameAndPassword = null;
-		usernameAndPassword = new String(Base64.decode(encodedUserPassword));
+		usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword));
 
 		// Split username and password tokens
 		final StringTokenizer tokenizer = new StringTokenizer(
