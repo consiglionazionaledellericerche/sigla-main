@@ -1,8 +1,5 @@
 # SIGLA
 
-------------------------------------------------------------
-
-
 ## SERVIZIO REST PER CREARE UNA MISSIONE
 
 ### HEADER HTTP 
@@ -18,9 +15,7 @@
 * Cache-Control: no-cache
 
 ### BODY JSON
-
-> 
-
+`  
 {
 		"esercizio" : 2016,
 		"cd_cds": "084",
@@ -110,6 +105,4 @@
 			}
 
 		]
-}
-
-> 
+}`
