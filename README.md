@@ -1,6 +1,8 @@
 SIGLA
 
 # SERVIZIO REST PER CREARE UNA MISSIONE
+
+## HEADER HTTP 
 PUT /SIGLA/restapi/missioni HTTP/1.1
 Host: localhost:8080
 Authorization: Basic ????????????
@@ -10,8 +12,8 @@ X-sigla-cd-unita-organizzativa: 084.000
 X-sigla-cd-cds: 084
 X-sigla-cd-cdr: 084.000.000
 Cache-Control: no-cache
-Postman-Token: dd27c7b0-a757-1277-f62f-8e93e2a5ab1e
 
+## BODY JSON
 {
 		"esercizio" : 2016,
 		"cd_cds": "084",
