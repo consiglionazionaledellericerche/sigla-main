@@ -6,10 +6,10 @@ import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
-import it.cnr.contab.web.rest.config.MassimaleSpesaBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.web.rest.config.RestException;
 import it.cnr.contab.web.rest.config.SIGLARoles;
-import it.cnr.contab.web.rest.model.UserContextBulk;
+import it.cnr.contab.web.rest.model.MassimaleSpesaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -37,6 +37,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.SecurityContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,15 +48,15 @@ import org.slf4j.LoggerFactory;
 @RolesAllowed(SIGLARoles.MISSIONI)
 public class MissioneResource {
     private final Logger LOGGER = LoggerFactory.getLogger(MissioneResource.class);
+	@Context SecurityContext securityContext;
 
     @POST
     @Path(value = "/validaMassimaleSpesa")
-    public Response validaMassimaleSpesa(@Context HttpServletRequest request, UserContextBulk<MassimaleSpesaBulk> massimaleSpesa) throws Exception {
+    public Response validaMassimaleSpesa(@Context HttpServletRequest request, MassimaleSpesaBulk massimaleSpesaBulk) throws Exception {
 		ResponseBuilder rb;
     	try{
             LOGGER.debug("REST request per visualizzare la divisa per nazione" );
-        	MassimaleSpesaBulk massimaleSpesaBulk = massimaleSpesa.getOggettoBulk();
-        	UserContext userContext = massimaleSpesa.getUserContext();
+        	UserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
     		Optional.ofNullable(massimaleSpesaBulk.getData()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, data dettaglio spesa obbligatoria."));
     		Optional.ofNullable(massimaleSpesaBulk.getImportoSpesa()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, importo dettaglio spesa obbligatorio."));
     		Optional.ofNullable(massimaleSpesaBulk.getDivisa()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, divisa dettaglio spesa obbligatoria."));
@@ -83,7 +84,6 @@ public class MissioneResource {
     			}
     			Optional.ofNullable(tipoPasto).orElseThrow(() -> new RestException(Status.BAD_REQUEST,  "Tipo Pasto non trovato in SIGLA."));
     		}
-
     		MissioneBulk missioneBulk = new MissioneBulk();
     		Missione_dettaglioBulk dettaglio = new Missione_dettaglioBulk();
     		dettaglio.setTipo_pasto(tipoPasto);
@@ -107,10 +107,11 @@ public class MissioneResource {
 	}
     
     @PUT
-    public Response insert(@Context HttpServletRequest request, UserContextBulk<MissioneBulk> userContextMissione) throws Exception {
+    public Response insert(@Context HttpServletRequest request, MissioneBulk missioneBulk) throws Exception {
+    	UserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
     	final MissioneBulk missione = (MissioneBulk) missioneComponent().inizializzaBulkPerInserimento(
-    			userContextMissione.getUserContext(), 
-    			userContextMissione.getOggettoBulk());
+    			userContext, 
+    			missioneBulk);
     	missione.setToBeCreated();
     	missione.getTappeMissioneColl().stream().forEach(x -> {
     		x.setToBeCreated();
@@ -125,15 +126,11 @@ public class MissioneResource {
     		x.setToBeCreated();
     		x.setMissione(missione);
     	}));
-    	MissioneBulk missioneCreated = (MissioneBulk) missioneComponent().creaConBulk(userContextMissione.getUserContext(), missione);
+    	MissioneBulk missioneCreated = (MissioneBulk) missioneComponent().creaConBulk(userContext, missione);
     	missioneCreated.setToBeUpdated();
     	missioneCreated.setMissioneIniziale(missioneCreated);
-    	missioneCreated = (MissioneBulk) missioneComponent().creaConBulk(userContextMissione.getUserContext(), missioneCreated);
+    	missioneCreated = (MissioneBulk) missioneComponent().creaConBulk(userContext, missioneCreated);
     	return Response.status(Status.CREATED).entity(missioneCreated).build();
-    }
-
-    public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException{
-		return BigDecimal.ZERO;		
     }
 
 	private MissioneComponentSession missioneComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {

@@ -1,6 +1,7 @@
 package it.cnr.contab.utenze00.bp;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -9,7 +10,7 @@ import java.util.Hashtable;
  * sessione e di scrivania corrente
  */
 
-public class CNRUserContext implements it.cnr.jada.UserContext {
+public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	private static final long serialVersionUID = 1L;
 	private Hashtable<String, Serializable> attributes;
 	
@@ -191,8 +192,13 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 	public Hashtable<String, Serializable> getAttributes() {
 		return attributes;
 	}
-
-	public String toString() {
-		return "USER: " + getUser();
+	
+	@Override
+	public String getName() {
+		return getUser();
 	}
+	@Override
+	public String toString() {
+		return "CNRUserContext [attributes=" + attributes + "]";
+	}	
 }
