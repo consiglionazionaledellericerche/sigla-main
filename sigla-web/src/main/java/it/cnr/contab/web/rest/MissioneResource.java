@@ -108,7 +108,14 @@ public class MissioneResource {
     
     @PUT
     public Response insert(@Context HttpServletRequest request, MissioneBulk missioneBulk) throws Exception {
-    	UserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+    	CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+    	Optional.ofNullable(missioneBulk.getEsercizio()).filter(x -> userContext.getEsercizio().equals(x)).
+    		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Esercizio del contesto diverso da quello della Missione"));
+    	Optional.ofNullable(missioneBulk.getCd_cds()).filter(x -> userContext.getCd_cds().equals(x)).
+			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "CdS del contesto diverso da quello della Missione"));
+    	Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
+			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
+    	
     	final MissioneBulk missione = (MissioneBulk) missioneComponent().inizializzaBulkPerInserimento(
     			userContext, 
     			missioneBulk);
