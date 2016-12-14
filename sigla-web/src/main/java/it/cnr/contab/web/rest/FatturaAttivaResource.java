@@ -12,7 +12,7 @@ import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -36,7 +36,7 @@ public class FatturaAttivaResource {
     /**
      * POST  /restapi/fatturaattiva/ricerca -> return Fattura attiva
      */
-    @POST
+    @GET
     @Path(value = "/ricerca")
     public Response ricercaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception {
         LOGGER.debug("REST request per ricercare una fattura attiva." );
