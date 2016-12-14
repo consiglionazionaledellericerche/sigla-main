@@ -155,6 +155,7 @@ public class BasicAuthentication {
  			throw new ApplicationException("E' necessario valorizzare il contesto utente.");
  		}
  	}    
+	
 	@SuppressWarnings("unchecked")
 	public static List<Utente_unita_ruoloBulk> getRuoli(UserContext userContext, UtenteBulk utente) throws IOException, ComponentException{
 		return loginComponentSession().getRuoli(userContext, utente);

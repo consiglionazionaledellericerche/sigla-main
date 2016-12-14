@@ -501,5 +501,22 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
 			}
 		}
 	}
-	
+	public java.lang.Boolean isUserAccessoAllowed(it.cnr.jada.UserContext param0, String...param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (java.lang.Boolean)invoke("isUserAccessoAllowed",new Object[] {
+				param0,
+				param1 
+			});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}		
 }

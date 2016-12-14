@@ -3,6 +3,8 @@ package it.cnr.contab.web.rest;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.web.rest.config.AccessoAllowed;
+import it.cnr.contab.web.rest.config.AccessoEnum;
 import it.cnr.contab.web.rest.config.SIGLARoles;
 import it.cnr.jada.comp.FatturaNonTrovataException;
 
@@ -38,6 +40,7 @@ public class FatturaAttivaResource {
      */
     @GET
     @Path(value = "/ricerca")
+    @AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTV)
     public Response ricercaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception {
         LOGGER.debug("REST request per ricercare una fattura attiva." );
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();        
