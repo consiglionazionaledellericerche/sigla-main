@@ -48,6 +48,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
@@ -271,6 +272,41 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					}
 				}
 			}
+		} else if (oggettobulk instanceof WorkpackageBulk){
+			
+	        if(compoundfindclause == null){
+	            if(oggettobulk != null)
+	                compoundfindclause = oggettobulk.buildFindClauses(null);
+	        }else{
+	            compoundfindclause = CompoundFindClause.and(compoundfindclause, oggettobulk.buildFindClauses(Boolean.FALSE));
+	        }
+	        sql =  getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").selectByClause(userContext, compoundfindclause);
+			
+			if(!isUtenteEnte(userContext)){ 
+				WorkpackageHome home = (WorkpackageHome) getHome(userContext, oggettobulk);
+				SQLBuilder sqlExists = home.createSQLBuilder();
+				CdrBulk cdrUtente = cdrFromUserContext(userContext);
+				String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
+				if (cdrUtente.getLivello().compareTo(CdrHome.CDR_PRIMO_LIVELLO)==0)
+				{
+					sql.addTableToHeader("V_CDR_VALIDO");
+					sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+					sql.openParenthesis("AND");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					sql.closeParenthesis();
+				}else{
+					sql.addTableToHeader("V_CDR_VALIDO");
+					sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+					sql.openParenthesis("AND");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
+					sql.closeParenthesis();
+				}
+				((SQLBuilder)sql).addSQLExistsClause(FindClause.AND, sqlExists);
+			} 
 		} else if (oggettobulk instanceof V_mandato_reversaleBulk){
 			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
 				Boolean trovataCondizioneSoloAnticipi = false;
@@ -335,32 +371,6 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
 				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 			}
-		} else if (oggettobulk instanceof WorkpackageBulk){
-			if(!isUtenteEnte(userContext)){ 
-				WorkpackageHome home = (WorkpackageHome) getHome(userContext, oggettobulk);
-				SQLBuilder sqlExists = home.createSQLBuilder();
-				CdrBulk cdrUtente = cdrFromUserContext(userContext);
-				String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
-				if (cdrUtente.getLivello().compareTo(CdrHome.CDR_PRIMO_LIVELLO)==0)
-				{
-					sql.addTableToHeader("V_CDR_VALIDO");
-					sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
-					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-					sql.openParenthesis("AND");
-					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-					sql.closeParenthesis();
-				}else{
-					sql.addTableToHeader("V_CDR_VALIDO");
-					sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
-					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-					sql.openParenthesis("AND");
-					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
-					sql.closeParenthesis();
-				}
-				((SQLBuilder)sql).addSQLExistsClause(FindClause.AND, sqlExists);
-			} 
 		} else if (oggettobulk instanceof V_mandato_reversaleBulk){
 
 			if ( !isUoEnte(userContext)){
