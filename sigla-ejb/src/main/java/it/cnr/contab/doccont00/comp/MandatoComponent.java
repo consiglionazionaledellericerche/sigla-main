@@ -3855,7 +3855,7 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 				mandato = inizializzaFlagFaiReversale(aUC,
 						(MandatoIBulk) mandato);
 			if(mandato.getPg_mandato_riemissione()!=null) {
-				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato_riemissione()));
+				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds_origine(), mandato.getPg_mandato_riemissione()));
 				if ( man_rev != null )
 					mandato.setV_man_rev( man_rev );
 			}

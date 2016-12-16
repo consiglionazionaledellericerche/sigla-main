@@ -3039,7 +3039,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		reversale.setDoc_contabili_collColl(((V_ass_doc_contabiliHome) getHome( aUC, V_ass_doc_contabiliBulk.class)).findDoc_contabili_coll( reversale ));		
 
 		if(reversale.getPg_reversale_riemissione()!=null) {
-				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds(), reversale.getPg_reversale_riemissione()));
+				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds_origine(), reversale.getPg_reversale_riemissione()));
 				if ( man_rev != null )
 					reversale.setV_man_rev( man_rev );
 		}
