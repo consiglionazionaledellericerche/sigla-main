@@ -40,7 +40,9 @@ public class PrintService {
 		try{
 			method = new HttpPost(offlineReportComponent.getLastServerActive(userContext));
 	        method.addHeader("Accept-Language", Locale.getDefault().toString());
+	        method.setHeader("Content-Type", "application/json;charset=UTF-8");
 	        HttpEntity requestEntity = new ByteArrayEntity(gson.toJson(printSpooler).getBytes());
+	       
 	        method.setEntity(requestEntity);
 	        HttpResponse httpResponse = httpclient.execute(method);				
 			int status = httpResponse.getStatusLine().getStatusCode();
