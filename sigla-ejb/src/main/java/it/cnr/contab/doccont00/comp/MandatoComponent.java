@@ -6586,7 +6586,7 @@ public SQLBuilder selectV_man_revByClause( UserContext userContext, MandatoBulk 
 	SQLBuilder sql = getHome( userContext, V_mandato_reversaleBulk.class ).createSQLBuilder();
 	sql.addClause( "AND", "cd_tipo_documento_cont", sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN );
     sql.addClause( "AND", "esercizio", sql.EQUALS, bulk.getEsercizio() );
-	sql.addClause( "AND", "cd_cds", sql.EQUALS, bulk.getCd_cds() );
+	//sql.addClause( "AND", "cd_cds", sql.EQUALS, bulk.getCd_cds() );
 	sql.addClause( "AND", "cd_unita_organizzativa", sql.EQUALS, ((CNRUserContext) userContext).getCd_unita_organizzativa() );
 	sql.addClause( "AND", "ti_documento_cont", sql.NOT_EQUALS, MandatoBulk.TIPO_REGOLARIZZAZIONE );		
 	sql.addClause( "AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_EMESSO );
@@ -6599,7 +6599,7 @@ public Boolean esisteAnnullodaRiemettereNonCollegato(UserContext userContext,
 	try{
 		SQLBuilder sql = getHome( userContext, MandatoIBulk.class ).createSQLBuilder();
 		sql.addClause( "AND", "esercizio", sql.EQUALS,esercizio);
-		sql.addClause( "AND", "cd_cds", sql.EQUALS,cds );
+		sql.addClause( "AND", "cd_cds_origine", sql.EQUALS,cds );
 		sql.addClause( "AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO );	
 		sql.addSQLClause( "AND", "pg_mandato_riemissione" , sql.ISNULL, null );
 		sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
@@ -6616,7 +6616,7 @@ public Boolean isMandatoCollegatoAnnullodaRiemettere(UserContext userContext,
 	try{
 		SQLBuilder sql = getHome( userContext, MandatoIBulk.class ).createSQLBuilder();
 		sql.addClause( "AND", "esercizio", sql.EQUALS,mandato.getEsercizio());
-		sql.addClause( "AND", "cd_cds", sql.EQUALS,mandato.getCd_cds() );
+		sql.addClause( "AND", "cd_cds_origine", sql.EQUALS,mandato.getCd_cds_origine() );
 		sql.addClause( "AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO );	
 		sql.addSQLClause( "AND", "pg_mandato_riemissione" ,sql.EQUALS,mandato.getPg_mandato());
 		sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
