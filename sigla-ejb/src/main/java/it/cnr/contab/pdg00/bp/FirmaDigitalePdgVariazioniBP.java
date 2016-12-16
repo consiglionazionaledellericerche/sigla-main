@@ -222,7 +222,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		}
 		else {
 //			toolbar[1].setHref(null);
-			toolbar[2].setHref(null);
+			toolbar[1].setHref(null);
 			toolbar[3].setHref(null);
 //			toolbar[6].setHref(null);
 		}
