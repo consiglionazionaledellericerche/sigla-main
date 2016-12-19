@@ -1,8 +1,11 @@
 package it.cnr.contab.pdg00.action;
 
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.pdg00.bp.FirmaDigitalePdgVariazioniBP;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -67,10 +70,22 @@ public class FirmaDigitaleStampaPdgVariazioneAction extends it.cnr.jada.util.act
 
 	public Forward doSignOTP(ActionContext context) {
 		try {
+			FirmaDigitalePdgVariazioniBP bp = (FirmaDigitalePdgVariazioniBP)context.getBusinessProcess();
+			Parametri_cdsBulk  parametriCds = Utility.createParametriCdsComponentSession().
+				getParametriCds(context.getUserContext(), 
+								CNRUserContext.getCd_cds(context.getUserContext()), 
+								CNRUserContext.getEsercizio(context.getUserContext()));
+			if (!parametriCds.getFl_kit_firma_digitale()){
+				bp.sign(context);
+				return context.findDefaultForward();
+			}
+			else
+			{
 			BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
 			firmaOTPBP.setModel(context, new FirmaOTPBulk());
 			context.addHookForward("firmaOTP",this,"doBackFirmaOTP");			
 			return context.addBusinessProcess(firmaOTPBP);
+			}
 		} catch(Exception e) {
 			return handleException(context,e);
 		}
