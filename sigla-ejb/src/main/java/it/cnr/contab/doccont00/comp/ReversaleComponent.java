@@ -3042,6 +3042,10 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds_origine(), reversale.getPg_reversale_riemissione()));
 				if ( man_rev != null )
 					reversale.setV_man_rev( man_rev );
+				else
+				  man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds(), reversale.getPg_reversale_riemissione()));
+				  if ( man_rev != null )
+					  reversale.setV_man_rev( man_rev );
 		}
 	}catch ( Exception e )
 	{
