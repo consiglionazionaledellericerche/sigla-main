@@ -84,7 +84,16 @@
 		enabledOnSearch = "true"
 		keysProperty="tipiAssociazioneKeys"
 		label="Tipo Associazione" />
-
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data fine validita" />
 	<formFieldProperty
 		name="cd_tipo_incarico" />
 	<formFieldProperty
@@ -101,7 +110,8 @@
 		name="fl_cancellato" />
 	<formFieldProperty
 		name="tipo_associazione" />
-
+	<formFieldProperty
+		name="dt_fine_validita" />
 	<columnFieldProperty
 		name="cd_tipo_incarico" />
 	<columnFieldProperty
@@ -118,7 +128,8 @@
 		name="fl_cancellato" />
 	<columnFieldProperty
 		name="cd_tipo_rapporto" />
-
+	<columnFieldProperty
+		name="dt_fine_validita" />
 	<findFieldProperty
 		name="cd_tipo_incarico" />
 	<findFieldProperty
@@ -131,6 +142,8 @@
 		name="fl_cancellato" />
 	<findFieldProperty
 		name="tipo_associazione" />
+	<findFieldProperty
+		name="dt_fine_validita" />	
 
 	<form
 		name="searchtool" >
