@@ -22,7 +22,7 @@ public class Tipo_incaricoBase extends Tipo_incaricoKey implements Keyed {
 
 //    TIPO_ASSOCIAZIONE VARCHAR(3) NOT NULL
 	private java.lang.String tipo_associazione;
-
+	private java.sql.Timestamp dt_fine_validita;
 	public Tipo_incaricoBase() {
 		super();
 	}
@@ -64,5 +64,11 @@ public class Tipo_incaricoBase extends Tipo_incaricoKey implements Keyed {
 	}
 	public void setPrc_incremento_var(java.math.BigDecimal prc_incremento_var) {
 		this.prc_incremento_var = prc_incremento_var;
+	}
+	public java.sql.Timestamp getDt_fine_validita() {
+		return dt_fine_validita;
+	}
+	public void setDt_fine_validita(java.sql.Timestamp dt_fine_validita) {
+		this.dt_fine_validita = dt_fine_validita;
 	}
 }
