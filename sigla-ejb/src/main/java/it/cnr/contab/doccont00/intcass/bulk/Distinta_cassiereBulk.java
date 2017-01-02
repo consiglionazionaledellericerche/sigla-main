@@ -336,10 +336,12 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	if(bp instanceof CRUDDistintaCassiereBP){
 		setFl_flusso(((CRUDDistintaCassiereBP)bp).isFlusso());
 		setFl_sepa(((CRUDDistintaCassiereBP)bp).isSepa());
+		setFl_annulli(((CRUDDistintaCassiereBP)bp).isAnnulli());
 	}
 	else {
 		setFl_flusso(Boolean.FALSE);
 		setFl_sepa(Boolean.FALSE);
+		setFl_annulli(Boolean.FALSE);
 	}
 	
 	return this;
