@@ -131,7 +131,7 @@
 		/>
 	<columnFieldProperty
 		name="pg_obbligazione"
-		/>
+		/>	
 	<columnFieldProperty
 		name="dt_scadenza"
 		/>
@@ -163,6 +163,9 @@
 	<columnFieldProperty
 		name="dt_scadenza"
 		/>
+	<columnFieldProperty
+		name="pg_obbligazione_scadenzario"
+		/>	
 	<columnFieldProperty
 		name="ds_scadenza"
 		/>

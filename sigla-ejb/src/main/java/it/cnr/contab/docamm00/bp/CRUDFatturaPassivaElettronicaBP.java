@@ -470,7 +470,10 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 					dettaglioController.setDirty(true);
 					dettaglioController.setModelIndex(context, i);
 					rigaFattura.setBene_servizio(documentoEleLinea.getBeneServizio());
-					rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
+					if(documentoEleLinea.getLineaDescrizione().length()>199)
+						rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione().substring(0, 199));
+					else
+						rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
 					rigaFattura.setVoce_iva(recuperaCodiceIVA(documentoEleTestata, documentoEleLinea));
 					rigaFattura.setQuantita(documentoEleLinea.getLineaQuantita());
 					action.doOnQuantitaChange(context);

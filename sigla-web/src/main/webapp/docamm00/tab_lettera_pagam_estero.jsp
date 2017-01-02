@@ -17,6 +17,7 @@
 		<tr>
 			<% bp.writeFormFieldDoc1210(out,"creaLettera");%>
 			<% bp.writeFormFieldDoc1210(out,"cancellaLettera");%>
+			<% bp.writeFormFieldDoc1210(out,"disassociaLettera");%>
 		</tr>
 	</table>
 </div>

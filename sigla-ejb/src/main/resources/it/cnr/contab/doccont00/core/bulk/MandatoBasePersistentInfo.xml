@@ -146,7 +146,28 @@
 			columnName="DT_FIRMA"
 			propertyName="dt_firma"
 			sqlTypeName="TIMESTAMP"
-			columnSize="7" />				
+			columnSize="7" />		
+		<columnMapping
+			columnName="STATO_TRASMISSIONE_ANNULLO"
+			propertyName="stato_trasmissione_annullo"
+			sqlTypeName="CHAR"
+			columnSize="1"/>
+		<columnMapping
+			columnName="FL_RIEMISSIONE"
+			propertyName="fl_riemissione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="DT_FIRMA_ANNULLO"
+			propertyName="dt_firma_annullo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />			
+		<columnMapping
+			columnName="PG_MANDATO_RIEMISSIONE"
+			propertyName="pg_mandato_riemissione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>		
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_annullamento" />
@@ -196,4 +217,12 @@
 		name="ds_mandato" />
 	<persistentProperty
 		name="dt_firma" />	
+	<persistentProperty
+		name="stato_trasmissione_annullo" />
+	<persistentProperty
+		name="fl_riemissione" />		
+	<persistentProperty
+		name="dt_firma_annullo" />		
+	<persistentProperty
+		name="pg_mandato_riemissione" />	
 </SQLPersistentInfo>

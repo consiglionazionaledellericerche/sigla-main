@@ -163,7 +163,12 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
-																																		
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />		
+																																			
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -223,4 +228,6 @@
 		name="commissioni_spese"/>
 	<persistentProperty
 		name="commissioni_spese_estere"/>
+	<persistentProperty
+		name="dt_cancellazione"/>	
 </SQLPersistentInfo>

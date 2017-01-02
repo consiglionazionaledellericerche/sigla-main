@@ -58,6 +58,8 @@ import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -5166,6 +5168,27 @@ public Forward doConfirmDtScadenza(ActionContext context, it.cnr.jada.util.actio
 		}
 		return context.findDefaultForward();
 	} catch(Exception e) {
+		return handleException(context,e);
+	}
+}
+public Forward doDisassociaLettera(ActionContext context) {
+
+	try {
+		fillModel(context);
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passivaBulk model = (Fattura_passivaBulk)bp.getModel();
+		CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
+		UtenteBulk utente = ui.getUtente();
+		if (utente.isSupervisore()){
+			if (model != null) {
+				if (model.getLettera_pagamento_estero() != null) {
+					model = ((FatturaPassivaComponentSession)bp.createComponentSession()).eliminaLetteraPagamentoEstero(context.getUserContext(), model,false);
+					bp.setModel(context, model);
+				}
+			}
+		}else throw new it.cnr.jada.comp.ApplicationException("Utente non abilitato!");
+		return context.findDefaultForward();
+	} catch(Throwable e) {
 		return handleException(context,e);
 	}
 }

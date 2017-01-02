@@ -115,9 +115,10 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
 	
 	protected List reversaliAssociate = new it.cnr.jada.util.Collect(reversaliColl, "reversale");
 	protected List reversaliDisponibili = new Vector();
-
+	protected it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk v_man_rev = new it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk();
 	private java.math.BigDecimal im_disp_cassa_cds;
 	private java.math.BigDecimal im_disp_cassa_CNR;	
+	
 public MandatoBulk() {
 	super();
 }
@@ -920,5 +921,22 @@ return false;
 				  return true;
 		else
 			return false;
+	}
+	public it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk getV_man_rev() {
+		return v_man_rev;
+	}
+	public void setV_man_rev(
+			it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk v_man_rev) {
+		this.v_man_rev = v_man_rev;
+	}
+	public Long getPg_mandato_riemissione() {
+		if (v_man_rev == null)
+			return null;
+		return v_man_rev.getPg_documento_cont();
+	}
+	@Override
+	public void setPg_mandato_riemissione(Long pg_mandato_riemissione) {
+	if(getV_man_rev()!=null)
+		getV_man_rev().setPg_documento_cont(pg_mandato_riemissione);
 	}
 }

@@ -8,10 +8,13 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
 
+
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.comp.DocumentoGenericoComponent;
 import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
-
 import it.cnr.contab.docamm00.comp.DocumentoGenericoComponent;
+import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRDOCAMM00_EJB_DocumentoGenericoComponentSession")
@@ -796,6 +799,45 @@ public java.util.List findReversaleRigaCollegate(it.cnr.jada.UserContext param0,
 		component_invocation_failure(param0,componentObj);
 		throw e;
 	} catch(it.cnr.jada.persistency.IntrospectionException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+@Override
+public TerzoBulk getTerzoUnivoco(UserContext param0,
+		Documento_genericoBulk param1) throws ComponentException,
+		RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.anagraf00.core.bulk.TerzoBulk result = ((DocumentoGenericoComponent)componentObj).getTerzoUnivoco(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk eliminaLetteraPagamentoEstero(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk param1,boolean param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk result = ((DocumentoGenericoComponent)componentObj).eliminaLetteraPagamentoEstero(param0,param1,param2);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
 		component_invocation_failure(param0,componentObj);
 		throw e;
 	} catch(RuntimeException e) {

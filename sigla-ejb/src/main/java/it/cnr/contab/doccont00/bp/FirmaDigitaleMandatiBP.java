@@ -102,9 +102,17 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					MandatoBulk.TIPO_REGOLARIZZAZIONE);
 			compoundfindclause.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS,
 					ReversaleIBulk.TIPO_INCASSO);
-			compoundfindclause.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS,
-					MandatoBulk.STATO_MANDATO_ANNULLATO);
+			
+			SimpleFindClause statoFindClause = new SimpleFindClause();
+			statoFindClause.setLogicalOperator(FindClause.AND);
+			statoFindClause.setSqlClause("stato != 'A'");
 
+			SimpleFindClause statoRitrasmFindClause = new SimpleFindClause();
+			statoRitrasmFindClause.setLogicalOperator(FindClause.AND);
+			statoRitrasmFindClause.setSqlClause("stato = 'A' and dt_trasmissione is not null "); 
+			
+			compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(statoFindClause, statoRitrasmFindClause));
+			
 			SimpleFindClause simpleFindClause = new SimpleFindClause();
 			simpleFindClause.setLogicalOperator(FindClause.AND);
 			simpleFindClause.setSqlClause("pg_documento_cont = pg_documento_cont_padre");
@@ -112,7 +120,17 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			SimpleFindClause collegatiFindClause = new SimpleFindClause();
 			collegatiFindClause.setLogicalOperator(FindClause.AND);
 			collegatiFindClause.setSqlClause("pg_documento_cont != pg_documento_cont_padre" + 
-					" and cd_tipo_documento_cont = 'MAN' and cd_tipo_documento_cont_padre = 'MAN'");	
+					" and (cd_tipo_documento_cont = 'MAN' and cd_tipo_documento_cont_padre = 'MAN' )");	
+			/*SimpleFindClause collegatiFindClauseAnn = new SimpleFindClause();
+			collegatiFindClauseAnn.setLogicalOperator(FindClause.AND);
+			collegatiFindClauseAnn.setSqlClause("pg_documento_cont != pg_documento_cont_padre" + 
+					" and (cd_tipo_documento_cont = 'REV' and cd_tipo_documento_cont_padre = 'REV' and stato ='A' )");	
+			CompoundFindClause compoundfindclauseor = new CompoundFindClause();
+			compoundfindclauseor = CompoundFindClause.or(compoundfindclauseor, CompoundFindClause.or(simpleFindClause, collegatiFindClause));
+
+			compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(compoundfindclauseor,  collegatiFindClauseAnn));
+			*/
+			
 			compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(simpleFindClause, collegatiFindClause));
 			setBaseclause(compoundfindclause);
 			
@@ -129,13 +147,23 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {				
 				MandatoIBulk mandato = new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
 				mandato = (MandatoIBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), mandato);
-				if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(mandato.getStato_trasmissione()))
-					throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
-				mandato.setStato_trasmissione(stato);
-				if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
-					mandato.setDt_firma(EJBCommonServices.getServerTimestamp());
-				else
-					mandato.setDt_firma(null);					
+				if(mandato.getStato().compareTo(MandatoBulk.STATO_MANDATO_ANNULLATO)==0){
+					if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(mandato.getStato_trasmissione_annullo()))
+						throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
+					mandato.setStato_trasmissione_annullo(stato);
+					if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
+						mandato.setDt_firma_annullo(EJBCommonServices.getServerTimestamp());
+					else
+						mandato.setDt_firma_annullo(null);
+				}else{
+					if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(mandato.getStato_trasmissione()))
+						throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
+					mandato.setStato_trasmissione(stato);
+					if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
+						mandato.setDt_firma(EJBCommonServices.getServerTimestamp());
+					else
+						mandato.setDt_firma(null);					
+				}
 				mandato.setToBeUpdated();
 				getComponentSession().modificaConBulk(actioncontext.getUserContext(), mandato);
 				for (StatoTrasmissione statoTrasmissione : distintaCassiereComponentSession.findReversaliCollegate(actioncontext.getUserContext(), (V_mandato_reversaleBulk) v_mandato_reversaleBulk)) {
@@ -150,13 +178,23 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	private void aggiornaStatoReversale(ActionContext actioncontext, StatoTrasmissione v_mandato_reversaleBulk, String stato) throws ComponentException, RemoteException {
 		ReversaleIBulk reversale = new ReversaleIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
 		reversale = (ReversaleIBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), reversale);
-		if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(reversale.getStato_trasmissione()))
-			throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
-		reversale.setStato_trasmissione(stato);
-		if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
-			reversale.setDt_firma(EJBCommonServices.getServerTimestamp());
-		else
-			reversale.setDt_firma(null);					
+		if(reversale.getStato().compareTo(MandatoBulk.STATO_MANDATO_ANNULLATO)==0){
+			if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(reversale.getStato_trasmissione_annullo()))
+				throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
+			reversale.setStato_trasmissione_annullo(stato);
+			if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
+				reversale.setDt_firma_annullo(EJBCommonServices.getServerTimestamp());
+			else
+				reversale.setDt_firma_annullo(null);
+		}else{
+			if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(reversale.getStato_trasmissione()))
+				throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
+			reversale.setStato_trasmissione(stato);
+			if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
+				reversale.setDt_firma(EJBCommonServices.getServerTimestamp());
+			else
+				reversale.setDt_firma(null);
+		}
 		reversale.setToBeUpdated();
 		getComponentSession().modificaConBulk(actioncontext.getUserContext(), reversale);		
 	}
@@ -170,22 +208,28 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					throw new ApplicationException("Selezionare almeno un elemento!");
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			String message = "";
+			boolean isBloccoFirma = false;
 			addSomethingToSelectedElements(actioncontext, selectedElements);
 			for (StatoTrasmissione statoTrasmissione : selectedElements) {
 				V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk)statoTrasmissione;
 				if (v_mandato_reversaleBulk.isMandato()) {
+					if (Utility.createMandatoComponentSession().esisteAnnullodaRiemettereNonCollegato(
+							actioncontext.getUserContext(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getCd_cds_origine())) {
+						message += "\nEsistono mandati di annullo con riemissione da completamente.";
+						isBloccoFirma=true;
+						break;
+					}
 					boolean isReversaleCollegataSiope = true;
 					if (!Utility.createMandatoComponentSession().isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
 						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a codici Siope, pertanto è stato escluso dalla selezione.";
 						continue;
 					}
-					if (!Utility.createMandatoComponentSession().isCollegamentoSospesoCompleto(
+					if (v_mandato_reversaleBulk.getStato().compareTo( MandatoBulk.STATO_MANDATO_ANNULLATO)!=0 &&!Utility.createMandatoComponentSession().isCollegamentoSospesoCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
 						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a sospeso, pertanto è stato escluso dalla selezione.";
 						continue;
 					}
-				
 					for (StatoTrasmissione reversaleCollegata : distintaCassiereComponentSession.findReversaliCollegate(actioncontext.getUserContext(), v_mandato_reversaleBulk)) {
 						if (!Utility.createReversaleComponentSession().isCollegamentoSiopeCompleto(
 								actioncontext.getUserContext(),new ReversaleIBulk(reversaleCollegata.getCd_cds(),reversaleCollegata.getEsercizio(),reversaleCollegata.getPg_documento_cont()))) {
@@ -198,6 +242,12 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					if (!isReversaleCollegataSiope)
 						continue;
 				} else if (v_mandato_reversaleBulk.isReversale()) {
+					if (Utility.createReversaleComponentSession().esisteAnnullodaRiemettereNonCollegato(
+							actioncontext.getUserContext(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getCd_cds_origine())) {
+						message += "\nEsistono reversali di annullo con riemissione da completamente.";
+						isBloccoFirma=true;
+						break;
+					}
 					if (!Utility.createReversaleComponentSession().isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new ReversaleIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
 						message += "\nLa reversale n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associata completamente a codici Siope, pertanto è stata esclusa dalla selezione.";
@@ -206,7 +256,10 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 				}				
 				predisponi(actioncontext, v_mandato_reversaleBulk, dateFormat);
 			}
-			setMessage("Predisposizione effettuata correttamente." + message);
+			if(!isBloccoFirma)
+				setMessage("Predisposizione effettuata correttamente." + message);
+			else
+				setMessage("Predisposizione interotta "+message);
 		} catch (ApplicationException e) {
 			setMessage(e.getMessage());
 		} catch (ComponentException e) {
@@ -273,7 +326,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 		for (Iterator<StatoTrasmissione> iterator = selectelElements.iterator(); iterator.hasNext();) {
 			try {
 				StatoTrasmissione statoTrasmissione = iterator.next();
-				if (statoTrasmissione.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)){
+				if (statoTrasmissione.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN) &&((V_mandato_reversaleBulk) statoTrasmissione).getStato().compareTo(MandatoBulk.STATO_MANDATO_ANNULLATO)!=0){
 					CMISPath cmisPath = statoTrasmissione.getCMISPath(cmisService);
 					Folder folderMandato = (Folder) cmisService.getNodeByPath(cmisPath);					
 					List<Rif_modalita_pagamentoBulk> result = Utility.createMandatoComponentSession().findModPagObbligatorieAssociateAlMandato(actioncontext.getUserContext(), 
