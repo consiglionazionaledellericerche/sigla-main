@@ -1184,6 +1184,23 @@ public void aggiornaObblSuCancPerCompenso(UserContext param0,
 		}
 	}
 }
-
+public it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk eliminaLetteraPagamentoEstero(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1,boolean param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk)invoke("eliminaLetteraPagamentoEstero",new Object[] {
+			param0,
+			param1,
+			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }
 

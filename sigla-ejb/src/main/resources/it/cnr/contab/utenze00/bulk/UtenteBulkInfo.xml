@@ -251,7 +251,9 @@
 		name="cd_utente_uid" />
 	<columnFieldProperty
 		name="ds_utente" />
-		
+	<columnFieldProperty
+		name="cd_cdr" />
+	
 	<form
 		name="searchtool_utente_gest" >
 		<formFieldProperty

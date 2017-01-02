@@ -401,6 +401,8 @@
 		<columnFieldProperty
 		name="ti_documento_cont" />
 		<columnFieldProperty
+		name="stato" />
+		<columnFieldProperty
 		name="im_documento_cont" />
 		<columnFieldProperty
 		name="ds_documento_cont" />
@@ -421,6 +423,8 @@
 		name="pg_documento_cont" />
 		<columnFieldProperty
 		name="ti_documento_cont" />
+		<columnFieldProperty
+		name="stato" />
 		<columnFieldProperty
 		name="im_documento_cont" />
 		<columnFieldProperty
