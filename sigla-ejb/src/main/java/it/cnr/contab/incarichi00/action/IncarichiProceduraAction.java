@@ -921,7 +921,9 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 						throw new ValidationException( "Non \350 possibile inserire una data di stipula inferiore di "+limite.toString()+" giorni rispetto alla data odierna.");
 				}
 			}
-			
+			if (incarico.getDt_stipula()!=null && incarico.getIncarichi_procedura()!=null && incarico.getIncarichi_procedura().getTipo_incarico()!=null && incarico.getIncarichi_procedura().getTipo_incarico().getDt_fine_validita()!=null)  
+				if (incarico.getDt_stipula().after(incarico.getIncarichi_procedura().getTipo_incarico().getDt_fine_validita()))
+					throw new ValidationException( "Non \350 possibile conferire questo tipo di incarico con la data indicata."); 
 //			if (incarico.getTerzo()!=null && incarico.getTerzo().getCd_terzo()!=null)
 //			    throw new ValidationException( "Non \350 possibile modificare la \"Data di Stipula\". Cancellare il campo \"Contraente\" e ripetere l'operazione.");
 			incarico.validaDateContratto();
