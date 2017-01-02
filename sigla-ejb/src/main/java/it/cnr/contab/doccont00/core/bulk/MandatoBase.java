@@ -59,7 +59,17 @@ public class MandatoBase extends MandatoKey implements Keyed {
 
 	// DT_FIRMA TIMESTAMP
 	private java.sql.Timestamp dt_firma;
+	
+	// fl_riemissione CHAR(1) 
+	private java.lang.Boolean  fl_riemissione;
 
+	private java.lang.Long pg_mandato_riemissione;
+	
+	// stato_trasmissione_annullo CHAR(1) 
+	private java.lang.String stato_trasmissione_annullo;
+	
+	private java.sql.Timestamp dt_firma_annullo;
+		
 	public MandatoBase() {
 		super();
 	}
@@ -287,5 +297,30 @@ public class MandatoBase extends MandatoKey implements Keyed {
 	}
 	public void setDt_firma(java.sql.Timestamp dt_firma) {
 		this.dt_firma = dt_firma;
+	}
+	public java.lang.Boolean getFl_riemissione() {
+		return fl_riemissione;
+	}
+	public void setFl_riemissione(java.lang.Boolean fl_riemissione) {
+		this.fl_riemissione = fl_riemissione;
+	}
+	public java.lang.String getStato_trasmissione_annullo() {
+		return stato_trasmissione_annullo;
+	}
+	public void setStato_trasmissione_annullo(
+			java.lang.String stato_trasmissione_annullo) {
+		this.stato_trasmissione_annullo = stato_trasmissione_annullo;
+	}
+	public java.sql.Timestamp getDt_firma_annullo() {
+		return dt_firma_annullo;
+	}
+	public void setDt_firma_annullo(java.sql.Timestamp dt_firma_annullo) {
+		this.dt_firma_annullo = dt_firma_annullo;
+	}
+	public java.lang.Long getPg_mandato_riemissione() {
+		return pg_mandato_riemissione;
+	}
+	public void setPg_mandato_riemissione(java.lang.Long pg_mandato_riemissione) {
+		this.pg_mandato_riemissione = pg_mandato_riemissione;
 	}
 }

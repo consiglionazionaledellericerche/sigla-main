@@ -203,6 +203,11 @@ public Forward doConfermaElimina(ActionContext context, int choice ) throws java
 		if ( choice == OptionBP.YES_BUTTON )
 		{
 			CRUDBP bp = getBusinessProcess(context);
+			CRUDReversaleBP bpr = (CRUDReversaleBP)context.getBusinessProcess();
+			ReversaleIBulk rev = (ReversaleIBulk) bp.getModel();
+			if(bpr.isAnnullabileEnte(context, rev))
+				return openConfirm(context,"All'annullamento della reversale seguirà la riemissione?",OptionBP.CONFIRM_YES_NO,"doConfermaRiemissione");
+			
 			bp.delete(context);
 			bp.setMessage("Annullamento effettuato");
 		}	
@@ -210,6 +215,28 @@ public Forward doConfermaElimina(ActionContext context, int choice ) throws java
 	} catch(Throwable e) {
 		return handleException(context,e);
 	}
+}
+public Forward doConfermaRiemissione(ActionContext context, int choice ) throws java.rmi.RemoteException 
+{
+	try 
+	{
+		fillModel(context);
+		CRUDBP bp = getBusinessProcess(context);
+		CRUDReversaleBP bpr = (CRUDReversaleBP)context.getBusinessProcess();
+		if ( choice == OptionBP.YES_BUTTON )
+		{
+			bpr.deleteRiemissione(context);
+			bp.setMessage("Annullamento effettuato");
+		}
+		else
+		{
+			bp.delete(context);
+			bp.setMessage("Annullamento effettuato");
+		}
+	return context.findDefaultForward();
+} catch(Throwable e) {
+	return handleException(context,e);
+}
 }
 /**
  * Gestisce un comando di cancellazione.
@@ -502,21 +529,22 @@ public Forward doConfirmSalvaCup(ActionContext actioncontext,int option) {
 					  return openConfirm(actioncontext,"Attenzione! Alcune o tutte le righe della reversale non risultano associate completamente al CUP. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmSalva");
 				}
 			}
-			
-			if (bp.isSiope_cup_attivo() && reversale.isRequiredSiope() ){
-				boolean trovato =false;
-				if (reversale instanceof ReversaleIBulk){
-					bp.getSiopeCupCollegati().validate(actioncontext);
-					for (Iterator i=reversale.getReversale_rigaColl().iterator();i.hasNext()&&!trovato;){
-						Reversale_rigaBulk riga = (Reversale_rigaBulk)i.next();
-						for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext()&&!trovato;){
-							Reversale_siopeBulk rigaSiope = (Reversale_siopeBulk)j.next();
-						
-							if(rigaSiope.getReversaleSiopeCupColl().isEmpty()||rigaSiope.getTipoAssociazioneCup().compareTo(Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO)!=0)
-								trovato =true;
+			if(!reversale.isAnnullato()){
+				if (bp.isSiope_cup_attivo() && reversale.isRequiredSiope() ){
+					boolean trovato =false;
+					if (reversale instanceof ReversaleIBulk){
+						bp.getSiopeCupCollegati().validate(actioncontext);
+						for (Iterator i=reversale.getReversale_rigaColl().iterator();i.hasNext()&&!trovato;){
+							Reversale_rigaBulk riga = (Reversale_rigaBulk)i.next();
+							for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext()&&!trovato;){
+								Reversale_siopeBulk rigaSiope = (Reversale_siopeBulk)j.next();
+							
+								if(rigaSiope.getReversaleSiopeCupColl().isEmpty()||rigaSiope.getTipoAssociazioneCup().compareTo(Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO)!=0)
+									trovato =true;
+							}
+						if(trovato)
+						  return openConfirm(actioncontext,"Attenzione! Alcune o tutte le righe siope non risultano associate completamente al CUP. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmSalva");
 						}
-					if(trovato)
-					  return openConfirm(actioncontext,"Attenzione! Alcune o tutte le righe siope non risultano associate completamente al CUP. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmSalva");
 					}
 				}
 			}

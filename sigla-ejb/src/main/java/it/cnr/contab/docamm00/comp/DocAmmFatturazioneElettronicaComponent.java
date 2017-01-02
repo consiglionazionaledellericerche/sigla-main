@@ -400,7 +400,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				anagraficiCedenteType.setAnagrafica(impostaAnagrafica(factory, terzoCnr));
 
 				anagraficiCedenteType.setRegimeFiscale(RegimeFiscaleType.RF_01);
-				cedentePrestatoreType.setDatiAnagrafici(anagraficiCedenteType); 
+				cedentePrestatoreType.setDatiAnagrafici(anagraficiCedenteType);
 				cedentePrestatoreType.setSede(impostaIndirizzo(userContext, factory, terzoUo));
 
 				// TODO: Per il momento non lo gestiamo. Il dato non è obbligatorio.
@@ -516,12 +516,8 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 							impostaDatiPerNoteCredito(userContext,mappaDocumentiCollegati, riga, dettagliNoteSenzaContratto);
 						}
 						preparaDatiContratto(userContext, mappaContratti, riga);
-					}else
-					{
-						if (riga.getVoce_iva()!=null && riga.getVoce_iva().getCd_voce_iva()!=null && riga.getVoce_iva().getPercentuale()==null)
-							riga.setVoce_iva((Voce_ivaBulk)findByPrimaryKey(userContext, riga.getVoce_iva()));
+						impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
 					}
-					impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
 				}
 				datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
 

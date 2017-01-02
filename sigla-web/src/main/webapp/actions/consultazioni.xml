@@ -1628,4 +1628,28 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsDocammDaRiscontrareAction" />
 	</businessProcess>
+	<action path="/ConsDocammAnagFitAction"
+		actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsDocammAnagFitAction">
+	</action>
+	<businessProcess name="ConsDocammAnagFitBP"
+		className="it.cnr.contab.docamm00.consultazioni.bp.ConsDocammAnagFitBP">
+		<forward name="default" path="/docamm00/estrazione_docamm.jsp" />
+
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAnagManrevBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsDocammAnagFitAction" />
+	</businessProcess>
+
+	<action path="/ConsDocammAnagAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
+	<businessProcess name="ConsDocammAnagBP"
+		className="it.cnr.contab.docamm00.consultazioni.bp.ConsDocammAnagBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAnagManrevBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsDocammAnagAction" />
+	</businessProcess>
+	
 </action-mappings>
