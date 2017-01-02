@@ -18,6 +18,7 @@
 	<tr>
 		<% bp.getController().writeFormField(out,"creaLettera");%>
 		<% bp.getController().writeFormField(out,"cancellaLettera");%>
+		<% bp.getController().writeFormField(out,"disassociaLettera");%>
 	</tr>
 </table>
 <div class="Group" style="width:100%">

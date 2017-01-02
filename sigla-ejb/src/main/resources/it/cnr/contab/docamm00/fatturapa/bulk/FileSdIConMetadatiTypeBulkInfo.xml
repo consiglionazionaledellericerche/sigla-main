@@ -65,11 +65,24 @@
 		caseSensitiveSearch="false"
 		nullable="false"
 		label="File fatture ricevute" />
+
+	<fieldProperty
+		name="daysBefore"
+		property="daysBefore"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Days Before" />
 					
 	<formFieldProperty
 		name="file" />
 	<formFieldProperty
 		name="metadati" />
 	<formFieldProperty
-		name="fileFattureRicevute" />		
+		name="fileFattureRicevute" />	
+	<formFieldProperty
+		name="daysBefore" />	
+			
 </bulkInfo>

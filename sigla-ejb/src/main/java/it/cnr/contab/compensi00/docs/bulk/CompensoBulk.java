@@ -220,7 +220,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	private Tipo_prestazione_compensoBulk tipoPrestazioneCompenso;
 	private java.util.Collection tipiPrestazioneCompenso;
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
-
+	private boolean userAbilitatoSenzaCalcolo = false;
 	public CompensoBulk() {
 		super();
 	}
@@ -1620,7 +1620,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 */
 	public boolean isROFlagSenzaCalcoli() {
 
-		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null)
+		if (isDaMissione() || isDaMinicarriera() || isDaConguaglio() || isDaBonus() || isROPerChiusura() || (isDaFatturaPassiva() && !isUserAbilitatoSenzaCalcolo()))
 			return true;
 		return false;
 	}
@@ -1663,7 +1663,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 * @return boolean
 	 */
 	public boolean isROModalitaPagamento() {
-		return isROPerChiusura() || isDaFatturaPassiva();
+		return isROPerChiusura();// || isDaFatturaPassiva();
 	}
 
 	/**
@@ -3393,5 +3393,14 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
 	public void setMandatiRigaAssociati(java.util.List mandatiRigaAssociati) {
 		this.mandatiRigaAssociati = mandatiRigaAssociati;
+	}
+
+	public void setUserAbilitatoSenzaCalcolo(boolean b) {
+		this.userAbilitatoSenzaCalcolo=b;
+		
+	}
+
+	public boolean isUserAbilitatoSenzaCalcolo() {
+		return userAbilitatoSenzaCalcolo;
 	}
 }

@@ -1,7 +1,9 @@
 package it.cnr.contab.doccont00.action;
 
 import it.cnr.contab.doccont00.core.bulk.*;
+
 import java.util.*;
+
 import it.cnr.contab.doccont00.bp.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
@@ -45,7 +47,7 @@ public Forward doAddToCRUDMain_SospesiSelezionati(ActionContext context)
 		} else {
 	//		bp.setModel(context,filtro);
 			BulkInfo bulkInfo = BulkInfo.getBulkInfo(SospesoBulk.class);
-			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");
+			ListaSospesiSpesaBP nbp = (ListaSospesiSpesaBP)context.createBusinessProcess("ListaSospesiSpesaBP");
 			nbp.setColumns( bulkInfo.getColumnFieldPropertyDictionary("SospesiMandato"));
 			nbp.setIterator(context,ri);
 			nbp.setMultiSelection( true );
@@ -95,8 +97,8 @@ public Forward doCercaSospesi(ActionContext context)
 		} else {
 	//		bp.setModel(context,filtro);
 			BulkInfo bulkInfo = BulkInfo.getBulkInfo(SospesoBulk.class);
-			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");
-			nbp.setColumns( bulkInfo.getColumnFieldPropertyDictionary("SospesiDocCont"));
+			ListaSospesiSpesaBP nbp = (ListaSospesiSpesaBP)context.createBusinessProcess("ListaSospesiSpesaBP");
+			nbp.setColumns( bulkInfo.getColumnFieldPropertyDictionary("SospesiMandato"));
 			nbp.setIterator(context,ri);
 			nbp.setMultiSelection( true );
 //			nbp.setBulkInfo(bulkInfo);
@@ -128,6 +130,10 @@ public Forward doConfermaElimina(ActionContext context, int choice ) throws java
 		if ( choice == OptionBP.YES_BUTTON )
 		{
 			CRUDBP bp = getBusinessProcess(context);
+			CRUDAbstractMandatoBP bpm = (CRUDAbstractMandatoBP)context.getBusinessProcess();
+			MandatoIBulk mandato = (MandatoIBulk) bp.getModel();
+			if(bpm.isAnnullabileEnte(context, mandato))
+				return openConfirm(context,"All'annullamento del mandato seguirà la riemissione?",OptionBP.CONFIRM_YES_NO,"doConfermaRiemissione");			
 			bp.delete(context);
 			bp.setMessage("Annullamento effettuato");
 		}	
@@ -136,6 +142,29 @@ public Forward doConfermaElimina(ActionContext context, int choice ) throws java
 		return handleException(context,e);
 	}
 }
+public Forward doConfermaRiemissione(ActionContext context, int choice ) throws java.rmi.RemoteException 
+{
+	try 
+	{
+		fillModel(context);
+		CRUDBP bp = getBusinessProcess(context);
+		CRUDAbstractMandatoBP bpm = (CRUDAbstractMandatoBP)context.getBusinessProcess();
+		if ( choice == OptionBP.YES_BUTTON )
+		{
+			bpm.deleteRiemissione(context);
+			bp.setMessage("Annullamento effettuato");
+		}
+		else
+		{
+			bp.delete(context);
+			bp.setMessage("Annullamento effettuato");
+		}
+	return context.findDefaultForward();
+} catch(Throwable e) {
+	return handleException(context,e);
+}
+}
+
 /**
  * Gestisce un comando di cancellazione.
  */
