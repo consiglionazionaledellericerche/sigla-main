@@ -1,57 +1,5 @@
 package it.cnr.contab.docamm00.comp;
 
-import it.cnr.contab.cmis.CMISAspect;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
-import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
-import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleScontoMaggBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTributiBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
-import it.cnr.contab.docamm00.fatturapa.bulk.TipoAcquistoEnum;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.utenze00.bp.WSUserContext;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.SendMail;
-import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.EsitoRicezioneType;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIType;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.RispostaRiceviFattureType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.AllegatiType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CedentePrestatoreType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CessionarioCommittenteType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBolloType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiCassaPrevidenzialeType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDDTType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDocumentiCorrelatiType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliDocumentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiPagamentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiRiepilogoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasmissioneType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasportoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioLineeType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioPagamentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaBodyType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FormatoTrasmissioneType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IdFiscaleType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RappresentanteFiscaleType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ScontoMaggiorazioneType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TerzoIntermediarioSoggettoEmittenteType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
-import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -92,18 +40,69 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSProcessable;
 import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.cms.CMSTypedData;
 import org.jboss.wsf.spi.annotation.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.cnr.contab.cmis.CMISAspect;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
+import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
+import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleScontoMaggBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTributiBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
+import it.cnr.contab.docamm00.fatturapa.bulk.TipoAcquistoEnum;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.bp.WSUserContext;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.SendMail;
+import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.AllegatiType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CedentePrestatoreType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CessionarioCommittenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBolloType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiCassaPrevidenzialeType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDDTType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDocumentiCorrelatiType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliDocumentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiRiepilogoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasmissioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasportoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioLineeType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaBodyType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FormatoTrasmissioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IdFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RappresentanteFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ScontoMaggiorazioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TerzoIntermediarioSoggettoEmittenteType;
+import it.gov.fatturapa.EsitoRicezioneType;
+import it.gov.fatturapa.FileSdIConMetadatiType;
+import it.gov.fatturapa.FileSdIType;
+import it.gov.fatturapa.RispostaRiceviFattureType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
+import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
 @Stateless
 @WebService(endpointInterface="it.gov.fatturapa.RicezioneFatture", 
 			name="RicezioneFatture",targetNamespace="http://www.fatturapa.gov.it/sdi/ws/ricezione/v1.0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @WebContext(contextRoot="/fatturesdi")
-public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFatturePA {
+public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.cnr.contab.docamm00.ejb.RicezioneFatturePA {
 	private transient final static Logger LOGGER = LoggerFactory.getLogger(RicezioneFatture.class);
 	
 	@SuppressWarnings("unchecked")	

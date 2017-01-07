@@ -19,7 +19,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIType;
+import it.gov.fatturapa.FileSdIType;
 import it.gov.fatturapa.sdi.messaggi.v1.*;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
@@ -46,7 +46,7 @@ import java.util.Date;
 			name="TrasmissioneFatture",targetNamespace="http://www.fatturapa.gov.it/sdi/ws/trasmissione/v1.0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @WebContext(contextRoot="/fatturesdi")
-public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA {
+public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture, it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA {
 	private static final Logger logger = LoggerFactory.getLogger(TrasmissioneFatture.class);
 	
 	public void ricevutaConsegna(FileSdIType ricevuta) {
