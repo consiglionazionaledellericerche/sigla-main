@@ -3,6 +3,9 @@
  * Date 25/02/2015
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
+import java.util.Dictionary;
+import java.util.Iterator;
+
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -21,12 +24,8 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
-import it.gov.fatturapa.sdi.fatturapa.v1.ModalitaPagamentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.TipoCassaType;
-import it.gov.fatturapa.sdi.fatturapa.v1.TipoDocumentoType;
-
-import java.util.Dictionary;
-import java.util.Iterator;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ModalitaPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoDocumentoType;
 public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements AllegatoParentBulk{
 	public static final String STATO_DOCUMENTO_TUTTI = "TUTTI";
 	/**
