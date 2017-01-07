@@ -24,31 +24,31 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.gov.fatturapa.EsitoRicezioneType;
-import it.gov.fatturapa.FileSdIConMetadatiType;
-import it.gov.fatturapa.FileSdIType;
-import it.gov.fatturapa.RispostaRiceviFattureType;
-import it.gov.fatturapa.sdi.fatturapa.v1.AllegatiType;
-import it.gov.fatturapa.sdi.fatturapa.v1.CedentePrestatoreType;
-import it.gov.fatturapa.sdi.fatturapa.v1.CessionarioCommittenteType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiBolloType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiCassaPrevidenzialeType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiDDTType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiDocumentiCorrelatiType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiGeneraliDocumentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiPagamentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiRiepilogoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiTrasmissioneType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiTrasportoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DettaglioLineeType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DettaglioPagamentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaBodyType;
-import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaType;
-import it.gov.fatturapa.sdi.fatturapa.v1.FormatoTrasmissioneType;
-import it.gov.fatturapa.sdi.fatturapa.v1.IdFiscaleType;
-import it.gov.fatturapa.sdi.fatturapa.v1.RappresentanteFiscaleType;
-import it.gov.fatturapa.sdi.fatturapa.v1.ScontoMaggiorazioneType;
-import it.gov.fatturapa.sdi.fatturapa.v1.TerzoIntermediarioSoggettoEmittenteType;
+import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.EsitoRicezioneType;
+import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
+import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIType;
+import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.RispostaRiceviFattureType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.AllegatiType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CedentePrestatoreType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CessionarioCommittenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBolloType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiCassaPrevidenzialeType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDDTType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDocumentiCorrelatiType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliDocumentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiRiepilogoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasmissioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasportoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioLineeType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaBodyType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FormatoTrasmissioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IdFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RappresentanteFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ScontoMaggiorazioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TerzoIntermediarioSoggettoEmittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
 import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
 
@@ -103,7 +103,7 @@ import org.slf4j.LoggerFactory;
 			name="RicezioneFatture",targetNamespace="http://www.fatturapa.gov.it/sdi/ws/ricezione/v1.0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @WebContext(contextRoot="/fatturesdi")
-public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.cnr.contab.docamm00.ejb.RicezioneFatturePA {
+public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFatturePA {
 	private transient final static Logger LOGGER = LoggerFactory.getLogger(RicezioneFatture.class);
 	
 	@SuppressWarnings("unchecked")	
@@ -260,7 +260,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		if (datiTrasmissione.getFormatoTrasmissione() != null)
 			docTrasmissione.setFormatoTrasmissione(datiTrasmissione.getFormatoTrasmissione().value());
 		else
-			docTrasmissione.setFormatoTrasmissione(FormatoTrasmissioneType.SDI_11.value());
+			docTrasmissione.setFormatoTrasmissione(FormatoTrasmissioneType.FPA_12.value());
 		docTrasmissione.setCodiceDestinatario(datiTrasmissione.getCodiceDestinatario());
 		docTrasmissione.setCodiceUnivocoSdi(identificativoSdI.longValue());
 		docTrasmissione.setDataRicezione(EJBCommonServices.getServerTimestamp());

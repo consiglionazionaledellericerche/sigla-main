@@ -30,7 +30,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.jsp.Button;
-import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
 
 import java.io.File;
 import java.io.FileOutputStream;
