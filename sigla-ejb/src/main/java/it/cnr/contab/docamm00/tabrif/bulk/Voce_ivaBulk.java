@@ -51,6 +51,7 @@ public class Voce_ivaBulk extends Voce_ivaBase {
 	public final static String ESENTI		  	= "N4";
 	public final static String REGIME_MARGINE  	= "N5";
 	public final static String REVERSE_CHARGE  	= "N6";
+	public final static String IVA_ALTRO_STATO  = "N7";
 
 	
 	public final static Dictionary naturaOperazioniNonImponibiliKeys;
@@ -62,7 +63,8 @@ public class Voce_ivaBulk extends Voce_ivaBase {
 		naturaOperazioniNonImponibiliKeys.put(ESENTI,"Esenti");	
 		naturaOperazioniNonImponibiliKeys.put(REGIME_MARGINE,"Regime del Margine");	
 		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE,"Reverse charge");
-    };
+		naturaOperazioniNonImponibiliKeys.put(IVA_ALTRO_STATO,"IVA assolta in altro stato UE (vendite a distanza ex art. 40 c. 3 e 4 e art. 41 c. 1 lett. b,  DL 331/93; prestazione di servizi di telecomunicazioni, tele-radiodiffusione ed elettronici ex art. 7-sexies lett. f, g, art. 74-sexies DPR 633/72)");
+	};
 
  public Voce_ivaBulk() {
 	super();
