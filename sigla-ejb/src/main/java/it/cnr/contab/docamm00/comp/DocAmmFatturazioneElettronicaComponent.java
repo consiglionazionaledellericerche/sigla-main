@@ -1,5 +1,27 @@
 package it.cnr.contab.docamm00.comp;
 
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.ejb.EJBException;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -22,59 +44,37 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.gov.fatturapa.sdi.fatturapa.v1.AnagraficaType;
-import it.gov.fatturapa.sdi.fatturapa.v1.BolloVirtualeType;
-import it.gov.fatturapa.sdi.fatturapa.v1.CedentePrestatoreType;
-import it.gov.fatturapa.sdi.fatturapa.v1.CessionarioCommittenteType;
-import it.gov.fatturapa.sdi.fatturapa.v1.CondizioniPagamentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.ContattiTrasmittenteType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiAnagraficiCedenteType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiAnagraficiCessionarioType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiBeniServiziType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiBolloType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiDocumentiCorrelatiType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiGeneraliDocumentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiGeneraliType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiPagamentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiRiepilogoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DatiTrasmissioneType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DettaglioLineeType;
-import it.gov.fatturapa.sdi.fatturapa.v1.DettaglioPagamentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.EsigibilitaIVAType;
-import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaBodyType;
-import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaHeaderType;
-import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaType;
-import it.gov.fatturapa.sdi.fatturapa.v1.FormatoTrasmissioneType;
-import it.gov.fatturapa.sdi.fatturapa.v1.IdFiscaleType;
-import it.gov.fatturapa.sdi.fatturapa.v1.IndirizzoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.ModalitaPagamentoType;
-import it.gov.fatturapa.sdi.fatturapa.v1.NaturaType;
-import it.gov.fatturapa.sdi.fatturapa.v1.ObjectFactory;
-import it.gov.fatturapa.sdi.fatturapa.v1.RegimeFiscaleType;
-import it.gov.fatturapa.sdi.fatturapa.v1.TipoDocumentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.AnagraficaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.BolloVirtualeType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CedentePrestatoreType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CessionarioCommittenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CondizioniPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ContattiTrasmittenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiAnagraficiCedenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiAnagraficiCessionarioType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBeniServiziType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBolloType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDocumentiCorrelatiType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliDocumentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiRiepilogoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasmissioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioLineeType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.EsigibilitaIVAType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaBodyType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaHeaderType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FormatoTrasmissioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IdFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IndirizzoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ModalitaPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.NaturaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ObjectFactory;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoDocumentoType;
 import it.gov.fatturapa.sdi.ws.trasmissione.v1_0.types.FileSdIBaseType;
-
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
-import javax.ejb.EJBException;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 @XmlRootElement(name = "fileSdIBase_Type")
 public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
@@ -358,7 +358,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 			ObjectFactory factory = new ObjectFactory();
 			FatturaElettronicaType fatturaType = factory.createFatturaElettronicaType();
-			fatturaType.setVersione("1.1");
+			fatturaType.setVersione(FormatoTrasmissioneType.FPA_12);
 			FatturaElettronicaHeaderType fatturaHeaderType = factory.createFatturaElettronicaHeaderType();
 			TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
 			TerzoBulk cliente = fattura.getCliente();
@@ -380,7 +380,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				contattiTrasmittenteType.setTelefono(telefonoReferente);
 				datiTrasmissione.setContattiTrasmittente(contattiTrasmittenteType);
 
-				datiTrasmissione.setFormatoTrasmissione(FormatoTrasmissioneType.SDI_11);
+				datiTrasmissione.setFormatoTrasmissione(FormatoTrasmissioneType.FPA_12);
 
 				fatturaHeaderType.setDatiTrasmissione(datiTrasmissione);
 
@@ -740,7 +740,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			throw new ApplicationException("Impossibile Procedere! Per la modalità di Pagamento: "+fattura.getModalita_pagamento_uo().getCd_ds_modalita_pagamento()+" non è stato indicato il Tipo Pagamento per SDI"); 
 		}
 		dettaglioPagamento.setModalitaPagamento(ModalitaPagamentoType.fromValue(fattura.getModalita_pagamento_uo().getTipoPagamentoSdi()));				
-		
+			
 		if (fattura.getFl_liquidazione_differita() && fattura.getEsercizio() > 2014) {
 			dettaglioPagamento.setImportoPagamento(fattura.getIm_totale_imponibile().setScale(2));
 		} else {

@@ -6,9 +6,6 @@
   </module>
   <module>
     <ejb>sigla-ws.jar</ejb>
-  </module>
-  <module>
-    <ejb>sigla-sdi.jar</ejb>
   </module>  
   <module>
     <web>
