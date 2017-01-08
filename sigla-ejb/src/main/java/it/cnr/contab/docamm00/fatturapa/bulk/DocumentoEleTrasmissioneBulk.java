@@ -10,7 +10,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.util.OrderedHashtable;
-import it.gov.fatturapa.sdi.fatturapa.v1.RegimeFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 public class DocumentoEleTrasmissioneBulk extends DocumentoEleTrasmissioneBase {
 	private static final long serialVersionUID = 1L;
 	public static final java.util.Dictionary<String, String> regimefiscaleKeys = new OrderedHashtable();
