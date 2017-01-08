@@ -38,7 +38,7 @@ import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
-import it.gov.fatturapa.sdi.fatturapa.v1.RegimeFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 
 import java.io.IOException;
 import java.io.InputStream;
