@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="10"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -357,7 +357,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA["Totale CdS "+$F{CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-35" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="4c582cdc-37b8-4a26-b97a-7f3ecea90025"/>
+					<reportElement key="textField-35" style="TNR9BOLD" x="213" y="3" width="58" height="13" uuid="4c582cdc-37b8-4a26-b97a-7f3ecea90025"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -403,7 +403,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-58" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="64ac48f8-de6a-46d4-80e3-4d6a6bb13ebd"/>
+					<reportElement key="textField-58" style="TNR9BOLD" x="434" y="3" width="58" height="13" uuid="64ac48f8-de6a-46d4-80e3-4d6a6bb13ebd"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -503,7 +503,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA["Totale Unità Operativa "+$F{UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-34" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="c04e4d22-a2c9-4ecf-b38d-40f7ec43e7a8"/>
+					<reportElement key="textField-34" style="TNR9BOLD" x="213" y="3" width="58" height="13" uuid="c04e4d22-a2c9-4ecf-b38d-40f7ec43e7a8"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -549,7 +549,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-57" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="2663a01c-38f7-41f6-ae1c-37f9841532bf"/>
+					<reportElement key="textField-57" style="TNR9BOLD" x="434" y="3" width="58" height="13" uuid="2663a01c-38f7-41f6-ae1c-37f9841532bf"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -661,7 +661,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[($F{FL_NUOVO_PDG}.equals( "N" )?"Totale Commessa ":"Totale Area Progettuale ")+$F{CD_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-33" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="6b3bfd65-b16a-458d-b048-908c9ada0538"/>
+					<reportElement key="textField-33" style="TNR9BOLD" x="213" y="3" width="58" height="13" uuid="6b3bfd65-b16a-458d-b048-908c9ada0538"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -705,7 +705,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-56" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="6be1f2dc-c0cb-408a-a735-fdae416e6164"/>
+					<reportElement key="textField-56" style="TNR9BOLD" x="434" y="3" width="58" height="13" uuid="6be1f2dc-c0cb-408a-a735-fdae416e6164"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -846,7 +846,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA["Totale CdR "+$F{CD_CENTRO_RESPONSABILITA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-32" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="ecf8896e-fe40-41b5-a9df-ba34c5bb5495"/>
+					<reportElement key="textField-32" style="TNR9BOLD" x="213" y="3" width="58" height="13" uuid="ecf8896e-fe40-41b5-a9df-ba34c5bb5495"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -890,7 +890,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-55" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="8ff42768-3915-4829-babc-7a129dd33eee"/>
+					<reportElement key="textField-55" style="TNR9BOLD" x="434" y="3" width="58" height="13" uuid="8ff42768-3915-4829-babc-7a129dd33eee"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1002,7 +1002,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[($F{FL_NUOVO_PDG}.equals( "N" )?"Totale Modulo ":"Totale Progetto ")+$F{CD_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-31" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="a2d57495-e423-43b6-bb4e-f1c6109fdc6c"/>
+					<reportElement key="textField-31" style="TNR9BOLD" x="213" y="3" width="58" height="13" uuid="a2d57495-e423-43b6-bb4e-f1c6109fdc6c"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1046,7 +1046,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-54" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="7c0b0474-2ad4-4805-808c-a6d796f2f8a1"/>
+					<reportElement key="textField-54" style="TNR9BOLD" x="434" y="3" width="58" height="13" uuid="7c0b0474-2ad4-4805-808c-a6d796f2f8a1"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1184,7 +1184,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA["Totale GAE "+$F{CD_LINEA_ATTIVITA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="2a81e0c2-931c-44ac-9023-cac310ae063f"/>
+					<reportElement key="textField" style="TNR9BOLD" x="213" y="3" width="58" height="13" uuid="2a81e0c2-931c-44ac-9023-cac310ae063f"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1230,7 +1230,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-53" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="2d4676d0-f317-496e-803b-be8a210a9dbe"/>
+					<reportElement key="textField-53" style="TNR9BOLD" x="434" y="3" width="58" height="13" uuid="2d4676d0-f317-496e-803b-be8a210a9dbe"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1348,7 +1348,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA["Totale Capitolo "+$F{CD_ELEMENTO_VOCE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="ae25009b-4706-4c6b-94f9-c68f060a48f4"/>
+					<reportElement key="textField" style="TNR9BOLD" x="213" y="3" width="58" height="13" uuid="ae25009b-4706-4c6b-94f9-c68f060a48f4"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1392,7 +1392,7 @@ and p.esercizio = v.esercizio]]>
 					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_ELEMENTO_VOCE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR9BOLD" x="436" y="3" width="55" height="13" uuid="e6687b7c-8a70-4b7a-9eeb-9547df789aba"/>
+					<reportElement key="textField" style="TNR9BOLD" x="433" y="3" width="58" height="13" uuid="e6687b7c-8a70-4b7a-9eeb-9547df789aba"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1907,7 +1907,7 @@ pagare]]></text>
 	<detail>
 		<band height="18" splitType="Stretch">
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR9" x="215" y="3" width="52" height="13" uuid="fe8b0d67-0675-40ec-bc48-6f86c98bce04"/>
+				<reportElement key="textField" style="TNR9" x="213" y="3" width="58" height="13" uuid="fe8b0d67-0675-40ec-bc48-6f86c98bce04"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1951,7 +1951,7 @@ pagare]]></text>
 				<textFieldExpression><![CDATA[$F{VAR_STANZ_RES_MENO_STO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-20" style="TNR9" x="437" y="3" width="55" height="13" uuid="dbff1ea3-1379-4a9d-b34f-1d5b1fa0e81a"/>
+				<reportElement key="textField-20" style="TNR9" x="434" y="3" width="58" height="13" uuid="dbff1ea3-1379-4a9d-b34f-1d5b1fa0e81a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
