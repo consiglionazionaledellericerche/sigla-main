@@ -26,7 +26,7 @@ import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.SelezionatoreListaAction;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
