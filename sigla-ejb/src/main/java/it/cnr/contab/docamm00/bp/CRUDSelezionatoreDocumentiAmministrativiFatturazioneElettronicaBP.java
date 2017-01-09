@@ -347,7 +347,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 			File file = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/",nomeFile);
 			FileOutputStream fileOutputStream = new FileOutputStream(file);					
 	
-			JAXBContext jaxbContext = JAXBContext.newInstance("it.gov.fatturapa.sdi.fatturapa.v1");
+			JAXBContext jaxbContext = JAXBContext.newInstance("it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1");
 			jaxbContext.createMarshaller().marshal(fatturaType, fileOutputStream);
 			fileOutputStream.flush();
 			fileOutputStream.close();
