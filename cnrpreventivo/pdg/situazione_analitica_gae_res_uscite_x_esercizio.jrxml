@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_analitica_gae_res_uscite_x_esercizio" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="826" leftMargin="8" rightMargin="8" topMargin="8" bottomMargin="8">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_analitica_gae_res_uscite_x_esercizio" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="826" leftMargin="8" rightMargin="8" topMargin="8" bottomMargin="8" uuid="6fa8e7f0-09a0-434b-a86e-eda7a74163d1">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="143"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -373,7 +373,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 		<groupFooter>
 			<band height="25" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-30" style="TNR9BOLD" x="8" y="3" width="201" height="13"/>
+					<reportElement key="textField-30" style="TNR9BOLD" x="8" y="3" width="201" height="13" uuid="649bf021-aaee-47d3-9fb0-75db16038605"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -383,10 +383,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<textElement>
 						<font isUnderline="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale CdS "+$F{CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Totale CdS "+$F{CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-35" style="TNR9BOLD" x="215" y="3" width="52" height="13"/>
+					<reportElement key="textField-35" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="1a9be2a0-eb59-48f4-bba5-8772465c0d0e"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -396,10 +396,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<textElement textAlignment="Right" markup="styled">
 						<font isUnderline="false"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_INIZIALI_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_INIZIALI_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-40" style="TNR9BOLD" x="271" y="3" width="52" height="13"/>
+					<reportElement key="textField-40" style="TNR9BOLD" x="271" y="3" width="52" height="13" uuid="afbf3f24-d5e7-4141-94d4-9f7a1a8da6c9"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -407,10 +407,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-46" style="TNR9BOLD" x="381" y="3" width="52" height="13"/>
+					<reportElement key="textField-46" style="TNR9BOLD" x="381" y="3" width="52" height="13" uuid="bc1f8668-d41e-442e-8bc5-9fa8067d7ab3"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -418,10 +418,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-52" style="TNR9BOLD" x="327" y="3" width="52" height="13"/>
+					<reportElement key="textField-52" style="TNR9BOLD" x="327" y="3" width="52" height="13" uuid="dabeadaf-83a8-4369-a1ae-100638a3e521"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -429,10 +429,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-58" style="TNR9BOLD" x="437" y="3" width="52" height="13"/>
+					<reportElement key="textField-58" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="105397a2-c06f-4d9a-810a-ef900ebc8edd"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -440,10 +440,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_TOTALE_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-64" style="TNR9BOLD" x="547" y="3" width="52" height="13"/>
+					<reportElement key="textField-64" style="TNR9BOLD" x="547" y="3" width="52" height="13" uuid="deff2fce-a593-4fe9-84c8-c400bd879061"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -451,10 +451,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ASSUMERE_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_ASSUMERE_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-70" style="TNR9BOLD" x="601" y="3" width="52" height="13"/>
+					<reportElement key="textField-70" style="TNR9BOLD" x="601" y="3" width="52" height="13" uuid="baa996e1-8076-47c7-a04b-fe5708ff926e"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -462,10 +462,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATI_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_LIQUIDATI_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-76" style="TNR9BOLD" x="655" y="3" width="52" height="13"/>
+					<reportElement key="textField-76" style="TNR9BOLD" x="655" y="3" width="52" height="13" uuid="d1489714-24dc-45c6-a0d7-fbe9c508bbde"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -473,10 +473,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_PAGATI_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PAGATI_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-82" style="TNR9BOLD" x="709" y="3" width="52" height="13"/>
+					<reportElement key="textField-82" style="TNR9BOLD" x="709" y="3" width="52" height="13" uuid="16b1522b-6911-4002-b994-c0017d9f117e"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -484,10 +484,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_PAGARE_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_PAGARE_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-89" style="TNR9BOLD" x="493" y="3" width="52" height="13"/>
+					<reportElement key="textField-89" style="TNR9BOLD" x="493" y="3" width="52" height="13" uuid="29281810-d1f8-4845-a2e4-8cb5120bd6c2"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -495,10 +495,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSUNTI_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSUNTI_CDS}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-96" style="TNR9BOLD" x="765" y="3" width="52" height="13"/>
+					<reportElement key="textField-96" style="TNR9BOLD" x="765" y="3" width="56" height="13" uuid="bd2c933a-5444-405e-85bb-800a3a575c40"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -506,7 +506,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_FINALI_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_FINALI_CDS}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -519,7 +519,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 		<groupFooter>
 			<band height="25" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-29" style="TNR9BOLD" x="8" y="3" width="201" height="13"/>
+					<reportElement key="textField-29" style="TNR9BOLD" x="8" y="3" width="201" height="13" uuid="cad38934-2c91-4317-bcf9-f22bd68955b2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -529,10 +529,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<textElement>
 						<font isUnderline="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale Unitï¿½ Operativa "+$F{UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Totale Unità Operativa "+$F{UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-34" style="TNR9BOLD" x="215" y="3" width="52" height="13"/>
+					<reportElement key="textField-34" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="6f71710b-5f29-46f8-b063-1c5671a343e1"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -542,10 +542,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<textElement textAlignment="Right" markup="styled">
 						<font isUnderline="false"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_INIZIALI_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_INIZIALI_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-39" style="TNR9BOLD" x="271" y="3" width="52" height="13"/>
+					<reportElement key="textField-39" style="TNR9BOLD" x="271" y="3" width="52" height="13" uuid="0fd9d7f6-83bf-407e-bc29-42eb972a3f73"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -553,10 +553,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-45" style="TNR9BOLD" x="381" y="3" width="52" height="13"/>
+					<reportElement key="textField-45" style="TNR9BOLD" x="381" y="3" width="52" height="13" uuid="a4fbcffe-24fa-4fd8-a612-b73301ea15bc"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -564,10 +564,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-51" style="TNR9BOLD" x="327" y="3" width="52" height="13"/>
+					<reportElement key="textField-51" style="TNR9BOLD" x="327" y="3" width="52" height="13" uuid="b983a8f9-401b-43ab-a9c1-d8fa8dea5eeb"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -575,10 +575,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-57" style="TNR9BOLD" x="437" y="3" width="52" height="13"/>
+					<reportElement key="textField-57" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="f15f1d83-6c25-4742-bffc-298d81bd84f1"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -586,10 +586,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_TOTALE_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-63" style="TNR9BOLD" x="547" y="3" width="52" height="13"/>
+					<reportElement key="textField-63" style="TNR9BOLD" x="547" y="3" width="52" height="13" uuid="b2d04598-1638-4a4f-8606-7d38067bcb68"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -597,10 +597,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ASSUMERE_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_ASSUMERE_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-69" style="TNR9BOLD" x="601" y="3" width="52" height="13"/>
+					<reportElement key="textField-69" style="TNR9BOLD" x="601" y="3" width="52" height="13" uuid="948f4d47-40d4-4f11-aff1-12a701de4ab0"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -608,10 +608,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATI_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_LIQUIDATI_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-75" style="TNR9BOLD" x="655" y="3" width="52" height="13"/>
+					<reportElement key="textField-75" style="TNR9BOLD" x="655" y="3" width="52" height="13" uuid="d5065025-9686-435d-be98-409727af4195"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -619,10 +619,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_PAGATI_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PAGATI_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-81" style="TNR9BOLD" x="709" y="3" width="52" height="13"/>
+					<reportElement key="textField-81" style="TNR9BOLD" x="709" y="3" width="52" height="13" uuid="669dc569-b2ba-41ef-ae93-a416208ccb97"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -630,10 +630,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_PAGARE_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_PAGARE_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-88" style="TNR9BOLD" x="493" y="3" width="52" height="13"/>
+					<reportElement key="textField-88" style="TNR9BOLD" x="493" y="3" width="52" height="13" uuid="6dccc497-16f8-4c27-9283-15271bb546ef"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -641,10 +641,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSUNTI_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSUNTI_UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-95" style="TNR9BOLD" x="765" y="3" width="52" height="13"/>
+					<reportElement key="textField-95" style="TNR9BOLD" x="765" y="3" width="56" height="13" uuid="cf754dd9-b782-45c6-9c3a-0f263ae1fe6e"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -652,7 +652,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_FINALI_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_FINALI_UO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -662,38 +662,35 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 		<groupHeader>
 			<band height="25" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-11" style="TNR9" x="105" y="3" width="709" height="13"/>
+					<reportElement key="textField-11" style="TNR9" x="105" y="3" width="709" height="13" uuid="50c04251-def8-45de-8a55-ed49cd4ce69b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_COMMESSA}+ " " + $F{DS_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_COMMESSA}+ " " + $F{DS_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TNR9BOLD" x="4" y="3" width="101" height="13"/>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Commessa":"Area Progettuale")]]></textFieldExpression>
+					<reportElement style="TNR9BOLD" x="4" y="3" width="101" height="13" uuid="d42593a7-240e-4f6c-87c4-91f960d47db5"/>
+					<textFieldExpression><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Commessa":"Area Progettuale")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="33" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-28" style="TNR9BOLD" x="10" y="3" width="201" height="13"/>
+					<reportElement key="textField-28" style="TNR9BOLD" x="10" y="3" width="201" height="13" uuid="8d464464-e86e-4d73-9d43-fa3713438828"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Totale Commessa ": "Totale Area Progettuale ")+$F{CD_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Totale Commessa ": "Totale Area Progettuale ")+$F{CD_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-33" style="TNR9BOLD" x="215" y="3" width="52" height="13"/>
+					<reportElement key="textField-33" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="df4f3737-a92f-4fda-b9b6-25c23fc768e0"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -701,10 +698,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" markup="styled"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_INIZIALI_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_INIZIALI_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-38" style="TNR9BOLD" x="271" y="3" width="52" height="13"/>
+					<reportElement key="textField-38" style="TNR9BOLD" x="271" y="3" width="52" height="13" uuid="78001140-01f1-4a94-8aeb-962ffebd3c22"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -712,10 +709,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-44" style="TNR9BOLD" x="381" y="3" width="52" height="13"/>
+					<reportElement key="textField-44" style="TNR9BOLD" x="381" y="3" width="52" height="13" uuid="4d5fa7b1-a5fa-49dd-ae83-7d2e2b7ced27"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -723,10 +720,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-50" style="TNR9BOLD" x="327" y="3" width="52" height="13"/>
+					<reportElement key="textField-50" style="TNR9BOLD" x="327" y="3" width="52" height="13" uuid="3ebc8aec-8635-4663-b5d8-a50ef4242f2e"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -734,10 +731,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-56" style="TNR9BOLD" x="437" y="3" width="52" height="13"/>
+					<reportElement key="textField-56" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="d9bea9e3-bde7-45ad-94c3-715caa2cbfa8"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -745,10 +742,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_TOTALE_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-62" style="TNR9BOLD" x="547" y="3" width="52" height="13"/>
+					<reportElement key="textField-62" style="TNR9BOLD" x="547" y="3" width="52" height="13" uuid="e846a914-7333-45fb-acdf-bf68fd847937"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -756,10 +753,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ASSUMERE_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_ASSUMERE_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-68" style="TNR9BOLD" x="601" y="3" width="52" height="13"/>
+					<reportElement key="textField-68" style="TNR9BOLD" x="601" y="3" width="52" height="13" uuid="67a4d0fb-3689-4a67-be03-c90321b66657"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -767,10 +764,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATI_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_LIQUIDATI_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-74" style="TNR9BOLD" x="655" y="3" width="52" height="13"/>
+					<reportElement key="textField-74" style="TNR9BOLD" x="655" y="3" width="52" height="13" uuid="442c52dc-c962-4738-884b-87073c5775d8"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -778,10 +775,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_PAGATI_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PAGATI_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-80" style="TNR9BOLD" x="709" y="3" width="52" height="13"/>
+					<reportElement key="textField-80" style="TNR9BOLD" x="709" y="3" width="52" height="13" uuid="cb45ae8f-7119-41b1-a1f3-f699bc1150e7"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -789,10 +786,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_PAGARE_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_PAGARE_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-87" style="TNR9BOLD" x="493" y="3" width="52" height="13"/>
+					<reportElement key="textField-87" style="TNR9BOLD" x="493" y="3" width="52" height="13" uuid="be360975-64e4-4e4e-b119-e435c27f0007"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -800,10 +797,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSUNTI_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSUNTI_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-94" style="TNR9BOLD" x="765" y="3" width="52" height="13"/>
+					<reportElement key="textField-94" style="TNR9BOLD" x="765" y="3" width="56" height="13" uuid="32f898c0-f013-42e3-94bd-1bccca0c08a8"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -811,10 +808,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_FINALI_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_FINALI_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-1" style="TNR10" x="0" y="19" width="826" height="13"/>
+					<reportElement key="subreport-1" style="TNR10" x="0" y="19" width="826" height="13" uuid="7df9c052-be82-4325-aff6-51f4408602cf"/>
 					<subreportParameter name="esercizio">
 						<subreportParameterExpression><![CDATA[$F{ESERCIZIO}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -834,7 +831,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<subreportParameterExpression><![CDATA[$F{CD_COMMESSA}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "totali_x_natura_res_usc.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "totali_x_natura_res_usc.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupFooter>
@@ -844,44 +841,41 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 		<groupHeader>
 			<band height="25" splitType="Stretch">
 				<staticText>
-					<reportElement key="staticText-38" style="TNR9BOLD" x="11" y="3" width="45" height="13"/>
+					<reportElement key="staticText-38" style="TNR9BOLD" x="11" y="3" width="45" height="13" uuid="702052ee-608f-494f-b126-dcfbc41a600b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Esercizio Residuo]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
-					<reportElement key="textField-98" style="TNR9" x="60" y="3" width="45" height="13"/>
+					<reportElement key="textField-98" style="TNR9" x="60" y="3" width="45" height="13" uuid="d6757b5f-b1b6-49c2-a625-445f0bbe666c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="25" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-99" style="TNR9BOLD" x="11" y="2" width="201" height="13"/>
+					<reportElement key="textField-99" style="TNR9BOLD" x="11" y="2" width="201" height="13" uuid="bb527d53-232d-49b8-9f2f-348066911c3e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale Esercizio Residuo "+$F{ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Totale Esercizio Residuo "+$F{ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-100" style="TNR9BOLD" x="215" y="2" width="52" height="13"/>
+					<reportElement key="textField-100" style="TNR9BOLD" x="215" y="2" width="52" height="13" uuid="3641e057-edea-49de-aeb9-0f580091a33c"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -889,10 +883,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" markup="styled"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_INIZIALI_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_INIZIALI_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-101" style="TNR9BOLD" x="271" y="2" width="52" height="13"/>
+					<reportElement key="textField-101" style="TNR9BOLD" x="271" y="2" width="52" height="13" uuid="7aa65648-c2aa-4f34-912a-3b4c5192d533"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -900,10 +894,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-102" style="TNR9BOLD" x="381" y="2" width="52" height="13"/>
+					<reportElement key="textField-102" style="TNR9BOLD" x="381" y="2" width="52" height="13" uuid="e75b6426-e34e-4990-aa7d-41b6ad7ccb07"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -911,10 +905,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-103" style="TNR9BOLD" x="327" y="2" width="52" height="13"/>
+					<reportElement key="textField-103" style="TNR9BOLD" x="327" y="2" width="52" height="13" uuid="e405727e-9fac-41bd-8d1c-adaec04429bd"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -922,10 +916,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-104" style="TNR9BOLD" x="437" y="2" width="52" height="13"/>
+					<reportElement key="textField-104" style="TNR9BOLD" x="437" y="2" width="55" height="13" uuid="bf5d1c47-fa51-4908-bb9d-402fc5415227"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -933,10 +927,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_TOTALE_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-105" style="TNR9BOLD" x="547" y="2" width="52" height="13"/>
+					<reportElement key="textField-105" style="TNR9BOLD" x="547" y="2" width="52" height="13" uuid="dbc1e8ec-d861-4aa6-bc1c-d738c2bc14a1"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -944,10 +938,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ASSUMERE_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_ASSUMERE_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-106" style="TNR9BOLD" x="601" y="2" width="52" height="13"/>
+					<reportElement key="textField-106" style="TNR9BOLD" x="601" y="2" width="52" height="13" uuid="f2ca6441-d209-496d-afcf-9c820fe8d2ad"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -955,10 +949,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATI_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_LIQUIDATI_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-107" style="TNR9BOLD" x="655" y="2" width="52" height="13"/>
+					<reportElement key="textField-107" style="TNR9BOLD" x="655" y="2" width="52" height="13" uuid="c8446417-5275-41eb-939c-e1c1d36ca2af"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -966,10 +960,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_PAGATI_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PAGATI_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-108" style="TNR9BOLD" x="709" y="2" width="52" height="13"/>
+					<reportElement key="textField-108" style="TNR9BOLD" x="709" y="2" width="52" height="13" uuid="26601039-3378-48e7-adea-171f0f8d7901"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -977,10 +971,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_PAGARE_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_PAGARE_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-109" style="TNR9BOLD" x="493" y="2" width="52" height="13"/>
+					<reportElement key="textField-109" style="TNR9BOLD" x="493" y="2" width="52" height="13" uuid="33131a3a-8073-4a01-9c71-7d3af434af4d"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -988,10 +982,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSUNTI_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSUNTI_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-110" style="TNR9BOLD" x="765" y="2" width="52" height="13"/>
+					<reportElement key="textField-110" style="TNR9BOLD" x="765" y="2" width="56" height="13" uuid="54d147c0-9483-4ff4-b7e8-a9034a29f84b"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -999,7 +993,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_FINALI_ESERCIZIO_RES}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_FINALI_ESERCIZIO_RES}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -1009,44 +1003,41 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 		<groupHeader>
 			<band height="25" splitType="Stretch">
 				<staticText>
-					<reportElement key="staticText-22" style="TNR9BOLD" x="15" y="3" width="45" height="13"/>
+					<reportElement key="staticText-22" style="TNR9BOLD" x="15" y="3" width="45" height="13" uuid="0cc320e5-3de4-4540-8cee-52df2e89b19b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[CdR]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-12" style="TNR9" x="63" y="3" width="752" height="13"/>
+					<reportElement key="textField-12" style="TNR9" x="63" y="3" width="752" height="13" uuid="e6584919-36d9-4717-b729-ac09d7fb7c8c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CENTRO_RESPONSABILITA}+ " " + $F{DS_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}+ " " + $F{DS_CDR}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="25" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-27" style="TNR9BOLD" x="15" y="3" width="195" height="13"/>
+					<reportElement key="textField-27" style="TNR9BOLD" x="15" y="3" width="195" height="13" uuid="94119924-595a-426a-85d3-2737b1cc87f1"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale CdR "+$F{CD_CENTRO_RESPONSABILITA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Totale CdR "+$F{CD_CENTRO_RESPONSABILITA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-32" style="TNR9BOLD" x="215" y="3" width="52" height="13"/>
+					<reportElement key="textField-32" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="137cffe9-5f93-4dbd-ad6b-1fca07ba3167"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1054,10 +1045,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" markup="styled"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_INIZIALI_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_INIZIALI_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-37" style="TNR9BOLD" x="271" y="3" width="52" height="13"/>
+					<reportElement key="textField-37" style="TNR9BOLD" x="271" y="3" width="52" height="13" uuid="58a4e542-7aeb-4c85-86c6-742de51b6549"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1065,10 +1056,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-43" style="TNR9BOLD" x="381" y="3" width="52" height="13"/>
+					<reportElement key="textField-43" style="TNR9BOLD" x="381" y="3" width="52" height="13" uuid="87f53787-c2ff-49d9-8ec0-c97b7f7788d5"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1076,10 +1067,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-49" style="TNR9BOLD" x="327" y="3" width="52" height="13"/>
+					<reportElement key="textField-49" style="TNR9BOLD" x="327" y="3" width="52" height="13" uuid="37c5d405-ffc5-4d3d-a0e7-41d425ec6b14"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1087,10 +1078,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-55" style="TNR9BOLD" x="437" y="3" width="52" height="13"/>
+					<reportElement key="textField-55" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="102162ac-279b-4e6d-863c-2c42f4676d4a"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1098,10 +1089,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_TOTALE_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-61" style="TNR9BOLD" x="547" y="3" width="52" height="13"/>
+					<reportElement key="textField-61" style="TNR9BOLD" x="547" y="3" width="52" height="13" uuid="e499f634-e427-40af-a21c-d2b48212ae1b"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1109,10 +1100,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ASSUMERE_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_ASSUMERE_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-67" style="TNR9BOLD" x="601" y="3" width="52" height="13"/>
+					<reportElement key="textField-67" style="TNR9BOLD" x="601" y="3" width="52" height="13" uuid="9580b630-10c5-421a-a21a-e9206702abbb"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1120,10 +1111,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATI_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_LIQUIDATI_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-73" style="TNR9BOLD" x="655" y="3" width="52" height="13"/>
+					<reportElement key="textField-73" style="TNR9BOLD" x="655" y="3" width="52" height="13" uuid="9ee558d8-3d19-4097-b34f-27da7aeb99cd"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1131,10 +1122,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_PAGATI_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PAGATI_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-79" style="TNR9BOLD" x="709" y="3" width="52" height="13"/>
+					<reportElement key="textField-79" style="TNR9BOLD" x="709" y="3" width="52" height="13" uuid="d3790006-c81a-478a-b24a-35abfe5892ef"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1142,10 +1133,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_PAGARE_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_PAGARE_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-86" style="TNR9BOLD" x="493" y="3" width="52" height="13"/>
+					<reportElement key="textField-86" style="TNR9BOLD" x="493" y="3" width="52" height="13" uuid="75b8b14b-92c9-4f76-8016-a799784451ff"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1153,10 +1144,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSUNTI_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSUNTI_CDR}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-93" style="TNR9BOLD" x="765" y="3" width="52" height="13"/>
+					<reportElement key="textField-93" style="TNR9BOLD" x="765" y="3" width="56" height="13" uuid="779f90f4-2238-4312-a2b8-bfb6ca2550c3"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1164,7 +1155,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_FINALI_CDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_FINALI_CDR}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -1174,38 +1165,35 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 		<groupHeader>
 			<band height="25" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-13" style="TNR9" x="68" y="3" width="745" height="13"/>
+					<reportElement key="textField-13" style="TNR9" x="68" y="3" width="745" height="13" uuid="7bb839b3-c5fd-4c7f-b614-d1e8e4b8ac66"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_MODULO}+ " " + $F{DS_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_MODULO}+ " " + $F{DS_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TNR9BOLD" x="21" y="3" width="39" height="13"/>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Modulo ":"Progetto ")]]></textFieldExpression>
+					<reportElement style="TNR9BOLD" x="21" y="3" width="39" height="13" uuid="f000a68c-40d9-4e6d-9a5e-d22e3f3eec6c"/>
+					<textFieldExpression><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Modulo ":"Progetto ")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="25" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-26" style="TNR9BOLD" x="20" y="3" width="190" height="13"/>
+					<reportElement key="textField-26" style="TNR9BOLD" x="20" y="3" width="190" height="13" uuid="ff059f97-22d8-4aae-ab26-75a89ce8612c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Totale Modulo ":"Totale Progetto " )+$F{CD_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Totale Modulo ":"Totale Progetto " )+$F{CD_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-31" style="TNR9BOLD" x="215" y="3" width="52" height="13"/>
+					<reportElement key="textField-31" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="56f4c092-5427-4c7c-9c85-627e3bb76372"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1213,10 +1201,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" markup="styled"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_INIZIALI_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_INIZIALI_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="TNR9BOLD" x="271" y="3" width="52" height="13"/>
+					<reportElement key="textField-36" style="TNR9BOLD" x="271" y="3" width="52" height="13" uuid="3beb7d4e-d715-4566-b908-23b16b44702f"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1224,10 +1212,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-42" style="TNR9BOLD" x="381" y="3" width="52" height="13"/>
+					<reportElement key="textField-42" style="TNR9BOLD" x="381" y="3" width="52" height="13" uuid="276b6253-9998-48dc-ba61-069c8f487208"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1235,10 +1223,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-48" style="TNR9BOLD" x="327" y="3" width="52" height="13"/>
+					<reportElement key="textField-48" style="TNR9BOLD" x="327" y="3" width="52" height="13" uuid="92d71363-359d-4178-8253-a621ecee1794"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1246,10 +1234,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-54" style="TNR9BOLD" x="437" y="3" width="52" height="13"/>
+					<reportElement key="textField-54" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="5d284934-17f2-47d2-87fd-2ef8e7a94204"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1257,10 +1245,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_TOTALE_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-60" style="TNR9BOLD" x="547" y="3" width="52" height="13"/>
+					<reportElement key="textField-60" style="TNR9BOLD" x="547" y="3" width="52" height="13" uuid="05abe145-071c-49a5-b5ef-361bffec6749"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1268,10 +1256,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ASSUMERE_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_ASSUMERE_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-66" style="TNR9BOLD" x="601" y="3" width="52" height="13"/>
+					<reportElement key="textField-66" style="TNR9BOLD" x="601" y="3" width="52" height="13" uuid="79bbe347-4b72-485d-ac6c-f387546bc163"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1279,10 +1267,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATI_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_LIQUIDATI_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-72" style="TNR9BOLD" x="655" y="3" width="52" height="13"/>
+					<reportElement key="textField-72" style="TNR9BOLD" x="655" y="3" width="52" height="13" uuid="71f152a2-3907-4ed3-95aa-4bda004bf9d6"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1290,10 +1278,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_PAGATI_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PAGATI_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-78" style="TNR9BOLD" x="709" y="3" width="52" height="13"/>
+					<reportElement key="textField-78" style="TNR9BOLD" x="709" y="3" width="52" height="13" uuid="9cb5bb33-0fd9-42aa-8c41-08d5d352bce2"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1301,10 +1289,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_PAGARE_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_PAGARE_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-85" style="TNR9BOLD" x="493" y="3" width="52" height="13"/>
+					<reportElement key="textField-85" style="TNR9BOLD" x="493" y="3" width="52" height="13" uuid="d87cf995-6c8b-4638-bd5a-1b8cf9572c19"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1312,10 +1300,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSUNTI_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSUNTI_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-92" style="TNR9BOLD" x="765" y="3" width="52" height="13"/>
+					<reportElement key="textField-92" style="TNR9BOLD" x="765" y="3" width="56" height="13" uuid="0385c322-913e-432e-864e-1f5b50be369e"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1323,7 +1311,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_FINALI_MODULO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_FINALI_MODULO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -1333,66 +1321,61 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 		<groupHeader>
 			<band height="35" splitType="Stretch">
 				<staticText>
-					<reportElement key="staticText-24" style="TNR9BOLD" x="25" y="3" width="35" height="13"/>
+					<reportElement key="staticText-24" style="TNR9BOLD" x="25" y="3" width="35" height="13" uuid="3d134564-1ba2-4e87-9c56-fac022e58183"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[GAE]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-14" style="TNR9" x="68" y="3" width="745" height="13"/>
+					<reportElement key="textField-14" style="TNR9" x="68" y="3" width="745" height="13" uuid="f149a140-f88d-4531-b013-cd33872839b1"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_LINEA_ATTIVITA}+ " " + $F{DS_LINEA_ATTIVITA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_LINEA_ATTIVITA}+ " " + $F{DS_LINEA_ATTIVITA}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-25" style="TNR9BOLD" positionType="FixRelativeToBottom" x="25" y="17" width="35" height="13"/>
+					<reportElement key="staticText-25" style="TNR9BOLD" positionType="FixRelativeToBottom" x="25" y="17" width="35" height="13" uuid="764470df-578d-41cd-93b2-c70fc2285d2f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Natura]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-15" style="TNR9" positionType="FixRelativeToBottom" x="68" y="17" width="75" height="13"/>
+					<reportElement key="textField-15" style="TNR9" positionType="FixRelativeToBottom" x="68" y="17" width="75" height="13" uuid="a3735d51-33c4-4a1c-b7b6-874e6f4645b4"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_NATURA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="25" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-25" style="TNR9BOLD" x="25" y="3" width="185" height="13"/>
+					<reportElement key="textField-25" style="TNR9BOLD" x="25" y="3" width="185" height="13" uuid="998793e8-6613-4139-9c72-d9ce0ac92080"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale GAE "+$F{CD_LINEA_ATTIVITA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Totale GAE "+$F{CD_LINEA_ATTIVITA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR9BOLD" x="215" y="3" width="52" height="13"/>
+					<reportElement key="textField" style="TNR9BOLD" x="215" y="3" width="52" height="13" uuid="5539e9ff-61c7-4e9d-93f6-99e6f1621b20"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1402,10 +1385,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<textElement textAlignment="Right" markup="styled">
 						<font isStrikeThrough="false"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_INIZIALI_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_INIZIALI_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR9BOLD" x="271" y="3" width="52" height="13"/>
+					<reportElement key="textField" style="TNR9BOLD" x="271" y="3" width="52" height="13" uuid="40bac86b-50c6-468a-8505-156c60d9e678"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1413,10 +1396,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-41" style="TNR9BOLD" x="381" y="3" width="52" height="13"/>
+					<reportElement key="textField-41" style="TNR9BOLD" x="381" y="3" width="52" height="13" uuid="c8e9e834-1ac6-48c7-b4fc-2c6ab398e889"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1424,10 +1407,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-47" style="TNR9BOLD" x="327" y="3" width="52" height="13"/>
+					<reportElement key="textField-47" style="TNR9BOLD" x="327" y="3" width="52" height="13" uuid="4aa77647-c8fa-4932-981f-3a79aa66dfa0"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1435,10 +1418,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-53" style="TNR9BOLD" x="437" y="3" width="52" height="13"/>
+					<reportElement key="textField-53" style="TNR9BOLD" x="437" y="3" width="55" height="13" uuid="5f503648-adeb-4f37-8916-8037fb28f589"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1446,10 +1429,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_TOTALE_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-59" style="TNR9BOLD" x="547" y="3" width="52" height="13"/>
+					<reportElement key="textField-59" style="TNR9BOLD" x="547" y="3" width="52" height="13" uuid="3b763dc8-8ef8-409f-a681-d859d2fd94ae"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1457,10 +1440,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ASSUMERE_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_ASSUMERE_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-65" style="TNR9BOLD" x="601" y="3" width="52" height="13"/>
+					<reportElement key="textField-65" style="TNR9BOLD" x="601" y="3" width="52" height="13" uuid="cfbf88f7-f2d5-41be-b46f-def06dcec203"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1468,10 +1451,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATI_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_LIQUIDATI_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-71" style="TNR9BOLD" x="655" y="3" width="52" height="13"/>
+					<reportElement key="textField-71" style="TNR9BOLD" x="655" y="3" width="52" height="13" uuid="7ad86eec-7415-49fb-ac8c-2e4dbd390ab4"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1479,10 +1462,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_PAGATI_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PAGATI_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-77" style="TNR9BOLD" x="709" y="3" width="52" height="13"/>
+					<reportElement key="textField-77" style="TNR9BOLD" x="709" y="3" width="52" height="13" uuid="1bfb3693-c1fb-4243-becc-13e7a0130454"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1490,10 +1473,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_PAGARE_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_PAGARE_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-84" style="TNR9BOLD" x="493" y="3" width="52" height="13"/>
+					<reportElement key="textField-84" style="TNR9BOLD" x="493" y="3" width="52" height="13" uuid="cafdc186-c2d2-4b55-afb5-d6416a5e0822"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1501,10 +1484,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSUNTI_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSUNTI_LINEA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-91" style="TNR9BOLD" x="765" y="3" width="52" height="13"/>
+					<reportElement key="textField-91" style="TNR9BOLD" x="765" y="3" width="56" height="13" uuid="5bbe4bd1-5c5e-450a-97de-c11367858af4"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1512,7 +1495,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_FINALI_LINEA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_FINALI_LINEA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -1526,37 +1509,36 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 	<pageHeader>
 		<band height="150" splitType="Stretch">
 			<rectangle>
-				<reportElement key="rectangle-1" style="TNR10" x="8" y="70" width="811" height="75"/>
+				<reportElement key="rectangle-1" style="TNR10" x="8" y="70" width="811" height="75" uuid="f4fdeca4-fc50-4e13-851a-cad4d717b1e8"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<image onErrorType="Blank">
-				<reportElement key="image-1" x="0" y="0" width="497" height="40"/>
+				<reportElement key="image-1" x="0" y="0" width="497" height="40" uuid="c43c18f3-e2db-49e4-bff1-77c82aaee9f1"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement key="staticText-1" style="TNR12" x="0" y="48" width="340" height="15"/>
+				<reportElement key="staticText-1" style="TNR12" x="0" y="48" width="340" height="15" uuid="6694112c-f615-47ad-bdc2-f87df9637e79"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[SITUAZIONE ANALITICA PER GAE]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-1" style="TNR10" x="0" y="66" width="826" height="1"/>
+				<reportElement key="line-1" style="TNR10" x="0" y="66" width="826" height="1" uuid="113526f7-7b80-4947-bfee-559e6a396a86"/>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-1" style="TNR12" x="342" y="48" width="166" height="15"/>
+				<reportElement key="textField-1" style="TNR12" x="342" y="48" width="166" height="15" uuid="e1e8e87b-4c69-4742-94fa-2f8ea46257f0"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1564,10 +1546,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["USCITE IN C/RESIDUI"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["USCITE IN C/RESIDUI"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" style="TNR12" x="512" y="48" width="304" height="15"/>
+				<reportElement key="textField-2" style="TNR12" x="512" y="48" width="304" height="15" uuid="f86ff969-d94d-41da-9ae0-6530dae221ea"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1575,57 +1557,53 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Esercizio " + $P{esercizio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Esercizio " + $P{esercizio}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-3" style="TNR10" x="270" y="94" width="166" height="1"/>
+				<reportElement key="line-3" style="TNR10" x="270" y="94" width="166" height="1" uuid="b448e22d-60be-4896-9d12-6e7cf8013a14"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-2" style="TNR10BOLDITALIC" x="16" y="74" width="94" height="13"/>
+				<reportElement key="staticText-2" style="TNR10BOLDITALIC" x="16" y="74" width="94" height="13" uuid="aec718fc-6b57-4315-a253-d0892ac770c9"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Esercizio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-3" style="TNR10BOLDITALIC" x="16" y="92" width="94" height="13"/>
+				<reportElement key="staticText-3" style="TNR10BOLDITALIC" x="16" y="92" width="94" height="13" uuid="48da924f-d87f-4a28-a65e-3eada8a8344f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[CdS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" style="TNR10BOLDITALIC" x="16" y="110" width="94" height="13"/>
+				<reportElement key="staticText-4" style="TNR10BOLDITALIC" x="16" y="110" width="94" height="13" uuid="758f5f96-51fb-4280-b68a-e812d9142305"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<text><![CDATA[Unitï¿½ Organizzativa]]></text>
+				<text><![CDATA[Unità Organizzativa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-5" style="TNR10BOLDITALIC" x="16" y="129" width="94" height="13"/>
+				<reportElement key="staticText-5" style="TNR10BOLDITALIC" x="16" y="129" width="94" height="13" uuid="a2ca5eaf-6f74-447f-97d1-f80a1f3c6054"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[CdR]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-3" style="TNR10BOLDITALIC" x="113" y="74" width="97" height="13"/>
+				<reportElement key="textField-3" style="TNR10BOLDITALIC" x="113" y="74" width="97" height="13" uuid="4bb8aa81-6720-4f93-b074-6ec3e99861f8"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1633,10 +1611,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$P{esercizio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{esercizio}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-4" style="TNR10BOLDITALIC" x="113" y="92" width="97" height="13"/>
+				<reportElement key="textField-4" style="TNR10BOLDITALIC" x="113" y="92" width="97" height="13" uuid="6c5b5f77-4006-4f5b-bf54-37432c2cc549"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1644,10 +1622,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{cds}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{cds}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-5" style="TNR10BOLDITALIC" x="113" y="110" width="97" height="13"/>
+				<reportElement key="textField-5" style="TNR10BOLDITALIC" x="113" y="110" width="97" height="13" uuid="3dea23cb-bc79-46d0-878e-984f351b970d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1655,10 +1633,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{uo}.equals("*")?"Tutte":$P{uo})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{uo}.equals("*")?"Tutte":$P{uo})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-6" style="TNR10BOLDITALIC" x="113" y="129" width="97" height="13"/>
+				<reportElement key="textField-6" style="TNR10BOLDITALIC" x="113" y="129" width="97" height="13" uuid="3edcf633-aa70-484b-8958-3ea409a1c786"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1666,13 +1644,13 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{cdr}.equals("*")?"Tutti":$P{cdr})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{cdr}.equals("*")?"Tutti":$P{cdr})]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-4" style="TNR10" x="491" y="70" width="1" height="75"/>
+				<reportElement key="line-4" style="TNR10" x="491" y="70" width="1" height="75" uuid="684fe169-8a65-46ab-8e90-6f8ad4d9d52f"/>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-8" style="TNR9BOLDITALIC" x="493" y="72" width="268" height="21"/>
+				<reportElement key="textField-8" style="TNR9BOLDITALIC" x="493" y="72" width="268" height="21" uuid="ad867174-85eb-4154-bd57-05a55462da85"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1680,10 +1658,10 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Impegni residui"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Impegni residui"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-8" style="TNR9BOLDITALIC" x="271" y="72" width="161" height="20"/>
+				<reportElement key="staticText-8" style="TNR9BOLDITALIC" x="271" y="72" width="161" height="20" uuid="855483a8-c7f4-4032-8c25-00dd117669be"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1694,7 +1672,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 				<text><![CDATA[Variazioni approvate]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-9" style="TNR9BOLDITALIC" x="271" y="119" width="52" height="24"/>
+				<reportElement key="staticText-9" style="TNR9BOLDITALIC" x="271" y="119" width="52" height="24" uuid="8ad8c303-cc57-4f94-a07f-51ee595fea02"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1705,7 +1683,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 				<text><![CDATA[(b)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-10" style="TNR9BOLDITALIC" x="327" y="119" width="52" height="24"/>
+				<reportElement key="staticText-10" style="TNR9BOLDITALIC" x="327" y="119" width="52" height="24" uuid="3af42e9b-ef3f-406c-8a39-f6520326c7b4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1717,7 +1695,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 (c)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-11" style="TNR9BOLDITALIC" x="381" y="119" width="52" height="24"/>
+				<reportElement key="staticText-11" style="TNR9BOLDITALIC" x="381" y="119" width="52" height="24" uuid="dc12174e-d0d5-4ea8-b0ba-273ac01914c0"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1729,7 +1707,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 (d)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-12" style="TNR9BOLDITALIC" x="437" y="118" width="52" height="24"/>
+				<reportElement key="staticText-12" style="TNR9BOLDITALIC" x="437" y="118" width="52" height="24" uuid="ba86f688-456e-4629-8b50-859c5659dd87"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1741,7 +1719,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 (e=a + b + c)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-14" style="TNR9BOLDITALIC" x="493" y="96" width="52" height="28"/>
+				<reportElement key="staticText-14" style="TNR9BOLDITALIC" x="493" y="96" width="52" height="28" uuid="64914956-8f13-46f8-b2ab-40ddca881458"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1752,7 +1730,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 				<text><![CDATA[assunti]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-15" style="TNR9BOLDITALIC" x="547" y="96" width="52" height="28"/>
+				<reportElement key="staticText-15" style="TNR9BOLDITALIC" x="547" y="96" width="52" height="28" uuid="90d48820-23da-4716-8fe4-92b54fd8208e"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1764,7 +1742,7 @@ ORDER BY  v.CDS ASC, v.UO ASC, v.CD_COMMESSA ASC, v.esercizio_res ASC,
 assumere]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-16" style="TNR9BOLDITALIC" x="493" y="126" width="52" height="16"/>
+				<reportElement key="staticText-16" style="TNR9BOLDITALIC" x="493" y="126" width="52" height="16" uuid="8060aef7-0868-4ee8-ad15-d0c5a67a4948"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1775,7 +1753,7 @@ assumere]]></text>
 				<text><![CDATA[(f)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-17" style="TNR9BOLDITALIC" x="547" y="126" width="52" height="16"/>
+				<reportElement key="staticText-17" style="TNR9BOLDITALIC" x="547" y="126" width="52" height="16" uuid="bca4ec6c-4261-4be4-a967-8527043df3df"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1786,7 +1764,7 @@ assumere]]></text>
 				<text><![CDATA[(g)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-18" style="TNR9BOLDITALIC" x="601" y="126" width="52" height="16"/>
+				<reportElement key="staticText-18" style="TNR9BOLDITALIC" x="601" y="126" width="52" height="16" uuid="31d8b805-9f1a-482a-9259-89d4aff24d7e"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1797,7 +1775,7 @@ assumere]]></text>
 				<text><![CDATA[(h)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-19" style="TNR9BOLDITALIC" x="655" y="126" width="52" height="16"/>
+				<reportElement key="staticText-19" style="TNR9BOLDITALIC" x="655" y="126" width="52" height="16" uuid="a1cd50ce-1599-43e7-97b1-db10323b110f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1808,7 +1786,7 @@ assumere]]></text>
 				<text><![CDATA[(i)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-27" style="TNR9BOLDITALIC" x="215" y="119" width="52" height="24"/>
+				<reportElement key="staticText-27" style="TNR9BOLDITALIC" x="215" y="119" width="52" height="24" uuid="9515cb40-347e-4d92-97e1-0990494b0287"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1819,13 +1797,13 @@ assumere]]></text>
 				<text><![CDATA[(a)]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-6" x="213" y="70" width="1" height="75"/>
+				<reportElement key="line-6" x="213" y="70" width="1" height="75" uuid="fc7e97f1-043b-42e4-8442-4d193b7d6cda"/>
 			</line>
 			<line>
-				<reportElement key="line-7" x="269" y="70" width="1" height="75"/>
+				<reportElement key="line-7" x="269" y="70" width="1" height="75" uuid="76f48e4c-863c-4423-8111-26944b092182"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-28" style="TNR9BOLDITALIC" x="215" y="72" width="52" height="44"/>
+				<reportElement key="staticText-28" style="TNR9BOLDITALIC" x="215" y="72" width="52" height="44" uuid="9db32da4-e8c4-4def-9801-03abe7f0b3e9"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1836,10 +1814,10 @@ assumere]]></text>
 				<text><![CDATA[Residui all'inizio dell'esercizio]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-8" x="435" y="70" width="1" height="75"/>
+				<reportElement key="line-8" x="435" y="70" width="1" height="75" uuid="37fcfba3-ce18-488d-bb20-b6f70f449cd1"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-29" style="TNR9BOLDITALIC" x="271" y="96" width="52" height="20"/>
+				<reportElement key="staticText-29" style="TNR9BOLDITALIC" x="271" y="96" width="52" height="20" uuid="c731b2f0-da41-41d6-ba0f-c3c56d5067dd"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1850,10 +1828,10 @@ assumere]]></text>
 				<text><![CDATA[in +]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-9" style="TNR9BOLDITALIC" x="325" y="95" width="1" height="50"/>
+				<reportElement key="line-9" style="TNR9BOLDITALIC" x="325" y="95" width="1" height="50" uuid="922dbbbd-1c3c-4ff6-9901-7d39895ae3f4"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-30" style="TNR9BOLDITALIC" x="327" y="96" width="106" height="20"/>
+				<reportElement key="staticText-30" style="TNR9BOLDITALIC" x="327" y="96" width="106" height="20" uuid="1e1e6da7-5046-42f6-b76d-b1e4bff877d5"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1864,10 +1842,10 @@ assumere]]></text>
 				<text><![CDATA[in -]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-10" style="TNR10" x="325" y="117" width="111" height="1"/>
+				<reportElement key="line-10" style="TNR10" x="325" y="117" width="111" height="1" uuid="3d650e86-6ba7-45f7-be14-2057307d861b"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-31" style="TNR9BOLDITALIC" x="437" y="72" width="52" height="44"/>
+				<reportElement key="staticText-31" style="TNR9BOLDITALIC" x="437" y="72" width="52" height="44" uuid="5a423583-34f6-457e-96e6-a19ffabab488"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1878,7 +1856,7 @@ assumere]]></text>
 				<text><![CDATA[Totale]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-32" style="TNR9BOLDITALIC" x="601" y="96" width="52" height="28"/>
+				<reportElement key="staticText-32" style="TNR9BOLDITALIC" x="601" y="96" width="52" height="28" uuid="3b880220-5e68-4923-96a1-7d8ade566c0a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1889,7 +1867,7 @@ assumere]]></text>
 				<text><![CDATA[liquidati]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-33" style="TNR9BOLDITALIC" x="655" y="96" width="52" height="28"/>
+				<reportElement key="staticText-33" style="TNR9BOLDITALIC" x="655" y="96" width="52" height="28" uuid="48bc1d1f-88d4-4be2-970f-fb75e6f85cbb"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1900,7 +1878,7 @@ assumere]]></text>
 				<text><![CDATA[pagati]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-34" style="TNR9BOLDITALIC" x="709" y="126" width="52" height="16"/>
+				<reportElement key="staticText-34" style="TNR9BOLDITALIC" x="709" y="126" width="52" height="16" uuid="d136310f-ac4c-4394-8464-adedc3704289"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1911,7 +1889,7 @@ assumere]]></text>
 				<text><![CDATA[(j = f - i)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-35" style="TNR9BOLDITALIC" x="765" y="126" width="52" height="16"/>
+				<reportElement key="staticText-35" style="TNR9BOLDITALIC" x="765" y="126" width="52" height="16" uuid="c3d4b9be-ec37-40da-95fc-cf507dedf4b6"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1922,10 +1900,10 @@ assumere]]></text>
 				<text><![CDATA[(k = g + j)]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-11" x="763" y="70" width="1" height="75"/>
+				<reportElement key="line-11" x="763" y="70" width="1" height="75" uuid="9c4440a4-c27f-4fc5-86ee-95392315020c"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-36" style="TNR9BOLDITALIC" x="709" y="96" width="52" height="28"/>
+				<reportElement key="staticText-36" style="TNR9BOLDITALIC" x="709" y="96" width="52" height="28" uuid="4db32cab-f021-480b-ad83-4f7897fb6604"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1937,7 +1915,7 @@ assumere]]></text>
 pagare]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-37" style="TNR9BOLDITALIC" x="765" y="72" width="52" height="44"/>
+				<reportElement key="staticText-37" style="TNR9BOLDITALIC" x="765" y="72" width="52" height="44" uuid="eb04c04f-756e-42cd-bd9b-75a87bb36232"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1948,7 +1926,7 @@ pagare]]></text>
 				<text><![CDATA[Residui al termine dell'esercizio]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-12" x="492" y="95" width="271" height="1"/>
+				<reportElement key="line-12" x="492" y="95" width="271" height="1" uuid="eea9659c-52dc-449b-8b70-a5677dabc99a"/>
 			</line>
 		</band>
 	</pageHeader>
@@ -1958,29 +1936,27 @@ pagare]]></text>
 	<detail>
 		<band height="25" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-26" style="TNR9BOLD" x="30" y="3" width="37" height="13"/>
+				<reportElement key="staticText-26" style="TNR9BOLD" x="30" y="3" width="37" height="13" uuid="1465c691-1660-448c-9f87-d5ba5c732b84"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Capitolo]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-16" style="TNR9" x="69" y="3" width="140" height="13"/>
+				<reportElement key="textField-16" style="TNR9" x="69" y="3" width="140" height="13" uuid="a8d04e86-bf4c-41fd-81b9-fdd4c72408d1"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_ELEMENTO_VOCE}+ " " + $F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}+ " " + $F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR9" x="215" y="3" width="52" height="13"/>
+				<reportElement key="textField" style="TNR9" x="215" y="3" width="52" height="13" uuid="b15b6610-8dd5-45c2-a758-24be08b226ca"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1988,10 +1964,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{RESIDUI_INIZIALI}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{RESIDUI_INIZIALI}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-17" style="TNR9" x="271" y="3" width="52" height="13"/>
+				<reportElement key="textField-17" style="TNR9" x="271" y="3" width="52" height="13" uuid="990bcb92-33bf-4e8e-ab2b-3fb4aeeaee30"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1999,10 +1975,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{VAR_STANZ_RES_PIU}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VAR_STANZ_RES_PIU}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-18" style="TNR9" x="381" y="3" width="52" height="13"/>
+				<reportElement key="textField-18" style="TNR9" x="381" y="3" width="52" height="13" uuid="bd534f13-f44c-4244-ac7a-b8e9dd9656ea"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2010,10 +1986,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{VAR_STANZ_RES_MENO_ECO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VAR_STANZ_RES_MENO_ECO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-19" style="TNR9" x="327" y="3" width="52" height="13"/>
+				<reportElement key="textField-19" style="TNR9" x="327" y="3" width="52" height="13" uuid="94e942cc-8fdf-4086-9ed9-2a4fe066c7a7"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2021,10 +1997,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{VAR_STANZ_RES_MENO_STO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VAR_STANZ_RES_MENO_STO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-20" style="TNR9" x="437" y="3" width="52" height="13"/>
+				<reportElement key="textField-20" style="TNR9" x="437" y="3" width="55" height="13" uuid="4804e75a-13c3-4873-b680-17086607303d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2032,10 +2008,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TOTALE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-21" style="TNR9" x="547" y="3" width="52" height="13"/>
+				<reportElement key="textField-21" style="TNR9" x="547" y="3" width="52" height="13" uuid="fbbe55dd-d8aa-4876-b022-7bd4952fddc0"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2043,10 +2019,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{DA_ASSUMERE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DA_ASSUMERE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-22" style="TNR9" x="601" y="3" width="52" height="13"/>
+				<reportElement key="textField-22" style="TNR9" x="601" y="3" width="52" height="13" uuid="fdabff41-fae3-4b64-9405-bc5078099ed1"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2054,10 +2030,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{LIQUIDATI}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{LIQUIDATI}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-23" style="TNR9" x="655" y="3" width="52" height="13"/>
+				<reportElement key="textField-23" style="TNR9" x="655" y="3" width="52" height="13" uuid="d9425709-e04e-48db-9148-df799b1aae5e"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2065,10 +2041,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PAGATI}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PAGATI}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-24" style="TNR9" x="709" y="3" width="52" height="13"/>
+				<reportElement key="textField-24" style="TNR9" x="709" y="3" width="52" height="13" uuid="beb9c11f-2ed8-480b-8abd-3c80d63be831"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2076,10 +2052,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{DA_PAGARE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DA_PAGARE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-83" style="TNR9" x="493" y="3" width="52" height="13"/>
+				<reportElement key="textField-83" style="TNR9" x="493" y="3" width="52" height="13" uuid="6f9eb436-8899-4365-b741-3b53422171bb"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2087,10 +2063,10 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ASSUNTI}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ASSUNTI}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-90" style="TNR9" x="765" y="3" width="52" height="13"/>
+				<reportElement key="textField-90" style="TNR9" x="765" y="3" width="56" height="13" uuid="6a50c5f2-3366-48e0-8ba5-100225bd6a4e"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2098,7 +2074,7 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{RESIDUI_FINALI}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{RESIDUI_FINALI}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -2108,18 +2084,17 @@ pagare]]></text>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField evaluationTime="Report" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10BOLD" x="10" y="4" width="161" height="13"/>
+				<reportElement key="textField" style="TNR10BOLD" x="10" y="4" width="161" height="13" uuid="35f13317-3e08-4e27-966b-35027055ac3b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Data di stampa "+ new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new java.util.Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Data di stampa "+ new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10BOLD" x="658" y="4" width="100" height="13"/>
+				<reportElement key="textField" style="TNR10BOLD" x="658" y="4" width="100" height="13" uuid="6d0df713-0926-4f18-8b64-b3b8af7d0883"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2127,21 +2102,20 @@ pagare]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10BOLD" x="758" y="4" width="55" height="13"/>
+				<reportElement key="textField" style="TNR10BOLD" x="758" y="4" width="55" height="13" uuid="ca1f1169-0fe1-435f-b4cf-a02e22ca5adc"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-5" style="TNR10" x="8" y="2" width="808" height="1"/>
+				<reportElement key="line-5" style="TNR10" x="8" y="2" width="808" height="1" uuid="63537068-62da-4885-9d63-ec3fe995ad3b"/>
 			</line>
 		</band>
 	</pageFooter>
