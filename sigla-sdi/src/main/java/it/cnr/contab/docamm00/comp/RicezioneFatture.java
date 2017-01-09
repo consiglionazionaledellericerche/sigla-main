@@ -109,7 +109,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	private RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn, String replyTo) {
 		RispostaRiceviFattureType risposta = new RispostaRiceviFattureType();
 		try {
-			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.fatturapa.v1");
+			JAXBContext jc = JAXBContext.newInstance("it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1");
 			byte[] bytesMetadata = IOUtils.toByteArray(parametersIn.getMetadati().getInputStream());
 			if (Base64.isArrayByteBase64(bytesMetadata))
 				bytesMetadata = Base64.decodeBase64(bytesMetadata);
