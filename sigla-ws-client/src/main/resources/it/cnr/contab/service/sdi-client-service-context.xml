@@ -9,7 +9,7 @@
       		<list>
         		<value>it.gov.fatturapa.sdi.ws.ricezione.v1_0.types</value>      		    
       		    <value>it.gov.fatturapa.sdi.ws.trasmissione.v1_0.types</value>
-        		<value>it.gov.fatturapa.sdi.fatturapa.v1</value>
+        		<value>it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1</value>
         		<value>it.gov.fatturapa.sdi.messaggi.v1</value>
         		<value>it.gov.fatturapa.sdi.monitoraggio.v1</value>
        		</list>
