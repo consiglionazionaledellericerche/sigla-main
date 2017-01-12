@@ -291,6 +291,9 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 		if(getDt_inizio_tappa()==null)
 			return false;
 
+		if(getMissione() == null)
+			return false;
+		
 		if(getMissione().getTappeMissioneHash() == null)
 			return false;
 
