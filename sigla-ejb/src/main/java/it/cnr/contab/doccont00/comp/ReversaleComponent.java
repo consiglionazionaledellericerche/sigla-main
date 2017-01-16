@@ -1009,18 +1009,19 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
 
 		lockBulk( userContext, reversale );
 
-		if(DateServices.isAnnoMaggEsScriv(userContext)) {
-		// Se la data di annullamento NON E' NULLA, e siamo in esercizio successivo, metto
-		// la data di trasmissione = ad istante successivo a quella di annullamento
-		 if(reversale.getDt_trasmissione() != null) {
-		  reversale.setDt_annullamento( DateServices.getNextMinTs( userContext,reversale.getDt_trasmissione()));
-		 } else {
-		  reversale.setDt_annullamento( DateServices.getMidDayTs( DateServices.getTs_valido( userContext)));
-		 }
-		} else {
-		 reversale.setDt_annullamento( DateServices.getTs_valido( userContext));
-		}
+//		if(DateServices.isAnnoMaggEsScriv(userContext)) {
+//		// Se la data di annullamento NON E' NULLA, e siamo in esercizio successivo, metto
+//		// la data di trasmissione = ad istante successivo a quella di annullamento
+//		 if(reversale.getDt_trasmissione() != null) {
+//		  reversale.setDt_annullamento( DateServices.getNextMinTs( userContext,reversale.getDt_trasmissione()));
+//		 } else {
+//		  reversale.setDt_annullamento( DateServices.getMidDayTs( DateServices.getTs_valido( userContext)));
+//		 }
+//		} else {
+//	 reversale.setDt_annullamento( DateServices.getTs_valido( userContext));
+//		}
 
+		reversale.setDt_annullamento( DateServices.getTs_valido( userContext));
 		
 		if ( reversale.getStato_coge().equals( MandatoBulk.STATO_COGE_C ))
 			reversale.setStato_coge( MandatoBulk.STATO_COGE_R);
