@@ -1323,25 +1323,28 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 
 			lockBulk(userContext, mandato);
 
-			if (DateServices.isAnnoMaggEsScriv(userContext)) {
-				// Se la data di annullamento NON E' NULLA, e siamo in esercizio
-				// successivo, metto
-				// la data di trasmissione = ad istante successivo a quella di
-				// annullamento
-				if (mandato.getDt_trasmissione() != null) {
-					mandato.setDt_annullamento(DateServices.getNextMinTs(
-							userContext, mandato.getDt_trasmissione()));
-				} else {
-					mandato
-					.setDt_annullamento(DateServices
-							.getMidDayTs(DateServices
-									.getTs_valido(userContext)));
-				}
-			} else {
-				mandato.setDt_annullamento(DateServices
-						.getTs_valido(userContext));
-			}
-
+//			if (DateServices.isAnnoMaggEsScriv(userContext)) {
+//				// Se la data di annullamento NON E' NULLA, e siamo in esercizio
+//				// successivo, metto
+//				// la data di trasmissione = ad istante successivo a quella di
+//				// annullamento
+//				if (mandato.getDt_trasmissione() != null) {
+//					mandato.setDt_annullamento(DateServices.getNextMinTs(
+//							userContext, mandato.getDt_trasmissione()));
+//				} else {
+//					mandato
+//					.setDt_annullamento(DateServices
+//							.getMidDayTs(DateServices
+//									.getTs_valido(userContext)));
+//				}
+//			} else {
+//				mandato.setDt_annullamento(DateServices
+//						.getTs_valido(userContext));
+//			//}
+			// modifica 16/01/2017 messa sempre o sysdate o 31/12
+			mandato.setDt_annullamento(DateServices
+					.getTs_valido(userContext));
+		
 			if (mandato.getStato_coge().equals(mandato.STATO_COGE_C))
 				mandato.setStato_coge(mandato.STATO_COGE_R);
 			if (!MandatoBulk.TIPO_REGOLARIZZAZIONE.equals(mandato
