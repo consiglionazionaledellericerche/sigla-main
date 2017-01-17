@@ -388,6 +388,9 @@
 	<columnSet
 		name="restService">
 		<columnFieldProperty
+			name="pg_banca"
+			/>
+		<columnFieldProperty
 			name="ti_pagamento"
 			/>
 		<columnFieldProperty
