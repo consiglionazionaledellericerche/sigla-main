@@ -1850,6 +1850,7 @@ public SQLBuilder selectResiduiForRiaccertamento(UserContext userContext) throws
 	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.CD_CDS_ORIGINE", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getCd_cds());
 	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
 	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_ACR_RES);
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.FL_PGIRO",SQLBuilder.EQUALS, "N");
 
 	sql.addTableToHeader("ACCERTAMENTO");
 	sql.addSQLJoin("ACCERTAMENTO.CD_CDS", "V_OBB_ACC_RIPORTA.CD_CDS");
