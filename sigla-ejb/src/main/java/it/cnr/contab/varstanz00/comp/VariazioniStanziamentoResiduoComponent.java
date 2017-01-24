@@ -412,6 +412,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	 */
 	public it.cnr.jada.bulk.OggettoBulk salvaDefinitivo(UserContext userContext, it.cnr.jada.bulk.OggettoBulk ogettoBulk) throws ComponentException{
 		Var_stanz_resBulk var_stanz_res = (Var_stanz_resBulk)ogettoBulk;
+		var_stanz_res = (Var_stanz_resBulk)modificaConBulk(userContext,var_stanz_res);
+	    var_stanz_res = (Var_stanz_resBulk)inizializzaBulkPerModifica(userContext,var_stanz_res);
 		verificaTotaliDaAccertamentoModifica(userContext, var_stanz_res);
 		var_stanz_res.setStato(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
 		
@@ -434,7 +436,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 //		var_stanz_res.setDt_chiusura(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
 		var_stanz_res.setToBeUpdated();
 		if (var_stanz_res.getAssociazioneCDR().isEmpty()) 
-			throw new ApplicationException("Associare almeno un Centro di Responsabilitï¿½ alla Variazione.");
+			throw new ApplicationException("Associare almeno un Centro di Responsabilità alla Variazione.");
+		
 		var_stanz_res = (Var_stanz_resBulk)super.modificaConBulk(userContext, var_stanz_res);
 		if ((var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
 		    var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO_INT)) &&
