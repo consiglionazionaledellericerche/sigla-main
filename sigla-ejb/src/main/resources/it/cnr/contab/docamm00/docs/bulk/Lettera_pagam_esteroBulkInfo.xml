@@ -216,6 +216,8 @@
 			name="im_pagamento" />
 		<columnFieldProperty
 			name="dt_registrazione" />
+		<columnFieldProperty
+			name="dt_cancellazione" />	
 	</columnSet>	
 	<columnSet
         name="firmaPredisposta">
@@ -235,6 +237,8 @@
 			name="im_pagamento" />
 		<columnFieldProperty
 			name="dt_registrazione" />
+		<columnFieldProperty
+			name="dt_cancellazione" />	
 		<columnFieldProperty
 			name="documento"
 			property="documento"
