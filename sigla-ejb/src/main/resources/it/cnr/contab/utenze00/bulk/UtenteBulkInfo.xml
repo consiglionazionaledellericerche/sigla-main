@@ -253,7 +253,12 @@
 		name="ds_utente" />
 	<columnFieldProperty
 		name="cd_cdr" />
-	
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="dt_fine_validita" />	
+	<columnFieldProperty
+		name="dt_ultimo_accesso" />	
 	<form
 		name="searchtool_utente_gest" >
 		<formFieldProperty
