@@ -2884,6 +2884,45 @@ private MissioneBulk ritornaRimborsoGenerato(UserContext aUC, MissioneBulk missi
 	}
 }
 
+public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException
+{
+	try
+	{	
+		if (missione.getEsercizioObblGeMis() != null && missione.getEsercizioOriObblGeMis() != null && missione.getCdsObblGeMis() != null && missione.getPgObblGeMis() != null){
+			
+			Obbligazione_scad_voceHome scadVoceHome = (Obbligazione_scad_voceHome)getHome( aUC, Obbligazione_scad_voceBulk.class );
+			SQLBuilder sql = scadVoceHome.createSQLBuilder();
+		
+			sql.addSQLClause( "AND", "cd_cds", sql.EQUALS, missione.getCdsObblGeMis());
+			sql.addSQLClause("AND","esercizio",sql.EQUALS,missione.getEsercizioObblGeMis());
+			sql.addSQLClause("AND","esercizio_originale",sql.EQUALS,missione.getEsercizioOriObblGeMis());
+			sql.addSQLClause("AND","pg_obbligazione",sql.EQUALS,missione.getPgObblGeMis());
+			if (missione.getGaeGeMis() != null){
+				sql.addSQLClause("AND","cd_linea_attivita",sql.EQUALS,missione.getGaeGeMis());
+			}
+
+			it.cnr.jada.bulk.BulkList scadVoces = new it.cnr.jada.bulk.BulkList(scadVoceHome.fetchAll( sql ));
+		
+			if((scadVoces != null) && (!scadVoces.isEmpty()) && scadVoces.size() == 1){
+				Obbligazione_scad_voceBulk scadVoce = (Obbligazione_scad_voceBulk)scadVoces.get(0);
+				Obbligazione_scadenzarioBulk scad = scadVoce.getObbligazione_scadenzario();
+				Obbligazione_scadenzarioHome scadHome = (Obbligazione_scadenzarioHome)getHome( aUC, Obbligazione_scadenzarioBulk.class );
+				scad = ((Obbligazione_scadenzarioBulk)scadHome.findByPrimaryKey(scad));
+				ObbligazioneHome obblHome = (ObbligazioneHome)getHome( aUC, ObbligazioneBulk.class );
+				scad.setObbligazione((ObbligazioneBulk)obblHome.findByPrimaryKey(scad.getObbligazione()));
+				return scad;
+			}
+		} else {
+			return null;
+		}
+	} 
+	catch (Throwable e) 
+	{
+		throw handleException(missione, e);
+	}
+	return null;
+}
+
 /**
  * Annulla le modifiche apportate alla missione e ritorna al savepoint impostato in precedenza
  *

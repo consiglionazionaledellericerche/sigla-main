@@ -2,6 +2,7 @@ package it.cnr.contab.missioni00.ejb;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.missioni00.comp.MissioneComponent;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
@@ -1076,6 +1077,24 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Timestamp dataTappa, N
 	pre_component_invocation(aUC, componentObj);
 	try {
 		SQLBuilder result = ((MissioneComponent) componentObj).selectTipo_autoByClause(aUC, dataTappa, nazione, tipoAuto, clauses);
+		component_invocation_succes(aUC, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(aUC, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(aUC, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(aUC, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(aUC, componentObj, e);
+	}
+}
+public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException{
+	pre_component_invocation(aUC, componentObj);
+	try {
+		Obbligazione_scadenzarioBulk result = ((MissioneComponent) componentObj).recuperoObbligazioneDaGemis(aUC, missione);
 		component_invocation_succes(aUC, componentObj);
 		return result;
 	} catch (it.cnr.jada.comp.NoRollbackException e) {

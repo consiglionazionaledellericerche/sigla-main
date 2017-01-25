@@ -3,6 +3,7 @@ package it.cnr.contab.web.rest;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
@@ -120,9 +121,16 @@ public class MissioneResource {
 				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
 		}
     	
-    	final MissioneBulk missione = (MissioneBulk) missioneComponent().inizializzaBulkPerInserimento(
+		
+		Obbligazione_scadenzarioBulk scad = missioneComponent().recuperoObbligazioneDaGemis(userContext, missioneBulk);
+		if (scad != null){
+			missioneBulk.setObbligazione_scadenzario(scad);
+		}
+
+		final MissioneBulk missione = (MissioneBulk) missioneComponent().inizializzaBulkPerInserimento(
     			userContext, 
     			missioneBulk);
+				
     	missione.setToBeCreated();
     	missione.getTappeMissioneColl().stream().forEach(x -> {
     		x.setToBeCreated();
