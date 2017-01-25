@@ -636,7 +636,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	public boolean isInputReadonly() {
 		Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
 		
-		return super.isInputReadonly() || isDeleting() || isModelVoided() || (!isAnnoDiCompetenza() && isEditing()) ||
+		return super.isInputReadonly() || isDeleting() || isModelVoided()|| (!isAnnoDiCompetenza() && isEditing()) ||
 				     (fp != null && ((fp.isPagata() || 
 					 ((isAnnoDiCompetenza() && fp.isRiportata())) ||
 					 fp.isCongelata()) && !isSearching())) ||
@@ -647,7 +647,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
 		return super.isInputReadonly();
 	}
-
 	public boolean isInventariaButtonEnabled() {
 
 		return (isEditing() || isInserting()) && getModel() != null
@@ -1483,7 +1482,13 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
 					s2, "onChange=\"submitForm('doOnCausaleChange')\"",
 					getInputPrefix(), getStatus(), getFieldValidationMap());
-		} else
+		} else if (fp != null && fp.isRiportataInScrivania() && !fp.isPagata()
+				&& isInputReadonly() && s1.equals("sospeso")) {
+			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
+					s2,"" ,
+					getInputPrefix(), getStatus(), getFieldValidationMap());
+		}  
+		else
 			super.writeFormInput(jspwriter, s, s1, flag, s2, s3);
 	}
 
@@ -1529,7 +1534,15 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 			for (CmisObject cmisObject : files) {
 				if (cmisObject.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains("P:sigla_fatture_attachment:trasmissione_fattura")){													
 					TransformerFactory tFactory = TransformerFactory.newInstance();							
-					Source xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
+					Source xslDoc = null;
+					if (fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("FPA12")){
+						xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+					} else if (fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("SDI11")){
+						xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
+					} else {
+						throw new ApplicationException("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
+					}
+				
 					Source xmlDoc = new StreamSource(((Document)cmisObject).getContentStream().getStream());
 					HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
 					OutputStream os = response.getOutputStream();
