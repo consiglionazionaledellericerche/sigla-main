@@ -1,6 +1,8 @@
 package it.cnr.contab.web.rest;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
@@ -42,6 +44,7 @@ public class MissioneResource implements MissioneLocal{
 	@Context SecurityContext securityContext;
 	@EJB CRUDComponentSession crudComponentSession;
 	@EJB MissioneComponentSession missioneComponentSession;
+	@EJB Unita_organizzativaComponentSession unita_organizzativaComponentSession;
 	
     public Response validaMassimaleSpesa(@Context HttpServletRequest request, MassimaleSpesaBulk massimaleSpesaBulk) throws Exception {
 		ResponseBuilder rb;
@@ -100,15 +103,18 @@ public class MissioneResource implements MissioneLocal{
     public Response insert(@Context HttpServletRequest request, MissioneBulk missioneBulk) throws Exception {
     	CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
     	Optional.ofNullable(missioneBulk.getEsercizio()).filter(x -> userContext.getEsercizio().equals(x)).
-    		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Esercizio del contesto diverso da quello della Missione"));
-    	Optional.ofNullable(missioneBulk.getCd_cds()).filter(x -> userContext.getCd_cds().equals(x)).
-			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "CdS del contesto diverso da quello della Missione"));
-    	Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
-			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
-    	
-    	final MissioneBulk missione = (MissioneBulk) missioneComponentSession.inizializzaBulkPerInserimento(
+		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Esercizio del contesto diverso da quello della Missione"));
+		if (!isUoEnte(userContext)){
+	    	Optional.ofNullable(missioneBulk.getCd_cds()).filter(x -> userContext.getCd_cds().equals(x)).
+				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "CdS del contesto diverso da quello della Missione"));
+	    	Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
+				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
+		}
+		missioneBulk.setObbligazione_scadenzario(Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk)).orElse(null));
+		final MissioneBulk missione = (MissioneBulk) missioneComponentSession.inizializzaBulkPerInserimento(
     			userContext, 
     			missioneBulk);
+				
     	missione.setToBeCreated();
     	missione.getTappeMissioneColl().stream().forEach(x -> {
     		x.setToBeCreated();
@@ -135,4 +141,14 @@ public class MissioneResource implements MissioneLocal{
 		nazioneBulk = (NazioneBulk)crudComponentSession.findByPrimaryKey(userContext, nazioneBulk);
 		return nazioneBulk;
 	}
+
+	private Unita_organizzativa_enteBulk getUoEnte(UserContext userContext)
+			throws PersistencyException, ComponentException, java.rmi.RemoteException  {
+		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)unita_organizzativaComponentSession.getUoEnte(userContext);
+		return uoEnte;
+	}	
+
+    private Boolean isUoEnte(UserContext userContext) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+    	return Optional.of(getUoEnte(userContext)).filter(x -> x.getCd_unita_organizzativa().equals(((CNRUserContext)userContext).getCd_unita_organizzativa())).isPresent();
+	}	
 }
