@@ -2,6 +2,7 @@ package it.cnr.contab.web.rest.config;
 
 import it.cnr.contab.utenze00.bp.RESTUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
@@ -140,7 +141,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Exceptio
 	public Response toResponse(Exception exception) {
 		LOGGER.error("ERROR for REST SERVICE", exception);
 		if (exception instanceof RestException)
-			return Response.status(((RestException)exception).getStatus()).entity(Collections.singletonMap("ERROR", exception.getMessage())).build();			
+			return Response.status(((RestException)exception).getStatus()).entity(((RestException)exception).getErrorMap()).build();			
 		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(exception).build();
 	}
 }
