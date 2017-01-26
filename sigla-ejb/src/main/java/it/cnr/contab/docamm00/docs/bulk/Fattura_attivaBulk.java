@@ -734,7 +734,7 @@ AllegatoParentBulk {
 	 * Creation date: (11/07/2001 11.07.07)
 	 * @return it.cnr.jada.bulk.BulkList
 	 */
-	public it.cnr.jada.bulk.BulkList getFattura_attiva_dettColl() {
+	public it.cnr.jada.bulk.BulkList<Fattura_attiva_rigaBulk> getFattura_attiva_dettColl() {
 		return fattura_attiva_dettColl;
 	}
 	/**
@@ -872,7 +872,7 @@ AllegatoParentBulk {
 	 * Creation date: (18/10/2001 14.41.50)
 	 * @return java.util.Collection
 	 */
-	public java.util.Collection getSezionali() {
+	public java.util.Collection<Tipo_sezionaleBulk> getSezionali() {
 		return sezionali;
 	}
 	/**
