@@ -1,6 +1,7 @@
 package it.cnr.contab.web.rest.exception;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +19,7 @@ public class RestException extends RuntimeException{
 	}
 
 	public Map<String, Serializable> getErrorMap() {
-		Map<String, Serializable> result = new HashMap<String, Serializable>();
-		result.put("ERROR", getMessage());
-		return result;
+		return Collections.singletonMap("message", getMessage());
 	}	
 	
 }
