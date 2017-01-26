@@ -7,8 +7,7 @@ import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.web.rest.config.RestException;
-import it.cnr.contab.web.rest.config.SIGLARoles;
+import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.model.MassimaleSpesaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.ValidationException;
@@ -24,16 +23,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
@@ -42,16 +36,13 @@ import javax.ws.rs.core.SecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Path("/missioni")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@RolesAllowed(SIGLARoles.MISSIONI)
-public class MissioneResource {
+@Stateless
+public class MissioneResource implements MissioneLocal{
     private final Logger LOGGER = LoggerFactory.getLogger(MissioneResource.class);
 	@Context SecurityContext securityContext;
-
-    @POST
-    @Path(value = "/validaMassimaleSpesa")
+	@EJB CRUDComponentSession crudComponentSession;
+	@EJB MissioneComponentSession missioneComponentSession;
+	
     public Response validaMassimaleSpesa(@Context HttpServletRequest request, MassimaleSpesaBulk massimaleSpesaBulk) throws Exception {
 		ResponseBuilder rb;
     	try{
@@ -66,7 +57,7 @@ public class MissioneResource {
 
 			NazioneBulk nazioneBulk = getNazione(userContext, massimaleSpesaBulk.getNazione()); 
         	if (massimaleSpesaBulk.getCdTipoSpesa() != null){
-        		List<?> lista = missioneComponent().recuperoTipiSpesa(userContext, dataMissione, massimaleSpesaBulk.getInquadramento(), 
+        		List<?> lista = missioneComponentSession.recuperoTipiSpesa(userContext, dataMissione, massimaleSpesaBulk.getInquadramento(), 
         				nazioneBulk.getPg_nazione(), false, massimaleSpesaBulk.getCdTipoSpesa());
     			if (lista != null && !lista.isEmpty()){
     	    		tipoSpesa = (Missione_tipo_spesaBulk)lista.get(0);
@@ -78,7 +69,7 @@ public class MissioneResource {
 
     		Missione_tipo_pastoBulk tipoPasto = null;
     		if (massimaleSpesaBulk.getCdTipoPasto() != null){
-    			List<?> lista = missioneComponent().recuperoTipi_pasto(userContext, dataMissione, massimaleSpesaBulk.getInquadramento(), nazioneBulk, massimaleSpesaBulk.getCdTipoPasto(), null);    			
+    			List<?> lista = missioneComponentSession.recuperoTipi_pasto(userContext, dataMissione, massimaleSpesaBulk.getInquadramento(), nazioneBulk, massimaleSpesaBulk.getCdTipoPasto(), null);    			
     			if (lista != null && !lista.isEmpty()){
     	    		tipoPasto = (Missione_tipo_pastoBulk)lista.get(0);
     			}
@@ -95,7 +86,7 @@ public class MissioneResource {
     		dettaglio.setIm_spesa_divisa(dettaglio.getIm_spesa_euro());
     		dettaglio.setCd_divisa_spesa(massimaleSpesaBulk.getDivisa());
         	try{
-        		missioneComponent().validaMassimaliSpesa(userContext, missioneBulk, dettaglio);
+        		missioneComponentSession.validaMassimaliSpesa(userContext, missioneBulk, dettaglio);
         	} catch (ValidationException e) {
         		throw new RestException(Status.BAD_REQUEST, e.getMessage());
         	} 	
@@ -106,7 +97,6 @@ public class MissioneResource {
     	return rb.build();		
 	}
     
-    @PUT
     public Response insert(@Context HttpServletRequest request, MissioneBulk missioneBulk) throws Exception {
     	CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
     	Optional.ofNullable(missioneBulk.getEsercizio()).filter(x -> userContext.getEsercizio().equals(x)).
@@ -116,7 +106,7 @@ public class MissioneResource {
     	Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
 			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
     	
-    	final MissioneBulk missione = (MissioneBulk) missioneComponent().inizializzaBulkPerInserimento(
+    	final MissioneBulk missione = (MissioneBulk) missioneComponentSession.inizializzaBulkPerInserimento(
     			userContext, 
     			missioneBulk);
     	missione.setToBeCreated();
@@ -133,24 +123,16 @@ public class MissioneResource {
     		x.setToBeCreated();
     		x.setMissione(missione);
     	}));
-    	MissioneBulk missioneCreated = (MissioneBulk) missioneComponent().creaConBulk(userContext, missione);
+    	MissioneBulk missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missione);
     	missioneCreated.setToBeUpdated();
     	missioneCreated.setMissioneIniziale(missioneCreated);
-    	missioneCreated = (MissioneBulk) missioneComponent().creaConBulk(userContext, missioneCreated);
+    	missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missioneCreated);
     	return Response.status(Status.CREATED).entity(missioneCreated).build();
     }
 
-	private MissioneComponentSession missioneComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
-		return (MissioneComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession");
-	}
-
-	private CRUDComponentSession getComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
-		return (CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
-	}
-
     private NazioneBulk getNazione(UserContext userContext, Long nazione) throws PersistencyException, ComponentException, RemoteException, EJBException {
 		NazioneBulk nazioneBulk = new NazioneBulk(nazione);
-		nazioneBulk = (NazioneBulk)getComponent().findByPrimaryKey(userContext, nazioneBulk);
+		nazioneBulk = (NazioneBulk)crudComponentSession.findByPrimaryKey(userContext, nazioneBulk);
 		return nazioneBulk;
 	}
 }
