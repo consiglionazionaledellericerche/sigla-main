@@ -37,4 +37,5 @@ java.lang.String isAnnullabile(UserContext param0, MandatoBulk param1)throws it.
 it.cnr.contab.doccont00.core.bulk.MandatoBulk annullaMandato(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1,boolean param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;	
 java.lang.Boolean esisteAnnullodaRiemettereNonCollegato(it.cnr.jada.UserContext userContext,Integer esercizio, String cds )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.Boolean isMandatoCollegatoAnnullodaRiemettere(it.cnr.jada.UserContext userContext,it.cnr.contab.doccont00.core.bulk.MandatoBulk mandato )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+java.lang.Boolean isVerificataModPagMandato(it.cnr.jada.UserContext userContext,V_mandato_reversaleBulk mandato_reversaleBulk )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

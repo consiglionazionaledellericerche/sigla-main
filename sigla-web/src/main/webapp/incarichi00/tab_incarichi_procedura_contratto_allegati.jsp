@@ -49,7 +49,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-	doPrint('<%=(allegato==null?null:allegato.getDownloadUrl())%>');
+	doPrint('<%=(allegato==null?null:allegato.getDownloadUrl().replace("'", "_"))%>');
 }
 </script>
 
