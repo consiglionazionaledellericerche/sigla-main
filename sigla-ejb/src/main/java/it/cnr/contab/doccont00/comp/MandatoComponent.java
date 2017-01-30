@@ -6637,4 +6637,28 @@ public Boolean isMandatoCollegatoAnnullodaRiemettere(UserContext userContext,
 	}
 }
 
+public Boolean isVerificataModPagMandato(UserContext userContext,
+		V_mandato_reversaleBulk mandato_reversaleBulk) throws ComponentException {
+	try{
+	UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
+	SQLBuilder sql = getHome( userContext, Rif_modalita_pagamentoBulk.class ).createSQLBuilder();
+	sql.addClause(FindClause.AND, "fl_conto_bi", SQLBuilder.EQUALS, true);
+	sql.addTableToHeader("MANDATO_RIGA");
+	sql.addSQLJoin("MANDATO_RIGA.CD_MODALITA_PAG", "RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
+	sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.CD_CDS", SQLBuilder.EQUALS, mandato_reversaleBulk.getCd_cds());		
+	sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.ESERCIZIO", SQLBuilder.EQUALS, mandato_reversaleBulk.getEsercizio());		
+	sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.PG_MANDATO", SQLBuilder.EQUALS, mandato_reversaleBulk.getPg_documento_cont());		
+	if(sql.executeCountQuery(getConnection(userContext))>0 && utente.isSupervisore()) 
+		return Boolean.TRUE;
+	else if(sql.executeCountQuery(getConnection(userContext))==0)
+		return Boolean.TRUE;
+	else
+		return Boolean.FALSE;
+	} catch (SQLException e) {
+		throw handleException(e);
+	}catch (PersistencyException e) {
+		throw handleException(e);
+	}
+}
+
 }
