@@ -854,6 +854,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			OutputStream outputStream = new FileOutputStream(fileNew);
 			IOUtils.copy(pdgVariazioniService.getResource(node), outputStream);
 			outputStream.close();			
+			caricaDatiPEC(context);
 			List<String> lista = datiPEC.emailListTotale();
 			if (!lista.isEmpty())
 				SendPecMail.sendMail(datiPEC.getOggetto(), datiPEC.getOggetto(), fileNew,
