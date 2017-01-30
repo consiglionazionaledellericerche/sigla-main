@@ -230,6 +230,11 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a sospeso, pertanto è stato escluso dalla selezione.";
 						continue;
 					}
+					if(v_mandato_reversaleBulk.getStato().compareTo( MandatoBulk.STATO_MANDATO_ANNULLATO)!=0 &&!Utility.createMandatoComponentSession().isVerificataModPagMandato(actioncontext.getUserContext(), 
+							(V_mandato_reversaleBulk) statoTrasmissione)){
+						message += "\nModalità di pagamento non valida presente sul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+", pertanto è stato escluso dalla selezione.";						
+							continue;
+					}
 					for (StatoTrasmissione reversaleCollegata : distintaCassiereComponentSession.findReversaliCollegate(actioncontext.getUserContext(), v_mandato_reversaleBulk)) {
 						if (!Utility.createReversaleComponentSession().isCollegamentoSiopeCompleto(
 								actioncontext.getUserContext(),new ReversaleIBulk(reversaleCollegata.getCd_cds(),reversaleCollegata.getEsercizio(),reversaleCollegata.getPg_documento_cont()))) {
