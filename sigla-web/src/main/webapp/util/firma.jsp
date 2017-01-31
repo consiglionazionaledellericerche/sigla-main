@@ -24,7 +24,7 @@ function doScaricaFile() {
    altezFinestra=5;
    sinistra=(screen.width)/2;
    alto=(screen.height)/2;
-   window.open("<%=(doc==null?null:doc.getDownloadUrl().replace("'", "_"))%>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no,resizable=yes")
+   window.open("<%=(doc==null?null:doc.getDownloadUrl())%>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no,resizable=yes")
 }
 </script>
 
