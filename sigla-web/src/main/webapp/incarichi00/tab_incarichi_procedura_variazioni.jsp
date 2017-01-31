@@ -33,7 +33,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-	doPrint('<%=(variazione==null?null:variazione.getDownloadUrl().replace("'", "_"))%>');
+	doPrint('<%=(variazione==null?null:variazione.getDownloadUrl())%>');
 }
 </script>
 
