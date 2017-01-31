@@ -142,6 +142,6 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Exceptio
 		if (exception.getCause() instanceof RestException)
 			return Response.status(((RestException)exception.getCause()).getStatus()).entity(((RestException)exception.getCause()).getErrorMap()).build();			
 		LOGGER.error("ERROR for REST SERVICE", exception);
-		return Response.status(Status.BAD_REQUEST).entity(exception).build();
+		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(exception).build();
 	}
 }
