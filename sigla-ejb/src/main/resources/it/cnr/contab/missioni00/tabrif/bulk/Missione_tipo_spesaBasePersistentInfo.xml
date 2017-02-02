@@ -38,12 +38,6 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="CD_DIVISA"
-			propertyName="cd_divisa"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="false" />
-		<columnMapping
 			columnName="UTCR"
 			propertyName="utcr"
 			sqlTypeName="VARCHAR"
