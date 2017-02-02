@@ -2,7 +2,6 @@ package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-
 public class TrovatoBulk extends it.cnr.jada.bulk.OggettoBulk {
 
 	private CdsBulk cds;

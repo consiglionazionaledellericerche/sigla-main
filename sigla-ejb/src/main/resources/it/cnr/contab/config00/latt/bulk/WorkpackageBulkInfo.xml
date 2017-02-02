@@ -599,6 +599,7 @@
 		<columnFieldProperty name="pg_progetto"/>	
 		<columnFieldProperty name="esercizio_inizio"/>	
 		<columnFieldProperty name="esercizio_fine"/>	
+		<columnFieldProperty name="cd_responsabile_terzo"/>	
 	</columnSet>
 
 	<columnSet name="columnSetPerAccertamento">

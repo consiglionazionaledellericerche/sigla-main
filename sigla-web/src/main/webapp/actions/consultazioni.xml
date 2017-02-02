@@ -171,6 +171,21 @@
 	<action path="/ConsCdSAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
 		needExistingSession="false">
 	</action>
+	<action path="/ConsMissioneRimborsoKmAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
+	<action path="/ConsMissioneTipoPastoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
+	<action path="/ConsMissioneTipoSpesaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
+	<action path="/ConsBancaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
+	<action path="/ConsModalitaPagamentoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
+	<action path="/ConsMandatoRevRestAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
+	<action path="/ConsDivisaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
+		needExistingSession="false">
+	</action>
 	<action path="/ConsNazioneAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
 		needExistingSession="false">
 	</action>
@@ -1651,5 +1666,66 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsDocammAnagAction" />
 	</businessProcess>
-	
+	<businessProcess name="ConsModalitaPagamentoBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsModalitaPagamentoAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="ConsBancaBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.anagraf00.core.bulk.BancaBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsBancaAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="MissioneTipoSpesaBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsMissioneTipoSpesaAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="MissioneRimborsoBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsMissioneRimborsoKmAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="MissioneTipoPastoBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsMissioneTipoPastoAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="ConsDivisaBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsDivisaAction" />
+	</businessProcess>
+	<businessProcess name="ConsMandatoRevRestBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsMandatoRevRestAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
 </action-mappings>
