@@ -29,7 +29,8 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 
 	private BulkList risultati;
 	private BulkList dettagliPostIt = new BulkList();
-
+	private java.lang.Integer esercizio;
+	
 	private final static java.util.Dictionary ti_gestioneKeys;
 	
 	static {
@@ -638,5 +639,11 @@ public void validate() throws ValidationException
 	
 	public boolean isUtilizzata2016() {
 		return utilizzata2016;
+	}
+	public java.lang.Integer getEsercizio() {
+		return esercizio;
+	}
+	public void setEsercizio(java.lang.Integer esercizio) {
+		this.esercizio = esercizio;
 	}
 }

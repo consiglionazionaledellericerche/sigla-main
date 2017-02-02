@@ -1,5 +1,7 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -50,6 +52,7 @@ public int primaryKeyHashCode() {
 public void setPg_progetto(java.lang.Integer pg_progetto) {
 	this.pg_progetto = pg_progetto;
 }
+@JsonIgnore
 public void setPg_progetto(java.math.BigDecimal pg_progetto) {
 	this.pg_progetto = new java.lang.Integer(pg_progetto.intValue());
 }
