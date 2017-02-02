@@ -156,7 +156,7 @@ public void completeFrom(
  *
  * @return Il valore della proprietà 'accertamento_scadenzarioColl'
  */
-public it.cnr.jada.bulk.BulkList getAccertamento_scadenzarioColl() {
+public it.cnr.jada.bulk.BulkList<Accertamento_scadenzarioBulk> getAccertamento_scadenzarioColl() {
 	return accertamento_scadenzarioColl;
 }
 public BulkCollection[] getBulkLists() {
