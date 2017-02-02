@@ -385,6 +385,55 @@
 			/>
 	</columnSet>
 
+	<columnSet
+		name="restService">
+		<columnFieldProperty
+			name="pg_banca"
+			/>
+		<columnFieldProperty
+			name="ti_pagamento"
+			/>
+		<columnFieldProperty
+			name="abi"
+			/>
+		<columnFieldProperty
+			name="cab"
+			/>
+		<columnFieldProperty
+			name="numero_conto"
+			/>
+		<columnFieldProperty
+			name="intestazione"
+			/>
+		<columnFieldProperty
+			name="codice_iban"
+			/>
+		<columnFieldProperty
+			name="codice_swift"
+			/>
+		<columnFieldProperty
+			name="fl_cancellato"
+			/>
+		<columnFieldProperty
+			name="fl_cc_cds"
+			/>
+		<columnFieldProperty
+			name="cin"
+			/>
+		<columnFieldProperty
+			name="quietanza"
+			/>
+		<columnFieldProperty
+			name="cd_terzo_delegato"
+			/>
+		<columnFieldProperty
+			name="ds_terzo_delegato"
+			/>	
+		<columnFieldProperty
+			name="ds_abicab"
+			/>	
+	</columnSet>
+
 	<formFieldProperty
 		name="abi"
 		/>
