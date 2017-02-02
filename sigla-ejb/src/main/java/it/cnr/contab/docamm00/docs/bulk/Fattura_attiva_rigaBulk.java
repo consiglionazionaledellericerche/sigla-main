@@ -458,14 +458,14 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 	public TrovatoBulk getTrovato() {
 		return trovato;
 	}
-	public java.lang.Integer getPg_trovato() {
+	public java.lang.Long getPg_trovato() {
 		if (this.getTrovato() == null)
 			return null;
-		return this.getTrovato().getNsrif();
+		return this.getTrovato().getPg_trovato();
 	}
-	public void setPg_trovato(java.lang.Integer pg_trovato) {
+	public void setPg_trovato(java.lang.Long pg_trovato) {
 		if (this.getTrovato() != null)
-			this.getTrovato().setNsrif(pg_trovato);
+			this.getTrovato().setPg_trovato(pg_trovato);
 	}
 	public Boolean getCollegatoCapitoloPerTrovato() {
 		return collegatoCapitoloPerTrovato;
