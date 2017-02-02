@@ -1,14 +1,14 @@
 package it.cnr.contab.client.docamm;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
 
 public class FatturaAttiva  implements Serializable{
-
+	private static final long serialVersionUID = 1L;
 	public FatturaAttiva() {
 		super();
 	}
@@ -22,9 +22,9 @@ public class FatturaAttiva  implements Serializable{
 		this.esercizio = esercizio;
 	}
 
-	private java.util.ArrayList<FatturaAttivaRiga> righefat;
+	private List<FatturaAttivaRiga> righefat;
 	
-	private java.util.ArrayList<FatturaAttivaIntra> righeIntra;
+	private List<FatturaAttivaIntra> righeIntra;
 	
 	private String cod_errore;
 	private String desc_errore;
@@ -274,11 +274,11 @@ public class FatturaAttiva  implements Serializable{
 		this.cd_modalita_pag_uo_cds = cd_modalita_pag_uo_cds;
 	}
 
-	public ArrayList<FatturaAttivaRiga> getRighefat() {
+	public List<FatturaAttivaRiga> getRighefat() {
 		return righefat;
 	}
 	@XmlElement(required=true)
-	public void setRighefat(ArrayList<FatturaAttivaRiga> righefat) {
+	public void setRighefat(List<FatturaAttivaRiga> righefat) {
 		this.righefat = righefat;
 	}
 
@@ -332,10 +332,10 @@ public class FatturaAttiva  implements Serializable{
 	public void setTi_bene_servizio(String ti_bene_servizio) {
 		this.ti_bene_servizio = ti_bene_servizio;
 	}
-	public java.util.ArrayList<FatturaAttivaIntra> getRigheIntra() {
+	public List<FatturaAttivaIntra> getRigheIntra() {
 		return righeIntra;
 	}
-	public void setRigheIntra(java.util.ArrayList<FatturaAttivaIntra> righeIntra) {
+	public void setRigheIntra(List<FatturaAttivaIntra> righeIntra) {
 		this.righeIntra = righeIntra;
 	}
 	public String getFl_pagamento_anticipato() {
