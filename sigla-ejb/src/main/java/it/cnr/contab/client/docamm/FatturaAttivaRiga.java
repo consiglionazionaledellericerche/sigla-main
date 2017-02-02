@@ -1,10 +1,14 @@
 package it.cnr.contab.client.docamm;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
-public class FatturaAttivaRiga {
+public class FatturaAttivaRiga implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private java.lang.Boolean fl_iva_forzata;
 	private String cd_voce;
 	private String cd_tariffario;
@@ -22,7 +26,7 @@ public class FatturaAttivaRiga {
 	private Long progressivo_riga;
 	private String ds_accertamento;
 	private String ds_obbligazione;
-	private java.util.ArrayList<FatturaAttivaScad> righescadvoc;
+	private List<FatturaAttivaScad> righescadvoc;
 	private Long pg_obbligazione_scadenzario;
 	private Long pg_obbligazione;
 	private Long pg_accertamento_scadenzario;
@@ -126,11 +130,11 @@ public class FatturaAttivaRiga {
 	public void setDs_accertamento(String ds_accertamento) {
 		this.ds_accertamento = ds_accertamento;
 	}
-	public java.util.ArrayList<FatturaAttivaScad> getRighescadvoc() {
+	public List<FatturaAttivaScad> getRighescadvoc() {
 		return righescadvoc;
 	}
 	@XmlElement(required=true)
-	public void setRighescadvoc(java.util.ArrayList<FatturaAttivaScad> righescadvoc) {
+	public void setRighescadvoc(List<FatturaAttivaScad> righescadvoc) {
 		this.righescadvoc = righescadvoc;
 	}
 	public String getDs_obbligazione() {

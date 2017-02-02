@@ -170,7 +170,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 				testata = (Fattura_attivaBulk) fatturaAttivaSingolaComponentSession.inizializzaBulkPerInserimento(userContext,testata);    	    		
 				fatturaAttivaSingolaComponentSession.setSavePoint(userContext,FATTURA_AUTOMATICA);                
 				// potrebbe non essere univoca per tipologia
-				Optional.of(fatturaAttivaSingolaComponentSession.VerificaDuplicati(userContext, testata)).filter(x -> x.equals(Boolean.TRUE))
+				Optional.of(fatturaAttivaSingolaComponentSession.VerificaDuplicati(userContext, testata)).filter(x -> x.equals(Boolean.FALSE))
 				.orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_102));
 
 				testata.setTipo_sezionale(new Tipo_sezionaleBulk(fattura.getCd_tipo_sezionale()));
@@ -633,7 +633,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 								obb_scadenza.getObbligazione_scad_voceColl().add((obb_scad_voce));
 							}
 							//intrastat
-							java.util.ArrayList<FatturaAttivaIntra> listOfIntra = fattura.getRigheIntra();
+							List<FatturaAttivaIntra> listOfIntra = fattura.getRigheIntra();
 							boolean obbligatorio = testata.getFattura_attiva_dettColl().stream().filter(
 									x -> Optional.ofNullable(x.getBene_servizio()).get().getFl_obb_intrastat_ven() == true
 									).findAny().isPresent();
