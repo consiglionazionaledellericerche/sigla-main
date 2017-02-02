@@ -62,11 +62,13 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.soap.MessageFactory;
@@ -85,6 +87,7 @@ import org.jboss.ws.api.annotation.WebContext;
 @WebService(endpointInterface="it.cnr.contab.docamm00.ejb.FatturaAttivaComponentSessionWS")
 @DeclareRoles({"WSUserRole","IITRole"})
 @WebContext(authMethod = "WSSE", contextRoot = "SIGLA-SIGLAEJB")
+@HandlerChain(file = "/it/cnr/contab/handler/handlers.xml")
 public class FatturaAttivaComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	@EJB Configurazione_cnrComponentSession configurazione_cnrComponentSession;
@@ -316,7 +319,7 @@ public class FatturaAttivaComponentWS {
 			          testata.setCambio(fat.getCambio());
 			     	  testata.setNote(fat.getNote());
 			          testata.validate();
-			          java.util.ArrayList<FatturaAttivaRiga> listOfRighe =fat.getRighefat(); 
+			          List<FatturaAttivaRiga> listOfRighe =fat.getRighefat(); 
 			          for(int r=0; r<listOfRighe.size() ; r++){
 			        	  FatturaAttivaRiga fatr = (FatturaAttivaRiga)listOfRighe.get(r);
 			        	  if ((testata.getTi_fattura().compareTo(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)==0))
@@ -551,7 +554,7 @@ public class FatturaAttivaComponentWS {
 		    	                    	    	fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_108.toString());
 		    	                    }
 
-		    	                    java.util.ArrayList<FatturaAttivaScad> listOfScad =fatr.getRighescadvoc(); 
+		    	                    List<FatturaAttivaScad> listOfScad =fatr.getRighescadvoc(); 
 	    	                        for(int v=0; v<listOfScad.size() ; v++){
 	    	                        	FatturaAttivaScad fatrs=(FatturaAttivaScad) listOfScad.get(v);
 	    	                        	nome=Controllo_campo_errore(fatrs);
@@ -600,7 +603,7 @@ public class FatturaAttivaComponentWS {
 				                    }
 	                    	        //intrastat
 	                    	        
-	                    	        java.util.ArrayList<FatturaAttivaIntra> listOfIntra =fat.getRigheIntra();
+	                    	        List<FatturaAttivaIntra> listOfIntra =fat.getRigheIntra();
 	                    	        boolean obbligatorio=false;
 	                    	        for (Iterator i = testata.getFattura_attiva_dettColl().iterator(); i.hasNext();) {
                     	    			Fattura_attiva_rigaBulk dettaglio = (Fattura_attiva_rigaBulk)i.next();
@@ -752,7 +755,7 @@ public class FatturaAttivaComponentWS {
 		    	                    	if((fatr.getEsercizio_contratto()!=null || fatr.getStato_contratto()!=null || fatr.getPg_contratto()!=null) && (fatr.getEsercizio_contratto()==null && fatr.getStato_contratto()==null && fatr.getPg_contratto()==null))	
 		    	                    	    	fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_108.toString());   
 		    	                    }
-			 	    	           java.util.ArrayList <FatturaAttivaScad> listOfScad =fatr.getRighescadvoc(); 
+			 	    	           List <FatturaAttivaScad> listOfScad =fatr.getRighescadvoc(); 
 		    		                for(int v=0; v<listOfScad.size() ; v++){
 		    		                   FatturaAttivaScad fatrs=(FatturaAttivaScad) listOfScad.get(v);
 		    		                   nome = Controllo_campo_errore(fatrs);
@@ -789,7 +792,7 @@ public class FatturaAttivaComponentWS {
 		    		                }
 	                    	        //intrastat
 	                    	        
-	                    	        java.util.ArrayList<FatturaAttivaIntra> listOfIntra =fat.getRigheIntra();
+	                    	        List<FatturaAttivaIntra> listOfIntra =fat.getRigheIntra();
 	                    	        boolean obbligatorio=false;
 	                    	        for (Iterator i = testata.getFattura_attiva_dettColl().iterator(); i.hasNext();) {
                     	    			Fattura_attiva_rigaBulk dettaglio = (Fattura_attiva_rigaBulk)i.next();
@@ -1141,7 +1144,7 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
        	if (fat.getPg_banca_uo_cds()==null)
        		return new String("Progressivo Banca UO non inserito.");
        	if (fat.getCd_modalita_pag_uo_cds()==null)
-       		return new String("Modalit‡ pagamento Uo non inserita.");
+       		return new String("Modalit√† pagamento Uo non inserita.");
        	if (fat.getCd_divisa()==null)
        		return new String("Divisa non inserita.");
        	if (fat.getCambio()==null)
@@ -1174,7 +1177,7 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
     	  if (riga.getCd_tariffario()==null &&
         	  riga.getPrezzo_unitario()!=null &&
         	  riga.getQuantita()==null)
-        		  return new String("Quantit‡ non inserita.");
+        		  return new String("Quantit√† non inserita.");
     	  if(riga.getRighescadvoc()==null||riga.getRighescadvoc().size()==0)
          		return new String("Righe Scadenza voce non inserite.");      	
     	  else
@@ -1192,9 +1195,9 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
       }else if (intra!=null){
     	  if(intra.getCod_erogazione()!=null ||intra.getCod_incasso()!=null||intra.getId_cpa()!=null ){
 		  	  if(intra.getCod_erogazione()==null)
-		  		  return new String("Modalit‡ erogazione non inserita.");
+		  		  return new String("Modalit√† erogazione non inserita.");
 		  	  if(intra.getCod_incasso()==null)
-		  		  return new String("Modalit‡ incasso non inserita.");
+		  		  return new String("Modalit√† incasso non inserita.");
 		  	  if(intra.getId_cpa()==null)
 			  		return new String("Id servizio non inserito.");
     	  }
@@ -1207,7 +1210,7 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
     		  if(intra.getCd_provincia()==null)
     			  return new String("Provincia non inserita.");
     		  if(intra.getCd_trasporto()==null)
-    			  return new String("Modalit‡ trasporto non inserita.");
+    			  return new String("Modalit√† trasporto non inserita.");
     		  if(intra.getCd_consegna()==null)
     			  return new String("Condizione consegna non inserita.");
     	  }
