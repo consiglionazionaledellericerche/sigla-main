@@ -76,7 +76,7 @@ and   ($P{P_VOCE} IS NULL or
            FROM ass_evold_evnew b
            WHERE b.ti_gestione_old = ACC.TI_GESTIONE
            AND   b.cd_elemento_voce_old = ACC.CD_ELEMENTO_VOCE
-           AND   b.esercizio_new >= 2016
+           AND   b.esercizio_new = 2016
            AND   b.ti_gestione_new = ACC.TI_GESTIONE
            AND   rownum < 2), ACC.CD_ELEMENTO_VOCE) = $P{P_VOCE})
 and   ASV.CD_CDS = DOC.CD_CDS_ACCERTAMENTO
@@ -163,7 +163,7 @@ and   ($P{P_VOCE} IS NULL OR
            FROM ass_evold_evnew b
            WHERE b.ti_gestione_old = OBB.TI_GESTIONE
            AND   b.cd_elemento_voce_old = OBB.CD_ELEMENTO_VOCE
-           AND   b.esercizio_new >= 2016
+           AND   b.esercizio_new = 2016
            AND   b.ti_gestione_new = OBB.TI_GESTIONE
            AND   rownum < 2),OBB.CD_ELEMENTO_VOCE) = $P{P_VOCE})
 and   OSV.CD_CDS = DOC.CD_CDS_OBBLIGAZIONE

@@ -76,7 +76,7 @@ and   ($P{P_VOCE} IS NULL or
            FROM ass_evold_evnew C
            WHERE C.ti_gestione_old = A.TI_GESTIONE
            AND   C.cd_elemento_voce_old = A.CD_ELEMENTO_VOCE
-           AND   C.esercizio_new >= 2016
+           AND   C.esercizio_new = 2016
            AND   C.ti_gestione_new = A.TI_GESTIONE
            AND   rownum < 2), A.CD_ELEMENTO_VOCE) = $P{P_VOCE})
 UNION ALL
@@ -100,7 +100,7 @@ and   ($P{P_VOCE} IS NULL or
            FROM ass_evold_evnew C
            WHERE C.ti_gestione_old = A.TI_GESTIONE
            AND   C.cd_elemento_voce_old = A.CD_ELEMENTO_VOCE
-           AND   C.esercizio_new >= 2016
+           AND   C.esercizio_new = 2016
            AND   C.ti_gestione_new = A.TI_GESTIONE
            AND   rownum < 2), A.CD_ELEMENTO_VOCE) = $P{P_VOCE})) A
 GROUP BY  A.ESERCIZIO_VAR, A.PG_VAR, A.DS_VAR]]>
