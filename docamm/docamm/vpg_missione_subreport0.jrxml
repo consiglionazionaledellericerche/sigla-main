@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_missione_subreport0" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_missione_subreport0" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="24da6c44-b0c6-4155-ae28-148ae11bac7a">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="89"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -142,7 +142,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="39" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals(new Integer(1)))]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-1" style="TNR18BOLD" x="5" y="0" width="585" height="22"/>
+					<reportElement key="staticText-1" style="TNR18BOLD" x="5" y="0" width="585" height="22" uuid="4b3f6dc9-2976-4c9f-bbdb-69b30e396054"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -153,7 +153,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 					<text><![CDATA[CONSIGLIO NAZIONALE DELLE RICERCHE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-2" style="TNR12BOLD" x="5" y="25" width="585" height="14"/>
+					<reportElement key="staticText-2" style="TNR12BOLD" x="5" y="25" width="585" height="14" uuid="bfd53324-2607-4d2f-9fb6-21e5ee44df0a"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -175,7 +175,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="15" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean(!$V{PAGE_NUMBER}.equals(new Integer(1)))]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-3" style="TNR12BOLD" x="5" y="1" width="585" height="14"/>
+					<reportElement key="staticText-3" style="TNR12BOLD" x="5" y="1" width="585" height="14" uuid="13c0a320-a4f2-48ad-8596-d1b6f2e9cb14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -220,25 +220,25 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 			<band height="66" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-250" x="2" y="64" width="575" height="1"/>
+					<reportElement key="line-250" x="2" y="64" width="575" height="1" uuid="1ef2b672-ca4b-4bde-88c7-72aa15784cc1"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-251" x="2" y="0" width="1" height="65"/>
+					<reportElement key="line-251" x="2" y="0" width="1" height="65" uuid="4cab4c0a-2972-4e3d-b060-53d65e676fcd"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-252" x="398" y="33" width="179" height="1"/>
+					<reportElement key="line-252" x="398" y="33" width="179" height="1" uuid="91db2c25-4a76-4b9d-86f8-2253bf7f2d59"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-96" style="TNR8BOLD" x="401" y="19" width="98" height="12"/>
+					<reportElement key="staticText-96" style="TNR8BOLD" x="401" y="19" width="98" height="12" uuid="d0a60b0b-1915-48cb-abba-11065d74ffef"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -249,13 +249,13 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 					<text><![CDATA[TOTALE SPESE + KM]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-253" x="576" y="0" width="1" height="65"/>
+					<reportElement key="line-253" x="576" y="0" width="1" height="65" uuid="f897d3a8-ecc1-4b4a-b2d9-a82d83ff9f10"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-85" style="TNR8BOLD" x="504" y="19" width="69" height="12"/>
+					<reportElement key="textField-85" style="TNR8BOLD" x="504" y="19" width="69" height="12" uuid="b2c45628-5cc2-43ce-a261-b916af35e81e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -263,28 +263,28 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_SPESE}.add($F{IM_SPESE_ANTICIPATE})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_SPESE}.add($F{IM_SPESE_ANTICIPATE})]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-258" x="502" y="18" width="1" height="47"/>
+					<reportElement key="line-258" x="502" y="18" width="1" height="47" uuid="b0e5faf6-9b8f-4161-93c8-a67cbf893f43"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-259" x="398" y="18" width="179" height="1"/>
+					<reportElement key="line-259" x="398" y="18" width="179" height="1" uuid="8af1cf0b-07d7-4f75-ac64-3ad8dac90d4b"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-260" x="398" y="18" width="1" height="47"/>
+					<reportElement key="line-260" x="398" y="18" width="1" height="47" uuid="9ce8d41d-68d1-4a04-b400-6331d2d9d9fe"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-97" style="TNR8BOLD" x="401" y="35" width="98" height="12"/>
+					<reportElement key="staticText-97" style="TNR8BOLD" x="401" y="35" width="98" height="12" uuid="72cc0d45-575b-4661-a7b7-73e2ca294f82"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -295,7 +295,7 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 					<text><![CDATA[- SPESE ANTICIPATE]]></text>
 				</staticText>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-86" style="TNR8BOLD" x="504" y="35" width="69" height="12"/>
+					<reportElement key="textField-86" style="TNR8BOLD" x="504" y="35" width="69" height="12" uuid="82b67771-9dd5-440a-91c4-e6acbc3241e7"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -303,10 +303,10 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_SPESE_ANTICIPATE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_SPESE_ANTICIPATE}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-98" style="TNR8BOLD" x="401" y="51" width="98" height="12"/>
+					<reportElement key="staticText-98" style="TNR8BOLD" x="401" y="51" width="98" height="12" uuid="17b8101b-3e9b-49c3-83a9-8cd941278c56"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -317,7 +317,7 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 					<text><![CDATA[TOTALE]]></text>
 				</staticText>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-87" style="TNR8BOLD" x="504" y="51" width="69" height="12"/>
+					<reportElement key="textField-87" style="TNR8BOLD" x="504" y="51" width="69" height="12" uuid="b00c79ad-d357-40d5-9ede-7297515b9828"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -325,10 +325,10 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_SPESE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_SPESE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-261" x="398" y="49" width="179" height="1"/>
+					<reportElement key="line-261" x="398" y="49" width="179" height="1" uuid="21a8846e-aec0-4d45-a79e-e4d72b65b524"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -345,25 +345,25 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 			<band height="120" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-244" mode="Transparent" x="2" y="0" width="575" height="1" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-244" mode="Transparent" x="2" y="0" width="575" height="1" isRemoveLineWhenBlank="true" uuid="3e4e398b-b2c4-473f-bf42-d26fc70e50a8"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-245" x="2" y="47" width="292" height="1"/>
+					<reportElement key="line-245" x="2" y="47" width="292" height="1" uuid="c8dca786-9364-47cf-b721-b7e50a933c0d"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-246" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="47" width="1" height="70"/>
+					<reportElement key="line-246" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="47" width="1" height="70" uuid="57c4c260-488c-429c-816a-4a2167e6ae20"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-95" style="TNR8BOLD" x="4" y="48" width="288" height="20"/>
+					<reportElement key="staticText-95" style="TNR8BOLD" x="4" y="48" width="288" height="20" uuid="aaf7c293-2f5a-49eb-a8dc-7c3b8f5f0a9d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -374,19 +374,19 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 					<text><![CDATA[VISTO PER LA LIQUIDAZIONE]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-247" positionType="Float" stretchType="RelativeToBandHeight" x="293" y="47" width="1" height="70"/>
+					<reportElement key="line-247" positionType="Float" stretchType="RelativeToBandHeight" x="293" y="47" width="1" height="70" uuid="ec3f65ea-03b7-41b3-b225-12448c38b89b"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-248" x="2" y="70" width="292" height="1"/>
+					<reportElement key="line-248" x="2" y="70" width="292" height="1" uuid="f193bed1-1a81-4983-acf8-12de7a8f4b49"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-249" x="2" y="116" width="292" height="1"/>
+					<reportElement key="line-249" x="2" y="116" width="292" height="1" uuid="67a336a6-9e66-4e24-a50b-f98484e24df5"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -403,36 +403,35 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 			<band height="42" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-241" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="42"/>
+					<reportElement key="line-241" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="42" uuid="3cbba2e3-dfd2-488e-8ce7-724946094ab2"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-242" positionType="Float" stretchType="RelativeToBandHeight" x="81" y="0" width="1" height="42"/>
+					<reportElement key="line-242" positionType="Float" stretchType="RelativeToBandHeight" x="81" y="0" width="1" height="42" uuid="74b04e82-842f-4222-8232-3dc72bdecff3"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-243" positionType="Float" stretchType="RelativeToBandHeight" x="576" y="0" width="1" height="42"/>
+					<reportElement key="line-243" positionType="Float" stretchType="RelativeToBandHeight" x="576" y="0" width="1" height="42" uuid="9ee25e9d-c933-4cf1-bc1e-aa90f2deded4"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-94" style="TNR8" x="82" y="2" width="24" height="12"/>
+					<reportElement key="staticText-94" style="TNR8" x="82" y="2" width="24" height="12" uuid="35d30638-0b94-4f0f-9031-ee023511b6db"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[presso]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-82" style="TNR8" x="108" y="2" width="466" height="12">
+					<reportElement key="textField-82" style="TNR8" x="108" y="2" width="466" height="12" uuid="3763aec3-d9d5-4b7f-940a-3b0ec86c8b0c">
 						<printWhenExpression><![CDATA[new Boolean($F{ABI}!= null)]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -442,10 +441,10 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_ABICAB}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_ABICAB}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-83" style="TNR8" x="108" y="15" width="466" height="12">
+					<reportElement key="textField-83" style="TNR8" x="108" y="15" width="466" height="12" uuid="dce0766a-1d02-43be-8597-6dd6c4bef2a7">
 						<printWhenExpression><![CDATA[new Boolean($F{ABI}!= null)]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -455,10 +454,10 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{VIA_BANCA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{VIA_BANCA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-84" style="TNR8" x="108" y="28" width="466" height="12">
+					<reportElement key="textField-84" style="TNR8" x="108" y="28" width="466" height="12" uuid="cc822e61-c23a-44a1-b799-a18bcea4f6f9">
 						<printWhenExpression><![CDATA[new Boolean($F{ABI}!= null)]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -468,7 +467,7 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CAP_BANCA}+", "+$F{DS_COMUNE_BANCA}+", "+$F{CD_PROVINCIA_BANCA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CAP_BANCA}+", "+$F{DS_COMUNE_BANCA}+", "+$F{CD_PROVINCIA_BANCA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -482,19 +481,19 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 			<band height="40" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-236" positionType="Float" stretchType="RelativeToBandHeight" x="81" y="8" width="1" height="32"/>
+					<reportElement key="line-236" positionType="Float" stretchType="RelativeToBandHeight" x="81" y="8" width="1" height="32" uuid="56b92c06-213e-4e10-9bae-0d3c05c61cf5"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-237" x="2" y="8" width="574" height="1"/>
+					<reportElement key="line-237" x="2" y="8" width="574" height="1" uuid="b3dc7e01-89a7-4325-95a3-431c90ac5d2c"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-93" style="TNR8BOLD" x="4" y="10" width="75" height="27"/>
+					<reportElement key="staticText-93" style="TNR8BOLD" x="4" y="10" width="75" height="27" uuid="7b6222cd-161b-4efb-ab88-ea2b0ee14fb1"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -506,19 +505,19 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 PAGAMENTO]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-239" positionType="Float" stretchType="RelativeToBandHeight" x="576" y="8" width="1" height="32"/>
+					<reportElement key="line-239" positionType="Float" stretchType="RelativeToBandHeight" x="576" y="8" width="1" height="32" uuid="5d8ea658-6ebd-47c4-b0dd-3ce0fc2ece4a"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-240" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="8" width="1" height="32"/>
+					<reportElement key="line-240" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="8" width="1" height="32" uuid="a75d7c7c-4048-4976-beee-5ffab987e1c6"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-80" style="TNR8" x="83" y="10" width="491" height="12"/>
+					<reportElement key="textField-80" style="TNR8" x="83" y="10" width="491" height="12" uuid="bb17fb10-dec0-469d-8aec-154e8ba60ef5"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -526,13 +525,13 @@ PAGAMENTO]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_MODALITA_PAG}+
+					<textFieldExpression><![CDATA[$F{DS_MODALITA_PAG}+
 ($F{NUMERO_CONTO}!=null?
 "    n. "+($F{CIN}!=null?$F{CIN}:" ")+" "+$F{ABI}+" "+$F{CAB}+" "+$F{NUMERO_CONTO}:" ")+
 ($F{IBAN}!=null?"  Iban "+$F{IBAN}:" ")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-81" style="TNR8" x="83" y="24" width="491" height="12">
+					<reportElement key="textField-81" style="TNR8" x="83" y="24" width="491" height="12" uuid="4a80612a-854e-4dee-984f-30d3e49d8529">
 						<printWhenExpression><![CDATA[new Boolean($F{INTESTAZIONE}!= null)]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -542,7 +541,7 @@ PAGAMENTO]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA["intestato a "+$F{INTESTAZIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["intestato a "+$F{INTESTAZIONE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -556,7 +555,7 @@ PAGAMENTO]]></text>
 			<band height="5" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-235" mode="Transparent" x="2" y="0" width="575" height="1" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-235" mode="Transparent" x="2" y="0" width="575" height="1" isRemoveLineWhenBlank="true" uuid="2e78f15e-3916-46be-9d71-de201a52ceec"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -573,31 +572,31 @@ PAGAMENTO]]></text>
 			<band height="49" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-229" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="8" width="1" height="41"/>
+					<reportElement key="line-229" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="8" width="1" height="41" uuid="0d622c11-f47a-41be-90ec-8b83045fca7c"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-230" positionType="Float" stretchType="RelativeToBandHeight" x="418" y="8" width="1" height="41"/>
+					<reportElement key="line-230" positionType="Float" stretchType="RelativeToBandHeight" x="418" y="8" width="1" height="41" uuid="975bede8-1472-4e1d-a6b1-2247177ee62e"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-231" x="2" y="8" width="574" height="1"/>
+					<reportElement key="line-231" x="2" y="8" width="574" height="1" uuid="6b63a93b-b4e2-483c-b566-962da78cf286"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-232" x="2" y="32" width="574" height="1"/>
+					<reportElement key="line-232" x="2" y="32" width="574" height="1" uuid="817eefd8-e315-475b-9eee-44832207e184"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-86" style="TNR8BOLD" x="4" y="10" width="411" height="20"/>
+					<reportElement key="staticText-86" style="TNR8BOLD" x="4" y="10" width="411" height="20" uuid="47d1d744-430c-437b-b267-7a62659f9205"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -608,7 +607,7 @@ PAGAMENTO]]></text>
 					<text><![CDATA[LUOGO DELLA MISSIONE]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-73" style="TNR8" x="4" y="34" width="411" height="12"/>
+					<reportElement key="textField-73" style="TNR8" x="4" y="34" width="411" height="12" uuid="1a0e531c-4970-41e1-9e1f-c0089bd88854"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -616,16 +615,16 @@ PAGAMENTO]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_MISSIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_MISSIONE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-234" positionType="Float" stretchType="RelativeToBandHeight" x="576" y="8" width="1" height="41"/>
+					<reportElement key="line-234" positionType="Float" stretchType="RelativeToBandHeight" x="576" y="8" width="1" height="41" uuid="050760c6-7796-478d-aff8-abd2861dbe52"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-79" style="TNR8" x="420" y="34" width="155" height="12"/>
+					<reportElement key="textField-79" style="TNR8" x="420" y="34" width="155" height="12" uuid="f7c8197f-28ef-4132-a5c5-e7f12557a21c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -633,13 +632,13 @@ PAGAMENTO]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[" dal "+
+					<textFieldExpression><![CDATA[" dal "+
 (new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DT_INIZIO_MISSIONE})+
 " al " +
 (new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DT_FINE_MISSIONE})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-92" style="TNR8BOLD" x="421" y="10" width="154" height="20"/>
+					<reportElement key="staticText-92" style="TNR8BOLD" x="421" y="10" width="154" height="20" uuid="029077db-3479-4ce4-8b94-df4eec3e8298"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -657,7 +656,7 @@ PAGAMENTO]]></text>
 		<groupHeader>
 			<band height="2" splitType="Stretch">
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-3" x="0" y="0" width="591" height="2" isRemoveLineWhenBlank="true" printWhenGroupChanges="TI_RECORD_L2b"/>
+					<reportElement key="subreport-3" x="0" y="0" width="591" height="2" isRemoveLineWhenBlank="true" printWhenGroupChanges="TI_RECORD_L2b" uuid="676e15ed-c1c7-4ef6-a2a0-4202cb9bfa70"/>
 					<subreportParameter name="TI_RECORD_L1">
 						<subreportParameterExpression><![CDATA[$F{TI_RECORD_L1}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -683,7 +682,7 @@ PAGAMENTO]]></text>
 						<subreportParameterExpression><![CDATA[$F{PG_MISSIONE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT} + "vpg_missione_subreport1.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "vpg_missione_subreport1.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -713,25 +712,25 @@ PAGAMENTO]]></text>
 			<band height="27" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("E") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-211" x="2" y="4" width="575" height="1"/>
+					<reportElement key="line-211" x="2" y="4" width="575" height="1" uuid="51448094-22d0-40ad-9649-339c4c9cd327"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-212" x="2" y="0" width="1" height="4"/>
+					<reportElement key="line-212" x="2" y="0" width="1" height="4" uuid="99e28c10-8623-41de-b31f-721642312db4"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-214" x="503" y="19" width="74" height="1"/>
+					<reportElement key="line-214" x="503" y="19" width="74" height="1" uuid="fd9296bd-b8ba-4cb9-bfc0-1ddb4ef581e0"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-85" style="TNR8BOLD" x="449" y="6" width="50" height="12"/>
+					<reportElement key="staticText-85" style="TNR8BOLD" x="449" y="6" width="50" height="12" uuid="7276b744-53fb-4d94-8a24-e8bdafbd825d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -744,13 +743,13 @@ CARICO ENTE
 ]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-222" x="576" y="0" width="1" height="20"/>
+					<reportElement key="line-222" x="576" y="0" width="1" height="20" uuid="d47afe08-92f0-4eec-a2f6-7bb4299aa95a"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-72" style="TNR8BOLD" x="504" y="6" width="69" height="12"/>
+					<reportElement key="textField-72" style="TNR8BOLD" x="504" y="6" width="69" height="12" uuid="13d5fc93-44ae-4555-ba04-2bb481e31289"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -758,34 +757,34 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_AMMONTARE_2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_AMMONTARE_2}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-223" x="106" y="0" width="1" height="4"/>
+					<reportElement key="line-223" x="106" y="0" width="1" height="4" uuid="160d7f0f-a3e4-40e3-9b2d-a79c46401844"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-224" x="313" y="0" width="1" height="4"/>
+					<reportElement key="line-224" x="313" y="0" width="1" height="4" uuid="a3b505d2-8a26-44c2-b901-c76bc42b3ad2"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-225" x="353" y="0" width="1" height="4"/>
+					<reportElement key="line-225" x="353" y="0" width="1" height="4" uuid="b4f5377f-422e-4e2d-9477-4bcf856967f5"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-226" x="428" y="0" width="1" height="4"/>
+					<reportElement key="line-226" x="428" y="0" width="1" height="4" uuid="5727e1a1-1841-4743-a797-52b4120fdef6"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-227" x="502" y="0" width="1" height="20"/>
+					<reportElement key="line-227" x="502" y="0" width="1" height="20" uuid="fcb31ba5-05fa-49d8-ba25-941e649d3812"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -804,25 +803,25 @@ CARICO ENTE
 			<band height="27" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("C") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-197" x="2" y="4" width="575" height="1"/>
+					<reportElement key="line-197" x="2" y="4" width="575" height="1" uuid="01566bf5-4f7f-4670-87bb-38484aa501ef"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-198" x="2" y="0" width="1" height="4"/>
+					<reportElement key="line-198" x="2" y="0" width="1" height="4" uuid="804a97e7-905a-4d52-ac70-fc4ab5412c79"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-199" x="73" y="0" width="1" height="4"/>
+					<reportElement key="line-199" x="73" y="0" width="1" height="4" uuid="c8a60e35-7ab1-4945-9ee7-98d6a7706584"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-67" style="TNR8BOLD" x="314" y="6" width="68" height="12"/>
+					<reportElement key="textField-67" style="TNR8BOLD" x="314" y="6" width="68" height="12" uuid="1a211b7d-8c46-4c1f-9f52-edfed5aadbd9"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -830,16 +829,16 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_DIARIA_LORDA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_DIARIA_LORDA}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-202" x="314" y="19" width="213" height="1"/>
+					<reportElement key="line-202" x="314" y="19" width="213" height="1" uuid="bb0a45f8-7582-4e9f-8313-9d4efffba233"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-84" style="TNR8BOLD" x="260" y="6" width="50" height="12"/>
+					<reportElement key="staticText-84" style="TNR8BOLD" x="260" y="6" width="50" height="12" uuid="f5a77079-fba4-459f-b53d-b470ebb8945f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -852,55 +851,55 @@ CARICO ENTE
 ]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-203" x="144" y="0" width="1" height="4"/>
+					<reportElement key="line-203" x="144" y="0" width="1" height="4" uuid="ea8eb84d-2da0-4671-be41-3c9667a8d329"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-204" x="194" y="0" width="1" height="4"/>
+					<reportElement key="line-204" x="194" y="0" width="1" height="4" uuid="0ef1f316-794d-48ec-bda4-8a4aef866c8e"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-205" x="267" y="0" width="1" height="4"/>
+					<reportElement key="line-205" x="267" y="0" width="1" height="4" uuid="bc305caf-5e0b-4936-ac1e-4522fec1cfc7"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-206" x="313" y="0" width="1" height="20"/>
+					<reportElement key="line-206" x="313" y="0" width="1" height="20" uuid="ccb715ab-8206-4a5e-9bec-3ceac341a1a2"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-207" x="384" y="0" width="1" height="20"/>
+					<reportElement key="line-207" x="384" y="0" width="1" height="20" uuid="940f67cc-7a1e-496d-8a53-f6ce460a6df7"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-208" x="455" y="0" width="1" height="20"/>
+					<reportElement key="line-208" x="455" y="0" width="1" height="20" uuid="424f356c-f945-48a8-8f4b-b852a598401d"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-209" x="526" y="0" width="1" height="20"/>
+					<reportElement key="line-209" x="526" y="0" width="1" height="20" uuid="10571d5e-51ba-4342-b149-4c27427c9b1b"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-210" x="576" y="0" width="1" height="4"/>
+					<reportElement key="line-210" x="576" y="0" width="1" height="4" uuid="ca97111a-ce1d-458c-9c48-c1c161906f27"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-68" style="TNR8BOLD" x="386" y="6" width="66" height="12"/>
+					<reportElement key="textField-68" style="TNR8BOLD" x="386" y="6" width="66" height="12" uuid="4517c28d-9e91-4518-8536-ab09f1729bef"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -908,10 +907,10 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_QUOTA_ESENTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_QUOTA_ESENTE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-69" style="TNR8BOLD" x="457" y="6" width="66" height="12"/>
+					<reportElement key="textField-69" style="TNR8BOLD" x="457" y="6" width="66" height="12" uuid="dd7ff421-a746-4291-b331-6776412eb42b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -919,7 +918,7 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_DIARIA_NETTO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_DIARIA_NETTO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -935,49 +934,49 @@ CARICO ENTE
 			<band height="28" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B") && $F{TI_RECORD_L2}.equals("B"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-180" x="2" y="0" width="1" height="28"/>
+					<reportElement key="line-180" x="2" y="0" width="1" height="28" uuid="2793f409-fc8b-473e-a4a1-303dd151660f"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-181" x="313" y="4" width="264" height="1"/>
+					<reportElement key="line-181" x="313" y="4" width="264" height="1" uuid="2810823b-25b6-4420-87b3-39e718dddf0d"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-184" x="313" y="0" width="1" height="4"/>
+					<reportElement key="line-184" x="313" y="0" width="1" height="4" uuid="3bc88911-3d86-4abe-8be9-b5c812d9ea7b"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-192" x="576" y="0" width="1" height="28"/>
+					<reportElement key="line-192" x="576" y="0" width="1" height="28" uuid="6706b4c0-fa1d-483f-88c2-7a502c3032f5"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-193" x="384" y="0" width="1" height="4"/>
+					<reportElement key="line-193" x="384" y="0" width="1" height="4" uuid="171b3d82-492b-473d-9d99-1adb9d9bfff0"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-194" x="455" y="0" width="1" height="4"/>
+					<reportElement key="line-194" x="455" y="0" width="1" height="4" uuid="d8906b9e-a6bd-4d73-b545-4c48d26cbcf6"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-195" x="526" y="0" width="1" height="19"/>
+					<reportElement key="line-195" x="526" y="0" width="1" height="19" uuid="4435a7e5-f209-401f-8d7a-2434ba8244da"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-66" style="TNR8BOLD" x="528" y="6" width="47" height="12"/>
+					<reportElement key="textField-66" style="TNR8BOLD" x="528" y="6" width="47" height="12" uuid="aad8d841-ccf5-4a62-bc84-9641ca4baa22"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -985,10 +984,10 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_im_km_1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_im_km_1}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-196" x="526" y="19" width="51" height="1"/>
+					<reportElement key="line-196" x="526" y="19" width="51" height="1" uuid="4436af58-c80f-4e30-b7d0-1f4d98454c33"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -1007,79 +1006,79 @@ CARICO ENTE
 			<band height="5" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-166" x="2" y="0" width="1" height="5"/>
+					<reportElement key="line-166" x="2" y="0" width="1" height="5" uuid="2614e532-02f0-478c-b7b5-8d576d9123ab"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-167" x="2" y="4" width="575" height="1"/>
+					<reportElement key="line-167" x="2" y="4" width="575" height="1" uuid="ebb386a8-6d21-43ba-a767-75e97738ad7e"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-168" x="43" y="0" width="1" height="4"/>
+					<reportElement key="line-168" x="43" y="0" width="1" height="4" uuid="8cc047dc-334d-40dd-9418-7eae667483f1"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-169" x="144" y="0" width="1" height="4"/>
+					<reportElement key="line-169" x="144" y="0" width="1" height="4" uuid="ebdd7fc4-d2a2-413c-ab36-bc9f721ae119"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-170" x="189" y="0" width="1" height="4"/>
+					<reportElement key="line-170" x="189" y="0" width="1" height="4" uuid="4f0a8bb0-152b-45bc-9ca8-155f37fd4c95"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-171" x="234" y="0" width="1" height="4"/>
+					<reportElement key="line-171" x="234" y="0" width="1" height="4" uuid="6137e0a6-ca8c-403f-bd78-c131660c9f69"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-172" x="307" y="0" width="1" height="4"/>
+					<reportElement key="line-172" x="307" y="0" width="1" height="4" uuid="f9acb641-c1c3-4377-b110-bf8822f8cc30"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-173" x="352" y="0" width="1" height="4"/>
+					<reportElement key="line-173" x="352" y="0" width="1" height="4" uuid="283e5370-d6a7-4c1d-815b-5a5a6fc92be8"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-174" x="395" y="0" width="1" height="4"/>
+					<reportElement key="line-174" x="395" y="0" width="1" height="4" uuid="82717156-d7a6-42b0-ae34-a055365f2902"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-175" x="422" y="0" width="1" height="4"/>
+					<reportElement key="line-175" x="422" y="0" width="1" height="4" uuid="ea7134f7-6ad9-4714-b0f2-e7c9c2012a94"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-176" x="479" y="0" width="1" height="4"/>
+					<reportElement key="line-176" x="479" y="0" width="1" height="4" uuid="a938cb53-447e-42c3-b4e2-32a36b370e42"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-177" x="527" y="0" width="1" height="4"/>
+					<reportElement key="line-177" x="527" y="0" width="1" height="4" uuid="b33b7e1f-a7bb-46ce-9085-dfd13e7d8992"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-178" x="576" y="0" width="1" height="5"/>
+					<reportElement key="line-178" x="576" y="0" width="1" height="5" uuid="4313bee2-4f55-4fcb-ab98-43efa9b4ec50"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -1098,31 +1097,31 @@ CARICO ENTE
 			<band height="20" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("D") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-197" x="2" y="4" width="574" height="1"/>
+					<reportElement key="line-197" x="2" y="4" width="574" height="1" uuid="503a5a7f-b8a4-486b-a507-a0fabf20a80c"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-198" x="2" y="0" width="1" height="4"/>
+					<reportElement key="line-198" x="2" y="0" width="1" height="4" uuid="9ddb308c-e1cf-4175-9953-7dba0ca9a0f0"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-199" x="73" y="0" width="1" height="4"/>
+					<reportElement key="line-199" x="73" y="0" width="1" height="4" uuid="8a644f89-737f-4773-b201-3e82adb72ed7"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-202" x="314" y="19" width="262" height="1"/>
+					<reportElement key="line-202" x="314" y="19" width="262" height="1" uuid="4f8ecaf4-6dbf-4a18-b5e4-482748041885"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-84" style="TNR8BOLD" x="256" y="6" width="50" height="12"/>
+					<reportElement key="staticText-84" style="TNR8BOLD" x="256" y="6" width="50" height="12" uuid="bd77bc17-4aa0-4b49-ae20-53b6c93d1bbb"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1135,31 +1134,31 @@ CARICO ENTE
 ]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-203" x="144" y="0" width="1" height="4"/>
+					<reportElement key="line-203" x="144" y="0" width="1" height="4" uuid="912b14cf-9d2b-41fb-bbc2-951dab0f0739"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-207" x="313" y="0" width="1" height="20"/>
+					<reportElement key="line-207" x="313" y="0" width="1" height="20" uuid="dce3b1a5-8168-48a8-b80e-c6db71dcd224"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-208" x="455" y="0" width="1" height="20"/>
+					<reportElement key="line-208" x="455" y="0" width="1" height="20" uuid="ade43a91-d263-495d-ad97-467998aba9e8"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-209" x="576" y="0" width="1" height="20"/>
+					<reportElement key="line-209" x="576" y="0" width="1" height="20" uuid="e70e4c3a-6909-4871-a723-67efa31c6bc3"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-68" style="TNR8BOLD" x="382" y="6" width="66" height="12"/>
+					<reportElement key="textField-68" style="TNR8BOLD" x="382" y="6" width="66" height="12" uuid="dd8219cd-af11-4946-be84-eb5ab67bbaaa"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1167,10 +1166,10 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOT_QUOTA_RIMBORSO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TOT_QUOTA_RIMBORSO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-69" style="TNR8BOLD" x="505" y="6" width="66" height="12"/>
+					<reportElement key="textField-69" style="TNR8BOLD" x="505" y="6" width="66" height="12" uuid="f559da89-66a8-4614-87d3-06a32b74733d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1178,7 +1177,7 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_QUOTA_ESENTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_QUOTA_ESENTE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -1194,37 +1193,37 @@ CARICO ENTE
 			<band height="23" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A") && $F{TI_RECORD_L2}.equals("C"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-157" x="2" y="4" width="267" height="1"/>
+					<reportElement key="line-157" x="2" y="4" width="267" height="1" uuid="d1a40f2f-fba8-4d0e-abb1-1abe2b861104"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-158" x="2" y="0" width="1" height="4"/>
+					<reportElement key="line-158" x="2" y="0" width="1" height="4" uuid="3b3fd17e-0627-41ae-bf6d-418ee1983caa"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-159" x="118" y="0" width="1" height="4"/>
+					<reportElement key="line-159" x="118" y="0" width="1" height="4" uuid="eceb89a2-e38b-4ba2-a218-508934120b19"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-160" x="170" y="0" width="1" height="20"/>
+					<reportElement key="line-160" x="170" y="0" width="1" height="20" uuid="3e46cde1-d074-40d9-ab21-95a6870a93ad"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-161" x="268" y="0" width="1" height="20"/>
+					<reportElement key="line-161" x="268" y="0" width="1" height="20" uuid="613480c8-1b53-43b6-9f18-3a143669191f"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-65" style="TNR8BOLD" x="171" y="6" width="94" height="12"/>
+					<reportElement key="textField-65" style="TNR8BOLD" x="171" y="6" width="94" height="12" uuid="ae33527d-0127-481b-9101-ed8aa68c78aa"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1232,16 +1231,16 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_AMMONTARE_1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_AMMONTARE_1}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-162" x="171" y="19" width="98" height="1"/>
+					<reportElement key="line-162" x="171" y="19" width="98" height="1" uuid="457a5397-3f58-4e89-8d7e-c0a4fb312659"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-83" style="TNR8BOLD" x="118" y="6" width="50" height="12"/>
+					<reportElement key="staticText-83" style="TNR8BOLD" x="118" y="6" width="50" height="12" uuid="5ce8e563-db1a-43b6-b352-58de7a6fc73b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1267,85 +1266,85 @@ CARICO ENTE
 			<band height="51" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A") && $F{TI_RECORD_L2}.equals("B2"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-137" x="84" y="0" width="1" height="4"/>
+					<reportElement key="line-137" x="84" y="0" width="1" height="4" uuid="43e128ca-0e82-41f1-8ba0-d0a924a4abd0"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-138" x="142" y="0" width="1" height="4"/>
+					<reportElement key="line-138" x="142" y="0" width="1" height="4" uuid="93b57553-3e95-4763-b487-ea7a9719560b"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-139" x="248" y="0" width="1" height="4"/>
+					<reportElement key="line-139" x="248" y="0" width="1" height="4" uuid="93c3d457-77e2-4cfd-ab5d-1d63412c41fd"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-140" x="330" y="0" width="1" height="4"/>
+					<reportElement key="line-140" x="330" y="0" width="1" height="4" uuid="8c8652f5-d18a-4863-80ab-ac42ecb96eb5"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-141" x="412" y="0" width="1" height="4"/>
+					<reportElement key="line-141" x="412" y="0" width="1" height="4" uuid="6463267e-cb3d-4875-82bf-ab2ec611514f"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-142" x="84" y="4" width="493" height="1"/>
+					<reportElement key="line-142" x="84" y="4" width="493" height="1" uuid="bdfe7324-cd6f-4615-a816-a75a5a4babf9"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-143" x="494" y="0" width="1" height="4"/>
+					<reportElement key="line-143" x="494" y="0" width="1" height="4" uuid="793e9eea-5cd3-40af-94fc-5871dffbb5c6"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-144" x="576" y="0" width="1" height="4"/>
+					<reportElement key="line-144" x="576" y="0" width="1" height="4" uuid="04a18e1e-9f0c-40e3-acaf-db0d5c936105"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-145" x="2" y="8" width="1" height="41"/>
+					<reportElement key="line-145" x="2" y="8" width="1" height="41" uuid="c43e6821-8daf-4303-9784-7cbf96bc4f14"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-146" x="84" y="8" width="1" height="41"/>
+					<reportElement key="line-146" x="84" y="8" width="1" height="41" uuid="dc7d2bbf-0b8b-42cb-bbaf-17e3926e6414"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-148" x="2" y="8" width="574" height="1"/>
+					<reportElement key="line-148" x="2" y="8" width="574" height="1" uuid="098af3ca-c854-4b48-9405-f0370ae0fc4c"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-149" x="2" y="32" width="574" height="1"/>
+					<reportElement key="line-149" x="2" y="32" width="574" height="1" uuid="a0b13051-d903-456b-9cb7-bd7e64b58a51"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-150" x="2" y="48" width="574" height="1"/>
+					<reportElement key="line-150" x="2" y="48" width="574" height="1" uuid="3ddc43fc-0048-41f0-9f7a-c7f0ddf86ae9"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-76" style="TNR8BOLD" x="4" y="10" width="78" height="20"/>
+					<reportElement key="staticText-76" style="TNR8BOLD" x="4" y="10" width="78" height="20" uuid="622075c8-e39a-49d1-92e5-682c77c259e7"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1357,7 +1356,7 @@ CARICO ENTE
 MISSIONE]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-58" style="TNR8" x="4" y="34" width="78" height="12"/>
+					<reportElement key="textField-58" style="TNR8" x="4" y="34" width="78" height="12" uuid="dc6c9415-38cd-4c88-ad88-23914fc017a8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1365,16 +1364,16 @@ MISSIONE]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_TOTALE_MISSIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_TOTALE_MISSIONE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-151" x="576" y="8" width="1" height="41"/>
+					<reportElement key="line-151" x="576" y="8" width="1" height="41" uuid="74485d38-f150-4d9c-8796-503fe8db5b41"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-77" style="TNR8BOLD" x="86" y="10" width="78" height="20"/>
+					<reportElement key="staticText-77" style="TNR8BOLD" x="86" y="10" width="78" height="20" uuid="3c0193b9-48c3-4433-84dd-ad00abf5acdc"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1387,7 +1386,7 @@ CARICO ENTE
 ]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-59" style="TNR8" x="86" y="34" width="78" height="12"/>
+					<reportElement key="textField-59" style="TNR8" x="86" y="34" width="78" height="12" uuid="decd5724-7388-416a-91b6-8615bb489d02"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1395,16 +1394,16 @@ CARICO ENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_CR_ENTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_CR_ENTE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-152" x="166" y="8" width="1" height="41"/>
+					<reportElement key="line-152" x="166" y="8" width="1" height="41" uuid="22065285-c054-4e34-86b0-852beb4bf36e"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-78" style="TNR8BOLD" x="168" y="10" width="78" height="20"/>
+					<reportElement key="staticText-78" style="TNR8BOLD" x="168" y="10" width="78" height="20" uuid="b1fd80ba-28d1-4d89-9c35-cb97c51b8471"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1417,7 +1416,7 @@ PERCIPIENTE
 ]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-60" style="TNR8BOLD" x="168" y="34" width="78" height="12"/>
+					<reportElement key="textField-60" style="TNR8BOLD" x="168" y="34" width="78" height="12" uuid="03147af4-2dde-4b27-98e3-cb9fdf910b4f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1425,16 +1424,16 @@ PERCIPIENTE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_LORDO_PERCEPIENTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_LORDO_PERCEPIENTE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-153" x="248" y="8" width="1" height="41"/>
+					<reportElement key="line-153" x="248" y="8" width="1" height="41" uuid="2bc39c57-2f76-4460-b01e-99fc12b0d53b"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-79" style="TNR8BOLD" x="250" y="10" width="72" height="20"/>
+					<reportElement key="staticText-79" style="TNR8BOLD" x="250" y="10" width="72" height="20" uuid="f884e194-6286-428a-a822-c93d07d46329"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1446,7 +1445,7 @@ PERCIPIENTE
 RITENUTE]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-61" style="TNR8" x="250" y="34" width="72" height="12"/>
+					<reportElement key="textField-61" style="TNR8" x="250" y="34" width="72" height="12" uuid="32c8fd23-961c-493b-88ae-4ce3edfcd2ff"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1454,10 +1453,10 @@ RITENUTE]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_LORDO_PERCEPIENTE}.subtract($F{IM_NETTO_PECEPIENTE})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_LORDO_PERCEPIENTE}.subtract($F{IM_NETTO_PECEPIENTE})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-80" style="TNR8BOLD" x="326" y="10" width="78" height="20"/>
+					<reportElement key="staticText-80" style="TNR8BOLD" x="326" y="10" width="78" height="20" uuid="99832532-b1e2-43c2-a537-e56363a27867"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1470,7 +1469,7 @@ MISSIONE
 ]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-62" style="TNR8" x="326" y="34" width="78" height="12"/>
+					<reportElement key="textField-62" style="TNR8" x="326" y="34" width="78" height="12" uuid="6da84dd0-29c8-4821-aa44-882d51883a45"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1478,22 +1477,22 @@ MISSIONE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_NETTO_PECEPIENTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_NETTO_PECEPIENTE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-154" x="324" y="8" width="1" height="41"/>
+					<reportElement key="line-154" x="324" y="8" width="1" height="41" uuid="d183c308-c4a9-40e7-b271-de1eaac96791"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-155" x="406" y="8" width="1" height="41"/>
+					<reportElement key="line-155" x="406" y="8" width="1" height="41" uuid="d548c624-c511-4513-97d2-09ad465ddee9"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-81" style="TNR8BOLD" x="408" y="10" width="78" height="20"/>
+					<reportElement key="staticText-81" style="TNR8BOLD" x="408" y="10" width="78" height="20" uuid="05a1d684-0470-4862-88c5-731447d43277"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1504,7 +1503,7 @@ MISSIONE
 					<text><![CDATA[ANTICIPO]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-63" style="TNR8" x="408" y="34" width="78" height="12"/>
+					<reportElement key="textField-63" style="TNR8" x="408" y="34" width="78" height="12" uuid="95976a2d-1bc3-478b-af10-c843b8c7da4f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1512,16 +1511,16 @@ MISSIONE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_ANTICIPO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_ANTICIPO}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-156" x="488" y="8" width="1" height="41"/>
+					<reportElement key="line-156" x="488" y="8" width="1" height="41" uuid="09c6fec7-2abb-4fa4-b941-487278db5bbb"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-64" style="TNR8" x="490" y="34" width="85" height="12"/>
+					<reportElement key="textField-64" style="TNR8" x="490" y="34" width="85" height="12" uuid="8303ed7c-bdc6-45fd-b8d3-25b84ba70873"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1529,12 +1528,12 @@ MISSIONE
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[($F{IM_ANTICIPO}!=null?
+					<textFieldExpression><![CDATA[($F{IM_ANTICIPO}!=null?
     $F{IM_NETTO_PECEPIENTE}.subtract($F{IM_ANTICIPO}):
 $F{IM_NETTO_PECEPIENTE})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-82" style="TNR8BOLD" x="490" y="10" width="85" height="20"/>
+					<reportElement key="staticText-82" style="TNR8BOLD" x="490" y="10" width="85" height="20" uuid="9789c608-e7b7-4ff6-a02a-186ecd380028"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1554,13 +1553,13 @@ DA REGOLARE]]></text>
 			<band height="67" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-98" x="2" y="2" width="243" height="1"/>
+					<reportElement key="line-98" x="2" y="2" width="243" height="1" uuid="7554aa14-e3d1-442f-98f0-04873097e73e"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-65" style="TNR8BOLD" x="5" y="4" width="117" height="12"/>
+					<reportElement key="staticText-65" style="TNR8BOLD" x="5" y="4" width="117" height="12" uuid="a3740b7b-d6a6-49da-bb2d-b2c6f19b17bc"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1571,19 +1570,19 @@ DA REGOLARE]]></text>
 					<text><![CDATA[PROTOCOLLO]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-99" x="2" y="2" width="1" height="65"/>
+					<reportElement key="line-99" x="2" y="2" width="1" height="65" uuid="93a771d0-a89d-4c08-a8d4-098382b13246"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-100" x="124" y="2" width="1" height="65"/>
+					<reportElement key="line-100" x="124" y="2" width="1" height="65" uuid="97d2f37b-9466-4e45-bf66-7a72ff25ab92"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-66" style="TNR8BOLD" x="126" y="4" width="117" height="12"/>
+					<reportElement key="staticText-66" style="TNR8BOLD" x="126" y="4" width="117" height="12" uuid="62613d42-e59c-4651-8f1f-8d88be46a2df"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1594,37 +1593,37 @@ DA REGOLARE]]></text>
 					<text><![CDATA[DATA PROTOCOLLO]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-101" x="245" y="2" width="1" height="33"/>
+					<reportElement key="line-101" x="245" y="2" width="1" height="33" uuid="a2f921ac-a079-403e-a2ef-04c527803c40"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-102" x="2" y="18" width="243" height="1"/>
+					<reportElement key="line-102" x="2" y="18" width="243" height="1" uuid="6c067cbd-6b58-4e6d-9793-f617ac527a74"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-103" x="2" y="34" width="574" height="1"/>
+					<reportElement key="line-103" x="2" y="34" width="574" height="1" uuid="fcd70343-08c1-4150-b0bd-a1229a04f76c"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-104" x="2" y="50" width="574" height="1"/>
+					<reportElement key="line-104" x="2" y="50" width="574" height="1" uuid="ad550629-658f-4d84-a1c2-9e21037b5647"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-105" x="2" y="66" width="574" height="1"/>
+					<reportElement key="line-105" x="2" y="66" width="574" height="1" uuid="d7107ea5-cc4d-4735-981d-c7ac6799c6fa"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-67" style="TNR8BOLD" x="5" y="36" width="117" height="12"/>
+					<reportElement key="staticText-67" style="TNR8BOLD" x="5" y="36" width="117" height="12" uuid="bc96faf2-94d0-4af0-9215-8acf93bd1edc"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1635,7 +1634,7 @@ DA REGOLARE]]></text>
 					<text><![CDATA[ESERCIZIO FIN.RIO]]></text>
 				</staticText>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-4" style="TNR8" x="5" y="52" width="117" height="12">
+					<reportElement key="textField-4" style="TNR8" x="5" y="52" width="117" height="12" uuid="b007e559-5417-401f-877e-4ef6ba2f7ea4">
 						<printWhenExpression><![CDATA[new Boolean(!$F{ES_FINANZIARIO}.equals(new BigDecimal(0)))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -1645,22 +1644,22 @@ DA REGOLARE]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ES_FINANZIARIO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ES_FINANZIARIO}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-106" x="576" y="2" width="1" height="65"/>
+					<reportElement key="line-106" x="576" y="2" width="1" height="65" uuid="f1f189c3-9247-42f3-967d-bf1383dd0365"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-107" x="374" y="2" width="202" height="1"/>
+					<reportElement key="line-107" x="374" y="2" width="202" height="1" uuid="5a2f1bcb-7a76-4538-8fa8-c8bb369ef74c"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-68" style="TNR8BOLD" x="495" y="4" width="80" height="12"/>
+					<reportElement key="staticText-68" style="TNR8BOLD" x="495" y="4" width="80" height="12" uuid="f84217be-bfd6-437f-83e4-13c347f06006"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1671,13 +1670,13 @@ DA REGOLARE]]></text>
 					<text><![CDATA[DATA]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-108" x="493" y="2" width="1" height="33"/>
+					<reportElement key="line-108" x="493" y="2" width="1" height="33" uuid="328cead4-ff37-4b2b-9872-f6dc24e55320"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-69" style="TNR8BOLD" x="375" y="4" width="116" height="12"/>
+					<reportElement key="staticText-69" style="TNR8BOLD" x="375" y="4" width="116" height="12" uuid="1b56bb4a-b546-4336-9fd8-ea66b6e4e6ec"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1688,19 +1687,19 @@ DA REGOLARE]]></text>
 					<text><![CDATA[PROGR.VO MISSIONE]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-109" x="373" y="2" width="1" height="33"/>
+					<reportElement key="line-109" x="373" y="2" width="1" height="33" uuid="bfb2de3d-7039-4eb8-9992-d2bf3ca77c68"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-110" x="374" y="18" width="202" height="1"/>
+					<reportElement key="line-110" x="374" y="18" width="202" height="1" uuid="d950f33c-0909-44df-846a-e670aef57328"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-5" style="TNR8" x="375" y="20" width="116" height="12"/>
+					<reportElement key="textField-5" style="TNR8" x="375" y="20" width="116" height="12" uuid="63be7868-5db6-4af8-8487-15b6a84f567b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1708,10 +1707,10 @@ DA REGOLARE]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PG_MISSIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PG_MISSIONE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR8" x="495" y="20" width="80" height="12"/>
+					<reportElement key="textField" style="TNR8" x="495" y="20" width="80" height="12" uuid="2bdf5966-3d70-44b4-a2d6-0123a856fbf5"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1719,10 +1718,10 @@ DA REGOLARE]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DT_REGISTRAZIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DT_REGISTRAZIONE}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-70" style="TNR8BOLD" x="126" y="36" width="448" height="12"/>
+					<reportElement key="staticText-70" style="TNR8BOLD" x="126" y="36" width="448" height="12" uuid="672b50fa-b9bb-47e7-bbd7-a75bcfd1858e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1733,7 +1732,7 @@ DA REGOLARE]]></text>
 					<text><![CDATA[UNITA' ORGANIZZATIVA EMITTENTE]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-6" style="TNR8" x="126" y="52" width="448" height="12"/>
+					<reportElement key="textField-6" style="TNR8" x="126" y="52" width="448" height="12" uuid="2553d4a6-72e5-4a10-8b84-70be2922b934"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1741,7 +1740,7 @@ DA REGOLARE]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}+" - "+$F{DS_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}+" - "+$F{DS_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -1758,13 +1757,13 @@ $F{TI_RECORD_L1}.equals("A") &&
 $F{TI_RECORD_L2}.equals("A")
 )]]></printWhenExpression>
 				<line>
-					<reportElement key="line-111" x="285" y="25" width="292" height="1"/>
+					<reportElement key="line-111" x="285" y="25" width="292" height="1" uuid="d93d17f9-6bea-4847-a06c-f3a03b9af1a9"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-71" style="TNR8BOLD" x="286" y="29" width="289" height="12"/>
+					<reportElement key="staticText-71" style="TNR8BOLD" x="286" y="29" width="289" height="12" uuid="5c2cf8f3-e591-4d40-b4b6-bc759c1beab9"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1775,19 +1774,19 @@ $F{TI_RECORD_L2}.equals("A")
 					<text><![CDATA[BENEFICIARIO]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-112" x="284" y="25" width="1" height="19"/>
+					<reportElement key="line-112" x="284" y="25" width="1" height="19" uuid="beb4103f-9e75-473a-91c9-5023f23574e4"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-113" x="284" y="44" width="292" height="1"/>
+					<reportElement key="line-113" x="284" y="44" width="292" height="1" uuid="39decec3-a452-4712-8805-e1e6aef34eed"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-114" x="576" y="26" width="1" height="19"/>
+					<reportElement key="line-114" x="576" y="26" width="1" height="19" uuid="6561b4db-4c14-438a-bd1d-796626e0e0c5"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -1807,19 +1806,19 @@ $F{TI_RECORD_L1}.equals("A") &&
 $F{TI_RECORD_L2}.equals("A")
 )]]></printWhenExpression>
 				<line>
-					<reportElement key="line-115" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="0" width="1" height="15" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-115" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="0" width="1" height="15" isRemoveLineWhenBlank="true" uuid="a31ae5c4-16d8-41a7-8044-42b23a85663f"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-116" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="15" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-116" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="15" isRemoveLineWhenBlank="true" uuid="3f74df9e-6045-4750-8904-08155aa2c97b"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-7" style="TNR8" x="286" y="2" width="288" height="12"/>
+					<reportElement key="textField-7" style="TNR8" x="286" y="2" width="288" height="12" uuid="7e89c89e-6f2e-479e-8a22-9460c97cb9a0"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1827,7 +1826,7 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{NOME}+ " " + $F{COGNOME}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{NOME}+ " " + $F{COGNOME}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -1844,13 +1843,13 @@ $F{TI_RECORD_L1}.equals("A") &&
 $F{TI_RECORD_L2}.equals("A")
 )]]></printWhenExpression>
 				<line>
-					<reportElement key="line-117" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="0" width="1" height="15" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-117" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="0" width="1" height="15" isRemoveLineWhenBlank="true" uuid="30421a80-e165-4e00-88ff-29671f1cf7da"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-8" style="TNR8" x="286" y="2" width="288" height="12"/>
+					<reportElement key="textField-8" style="TNR8" x="286" y="2" width="288" height="12" uuid="fb2fdbb8-f642-40ca-aa5d-d469409893b9"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1858,11 +1857,11 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{VIA_SEDE}!=null?$F{VIA_SEDE}:"")+
+					<textFieldExpression><![CDATA[($F{VIA_SEDE}!=null?$F{VIA_SEDE}:"")+
 ($F{NUMERO_CIVICO_SEDE}!=null?(","+$F{NUMERO_CIVICO_SEDE}):"")]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-118" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="15" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-118" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="15" isRemoveLineWhenBlank="true" uuid="0f6f249f-1f3f-4d60-89c0-d3ef29837369"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -1882,13 +1881,13 @@ $F{TI_RECORD_L1}.equals("A") &&
 $F{TI_RECORD_L2}.equals("A")
 )]]></printWhenExpression>
 				<line>
-					<reportElement key="line-119" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="0" width="1" height="15" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-119" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="0" width="1" height="15" isRemoveLineWhenBlank="true" uuid="7b55fa83-fb46-49f4-a00e-7a8a711cd844"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-9" style="TNR8" x="286" y="2" width="288" height="12"/>
+					<reportElement key="textField-9" style="TNR8" x="286" y="2" width="288" height="12" uuid="29a42ba9-2bf9-4afa-b4f9-0a413ee9858a"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1896,12 +1895,12 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{CAP_COMUNE_SEDE}!=null?$F{CAP_COMUNE_SEDE}:"")+
+					<textFieldExpression><![CDATA[($F{CAP_COMUNE_SEDE}!=null?$F{CAP_COMUNE_SEDE}:"")+
 ($F{DS_COMUNE}!=null?(" - "+$F{DS_COMUNE}):"")+
 ($F{CD_PROVINCIA}!=null?(" - ("+$F{CD_PROVINCIA}+")"):"")]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-120" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="15" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-120" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="15" isRemoveLineWhenBlank="true" uuid="ef629093-01fb-41ec-ad2c-92c649964c8c"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
@@ -1921,25 +1920,25 @@ $F{TI_RECORD_L1}.equals("A") &&
 $F{TI_RECORD_L2}.equals("A")
 )]]></printWhenExpression>
 				<line>
-					<reportElement key="line-121" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="0" width="1" height="33" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-121" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="0" width="1" height="33" isRemoveLineWhenBlank="true" uuid="20ab50c7-6263-4d32-89e3-0072474e6bd4"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-122" x="284" y="0" width="292" height="1"/>
+					<reportElement key="line-122" x="284" y="0" width="292" height="1" uuid="3fbd9003-1455-4024-a5e4-c59d52e37181"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-123" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="33" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-123" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="33" isRemoveLineWhenBlank="true" uuid="4f8abe50-97ec-46cf-905d-fcde0f19d7d5"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-10" style="TNR8BOLD" x="286" y="2" width="61" height="12"/>
+					<reportElement key="textField-10" style="TNR8BOLD" x="286" y="2" width="61" height="12" uuid="9d9e4f83-ada9-4ce3-8294-cee38518bc61"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1947,16 +1946,16 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_ANAGRAFICO}.equals("D")?"MATRICOLA":"CODICE")]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{TI_ANAGRAFICO}.equals("D")?"MATRICOLA":"CODICE")]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-124" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="349" y="0" width="1" height="33" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-124" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="349" y="0" width="1" height="33" isRemoveLineWhenBlank="true" uuid="d5d91776-83b3-4ece-a968-184fb544aa89"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-11" style="TNR8" x="351" y="2" width="222" height="12"/>
+					<reportElement key="textField-11" style="TNR8BOLD" x="351" y="2" width="222" height="12" uuid="56302322-1d6a-4033-a343-8f718a20da8d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1964,16 +1963,16 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{MATRICOLA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{TI_ANAGRAFICO}.equals("D")?$F{MATRICOLA}+" CODICE "+$F{CD_TERZO}:$F{MATRICOLA})]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-125" x="284" y="15" width="292" height="1"/>
+					<reportElement key="line-125" x="284" y="15" width="292" height="1" uuid="6b973a02-b7e7-4075-a0e1-114722b052f5"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-12" style="TNR8BOLD" x="286" y="17" width="61" height="12"/>
+					<reportElement key="textField-12" style="TNR8BOLD" x="286" y="17" width="61" height="12" uuid="ff441667-16cb-4317-ba8a-9e44c25fd558"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1981,16 +1980,16 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA["QUALIFICA"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["QUALIFICA"]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-126" x="284" y="32" width="292" height="1"/>
+					<reportElement key="line-126" x="284" y="32" width="292" height="1" uuid="1aa4f68a-ea6a-479b-bb9d-1a6eb2fc178e"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-13" style="TNR8" x="352" y="17" width="222" height="12"/>
+					<reportElement key="textField-13" style="TNR8" x="352" y="17" width="222" height="12" uuid="65533eac-69d4-48af-9419-26b3cc9e43c1"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1998,7 +1997,7 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{QUALIFICA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{QUALIFICA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -2015,7 +2014,7 @@ $F{TI_RECORD_L1}.equals("A") &&
 $F{TI_RECORD_L2}.equals("B1")
 )]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-14" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="84" y="0" width="59" height="12"/>
+					<reportElement key="textField-14" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="84" y="0" width="59" height="12" uuid="f0b6e09d-eb95-4f1b-b5a2-ba4a1218def2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2023,12 +2022,12 @@ $F{TI_RECORD_L2}.equals("B1")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{TI_COMPETENZA_RESIDUO}.equals("C")
+					<textFieldExpression><![CDATA[$F{TI_COMPETENZA_RESIDUO}.equals("C")
 ?"Competenza"
 :"Residuo"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-16" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="143" y="0" width="106" height="12"/>
+					<reportElement key="textField-16" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="143" y="0" width="106" height="12" uuid="02a41563-dab3-4539-b8d0-79f4fb2b5f70"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2036,12 +2035,12 @@ $F{TI_RECORD_L2}.equals("B1")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{ESERCIZIO_ORI_OBBL_ACC}+"/"+$F{PG_OBBL_ACC}+"/"+$F{PG_OBBL_ACC_SCADENZARIO}+
+					<textFieldExpression><![CDATA[$F{ESERCIZIO_ORI_OBBL_ACC}+"/"+$F{PG_OBBL_ACC}+"/"+$F{PG_OBBL_ACC_SCADENZARIO}+
 " del "+
 (new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DT_SCADENZA})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-18" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="249" y="0" width="82" height="12"/>
+					<reportElement key="textField-18" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="249" y="0" width="82" height="12" uuid="9173b8d4-57c1-4245-ad41-03a22ebd2602"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2049,10 +2048,10 @@ $F{TI_RECORD_L2}.equals("B1")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_VOCE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_VOCE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-20" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="331" y="0" width="82" height="12"/>
+					<reportElement key="textField-20" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="331" y="0" width="82" height="12" uuid="b454b997-5948-4f39-befd-cea82ea1940f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2060,10 +2059,10 @@ $F{TI_RECORD_L2}.equals("B1")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_ANTICIPO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_ANTICIPO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-22" style="TNR8" mode="Transparent" x="413" y="0" width="82" height="12"/>
+					<reportElement key="textField-22" style="TNR8" mode="Transparent" x="413" y="0" width="82" height="12" uuid="f592b563-562a-4b4e-aae5-994392555a8c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2071,7 +2070,7 @@ $F{TI_RECORD_L2}.equals("B1")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[(!$F{PG_MAN_REV}.equals(new BigDecimal(0)))?
+					<textFieldExpression><![CDATA[(!$F{PG_MAN_REV}.equals(new BigDecimal(0)))?
 $F{PG_MAN_REV}.toString():""]]></textFieldExpression>
 				</textField>
 			</band>
@@ -2089,7 +2088,7 @@ $F{TI_RECORD_L1}.equals("A") &&
 $F{TI_RECORD_L2}.equals("B2")
 )]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-15" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="84" y="0" width="59" height="12"/>
+					<reportElement key="textField-15" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="84" y="0" width="59" height="12" uuid="2a87c83f-4f76-4521-b6f2-8d0d02433f24"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2097,12 +2096,12 @@ $F{TI_RECORD_L2}.equals("B2")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{TI_COMPETENZA_RESIDUO}.equals("C")
+					<textFieldExpression><![CDATA[$F{TI_COMPETENZA_RESIDUO}.equals("C")
 ?"Competenza"
 :"Residuo"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-17" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="143" y="0" width="106" height="12"/>
+					<reportElement key="textField-17" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="143" y="0" width="106" height="12" uuid="645103a0-e487-4006-9e52-ad66a5784bfb"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2110,12 +2109,12 @@ $F{TI_RECORD_L2}.equals("B2")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{ESERCIZIO_ORI_OBBL_ACC}+"/"+$F{PG_OBBL_ACC}+"/"+$F{PG_OBBL_ACC_SCADENZARIO}+
+					<textFieldExpression><![CDATA[$F{ESERCIZIO_ORI_OBBL_ACC}+"/"+$F{PG_OBBL_ACC}+"/"+$F{PG_OBBL_ACC_SCADENZARIO}+
 " del "+
 (new java.text.SimpleDateFormat("dd/MM/yyyy")).format($F{DT_SCADENZA})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-19" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="249" y="0" width="82" height="12"/>
+					<reportElement key="textField-19" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="249" y="0" width="82" height="12" uuid="84ba1125-f3d4-4dff-bb77-619389d44596"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2123,10 +2122,10 @@ $F{TI_RECORD_L2}.equals("B2")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_VOCE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_VOCE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-21" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="331" y="0" width="82" height="12"/>
+					<reportElement key="textField-21" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="331" y="0" width="82" height="12" uuid="42cbfb28-0fb4-45ff-88a2-6b352ee50a79"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2134,10 +2133,10 @@ $F{TI_RECORD_L2}.equals("B2")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PG_COMPENSO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PG_COMPENSO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-23" style="TNR8" mode="Opaque" x="413" y="0" width="82" height="12"/>
+					<reportElement key="textField-23" style="TNR8" mode="Opaque" x="413" y="0" width="82" height="12" uuid="c2a63eb7-e79c-45d5-9ca8-a5e46fb35c8e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2145,11 +2144,11 @@ $F{TI_RECORD_L2}.equals("B2")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[(!$F{PG_MAN_REV}.equals(new BigDecimal(0)))?
+					<textFieldExpression><![CDATA[(!$F{PG_MAN_REV}.equals(new BigDecimal(0)))?
 $F{PG_MAN_REV}.toString():""]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-25" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="495" y="0" width="82" height="12"/>
+					<reportElement key="textField-25" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="495" y="0" width="82" height="12" uuid="0b6de3c2-2e11-4c36-b702-3d0dde1c8de3"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2157,7 +2156,7 @@ $F{PG_MAN_REV}.toString():""]]></textFieldExpression>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_RIMBORSO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_RIMBORSO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -2174,7 +2173,7 @@ $F{TI_RECORD_L1}.equals("A") &&
 $F{TI_RECORD_L2}.equals("C")
 )]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-26" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="117" height="12"/>
+					<reportElement key="textField-26" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="117" height="12" uuid="7710e7bd-bf72-40b0-b8cd-5b9a709390dc"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2182,10 +2181,10 @@ $F{TI_RECORD_L2}.equals("C")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CONTRIBUTO_RITENUTA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_CONTRIBUTO_RITENUTA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-27" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="119" y="0" width="52" height="12"/>
+					<reportElement key="textField-27" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="119" y="0" width="52" height="12" uuid="1fe621fa-d70e-4e2d-98b4-c149101e269d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2193,10 +2192,10 @@ $F{TI_RECORD_L2}.equals("C")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{TI_ENTE_PERCIPIENTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TI_ENTE_PERCIPIENTE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-28" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="171" y="0" width="98" height="12"/>
+					<reportElement key="textField-28" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="171" y="0" width="98" height="12" uuid="96a34d05-dd23-479e-876c-c18cba4828e7"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2204,7 +2203,7 @@ $F{TI_RECORD_L2}.equals("C")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{AMMONTARE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{AMMONTARE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -2221,7 +2220,7 @@ $F{TI_RECORD_L1}.equals("B") &&
 $F{TI_RECORD_L2}.equals("A")
 )]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement key="textField-29" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="42" height="12"/>
+					<reportElement key="textField-29" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="42" height="12" uuid="27a229dd-82ac-4535-9b64-f2232eabf2c1"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2229,10 +2228,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DT_INIZIO_TAPPA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DT_INIZIO_TAPPA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-30" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="44" y="0" width="101" height="12"/>
+					<reportElement key="textField-30" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="44" y="0" width="101" height="12" uuid="5679cbbb-276c-4a44-b368-e51d5b399129"/>
 					<box leftPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2240,10 +2239,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_SPESA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_SPESA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-31" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="145" y="0" width="45" height="12"/>
+					<reportElement key="textField-31" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="145" y="0" width="45" height="12" uuid="e75c7180-4e69-4158-a465-892aa1cfbe79"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2251,10 +2250,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_SPESA_ANTICIPATA}.equals("Y")?"Si":"No"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_SPESA_ANTICIPATA}.equals("Y")?"Si":"No"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-32" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="190" y="0" width="45" height="12"/>
+					<reportElement key="textField-32" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="190" y="0" width="45" height="12" uuid="cf7d59ad-4cdc-4a38-ba39-a605d73a8c2f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2262,10 +2261,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_DIVISA_SPESA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_DIVISA_SPESA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-33" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="235" y="0" width="73" height="12"/>
+					<reportElement key="textField-33" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="235" y="0" width="73" height="12" uuid="f9b1d540-f1dc-40a4-882b-e1bfc9c74f67"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2273,10 +2272,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_SPESA_DIVISA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_SPESA_DIVISA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-34" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="308" y="0" width="45" height="12"/>
+					<reportElement key="textField-34" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="308" y="0" width="45" height="12" uuid="188d92da-7ba9-4413-8852-54b4ec4eeeca"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2284,10 +2283,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CAMBIO_SPESA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CAMBIO_SPESA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-35" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="353" y="0" width="43" height="12"/>
+					<reportElement key="textField-35" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="353" y="0" width="43" height="12" uuid="f4086991-7b87-4dac-bfb7-caa021019f98"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2295,10 +2294,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_BASE_MAGGIORAZIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_BASE_MAGGIORAZIONE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="396" y="0" width="27" height="12"/>
+					<reportElement key="textField-36" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="396" y="0" width="27" height="12" uuid="d0844e73-771f-4b97-9387-2f04c0f5f169"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2306,10 +2305,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PERCENTUALE_MAGGIORAZIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PERCENTUALE_MAGGIORAZIONE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-37" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="423" y="0" width="57" height="12"/>
+					<reportElement key="textField-37" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="423" y="0" width="57" height="12" uuid="f5898bc8-b4b3-4ee6-a189-299de3841f2c"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2317,10 +2316,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_MAGGIORAZIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_MAGGIORAZIONE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-38" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="480" y="0" width="48" height="12"/>
+					<reportElement key="textField-38" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="480" y="0" width="48" height="12" uuid="7d9ec941-9f85-4cdb-bff5-815e015290b8"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2328,10 +2327,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_SPESA_EURO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_SPESA_EURO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-39" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="528" y="0" width="49" height="12"/>
+					<reportElement key="textField-39" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="528" y="0" width="49" height="12" uuid="8022d0bf-545d-4758-8d54-36e5bcbf5837"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2339,7 +2338,7 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_TOTALE_SPESA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_TOTALE_SPESA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -2356,7 +2355,7 @@ $F{TI_RECORD_L1}.equals("B") &&
 $F{TI_RECORD_L2}.equals("B")
 )]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-40" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="313" y="0" width="72" height="12"/>
+					<reportElement key="textField-40" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="313" y="0" width="72" height="12" uuid="bb7afb4e-c1b5-450e-a96d-fd7bd811b4c4"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2364,32 +2363,30 @@ $F{TI_RECORD_L2}.equals("B")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CHILOMETRI}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CHILOMETRI}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-74" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="82" height="12"/>
+					<reportElement key="staticText-74" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="82" height="12" uuid="f7582430-c65f-4ad9-8f6e-4443ea27d27f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-75" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="560" y="0" width="17" height="12"/>
+					<reportElement key="staticText-75" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="560" y="0" width="17" height="12" uuid="2cc472ed-4a09-4840-bf95-1db3997eab49"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-41" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="385" y="0" width="71" height="12"/>
+					<reportElement key="textField-41" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="385" y="0" width="71" height="12" uuid="6a1144af-c3c7-4fbc-a6fc-16d890d43b93"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2397,10 +2394,10 @@ $F{TI_RECORD_L2}.equals("B")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{INDENNITA_CHILOMETRICA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{INDENNITA_CHILOMETRICA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-42" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="456" y="0" width="71" height="12"/>
+					<reportElement key="textField-42" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="456" y="0" width="71" height="12" uuid="7fed2ca8-511c-4b4f-b1a9-a2d86f1c514d"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2408,14 +2405,14 @@ $F{TI_RECORD_L2}.equals("B")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CHILOMETRI}.multiply(
+					<textFieldExpression><![CDATA[$F{CHILOMETRI}.multiply(
 $F{INDENNITA_CHILOMETRICA})]]></textFieldExpression>
 				</textField>
 			</band>
 			<band height="12" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean( $F{TI_RECORD_L1}.equals("D") && $F{TI_RECORD_L2}.equals("A") )]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm" isBlankWhenNull="true">
-					<reportElement key="textField-43" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="72" height="12"/>
+					<reportElement key="textField-43" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="72" height="12" uuid="012e5be9-ed0b-47d0-b753-db4f9613f6fe"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2423,10 +2420,10 @@ $F{INDENNITA_CHILOMETRICA})]]></textFieldExpression>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DT_INIZIO_TAPPA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DT_INIZIO_TAPPA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm" isBlankWhenNull="true">
-					<reportElement key="textField-44" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="74" y="0" width="71" height="12"/>
+					<reportElement key="textField-44" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="74" y="0" width="71" height="12" uuid="0b7c2528-30f9-40b9-83e1-e99653622e20"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2434,10 +2431,10 @@ $F{INDENNITA_CHILOMETRICA})]]></textFieldExpression>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None"/>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DT_FINE_TAPPA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DT_FINE_TAPPA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-49" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="243" y="0" width="71" height="12"/>
+					<reportElement key="textField-49" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="243" y="0" width="71" height="12" uuid="3d086b0f-17ae-430a-bbd3-e7f9b915a883"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2445,10 +2442,10 @@ $F{INDENNITA_CHILOMETRICA})]]></textFieldExpression>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_TABELL_RIMB}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_TABELL_RIMB}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-50" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="385" y="0" width="71" height="12"/>
+					<reportElement key="textField-50" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="385" y="0" width="71" height="12" uuid="cee6a226-3691-4e97-988d-5ebb291fb858"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2456,10 +2453,10 @@ $F{INDENNITA_CHILOMETRICA})]]></textFieldExpression>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{QUOTA_RIMBORSO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{QUOTA_RIMBORSO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-50" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="506" y="0" width="71" height="12"/>
+					<reportElement key="textField-50" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="506" y="0" width="71" height="12" uuid="31718de3-184f-4df6-bc41-cae60b1e2eb3"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2467,7 +2464,7 @@ $F{INDENNITA_CHILOMETRICA})]]></textFieldExpression>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_QUOTA_ESENTE_DET}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_QUOTA_ESENTE_DET}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -2484,7 +2481,7 @@ $F{TI_RECORD_L1}.equals("C") &&
 $F{TI_RECORD_L2}.equals("A")
 )]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm" isBlankWhenNull="true">
-					<reportElement key="textField-43" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="72" height="12"/>
+					<reportElement key="textField-43" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="72" height="12" uuid="e53fbadf-9365-4438-a5c0-e1f1cd3b67fc"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2492,10 +2489,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DT_INIZIO_TAPPA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DT_INIZIO_TAPPA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm" isBlankWhenNull="true">
-					<reportElement key="textField-44" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="74" y="0" width="71" height="12"/>
+					<reportElement key="textField-44" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="74" y="0" width="71" height="12" uuid="ade3790b-58da-49dd-bae2-8700ce6b9663"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2503,10 +2500,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DT_FINE_TAPPA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DT_FINE_TAPPA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-45" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="145" y="0" width="50" height="12"/>
+					<reportElement key="textField-45" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="145" y="0" width="50" height="12" uuid="329c6209-96a0-4092-93f2-a3e285d85295"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2514,10 +2511,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_DIVISA_TAPPA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_DIVISA_TAPPA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-46" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="195" y="0" width="73" height="12"/>
+					<reportElement key="textField-46" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="195" y="0" width="73" height="12" uuid="2616b450-d678-4cc9-9891-79c1ca775cb6"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2525,10 +2522,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_DIARIA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_DIARIA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-47" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="268" y="0" width="46" height="12"/>
+					<reportElement key="textField-47" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="268" y="0" width="46" height="12" uuid="e12ac7e3-7a9a-4b8d-b806-b1dcff99bd4c"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2536,10 +2533,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CAMBIO_TAPPA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CAMBIO_TAPPA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-48" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="314" y="0" width="71" height="12"/>
+					<reportElement key="textField-48" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="314" y="0" width="71" height="12" uuid="868c63a5-221d-4def-810a-46a5dcedd9ba"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2547,10 +2544,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_DIARIA_LORDA_DET}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_DIARIA_LORDA_DET}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-49" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="385" y="0" width="71" height="12"/>
+					<reportElement key="textField-49" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="385" y="0" width="71" height="12" uuid="63a9e805-77ed-46a9-b322-39ecb0d3d9d7"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2558,10 +2555,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_QUOTA_ESENTE_DET}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_QUOTA_ESENTE_DET}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-50" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="456" y="0" width="71" height="12"/>
+					<reportElement key="textField-50" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="456" y="0" width="71" height="12" uuid="d2292f9a-8710-4cc6-a715-793e8de9e688"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2569,10 +2566,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_DIARIA_NETTO_DET}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_DIARIA_NETTO_DET}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-51" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="527" y="0" width="50" height="12"/>
+					<reportElement key="textField-51" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="527" y="0" width="50" height="12" uuid="493beeae-0f40-46d8-8a42-e41e95a7c2e3"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2580,7 +2577,7 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_DIARIA_MANUALE}.equals("Y")?"Si":"No"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_DIARIA_MANUALE}.equals("Y")?"Si":"No"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -2597,7 +2594,7 @@ $F{TI_RECORD_L1}.equals("E") &&
 $F{TI_RECORD_L2}.equals("A")
 )]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-52" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="105" height="12"/>
+					<reportElement key="textField-52" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="0" width="105" height="12" uuid="5eae89c1-df30-4d55-abf1-653b4a485e30"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2605,10 +2602,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CONTRIBUTO_RITENUTA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_CONTRIBUTO_RITENUTA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-53" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="107" y="0" width="207" height="12"/>
+					<reportElement key="textField-53" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="107" y="0" width="207" height="12" uuid="ae819d0b-bc0e-493b-8ef5-2bd5cffc2003"/>
 					<box leftPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2616,10 +2613,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_CONTRIBUTO_RITENUTA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_CONTRIBUTO_RITENUTA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-54" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="314" y="0" width="40" height="12"/>
+					<reportElement key="textField-54" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="314" y="0" width="40" height="12" uuid="b82c7321-8ce1-474c-bd81-61870b5c6d68"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2627,10 +2624,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{TI_ENTE_PERCIPIENTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TI_ENTE_PERCIPIENTE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-55" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="75" height="12"/>
+					<reportElement key="textField-55" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="75" height="12" uuid="2e4d1ce6-d15a-4a99-abc1-df079ae3dccc"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2638,10 +2635,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-56" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="429" y="0" width="74" height="12"/>
+					<reportElement key="textField-56" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="429" y="0" width="74" height="12" uuid="5042c28f-19db-4232-ac53-6f11d5b0553e"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2649,10 +2646,10 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ALIQUOTA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ALIQUOTA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-57" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="503" y="0" width="74" height="12"/>
+					<reportElement key="textField-57" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="503" y="0" width="74" height="12" uuid="1aa5f9a9-86b8-4f49-bf79-4d94c8c92493"/>
 					<box rightPadding="4">
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2660,7 +2657,7 @@ $F{TI_RECORD_L2}.equals("A")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{AMMONTARE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{AMMONTARE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
