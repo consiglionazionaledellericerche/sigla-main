@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="2.049040366095212"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="95"/>
+	<property name="ireport.y" value="35"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -80,7 +80,7 @@
 	</parameter>
 	<parameter name="P_ORDINE" class="java.lang.String">
 		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
-		<defaultValueExpression><![CDATA["A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["V"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT p.tipo, p.esercizio_res, p.cd_linea_attivita cd_gae,
