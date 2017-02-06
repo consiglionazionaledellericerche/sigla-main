@@ -94,7 +94,63 @@ and   A.CD_LINEA_ATTIVITA in (
 and   ($P{P_VOCE} IS NULL OR
       NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, A.ESERCIZIO_RES,
            		    A.TI_GESTIONE, A.CD_ELEMENTO_VOCE),
-	A.CD_ELEMENTO_VOCE) = $P{P_VOCE})) A
+	A.CD_ELEMENTO_VOCE) = $P{P_VOCE})
+UNION ALL
+SELECT C.ESERCIZIO, 99999, 'Variazione fittizia per cambiamento piano dei conti',
+       -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))
+FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c
+WHERE a.cd_cds = b.cd_cds
+and   a.esercizio=b.esercizio
+and   a.esercizio_originale=b.esercizio_originale
+and   a.pg_obbligazione = b.pg_obbligazione
+and   a.pg_obbligazione_scadenzario = b.pg_obbligazione_scadenzario
+and   a.cd_cds = c.cd_cds
+and   a.esercizio=c.esercizio
+and   a.esercizio_originale=c.esercizio_originale
+and   a.pg_obbligazione = c.pg_obbligazione
+and   c.cd_elemento_voce_next is not null
+and   nvl(b.im_scadenza,0)!=0
+AND   A.TI_GESTIONE = $P{P_TIPO}
+and   A.ESERCIZIO <= $P{P_ESERCIZIO}
+and   A.ESERCIZIO_ORIGINALE = NVL($P{P_ESERCIZIO_RES}, A.ESERCIZIO_ORIGINALE)
+and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+and   A.CD_LINEA_ATTIVITA in (
+    SELECT cd_linea_attivita
+    FROM v_linea_attivita_valida
+    WHERE cd_centro_responsabilita = a.cd_centro_responsabilita
+    AND   pg_progetto=$P{P_PG_PROGLIV2}
+    AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
+and   ($P{P_VOCE} IS NULL OR
+      NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, c.esercizio_originale,
+			    'S' , c.cd_elemento_voce),
+	C.CD_ELEMENTO_VOCE) = $P{P_VOCE})
+UNION ALL
+SELECT C.ESERCIZIO, 99999, 'Variazione fittizia per cambiamento piano dei conti',
+       im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))
+FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c
+WHERE a.cd_cds = b.cd_cds
+and   a.esercizio=b.esercizio
+and   a.esercizio_originale=b.esercizio_originale
+and   a.pg_obbligazione = b.pg_obbligazione
+and   a.pg_obbligazione_scadenzario = b.pg_obbligazione_scadenzario
+and   a.cd_cds = c.cd_cds
+and   a.esercizio=c.esercizio
+and   a.esercizio_originale=c.esercizio_originale
+and   a.pg_obbligazione = c.pg_obbligazione
+and   c.cd_elemento_voce_next is not null
+and   nvl(b.im_scadenza,0)!=0
+AND   A.TI_GESTIONE = $P{P_TIPO}
+and   A.ESERCIZIO <= $P{P_ESERCIZIO}
+and   A.ESERCIZIO_ORIGINALE = NVL($P{P_ESERCIZIO_RES}, A.ESERCIZIO_ORIGINALE)
+and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
+and   A.CD_LINEA_ATTIVITA in (
+    SELECT cd_linea_attivita
+    FROM v_linea_attivita_valida
+    WHERE cd_centro_responsabilita = a.cd_centro_responsabilita
+    AND   pg_progetto=$P{P_PG_PROGLIV2}
+    AND   cd_linea_attivita = nvl($P{P_GAE},cd_linea_attivita))
+and   ($P{P_VOCE} IS NULL OR
+      NVL(c.cd_elemento_voce_next, c.cd_elemento_voce) = $P{P_VOCE})) A
 GROUP BY  A.ESERCIZIO_VAR, A.PG_VAR, A.DS_VAR
 ORDER BY A.ESERCIZIO_VAR, A.PG_VAR]]>
 	</queryString>
