@@ -121,13 +121,8 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
   	            ELSE 'GAE_UNICA'
                       END cd_linea_attivita,
                  CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN CASE WHEN esercizio>=2016
-                           THEN cd_elemento_voce
-                           ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
-                                     FROM ass_evold_evnew b
-                                     WHERE b.ti_gestione_old = 'E'
-                                     AND   b.cd_elemento_voce_old = cd_elemento_voce), cd_elemento_voce)
-                           END
+                      THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, esercizio_res, 'E' , cd_elemento_voce),
+			cd_elemento_voce)
                       ELSE 'VOCE_UNICA'
                       END cd_elemento_voce,
                  CASE WHEN esercizio = esercizio_res
@@ -166,13 +161,8 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
   	            ELSE 'GAE_UNICA'
                       END cd_linea_attivita,
                  CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN CASE WHEN esercizio>=2016
-                           THEN cd_elemento_voce
-                           ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
-                                     FROM ass_evold_evnew b
-                                     WHERE b.ti_gestione_old = 'S'
-                                     AND   b.cd_elemento_voce_old = cd_elemento_voce), cd_elemento_voce)
-                           END
+                      THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, esercizio_res, 'S' , cd_elemento_voce),
+			cd_elemento_voce)
                       ELSE 'VOCE_UNICA'
                       END cd_elemento_voce,
                 CASE WHEN esercizio = esercizio_res
@@ -201,13 +191,8 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                        AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
          UNION ALL
          SELECT  c.esercizio, c.esercizio_originale esercizio_res, 'S' tipo, a.CD_LINEA_ATTIVITA,
-                 CASE WHEN c.esercizio>=2016
-                      THEN c.cd_elemento_voce
-                      ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
-                                FROM ass_evold_evnew b
-                                WHERE b.ti_gestione_old = 'S'
-                                AND   b.cd_elemento_voce_old = c.cd_elemento_voce), c.cd_elemento_voce)
-                      END cd_elemento_voce,
+                 NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, c.esercizio_originale, 'S' , c.cd_elemento_voce),
+		c.cd_elemento_voce) cd_elemento_voce,
                  0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
                  0 impegnato, 0 pagato
          FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c
@@ -253,13 +238,8 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                                        AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
          UNION ALL
          SELECT  c.esercizio, c.esercizio_originale esercizio_res, 'E' tipo, a.CD_LINEA_ATTIVITA,
-                 CASE WHEN c.esercizio>=2016
-                      THEN c.cd_elemento_voce
-                      ELSE NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
-                                FROM ass_evold_evnew b
-                                WHERE b.ti_gestione_old = 'E'
-                                AND   b.cd_elemento_voce_old = c.cd_elemento_voce), c.cd_elemento_voce)
-                      END cd_elemento_voce,
+                 NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, c.esercizio_originale, 'E' , c.cd_elemento_voce),
+		c.cd_elemento_voce) cd_elemento_voce,
                  0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
                  0 impegnato, 0 pagato
          FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c
@@ -305,10 +285,8 @@ FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
                                        AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
          UNION ALL
          SELECT a.esercizio, 2005 esercizio_res, 'S' tipo, a.cd_linea_attivita,
-                NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
-                     FROM ass_evold_evnew b
-                     WHERE b.ti_gestione_old = 'S'
-                     AND   b.cd_elemento_voce_old = a.cd_elemento_voce), a.cd_elemento_voce) cd_elemento_voce,
+                NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, 2005, 'S' , a.cd_elemento_voce),
+	          a.cd_elemento_voce) cd_elemento_voce,
                 NVL(a.im_residuo, 0), 0 variazioni, 0 impegnato, 0 pagato
          FROM pdg_residuo_det a
          WHERE a.esercizio = 2005
