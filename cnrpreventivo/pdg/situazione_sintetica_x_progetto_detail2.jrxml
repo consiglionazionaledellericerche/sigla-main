@@ -32,7 +32,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["020.003.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_GAE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -72,9 +72,13 @@ and   ASV.ESERCIZIO = ACC.ESERCIZIO
 and   ASV.ESERCIZIO_ORIGINALE = ACC.ESERCIZIO_ORIGINALE
 and   ASV.PG_ACCERTAMENTO = ACC.PG_ACCERTAMENTO
 and   ($P{P_VOCE} IS NULL or
-      NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, ACC.ESERCIZIO_ORIGINALE,
-           		    ACC.TI_GESTIONE, ACC.CD_ELEMENTO_VOCE),
-	ACC.CD_ELEMENTO_VOCE) = $P{P_VOCE})
+      NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
+           FROM ass_evold_evnew b
+           WHERE b.ti_gestione_old = ACC.TI_GESTIONE
+           AND   b.cd_elemento_voce_old = ACC.CD_ELEMENTO_VOCE
+           AND   b.esercizio_new = 2016
+           AND   b.ti_gestione_new = ACC.TI_GESTIONE
+           AND   rownum < 2), ACC.CD_ELEMENTO_VOCE) = $P{P_VOCE})
 and   ASV.CD_CDS = DOC.CD_CDS_ACCERTAMENTO
 and   ASV.ESERCIZIO = DOC.ESERCIZIO_ACCERTAMENTO
 and   ASV.ESERCIZIO_ORIGINALE = DOC.ESERCIZIO_ORI_ACCERTAMENTO
@@ -155,9 +159,13 @@ and   OSV.ESERCIZIO = OBB.ESERCIZIO
 and   OSV.ESERCIZIO_ORIGINALE = OBB.ESERCIZIO_ORIGINALE
 and   OSV.PG_OBBLIGAZIONE = OBB.PG_OBBLIGAZIONE
 and   ($P{P_VOCE} IS NULL OR
-      NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, OBB.ESERCIZIO_ORIGINALE,
-           		    OBB.TI_GESTIONE, OBB.CD_ELEMENTO_VOCE),
-	OBB.CD_ELEMENTO_VOCE) = $P{P_VOCE})
+       NVL((SELECT b.CD_ELEMENTO_VOCE_NEW
+           FROM ass_evold_evnew b
+           WHERE b.ti_gestione_old = OBB.TI_GESTIONE
+           AND   b.cd_elemento_voce_old = OBB.CD_ELEMENTO_VOCE
+           AND   b.esercizio_new = 2016
+           AND   b.ti_gestione_new = OBB.TI_GESTIONE
+           AND   rownum < 2),OBB.CD_ELEMENTO_VOCE) = $P{P_VOCE})
 and   OSV.CD_CDS = DOC.CD_CDS_OBBLIGAZIONE
 and   OSV.ESERCIZIO = DOC.ESERCIZIO_OBBLIGAZIONE
 and   OSV.ESERCIZIO_ORIGINALE = DOC.ESERCIZIO_ORI_OBBLIGAZIONE
