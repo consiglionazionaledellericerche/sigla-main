@@ -946,31 +946,32 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					}
 				}
 
-				BigDecimal totaleImportoRiga = BigDecimal.ZERO;
 				if (var_stanz_res.isApprovata()){
 						for (java.util.Iterator j=var_stanz_res.getAssociazioneCDR().iterator();j.hasNext();){			
 							Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)j.next();
-							for (java.util.Iterator i =  var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
-								Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
-								try {
-									if (isRigaLiquidazioneIva(usercontext, riga)){
-										throw new ApplicationException ("Attenzione: Non è possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
-									} else {
-										totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
+							BigDecimal totaleImportoRiga = BigDecimal.ZERO;
+							if (!AssHome.findDettagliSpesa(ass_var_cdr).isEmpty())  
+								for (java.util.Iterator i =  AssHome.findDettagliSpesa(ass_var_cdr).iterator();i.hasNext();) {
+									Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
+									try {
+										if (isRigaLiquidazioneIva(usercontext, riga)){
+											throw new ApplicationException ("Attenzione: Non è possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
+										} else {
+											totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
+										}
+									} catch (ComponentException e) {
+										throw new ApplicationException (e.getMessage());
 									}
-								} catch (ComponentException e) {
-									throw new ApplicationException (e.getMessage());
 								}
-						}
 						
-						if (Utility.nvl(ass_var_cdr.getIm_spesa()).compareTo(totaleImportoRiga) != 0){
-							throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilità!");
-						}
-						try {
-							if( rigaInsMod) 
+							if (Utility.nvl(ass_var_cdr.getIm_spesa()).compareTo(totaleImportoRiga) != 0){
+								throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilità!");
+							}
+							try {
+								if( rigaInsMod) 
 								allineaSaldiVariazioneApprovata(usercontext, var_stanz_res, totaleImportoRiga);
-						} catch (ComponentException e) {
-							throw handleException(e);
+							} catch (ComponentException e) {
+								throw handleException(e);
 						}
 					}
 				}
