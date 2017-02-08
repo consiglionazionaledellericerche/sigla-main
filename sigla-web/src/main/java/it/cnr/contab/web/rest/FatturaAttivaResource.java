@@ -62,7 +62,6 @@ import it.cnr.jada.util.DateUtils;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
@@ -113,7 +112,6 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 	@Override
 	public Response inserisciFatture(@Context HttpServletRequest request, List<FatturaAttiva> fatture) throws Exception {
 		LOGGER.debug("REST request per inserire fatture attive." );
-		List<Fattura_attivaBulk> fattureCreate = new ArrayList<Fattura_attivaBulk>();
 		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
 		fatture.stream().forEach(fattura -> {
 			Fattura_attivaBulk testata;
@@ -147,6 +145,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 			testata.setToBeCreated();
 			testata.setEsercizio(fattura.getEsercizio());
 			testata.setTi_fattura(fattura.getTi_fattura());
+			testata.setUtcr(userContext.getUser());
 			testata.setCd_cds_origine(fattura.getCd_cds_origine());
 			testata.setTi_bene_servizio(fattura.getTi_bene_servizio());
 			testata.setFl_pagamento_anticipato(fattura.getFl_pagamento_anticipato());
@@ -172,10 +171,10 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 				// potrebbe non essere univoca per tipologia
 				Optional.of(fatturaAttivaSingolaComponentSession.VerificaDuplicati(userContext, testata)).filter(x -> x.equals(Boolean.FALSE))
 				.orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_102));
-
+				
 				testata.setTipo_sezionale(new Tipo_sezionaleBulk(fattura.getCd_tipo_sezionale()));
 				Optional.of(testata.getSezionali().stream().filter(x -> x.getCd_tipo_sezionale().equals(
-						fattura.getCd_tipo_sezionale())).count()).filter(x -> x < 1).
+						fattura.getCd_tipo_sezionale())).count()).filter(x -> x >= 1).
 						orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_127));
 
 				testata.setDt_registrazione(new Timestamp(fattura.getDt_registrazione().getTime()));
@@ -186,8 +185,10 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 				testata.setCliente(new TerzoBulk(fattura.getCd_terzo()));
 				testata.setCliente((TerzoBulk)fatturaAttivaSingolaComponentSession.completaOggetto(userContext,testata.getCliente()));
 				Optional.ofNullable(testata.getCliente()).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_105));
+				
 				Optional.of(testata.getCliente().getAnagrafico().getTi_italiano_estero().equals(testata.getSupplierNationType())).
-				filter(x -> x.equals(Boolean.FALSE)).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_140));
+				filter(x -> x.equals(Boolean.TRUE)).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_140));
+				
 				testata.setCd_terzo(fattura.getCd_terzo());
 				testata=(Fattura_attivaBulk)fatturaAttivaSingolaComponentSession.completaTerzo(userContext,testata,testata.getCliente());
 				Optional.of(Stream.of(
@@ -257,7 +258,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 					Optional.of(Stream.of(
 							fattura.getTi_bene_servizio().equals("*"),
 							riga.getBene_servizio().getTi_bene_servizio().equals(fattura.getTi_bene_servizio())
-							).filter(x -> x.equals(Boolean.TRUE)).count()).filter(x -> x == 0).
+							).filter(x -> x.equals(Boolean.TRUE)).count()).filter(x -> x > 0).
 							orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_141));
 					if(testata.getTi_causale_emissione().equals(Fattura_attivaBulk.TARIFFARIO)){
 						Optional.ofNullable(fatr.getCd_tariffario()).
@@ -688,7 +689,6 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 												fa_intra.setValore_statistico(intra.getValore_statistico());
 											if(intra.getUnita_supplementari()!=null)
 												fa_intra.setUnita_supplementari(intra.getUnita_supplementari());
-
 										}
 										fa_intra.setNazione_destinazione(Optional.ofNullable(((NazioneBulk)fatturaAttivaSingolaComponentSession.
 												completaOggetto(userContext,new NazioneBulk(intra.getPg_nazione())))).
@@ -716,7 +716,6 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 						}
 						// Fine Nota Credito
 					}
-					fattureCreate.add(testata);
 				}
 			} catch (RemoteException|ComponentException|PersistencyException|ValidationException|IntrospectionException ex) {
 				LOGGER.error("ERROR while importing ", ex);
@@ -724,7 +723,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 			}
 
 		});        
-		return Response.status(Status.CREATED).entity(fattureCreate).build();
+		return Response.status(Status.CREATED).entity(fatture).build();
 	}
 
 	@Override
