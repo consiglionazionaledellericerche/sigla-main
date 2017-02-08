@@ -165,13 +165,13 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 
 			try {
 				userContext.setTransactional(true);
+				Optional.of(fatturaAttivaSingolaComponentSession.VerificaDuplicati(userContext, testata)).filter(x -> x.equals(Boolean.FALSE))
+				.orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_102));
 				// richiesta dall'inizializza (Fattura_attiva_IBulk)    	    	
 				testata = (Fattura_attivaBulk) fatturaAttivaSingolaComponentSession.inizializzaBulkPerInserimento(userContext,testata);    	    		
 				fatturaAttivaSingolaComponentSession.setSavePoint(userContext,FATTURA_AUTOMATICA);                
 				// potrebbe non essere univoca per tipologia
-				Optional.of(fatturaAttivaSingolaComponentSession.VerificaDuplicati(userContext, testata)).filter(x -> x.equals(Boolean.FALSE))
-				.orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_102));
-				
+
 				testata.setTipo_sezionale(new Tipo_sezionaleBulk(fattura.getCd_tipo_sezionale()));
 				Optional.of(testata.getSezionali().stream().filter(x -> x.getCd_tipo_sezionale().equals(
 						fattura.getCd_tipo_sezionale())).count()).filter(x -> x >= 1).
@@ -185,10 +185,10 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 				testata.setCliente(new TerzoBulk(fattura.getCd_terzo()));
 				testata.setCliente((TerzoBulk)fatturaAttivaSingolaComponentSession.completaOggetto(userContext,testata.getCliente()));
 				Optional.ofNullable(testata.getCliente()).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_105));
-				
+
 				Optional.of(testata.getCliente().getAnagrafico().getTi_italiano_estero().equals(testata.getSupplierNationType())).
 				filter(x -> x.equals(Boolean.TRUE)).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_140));
-				
+
 				testata.setCd_terzo(fattura.getCd_terzo());
 				testata=(Fattura_attivaBulk)fatturaAttivaSingolaComponentSession.completaTerzo(userContext,testata,testata.getCliente());
 				Optional.of(Stream.of(
@@ -716,12 +716,35 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 						}
 						// Fine Nota Credito
 					}
+					//fine righe
+					if(fattura.getCod_errore()==null){
+						testata = (Fattura_attivaBulk)fatturaAttivaSingolaComponentSession.creaConBulk(userContext,testata);
+						fattura.setPg_fattura_attiva(testata.getPg_fattura_attiva());
+						fattura.setIm_totale_imponibile(testata.getIm_totale_imponibile());
+						fattura.setIm_totale_iva(testata.getIm_totale_iva());
+						for(int ra=0; ra < fattura.getRighefat().size() ; ra++){
+							FatturaAttivaRiga fatr_agg = (FatturaAttivaRiga)fattura.getRighefat().get(ra);
+							if (!(testata.getTi_fattura().compareTo(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)==0)){ 
+								Fattura_attiva_rigaIBulk riga_fat = (Fattura_attiva_rigaIBulk)testata.getFattura_attiva_dettColl().get(testata.getFattura_attiva_dettColl().indexOfByPrimaryKey(
+										new Fattura_attiva_rigaIBulk(testata.getCd_cds(),testata.getCd_unita_organizzativa(),testata.getEsercizio(),testata.getPg_fattura_attiva(),fatr_agg.getProgressivo_riga())));
+								fatr_agg.setPg_accertamento(((Accertamento_scadenzarioBulk)riga_fat.getAccertamento_scadenzario()).getPg_accertamento());
+							}else{
+								Nota_di_credito_attiva_rigaBulk riga_fat = (Nota_di_credito_attiva_rigaBulk)testata.getFattura_attiva_dettColl().get(testata.getFattura_attiva_dettColl().indexOfByPrimaryKey(
+										new Nota_di_credito_attiva_rigaBulk(testata.getCd_cds(),testata.getCd_unita_organizzativa(),testata.getEsercizio(),testata.getPg_fattura_attiva(),new Long(fatr_agg.getProgressivo_riga()))));
+								fatr_agg.setPg_obbligazione(((Obbligazione_scadenzarioBulk)riga_fat.getObbligazione_scadenzario()).getPg_obbligazione());
+							}
+						}
+					}else{
+						fatturaAttivaSingolaComponentSession.rollbackToSavePoint(userContext,"Fattura_automatica");
+					}
 				}
+			} catch (FatturaAttivaException e) {
+				fattura.setCod_errore(String.valueOf(e.getFatturaAttivaCodiciEnum().getCodice()));
+				fattura.setDesc_errore(String.valueOf(e.getFatturaAttivaCodiciEnum().getMessage()));				
 			} catch (RemoteException|ComponentException|PersistencyException|ValidationException|IntrospectionException ex) {
 				LOGGER.error("ERROR while importing ", ex);
 				throw FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_999);
 			}
-
 		});        
 		return Response.status(Status.CREATED).entity(fatture).build();
 	}
