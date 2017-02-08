@@ -79,6 +79,12 @@
 		inputType="TEXT"
 		label="Pg Riferimento Inquadramento"/>
 
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="rapporto.tipo_rapporto.cd_tipo_rapporto"
+		inputType="TEXT"
+		label="Codice Tipo Rapporto"/>
+
 	<formFieldProperty
 		name="rif_inquadramento" />
 	<formFieldProperty
@@ -91,6 +97,8 @@
 		name="ds_inquadramento" />
 	<formFieldProperty
 		name="pg_rif_inquadramento" />
+	<formFieldProperty
+		name="cd_tipo_rapporto" />
 	<formFieldProperty
 		name="dt_fin_validita" />
 	<formFieldProperty
@@ -107,6 +115,8 @@
 	<columnFieldProperty
 		name="ds_inquadramento" />
 	<columnFieldProperty
+		name="cd_tipo_rapporto" />
+	<columnFieldProperty
 		name="pg_rif_inquadramento" />
 	<columnFieldProperty
 		name="rif_inquadramento" />
@@ -117,6 +127,7 @@
 
 	<columnSet name="restService" >
 		<columnFieldProperty name="cd_anag" />
+		<columnFieldProperty name="cd_tipo_rapporto" />
 		<columnFieldProperty name="pg_rif_inquadramento" />
 		<columnFieldProperty name="ds_inquadramento" />
 		<columnFieldProperty name="dt_ini_validita" />

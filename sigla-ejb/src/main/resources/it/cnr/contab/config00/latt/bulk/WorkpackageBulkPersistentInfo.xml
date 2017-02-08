@@ -67,6 +67,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"
 			nullable="true" />									
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />									
 	</columnMap>		  		
 	<columnMap 
 		name="V_LINEA_ATT_NOT_IN_PDG"

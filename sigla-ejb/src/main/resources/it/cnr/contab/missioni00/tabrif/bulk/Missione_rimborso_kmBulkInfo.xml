@@ -140,4 +140,14 @@
 	<findFieldProperty name="indennita_chilometrica" />
 	<findFieldProperty name="dt_cancellazione" />
 
+	<columnSet name="restService">
+		<columnFieldProperty name="ti_auto" />
+		<columnFieldProperty name="ti_area_geografica" />
+		<columnFieldProperty name="pg_nazione" />
+		<columnFieldProperty name="dt_inizio_validita" />
+		<columnFieldProperty name="dt_fine_validita" />
+		<columnFieldProperty name="indennita_chilometrica" />
+		<columnFieldProperty name="dt_cancellazione" />
+	</columnSet>
+
 </bulkInfo>
