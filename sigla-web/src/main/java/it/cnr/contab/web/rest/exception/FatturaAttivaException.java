@@ -21,6 +21,10 @@ public class FatturaAttivaException extends RestException {
 		return new FatturaAttivaException(status, fatturaAttivaCodiciEnum.getMessage(),fatturaAttivaCodiciEnum);
 	}
 	
+	public FatturaAttivaCodiciEnum getFatturaAttivaCodiciEnum() {
+		return fatturaAttivaCodiciEnum;
+	}
+
 	@Override
 	public Map<String, Serializable> getErrorMap() {
 		return fatturaAttivaCodiciEnum.getErrorMap();
