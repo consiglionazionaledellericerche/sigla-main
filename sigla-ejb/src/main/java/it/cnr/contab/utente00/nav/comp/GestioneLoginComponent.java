@@ -55,8 +55,11 @@ import it.cnr.contab.utenze00.bulk.SessionTraceHome;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteComuneBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
+import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloBulk;
+import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
@@ -67,6 +70,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
@@ -444,6 +448,29 @@ public class GestioneLoginComponent
 				};
 			}
 		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
+	
+	public boolean isUserAccessoAllowed(UserContext userContext, String...accessi) throws it.cnr.jada.comp.ComponentException {
+		try {
+		    SQLBuilder sql = new SQLBuilder();
+		    sql.setHeader("SELECT CD_ACCESSO, TI_FUNZIONE");
+		    sql.addTableToHeader("V_ASS_BP_ACCESSO_UNITA_UTENTE");
+			sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+			sql.addSQLClause("AND","CD_UTENTE",SQLBuilder.EQUALS, CNRUserContext.getUser(userContext));
+			sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			for (String accesso : accessi) {
+				sql.addSQLClause("AND","CD_ACCESSO",SQLBuilder.EQUALS, accesso);				
+			}
+			LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
+			try {
+				java.sql.ResultSet rs = stm.executeQuery();
+				return rs.next();
+			} finally {
+				stm.close();
+			}
+		} catch(IntrospectionException | SQLException e) {
 			throw handleException(e);
 		}
 	}
@@ -1166,5 +1193,27 @@ public class GestioneLoginComponent
 			throw handleException(e);
 		}
 	}
-	
+
+	public List getRuoli(UserContext userContext, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException {
+		try {
+			Utente_unita_ruoloHome home = (Utente_unita_ruoloHome)getHome(userContext,Utente_unita_ruoloBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+	 		sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
+			List result = getHome(userContext, Utente_unita_ruoloBulk.class).fetchAll(sql);
+			return result;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
+	public List getUnitaRuolo(UserContext userContext, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException {
+		try {
+			Utente_unita_ruoloHome home = (Utente_unita_ruoloHome)getHome(userContext,Utente_unita_ruoloBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+	 		sql.addClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
+			List result = getHome(userContext, UtenteBulk.class).fetchAll(sql);
+			return result;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
 }

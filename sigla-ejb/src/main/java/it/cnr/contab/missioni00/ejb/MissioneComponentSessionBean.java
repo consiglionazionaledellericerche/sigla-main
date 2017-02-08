@@ -1,12 +1,19 @@
 package it.cnr.contab.missioni00.ejb;
 
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.missioni00.comp.MissioneComponent;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -845,6 +852,45 @@ public class MissioneComponentSessionBean extends
 		}
 	}
 
+	public List recuperoTipi_pasto(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException, java.rmi.RemoteException, PersistencyException{
+		pre_component_invocation(aUC, componentObj);
+		try {
+			java.util.List result = ((MissioneComponent) componentObj)
+					.recuperoTipi_pasto(aUC, dataTappa, inquadramento, nazione, tipoPasto, clauses);
+			component_invocation_succes(aUC, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(aUC, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(aUC, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(aUC, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(aUC, componentObj, e);
+		}
+	}
+	public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile, String cdTipoSpesa) throws ComponentException, java.rmi.RemoteException, PersistencyException{
+		pre_component_invocation(aUC, componentObj);
+		try {
+			java.util.List result = ((MissioneComponent) componentObj)
+					.recuperoTipiSpesa(aUC, dataInizioTappa, nazione, inquadramento, rimborsoAmmissibile, cdTipoSpesa);
+			component_invocation_succes(aUC, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(aUC, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(aUC, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(aUC, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(aUC, componentObj, e);
+		}
+	}
+
 	public java.util.List findListaMissioniSIP(UserContext param0,
 			String query, String dominio, String uo, String terzo, String voce,
 			String cdr, String gae, String tipoRicerca, Timestamp data_inizio,
@@ -927,6 +973,140 @@ public java.math.BigDecimal calcolaMinutiTappa(it.cnr.jada.UserContext param0,
 		throw uncaughtRuntimeException(param0, componentObj, e);
 	} catch (Error e) {
 		throw uncaughtError(param0, componentObj, e);
+	}
+}
+
+public java.math.BigDecimal recuperoCambio(it.cnr.jada.UserContext param0,
+		String divisa, Timestamp dataInizioMissione) throws it.cnr.jada.comp.ComponentException,
+		javax.ejb.EJBException {
+	pre_component_invocation(param0, componentObj);
+	try {
+		java.math.BigDecimal result = ((MissioneComponent) componentObj).recuperoCambio(param0,
+				divisa, dataInizioMissione);
+		component_invocation_succes(param0, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(param0, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(param0, componentObj, e);
+	}
+}
+
+public DivisaBulk recuperoDivisa(it.cnr.jada.UserContext param0, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws it.cnr.jada.comp.ComponentException{
+	pre_component_invocation(param0,componentObj);
+	try {
+		DivisaBulk result = ((MissioneComponent)componentObj).recuperoDivisa(param0, nazione, gruppoInquadramento, dataInizioMissione);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(javax.ejb.EJBException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public DivisaBulk getDivisaDefault(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, it.cnr.jada.persistency.PersistencyException{
+	pre_component_invocation(param0,componentObj);
+	try {
+		DivisaBulk result = ((MissioneComponent)componentObj).getDivisaDefault(param0);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(javax.ejb.EJBException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, PersistencyException{
+	
+	pre_component_invocation(aUC, componentObj);
+	try {
+		SQLBuilder result = ((MissioneComponent) componentObj).selectTipo_spesaByClause(aUC, dataTappa, inquadramento, nazione, ammissibileConRimborso, tipoSpesa, clauses);
+		component_invocation_succes(aUC, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(aUC, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(aUC, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(aUC, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(aUC, componentObj, e);
+	}
+}
+public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException, PersistencyException{
+	pre_component_invocation(aUC, componentObj);
+	try {
+		SQLBuilder result = ((MissioneComponent) componentObj).selectTipo_pastoByClause(aUC, dataTappa, inquadramento, nazione, tipoPasto, clauses);
+		component_invocation_succes(aUC, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(aUC, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(aUC, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(aUC, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(aUC, componentObj, e);
+	}
+}
+public SQLBuilder selectTipo_autoByClause(UserContext aUC,Timestamp dataTappa, NazioneBulk nazione, String tipoAuto, CompoundFindClause clauses) throws ComponentException{
+	pre_component_invocation(aUC, componentObj);
+	try {
+		SQLBuilder result = ((MissioneComponent) componentObj).selectTipo_autoByClause(aUC, dataTappa, nazione, tipoAuto, clauses);
+		component_invocation_succes(aUC, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(aUC, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(aUC, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(aUC, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(aUC, componentObj, e);
+	}
+}
+public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException{
+	pre_component_invocation(aUC, componentObj);
+	try {
+		Obbligazione_scadenzarioBulk result = ((MissioneComponent) componentObj).recuperoObbligazioneDaGemis(aUC, missione);
+		component_invocation_succes(aUC, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(aUC, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(aUC, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(aUC, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(aUC, componentObj, e);
 	}
 }
 }

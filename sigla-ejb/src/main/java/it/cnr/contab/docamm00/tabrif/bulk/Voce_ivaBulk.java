@@ -6,6 +6,10 @@ import it.cnr.jada.bulk.ValidationException;
 import java.math.BigDecimal;
 import java.util.Dictionary;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonInclude(value=Include.NON_NULL)
 public class Voce_ivaBulk extends Voce_ivaBase {
 	protected Voce_ivaBulk voce_iva;
 	protected Gruppo_ivaBulk gruppo_iva;
@@ -165,6 +169,7 @@ public boolean isDetraibile() {
  * Creation date: (27/03/2002 11.58.38)
  * @return boolean
  */
+@JsonIgnore
 public boolean isROCd_gruppo_iva() {
 	return getGruppo_iva().getCrudStatus() == OggettoBulk.NORMAL;
 }
