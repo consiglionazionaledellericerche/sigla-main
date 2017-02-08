@@ -126,6 +126,9 @@
 		name="ds_modalita_pag"
 		/>
 		
-
-
+	<columnSet name="restService" >
+		<columnFieldProperty name="cd_modalita_pag"/>
+		<columnFieldProperty name="ti_pagamento"/>
+		<columnFieldProperty name="ds_modalita_pag"/>
+	</columnSet>
 </bulkInfo>

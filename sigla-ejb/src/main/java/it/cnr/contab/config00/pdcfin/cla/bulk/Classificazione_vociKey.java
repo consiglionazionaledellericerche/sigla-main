@@ -3,6 +3,8 @@
 * Date 29/08/2005
 */
 package it.cnr.contab.config00.pdcfin.cla.bulk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
 public class Classificazione_vociKey extends OggettoBulk implements KeyedPersistent {
@@ -29,6 +31,7 @@ public class Classificazione_vociKey extends OggettoBulk implements KeyedPersist
 	public void setId_classificazione(java.lang.Integer id_classificazione)  {
 		this.id_classificazione=id_classificazione;
 	}
+	@JsonIgnore
 	public void setId_classificazione(java.math.BigDecimal id_classificazione) {
 		this.id_classificazione = new java.lang.Integer(id_classificazione.intValue());
 	}

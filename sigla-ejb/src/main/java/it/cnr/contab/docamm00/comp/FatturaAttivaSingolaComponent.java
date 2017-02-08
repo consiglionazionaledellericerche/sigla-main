@@ -6802,8 +6802,8 @@ private void caricaDettagliFatturaTrovato(UserContext userContext, BulkList<Fatt
 }
 private void caricaDettagliFatturaTrovato(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException, PersistencyException {
 	if (fattura!=null) {
-		BulkList<Fattura_attiva_rigaIBulk> dett = fattura.getFattura_attiva_dettColl();
-		for (Iterator<Fattura_attiva_rigaIBulk> j = dett.iterator(); j.hasNext(); ) {
+		BulkList<Fattura_attiva_rigaBulk> dett = fattura.getFattura_attiva_dettColl();
+		for (Iterator<Fattura_attiva_rigaBulk> j = dett.iterator(); j.hasNext(); ) {
 			Fattura_attiva_rigaIBulk det = (Fattura_attiva_rigaIBulk) j.next();
 			det.setVoce_iva((Voce_ivaBulk)getHome(userContext, Voce_ivaBulk.class).findByPrimaryKey(det.getVoce_iva()));
 			
