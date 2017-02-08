@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<handler-chains xmlns="http://java.sun.com/xml/ns/javaee">
+  <handler-chain>
+    <handler>
+      <handler-name>Must Understand SOAP Message</handler-name>
+      <handler-class>it.cnr.contab.handler.MustUnderstandSOAPMessageHandler</handler-class>
+    </handler>
+  </handler-chain>
+</handler-chains>
