@@ -191,7 +191,7 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	}
 	@Override
 	public void setCd_cds(java.lang.String cd_cds) {
-		this.getMissione().setCd_unita_organizzativa(cd_cds);
+		this.getMissione().setCd_cds(cd_cds);
 	}
 	@Override
 	public void setEsercizio(java.lang.Integer esercizio) {
