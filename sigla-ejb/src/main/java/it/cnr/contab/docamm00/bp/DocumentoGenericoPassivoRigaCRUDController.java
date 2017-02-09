@@ -1,4 +1,8 @@
 package it.cnr.contab.docamm00.bp;
+import java.io.IOException;
+
+import javax.servlet.jsp.JspWriter;
+
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
@@ -87,4 +91,32 @@ public void writeHTMLToolbar(
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDDocumentoGenericoPassivoBP)getParentController()).isSearching())? command : null,
 			true,"Contabilizza");
 }
+@Override
+	public void writeFormInput(JspWriter jspwriter, String s, String s1,
+			boolean flag, String s2, String s3) throws IOException {
+	
+	Documento_genericoBulk doc=null;
+	if(((it.cnr.jada.util.action.CRUDBP)getParentController()) instanceof CRUDDocumentoGenericoPassivoBP ){
+	if(((it.cnr.jada.util.action.CRUDBP)getParentController()).getModel()!=null)
+		doc = (Documento_genericoBulk)((it.cnr.jada.util.action.CRUDBP)getParentController()).getModel();
+		if (doc!=null &&
+			doc.isRiportataInScrivania()&&
+			!doc.isPagata()&& 
+			isInputReadonly()&& 
+			s1.equals("modalita_pagamento")){ 
+				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnModalitaPagamentoChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+		}else
+			if (doc!=null &&
+			doc.isRiportataInScrivania()&&
+			!doc.isPagata()&& 
+			isInputReadonly()&& 
+			s1.equals("listabanche")){ 
+				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
+						s2,"" ,
+						getInputPrefix(), getStatus(), getFieldValidationMap());
+			}
+		else
+			super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
+	}
+	}
 }
