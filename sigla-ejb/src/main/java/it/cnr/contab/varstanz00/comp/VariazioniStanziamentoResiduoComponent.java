@@ -965,7 +965,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 								throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilità!");
 							}
 							try {
-								allineaSaldiVariazioneApprovata(usercontext, var_stanz_res, totaleImportoRiga);
+								if(rigaInsMod)
+									allineaSaldiVariazioneApprovata(usercontext, var_stanz_res, totaleImportoRiga);
 							} catch (ComponentException e) {
 								throw handleException(e);
 						}
