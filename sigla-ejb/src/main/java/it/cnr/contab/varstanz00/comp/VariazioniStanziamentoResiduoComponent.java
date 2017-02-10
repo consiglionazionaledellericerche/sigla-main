@@ -945,14 +945,11 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						rigaInsMod = true;				
 					}
 				}
-
-				if (var_stanz_res.isApprovata()){
-						for (java.util.Iterator j=var_stanz_res.getAssociazioneCDR().iterator();j.hasNext();){			
-							Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)j.next();
-							BigDecimal totaleImportoRiga = BigDecimal.ZERO;
-							if (!AssHome.findDettagliSpesa(ass_var_cdr).isEmpty())  
-								for (java.util.Iterator i =  AssHome.findDettagliSpesa(ass_var_cdr).iterator();i.hasNext();) {
-									Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
+				BigDecimal totaleImportoRiga = BigDecimal.ZERO;
+				if (var_stanz_res.isApprovata() ){
+							Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCentroDiResponsabilita().getCd_centro_responsabilita()));
+							for (java.util.Iterator i =  var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
+								Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
 									try {
 										if (isRigaLiquidazioneIva(usercontext, riga)){
 											throw new ApplicationException ("Attenzione: Non è possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
@@ -968,13 +965,12 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 								throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilità!");
 							}
 							try {
-								if( rigaInsMod) 
 								allineaSaldiVariazioneApprovata(usercontext, var_stanz_res, totaleImportoRiga);
 							} catch (ComponentException e) {
 								throw handleException(e);
 						}
 					}
-				}
+				
 				if (rigaInsMod){
 						Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
 						if (ass_var_cdr.getIm_spesa().compareTo(totaleRighe) == 0){
