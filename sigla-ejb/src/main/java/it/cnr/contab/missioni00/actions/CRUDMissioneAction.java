@@ -3163,6 +3163,9 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 			if(!pageName.equals("tabAnagrafico"))
 				missione.validaTabAnagrafico();			
 		}	
+        if ("tabMissioneAllegati".equalsIgnoreCase(bp.getTab(tabName))) {
+			fillModel( context );
+		}
 		// Da tab Anagrafico	
 		if(bp.isEditable() && !bp.isSearching() && bp.getTab( tabName ).equalsIgnoreCase("tabAnagrafico") &&
 		   !pageName.equals("tabTestata"))
