@@ -53,6 +53,7 @@ import it.cnr.contab.web.rest.exception.FatturaAttivaException;
 import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -740,7 +741,10 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 				}
 			} catch (FatturaAttivaException e) {
 				fattura.setCod_errore(String.valueOf(e.getFatturaAttivaCodiciEnum().getCodice()));
-				fattura.setDesc_errore(String.valueOf(e.getFatturaAttivaCodiciEnum().getMessage()));				
+				fattura.setDesc_errore(String.valueOf(e.getFatturaAttivaCodiciEnum().getMessage()));
+			} catch (ApplicationException ex) {
+				fattura.setCod_errore(String.valueOf(FatturaAttivaCodiciEnum.ERRORE_FA_999.getCodice()));
+				fattura.setDesc_errore(ex.getMessage());				
 			} catch (RemoteException|ComponentException|PersistencyException|ValidationException|IntrospectionException ex) {
 				LOGGER.error("ERROR while importing ", ex);
 				throw FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_999);
