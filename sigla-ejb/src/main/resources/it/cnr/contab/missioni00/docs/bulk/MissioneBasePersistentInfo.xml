@@ -340,10 +340,30 @@
 			columnScale="2"
 			nullable="false" />			
 		<columnMapping
-			columnName="STATO_LIQUIDAZIONE"
-			propertyName="stato_liquidazione"
+			columnName="ID_RIMBORSO_MISSIONE"
+			propertyName="idRimborsoMissione"
+			sqlTypeName="DECIMAL"
+			columnSize="16" />
+		<columnMapping
+			columnName="ID_FLUSSO"
+			propertyName="idFlusso"
 			sqlTypeName="VARCHAR"
-			columnSize="10"/>	
+			columnSize="100"/>	
+		<columnMapping
+			columnName="ID_FLUSSO_ORDINE_MISSIONE"
+			propertyName="idFlussoOrdineMissione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>	
+		<columnMapping
+			columnName="ID_FOLDER_ORDINE_MISSIONE"
+			propertyName="idFolderOrdineMissione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>	
+		<columnMapping
+			columnName="ID_FOLDER_RIMBORSO_MISSIONE"
+			propertyName="idFolderRimborsoMissione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>	
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -461,4 +481,14 @@
 		name="im_rimborso" />		
 	<persistentProperty
 		name="stato_liquidazione" />	
+	<persistentProperty
+		name="idRimborsoMissione" />
+	<persistentProperty
+		name="idFlusso" />
+	<persistentProperty
+		name="idFlussoOrdineMissione" />
+	<persistentProperty
+		name="idFolderOrdineMissione" />
+	<persistentProperty
+		name="idFolderRimborsoMissione" />
 </SQLPersistentInfo>
