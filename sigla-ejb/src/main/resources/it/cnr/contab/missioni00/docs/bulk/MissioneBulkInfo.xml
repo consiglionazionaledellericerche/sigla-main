@@ -206,6 +206,17 @@
 		enabledOnFreeSearch="true"
 		nullable="false"				
 		/>		
+	<fieldProperty
+		name="idRimborsoMissione"
+		property="idRimborsoMissione"
+		inputType="TEXT"
+		maxLength="16"
+		inputSize="16"
+		label="Id Rimborso Missione"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		/>
 /******************** fine TAB. TESTATA **********************/
 		
 /******************** TAB. ANAGRAFICO **********************/			
@@ -923,6 +934,7 @@
 	<formFieldProperty name="cd_cds" />
 	<formFieldProperty name="cd_unita_organizzativa" />	
 	<formFieldProperty name="pg_missione" />				
+	<formFieldProperty name="idRimborsoMissione" />				
 	<formFieldProperty name="dt_inizio_missione" command="doOnInizioMissioneChange"/>
 	<formFieldProperty name="dt_fine_missione" command="doOnFineMissioneChange"/>		
 	<formFieldProperty name="ds_missione" />
@@ -1003,6 +1015,7 @@
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
 	<columnFieldProperty name="pg_missione" />
+	<columnFieldProperty name="idRimborsoMissione" />
 	<columnFieldProperty name="cd_tipo_missione" />
 	<columnFieldProperty name="ti_istituz_commerc" />	
 	<columnFieldProperty name="ds_missione" />
@@ -1026,6 +1039,7 @@
 	<findFieldProperty name="esercizio" />		
 	<findFieldProperty name="cd_tipo_missione" />	
 	<findFieldProperty name="pg_missione"/>	
+	<findFieldProperty name="idRimborsoMissione"/>	
 	<findFieldProperty name="dt_inizio_missione" />
 	<findFieldProperty name="dt_fine_missione" />
 	<findFieldProperty name="dt_registrazione" />

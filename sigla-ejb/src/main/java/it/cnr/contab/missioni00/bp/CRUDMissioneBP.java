@@ -8,7 +8,11 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
+
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -24,8 +28,11 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.missioni00.tabrif.bulk.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
@@ -40,7 +47,8 @@ import it.cnr.jada.util.jsp.Button;
  * @author: Paola sala
  */
 
-public class CRUDMissioneBP extends it.cnr.jada.util.action.SimpleCRUDBP	implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP 
+public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, MissioneBulk> 
+	implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP 
 {
 	private final SimpleDetailCRUDController tappaController = new SimpleDetailCRUDController("Tappa", Missione_tappaBulk.class,"tappeMissioneColl",this)
 	{
@@ -2464,6 +2472,43 @@ private java.sql.Timestamp getDataInizioObbligoRegistroUnico(it.cnr.jada.action.
 	} catch(Exception e) {
 		throw handleException(e);
 	}
+}
+
+@Override
+protected CMISPath getCMISPath(MissioneBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
+	try {
+		CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniAlCNR",CMISPath.class);
+//		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getCd_uo_origine(), allegatoParentBulk.getCd_uo_origine(), allegatoParentBulk.getCd_uo_origine());
+//		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Fatture Attive", "Fatture Attive", "Fatture Attive");
+//		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getEsercizio().toString(), "Esercizio "+allegatoParentBulk.getEsercizio().toString(), "Esercizio "+allegatoParentBulk.getEsercizio().toString());
+
+		String folderName = "Missione "
+//		+allegatoParentBulk.getEsercizio().toString()+Utility.lpad(allegatoParentBulk.getPg_fattura_attiva().toString(),10,'0')
+		;
+		if (create) {
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
+					folderName, folderName);			
+		} else {
+			try {
+				cmisPath = cmisPath.appendToPath(folderName);
+				cmisService.getNodeByPath(cmisPath);
+			} catch (CmisObjectNotFoundException _ex) {
+				return null;
+			}
+		}			
+		return cmisPath;
+	} catch (ApplicationException e) {
+		throw new BusinessProcessException(e);
+	}
+}
+@Override
+protected Class<AllegatoMissioneBulk> getAllegatoClass() {
+	return AllegatoMissioneBulk.class;
+}
+@Override
+public String getAllegatiFormName() {
+	super.getAllegatiFormName();
+	return "Missione";
 }
 
 }
