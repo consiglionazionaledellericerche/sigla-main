@@ -49,7 +49,7 @@ public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 		 results.add(getAspectName());
 		 return results;
 	}
-	public static OrderedHashtable getAspectnameskeys() {
+	public static OrderedHashtable getAspectNamesKeys() {
 		return aspectNamesKeys;
 	}
 
