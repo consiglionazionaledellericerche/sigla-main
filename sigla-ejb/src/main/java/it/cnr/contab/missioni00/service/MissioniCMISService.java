@@ -2,8 +2,10 @@ package it.cnr.contab.missioni00.service;
 
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,6 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
@@ -19,6 +22,7 @@ import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
+import org.springframework.util.StringUtils;
 
 public class MissioniCMISService extends SiglaCMISService {
 	
@@ -29,10 +33,30 @@ public class MissioniCMISService extends SiglaCMISService {
 	private final static String ORDINE_MISSIONE = "ordine";
 	private final static String SCONTRINI = "scontrini";
 	private final static String RIMBORSO_MISSIONE = "rimborso";
-//	public List<String> getNodeRefDocumentoAttivo(Fattura_attivaBulk fattura)throws DetailedException{
-//		return getNodeRefDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
-//	}
-//
+
+	
+	
+	public ItemIterable<CmisObject> getFilesOrdineMissione(MissioneBulk missione) throws ComponentException{
+		if (!StringUtils.isEmpty(missione.getIdFolderOrdineMissione())){
+			Folder folderOrdine = null;
+			try{
+				folderOrdine = (Folder) getNodeByNodeRef(missione.getIdFolderOrdineMissione());
+				
+			} catch (CmisObjectNotFoundException ex){
+				return null;
+			}
+			if (folderOrdine != null){
+		        ItemIterable<CmisObject> children = folderOrdine.getChildren();
+		        ItemIterable<QueryResult> results = getDocuments(missione.getIdFolderOrdineMissione(), null);
+				for (QueryResult nodeFile : results) {
+					String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
+				}
+		        return children;
+			}
+		}
+		return null;
+	}
+
 //	public List<String> getNodeRefDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
 //		List<String> ids = new ArrayList<String>();
 //		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura); 
@@ -77,14 +101,17 @@ public class MissioniCMISService extends SiglaCMISService {
 //		return ids;
 //	}
 //
-//	private ItemIterable<QueryResult> getDocuments(String folder, String tipoAllegato)
-//			throws ApplicationException {
-//		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
+	private ItemIterable<QueryResult> getDocuments(String folder, String tipoAllegato)
+			throws ApplicationException {
+		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
 //		query.append(" join sigla_fatture_attachment:"+tipoAllegato+" allegati on doc.cmis:objectId = allegati.cmis:objectId");
-//		query.append(" where IN_FOLDER(doc, '").append(folder).append("')");
-//		ItemIterable<QueryResult> results = search(query);
-//		return results;
-//	}
+		query.append(" where IN_FOLDER(doc, '").append(folder).append("')");
+		ItemIterable<QueryResult> results = search(query);
+		for (QueryResult nodeFile : results) {
+			String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
+		}
+		return results;
+	}
 //
 //	private String getFolderDocumentoAttivo(Integer esercizio, String cds, String cdUo,
 //			Long pgFattura) throws DetailedException, ApplicationException {

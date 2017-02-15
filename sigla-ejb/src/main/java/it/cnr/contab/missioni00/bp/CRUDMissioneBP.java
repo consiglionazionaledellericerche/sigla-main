@@ -1,5 +1,6 @@
 package it.cnr.contab.missioni00.bp;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
@@ -9,10 +10,16 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -23,6 +30,7 @@ import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.bp.*;
 import it.cnr.contab.missioni00.ejb.*;
+import it.cnr.contab.missioni00.service.MissioniCMISService;
 import it.cnr.contab.missioni00.docs.bulk.*;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
@@ -31,13 +39,17 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.ejb.*;
+import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
@@ -84,6 +96,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 	private boolean riportaAvantiIndietro = false;
 	private boolean carryingThrough = false;
 	private boolean ribaltato;
+	private MissioniCMISService missioniCMISService;
 /**
  * CRUDMissioneBP constructor comment.
  */
@@ -2474,6 +2487,18 @@ private java.sql.Timestamp getDataInizioObbligoRegistroUnico(it.cnr.jada.action.
 	}
 }
 
+public MissioniCMISService getMissioniCMISService() {
+	return missioniCMISService;
+}
+public void setMissioniCMISService(MissioniCMISService missioniCMISService) {
+	this.missioniCMISService = missioniCMISService;
+}
+protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
+	super.initialize(actioncontext);
+	missioniCMISService = SpringUtil.getBean("missioniCMISService",
+			MissioniCMISService.class);	
+}
+
 @Override
 protected CMISPath getCMISPath(MissioneBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
 	try {
@@ -2509,6 +2534,47 @@ protected Class<AllegatoMissioneBulk> getAllegatoClass() {
 public String getAllegatiFormName() {
 	super.getAllegatiFormName();
 	return "Missione";
+}
+@Override
+public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk)
+		throws BusinessProcessException {
+	
+	MissioneBulk allegatoParentBulk = (MissioneBulk)oggettobulk;
+	try {
+		ItemIterable<CmisObject> files = missioniCMISService.getFilesOrdineMissione(allegatoParentBulk);
+		if (files != null){
+			for (CmisObject cmisObject : files) {
+				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
+					continue;
+				if (excludeChild(cmisObject))
+					continue;
+				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+					Document document = (Document) cmisObject;
+					AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+					allegato.setContentType(document.getContentStreamMimeType());
+					allegato.setNome(cmisObject.getName());
+					allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+					allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+					completeAllegato(allegato);
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+					allegatoParentBulk.addToArchivioAllegati(allegato);					
+				}
+			}
+		}
+	} catch (ApplicationException e) {
+		throw handleException(e);
+	} catch (ComponentException e) {
+		throw handleException(e);
+	} catch (NoSuchMethodException e) {
+		throw handleException(e);
+	} catch (IllegalAccessException e) {
+		throw handleException(e);
+	} catch (InstantiationException e) {
+		throw handleException(e);
+	} catch (InvocationTargetException e) {
+		throw handleException(e);
+	}
+	return oggettobulk;	
 }
 
 }
