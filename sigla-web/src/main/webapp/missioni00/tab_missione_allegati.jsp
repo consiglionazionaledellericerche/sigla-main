@@ -4,17 +4,19 @@
 		java.util.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.jada.*,
-		it.cnr.contab.util00.bp.*"
+		it.cnr.contab.missioni00.bp.*,
+		it.cnr.contab.util00.bp.*,
+		"
 %>
-<%	AllegatiCRUDBP bp = (AllegatiCRUDBP)BusinessProcess.getBusinessProcess(request);%>
+<%	CRUDMissioneBP bp = (CRUDMissioneBP)BusinessProcess.getBusinessProcess(request);%>
 <script language="JavaScript">
 function doScaricaFile() {	
   doPrint('genericdownload/<%=bp.getNomeAllegato()%>?methodName=scaricaAllegatoGenerico&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
-<%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,bp.getAllegatiFormName(),true,false,true,"100%","150px"); %>  
+<%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,"archivioAllegati",false,false,false,"100%","150px"); %>  
 <div class="Group">
   <table>
-  	<% bp.getCrudArchivioAllegati().writeForm(out, bp.getAllegatiFormName());  %>
+  	<% bp.getCrudArchivioAllegati().writeForm(out, "archivioAllegati");  %>
   </table>
 </div> 
