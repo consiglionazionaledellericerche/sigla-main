@@ -13,7 +13,8 @@ import it.cnr.jada.util.OrderedHashtable;
 
 public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 	private static final long serialVersionUID = 1L;
-
+	public static final String FLUSSO_ORDINE = "FLUSSO_ORDINE";
+	public static final String FLUSSO_RIMBORSO = "FLUSSO_RIMBORSO";
 	public static OrderedHashtable aspectNamesKeys = new OrderedHashtable();
 
 	static {
@@ -25,6 +26,9 @@ public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:scontrini","Giustificativo");
 		aspectNamesKeys.put("P:missioni_ordine_attachment:ordine","Ordine Di Missione");
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:rimborso","Rimborso Missione");
+		aspectNamesKeys.put("P:missioni_rimborso_attachment:rimborso","Rimborso Missione");
+		aspectNamesKeys.put(FLUSSO_ORDINE,"Flusso Ordine di Missione");
+		aspectNamesKeys.put(FLUSSO_RIMBORSO,"Flusso Rimborso Missione");
 	}
 	private String aspectName;
 	
