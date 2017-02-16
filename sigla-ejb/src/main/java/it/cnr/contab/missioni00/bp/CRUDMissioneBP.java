@@ -2561,6 +2561,56 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 				}
 			}
 		}
+		ItemIterable<CmisObject> filesRimborso = missioniCMISService.getFilesRimborsoMissione(allegatoParentBulk);
+		if (files != null){
+			for (CmisObject cmisObject : filesRimborso) {
+				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
+					continue;
+				if (excludeChild(cmisObject))
+					continue;
+				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+					Document document = (Document) cmisObject;
+					if (document != null){
+						AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+						allegato.setContentType(document.getContentStreamMimeType());
+						allegato.setNome(document.getName());
+						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+						completeAllegato(allegato);
+						allegato.setCrudStatus(OggettoBulk.NORMAL);
+						allegatoParentBulk.addToArchivioAllegati(allegato);					
+					}
+				}
+			}
+		}
+		if (allegatoParentBulk.getidFlusso() != null){
+			Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getidFlusso());
+			if (document != null){
+				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+				allegato.setContentType(document.getContentStreamMimeType());
+				allegato.setNome(document.getName());
+				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
+				allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+				completeAllegato(allegato);
+				allegato.setCrudStatus(OggettoBulk.NORMAL);
+				allegatoParentBulk.addToArchivioAllegati(allegato);					
+			}
+		}
+		if (allegatoParentBulk.getidFlussoOrdineMissione() != null){
+			Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getidFlussoOrdineMissione());
+			if (documentOrdine != null){
+				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), documentOrdine);
+				allegato.setContentType(documentOrdine.getContentStreamMimeType());
+				allegato.setNome(documentOrdine.getName());
+				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_ORDINE);
+				allegato.setDescrizione((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+				allegato.setTitolo((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+				completeAllegato(allegato);
+				allegato.setCrudStatus(OggettoBulk.NORMAL);
+				allegatoParentBulk.addToArchivioAllegati(allegato);					
+			}
+		}
 	} catch (ApplicationException e) {
 		throw handleException(e);
 	} catch (ComponentException e) {
