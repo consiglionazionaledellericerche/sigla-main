@@ -57,6 +57,27 @@ public class MissioniCMISService extends SiglaCMISService {
 		return null;
 	}
 
+	public ItemIterable<CmisObject> getFilesRimborsoMissione(MissioneBulk missione) throws ComponentException{
+		if (!StringUtils.isEmpty(missione.getIdFolderRimborsoMissione())){
+			Folder folderRimborso = null;
+			try{
+				folderRimborso = (Folder) getNodeByNodeRef(missione.getIdFolderRimborsoMissione());
+				
+			} catch (CmisObjectNotFoundException ex){
+				return null;
+			}
+			if (folderRimborso != null){
+		        ItemIterable<CmisObject> children = folderRimborso.getChildren();
+		        ItemIterable<QueryResult> results = getDocuments(missione.getIdFolderRimborsoMissione(), null);
+				for (QueryResult nodeFile : results) {
+					String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
+				}
+		        return children;
+			}
+		}
+		return null;
+	}
+
 //	public List<String> getNodeRefDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
 //		List<String> ids = new ArrayList<String>();
 //		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura); 
@@ -136,29 +157,23 @@ public class MissioniCMISService extends SiglaCMISService {
 //		}
 //	}
 //	
-//	public Folder recuperoFolderFattura(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
-//		int posizionePunto = cdUo.indexOf(".");
-//		StringBuffer query = new StringBuffer("select fat.cmis:objectId from sigla_fatture:fatture_attive fat join strorg:uo uo on fat.cmis:objectId = uo.cmis:objectId ");
-//		query.append(" join strorg:cds cds on fat.cmis:objectId = cds.cmis:objectId ");
-//		query.append(" where fat.sigla_fatture:esercizio = ").append(esercizio);
-//		query.append(" and fat.sigla_fatture:pg_fattura = ").append(pgFattura);
-//		query.append(" and uo.strorguo:codice like '").append(cdUo.substring(0, posizionePunto)+"%").append("'");
-//		query.append(" and cds.strorgcds:codice = '").append(cds).append("'");
-//		//		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
-//		//		query.append(" order by doc.cmis:creationDate DESC");
-//		ItemIterable<QueryResult> resultsFolder = search(query);
-//		if (resultsFolder.getTotalNumItems() == 0)
-//			return null;
-//		else if (resultsFolder.getTotalNumItems() > 1){
-//			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' fatture.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+
-//					" numero:"+pgFattura);
-//		} else {
-//			for (QueryResult queryResult : resultsFolder) {
-//				return (Folder) getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
-//			}
-//		}
-//		return null;
-//	}
+
+	public Document recuperoFlows(String idFlusso)throws DetailedException{
+		StringBuffer query = new StringBuffer("SELECT alfcmis:nodeRef,cmis:name from wfcnr:parametriFlusso ");
+		query.append(" where wfcnr:wfInstanceId = '").append(idFlusso).append("'");
+		query.append(" and wfcnr:tipologiaDocSpecifica = 'Riepilogo Flusso'");
+		ItemIterable<QueryResult> resultsFolder = search(query);
+		if (resultsFolder.getTotalNumItems() == 0)
+			return null;
+		else if (resultsFolder.getTotalNumItems() > 1){
+			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' Riepiloghi Flusso.  ID Flusso:"+ idFlusso);
+		} else {
+			for (QueryResult queryResult : resultsFolder) {
+				return (Document) getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
+			}
+		}
+		return null;
+	}
 //	
 //	public InputStream getStreamDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception{
 //		List<String> ids = getNodeRefDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
