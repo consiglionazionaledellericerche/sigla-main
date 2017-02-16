@@ -10,6 +10,7 @@ import java.util.Vector;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.SecondaryType;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
@@ -2532,11 +2533,6 @@ protected Class<AllegatoMissioneBulk> getAllegatoClass() {
 	return AllegatoMissioneBulk.class;
 }
 @Override
-public String getAllegatiFormName() {
-	super.getAllegatiFormName();
-	return "Missione";
-}
-@Override
 public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk)
 		throws BusinessProcessException {
 	
@@ -2562,56 +2558,56 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 				}
 			}
 		}
-		ItemIterable<CmisObject> filesRimborso = missioniCMISService.getFilesRimborsoMissione(allegatoParentBulk);
-		if (files != null){
-			for (CmisObject cmisObject : filesRimborso) {
-				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
-					continue;
-				if (excludeChild(cmisObject))
-					continue;
-				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
-					Document document = (Document) cmisObject;
-					if (document != null){
-						AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
-						allegato.setContentType(document.getContentStreamMimeType());
-						allegato.setNome(document.getName());
-						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-						completeAllegato(allegato);
-						allegato.setCrudStatus(OggettoBulk.NORMAL);
-						allegatoParentBulk.addToArchivioAllegati(allegato);					
-					}
-				}
-			}
-		}
-		if (allegatoParentBulk.getIdFlusso() != null){
-			Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlusso());
-			if (document != null){
-				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
-				allegato.setContentType(document.getContentStreamMimeType());
-				allegato.setNome(document.getName());
-//				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
-				allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-				completeAllegato(allegato);
-				allegato.setCrudStatus(OggettoBulk.NORMAL);
-				allegatoParentBulk.addToArchivioAllegati(allegato);					
-			}
-		}
-		if (allegatoParentBulk.getIdFlussoOrdineMissione() != null){
-			Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlussoOrdineMissione());
-			if (documentOrdine != null){
-				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), documentOrdine);
-				allegato.setContentType(documentOrdine.getContentStreamMimeType());
-				allegato.setNome(documentOrdine.getName());
-//				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_ORDINE);
-				allegato.setDescrizione((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-				allegato.setTitolo((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-				completeAllegato(allegato);
-				allegato.setCrudStatus(OggettoBulk.NORMAL);
-				allegatoParentBulk.addToArchivioAllegati(allegato);					
-			}
-		}
+//		ItemIterable<CmisObject> filesRimborso = missioniCMISService.getFilesRimborsoMissione(allegatoParentBulk);
+//		if (files != null){
+//			for (CmisObject cmisObject : filesRimborso) {
+//				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
+//					continue;
+//				if (excludeChild(cmisObject))
+//					continue;
+//				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+//					Document document = (Document) cmisObject;
+//					if (document != null){
+//						AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+//						allegato.setContentType(document.getContentStreamMimeType());
+//						allegato.setNome(document.getName());
+//						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+//						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+//						completeAllegato(allegato);
+//						allegato.setCrudStatus(OggettoBulk.NORMAL);
+//						allegatoParentBulk.addToArchivioAllegati(allegato);					
+//					}
+//				}
+//			}
+//		}
+//		if (allegatoParentBulk.getIdFlusso() != null){
+//			Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlusso());
+//			if (document != null){
+//				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+//				allegato.setContentType(document.getContentStreamMimeType());
+//				allegato.setNome(document.getName());
+////				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
+//				allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+//				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+//				completeAllegato(allegato);
+//				allegato.setCrudStatus(OggettoBulk.NORMAL);
+//				allegatoParentBulk.addToArchivioAllegati(allegato);					
+//			}
+//		}
+//		if (allegatoParentBulk.getIdFlussoOrdineMissione() != null){
+//			Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlussoOrdineMissione());
+//			if (documentOrdine != null){
+//				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), documentOrdine);
+//				allegato.setContentType(documentOrdine.getContentStreamMimeType());
+//				allegato.setNome(documentOrdine.getName());
+////				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_ORDINE);
+//				allegato.setDescrizione((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+//				allegato.setTitolo((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+//				completeAllegato(allegato);
+//				allegato.setCrudStatus(OggettoBulk.NORMAL);
+//				allegatoParentBulk.addToArchivioAllegati(allegato);					
+//			}
+//		}
 	} catch (ApplicationException e) {
 		throw handleException(e);
 	} catch (ComponentException e) {
@@ -2628,6 +2624,22 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 		throw handleException(e);
 	}
 	return oggettobulk;	
+}
+@Override
+protected void completeAllegato(AllegatoMissioneBulk allegato) throws ApplicationException {
+	for (SecondaryType secondaryType : allegato.getDocument(cmisService).getSecondaryTypes()) {
+		if (AllegatoMissioneBulk.aspectNamesKeys.get(secondaryType.getId()) != null){
+			allegato.setAspectName(secondaryType.getId());
+			break;
+		}
+	}
+	super.completeAllegato(allegato);
+}
+
+@Override
+public String getAllegatiFormName() {
+	super.getAllegatiFormName();
+	return "allegatiMissione";
 }
 
 }
