@@ -92,7 +92,7 @@
 		name="titolo" />
 
 	<columnSet
-		name="archivioAllegati" >
+		name="allegatiMissione" >
 		<columnFieldProperty
 			name="aspectName" />
 		<columnFieldProperty
@@ -100,6 +100,6 @@
 		<columnFieldProperty
 			name="descrizione" />
 		<columnFieldProperty
-			name="titolo" />
+			name="attivaFile" />
 	</columnSet>
 </bulkInfo>
