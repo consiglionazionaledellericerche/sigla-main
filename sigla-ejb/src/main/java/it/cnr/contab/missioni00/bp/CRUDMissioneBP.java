@@ -2,50 +2,51 @@ package it.cnr.contab.missioni00.bp;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Vector;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
+import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.CambioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.bp.IValidaDocContBP;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.missioni00.ejb.*;
+import it.cnr.contab.missioni00.docs.bulk.AllegatoMissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk;
+import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.missioni00.service.MissioniCMISService;
-import it.cnr.contab.missioni00.docs.bulk.*;
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.missioni00.tabrif.bulk.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
+import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
+import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -2583,13 +2584,13 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 				}
 			}
 		}
-		if (allegatoParentBulk.getidFlusso() != null){
-			Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getidFlusso());
+		if (allegatoParentBulk.getIdFlusso() != null){
+			Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlusso());
 			if (document != null){
 				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
 				allegato.setContentType(document.getContentStreamMimeType());
 				allegato.setNome(document.getName());
-				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
+//				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
 				allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
 				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
 				completeAllegato(allegato);
@@ -2597,13 +2598,13 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 				allegatoParentBulk.addToArchivioAllegati(allegato);					
 			}
 		}
-		if (allegatoParentBulk.getidFlussoOrdineMissione() != null){
-			Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getidFlussoOrdineMissione());
+		if (allegatoParentBulk.getIdFlussoOrdineMissione() != null){
+			Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlussoOrdineMissione());
 			if (documentOrdine != null){
 				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), documentOrdine);
 				allegato.setContentType(documentOrdine.getContentStreamMimeType());
 				allegato.setNome(documentOrdine.getName());
-				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_ORDINE);
+//				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_ORDINE);
 				allegato.setDescrizione((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
 				allegato.setTitolo((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
 				completeAllegato(allegato);
@@ -2614,6 +2615,8 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 	} catch (ApplicationException e) {
 		throw handleException(e);
 	} catch (ComponentException e) {
+		throw handleException(e);
+	} catch (DetailedException e) {
 		throw handleException(e);
 	} catch (NoSuchMethodException e) {
 		throw handleException(e);
