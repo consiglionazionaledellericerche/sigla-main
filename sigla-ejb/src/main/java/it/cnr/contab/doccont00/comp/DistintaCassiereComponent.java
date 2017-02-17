@@ -312,11 +312,11 @@ public class DistintaCassiereComponent extends
 				new MandatoIBulk(docContabile.getCd_cds(), docContabile
 						.getEsercizio(), docContabile.getPg_documento_cont()));
 
-		// if ( mandato.getPg_ver_rec().compareTo( docContabile.getPg_ver_rec())
-		// != 0 )
-		// throw new ApplicationException("Attenzione! Il mandato " +
-		// mandato.getPg_mandato() +
-		// " non e' più valido perche' stato modificato." );
+		 if ( mandato.getPg_ver_rec().compareTo( docContabile.getPg_ver_rec())
+		 != 0 )
+		 throw new ApplicationException("Attenzione! Il mandato " +
+		 mandato.getPg_mandato() +
+		 " non e' più valido perche' stato modificato." );
 		if(mandato.isAnnullato())
 			mandato.setStato_trasmissione_annullo(stato_trasmissione);
 		else
@@ -408,11 +408,11 @@ public class DistintaCassiereComponent extends
 				new MandatoAccreditamentoBulk(docContabile.getCd_cds(),
 						docContabile.getEsercizio(), docContabile
 								.getPg_documento_cont()));
-		// if ( mandato.getPg_ver_rec().compareTo( docContabile.getPg_ver_rec())
-		// != 0 )
-		// throw new ApplicationException("Attenzione! Il mandato " +
-		// mandato.getPg_mandato() +
-		// " non e' più valido perche' stato modificato." );
+		 if ( mandato.getPg_ver_rec().compareTo( docContabile.getPg_ver_rec())
+		 != 0 )
+		 throw new ApplicationException("Attenzione! Il mandato " +
+		 mandato.getPg_mandato() +
+		 " non e' più valido perche' stato modificato." );
 
 		mandato.setStato_trasmissione(stato_trasmissione);
 
@@ -504,11 +504,11 @@ public class DistintaCassiereComponent extends
 				ReversaleIBulk.class).findAndLock(
 				new ReversaleIBulk(docContabile.getCd_cds(), docContabile
 						.getEsercizio(), docContabile.getPg_documento_cont()));
-		// if ( reversale.getPg_ver_rec().compareTo(
-		// docContabile.getPg_ver_rec()) != 0 )
-		// throw new ApplicationException("Attenzione! La reversale " +
-		// reversale.getPg_reversale() +
-		// " non e' più valida perche' stata modificata." );
+		if ( reversale.getPg_ver_rec().compareTo(
+		 docContabile.getPg_ver_rec()) != 0 )
+		 throw new ApplicationException("Attenzione! La reversale " +
+		 reversale.getPg_reversale() +
+		 " non e' più valida perche' stata modificata." );
 		if(reversale.isAnnullato())
 			reversale.setStato_trasmissione_annullo(stato_trasmissione);
 		else
