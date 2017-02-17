@@ -1973,9 +1973,10 @@ public boolean quadraturaInDeroga() {
  */
 public boolean quadraturaInDeroga1210() {
 	return ((isIstituzionale() && (
-				(getFl_intra_ue() != null && getFl_intra_ue().booleanValue()) ||
-				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue())) &&
-				isFatturaDiBeni()) || (getTipo_sezionale()!=null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())||
+				(getFl_intra_ue() != null && getFl_intra_ue().booleanValue())||
+				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue())) &&  
+				  (getTipo_sezionale()!=null && getTipo_sezionale().getTi_bene_servizio().equalsIgnoreCase(getTi_bene_servizio())) && 
+				  isFatturaDiBeni()) || (getTipo_sezionale()!=null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())||
 				(isIstituzionale() && getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()) 
 						  && getFl_merce_intra_ue()!=null && getFl_merce_intra_ue().booleanValue()));
 }
