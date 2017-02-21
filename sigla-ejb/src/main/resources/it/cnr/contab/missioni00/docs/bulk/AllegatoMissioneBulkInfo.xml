@@ -75,6 +75,7 @@
 	<formFieldProperty
 		name="attivaFile" />
 		
+		
 	<columnFieldProperty
 		name="nome" />
 	<columnFieldProperty
@@ -99,7 +100,17 @@
 			name="nome" />
 		<columnFieldProperty
 			name="descrizione" />
-		<columnFieldProperty
-			name="attivaFile" />
 	</columnSet>
+	<form
+		name="allegatiMissione" >
+		<formFieldProperty
+			name="aspectName" />
+		<formFieldProperty
+			name="nome" />
+		<formFieldProperty
+			name="descrizione" />
+		<formFieldProperty
+			name="attivaFile" />
+	</form>
+
 </bulkInfo>
