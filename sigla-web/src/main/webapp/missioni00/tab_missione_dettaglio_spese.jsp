@@ -99,8 +99,11 @@
 	</tr>
 	
 	<tr>	
-	<td><% bp.getSpesaController().writeFormLabel( out, "ds_giustificativo"); %></td>
-	<td><% bp.getSpesaController().writeFormInput( out, "default", "ds_giustificativo", !bp.getSpesaController().isEditingSpesa(), "FormInput", null); %></td>
+	<td><% 
+	if((spesa != null) && (!spesa.isMissioneFromGemis()))
+		bp.getSpesaController().writeFormLabel( out, "ds_giustificativo"); %></td>
+	<td><% 	if((spesa != null) && (!spesa.isMissioneFromGemis()))
+		bp.getSpesaController().writeFormInput( out, "default", "ds_giustificativo", !bp.getSpesaController().isEditingSpesa(), "FormInput", null); %></td>
 	<td></td>	
 	</tr>
 

@@ -74,7 +74,7 @@
 									{ "tabDettaglioRimborso","Dettaglio rimborso","/missioni00/tab_missione_dettaglio_rimborso.jsp" } ,
 									{ "tabObbligazione","Documenti associati","/missioni00/tab_missione_obbligazione.jsp" } ,
 									{ "tabConsuntivo","Consuntivo","/missioni00/tab_missione_consuntivo.jsp" } ,
-									{ "tabAllegati","Allegati","/missioni00/tab_missione_allegati.jsp" }
+									{ "tabAllegati","Allegati","/util00/tab_allegati.jsp" }
 								},
 						bp.getTab("tab"),
 						"center", 

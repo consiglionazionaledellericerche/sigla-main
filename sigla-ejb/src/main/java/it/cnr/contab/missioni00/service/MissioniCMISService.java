@@ -160,7 +160,7 @@ public class MissioniCMISService extends SiglaCMISService {
 			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' Riepiloghi Flusso.  ID Flusso:"+ idFlusso);
 		} else {
 			for (QueryResult queryResult : resultsFolder) {
-				return (Document) getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
+				return (Document) getNodeByNodeRef((String) queryResult.getPropertyValueByQueryName(MissioniCMISService.ALFCMIS_NODEREF));
 			}
 		}
 		return null;

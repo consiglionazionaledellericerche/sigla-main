@@ -333,6 +333,12 @@
 			columnSize="10"
 			nullable="false" />
 		<columnMapping
+			columnName="STATO_LIQUIDAZIONE"
+			propertyName="stato_liquidazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
 			columnName="IM_RIMBORSO"
 			propertyName="im_rimborso"
 			sqlTypeName="DECIMAL"
