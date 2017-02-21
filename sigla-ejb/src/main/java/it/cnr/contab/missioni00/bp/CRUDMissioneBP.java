@@ -1,11 +1,16 @@
 package it.cnr.contab.missioni00.bp;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Vector;
+
+import javax.servlet.ServletException;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
@@ -20,6 +25,7 @@ import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
@@ -47,6 +53,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -2558,56 +2565,56 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 				}
 			}
 		}
-//		ItemIterable<CmisObject> filesRimborso = missioniCMISService.getFilesRimborsoMissione(allegatoParentBulk);
-//		if (files != null){
-//			for (CmisObject cmisObject : filesRimborso) {
-//				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
-//					continue;
-//				if (excludeChild(cmisObject))
-//					continue;
-//				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
-//					Document document = (Document) cmisObject;
-//					if (document != null){
-//						AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
-//						allegato.setContentType(document.getContentStreamMimeType());
-//						allegato.setNome(document.getName());
-//						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-//						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-//						completeAllegato(allegato);
-//						allegato.setCrudStatus(OggettoBulk.NORMAL);
-//						allegatoParentBulk.addToArchivioAllegati(allegato);					
-//					}
-//				}
-//			}
-//		}
-//		if (allegatoParentBulk.getIdFlusso() != null){
-//			Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlusso());
-//			if (document != null){
-//				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
-//				allegato.setContentType(document.getContentStreamMimeType());
-//				allegato.setNome(document.getName());
-////				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
-//				allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-//				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-//				completeAllegato(allegato);
-//				allegato.setCrudStatus(OggettoBulk.NORMAL);
-//				allegatoParentBulk.addToArchivioAllegati(allegato);					
-//			}
-//		}
-//		if (allegatoParentBulk.getIdFlussoOrdineMissione() != null){
-//			Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlussoOrdineMissione());
-//			if (documentOrdine != null){
-//				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), documentOrdine);
-//				allegato.setContentType(documentOrdine.getContentStreamMimeType());
-//				allegato.setNome(documentOrdine.getName());
-////				allegato.setAspect(AllegatoMissioneBulk.FLUSSO_ORDINE);
-//				allegato.setDescrizione((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-//				allegato.setTitolo((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-//				completeAllegato(allegato);
-//				allegato.setCrudStatus(OggettoBulk.NORMAL);
-//				allegatoParentBulk.addToArchivioAllegati(allegato);					
-//			}
-//		}
+		ItemIterable<CmisObject> filesRimborso = missioniCMISService.getFilesRimborsoMissione(allegatoParentBulk);
+		if (files != null){
+			for (CmisObject cmisObject : filesRimborso) {
+				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
+					continue;
+				if (excludeChild(cmisObject))
+					continue;
+				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+					Document document = (Document) cmisObject;
+					if (document != null){
+						AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+						allegato.setContentType(document.getContentStreamMimeType());
+						allegato.setNome(document.getName());
+						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+						completeAllegato(allegato);
+						allegato.setCrudStatus(OggettoBulk.NORMAL);
+						allegatoParentBulk.addToArchivioAllegati(allegato);					
+					}
+				}
+			}
+		}
+		if (allegatoParentBulk.getIdFlusso() != null){
+			Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlusso());
+			if (document != null){
+				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+				allegato.setContentType(document.getContentStreamMimeType());
+				allegato.setNome(document.getName());
+				allegato.setAspectName(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
+				allegato.setDescrizione("Flusso di Approvazione della richiesta di rimborso");
+				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+				completeAllegato(allegato);
+				allegato.setCrudStatus(OggettoBulk.NORMAL);
+				allegatoParentBulk.addToArchivioAllegati(allegato);					
+			}
+		}
+		if (allegatoParentBulk.getIdFlussoOrdineMissione() != null){
+			Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlussoOrdineMissione());
+			if (documentOrdine != null){
+				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), documentOrdine);
+				allegato.setContentType(documentOrdine.getContentStreamMimeType());
+				allegato.setNome(documentOrdine.getName());
+				allegato.setAspectName(AllegatoMissioneBulk.FLUSSO_ORDINE);
+				allegato.setDescrizione("Flusso di Approvazione dell'Ordine di missione");
+				allegato.setTitolo((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+				completeAllegato(allegato);
+				allegato.setCrudStatus(OggettoBulk.NORMAL);
+				allegatoParentBulk.addToArchivioAllegati(allegato);					
+			}
+		}
 	} catch (ApplicationException e) {
 		throw handleException(e);
 	} catch (ComponentException e) {
@@ -2621,7 +2628,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 	} catch (InstantiationException e) {
 		throw handleException(e);
 	} catch (InvocationTargetException e) {
-		throw handleException(e);
+		throw handleException(e); 
 	}
 	return oggettobulk;	
 }
@@ -2642,4 +2649,20 @@ public String getAllegatiFormName() {
 	return "allegatiMissione";
 }
 
+public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
+	AllegatoMissioneBulk allegato = (AllegatoMissioneBulk)getCrudArchivioAllegati().getModel();
+	Document node = allegato.getDocument(missioniCMISService);
+	InputStream is = missioniCMISService.getResource(node);
+	((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());
+	((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentStreamMimeType());
+	OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+	((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+	byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+	int buflength;
+	while ((buflength = is.read(buffer)) > 0) {
+		os.write(buffer,0,buflength);
+	}
+	is.close();
+	os.flush();
+}
 }

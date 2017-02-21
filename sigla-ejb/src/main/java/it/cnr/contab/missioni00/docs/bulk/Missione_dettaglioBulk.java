@@ -39,6 +39,7 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	/**** Gestione edita, conferma, annulla dettaglio di spesa ***/	
 	public static final int STATUS_NOT_CONFIRMED = 0;
 	public static final int STATUS_CONFIRMED = 1;
+	private String allegatiDocumentale;
 	private int status = STATUS_NOT_CONFIRMED;
 	protected Missione_dettaglioBulk spesaIniziale;
 	/***************************************************************/
@@ -303,6 +304,13 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 
 		return false;
 	}
+	public boolean isMissioneFromGemis()
+	{
+		if(getMissione() != null && getMissione().getIdRimborsoMissione() != null)
+			return true;
+
+		return false;
+	}
 	public boolean isROTipo_auto() 
 	{
 		return tipo_auto == null || tipo_auto.getCrudStatus() == NORMAL; 
@@ -469,5 +477,11 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 
 		if((isRimborsoKm()) && ((getChilometri() == null) || (getChilometri().compareTo(new java.math.BigDecimal(0)) < 0)))		
 			throw new ValidationException( "il numero di Km deve essere > 0!" );		
+	}
+	public String getAllegatiDocumentale() {
+		return allegatiDocumentale;
+	}
+	public void setAllegatiDocumentale(String allegatiDocumentale) {
+		this.allegatiDocumentale = allegatiDocumentale;
 	}
 }
