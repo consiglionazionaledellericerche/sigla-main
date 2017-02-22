@@ -14,6 +14,12 @@
 		spesa = new Missione_dettaglioBulk();	
 %>
 
+<script language="JavaScript">
+function doVisualizzaGiustificativiCollegati() {
+  doPrint('genericdownload/GiustificativiCollegati/<%=bp.getNomeAllegatoDettaglio()%>?methodName=scaricaGiustificativiCollegati&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+}
+</script>
+
 <table width="100%">
 	<tr></tr>
 	<tr></tr>
@@ -95,15 +101,20 @@
 	<tr>
 	<td><% bp.getSpesaController().writeFormLabel( out, "id_giustificativo"); %></td>
 	<td><% bp.getSpesaController().writeFormInput( out, "default", "id_giustificativo", !bp.getSpesaController().isEditingSpesa(), "FormInput", null); %></td>
+	<td><% if((spesa != null) && (spesa.isMissioneFromGemis())){
+				bp.getSpesaController().writeFormInput( out, "default", "allegatiDocumentale", false, "Button", null);
+		} %></td>
 	<td></td>
 	</tr>
 	
 	<tr>	
 	<td><% 
-	if((spesa != null) && (!spesa.isMissioneFromGemis()))
-		bp.getSpesaController().writeFormLabel( out, "ds_giustificativo"); %></td>
-	<td><% 	if((spesa != null) && (!spesa.isMissioneFromGemis()))
-		bp.getSpesaController().writeFormInput( out, "default", "ds_giustificativo", !bp.getSpesaController().isEditingSpesa(), "FormInput", null); %></td>
+	if((spesa != null) && (!spesa.isMissioneFromGemis())){
+		bp.getSpesaController().writeFormLabel( out, "ds_giustificativo");		
+	} %></td>
+	<td><% 	if((spesa != null) && (!spesa.isMissioneFromGemis())){
+		bp.getSpesaController().writeFormInput( out, "default", "ds_giustificativo", !bp.getSpesaController().isEditingSpesa(), "FormInput", null);
+	} %></td>
 	<td></td>	
 	</tr>
 
