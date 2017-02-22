@@ -101,7 +101,7 @@ function doVisualizzaGiustificativiCollegati() {
 	<tr>
 	<td><% bp.getSpesaController().writeFormLabel( out, "id_giustificativo"); %></td>
 	<td><% bp.getSpesaController().writeFormInput( out, "default", "id_giustificativo", !bp.getSpesaController().isEditingSpesa(), "FormInput", null); %></td>
-	<td><% if((spesa != null) && (spesa.isMissioneFromGemis())){
+	<td><% if((spesa != null) && (spesa.isMissioneFromGemis()) && (!spesa.isRimborsoKm())){
 				bp.getSpesaController().writeFormInput( out, "default", "allegatiDocumentale", false, "Button", null);
 		} %></td>
 	<td></td>
