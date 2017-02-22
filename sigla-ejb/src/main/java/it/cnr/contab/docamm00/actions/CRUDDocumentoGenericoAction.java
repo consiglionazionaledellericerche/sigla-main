@@ -1490,8 +1490,8 @@ public Forward doCreaLettera(ActionContext context) {
 			if (model.getLettera_pagamento_estero() == null) {
 				Lettera_pagam_esteroBulk lettera = new Lettera_pagam_esteroBulk(
 															model.getCd_cds(),
-															model.getCd_unita_organizzativa(),
-															model.getEsercizio(),
+											 				model.getCd_unita_organizzativa(),
+															it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()),
 															null);
 				lettera.completeFrom(context);
 				lettera.setToBeCreated();

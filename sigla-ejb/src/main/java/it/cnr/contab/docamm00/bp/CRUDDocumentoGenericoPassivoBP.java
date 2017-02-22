@@ -476,10 +476,10 @@ public boolean isSaveButtonEnabled() {
 			 ||  carryingThrough
 			// Consentire salvataggio 		
 			 ||(!doc.isEditable()&&doc.getCrudStatus()!=5)
-			 ); //||
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato DA UN ES. PRECEDENTE a quello di scrivania.				
-			// (doc.COMPLETAMENTE_RIPORTATO.equals(doc.getRiportataInScrivania()) && !isAnnoDiCompetenza()));
+			 ||(doc.COMPLETAMENTE_RIPORTATO.equals(doc.getRiportataInScrivania()) && !isAnnoDiCompetenza()));
+		
 }
 public boolean isSpesaBP() {
 
@@ -839,4 +839,22 @@ public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String
 	else
 		super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
 }
+
+public void writeFormFieldDoc1210(javax.servlet.jsp.JspWriter out,String name) throws java.io.IOException {
+
+	Documento_genericoBulk dg = (Documento_genericoBulk)getModel();
+
+
+	boolean isReadonly = isInputReadonly();
+
+	if (dg.COMPLETAMENTE_RIPORTATO.equals(dg.getRiportataInScrivania())){
+			isReadonly = isDeleting() 
+						|| isModelVoided() 
+						|| (dg != null && (dg.isPagata() && !isSearching()));
+	}
+
+	
+	getBulkInfo().writeFormField(out,dg,null,name,getInputPrefix(),1,1,getStatus(),isReadonly,getFieldValidationMap());	
+}
+
 }
