@@ -306,7 +306,7 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	}
 	public boolean isMissioneFromGemis()
 	{
-		if(getMissione() != null && getMissione().getIdRimborsoMissione() != null)
+		if(getMissione() != null && getMissione().isMissioneFromGemis() )
 			return true;
 
 		return false;

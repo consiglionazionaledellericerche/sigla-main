@@ -3600,4 +3600,11 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			BulkList<AllegatoGenericoBulk> archivioAllegati) {
 		this.archivioAllegati = archivioAllegati;
 	}
+	public boolean isMissioneFromGemis()
+	{
+		if(getIdRimborsoMissione() != null)
+			return true;
+
+		return false;
+	}
 }
