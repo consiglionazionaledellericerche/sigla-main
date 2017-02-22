@@ -1,5 +1,7 @@
 package it.cnr.contab.missioni00.bp;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,18 +9,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.ParseException;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.SecondaryType;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
+import org.apache.pdfbox.util.PDFMergerUtility;
 
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.cmis.CMISAspect;
@@ -38,6 +46,7 @@ import it.cnr.contab.doccont00.bp.IValidaDocContBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.missioni00.docs.bulk.AllegatoMissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
@@ -48,6 +57,7 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -2664,5 +2674,48 @@ public void scaricaAllegato(ActionContext actioncontext) throws IOException, Ser
 	}
 	is.close();
 	os.flush();
+}
+
+public String getNomeAllegatoDettaglio() throws ApplicationException{
+	Document document = recuperoDocumentoGiustificativoDettaglio();
+	if (document != null){
+		return document.getName();
+	}
+	return "";
+}
+private Document recuperoDocumentoGiustificativoDettaglio() throws ApplicationException {
+	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
+	if (dettaglio != null){
+		if (dettaglio.getDs_giustificativo() != null){
+			Folder node = (Folder)missioniCMISService.getNodeByNodeRef(dettaglio.getDs_giustificativo());
+			if (node != null){
+				for (CmisObject cmisObject : node.getChildren()) {
+					Document document = (Document)cmisObject;
+					return document;
+				}
+			}
+		}
+	}
+	return null;
+}
+
+public void scaricaGiustificativiCollegati(ActionContext actioncontext) throws Exception {
+	Document document = recuperoDocumentoGiustificativoDettaglio();
+	if (document != null){
+		InputStream is = missioniCMISService.getResource(document);
+		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(document.getContentStreamLength()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(document.getContentStreamMimeType());
+		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer,0,buflength);
+		}
+		is.close();
+		os.flush();
+	} else {
+		throw new it.cnr.jada.action.MessageToUser( "Giustificativi non presenti sul documentale per la riga selezionata" );
+	}
 }
 }
