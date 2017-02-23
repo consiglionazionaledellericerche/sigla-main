@@ -111,6 +111,7 @@ public class MissioneResource implements MissioneLocal{
 				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
 		}
 		missioneBulk.setObbligazione_scadenzario(Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk)).orElse(null));
+		missioneBulk.setAnticipo(Optional.ofNullable(missioneComponentSession.recuperoAnticipoDaGemis(userContext, missioneBulk)).orElse(null));
 		final MissioneBulk missione = (MissioneBulk) missioneComponentSession.inizializzaBulkPerInserimento(
     			userContext, 
     			missioneBulk);
