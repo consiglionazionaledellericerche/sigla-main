@@ -2677,15 +2677,18 @@ public void scaricaAllegato(ActionContext actioncontext) throws IOException, Ser
 }
 
 public String getNomeAllegatoDettaglio() throws ApplicationException{
-	Document document = recuperoDocumentoGiustificativoDettaglio();
-	if (document != null){
-		return document.getName();
+	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
+	if (dettaglio.isMissioneFromGemis()){
+		Document document = recuperoDocumentoGiustificativoDettaglio();
+		if (document != null){
+			return document.getName();
+		}
 	}
 	return "";
 }
 private Document recuperoDocumentoGiustificativoDettaglio() throws ApplicationException {
 	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
-	if (dettaglio != null){
+	if (dettaglio != null && dettaglio.isMissioneFromGemis()){
 		if (dettaglio.getDs_giustificativo() != null){
 			Folder node = (Folder)missioniCMISService.getNodeByNodeRef(dettaglio.getDs_giustificativo());
 			if (node != null){
