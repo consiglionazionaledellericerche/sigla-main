@@ -325,6 +325,15 @@
 		label="Responsabile"
 		nullable="false" />
 	<fieldProperty
+		name="ds_responsabile"
+		property="responsabile.denominazione_sede"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Denominazione Resp"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>			
+	<fieldProperty
 		name="fl_limite_ass_obblig"
 		property="fl_limite_ass_obblig"
 		label="Controllo limite assunzione Impegni"
@@ -484,7 +493,9 @@
 	<formFieldProperty
 		name="cd_responsabile_terzo" />
 	<formFieldProperty
-		name="responsabile" />				
+		name="responsabile" />	
+	<formFieldProperty
+		name="ds_responsabile" />				
 	<formFieldProperty
 		name="crea_modulo" />
 	<formFieldProperty
@@ -550,6 +561,8 @@
 	<columnFieldProperty
 		name="cd_responsabile_terzo" />		
 	<columnFieldProperty
+		name="ds_responsabile" />			
+	<columnFieldProperty
 		name="fl_limite_ass_obblig"/>
 	<columnFieldProperty
 		name="cd_cofog"/>
@@ -584,6 +597,8 @@
 			name="ti_gestione" />
 		<columnFieldProperty
 			name="cd_responsabile_terzo" />		
+		<columnFieldProperty
+			name="ds_responsabile" />
 		<columnFieldProperty
 			name="cd_cofog"/>
 		<columnFieldProperty
