@@ -17,6 +17,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.*;
 import it.cnr.contab.missioni00.docs.bulk.*;
 import it.cnr.contab.missioni00.tabrif.bulk.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
+import it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
@@ -24,6 +25,10 @@ import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 
 import java.util.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -44,6 +49,7 @@ import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 
 public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cloneable, Serializable, IPrintMgr {
+	private transient final static Logger logger = LoggerFactory.getLogger(MissioneComponent.class);
 /**
  * MissioneComponent constructor comment.
  */
@@ -2936,7 +2942,7 @@ public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missio
 			sql.addSQLClause("AND","esercizio",sql.EQUALS,missione.getEsercizioAnticipoGeMis());
 			sql.addSQLClause("AND","pg_mandato",sql.EQUALS,missione.getPgAnticipoGeMis());
 			sql.addSQLClause("AND","cd_terzo",sql.EQUALS,missione.getCd_terzo());
-
+			logger.info(sql.toString());
 			it.cnr.jada.bulk.BulkList mandati = new it.cnr.jada.bulk.BulkList(mandatoHome.fetchAll( sql ));
 		
 			if((mandati != null) && (!mandati.isEmpty())){
