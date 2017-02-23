@@ -1607,10 +1607,14 @@ public void validaCreaModificaConBulk(
 					PartitaIVAControllo.parsePartitaIVA(anagrafico.getCodice_fiscale());
 				} catch (NumberFormatException nfe) {
 					// se non sono tutti numeri è un codice fiscale!
-					if (anagrafico.getCodice_fiscale().length() != 16
-						|| !CodiceFiscaleControllo.checkCC(anagrafico.getCodice_fiscale()))
+//					if (anagrafico.getCodice_fiscale().length() != 16
+//						|| !CodiceFiscaleControllo.checkCC(anagrafico.getCodice_fiscale()))
+					if (anagrafico.getCodice_fiscale().length() == 16)
 						throw new it.cnr.jada.comp.ApplicationException(
-							"Codice fiscale inserito errato.");
+							"Codice fiscale inserito errato per la tipologia dell'anagrafica.");
+					else
+						throw new it.cnr.jada.comp.ApplicationException(
+								"Codice fiscale inserito errato.");
 				} catch (ExPartitaIVA ecf) {
 					throw new it.cnr.jada.comp.ApplicationException(
 						"Codice fiscale inserito errato.");
