@@ -2935,7 +2935,7 @@ public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missio
 	{	
 		if (missione.getEsercizioAnticipoGeMis() != null && missione.getCdsAnticipoGeMis() != null && missione.getPgAnticipoGeMis() != null && missione.getCd_terzo() != null){
 			
-			Mandato_rigaHome mandatoHome = (Mandato_rigaHome)getHome( aUC, Mandato_rigaBulk.class );
+			Mandato_rigaHome mandatoHome = (Mandato_rigaHome)getHome( aUC, Mandato_rigaIBulk.class );
 			SQLBuilder sql = mandatoHome.createSQLBuilder();
 		
 			sql.addSQLClause( "AND", "cd_cds", sql.EQUALS, missione.getCdsAnticipoGeMis());
@@ -2947,7 +2947,7 @@ public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missio
 		
 			if((mandati != null) && (!mandati.isEmpty())){
 				for (Object object : mandati) {
-					Mandato_rigaBulk mandato = (Mandato_rigaBulk)object;
+					Mandato_rigaIBulk mandato = (Mandato_rigaIBulk)object;
 					if (mandato.getCd_tipo_documento_amm() != null && mandato.getCd_tipo_documento_amm().equals("ANTICIPO")){
 						AnticipoHome anticipoHome = (AnticipoHome)getHome( aUC, AnticipoBulk.class );
 						AnticipoKey key = new AnticipoKey(mandato.getCd_cds_doc_amm(), mandato.getCd_uo_doc_amm(), mandato.getEsercizio_doc_amm(), mandato.getPg_doc_amm());
