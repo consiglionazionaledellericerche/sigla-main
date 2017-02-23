@@ -154,6 +154,9 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private Integer esercizioOriObblGeMis;
 	private String cdsObblGeMis;
 	private Long pgObblGeMis;
+	private Integer esercizioAnticipoGeMis;
+	private String cdsAnticipoGeMis;
+	private Long pgAnticipoGeMis;
 	private String gaeGeMis;
 
 	// Fondo Economale
@@ -3606,5 +3609,23 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			return true;
 
 		return false;
+	}
+	public Integer getEsercizioAnticipoGeMis() {
+		return esercizioAnticipoGeMis;
+	}
+	public void setEsercizioAnticipoGeMis(Integer esercizioAnticipoGeMis) {
+		this.esercizioAnticipoGeMis = esercizioAnticipoGeMis;
+	}
+	public String getCdsAnticipoGeMis() {
+		return cdsAnticipoGeMis;
+	}
+	public void setCdsAnticipoGeMis(String cdsAnticipoGeMis) {
+		this.cdsAnticipoGeMis = cdsAnticipoGeMis;
+	}
+	public Long getPgAnticipoGeMis() {
+		return pgAnticipoGeMis;
+	}
+	public void setPgAnticipoGeMis(Long pgAnticipoGeMis) {
+		this.pgAnticipoGeMis = pgAnticipoGeMis;
 	}
 }
