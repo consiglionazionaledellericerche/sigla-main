@@ -2942,7 +2942,6 @@ public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missio
 			sql.addSQLClause("AND","esercizio",sql.EQUALS,missione.getEsercizioAnticipoGeMis());
 			sql.addSQLClause("AND","pg_mandato",sql.EQUALS,missione.getPgAnticipoGeMis());
 			sql.addSQLClause("AND","cd_terzo",sql.EQUALS,missione.getCd_terzo());
-			logger.info(sql.toString());
 			it.cnr.jada.bulk.BulkList mandati = new it.cnr.jada.bulk.BulkList(mandatoHome.fetchAll( sql ));
 		
 			if((mandati != null) && (!mandati.isEmpty())){
