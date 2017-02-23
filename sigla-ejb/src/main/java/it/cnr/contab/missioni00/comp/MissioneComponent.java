@@ -2923,6 +2923,46 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 	return null;
 }
 
+public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException
+{
+	try
+	{	
+		if (missione.getEsercizioAnticipoGeMis() != null && missione.getCdsAnticipoGeMis() != null && missione.getPgAnticipoGeMis() != null && missione.getCd_terzo() != null){
+			
+			Mandato_rigaHome mandatoHome = (Mandato_rigaHome)getHome( aUC, Mandato_rigaBulk.class );
+			SQLBuilder sql = mandatoHome.createSQLBuilder();
+		
+			sql.addSQLClause( "AND", "cd_cds", sql.EQUALS, missione.getCdsAnticipoGeMis());
+			sql.addSQLClause("AND","esercizio",sql.EQUALS,missione.getEsercizioAnticipoGeMis());
+			sql.addSQLClause("AND","pg_mandato",sql.EQUALS,missione.getPgAnticipoGeMis());
+			sql.addSQLClause("AND","cd_terzo",sql.EQUALS,missione.getCd_terzo());
+
+			it.cnr.jada.bulk.BulkList mandati = new it.cnr.jada.bulk.BulkList(mandatoHome.fetchAll( sql ));
+		
+			if((mandati != null) && (!mandati.isEmpty())){
+				for (Object object : mandati) {
+					Mandato_rigaBulk mandato = (Mandato_rigaBulk)object;
+					if (mandato.getCd_tipo_documento_amm() != null && mandato.getCd_tipo_documento_amm().equals("ANTICIPO")){
+						AnticipoHome anticipoHome = (AnticipoHome)getHome( aUC, AnticipoBulk.class );
+						AnticipoKey key = new AnticipoKey(mandato.getCd_cds_doc_amm(), mandato.getCd_uo_doc_amm(), mandato.getEsercizio_doc_amm(), mandato.getPg_doc_amm());
+						AnticipoBulk anticipo = ((AnticipoBulk)anticipoHome.findByPrimaryKey(key));
+						if (anticipo != null){
+							return anticipo;
+						}
+					}
+				}
+			}
+		} else {
+			return null;
+		}
+	} 
+	catch (Throwable e) 
+	{
+		throw handleException(missione, e);
+	}
+	return null;
+}
+
 /**
  * Annulla le modifiche apportate alla missione e ritorna al savepoint impostato in precedenza
  *

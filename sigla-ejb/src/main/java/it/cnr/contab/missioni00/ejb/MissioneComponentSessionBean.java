@@ -1,24 +1,23 @@
 package it.cnr.contab.missioni00.ejb;
 
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.missioni00.comp.MissioneComponent;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.missioni00.comp.MissioneComponent;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 @Stateless(name = "CNRMISSIONI00_EJB_MissioneComponentSession")
 public class MissioneComponentSessionBean extends
@@ -1095,6 +1094,25 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 	pre_component_invocation(aUC, componentObj);
 	try {
 		Obbligazione_scadenzarioBulk result = ((MissioneComponent) componentObj).recuperoObbligazioneDaGemis(aUC, missione);
+		component_invocation_succes(aUC, componentObj);
+		return result;
+	} catch (it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(aUC, componentObj);
+		throw e;
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(aUC, componentObj);
+		throw e;
+	} catch (RuntimeException e) {
+		throw uncaughtRuntimeException(aUC, componentObj, e);
+	} catch (Error e) {
+		throw uncaughtError(aUC, componentObj, e);
+	}
+}
+
+public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException{
+	pre_component_invocation(aUC, componentObj);
+	try {
+		AnticipoBulk result= ((MissioneComponent) componentObj).recuperoAnticipoDaGemis(aUC, missione);
 		component_invocation_succes(aUC, componentObj);
 		return result;
 	} catch (it.cnr.jada.comp.NoRollbackException e) {
