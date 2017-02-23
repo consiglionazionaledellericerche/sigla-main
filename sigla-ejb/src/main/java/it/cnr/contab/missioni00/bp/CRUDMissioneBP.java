@@ -2678,7 +2678,7 @@ public void scaricaAllegato(ActionContext actioncontext) throws IOException, Ser
 
 public String getNomeAllegatoDettaglio() throws ApplicationException{
 	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
-	if (dettaglio.isMissioneFromGemis()){
+	if (dettaglio!= null && dettaglio.isMissioneFromGemis()){
 		Document document = recuperoDocumentoGiustificativoDettaglio();
 		if (document != null){
 			return document.getName();
