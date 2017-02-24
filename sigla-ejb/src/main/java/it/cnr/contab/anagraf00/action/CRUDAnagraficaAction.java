@@ -501,14 +501,19 @@ public Forward doTerzi(ActionContext context) {
 			CRUDAnagraficaBP bp   = (CRUDAnagraficaBP)getBusinessProcess(context);
 			try {
 				String newCF = ((AnagraficoComponentSession)bp.createComponentSession()).calcolaCodiceFiscale(context.getUserContext(), (AnagraficoBulk)bp.getModel());
-				String msg = e.getMessage();
-				msg += "\nIl codice fiscale esatto potrebbe essere \""
-						+ newCF + "\".\nUtilizzare il Codice Fiscale calcolato?";
-
-				it.cnr.jada.util.action.OptionBP option = openConfirm( context, msg, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmHandleExCodiceFiscale");
-				option.addAttribute("anagrafica", (AnagraficoBulk)bp.getModel());
-				option.addAttribute("nuovoCodice", newCF);
-				return option;
+				if(newCF!=null && bp.getModel()!= null && ((AnagraficoBulk)bp.getModel()).getCodice_fiscale()!=null){
+					String msg = e.getMessage();
+					msg += "\nIl codice fiscale esatto potrebbe essere \""
+							+ newCF + "\".\nUtilizzare il Codice Fiscale calcolato?";
+	
+					it.cnr.jada.util.action.OptionBP option = openConfirm( context, msg, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmHandleExCodiceFiscale");
+					option.addAttribute("anagrafica", (AnagraficoBulk)bp.getModel());
+					option.addAttribute("nuovoCodice", newCF);
+					return option;
+				} else{
+					bp.setErrorMessage(e.getMessage());
+					return context.findDefaultForward();
+				}
 			} catch(Throwable twb) {
 				bp.setErrorMessage(e.getMessage());
 				return context.findDefaultForward();
