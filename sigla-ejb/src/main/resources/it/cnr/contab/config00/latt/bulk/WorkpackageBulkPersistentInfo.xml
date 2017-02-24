@@ -151,6 +151,7 @@
 	<fetchPolicy name="it.cnr.contab.pdg00.comp.StampaSituazioneSinteticaGAEComponent.find">
 		<exclude pattern="*" />
 		<include pattern="progetto"/>	
+		<include pattern="responsabile"/>	
 		<include pattern="progetto.*"/>
 	</fetchPolicy>	
 	<fetchPolicy
