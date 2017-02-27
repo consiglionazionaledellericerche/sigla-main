@@ -202,7 +202,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 	}
 	
 	@Override
-	protected void basicEdit(ActionContext actioncontext,
+	public void basicEdit(ActionContext actioncontext,
 			OggettoBulk oggettobulk, boolean flag)
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
@@ -422,7 +422,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		List<String> nodes = new ArrayList<String>();
 		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
 			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
-			nodes.addAll(documentiContabiliService.getNodeRefDocumento(lettera_pagam_esteroBulk, true));
+			nodes.addAll(documentiContabiliService.getNodeRefDocumento(lettera_pagam_esteroBulk, true));			
 		}
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		Print_spoolerBulk print = new Print_spoolerBulk();
@@ -447,7 +447,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 				null, 
 				"Rome", "Firma documento contabile",
 				"per invio all'Istituto cassiere\nFirmato da\n", 
-				450, 40, getLastPagePDF(node.getContentStream().getStream()), 700, 80);		
+				450, 40, getLastPagePDF(node.getContentStream().getStream()), 700, 80);
 		signDocuments(context, firmaOTPBulk, Collections.singletonList(nodo), apparence);		
 		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
 			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
@@ -464,7 +464,8 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 			documentiContabiliService.inviaDistintaPEC1210(nodes,true,distintaCassiere1210Bulk.getEsercizio()+"/"+distintaCassiere1210Bulk.getPgDistinta());
 		else
 			documentiContabiliService.inviaDistintaPEC1210(nodes);
-		save(context);
+		commitUserTransaction();
+		setMessage("Invio effettuato correttamente.");
 		setStatus(VIEW);
 	}
 	

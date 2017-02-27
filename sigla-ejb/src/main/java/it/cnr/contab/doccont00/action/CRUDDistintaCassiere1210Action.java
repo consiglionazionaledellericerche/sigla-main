@@ -70,6 +70,9 @@ public class CRUDDistintaCassiere1210Action extends CRUDAction {
 			CRUDDistintaCassiere1210BP bp = (CRUDDistintaCassiere1210BP)context.getBusinessProcess();	
 			HookForward caller = (HookForward)context.getCaller();
 			FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
+			bp.signDocuments(context, firmaOTPBulk);
+			bp.commitUserTransaction();
+			  bp.basicEdit(context, bp.getModel(), true);
 			bp.invia(context, firmaOTPBulk);			
 			return context.findDefaultForward();
 		} catch (Exception e ){
@@ -80,12 +83,14 @@ public class CRUDDistintaCassiere1210Action extends CRUDAction {
 	public Forward doSalva(ActionContext context) throws RemoteException {
 		try {
 			CRUDDistintaCassiere1210BP bp = (CRUDDistintaCassiere1210BP)context.getBusinessProcess();	
-			if (bp.getDistintaCassiere1210LettereCollegate().countDetails() == 0)
-				return super.doSalva(context);	
-			BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
-			firmaOTPBP.setModel(context, new FirmaOTPBulk());
-			context.addHookForward("firmaOTP",this,"doBackSign");			
-			return context.addBusinessProcess(firmaOTPBP);
+//			if (bp.getDistintaCassiere1210LettereCollegate().countDetails() == 0) 
+//				throw new ApplicationException("Associare almeno un documento alla distinta!");
+//			else
+//			BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
+//			firmaOTPBP.setModel(context, new FirmaOTPBulk());
+//			context.addHookForward("firmaOTP",this,"doBackSign");			
+			//return context.addBusinessProcess(firmaOTPBP);
+				return super.doSalva(context);
 		} catch(Exception e) {
 			return handleException(context,e);
 		}
