@@ -58,7 +58,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	protected ContrattoService contrattoService;
 	private Date dataStipulaParametri;
-	
+	private Boolean flagPubblicaContratto;
 	private SimpleDetailCRUDController crudAssUO = new SimpleDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUO", this);
 	private SimpleDetailCRUDController crudAssUODisponibili = new SimpleDetailCRUDController( "Associazione UO Disponibili", Unita_organizzativaBulk.class, "associazioneUODisponibili", this);
 
@@ -135,8 +135,8 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		if (getModel()!=null){
 			ContrattoBulk contratto = (ContrattoBulk) getModel();
 			if ((contratto.isPassivo() || contratto.isAttivo_e_Passivo()) &&
-					contratto.isDefinitivo() &&
-					!contratto.getDt_stipula().before(dataStipulaParametri) &&
+					contratto.isDefinitivo() && flagPubblicaContratto.booleanValue() &&
+					(!contratto.getDt_stipula().before(dataStipulaParametri)) &&
 					!contratto.getFl_pubblica_contratto()){
 				return false;
 			}
@@ -150,10 +150,13 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				contratto != null && 
 				contratto.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL){
 			if (contratto.isDefinitivo()){
-				if (contratto.getFl_pubblica_contratto() == null || contratto.getFl_pubblica_contratto())
+				if (flagPubblicaContratto.booleanValue()){
+				   if (contratto.getFl_pubblica_contratto() == null || contratto.getFl_pubblica_contratto())
+					   return false;
+				   else			
+					  return (!contratto.getDt_stipula().before(dataStipulaParametri));
+				}else
 					return false;
-				else			
-					return !contratto.getDt_stipula().before(dataStipulaParametri);
 			}
 		}
 		return true;
@@ -166,16 +169,16 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		return false;
 	}
 	
-	private Date getDataStipulaParametri(it.cnr.jada.action.ActionContext context) throws ComponentException, RemoteException, EJBException{
+	private it.cnr.contab.config00.bulk.Parametri_cnrBulk getParametri_cnrBulk(it.cnr.jada.action.ActionContext context) throws ComponentException, RemoteException, EJBException{
 		return Utility.createParametriCnrComponentSession().
-			getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getData_stipula_contratti();
+			getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()));
 	}
-	
 	public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException {
 		super.basicEdit(context, bulk, doInitializeForEdit);
 		ContrattoBulk contratto= (ContrattoBulk)getModel();
 		try {
-			dataStipulaParametri = getDataStipulaParametri(context);
+			dataStipulaParametri = getParametri_cnrBulk(context).getData_stipula_contratti();
+			flagPubblicaContratto=getParametri_cnrBulk(context).getFl_pubblica_contratto();
 		} catch (Exception e) {
 			throw handleException(e);
 		}
@@ -572,5 +575,13 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				}
 			}
 		}
+	}
+
+	public Boolean getFlagPubblicaContratto() {
+		return flagPubblicaContratto;
+	}
+
+	public void setFlagPubblicaContratto(Boolean flagPubblicaContratto) {
+		this.flagPubblicaContratto = flagPubblicaContratto;
 	}
 }
