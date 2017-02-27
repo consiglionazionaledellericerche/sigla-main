@@ -1134,11 +1134,20 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			Folder oldNode = contrattoService.getFolderContratto(contratto);
 			if (oldNode == null || !contrattoService.isDocumentoContrattoPresent(contratto))
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
-			if (contratto.getDt_stipula().after(dataStipulaParametri) ||
-				contratto.getDt_stipula().equals(dataStipulaParametri)){
-				if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
-					contratto.setFl_pubblica_contratto(Boolean.TRUE);
-			}
+			boolean pubblica = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
+					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_pubblica_contratto().booleanValue();
+		    if(pubblica){
+				if (contratto.getDt_stipula().after(dataStipulaParametri) ||
+					contratto.getDt_stipula().equals(dataStipulaParametri)){
+					if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
+						
+						contratto.setFl_pubblica_contratto(Boolean.TRUE);
+					else
+						contratto.setFl_pubblica_contratto(Boolean.FALSE);
+
+				}
+		    }else 
+		    	contratto.setFl_pubblica_contratto(Boolean.FALSE);
 
 			ContrattoBulk contrattoClone = (ContrattoBulk)contratto.clone();
 			try {
