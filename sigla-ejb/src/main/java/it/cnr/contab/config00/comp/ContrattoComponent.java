@@ -1187,7 +1187,10 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				if (node != null){
 					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
 					if (contrattoDefinitivo.isPassivo() || contrattoDefinitivo.isAttivo_e_Passivo())
-						contrattoService.addConsumerToEveryone(node);
+						if(pubblica)
+							contrattoService.addConsumerToEveryone(node);
+						else 
+							contrattoService.setInheritedPermission(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo), Boolean.FALSE);
 				}
 			}
 			return contrattoDefinitivo;
