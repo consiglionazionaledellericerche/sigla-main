@@ -364,9 +364,10 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			comp.modificaConBulk(context.getUserContext(), contratto);
 			if (folder != null){
-				contrattoService.updateProperties(contratto, folder);
+				contrattoService.updateProperties(contratto, folder); 
 				contrattoService.addAspect(folder, "P:sigla_contratti_aspect:stato_definitivo");
-				contrattoService.addConsumerToEveryone(folder);
+				contrattoService.addConsumer(folder,"GROUP_CONTRATTI");
+				contrattoService.setInheritedPermission(contrattoService.getCMISPathFolderContratto(contratto), Boolean.FALSE);
 			}
 			edit(context,contratto);
 		}catch(it.cnr.jada.comp.ComponentException ex){
