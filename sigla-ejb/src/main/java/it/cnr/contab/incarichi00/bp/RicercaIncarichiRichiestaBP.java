@@ -388,28 +388,28 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = contratto.getProcedura_amministrativa().getDs_proc_amm(); 
 		elementBeneficiario.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementBeneficiario);
-
+		//eliminata pubblicazione dei file
 		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
 			if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO)){
 				Element elementLink = xmldoc.createElement(getTagRadice()+":url_contratto");
-				dato = "genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
+				dato =null;// "genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
 				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 				elementContratto.appendChild(elementLink);
 			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO)) {
 				if (allegato.getLink()!= null){
 					Element elementLink = xmldoc.createElement(getTagRadice()+":url_esterno_progetto");
-					dato = allegato.getLink(); 					
+					dato = null;//allegato.getLink(); 					
 					elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 					elementContratto.appendChild(elementLink);
 				}else if (allegato.isContentStreamPresent()) {
 					Element elementLink = xmldoc.createElement(getTagRadice()+":url_progetto");
-					dato = "genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
+					dato =null; //"genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
 					elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 					elementContratto.appendChild(elementLink);
 				}
 			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CAPITOLATO)) {
 				Element elementLink = xmldoc.createElement(getTagRadice()+":url_capitolato");
-				dato = "genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
+				dato = null;//"genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
 				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 				elementContratto.appendChild(elementLink);
 			}
@@ -762,7 +762,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				codiceErrore = Constants.ERRORE_INC_104;
 				return;
 			}
-		}
+		} 
 		if(getRows()!=null){
 			try{
 				this.setPageSize(new Integer(getRows()));
