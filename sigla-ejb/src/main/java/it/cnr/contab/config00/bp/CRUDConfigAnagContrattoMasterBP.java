@@ -94,8 +94,7 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			comp.modificaConBulk(context.getUserContext(), contratto);
 			if (node != null){
-				contrattoService.removeAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
-				contrattoService.removeConsumerToEveryone(node);
+				contrattoService.removeConsumer(node,"GROUP_CONTRATTI");
 			}
 			edit(context,contratto);
 		}catch(it.cnr.jada.comp.ComponentException ex){
