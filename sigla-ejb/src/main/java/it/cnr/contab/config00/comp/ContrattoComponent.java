@@ -1186,11 +1186,10 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				Folder node = contrattoService.getFolderContratto(contrattoDefinitivo);
 				if (node != null){
 					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
-					if (contrattoDefinitivo.isPassivo() || contrattoDefinitivo.isAttivo_e_Passivo())
-						if(pubblica)
-							contrattoService.addConsumerToEveryone(node);
-						else 
+					if (contrattoDefinitivo.isPassivo() || contrattoDefinitivo.isAttivo_e_Passivo()){
+							contrattoService.addConsumer(node,"GROUP_CONTRATTI");
 							contrattoService.setInheritedPermission(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo), Boolean.FALSE);
+						}
 				}
 			}
 			return contrattoDefinitivo;
