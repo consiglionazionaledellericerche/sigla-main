@@ -308,14 +308,7 @@ CD_LIVELLO1)]]>
 	<group name="SOMMARIO">
 		<groupExpression><![CDATA["SOMMARIO"]]></groupExpression>
 		<groupFooter>
-			<band height="13">
-				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="85724f1c-70ed-4346-9797-c74300db3230"/>
-					<box topPadding="4" rightPadding="4"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_PREC_REPORT}]]></textFieldExpression>
-				</textField>
-			</band>
+			<band height="13"/>
 			<band height="14" splitType="Stretch"/>
 		</groupFooter>
 	</group>
