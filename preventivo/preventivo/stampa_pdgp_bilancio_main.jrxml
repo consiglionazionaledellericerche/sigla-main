@@ -1662,7 +1662,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf" pdfEncoding="Cp1252"/>
+					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PARTE I"+
@@ -1678,7 +1678,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf" pdfEncoding="Cp1252"/>
+					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NOME_EST}]]></textFieldExpression>
