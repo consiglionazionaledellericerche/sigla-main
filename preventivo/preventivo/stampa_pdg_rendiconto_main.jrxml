@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.6105100000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="166"/>
+	<property name="ireport.y" value="248"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -352,52 +352,7 @@ CD_LIVELLO1)]]>
 					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_PREC_REPORT}]]></textFieldExpression>
 				</textField>
 			</band>
-			<band height="14" splitType="Stretch">
-				<subreport isUsingCache="true">
-					<reportElement x="0" y="3" width="842" height="10" uuid="52ae6cf8-9d01-47ba-9c75-f66a7aef16de"/>
-					<subreportParameter name="ROTTURA">
-						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO_FORNITORE">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_NUM_LIV">
-						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SUBREPORT_DIR">
-						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_ESERCIZIO">
-						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_TIPO">
-						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="NOME_EST">
-						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO1">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="UTENTE">
-						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="DESCR_AGG_ENTE">
-						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="RIEPILOGO">
-						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<returnValue subreportVariable="RES_INI_ES" toVariable="RES_INI_ES"/>
-					<returnValue subreportVariable="TOT_ACC_IMP" toVariable="TOT_ACC_IMP"/>
-					<returnValue subreportVariable="RIS_PAG" toVariable="RIS_PAG"/>
-					<returnValue subreportVariable="RES_INI_ES_PREC" toVariable="RES_INI_ES_PREC"/>
-					<returnValue subreportVariable="TOT_ACC_IMP_PREC" toVariable="TOT_ACC_IMP_PREC"/>
-					<returnValue subreportVariable="RIS_PAG_PREC" toVariable="RIS_PAG_PREC"/>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"/stampa_pdg_rendiconto_utilizzato.jasper"]]></subreportExpression>
-				</subreport>
-			</band>
+			<band height="14" splitType="Stretch"/>
 		</groupFooter>
 	</group>
 	<group name="RIEPILOGO_TITOLI">
@@ -406,88 +361,9 @@ CD_LIVELLO1)]]>
 			<band height="17" splitType="Stretch">
 				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E")  &&
     $P{P_NUM_LIV}.compareTo(new Integer(2)) >= 0)]]></printWhenExpression>
-				<subreport>
-					<reportElement x="0" y="4" width="842" height="10" isRemoveLineWhenBlank="true" uuid="eafd3963-86c1-4d1f-9b3c-192a925f3336"/>
-					<subreportParameter name="ROTTURA">
-						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO_FORNITORE">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="LIVELLO2">
-						<subreportParameterExpression><![CDATA[$F{CD_LIVELLO2}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_NUM_LIV">
-						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SUBREPORT_DIR">
-						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_ESERCIZIO">
-						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_TIPO">
-						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="NOME_EST">
-						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO1">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="UTENTE">
-						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="DESCR_AGG_ENTE">
-						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="RIEPILOGO">
-						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"/stampa_pdg_rendiconto_totale_titoli.jasper"]]></subreportExpression>
-				</subreport>
 			</band>
 			<band height="17">
 				<printWhenExpression><![CDATA[Boolean.valueOf($P{RIEPILOGO}.equals("S"))]]></printWhenExpression>
-				<subreport>
-					<reportElement x="0" y="4" width="842" height="10" isRemoveLineWhenBlank="true" uuid="1fe1d4fb-71b6-4082-97b3-c4738d146b44"/>
-					<subreportParameter name="ROTTURA">
-						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO_FORNITORE">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_NUM_LIV">
-						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SUBREPORT_DIR">
-						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_ESERCIZIO">
-						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_TIPO">
-						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="NOME_EST">
-						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO1">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="UTENTE">
-						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="DESCR_AGG_ENTE">
-						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="RIEPILOGO">
-						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"/stampa_pdg_rendiconto_riepilogo.jasper"]]></subreportExpression>
-				</subreport>
 				<break>
 					<reportElement x="0" y="2" width="100" height="1" uuid="bd30eba1-6544-4e49-83d5-6666579b456d"/>
 				</break>
@@ -499,44 +375,6 @@ CD_LIVELLO1)]]>
 		<groupFooter>
 			<band height="15">
 				<printWhenExpression><![CDATA[Boolean.valueOf($F{CD_LIVELLO2}.compareTo($P{ROTTURA}) < 0)]]></printWhenExpression>
-				<subreport>
-					<reportElement x="0" y="2" width="842" height="10" isRemoveLineWhenBlank="true" uuid="2d9e7d4a-5043-403b-99b0-537bfa6fbf86"/>
-					<subreportParameter name="ROTTURA">
-						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO_FORNITORE">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_NUM_LIV">
-						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SUBREPORT_DIR">
-						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_ESERCIZIO">
-						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="NOME_EST">
-						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_TIPO">
-						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="UTENTE">
-						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO1">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="DESCR_AGG_ENTE">
-						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="RIEPILOGO">
-						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"/stampa_pdg_rendiconto_rottura.jasper"]]></subreportExpression>
-				</subreport>
 			</band>
 		</groupFooter>
 	</group>
@@ -1376,44 +1214,6 @@ CD_LIVELLO1)]]>
 	<columnHeader>
 		<band height="14">
 			<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) ))]]></printWhenExpression>
-			<subreport isUsingCache="true">
-				<reportElement x="0" y="0" width="842" height="10" uuid="e1e149d8-5f8b-439f-a297-a6e2ea5fe23c"/>
-				<subreportParameter name="ROTTURA">
-					<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO_FORNITORE">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_NUM_LIV">
-					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO">
-					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_TIPO">
-					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="NOME_EST">
-					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO1">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="UTENTE">
-					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DESCR_AGG_ENTE">
-					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="RIEPILOGO">
-					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"/stampa_pdg_rendiconto_presunto.jasper"]]></subreportExpression>
-			</subreport>
 		</band>
 	</columnHeader>
 	<detail>
