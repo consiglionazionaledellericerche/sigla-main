@@ -25,7 +25,7 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String">
+	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_NUM_LIV" class="java.lang.Integer">
