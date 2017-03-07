@@ -81,7 +81,16 @@
 		<band/>
 	</columnHeader>
 	<detail>
-		<band height="16"/>
+		<band height="16">
+			<subreport>
+				<reportElement x="0" y="0" width="820" height="16" uuid="7f5dc009-880d-4b09-8385-84e7fb22816d"/>
+				<subreportParameter name="P_TIPO_AGGREGAZIONE">
+					<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/stampa_pdg_rendiconto_main.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
 	<columnFooter>
 		<band/>
