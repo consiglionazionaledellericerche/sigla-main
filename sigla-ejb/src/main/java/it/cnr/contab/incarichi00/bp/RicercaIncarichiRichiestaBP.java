@@ -370,6 +370,12 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getIm_contratto_passivo()); 
 		elementImporto.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementImporto);
+		
+		Element elementImportoLiq = xmldoc.createElement(getTagRadice()+":importo_liquidato");
+		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getTot_doccont_cont_spe()); 
+		elementImportoLiq.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementContratto.appendChild(elementImportoLiq);
+
 
 		Element elementTipoNorma = xmldoc.createElement(getTagRadice()+":tiponorma");
 		dato = contratto.getTipo_norma(); 
@@ -922,7 +928,22 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			for (AllegatoContrattoDocumentBulk allegato :  contrattoService.findAllegatiContratto(contratto)) {
 				contratto.addToArchivioAllegati(allegato);
 			}
-//			ContrattoComponentSession contrattoComponentSession= (ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class);
+			try {
+				ContrattoComponentSession contrattoComponentSession= (ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class);
+				contratto=(ContrattoBulk)contrattoComponentSession.inizializzaBulkPerModifica(userContext, contratto);
+			} catch (BusinessProcessException e) {
+				e.printStackTrace();
+				codiceErrore = Constants.ERRORE_INC_100;
+				return null;
+			} catch (ComponentException e) {
+				e.printStackTrace();
+				codiceErrore = Constants.ERRORE_INC_100;
+				return null;
+			} catch (RemoteException e) {
+				e.printStackTrace();
+				codiceErrore = Constants.ERRORE_INC_100;
+				return null;
+			}
 			result.add(contratto);
 		}
 		return result;
