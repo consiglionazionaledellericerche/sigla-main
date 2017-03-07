@@ -81,52 +81,7 @@
 		<band/>
 	</columnHeader>
 	<detail>
-		<band height="16">
-			<subreport>
-				<reportElement x="0" y="0" width="820" height="16" uuid="ce6cbeec-1067-416d-9f3b-25d4fca14495"/>
-				<subreportParameter name="ROTTURA">
-					<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_TIPO_RENDICONTO">
-					<subreportParameterExpression><![CDATA[$P{P_TIPO_RENDICONTO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO">
-					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_TIPO">
-					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO_FORNITORE">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="NOME_EST">
-					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO1">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="UTENTE">
-					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_NUM_LIV">
-					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DESCR_AGG_ENTE">
-					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="RIEPILOGO">
-					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_TIPO_AGGREGAZIONE">
-					<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/stampa_pdg_rendiconto_main.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
+		<band height="16"/>
 	</detail>
 	<columnFooter>
 		<band/>
@@ -141,7 +96,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" markup="styled">
+				<textElement textAlignment="Center" markup="">
 					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 				</textElement>
 				<textFieldExpression><![CDATA["- " + $V{PAGE_NUMBER} + " -"]]></textFieldExpression>
