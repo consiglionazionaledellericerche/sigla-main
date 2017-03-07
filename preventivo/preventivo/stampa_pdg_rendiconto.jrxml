@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_rendiconto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="820" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Stampa_pdg_rendicontoScriptlet" uuid="09ada83b-a3ad-4204-ab8a-ad6b38ba3c49">
-	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -41,10 +40,10 @@
 	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String">
+	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_NUM_LIV" class="java.lang.Integer">
@@ -62,7 +61,7 @@
 	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["4"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="RIEPILOGO" class="java.lang.String">
+	<parameter name="RIEPILOGO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -84,39 +83,36 @@
 	<detail>
 		<band height="16">
 			<subreport>
-				<reportElement x="0" y="0" width="820" height="16" uuid="7f5dc009-880d-4b09-8385-84e7fb22816d"/>
+				<reportElement x="0" y="0" width="820" height="16" uuid="ce6cbeec-1067-416d-9f3b-25d4fca14495"/>
 				<subreportParameter name="ROTTURA">
 					<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATH_LOGO_FORNITORE">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_NUM_LIV">
-					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO">
-					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_TIPO_RENDICONTO">
 					<subreportParameterExpression><![CDATA[$P{P_TIPO_RENDICONTO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_ORIGINE">
-					<subreportParameterExpression><![CDATA[$P{P_ORIGINE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="NOME_EST">
-					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_TIPO">
 					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="UTENTE">
-					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="PATH_LOGO1">
 					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_NUM_LIV">
+					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DESCR_AGG_ENTE">
 					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
@@ -128,7 +124,7 @@
 					<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/stampa_pdg_rendiconto_main.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_rendiconto_main.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
@@ -145,7 +141,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" markup="none">
+				<textElement textAlignment="Center" markup="styled">
 					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 				</textElement>
 				<textFieldExpression><![CDATA["- " + $V{PAGE_NUMBER} + " -"]]></textFieldExpression>
