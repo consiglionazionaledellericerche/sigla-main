@@ -1513,6 +1513,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		public RemoteIterator findListaContrattiElenco(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
 			ContrattoHome home = (ContrattoHome)getHome(userContext,ContrattoBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
+			if (anno!=null)
+				sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,anno);
 			sql.addClause(FindClause.AND, "fl_pubblica_contratto", SQLBuilder.EQUALS, Boolean.TRUE);
 			sql.addSQLClause(FindClause.AND, "to_char(dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
 			sql.addOrderBy("ESERCIZIO DESC, PG_CONTRATTO DESC");
