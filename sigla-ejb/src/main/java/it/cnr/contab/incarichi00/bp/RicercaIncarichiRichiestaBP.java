@@ -921,16 +921,17 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	@SuppressWarnings("rawtypes")
 	private List<ContrattoBulk> completaListaContrattiElenco(UserContext userContext, List list) throws ApplicationException {
 		List<ContrattoBulk> result = new ArrayList<ContrattoBulk>();
-		ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
-				ContrattoService.class);		
+//		ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
+//				ContrattoService.class);		
 		for (Object object : list) {
 			ContrattoBulk contratto = (ContrattoBulk)object;
-			for (AllegatoContrattoDocumentBulk allegato :  contrattoService.findAllegatiContratto(contratto)) {
-				contratto.addToArchivioAllegati(allegato);
-			}
+//			for (AllegatoContrattoDocumentBulk allegato :  contrattoService.findAllegatiContratto(contratto)) {
+//				contratto.addToArchivioAllegati(allegato);
+//			}
 			try {
 				ContrattoComponentSession contrattoComponentSession= (ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class);
-				contratto=(ContrattoBulk)contrattoComponentSession.inizializzaBulkPerModifica(userContext, contratto);
+				contratto=(ContrattoBulk)contrattoComponentSession.calcolaTotDocCont(userContext, contratto);
+				
 			} catch (BusinessProcessException e) {
 				e.printStackTrace();
 				codiceErrore = Constants.ERRORE_INC_100;
