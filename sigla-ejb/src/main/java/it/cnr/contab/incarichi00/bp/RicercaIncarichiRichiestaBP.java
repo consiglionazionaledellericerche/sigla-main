@@ -335,7 +335,9 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	}
 
 	private Element generaDettaglioContratti(Document xmldoc, ContrattoBulk contratto) throws ParseException{
+
 		String dato;
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 		Element elementContratto = xmldoc.createElement(getTagRadice()+":contratto");
 
 		Element elementChiave = xmldoc.createElement(getTagRadice()+":chiave");
@@ -358,6 +360,11 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = contratto.getFigura_giuridica_esterna().getAnagrafico().getPartita_iva(); 
 		elementPariva.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementPariva);
+		
+		Element elementOggetto = xmldoc.createElement(getTagRadice()+":oggetto");
+		dato = contratto.getOggetto();
+		elementOggetto.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementContratto.appendChild(elementOggetto);
 		
 		Element elementImporto = xmldoc.createElement(getTagRadice()+":importo");
 		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getIm_contratto_passivo()); 
@@ -388,6 +395,51 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = contratto.getProcedura_amministrativa().getDs_proc_amm(); 
 		elementBeneficiario.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementBeneficiario);
+		
+		
+
+		Element elementDataInizio = xmldoc.createElement(getTagRadice()+":datainizio");
+		String datai=null;
+		if(contratto.getDt_inizio_validita()!=null)
+			datai = formatter.format(contratto.getDt_inizio_validita()).toString();
+		dato = datai; 
+		Node nodeDataInizio = xmldoc.createTextNode(dato!=null?dato:"");
+		elementDataInizio.appendChild(nodeDataInizio);
+		elementContratto.appendChild(elementDataInizio);
+
+		Element elementDataFine = xmldoc.createElement(getTagRadice()+":datafine");
+		String dataf=null;
+		if(contratto.getDt_proroga()!=null)
+			dataf = formatter.format(contratto.getDt_proroga()).toString();
+		else if(contratto.getDt_fine_validita()!=null)
+			dataf = formatter.format(contratto.getDt_fine_validita()).toString();
+		dato = dataf; 
+		Node nodeDataFine = xmldoc.createTextNode(dato!=null?dato:"");
+		elementDataFine.appendChild(nodeDataFine);
+		elementContratto.appendChild(elementDataFine);
+
+		Element elementDataStipula = xmldoc.createElement(getTagRadice()+":datastipula");
+		String datas=null;
+		if(contratto.getDt_stipula()!=null)
+			datas = formatter.format(contratto.getDt_stipula()).toString();
+		dato = datas; 
+		Node nodeDataStipula = xmldoc.createTextNode(dato!=null?dato:"");
+		elementDataStipula.appendChild(nodeDataStipula);
+		elementContratto.appendChild(elementDataStipula);
+		
+		Element elementCig = xmldoc.createElement(getTagRadice()+":cig");
+		if(contratto.getCig()!=null &&contratto.getCig().getCdCig()!=null)
+			dato = contratto.getCig().getCdCig();
+		else
+			dato="0000000000";
+		elementCig.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementContratto.appendChild(elementCig);
+		
+		Element elementCodFisCnr = xmldoc.createElement(getTagRadice()+":codicefiscaleCNR");
+		dato = contratto.getFigura_giuridica_interna().getAnagrafico().getCodice_fiscale(); 
+		elementCodFisCnr.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementContratto.appendChild(elementCodFisCnr);
+		
 		//eliminata pubblicazione dei file
 		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
 			if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO)){
@@ -709,8 +761,9 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		    				elem = generaDettaglioIncarichiCollaborazione(xmldoc,(V_incarichi_collaborazioneBulk)incarico);
 		    			else if (getTipofile().equals("3"))
 		    				elem = generaDettaglioIncarichiElenco(xmldoc,(V_incarichi_elencoBulk)incarico);
-		    			else if (getTipofile().equals("4"))
+		    			else if (getTipofile().equals("4")){
 		    				elem = generaDettaglioContratti(xmldoc,(ContrattoBulk)incarico);
+		    			}
 		    			else if (getTipofile().equals("5"))
 		    				elem = generaDettaglioIncarichiArt18(xmldoc,(V_incarichi_elencoBulk)incarico);
 		    			if (elem!=null)
@@ -869,6 +922,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			for (AllegatoContrattoDocumentBulk allegato :  contrattoService.findAllegatiContratto(contratto)) {
 				contratto.addToArchivioAllegati(allegato);
 			}
+//			ContrattoComponentSession contrattoComponentSession= (ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class);
 			result.add(contratto);
 		}
 		return result;
