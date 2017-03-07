@@ -598,7 +598,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  * @param aUC lo user context 
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
 	  */
-	private ContrattoBulk calcolaTotDocCont (UserContext userContext,ContrattoBulk contratto) throws ComponentException
+	public ContrattoBulk calcolaTotDocCont (UserContext userContext,ContrattoBulk contratto) throws ComponentException
 	{
 		try
 		{
