@@ -26,26 +26,34 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 
 	@Override
 	public boolean isPublishCRUDButtonHidden() {
-		if (isSearching() || isInserting())
+		return true;
+		/*if (isSearching() || isInserting())
 			return true;
 		if (getModel()!=null){
 			ContrattoBulk contratto = (ContrattoBulk) getModel();
 			if (contratto.isProvvisorio())
 				return false;
 			if (contratto.isCessato())
-				return true;
-			if (contratto.getFl_pubblica_contratto() == null)
-				return false;
-			if (contratto.getFl_pubblica_contratto())
+				return true; 
+			if ((contratto.isPassivo() || contratto.isAttivo_e_Passivo()) &&
+					contratto.isDefinitivo() && super.flagPubblicaContratto.booleanValue() &&
+					(!contratto.getDt_stipula().before(super.dataStipulaParametri)) &&
+					!contratto.getFl_pubblica_contratto()
+				&& (contratto.getTipo_contratto() != null && 
+				    contratto.getTipo_contratto().getFl_pubblica_contratto() != null  &&
+				   contratto.getTipo_contratto().getFl_pubblica_contratto().booleanValue())) 
+				return false;	 
+			else
 				return true;
 		}
-		return false;
+		return false;*/
 	}
 
 	public boolean isUpublishCRUDButtonHidden() {
-		if (isSearching() || isInserting())
+		/*if (isSearching() || isInserting())
 			return true;
-		return !isPublishCRUDButtonHidden();
+		return !isPublishCRUDButtonHidden();*/
+		return true;
 	}
 
 	@Override

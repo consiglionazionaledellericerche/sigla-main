@@ -395,9 +395,29 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	 * Pre:  Controllo il progressivo negativo
 	 * Post: Aggiorno il progressivo dai numeratori
 	 */  			
-	public OggettoBulk modificaConBulk(UserContext uc, ContrattoBulk bulk) throws ComponentException{
+	public OggettoBulk modificaConBulk(UserContext userContext, ContrattoBulk bulk) throws ComponentException{
 		try {
-			validaCampiObbligatori(uc,(ContrattoBulk)bulk);
+			validaCampiObbligatori(userContext,(ContrattoBulk)bulk);
+			ContrattoBulk contratto=(ContrattoBulk)bulk;
+			Date dataStipulaParametri = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
+					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getData_stipula_contratti();
+			
+			boolean pubblica = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
+					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_pubblica_contratto().booleanValue();
+		    if(pubblica){
+				if (contratto.getDt_stipula().after(dataStipulaParametri) ||
+					contratto.getDt_stipula().equals(dataStipulaParametri)){
+					if (contratto.isPassivo() || contratto.isAttivo_e_Passivo() )
+						if (contratto.isDefinitivo() && contratto.getTipo_contratto() != null && contratto.getTipo_contratto().getFl_pubblica_contratto() != null  && contratto.getTipo_contratto().getFl_pubblica_contratto())  
+							contratto.setFl_pubblica_contratto(Boolean.TRUE);
+						else
+							contratto.setFl_pubblica_contratto(Boolean.FALSE);
+					else
+						contratto.setFl_pubblica_contratto(Boolean.FALSE);					
+				}
+		    }else 
+		    	contratto.setFl_pubblica_contratto(Boolean.FALSE);
+
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		} catch (IntrospectionException e) {
@@ -405,7 +425,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		} catch (SQLException e) {
 			throw new ComponentException(e);
 		}
-		return super.modificaConBulk(uc,bulk);
+		return super.modificaConBulk(userContext,bulk);
 	}
 	/**
 	  * Viene richiesta l'eliminazione dell'oggetto selezionato
@@ -1140,11 +1160,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				if (contratto.getDt_stipula().after(dataStipulaParametri) ||
 					contratto.getDt_stipula().equals(dataStipulaParametri)){
 					if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
-						
-						contratto.setFl_pubblica_contratto(Boolean.TRUE);
+						if (contratto.getTipo_contratto() != null && contratto.getTipo_contratto().getFl_pubblica_contratto() != null  && contratto.getTipo_contratto().getFl_pubblica_contratto())  
+							contratto.setFl_pubblica_contratto(Boolean.TRUE);
+						else
+							contratto.setFl_pubblica_contratto(Boolean.FALSE);
 					else
-						contratto.setFl_pubblica_contratto(Boolean.FALSE);
-
+						contratto.setFl_pubblica_contratto(Boolean.FALSE);					
 				}
 		    }else 
 		    	contratto.setFl_pubblica_contratto(Boolean.FALSE);

@@ -370,12 +370,11 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getIm_contratto_passivo()); 
 		elementImporto.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementImporto);
-		
+		 
 		Element elementImportoLiq = xmldoc.createElement(getTagRadice()+":importo_liquidato");
-		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getTot_doccont_cont_spe()); 
+		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getTot_docamm_cont_spe()); 
 		elementImportoLiq.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementImportoLiq);
-
 
 		Element elementTipoNorma = xmldoc.createElement(getTagRadice()+":tiponorma");
 		dato = contratto.getTipo_norma(); 
