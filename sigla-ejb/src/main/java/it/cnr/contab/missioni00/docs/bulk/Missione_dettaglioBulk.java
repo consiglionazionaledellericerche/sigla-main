@@ -157,13 +157,53 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	public MissioneBulk getMissione() {
 		return missione;
 	}
+
+	@Override
 	public java.lang.Long getPg_missione() 
 	{
+			MissioneBulk missione = this.getMissione();
+			if (missione == null)
+				return null;
+			return missione.getPg_missione();
+	}
+	@Override
+	public java.lang.Integer getEsercizio(){
 		MissioneBulk missione = this.getMissione();
 		if (missione == null)
 			return null;
-		return missione.getPg_missione();
+		return missione.getEsercizio();
 	}
+	@Override
+	public java.lang.String getCd_cds(){
+		MissioneBulk missione = this.getMissione();
+		if (missione == null)
+			return null;
+		return missione.getCd_cds();
+	}
+	@Override
+	public java.lang.String getCd_unita_organizzativa(){
+		MissioneBulk missione = this.getMissione();
+		if (missione == null)
+			return null;
+		return missione.getCd_unita_organizzativa();
+	}
+	@Override
+	public void setCd_unita_organizzativa(java.lang.String cd_unita_organizzativa) {
+		this.getMissione().setCd_unita_organizzativa(cd_unita_organizzativa);
+	}
+	@Override
+	public void setCd_cds(java.lang.String cd_cds) {
+		this.getMissione().setCd_cds(cd_cds);
+	}
+	@Override
+	public void setEsercizio(java.lang.Integer esercizio) {
+		this.getMissione().setEsercizio(esercizio);
+	}
+	@Override
+	public void setPg_missione(java.lang.Long pg_missione) {
+		this.getMissione().setPg_missione(pg_missione);
+	}
+	
 	/**
 	 * Insert the method's description here.
 	 * Creation date: (13/03/2002 16.02.59)
