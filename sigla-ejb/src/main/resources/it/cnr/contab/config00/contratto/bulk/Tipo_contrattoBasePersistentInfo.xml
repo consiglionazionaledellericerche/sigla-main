@@ -61,6 +61,14 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_PUBBLICA_CONTRATTO"
+			propertyName="fl_pubblica_contratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			
 	</defaultColumnMap>
 	<persistentProperty
 		name="ds_tipo_contratto" />
@@ -70,6 +78,8 @@
 		name="fl_cancellato" />
 	<persistentProperty
 		name="fl_cig" />
+	<persistentProperty
+		name="fl_pubblica_contratto" />	
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

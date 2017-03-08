@@ -57,8 +57,8 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	private static final long serialVersionUID = 1L;
 
 	protected ContrattoService contrattoService;
-	private Date dataStipulaParametri;
-	private Boolean flagPubblicaContratto;
+	protected Date dataStipulaParametri;
+	protected Boolean flagPubblicaContratto;
 	private SimpleDetailCRUDController crudAssUO = new SimpleDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUO", this);
 	private SimpleDetailCRUDController crudAssUODisponibili = new SimpleDetailCRUDController( "Associazione UO Disponibili", Unita_organizzativaBulk.class, "associazioneUODisponibili", this);
 
@@ -130,17 +130,19 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	}
 
 	public boolean isPublishCRUDButtonHidden(){
-		if (isSearching())
+		/*if (isSearching())
 			return true;		
 		if (getModel()!=null){
 			ContrattoBulk contratto = (ContrattoBulk) getModel();
 			if ((contratto.isPassivo() || contratto.isAttivo_e_Passivo()) &&
 					contratto.isDefinitivo() && flagPubblicaContratto.booleanValue() &&
 					(!contratto.getDt_stipula().before(dataStipulaParametri)) &&
-					!contratto.getFl_pubblica_contratto()){
+					!contratto.getFl_pubblica_contratto()
+				&& (contratto.getTipo_contratto() != null && 
+				    contratto.getTipo_contratto().getFl_pubblica_contratto() != null  &&
+				   contratto.getTipo_contratto().getFl_pubblica_contratto().booleanValue())) 
 				return false;
-			}
-		}
+		}*/
 		return true;
 	}
 	
