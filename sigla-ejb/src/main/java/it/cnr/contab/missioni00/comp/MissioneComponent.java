@@ -3015,7 +3015,7 @@ public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missio
 						AnticipoHome anticipoHome = (AnticipoHome)getHome( aUC, AnticipoBulk.class );
 						AnticipoKey key = new AnticipoKey(mandato.getCd_cds_doc_amm(), mandato.getCd_uo_doc_amm(), mandato.getEsercizio_doc_amm(), mandato.getPg_doc_amm());
 						AnticipoBulk anticipo = ((AnticipoBulk)anticipoHome.findByPrimaryKey(key));
-						if (anticipo != null){
+						if (anticipo != null && !anticipo.isAnticipoConMissione()){
 							if(checkEleggibilitaAnticipo(aUC, missione))
 								return anticipo;
 						}
