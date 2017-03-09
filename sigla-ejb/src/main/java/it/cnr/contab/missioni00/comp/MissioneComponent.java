@@ -2185,25 +2185,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext aUC, OggettoBulk bu
 		if (!verificaStatoEsercizio(aUC, new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk(missione.getCd_cds(), ((it.cnr.contab.utenze00.bp.CNRUserContext)aUC).getEsercizio())))
             throw new it.cnr.jada.comp.ApplicationException("Impossibile inserire una missione per un esercizio non aperto!");
              
-        java.sql.Timestamp tsOdierno = ((MissioneHome) getHome(aUC, missione)).getServerDate();
-        GregorianCalendar tsOdiernoGregorian = (GregorianCalendar) missione.getGregorianCalendar(tsOdierno);
-
-        //	Se l'esercizio della missione (scrivania) e' antecedente a quello corrente
-        //	inizializzo la data di registrazione a 31/12/esercizio missione
-		if (tsOdiernoGregorian.get(GregorianCalendar.YEAR) > missione.getEsercizio().intValue()) 
-		{
-			try 
-			{
-				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-		        missione.setDt_registrazione(new java.sql.Timestamp(sdf.parse("31/12/"+missione.getEsercizio().intValue()).getTime()));
-	        } 
-			catch (java.text.ParseException e) 
-			{
-				throw new it.cnr.jada.comp.ApplicationException("Impossibile inizializzare la data di registrazione!");
-			}
-        } 
-		else
-            missione.setDt_registrazione(tsOdierno);
+		missione.setDt_registrazione(getDataRegistrazione(aUC, missione));
 
         return super.inizializzaBulkPerInserimento(aUC, missione);
     } 
@@ -2211,6 +2193,30 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext aUC, OggettoBulk bu
     {
         throw handleException(missione, e);
     } 
+}
+private Timestamp getDataRegistrazione(UserContext aUC, MissioneBulk missione)
+		throws PersistencyException, ComponentException, ApplicationException {
+	java.sql.Timestamp tsOdierno = ((MissioneHome) getHome(aUC, missione)).getServerDate();
+	GregorianCalendar tsOdiernoGregorian = (GregorianCalendar) missione.getGregorianCalendar(tsOdierno);
+
+	//	Se l'esercizio della missione (scrivania) e' antecedente a quello corrente
+	//	inizializzo la data di registrazione a 31/12/esercizio missione
+	Timestamp dataRegistrazione = null;
+	if (tsOdiernoGregorian.get(GregorianCalendar.YEAR) > missione.getEsercizio().intValue()) 
+	{
+		try 
+		{
+			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+			dataRegistrazione = new java.sql.Timestamp(sdf.parse("31/12/"+missione.getEsercizio().intValue()).getTime());
+	    } 
+		catch (java.text.ParseException e) 
+		{
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile inizializzare la data di registrazione!");
+		}
+	} 
+	else
+		dataRegistrazione = tsOdierno;
+	return dataRegistrazione;
 }
 /**
  *
@@ -2900,7 +2906,7 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 				Obbligazione_scad_voceHome scadenzaHome = (Obbligazione_scad_voceHome)getHome(aUC, Obbligazione_scad_voceBulk.class);
 				SQLBuilder sql = scadenzaHome.createSQLBuilder();
 
-			  	GregorianCalendar ggRegistrazione = (GregorianCalendar)missione.getGregorianCalendar(missione.getDt_registrazione()).clone();		
+			  	GregorianCalendar ggRegistrazione = (GregorianCalendar)missione.getGregorianCalendar(getDataRegistrazione(aUC, missione)).clone();		
 				ggRegistrazione.set(GregorianCalendar.HOUR_OF_DAY, 0);
 				ggRegistrazione.set(GregorianCalendar.MINUTE, 0);
 				ggRegistrazione.set(GregorianCalendar.SECOND, 0);	
@@ -2935,8 +2941,9 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 				sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 				sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
 				sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
+				sql.addOrderBy("OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE_SCADENZARIO");
 				it.cnr.jada.bulk.BulkList scadVoces = new it.cnr.jada.bulk.BulkList(scadenzaHome.fetchAll( sql ));
-				if((scadVoces != null) && (!scadVoces.isEmpty()) && scadVoces.size() == 1){
+				if((scadVoces != null) && (!scadVoces.isEmpty())){
 					Obbligazione_scad_voceBulk scadVoce = (Obbligazione_scad_voceBulk)scadVoces.get(0);
 					Obbligazione_scadenzarioBulk scad = scadVoce.getObbligazione_scadenzario();
 					Obbligazione_scadenzarioHome scadHome = (Obbligazione_scadenzarioHome)getHome( aUC, Obbligazione_scadenzarioBulk.class );
@@ -2949,7 +2956,7 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 				Obbligazione_scadenzarioHome scadenzaHome = (Obbligazione_scadenzarioHome)getHome(aUC, Obbligazione_scadenzarioBulk.class);
 				SQLBuilder sql = scadenzaHome.createSQLBuilder();
 
-			  	GregorianCalendar ggRegistrazione = (GregorianCalendar)missione.getGregorianCalendar(missione.getDt_registrazione()).clone();		
+			  	GregorianCalendar ggRegistrazione = (GregorianCalendar)missione.getGregorianCalendar(getDataRegistrazione(aUC, missione)).clone();		
 				ggRegistrazione.set(GregorianCalendar.HOUR_OF_DAY, 0);
 				ggRegistrazione.set(GregorianCalendar.MINUTE, 0);
 				ggRegistrazione.set(GregorianCalendar.SECOND, 0);	
@@ -2974,8 +2981,9 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 				sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 				sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
 				sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
+				sql.addOrderBy("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO");
 				it.cnr.jada.bulk.BulkList scadenzario = new it.cnr.jada.bulk.BulkList(scadenzaHome.fetchAll( sql ));
-				if((scadenzario != null) && (!scadenzario.isEmpty()) && scadenzario.size() == 1){
+				if((scadenzario != null) && (!scadenzario.isEmpty())){
 					Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk)scadenzario.get(0);
 					ObbligazioneHome obblHome = (ObbligazioneHome)getHome( aUC, ObbligazioneBulk.class );
 					scad.setObbligazione((ObbligazioneBulk)obblHome.findByPrimaryKey(scad.getObbligazione()));
