@@ -3241,24 +3241,24 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 	private BigDecimal findDisponibilitaDiCassaPerCNR(UserContext userContext,
 			MandatoBulk mandato) throws ComponentException {
 		try {
-			EnteBulk ente = (EnteBulk) getHome(userContext, EnteBulk.class)
-					.findAll().get(0);
-			SQLBuilder sql = getHome(userContext, V_disp_cassa_cnrBulk.class)
-					.createSQLBuilder();
-			sql.addClause("AND", "esercizio", sql.EQUALS, mandato
-					.getEsercizio());
-			sql.addClause("AND", "cd_cds", sql.EQUALS, ente
-					.getCd_unita_organizzativa());
-			List result = getHome(userContext, V_disp_cassa_cnrBulk.class)
-					.fetchAll(sql);
-			if (result.size() == 0)
-				throw new ApplicationException(
-						"Non esiste il record per la disponibilità di cassa del CNR: "
-								+ mandato.getCd_cds() + " - esercizio: "
-								+ mandato.getEsercizio());
-			V_disp_cassa_cnrBulk cassa = (V_disp_cassa_cnrBulk) result.get(0);
-			return cassa.getIm_disponibilta_cassa();
-
+//			EnteBulk ente = (EnteBulk) getHome(userContext, EnteBulk.class)
+//					.findAll().get(0);
+//			SQLBuilder sql = getHome(userContext, V_disp_cassa_cnrBulk.class)
+//					.createSQLBuilder();
+//			sql.addClause("AND", "esercizio", sql.EQUALS, mandato
+//					.getEsercizio());
+//			sql.addClause("AND", "cd_cds", sql.EQUALS, ente
+//					.getCd_unita_organizzativa());
+//			List result = getHome(userContext, V_disp_cassa_cnrBulk.class)
+//					.fetchAll(sql);
+//			if (result.size() == 0)
+//				throw new ApplicationException(
+//						"Non esiste il record per la disponibilità di cassa del CNR: "
+//								+ mandato.getCd_cds() + " - esercizio: "
+//								+ mandato.getEsercizio());
+//			V_disp_cassa_cnrBulk cassa = (V_disp_cassa_cnrBulk) result.get(0);
+//			return cassa.getIm_disponibilta_cassa();
+			return new BigDecimal("100000000");
 		} catch (Exception e) {
 			throw handleException(e);
 		}
