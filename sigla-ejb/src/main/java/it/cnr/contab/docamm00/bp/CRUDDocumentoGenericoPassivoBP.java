@@ -835,7 +835,13 @@ public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String
 			isInputReadonly()&& 
 			s1.equals("causale")){ 
 				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnCausaleChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
-		}
+		
+	} else if (doc != null && doc.isRiportataInScrivania() && !doc.isPagata()
+		&& isInputReadonly() && s1.equals("sospeso")) {
+	getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
+			s2,"" ,
+			getInputPrefix(), getStatus(), getFieldValidationMap());
+	}  
 	else
 		super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
 }
