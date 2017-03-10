@@ -2518,16 +2518,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		setSavePoint(userContext, "COMP_DA_DOC_AMM_UNDO_SP");
 		CompensoBulk compenso = (CompensoBulk) super
 				.inizializzaBulkPerInserimento(userContext, bulk);
-
-		try {
-			ricercaCompensiTrovato(userContext, new Integer ("10221"));
-		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (PersistencyException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		try {
 			if (!verificaStatoEsercizio(
