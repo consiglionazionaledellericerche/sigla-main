@@ -336,10 +336,23 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		if (bulk.getCig() != null && bulk.getCd_terzo_resp() != null && bulk.getCig().getCdTerzoRup() != null && !bulk.getCig().getCdTerzoRup().equals(bulk.getCd_terzo_resp())){
 			throw new ApplicationException("Il Terzo del CIG non coincide con il Responsabile!");
 		}
+		if(bulk.getDt_stipula() != null ) {
+			if(bulk.getDt_stipula().after(getHome(uc, ContrattoBulk.class).getServerDate())) 
+				throw new ApplicationException("La data di stipula non può essere superiore alla data odierna!");
+		}
+		if(bulk.getDt_stipula() != null && bulk.getDt_fine_validita()!=null) {
+			if(bulk.getDt_stipula().after(bulk.getDt_fine_validita()))
+				throw new ApplicationException("La data di stipula non può essere superiore alla data fine validita!");
+		}
+		if(bulk.getDt_inizio_validita() != null && bulk.getDt_fine_validita()!=null) {
+			if(bulk.getDt_inizio_validita().after(bulk.getDt_fine_validita()))
+				throw new ApplicationException("La data di inizio non può essere superiore alla data fine validita!");
+		}
+		
 		try {
 			Date data_stipula_contratti = Utility.createParametriCnrComponentSession().
 			getParametriCnr(uc, CNRUserContext.getEsercizio(uc)).getData_stipula_contratti();
-			if (!(bulk.getDt_stipula().before(data_stipula_contratti) && bulk.isDefinitivo())){
+			if (!(bulk.getDt_stipula().before(data_stipula_contratti)) && bulk.isDefinitivo()){
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && bulk.getDirettore() == null) 
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("direttore").getLabel());
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getFl_mepa() == null) 
