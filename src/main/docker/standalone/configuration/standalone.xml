@@ -148,7 +148,7 @@
                     <driver>ojdbc</driver>
                     <pool>
                         <min-pool-size>3</min-pool-size>
-                        <max-pool-size>5</max-pool-size>
+                        <max-pool-size>50</max-pool-size>
                     </pool>
                     <security>
                         <user-name>PCIR009</user-name>
