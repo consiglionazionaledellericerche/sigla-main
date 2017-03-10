@@ -90,14 +90,14 @@
 				<div class="Group" style="width:90%">
 					<table>
 						<tr>
-							<% bp.getController().writeFormField(out,"cd_sospeso"); %>
+							<% bp.writeFormFieldDoc1210(out,"cd_sospeso"); %>
 							<td colspan="2">
-								<% bp.getController().writeFormInput(out,null, "sospeso",(documento.getLettera_pagamento_estero()!=null && documento.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)!=0),null,""); %>
+								<% bp.writeFormInput(out,null, "sospeso",(documento.getLettera_pagamento_estero()!=null && documento.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)!=0),null,""); %>
 							</td>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out,"esercizio_sospeso"); %>
-							<% bp.getController().writeFormField(out,"cd_cds_sospeso"); %>
+							<% bp.writeFormFieldDoc1210(out,"esercizio_sospeso"); %>
+							<% bp.writeFormFieldDoc1210(out,"cd_cds_sospeso"); %>
 						</tr>
 					</table>
 				</div>
