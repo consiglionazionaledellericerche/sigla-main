@@ -19,13 +19,12 @@ public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 
 	static {
 		aspectNamesKeys.put("P:missioni_ordine_attachment:allegati","Allegato all'Ordine di Missione");
-		aspectNamesKeys.put("P:missioni_ordine_attachment:allegati_anticipo","Allegato Anticipo");
+		aspectNamesKeys.put("P:missioni_ordine_attachment:allegati_anticipo","Allegato all'Anticipo");
 		aspectNamesKeys.put("P:missioni_ordine_attachment:uso_auto_propria","Richiesta Auto Propria");
 		aspectNamesKeys.put("P:missioni_ordine_attachment:richiesta_anticipo","Richiesta Anticipo");
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:allegati","Allegato al Rimborso Missione");
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:scontrini","Giustificativo");
 		aspectNamesKeys.put("P:missioni_ordine_attachment:ordine","Ordine Di Missione");
-		aspectNamesKeys.put("P:missioni_rimborso_attachment:rimborso","Rimborso Missione");
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:rimborso","Rimborso Missione");
 		aspectNamesKeys.put(FLUSSO_ORDINE,"Flusso Ordine di Missione");
 		aspectNamesKeys.put(FLUSSO_RIMBORSO,"Flusso Rimborso Missione");
