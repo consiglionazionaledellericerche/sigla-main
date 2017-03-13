@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_rendiconto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="820" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Stampa_pdg_rendicontoScriptlet" uuid="09ada83b-a3ad-4204-ab8a-ad6b38ba3c49">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_renddec" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="820" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" uuid="09ada83b-a3ad-4204-ab8a-ad6b38ba3c49">
 	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -40,10 +40,10 @@
 	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_TIPO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_NUM_LIV" class="java.lang.Integer">
@@ -53,10 +53,12 @@
 		<defaultValueExpression><![CDATA["SCI"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO_RENDICONTO" class="java.lang.String">
+		<parameterDescription><![CDATA[DEC: Decisionale - GES: Gestionale]]></parameterDescription>
 		<defaultValueExpression><![CDATA["DEC"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_ORIGINE" class="java.lang.String">
-		<defaultValueExpression><![CDATA["EXT"]]></defaultValueExpression>
+		<parameterDescription><![CDATA[REA: Dati Reali - EXT: Dati Storicizzati]]></parameterDescription>
+		<defaultValueExpression><![CDATA["REA"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["4"]]></defaultValueExpression>
@@ -124,7 +126,7 @@
 					<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_rendiconto_main.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_renddec_main.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

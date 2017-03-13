@@ -1,0 +1,2509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_rendges_competenza_main" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d4347ecd-098e-4dfb-8874-83201d295146">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/media/truecrypt1/DPR_Rendiconto/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(2010)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TIPO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_NUM_LIV" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(3)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="RIEPILOGO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TIPO_AGGREGAZIONE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["SCI"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT tipo, peso_livello1, peso_livello2,
+cd_livello1, cd_livello2, cd_livello3, cd_livello4,
+cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
+ds_livello1, ds_livello2, ds_livello3, ds_livello4,
+ds_livello5, ds_livello6, ds_livello7, ds_livello8, ds_livello9,
+livello1_ds, livello2_ds, livello3_ds, livello4_ds,
+livello5_ds, livello6_ds, livello7_ds, livello8_ds, livello9_ds,
+TOTALE, PREV_INI, VARIAZIONI, ASSESTATO, RIS_PAG, RIM_RIS_PAG, TOT_ACC_IMP,
+DIFF_COMP, RES_INI_ES, RES_RIS_PAG, RES_RIM_RIS_PAG,
+RES_TOTALI, RES_VAR_PIU, RES_VAR_MENO, CASSA_PREV,
+CASSA_RIS_PAG, CASSA_DIFF, TOT_RES_TER, RES_INI_ES_PREC,
+TOT_ACC_IMP_PREC, RIS_PAG_PREC, PREV_INI_ES_PREC, CASSA_PREV_ES_PREC
+FROM (
+SELECT tipo,
+CASE WHEN $P{P_TIPO_AGGREGAZIONE}='FIN'
+     THEN 1
+     ELSE DECODE(cd_livello1,'RI',1,'SIG',2,'DP',3,'FO',4,5)
+     END peso_livello1,
+CASE WHEN $P{P_TIPO_AGGREGAZIONE}='FIN'
+     THEN 1
+     ELSE (SELECT a.PESO
+           FROM DIPARTIMENTO_PESO a
+           WHERE a.ESERCIZIO = $P{P_ESERCIZIO}
+           AND   a.CD_DIPARTIMENTO = cd_livello2)
+     END peso_livello2,
+cd_livello1, cd_livello2, cd_livello3, cd_livello4,
+cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
+ds_livello1, ds_livello2, ds_livello3, ds_livello4, ds_livello5, ds_livello6, ds_livello7,
+ds_livello8, ds_livello9,
+livello1_ds, livello2_ds, livello3_ds, livello4_ds,
+livello5_ds, livello6_ds, livello7_ds, livello8_ds, livello9_ds,
+TOTALE, PREV_INI, VARIAZIONI, ASSESTATO, RIS_PAG, RIM_RIS_PAG, TOT_ACC_IMP,
+DIFF_COMP, RES_INI_ES, RES_RIS_PAG, RES_RIM_RIS_PAG,
+RES_TOTALI, RES_VAR_PIU, RES_VAR_MENO, CASSA_PREV,
+CASSA_RIS_PAG, CASSA_DIFF, TOT_RES_TER, RES_INI_ES_PREC,
+TOT_ACC_IMP_PREC, RIS_PAG_PREC, PREV_INI_ES_PREC, CASSA_PREV_ES_PREC
+FROM TMP_STAMPA_RENDICONTO
+WHERE TIPO = $P{P_TIPO})
+ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7, CD_LIVELLO8, CD_LIVELLO9]]>
+	</queryString>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="PESO_LIVELLO1" class="java.math.BigDecimal"/>
+	<field name="PESO_LIVELLO2" class="java.math.BigDecimal"/>
+	<field name="CD_LIVELLO1" class="java.lang.String"/>
+	<field name="CD_LIVELLO2" class="java.lang.String"/>
+	<field name="CD_LIVELLO3" class="java.lang.String"/>
+	<field name="CD_LIVELLO4" class="java.lang.String"/>
+	<field name="CD_LIVELLO5" class="java.lang.String"/>
+	<field name="CD_LIVELLO6" class="java.lang.String"/>
+	<field name="CD_LIVELLO7" class="java.lang.String"/>
+	<field name="CD_LIVELLO8" class="java.lang.String"/>
+	<field name="CD_LIVELLO9" class="java.lang.String"/>
+	<field name="DS_LIVELLO1" class="java.lang.String"/>
+	<field name="DS_LIVELLO2" class="java.lang.String"/>
+	<field name="DS_LIVELLO3" class="java.lang.String"/>
+	<field name="DS_LIVELLO4" class="java.lang.String"/>
+	<field name="DS_LIVELLO5" class="java.lang.String"/>
+	<field name="DS_LIVELLO6" class="java.lang.String"/>
+	<field name="DS_LIVELLO7" class="java.lang.String"/>
+	<field name="DS_LIVELLO8" class="java.lang.String"/>
+	<field name="DS_LIVELLO9" class="java.lang.String"/>
+	<field name="LIVELLO1_DS" class="java.lang.String"/>
+	<field name="LIVELLO2_DS" class="java.lang.String"/>
+	<field name="LIVELLO3_DS" class="java.lang.String"/>
+	<field name="LIVELLO4_DS" class="java.lang.String"/>
+	<field name="LIVELLO5_DS" class="java.lang.String"/>
+	<field name="LIVELLO6_DS" class="java.lang.String"/>
+	<field name="LIVELLO7_DS" class="java.lang.String"/>
+	<field name="LIVELLO8_DS" class="java.lang.String"/>
+	<field name="LIVELLO9_DS" class="java.lang.String"/>
+	<field name="TOTALE" class="java.lang.String"/>
+	<field name="PREV_INI" class="java.math.BigDecimal"/>
+	<field name="VARIAZIONI" class="java.math.BigDecimal"/>
+	<field name="ASSESTATO" class="java.math.BigDecimal"/>
+	<field name="RIS_PAG" class="java.math.BigDecimal"/>
+	<field name="RIM_RIS_PAG" class="java.math.BigDecimal"/>
+	<field name="TOT_ACC_IMP" class="java.math.BigDecimal"/>
+	<field name="DIFF_COMP" class="java.math.BigDecimal"/>
+	<field name="RES_INI_ES" class="java.math.BigDecimal"/>
+	<field name="RES_RIS_PAG" class="java.math.BigDecimal"/>
+	<field name="RES_RIM_RIS_PAG" class="java.math.BigDecimal"/>
+	<field name="RES_TOTALI" class="java.math.BigDecimal"/>
+	<field name="RES_VAR_PIU" class="java.math.BigDecimal"/>
+	<field name="RES_VAR_MENO" class="java.math.BigDecimal"/>
+	<field name="CASSA_PREV" class="java.math.BigDecimal"/>
+	<field name="CASSA_RIS_PAG" class="java.math.BigDecimal"/>
+	<field name="CASSA_DIFF" class="java.math.BigDecimal"/>
+	<field name="TOT_RES_TER" class="java.math.BigDecimal"/>
+	<field name="RES_INI_ES_PREC" class="java.math.BigDecimal"/>
+	<field name="TOT_ACC_IMP_PREC" class="java.math.BigDecimal"/>
+	<field name="RIS_PAG_PREC" class="java.math.BigDecimal"/>
+	<field name="PREV_INI_ES_PREC" class="java.math.BigDecimal"/>
+	<field name="CASSA_PREV_ES_PREC" class="java.math.BigDecimal"/>
+	<variable name="SUM_PREV_INI_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{PREV_INI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIS_PAG_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIM_RIS_PAG_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_ACC_IMP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DIFF_COMP_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIFF_COMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_INI_ES_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_INI_ES}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIS_PAG_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIM_RIS_PAG_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_TOTALI_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_TOTALI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_PIU_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_MENO_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_PREV_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_PREV}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_RIS_PAG_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_RES_TER_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_RES_TER}]]></variableExpression>
+	</variable>
+	<variable name="SUM_PREV_INI_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{PREV_INI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIS_PAG_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIM_RIS_PAG_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_ACC_IMP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DIFF_COMP_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIFF_COMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DIFF_MENO_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)<0?$F{DIFF_COMP}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_INI_ES_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_INI_ES}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIS_PAG_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIM_RIS_PAG_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_TOTALI_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_TOTALI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_PIU_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_MENO_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_PREV_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_PREV}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_RIS_PAG_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_RES_TER_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_RES_TER}]]></variableExpression>
+	</variable>
+	<variable name="SUM_PREV_INI_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{PREV_INI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIS_PAG_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIM_RIS_PAG_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_ACC_IMP_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DIFF_COMP_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIFF_COMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_INI_ES_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_INI_ES}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIS_PAG_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIM_RIS_PAG_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_TOTALI_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_TOTALI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_PIU_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_MENO_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_PREV_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_PREV}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_RIS_PAG_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_RES_TER_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_RES_TER}]]></variableExpression>
+	</variable>
+	<variable name="SUM_PREV_INI_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{PREV_INI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIS_PAG_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIM_RIS_PAG_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_ACC_IMP_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DIFF_COMP_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIFF_COMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_INI_ES_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_INI_ES}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIS_PAG_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIM_RIS_PAG_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_TOTALI_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_TOTALI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_PIU_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_MENO_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_PREV_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_PREV}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_RIS_PAG_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_RES_TER_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_RES_TER}]]></variableExpression>
+	</variable>
+	<variable name="SUM_PREV_INI_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{PREV_INI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIS_PAG_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIM_RIS_PAG_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_ACC_IMP_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DIFF_COMP_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIFF_COMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_INI_ES_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_INI_ES}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIS_PAG_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIM_RIS_PAG_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_TOTALI_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_TOTALI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_PIU_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_MENO_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_PREV_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_PREV}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_RIS_PAG_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_RES_TER_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_RES_TER}]]></variableExpression>
+	</variable>
+	<variable name="SUM_PREV_INI_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{PREV_INI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIS_PAG_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIM_RIS_PAG_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_ACC_IMP_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DIFF_COMP_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIFF_COMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_INI_ES_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_INI_ES}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIS_PAG_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIM_RIS_PAG_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_TOTALI_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_TOTALI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_PIU_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_MENO_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_PREV_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_PREV}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_RIS_PAG_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_RES_TER_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_RES_TER}]]></variableExpression>
+	</variable>
+	<variable name="SUM_PREV_INI_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{PREV_INI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIS_PAG_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RIM_RIS_PAG_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_ACC_IMP_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DIFF_COMP_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIFF_COMP}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_INI_ES_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_INI_ES}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIS_PAG_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_RIM_RIS_PAG_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_RIM_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_TOTALI_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_TOTALI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_PIU_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_RES_VAR_MENO_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_PREV_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_PREV}]]></variableExpression>
+	</variable>
+	<variable name="SUM_CASSA_RIS_PAG_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASSA_RIS_PAG}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOT_RES_TER_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_RES_TER}]]></variableExpression>
+	</variable>
+	<variable name="TOT_ACC_IMP" class="java.math.BigDecimal"/>
+	<group name="SOMMARIO">
+		<groupExpression><![CDATA["SOMMARIO"]]></groupExpression>
+		<groupFooter>
+			<band height="15">
+				<rectangle>
+					<reportElement x="1" y="0" width="825" height="15" uuid="bfc0ba97-da88-4e64-972a-b6905e4cba8c"/>
+				</rectangle>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-166" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="7562e459-e5b2-4cba-95e0-778b867beaed"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_REPORT}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-167" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="571a14c6-ea15-4d9b-94ff-f62eb937f3f5"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_REPORT}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-168" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="ed9550af-cb0c-4b02-8478-2bca7733d159"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_REPORT}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="7cd2ba2f-9682-4a93-ad43-39922af5f7ea"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_REPORT}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="f361195f-89c9-4a27-b7a2-2e451d3304ef"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_REPORT}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="89f35fa3-a36f-48bf-9819-16b4d07fd14b"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIM_RIS_PAG_REPORT}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="4d346841-7bc9-4ccc-8fb2-399ffb17cbb7"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_REPORT}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="ae28e09b-1f7d-4ad2-a7f0-e33bbfb996e5"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_REPORT}.compareTo(BigDecimal.ZERO)>0?$V{SUM_DIFF_COMP_REPORT}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="9ad21f44-1547-4cc1-927f-e3b293e8fa5f"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_REPORT}.compareTo(BigDecimal.ZERO)<0?$V{SUM_DIFF_COMP_REPORT}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-163" style="VERB6" x="3" y="0" width="246" height="13" uuid="06c4d692-5848-400f-8907-55469c049e78"/>
+					<box topPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA["TOTALE"]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="14" splitType="Stretch">
+				<subreport isUsingCache="true">
+					<reportElement x="0" y="3" width="842" height="10" uuid="d24b12f1-137c-452f-afbf-ad5a3531c10a"/>
+					<subreportParameter name="ROTTURA">
+						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="PATH_LOGO_FORNITORE">
+						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_NUM_LIV">
+						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_ESERCIZIO">
+						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_TIPO">
+						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="NOME_EST">
+						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="PATH_LOGO1">
+						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="UTENTE">
+						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DESCR_AGG_ENTE">
+						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="RIEPILOGO">
+						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_TIPO_AGGREGAZIONE">
+						<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<returnValue subreportVariable="TOT_ACC_IMP" toVariable="TOT_ACC_IMP"/>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_rendges_competenza_utilizzato.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="RIEPILOGO_TITOLI">
+		<groupExpression><![CDATA["RIEPILOGO_TITOLI"]]></groupExpression>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{RIEPILOGO}.equals("S"))]]></printWhenExpression>
+				<subreport>
+					<reportElement x="0" y="4" width="842" height="10" isRemoveLineWhenBlank="true" uuid="06e5ade5-b8d7-406e-ac61-255fa99e4f44"/>
+					<subreportParameter name="ROTTURA">
+						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="PATH_LOGO_FORNITORE">
+						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_NUM_LIV">
+						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_ESERCIZIO">
+						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_TIPO">
+						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="NOME_EST">
+						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="PATH_LOGO1">
+						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="UTENTE">
+						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DESCR_AGG_ENTE">
+						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="RIEPILOGO">
+						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_TIPO_AGGREGAZIONE">
+						<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdg_rendges_competenza_riepilogo.jasper"]]></subreportExpression>
+				</subreport>
+				<break>
+					<reportElement x="0" y="2" width="100" height="1" uuid="2bd0993b-9cbf-48a6-acde-f4359e605430"/>
+				</break>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="LIVELLO1">
+		<groupExpression><![CDATA[$F{CD_LIVELLO1}]]></groupExpression>
+		<groupHeader>
+			<band height="11">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(1)) > 0 && $F{CD_LIVELLO1} != null)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="55" y="2" width="240" height="9" uuid="e0fdb064-6548-4d7d-970f-ccb9799ea489"/>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{LIVELLO1_DS} +" "+$F{CD_LIVELLO1}+"\n"+
+$F{DS_LIVELLO1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(1)) > 0 && $F{CD_LIVELLO1} != null)]]></printWhenExpression>
+				<rectangle>
+					<reportElement x="1" y="0" width="825" height="15" uuid="a366827a-0acf-4532-a6b2-68112feee9f2"/>
+				</rectangle>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="e4e02028-843a-4c95-86cf-0145c08a1c26"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_LIV1}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="5355884c-937e-46d4-9733-31cffbf49977"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_LIV1}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="825d6685-4db0-4854-bcb1-5ae3c2c2bcd7"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_LIV1}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="ea3cac82-43d3-4ba5-af51-58f1b3d1117c"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_LIV1}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="200245e2-1d0e-4ee1-8226-d2950bfb88df"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_LIV1}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="1571d3ea-860b-406b-bbfe-66cb1bda9266"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIM_RIS_PAG_LIV1}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="3277ae43-b280-4320-bb09-eda777c66c2d"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_LIV1}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="a522da3a-fc5c-4ed8-8cf9-0564c00a7e25"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV1}.compareTo(BigDecimal.ZERO)>0?$V{SUM_DIFF_COMP_LIV1}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="51231694-5c88-476d-be20-623c6999664e"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV1}.compareTo(BigDecimal.ZERO)<0?$V{SUM_DIFF_COMP_LIV1}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-36" style="VERB6" x="4" y="0" width="291" height="13" uuid="1d53c48b-b784-4dd3-88f1-570bf5751413"/>
+					<box topPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA["TOTALE "+$F{LIVELLO1_DS} +" "+$F{CD_LIVELLO1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="LIVELLO2">
+		<groupExpression><![CDATA[$F{CD_LIVELLO2}]]></groupExpression>
+		<groupHeader>
+			<band height="11">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(2)) > 0 && $F{CD_LIVELLO2} != null)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="55" y="2" width="240" height="9" uuid="5712dd62-4f09-4b41-a8a1-e42576c3a696"/>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{LIVELLO2_DS} +" "+$F{CD_LIVELLO2}+"\n"+
+$F{DS_LIVELLO2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(2)) > 0 && $F{CD_LIVELLO2} != null)]]></printWhenExpression>
+				<rectangle>
+					<reportElement x="1" y="0" width="825" height="15" uuid="84ce63c4-0d42-45c4-9e7a-d2d30f90b890"/>
+				</rectangle>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="27637f02-15d1-4493-bbc7-53dfc5c76bcc"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_LIV2}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="881c97bf-7aa5-4aaf-adda-615e6d28b3f2"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_LIV2}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="f66e552e-a1fc-42fb-93a9-6a50fb58cfbb"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_LIV2}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="01434851-25ba-48f7-80ea-f6149600d049"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_LIV2}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="386d7a41-fc49-4c29-aabb-bdfcd244d12e"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_LIV2}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="05395753-bb60-439f-850d-a6030d0c9c6c"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIM_RIS_PAG_LIV2}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="f9d710d8-dda4-4780-8619-bbf1b2d4d172"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_LIV2}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="1749a857-3f1b-41a0-b197-ba0594526bb4"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV2}.compareTo(BigDecimal.ZERO)>0?$V{SUM_DIFF_COMP_LIV2}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="baba46d2-36fa-4a21-aa48-ac229ce1fb96"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV2}.compareTo(BigDecimal.ZERO)<0?$V{SUM_DIFF_COMP_LIV2}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-36" style="VERB6" x="4" y="0" width="291" height="13" uuid="3d15a4ab-6be5-489d-a710-c97ea0ce46b2"/>
+					<box topPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA["TOTALE "+$F{LIVELLO2_DS} +" "+$F{CD_LIVELLO2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="LIVELLO3">
+		<groupExpression><![CDATA[$F{CD_LIVELLO3}]]></groupExpression>
+		<groupHeader>
+			<band height="11">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(3)) > 0 && $F{CD_LIVELLO3} != null)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="55" y="2" width="240" height="9" uuid="fe6c732b-a0d6-4bfc-913a-18329779fa6b"/>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{LIVELLO3_DS} +" "+$F{CD_LIVELLO3}+"\n"+
+$F{DS_LIVELLO3}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(3)) > 0 && $F{CD_LIVELLO3} != null)]]></printWhenExpression>
+				<rectangle>
+					<reportElement x="1" y="0" width="825" height="15" uuid="732650a0-0369-4420-a61f-f7deb759df97"/>
+				</rectangle>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="46dce439-baf9-4388-a4fb-0f4d377c0a77"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_LIV3}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="8d286f0f-d458-4bac-a7ab-34ddf50bb1e1"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_LIV3}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="c7a5bd09-3dd0-43de-a681-c88a29aef2e3"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_LIV3}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="98b17897-4f22-4d79-a161-bd1d2701c44a"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_LIV3}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="006ff21e-05af-4756-bbca-11fb5a2d2c33"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_LIV3}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="afe7dd9b-1814-4b21-99fe-80418e056d39"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIM_RIS_PAG_LIV3}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="47a216d1-b029-46b2-ac75-6a494eb55764"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_LIV3}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="f422ec69-3210-4d79-9bf0-6b721121aa9a"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV3}.compareTo(BigDecimal.ZERO)>0?$V{SUM_DIFF_COMP_LIV3}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO3" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="942070b5-6836-4691-9567-8df4aff3094f"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV3}.compareTo(BigDecimal.ZERO)<0?$V{SUM_DIFF_COMP_LIV3}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-36" style="VERB6" x="4" y="0" width="291" height="13" uuid="803f83e1-0c27-4c7e-a398-7950154888af"/>
+					<box topPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA["TOTALE "+$F{LIVELLO3_DS} +" "+$F{CD_LIVELLO3}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="LIVELLO4">
+		<groupExpression><![CDATA[$F{CD_LIVELLO4}]]></groupExpression>
+		<groupHeader>
+			<band height="11">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(4)) > 0 && $F{CD_LIVELLO4} != null)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="55" y="2" width="240" height="9" uuid="8dc4335a-c864-4c3b-887c-034226e6110e"/>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{LIVELLO4_DS} +" "+$F{CD_LIVELLO4}+"\n"+
+$F{DS_LIVELLO4}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(4)) > 0 && $F{CD_LIVELLO4} != null)]]></printWhenExpression>
+				<rectangle>
+					<reportElement x="1" y="0" width="825" height="15" uuid="602e892f-f08c-4b0e-80d3-c8a30119d035"/>
+				</rectangle>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="0707cb85-50e8-44c0-ac01-77eab8c5c475"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_LIV4}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="bef920c9-eba6-465d-a28a-ed514f6a99ad"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_LIV4}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="84a3ff10-cddd-4c30-bdaf-30ef1d9ffafe"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_LIV4}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="1c055a78-abc0-4621-99c5-c6da54f06dba"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_LIV4}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="1d05dde0-b89b-41e6-9913-884e8062692c"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_LIV4}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="3093d5bc-40e1-4f30-bba1-fc831e02e035"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIM_RIS_PAG_LIV4}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="c14fe858-3a66-4027-891e-873deeeb07b7"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_LIV4}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="c97fed76-680a-4c5c-9275-e01e9d04c632"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV4}.compareTo(BigDecimal.ZERO)>0?$V{SUM_DIFF_COMP_LIV4}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO4" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="a7ab7910-bcc7-49d9-9011-787c5313f69a"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV4}.compareTo(BigDecimal.ZERO)<0?$V{SUM_DIFF_COMP_LIV4}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-36" style="VERB6" x="4" y="0" width="291" height="13" uuid="9cd6d51b-554f-4e35-a741-0f075b923f8c"/>
+					<box topPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA["TOTALE "+$F{LIVELLO4_DS} +" "+$F{CD_LIVELLO4}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="LIVELLO5">
+		<groupExpression><![CDATA[$F{CD_LIVELLO5}]]></groupExpression>
+		<groupHeader>
+			<band height="11">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(5)) > 0 && $F{CD_LIVELLO5} != null)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="55" y="2" width="240" height="9" uuid="4b501695-73b4-454c-afb0-e24716b2952f"/>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{LIVELLO5_DS} +" "+$F{CD_LIVELLO5}+"\n"+
+$F{DS_LIVELLO5}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(5)) > 0 && $F{CD_LIVELLO5} != null)]]></printWhenExpression>
+				<rectangle>
+					<reportElement x="1" y="0" width="825" height="15" uuid="e6ffc1d0-89dd-4b99-b2af-ea529818fc8a"/>
+				</rectangle>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="da17f3f1-78a1-4eaf-9323-23fc64f752ac"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_LIV5}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="d88cc4d9-d49f-4273-a0a9-b1ac2b8855e8"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_LIV5}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="449fcac5-5458-4808-911d-6fb7bedf688b"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_LIV5}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="52bb7f97-aaad-4135-89ea-fe92859b2514"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_LIV5}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="ea9038e8-ca33-416f-94be-27c12d2186b8"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_LIV5}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="618a7ab8-8b0e-4733-8835-bb56516e4da5"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIM_RIS_PAG_LIV5}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="0572b06f-58fb-4871-b4b3-70b2bd4694e2"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_LIV5}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="19d4e9af-f947-4c13-9457-809c3b581129"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV5}.compareTo(BigDecimal.ZERO)>0?$V{SUM_DIFF_COMP_LIV5}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO5" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="b867c541-d220-41f3-b5f9-e97c270c1d9e"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV5}.compareTo(BigDecimal.ZERO)<0?$V{SUM_DIFF_COMP_LIV5}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-36" style="VERB6" x="4" y="0" width="291" height="13" uuid="7df2d805-e6f6-4b59-aa46-fd80a3311210"/>
+					<box topPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA["TOTALE "+$F{LIVELLO5_DS} +" "+$F{CD_LIVELLO5}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="LIVELLO6">
+		<groupExpression><![CDATA[$F{CD_LIVELLO6}]]></groupExpression>
+		<groupHeader>
+			<band height="11">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(6)) > 0 && $F{CD_LIVELLO6} != null)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERB6" x="55" y="2" width="240" height="9" uuid="f58e2d94-45c3-437e-9daa-b262a2ae6f7e"/>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{LIVELLO6_DS} +" "+$F{CD_LIVELLO6}+"\n"+
+$F{DS_LIVELLO6}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(6)) > 0 && $F{CD_LIVELLO6} != null)]]></printWhenExpression>
+				<rectangle>
+					<reportElement x="1" y="0" width="825" height="15" uuid="451c9013-0471-4700-8a81-0e7a2f89fce1"/>
+				</rectangle>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="60a142ff-63ac-45de-ab34-70ddf83520b8"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_LIV6}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="0f854a2a-eb5e-41e7-a1ec-0b1674b7e6dd"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_LIV6}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="191cbd12-d15e-4847-9d0f-3f2aa80c2910"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_LIV6}.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="785ec22f-18d0-48ca-8ec9-7d117286f6ca"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_LIV6}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="96082935-6e1b-4e2e-a514-42f6b1770a7f"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_LIV6}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="737f583d-963f-4eb4-a1ff-d21085864b00"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_RIM_RIS_PAG_LIV6}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="315439f6-3787-4495-8b83-f66e6a867b9f"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_LIV6}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="1e7b481c-5c4b-4f5d-b9a6-d86a607df90a"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV6}.compareTo(BigDecimal.ZERO)>0?$V{SUM_DIFF_COMP_LIV6}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO6" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="b94c6663-cf37-4d78-b54a-3aef266b6bf0"/>
+					<box topPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DIFF_COMP_LIV6}.compareTo(BigDecimal.ZERO)<0?$V{SUM_DIFF_COMP_LIV6}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-36" style="VERB6" x="4" y="0" width="291" height="13" uuid="49271cd0-2be1-4231-b560-827b9fb0bc47"/>
+					<box topPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA["TOTALE "+$F{LIVELLO6_DS} +" "+$F{CD_LIVELLO6}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band height="90">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-184" style="VERB7" x="4" y="6" width="573" height="11" uuid="60ab69b4-b9e7-4cf0-9ac1-9b037d1e2864"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rendiconto finanziario gestionale - "+
+($P{P_TIPO}.equals("E")?"Entrate":"Spese")+
+" I parte - Esercizio "+$P{P_ESERCIZIO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-4" x="3" y="37" width="1" height="52" uuid="9b13b366-1496-4beb-8ef8-beb1fa197edb"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-45" style="VERB6" x="354" y="58" width="118" height="12" uuid="cfa8ded6-7ddc-4357-a721-d5ed520248cf"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[VARIAZIONI]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="590" y="58" width="59" height="31" uuid="6a308741-5d8f-4d5e-ac0c-83f25982f62a"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RIMASTI DA "+
+($P{P_TIPO}.equals("E")?"RISCUOTERE":"PAGARE")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-8" x="295" y="37" width="1" height="52" uuid="82c7694b-a911-48c5-979b-39d4681b025d"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-52" style="VERB6" x="4" y="37" width="291" height="21" uuid="ae450bbc-fbf6-4609-ba7d-830bc1a61e5d"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CAPITOLO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-53" style="VERB6" x="3" y="58" width="52" height="30" uuid="b0ad721d-9753-44bc-92c7-f4a5c576bac8"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CODICE N.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB6" x="55" y="58" width="240" height="31" uuid="2d3dcd6a-75df-4f88-a690-5bcde80d45df"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DENOMINAZIONE]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-67" x="826" y="37" width="1" height="52" uuid="8587ecd4-1021-4311-94b1-c8151ad543b0"/>
+			</line>
+			<line>
+				<reportElement key="line-68" x="3" y="37" width="824" height="1" uuid="dacaa784-438e-4874-8fc1-f7d1fe3e176c"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-185" style="VERB6" x="295" y="37" width="413" height="11" uuid="82ce3981-da5f-4bab-afb0-ef26a8c2ba62"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["GESTIONE DI COMPETENZA"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-69" x="3" y="88" width="823" height="1" uuid="75b72b00-ed87-4de9-b1d9-37e1cc0df55d"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-184" style="VER7" x="76" y="24" width="750" height="11" uuid="a12ebb2c-2f0a-46e2-92d0-1c20246fd1b0"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NOME_EST}+" - "+$P{DESCR_AGG_ENTE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="295" y="70" width="59" height="19" uuid="f9c0114a-a1b1-4196-96e5-0c6ac5122454"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["INIZIALI"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="354" y="70" width="59" height="19" uuid="ff5f3856-52eb-420a-9538-fd72bedbdea1"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["IN AUMENTO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="413" y="70" width="59" height="19" uuid="100a42dd-8ec0-43b8-a2cf-99cede094741"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["IN DIMINUZIONE"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="472" y="70" width="59" height="19" uuid="b1a0e75c-8bff-4a47-9972-6e0a80d0a5ae"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DEFINITIVE"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="649" y="58" width="59" height="31" uuid="e8919ef5-09a4-4920-b1e2-fdc98553dc47"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TOTALI "+
+($P{P_TIPO}.equals("E")?"ACCERTAMENTI":"IMPEGNI")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-45" style="VERB6" x="708" y="48" width="118" height="28" uuid="37717b90-b6d4-4935-b2da-6dbe58e7be65"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DIFFERENZE RISPETTO ALLE PREVISIONI]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="708" y="76" width="59" height="12" uuid="e120f1d3-8ee1-45de-a748-8231dd97d71d"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["IN +"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="767" y="76" width="59" height="12" uuid="4a69c03c-bf05-4d28-bfd2-526af49abee1"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["IN -"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-8" x="708" y="37" width="1" height="52" uuid="e334ffc4-fd10-418b-9056-5da07c9e8ea2"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-187" style="VERB6" x="531" y="58" width="59" height="31" uuid="0aa63903-eacc-46bd-8ac7-63b3c630cc77"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{P_TIPO}.equals("E")?"RISCOSSE":"PAGATE")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-185" style="VERB6" x="531" y="47" width="177" height="11" uuid="c102e7c1-b4aa-45bc-90c3-2a9254dafa77"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["SOMME "+
+($P{P_TIPO}.equals("E")?"ACCERTATE":"PAGATE")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-185" style="VERB6" x="296" y="47" width="235" height="11" uuid="367ff024-2bde-46eb-b030-ed3f616a7803"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["PREVISIONI"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(1)) == 0
+    && $F{CD_LIVELLO1} != null && $F{CD_LIVELLO2} == null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="VER6" x="55" y="2" width="240" height="9" uuid="d2482754-d334-4dea-a9b3-3194848122a5"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DS_LIVELLO1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-8" style="VER6" x="4" y="2" width="52" height="9" uuid="4f2e8920-19e1-4fea-b146-c4efbc35e833"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_LIVELLO1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="1836e319-1e82-4ca0-b295-0a17534918bb"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PREV_INI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="1f15ef4e-a418-4241-bed5-2432d3926ce6"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="128ea0e4-120b-475f-8eca-ec90d2c51cf6"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="0949be0b-6616-40eb-8621-ad971f67f3cd"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASSESTATO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="0c447f33-86ed-4948-aa87-228f2c0881f8"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="4d6e7268-7f51-4928-8e80-cedb7cf74bbe"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIM_RIS_PAG}.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="ae45ef64-906f-4fb8-bb3c-46cc70a956dc"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="d5e4ac1c-2d58-43f0-97c8-dc64326b5bed"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)>0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="1b2d8ae5-406a-4fac-b2d3-bf4d7e50a916"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)<0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(2)) == 0
+    && $F{CD_LIVELLO2} != null && $F{CD_LIVELLO3} == null
+)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="VER6" x="55" y="2" width="240" height="9" uuid="3dd2de33-1765-4189-be67-d8a68298d357"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DS_LIVELLO2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-8" style="VER6" x="4" y="2" width="52" height="9" uuid="703ee67c-b258-4ba8-86e3-c02d8118159e"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_LIVELLO1}+"."+$F{CD_LIVELLO2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="c21550fe-7c12-4e6d-ab91-8cf3f3097550"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PREV_INI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="fbe89cb0-6e0b-46ac-9257-a9750692e8ca"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="f7a5a2c6-3679-4f6f-90f4-6442c9eacfa2"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="ae389f6a-51e3-418c-8ca5-cd56082bd18a"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASSESTATO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="15153898-0fd2-49d2-a2fa-e3e5cf7c8bd6"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="4bd9be43-15f6-4c36-9aa2-80a6ff5d9bf4"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIM_RIS_PAG}.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="f437e495-5fe0-4f34-b14c-1e09f9c9b463"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="2f2d0ae1-7e9c-4f7c-addf-24bf25e08142"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)>0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="37904126-a422-4ea5-898e-7e3170c46865"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)<0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(3)) == 0 &&
+    $F{CD_LIVELLO3} != null && $F{CD_LIVELLO4} == null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="VER6" x="55" y="2" width="240" height="9" uuid="c66f4842-38e3-4285-8ef3-8c9d78177e3f"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DS_LIVELLO3}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-8" style="VER6" x="4" y="2" width="52" height="9" uuid="d622d539-6477-4709-88d2-ec8e7338073c"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_LIVELLO1}+"."+$F{CD_LIVELLO2}+"."+$F{CD_LIVELLO3}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="dd92a0fa-4198-4142-bb22-b779c6a066a0"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PREV_INI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="85725a10-944c-4fe2-b49a-4d40fc78d021"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="f6d888e1-e8db-4402-8552-0954e9b110aa"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="9c94f69b-96b9-4bbb-8d1d-f1616888bf25"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASSESTATO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="5d2eae86-4dd9-40d3-9846-2e112837057b"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="f36f5626-2a95-4621-bb3d-c02f2d6b15e3"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIM_RIS_PAG}.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="bd7e570e-b02a-4ba9-b845-4452a1acffa6"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="cfb092ab-31db-46ef-8c02-6746af18c539"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)>0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="15297ffe-e8c9-4e3d-b0aa-fa877d0a959c"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)<0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(4)) == 0
+    && $F{CD_LIVELLO4} != null && $F{CD_LIVELLO5} == null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="VER6" x="55" y="2" width="240" height="9" uuid="06990514-7681-4e35-9a51-7d2335cf0dcc"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DS_LIVELLO4}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-8" style="VER6" x="4" y="2" width="52" height="9" uuid="2f0d1b17-4671-4386-b3fa-5df39ee94dec"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_LIVELLO1}+"."+$F{CD_LIVELLO2}+"."+$F{CD_LIVELLO3}+"."+$F{CD_LIVELLO4}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="e03e96da-af69-4818-86c3-957104e17ba0"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PREV_INI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="decd6058-2adc-4f9f-8ff4-a050ba648b6c"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="7de06c61-3822-4fbe-93c4-dad35b8cc431"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="1759f348-5ed9-4a76-bbd9-52d97945598d"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASSESTATO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="b007b12d-56b5-4712-b90e-8c309e262910"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="1a450e35-a7d0-4980-b238-e7923d95db58"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIM_RIS_PAG}.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="2ab2fb57-00f0-407d-a9f0-562ed44d05ce"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="86aca2f4-8979-4e84-a025-fcd0a259ed83"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)>0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="e4de9f0b-44d1-4e3a-a590-6a3c59c76a42"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)<0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(5)) == 0
+    && $F{CD_LIVELLO5} != null && $F{CD_LIVELLO6} == null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="VER6" x="55" y="2" width="240" height="9" uuid="4c50c689-e471-4f5d-af0b-962eff500565"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DS_LIVELLO5}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-8" style="VER6" x="4" y="2" width="52" height="9" uuid="c917bb08-983e-4867-bbee-eac996cb47b1"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_LIVELLO1}+"."+$F{CD_LIVELLO2}+"."+$F{CD_LIVELLO3}+"."+$F{CD_LIVELLO4}+"."+$F{CD_LIVELLO5}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="fd44ca13-19bd-4295-a3e4-26a9717878ab"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PREV_INI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="d8cd7959-fcfa-44e6-ade3-55faeaf367f4"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="185c7681-39e6-49b7-abcb-2ba03a1342b1"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="e84ada2f-1b09-4d8b-859c-f4b62b56f441"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASSESTATO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="319eee6b-81f9-4bb3-bf51-210661a35bd9"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="13023e18-86e9-4ffb-b535-c5b58ebe3a28"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIM_RIS_PAG}.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="82394eb7-92c3-43c7-b27e-4fbe1035726d"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="6be2643e-6d1f-4369-a68e-5954a94ff1bd"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)>0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="25469d75-b18d-42bc-b373-fc8fca1d6c21"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)<0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(6)) == 0
+    && $F{CD_LIVELLO6} != null && $F{CD_LIVELLO7} == null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="VER6" x="55" y="2" width="240" height="9" uuid="c33eb060-377f-4830-ab48-d8e3fe046881"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DS_LIVELLO6}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-8" style="VER6" x="4" y="2" width="52" height="9" uuid="b13d7b0e-8677-46a9-acb7-2bd87a628fc5"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_LIVELLO1}+"."+$F{CD_LIVELLO2}+"."+$F{CD_LIVELLO3}+"."+$F{CD_LIVELLO4}+"."+$F{CD_LIVELLO5}+"."+$F{CD_LIVELLO6}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="bc7d34de-af41-4901-a97c-f1aea2f4c555"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PREV_INI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="1f8b5b5e-c789-4448-a72d-406a82125be5"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="52d375ea-1b8e-46b7-ba70-5142beeca7b1"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="1304d9f5-552a-45ac-94a5-3c591f7a2aa7"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASSESTATO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="53fd34f9-2a73-4128-8710-8d4c01467a01"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="7e9af444-b781-49ea-a43b-467a381a6334"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIM_RIS_PAG}.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="e83948ff-9c18-45a9-80e0-b7eed6473477"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="656c7677-8f55-4a2b-8822-4a3dec4a2ae9"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)>0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="94aa9467-f35e-4e00-ae96-4cc29bdfc7d9"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)<0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(7)) == 0 && $F{CD_LIVELLO7} != null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="VER6" x="55" y="2" width="240" height="9" uuid="938fdff5-d044-4dc3-acd6-d687ac934122"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DS_LIVELLO7}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-8" style="VER6" x="4" y="2" width="52" height="9" uuid="f3d0e020-3bca-42a8-843a-f21990aceea8"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_LIVELLO1}+"."+$F{CD_LIVELLO2}+"."+$F{CD_LIVELLO3}+"."+$F{CD_LIVELLO4}+"."+$F{CD_LIVELLO5}+"."+$F{CD_LIVELLO6}+"."+$F{CD_LIVELLO7}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="d9457050-56a6-4b8e-a13c-7a959709ec81"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PREV_INI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="afcd0287-0c47-4f33-9b84-ec8a85326790"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)>0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="b45f7f87-4f25-4b7f-b726-48d9454b0c52"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VARIAZIONI}.compareTo(BigDecimal.ZERO)<0?$F{VARIAZIONI}.abs():BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="903e6793-b403-4224-899e-94bf66d1168d"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASSESTATO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="7757432c-5cea-4af3-8d2b-2a891c938db7"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="9c63618d-9958-4862-bfeb-120a83050dc6"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIM_RIS_PAG}.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="8bde71bf-2889-4b49-b73f-c30654e7ff9a"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="72932bec-b949-4d6d-bdc9-dd733e30317e"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)>0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="840f1450-ceca-4701-8121-7d264de73e2b"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIFF_COMP}.compareTo(BigDecimal.ZERO)<0?$F{DIFF_COMP}.abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band height="15">
+			<rectangle>
+				<reportElement x="1" y="0" width="825" height="15" uuid="b9b36025-870b-4d1e-9771-ae1ef7ba7f2f"/>
+			</rectangle>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-166" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="59" height="13" uuid="7ea9e9b0-3c14-4343-bac9-adc15f81f2de"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_PREV_INI_REPORT}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-167" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="354" y="0" width="59" height="13" uuid="0cd1fe01-5024-4090-a685-bd284f88acae"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_REPORT}.abs()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-168" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="59" height="13" uuid="170f359a-2df2-4b76-9025-51ecd3df107d"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_REPORT}.abs()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="472" y="0" width="59" height="13" uuid="5c19db60-3386-47e5-8020-a8bdbe89eaa1"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_REPORT}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="59" height="13" uuid="0619c818-d9c1-44da-95ea-b561a8210909"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_REPORT}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="590" y="0" width="59" height="13" uuid="2b1574fe-2eac-4c58-a086-61e2e8e28f4d"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_RIM_RIS_PAG_REPORT}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="649" y="0" width="59" height="13" uuid="cd8f056f-46ff-479f-8f98-aa853785b8b0"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="708" y="0" width="59" height="13" uuid="88f72300-f005-4b07-9a21-b64a462b0374"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_REPORT}.subtract($V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP})).compareTo(BigDecimal.ZERO)<0?
+$V{SUM_ASSESTATO_REPORT}.subtract($V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP})).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="767" y="0" width="59" height="13" uuid="980bc0de-b0d0-477f-b177-6b2a22314699"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_REPORT}.subtract($V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP})).compareTo(BigDecimal.ZERO)>0?
+$V{SUM_ASSESTATO_REPORT}.subtract($V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP})).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-163" style="VERB6" x="3" y="0" width="246" height="13" uuid="cc56273e-8ba9-40e4-a1fe-0683ac64b80e"/>
+				<box topPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["TOTALE GENERALE"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
