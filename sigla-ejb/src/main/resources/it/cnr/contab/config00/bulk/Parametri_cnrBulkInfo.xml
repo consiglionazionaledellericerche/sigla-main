@@ -260,8 +260,17 @@
 		enabledOnInsert="true"
 		enabledOnSearch="true"
 		nullable="true"	/>
-
-
+<fieldProperty
+		name="fl_tesoreria_unica"
+		property="fl_tesoreria_unica"
+		label="Gestione tesoreria Unica" 
+		inputType="CHECKBOX" />			
+	<fieldProperty
+		name="fl_pubblica_contratto"
+		property="fl_pubblica_contratto"
+		label="Pubblica contratto" 
+		inputType="CHECKBOX" />			
+	
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -341,7 +350,11 @@
 		name="fl_credito_irpef"/>				       
 	<formFieldProperty
 		name="data_attivazione_new_voce" />
-
+	<formFieldProperty
+		name="fl_tesoreria_unica"/>				       
+	<formFieldProperty
+		name="fl_pubblica_contratto"/>				       
+	
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -410,7 +423,12 @@
 	<columnFieldProperty
 		name="livello_pdg_cofog"/>
 	<columnFieldProperty
-		name="fl_credito_irpef"/>	               
+		name="fl_credito_irpef"/>	 
+	<columnFieldProperty
+		name="fl_tesoreria_unica"/>				       
+	<columnFieldProperty
+		name="fl_pubblica_contratto"/>				       
+		              
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
