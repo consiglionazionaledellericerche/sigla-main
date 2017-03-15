@@ -5,6 +5,7 @@ import it.cnr.contab.doccont00.bp.*;
 import it.cnr.contab.doccont00.ordine.bulk.OrdineBulk;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.*;
 /**
  * Azione che gestisce le richieste relative alla Gestione Documenti Contabili
@@ -55,7 +56,10 @@ public Forward doEdit(ActionContext context) {
 			bp.setStatus(CRUDBP.VIEW);
 			bp.setEditable(false);
 		}
-
+		if(obbligazione.getFl_gara_in_corso().booleanValue() && obbligazione.isObbligazioneResiduo()
+				&& obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO )){
+			throw new ApplicationException("Non e' possibile modificare un'impegno residuo ("+obbligazione.getEsercizio()+"/"+obbligazione.getEsercizio_originale()+"/"+obbligazione.getPg_obbligazione()+") con gara di appalto in corso di espletamento.");
+	  }
 		bp.edit( context, obbligazione );
 		context.addHookForward("close",this,"doRefreshLista");				
 		return context.addBusinessProcess(bp);

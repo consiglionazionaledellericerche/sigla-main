@@ -336,10 +336,23 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		if (bulk.getCig() != null && bulk.getCd_terzo_resp() != null && bulk.getCig().getCdTerzoRup() != null && !bulk.getCig().getCdTerzoRup().equals(bulk.getCd_terzo_resp())){
 			throw new ApplicationException("Il Terzo del CIG non coincide con il Responsabile!");
 		}
+		if(bulk.getDt_stipula() != null ) {
+			if(bulk.getDt_stipula().after(getHome(uc, ContrattoBulk.class).getServerDate())) 
+				throw new ApplicationException("La data di stipula non può essere superiore alla data odierna!");
+		}
+		if(bulk.getDt_stipula() != null && bulk.getDt_fine_validita()!=null) {
+			if(bulk.getDt_stipula().after(bulk.getDt_fine_validita()))
+				throw new ApplicationException("La data di stipula non può essere superiore alla data fine validita!");
+		}
+		if(bulk.getDt_inizio_validita() != null && bulk.getDt_fine_validita()!=null) {
+			if(bulk.getDt_inizio_validita().after(bulk.getDt_fine_validita()))
+				throw new ApplicationException("La data di inizio non può essere superiore alla data fine validita!");
+		}
+		
 		try {
 			Date data_stipula_contratti = Utility.createParametriCnrComponentSession().
 			getParametriCnr(uc, CNRUserContext.getEsercizio(uc)).getData_stipula_contratti();
-			if (!(bulk.getDt_stipula().before(data_stipula_contratti) && bulk.isDefinitivo())){
+			if (!(bulk.getDt_stipula().before(data_stipula_contratti)) && bulk.isDefinitivo()){
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && bulk.getDirettore() == null) 
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("direttore").getLabel());
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getFl_mepa() == null) 
@@ -395,9 +408,29 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	 * Pre:  Controllo il progressivo negativo
 	 * Post: Aggiorno il progressivo dai numeratori
 	 */  			
-	public OggettoBulk modificaConBulk(UserContext uc, ContrattoBulk bulk) throws ComponentException{
+	public OggettoBulk modificaConBulk(UserContext userContext, ContrattoBulk bulk) throws ComponentException{
 		try {
-			validaCampiObbligatori(uc,(ContrattoBulk)bulk);
+			validaCampiObbligatori(userContext,(ContrattoBulk)bulk);
+			ContrattoBulk contratto=(ContrattoBulk)bulk;
+			Date dataStipulaParametri = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
+					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getData_stipula_contratti();
+			
+			boolean pubblica = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
+					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_pubblica_contratto().booleanValue();
+		    if(pubblica){
+				if (contratto.getDt_stipula().after(dataStipulaParametri) ||
+					contratto.getDt_stipula().equals(dataStipulaParametri)){
+					if (contratto.isPassivo() || contratto.isAttivo_e_Passivo() )
+						if (contratto.isDefinitivo() && contratto.getTipo_contratto() != null && contratto.getTipo_contratto().getFl_pubblica_contratto() != null  && contratto.getTipo_contratto().getFl_pubblica_contratto())  
+							contratto.setFl_pubblica_contratto(Boolean.TRUE);
+						else
+							contratto.setFl_pubblica_contratto(Boolean.FALSE);
+					else
+						contratto.setFl_pubblica_contratto(Boolean.FALSE);					
+				}
+		    }else 
+		    	contratto.setFl_pubblica_contratto(Boolean.FALSE);
+
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		} catch (IntrospectionException e) {
@@ -405,7 +438,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		} catch (SQLException e) {
 			throw new ComponentException(e);
 		}
-		return super.modificaConBulk(uc,bulk);
+		return super.modificaConBulk(userContext,bulk);
 	}
 	/**
 	  * Viene richiesta l'eliminazione dell'oggetto selezionato
@@ -598,7 +631,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  * @param aUC lo user context 
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
 	  */
-	private ContrattoBulk calcolaTotDocCont (UserContext userContext,ContrattoBulk contratto) throws ComponentException
+	public ContrattoBulk calcolaTotDocCont (UserContext userContext,ContrattoBulk contratto) throws ComponentException
 	{
 		try
 		{
@@ -1134,11 +1167,21 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			Folder oldNode = contrattoService.getFolderContratto(contratto);
 			if (oldNode == null || !contrattoService.isDocumentoContrattoPresent(contratto))
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
-			if (contratto.getDt_stipula().after(dataStipulaParametri) ||
-				contratto.getDt_stipula().equals(dataStipulaParametri)){
-				if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
-					contratto.setFl_pubblica_contratto(Boolean.TRUE);
-			}
+			boolean pubblica = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
+					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_pubblica_contratto().booleanValue();
+		    if(pubblica){
+				if (contratto.getDt_stipula().after(dataStipulaParametri) ||
+					contratto.getDt_stipula().equals(dataStipulaParametri)){
+					if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
+						if (contratto.getTipo_contratto() != null && contratto.getTipo_contratto().getFl_pubblica_contratto() != null  && contratto.getTipo_contratto().getFl_pubblica_contratto())  
+							contratto.setFl_pubblica_contratto(Boolean.TRUE);
+						else
+							contratto.setFl_pubblica_contratto(Boolean.FALSE);
+					else
+						contratto.setFl_pubblica_contratto(Boolean.FALSE);					
+				}
+		    }else 
+		    	contratto.setFl_pubblica_contratto(Boolean.FALSE);
 
 			ContrattoBulk contrattoClone = (ContrattoBulk)contratto.clone();
 			try {
@@ -1177,8 +1220,10 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				Folder node = contrattoService.getFolderContratto(contrattoDefinitivo);
 				if (node != null){
 					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
-					if (contrattoDefinitivo.isPassivo() || contrattoDefinitivo.isAttivo_e_Passivo())
-						contrattoService.addConsumerToEveryone(node);
+					if (contrattoDefinitivo.isPassivo() || contrattoDefinitivo.isAttivo_e_Passivo()){
+							contrattoService.addConsumer(node,"GROUP_CONTRATTI");
+							contrattoService.setInheritedPermission(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo), Boolean.FALSE);
+						}
 				}
 			}
 			return contrattoDefinitivo;
@@ -1502,6 +1547,9 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		public RemoteIterator findListaContrattiElenco(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
 			ContrattoHome home = (ContrattoHome)getHome(userContext,ContrattoBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
+			if (anno!=null)
+				//sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,anno);
+				sql.addSQLClause(FindClause.AND, "to_char(dt_stipula,'yyyy')", SQLBuilder.EQUALS, anno);
 			sql.addClause(FindClause.AND, "fl_pubblica_contratto", SQLBuilder.EQUALS, Boolean.TRUE);
 			sql.addSQLClause(FindClause.AND, "to_char(dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
 			sql.addOrderBy("ESERCIZIO DESC, PG_CONTRATTO DESC");
