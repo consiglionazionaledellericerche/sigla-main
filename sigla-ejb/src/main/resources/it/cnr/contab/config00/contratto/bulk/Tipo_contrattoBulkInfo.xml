@@ -44,6 +44,11 @@
 		property="fl_cig"
 		inputType="CHECKBOX"
 		label="CIG" />
+	<fieldProperty
+		name="fl_pubblica_contratto"
+		property="fl_pubblica_contratto"
+		inputType="CHECKBOX"
+		label="Pubblica" />	
 		
     <form name="searchtool">
 	  <formFieldProperty
@@ -65,6 +70,8 @@
 		name="fl_cancellato" />
 	<formFieldProperty
 		name="fl_cig" />
+	<formFieldProperty
+		name="fl_pubblica_contratto" />
 		
 	<columnFieldProperty
 		name="cd_tipo_contratto" />
@@ -76,6 +83,8 @@
 		name="fl_cancellato" />
 	<columnFieldProperty
 		name="fl_cig" />
+	<columnFieldProperty
+		name="fl_pubblica_contratto" />	
 		
 	<findFieldProperty
 		name="cd_tipo_contratto" />
@@ -87,4 +96,7 @@
 		name="fl_cancellato" />
 	<findFieldProperty
 		name="fl_cig" />
+	<findFieldProperty
+		name="fl_pubblica_contratto" />
+		
 </bulkInfo>

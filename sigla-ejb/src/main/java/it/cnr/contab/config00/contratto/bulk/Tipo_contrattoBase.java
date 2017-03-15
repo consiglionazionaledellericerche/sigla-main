@@ -14,9 +14,12 @@ public class Tipo_contrattoBase extends Tipo_contrattoKey implements Keyed {
 //    FL_CANCELLATO CHAR(1) NOT NULL
 	private java.lang.Boolean fl_cancellato;
 
-	//  FL_CIG CHAR(1) NOT NULL
+//  FL_CIG CHAR(1) NOT NULL
 	private java.lang.Boolean fl_cig;
  
+//  FL_CIG CHAR(1) NOT NULL
+	private java.lang.Boolean fl_pubblica_contratto;
+
 	public Tipo_contrattoBase() {
 		super();
 	}
@@ -53,6 +56,12 @@ public class Tipo_contrattoBase extends Tipo_contrattoKey implements Keyed {
 	}
 	public void setFl_cig(java.lang.Boolean fl_cig) {
 		this.fl_cig = fl_cig;
+	}
+	public java.lang.Boolean getFl_pubblica_contratto() {
+		return fl_pubblica_contratto;
+	}
+	public void setFl_pubblica_contratto(java.lang.Boolean fl_pubblica_contratto) {
+		this.fl_pubblica_contratto = fl_pubblica_contratto;
 	}
 
 }
