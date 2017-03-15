@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.331000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="190"/>
+	<property name="ireport.y" value="189"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -553,35 +553,38 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<printWhenExpression><![CDATA[Boolean.valueOf($F{CD_LIVELLO2}.compareTo($P{ROTTURA}) < 0)]]></printWhenExpression>
 				<subreport>
 					<reportElement x="0" y="2" width="842" height="10" isRemoveLineWhenBlank="true" uuid="2d9e7d4a-5043-403b-99b0-537bfa6fbf86"/>
-					<subreportParameter name="ROTTURA">
-						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO_FORNITORE">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_NUM_LIV">
-						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="SUBREPORT_DIR">
 						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ROTTURA">
+						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="P_ESERCIZIO">
 						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="NOME_EST">
-						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="P_TIPO">
 						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="UTENTE">
-						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+					<subreportParameter name="NOME_EST">
+						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="PATH_LOGO_FORNITORE">
+						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="PATH_LOGO1">
 						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="UTENTE">
+						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="LIVELLO2">
+						<subreportParameterExpression><![CDATA[$F{CD_LIVELLO2}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter name="DESCR_AGG_ENTE">
 						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_NUM_LIV">
+						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="RIEPILOGO">
 						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
