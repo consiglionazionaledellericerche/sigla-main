@@ -49,6 +49,11 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private java.sql.Timestamp data_attivazione_new_voce;
 	
 	private Boolean fl_tesoreria_unica;
+	
+	private Boolean fl_pubblica_contratto;
+	private Integer livello_eco;
+	private Integer livello_pat;
+	
 	public Boolean getFl_incarico() {
 		return fl_incarico;
 	}
@@ -326,5 +331,26 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	}
 	public void setFl_tesoreria_unica(Boolean fl_tesoreria_unica) {
 		this.fl_tesoreria_unica = fl_tesoreria_unica;
+	}
+	public Boolean getFl_pubblica_contratto() {
+		return fl_pubblica_contratto;
+	}
+	public void setFl_pubblica_contratto(Boolean fl_pubblica_contratto) {
+		this.fl_pubblica_contratto = fl_pubblica_contratto;
 	}	
+	public Integer getLivello_eco() {
+		return livello_eco;
+	}
+
+	public Integer getLivello_pat() {
+		return livello_pat;
+	}
+
+	public void setLivello_eco(Integer integer) {
+		livello_eco = integer;
+	}
+
+	public void setLivello_pat(Integer integer) {
+		livello_pat = integer;
+	}
 }
