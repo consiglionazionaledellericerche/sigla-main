@@ -7,6 +7,7 @@ import java.math.*;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.doccont00.bp.*;
+import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -791,8 +792,17 @@ public void validate() throws ValidationException {
 	
 	// controllo su campo DATA EMISSIONE
 	if ( getDt_emissione() == null )
-		throw new ValidationException( "Il campo DATA CONTABILITA' � obbligatorio." );
-
+		throw new ValidationException( "Il campo DATA CONTABILITA' è obbligatorio." );
+		
+		if(getDs_mandato()!=null && getDs_mandato().length()!=0){
+			for (int i = 0;i <getDs_mandato().length();i++){
+				if ((((int) RemoveAccent.convert(getDs_mandato()).charAt(i))<31||
+					  ((int) RemoveAccent.convert(getDs_mandato()).charAt(i))>126) &&
+					  (int) RemoveAccent.convert(getDs_mandato()).charAt(i)!=13&&
+					  (int) RemoveAccent.convert(getDs_mandato()).charAt(i)!=10 )					  
+				throw new ValidationException( "La descrizione contienere caratteri speciali non supportati." );
+			}
+		}
 	//verifica sui sospesi
 	for (Iterator i = getSospeso_det_uscColl().iterator(); i.hasNext(); )
 		((Sospeso_det_uscBulk) i.next()).validate();
