@@ -399,6 +399,7 @@
                     <location name="/" handler="welcome-content"/>
                     <filter-ref name="server-header"/>
                     <filter-ref name="x-powered-by-header"/>
+		    <access-log pattern="common" directory="${jboss.home.dir}/standalone/log" prefix="access" />
                 </host>
             </server>
             <servlet-container name="default">
