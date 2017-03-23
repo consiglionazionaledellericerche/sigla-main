@@ -10,10 +10,10 @@
 <html>
 <head>
 <% JSPUtils.printBaseUrl(pageContext);%>
-<%	BulkBP bp = (BulkBP)BusinessProcess.getBusinessProcess(request);%>
+<%	StampaPdgpBilancioBP bp = (StampaPdgpBilancioBP)BusinessProcess.getBusinessProcess(request);%>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Stampa Bilancio Previsione</title>
+<title><%=bp.getFormTitle()%></title>
 </head>
 <body class="Form">
 
@@ -34,15 +34,21 @@
 	  </tr>  
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"ti_stampa"); %></td>
-        <td><% bp.getController().writeFormInput(out,"ti_stampa"); %></td>
+        <td><% bp.getController().writeFormInput(out,null,"ti_stampa",false,null,"onClick=\"submitForm('doDefault')\""); %></td>
 	  </tr>  
+	  <% if (bp.isStampaRendicontoGestionale()) {%>
+	  <tr>
+		<td><% bp.getController().writeFormLabel(out,"ti_parte"); %></td>
+        <td><% bp.getController().writeFormInput(out,"ti_parte"); %></td>
+      </tr>
+	  <% } %>		
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"ti_aggregazione"); %></td>
         <td><% bp.getController().writeFormInput(out,null,"ti_aggregazione",false,null,"onClick=\"submitForm('doOnTipoAggregazioneChange')\""); %></td>
 	  </tr>  
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"ti_origine"); %></td>
-        <td><% bp.getController().writeFormInput(out,null,"ti_origine",false,null,"onClick=\"submitForm('doDefault')\""); %></td>
+		<td><% bp.getController().writeFormInput(out,"ti_origine"); %></td>
 	  </tr>  
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"ti_livello"); %></td>
@@ -54,20 +60,37 @@
 	  </tr>
 	</table>
 	<div class="Group">
-    <table>
-	  <tr>
-		<td class="GroupLabel" colspan="4">Aggiornamento Dati Bilancio</td>
-	  </tr>
-	  <tr>
- 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaResiduoAC')",null,true);%></td>
- 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaCassaAC')",null,true);%></td>
-	    <% if (Stampa_pdgp_bilancioBulk.TIPO_PROVVISORIO.equals(((Stampa_pdgp_bilancioBulk)bp.getModel()).getTi_origine())) { %>
- 	    	<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Previsione Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaPrevisioneAC')",null,true);%></td>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaResiduoAP')",null,true);%></td>
-	 	<% } %>
-	  </tr>
-	</div>
-    </table>
+	<% if (bp.isStampaRendiconto()) {%>
+	    <table>
+		  <tr>
+			<td class="GroupLabel" colspan="4">Aggiornamento Dati Rendiconto</td>
+		  </tr>
+		  <tr>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Competenza Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCompetenzaAC')",null,true);%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residui Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoResiduiAC')",null,true);%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCassaAC')",null,true);%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Competenza Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCompetenzaAP')",null,true);%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residui Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoResiduiAP')",null,true);%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCassaAP')",null,true);%></td>
+		  </tr>
+		</div>
+	    </table>
+	<% } else { %>
+	    <table>
+		  <tr>
+			<td class="GroupLabel" colspan="4">Aggiornamento Dati Bilancio</td>
+		  </tr>
+		  <tr>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaResiduoAC')",null,true);%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaCassaAC')",null,true);%></td>
+		    <% if (Stampa_pdgp_bilancioBulk.TIPO_PROVVISORIO.equals(((Stampa_pdgp_bilancioBulk)bp.getModel()).getTi_origine())) { %>
+	 	    	<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Previsione Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaPrevisioneAC')",null,true);%></td>
+		 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaResiduoAP')",null,true);%></td>
+		 	<% } %>
+		  </tr>
+		</div>
+	    </table>
+	<% } %>
    </td>
   </tr>
 </table>
