@@ -361,4 +361,37 @@
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_LimiteSpesaComponentSession" />
 		<init-param name="defaultAction" value="CRUDLimiteSpesaAction" />
   </businessProcess>
+  
+   <action 
+      path="/CRUDClassificazioneVociEPAction" actionClass="it.cnr.contab.config00.action.CRUDClassificazioneVociEPAction">
+  </action>
+
+  <businessProcess
+      name="ClassificazioneVociEPEcoBP" className="it.cnr.contab.config00.bp.CRUDClassificazioneVociEPBP">
+    <forward name="default" path="/config00/classificazione_voci_ep.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.config00.pdcep.cla.bulk.Classificazione_voci_ep_eco_liv1Bulk"/>
+    <init-param name="componentSessionName" value="CNRCONFIG00_EJB_Classificazione_voci_epComponentSession"/>
+	<init-param name="defaultAction" value="CRUDClassificazioneVociEPAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="ClassificazioneVociEPPatBP" className="it.cnr.contab.config00.bp.CRUDClassificazioneVociEPBP">
+    <forward name="default" path="/config00/classificazione_voci_ep.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.config00.pdcep.cla.bulk.Classificazione_voci_ep_pat_liv1Bulk"/>
+    <init-param name="componentSessionName" value="CNRCONFIG00_EJB_Classificazione_voci_epComponentSession"/>
+	<init-param name="defaultAction" value="CRUDClassificazioneVociEPAction"/>
+  </businessProcess>
+
+  <action 
+      path="/CRUDConfigParametriLivelliEPAction" actionClass="it.cnr.contab.config00.action.CRUDConfigParametriLivelliEPAction">
+  </action>
+
+  <businessProcess
+      name="CRUDConfigParametriLivelliEPBP" className="it.cnr.contab.config00.bp.CRUDConfigParametriLivelliEPBP">
+    <forward name="default" path="/config00/parametri_livelli_ep.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.config00.pdcep.cla.bulk.Parametri_livelli_epBulk"/>
+    <init-param name="componentSessionName" value="CNRCONFIG00_EJB_Parametri_livelli_epComponentSession"/>
+	<init-param name="defaultAction" value="CRUDConfigParametriLivelliEPAction"/>
+  </businessProcess>    	      	
+
 </action-mappings>
