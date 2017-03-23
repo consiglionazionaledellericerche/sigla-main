@@ -1,9 +1,7 @@
 package it.cnr.contab.prevent01.comp;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +17,6 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.pdg00.ejb.CostiDipendenteComponentSession;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrBulk;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrHome;
@@ -46,7 +43,6 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.OutdatedResourceException;
@@ -980,4 +976,44 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			}	
 		}
 
+	public void stampaRendicontoCallAggiornaDati(UserContext userContext, Stampa_pdgp_bilancioBulk bulk, boolean aggCompAC, boolean aggResiduiAC, boolean aggCassaAC, boolean aggCompAP, boolean aggResiduiAP, boolean aggCassaAP) throws it.cnr.jada.comp.ComponentException {
+		try
+		{
+			LoggableStatement cs = new LoggableStatement(getConnection( userContext ), 
+				"call " +
+				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +			
+				"PRC_LOAD_TABLE_STAMPA_RENDIC(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",false,this.getClass());
+				try
+				{
+					cs.setInt( 1, bulk.getEsercizio().intValue());
+					cs.setString( 2, null);
+					cs.setInt( 3, Integer.valueOf(0));
+					cs.setString( 4, null);
+					cs.setString( 5, null);
+					cs.setString( 6, null);
+					cs.setString( 7, "N");		
+					cs.setString( 8, aggCompAC?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 9, aggResiduiAC?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 10, aggCassaAC?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 11, aggCompAP?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 12, aggResiduiAP?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 13, aggCassaAP?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 14, userContext.getUser());
+
+					cs.executeQuery();
+				}
+				catch ( SQLException e )
+				{
+					throw handleException( e );
+				}	
+				finally
+				{
+					cs.close();
+				}
+			}
+			catch ( SQLException e )
+			{
+				throw handleException( e );
+			}	
+		}
 }
