@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_renddec_totale_titoli" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="45d07c51-bb8f-40ea-8cee-54215693026a">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<subDataset name="ALL_TITOLI" uuid="e573bae7-f0df-4e5b-8517-f3fe82b3167a">
+		<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[SELECT FNC_CCNCONCAT(CURSOR(SELECT DISTINCT DS_LIVELLO2 FROM TMP_STAMPA_RENDICONTO Where CD_LIVELLO2 >= $P{ROTTURA} and TIPO = $P{P_TIPO} ORDER BY 1), ' E ') CODICE from dual]]>
+		</queryString>
+		<field name="CODICE" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/media/truecrypt1/DPR/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TIPO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+SUM(RES_INI_ES) RES_INI_ES,
+SUM(TOT_ACC_IMP) TOT_ACC_IMP,
+SUM(Nvl(RIS_PAG,0)+nvl(RES_RIS_PAG,0)) RIS_PAG,
+SUM(RES_INI_ES_PREC) RES_INI_ES_PREC,
+SUM(TOT_ACC_IMP_PREC) TOT_ACC_IMP_PREC,
+SUM(RIS_PAG_PREC) RIS_PAG_PREC
+from TMP_STAMPA_RENDICONTO
+Where CD_LIVELLO2 >= $P{ROTTURA}
+and TIPO = $P{P_TIPO}]]>
+	</queryString>
+	<field name="RES_INI_ES" class="java.math.BigDecimal"/>
+	<field name="TOT_ACC_IMP" class="java.math.BigDecimal"/>
+	<field name="RIS_PAG" class="java.math.BigDecimal"/>
+	<field name="RES_INI_ES_PREC" class="java.math.BigDecimal"/>
+	<field name="TOT_ACC_IMP_PREC" class="java.math.BigDecimal"/>
+	<field name="RIS_PAG_PREC" class="java.math.BigDecimal"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<detail>
+		<band height="13">
+			<componentElement>
+				<reportElement x="0" y="0" width="432" height="13" uuid="15915225-d53d-4dd9-a523-bfbe587685e7"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="ALL_TITOLI" uuid="36b66d6f-0c52-4040-8434-65842bca8829">
+						<datasetParameter name="ROTTURA">
+							<datasetParameterExpression><![CDATA[$P{ROTTURA}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_TIPO">
+							<datasetParameterExpression><![CDATA[$P{P_TIPO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="13">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement key="textField-36" style="VERB6" x="99" y="0" width="333" height="13" uuid="69407fc8-d041-4d4f-bbe8-697aa18cd714"/>
+							<box topPadding="4">
+								<topPen lineWidth="0.0" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Left" verticalAlignment="Top">
+								<font isItalic="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA["TOTALE GENERALE "+$F{CODICE}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-61" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="432" y="0" width="65" height="13" uuid="65ae1ce9-3ad5-4839-bccc-5d528ebd5226"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RES_INI_ES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="497" y="0" width="65" height="13" uuid="cee0f5ad-5d9f-4840-adc2-788c28933b05"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-63" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="562" y="0" width="65" height="13" uuid="0549a25f-8218-408e-950c-c97695d62294"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="c85a940a-f50d-4d41-81eb-e0ffa52e0c90"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RES_INI_ES_PREC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="692" y="0" width="65" height="13" uuid="07ad48c7-e199-4d06-9de9-7ae9c6835140"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOT_ACC_IMP_PREC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="0b54b372-e4cc-467a-87dd-63857be5016e"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RIS_PAG_PREC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+</jasperReport>

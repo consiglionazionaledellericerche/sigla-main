@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_rendges_residui_presunto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="50fb748d-2ab2-48dc-9e9a-37d623c8b721">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/media/truecrypt1/DPR/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TIPO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_NUM_LIV" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(3)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TIPO_AGGREGAZIONE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["SCI"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TIPO_RENDICONTO" class="java.lang.String">
+		<parameterDescription><![CDATA[DEC: Decisionale - GES: Gestionale]]></parameterDescription>
+		<defaultValueExpression><![CDATA["DEC"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ORIGINE" class="java.lang.String">
+		<parameterDescription><![CDATA[REA: Dati Reali - EXT: Dati Storicizzati]]></parameterDescription>
+		<defaultValueExpression><![CDATA["REA"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["4"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="RIEPILOGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT NVL(SUM(FONDO_CASSA), 0) FONDO_INIZ_CASSA_N,
+NVL(SUM(FONDO_CASSA_PRE),0) FONDO_INIZ_CASSA_PREC_N,
+NVL(SUM(CASE WHEN NVL(AVANZO,0)>0
+             THEN AVANZO
+             ELSE 0
+             END), 0) AVANZO_N,
+NVL(SUM(CASE WHEN NVL(AVANZO_PRE,0)>0
+             THEN AVANZO_PRE
+             ELSE 0
+             END), 0) AVANZO_PREC_N,
+NVL(SUM(CASE WHEN NVL(AVANZO,0)<0
+             THEN ABS(AVANZO)
+             ELSE 0
+             END), 0) DISAVANZO_N,
+NVL(SUM(CASE WHEN NVL(AVANZO_PRE,0)<0
+             THEN ABS(AVANZO_PRE)
+             ELSE 0
+             END), 0) DISAVANZO_PREC_N
+FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, IM01 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, IM01 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, IM01 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO')]]>
+	</queryString>
+	<field name="FONDO_INIZ_CASSA_N" class="java.math.BigDecimal"/>
+	<field name="FONDO_INIZ_CASSA_PREC_N" class="java.math.BigDecimal"/>
+	<field name="AVANZO_N" class="java.math.BigDecimal"/>
+	<field name="AVANZO_PREC_N" class="java.math.BigDecimal"/>
+	<field name="DISAVANZO_N" class="java.math.BigDecimal"/>
+	<field name="DISAVANZO_PREC_N" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" x="4" y="2" width="173" height="9" uuid="e327e402-05a8-4993-9d22-59e43f481e88"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Avanzo di amministrazione presunto"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-41" positionType="Float" stretchType="RelativeToBandHeight" x="432" y="0" width="65" height="13" uuid="55e3f475-b75b-4a2e-9e9a-c217b36aadec"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-42" positionType="Float" stretchType="RelativeToBandHeight" x="497" y="0" width="65" height="13" uuid="c727f8e0-db73-43ba-a612-2342fb5ef87e"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{AVANZO_N}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" positionType="Float" stretchType="RelativeToBandHeight" x="562" y="0" width="65" height="13" uuid="46615329-785c-4f75-8ee9-7c9b4ef87bd8"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="16d3b68d-41c6-4c0b-aed7-a2e12e64926f"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" positionType="Float" stretchType="RelativeToBandHeight" x="692" y="0" width="65" height="13" uuid="2bf363ed-321d-4494-a4ce-c349dd2d0ab1"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{AVANZO_PREC_N}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="18c3aac1-7e50-4ecf-a005-c4f655d2e4d1"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" x="4" y="2" width="173" height="9" uuid="0575cc73-5792-4ccd-a0c3-d2c37ea0568e"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fondo iniziale di cassa presunto"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-41" positionType="Float" stretchType="RelativeToBandHeight" x="432" y="0" width="65" height="13" uuid="59d100b1-f655-4958-9c9c-caf495b3dc98"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-42" positionType="Float" stretchType="RelativeToBandHeight" x="497" y="0" width="65" height="13" uuid="79198b2f-69d3-44b3-9b0f-0095fa5765ad"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" positionType="Float" stretchType="RelativeToBandHeight" x="562" y="0" width="65" height="13" uuid="fe126b79-e540-4a34-bd9b-69a377dd995b"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FONDO_INIZ_CASSA_N}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="48740a50-cfee-4d4d-85ca-b02280b3c756"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" positionType="Float" stretchType="RelativeToBandHeight" x="692" y="0" width="65" height="13" uuid="f1e1186d-b97e-4357-8011-7d4e1ea2cb1f"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="d1e6c475-9914-4e3c-9792-0d1dc0eb6573"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FONDO_INIZ_CASSA_PREC_N}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("S"))]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-7" x="4" y="2" width="173" height="9" uuid="b8e0ad5e-fbfb-46b8-9890-2bf5956da7e6"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Disavanzo di amministrazione presunto"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-41" positionType="Float" stretchType="RelativeToBandHeight" x="432" y="0" width="65" height="13" uuid="3ab64a54-7842-45d9-b127-13afdde7e057"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-42" positionType="Float" stretchType="RelativeToBandHeight" x="497" y="0" width="65" height="13" uuid="041f6fea-e168-42f6-9fb4-08e9300b7e1e"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DISAVANZO_N}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-43" positionType="Float" stretchType="RelativeToBandHeight" x="562" y="0" width="65" height="13" uuid="cbccf607-64cf-4d6e-a8ac-2a5cb796513f"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="9f6809d0-2400-4c23-9d6e-fa6ed9ec6c57"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" positionType="Float" stretchType="RelativeToBandHeight" x="692" y="0" width="65" height="13" uuid="28fedc57-3bc1-4a3a-81fc-7ae5e247ec9b"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DISAVANZO_PREC_N}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="9f2ca14b-9baa-4fd1-8ea7-af0ddd4cbd1f"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
