@@ -10,6 +10,8 @@
 		keysProperty="aspectNamesKeys"
 		inputSize="40"
 		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
 		label="Tipologia" />
 	<fieldProperty
 		name="nome"
@@ -29,6 +31,7 @@
 		maxLength="2000"
 		cols="80"
 		rows="3"
+		readonlyProperty="allegatoEsistente"
 		caseSensitiveSearch="false"
 		label="Descrizione" />
 	<fieldProperty
@@ -48,6 +51,7 @@
 		inputSize="40"
 		maxLength="400"
 		caseSensitiveSearch="false"
+		readonlyProperty="allegatoEsistente"
 		nullable="false"
 		label="File" />
 	<fieldProperty
@@ -109,6 +113,8 @@
 			name="nome" />
 		<formFieldProperty
 			name="descrizione" />
+		<formFieldProperty
+			name="file" />
 		<formFieldProperty
 			name="attivaFile" />
 	</form>
