@@ -183,6 +183,9 @@ public class MissioneBase extends MissioneKey implements Keyed {
     // ID_FOLDER_ORDINE_MISSIONE VARCHAR(100)
     private String idFolderOrdineMissione;
 	
+	// TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
+	private java.lang.Boolean daRimborsoDaCompletare;
+
 public MissioneBase() {
 	super();
 }
@@ -842,5 +845,11 @@ public String getIdFolderOrdineMissione() {
 }
 public void setIdFolderOrdineMissione(String idFolderOrdineMissione) {
 	this.idFolderOrdineMissione = idFolderOrdineMissione;
+}
+public java.lang.Boolean getDaRimborsoDaCompletare() {
+	return daRimborsoDaCompletare;
+}
+public void setDaRimborsoDaCompletare(java.lang.Boolean daRimborsoDaCompletare) {
+	this.daRimborsoDaCompletare = daRimborsoDaCompletare;
 }
 }

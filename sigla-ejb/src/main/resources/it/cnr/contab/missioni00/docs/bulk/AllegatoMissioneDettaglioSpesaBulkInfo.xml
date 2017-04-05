@@ -4,16 +4,6 @@
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
-		name="aspectName"
-		property="aspectName"
-		inputType="SELECT"
-		keysProperty="aspectNamesKeys"
-		inputSize="40"
-		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		label="Tipologia" />
-	<fieldProperty
 		name="nome"
 		property="nome"
 		inputType="TEXT"
@@ -69,8 +59,6 @@
 	<formFieldProperty
 		name="nome" />
 	<formFieldProperty
-		name="aspectName" />
-	<formFieldProperty
 		name="descrizione" />
 	<formFieldProperty
 		name="titolo" />
@@ -83,8 +71,6 @@
 	<columnFieldProperty
 		name="nome" />
 	<columnFieldProperty
-		name="aspectName" />
-	<columnFieldProperty
 		name="descrizione" />
 	<columnFieldProperty
 		name="titolo" />
@@ -95,28 +81,5 @@
 		name="descrizione" />
 	<findFieldProperty
 		name="titolo" />
-
-	<columnSet
-		name="allegatiMissione" >
-		<columnFieldProperty
-			name="aspectName" />
-		<columnFieldProperty
-			name="nome" />
-		<columnFieldProperty
-			name="descrizione" />
-	</columnSet>
-	<form
-		name="allegatiMissione" >
-		<formFieldProperty
-			name="aspectName" />
-		<formFieldProperty
-			name="nome" />
-		<formFieldProperty
-			name="descrizione" />
-		<formFieldProperty
-			name="file" />
-		<formFieldProperty
-			name="attivaFile" />
-	</form>
 
 </bulkInfo>
