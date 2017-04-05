@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -146,6 +147,28 @@ public class MissioniCMISService extends SiglaCMISService {
 		return null;
 	}
 	
+//	public Folder recuperoFolderMissioneDettaglio(Missione_dettaglioBulk dettaglio)throws DetailedException{
+//		int posizionePunto = dettaglio.getCd_unita_organizzativa().indexOf(".");
+//		StringBuffer query = new StringBuffer("select mis.cmis:objectId from missioni_dettaglio_sigla:main mis join strorg:uo uo on mis.cmis:objectId = uo.cmis:objectId ");
+//		query.append(" join strorg:cds cds on mis.cmis:objectId = cds.cmis:objectId ");
+//		query.append(" where mis.missioni_sigla:anno = ").append(missione.getEsercizio());
+//		query.append(" and mis.missioni_sigla:numero = ").append(missione.getPg_missione());
+//		query.append(" and uo.strorguo:codice like '").append(missione.getCd_unita_organizzativa().substring(0, posizionePunto)+"%").append("'");
+//		query.append(" and cds.strorgcds:codice = '").append(missione.getCd_cds()).append("'");
+//		ItemIterable<QueryResult> resultsFolder = search(query);
+//		if (resultsFolder.getTotalNumItems() == 0)
+//			return null;
+//		else if (resultsFolder.getTotalNumItems() > 1){
+//			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' Missioni.  Anno:"+ missione.getEsercizio()+ " cds:" +missione.getCd_cds() +" uo:"+missione.getCd_unita_organizzativa()+
+//					" numero:"+missione.getPg_missione());
+//		} else {
+//			for (QueryResult queryResult : resultsFolder) {
+//				return (Folder) getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
+//			}
+//		}
+//		return null;
+//	}
+//	
 	public CMISPath createLastFolderIfNotPresent(CMISPath cmisPath, MissioneBulk missione) throws ApplicationException{
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		String name = missione.constructCMISNomeFile();
