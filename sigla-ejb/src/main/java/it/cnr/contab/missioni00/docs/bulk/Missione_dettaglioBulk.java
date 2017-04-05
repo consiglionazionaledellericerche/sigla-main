@@ -5,6 +5,9 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_diariaBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
 public class Missione_dettaglioBulk extends Missione_dettaglioBase 
 {
+	private BulkList dettaglioSpesaAllegati = new BulkList();
 	public final static String TIPO_DIARIA = "D";
 	public final static String TIPO_SPESA = "S";		
 	public final static String TIPO_RIMBORSO = "R";
@@ -523,5 +527,25 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	}
 	public void setAllegatiDocumentale(String allegatiDocumentale) {
 		this.allegatiDocumentale = allegatiDocumentale;
+	}
+	public BulkList getDettaglioSpesaAllegati() {
+		return dettaglioSpesaAllegati;
+	}
+	public void setDettaglioSpesaAllegati(BulkList dettaglioSpesaAllegati) {
+		this.dettaglioSpesaAllegati = dettaglioSpesaAllegati;
+	}
+	/**
+	 * Restituisce un array di <code>BulkCollection</code> contenenti oggetti
+	 * bulk da rendere persistenti insieme al ricevente.
+	 * L'implementazione standard restituisce <code>null</code>.
+	 * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
+	 */ 
+	public BulkCollection[] getBulkLists() {
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				dettaglioSpesaAllegati };
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		dettaglioSpesaAllegati.add(allegato);
+		return dettaglioSpesaAllegati.size()-1;		
 	}
 }
