@@ -830,6 +830,11 @@ private void caricaTipoTrattamento(MissioneBulk missione)
 public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbligazioniVBulk filtro) throws ComponentException 
 {
 
+	SQLBuilder sql = prepareQueryObbligazioni(context, filtro);
+		
+	return iterator(context, sql, Obbligazione_scadenzarioBulk.class, "default");
+}
+private SQLBuilder prepareQueryObbligazioni(UserContext context, Filtro_ricerca_obbligazioniVBulk filtro) throws ComponentException {
 	Obbligazione_scadenzarioHome home = (Obbligazione_scadenzarioHome)getHome(context, Obbligazione_scadenzarioBulk.class);
 	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 	sql.setDistinctClause(true);
@@ -896,8 +901,8 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 	//filtro su Numero obbligazione
 	if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getNr_obbligazione() != null)
 		sql.addSQLClause("AND","OBBLIGAZIONE.PG_OBBLIGAZIONE",sql.EQUALS, filtro.getNr_obbligazione());
-		
-	return iterator(context, sql, Obbligazione_scadenzarioBulk.class, "default");
+	
+	return sql;
 } 
 private boolean checkEleggibilitaAnticipo(UserContext aUC, MissioneBulk missione) throws ComponentException
 {
@@ -1030,6 +1035,8 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 	    if (missioneTemp.getDefferredSaldi() != null)
 		    aTempDiffSaldi=(PrimaryKeyHashMap)missioneTemp.getDefferredSaldi().clone();    
 		
+		impostaDatiRimborsoDaCompletare(missioneTemp);
+		
 		if(missioneTemp.getPg_missione() == null)
 		{
 			// Salvo missione, le spese, le tappe in modo temporaneo			
@@ -1063,9 +1070,13 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 			// Salvo missione/tappe/spese in modo definitivo
 			// Cerco un progressivo definitivo per la missione
 			Long pg = null;		
-			ProgressiviAmmComponentSession progressiviSession = (ProgressiviAmmComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_ProgressiviAmmComponentSession", ProgressiviAmmComponentSession.class);
-			Numerazione_doc_ammBulk numerazione = new Numerazione_doc_ammBulk(missioneTemp);
-			pg = progressiviSession.getNextPG(userContext, numerazione);
+			if (missioneTemp.isMissioneFromGemis() && missioneTemp.getPgMissioneFromGeMis() != null){
+				pg = missioneTemp.getPgMissioneFromGeMis();
+			} else {
+				ProgressiviAmmComponentSession progressiviSession = (ProgressiviAmmComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_ProgressiviAmmComponentSession", ProgressiviAmmComponentSession.class);
+				Numerazione_doc_ammBulk numerazione = new Numerazione_doc_ammBulk(missioneTemp);
+				pg = progressiviSession.getNextPG(userContext, numerazione);
+			}
 
 			// Inserisco la missione, le spese, le tappe in modo definitivo
 			MissioneHome home = (MissioneHome)getHome(userContext, missioneTemp);
@@ -1094,6 +1105,13 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 	{
 		throw handleException(e);
 	} 	
+}
+private void impostaDatiRimborsoDaCompletare(MissioneBulk missioneTemp) {
+	if (!missioneTemp.isMissioneProvvisoria() && missioneTemp.isMissioneFromGemis()){
+		missioneTemp.setDaRimborsoDaCompletare(true);
+	} else {
+		missioneTemp.setDaRimborsoDaCompletare(false);
+	}
 }
 
 private void controlloTrovato(UserContext aUC,
@@ -2800,6 +2818,8 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
 
 	aggiornaObbligazione(userContext, missione, status);
 
+	impostaDatiRimborsoDaCompletare(missione);
+	
 	missione = (MissioneBulk) super.modificaConBulk(userContext, missione);
 
 	
@@ -2906,42 +2926,19 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 				Obbligazione_scad_voceHome scadenzaHome = (Obbligazione_scad_voceHome)getHome(aUC, Obbligazione_scad_voceBulk.class);
 				SQLBuilder sql = scadenzaHome.createSQLBuilder();
 
-			  	GregorianCalendar ggRegistrazione = (GregorianCalendar)missione.getGregorianCalendar(getDataRegistrazione(aUC, missione)).clone();		
-				ggRegistrazione.set(GregorianCalendar.HOUR_OF_DAY, 0);
-				ggRegistrazione.set(GregorianCalendar.MINUTE, 0);
-				ggRegistrazione.set(GregorianCalendar.SECOND, 0);	
-				java.sql.Timestamp dataRegistrazione = new java.sql.Timestamp(ggRegistrazione.getTime().getTime());		
-				
-				sql.setDistinctClause(true);
-				sql.addTableToHeader("OBBLIGAZIONE_SCADENZARIO");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.CD_CDS","OBBLIGAZIONE_SCAD_VOCE.CD_CDS");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO","OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE","OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE","OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO","OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE_SCADENZARIO");
+				sql.addSQLClause("AND","OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA",sql.EQUALS, missione.getGaeGeMis());
 
-				sql.addTableToHeader("OBBLIGAZIONE");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.CD_CDS","OBBLIGAZIONE.CD_CDS");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO","OBBLIGAZIONE.ESERCIZIO");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE","OBBLIGAZIONE.ESERCIZIO_ORIGINALE");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE","OBBLIGAZIONE.PG_OBBLIGAZIONE");
-				
-				sql.addSQLClause("AND","OBBLIGAZIONE.CD_CDS", sql.EQUALS, missione.getCdsObblGeMis());
-				sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, missione.getEsercizioObblGeMis());
-				sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO_ORIGINALE", sql.EQUALS, missione.getEsercizioOriObblGeMis());
-				sql.addSQLClause("AND","OBBLIGAZIONE.PG_OBBLIGAZIONE", sql.EQUALS, missione.getPgObblGeMis());
-				sql.addSQLClause("AND","OBBLIGAZIONE.STATO_OBBLIGAZIONE", sql.EQUALS, "D");
-				sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
-				sql.addSQLClause("AND","OBBLIGAZIONE.CD_TERZO",sql.EQUALS, missione.getCd_terzo());
+				SQLBuilder sqlExists = impostaFiltroQueryObbligazioniFromGemis(aUC, missione);
 
-				sql.addSQLClause("AND","OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA",sql.GREATER_EQUALS, missione.getGaeGeMis());
-				
-				sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA",sql.GREATER_EQUALS, dataRegistrazione);	
-				sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-				sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
-				sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-				sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
+				sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.CD_CDS","OBBLIGAZIONE_SCAD_VOCE.CD_CDS");
+				sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO","OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
+				sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE","OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE");
+				sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE","OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE");
+				sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO","OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE_SCADENZARIO");
+				sql.addSQLExistsClause("AND", sqlExists);
+
 				sql.addOrderBy("OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE_SCADENZARIO");
+
 				it.cnr.jada.bulk.BulkList scadVoces = new it.cnr.jada.bulk.BulkList(scadenzaHome.fetchAll( sql ));
 				if((scadVoces != null) && (!scadVoces.isEmpty())){
 					Obbligazione_scad_voceBulk scadVoce = (Obbligazione_scad_voceBulk)scadVoces.get(0);
@@ -2954,34 +2951,9 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 				}
 			} else {
 				Obbligazione_scadenzarioHome scadenzaHome = (Obbligazione_scadenzarioHome)getHome(aUC, Obbligazione_scadenzarioBulk.class);
-				SQLBuilder sql = scadenzaHome.createSQLBuilder();
-
-			  	GregorianCalendar ggRegistrazione = (GregorianCalendar)missione.getGregorianCalendar(getDataRegistrazione(aUC, missione)).clone();		
-				ggRegistrazione.set(GregorianCalendar.HOUR_OF_DAY, 0);
-				ggRegistrazione.set(GregorianCalendar.MINUTE, 0);
-				ggRegistrazione.set(GregorianCalendar.SECOND, 0);	
-				java.sql.Timestamp dataRegistrazione = new java.sql.Timestamp(ggRegistrazione.getTime().getTime());		
-				
-				sql.setDistinctClause(true);
-				sql.addTableToHeader("OBBLIGAZIONE");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.CD_CDS","OBBLIGAZIONE.CD_CDS");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO","OBBLIGAZIONE.ESERCIZIO");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE","OBBLIGAZIONE.ESERCIZIO_ORIGINALE");
-				sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE","OBBLIGAZIONE.PG_OBBLIGAZIONE");
-				
-				sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, missione.getEsercizio());
-				sql.addSQLClause("AND","OBBLIGAZIONE.CD_CDS", sql.EQUALS, missione.getCd_cds());
-				sql.addSQLClause("AND","OBBLIGAZIONE.STATO_OBBLIGAZIONE", sql.EQUALS, "D");
-				sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
-				sql.addSQLClause("AND","OBBLIGAZIONE.CD_TERZO",sql.EQUALS, missione.getCd_terzo());
-				sql.addSQLClause("AND","OBBLIGAZIONE.RIPORTATO",sql.EQUALS, "N");	
-
-				sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA",sql.GREATER_EQUALS, dataRegistrazione);	
-				sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-				sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
-				sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-				sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
+				SQLBuilder sql = impostaFiltroQueryObbligazioniFromGemis(aUC, missione);
 				sql.addOrderBy("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO");
+
 				it.cnr.jada.bulk.BulkList scadenzario = new it.cnr.jada.bulk.BulkList(scadenzaHome.fetchAll( sql ));
 				if((scadenzario != null) && (!scadenzario.isEmpty())){
 					Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk)scadenzario.get(0);
@@ -2999,6 +2971,31 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 		throw handleException(missione, e);
 	}
 	return null;
+}
+
+private SQLBuilder impostaFiltroQueryObbligazioniFromGemis(UserContext aUC, MissioneBulk missione) throws PersistencyException, ComponentException, ApplicationException  {
+	Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
+	
+	filtro.setCd_unita_organizzativa(missione.getCd_unita_organizzativa());
+	filtro.setFl_data_scadenziario(false);
+	filtro.setFl_fornitore(false);
+	filtro.setFl_importo(false);
+	filtro.setFl_nr_obbligazione(true);
+	TerzoBulk terzo = new TerzoBulk();
+	terzo.setCd_terzo(missione.getCd_terzo());
+	filtro.setFornitore(terzo);
+	filtro.setEsercizio_ori_obbligazione(missione.getEsercizioOriObblGeMis());
+	filtro.setNr_obbligazione(missione.getPgObblGeMis());
+	
+	SQLBuilder sql = prepareQueryObbligazioni(aUC, filtro);
+	
+//  	GregorianCalendar ggRegistrazione = (GregorianCalendar)missione.getGregorianCalendar(getDataRegistrazione(aUC, missione)).clone();		
+//	ggRegistrazione.set(GregorianCalendar.HOUR_OF_DAY, 0);
+//	ggRegistrazione.set(GregorianCalendar.MINUTE, 0);
+//	ggRegistrazione.set(GregorianCalendar.SECOND, 0);	
+//	java.sql.Timestamp dataRegistrazione = new java.sql.Timestamp(ggRegistrazione.getTime().getTime());		
+	
+	return sql;
 }
 
 public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException
