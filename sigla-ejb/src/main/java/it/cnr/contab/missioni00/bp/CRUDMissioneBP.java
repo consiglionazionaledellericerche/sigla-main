@@ -7,11 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -20,8 +17,8 @@ import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.client.api.SecondaryType;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
@@ -44,6 +41,7 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.missioni00.docs.bulk.AllegatoMissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.AllegatoMissioneDettaglioSpesaBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk;
@@ -61,6 +59,8 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.action.MessageToUser;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.FieldValidationMap;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -96,11 +96,32 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 			// Aggiungo alla table delle spese il bottone di fine inserimento spese
 			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif",isViewing() ? null : "javascript:submitForm('doFineInserimentoSpese')",true,"Fine Inserimento Spese");			
 		}
+
+		@Override
+		public List getDetails() {
+			Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getModel();
+			try {
+				recuperoAllegatiDettaglio(dettaglio);
+			} catch (ApplicationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return super.getDetails();
+		}
 	};	
 	
 	private final SimpleDetailCRUDController diariaController = new SimpleDetailCRUDController("Diaria", Missione_dettaglioBulk.class,"diariaMissioneColl",this);
 	private final SimpleDetailCRUDController rimborsoController = new SimpleDetailCRUDController("Rimborso", Missione_dettaglioBulk.class,"rimborsoMissioneColl",this);
-	private final SimpleDetailCRUDController consuntivoController = new SimpleDetailCRUDController("Consuntivo", Missione_dettaglioBulk.class,"speseMissioneColl",this);				
+	private final SimpleDetailCRUDController consuntivoController = new SimpleDetailCRUDController("Consuntivo", Missione_dettaglioBulk.class,"speseMissioneColl",this);
+	private final SimpleDetailCRUDController dettaglioSpesaAllegatiController = new SimpleDetailCRUDController("DettaglioSpesaAllegati", AllegatoMissioneDettaglioSpesaBulk.class,"dettaglioSpesaAllegati",spesaController)
+	{
+		@Override
+		public List getDetails() {
+//			Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getModel();
+			return super.getDetails();
+		}
+	};	
+				
 
 	private boolean editingTappa = false;
 
@@ -127,6 +148,7 @@ public CRUDMissioneBP(String function)
 {
 	super(function+"Tr");
    	setTab("tab", "tabTestata");				// Mette il fuoco sul primo TAB	
+	setTab("tabDettaglioSpese","tabDettaglioSpesa");
 }
 /**
  * Il metodo gestisce la creazione di una nuova tappa.
@@ -270,6 +292,7 @@ public void cancellaDettagliMissione(ActionContext context) throws BusinessProce
 	MissioneBulk missione = (MissioneBulk) getModel();
 
 	missione.cancellaSpese();
+	getDettaglioSpesaAllegatiController().reset(context);
 	getSpesaController().reset(context);
 		
 	cancellaDiaria(context);
@@ -2567,6 +2590,7 @@ protected CMISPath getCMISPath(MissioneBulk allegatoParentBulk, boolean create) 
 protected Class<AllegatoMissioneBulk> getAllegatoClass() {
 	return AllegatoMissioneBulk.class;
 }
+
 @Override
 public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk)
 		throws BusinessProcessException {
@@ -2595,12 +2619,46 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 				}
 			}
 			ItemIterable<CmisObject> filesRimborso = missioniCMISService.getFilesRimborsoMissione(allegatoParentBulk);
-			if (files != null){
+			if (filesRimborso != null){
 				for (CmisObject cmisObject : filesRimborso) {
 					if (missioniCMISService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
 						continue;
 					if (excludeChild(cmisObject))
 						continue;
+
+					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_FOLDER)) {
+						Property<?> type = cmisObject.getProperty("cmis:objectTypeId");
+						String prop = type.getValueAsString();
+						if (prop.equals("F:missioni_rimborso_dettaglio:main")){
+							Property<?> typeRiga = cmisObject.getProperty("missioni_rimborso_dettaglio:riga");
+							String rigaString = typeRiga.getValueAsString();
+							Folder folderDettaglio = (Folder) cmisObject;
+					        ItemIterable<CmisObject> children = folderDettaglio.getChildren();
+							if (children != null){
+								for (CmisObject doc : children) {
+									Document document = (Document) doc;
+									if (document != null){
+										AllegatoMissioneDettaglioSpesaBulk allegato = (AllegatoMissioneDettaglioSpesaBulk) Introspector.newInstance(AllegatoMissioneDettaglioSpesaBulk.class, document);
+										allegato.setContentType(document.getContentStreamMimeType());
+										allegato.setNome(document.getName());
+										allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+										allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+										allegato.setCrudStatus(OggettoBulk.NORMAL);
+
+										for ( java.util.Iterator i = allegatoParentBulk.getSpeseMissioneColl().iterator(); i.hasNext(); )
+										{
+											Missione_dettaglioBulk spesa = (Missione_dettaglioBulk) i.next();
+											if (spesa.getPg_riga().equals(new Long(rigaString))){
+												spesa.addToArchivioAllegati(allegato);					
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					
 					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
 						Document document = (Document) cmisObject;
 						if (document != null){
@@ -2718,53 +2776,54 @@ public void scaricaAllegato(ActionContext actioncontext) throws IOException, Ser
 }
 
 public String getNomeAllegatoDettaglio() throws ApplicationException{
-	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
-	if (dettaglio!= null && dettaglio.isMissioneFromGemis()){
-		Document document = recuperoDocumentoGiustificativoDettaglio();
-		if (document != null){
-			return document.getName();
-		}
-	}
+//	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
+//	if (dettaglio!= null && dettaglio.isMissioneFromGemis()){
+//		Document document = recuperoAllegatiDettaglio();
+//		if (document != null){
+//			return document.getName();
+//		}
+//	}
 	return "";
 }
-private Document recuperoDocumentoGiustificativoDettaglio() throws ApplicationException {
+
+private ItemIterable<CmisObject> recuperoAllegatiDettaglio() throws ApplicationException {
 	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
-	if (dettaglio != null && dettaglio.isMissioneFromGemis()){
-		if (dettaglio.getDs_giustificativo() != null){
-			try {
-				Folder node = (Folder)missioniCMISService.getNodeByNodeRef(dettaglio.getDs_giustificativo());
-				if (node != null){
-					for (CmisObject cmisObject : node.getChildren()) {
-						Document document = (Document)cmisObject;
-						return document;
-					}
-				}
-			} catch (CmisObjectNotFoundException e) {
-				return null;
+	return recuperoAllegatiDettaglio(dettaglio);
+}
+private ItemIterable<CmisObject> recuperoAllegatiDettaglio(Missione_dettaglioBulk dettaglio) throws ApplicationException {
+	if (dettaglio != null && dettaglio.isMissioneFromGemis() && dettaglio.getDs_giustificativo() != null){
+		try {
+			Folder node = (Folder)missioniCMISService.getNodeByNodeRef(dettaglio.getDs_giustificativo());
+			if (node != null){
+				return node.getChildren();
 			}
+		} catch (CmisObjectNotFoundException e) {
+			return null;
 		}
+	} else {
+		
 	}
 	return null;
 }
 
 public void scaricaGiustificativiCollegati(ActionContext actioncontext) throws Exception {
-	Document document = recuperoDocumentoGiustificativoDettaglio();
-	if (document != null){
-		InputStream is = missioniCMISService.getResource(document);
-		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(document.getContentStreamLength()).intValue());
-		((HttpActionContext)actioncontext).getResponse().setContentType(document.getContentStreamMimeType());
-		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
-		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
-		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
-		int buflength;
-		while ((buflength = is.read(buffer)) > 0) {
-			os.write(buffer,0,buflength);
-		}
-		is.close();
-		os.flush();
-	} else {
-		throw new it.cnr.jada.action.MessageToUser( "Giustificativi non presenti sul documentale per la riga selezionata" );
-	}
+//	Document document = recuperoAllegatiDettaglio();
+//	if (document != null){
+//		InputStream is = missioniCMISService.getResource(document);
+//		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(document.getContentStreamLength()).intValue());
+//		((HttpActionContext)actioncontext).getResponse().setContentType(document.getContentStreamMimeType());
+//		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+//		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+//		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+//		int buflength;
+//		while ((buflength = is.read(buffer)) > 0) {
+//			os.write(buffer,0,buflength);
+//		}
+//		is.close();
+//		os.flush();
+//	} else {
+//		throw new it.cnr.jada.action.MessageToUser( "Giustificativi non presenti sul documentale per la riga selezionata" );
+//	}
 }
 @Override
 protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
@@ -2776,4 +2835,12 @@ protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
 	return true;
 }
 
+/**
+ * Metodo con cui si ottiene il valore della variabile <code>scadenzarioDettaglio</code>
+ * di tipo <code>SimpleDetailCRUDController</code>.
+ * @return it.cnr.jada.util.action.SimpleDetailCRUDController
+ */
+public final it.cnr.jada.util.action.SimpleDetailCRUDController getDettaglioSpesaAllegatiController() {
+	return dettaglioSpesaAllegatiController;
+}
 }
