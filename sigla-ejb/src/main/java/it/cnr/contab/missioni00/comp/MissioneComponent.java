@@ -2998,6 +2998,25 @@ private SQLBuilder impostaFiltroQueryObbligazioniFromGemis(UserContext aUC, Miss
 	return sql;
 }
 
+private SQLBuilder impostaFiltroQueryObbligazioniFromGemis(UserContext aUC, MissioneBulk missione) throws PersistencyException, ComponentException, ApplicationException  {
+	Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
+	
+	filtro.setCd_unita_organizzativa(missione.getCd_unita_organizzativa());
+	filtro.setFl_data_scadenziario(false);
+	filtro.setFl_fornitore(false);
+	filtro.setFl_importo(false);
+	filtro.setFl_nr_obbligazione(true);
+	TerzoBulk terzo = new TerzoBulk();
+	terzo.setCd_terzo(missione.getCd_terzo());
+	filtro.setFornitore(terzo);
+	filtro.setEsercizio_ori_obbligazione(missione.getEsercizioOriObblGeMis());
+	filtro.setNr_obbligazione(missione.getPgObblGeMis());
+	
+	SQLBuilder sql = prepareQueryObbligazioni(aUC, filtro);
+	
+	return sql;
+}
+
 public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException
 {
 	try
