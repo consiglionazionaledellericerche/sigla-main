@@ -1,7 +1,5 @@
 package it.cnr.contab.missioni00.bp;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,10 +7,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.ParseException;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -22,18 +21,16 @@ import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.SecondaryType;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
-import org.apache.pdfbox.util.PDFMergerUtility;
 
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
@@ -46,7 +43,6 @@ import it.cnr.contab.doccont00.bp.IValidaDocContBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.missioni00.docs.bulk.AllegatoMissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
@@ -138,6 +134,8 @@ public CRUDMissioneBP(String function)
  * Se i dettagli di diaria sono già stati creati li cancello
  * Se i dettagli del rimborso sono già stati creati li cancello
  */
+
+
 
 public void addTappa(ActionContext context) throws it.cnr.jada.bulk.ValidationException, BusinessProcessException, it.cnr.jada.comp.ApplicationException
 {
@@ -689,12 +687,13 @@ public void create(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.
 protected it.cnr.jada.util.jsp.Button[] createToolbar() 
 {
 	Button[] toolbar = super.createToolbar();
-	Button[] newToolbar = new Button[ toolbar.length + 2];
+	Button[] newToolbar = new Button[ toolbar.length + 3];
 	int i;
 	for ( i = 0; i < toolbar.length; i++ )
 		newToolbar[i] = toolbar[i];
 	newToolbar[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.riportaAvanti");
 	newToolbar[ i+1 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.riportaIndietro");	
+	newToolbar[ i+2 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.salvaProvvisorio");	
 	return newToolbar;
 }
 /**
@@ -1682,6 +1681,24 @@ public boolean isPrintButtonHidden()
 			  && missione.getCd_terzo() != null && missione.getEsercizio() != null));
 }
 /**
+ * Il metodo stabilisce se il bottone di salva provvisorio debba essere 
+ * abilitato o meno.
+ * Il bottone è abilitato se ho appena riportato indietro il documento o se la scadenza non risulta riportata.
+ */ 
+public boolean isSalvaProvvisorioButtonEnabled() 
+{
+	MissioneBulk missione = (MissioneBulk)getModel();
+	return !missione.isMissioneDefinitiva() && (missione.isCompensoObbligatorio() || (missione.isObbligazioneObbligatoria() && !missione.isMissioneConObbligazione()));
+
+}
+/**
+ * Il metodo stabilisce se il bottone di riporta avanti debba essere visualizzato
+ */  
+public boolean isSalvaProvvisorioButtonHidden() 
+{
+	return !isSalvaProvvisorioButtonEnabled();
+}
+/**
  * Il metodo stabilisce se il bottone di riporto avanti del documento contabile debba essere 
  * abilitato o meno.
  * Il bottone è abilitato se ho appena riportato indietro il documento o se la scadenza non risulta riportata.
@@ -2236,6 +2253,7 @@ public void update(ActionContext context) throws it.cnr.jada.action.BusinessProc
 {
 	try 
 	{
+		archiviaAllegati(context, null);
 		getModel().setToBeUpdated();
 		setModel(	context,
 					((MissioneComponentSession)createComponentSession()).modificaConBulk(	context.getUserContext(),
@@ -2521,27 +2539,27 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 @Override
 protected CMISPath getCMISPath(MissioneBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
 	try {
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniAlCNR",CMISPath.class);
-//		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getCd_uo_origine(), allegatoParentBulk.getCd_uo_origine(), allegatoParentBulk.getCd_uo_origine());
-//		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Fatture Attive", "Fatture Attive", "Fatture Attive");
-//		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getEsercizio().toString(), "Esercizio "+allegatoParentBulk.getEsercizio().toString(), "Esercizio "+allegatoParentBulk.getEsercizio().toString());
-
-		String folderName = "Missione "
-//		+allegatoParentBulk.getEsercizio().toString()+Utility.lpad(allegatoParentBulk.getPg_fattura_attiva().toString(),10,'0')
-		;
-		if (create) {
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
-					folderName, folderName);			
+		CMISPath cmisPath = null;
+		if (allegatoParentBulk.isMissioneFromGemis() && allegatoParentBulk.getIdFolderRimborsoMissione() != null){
+			cmisPath = missioniCMISService.getCMISPathFromFolderRimborso(allegatoParentBulk);
 		} else {
-			try {
-				cmisPath = cmisPath.appendToPath(folderName);
-				cmisService.getNodeByPath(cmisPath);
-			} catch (CmisObjectNotFoundException _ex) {
-				return null;
-			}
-		}			
+			cmisPath = SpringUtil.getBean("cmisPathMissioni",CMISPath.class);
+
+			if (create) {
+				cmisPath = missioniCMISService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getCd_unita_organizzativa(), allegatoParentBulk.getCd_unita_organizzativa(), allegatoParentBulk.getCd_unita_organizzativa());
+				cmisPath = missioniCMISService.createFolderIfNotPresent(cmisPath, "Rimborso Missione", "Rimborso Missione", "Rimborso Missione");
+				cmisPath = missioniCMISService.createFolderIfNotPresent(cmisPath, "Anno "+allegatoParentBulk.getEsercizio().toString(), "Anno "+allegatoParentBulk.getEsercizio().toString(), "Anno "+allegatoParentBulk.getEsercizio().toString());
+				cmisPath = missioniCMISService.createLastFolderIfNotPresent(cmisPath, allegatoParentBulk);
+			} else {
+				try {
+					missioniCMISService.getNodeByPath(cmisPath);
+				} catch (CmisObjectNotFoundException _ex) {
+					return null;
+				}
+			}			
+		}
 		return cmisPath;
-	} catch (ApplicationException e) {
+	} catch (ComponentException e) {
 		throw new BusinessProcessException(e);
 	}
 }
@@ -2555,39 +2573,19 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 	
 	MissioneBulk allegatoParentBulk = (MissioneBulk)oggettobulk;
 	try {
-		ItemIterable<CmisObject> files = missioniCMISService.getFilesOrdineMissione(allegatoParentBulk);
-		if (files != null){
-			for (CmisObject cmisObject : files) {
-				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
-					continue;
-				if (excludeChild(cmisObject))
-					continue;
-				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
-					Document document = (Document) cmisObject;
-					AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
-					allegato.setContentType(document.getContentStreamMimeType());
-					allegato.setNome(cmisObject.getName());
-					allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-					allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-					completeAllegato(allegato);
-					allegato.setCrudStatus(OggettoBulk.NORMAL);
-					allegatoParentBulk.addToArchivioAllegati(allegato);					
-				}
-			}
-		}
-		ItemIterable<CmisObject> filesRimborso = missioniCMISService.getFilesRimborsoMissione(allegatoParentBulk);
-		if (files != null){
-			for (CmisObject cmisObject : filesRimborso) {
-				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
-					continue;
-				if (excludeChild(cmisObject))
-					continue;
-				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
-					Document document = (Document) cmisObject;
-					if (document != null){
+		if (allegatoParentBulk.getIdRimborsoMissione() != null){
+			ItemIterable<CmisObject> files = missioniCMISService.getFilesOrdineMissione(allegatoParentBulk);
+			if (files != null){
+				for (CmisObject cmisObject : files) {
+					if (missioniCMISService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
+						continue;
+					if (excludeChild(cmisObject))
+						continue;
+					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+						Document document = (Document) cmisObject;
 						AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
 						allegato.setContentType(document.getContentStreamMimeType());
-						allegato.setNome(document.getName());
+						allegato.setNome(cmisObject.getName());
 						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
 						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
 						completeAllegato(allegato);
@@ -2596,33 +2594,76 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 					}
 				}
 			}
-		}
-		if (allegatoParentBulk.getIdFlusso() != null){
-			Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlusso());
-			if (document != null){
-				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
-				allegato.setContentType(document.getContentStreamMimeType());
-				allegato.setNome(document.getName());
-				allegato.setAspectName(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
-				allegato.setDescrizione("Flusso di Approvazione della richiesta di rimborso");
-				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-				completeAllegato(allegato);
-				allegato.setCrudStatus(OggettoBulk.NORMAL);
-				allegatoParentBulk.addToArchivioAllegati(allegato);					
+			ItemIterable<CmisObject> filesRimborso = missioniCMISService.getFilesRimborsoMissione(allegatoParentBulk);
+			if (files != null){
+				for (CmisObject cmisObject : filesRimborso) {
+					if (missioniCMISService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
+						continue;
+					if (excludeChild(cmisObject))
+						continue;
+					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+						Document document = (Document) cmisObject;
+						if (document != null){
+							AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+							allegato.setContentType(document.getContentStreamMimeType());
+							allegato.setNome(document.getName());
+							allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+							allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+							completeAllegato(allegato);
+							allegato.setCrudStatus(OggettoBulk.NORMAL);
+							allegatoParentBulk.addToArchivioAllegati(allegato);					
+						}
+					}
+				}
 			}
-		}
-		if (allegatoParentBulk.getIdFlussoOrdineMissione() != null){
-			Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlussoOrdineMissione());
-			if (documentOrdine != null){
-				AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), documentOrdine);
-				allegato.setContentType(documentOrdine.getContentStreamMimeType());
-				allegato.setNome(documentOrdine.getName());
-				allegato.setAspectName(AllegatoMissioneBulk.FLUSSO_ORDINE);
-				allegato.setDescrizione("Flusso di Approvazione dell'Ordine di missione");
-				allegato.setTitolo((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-				completeAllegato(allegato);
-				allegato.setCrudStatus(OggettoBulk.NORMAL);
-				allegatoParentBulk.addToArchivioAllegati(allegato);					
+			if (allegatoParentBulk.getIdFlusso() != null){
+				Document document = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlusso());
+				if (document != null){
+					AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+					allegato.setContentType(document.getContentStreamMimeType());
+					allegato.setNome(document.getName());
+					allegato.setAspectName(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
+					allegato.setDescrizione("Flusso di Approvazione della richiesta di rimborso");
+					allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+					completeAllegato(allegato);
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+					allegatoParentBulk.addToArchivioAllegati(allegato);					
+				}
+			}
+			if (allegatoParentBulk.getIdFlussoOrdineMissione() != null){
+				Document documentOrdine = missioniCMISService.recuperoFlows(allegatoParentBulk.getIdFlussoOrdineMissione());
+				if (documentOrdine != null){
+					AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), documentOrdine);
+					allegato.setContentType(documentOrdine.getContentStreamMimeType());
+					allegato.setNome(documentOrdine.getName());
+					allegato.setAspectName(AllegatoMissioneBulk.FLUSSO_ORDINE);
+					allegato.setDescrizione("Flusso di Approvazione dell'Ordine di missione");
+					allegato.setTitolo((String)documentOrdine.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+					completeAllegato(allegato);
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+					allegatoParentBulk.addToArchivioAllegati(allegato);					
+				}
+			}
+		} else {
+			ItemIterable<CmisObject> files = missioniCMISService.getFilesMissioneSigla(allegatoParentBulk);
+			if (files != null){
+				for (CmisObject cmisObject : files) {
+					if (missioniCMISService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
+						continue;
+					if (excludeChild(cmisObject))
+						continue;
+					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+						Document document = (Document) cmisObject;
+						AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
+						allegato.setContentType(document.getContentStreamMimeType());
+						allegato.setNome(cmisObject.getName());
+						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+						completeAllegato(allegato);
+						allegato.setCrudStatus(OggettoBulk.NORMAL);
+						allegatoParentBulk.addToArchivioAllegati(allegato);					
+					}
+				}
 			}
 		}
 	} catch (ApplicationException e) {
@@ -2644,7 +2685,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 }
 @Override
 protected void completeAllegato(AllegatoMissioneBulk allegato) throws ApplicationException {
-	for (SecondaryType secondaryType : allegato.getDocument(cmisService).getSecondaryTypes()) {
+	for (SecondaryType secondaryType : allegato.getDocument(missioniCMISService).getSecondaryTypes()) {
 		if (AllegatoMissioneBulk.aspectNamesKeys.get(secondaryType.getId()) != null){
 			allegato.setAspectName(secondaryType.getId());
 			break;
@@ -2690,12 +2731,16 @@ private Document recuperoDocumentoGiustificativoDettaglio() throws ApplicationEx
 	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
 	if (dettaglio != null && dettaglio.isMissioneFromGemis()){
 		if (dettaglio.getDs_giustificativo() != null){
-			Folder node = (Folder)missioniCMISService.getNodeByNodeRef(dettaglio.getDs_giustificativo());
-			if (node != null){
-				for (CmisObject cmisObject : node.getChildren()) {
-					Document document = (Document)cmisObject;
-					return document;
+			try {
+				Folder node = (Folder)missioniCMISService.getNodeByNodeRef(dettaglio.getDs_giustificativo());
+				if (node != null){
+					for (CmisObject cmisObject : node.getChildren()) {
+						Document document = (Document)cmisObject;
+						return document;
+					}
 				}
+			} catch (CmisObjectNotFoundException e) {
+				return null;
 			}
 		}
 	}
@@ -2721,4 +2766,14 @@ public void scaricaGiustificativiCollegati(ActionContext actioncontext) throws E
 		throw new it.cnr.jada.action.MessageToUser( "Giustificativi non presenti sul documentale per la riga selezionata" );
 	}
 }
+@Override
+protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
+	AllegatoMissioneBulk all =(AllegatoMissioneBulk)allegato;
+	if (!all.getAspectName().equals(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA)){
+		setMessage("Cancellazione non possibile!");
+		return false;
+	}
+	return true;
+}
+
 }
