@@ -119,6 +119,12 @@
 		inputType="ROTEXT"
 		/>
 	<fieldProperty
+		name="daRimborsoDaCompletare"
+		property="daRimborsoDaCompletare"
+		label="Missione Automatica da Completare"		
+		inputType="CHECKBOX"
+		/>
+	<fieldProperty
 		name="ti_provvisorio_definitivoForSearch"
 		property="ti_provvisorio_definitivo"
 		maxLength="1"
@@ -934,7 +940,7 @@
 	<formFieldProperty name="cd_cds" />
 	<formFieldProperty name="cd_unita_organizzativa" />	
 	<formFieldProperty name="pg_missione" />				
-	<formFieldProperty name="idRimborsoMissione" />				
+	<formFieldProperty name="daRimborsoDaCompletare" />				
 	<formFieldProperty name="dt_inizio_missione" command="doOnInizioMissioneChange"/>
 	<formFieldProperty name="dt_fine_missione" command="doOnFineMissioneChange"/>		
 	<formFieldProperty name="ds_missione" />
@@ -1015,7 +1021,6 @@
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
 	<columnFieldProperty name="pg_missione" />
-	<columnFieldProperty name="idRimborsoMissione" />
 	<columnFieldProperty name="cd_tipo_missione" />
 	<columnFieldProperty name="ti_istituz_commerc" />	
 	<columnFieldProperty name="ds_missione" />
@@ -1030,6 +1035,7 @@
 	<columnFieldProperty name="stato_pagamento_fondo_eco" />
 	<columnFieldProperty name="dt_pagamento_fondo_eco" />
 	<columnFieldProperty name="ti_provvisorio_definitivo" />
+	<columnFieldProperty name="daRimborsoDaCompletare" />
 	<columnFieldProperty name="stato_cofi" />
 	<columnFieldProperty name="stato_coge" />		
 	<columnFieldProperty name="stato_coan" />
@@ -1039,7 +1045,7 @@
 	<findFieldProperty name="esercizio" />		
 	<findFieldProperty name="cd_tipo_missione" />	
 	<findFieldProperty name="pg_missione"/>	
-	<findFieldProperty name="idRimborsoMissione"/>	
+	<findFieldProperty name="daRimborsoDaCompletare"/>	
 	<findFieldProperty name="dt_inizio_missione" />
 	<findFieldProperty name="dt_fine_missione" />
 	<findFieldProperty name="dt_registrazione" />
