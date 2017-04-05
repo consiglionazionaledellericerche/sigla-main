@@ -25,19 +25,11 @@ import it.cnr.contab.docamm00.consultazioni.bulk.VFatturaAttivaRigaBrevettiBulk;
 import it.cnr.contab.docamm00.consultazioni.bulk.VFatturaAttivaRigaBrevettiHome;
 import it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiBulk;
 import it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiHome;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaHome;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaHome;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
-import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
-import it.cnr.contab.missioni00.docs.bulk.AnticipoHome;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoHome;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
@@ -54,7 +46,6 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
@@ -83,11 +74,14 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 				Boolean trovataCondizioneCdAnagrafica = false;
 				Enumeration e = compoundfindclause.getClauses();
 				while(e.hasMoreElements() ){
-					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
-					int operator = clause.getOperator();
-					if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_anag") && 
-							operator == 8192){
-						trovataCondizioneCdAnagrafica = true;
+					FindClause findClause = (FindClause) e.nextElement();
+					if (findClause instanceof SimpleFindClause){
+						SimpleFindClause clause = (SimpleFindClause)findClause;
+						int operator = clause.getOperator();
+						if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_anag") && 
+								operator == 8192){
+							trovataCondizioneCdAnagrafica = true;
+						}
 					}
 				}
 				if (!trovataCondizioneCdAnagrafica){
@@ -101,21 +95,24 @@ public class ConsultazioniRestComponent extends CRUDComponent {
     			Enumeration e = compoundfindclause.getClauses();
     			SQLBuilder sqlExists = null;
 				while(e.hasMoreElements() ){
-					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
-					int operator = clause.getOperator();
-					if (clause.getPropertyName() != null && clause.getPropertyName().equals("pgTrovato") && 
-							operator == 8192){
-						trovataCondizioneTrovato = true;
-						VFatturaAttivaRigaBrevettiHome home = (VFatturaAttivaRigaBrevettiHome) getHome(userContext, VFatturaAttivaRigaBrevettiBulk.class);
-						sqlExists = home.createSQLBuilder();
-						sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.ESERCIZIO", "V_FATTURA_ATTIVA_RIGA_BREVETTI.ESERCIZIO");
-						sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.CD_CDS", "V_FATTURA_ATTIVA_RIGA_BREVETTI.CD_CDS");
-						sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.CD_UNITA_ORGANIZZATIVA", "V_FATTURA_ATTIVA_RIGA_BREVETTI.CD_UNITA_ORGANIZZATIVA");
-						sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.PG_FATTURA_ATTIVA", "V_FATTURA_ATTIVA_RIGA_BREVETTI.PG_FATTURA_ATTIVA");
-						sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.TIPO_FATTURA", "V_FATTURA_ATTIVA_RIGA_BREVETTI.TIPO_FATTURA");
-						sqlExists.addSQLClause("AND","V_FATTURA_ATTIVA_RIGA_BREVETTI.PG_TROVATO",SQLBuilder.EQUALS, clause.getValue() );
-					} else {
-						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					FindClause findClause = (FindClause) e.nextElement();
+					if (findClause instanceof SimpleFindClause){
+						SimpleFindClause clause = (SimpleFindClause)findClause;
+						int operator = clause.getOperator();
+						if (clause.getPropertyName() != null && clause.getPropertyName().equals("pgTrovato") && 
+								operator == 8192){
+							trovataCondizioneTrovato = true;
+							VFatturaAttivaRigaBrevettiHome home = (VFatturaAttivaRigaBrevettiHome) getHome(userContext, VFatturaAttivaRigaBrevettiBulk.class);
+							sqlExists = home.createSQLBuilder();
+							sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.ESERCIZIO", "V_FATTURA_ATTIVA_RIGA_BREVETTI.ESERCIZIO");
+							sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.CD_CDS", "V_FATTURA_ATTIVA_RIGA_BREVETTI.CD_CDS");
+							sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.CD_UNITA_ORGANIZZATIVA", "V_FATTURA_ATTIVA_RIGA_BREVETTI.CD_UNITA_ORGANIZZATIVA");
+							sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.PG_FATTURA_ATTIVA", "V_FATTURA_ATTIVA_RIGA_BREVETTI.PG_FATTURA_ATTIVA");
+							sqlExists.addSQLJoin("V_DOC_AMM_ATTIVI_BREVETTI.TIPO_FATTURA", "V_FATTURA_ATTIVA_RIGA_BREVETTI.TIPO_FATTURA");
+							sqlExists.addSQLClause("AND","V_FATTURA_ATTIVA_RIGA_BREVETTI.PG_TROVATO",SQLBuilder.EQUALS, clause.getValue() );
+						} else {
+							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+						}
 					}
 				}
 				if (trovataCondizioneTrovato){
@@ -140,35 +137,38 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					Boolean ammissibileConRimborso = null;
 
 					while(e1.hasMoreElements() ){
-						SimpleFindClause clause = (SimpleFindClause) e1.nextElement();
-						int operator = clause.getOperator();
-						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
-								operator == 8192){
-							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
-							Integer str = (Integer)clause.getValue();
-							nazioneBulk = new NazioneBulk(new Long(str));
-							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
-						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
-								operator == 8192)	{
-							Integer str = (Integer)clause.getValue();
-							inquadramento = new Long(str);
-						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
-								operator == 8192)	{
-							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-							Date parsedDate;
-							try {
-								parsedDate = dateFormat.parse((String) clause.getValue());
-								dataTappa = new Timestamp(parsedDate.getTime());
-							} catch (ParseException e2) {
-								e2.printStackTrace();
-							}
-						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("ammissibileRimborso") && 
-								operator == 8192)	{
-							Boolean str = (Boolean)clause.getValue();
-							ammissibileConRimborso = str;
+						FindClause findClause = (FindClause) e.nextElement();
+						if (findClause instanceof SimpleFindClause){
+							SimpleFindClause clause = (SimpleFindClause)findClause;
+							int operator = clause.getOperator();
+							if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
+									operator == 8192){
+								NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
+								Integer str = (Integer)clause.getValue();
+								nazioneBulk = new NazioneBulk(new Long(str));
+								nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+							}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
+									operator == 8192)	{
+								Integer str = (Integer)clause.getValue();
+								inquadramento = new Long(str);
+							}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
+									operator == 8192)	{
+								SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+								Date parsedDate;
+								try {
+									parsedDate = dateFormat.parse((String) clause.getValue());
+									dataTappa = new Timestamp(parsedDate.getTime());
+								} catch (ParseException e2) {
+									e2.printStackTrace();
+								}
+							}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("ammissibileRimborso") && 
+									operator == 8192)	{
+								Boolean str = (Boolean)clause.getValue();
+								ammissibileConRimborso = str;
 
-						} else {
-							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+							} else {
+								newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+							}
 						}
 					}
 					if (nazioneBulk != null && dataTappa != null && inquadramento != null && ammissibileConRimborso != null){
@@ -194,30 +194,33 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					String tipoAuto = null;
 
 					while(e1.hasMoreElements() ){
-						SimpleFindClause clause = (SimpleFindClause) e1.nextElement();
-						int operator = clause.getOperator();
-						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
-								operator == 8192){
-							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
-							Integer str = (Integer)clause.getValue();
-							nazioneBulk = new NazioneBulk(new Long(str));
-							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
-						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("tipoAuto") && 
-								operator == 8192)	{
-							String str = (String)clause.getValue();
-							tipoAuto = str;
-						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
-								operator == 8192)	{
-							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-							Date parsedDate;
-							try {
-								parsedDate = dateFormat.parse((String) clause.getValue());
-								dataTappa = new Timestamp(parsedDate.getTime());
-							} catch (ParseException e2) {
-								e2.printStackTrace();
+						FindClause findClause = (FindClause) e.nextElement();
+						if (findClause instanceof SimpleFindClause){
+							SimpleFindClause clause = (SimpleFindClause)findClause;
+							int operator = clause.getOperator();
+							if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
+									operator == 8192){
+								NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
+								Integer str = (Integer)clause.getValue();
+								nazioneBulk = new NazioneBulk(new Long(str));
+								nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+							}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("tipoAuto") && 
+									operator == 8192)	{
+								String str = (String)clause.getValue();
+								tipoAuto = str;
+							}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
+									operator == 8192)	{
+								SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+								Date parsedDate;
+								try {
+									parsedDate = dateFormat.parse((String) clause.getValue());
+									dataTappa = new Timestamp(parsedDate.getTime());
+								} catch (ParseException e2) {
+									e2.printStackTrace();
+								}
+							} else {
+								newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
 							}
-						} else {
-							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
 						}
 					}
 					if (nazioneBulk != null && dataTappa != null && tipoAuto != null){
@@ -242,30 +245,33 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					Long inquadramento = null;
 
 					while(e1.hasMoreElements() ){
-						SimpleFindClause clause = (SimpleFindClause) e1.nextElement();
-						int operator = clause.getOperator();
-						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
-								operator == 8192){
-							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
-							Integer str = (Integer)clause.getValue();
-							nazioneBulk = new NazioneBulk(new Long(str));
-							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
-						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
-								operator == 8192)	{
-							Integer str = (Integer)clause.getValue();
-							inquadramento = new Long(str);
-						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
-								operator == 8192)	{
-							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-							Date parsedDate;
-							try {
-								parsedDate = dateFormat.parse((String) clause.getValue());
-								dataTappa = new Timestamp(parsedDate.getTime());
-							} catch (ParseException e2) {
-								e2.printStackTrace();
+						FindClause findClause = (FindClause) e.nextElement();
+						if (findClause instanceof SimpleFindClause){
+							SimpleFindClause clause = (SimpleFindClause)findClause;
+							int operator = clause.getOperator();
+							if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
+									operator == 8192){
+								NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
+								Integer str = (Integer)clause.getValue();
+								nazioneBulk = new NazioneBulk(new Long(str));
+								nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+							}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
+									operator == 8192)	{
+								Integer str = (Integer)clause.getValue();
+								inquadramento = new Long(str);
+							}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
+									operator == 8192)	{
+								SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+								Date parsedDate;
+								try {
+									parsedDate = dateFormat.parse((String) clause.getValue());
+									dataTappa = new Timestamp(parsedDate.getTime());
+								} catch (ParseException e2) {
+									e2.printStackTrace();
+								}
+							} else {
+								newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
 							}
-						} else {
-							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
 						}
 					}
 					if (nazioneBulk != null && dataTappa != null && inquadramento != null){
@@ -321,38 +327,41 @@ public class ConsultazioniRestComponent extends CRUDComponent {
     			SQLBuilder sqlExists = null;
     			SQLBuilder sqlNotExists = null;
 				while(e.hasMoreElements() ){
-					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
-					int operator = clause.getOperator();
-					if (clause.getPropertyName() != null && clause.getPropertyName().equals("soloAnticipi") && 
-							operator == 8192){
-						trovataCondizioneSoloAnticipi = true;
-						Mandato_rigaHome home = (Mandato_rigaHome) getHome(userContext, Mandato_rigaBulk.class);
-						sqlExists = home.createSQLBuilder();
-						sqlExists.addTableToHeader("ANTICIPO");
-						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
-						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
-						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
-						sqlExists.addSQLJoin("ANTICIPO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
-						sqlExists.addSQLJoin("ANTICIPO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
-						sqlExists.addSQLJoin("ANTICIPO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
-						sqlExists.addSQLJoin("ANTICIPO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM");
-						sqlExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
-						sqlExists.addSQLClause("AND","ANTICIPO.FL_ASSOCIATO_MISSIONE",SQLBuilder.EQUALS, "N" );
+					FindClause findClause = (FindClause) e.nextElement();
+					if (findClause instanceof SimpleFindClause){
+						SimpleFindClause clause = (SimpleFindClause)findClause;
+						int operator = clause.getOperator();
+						if (clause.getPropertyName() != null && clause.getPropertyName().equals("soloAnticipi") && 
+								operator == 8192){
+							trovataCondizioneSoloAnticipi = true;
+							Mandato_rigaHome home = (Mandato_rigaHome) getHome(userContext, Mandato_rigaBulk.class);
+							sqlExists = home.createSQLBuilder();
+							sqlExists.addTableToHeader("ANTICIPO");
+							sqlExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
+							sqlExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
+							sqlExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
+							sqlExists.addSQLJoin("ANTICIPO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
+							sqlExists.addSQLJoin("ANTICIPO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
+							sqlExists.addSQLJoin("ANTICIPO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
+							sqlExists.addSQLJoin("ANTICIPO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM");
+							sqlExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
+							sqlExists.addSQLClause("AND","ANTICIPO.FL_ASSOCIATO_MISSIONE",SQLBuilder.EQUALS, "N" );
 
 
-						RimborsoHome homeRimborso = (RimborsoHome) getHome(userContext, RimborsoBulk.class);
-						sqlNotExists = homeRimborso.createSQLBuilder();
-						sqlNotExists.addTableToHeader("MANDATO_RIGA");
-						sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
-						sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
-						sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
-						sqlNotExists.addSQLJoin("RIMBORSO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
-						sqlNotExists.addSQLJoin("RIMBORSO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
-						sqlNotExists.addSQLJoin("RIMBORSO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
-						sqlNotExists.addSQLJoin("RIMBORSO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM");
-						sqlNotExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
-					} else {
-						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+							RimborsoHome homeRimborso = (RimborsoHome) getHome(userContext, RimborsoBulk.class);
+							sqlNotExists = homeRimborso.createSQLBuilder();
+							sqlNotExists.addTableToHeader("MANDATO_RIGA");
+							sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
+							sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
+							sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
+							sqlNotExists.addSQLJoin("RIMBORSO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
+							sqlNotExists.addSQLJoin("RIMBORSO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
+							sqlNotExists.addSQLJoin("RIMBORSO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
+							sqlNotExists.addSQLJoin("RIMBORSO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM");
+							sqlNotExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
+						} else {
+							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+						}
 					}
 				}
 				if (trovataCondizioneSoloAnticipi){
@@ -371,23 +380,26 @@ public class ConsultazioniRestComponent extends CRUDComponent {
     			CompoundFindClause newClauses = new CompoundFindClause();
     			Enumeration e = compoundfindclause.getClauses();
     			SQLBuilder sqlExists = null;
-				while(e.hasMoreElements() ){
-					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
-					int operator = clause.getOperator();
-					if (clause.getPropertyName() != null && clause.getPropertyName().equals("pgTrovato") && 
-							operator == 8192){
-						trovataCondizioneTrovato = true;
-						VFatturaPassivaRigaBrevettiHome home = (VFatturaPassivaRigaBrevettiHome) getHome(userContext, VFatturaPassivaRigaBrevettiBulk.class);
-						sqlExists = home.createSQLBuilder();
-						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.ESERCIZIO", "V_FATTURA_PASSIV_RIGA_BREVETTI.ESERCIZIO");
-						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.CD_CDS", "V_FATTURA_PASSIV_RIGA_BREVETTI.CD_CDS");
-						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.CD_UNITA_ORGANIZZATIVA", "V_FATTURA_PASSIV_RIGA_BREVETTI.CD_UNITA_ORGANIZZATIVA");
-						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.PG_FATTURA_PASSIVA", "V_FATTURA_PASSIV_RIGA_BREVETTI.PG_FATTURA_PASSIVA");
-						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.TIPO_FATTURA_COMPENSO", "V_FATTURA_PASSIV_RIGA_BREVETTI.TIPO_FATTURA_COMPENSO");
-						sqlExists.addSQLClause("AND","V_FATTURA_PASSIV_RIGA_BREVETTI.PG_TROVATO",SQLBuilder.EQUALS, clause.getValue() );
-					} else {
-						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
-					}
+    			while(e.hasMoreElements() ){
+    				FindClause findClause = (FindClause) e.nextElement();
+    				if (findClause instanceof SimpleFindClause){
+    					SimpleFindClause clause = (SimpleFindClause)findClause;
+    					int operator = clause.getOperator();
+    					if (clause.getPropertyName() != null && clause.getPropertyName().equals("pgTrovato") && 
+    							operator == 8192){
+    						trovataCondizioneTrovato = true;
+    						VFatturaPassivaRigaBrevettiHome home = (VFatturaPassivaRigaBrevettiHome) getHome(userContext, VFatturaPassivaRigaBrevettiBulk.class);
+    						sqlExists = home.createSQLBuilder();
+    						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.ESERCIZIO", "V_FATTURA_PASSIV_RIGA_BREVETTI.ESERCIZIO");
+    						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.CD_CDS", "V_FATTURA_PASSIV_RIGA_BREVETTI.CD_CDS");
+    						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.CD_UNITA_ORGANIZZATIVA", "V_FATTURA_PASSIV_RIGA_BREVETTI.CD_UNITA_ORGANIZZATIVA");
+    						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.PG_FATTURA_PASSIVA", "V_FATTURA_PASSIV_RIGA_BREVETTI.PG_FATTURA_PASSIVA");
+    						sqlExists.addSQLJoin("V_DOC_AMM_BREVETTI.TIPO_FATTURA_COMPENSO", "V_FATTURA_PASSIV_RIGA_BREVETTI.TIPO_FATTURA_COMPENSO");
+    						sqlExists.addSQLClause("AND","V_FATTURA_PASSIV_RIGA_BREVETTI.PG_TROVATO",SQLBuilder.EQUALS, clause.getValue() );
+    					} else {
+    						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+    					}
+    				}
 				}
 				if (trovataCondizioneTrovato){
 					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
