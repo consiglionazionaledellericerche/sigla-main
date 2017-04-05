@@ -58,6 +58,9 @@
     <bean id="cmisPathComunicazioniAlCNR" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
         <property name="path" value="/Comunicazioni al CNR"/>
     </bean>    
+    <bean id="cmisPathMissioni" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+        <property name="path" value="/Comunicazioni al CNR/Missioni"/>
+    </bean>    
     <bean id="cmisPathComunicazioniDalCNR" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
         <property name="path" value="/Comunicazioni dal CNR"/>
     </bean>    
