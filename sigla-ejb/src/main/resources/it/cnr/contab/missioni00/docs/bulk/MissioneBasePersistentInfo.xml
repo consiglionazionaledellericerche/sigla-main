@@ -370,6 +370,12 @@
 			propertyName="idFolderRimborsoMissione"
 			sqlTypeName="VARCHAR"
 			columnSize="100"/>	
+		<columnMapping
+			columnName="DA_RIMBORSO_DA_COMPLETARE"
+			propertyName="daRimborsoDaCompletare"
+			sqlTypeName="CHAR"
+			columnSize="1" 
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -381,6 +387,8 @@
 		name="pg_obbligazione" />
 	<persistentProperty
 		name="ti_provvisorio_definitivo" />
+	<persistentProperty
+		name="daRimborsoDaCompletare" />
 	<persistentProperty
 		name="stato_coge" />
 	<persistentProperty
