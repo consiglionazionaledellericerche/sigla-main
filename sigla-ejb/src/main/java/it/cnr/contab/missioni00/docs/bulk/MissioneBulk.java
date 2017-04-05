@@ -1,5 +1,21 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Vector;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -33,23 +49,8 @@ import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
-
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Vector;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @CMISType(name="D:emppay:missione", parentName="D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
@@ -60,6 +61,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private int annoSolare;
 	private int esercizioScrivania;	
 	private java.util.Vector collectionGiorni;
+	public final static Dictionary DA_GEMIS_DA_COMPLETARE;
 	private java.util.List collectionGiorniSpese;
 	private java.util.List collectionGiorniSpeseSelezionati;		
 	protected Tipo_missioneBulk tipo_missione;
@@ -82,6 +84,11 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		ti_salvataggioKeys.put("D", "Definitiva");
 		ti_salvataggioKeys.put("P", "Provvisoria");
 		ti_salvataggioKeys.put("T", "");				
+
+		DA_GEMIS_DA_COMPLETARE = new it.cnr.jada.util.OrderedHashtable();
+		DA_GEMIS_DA_COMPLETARE.put(new Boolean(false), "N");
+		DA_GEMIS_DA_COMPLETARE.put(new Boolean(true), "Y");
+
 	}	
 
 	// Tappe
@@ -158,6 +165,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private String cdsAnticipoGeMis;
 	private Long pgAnticipoGeMis;
 	private String gaeGeMis;
+	private Long pgMissioneFromGeMis;
 
 	// Fondo Economale
 	public final static Dictionary STATO_FONDO_ECO;
@@ -3627,5 +3635,19 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 	public void setPgAnticipoGeMis(Long pgAnticipoGeMis) {
 		this.pgAnticipoGeMis = pgAnticipoGeMis;
+	}
+	public java.util.Dictionary getDaRimborsoDaCompletareKeys() {
+		return DA_GEMIS_DA_COMPLETARE;
+	}
+	public Long getPgMissioneFromGeMis() {
+		return pgMissioneFromGeMis;
+	}
+	public void setPgMissioneFromGeMis(Long pgMissioneFromGeMis) {
+		this.pgMissioneFromGeMis = pgMissioneFromGeMis;
+	}
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(StrServ.lpad(this.getPg_missione().toString(),9,"0"));
+		return nomeFile.toString();
 	}
 }
