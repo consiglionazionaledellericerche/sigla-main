@@ -29,6 +29,7 @@ public class MissioniCMISService extends SiglaCMISService {
 	public static final String CMIS_MISSIONE_SIGLA_ANNO = "missioni_sigla:anno";
 	public static final String CMIS_MISSIONE_SIGLA_NUMERO = "missioni_sigla:numero";
 	public static final String CMIS_MISSIONE_SIGLA_OGGETTO = "missioni_sigla:oggetto";
+	public static final String CMIS_MISSIONE_DETTAGLIO_SIGLA_RIGA = "missioni_dettaglio_sigla:riga";
 
 	
 	
@@ -55,6 +56,11 @@ public class MissioniCMISService extends SiglaCMISService {
 	
 	public CMISPath getCMISPathFromFolderRimborso(MissioneBulk missione) throws ComponentException{
 		Folder folderRimborso = (Folder) getNodeByNodeRef(missione.getIdFolderRimborsoMissione());
+		return getCMISPathFromFolder(folderRimborso);
+	}
+
+	public CMISPath getCMISPathFromFolderDettaglio(Missione_dettaglioBulk dettaglio) throws ComponentException{
+		Folder folderRimborso = (Folder) getNodeByNodeRef(dettaglio.getIdFolderDettagliGemis());
 		return getCMISPathFromFolder(folderRimborso);
 	}
 
@@ -169,7 +175,7 @@ public class MissioniCMISService extends SiglaCMISService {
 //		return null;
 //	}
 //	
-	public CMISPath createLastFolderIfNotPresent(CMISPath cmisPath, MissioneBulk missione) throws ApplicationException{
+	public CMISPath createFolderMissioneSiglaIfNotPresent(CMISPath cmisPath, MissioneBulk missione) throws ApplicationException{
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		String name = missione.constructCMISNomeFile();
 		String folderName = name;
@@ -191,6 +197,22 @@ public class MissioniCMISService extends SiglaCMISService {
 		aspectsToAdd.add("P:strorg:uo");
 		aspectsToAdd.add("P:sigla_commons_aspect:utente_applicativo_sigla");
 		aspectsToAdd.add(MissioniCMISService.ASPECT_CMIS_MISSIONE_SIGLA);
+		cmisPath = createFolderIfNotPresent(cmisPath, metadataProperties, aspectsToAdd, folderName);
+		return cmisPath;
+	}
+	public CMISPath createFolderDettaglioIfNotPresent(CMISPath cmisPath, Missione_dettaglioBulk dettaglio) throws ApplicationException{
+		Map<String, Object> metadataProperties = new HashMap<String, Object>();
+		String name = dettaglio.constructCMISNomeFile();
+		String folderName = name;
+		folderName = sanitizeFolderName(folderName);
+		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "F:missioni_dettaglio_sigla:main");
+		metadataProperties.put(MissioniCMISService.PROPERTY_DESCRIPTION, folderName);
+		metadataProperties.put(PropertyIds.NAME, folderName);
+		metadataProperties.put(MissioniCMISService.PROPERTY_TITLE, folderName);
+		metadataProperties.put(MissioniCMISService.CMIS_MISSIONE_DETTAGLIO_SIGLA_RIGA, dettaglio.getPg_riga());
+
+		List<String> aspectsToAdd = new ArrayList<String>();
+		aspectsToAdd.add("P:cm:titled");
 		cmisPath = createFolderIfNotPresent(cmisPath, metadataProperties, aspectsToAdd, folderName);
 		return cmisPath;
 	}
