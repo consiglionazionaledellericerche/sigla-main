@@ -2626,38 +2626,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 					if (excludeChild(cmisObject))
 						continue;
 
-					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_FOLDER)) {
-						Property<?> type = cmisObject.getProperty("cmis:objectTypeId");
-						String prop = type.getValueAsString();
-						if (prop.equals("F:missioni_rimborso_dettaglio:main")){
-							Property<?> typeRiga = cmisObject.getProperty("missioni_rimborso_dettaglio:riga");
-							String rigaString = typeRiga.getValueAsString();
-							Folder folderDettaglio = (Folder) cmisObject;
-					        ItemIterable<CmisObject> children = folderDettaglio.getChildren();
-							if (children != null){
-								for (CmisObject doc : children) {
-									Document document = (Document) doc;
-									if (document != null){
-										AllegatoMissioneDettaglioSpesaBulk allegato = (AllegatoMissioneDettaglioSpesaBulk) Introspector.newInstance(AllegatoMissioneDettaglioSpesaBulk.class, document);
-										allegato.setContentType(document.getContentStreamMimeType());
-										allegato.setNome(document.getName());
-										allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-										allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-										allegato.setCrudStatus(OggettoBulk.NORMAL);
-
-										for ( java.util.Iterator i = allegatoParentBulk.getSpeseMissioneColl().iterator(); i.hasNext(); )
-										{
-											Missione_dettaglioBulk spesa = (Missione_dettaglioBulk) i.next();
-											if (spesa.getPg_riga().equals(new Long(rigaString))){
-												spesa.addToArchivioAllegati(allegato);					
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-
+					recuperoAllegatiDettaglioMissioneSigla(allegatoParentBulk, cmisObject);
 					
 					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
 						Document document = (Document) cmisObject;
@@ -2710,6 +2679,9 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 						continue;
 					if (excludeChild(cmisObject))
 						continue;
+
+					recuperoAllegatiDettaglioMissioneSigla(allegatoParentBulk, cmisObject);
+					
 					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
 						Document document = (Document) cmisObject;
 						AllegatoMissioneBulk allegato = (AllegatoMissioneBulk) Introspector.newInstance(getAllegatoClass(), document);
@@ -2740,6 +2712,42 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 		throw handleException(e); 
 	}
 	return oggettobulk;	
+}
+private void recuperoAllegatiDettaglioMissioneSigla(MissioneBulk allegatoParentBulk, CmisObject cmisObject)
+		throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+	if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_FOLDER)) {
+		Property<?> type = cmisObject.getProperty("cmis:objectTypeId");
+		String prop = type.getValueAsString();
+		if (prop.equals("F:missioni_rimborso_dettaglio:main")){
+			Property<?> typeRiga = cmisObject.getProperty("missioni_rimborso_dettaglio:riga");
+			String rigaString = typeRiga.getValueAsString();
+			Folder folderDettaglio = (Folder) cmisObject;
+	        ItemIterable<CmisObject> children = folderDettaglio.getChildren();
+			if (children != null){
+				for (CmisObject doc : children) {
+					if (doc.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+						Document document = (Document) doc;
+						if (document != null){
+							AllegatoMissioneDettaglioSpesaBulk allegato = (AllegatoMissioneDettaglioSpesaBulk) Introspector.newInstance(AllegatoMissioneDettaglioSpesaBulk.class, document);
+							allegato.setContentType(document.getContentStreamMimeType());
+							allegato.setNome(document.getName());
+							allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+							allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+							allegato.setCrudStatus(OggettoBulk.NORMAL);
+
+							for ( java.util.Iterator i = allegatoParentBulk.getSpeseMissioneColl().iterator(); i.hasNext(); )
+							{
+								Missione_dettaglioBulk spesa = (Missione_dettaglioBulk) i.next();
+								if (spesa.getPg_riga().equals(new Long(rigaString))){
+									spesa.addToArchivioAllegati(allegato);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 @Override
 protected void completeAllegato(AllegatoMissioneBulk allegato) throws ApplicationException {
