@@ -219,6 +219,11 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="false" />		
+		<columnMapping
+			columnName="ID_FOLDER_DETTAGLI_GEMIS"
+			propertyName="idFolderDettagliGemis"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -290,4 +295,6 @@
 		name="im_quota_esente" />
 	<persistentProperty
 		name="im_rimborso" />	
+	<persistentProperty
+		name="idFolderDettagliGemis" />
 </SQLPersistentInfo>
