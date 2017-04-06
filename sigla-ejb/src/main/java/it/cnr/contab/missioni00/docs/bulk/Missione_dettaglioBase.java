@@ -96,6 +96,9 @@ public class Missione_dettaglioBase extends Missione_dettaglioKey implements Key
 	// IM_DIARIA_NETTO DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_rimborso;
 	
+    // ID_FOLDER_DETTAGLI_GEMIS VARCHAR(100)
+    private String idFolderDettagliGemis;
+
 public Missione_dettaglioBase() {
 	super();
 }
@@ -455,5 +458,11 @@ public java.math.BigDecimal getIm_rimborso() {
 }
 public void setIm_rimborso(java.math.BigDecimal im_rimborso) {
 	this.im_rimborso = im_rimborso;
+}
+public String getIdFolderDettagliGemis() {
+	return idFolderDettagliGemis;
+}
+public void setIdFolderDettagliGemis(String idFolderDettagliGemis) {
+	this.idFolderDettagliGemis = idFolderDettagliGemis;
 }
 }

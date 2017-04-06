@@ -32,6 +32,7 @@
 		maxLength="2000"
 		cols="80"
 		rows="3"
+		readonlyProperty="allegatoEsistente"
 		caseSensitiveSearch="false"
 		label="Titolo" />
 	<fieldProperty
@@ -53,15 +54,13 @@
 		enabledOnView="true"
 		readonlyProperty="nodeNotPresent"
 		img="img/import24.gif"
-		href="javascript:doScaricaAllegato()"
+		href="javascript:doVisualizzaGiustificativiCollegati()"
 		label="Apri File" />
 		
 	<formFieldProperty
 		name="nome" />
 	<formFieldProperty
 		name="descrizione" />
-	<formFieldProperty
-		name="titolo" />
 	<formFieldProperty
 		name="file" />
 	<formFieldProperty
@@ -72,14 +71,10 @@
 		name="nome" />
 	<columnFieldProperty
 		name="descrizione" />
-	<columnFieldProperty
-		name="titolo" />
 
 	<findFieldProperty
 		name="nome" />
 	<findFieldProperty
 		name="descrizione" />
-	<findFieldProperty
-		name="titolo" />
 
 </bulkInfo>
