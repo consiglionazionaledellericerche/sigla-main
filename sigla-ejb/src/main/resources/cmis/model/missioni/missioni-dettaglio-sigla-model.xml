@@ -32,7 +32,7 @@
 			<description>Dati Dettaglio Rimborso Missione</description>
 			<parent>cm:folder</parent>
 			<properties>
-				<property name="missioni_rimborso_dettaglio:riga">
+				<property name="missioni_dettaglio_sigla:riga">
 					<title>Numero riga dettaglio Missione</title>
 					<type>d:long</type>
 				</property>
