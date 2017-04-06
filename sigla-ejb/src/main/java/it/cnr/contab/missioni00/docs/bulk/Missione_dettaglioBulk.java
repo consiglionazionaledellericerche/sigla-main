@@ -9,6 +9,7 @@ import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.StrServ;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
 public class Missione_dettaglioBulk extends Missione_dettaglioBase 
 {
-	private BulkList dettaglioSpesaAllegati = new BulkList();
 	public final static String TIPO_DIARIA = "D";
 	public final static String TIPO_SPESA = "S";		
 	public final static String TIPO_RIMBORSO = "R";
@@ -44,6 +44,7 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	public static final int STATUS_NOT_CONFIRMED = 0;
 	public static final int STATUS_CONFIRMED = 1;
 	private String allegatiDocumentale;
+	private BulkList<AllegatoMissioneDettaglioSpesaBulk> dettaglioSpesaAllegati = new BulkList<AllegatoMissioneDettaglioSpesaBulk>();
 	private int status = STATUS_NOT_CONFIRMED;
 	protected Missione_dettaglioBulk spesaIniziale;
 	/***************************************************************/
@@ -522,17 +523,23 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 		if((isRimborsoKm()) && ((getChilometri() == null) || (getChilometri().compareTo(new java.math.BigDecimal(0)) < 0)))		
 			throw new ValidationException( "il numero di Km deve essere > 0!" );		
 	}
+	/**
+	 * Il metodo ritorna il valore dell'attributo 'dettaglioSpesaAllegati'
+	 */
+	public it.cnr.jada.bulk.BulkList<AllegatoMissioneDettaglioSpesaBulk> getDettaglioSpesaAllegati() {
+		return dettaglioSpesaAllegati;
+	}
+	/**
+	 * Il metodo imposta il valore dell'attributo 'dettaglioSpesaAllegati'
+	 */
+	public void setDettaglioSpesaAllegati(it.cnr.jada.bulk.BulkList<AllegatoMissioneDettaglioSpesaBulk> newDettaglioSpesaAllegati) {
+		dettaglioSpesaAllegati = newDettaglioSpesaAllegati;
+	}
 	public String getAllegatiDocumentale() {
 		return allegatiDocumentale;
 	}
 	public void setAllegatiDocumentale(String allegatiDocumentale) {
 		this.allegatiDocumentale = allegatiDocumentale;
-	}
-	public BulkList getDettaglioSpesaAllegati() {
-		return dettaglioSpesaAllegati;
-	}
-	public void setDettaglioSpesaAllegati(BulkList dettaglioSpesaAllegati) {
-		this.dettaglioSpesaAllegati = dettaglioSpesaAllegati;
 	}
 	/**
 	 * Restituisce un array di <code>BulkCollection</code> contenenti oggetti
@@ -544,8 +551,23 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 		return new it.cnr.jada.bulk.BulkCollection[] { 
 				dettaglioSpesaAllegati };
 	}
-	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+	/**
+	 * Il metodo rimuove dalla collection dei dettagli di spesa un solo dettaglio
+	 */
+	public AllegatoMissioneDettaglioSpesaBulk removeFromDettaglioSpesaAllegati(int index) 
+	{
+		AllegatoMissioneDettaglioSpesaBulk allegato = (AllegatoMissioneDettaglioSpesaBulk)dettaglioSpesaAllegati.remove(index);
+		allegato.setToBeDeleted();
+
+		return allegato;
+	}
+	public int addToDettaglioSpesaAllegati(AllegatoMissioneDettaglioSpesaBulk allegato) {
 		dettaglioSpesaAllegati.add(allegato);
 		return dettaglioSpesaAllegati.size()-1;		
+	}
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(StrServ.lpad(this.getPg_riga().toString(),4,"0"));
+		return nomeFile.toString();
 	}
 }
