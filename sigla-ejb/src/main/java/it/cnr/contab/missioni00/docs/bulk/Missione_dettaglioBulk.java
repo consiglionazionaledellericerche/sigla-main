@@ -570,4 +570,10 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 		nomeFile = nomeFile.append(StrServ.lpad(this.getPg_riga().toString(),4,"0"));
 		return nomeFile.toString();
 	}
+	public Boolean isDettaglioMissioneFromGemis(){
+		if (getIdFolderDettagliGemis() != null){
+			return true;
+		}
+		return false;
+	}
 }

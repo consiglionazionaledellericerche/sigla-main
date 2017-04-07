@@ -55,7 +55,6 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -132,6 +131,20 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 			}
 			oggettobulk.validate();		
 			super.validate(actioncontext, oggettobulk);
+		}
+
+		@Override
+		public OggettoBulk removeDetail(int i) {
+			if (!getModel().isNew()){	
+				List list = getDetails();
+				AllegatoGenericoBulk all =(AllegatoGenericoBulk)list.get(i);
+				if (isPossibileCancellazioneDettaglioAllegato(all)) {
+					return super.removeDetail(i);
+				} else {
+					return null;
+				}
+			}
+			return super.removeDetail(i);
 		}
 	};	
 				
@@ -2295,7 +2308,17 @@ public void update(ActionContext context) throws it.cnr.jada.action.BusinessProc
 																							getModel(),
 																							getUserConfirm()));
 		archiviaAllegati(context, null);
-		Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
+		archiviaAllegatiMissioneDettagli();
+		setUserConfirm(null);
+	} 
+	catch(Throwable e) 
+	{
+		throw handleException(e);
+	}
+}
+private void archiviaAllegatiMissioneDettagli() throws ApplicationException, BusinessProcessException {
+	MissioneBulk missione = (MissioneBulk)getModel();
+	for (Missione_dettaglioBulk dettaglio : missione.getDettagliMissioneColl()) {
 		for (AllegatoMissioneDettaglioSpesaBulk allegato : dettaglio.getDettaglioSpesaAllegati()) {
 			if (allegato.isToBeCreated()){
 				try {
@@ -2329,11 +2352,6 @@ public void update(ActionContext context) throws it.cnr.jada.action.BusinessProc
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 			}
 		}
-		setUserConfirm(null);
-	} 
-	catch(Throwable e) 
-	{
-		throw handleException(e);
 	}
 }
 /**
@@ -2917,6 +2935,15 @@ public void scaricaGiustificativiCollegati(ActionContext actioncontext) throws E
 protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
 	AllegatoMissioneBulk all =(AllegatoMissioneBulk)allegato;
 	if (!all.getAspectName().equals(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA)){
+		setMessage("Cancellazione non possibile!");
+		return false;
+	}
+	return true;
+}
+
+protected Boolean isPossibileCancellazioneDettaglioAllegato(AllegatoGenericoBulk allegato) {
+	AllegatoMissioneBulk all =(AllegatoMissioneBulk)allegato;
+	if (!all.getAspectName().equals(MissioniCMISService.ASPECT_MISSIONE_SIGLA_DETTAGLIO)){
 		setMessage("Cancellazione non possibile!");
 		return false;
 	}
