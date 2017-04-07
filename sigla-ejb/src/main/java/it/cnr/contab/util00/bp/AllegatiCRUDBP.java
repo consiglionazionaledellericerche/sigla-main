@@ -75,6 +75,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		return true;
 	}
 
+	protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato){
+		return true;
+	}
+
 	public AllegatiCRUDBP(String s) {
 		super(s);
 	}	
@@ -242,15 +246,17 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 					throw new ApplicationException("Il file " + allegato.getNome() +" già esiste!");
 				}
 			}else if (allegato.isToBeUpdated()) {
-				try {
-					if (allegato.getFile() != null)
-						cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
-								new FileInputStream(allegato.getFile()),
-								allegato.getContentType());
-					cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
-					allegato.setCrudStatus(OggettoBulk.NORMAL);
-				} catch (FileNotFoundException e) {
-					throw handleException(e);
+				if (isPossibileModifica(allegato)) {
+					try {
+						if (allegato.getFile() != null)
+							cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
+									new FileInputStream(allegato.getFile()),
+									allegato.getContentType());
+						cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
+						allegato.setCrudStatus(OggettoBulk.NORMAL);
+					} catch (FileNotFoundException e) {
+						throw handleException(e);
+					}
 				}
 			}
 		}
