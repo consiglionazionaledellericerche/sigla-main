@@ -55,6 +55,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -126,6 +127,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 				allegato.setFile(file.getFile());
 				allegato.setContentType(file.getContentType());
 				allegato.setNome(allegato.parseFilename(file.getName()));
+				allegato.setAspectName(MissioniCMISService.ASPECT_MISSIONE_SIGLA_DETTAGLIO);
 				allegato.setToBeUpdated();
 				getParentController().setDirty(true);
 			}
@@ -137,7 +139,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 		public OggettoBulk removeDetail(int i) {
 			if (!getModel().isNew()){	
 				List list = getDetails();
-				AllegatoGenericoBulk all =(AllegatoGenericoBulk)list.get(i);
+				AllegatoMissioneDettaglioSpesaBulk all =(AllegatoMissioneDettaglioSpesaBulk)list.get(i);
 				if (isPossibileCancellazioneDettaglioAllegato(all)) {
 					return super.removeDetail(i);
 				} else {
@@ -2316,6 +2318,9 @@ public void update(ActionContext context) throws it.cnr.jada.action.BusinessProc
 		throw handleException(e);
 	}
 }
+
+
+
 private void archiviaAllegatiMissioneDettagli() throws ApplicationException, BusinessProcessException {
 	MissioneBulk missione = (MissioneBulk)getModel();
 	for (Missione_dettaglioBulk dettaglio : missione.getDettagliMissioneColl()) {
@@ -2335,11 +2340,15 @@ private void archiviaAllegatiMissioneDettagli() throws ApplicationException, Bus
 			}else if (allegato.isToBeUpdated()) {
 				try {
 					if (allegato.getFile() != null)
-						cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
-								new FileInputStream(allegato.getFile()),
-								allegato.getContentType());
-					cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
-					allegato.setCrudStatus(OggettoBulk.NORMAL);
+							if (!isDocumentoDettaglioProvenienteDaGemis(allegato)){
+								cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
+										new FileInputStream(allegato.getFile()),
+										allegato.getContentType());
+								cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
+								allegato.setCrudStatus(OggettoBulk.NORMAL);
+							} else {
+								throw new ApplicationException("Aggiornamento non possibile! Documento proveniente dalla procedura Missioni");
+							}
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
 				}
@@ -2655,7 +2664,7 @@ protected CMISPath getCMISPath(MissioneBulk allegatoParentBulk, boolean create) 
 protected CMISPath getCMISPathDettaglio(Missione_dettaglioBulk dettaglioBulk, boolean create) throws BusinessProcessException{
 	try {
 		CMISPath cmisPath = null;
-		if (dettaglioBulk.isMissioneFromGemis() && dettaglioBulk.getIdFolderDettagliGemis() != null){
+		if (dettaglioBulk.isMissioneFromGemis() && dettaglioBulk.isDettaglioMissioneFromGemis()){
 			cmisPath = missioniCMISService.getCMISPathFromFolderDettaglio(dettaglioBulk);
 		} else {
 			cmisPath = SpringUtil.getBean("cmisPathMissioni",CMISPath.class);
@@ -2664,7 +2673,11 @@ protected CMISPath getCMISPathDettaglio(Missione_dettaglioBulk dettaglioBulk, bo
 				cmisPath = missioniCMISService.createFolderIfNotPresent(cmisPath, dettaglioBulk.getCd_unita_organizzativa(), dettaglioBulk.getCd_unita_organizzativa(), dettaglioBulk.getCd_unita_organizzativa());
 				cmisPath = missioniCMISService.createFolderIfNotPresent(cmisPath, "Rimborso Missione", "Rimborso Missione", "Rimborso Missione");
 				cmisPath = missioniCMISService.createFolderIfNotPresent(cmisPath, "Anno "+dettaglioBulk.getEsercizio().toString(), "Anno "+dettaglioBulk.getEsercizio().toString(), "Anno "+dettaglioBulk.getEsercizio().toString());
-				cmisPath = missioniCMISService.createFolderMissioneSiglaIfNotPresent(cmisPath, dettaglioBulk.getMissione());
+				if (dettaglioBulk.isMissioneFromGemis()){
+					cmisPath = missioniCMISService.getCMISPathFromFolderRimborso(dettaglioBulk.getMissione());
+				} else {
+					cmisPath = missioniCMISService.createFolderMissioneSiglaIfNotPresent(cmisPath, dettaglioBulk.getMissione());
+				}
 				cmisPath = missioniCMISService.createFolderDettaglioIfNotPresent(cmisPath, dettaglioBulk);
 			} else {
 				try {
@@ -2840,6 +2853,35 @@ private void recuperoAllegatiDettaglioMissioneSigla(MissioneBulk allegatoParentB
 					}
 				}
 			}
+		} else if (prop.equals("F:missioni_dettaglio_sigla:main")){
+			Property<?> typeRiga = cmisObject.getProperty("missioni_dettaglio_sigla:riga");
+			String rigaString = typeRiga.getValueAsString();
+			Folder folderDettaglio = (Folder) cmisObject;
+	        ItemIterable<CmisObject> children = folderDettaglio.getChildren();
+			if (children != null){
+				for (CmisObject doc : children) {
+					if (doc.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+						Document document = (Document) doc;
+						if (document != null){
+							AllegatoMissioneDettaglioSpesaBulk allegato = (AllegatoMissioneDettaglioSpesaBulk) Introspector.newInstance(AllegatoMissioneDettaglioSpesaBulk.class, document);
+							allegato.setContentType(document.getContentStreamMimeType());
+							allegato.setNome(document.getName());
+							allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+							allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+							allegato.setCrudStatus(OggettoBulk.NORMAL);
+
+							for ( java.util.Iterator i = allegatoParentBulk.getSpeseMissioneColl().iterator(); i.hasNext(); )
+							{
+								Missione_dettaglioBulk spesa = (Missione_dettaglioBulk) i.next();
+								if (spesa.getPg_riga().equals(new Long(rigaString))){
+									spesa.addToDettaglioSpesaAllegati(allegato);
+								}
+							}
+						}
+					}
+				}
+			}
+			
 		}
 	}
 }
@@ -2934,17 +2976,47 @@ public void scaricaGiustificativiCollegati(ActionContext actioncontext) throws E
 @Override
 protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
 	AllegatoMissioneBulk all =(AllegatoMissioneBulk)allegato;
-	if (!all.getAspectName().equals(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA)){
-		setMessage("Cancellazione non possibile!");
+	if (isDocumentoProvenienteDaGemis(all)){
+		setMessage("Cancellazione non possibile! Documento proveniente dalla procedura Missioni");
 		return false;
 	}
 	return true;
 }
 
+private Boolean isDocumentoProvenienteDaGemis(AllegatoGenericoBulk allegato){
+	Document doc;
+	try {
+		doc = allegato.getDocument(missioniCMISService);
+		if (doc != null){
+			if (!missioniCMISService.hasAspect(doc, MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA)){
+				return true;
+			}
+		}
+	} catch (ApplicationException e) {
+		setMessage("Errore nel recupero del file!");
+	}
+	return false;
+}
+
+private Boolean isDocumentoDettaglioProvenienteDaGemis(AllegatoGenericoBulk allegato){
+	Document doc;
+	try {
+		doc = allegato.getDocument(missioniCMISService);
+		if (doc != null){
+			if (!missioniCMISService.hasAspect(doc, MissioniCMISService.ASPECT_MISSIONE_SIGLA_DETTAGLIO)){
+				return true;
+			}
+		}
+	} catch (ApplicationException e) {
+		setMessage("Errore nel recupero del file!");
+	}
+	return false;
+}
+
 protected Boolean isPossibileCancellazioneDettaglioAllegato(AllegatoGenericoBulk allegato) {
-	AllegatoMissioneBulk all =(AllegatoMissioneBulk)allegato;
-	if (!all.getAspectName().equals(MissioniCMISService.ASPECT_MISSIONE_SIGLA_DETTAGLIO)){
-		setMessage("Cancellazione non possibile!");
+	AllegatoMissioneDettaglioSpesaBulk all =(AllegatoMissioneDettaglioSpesaBulk)allegato;
+	if (isDocumentoDettaglioProvenienteDaGemis(all)){
+		setMessage("Cancellazione non possibile! Documento proveniente dalla procedura Missioni");
 		return false;
 	}
 	return true;
@@ -2957,5 +3029,15 @@ protected Boolean isPossibileCancellazioneDettaglioAllegato(AllegatoGenericoBulk
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getDettaglioSpesaAllegatiController() {
 	return dettaglioSpesaAllegatiController;
+}
+@Override
+protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato){
+	if (allegato.getFile() != null){
+		if (isDocumentoProvenienteDaGemis(allegato)){
+			setMessage("Aggiornamento non possibile! Documento proveniente dalla procedura Missioni");
+			return false;
+		}
+	}
+	return true;
 }
 }

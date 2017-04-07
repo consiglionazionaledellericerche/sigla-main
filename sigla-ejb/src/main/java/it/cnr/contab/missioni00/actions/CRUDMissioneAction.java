@@ -2999,7 +2999,7 @@ public Forward doSalva(ActionContext context) throws java.rmi.RemoteException
 	}	
 }
 
-public Forward doSalvaProvvisorio(ActionContext context) throws java.rmi.RemoteException
+public Forward doSalvaDefinitivo(ActionContext context) throws java.rmi.RemoteException
 {
 	CRUDMissioneBP bp = (CRUDMissioneBP)getBusinessProcess(context);
 	
