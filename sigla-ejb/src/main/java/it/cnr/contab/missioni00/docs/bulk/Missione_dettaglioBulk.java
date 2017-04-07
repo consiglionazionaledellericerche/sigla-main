@@ -488,13 +488,17 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 		// di default (EURO) mentre l'importo e' calcolato (km*indennita')	
 		if(!isRimborsoKm())
 		{
-			if((getIm_spesa_divisa() == null) || (getIm_spesa_divisa().compareTo(new java.math.BigDecimal(0)) < 1))
-				throw new ValidationException( "L'importo delle spesa deve essere > 0!" );
+			if((getIm_spesa_divisa() == null)  || (getIm_spesa_divisa().compareTo(new java.math.BigDecimal(0)) < 1 && !isDettaglioMissioneFromGemis()))
+				throw new ValidationException( "L'importo della spesa deve essere > 0!" );
 
+			if (getIm_spesa_divisa().compareTo(new java.math.BigDecimal(0)) < 0){
+				throw new ValidationException( "L'importo della spesa non può essere negativo" );
+			}
+			
 			if(getCd_divisa_spesa() == null)
 				throw new ValidationException( "Selezionare la valuta!" );
 
-			if((getCambio_spesa() == null) || (getCambio_spesa().compareTo(new java.math.BigDecimal(0)) < 1))		
+			if((getCambio_spesa() == null) || (getCambio_spesa().compareTo(new java.math.BigDecimal(0)) < 1))
 				throw new ValidationException( "Il cambio deve essere > 0 !" );			
 		}
 
