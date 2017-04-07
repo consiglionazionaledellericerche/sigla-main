@@ -24,6 +24,7 @@ import it.cnr.jada.comp.ComponentException;
 
 public class MissioniCMISService extends SiglaCMISService {
 	
+	public static final String ASPECT_MISSIONE_SIGLA_DETTAGLIO = "P:missioni_sigla_attachment:scontrini";
 	public static final String ASPECT_ALLEGATI_MISSIONE_SIGLA = "P:missioni_sigla_attachment:allegati";
 	public static final String ASPECT_CMIS_MISSIONE_SIGLA = "P:missioni_sigla:missione_sigla";
 	public static final String CMIS_MISSIONE_SIGLA_ANNO = "missioni_sigla:anno";
