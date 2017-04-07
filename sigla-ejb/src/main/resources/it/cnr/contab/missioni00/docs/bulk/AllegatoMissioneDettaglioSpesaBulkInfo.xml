@@ -30,7 +30,7 @@
 		rows="3"
 		readonlyProperty="allegatoEsistente"
 		caseSensitiveSearch="false"
-		label="Descrizione" />
+		label="Pippo" />
 	<fieldProperty
 		name="titolo"
 		property="titolo"
@@ -84,4 +84,11 @@
 	<findFieldProperty
 		name="descrizione" />
 
+	<columnSet
+		name="allegatiDettaglioSpese" >
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+	</columnSet>
 </bulkInfo>

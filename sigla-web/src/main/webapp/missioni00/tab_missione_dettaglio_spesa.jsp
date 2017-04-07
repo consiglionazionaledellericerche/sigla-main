@@ -76,10 +76,10 @@
 	
 	<tr>	
 	<td><% 
-	if((spesa != null) && (!spesa.isMissioneFromGemis())){
+	if((spesa != null) && (!spesa.isDettaglioMissioneFromGemis())){
 		bp.getSpesaController().writeFormLabel( out, "ds_giustificativo");		
 	} %></td>
-	<td><% 	if((spesa != null) && (!spesa.isMissioneFromGemis())){
+	<td><% 	if((spesa != null) && (!spesa.isDettaglioMissioneFromGemis())){
 		bp.getSpesaController().writeFormInput( out, "default", "ds_giustificativo", !bp.getSpesaController().isEditingSpesa(), "FormInput", null);
 	} %></td>
 	<td></td>	
