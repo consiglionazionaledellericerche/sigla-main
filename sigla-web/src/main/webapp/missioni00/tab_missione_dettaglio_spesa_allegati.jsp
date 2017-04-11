@@ -20,9 +20,23 @@ function doVisualizzaGiustificativiCollegati() {
 }
 </script>
 
-<%  bp.getDettaglioSpesaAllegatiController().writeHTMLTable(pageContext,"default",true,false,true,"100%","150px"); %>  
+<%  bp.getDettaglioSpesaAllegatiController().writeHTMLTable(pageContext,"allegatiDettaglioSpese",true,false,true,"100%","150px"); %>  
 <div class="Group">
   <table>
-  	<% bp.getDettaglioSpesaAllegatiController().writeForm(out, "default");  %>
+	<tr>
+		<td><% controller.writeFormLabel(out,"default","file"); %></td>
+		<td colspan="2"><% controller.writeFormInput(out,"default","file", true,"FormInput",null); %></td>
+	</tr>
+	<tr>
+		<td><% controller.writeFormLabel(out,"default","nome"); %></td>
+		<td><% controller.writeFormInput(out,"default","nome"); %></td>
+		<% if (bulk != null && bulk.isContentStreamPresent()){%>
+			 <td align="left"><% controller.writeFormInput(out,"default","attivaFile");%></td>
+		<%}%>
+	</tr>
+	<tr>
+		<td><% controller.writeFormLabel(out,"default","descrizione"); %></td>
+		<td colspan="2"><% controller.writeFormInput(out,"default","descrizione", true,"FormInput",null); %></td>
+	</tr>
   </table>
 </div> 
