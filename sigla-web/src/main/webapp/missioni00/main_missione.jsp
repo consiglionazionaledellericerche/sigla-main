@@ -64,7 +64,7 @@
 	<tr><td>
 		<%	
 			String[][] pages = null;
-			if(missione != null && missione.getPg_missione() != null){
+			if(missione != null && missione.getPg_missione() != null && missione.getPg_missione().compareTo(new Long (0)) > 0){
 				pages = new String[][] {
 					{ "tabTestata","Testata","/missioni00/tab_missione_testata.jsp" },							
 					{ "tabAnagrafico","Anagrafico","/missioni00/tab_missione_anagrafico.jsp" },
