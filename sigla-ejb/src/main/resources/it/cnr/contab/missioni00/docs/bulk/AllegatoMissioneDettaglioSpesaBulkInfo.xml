@@ -30,7 +30,7 @@
 		rows="3"
 		readonlyProperty="allegatoEsistente"
 		caseSensitiveSearch="false"
-		label="Pippo" />
+		label="Descrizione" />
 	<fieldProperty
 		name="titolo"
 		property="titolo"

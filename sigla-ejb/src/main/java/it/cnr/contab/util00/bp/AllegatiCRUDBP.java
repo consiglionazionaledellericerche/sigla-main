@@ -260,6 +260,9 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 				}
 			}
 		}
+		gestioneCancellazioneAllegati(allegatoParentBulk);
+	}
+	protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {
 		for (Iterator<AllegatoGenericoBulk> iterator = allegatoParentBulk.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
 			AllegatoGenericoBulk allegato = iterator.next();
 			if (allegato.isToBeDeleted()){
