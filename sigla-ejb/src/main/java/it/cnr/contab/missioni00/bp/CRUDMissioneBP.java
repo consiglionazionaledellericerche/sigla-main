@@ -100,18 +100,6 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 			// Aggiungo alla table delle spese il bottone di fine inserimento spese
 			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif",isViewing() ? null : "javascript:submitForm('doFineInserimentoSpese')",true,"Fine Inserimento Spese");			
 		}
-
-		@Override
-		public List getDetails() {
-//			Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getModel();
-//			try {
-//				recuperoAllegatiDettaglio(dettaglio);
-//			} catch (ApplicationException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			return super.getDetails();
-		}
 	};	
 	
 	private final SimpleDetailCRUDController diariaController = new SimpleDetailCRUDController("Diaria", Missione_dettaglioBulk.class,"diariaMissioneColl",this);
@@ -2927,26 +2915,6 @@ public String getNomeAllegatoDettaglio() throws ApplicationException{
 		return dettaglio.getNome();
 	}
 	return "";
-}
-
-private ItemIterable<CmisObject> recuperoAllegatiDettaglio() throws ApplicationException {
-	Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk)getSpesaController().getModel();
-	return recuperoAllegatiDettaglio(dettaglio);
-}
-private ItemIterable<CmisObject> recuperoAllegatiDettaglio(Missione_dettaglioBulk dettaglio) throws ApplicationException {
-	if (dettaglio != null && dettaglio.isMissioneFromGemis() && dettaglio.getIdFolderDettagliGemis() != null){
-		try {
-			Folder node = (Folder)missioniCMISService.getNodeByNodeRef(dettaglio.getIdFolderDettagliGemis());
-			if (node != null){
-				return node.getChildren();
-			}
-		} catch (CmisObjectNotFoundException e) {
-			return null;
-		}
-	} else {
-		
-	}
-	return null;
 }
 
 public void scaricaGiustificativiCollegati(ActionContext actioncontext) throws Exception {
