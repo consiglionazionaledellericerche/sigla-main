@@ -37,17 +37,19 @@
 	<tr></tr>
 	<tr></tr>
   <tr><td colspan=10>
-	      <%	JSPUtils.tabbed(
-							pageContext,
-							"tabDettaglioSpese",
-							new String[][] {
-								{ "tabDettaglioSpesa","Dettaglio Spesa","/missioni00/tab_missione_dettaglio_spesa.jsp" },
-								{ "tabDettaglioSpesaAllegati","Allegati","/missioni00/tab_missione_dettaglio_spesa_allegati.jsp" } },
-							bp.getTab("tabDettaglioSpese"),
-							"left", 
-							"910px", null,
-							!bp.getSpesaController().isEditingSpesa() );
-			
-		%>
+	      <%
+	      	String[][] pages = null;
+	      	if(spesa != null && spesa.getPg_missione() != null && spesa.getPg_missione().compareTo(new Long (0)) > 0){
+	      		pages = new String[][] {
+	      			{ "tabDettaglioSpesa","Dettaglio Spesa","/missioni00/tab_missione_dettaglio_spesa.jsp" },
+	      			{ "tabDettaglioSpesaAllegati","Allegati","/missioni00/tab_missione_dettaglio_spesa_allegati.jsp" } };
+	      	} else {
+	      		pages = new String[][] {
+	      			{ "tabDettaglioSpesa","Dettaglio Spesa","/missioni00/tab_missione_dettaglio_spesa.jsp" } };
+	      	}
+	      	JSPUtils.tabbed(pageContext, "tabDettaglioSpese",
+	      			pages,
+	      			bp.getTab("tabDettaglioSpese"), "left", "910px", null, !bp.getSpesaController().isEditingSpesa());
+	      %>
 	</td></tr>
 </table>

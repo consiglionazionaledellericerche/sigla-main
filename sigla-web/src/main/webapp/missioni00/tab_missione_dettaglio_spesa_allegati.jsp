@@ -24,19 +24,17 @@ function doVisualizzaGiustificativiCollegati() {
 <div class="Group">
   <table>
 	<tr>
-		<td><% controller.writeFormLabel(out,"default","file"); %></td>
-		<td colspan="2"><% controller.writeFormInput(out,"default","file", true,"FormInput",null); %></td>
+		<td><% bp.getDettaglioSpesaAllegatiController().writeFormLabel(out,"default","file"); %></td>
+		<td colspan="2"><% bp.getDettaglioSpesaAllegatiController().writeFormInput(out,"default","file", false,"FormInput",null); %></td>
 	</tr>
 	<tr>
-		<td><% controller.writeFormLabel(out,"default","nome"); %></td>
-		<td><% controller.writeFormInput(out,"default","nome"); %></td>
-		<% if (bulk != null && bulk.isContentStreamPresent()){%>
-			 <td align="left"><% controller.writeFormInput(out,"default","attivaFile");%></td>
-		<%}%>
+		<td><% bp.getDettaglioSpesaAllegatiController().writeFormLabel(out,"default","nome"); %></td>
+		<td><% bp.getDettaglioSpesaAllegatiController().writeFormInput(out,"default","nome"); %></td>
+		<td align="left"><% bp.getDettaglioSpesaAllegatiController().writeFormInput(out,"default","attivaFile");%></td>
 	</tr>
 	<tr>
-		<td><% controller.writeFormLabel(out,"default","descrizione"); %></td>
-		<td colspan="2"><% controller.writeFormInput(out,"default","descrizione", true,"FormInput",null); %></td>
+		<td><% bp.getDettaglioSpesaAllegatiController().writeFormLabel(out,"default","descrizione"); %></td>
+		<td colspan="2"><% bp.getDettaglioSpesaAllegatiController().writeFormInput(out,"default","descrizione", false,"FormInput",null); %></td>
 	</tr>
   </table>
 </div> 
