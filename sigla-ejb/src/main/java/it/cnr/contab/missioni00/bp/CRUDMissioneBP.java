@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -63,6 +64,8 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.action.MessageToUser;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.FieldValidationMap;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
@@ -100,6 +103,26 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 			// Aggiungo alla table delle spese il bottone di fine inserimento spese
 			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif",isViewing() ? null : "javascript:submitForm('doFineInserimentoSpese')",true,"Fine Inserimento Spese");			
 		}
+
+		@Override
+		public OggettoBulk removeDetail(int i) {
+			List list = getDetails();
+			Missione_dettaglioBulk dettaglio =(Missione_dettaglioBulk)list.get(i);
+			if (dettaglio.isDettaglioMissioneFromGemis()){
+				 throw new it.cnr.jada.action.MessageToUser( "Dettaglio non eliminabile in quanto proveniente da dalla Gestione automatica delle Missioni" );
+			} else {
+				BulkList<AllegatoMissioneDettaglioSpesaBulk> listaDettagliAllegati = dettaglio.getDettaglioSpesaAllegati();
+				if (listaDettagliAllegati != null && !listaDettagliAllegati.isEmpty()){
+					int k;
+					for ( k = 0; k < listaDettagliAllegati.size(); k++ ){
+						AllegatoMissioneDettaglioSpesaBulk all = listaDettagliAllegati.get(k);
+						all.setToBeDeleted();
+					}
+				}
+			}
+			return super.removeDetail(i);
+		}
+
 	};	
 	
 	private final SimpleDetailCRUDController diariaController = new SimpleDetailCRUDController("Diaria", Missione_dettaglioBulk.class,"diariaMissioneColl",this);
@@ -135,6 +158,14 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 				}
 			}
 			return super.removeDetail(i);
+		}
+
+		@Override
+		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+			int add = super.addDetail(oggettobulk);
+			AllegatoMissioneDettaglioSpesaBulk all =(AllegatoMissioneDettaglioSpesaBulk)oggettobulk;
+			all.setIsDetailAdded(true);
+			return add;
 		}
 	};	
 				
@@ -2350,6 +2381,28 @@ private void archiviaAllegatiMissioneDettagli() throws ApplicationException, Bus
 			}
 		}
 	}
+
+	if (!missione.isSalvataggioTemporaneo()){
+		for (Iterator<Missione_dettaglioBulk> iterator = missione.getDettagliMissioneColl().deleteIterator(); iterator.hasNext();) {
+			Missione_dettaglioBulk dettaglio = iterator.next();
+			Folder folder = null;
+			for (Iterator<AllegatoMissioneDettaglioSpesaBulk> iteratorAll = dettaglio.getDettaglioSpesaAllegati().iterator(); iteratorAll.hasNext();) {
+				AllegatoMissioneDettaglioSpesaBulk allegato = iteratorAll.next();
+				if (allegato.isToBeDeleted()){
+					Document doc = allegato.getDocument(cmisService);
+					List<Folder> list = doc.getParents();
+					for (Iterator<Folder> iteratorFolder = list.iterator(); iteratorFolder.hasNext();) {
+						folder = iteratorFolder.next();
+					}
+					cmisService.deleteNode(doc);
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+				}
+			}
+			if (folder != null){
+				cmisService.deleteNode(folder);
+			}
+		}
+	}
 }
 /**
  * Il metodo aggiorno la linea di attivita dell'anticipo collegato a missione inizializzadola con quella 
@@ -3007,5 +3060,12 @@ protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato){
 		}
 	}
 	return true;
+}
+@Override
+protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {
+	MissioneBulk missione = (MissioneBulk)allegatoParentBulk;
+	if (!missione.isSalvataggioTemporaneo()){
+		super.gestioneCancellazioneAllegati(allegatoParentBulk);
+	}
 }
 }
