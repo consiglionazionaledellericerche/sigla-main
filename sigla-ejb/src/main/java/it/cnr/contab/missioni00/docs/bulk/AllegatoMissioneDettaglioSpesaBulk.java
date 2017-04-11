@@ -16,14 +16,19 @@ public class AllegatoMissioneDettaglioSpesaBulk extends AllegatoGenericoBulk {
 
 	private String aspectName;
 	
+	private String nodeRefDettaglio;
+	
+	private Boolean isDetailAdded = false;
+	
 	public AllegatoMissioneDettaglioSpesaBulk() {
 		super();
 	}
 
 	public AllegatoMissioneDettaglioSpesaBulk(Document node) {
 		super(node);
+		setNodeRefDettaglio(node.getId());
 	}
-	
+	 
 	@CMISProperty(name=PropertyIds.SECONDARY_OBJECT_TYPE_IDS)
 	public List<String> getAspect() {
 		 List<String> results = new ArrayList<String>();
@@ -36,10 +41,7 @@ public class AllegatoMissioneDettaglioSpesaBulk extends AllegatoGenericoBulk {
 
 	public boolean isAllegatoEsistente()
 	{
-		if(this.isToBeCreated())
-			return false;
-
-		return true;
+		return !getIsDetailAdded();
 	}
 
 	public String getAspectName() {
@@ -48,5 +50,21 @@ public class AllegatoMissioneDettaglioSpesaBulk extends AllegatoGenericoBulk {
 
 	public void setAspectName(String aspectName) {
 		this.aspectName = aspectName;
+	}
+
+	public Boolean getIsDetailAdded() {
+		return isDetailAdded;
+	}
+
+	public void setIsDetailAdded(Boolean isDetailAdded) {
+		this.isDetailAdded = isDetailAdded;
+	}
+
+	public String getNodeRefDettaglio() {
+		return nodeRefDettaglio;
+	}
+
+	public void setNodeRefDettaglio(String nodeRefDettaglio) {
+		this.nodeRefDettaglio = nodeRefDettaglio;
 	}
 }
