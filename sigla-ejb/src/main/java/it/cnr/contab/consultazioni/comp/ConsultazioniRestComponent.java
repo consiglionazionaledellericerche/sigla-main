@@ -137,7 +137,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					Boolean ammissibileConRimborso = null;
 
 					while(e1.hasMoreElements() ){
-						FindClause findClause = (FindClause) e.nextElement();
+						FindClause findClause = (FindClause) e1.nextElement();
 						if (findClause instanceof SimpleFindClause){
 							SimpleFindClause clause = (SimpleFindClause)findClause;
 							int operator = clause.getOperator();
@@ -194,7 +194,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					String tipoAuto = null;
 
 					while(e1.hasMoreElements() ){
-						FindClause findClause = (FindClause) e.nextElement();
+						FindClause findClause = (FindClause) e1.nextElement();
 						if (findClause instanceof SimpleFindClause){
 							SimpleFindClause clause = (SimpleFindClause)findClause;
 							int operator = clause.getOperator();
@@ -245,7 +245,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					Long inquadramento = null;
 
 					while(e1.hasMoreElements() ){
-						FindClause findClause = (FindClause) e.nextElement();
+						FindClause findClause = (FindClause) e1.nextElement();
 						if (findClause instanceof SimpleFindClause){
 							SimpleFindClause clause = (SimpleFindClause)findClause;
 							int operator = clause.getOperator();
