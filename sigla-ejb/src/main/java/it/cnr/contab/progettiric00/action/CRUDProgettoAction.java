@@ -35,6 +35,8 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 		fillModel(context);
 
 		CRUDBP bp = getBusinessProcess(context);
+		if (bp instanceof TestataProgettiRicercaBP && ((TestataProgettiRicercaBP)bp).isFlNuovoPdg())
+			return doConfirmElimina(context, OptionBP.YES_BUTTON);	
 		return openConfirm(context,"Attenzione i Finanziatori del progetto, le UO partecipanti ed i Post-It saranno persi, vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmElimina");
 	} catch(Throwable e) {
 		return handleException(context,e);

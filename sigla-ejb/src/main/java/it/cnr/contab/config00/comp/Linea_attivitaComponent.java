@@ -172,15 +172,15 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 					throw new ApplicationException( "La Commessa sul GAE non può essere nulla.");
 				if (latt!=null && latt.getModulo2015()!=null && 
 					latt.getModulo2015().getProgettopadre()!=null && latt.getModulo2015().getProgettopadre().getProgettopadre()!=null)
-					cdProgramma = latt.getModulo2015().getProgettopadre().getProgettopadre().getCd_dipartimento();
+					cdProgramma = latt.getModulo2015().getProgettopadre().getProgettopadre().getCd_programma();
 			}
 			if (parCnr.getFl_nuovo_pdg()) {
 				if (latt.getProgetto2016() == null ||(latt.getProgetto2016() != null && latt.getProgetto2016().getPg_progetto() == null))
 					throw new ApplicationException( "Il Progetto sul GAE non può essere nullo. " );
 				if (latt!=null && latt.getProgetto2016()!=null && latt.getProgetto2016().getProgettopadre()!=null)
-					if (cdProgramma != null && !cdProgramma.equals(latt.getProgetto2016().getProgettopadre().getCd_dipartimento()))
-						throw new ApplicationException( "Il Codice Dipartimento del Modulo di attività ("+cdProgramma+") non può essere differente da quello del Progetto ("+latt.getProgetto2016().getProgettopadre().getCd_dipartimento()+")." );
-					cdProgramma = latt.getProgetto2016().getProgettopadre().getCd_dipartimento();
+					if (cdProgramma != null && !cdProgramma.equals(latt.getProgetto2016().getProgettopadre().getCd_programma()))
+						throw new ApplicationException( "Il Codice Dipartimento del Modulo di attività ("+cdProgramma+") non può essere differente da quello del Progetto ("+latt.getProgetto2016().getProgettopadre().getCd_programma()+")." );
+					cdProgramma = latt.getProgetto2016().getProgettopadre().getCd_programma();
 			}
 			if (cdProgramma!=null) {
 				if (latt.getPdgProgramma()!=null && !cdProgramma.equals(latt.getPdgProgramma().getCd_programma()))
@@ -609,12 +609,13 @@ public WorkpackageBulk inizializzaNature(UserContext userContext,WorkpackageBulk
 	try {
 			NaturaHome home = (NaturaHome)getHome(userContext,NaturaBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
-			if (linea_attivita.getTi_gestione() != null){
-				if (linea_attivita.getTi_gestione().equals(linea_attivita.TI_GESTIONE_SPESE))
-				  sql.addSQLClause("AND","FL_SPESA",sql.EQUALS,"Y");
-				else if (linea_attivita.getTi_gestione().equals(linea_attivita.TI_GESTIONE_ENTRATE))
-				  sql.addSQLClause("AND","FL_ENTRATA",sql.EQUALS,"Y"); 
-
+			if (linea_attivita.TI_GESTIONE_SPESE.equals(linea_attivita.getTi_gestione()))
+			  sql.addSQLClause("AND","FL_SPESA",sql.EQUALS,"Y");
+			else if (linea_attivita.TI_GESTIONE_ENTRATE.equals(linea_attivita.getTi_gestione()))
+			  sql.addSQLClause("AND","FL_ENTRATA",sql.EQUALS,"Y"); 
+			else if (linea_attivita.getTi_gestione().equals(linea_attivita.TI_GESTIONE_ENTRAMBE)) {
+			  sql.addSQLClause("AND","FL_SPESA",sql.EQUALS,"Y");
+			  sql.addSQLClause("AND","FL_ENTRATA",sql.EQUALS,"Y");
 			}
 			Broker broker = home.createBroker(sql);
 			linea_attivita.setNature(home.fetchAll(broker));
@@ -945,7 +946,7 @@ public SQLBuilder selectProgetto2016ByClause (UserContext userContext,
 		sql.addSQLJoin("V_PROGETTO_PADRE.ESERCIZIO_PROGETTO_PADRE","PROGETTO_DIP.ESERCIZIO");
 		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO_PADRE","PROGETTO_DIP.PG_PROGETTO");
 		sql.addSQLJoin("V_PROGETTO_PADRE.TIPO_FASE_PROGETTO_PADRE","PROGETTO_DIP.TIPO_FASE");
-		sql.addSQLClause(FindClause.AND, "PROGETTO_DIP.CD_DIPARTIMENTO", SQLBuilder.EQUALS, linea_attivita.getPdgProgramma().getCd_programma());
+		sql.addSQLClause(FindClause.AND, "PROGETTO_DIP.CD_PROGRAMMA", SQLBuilder.EQUALS, linea_attivita.getPdgProgramma().getCd_programma());
 	}
 	return sql;
 }
