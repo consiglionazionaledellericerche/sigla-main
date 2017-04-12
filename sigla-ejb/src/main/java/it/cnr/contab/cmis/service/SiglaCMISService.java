@@ -513,11 +513,17 @@ public class SiglaCMISService implements Serializable{
 	public void addConsumerToEveryone(CmisObject cmisObject) throws ApplicationException{
 		addAcl(getSiglaBindingSession(), cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(), Collections.singletonMap("GROUP_EVERYONE", ACLType.Consumer));
 	}
-
+	
 	public void removeConsumerToEveryone(CmisObject cmisObject) throws ApplicationException{
 		removeAcl(getSiglaBindingSession(), cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(), Collections.singletonMap("GROUP_EVERYONE", ACLType.Consumer));
 	}
-
+	// per gestire gruppi diversi es. CONTRATTI
+	public void addConsumer(CmisObject cmisObject,String group ) throws ApplicationException{
+		addAcl(getSiglaBindingSession(), cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(), Collections.singletonMap(group, ACLType.Consumer));
+	}
+	public void removeConsumer(CmisObject cmisObject,String group ) throws ApplicationException{
+		removeAcl(getSiglaBindingSession(), cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(), Collections.singletonMap(group, ACLType.Consumer));
+	}
 	public void copyNode(Document source, Folder target){
 		source.addToFolder(target, true);
 	}

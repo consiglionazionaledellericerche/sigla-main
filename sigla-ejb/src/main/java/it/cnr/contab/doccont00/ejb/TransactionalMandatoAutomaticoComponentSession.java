@@ -451,4 +451,101 @@ public Boolean isCollegamentoSospesoCompleto(UserContext param0,
 		}
 	}
 }
+@Override
+public String isAnnullabile(UserContext param0, MandatoBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (java.lang.String)invoke("isAnnullabile",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public it.cnr.contab.doccont00.core.bulk.MandatoBulk annullaMandato(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1,boolean param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.doccont00.core.bulk.MandatoBulk)invoke("annullaMandato",new Object[] {
+			param0,
+			param1,
+			new Boolean(param2) });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+@Override
+public Boolean esisteAnnullodaRiemettereNonCollegato(UserContext param0,
+		Integer param1, String param2) throws ComponentException,
+		RemoteException {
+	try {
+		return (java.lang.Boolean)invoke("esisteAnnullodaRiemettereNonCollegato",new Object[] {
+			param0,
+			param1,
+			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+@Override
+public Boolean isMandatoCollegatoAnnullodaRiemettere(UserContext param0,
+		MandatoBulk param1) throws ComponentException, RemoteException {
+	try {
+		return (java.lang.Boolean)invoke("isMandatoCollegatoAnnullodaRiemettere",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+@Override
+public Boolean isVerificataModPagMandato(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (java.lang.Boolean)invoke("isVerificataModPagMandato",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }

@@ -1579,7 +1579,7 @@ public Forward doCalcolaTotaliDiRiga(ActionContext context) {
 	try	{
 		java.math.BigDecimal vecchioTotale = riga.getIm_imponibile().add(riga.getIm_iva());
 		fillModel( context );
-		if (riga.getPrezzo_unitario()==null || riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0))<0)
+		if (riga.getPrezzo_unitario()==null )//|| riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0))<0)
 		  throw new it.cnr.jada.comp.ApplicationException("Inserire un importo maggiore di zero");
 		 //richiamo il metodo basicDoCalcolaTotaliDiRiga
 		basicDoCalcolaTotaliDiRiga(context, riga, vecchioTotale);

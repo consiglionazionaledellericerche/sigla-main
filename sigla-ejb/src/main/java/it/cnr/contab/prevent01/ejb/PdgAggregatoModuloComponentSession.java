@@ -13,4 +13,5 @@ it.cnr.jada.bulk.OggettoBulk annullaScaricaDipendentiSuPdGP(it.cnr.jada.UserCont
 it.cnr.jada.bulk.OggettoBulk getCdrPdGP(it.cnr.jada.UserContext param0,it.cnr.contab.config00.sto.bulk.CdrBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void validaCancellazionePdgModulo(it.cnr.jada.UserContext userContext, it.cnr.contab.prevent01.bulk.Pdg_moduloBulk pdg_modulo) throws  it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void stampaBilancioCallAggiornaDati(it.cnr.jada.UserContext userContext, it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk bulk, boolean aggPrevAC, boolean aggResiduiAC, boolean aggResiduiAP, boolean aggCassaAC) throws it.cnr.jada.comp.ComponentException;
+void stampaRendicontoCallAggiornaDati(it.cnr.jada.UserContext userContext, it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk bulk, boolean aggCompAC, boolean aggResiduiAC, boolean aggCassaAC, boolean aggCompAP, boolean aggResiduiAP, boolean aggCassaAP) throws it.cnr.jada.comp.ComponentException;
 }

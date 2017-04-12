@@ -23,6 +23,8 @@
 	<title>Gestione Distinta cassiere - Flusso Ordinativo </title>
 <% } else if (bp2.isSepa()) {%>
 	<title>Gestione Distinta Sepa</title>
+<% } else if (bp2.isAnnulli()) {%>
+	<title>Gestione Distinta Annulli</title>	
 <% } else {%>
 	<title>Gestione Distinta cassiere</title>
 <% } %>

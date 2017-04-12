@@ -144,15 +144,15 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:/jdbc/CIR" pool-name="OracleDSSIGLAPool" enabled="true" use-java-context="true" statistics-enabled="true">
-                    <connection-url>jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF</connection-url>
+                    <connection-url>jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAT</connection-url>
                     <driver>ojdbc</driver>
                     <pool>
                         <min-pool-size>3</min-pool-size>
-                        <max-pool-size>5</max-pool-size>
+                        <max-pool-size>10</max-pool-size>
                     </pool>
                     <security>
                         <user-name>PCIR009</user-name>
-                        <password>dbform</password>
+                        <password>dbtest</password>
                     </security>
                     <validation>
                         <exception-sorter class-name="org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter"/>
@@ -399,6 +399,7 @@
                     <location name="/" handler="welcome-content"/>
                     <filter-ref name="server-header"/>
                     <filter-ref name="x-powered-by-header"/>
+		    <access-log pattern="common" directory="${jboss.home.dir}/standalone/log" prefix="access" />
                 </host>
             </server>
             <servlet-container name="default">

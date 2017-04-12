@@ -280,7 +280,7 @@ public Forward doApriIncarichiProcedura(ActionContext context) {
 public Forward doBringBackApriIncarichiProcedura(ActionContext context) {
 	try {
 		CRUDBP bp = (CRUDBP)context.getBusinessProcess();
-		bp.edit(context, bp.getModel());
+		bp.edit(context, bp.getModel()); 
 		return context.findDefaultForward();
 	} catch(Throwable e) {
 		return handleException(context,e);
@@ -294,14 +294,15 @@ public Forward doOnDtStipulaChange(ActionContext context) {
 	if (incarico.getDt_stipula()!=null)
 		oldDate = (java.sql.Timestamp)incarico.getDt_stipula().clone();
 
-	try {
+	try { 
 		fillModel(context);
-
 		if (incarico.getDt_stipula()!=null && incarico.getDt_stipula().after(EJBCommonServices.getServerDate())) 
 		    throw new ValidationException( "Non \350 possibile inserire una data di stipula superiore alla data odierna.");
 		else if (incarico.getDt_stipula()!=null && !incarico.getFl_inviato_corte_conti() && DateUtils.daysBetweenDates(incarico.getDt_stipula(), EJBCommonServices.getServerDate())<5)
 			throw new ValidationException( "Non \350 possibile inserire una data di stipula inferiore di 5 giorni rispetto alla data odierna.");
-
+		else if (incarico.getDt_stipula()!=null && incarico.getIncarichi_procedura()!=null && incarico.getIncarichi_procedura().getTipo_incarico()!=null && incarico.getIncarichi_procedura().getTipo_incarico().getDt_fine_validita()!=null)  
+				if (incarico.getDt_stipula().after(incarico.getIncarichi_procedura().getTipo_incarico().getDt_fine_validita()))
+					throw new ValidationException( "Non \350 possibile conferire questo tipo di incarico con la data indicata.");
 		if (incarico.getTerzo()!=null && incarico.getTerzo().getCd_terzo()!=null)
 		    throw new ValidationException( "Non \350 possibile modificare la \"Data di Stipula\". Cancellare il campo \"Contraente\" e ripetere l'operazione.");
 		incarico.validaDateContratto();

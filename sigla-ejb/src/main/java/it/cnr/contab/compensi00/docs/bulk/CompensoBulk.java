@@ -42,9 +42,14 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Vector;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @CMISType(name = "D:emppay:compenso", parentName = "D:emppay:document")
+@JsonInclude(value=Include.NON_NULL)
 public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk {
 
 	private BancaBulk banca;
@@ -220,7 +225,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	private Tipo_prestazione_compensoBulk tipoPrestazioneCompenso;
 	private java.util.Collection tipiPrestazioneCompenso;
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
-
+	private boolean userAbilitatoSenzaCalcolo = false;
 	public CompensoBulk() {
 		super();
 	}
@@ -1366,8 +1371,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 *            it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
 	 */
 	public boolean isAnnullato() {
-
-		return getStato_cofi().equals(STATO_ANNULLATO);
+		return Optional.ofNullable(getStato_cofi()).map(x -> x.equals(STATO_ANNULLATO)).orElse(false);
 	}
 
 	public boolean isApertoDaMinicarriera() {
@@ -1382,8 +1386,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 *            it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
 	 */
 	public boolean isAssegnatoAFondoEconomale() {
-
-		return getStato_pagamento_fondo_eco().equals(ASSEGNATO_FONDO_ECO);
+		return ASSEGNATO_FONDO_ECO.equals(getStato_pagamento_fondo_eco());
 	}
 
 	/**
@@ -1411,8 +1414,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 * @return boolean
 	 */
 	public boolean isCancellabile() {
-		return (getStato_cofi().equals(STATO_INIZIALE) || (getStato_cofi().equals(STATO_CONTABILIZZATO))
-				&& getTi_associato_manrev().equals(NON_ASSOCIATO_MANREV));
+		return (Optional.ofNullable(getStato_cofi()).map(x -> x.equals(STATO_INIZIALE) || x.equals(STATO_CONTABILIZZATO)).orElse(true)
+				&& Optional.ofNullable(getTi_associato_manrev()).map(x -> x.equals(NON_ASSOCIATO_MANREV)).orElse(true));
 	}
 
 	public boolean isDaConguaglio() {
@@ -1450,7 +1453,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 * isEditable method comment.
 	 */
 	public boolean isEditable() {
-		return (getEsercizioScrivania() == getEsercizio().intValue()) && !isRiportata();
+		return (getEsercizioScrivania() == Optional.ofNullable(getEsercizio()).map(Integer::intValue).orElse(0)) && !isRiportata();
 	}
 
 	/**
@@ -1468,8 +1471,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 * 
 	 **/
 	public boolean isObbligazioneObbligatoria() {
-
-		return getImportoObbligazione().compareTo(new java.math.BigDecimal(0)) > 0;
+		return Optional.ofNullable(getImportoObbligazione()).map(x -> x.compareTo(BigDecimal.ZERO) > 0).orElse(false);
 	}
 
 	/**
@@ -1620,7 +1622,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 */
 	public boolean isROFlagSenzaCalcoli() {
 
-		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null)
+		if (isDaMissione() || isDaMinicarriera() || isDaConguaglio() || isDaBonus() || isROPerChiusura() || (isDaFatturaPassiva() && !isUserAbilitatoSenzaCalcolo()))
 			return true;
 		return false;
 	}
@@ -1663,7 +1665,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 * @return boolean
 	 */
 	public boolean isROModalitaPagamento() {
-		return isROPerChiusura() || isDaFatturaPassiva();
+		return isROPerChiusura();// || isDaFatturaPassiva();
 	}
 
 	/**
@@ -3393,5 +3395,14 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
 	public void setMandatiRigaAssociati(java.util.List mandatiRigaAssociati) {
 		this.mandatiRigaAssociati = mandatiRigaAssociati;
+	}
+
+	public void setUserAbilitatoSenzaCalcolo(boolean b) {
+		this.userAbilitatoSenzaCalcolo=b;
+		
+	}
+
+	public boolean isUserAbilitatoSenzaCalcolo() {
+		return userAbilitatoSenzaCalcolo;
 	}
 }

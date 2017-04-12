@@ -1,21 +1,20 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
-import it.cnr.contab.anagraf00.tabter.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.jada.bulk.BulkList;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Gestione dei dati relativi alla tabella Terzo
  */
-
+@JsonInclude(value=Include.NON_NULL)
 public class TerzoBulk extends TerzoBase {
 	private BulkList telefoni           = new BulkList();
 	private BulkList fax                = new BulkList();
@@ -865,7 +864,7 @@ public void setTerzo_speciale(boolean newTerzo_speciale) {
 		unita_organizzativa = newUnita_organizzativa;
 	}
 	public boolean isStudioAssociato() {
-		return getAnagrafico().getFl_studio_associato();
+		return Optional.ofNullable(getAnagrafico()).map(AnagraficoBulk::getFl_studio_associato).orElse(false);
 	}
 	public java.lang.String getCodice_fiscale_anagrafico() {
 		it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk anagrafico = this.getAnagrafico();
