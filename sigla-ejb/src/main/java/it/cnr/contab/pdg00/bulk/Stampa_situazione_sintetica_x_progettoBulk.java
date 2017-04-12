@@ -44,6 +44,8 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 
 	private Boolean printMovimentazione;
 
+	private Boolean printSoloGaeAttive;
+
 	private String ti_ordine_stampa;
 	
 	public final static String TI_ORDINE_GAE_VOCE_ANNO = "V";
@@ -206,5 +208,13 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 	
 	public void setPrintVoce(Boolean printVoce) {
 		this.printVoce = printVoce;
+	}
+
+	public Boolean getPrintSoloGaeAttive() {
+		return printSoloGaeAttive;
+	}
+	
+	public void setPrintSoloGaeAttive(Boolean printSoloGaeAttive) {
+		this.printSoloGaeAttive = printSoloGaeAttive;
 	}
 }

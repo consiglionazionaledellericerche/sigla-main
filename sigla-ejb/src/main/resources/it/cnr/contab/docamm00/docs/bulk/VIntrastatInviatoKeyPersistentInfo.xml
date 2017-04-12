@@ -27,7 +27,7 @@
 		<columnMapping
 			columnName="PROTOCOLLO_INVIO"
 			propertyName="protocollo_invio"
-			sqlTypeName="STRING"
+			sqlTypeName="VARCHAR"
 			columnSize="6"
 			nullable="false"
 			primary="true" />		

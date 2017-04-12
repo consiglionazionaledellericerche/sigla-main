@@ -1,6 +1,11 @@
 package it.cnr.contab.missioni00.docs.bulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+
 import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
@@ -15,7 +20,7 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.*;
 import it.cnr.jada.util.action.*;
-
+@JsonInclude(value=Include.NON_NULL)
 public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk
 {
 	private DivisaBulk divisa = new DivisaBulk();

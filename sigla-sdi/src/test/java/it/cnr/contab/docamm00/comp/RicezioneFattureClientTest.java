@@ -1,8 +1,8 @@
 package it.cnr.contab.docamm00.comp;
 
-import it.gov.fatturapa.FileSdIConMetadatiType;
-import it.gov.fatturapa.RicezioneFatture;
-import it.gov.fatturapa.RicezioneFattureService;
+//import it.gov.fatturapa.FileSdIConMetadatiType;
+//import it.gov.fatturapa.RicezioneFatture;
+//import it.gov.fatturapa.RicezioneFattureService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +17,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.gov.fatturapa.FileSdIConMetadatiType;
+import it.gov.fatturapa.RicezioneFattureService;
 
 public class RicezioneFattureClientTest {
 	private transient final static Logger LOGGER = LoggerFactory.getLogger(RicezioneFattureClientTest.class);

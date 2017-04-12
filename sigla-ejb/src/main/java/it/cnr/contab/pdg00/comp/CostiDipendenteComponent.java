@@ -1714,6 +1714,7 @@ public SQLBuilder selectUnita_organizzativa_scaricoByClause(UserContext userCont
 		sqlAss.addSQLJoin("ASS_CDP_LA.ESERCIZIO","C.ESERCIZIO");
 		sqlAss.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA","C.CD_ROOT");
 		sqlAss.addSQLJoin("C.CD_CDS","V_UNITA_ORGANIZZATIVA_VALIDA.CD_UNITA_PADRE");
+		sqlAss.addSQLClause(FindClause.AND,"V_UNITA_ORGANIZZATIVA_VALIDA.CD_TIPO_UNITA", SQLBuilder.NOT_EQUALS,Tipo_unita_organizzativaHome.TIPO_UO_SAC);		
 
 		sqlAss.openParenthesis(FindClause.AND);
 		sqlAss.addSQLClause(FindClause.AND,"ASS_CDP_LA.STATO", SQLBuilder.EQUALS, Ass_cdp_laBulk.STATO_SCARICATO);
@@ -1721,6 +1722,24 @@ public SQLBuilder selectUnita_organizzativa_scaricoByClause(UserContext userCont
 		sqlAss.closeParenthesis();
 		
 		sql.addSQLNotExistsClause(FindClause.AND, sqlAss);
+		SQLBuilder sqlAssSac = homeAss.createSQLBuilder();
+		sqlAssSac.resetColumns();
+		sqlAssSac.addColumn("1");
+
+		sqlAssSac.addSQLJoin("ASS_CDP_LA.ESERCIZIO","V_UNITA_ORGANIZZATIVA_VALIDA.ESERCIZIO");
+
+		sqlAssSac.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA", "C");
+		sqlAssSac.addSQLJoin("ASS_CDP_LA.ESERCIZIO","C.ESERCIZIO");
+		sqlAssSac.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA","C.CD_ROOT");
+		sqlAssSac.addSQLJoin("C.CD_UNITA_ORGANIZZATIVA","V_UNITA_ORGANIZZATIVA_VALIDA.CD_UNITA_ORGANIZZATIVA");
+		sqlAssSac.addSQLClause(FindClause.AND,"V_UNITA_ORGANIZZATIVA_VALIDA.CD_TIPO_UNITA", SQLBuilder.EQUALS,Tipo_unita_organizzativaHome.TIPO_UO_SAC);		
+
+		sqlAssSac.openParenthesis(FindClause.AND);
+		sqlAssSac.addSQLClause(FindClause.AND,"ASS_CDP_LA.STATO", SQLBuilder.EQUALS, Ass_cdp_laBulk.STATO_SCARICATO);
+		sqlAssSac.addSQLClause(FindClause.OR,"ASS_CDP_LA.STATO", SQLBuilder.EQUALS, Ass_cdp_laBulk.STATO_SCARICATO_PDGP);
+		sqlAssSac.closeParenthesis();
+		sql.addSQLNotExistsClause(FindClause.AND, sqlAssSac);
+
 	} else {
 		BulkHome homeAss = getHome(userContext,Ass_cdp_laBulk.class);
 		SQLBuilder sqlAss = homeAss.createSQLBuilder();
@@ -1734,12 +1753,30 @@ public SQLBuilder selectUnita_organizzativa_scaricoByClause(UserContext userCont
 		sqlAss.addSQLJoin("ASS_CDP_LA.ESERCIZIO","C.ESERCIZIO");
 		sqlAss.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA","C.CD_ROOT");
 		sqlAss.addSQLJoin("C.CD_CDS","V_UNITA_ORGANIZZATIVA_VALIDA.CD_UNITA_PADRE");
+		sqlAss.addSQLClause(FindClause.AND,"V_UNITA_ORGANIZZATIVA_VALIDA.CD_TIPO_UNITA", SQLBuilder.NOT_EQUALS,Tipo_unita_organizzativaHome.TIPO_UO_SAC);
 
 		sqlAss.openParenthesis(FindClause.AND);
 		sqlAss.addSQLClause(FindClause.AND,"ASS_CDP_LA.STATO", SQLBuilder.EQUALS, Ass_cdp_laBulk.STATO_SCARICATO_DEFINITIVO);
 		sqlAss.closeParenthesis();
 		
 		sql.addSQLNotExistsClause(FindClause.AND, sqlAss);
+		
+		SQLBuilder sqlAssSac = homeAss.createSQLBuilder();
+		sqlAssSac.resetColumns();
+		sqlAssSac.addColumn("1");
+
+		sqlAssSac.addSQLJoin("ASS_CDP_LA.ESERCIZIO","V_UNITA_ORGANIZZATIVA_VALIDA.ESERCIZIO");
+
+		sqlAssSac.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA", "C");
+		sqlAssSac.addSQLJoin("ASS_CDP_LA.ESERCIZIO","C.ESERCIZIO");
+		sqlAssSac.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA","C.CD_ROOT");
+		sqlAssSac.addSQLJoin("C.CD_UNITA_ORGANIZZATIVA","V_UNITA_ORGANIZZATIVA_VALIDA.CD_UNITA_ORGANIZZATIVA");
+		sqlAssSac.addSQLClause(FindClause.AND,"V_UNITA_ORGANIZZATIVA_VALIDA.CD_TIPO_UNITA", SQLBuilder.EQUALS,Tipo_unita_organizzativaHome.TIPO_UO_SAC);		
+
+		sqlAssSac.openParenthesis(FindClause.AND);
+		sqlAssSac.addSQLClause(FindClause.AND,"ASS_CDP_LA.STATO", SQLBuilder.EQUALS, Ass_cdp_laBulk.STATO_SCARICATO_DEFINITIVO);
+		sqlAssSac.closeParenthesis();
+		sql.addSQLNotExistsClause(FindClause.AND, sqlAssSac);
 
 		BulkHome homeCoan = getHome(userContext,Stipendi_coanBulk.class);
 		SQLBuilder sqlCoan = homeCoan.createSQLBuilder();

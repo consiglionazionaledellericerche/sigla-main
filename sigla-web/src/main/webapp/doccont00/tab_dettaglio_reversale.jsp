@@ -21,7 +21,7 @@
 			<td><% bp.getController().writeFormInput( out, "terzo_cd_terzo"); %>
 			    <% bp.getController().writeFormInput( out, "terzo_ds_terzo"); %></td>						
 			<td><% bp.getController().writeFormLabel( out, "terzo_tipo_bollo"); %></td>
-			<td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", false, "FormInput","onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
+			<td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", reversale.isAnnullato(), "FormInput","onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
 			    <% bp.getController().writeFormInput( out, "terzo_im_tipo_bollo"); %></td>						
 		</tr>
 		<tr>
@@ -57,7 +57,7 @@
 					</tr>
 					<tr>
 						<td  width="55%" rowspan="2">
-					        <% bp.getCodiciSiopeCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",false,false,false,"100%","100px", false); %>
+					        <% bp.getCodiciSiopeCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",false,false,false,"100%","100px", reversale.isAnnullato()); %>
 						</td>
 						<td  width="4%" align="center">
 							<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),null,"javascript:submitForm('doRimuoviCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled()); %>
@@ -104,7 +104,7 @@
 			<table border="0" cellspacing="0" cellpadding="2">
 					<tr>
 						<td colspan="6"> 
-					        <% bp.getCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",true,false,true,"100%","100px", true); %>
+					        <% bp.getCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",!reversale.isAnnullato(),false,!reversale.isAnnullato(),"100%","100px", true); %>
 						</td>
 					</tr> 
 						
@@ -123,7 +123,7 @@
 			<table border="0" cellspacing="0" cellpadding="2">
 					<tr>
 						<td colspan="6"> 
-					        <% bp.getSiopeCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversaleSiope",true,false,true,"100%","100px", true); %>
+					        <% bp.getSiopeCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversaleSiope",!reversale.isAnnullato(),false,!reversale.isAnnullato(),"100%","100px", true); %>
 						</td>
 					</tr> 
 						

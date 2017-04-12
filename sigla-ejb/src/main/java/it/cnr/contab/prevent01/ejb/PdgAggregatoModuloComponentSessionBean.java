@@ -211,4 +211,21 @@ public void stampaBilancioCallAggiornaDati(it.cnr.jada.UserContext param0, it.cn
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+public void stampaRendicontoCallAggiornaDati(it.cnr.jada.UserContext param0, it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk param1, boolean param2, boolean param3, boolean param4, boolean param5, boolean param6, boolean param7) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((PdgAggregatoModuloComponent)componentObj).stampaRendicontoCallAggiornaDati(param0,param1,param2,param3,param4,param5,param6,param7);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
 }

@@ -235,7 +235,7 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 	}
 	
 	public String getCMISName() {
-		return (getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN) ? "Mandato n. " : "Reversale n. ") + getPg_documento_cont() + ".pdf";
+		return (getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN) ? "Mandato n. " : "Reversale n. ") + getPg_documento_cont() + (getStato().equals(MandatoBulk.STATO_MANDATO_ANNULLATO)?" A.pdf":".pdf");
 	}
 
 	public String getReportName() {

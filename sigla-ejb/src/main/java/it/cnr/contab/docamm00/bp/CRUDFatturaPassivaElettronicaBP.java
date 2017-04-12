@@ -38,7 +38,7 @@ import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
-import it.gov.fatturapa.sdi.fatturapa.v1.RegimeFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -303,8 +303,15 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		ItemIterable<CmisObject> files = fatturaFolder.getChildren();
 		for (CmisObject cmisObject : files) {
 			if (cmisObject.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains("P:sigla_fatture_attachment:trasmissione_fattura")){													
-				TransformerFactory tFactory = TransformerFactory.newInstance();							
-				Source xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
+				TransformerFactory tFactory = TransformerFactory.newInstance();
+				Source xslDoc = null;
+				if (documentoEleTestata.getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("FPA12")){
+					xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+				} else if (documentoEleTestata.getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("SDI11")){
+					xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
+				} else {
+					throw new ApplicationException("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
+				}
 				Source xmlDoc = new StreamSource(((Document)cmisObject).getContentStream().getStream());
 				HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
 				OutputStream os = response.getOutputStream();
@@ -470,7 +477,10 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 					dettaglioController.setDirty(true);
 					dettaglioController.setModelIndex(context, i);
 					rigaFattura.setBene_servizio(documentoEleLinea.getBeneServizio());
-					rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
+					if(documentoEleLinea.getLineaDescrizione().length()>199)
+						rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione().substring(0, 199));
+					else
+						rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
 					rigaFattura.setVoce_iva(recuperaCodiceIVA(documentoEleTestata, documentoEleLinea));
 					rigaFattura.setQuantita(documentoEleLinea.getLineaQuantita());
 					action.doOnQuantitaChange(context);
