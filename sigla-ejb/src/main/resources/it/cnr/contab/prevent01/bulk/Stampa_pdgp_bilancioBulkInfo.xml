@@ -17,6 +17,7 @@
         keysProperty="ti_gestioneKeys"
         nullable="false"
         enabledOnSearch="true"
+        command="doOnTipoChange"
         layout="HORIZONTAL"        
         label="Tipo Stampa" />
 	<fieldProperty
@@ -26,7 +27,8 @@
         keysProperty="ti_stampaKeys"
         nullable="false"
         enabledOnSearch="true"
-        layout="HORIZONTAL"        
+        command="doDefault"
+        layout="HORIZONTAL"
         label="Tipo Bilancio" />
 	<fieldProperty
         name="ti_aggregazione"
@@ -35,6 +37,7 @@
         keysProperty="ti_aggregazioneKeys"
         nullable="false"
         enabledOnSearch="true"
+        command="doOnTipoAggregazioneChange"
         layout="HORIZONTAL"        
         label="Tipo Aggregazione" />
 	<fieldProperty
@@ -68,6 +71,15 @@
 		name="riepilogo"
 		property="riepilogo"
 		inputType="ROTEXT"/>
+	<fieldProperty
+        name="ti_parte"
+        property="ti_parte"
+        inputType="RADIOGROUP"
+        keysProperty="ti_parteKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        layout="HORIZONTAL"        
+        label="Parte" />
 				
 	<formFieldProperty name="esercizio"/>
 	<formFieldProperty name="ti_gestione" />
@@ -78,6 +90,7 @@
 	<formFieldProperty name="ti_riepilogo" />
 	<formFieldProperty name="nr_livello" />
 	<formFieldProperty name="riepilogo" />
+	<formFieldProperty name="ti_parte" />
 
 	<printForm
 		name="/preventivo/preventivo/stampa_pdgp_bilancio.jasper">
@@ -115,5 +128,161 @@
 			parameterType="STRING"
 			paramNameJR="RIEPILOGO"
 			paramTypeJR="java.lang.String" />	
-	</printForm>	
+	</printForm>
+	
+	<printForm
+		name="/preventivo/preventivo/stampa_pdg_renddec.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="P_ESERCIZIO"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="ti_gestione"
+			property="ti_gestione"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="P_TIPO"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="nr_livello"
+			property="nr_livello"
+			parameterPosition="3"
+			parameterType="INTEGER"
+			paramNameJR="P_NUM_LIV"
+			paramTypeJR="java.lang.Integer" />	
+		<printFieldProperty 
+			name="ti_aggregazione"
+			property="ti_aggregazione"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="P_TIPO_AGGREGAZIONE"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="ti_stampa"
+			property="ti_stampa"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="P_TIPO_RENDICONTO"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="ti_origine"
+			property="ti_origine"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="P_ORIGINE"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="riepilogo"
+			property="riepilogo"
+			parameterPosition="7"
+			parameterType="STRING"
+			paramNameJR="RIEPILOGO"
+			paramTypeJR="java.lang.String" />	
+	</printForm>
+	
+	<printForm
+		name="/preventivo/preventivo/stampa_pdg_rendges_competenza.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="P_ESERCIZIO"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="ti_gestione"
+			property="ti_gestione"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="P_TIPO"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="nr_livello"
+			property="nr_livello"
+			parameterPosition="3"
+			parameterType="INTEGER"
+			paramNameJR="P_NUM_LIV"
+			paramTypeJR="java.lang.Integer" />	
+		<printFieldProperty 
+			name="ti_aggregazione"
+			property="ti_aggregazione"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="P_TIPO_AGGREGAZIONE"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="ti_stampa"
+			property="ti_stampa"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="P_TIPO_RENDICONTO"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="ti_origine"
+			property="ti_origine"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="P_ORIGINE"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="riepilogo"
+			property="riepilogo"
+			parameterPosition="7"
+			parameterType="STRING"
+			paramNameJR="RIEPILOGO"
+			paramTypeJR="java.lang.String" />	
+	</printForm>
+	
+	<printForm
+		name="/preventivo/preventivo/stampa_pdg_rendges_residui.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="P_ESERCIZIO"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="ti_gestione"
+			property="ti_gestione"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="P_TIPO"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="nr_livello"
+			property="nr_livello"
+			parameterPosition="3"
+			parameterType="INTEGER"
+			paramNameJR="P_NUM_LIV"
+			paramTypeJR="java.lang.Integer" />	
+		<printFieldProperty 
+			name="ti_aggregazione"
+			property="ti_aggregazione"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="P_TIPO_AGGREGAZIONE"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="ti_stampa"
+			property="ti_stampa"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="P_TIPO_RENDICONTO"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="ti_origine"
+			property="ti_origine"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="P_ORIGINE"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="riepilogo"
+			property="riepilogo"
+			parameterPosition="7"
+			parameterType="STRING"
+			paramNameJR="RIEPILOGO"
+			paramTypeJR="java.lang.String" />	
+	</printForm>
 </bulkInfo>

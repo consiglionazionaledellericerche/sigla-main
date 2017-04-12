@@ -1,10 +1,13 @@
 package it.cnr.contab.anagraf00.tabrif.bulk;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
-
+@JsonInclude(value=Include.NON_NULL)
 public class Rif_inquadramentoBulk extends Rif_inquadramentoBase {
 
 	

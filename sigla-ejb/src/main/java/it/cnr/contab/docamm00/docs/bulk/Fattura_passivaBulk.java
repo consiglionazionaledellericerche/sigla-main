@@ -32,7 +32,6 @@ import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
-
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -99,7 +98,6 @@ public abstract class Fattura_passivaBulk
 	private java.util.Collection banche;
 	private java.util.Collection modalita;
 	private java.util.Collection termini;
-
 	public final static String STATO_IVA_A = "A";
 	public final static String STATO_IVA_B = "B";
 	public final static String STATO_IVA_C = "C";
@@ -1397,7 +1395,6 @@ public OggettoBulk initialize(CRUDBP bp,it.cnr.jada.action.ActionContext context
 	setCd_unita_organizzativa(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
 	setCd_cds_origine(getCd_cds());
 	setCd_uo_origine(getCd_unita_organizzativa());
-
 	setFl_fattura_compenso(Boolean.FALSE);
 	setFl_bolla_doganale(Boolean.FALSE);
 	setFl_spedizioniere(Boolean.FALSE);
@@ -1458,6 +1455,13 @@ public boolean isAbledToDeleteLettera() {
 			isPagata() ||
 			isPagataParzialmente()||
 			isROStatoTrasmissioneLettera();
+}
+public boolean isAbledToDisassociaLettera() {
+
+	return getLettera_pagamento_estero() == null ||
+			isPagata() ||
+			isPagataParzialmente()||
+			!isROStatoTrasmissioneLettera();
 }
 /**
  * Insert the method's description here.
@@ -1969,9 +1973,10 @@ public boolean quadraturaInDeroga() {
  */
 public boolean quadraturaInDeroga1210() {
 	return ((isIstituzionale() && (
-				(getFl_intra_ue() != null && getFl_intra_ue().booleanValue()) ||
-				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue())) &&
-				isFatturaDiBeni()) || (getTipo_sezionale()!=null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())||
+				(getFl_intra_ue() != null && getFl_intra_ue().booleanValue())||
+				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue())) &&  
+				  (getTipo_sezionale()!=null && getTipo_sezionale().getTi_bene_servizio().equalsIgnoreCase(getTi_bene_servizio())) && 
+				  isFatturaDiBeni()) || (getTipo_sezionale()!=null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())||
 				(isIstituzionale() && getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()) 
 						  && getFl_merce_intra_ue()!=null && getFl_merce_intra_ue().booleanValue()));
 }

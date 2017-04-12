@@ -1,20 +1,17 @@
 package it.cnr.contab.utente00.nav.ejb;
-import java.rmi.RemoteException;
-import java.util.Hashtable;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
+import javax.ejb.Remove;
+import javax.ejb.Stateless;
 
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utenze00.bulk.PreferitiBulk;
 import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.ejb.AdminSession;
-import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import javax.annotation.PostConstruct;
-import javax.ejb.*;
-import javax.naming.InitialContext;
 @Stateless(name="CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")
 public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements GestioneLoginComponentSession {
 	private it.cnr.contab.utente00.nav.comp.GestioneLoginComponent componentObj;
@@ -471,6 +468,44 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 		}
 	}	
 	
+	public List getUnitaRuolo(UserContext param0, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = componentObj.getUnitaRuolo(param0, utente);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
+	
+	public List getRuoli(UserContext param0, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = componentObj.getRuoli(param0, utente);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
+	
 	public String[] getLdapUserFromMatricola(UserContext param0, Integer param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
@@ -489,4 +524,23 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
+	
+	public java.lang.Boolean isUserAccessoAllowed(UserContext param0, String...param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.lang.Boolean result = componentObj.isUserAccessoAllowed(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
 }

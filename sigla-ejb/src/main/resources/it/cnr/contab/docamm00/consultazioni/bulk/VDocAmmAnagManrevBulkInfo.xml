@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Doc. amministrativi/anagrafica"
+    longDescription="Doc. amministrativi/anagrafica">
+	<fieldProperty
+		name="dtRegistrazione"
+		property="dtRegistrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Reg." />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Uo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdTipoDocumentoAmm"
+		property="cdTipoDocumentoAmm"
+		inputType="SELECT"
+		keysProperty="tipoDocumentoKeys"
+		label="Tipo Doc." />
+	<fieldProperty
+		name="dsTipoDocumentoAmm"
+		property="dsTipoDocumentoAmm"
+		inputType="ROTEXT"
+		label="Tipo Doc." />
+	<fieldProperty
+		name="pgDocumentoAmm"
+		property="pgDocumentoAmm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Nr. Doc." />
+	<fieldProperty
+		name="dtEmissione"
+		property="dtEmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Em." />
+	<fieldProperty
+		name="cdCdsOrigine"
+		property="cdCdsOrigine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Cds Orig." />
+	<fieldProperty
+		name="cdUoOrigine"
+		property="cdUoOrigine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Uo Orig." />
+	<fieldProperty
+		name="tiFattura"
+		property="tiFattura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Tipo F." />
+	<fieldProperty
+		name="statoCofi"
+		property="statoCofi"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Stato" />
+	<fieldProperty
+		name="statoPagamentoFondoEco"
+		property="statoPagamentoFondoEco"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Stato Fondo Eco" />
+	<fieldProperty
+		name="dtPagamentoFondoEco"
+		property="dtPagamentoFondoEco"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Pag. Fondo Eco" />
+	<fieldProperty
+		name="dtFatturaFornitore"
+		property="dtFatturaFornitore"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Fat. Forn." />
+	<fieldProperty
+		name="nrFatturaFornitore"
+		property="nrFatturaFornitore"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Nr. Fat.Forn." />
+	<fieldProperty
+		name="cdAnag"
+		property="cdAnag"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Anagrafico" />	
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="Terzo" />
+	<fieldProperty
+		name="cdTerzoCessionario"
+		property="cdTerzoCessionario"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Cessionario" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="Cognome" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="Nome" />
+	<fieldProperty
+		name="ragioneSociale"
+		property="ragioneSociale"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Ragione Sociale" />
+	<fieldProperty
+		name="cdModalitaPag"
+		property="cdModalitaPag"
+		inputType="TEXT"
+		maxLength="40"
+		enabledOnEdit="false"
+		label="Mod.Pag." />
+	<fieldProperty
+		name="imTotaleDocAmm"
+		property="imTotaleDocAmm"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Totale Doc." />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="partitaIva"
+		property="partitaIva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Partita Iva" />
+	<fieldProperty
+		name="dsDocumento"
+		property="dsDocumento"
+		inputType="TEXT"
+		maxLength="4000"
+		enabledOnEdit="false"
+		label="Desc. Documento" />
+	<fieldProperty
+		name="esercizioManrev"
+		property="esercizioManrev"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Esercizio Man/Rev" />
+	<fieldProperty
+		name="cdsManrev"
+		property="cdsManrev"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Cds Man/Rev" />
+	<fieldProperty
+		name="nrManrev"
+		property="nrManrev"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Nr. Man/Rev" />
+	<fieldProperty
+		name="findAnagrafico"
+		property="anagrafico"
+		inputType="SEARCHTOOL"
+		label="Anagrafico" />
+	
+	<fieldProperty
+		name="cd_anagrafico"
+		property="anagrafico.cd_anag"
+		inputType="TEXT"
+		inputSize="30" 
+		label="Codice anagrafico" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		inputType="ROTEXT"
+		inputSize="30" 
+		label="Ragione sociale" />
+	<fieldProperty
+		name="tipologia"
+		property="tipologia"
+		inputType="TEXT"
+		maxLength="40"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Tipo" />	
+	
+	<formFieldProperty name="cd_anagrafico" />	
+	<formFieldProperty name="findAnagrafico" />
+	<formFieldProperty name="ragione_sociale" />	
+	
+	<formFieldProperty
+		name="dtRegistrazione" />
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="dsTipoDocumentoAmm" />
+	<formFieldProperty
+		name="cdTipoDocumentoAmm" />	
+	<formFieldProperty
+		name="pgDocumentoAmm" />
+	<formFieldProperty
+		name="dtEmissione" />
+	<formFieldProperty
+		name="cdCdsOrigine" />
+	<formFieldProperty
+		name="cdUoOrigine" />
+	<formFieldProperty
+		name="tiFattura" />
+	<formFieldProperty
+		name="statoCofi" />
+	<formFieldProperty
+		name="statoPagamentoFondoEco" />
+	<formFieldProperty
+		name="dtPagamentoFondoEco" />
+	<formFieldProperty
+		name="dtFatturaFornitore" />
+	<formFieldProperty
+		name="nrFatturaFornitore" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="cdAnag" />
+	<formFieldProperty
+		name="cdTerzoCessionario" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="ragioneSociale" />
+	<formFieldProperty
+		name="cdModalitaPag" />
+	<formFieldProperty
+		name="imTotaleDocAmm" />
+	<formFieldProperty
+		name="codiceFiscale" />
+	<formFieldProperty
+		name="partitaIva" />
+	<formFieldProperty
+		name="dsDocumento" />
+	<formFieldProperty
+		name="esercizioManrev" />
+	<formFieldProperty
+		name="cdsManrev" />
+	<formFieldProperty
+		name="nrManrev" />
+	<formFieldProperty
+		name="tipologia" />	
+	<findFieldProperty
+		name="tipologia" />	
+	<findFieldProperty
+		name="dtRegistrazione" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdTipoDocumentoAmm" />
+	<findFieldProperty
+		name="pgDocumentoAmm" />
+	<findFieldProperty
+		name="cdCdsOrigine" />
+	<findFieldProperty
+		name="cdUoOrigine" />
+	<findFieldProperty
+		name="statoCofi" />
+	<findFieldProperty
+		name="dtFatturaFornitore" />
+	<findFieldProperty
+		name="nrFatturaFornitore" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="cdAnag" />		
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="ragioneSociale" />
+	<findFieldProperty
+		name="imTotaleDocAmm" />
+	<findFieldProperty
+		name="codiceFiscale" />
+	<findFieldProperty
+		name="partitaIva" />
+	<findFieldProperty
+		name="dsDocumento" />
+	<findFieldProperty
+		name="esercizioManrev" />
+	<findFieldProperty
+		name="cdsManrev" />
+	<findFieldProperty
+		name="nrManrev" />
+	
+	<columnFieldProperty
+		name="tipologia" />
+	<columnFieldProperty
+		name="dtRegistrazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="dsTipoDocumentoAmm" />
+	<columnFieldProperty
+		name="pgDocumentoAmm" />
+	<columnFieldProperty
+		name="cdCdsOrigine" />
+	<columnFieldProperty
+		name="cdUoOrigine" />
+	<columnFieldProperty
+		name="statoCofi" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="cdTerzoCessionario" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="ragioneSociale" />
+	<columnFieldProperty
+		name="codiceFiscale" />
+	<columnFieldProperty
+		name="partitaIva" />
+	<columnFieldProperty
+		name="dsDocumento" />
+	<columnFieldProperty
+		name="imTotaleDocAmm" />	
+	<columnFieldProperty
+		name="esercizioManrev" />
+	<columnFieldProperty
+		name="cdsManrev" />
+	<columnFieldProperty
+		name="nrManrev" />
+	<columnFieldProperty
+		name="dtEmissione" />
+	<columnFieldProperty
+		name="cdModalitaPag" />
+	<columnFieldProperty
+		name="statoPagamentoFondoEco" />
+	<columnFieldProperty
+		name="dtPagamentoFondoEco" />
+	<columnFieldProperty
+		name="dtFatturaFornitore" />
+	<columnFieldProperty
+		name="nrFatturaFornitore" />
+		
+</bulkInfo>

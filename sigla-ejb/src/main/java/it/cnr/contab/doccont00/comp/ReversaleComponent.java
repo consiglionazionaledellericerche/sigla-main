@@ -92,6 +92,7 @@ import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -977,7 +978,7 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
   * @return reversale <code>ReversaleBulk</code> la Reversale annullata
 */
 
-public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk reversale, boolean annullaCollegati ) throws ComponentException
+public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk reversale, boolean annullaCollegati,boolean riemissione ) throws ComponentException
 {
 	try
 	{
@@ -998,28 +999,36 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
 		}
 		
 		checkAnnullabilita( userContext, reversale );	
-		if(!isAnnullabile(userContext,reversale))
+		if(isReversaleCollegataAnnullodaRiemettere(userContext,reversale).booleanValue() )
+			throw new ApplicationException(
+					"Annullamento impossibile! Esiste una reversale annullata associata alla reversale.");
+	
+		if(isAnnullabile(userContext,reversale).compareTo("N")==0)
 			throw new ApplicationException(
 					"Verificare lo stato di trasmissione della reversale. Annullamento impossibile!");
 
 		lockBulk( userContext, reversale );
 
-		if(DateServices.isAnnoMaggEsScriv(userContext)) {
-		// Se la data di annullamento NON E' NULLA, e siamo in esercizio successivo, metto
-		// la data di trasmissione = ad istante successivo a quella di annullamento
-		 if(reversale.getDt_trasmissione() != null) {
-		  reversale.setDt_annullamento( DateServices.getNextMinTs( userContext,reversale.getDt_trasmissione()));
-		 } else {
-		  reversale.setDt_annullamento( DateServices.getMidDayTs( DateServices.getTs_valido( userContext)));
-		 }
-		} else {
-		 reversale.setDt_annullamento( DateServices.getTs_valido( userContext));
-		}
+//		if(DateServices.isAnnoMaggEsScriv(userContext)) {
+//		// Se la data di annullamento NON E' NULLA, e siamo in esercizio successivo, metto
+//		// la data di trasmissione = ad istante successivo a quella di annullamento
+//		 if(reversale.getDt_trasmissione() != null) {
+//		  reversale.setDt_annullamento( DateServices.getNextMinTs( userContext,reversale.getDt_trasmissione()));
+//		 } else {
+//		  reversale.setDt_annullamento( DateServices.getMidDayTs( DateServices.getTs_valido( userContext)));
+//		 }
+//		} else {
+//	 reversale.setDt_annullamento( DateServices.getTs_valido( userContext));
+//		}
 
+		reversale.setDt_annullamento( DateServices.getTs_valido( userContext));
 		
 		if ( reversale.getStato_coge().equals( MandatoBulk.STATO_COGE_C ))
 			reversale.setStato_coge( MandatoBulk.STATO_COGE_R);
-		
+		if (!ReversaleBulk.TIPO_REGOLARIZZAZIONE.equals(reversale.getTi_reversale())) {
+			reversale.setFl_riemissione(riemissione);
+			reversale.setStato_trasmissione_annullo(MandatoIBulk.STATO_TRASMISSIONE_NON_INSERITO);
+		}	
 		reversale.annulla();
 		annullaImportoSospesi( userContext, reversale );
 	
@@ -3029,9 +3038,17 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		
 		// carico i doc. contabili (mandati/reversali) associati alla reversale
 		reversale.setDoc_contabili_collColl(((V_ass_doc_contabiliHome) getHome( aUC, V_ass_doc_contabiliBulk.class)).findDoc_contabili_coll( reversale ));		
-		
-	}
-	catch ( Exception e )
+
+		if(reversale.getPg_reversale_riemissione()!=null) {
+				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds_origine(), reversale.getPg_reversale_riemissione()));
+				if ( man_rev != null )
+					reversale.setV_man_rev( man_rev );
+				else
+				  man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds(), reversale.getPg_reversale_riemissione()));
+				  if ( man_rev != null )
+					  reversale.setV_man_rev( man_rev );
+		}
+	}catch ( Exception e )
 	{
 		throw handleException( reversale, e )	;
 	}
@@ -3273,12 +3290,14 @@ public OggettoBulk modificaConBulk (UserContext userContext, OggettoBulk bulk) t
 {
 	try
 	{
+		
 		ReversaleBulk reversale = (ReversaleBulk) bulk;
 		verificaStatoEsercizio( userContext, ((ReversaleBulk)bulk).getEsercizio(), ((CNRUserContext)userContext).getCd_cds() );			
 		lockBulk( userContext, reversale);
-		reversale.refreshImporto();
-		verificaReversale( userContext, reversale, false );
-
+		if(!reversale.isAnnullato()){
+			reversale.refreshImporto();
+			verificaReversale( userContext, reversale, false );
+		}
 		// verifico se si tratta di una reversale provvisoria o definitiva
 		if (reversale.getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_REV_PROVV))
 		{
@@ -4142,25 +4161,86 @@ private String getOutputFileName(String reportName, String cds,Integer esercizio
 		fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fileName + '_' + esercizio + '_' + cds + '_' + pgReversale;
 		return fileName;
 	}
-public boolean isAnnullabile(
+public String isAnnullabile(
 		UserContext userContext, ReversaleBulk reversale)
 		throws ComponentException {
 	try {
 		  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(reversale.getEsercizio()));
 		     if (parametriCnr.getFl_tesoreria_unica()){
 		    	 UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
-				if (utente.isSupervisore()) {
-					return Boolean.TRUE;
+		    	 if(reversale.getStato_trasmissione().compareTo(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)==0)
+		    		 return new String("S");
+		    	 else
+		    		 if(reversale.getStato_trasmissione().compareTo(ReversaleBulk.STATO_TRASMISSIONE_TRASMESSO)==0 && 
+						 utente.isSupervisore()) {
+		    			 return new String("F");
 				}else
-					if(reversale.getStato_trasmissione().compareTo(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)==0)
-						return Boolean.TRUE;
-					else
-						return Boolean.FALSE;
+					return new String("N");
 		     }
-		return Boolean.TRUE;
+		     return new String("S");
 	} catch (Exception e) {
 		throw handleException(e);
 	}
 }
-
+@Override
+public ReversaleBulk annullaReversale(UserContext userContext,
+		ReversaleBulk reversale, boolean annullaCollegati)
+		throws ComponentException {
+	try
+	{
+		return annullaReversale( userContext, reversale, annullaCollegati ,false);
+	}
+	catch ( Exception e )
+	{
+		throw handleException( reversale, e );	
+	}
+}
+public SQLBuilder selectV_man_revByClause( UserContext userContext, ReversaleBulk bulk, V_mandato_reversaleBulk v_man_rev, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+{
+	SQLBuilder sql = getHome( userContext, V_mandato_reversaleBulk.class ).createSQLBuilder();
+	sql.addClause( "AND", "cd_tipo_documento_cont", sql.EQUALS, Numerazione_doc_contBulk.TIPO_REV );
+    sql.addClause( "AND", "esercizio", sql.EQUALS, bulk.getEsercizio() );
+	//sql.addClause( "AND", "cd_cds", sql.EQUALS, bulk.getCd_cds() );
+	sql.addClause( "AND", "cd_uo_origine", sql.EQUALS, ((CNRUserContext) userContext).getCd_unita_organizzativa() );
+	sql.addClause( "AND", "ti_documento_cont", sql.NOT_EQUALS, ReversaleBulk.TIPO_REGOLARIZZAZIONE );		
+	sql.addClause( "AND", "stato", sql.EQUALS, ReversaleBulk.STATO_REVERSALE_EMESSO );
+	sql.addSQLClause( "AND", "dt_trasmissione" , sql.ISNULL, null );		
+	sql.addClause( clauses );
+	return sql;
+}
+public Boolean esisteAnnullodaRiemettereNonCollegato(UserContext userContext,
+		Integer esercizio, String cds ) throws ComponentException {
+	try{
+		SQLBuilder sql = getHome( userContext, ReversaleIBulk.class ).createSQLBuilder();
+		sql.addClause( "AND", "esercizio", sql.EQUALS,esercizio);
+		sql.addClause( "AND", "cd_cds_origine", sql.EQUALS,cds );
+		sql.addClause( "AND", "stato", sql.EQUALS, ReversaleBulk.STATO_REVERSALE_ANNULLATO );	
+		sql.addSQLClause( "AND", "pg_reversale_riemissione" , sql.ISNULL, null );
+		sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
+		if(sql.executeCountQuery(getConnection(userContext))>0) 
+			return Boolean.TRUE;
+		else
+			return Boolean.FALSE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
+public Boolean isReversaleCollegataAnnullodaRiemettere(UserContext userContext,
+		 ReversaleBulk reversale ) throws ComponentException {
+	try{
+		SQLBuilder sql = getHome( userContext, ReversaleIBulk.class ).createSQLBuilder();
+		sql.addClause( "AND", "esercizio", sql.EQUALS,reversale.getEsercizio());
+		sql.addClause( "AND", "cd_cds_origine", sql.EQUALS,reversale.getCd_cds_origine() );
+		sql.addClause( "AND", "stato", sql.EQUALS, ReversaleBulk.STATO_REVERSALE_ANNULLATO );	
+		sql.addSQLClause( "AND", "pg_reversale_riemissione" ,sql.EQUALS,reversale.getPg_reversale());
+		sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
+		sql.addClause("AND", "stato_trasmissione_annullo", sql.NOT_EQUALS, ReversaleBulk.STATO_TRASMISSIONE_TRASMESSO );
+		if(sql.executeCountQuery(getConnection(userContext))>0) 
+			return Boolean.TRUE;
+		else
+			return Boolean.FALSE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
 }

@@ -139,7 +139,7 @@ public class SospesoHome extends BulkHome {
 	 */
 	public Collection findSospesiDiSpesa(MandatoBulk mandato,boolean tesoreriaUnica)
 			throws IntrospectionException, PersistencyException {
-		SQLBuilder sql = selectSospesiDiSpesa(mandato,tesoreriaUnica);
+		SQLBuilder sql = selectSospesiDiSpesa(mandato,null,tesoreriaUnica);
 		return fetchAll(sql);
 	}
 
@@ -365,8 +365,10 @@ public class SospesoHome extends BulkHome {
 	 *         spesa associati al mandato
 	 * 
 	 */
-	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato,boolean tesoreriaUnica) throws PersistencyException{
+	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato,it.cnr.jada.persistency.sql.CompoundFindClause clausole, boolean tesoreriaUnica) throws PersistencyException{
 		SQLBuilder sql = createSQLBuilder();
+		if (clausole != null)
+			sql.addClause(clausole);
 		Unita_organizzativa_enteBulk uoEnte=null;
 		sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
 		if (!tesoreriaUnica)

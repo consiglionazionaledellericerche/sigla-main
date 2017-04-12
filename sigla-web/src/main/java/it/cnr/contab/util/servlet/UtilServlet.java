@@ -3,12 +3,9 @@ package it.cnr.contab.util.servlet;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
-import it.cnr.contab.reports.bulk.Print_spoolerBulk;
-import it.cnr.contab.reports.bulk.Print_spoolerHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.excel.bulk.Excel_spoolerBulk;
-import it.cnr.jada.excel.bulk.Excel_spoolerHome;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -19,7 +16,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -29,9 +25,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,6 +115,7 @@ public class UtilServlet extends HttpServlet {
 	public void init()
 		throws ServletException
 	{
+		Utility.loadPersistentInfos();
 		final GregorianCalendar dataInizio = (GregorianCalendar) GregorianCalendar.getInstance();
 		class PrintThread
 			implements Runnable
@@ -133,8 +127,6 @@ public class UtilServlet extends HttpServlet {
 				  try{
 					Thread.sleep(1000*60*20);
 					if (new java.text.SimpleDateFormat("HH").format(new java.util.Date()).equalsIgnoreCase("02")){
-						deletePrintSpooler();
-						deleteExcel();
 						aggiornaGECO(String.valueOf(dataInizio.get(GregorianCalendar.YEAR)), null);
 						deleteMessaggi();
 					}
@@ -182,115 +174,7 @@ public class UtilServlet extends HttpServlet {
 			SendMail.sendErrorMail(text,e.toString());
 		}
 	}
-	
-	public void deletePrintSpooler()
-	{
-		try{	
-		  LoggableStatement statement = null;
-		  ResultSet rs = null;
-		  Connection conn = null;
-		  try{
-			  conn = it.cnr.jada.util.ejb.EJBCommonServices.getConnection();
-			  conn.setAutoCommit(false); 
-			  it.cnr.jada.persistency.sql.HomeCache homeCache = new it.cnr.jada.persistency.sql.HomeCache(conn);
-			  Print_spoolerHome print_spoolerHome = (Print_spoolerHome)homeCache.getHome(Print_spoolerBulk.class);
-			  statement = print_spoolerHome.selectJobsToDelete().prepareStatement(conn);
-			  rs = statement.executeQuery();
-			  while (rs.next()){
-			  	try{
-				  StringBuffer reportServerURL = new StringBuffer(rs.getString("SERVER"));
-				  HttpClient httpclient = HttpClientBuilder.create().build();
-				  reportServerURL.append("/").append(rs.getString("UTCR"));
-				  reportServerURL.append("/").append(rs.getString("NOME_FILE"));
-				  HttpDelete method = new HttpDelete(reportServerURL.toString());
-				  method.addHeader("Accept-Language", Locale.getDefault().toString());
-				  httpclient.execute(method);
-				  //Cancelliamo la riga sul DB
-				  Print_spoolerBulk bulk = (Print_spoolerBulk)print_spoolerHome.findByPrimaryKey(new Print_spoolerBulk(new Long(rs.getLong("PG_STAMPA"))));
-				  print_spoolerHome.deleteRiga(bulk, null);
-				} catch(java.net.UnknownHostException e) {
-				} catch(java.net.ConnectException e){
-				}catch(IOException e) {
-					//In questo caso Il file è già stato cancellato e quindi cancello la riga
-					Print_spoolerBulk bulk = (Print_spoolerBulk)print_spoolerHome.findByPrimaryKey(new Print_spoolerBulk(new Long(rs.getLong("PG_STAMPA"))));
-					print_spoolerHome.deleteRiga(bulk, null);					
-				}				  				  
-				  	
-			  }					
-		  }
-		  finally {
-		  	  if (rs != null)
-			    rs.close();	
-			  if (statement != null)  
-			    statement.close();
-			  if (conn != null){
-				conn.commit();
-				conn.close();
-			  }
-		  }
-		}
-		catch(EJBException ex){
-		}
-		catch(Throwable _ex){
-			System.out.println("UtilServlet.init()" +  _ex.getMessage());
-		}
-		
-	}
-	public void deleteExcel()
-	{
-		try{	
-		  LoggableStatement statement = null;
-		  ResultSet rs = null;
-		  Connection conn = null;
-		  try{
-			  conn = it.cnr.jada.util.ejb.EJBCommonServices.getConnection();
-			  conn.setAutoCommit(false); 
-			  it.cnr.jada.persistency.sql.HomeCache homeCache = new it.cnr.jada.persistency.sql.HomeCache(conn);
-			  Excel_spoolerHome excel_spoolerHome = (Excel_spoolerHome)homeCache.getHome(Excel_spoolerBulk.class);
-			  statement = excel_spoolerHome.selectJobsToDelete().prepareStatement(conn);
-			  rs = statement.executeQuery();
-			  while (rs.next()){
-				try{
-				  StringBuffer reportServerURL = new StringBuffer(rs.getString("SERVER"));
-				  reportServerURL.append("?user=");
-				  reportServerURL.append(java.net.URLEncoder.encode(rs.getString("UTCR")));
-				  reportServerURL.append("&file=");
-				  reportServerURL.append(java.net.URLEncoder.encode(rs.getString("NOME_FILE")));
-				  reportServerURL.append("&command=delete");
-				  java.net.URLConnection urlConn = new java.net.URL(reportServerURL.toString()).openConnection();
-				  urlConn.setUseCaches(false);
-				  urlConn.connect();
-				  java.io.InputStream is = urlConn.getInputStream();
-				  is.close();
-				  //Cancelliamo la riga sul DB
-				  Excel_spoolerBulk bulk = (Excel_spoolerBulk)excel_spoolerHome.findByPrimaryKey(new Excel_spoolerBulk(new Long(rs.getLong("PG_ESTRAZIONE"))));
-				  excel_spoolerHome.deleteRiga(bulk);
-				} catch(java.net.UnknownHostException e) {
-				} catch(java.net.ConnectException e){
-				}catch(IOException e) {
-					//In questo caso Il file è già stato cancellato e quindi cancello la riga
-					Excel_spoolerBulk bulk = (Excel_spoolerBulk)excel_spoolerHome.findByPrimaryKey(new Excel_spoolerBulk(new Long(rs.getLong("PG_ESTRAZIONE"))));
-					excel_spoolerHome.deleteRiga(bulk);					
-				}				  				  				  	
-			  }					
-		  }
-		  finally {
-			  if (rs != null)
-				rs.close();	
-			  if (statement != null)  
-				statement.close();
-			  if (conn != null){
-				conn.commit();
-				conn.close();
-			  }
-		  }
-		}
-		catch(EJBException ex){
-		}
-		catch(Throwable _ex){
-			System.out.println("UtilServlet.init()" +  _ex.getMessage());
-		}
-	}	
+
 	public void deleteMessaggi()
 	{
 		try{	

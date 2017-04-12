@@ -1,6 +1,7 @@
 package it.cnr.contab.utenze00.bp;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -9,9 +10,14 @@ import java.util.Hashtable;
  * sessione e di scrivania corrente
  */
 
-public class CNRUserContext implements it.cnr.jada.UserContext {
+public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	private static final long serialVersionUID = 1L;
 	private Hashtable<String, Serializable> attributes;
+	
+	public CNRUserContext() {
+		super();
+		attributes = new Hashtable<String, Serializable>(7);
+	}
 	/**
 	 * Costruttore dello User Context
 	 * 
@@ -69,6 +75,10 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 	 * 
 	 * @return Il valore della propriet? 'cd_unita_organizzativa'
 	 */
+	public void setCd_unita_organizzativa(java.lang.String cd_unita_organizzativa) {
+		attributes.put("cd_unita_organizzativa", cd_unita_organizzativa);
+	}
+	
 	public java.lang.String getCd_unita_organizzativa() {
 		return (String) attributes.get("cd_unita_organizzativa");
 	}
@@ -91,6 +101,10 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 	 * 
 	 * @return Il valore della propriet? 'esercizio'
 	 */
+	public void setEsercizio(java.lang.Integer esercizio) {
+		attributes.put("esercizio", esercizio);
+	}
+	
 	public java.lang.Integer getEsercizio() {
 		return (Integer) attributes.get("esercizio");
 	}
@@ -109,6 +123,10 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 
 	public final java.lang.String getSessionId() {
 		return (String) attributes.get("sessionId");
+	}
+
+	public void setUser(java.lang.String user) {
+		attributes.put("user", user);
 	}
 
 	public final java.lang.String getUser() {
@@ -159,6 +177,10 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 		return (Dictionary<Object, Object>) attributes.get("hiddenColumns");
 	}
 
+	public void setCd_cdr(java.lang.String cd_cdr) {
+		attributes.put("cd_cdr", cd_cdr);
+	}
+
 	public java.lang.String getCd_cdr() {
 		return (String) attributes.get("cd_cdr");
 	}
@@ -170,8 +192,13 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 	public Hashtable<String, Serializable> getAttributes() {
 		return attributes;
 	}
-
-	public String toString() {
-		return "USER: " + getUser();
+	
+	@Override
+	public String getName() {
+		return getUser();
 	}
+	@Override
+	public String toString() {
+		return "CNRUserContext [attributes=" + attributes + "]";
+	}	
 }

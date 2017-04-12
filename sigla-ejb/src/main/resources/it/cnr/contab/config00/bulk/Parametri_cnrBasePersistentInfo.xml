@@ -263,6 +263,13 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_PUBBLICA_CONTRATTO"
+			propertyName="fl_pubblica_contratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
 		<columnMapping
 			columnName="FL_PDG_CODLAST"
@@ -351,6 +358,8 @@
 		name="fl_nuovo_pdg" />		
 	<persistentProperty
 		name="data_attivazione_new_voce" />
+	<persistentProperty
+		name="fl_pubblica_contratto" />
 	<persistentProperty
 		name="fl_tesoreria_unica" />
 	<persistentProperty

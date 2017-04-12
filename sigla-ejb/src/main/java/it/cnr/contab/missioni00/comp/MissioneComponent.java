@@ -5,8 +5,8 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.*;
-import java.io.Serializable;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
@@ -22,6 +22,7 @@ import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+
 import java.util.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -1262,8 +1263,24 @@ public void eliminaConBulk (UserContext aUC, OggettoBulk bulk) throws ComponentE
 public CambioBulk findCambio(UserContext uc, DivisaBulk divisa, java.sql.Timestamp dataCambio) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	CambioHome cambioHome = (CambioHome)getHome(uc, CambioBulk.class);
-	CambioBulk aCambio = cambioHome.getCambio(divisa, dataCambio);
+	CambioBulk aCambio = null;
+	if (divisa != null){
+		return findCambio(uc, divisa.getCd_divisa(), dataCambio);
+	} else {
+		aCambio =cambioHome.getCambio(divisa, dataCambio);
+	}
+	if(aCambio == null)
+		return null;
 
+	return aCambio;
+}
+
+public CambioBulk findCambio(UserContext uc, String divisa, java.sql.Timestamp dataCambio) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+{
+	CambioHome cambioHome = (CambioHome)getHome(uc, CambioBulk.class);
+	CambioBulk aCambio = null;
+	aCambio =cambioHome.getCambio(divisa, dataCambio);
+	
 	if(aCambio == null)
 		return null;
 
@@ -1869,7 +1886,7 @@ public MissioneBulk generaRimborso (UserContext aUC, MissioneBulk missione) thro
  * @return la DivisaBulk di default oppure null se non esiste nessuna divisa di default
  */	
 
-private DivisaBulk getDivisaDefault(UserContext aUC) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException
+public DivisaBulk getDivisaDefault(UserContext aUC) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException
 {
 	DivisaHome divisaHome = (DivisaHome)getHome(aUC, DivisaBulk.class);
 	DivisaBulk divisaDefault = divisaHome.getDivisaDefault(aUC);
@@ -1890,16 +1907,16 @@ private DivisaBulk getDivisaDefault(UserContext aUC) throws it.cnr.jada.comp.Com
  * @return la DivisaBulk oppure null se non esiste nessuna divisa per il codice specificato
  */	
 
-private String getDivisaTappaDaDiaria(UserContext userContext, MissioneBulk missione, Missione_tappaBulk tappa) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+private String getDivisaTappaDaDiaria(UserContext userContext, Long nazione, String gruppoInqudramento, Timestamp data) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	Missione_diariaHome diariaHome = (Missione_diariaHome)getHome(userContext, Missione_diariaBulk.class);
 	Missione_diariaBulk aDiaria = new Missione_diariaBulk();
 
 	SQLBuilder sql = diariaHome.createSQLBuilder();
-	sql.addSQLClause("AND","PG_NAZIONE", sql.EQUALS, tappa.getPg_nazione());
-	sql.addSQLClause("AND","CD_GRUPPO_INQUADRAMENTO", sql.EQUALS, missione.getRif_inquadramento().getCd_gruppo_inquadramento());		
-	sql.addSQLClause("AND","DT_INIZIO_VALIDITA", sql.LESS_EQUALS, missione.getDt_inizio_missione());
-	sql.addSQLClause("AND","DT_FINE_VALIDITA", sql.GREATER_EQUALS, missione.getDt_inizio_missione());	
+	sql.addSQLClause("AND","PG_NAZIONE", sql.EQUALS, nazione);
+	sql.addSQLClause("AND","CD_GRUPPO_INQUADRAMENTO", sql.EQUALS, gruppoInqudramento);		
+	sql.addSQLClause("AND","DT_INIZIO_VALIDITA", sql.LESS_EQUALS, data);
+	sql.addSQLClause("AND","DT_FINE_VALIDITA", sql.GREATER_EQUALS, data);	
 	
 	SQLBroker broker = diariaHome.createBroker(sql);
 	if (broker.next())
@@ -2867,6 +2884,45 @@ private MissioneBulk ritornaRimborsoGenerato(UserContext aUC, MissioneBulk missi
 	}
 }
 
+public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException
+{
+	try
+	{	
+		if (missione.getEsercizioObblGeMis() != null && missione.getEsercizioOriObblGeMis() != null && missione.getCdsObblGeMis() != null && missione.getPgObblGeMis() != null){
+			
+			Obbligazione_scad_voceHome scadVoceHome = (Obbligazione_scad_voceHome)getHome( aUC, Obbligazione_scad_voceBulk.class );
+			SQLBuilder sql = scadVoceHome.createSQLBuilder();
+		
+			sql.addSQLClause( "AND", "cd_cds", sql.EQUALS, missione.getCdsObblGeMis());
+			sql.addSQLClause("AND","esercizio",sql.EQUALS,missione.getEsercizioObblGeMis());
+			sql.addSQLClause("AND","esercizio_originale",sql.EQUALS,missione.getEsercizioOriObblGeMis());
+			sql.addSQLClause("AND","pg_obbligazione",sql.EQUALS,missione.getPgObblGeMis());
+			if (missione.getGaeGeMis() != null){
+				sql.addSQLClause("AND","cd_linea_attivita",sql.EQUALS,missione.getGaeGeMis());
+			}
+
+			it.cnr.jada.bulk.BulkList scadVoces = new it.cnr.jada.bulk.BulkList(scadVoceHome.fetchAll( sql ));
+		
+			if((scadVoces != null) && (!scadVoces.isEmpty()) && scadVoces.size() == 1){
+				Obbligazione_scad_voceBulk scadVoce = (Obbligazione_scad_voceBulk)scadVoces.get(0);
+				Obbligazione_scadenzarioBulk scad = scadVoce.getObbligazione_scadenzario();
+				Obbligazione_scadenzarioHome scadHome = (Obbligazione_scadenzarioHome)getHome( aUC, Obbligazione_scadenzarioBulk.class );
+				scad = ((Obbligazione_scadenzarioBulk)scadHome.findByPrimaryKey(scad));
+				ObbligazioneHome obblHome = (ObbligazioneHome)getHome( aUC, ObbligazioneBulk.class );
+				scad.setObbligazione((ObbligazioneBulk)obblHome.findByPrimaryKey(scad.getObbligazione()));
+				return scad;
+			}
+		} else {
+			return null;
+		}
+	} 
+	catch (Throwable e) 
+	{
+		throw handleException(missione, e);
+	}
+	return null;
+}
+
 /**
  * Annulla le modifiche apportate alla missione e ritorna al savepoint impostato in precedenza
  *
@@ -3180,14 +3236,20 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Missione_dettaglioBulk
 	
 	Missione_tappaBulk tappa = (Missione_tappaBulk) missione.getTappeMissioneHash().get(primoGG);
 
+	return selectTipo_autoByClause(aUC, missione.getDt_inizio_missione(), tappa.getNazione(), dettaglioSpesa.getTi_auto(), clauses);
+	
+}
+
+public SQLBuilder selectTipo_autoByClause(UserContext aUC,Timestamp dataTappa, NazioneBulk nazione, String tipoAuto, CompoundFindClause clauses) throws ComponentException
+{
 	Missione_rimborso_kmHome aTipoAutoHome = (Missione_rimborso_kmHome)getHome(aUC, Missione_rimborso_kmBulk.class);
 	SQLBuilder sql = aTipoAutoHome.createSQLBuilder();
 	
-	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,missione.getDt_inizio_missione());
-	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,missione.getDt_inizio_missione());
+	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,dataTappa);
+	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,dataTappa);
 
 	sql.openParenthesis("AND");	
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "I");
 	else
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "E");
@@ -3195,22 +3257,22 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Missione_dettaglioBulk
 	sql.closeParenthesis();		
 	
 	sql.openParenthesis("AND");
-	sql.addClause("AND","pg_nazione",sql.EQUALS, tappa.getPg_nazione());
+	sql.addClause("AND","pg_nazione",sql.EQUALS, nazione.getPg_nazione());
 	sql.addClause("OR","pg_nazione",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 
-	sql.addClause("AND","ti_auto",sql.EQUALS, dettaglioSpesa.getTi_auto());
+	sql.addClause("AND","ti_auto",sql.EQUALS, tipoAuto);
 
 	sql.addSQLClause("AND","(ti_auto || ti_area_geografica || pg_nazione || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('03', ti_auto, ?, ?, null, ?)");
 	
 
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addParameter("I", java.sql.Types.CHAR, 5);
 	else
 		sql.addParameter("E", java.sql.Types.CHAR, 5);
-	sql.addParameter(tappa.getPg_nazione(), java.sql.Types.NUMERIC, 6);
-	sql.addParameter(missione.getDt_inizio_missione(), java.sql.Types.TIMESTAMP, 7);
+	sql.addParameter(nazione.getPg_nazione(), java.sql.Types.NUMERIC, 6);
+	sql.addParameter(dataTappa, java.sql.Types.TIMESTAMP, 7);
 
 	sql.addPreOrderBy(" ti_auto, pg_nazione desc, ti_area_geografica");
 		
@@ -3236,7 +3298,7 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Missione_dettaglioBulk
  * @return  il SQLBuilder con tutte le clausole
  */	
 
-public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBulk dettaglioSpesa, Missione_tipo_pastoBulk tipoPasto, CompoundFindClause clauses) throws ComponentException
+public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBulk dettaglioSpesa, Missione_tipo_pastoBulk tipoPasto, CompoundFindClause clauses) throws ComponentException, PersistencyException
 {
 	MissioneBulk missione = dettaglioSpesa.getMissione();
 
@@ -3253,16 +3315,30 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBul
 		
 	Missione_tappaBulk tappa = (Missione_tappaBulk) missione.getTappeMissioneHash().get(primoGG);
 
+    NazioneHome nazionehome=(NazioneHome)getHome(aUC,NazioneBulk.class);
+    
+	tappa.setNazione((NazioneBulk)nazionehome.findByPrimaryKey(tappa.getNazione()));
+
+	return selectTipo_pastoByClause(aUC, tappa.getDt_inizio_tappa(), missione.getPg_rif_inquadramento(), tappa.getNazione(), dettaglioSpesa.getCd_ti_pasto(), clauses);
+}
+
+public List recuperoTipi_pasto(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException, PersistencyException
+{
+	Missione_tipo_pastoHome tipoPastoHome = (Missione_tipo_pastoHome)getHome(aUC, Missione_tipo_pastoBulk.class);
+	return tipoPastoHome.fetchAll(selectTipo_pastoByClause(aUC, dataTappa, inquadramento, nazione, tipoPasto, clauses));
+}
+public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, String tipoPasto, CompoundFindClause clauses) throws ComponentException
+{
 	Missione_tipo_pastoHome tipoPastoHome = (Missione_tipo_pastoHome)getHome(aUC, Missione_tipo_pastoBulk.class);
 	SQLBuilder sql = tipoPastoHome.createSQLBuilder();
 
 	//sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,missione.getDt_inizio_missione());
 	//sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,missione.getDt_inizio_missione());
-	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,tappa.getDt_inizio_tappa());
-	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,tappa.getDt_inizio_tappa());
+	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,dataTappa);
+	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,dataTappa);
 	
 	sql.openParenthesis("AND");	
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "I");
 	else
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "E");
@@ -3270,29 +3346,29 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBul
 	sql.closeParenthesis();		
 	
 	sql.openParenthesis("AND");
-	sql.addClause("AND","pg_nazione",sql.EQUALS, tappa.getPg_nazione());
+	sql.addClause("AND","pg_nazione",sql.EQUALS, nazione.getPg_nazione());
 	sql.addClause("OR","pg_nazione",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 
 	sql.openParenthesis("AND");	
-	sql.addClause("AND","pg_rif_inquadramento",sql.EQUALS, missione.getPg_rif_inquadramento());
+	sql.addClause("AND","pg_rif_inquadramento",sql.EQUALS, inquadramento);
 	sql.addClause("OR","pg_rif_inquadramento",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 
-	sql.addClause("AND","cd_ti_pasto",sql.EQUALS, dettaglioSpesa.getCd_ti_pasto());
+	sql.addClause("AND","cd_ti_pasto",sql.EQUALS, tipoPasto);
 
-	sql.addClause("AND","cd_area_estera",sql.EQUALS,tappa.getNazione().getCd_area_estera());
+	sql.addClause("AND","cd_area_estera",sql.EQUALS,nazione.getCd_area_estera());
 
 	sql.addSQLClause("AND","(cd_ti_pasto || ti_area_geografica || pg_nazione || pg_rif_inquadramento || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('02', cd_ti_pasto, ?, ?, ?, ?)");
 		
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addParameter("I", java.sql.Types.CHAR, 6);
 	else
 		sql.addParameter("E", java.sql.Types.CHAR, 6);
-	sql.addParameter(tappa.getPg_nazione(), java.sql.Types.NUMERIC, 7);
-	sql.addParameter(missione.getPg_rif_inquadramento(), java.sql.Types.NUMERIC, 8);
-	sql.addParameter(tappa.getDt_inizio_tappa(), java.sql.Types.TIMESTAMP, 9);
+	sql.addParameter(nazione.getPg_nazione(), java.sql.Types.NUMERIC, 7);
+	sql.addParameter(inquadramento, java.sql.Types.NUMERIC, 8);
+	sql.addParameter(dataTappa, java.sql.Types.TIMESTAMP, 9);
 
 	sql.addPreOrderBy(" cd_ti_pasto, pg_rif_inquadramento desc, pg_nazione desc, ti_area_geografica");
 		
@@ -3334,24 +3410,42 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC,Missione_dettaglioBul
 	else		
 		primoGG = missione.getPrimoGiornoSpesaSelezionato();
 		
+	
 	Missione_tappaBulk tappa = (Missione_tappaBulk) missione.getTappeMissioneHash().get(primoGG);
     NazioneHome nazionehome=(NazioneHome)getHome(aUC,NazioneBulk.class);
     
 	tappa.setNazione((NazioneBulk)nazionehome.findByPrimaryKey(tappa.getNazione()));
 	
+	SQLBuilder sql = selectTipo_spesaByClause(aUC, tappa.getDt_inizio_tappa(), missione.getPg_rif_inquadramento(), tappa.getNazione(), tappa.getFl_rimborso(), dettaglioSpesa.getCd_ti_spesa(), clauses) ;
+	sql.addPreOrderBy(" cd_ti_spesa, pg_rif_inquadramento desc, pg_nazione desc, ti_area_geografica");
+	return sql;
+}
+
+public java.util.List recuperoTipiSpesa(UserContext aUC, Timestamp dataInizioTappa, Long nazione, Long inquadramento, Boolean rimborsoAmmissibile, String cdTipoSpesa) throws ComponentException, PersistencyException
+{
+    NazioneHome nazionehome=(NazioneHome)getHome(aUC,NazioneBulk.class);
+	NazioneBulk nazioneBulk = new NazioneBulk(nazione);
+	nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+	
+	SQLBuilder sql = selectTipo_spesaByClause(aUC, dataInizioTappa, inquadramento, nazioneBulk, rimborsoAmmissibile, cdTipoSpesa, new CompoundFindClause()) ;
+	Missione_tipo_spesaHome tipoSpesaHome = (Missione_tipo_spesaHome)getHome(aUC, Missione_tipo_spesaBulk.class);
+	return tipoSpesaHome.fetchAll(sql);
+}
+
+public SQLBuilder selectTipo_spesaByClause(UserContext aUC, Timestamp dataTappa, Long inquadramento, NazioneBulk nazione, Boolean ammissibileConRimborso, String tipoSpesa, CompoundFindClause clauses) throws ComponentException, PersistencyException
+{
+	
 	Missione_tipo_spesaHome tipoSpesaHome = (Missione_tipo_spesaHome)getHome(aUC, Missione_tipo_spesaBulk.class);
 	SQLBuilder sql = tipoSpesaHome.createSQLBuilder();
-	
+
 	sql.addClause(clauses);
 	
-	//sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,missione.getDt_inizio_missione());
-	//sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,missione.getDt_inizio_missione());
-	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,tappa.getDt_inizio_tappa());
-	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,tappa.getDt_inizio_tappa());
+	sql.addClause("AND","dt_inizio_validita",sql.LESS_EQUALS,dataTappa);
+	sql.addClause("AND","dt_fine_validita",sql.GREATER_EQUALS,dataTappa);
 
 
 	sql.openParenthesis("AND");	
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "I");
 	else
 		sql.addClause("AND","ti_area_geografica",sql.EQUALS, "E");
@@ -3359,32 +3453,31 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC,Missione_dettaglioBul
 	sql.closeParenthesis();		
 
 	sql.openParenthesis("AND");
-	sql.addClause("AND","pg_nazione",sql.EQUALS, tappa.getPg_nazione());
+	sql.addClause("AND","pg_nazione",sql.EQUALS, nazione.getPg_nazione());
 	sql.addClause("OR","pg_nazione",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 
 	sql.openParenthesis("AND");	
-	sql.addClause("AND","pg_rif_inquadramento",sql.EQUALS, missione.getPg_rif_inquadramento());
+	sql.addClause("AND","pg_rif_inquadramento",sql.EQUALS, inquadramento);
 	sql.addClause("OR","pg_rif_inquadramento",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 	
-	if (tappa.getFl_rimborso())
-	    sql.addClause("AND","fl_ammissibile_con_rimborso",sql.EQUALS, tappa.getFl_rimborso());	
+	if (ammissibileConRimborso)
+	    sql.addClause("AND","fl_ammissibile_con_rimborso",sql.EQUALS, ammissibileConRimborso);	
 
-	sql.addClause("AND","cd_ti_spesa",sql.EQUALS, dettaglioSpesa.getCd_ti_spesa());					
+	sql.addClause("AND","cd_ti_spesa",sql.EQUALS, tipoSpesa);					
 
 	sql.addSQLClause("AND","(cd_ti_spesa || ti_area_geografica || pg_nazione || pg_rif_inquadramento || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('01', cd_ti_spesa, ?, ?, ?, ?)");
 
-	if((tappa.getNazione() != null) && ((NazioneBulk.ITALIA).equals(tappa.getNazione().getTi_nazione())))
+	if((nazione != null) && ((NazioneBulk.ITALIA).equals(nazione.getTi_nazione())))
 		sql.addParameter("I", java.sql.Types.CHAR, 7);
 	else
 		sql.addParameter("E", java.sql.Types.CHAR, 7);
-	sql.addParameter(tappa.getPg_nazione(), java.sql.Types.NUMERIC, 8);
-	sql.addParameter(missione.getPg_rif_inquadramento(), java.sql.Types.NUMERIC, 9);
+	sql.addParameter(nazione.getPg_nazione(), java.sql.Types.NUMERIC, 8);
+	sql.addParameter(inquadramento, java.sql.Types.NUMERIC, 9);
 	//sql.addParameter(missione.getDt_inizio_missione(), java.sql.Types.TIMESTAMP, 10);	
-	sql.addParameter(tappa.getDt_inizio_tappa(), java.sql.Types.TIMESTAMP, 10);
-	sql.addPreOrderBy(" cd_ti_spesa, pg_rif_inquadramento desc, pg_nazione desc, ti_area_geografica");
+	sql.addParameter(dataTappa, java.sql.Types.TIMESTAMP, 10);
 	
 	return sql;
 }
@@ -3442,19 +3535,12 @@ public MissioneBulk setDivisaCambio(UserContext userContext, MissioneBulk missio
 {
 	try
 	{
-		CambioBulk cambio = null;
-		String cdDivisaDiaria = getDivisaTappaDaDiaria(userContext, missione, tappa);
-		if(cdDivisaDiaria == null)
-			throw new ApplicationException("Non trovata la divisa per la tappa !");
-		
-		DivisaBulk divisaDiaria = findDivisa(userContext, cdDivisaDiaria);
-		if(divisaDiaria == null)
-			throw new ApplicationException("Non trovata la divisa per la tappa !");
 			
-		tappa.setDivisa_tappa(divisaDiaria);
-
-		try{cambio = findCambio(userContext, tappa.getDivisa_tappa(), missione.getDt_inizio_missione());}
-		catch(ApplicationException e){}
+		tappa.setDivisa_tappa(recuperoDivisa(userContext, tappa.getPg_nazione(), missione.getRif_inquadramento().getCd_gruppo_inquadramento(), missione.getDt_inizio_missione()));
+		CambioBulk cambio = null;
+		if (tappa.getDivisa_tappa() != null){
+			cambio = getCambioDivisa(userContext, tappa.getDivisa_tappa().getCd_divisa(), missione.getDt_inizio_missione());
+		}
 		
 		if(cambio == null)
 			tappa.setCambio_tappa(null);
@@ -3468,6 +3554,55 @@ public MissioneBulk setDivisaCambio(UserContext userContext, MissioneBulk missio
 		throw handleException(ex);
 	}
 }	
+
+public DivisaBulk recuperoDivisa(UserContext userContext, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws ComponentException
+{
+	try
+	{
+		String cdDivisaDiaria = getDivisaTappaDaDiaria(userContext, nazione, gruppoInquadramento, dataInizioMissione);
+		if(cdDivisaDiaria == null)
+			throw new ApplicationException("Non trovata la divisa per la tappa !");
+		
+		DivisaBulk divisaDiaria = findDivisa(userContext, cdDivisaDiaria);
+		if(divisaDiaria == null)
+			throw new ApplicationException("Non trovata la divisa per la tappa !");
+			
+		return divisaDiaria;
+	}
+	catch(Throwable ex)
+	{
+		throw handleException(ex);
+	}
+}	
+
+public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException
+{
+	try
+	{
+		CambioBulk cambio = getCambioDivisa(userContext, divisa,dataInizioMissione);
+		
+		if(cambio == null)
+			return null;
+		else	
+			return cambio.getCambio();
+	}
+	catch(Throwable ex)
+	{
+		throw handleException(ex);
+	}
+}
+private CambioBulk getCambioDivisa(UserContext userContext, String divisa,
+		Timestamp dataInizioMissione) throws ComponentException,
+		PersistencyException {
+	CambioBulk cambio = null;
+	if (divisa == null){
+		return null;
+	}
+	try{cambio = findCambio(userContext, divisa, dataInizioMissione);}
+	catch(ApplicationException e){}
+	return cambio;
+}	
+
 /**
  * Inzializzazione tappa
  *
