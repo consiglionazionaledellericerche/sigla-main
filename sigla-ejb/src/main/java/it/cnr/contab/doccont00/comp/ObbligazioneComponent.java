@@ -4353,6 +4353,10 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 		if (obbligazione.getFl_gara_in_corso().booleanValue() &&
 			obbligazione.getDs_gara_in_corso() == null)
 		  throw new it.cnr.jada.comp.ApplicationException("La gara di appalto risulta essere in corso di espletamento. Campo \"Descrizione gara di appalto\" obbligatorio!");
+		if (obbligazione.getFl_gara_in_corso().booleanValue() &&
+				obbligazione.isObbligazioneResiduo()
+				&& obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
+			throw new ApplicationException("Non e' possibile modificare un'impegno residuo con gara di appalto in corso di espletamento.");
 		
 		if (obbligazione.getFl_gara_in_corso().booleanValue() && 
 			(obbligazione.getPg_contratto() != null || obbligazione.getPg_repertorio() != null))

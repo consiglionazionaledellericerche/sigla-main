@@ -74,6 +74,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_VALIDITA"
+			propertyName="dt_fine_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="ds_tipo_incarico" />
@@ -97,4 +103,6 @@
 		name="duva" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+		name="dt_fine_validita" />
 </SQLPersistentInfo>

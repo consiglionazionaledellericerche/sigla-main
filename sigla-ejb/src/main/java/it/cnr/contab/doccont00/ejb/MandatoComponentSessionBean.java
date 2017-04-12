@@ -1,4 +1,5 @@
 package it.cnr.contab.doccont00.ejb;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -6,8 +7,11 @@ import javax.ejb.Stateless;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.doccont00.comp.MandatoComponent;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCCONT00_EJB_MandatoComponentSession")
 public class MandatoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements MandatoComponentSession {
 	@PostConstruct
@@ -422,5 +426,104 @@ public class MandatoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSe
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
 		}
+	}
+	@Override
+	public String isAnnullabile(UserContext param0, MandatoBulk param1)throws ComponentException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+			try {
+				java.lang.String result = ((MandatoComponent)componentObj).isAnnullabile(param0,param1);
+				component_invocation_succes(param0,componentObj);
+				return result;
+			} catch(it.cnr.jada.comp.NoRollbackException e) {
+				component_invocation_succes(param0,componentObj);
+				throw e;
+			} catch(it.cnr.jada.comp.ComponentException e) {
+				component_invocation_failure(param0,componentObj);
+				throw e;
+			} catch(RuntimeException e) {
+				throw uncaughtRuntimeException(param0,componentObj,e);
+			} catch(Error e) {
+				throw uncaughtError(param0,componentObj,e);
+			}
+	}
+	@Override
+	public MandatoBulk annullaMandato(UserContext param0, MandatoBulk param1,
+			boolean param2) throws ComponentException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.contab.doccont00.core.bulk.MandatoBulk result = ((MandatoComponent)componentObj).annullaMandato(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public Boolean esisteAnnullodaRiemettereNonCollegato(it.cnr.jada.UserContext param0,Integer param1, String param2 ) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+		// TODO Auto-generated method stub
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.lang.Boolean result = ((MandatoComponent)componentObj).esisteAnnullodaRiemettereNonCollegato(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public Boolean isMandatoCollegatoAnnullodaRiemettere(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1 ) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+		// TODO Auto-generated method stub
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.lang.Boolean result = ((MandatoComponent)componentObj).isMandatoCollegatoAnnullodaRiemettere(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	@Override
+	public Boolean isVerificataModPagMandato(UserContext param0,
+			V_mandato_reversaleBulk param1)
+			throws ComponentException, RemoteException {
+		// TODO Auto-generated method stub
+				pre_component_invocation(param0,componentObj);
+				try {
+					java.lang.Boolean result = ((MandatoComponent)componentObj).isVerificataModPagMandato(param0,param1);
+					component_invocation_succes(param0,componentObj);
+					return result;
+				} catch(it.cnr.jada.comp.NoRollbackException e) {
+					component_invocation_succes(param0,componentObj);
+					throw e;
+				} catch(it.cnr.jada.comp.ComponentException e) {
+					component_invocation_failure(param0,componentObj);
+					throw e;
+				} catch(RuntimeException e) {
+					throw uncaughtRuntimeException(param0,componentObj,e);
+				} catch(Error e) {
+					throw uncaughtError(param0,componentObj,e);
+				}
 	}
 }

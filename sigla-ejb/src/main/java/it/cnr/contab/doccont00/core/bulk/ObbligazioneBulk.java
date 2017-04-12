@@ -1,25 +1,45 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.config00.pdcfin.bulk.*;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-
-import java.math.BigDecimal;
-import it.cnr.contab.config00.sto.bulk.*;
-
-import java.util.*;
-
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashMap;
+import it.cnr.jada.bulk.PrimaryKeyHashtable;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.persistency.Persister;
-import it.cnr.jada.util.*;
+import it.cnr.jada.util.OrderedHashtable;
 
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Vector;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonInclude(value=Include.NON_NULL)
 public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDocumentoContabileBulk {
 	private static final long serialVersionUID = 1L;
 
@@ -449,18 +469,8 @@ public java.math.BigDecimal getIm_parz_scadenze()
  */
 public java.math.BigDecimal getIm_residuo_obbligazione() 
 {
-	return this.getIm_obbligazione().subtract( this.getIm_parz_scadenze()) ;
-	/*
-		Obbligazione_scadenzarioBulk scadenza ;
-		im_residuo_obbligazione = new java.math.BigDecimal( 0 );
-		for ( Iterator i = getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
-		{
-			scadenza = (Obbligazione_scadenzarioBulk)i.next();
-			if ( scadenza.getIm_scadenza() != null )
-				im_residuo_obbligazione = this.getIm_obbligazione().subtract( this.getIm_parz_scadenze() );
-		}	
-		return im_residuo_obbligazione;
-	*/
+	return Optional.ofNullable(getIm_obbligazione()).orElse(BigDecimal.ZERO).subtract(
+			Optional.ofNullable(getIm_parz_scadenze()).orElse(BigDecimal.ZERO));
 }
 /**
  * <!-- @TODO: da completare -->

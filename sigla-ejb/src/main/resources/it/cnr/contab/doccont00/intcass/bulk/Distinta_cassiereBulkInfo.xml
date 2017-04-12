@@ -343,6 +343,17 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
 		label="Sepa" />
+		<fieldProperty
+		name="fl_annulli"
+		property="fl_annulli"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Annulli" />
+	
 	<fieldProperty
 		name="utcr"
 		property="utcr"
@@ -458,6 +469,8 @@
 	<formFieldProperty
 		name="fl_sepa" />
 	<formFieldProperty
+		name="fl_annulli" />
+	<formFieldProperty
 		name="utcr" />	
 	<columnFieldProperty
 		name="esercizio" />
@@ -476,7 +489,9 @@
 	<columnFieldProperty
 		name="fl_flusso" />
 	<columnFieldProperty
-		name="fl_sepa" />		
+		name="fl_sepa" />	
+	<columnFieldProperty
+		name="fl_annulli" />				
 	<columnFieldProperty
 		name="utcr" />	
 	<findFieldProperty

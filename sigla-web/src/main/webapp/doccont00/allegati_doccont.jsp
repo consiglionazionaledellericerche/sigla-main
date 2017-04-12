@@ -18,7 +18,7 @@
 <title>Allegati al <%=bp.getModel().toString()%></title>
 <script language="JavaScript">
 function doScaricaFile() {	
-  doPrint('genericdownload/<%=bp.getNomeAllegato()%>?methodName=scaricaAllegatoGenerico&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+  doPrint('genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegatoGenerico&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 </head>
