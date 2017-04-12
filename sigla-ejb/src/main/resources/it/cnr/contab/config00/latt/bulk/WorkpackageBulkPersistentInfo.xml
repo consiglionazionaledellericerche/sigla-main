@@ -67,6 +67,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"
 			nullable="true" />									
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />									
 	</columnMap>		  		
 	<columnMap 
 		name="V_LINEA_ATT_NOT_IN_PDG"
@@ -145,6 +151,7 @@
 	<fetchPolicy name="it.cnr.contab.pdg00.comp.StampaSituazioneSinteticaGAEComponent.find">
 		<exclude pattern="*" />
 		<include pattern="progetto"/>	
+		<include pattern="responsabile"/>	
 		<include pattern="progetto.*"/>
 	</fetchPolicy>	
 	<fetchPolicy

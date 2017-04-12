@@ -906,21 +906,21 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 									  );
 						} else {
 							//recupero la voce di ribaltamento
-							Voce_fBulk voceOld = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
-									  new Voce_fBulk(voce.getCd_voce(),CNRUserContext.getEsercizio(userContext),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
-									  );
-
-							getHomeCache(userContext).fetchAll(userContext);
-
-							if (voceOld == null)
-								throw new ApplicationException("La voce: "+ voce.getCd_voce() +" non è presente nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+//							Voce_fBulk voceOld = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+//									  new Voce_fBulk(voce.getCd_voce(),CNRUserContext.getEsercizio(userContext),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
+//						 			  );
+//
+//							getHomeCache(userContext).fetchAll(userContext);
+//
+//							if (voceOld == null)
+//								throw new ApplicationException("La voce: "+ voce.getCd_voce() +" non è presente nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
 							
 							Elemento_voceBulk elementoVoceOld = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-									  new Elemento_voceBulk(voceOld.getCd_elemento_voce(),voceOld.getEsercizio(),voceOld.getTi_appartenenza(),voceOld.getTi_gestione())
+									  new Elemento_voceBulk(saldoOld.getCd_voce(),CNRUserContext.getEsercizio(userContext),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
 									  );
 							
 							if (elementoVoceOld == null)
-							  throw new ApplicationException("Elemento voce non trovato per la Voce: "+ voceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+							  throw new ApplicationException("Elemento voce non trovato per la Voce: "+ saldoOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
 
 							//cerco la voce del nuovo anno
 							List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(elementoVoceOld);
@@ -935,7 +935,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 							}
 							
 							if (elemento_voce == null || elemento_voce.getEsercizio().compareTo(esercizio.getEsercizio())!=0)
-								  throw new ApplicationException("Elemento voce non trovato o associato ad una voce di anno differente rispetto a quello di ribaltamento per la Voce: "+ voceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+								  throw new ApplicationException("Elemento voce non trovato o associato ad una voce di anno differente rispetto a quello di ribaltamento per la Voce: "+ saldoOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
 
 							saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, elemento_voce);
 							codiceVoceForSaldoNew = elemento_voce.getCd_voce();

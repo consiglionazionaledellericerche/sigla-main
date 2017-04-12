@@ -49,7 +49,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.SendMail;
-import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
 
 import java.io.IOException;
 import java.io.Serializable;

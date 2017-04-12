@@ -58,6 +58,8 @@ import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -580,7 +582,7 @@ private Forward basicDoGeneraNotaDiCredito(ActionContext context)
 	// RP 16/03/2010 Da commentare per generare NC di fatture di anni precedenti
 	//else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
 		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
-
+ 
 	//if (fp.isRiportata() && !fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportata()))
 		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non riportate completamente!");
 	try {
@@ -617,12 +619,12 @@ private Forward basicDoGeneraNotaDiDebito(ActionContext context)
 
 	if (fp.isRiportata() && esercizioScrivania.intValue() == fp.getEsercizio().intValue())
 		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di debito per fatture riportate!");
-
+ 
 		// Gennaro Borriello - (02/11/2004 16.48.21)
 		// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato 
 		//	riportato DA UN ES. PRECEDENTE a quello di scrivania.
-	else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
-		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
+//	else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
+//		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
 
 	//if (fp.isRiportata() && !fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportata()))
 		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di debito per fatture non riportate completamente!");
@@ -5166,6 +5168,27 @@ public Forward doConfirmDtScadenza(ActionContext context, it.cnr.jada.util.actio
 		}
 		return context.findDefaultForward();
 	} catch(Exception e) {
+		return handleException(context,e);
+	}
+}
+public Forward doDisassociaLettera(ActionContext context) {
+
+	try {
+		fillModel(context);
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passivaBulk model = (Fattura_passivaBulk)bp.getModel();
+		CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
+		UtenteBulk utente = ui.getUtente();
+		if (utente.isSupervisore()){
+			if (model != null) {
+				if (model.getLettera_pagamento_estero() != null) {
+					model = ((FatturaPassivaComponentSession)bp.createComponentSession()).eliminaLetteraPagamentoEstero(context.getUserContext(), model,false);
+					bp.setModel(context, model);
+				}
+			}
+		}else throw new it.cnr.jada.comp.ApplicationException("Utente non abilitato!");
+		return context.findDefaultForward();
+	} catch(Throwable e) {
 		return handleException(context,e);
 	}
 }

@@ -412,6 +412,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	 */
 	public it.cnr.jada.bulk.OggettoBulk salvaDefinitivo(UserContext userContext, it.cnr.jada.bulk.OggettoBulk ogettoBulk) throws ComponentException{
 		Var_stanz_resBulk var_stanz_res = (Var_stanz_resBulk)ogettoBulk;
+		var_stanz_res = (Var_stanz_resBulk)modificaConBulk(userContext,var_stanz_res);
+	    var_stanz_res = (Var_stanz_resBulk)inizializzaBulkPerModifica(userContext,var_stanz_res);
 		verificaTotaliDaAccertamentoModifica(userContext, var_stanz_res);
 		var_stanz_res.setStato(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
 		
@@ -434,7 +436,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 //		var_stanz_res.setDt_chiusura(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
 		var_stanz_res.setToBeUpdated();
 		if (var_stanz_res.getAssociazioneCDR().isEmpty()) 
-			throw new ApplicationException("Associare almeno un Centro di Responsabilitï¿½ alla Variazione.");
+			throw new ApplicationException("Associare almeno un Centro di Responsabilità alla Variazione.");
+		
 		var_stanz_res = (Var_stanz_resBulk)super.modificaConBulk(userContext, var_stanz_res);
 		if ((var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
 		    var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO_INT)) &&
@@ -942,44 +945,45 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						rigaInsMod = true;				
 					}
 				}
-
 				BigDecimal totaleImportoRiga = BigDecimal.ZERO;
-				if (var_stanz_res.isApprovata()){
-					Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
-					for (java.util.Iterator i =  var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
-						Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
-						try {
-							if (isRigaLiquidazioneIva(usercontext, riga)){
-								throw new ApplicationException ("Attenzione: Non è possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
-							} else {
-								totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
+				if (var_stanz_res.isApprovata() ){
+							Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCentroDiResponsabilita().getCd_centro_responsabilita()));
+							for (java.util.Iterator i =  var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
+								Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
+									try {
+										if (isRigaLiquidazioneIva(usercontext, riga)){
+											throw new ApplicationException ("Attenzione: Non è possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
+										} else {
+											totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
+										}
+									} catch (ComponentException e) {
+										throw new ApplicationException (e.getMessage());
+									}
+								}
+						
+							if (Utility.nvl(ass_var_cdr.getIm_spesa()).compareTo(totaleImportoRiga) != 0){
+								throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilità!");
 							}
-						} catch (ComponentException e) {
-							throw new ApplicationException (e.getMessage());
+							try {
+								if(rigaInsMod)
+									allineaSaldiVariazioneApprovata(usercontext, var_stanz_res, totaleImportoRiga);
+							} catch (ComponentException e) {
+								throw handleException(e);
 						}
 					}
-					if (Utility.nvl(ass_var_cdr.getIm_spesa()).compareTo(totaleImportoRiga) != 0){
-						throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilità!");
-					}
-					try {
-						allineaSaldiVariazioneApprovata(usercontext, var_stanz_res, totaleImportoRiga);
-					} catch (ComponentException e) {
-						throw handleException(e);
-					}
-				}
 				
 				if (rigaInsMod){
-					Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
-					if (ass_var_cdr.getIm_spesa().compareTo(totaleRighe) == 0){
-					if (inviaMessaggio(usercontext,var_stanz_res,ass_var_cdr)){
-						for (java.util.Iterator i= utenteHome.findUtenteByCDRIncludeFirstLevel(var_stanz_res.getCd_centro_responsabilita()).iterator();i.hasNext();){
-							UtenteBulk utente = (UtenteBulk)i.next();
-							MessaggioBulk messaggio = generaMessaggioCopertura(usercontext,utente,var_stanz_res,ass_var_cdr);
-							super.creaConBulk(usercontext, messaggio);
-						}											
-					}
+						Ass_var_stanz_res_cdrBulk ass_var_cdr = (Ass_var_stanz_res_cdrBulk)AssHome.findByPrimaryKey(new Ass_var_stanz_res_cdrBulk(var_stanz_res.getEsercizio(), var_stanz_res.getPg_variazione(), var_stanz_res.getCdr().getCd_centro_responsabilita()));
+						if (ass_var_cdr.getIm_spesa().compareTo(totaleRighe) == 0){
+							if (inviaMessaggio(usercontext,var_stanz_res,ass_var_cdr)){
+								for (java.util.Iterator i= utenteHome.findUtenteByCDRIncludeFirstLevel(var_stanz_res.getCd_centro_responsabilita()).iterator();i.hasNext();){
+									UtenteBulk utente = (UtenteBulk)i.next();
+									MessaggioBulk messaggio = generaMessaggioCopertura(usercontext,utente,var_stanz_res,ass_var_cdr);
+									super.creaConBulk(usercontext, messaggio);
+								}											
+							}
+						}
 				}
-			}
 			} catch (PersistencyException e) {
 			   throw new ComponentException(e);
 			} catch (IntrospectionException e) {

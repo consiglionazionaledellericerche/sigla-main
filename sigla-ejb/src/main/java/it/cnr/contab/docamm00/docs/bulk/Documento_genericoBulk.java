@@ -61,12 +61,11 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public final static char ENTRATE= 'E';
 	public final static char SPESE= 'S';
 	public final static Dictionary flagEnteKeys;
-	public final static Dictionary entrate_speseKeys;
-
+	public final static Dictionary entrate_speseKeys;	
 	protected TerzoBulk terzo_uo_cds;
 	protected TerzoBulk terzo_spesa;
 	private PrimaryKeyHashMap deferredSaldi= new PrimaryKeyHashMap();
-
+	
 	public final static String NON_REGISTRATO_IN_COGE= "N";
 	public final static String REGISTRATO_IN_COGE= "C";
 	public final static String DA_RIREGISTRARE_IN_COGE= "R";
@@ -869,10 +868,8 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = null;
 		unita_organizzativa = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 		setCd_cds(unita_organizzativa.getUnita_padre().getCd_unita_organizzativa());
-
 		setCd_cds_origine(getCd_cds());
 		setCd_uo_origine(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
-
 		return super.initialize(bp,context);
 	}
 	public OggettoBulk initializeForFreeSearch(CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -883,7 +880,6 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
 		setCd_unita_organizzativa(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
 		setCd_cds(null); // ho aggiunto CD_CDS nelle findFieldProperties -> imposto a NULL per escluderlo dai filtri di ricerca
-
 		if (bp instanceof CRUDDocumentoGenericoPassivoBP && ((CRUDDocumentoGenericoPassivoBP)bp).isSpesaBP()){
 			setStato_cofi(this.STATO_CONTABILIZZATO);
 			setCd_tipo_documento_amm(this.GENERICO_S);
@@ -957,6 +953,14 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 				isPagata() ||
 				isPagataParzialmente()||
 				isROStatoTrasmissioneLettera();
+	}
+	public boolean isAbledToDisassociaLettera() {
+
+		return	isGenericoAttivo() ||
+				getLettera_pagamento_estero() == null ||
+				isPagata() ||
+				isPagataParzialmente()||
+				!isROStatoTrasmissioneLettera();
 	}
 	/**
 	 * Insert the method's description here.
@@ -1107,13 +1111,14 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public boolean isROFlagEnte() {
 
 		return	//Questo controllo evita problemi del tipo "cambiamenti di chiave" quando il doc è già salvato
-				isToBeUpdated() ||
+				isToBeUpdated() || 
 				getCrudStatus() == OggettoBulk.NORMAL ||
 				//*****************************************************************************************
 				((this.isPassivo_ente() && 
 						(this.getUo_CNR()!=null && this.getUo_CNR().equals(getCd_uo_origine()))) ||
 						this.isGenericoAttivo() && this.getAccertamentiHash() != null && !this.getAccertamentiHash().isEmpty()) ||
-						(!this.isGenericoAttivo() && this.getObbligazioniHash() != null && !this.getObbligazioniHash().isEmpty());
+						(!this.isGenericoAttivo() && this.getObbligazioniHash() != null && !this.getObbligazioniHash().isEmpty()||
+							(!this.isGenericoAttivo() && this.getLettera_pagamento_estero()!=null));
 	}
 	/**
 	 * Insert the method's description here.

@@ -830,6 +830,14 @@
 		label="Cancella lettera pagamento estero"
 		href="javascript:submitForm('doCancellaLettera')" />
 	<fieldProperty
+		name="disassociaLettera"
+		property="lettera_pagamento_estero"
+		inputType="BUTTON"
+		img="img/delete16.gif"
+		readonlyProperty="abledToDisassociaLettera"
+		label="Scollega lettera pagamento estero"
+		href="javascript:submitForm('doDisassociaLettera')" />	
+	<fieldProperty
 		name="cd_sospeso"
 		property="lettera_pagamento_estero.sospeso.cd_sospeso_padre"
 		inputType="TEXT"
@@ -1369,6 +1377,8 @@
 		name="creaLettera" />
 	<formFieldProperty
 		name="cancellaLettera" />
+	<formFieldProperty
+		name="disassociaLettera" />		
 	<formFieldProperty
 		name="cd_sospeso" />
 	<formFieldProperty

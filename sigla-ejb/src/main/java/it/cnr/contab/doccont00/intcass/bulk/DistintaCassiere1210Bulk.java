@@ -9,6 +9,7 @@ import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 @CMISType(name="D:doccont:document")
 public class DistintaCassiere1210Bulk extends DistintaCassiere1210Base {
@@ -47,5 +48,10 @@ public class DistintaCassiere1210Bulk extends DistintaCassiere1210Base {
 				null, 
 				null);
 		return cmisPath;		
+	}
+	public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		
+		setEsercizio( it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context) );
+		return this;
 	}
 }

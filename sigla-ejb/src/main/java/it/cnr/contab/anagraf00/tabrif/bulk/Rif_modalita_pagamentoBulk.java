@@ -1,16 +1,19 @@
 package it.cnr.contab.anagraf00.tabrif.bulk;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
-import it.gov.fatturapa.sdi.fatturapa.v1.ModalitaPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ModalitaPagamentoType;
 
 /**
  * Gestione dei dati relativi alla tabella Progressione
  */
-
+@JsonInclude(value=Include.NON_NULL)
 public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
 	public final static java.util.Dictionary TI_PAGAMENTO_KEYS;
 	public final static java.util.Dictionary TIPO_PAGAMENTO_SDI_KEYS;
@@ -59,6 +62,11 @@ public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_15.value(),    "Giroconto su Conti di Contabilità Speciale"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_16.value(),    "Domiciliazione Bancaria"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_17.value(),    "Domiciliazione Postale"    );
+		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_18.value(),    "Bollettino di c/c postale"    );
+		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_19.value(),    "SEPA Direct Debit"    );
+		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_20.value(),    "SEPA Direct Debit CORE"    );
+		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_21.value(),    "SEPA Direct Debit B2B"    );
+		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_22.value(),    "Trattenuta su somme già riscosse"    );
 	}
 /**
  * 

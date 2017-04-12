@@ -323,4 +323,13 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsultazioniAction" />	    
   </businessProcess>  
+
+  <businessProcess name="StampaPdgRendicontoBP" className="it.cnr.contab.prevent01.bp.StampaPdgpBilancioBP">
+	<forward name="default" path="/prevent01/stampa_pdgp_bilancio.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk" />
+	<init-param name="printbp" value="OfflineReportPrintBP"/>
+	<init-param name="defaultAction" value="StampaPdgpBilancioAction" />
+    <init-param name="componentSessionName" value="CNRPREVENT01_EJB_PdgAggregatoModuloComponentSession" />               
+	<init-param name="reportName" value="/preventivo/preventivo/stampa_pdg_renddec.jasper" />
+  </businessProcess> 
 </action-mappings>

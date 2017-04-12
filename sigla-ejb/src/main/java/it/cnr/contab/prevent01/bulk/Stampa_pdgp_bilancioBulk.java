@@ -40,6 +40,9 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 	//	Stampa Riepilogo Titoli
 	private boolean ti_riepilogo;
 
+	//	Parte Bilancio Gestionale da stampare - I - II parte
+	private String ti_parte;
+
 	private it.cnr.jada.util.OrderedHashtable livelliOptions = new it.cnr.jada.util.OrderedHashtable();
 	
 	public final static String TIPO_DECISIONALE = "DEC";
@@ -73,6 +76,17 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 		ti_origineKeys = new it.cnr.jada.util.OrderedHashtable();
 		ti_origineKeys.put(TIPO_PROVVISORIO,"Provvisoria");
 		ti_origineKeys.put(TIPO_REALE,"Reale");
+	}
+
+	public final static String TIPO_PARTE_PRIMA = "I";
+	public final static String TIPO_PARTE_SECONDA = "II";
+
+	public final static java.util.Dictionary ti_parteKeys;
+	
+	static {
+		ti_parteKeys = new it.cnr.jada.util.OrderedHashtable();
+		ti_parteKeys.put(TIPO_PARTE_PRIMA,"Prima");
+		ti_parteKeys.put(TIPO_PARTE_SECONDA,"Seconda");
 	}
 
 	public final static String TIPO_DECISIONALE_SCIENTIFICO = "DECSCI";
@@ -182,5 +196,13 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 
 	public String getRiepilogo() {
 		return ti_riepilogo?"S":"N";
+	}
+	
+	public String getTi_parte() {
+		return ti_parte;
+	}
+	
+	public void setTi_parte(String ti_parte) {
+		this.ti_parte = ti_parte;
 	}
 }

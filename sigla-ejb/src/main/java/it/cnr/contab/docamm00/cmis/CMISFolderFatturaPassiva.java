@@ -60,9 +60,12 @@ public class CMISFolderFatturaPassiva extends OggettoBulk {
 
 	@CMISPolicy(name="P:sigla_commons_aspect:terzi", property=@CMISProperty(name="sigla_commons_aspect:terzi_cd_terzo"))
 	public String getCodiceTerzo() {
-		if (this.documentoEleTestata == null)
-			return null;
-		return this.documentoEleTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo().toString();
+		if (this.getFattura_passivaBulk() != null && this.getFattura_passivaBulk().getCd_terzo() != null){
+			return this.getFattura_passivaBulk().getCd_terzo().toString();
+		} else if (this.documentoEleTestata != null && this.documentoEleTestata.getDocumentoEleTrasmissione() != null && this.documentoEleTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo() != null){
+			return this.documentoEleTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo().toString();
+		}
+		return null;
 	}
 	private Fattura_passivaBulk fattura_passivaBulk;
 	private DigitalPreservationProperties dpProperties;

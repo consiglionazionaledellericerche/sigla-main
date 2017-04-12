@@ -1,8 +1,18 @@
 package it.cnr.contab.consultazioni.comp;
 
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 
+import javax.ejb.EJBException;
+
 import it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -22,6 +32,16 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaHome;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
+
+import it.cnr.contab.pdg01.consultazioni.bulk.VConsVarCompResBulk;
+import it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_bilancioBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
+import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -32,6 +52,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
@@ -71,6 +92,32 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					throw new ComponentException("Non e' possibile richiamare il servizio REST degli inquadramenti senza la condizione del codice anagrafico.");
 				}
 			}
+		} else if (oggettobulk instanceof VConsVarCompResBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				Boolean trovataCondizioneCdrPersonale = false;
+    			CompoundFindClause newClauses = new CompoundFindClause();
+    			Enumeration e = compoundfindclause.getClauses();
+    			SQLBuilder sqlCDR = null;
+				while(e.hasMoreElements() ){
+					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("cdrPersonale") && 
+							operator == 8192 && "S".equals((String)clause.getValue())){
+						trovataCondizioneCdrPersonale = true;
+						sqlCDR = getHome(userContext, Configurazione_cnrBulk.class).createSQLBuilder();
+						sqlCDR.resetColumns();
+						sqlCDR.addColumn("VAL01");
+						sqlCDR.addSQLClause("AND", "CD_CHIAVE_PRIMARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.PK_CDR_SPECIALE);
+						sqlCDR.addSQLClause("AND", "CD_CHIAVE_SECONDARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.SK_CDR_PERSONALE);
+					} else {
+						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					}
+				}
+				if (trovataCondizioneCdrPersonale){
+					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
+					sql.addSQLClause("AND", "CDR_ASSEGN", sql.EQUALS, sqlCDR);
+				}
+			}
 		} else if (oggettobulk instanceof VDocAmmAttiviBrevettiBulk){
 			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
 				Boolean trovataCondizioneTrovato = false;
@@ -96,6 +143,223 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					}
 				}
 				if (trovataCondizioneTrovato){
+					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
+					sql.addSQLExistsClause("AND", sqlExists);
+				}
+			}
+			if ( !isUoEnte(userContext)){
+				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
+			}
+		} else if (oggettobulk instanceof Missione_tipo_spesaBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				CompoundFindClause newClauses = new CompoundFindClause();
+				Enumeration e = compoundfindclause.getClauses();
+				Enumeration e1 = compoundfindclause.getClauses();
+				SQLBuilder sqlExists = null;
+				if (isCondizioneTipiSpesaMissione(e)){
+					NazioneBulk nazioneBulk = null;
+					Timestamp dataTappa = null;
+					Long inquadramento = null;
+					Boolean ammissibileConRimborso = null;
+
+					while(e1.hasMoreElements() ){
+						SimpleFindClause clause = (SimpleFindClause) e1.nextElement();
+						int operator = clause.getOperator();
+						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
+								operator == 8192){
+							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
+							Integer str = (Integer)clause.getValue();
+							nazioneBulk = new NazioneBulk(new Long(str));
+							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
+								operator == 8192)	{
+							Integer str = (Integer)clause.getValue();
+							inquadramento = new Long(str);
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
+								operator == 8192)	{
+							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+							Date parsedDate;
+							try {
+								parsedDate = dateFormat.parse((String) clause.getValue());
+								dataTappa = new Timestamp(parsedDate.getTime());
+							} catch (ParseException e2) {
+								e2.printStackTrace();
+							}
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("ammissibileRimborso") && 
+								operator == 8192)	{
+							Boolean str = (Boolean)clause.getValue();
+							ammissibileConRimborso = str;
+
+						} else {
+							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+						}
+					}
+					if (nazioneBulk != null && dataTappa != null && inquadramento != null && ammissibileConRimborso != null){
+						try {
+							sql = missioneComponent().selectTipo_spesaByClause(userContext, dataTappa, inquadramento, nazioneBulk, ammissibileConRimborso, null, new CompoundFindClause());
+							sql.addPreOrderBy(" ds_ti_spesa");
+						} catch (RemoteException | EJBException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+					}
+				}
+			}
+		} else if (oggettobulk instanceof Missione_rimborso_kmBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				CompoundFindClause newClauses = new CompoundFindClause();
+				Enumeration e = compoundfindclause.getClauses();
+				Enumeration e1 = compoundfindclause.getClauses();
+				SQLBuilder sqlExists = null;
+				if (isCondizioneRimborsoKmMissione(e)){
+					NazioneBulk nazioneBulk = null;
+					Timestamp dataTappa = null;
+					String tipoAuto = null;
+
+					while(e1.hasMoreElements() ){
+						SimpleFindClause clause = (SimpleFindClause) e1.nextElement();
+						int operator = clause.getOperator();
+						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
+								operator == 8192){
+							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
+							Integer str = (Integer)clause.getValue();
+							nazioneBulk = new NazioneBulk(new Long(str));
+							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("tipoAuto") && 
+								operator == 8192)	{
+							String str = (String)clause.getValue();
+							tipoAuto = str;
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
+								operator == 8192)	{
+							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+							Date parsedDate;
+							try {
+								parsedDate = dateFormat.parse((String) clause.getValue());
+								dataTappa = new Timestamp(parsedDate.getTime());
+							} catch (ParseException e2) {
+								e2.printStackTrace();
+							}
+						} else {
+							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+						}
+					}
+					if (nazioneBulk != null && dataTappa != null && tipoAuto != null){
+						try {
+							sql = missioneComponent().selectTipo_autoByClause(userContext, dataTappa, nazioneBulk, tipoAuto, new CompoundFindClause());
+						} catch (RemoteException | EJBException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+					}
+				}
+			}
+		} else if (oggettobulk instanceof Missione_tipo_pastoBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				CompoundFindClause newClauses = new CompoundFindClause();
+				Enumeration e = compoundfindclause.getClauses();
+				Enumeration e1 = compoundfindclause.getClauses();
+				SQLBuilder sqlExists = null;
+				if (isCondizioneTipiPastoMissione(e)){
+					NazioneBulk nazioneBulk = null;
+					Timestamp dataTappa = null;
+					Long inquadramento = null;
+
+					while(e1.hasMoreElements() ){
+						SimpleFindClause clause = (SimpleFindClause) e1.nextElement();
+						int operator = clause.getOperator();
+						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") && 
+								operator == 8192){
+							NazioneHome nazionehome=(NazioneHome)getHome(userContext,NazioneBulk.class);
+							Integer str = (Integer)clause.getValue();
+							nazioneBulk = new NazioneBulk(new Long(str));
+							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk); 
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") && 
+								operator == 8192)	{
+							Integer str = (Integer)clause.getValue();
+							inquadramento = new Long(str);
+						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") && 
+								operator == 8192)	{
+							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+							Date parsedDate;
+							try {
+								parsedDate = dateFormat.parse((String) clause.getValue());
+								dataTappa = new Timestamp(parsedDate.getTime());
+							} catch (ParseException e2) {
+								e2.printStackTrace();
+							}
+						} else {
+							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+						}
+					}
+					if (nazioneBulk != null && dataTappa != null && inquadramento != null){
+						try {
+							sql = missioneComponent().selectTipo_pastoByClause(userContext, dataTappa, inquadramento, nazioneBulk, null, new CompoundFindClause());
+						} catch (RemoteException | EJBException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+					}
+				}
+			}
+		} else if (oggettobulk instanceof WorkpackageBulk){
+			
+	        if(compoundfindclause == null){
+	            if(oggettobulk != null)
+	                compoundfindclause = oggettobulk.buildFindClauses(null);
+	        }else{
+	            compoundfindclause = CompoundFindClause.and(compoundfindclause, oggettobulk.buildFindClauses(Boolean.FALSE));
+	        }
+	        sql =  getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").selectByClause(userContext, compoundfindclause);
+			
+			if(!isUtenteEnte(userContext)){ 
+				WorkpackageHome home = (WorkpackageHome) getHome(userContext, oggettobulk);
+				SQLBuilder sqlExists = home.createSQLBuilder();
+				CdrBulk cdrUtente = cdrFromUserContext(userContext);
+				String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
+				if (cdrUtente.getLivello().compareTo(CdrHome.CDR_PRIMO_LIVELLO)==0)
+				{
+					sql.addTableToHeader("V_CDR_VALIDO");
+					sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+					sql.openParenthesis("AND");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					sql.closeParenthesis();
+				}else{
+					sql.addTableToHeader("V_CDR_VALIDO");
+					sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+					sql.openParenthesis("AND");
+					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
+					sql.closeParenthesis();
+				}
+				((SQLBuilder)sql).addSQLExistsClause(FindClause.AND, sqlExists);
+			} 
+		} else if (oggettobulk instanceof V_mandato_reversaleBulk){
+			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+				Boolean trovataCondizioneSoloAnticipi = false;
+    			CompoundFindClause newClauses = new CompoundFindClause();
+    			Enumeration e = compoundfindclause.getClauses();
+    			SQLBuilder sqlExists = null;
+				while(e.hasMoreElements() ){
+					SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("soloAnticipi") && 
+							operator == 8192){
+						trovataCondizioneSoloAnticipi = true;
+						Mandato_rigaHome home = (Mandato_rigaHome) getHome(userContext, Mandato_rigaBulk.class);
+						sqlExists = home.createSQLBuilder();
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
+						sqlExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
+					} else {
+						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					}
+				}
+				if (trovataCondizioneSoloAnticipi){
 					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
 					sql.addSQLExistsClause("AND", sqlExists);
 				}
@@ -137,31 +401,11 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
 				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 			}
-		} else if (oggettobulk instanceof WorkpackageBulk){
-			if(!isUtenteEnte(userContext)){ 
-				WorkpackageHome home = (WorkpackageHome) getHome(userContext, oggettobulk);
-				SQLBuilder sqlExists = home.createSQLBuilder();
-				CdrBulk cdrUtente = cdrFromUserContext(userContext);
-				String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
-				if (cdrUtente.getLivello().compareTo(CdrHome.CDR_PRIMO_LIVELLO)==0)
-				{
-					sql.addTableToHeader("V_CDR_VALIDO");
-					sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
-					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-						sql.openParenthesis("AND");
-						sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-						sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-						sql.closeParenthesis();
-				}else{
-					sql.addTableToHeader("V_CDR_VALIDO");
-					sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
-					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-					sql.openParenthesis("AND");
-					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
-					sql.closeParenthesis();
-				}
-				((SQLBuilder)sql).addSQLExistsClause(FindClause.AND, sqlExists);
+		} else if (oggettobulk instanceof V_mandato_reversaleBulk){
+
+			if ( !isUoEnte(userContext)){
+				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 			}
 		} else if (oggettobulk instanceof ProgettoGestBulk){
 			ProgettoGestHome home = (ProgettoGestHome) getHome(userContext, oggettobulk);
@@ -172,6 +416,39 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 		}
 		
 		return sql;
+	}
+
+	private Boolean isCondizioneTipiSpesaMissione(Enumeration e) {
+		while(e.hasMoreElements() ){
+				SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+				int operator = clause.getOperator();
+				if (clause.getPropertyName() != null && clause.getPropertyName().equals("condizioneTipiSpesaMissione") ){
+					return true;
+				}
+			}
+		return false;
+	}
+
+	private Boolean isCondizioneTipiPastoMissione(Enumeration e) {
+		while(e.hasMoreElements() ){
+				SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+				int operator = clause.getOperator();
+				if (clause.getPropertyName() != null && clause.getPropertyName().equals("condizioneTipiPastoMissione") ){
+					return true;
+				}
+			}
+		return false;
+	}
+
+	private Boolean isCondizioneRimborsoKmMissione(Enumeration e) {
+		while(e.hasMoreElements() ){
+				SimpleFindClause clause = (SimpleFindClause) e.nextElement();
+				int operator = clause.getOperator();
+				if (clause.getPropertyName() != null && clause.getPropertyName().equals("condizioneRimborsoKmMissione") ){
+					return true;
+				}
+			}
+		return false;
 	}
 
 	private Boolean isUoEnte(UserContext userContext) throws PersistencyException, ComponentException{
@@ -225,4 +502,8 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 	private boolean isUtenteEnte(UserContext userContext) throws ComponentException {
 			return isCdrEnte(userContext,cdrFromUserContext(userContext));
 	}	
+	private MissioneComponentSession missioneComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
+		return (MissioneComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession");
+	}
+
 }

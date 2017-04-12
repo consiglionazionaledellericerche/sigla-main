@@ -44,6 +44,7 @@ import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
@@ -1029,12 +1030,31 @@ public SQLBuilder selectTerzoForPrintByClause(UserContext userContext, Stampa_pr
 public SQLBuilder selectTipo_rapportoByClause(UserContext userContext,RapportoBulk rapporto,Tipo_rapportoBulk tipo_rapporto,CompoundFindClause clause) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 	SQLBuilder sql = getHome(userContext,tipo_rapporto).createSQLBuilder();
 	sql.addClause(clause);
-	sql.addClause("AND","ti_dipendente_altro",sql.NOT_EQUALS,tipo_rapporto.DIPENDENTE);
-	if (rapporto != null &&  rapporto.getAnagrafico() != null && rapporto.getAnagrafico().getTi_entita()!= null && 
-	    rapporto.getAnagrafico().getTi_entita().equals(AnagraficoBulk.GIURIDICA)) {
-		sql.addSQLClause("AND","cd_tipo_rapporto = (select CD_TIPO_RAPPORTO_PROF from parametri_cnr where esercizio = "+((CNRUserContext)userContext).getEsercizio()+")");
+	UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
+	if (!utente.isSupervisore()) { 
+		sql.addSQLClause("AND","fl_visibile_a_tutti",sql.EQUALS,"Y");
+		sql.addClause("AND","ti_dipendente_altro",sql.NOT_EQUALS,tipo_rapporto.DIPENDENTE);
+		if (rapporto != null &&  rapporto.getAnagrafico() != null && rapporto.getAnagrafico().getTi_entita()!= null && 
+				rapporto.getAnagrafico().getTi_entita().equals(AnagraficoBulk.GIURIDICA)) {
+			sql.addSQLClause("AND","cd_tipo_rapporto = (select CD_TIPO_RAPPORTO_PROF from parametri_cnr where esercizio = "+((CNRUserContext)userContext).getEsercizio()+")");
+		}
 	}
-		
+	else
+	{
+		sql.openParenthesis("AND");
+		sql.openParenthesis("AND");
+		sql.addClause("AND","ti_dipendente_altro",sql.NOT_EQUALS,tipo_rapporto.DIPENDENTE);
+		if (rapporto != null &&  rapporto.getAnagrafico() != null && rapporto.getAnagrafico().getTi_entita()!= null && 
+				rapporto.getAnagrafico().getTi_entita().equals(AnagraficoBulk.GIURIDICA)) {
+			sql.addSQLClause("AND","cd_tipo_rapporto = (select CD_TIPO_RAPPORTO_PROF from parametri_cnr where esercizio = "+((CNRUserContext)userContext).getEsercizio()+")");
+		}
+		sql.closeParenthesis();
+		sql.openParenthesis("AND");
+		sql.addSQLClause("AND","fl_visibile_a_tutti",sql.EQUALS,"Y");
+		sql.addSQLClause("OR","fl_visibile_a_tutti",sql.EQUALS,"N");
+		sql.closeParenthesis();
+		sql.closeParenthesis();
+	}
 	return sql;
 }
 
@@ -1587,10 +1607,14 @@ public void validaCreaModificaConBulk(
 					PartitaIVAControllo.parsePartitaIVA(anagrafico.getCodice_fiscale());
 				} catch (NumberFormatException nfe) {
 					// se non sono tutti numeri è un codice fiscale!
-					if (anagrafico.getCodice_fiscale().length() != 16
-						|| !CodiceFiscaleControllo.checkCC(anagrafico.getCodice_fiscale()))
+//					if (anagrafico.getCodice_fiscale().length() != 16
+//						|| !CodiceFiscaleControllo.checkCC(anagrafico.getCodice_fiscale()))
+					if (anagrafico.getCodice_fiscale().length() == 16)
 						throw new it.cnr.jada.comp.ApplicationException(
-							"Codice fiscale inserito errato.");
+							"Codice fiscale inserito errato per la tipologia dell'anagrafica.");
+					else
+						throw new it.cnr.jada.comp.ApplicationException(
+								"Codice fiscale inserito errato.");
 				} catch (ExPartitaIVA ecf) {
 					throw new it.cnr.jada.comp.ApplicationException(
 						"Codice fiscale inserito errato.");

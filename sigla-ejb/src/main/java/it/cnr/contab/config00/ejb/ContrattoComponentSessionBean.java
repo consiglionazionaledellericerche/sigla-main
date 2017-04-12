@@ -339,6 +339,25 @@ public class ContrattoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 		} catch(Error e) {
 			throw uncaughtError(userContext,componentObj,e);
 		}
+	}
+	@Override
+	public ContrattoBulk calcolaTotDocCont(UserContext param0,
+			ContrattoBulk param1) throws ComponentException, RemoteException {
+		try {
+			ContrattoBulk result = ((ContrattoComponent)componentObj).calcolaTotDocCont(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
 	}	
 	
 }
