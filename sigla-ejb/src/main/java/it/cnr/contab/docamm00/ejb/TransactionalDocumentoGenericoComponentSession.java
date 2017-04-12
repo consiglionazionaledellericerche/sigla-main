@@ -1,7 +1,7 @@
 package it.cnr.contab.docamm00.ejb;
 import java.rmi.*;
 
-
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
@@ -988,6 +988,43 @@ public java.util.List findReversaleRigaCollegate(it.cnr.jada.UserContext param0,
 		} catch(it.cnr.jada.persistency.PersistencyException ex) {
 			throw ex;
 		} catch(it.cnr.jada.persistency.IntrospectionException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+@Override
+public TerzoBulk getTerzoUnivoco(UserContext param0,
+		Documento_genericoBulk param1) throws ComponentException,
+		RemoteException {
+	try {
+		return (it.cnr.contab.anagraf00.core.bulk.TerzoBulk)invoke("getTerzoUnivoco",new Object[] {
+			param0,param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk eliminaLetteraPagamentoEstero(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk param1,boolean param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk)invoke("eliminaLetteraPagamentoEstero",new Object[] {
+			param0,
+			param1,
+			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
 			throw ex;
 		} catch(Throwable ex) {
 			throw new java.rmi.RemoteException("Uncaugth exception",ex);

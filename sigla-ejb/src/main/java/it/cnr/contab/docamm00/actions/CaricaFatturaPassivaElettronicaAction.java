@@ -7,6 +7,7 @@ import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
 import it.cnr.contab.docamm00.fatturapa.bulk.FileSdIConMetadatiTypeBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
+import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
@@ -26,7 +27,6 @@ import it.gov.fatturapa.sdi.monitoraggio.v1.MonitoraggioFlussiType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,7 +43,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
@@ -125,6 +124,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 		}
 		return actioncontext.findDefaultForward();
 	};
+
 	@SuppressWarnings("unchecked")
 	public Forward doControllaFatture(ActionContext actioncontext) throws java.rmi.RemoteException {
 		CaricaFatturaElettronicaBP caricaPassivaElettronicaBP = (CaricaFatturaElettronicaBP) actioncontext.getBusinessProcess();
@@ -212,6 +212,15 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 		return actioncontext.findDefaultForward();
 	}	
 	
+	public Forward doScaricaFatture(ActionContext actioncontext) throws FillException {
+		FatturaPassivaElettronicaService fatturaPassivaElettronicaService = SpringUtil.getBean("fatturaPassivaElettronicaService", 
+				FatturaPassivaElettronicaService.class);
+		CaricaFatturaElettronicaBP caricaFatturaElettronicaBP = (CaricaFatturaElettronicaBP)actioncontext.getBusinessProcess();
+		caricaFatturaElettronicaBP.fillModel(actioncontext);
+		FileSdIConMetadatiTypeBulk model = (FileSdIConMetadatiTypeBulk) caricaFatturaElettronicaBP.getModel();
+		fatturaPassivaElettronicaService.caricaFatture(model.getDaysBefore());
+		return actioncontext.findDefaultForward();
+	}	
 	
 	
 	class UploadedFileDataSource implements DataSource {

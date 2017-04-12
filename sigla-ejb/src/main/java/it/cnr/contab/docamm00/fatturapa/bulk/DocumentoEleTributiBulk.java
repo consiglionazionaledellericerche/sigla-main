@@ -5,8 +5,8 @@
 package it.cnr.contab.docamm00.fatturapa.bulk;
 
 import it.cnr.jada.util.OrderedHashtable;
-import it.gov.fatturapa.sdi.fatturapa.v1.TipoCassaType;
-import it.gov.fatturapa.sdi.fatturapa.v1.TipoRitenutaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoCassaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoRitenutaType;
 
 public class DocumentoEleTributiBulk extends DocumentoEleTributiBase {
 	

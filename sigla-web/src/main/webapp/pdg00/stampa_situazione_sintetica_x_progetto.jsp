@@ -78,6 +78,10 @@
 		  <tr>
 			<td><% bp.getController().writeFormLabel(out,"printGae"); %></td>
 			<td><% bp.getController().writeFormInput(out,"printGae"); %></td>
+			<% if (Boolean.TRUE.equals(((Stampa_situazione_sintetica_x_progettoBulk)bp.getModel()).getPrintGae())) { %>
+				<td><% bp.getController().writeFormLabel(out,"printSoloGaeAttive"); %></td>
+				<td><% bp.getController().writeFormInput(out,"printSoloGaeAttive"); %></td>
+			<% } %>
 		  </tr>
 		  <tr>
 			<td><% bp.getController().writeFormLabel(out,"printVoce"); %></td>

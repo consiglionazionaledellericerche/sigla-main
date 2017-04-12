@@ -103,7 +103,7 @@
       	</td>   
 		<td>
 			<% 	if (riga != null && riga.getBanca() != null) {
-					bp.getDettaglio().writeFormInput(out,"listabanche");
+					bp.getDettaglio().writeFormInput(out,null,"listabanche",false,null,"");
 				} %>
    		</td>
       </tr>

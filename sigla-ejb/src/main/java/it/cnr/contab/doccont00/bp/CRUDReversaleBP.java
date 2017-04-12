@@ -13,7 +13,6 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.*;
 
-import it.cnr.contab.doccont00.comp.ReversaleComponent;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
@@ -147,7 +146,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				setStatus(VIEW);
 				setMessage("Reversale creata dall'Unità Organizzativa " + reversale.getCd_uo_origine() + ". Non consentita la modifica.");
 			}
-			else if ( reversale != null &&  reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO ))
+			else if ( reversale != null &&  reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO )&& (reversale.getFl_riemissione()==null || !reversale.getFl_riemissione()))
 			{
 				setStatus(VIEW);
 				setMessage("Reversale annullata. Non consentita la modifica.");
@@ -164,10 +163,14 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 					setStatus(VIEW);
 					setMessage("Reversale Provvisoria relativa a Liquidazioni IVA ancora aperte. Non consentita la modifica.");
 				}
-				if ( reversale != null && !reversale.getStato_trasmissione().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)) 
+				if ( reversale != null && !reversale.getStato_trasmissione().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO) && !reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO ) )  
 				{
 					setStatus(VIEW);
 					setMessage("Verificare lo stato di trasmissione della reversale. Non consentita la modifica.");
+				}
+				else if( reversale != null  && reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO ) && reversale.getFl_riemissione()!=null && reversale.getFl_riemissione() && !reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)){
+					setStatus(VIEW);
+					setMessage("Verificare lo stato di trasmissione della reversale annullata. Non consentita la modifica.");
 				}
 				else if (session.isRevProvvLiquidCoriCentroAperta(context.getUserContext(), reversale))
 				{
@@ -402,7 +405,8 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	 *					FALSE 	Il bottone di Salva non è abilitato
 	 */
 	public boolean isSaveButtonEnabled() {
-		return (super.isSaveButtonEnabled() && !((ReversaleBulk)getModel()).isAnnullato()) ||
+		return (super.isSaveButtonEnabled() //&& !((ReversaleBulk)getModel()).isAnnullato()
+				) ||
 				(isUoEnte() && ((ReversaleBulk)getModel()) != null && ((ReversaleBulk)getModel()).getCd_uo_origine() != null && 
 				!((ReversaleBulk)getModel()).getCd_uo_origine().equals(getUoSrivania().getCd_unita_organizzativa()) &&
 				((ReversaleBulk)getModel()).isSiopeDaCompletare()
@@ -686,6 +690,28 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			}
 			is.close();
 			os.flush();
+		}
+	}
+	public boolean isAnnullabileEnte(it.cnr.jada.action.ActionContext context,ReversaleBulk rev) throws it.cnr.jada.action.BusinessProcessException {
+		try { 
+			return  (((ReversaleComponentSession) createComponentSession()).isAnnullabile(context.getUserContext(),rev).compareTo("F")==0);
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			throw handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(e);
+		}
+
+	}
+	public void deleteRiemissione(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+		int crudStatus = getModel().getCrudStatus();
+		try {
+			validate(context);
+			getModel().setToBeUpdated(); 
+			setModel( context, ((ReversaleComponentSession) createComponentSession()).annullaReversale(context.getUserContext(),(ReversaleBulk)getModel(), true,true));
+			setStatus(VIEW);			
+		} catch(Exception e) {
+			getModel().setCrudStatus(crudStatus);
+			throw handleException(e);
 		}
 	}
 }

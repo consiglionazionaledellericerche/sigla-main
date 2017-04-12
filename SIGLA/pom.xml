@@ -7,7 +7,7 @@
   <parent>
     <groupId>it.cnr</groupId>
     <artifactId>sigla</artifactId>
-    <version>4.0.17-SNAPSHOT</version>
+    <version>4.0.61-SNAPSHOT</version>
   </parent>
   <build>
     <plugins>
@@ -38,6 +38,7 @@
                                 org.apache.commons.codec,
                                 org.apache.commons.lang,
                                 org.apache.commons.io,
+                                org.jboss.resteasy.resteasy-jaxrs,
                                 com.informix.jdbc,
                                 org.wildfly.extension.undertow,
                                 io.undertow.core,
@@ -75,11 +76,6 @@
               <groupId>it.cnr</groupId>
               <artifactId>sigla-ws</artifactId>
               <bundleFileName>sigla-ws.jar</bundleFileName>
-            </ejbModule>
-            <ejbModule>
-              <groupId>it.cnr</groupId>
-              <artifactId>sigla-ws-ns</artifactId>
-              <bundleFileName>sigla-ws-ns.jar</bundleFileName>
             </ejbModule>
             <ejbModule>
               <groupId>it.cnr</groupId>
@@ -172,19 +168,6 @@
       <version>${project.version}</version>
       <type>ejb</type>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>it.cnr</groupId>
-      <artifactId>sigla-ws-ns</artifactId>
-      <version>${project.version}</version>
-      <type>ejb</type>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>log4j</artifactId>
-          <groupId>log4j</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>it.cnr</groupId>

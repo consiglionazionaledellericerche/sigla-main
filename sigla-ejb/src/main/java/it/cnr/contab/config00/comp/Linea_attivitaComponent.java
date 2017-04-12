@@ -558,8 +558,11 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		}
 		
 		//Verifico se è stata utilizzata nel 2015 e/o nel 2016
-		aLA.setUtilizzata2015(isGaeUtilizzata(userContext,aLA,true));
-		aLA.setUtilizzata2016(isGaeUtilizzata(userContext,aLA,false));
+		//Rospuc i controlli effettuati in isGaeUtilizzata sono insufficienti, in accordo con l'ufficio competente non sono più modificabili 
+		if (aLA.getModulo2015()!=null)
+			aLA.setUtilizzata2015(true);
+		if (aLA.getProgetto2016()!=null)
+			aLA.setUtilizzata2016(true);
 		
 		getHomeCache(userContext).fetchAll(userContext);
 		
@@ -1342,14 +1345,13 @@ public java.util.List findListaGAEFEWS(UserContext userContext,String cdr,Intege
 	
 	private boolean isGaeUtilizzata(UserContext userContext, WorkpackageBulk gae, boolean ante2015) throws ComponentException, PersistencyException, SQLException {
 		if (WorkpackageBulk.TI_GESTIONE_SPESE.equals(gae.getTi_gestione())) {
-			//Controllo Ass_cdp_la
+			//Controllo Ass_cdp_la 
 			Ass_cdp_laHome homeAssCdpLa =  (Ass_cdp_laHome)getHome(userContext, Ass_cdp_laBulk.class);
 			SQLBuilder sqlAssCdpLa = homeAssCdpLa.createSQLBuilder();
-			if (ante2015)
+			if (ante2015) 
 				sqlAssCdpLa.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
 			else
 				sqlAssCdpLa.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
-			sqlAssCdpLa.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
 			sqlAssCdpLa.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
 			
 			if (sqlAssCdpLa.executeExistsQuery(getConnection(userContext)))
@@ -1365,6 +1367,19 @@ public java.util.List findListaGAEFEWS(UserContext userContext,String cdr,Intege
 			sqlPDG.addClause(FindClause.AND, "linea_attivita", SQLBuilder.EQUALS, gae);
 
 			if (sqlPDG.executeExistsQuery(getConnection(userContext)))
+				return true;
+
+			//Controllo variazione
+			Var_stanz_res_rigaHome homeVarRes =  (Var_stanz_res_rigaHome)getHome(userContext, Var_stanz_res_rigaBulk.class);
+			SQLBuilder sqlVarRes = homeVarRes.createSQLBuilder();
+			if (ante2015)
+				sqlVarRes.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS_EQUALS, Integer.valueOf(2015));
+			else
+				sqlVarRes.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf(2016));
+			sqlVarRes.addClause(FindClause.AND, "cd_linea_attivita", SQLBuilder.EQUALS, gae.getCd_linea_attivita());
+			sqlVarRes.addClause(FindClause.AND, "cd_cdr", SQLBuilder.EQUALS, gae.getCd_centro_responsabilita());
+
+			if (sqlVarRes.executeExistsQuery(getConnection(userContext)))
 				return true;
 
 			//Controllo Pdg_variazione_riga_gest

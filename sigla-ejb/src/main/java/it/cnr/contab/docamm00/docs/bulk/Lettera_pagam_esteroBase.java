@@ -82,6 +82,8 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
 	// CD_SOSPESO VARCHAR(20)
     private java.lang.String cd_cds_sospeso;
 	
+    private java.sql.Timestamp dt_cancellazione;
+    
 	public Lettera_pagam_esteroBase() {
 		super();
 	}
@@ -269,5 +271,11 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
 	}
 	public void setCd_cds_sospeso(java.lang.String cd_cds_sospeso) {
 		this.cd_cds_sospeso = cd_cds_sospeso;
+	}
+	public java.sql.Timestamp getDt_cancellazione() {
+		return dt_cancellazione;
+	}
+	public void setDt_cancellazione(java.sql.Timestamp dt_cancellazione) {
+		this.dt_cancellazione = dt_cancellazione;
 	}	
 }
