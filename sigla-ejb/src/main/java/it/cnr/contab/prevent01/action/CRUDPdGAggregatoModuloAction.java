@@ -76,7 +76,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)context.createBusinessProcess("TestataProgettiRicercaBP");
 			context.addBusinessProcess(bp);
 		
-			it.cnr.jada.util.RemoteIterator roots = bp.getProgetti_sipTree(context).getChildren(context,null);
+			it.cnr.jada.util.RemoteIterator roots = roots = bp.getProgetti_sipTree(context).getChildren(context,null);
 			// Non ci sono Commesse disponibili
 			if (roots.countElements()==0){
 				context.closeBusinessProcess();

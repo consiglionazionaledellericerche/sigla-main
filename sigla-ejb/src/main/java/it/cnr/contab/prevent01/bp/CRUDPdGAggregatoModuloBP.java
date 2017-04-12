@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import javax.ejb.RemoveException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
@@ -42,6 +43,7 @@ import it.cnr.jada.util.jsp.Button;
  */
 public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private Parametri_cnrBulk parametriCnr;
+	private Parametri_enteBulk parametriEnte;
 	private Unita_organizzativaBulk uoScrivania;
 	private CdrBulk cdrFromUserContext;
 	private Integer pgModulo;
@@ -108,12 +110,15 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				setUtenteDirettore(true);
 			else
 				setUtenteDirettore(false);
+
+			setParametriEnte(Utility.createParametriEnteComponentSession().getParametriEnte(context.getUserContext())); 
+			if (getParametriEnte().getFl_informix())
+				aggiornaGECO(context);
 		} catch (ComponentException e1) {
 			throw handleException(e1);
 		} catch (RemoteException e1) {
 			throw handleException(e1);
 		}
-		aggiornaGECO(context);
 		try {
 			cerca(context);
 		} catch(Exception e) {
@@ -474,5 +479,12 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	
 	public Parametri_cnrBulk getParametriCnr() {
 		return parametriCnr;
+	}
+	
+	public void setParametriEnte(Parametri_enteBulk parametriEnte) {
+		this.parametriEnte = parametriEnte;
+	}
+	public Parametri_enteBulk getParametriEnte() {
+		return parametriEnte;
 	}
 }
