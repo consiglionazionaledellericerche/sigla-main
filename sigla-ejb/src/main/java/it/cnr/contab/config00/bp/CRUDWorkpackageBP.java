@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
@@ -98,7 +99,9 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		setEsercizioScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(actioncontext));
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
-		aggiornaGECO(actioncontext.getUserContext());
+		Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext()); 
+		if (parEnte.getFl_informix())
+			aggiornaGECO(actioncontext.getUserContext());
 		super.initialize(actioncontext);
 	} catch (ComponentException e) {
 		throw new BusinessProcessException(e);
