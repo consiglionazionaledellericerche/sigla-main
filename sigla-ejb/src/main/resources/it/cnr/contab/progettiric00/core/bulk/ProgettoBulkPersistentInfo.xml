@@ -36,6 +36,12 @@
 			columnName="CD_DIPARTIMENTO"
 			propertyName="dipartimento.cd_dipartimento"
 			fetchOnly="false" />			
+		<columnMapping
+			columnName="CD_PROGRAMMA"
+			propertyName="pdgProgramma.cd_programma"/>	
+		<columnMapping
+			columnName="CD_MISSIONE"
+			propertyName="pdgMissione.cd_missione"/>	
 	</defaultColumnMap>
 
 	<columnMap
@@ -46,6 +52,18 @@
 	<columnMap
 		name="PROGETTO_SIC"
 		tableName="PROGETTO_SIC"
+		extends="default" >
+		<columnMapping
+			columnName="FL_PIANO_TRIENNALE"
+			propertyName="fl_piano_triennale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</columnMap>
+	<columnMap
+		name="PROGETTO_SIP"
+		tableName="PROGETTO_SIP"
 		extends="default" >
 		<columnMapping
 			columnName="FL_PIANO_TRIENNALE"
@@ -102,6 +120,10 @@
 		name="progettopadre" />		
 	<persistentProperty
 		name="dipartimento" />		
+	<persistentProperty
+		name="pdgProgramma" />	
+	<persistentProperty
+		name="pdgMissione" />	
 
 	<fetchPolicy
 		name="it.cnr.contab.progettiric00.comp.ProgettoRicercaModuloComponent.findProgettoPadre">

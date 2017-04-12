@@ -50,6 +50,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 	private Boolean pdgApprovatoDefinitivo;
     private boolean cofogObb;
 	private boolean flNuovoPdg = false;
+	private boolean flPdgCodlast = false;
 
 	private SimpleDetailCRUDController crudDettagliContrSpese = new SimpleDetailCRUDController( "DettagliContrSpese", Pdg_contrattazione_speseBulk.class, "dettagliContrSpese", this, false) {
 
@@ -130,6 +131,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 			setCofogObb(parCnr.isCofogObbligatorio());
 			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+			setFlPdgCodlast(parCnr.getFl_pdg_codlast().booleanValue());
 		}catch (ComponentException e) {
 			throw new BusinessProcessException(e);
 		} catch (RemoteException e) {
@@ -398,5 +400,13 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 
 	public boolean isDeleteProgettoButtonHidden() {
 		return super.isDeleteButtonHidden() || !this.isFlNuovoPdg();
+	}
+	
+	public boolean isFlPdgCodlast() {
+		return flPdgCodlast;
+	}
+	
+	public void setFlPdgCodlast(boolean flPdgCodlast) {
+		this.flPdgCodlast = flPdgCodlast;
 	}
 }

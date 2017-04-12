@@ -115,13 +115,23 @@
 	-->	
 <table>
 	<tr>
-		<td>
-				<% bp.getCrudDettagliEntrate().writeFormLabel(out,"find_classificazione_voci"); %>
-		</td>
-		<td>
-		
-				<% bp.getCrudDettagliEntrate().writeFormInput(out,"find_classificazione_voci"); %>
-		</td>
+		<% if (bp.getParametriCnr().getFl_pdg_codlast()) { %> 
+			<td>
+					<% bp.getCrudDettagliEntrate().writeFormLabel(out,"find_classificazione_voci_codlast"); %>
+			</td>
+			<td>
+			
+					<% bp.getCrudDettagliEntrate().writeFormInput(out,"find_classificazione_voci_codlast"); %>
+			</td>
+		<% } else { %>
+			<td>
+					<% bp.getCrudDettagliEntrate().writeFormLabel(out,"find_classificazione_voci"); %>
+			</td>
+			<td>
+			
+					<% bp.getCrudDettagliEntrate().writeFormInput(out,"find_classificazione_voci"); %>
+			</td>
+		<% } %>
 		<td>			
 				<%bp.getCrudDettagliEntrate().writeFormLabel(out,"natura"); %>			
 		</td>
