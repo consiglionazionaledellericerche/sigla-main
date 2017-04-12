@@ -38,13 +38,24 @@
         name="classificazione"
         property="classificazione"
         inputType="SEARCHTOOL"
+        formName="searchtool"
+        columnSet="searchtool"
+        freeSearchSet="searchtool"
+        enabledOnInsert="true"
+        enabledOnSearch="true"
+        readonlyPropertyOnEdit="classificazioneRO"
+        label="Classificazione" />		
+	<fieldProperty
+        name="classificazione_codlast"
+        property="classificazione"
+        inputType="SEARCHTOOL"
         formName="searchtool_codlast"
         columnSet="searchtool_codlast"
         freeSearchSet="searchtool_codlast"
         enabledOnInsert="true"
         enabledOnSearch="true"
         readonlyPropertyOnEdit="classificazioneRO"
-        label="Classificazione" />		
+        label="Classificazione" />	
 	<fieldProperty
 		name="id_classificazione"
 		property="classificazione.id_classificazione"
@@ -507,6 +518,8 @@
 		name="pg_dettaglio" />		
 	<formFieldProperty
         name="classificazione"/>		
+	<formFieldProperty
+        name="classificazione_codlast"/>		
 	<formFieldProperty
 		name="id_classificazione" />
 	<formFieldProperty

@@ -126,6 +126,19 @@
 		name="find_classificazione_voci"
 		property="classificazione_voci"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
+		columnSet="searchtool"
+		freeSearchSet="searchtool"
+		nullable="false"
+		completeOnSave = "true"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		readonlyPropertyOnEdit="ROClassificazione_voci"
+		label="Classificazione Ufficiale" />		
+	<fieldProperty
+		name="find_classificazione_voci_codlast"
+		property="classificazione_voci"
+		inputType="SEARCHTOOL"
 		formName="searchtool_codlast"
 		columnSet="searchtool_codlast"
 		freeSearchSet="searchtool_codlast"
@@ -400,6 +413,8 @@
 		name="ds_natura" />
 	<formFieldProperty
 		name="find_classificazione_voci" /> 
+	<formFieldProperty
+		name="find_classificazione_voci_codlast" /> 
 	<formFieldProperty
 		name="pg_dettaglio" />
 	<formFieldProperty

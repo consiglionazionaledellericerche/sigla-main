@@ -79,6 +79,12 @@
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_INFORMIX"
+			propertyName="fl_informix"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="LDAP_USER"
 			propertyName="ldap_user"
 			sqlTypeName="VARCHAR"
@@ -150,9 +156,11 @@
 	<persistentProperty		
 		name="box_scadenze" />								
 	<persistentProperty
-		name="fl_autenticazione_ldap" />		
-	<persistentProperty		
-		name="ldap_user" />								
+		name="fl_autenticazione_ldap" />	
+	<persistentProperty
+		name="fl_informix" />
+	<persistentProperty
+		name="ldap_user" />
 	<persistentProperty		
 		name="ldap_password" />								
 	<persistentProperty		

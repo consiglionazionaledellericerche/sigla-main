@@ -251,6 +251,11 @@
 		inputType="CHECKBOX"
 		label="Nuova Gestione PDG" />		
 	<fieldProperty
+		name="fl_pdg_codlast"
+		property="fl_pdg_codlast"
+		inputType="CHECKBOX"
+		label="Gestione Ultimo Livello Classificazione" />		
+	<fieldProperty
 		name="data_attivazione_new_voce"
 		property="data_attivazione_new_voce"
 		label="Data Attivazione Nuova Voce"
@@ -341,6 +346,8 @@
 		name="fl_credito_irpef"/>				       
 	<formFieldProperty
 		name="data_attivazione_new_voce" />
+	<formFieldProperty
+		name="fl_pdg_codlast"/>
 
 
 	<columnFieldProperty
