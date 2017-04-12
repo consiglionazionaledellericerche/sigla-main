@@ -30,12 +30,15 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 	private BulkList risultati;
 	private BulkList dettagliPostIt = new BulkList();
 
+	public final static String TI_GESTIONE_ENTRAMBE = "X" ;
+	
 	private final static java.util.Dictionary ti_gestioneKeys;
 	
 	static {
 		ti_gestioneKeys = new it.cnr.jada.util.OrderedHashtable();
 		ti_gestioneKeys.put(TI_GESTIONE_SPESE, "Spese");
 		ti_gestioneKeys.put(TI_GESTIONE_ENTRATE, "Entrate");
+		ti_gestioneKeys.put(TI_GESTIONE_ENTRAMBE, "Entrambe");
 	}	
 	private Insieme_laBulk insieme_la;
 

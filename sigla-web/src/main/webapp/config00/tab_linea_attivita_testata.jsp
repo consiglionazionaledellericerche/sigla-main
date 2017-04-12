@@ -80,7 +80,8 @@
 	</tr>
 	<tr>
 		<% WorkpackageBulk workpackage = (WorkpackageBulk)bp.getModel();
-		   if (workpackage.getTi_gestione() == null || workpackage.getTi_gestione().equals(workpackage.TI_GESTIONE_SPESE))
+		   if (workpackage.TI_GESTIONE_SPESE.equals(workpackage.getTi_gestione()) || 
+			   workpackage.TI_GESTIONE_ENTRAMBE.equals(workpackage.getTi_gestione()))
 			   bp.getController().writeFormField(out,"funzione"); %>
 	</tr>
 	<tr>
@@ -119,7 +120,8 @@
 		<% bp.getController().writeFormField( out, "fl_limite_ass_obblig"); %>
 	</tr>	
 	<tr>
-		<% if (workpackage.getTi_gestione() != null && workpackage.getTi_gestione().equals(workpackage.TI_GESTIONE_SPESE))
+		<% if (workpackage.TI_GESTIONE_SPESE.equals(workpackage.getTi_gestione()) || 
+			   workpackage.TI_GESTIONE_ENTRAMBE.equals(workpackage.getTi_gestione()))
 			bp.getController().writeFormField(out,"cofog");%>
 	</tr>
 	<tr>

@@ -75,6 +75,13 @@
 		maxLength="1"
 		label="Autenticazione su server LDAP" />
 	<fieldProperty
+		name="fl_informix"
+		property="fl_informix"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		label="Collegamento Informix" />
+	<fieldProperty
 		name="ldap_password"
 		property="ldap_password"
 		maxLength="100"
@@ -138,6 +145,8 @@
 		name="dt_ldap_migrazione" />						
 	<formFieldProperty
 		name="ldap_link_cambio_password" />						
+	<formFieldProperty
+		name="fl_informix" />
 	
 	<columnFieldProperty
 		name="descrizione" />

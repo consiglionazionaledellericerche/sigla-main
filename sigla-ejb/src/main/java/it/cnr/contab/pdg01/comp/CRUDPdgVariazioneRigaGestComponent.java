@@ -353,7 +353,12 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 
 		sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,dett.getCd_cdr_assegnatario());
-	    sql.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+		
+		sql.openParenthesis(FindClause.AND);
+		sql.addClause(FindClause.OR,"ti_gestione",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_SPESE);
+		sql.addClause(FindClause.OR,"ti_gestione",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+	    sql.closeParenthesis();
+
 	    if (dett.getProgetto()!=null && dett.getProgetto().getPg_progetto()!=null)
 	    	sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
 	    
