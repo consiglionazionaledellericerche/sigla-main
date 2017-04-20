@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -15,12 +16,15 @@ import org.slf4j.LoggerFactory;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utente00.nav.comp.GestioneLoginComponent;
 import it.cnr.contab.utente00.nav.comp.UtenteLdapNuovoException;
 import it.cnr.contab.utente00.nav.comp.UtenteMultiploException;
 import it.cnr.contab.utente00.nav.ejb.*;
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.utenze00.bulk.*;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.ejb.CRUDComponentSession;
@@ -526,5 +530,38 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 		else
 			bp.cercaUnitaOrganizzative(context);
 		return context.findForward("desktop");
+	}
+	
+	/**
+	 * Gestisce l'azione di selezione di un contesto
+	 *
+	 * @param context	L'ActionContext della richiesta
+	 * @return Il Forward alla pagina di risposta
+	 */
+	public Forward doSelezionaContesto(ActionContext context, Integer esercizio, String cds, String uo, String cdr) {
+		try {
+			CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
+			ui.setEsercizio(esercizio);
+			CNRUserContext userContext = new CNRUserContext(
+				ui.getUtente().getCd_utente(),
+				context.getSessionId(),
+				ui.getEsercizio(),
+				Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).orElse(null),
+				Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase("null")).orElse(null),
+				Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).orElse(null));
+			if (Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
+				ui.setUnita_organizzativa((Unita_organizzativaBulk) Utility.createUnita_organizzativaComponentSession()
+						.findByPrimaryKey(userContext, new Unita_organizzativaBulk(uo)));
+			}
+			if (Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
+				ui.setCdr((CdrBulk) Utility.createCdrComponentSession()
+						.findByPrimaryKey(userContext, new CdrBulk(cdr)));
+			}
+			userContext.getAttributes().put("bootstrap", true);
+			context.setUserContext(userContext);
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
 	}
 }
