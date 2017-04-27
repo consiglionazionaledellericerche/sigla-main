@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Numeratori Ordini"
+	longDescription="Numeratori Ordini">
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UnitaOperativaOrd" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="unitaOperativaOrd.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdUnitaOperativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdNumeratore"
+		property="cdNumeratore"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdNumeratore" />
+	<fieldProperty
+		name="dsNumeratore"
+		property="dsNumeratore"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dsNumeratore" />
+	<fieldProperty
+		name="findTipoOperazioneOrd"
+		property="tipoOperazioneOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="TipoOperazioneOrd" />
+	<fieldProperty
+		name="cdTipoOperazione"
+		property="tipoOperazioneOrd.cdTipoOperazione"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdTipoOperazione" />
+	<fieldProperty
+		name="corrente"
+		property="corrente"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="corrente" />
+	<fieldProperty
+		name="dataProgressivo"
+		property="dataProgressivo"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataProgressivo" />
+	<fieldProperty
+		name="cdTipoSezionale"
+		property="cdTipoSezionale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdTipoSezionale" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUnitaOperativa" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdNumeratore" />
+	</form>
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdNumeratore" />
+	<formFieldProperty
+		name="dsNumeratore" />
+	<formFieldProperty
+		name="findTipoOperazioneOrd" />
+	<formFieldProperty
+		name="corrente" />
+	<formFieldProperty
+		name="dataProgressivo" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratore" />
+	<findFieldProperty
+		name="dsNumeratore" />
+	<findFieldProperty
+		name="cdTipoOperazione" />
+	<findFieldProperty
+		name="corrente" />
+	<findFieldProperty
+		name="dataProgressivo" />
+	<findFieldProperty
+		name="cdTipoSezionale" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdUnitaOperativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratore" />
+	<columnFieldProperty
+		name="dsNumeratore" />
+	<columnFieldProperty
+		name="cdTipoOperazione" />
+	<columnFieldProperty
+		name="corrente" />
+	<columnFieldProperty
+		name="dataProgressivo" />
+	<columnFieldProperty
+		name="cdTipoSezionale" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>
