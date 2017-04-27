@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey">
+	<defaultColumnMap
+		tableName="UNITA_OPERATIVA_ORD">
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="cdUnitaOperativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdUnitaOperativa"
+		partOfOid="true" />
+</SQLPersistentInfo>
