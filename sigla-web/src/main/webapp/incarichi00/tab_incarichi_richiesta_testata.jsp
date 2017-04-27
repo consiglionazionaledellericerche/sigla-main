@@ -88,7 +88,7 @@
 				</td>
 			 	<% if (model.getNrContrattiAttivati().compareTo(model.getNr_risorse_da_trovare())==-1) {%>
 					 <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		  	 	 	 <td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Avvia Procedura<BR>Conferimento<BR>Incarico","javascript:submitForm('doRichiediContratto')", null, "Chiude la ricerca e procede ad attivare una richiesta di contratto ", ((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled() ); %></td>
+		  	 	 	 <td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Avvia Procedura<BR>Conferimento<BR>Incarico","javascript:submitForm('doRichiediContratto')", null, "Chiude la ricerca e procede ad attivare una richiesta di contratto ", ((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled(), bp.getParentRoot().isBootstrap()); %></td>
 		  	 	<% } %>
 		  	</tr>
 			<% } else { %>
@@ -104,7 +104,7 @@
 	 	         	<td><% bp.getController().writeFormInput(out,"nr_risorse_trovate_si_ro");%></td>
  	         	<% } %>
 		 	    <% if (!bp.isSearching() && model.getNrContrattiAttivati().compareTo(model.getNr_risorse_da_trovare())==-1) {%>				 
-		 	 	 	<td rowspan="3" align="center" valign="middle"><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Avvia Procedura<BR>Conferimento<BR>Incarico","javascript:submitForm('doRichiediContratto')", null, "Chiude la ricerca e procede ad attivare una richiesta di contratto ", ((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled() ); %></td>
+		 	 	 	<td rowspan="3" align="center" valign="middle"><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Avvia Procedura<BR>Conferimento<BR>Incarico","javascript:submitForm('doRichiediContratto')", null, "Chiude la ricerca e procede ad attivare una richiesta di contratto ", ((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled(), bp.getParentRoot().isBootstrap()); %></td>
  	         	<% } %>
 			</tr>
 			<tr>

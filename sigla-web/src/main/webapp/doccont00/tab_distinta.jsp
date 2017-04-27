@@ -60,7 +60,7 @@ function doScaricaFirmato() {
 	<td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
 	<td><% bp.getController().writeFormLabel( out, "totReversali"); %></td>
 	<td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
-	<td rowspan=3 align=center><% Button.write(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"),null,"javascript:submitForm('doVisualizzaDettagliTotali')", null, "Visualizza dettagli totali", bp.isVisualizzaDettagliTotaliButtonEnabled()  ); %></td>
+	<td rowspan=3 align=center><% Button.write(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"),null,"javascript:submitForm('doVisualizzaDettagliTotali')", null, "Visualizza dettagli totali", bp.isVisualizzaDettagliTotaliButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "totMandatiAnnullati"); %></td>
@@ -84,7 +84,7 @@ function doScaricaFirmato() {
 	<td><% bp.getController().writeFormInput( out, "totStoricoMandatiTrasmessi"); %></td>
 	<td><% bp.getController().writeFormLabel( out, "totStoricoReversaliTrasmesse"); %></td>
 	<td><% bp.getController().writeFormInput( out, "totStoricoReversaliTrasmesse"); %></td>
-	<td rowspan=2 align=center><% Button.write(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"),null,"javascript:submitForm('doVisualizzaDettagliTotaliTrasmessi')", null, "Visualizza dettagli totali trasmessi", bp.isVisualizzaDettagliTotaliTrasmessiButtonEnabled()  ); %></td>	
+	<td rowspan=2 align=center><% Button.write(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"),null,"javascript:submitForm('doVisualizzaDettagliTotaliTrasmessi')", null, "Visualizza dettagli totali trasmessi", bp.isVisualizzaDettagliTotaliTrasmessiButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>	
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "totStoricoMandatiDaRitrasmettere"); %></td>

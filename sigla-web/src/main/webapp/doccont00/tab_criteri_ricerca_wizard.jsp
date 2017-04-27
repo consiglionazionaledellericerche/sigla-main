@@ -80,10 +80,10 @@
 	<table border="0" cellspacing="0" cellpadding="2"  align="center">
 		<tr>
 			<td colspan=2>
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca Impegni"), "javascript:submitForm('doCercaImpegni')",null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca Impegni"), "javascript:submitForm('doCercaImpegni')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>
 			<td colspan=2>
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca Documenti"), "javascript:submitForm('doCercaDocPassivi')",null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca Documenti"), "javascript:submitForm('doCercaDocPassivi')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>

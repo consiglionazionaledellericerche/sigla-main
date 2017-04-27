@@ -540,15 +540,16 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 */
 	public Forward doSelezionaContesto(ActionContext context, Integer esercizio, String cds, String uo, String cdr) {
 		try {
+			LoginBP bp = (LoginBP)context.getBusinessProcess();			
 			CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
 			ui.setEsercizio(esercizio);
 			CNRUserContext userContext = new CNRUserContext(
 				ui.getUtente().getCd_utente(),
 				context.getSessionId(),
 				ui.getEsercizio(),
-				Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).orElse(null),
-				Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase("null")).orElse(null),
-				Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).orElse(null));
+				Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
+				Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cds(context.getUserContext())),
+				Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
 			if (Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
 				ui.setUnita_organizzativa((Unita_organizzativaBulk) Utility.createUnita_organizzativaComponentSession()
 						.findByPrimaryKey(userContext, new Unita_organizzativaBulk(uo)));
@@ -558,6 +559,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 						.findByPrimaryKey(userContext, new CdrBulk(cdr)));
 			}
 			userContext.getAttributes().put("bootstrap", true);
+			bp.setBootstrap(true);
 			context.setUserContext(userContext);
 			return context.findDefaultForward();
 		} catch(Throwable e) {
