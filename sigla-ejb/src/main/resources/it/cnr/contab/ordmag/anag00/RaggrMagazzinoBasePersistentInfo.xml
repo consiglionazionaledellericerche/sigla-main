@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.RaggrMagazzinoBase"
+	keyClassName="it.cnr.contab.ordmag.anag00.RaggrMagazzinoKey"
+	homeClassName="it.cnr.contab.ordmag.anag00.RaggrMagazzinoHome">
+	<defaultColumnMap
+		tableName="RAGGR_MAGAZZINO">
+		<columnMapping
+			columnName="DS_RAGGR_MAGAZZINO"
+			propertyName="dsRaggrMagazzino"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="METODO"
+			propertyName="metodo"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dsRaggrMagazzino" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="metodo" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.LuogoConsegnaMagHome">
+	<defaultColumnMap
+		tableName="LUOGO_CONSEGNA_MAG">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="comune.pg_comune" />
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="nazione.pg_nazione" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="comune" />
+	<persistentProperty
+		name="nazione" />
+</SQLPersistentInfo>
