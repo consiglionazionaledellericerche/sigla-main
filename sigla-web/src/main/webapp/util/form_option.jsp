@@ -20,52 +20,64 @@
 <body class="Workspace">
 <FORM name="mainForm" action="Option.do" method=post onSubmit="return disableDblClick()">
 <input type=hidden name="comando">
-<table class="Window" cellspacing="0" cellpadding="2" align="center" width="280">
+<table class="Window card" cellspacing="0" cellpadding="2" align="center" width="280">
 <% 	OptionBP bp = (OptionBP)BusinessProcess.getBusinessProcess(request);
 	 	BusinessProcess.encode(bp,pageContext);
 		HttpActionContext.encodeActionCounter(pageContext);
 		String msg = bp.getAndClearMessage();
 		String src = "img/question.gif";
+		String iconClass = "fa fa-question-circle fa-2x text-info";
 		if (msg != null)
 			switch(bp.getMessageStatus()) {
-				case OptionBP.WARNING_MESSAGE 	:	src = "img/warning.gif";
-																		break;
-				case OptionBP.ERROR_MESSAGE 		: src = "img/error.gif";
-																		break;
-				case OptionBP.QUESTION_MESSAGE	: 
-				default										: src = "img/question.gif";
-																		break;
+				case OptionBP.WARNING_MESSAGE:	
+					src = "img/warning.gif";
+					iconClass = "fa fa-exclamation-triangle fa-2x text-warning";
+					break;
+				case OptionBP.ERROR_MESSAGE: 
+					iconClass = "fa  fa-exclamation-circle fa-2x text-danger";
+					src = "img/error.gif";
+					break;
+				case OptionBP.QUESTION_MESSAGE: 
+				default: 
+					src = "img/question.gif";
+				break;
 			} %>
-		<tr><td class="FormTitle">Informazione</td></tr>
-	<tr>
-		<td>
-			<table class="Panel" width="100%">
-			  <tr>
-					<td valign="center"><img src="<%= src%>"></td>
-			  	<td valign="center" width="100%" <%=bp.isNowrap()? "NOWRAP":"" %>><%= msg%></td>
-			  </tr>
-			</table>
-		</td>
-	</tr>
+		<tr>
+			<td class="FormTitle card-header h5"><%if (bp.getParentRoot().isBootstrap()) { %><i class="<%=iconClass%>" aria-hidden="true"></i><%}%>Informazione</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="Panel" width="100%">
+				  <tr>
+						<td valign="center">
+							<%if (!bp.getParentRoot().isBootstrap()) { %>
+								<img src="<%=src%>">
+							<%}%>							
+						</td>
+				  		<td valign="center" width="100%" <%=bp.isNowrap()? "NOWRAP":"" %>><%= msg%></td>
+				  </tr>
+				</table>
+			</td>
+		</tr>
 	<tr>
 		<td align=center>		
 			<hr>
 			<table class="Panel" <%=bp.isNowrap()? "":"width=\"100%\"" %>>
 				<tr>
 					<% if (bp.hasButton(bp.YES_BUTTON)) { %>
-						<td><input type="button" name="comando.doYes" value="Si" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doYes')"></td>
+						<td><input type="button"  class="btn btn-primary" name="comando.doYes" value="Si" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doYes')"></td>
 					<% } 
 						 if (bp.hasButton(bp.NO_BUTTON)) { %>
-						<td><input type="button" name="comando.doNo" value="No" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doNo')"></td>
+						<td><input type="button" class="btn btn-primary" name="comando.doNo" value="No" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doNo')"></td>
 					<% } 
 						 if (bp.hasButton(bp.OK_BUTTON)) { %>
-						<td><input type="button" name="comando.doOk" value="Ok" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doOk')"></td>
+						<td><input type="button" class="btn btn-primary" name="comando.doOk" value="Ok" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doOk')"></td>
 					<% } 
 						 if (bp.hasButton(bp.CANCEL_BUTTON)) { %>
-						<td><input type="button" name="comando.doCancel" value="Annulla" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doCancel')"></td>
+						<td><input type="button" class="btn btn-primary" name="comando.doCancel" value="Annulla" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doCancel')"></td>
 					<% } 
 						 if (bp.hasButton(bp.CLOSE_BUTTON)) { %>
-						<td><input type="button" name="comando.doClose" value="Chiudi" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doClose')"></td>
+						<td><input type="button" class="btn btn-primary" name="comando.doClose" value="Chiudi" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doClose')"></td>
 					<% } %>
 				</tr>
 			</table>

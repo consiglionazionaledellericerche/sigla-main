@@ -64,8 +64,8 @@
 			<div class="Group" style="width:100%">
 				<table class="Panel" align="center" cellspacing=1 cellpadding=1>
 			  	<tr>
-					<td><center><%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Carica Struttura", "if (disableDblClick()) javascript:submitForm('doCaricaStruttura')", null, isTableEnabled);%></center></td>
-					<td><center><%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Inizializza Importi", "if (disableDblClick()) javascript:submitForm('doInitImTotSpeseAcc')", null, isTableEnabled);%></center></td>
+					<td><center><%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Carica Struttura", "if (disableDblClick()) javascript:submitForm('doCaricaStruttura')", null, isTableEnabled, bp.getParentRoot().isBootstrap());%></center></td>
+					<td><center><%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Inizializza Importi", "if (disableDblClick()) javascript:submitForm('doInitImTotSpeseAcc')", null, isTableEnabled, bp.getParentRoot().isBootstrap());%></center></td>
 		      	</tr>  
 			   	</table>
 			</div>	

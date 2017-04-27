@@ -17,7 +17,7 @@
 		
 	<tr>
   	<td><% bp.getController().writeFormLabel( out, "giorno_consuntivo");%></td>	
-	<td><% bp.getBulkInfo().writeFormInput(out,bp.getModel(),null,"giorno_consuntivo",false,null,"onChange=\"submitForm('doOnGiornoConsuntivoChange')\"",bp.getInputPrefix(),2,bp.getFieldValidationMap());%></td>  	
+	<td><% bp.getBulkInfo().writeFormInput(out,bp.getModel(),null,"giorno_consuntivo",false,null,"onChange=\"submitForm('doOnGiornoConsuntivoChange')\"",bp.getInputPrefix(),2,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%></td>  	
 	<td></td>  	
 	<td></td>  	
 	<td></td>  	

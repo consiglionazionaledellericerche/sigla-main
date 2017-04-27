@@ -33,7 +33,7 @@ if (bp.getModel()!=null &&
 		    <td><% controller.writeFormLabel(out,"pg_repertorio");%></td>
 		    <td><% controller.writeFormInput(out,"pg_repertorio");%></td>
 		    <%if (controller.countDetails()==0) {%>
-	          	<td><%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Carica Contratto", "if (disableDblClick()) javascript:submitForm('doAddToCRUD(main.IncarichiColl)')", null, true);%></td>
+	          	<td><%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Carica Contratto", "if (disableDblClick()) javascript:submitForm('doAddToCRUD(main.IncarichiColl)')", null, true, bp.getParentRoot().isBootstrap());%></td>
             <% } else if (bp.getIncarichiParametri()==null || bp.getIncarichiParametri().getFl_invio_fp()==null || 
             		  bp.getIncarichiParametri().getFl_invio_fp().equals("Y")) {%>
 		        <td><% controller.writeFormLabel(out,"fl_inviato_corte_conti");%></td>

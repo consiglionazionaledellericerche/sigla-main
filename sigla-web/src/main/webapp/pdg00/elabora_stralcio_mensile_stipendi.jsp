@@ -51,11 +51,11 @@
 					<% bp.getController().writeFormInput(out,null,"mese",false,null,"onChange=\"submitForm('doOnMeseChange')\"");%>
 				</td>
  				<td>
-				  <% JSPUtils.button(out,"img/refresh24.gif", "<u>E</u>labora<br>Dati","javascript:submitForm('doElaboraStralcioMensile')"); %>
+				  <% JSPUtils.button(out,"img/refresh24.gif", "<u>E</u>labora<br>Dati","javascript:submitForm('doElaboraStralcioMensile')", bp.getParentRoot().isBootstrap()); %>
 				</td>
 				<!--  
 				<td>	
-				  <% JSPUtils.button(out,"img/delete24.gif", "<u>A</u>nnulla<br>Elaborazione","javascript:submitForm('doReset')"); %>
+				  <% JSPUtils.button(out,"img/delete24.gif", "<u>A</u>nnulla<br>Elaborazione","javascript:submitForm('doReset')", bp.getParentRoot().isBootstrap()); %>
 				</td>
 				-->
 			</tr>

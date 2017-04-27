@@ -84,7 +84,8 @@ public void writeHTMLToolbar(
 				context,
 				"img/properties16.gif",
 				!(isInputReadonly() || getDetails().isEmpty() || ((CRUDObbligazioneBP)getParentController()).isSearching())? command : null,
-				true,"Raggruppa");
+				true,"Raggruppa",
+				HttpActionContext.isFromBootstrap(context));
 		}
 }
 }

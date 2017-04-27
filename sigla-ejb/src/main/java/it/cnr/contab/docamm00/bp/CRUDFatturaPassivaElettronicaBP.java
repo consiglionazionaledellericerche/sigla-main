@@ -218,7 +218,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
     	documentoEleTestata.getDocumentoEleTrasmissione().getBulkInfo().writeFormField(
     			this, jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), 
     			null, s, getInputPrefix(), 1, 1, getStatus(), 
-    			isInputReadonly(), getFieldValidationMap());
+    			isInputReadonly(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 	}
 
     public void writeFormLabelTrasmissione(JspWriter jspwriter, String s)
@@ -232,7 +232,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
     		throws IOException {
     	DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
     	documentoEleTestata.getDocumentoEleTrasmissione().getBulkInfo().writeFormInput(
-    			jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), null, s, isInputReadonly(), null, null, getInputPrefix(), getStatus(), getFieldValidationMap());
+    			jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), null, s, isInputReadonly(), null, null, getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
     }
 
 	public SimpleDetailCRUDController getCrudDocEleLineaColl() {

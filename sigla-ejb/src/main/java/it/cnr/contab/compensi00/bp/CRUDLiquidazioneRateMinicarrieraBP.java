@@ -128,8 +128,10 @@ public void resetTabs(ActionContext context) {
 public void writeExtraHTMLToolbar(javax.servlet.jsp.PageContext context) throws javax.servlet.ServletException, java.io.IOException{
 
 	if(isViewing())
-		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/history16.gif",null,false,"Liquida rate");
+		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/history16.gif",null,false,"Liquida rate",
+				HttpActionContext.isFromBootstrap(context));
 	else
-		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/history16.gif","javascript:submitForm('doLiquidaRate')",false,"Liquida rate");
+		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/history16.gif","javascript:submitForm('doLiquidaRate')",false,"Liquida rate",
+				HttpActionContext.isFromBootstrap(context));
 }
 }
