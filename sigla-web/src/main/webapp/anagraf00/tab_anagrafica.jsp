@@ -15,9 +15,9 @@
 	UserContext uc = HttpActionContext.getUserContext(session);
 	AnagraficoBulk anagrafico = (AnagraficoBulk)bp.getModel();
 %>
-<fieldset class="fieldset">
-<legend class="GroupLabel">Tipologia</legend>
-	<table>
+<fieldset class="fieldset card">
+<legend class="GroupLabel card-header h3 text-primary">Tipologia</legend>
+	<table class="card-block">
 		<tr>
 			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,"FormInput","onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
 			 	<td>
@@ -140,9 +140,9 @@
 	<%} %>
 </fieldset>
 
-<fieldset class="fieldset">
-	<legend class="GroupLabel">Informazioni anagrafiche</legend>
-	<table>
+<fieldset class="fieldset card">
+	<legend class="GroupLabel card-header h3 text-primary">Informazioni anagrafiche</legend>
+	<table class="card-block">
 		<tr>
 	<%if (anagrafico.isPersonaFisica() || anagrafico.isDiversi()) { %>
 			<% bp.getController().writeFormField(out,"cognome");%>
@@ -198,9 +198,9 @@
 	</table>
 </fieldset>
 
-<fieldset class="fieldset">
-	<legend class="GroupLabel">Sede legale/Domicilio fiscale</legend>
-	<table>
+<fieldset class="fieldset card">
+	<legend class="GroupLabel card-header h3 text-primary">Sede legale/Domicilio fiscale</legend>
+	<table class="card-block">
 	<tr>
 		<% bp.getController().writeFormField(out,"ds_comune_fiscale");%>
 		<td><% bp.getController().writeFormInput(out,"find_comune_fiscale");%></td>
@@ -233,9 +233,9 @@
 </fieldset>
 
 <% if (anagrafico.isPersonaFisica()) { %>
-<fieldset class="fieldset">
-	<legend class="GroupLabel">Dati anagrafici</legend>
-	<table>
+<fieldset class="fieldset card">
+	<legend class="GroupLabel card-header h3 text-primary">Dati anagrafici</legend>
+	<table class="card-block">
 	<tr>
 		<% bp.getController().writeFormField(out,"dt_nascita");%>
 		<% bp.getController().writeFormField(out,"ds_comune_nascita");%>

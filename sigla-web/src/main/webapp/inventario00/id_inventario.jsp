@@ -64,7 +64,7 @@
 				"200px",
 				true); %>
 		</td>
-		<td><% JSPUtils.button(out,"img/doublerightarrow24.gif","img/doublerightarrow24.gif",null,"if (disableDblClick()) submitForm('doAssociaUo')",null,bp.isBottoneAssociaEnabled());%></td>
+		<td><% JSPUtils.button(out,"img/doublerightarrow24.gif","img/doublerightarrow24.gif",null,"if (disableDblClick()) submitForm('doAssociaUo')",null,bp.isBottoneAssociaEnabled(), bp.getParentRoot().isBootstrap());%></td>
 		<td rowspan = "2">
 		  <% bp.getUo().writeHTMLTable(
 				pageContext,
@@ -78,11 +78,11 @@
 		</td>
 	  </tr>
 	  <tr>
-		<td><% JSPUtils.button(out,"img/doubleleftarrow24.gif","img/doubleleftarrow24.gif",null,"if (disableDblClick()) submitForm('doRimuoviUo')",null,bp.isBottoneRimuoviEnabled());%></td>
+		<td><% JSPUtils.button(out,"img/doubleleftarrow24.gif","img/doubleleftarrow24.gif",null,"if (disableDblClick()) submitForm('doRimuoviUo')",null,bp.isBottoneRimuoviEnabled(), bp.getParentRoot().isBootstrap());%></td>
 	  </tr>
   	  <tr>
   	    <td colspan="2">&nbsp;</td>
-		<td><% JSPUtils.button(out, null, null, "Imposta Uo Responsabile", "if (disableDblClick()) submitForm('doImpostaUoResponsabile')", null, bp.isBottoneImpostaUoEnabled());%></td>
+		<td><% JSPUtils.button(out, null, null, "Imposta Uo Responsabile", "if (disableDblClick()) submitForm('doImpostaUoResponsabile')", null, bp.isBottoneImpostaUoEnabled(), bp.getParentRoot().isBootstrap());%></td>
 	  </tr>
 	</table>
 

@@ -37,15 +37,15 @@
 				<td><span class="FormLabel">Condizione:</span></td>
 					<%	if (!condizioneRicerca.isPrimaCondizione()) {
 					%>
-									<td><% condizioneRicerca.writeFormInput(out,"logicalOperator",FormController.EDIT,bp.getFieldValidationMap());%></td>
+									<td><% condizioneRicerca.writeFormInput(out,"logicalOperator",FormController.EDIT,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%></td>
 					<%	}
 						if (condizioneRicerca instanceof CondizioneSempliceBulk) {
 							CondizioneSempliceBulk condizione = (CondizioneSempliceBulk)condizioneRicerca;
 					%>			
-									<td><% condizione.writeFormInput(bp.getParent(), out,"default","findFieldProperty",false,null,"onchange=\"submitForm('doImpostaAttributo')\"",null,FormController.EDIT,bp.getFieldValidationMap());%></td>
-									<td><% condizione.writeFormInput(out,"default","operator",condizione.getFindFieldProperty() == null,null,"onchange=\"submitForm('doImpostaAttributo')\"",null,FormController.EDIT,bp.getFieldValidationMap());%></td>
+									<td><% condizione.writeFormInput(bp.getParent(), out,"default","findFieldProperty",false,null,"onchange=\"submitForm('doImpostaAttributo')\"",null,FormController.EDIT,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%></td>
+									<td><% condizione.writeFormInput(out,"default","operator",condizione.getFindFieldProperty() == null,null,"onchange=\"submitForm('doImpostaAttributo')\"",null,FormController.EDIT,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%></td>
 									<td><% if (condizione.getOperator() != null && condizione.getOperator().intValue() != it.cnr.jada.persistency.sql.SQLBuilder.ISNULL && condizione.getOperator().intValue() != it.cnr.jada.persistency.sql.SQLBuilder.ISNOTNULL) 
-												condizione.getFindFieldProperty().writeInput(out,condizione.getPrototype(),condizione.getValue(),false,null,null,null,FormController.FREESEARCH,bp.getFieldValidationMap());%></td>
+												condizione.getFindFieldProperty().writeInput(out,condizione.getPrototype(),condizione.getValue(),false,null,null,null,FormController.FREESEARCH,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%></td>
 					<%	}
 					%>
 				<td width="100%">&nbsp;</td>

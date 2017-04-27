@@ -21,6 +21,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -80,7 +81,8 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 						context,
 						"img/properties16.gif",
 						!(getDetails().isEmpty() || ((CRUDBP)getParentController()).isSearching())? command : null,
-						true,"Apponi Visto");
+						true,"Apponi Visto",
+						HttpActionContext.isFromBootstrap(context));
 				}
 		}
 	};

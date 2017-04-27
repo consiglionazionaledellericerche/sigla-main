@@ -183,7 +183,7 @@
 		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",bp.isRoCampiResiduoProprio()|| bp.isROFindElemento_voce(),"FormInput",null); %>
 			</td>
 			<td>
-			<%JSPUtils.button(out, "img/find16.gif", "img/find16.gif", "Disponibilità<BR>Voce", "if (disableDblClick()) submitForm('doConsultaInserisciVoce')",null,true);%>
+			<%JSPUtils.button(out, "img/find16.gif", "img/find16.gif", "Disponibilità<BR>Voce", "if (disableDblClick()) submitForm('doConsultaInserisciVoce')",null,true, bp.getParentRoot().isBootstrap());%>
 			</td>
 			</tr>
 			</table>			
