@@ -3,6 +3,7 @@ package it.cnr.contab.compensi00.bp;
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
@@ -122,7 +123,8 @@ public void writeHTMLToolbar(
 				!(carriera.isNonAssociataACompenso() &&
 				carriera.isAttiva()) )? "javascript:submitForm('doGeneraRate')" : null),
 			true,
-			"Crea rate");
+			"Crea rate",
+			HttpActionContext.isFromBootstrap(context));
 		super.writeHTMLToolbar(context, reset, find, delete);
 		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 			context,
@@ -131,7 +133,8 @@ public void writeHTMLToolbar(
 				parentController.isSearching() ||
 				!carriera.isAttiva()) )? "javascript:submitForm('doCreaCompenso')" : null),
 			true,
-			"Crea compenso");
+			"Crea compenso",
+			HttpActionContext.isFromBootstrap(context));
 		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 			context,
 			"img/folderopen16.gif",
@@ -139,6 +142,7 @@ public void writeHTMLToolbar(
 				getModel() != null && 
 				((Minicarriera_rataBulk)getModel()).isAssociataACompenso()) ? "javascript:submitForm('doVisualizzaCompenso')" : null,
 			false,
-			"Visualizza compenso");
+			"Visualizza compenso",
+			HttpActionContext.isFromBootstrap(context));
 }
 }

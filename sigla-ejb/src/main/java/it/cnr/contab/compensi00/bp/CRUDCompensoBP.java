@@ -31,6 +31,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractPrintBP;
@@ -53,9 +54,11 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 
 			// Aggiungo alla table dei contributi per visualizzare ulteriori dettagli per ogni riga
 			if (getModelIndex()==-1)
-				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif",null,false,"Visualizza dettagli");
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif",null,false,"Visualizza dettagli",
+						HttpActionContext.isFromBootstrap(context));
 			else
-				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif","javascript:submitForm('doVisualizzaDettagli')",false,"Visualizza dettagli");
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif","javascript:submitForm('doVisualizzaDettagli')",false,"Visualizza dettagli",
+						HttpActionContext.isFromBootstrap(context));
 				
 		}
 	};
@@ -68,9 +71,11 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 
 			// Aggiungo un bottone alla toolbar dei documenti associati per aprire in visualizzazione il documento contabile associato
 			if (getModelIndex()==-1)
-				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif",null,false,"Visualizza documento");
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif",null,false,"Visualizza documento",
+						HttpActionContext.isFromBootstrap(context));
 			else
-				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif","javascript:submitForm('doVisualizzaDocumentoContabile')",false,"Visualizza documento");
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif","javascript:submitForm('doVisualizzaDocumentoContabile')",false,"Visualizza documento",
+						HttpActionContext.isFromBootstrap(context));
 		}
 	};
 

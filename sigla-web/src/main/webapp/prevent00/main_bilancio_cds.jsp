@@ -30,10 +30,10 @@
 
 	<tr>
 	<td ALIGN="CENTER">
-		<%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Predispone Bilancio CDS", "if (disableDblClick()) submitForm('doProduceBilancioCds')", null, bilancioPrev.isBottoneProduciCdsEnabled(bp));%>
-		<%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Approva", "if (disableDblClick()) submitForm('doApprovaBilancioCds')", null, bilancioPrev.isBottoneApprovaCdsEnabled(bp));%>
-<!-- 		<%JSPUtils.button(out, "img/edit16.gif", "Variazioni di bilancio", "if (disableDblClick()) submitForm('doVariazioniBilancioCds')");%> -->
-		<%JSPUtils.button(out, "img/edit16.gif", "Stampe", "if (disableDblClick()) submitForm('doApriStampe')");%>
+		<%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Predispone Bilancio CDS", "if (disableDblClick()) submitForm('doProduceBilancioCds')", null, bilancioPrev.isBottoneProduciCdsEnabled(bp), bp.getParentRoot().isBootstrap());%>
+		<%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Approva", "if (disableDblClick()) submitForm('doApprovaBilancioCds')", null, bilancioPrev.isBottoneApprovaCdsEnabled(bp), bp.getParentRoot().isBootstrap());%>
+<!-- 		<%JSPUtils.button(out, "img/edit16.gif", "Variazioni di bilancio", "if (disableDblClick()) submitForm('doVariazioniBilancioCds')", bp.getParentRoot().isBootstrap());%> -->
+		<%JSPUtils.button(out, "img/edit16.gif", "Stampe", "if (disableDblClick()) submitForm('doApriStampe')", bp.getParentRoot().isBootstrap());%>
 	</td>
 	</tr>
 
@@ -71,8 +71,8 @@
 
 	<tr>
 	<td colspan=2 ALIGN="CENTER">
-		<%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Dettagli bilancio - Spese", "if (disableDblClick()) submitForm('doGestioneDettagliSpese')",null, bilancioPrev.areBottoniDettagliCdsEnabled(bp));%>
-		<%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Dettagli bilancio - Entrate", "if (disableDblClick()) submitForm('doGestioneDettagliEntrate')",null, bilancioPrev.areBottoniDettagliCdsEnabled(bp));%>
+		<%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Dettagli bilancio - Spese", "if (disableDblClick()) submitForm('doGestioneDettagliSpese')",null, bilancioPrev.areBottoniDettagliCdsEnabled(bp), bp.getParentRoot().isBootstrap());%>
+		<%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Dettagli bilancio - Entrate", "if (disableDblClick()) submitForm('doGestioneDettagliEntrate')",null, bilancioPrev.areBottoniDettagliCdsEnabled(bp), bp.getParentRoot().isBootstrap());%>
 	</td>
 	</tr>
 		

@@ -40,7 +40,7 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 					getModel().isToBeCreated()&&
 					!((Fattura_passiva_rigaIBulk)getModel()).getFattura_passivaI().isDocumentoModificabile()&&
 					((Fattura_passiva_rigaIBulk)getModel()).getFattura_passivaI().isDetailDoubled()) 
-			        getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, s3, getInputPrefix(), getStatus(), getFieldValidationMap());
+			        getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, s3, getInputPrefix(), getStatus(), getFieldValidationMap(), getParentRoot().isBootstrap());
 				else
 					super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
 			}
@@ -291,7 +291,7 @@ public void writeFormFieldDoc1210(javax.servlet.jsp.JspWriter out,String name) t
 		//getBulkInfo().writeFormField(out,fp,null,name,getInputPrefix(),1,1,getStatus(),isInputReadonlyDoc1210(),getFieldValidationMap());
 	//}
 
-	getBulkInfo().writeFormField(out,fp,null,name,getInputPrefix(),1,1,getStatus(),isReadonly,getFieldValidationMap());	
+	getBulkInfo().writeFormField(out,fp,null,name,getInputPrefix(),1,1,getStatus(),isReadonly,getFieldValidationMap(), this.getParentRoot().isBootstrap());	
 }
 public void writeFormInputDoc1210(javax.servlet.jsp.JspWriter out,String name) throws java.io.IOException {
 
@@ -317,14 +317,14 @@ public void writeFormInputDoc1210(javax.servlet.jsp.JspWriter out,String name) t
 		//getBulkInfo().writeFormInput(out,fp,null,name,isInputReadonlyDoc1210(),null,null,getInputPrefix(),getStatus(),getFieldValidationMap());
 	//}
 
-	getBulkInfo().writeFormInput(out,fp,null,name,isReadonly,null,null,getInputPrefix(),getStatus(),getFieldValidationMap());
+	getBulkInfo().writeFormInput(out,fp,null,name,isReadonly,null,null,getInputPrefix(),getStatus(),getFieldValidationMap(), this.getParentRoot().isBootstrap());
 
 }
 public void writeFPInventarioToolbar(javax.servlet.jsp.JspWriter writer) throws java.io.IOException,javax.servlet.ServletException {
 
 	if (!isSearching() && !isDeleting()) {
 		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createFPInventarioToolbar(),this);
+		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createFPInventarioToolbar(),this, this.getParentRoot().isBootstrap());
 		closeToolbar(writer);
 	}
 }
@@ -332,7 +332,7 @@ public void writeFPToolbar(javax.servlet.jsp.JspWriter writer) throws java.io.IO
 
 	if (!isSearching() && !isDeleting()) {
 		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createFPToolbar(),this);
+		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createFPToolbar(),this, this.getParentRoot().isBootstrap());
 		closeToolbar(writer);
 	}
 }

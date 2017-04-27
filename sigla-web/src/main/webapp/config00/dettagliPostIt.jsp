@@ -78,5 +78,5 @@ function doScaricaFile() {
 		</tr>
 		<tr>
 			<% controller.writeFormField(out,"default","nome_file"); %>
-            <td><center><%JSPUtils.button(out, "img/import24.gif", "img/import24.gif", "Attiva File", "if (disableDblClick()) javascript:doScaricaFile()", null, bp.isActive(bp.getModel(),sel));%></center></td> 		</tr>		
+            <td><center><%JSPUtils.button(out, "img/import24.gif", "img/import24.gif", "Attiva File", "if (disableDblClick()) javascript:doScaricaFile()", null, bp.isActive(bp.getModel(),sel), bp.getParentRoot().isBootstrap());%></center></td> 		</tr>		
 	</table>

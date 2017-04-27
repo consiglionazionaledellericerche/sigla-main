@@ -19,7 +19,7 @@
 	<td><% bp.getController().writeFormLabel(out,"pgDocContPrincipale"); %></td>
 	<td><% bp.getController().writeFormInput(out,"pgDocContPrincipale"); %></td>
 	<td><% bp.getController().writeFormInput(out,"dsDocContPrincipale"); %></td>
-	<td><% it.cnr.jada.util.jsp.Button.write(out,"img/uncheckall16.gif","img/uncheckall16.gif",null,"javascript:submitForm('doVisualizzaDocContPrincipale')",null,"Visualizza documento contabile",bp.isBottoneVisualizzaDocContPrincipaleEnabled()); %></td>
+	<td><% it.cnr.jada.util.jsp.Button.write(out,"img/uncheckall16.gif","img/uncheckall16.gif",null,"javascript:submitForm('doVisualizzaDocContPrincipale')",null,"Visualizza documento contabile",bp.isBottoneVisualizzaDocContPrincipaleEnabled(), bp.getParentRoot().isBootstrap()); %></td>
   </tr>
 </table>
 </div>

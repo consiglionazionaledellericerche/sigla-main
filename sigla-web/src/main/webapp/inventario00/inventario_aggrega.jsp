@@ -48,7 +48,7 @@
 	<table>
 		<tr>	
 			<td>
-				<% JSPUtils.button(out,null,"Crea Gruppi","javascript:submitForm('doCreaGruppi')"); %>
+				<% JSPUtils.button(out,null,"Crea Gruppi","javascript:submitForm('doCreaGruppi')", bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>
@@ -88,7 +88,7 @@
 		<% } %>
 		<tr>
 			<td colspan="4">
-				<% JSPUtils.button(out,null,"Crea Dettagli","javascript:submitForm('doCreaDettagli')"); %>
+				<% JSPUtils.button(out,null,"Crea Dettagli","javascript:submitForm('doCreaDettagli')", bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>

@@ -31,7 +31,7 @@
 <table class="Panel" height="150px">
 	<tr><% bp.getController().writeFormField(out,"linea_attivita_eliminazione");%></tr>
 	<tr>
-		<td><center><%JSPUtils.button(out, "img/closeup.gif", "Eliminazione", "if (disableDblClick()) javascript:submitForm('doDelDetByLA')");%></center></td>
+		<td><center><%JSPUtils.button(out, "img/closeup.gif", "Eliminazione", "if (disableDblClick()) javascript:submitForm('doDelDetByLA')", bp.getParentRoot().isBootstrap());%></center></td>
 	</tr>
 </table>
 <%	bp.closeFormWindow(pageContext); %>
