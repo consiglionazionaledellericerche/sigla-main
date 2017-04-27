@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzBase"
+	keyClassName="it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzKey"
+	homeClassName="it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzHome">
+	<defaultColumnMap
+		tableName="TIPO_MOVIMENTO_MAG_AZ">
+		<columnMapping
+			columnName="ULT_PREL"
+			propertyName="ultPrel"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPMOV_PREL"
+			propertyName="tipmovPrel"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ULT_ENT"
+			propertyName="ultEnt"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPMOV_ENT"
+			propertyName="tipmovEnt"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ULT_FORN"
+			propertyName="ultForn"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="PROG_VAL"
+			propertyName="progVal"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ULT_ENT_VAL"
+			propertyName="ultEntVal"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="VALORIZ"
+			propertyName="valoriz"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="PROG_QTA"
+			propertyName="progQta"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ULT_ENT_QTA"
+			propertyName="ultEntQta"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGSCA_VAL"
+			propertyName="progscaVal"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="PROG_SCA"
+			propertyName="progSca"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGCONS"
+			propertyName="progcons"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ULT_SCA_VAL"
+			propertyName="ultScaVal"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ULT_SCA_QTA"
+			propertyName="ultScaQta"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="QTAINZ_ANNO"
+			propertyName="qtainzAnno"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="VALINZ_ANNO"
+			propertyName="valinzAnno"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="MEDIOAPPR"
+			propertyName="medioappr"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="SCORTAMIN"
+			propertyName="scortamin"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="QTAORDI"
+			propertyName="qtaordi"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="GIAC_CAR"
+			propertyName="giacCar"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="LOTTO_FORN"
+			propertyName="lottoForn"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="AGGUBIC"
+			propertyName="aggubic"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="QTAINZ_LOTTO"
+			propertyName="qtainzLotto"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_LOTTO"
+			propertyName="importoLotto"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CARICO"
+			propertyName="carico"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_RIF"
+			propertyName="cdCdsRif"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_RIF"
+			propertyName="cdTipoMovimentoRif"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="FLAG_SPESE"
+			propertyName="flagSpese"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="QTACARICO"
+			propertyName="qtacarico"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="COSTO"
+			propertyName="costo"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="FLAG_BLOCCO"
+			propertyName="flagBlocco"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="QTAPROPSCA"
+			propertyName="qtapropsca"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="BOLLASCA"
+			propertyName="bollasca"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ATTIVO"
+			propertyName="attivo"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FLAG_CEFF"
+			propertyName="flagCeff"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="QTAINPROD"
+			propertyName="qtainprod"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CARICO_INIZIALE"
+			propertyName="caricoIniziale"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO_DA_ESTRARRE"
+			propertyName="tipoDaEstrarre"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ultPrel" />
+	<persistentProperty
+		name="tipmovPrel" />
+	<persistentProperty
+		name="ultEnt" />
+	<persistentProperty
+		name="tipmovEnt" />
+	<persistentProperty
+		name="ultForn" />
+	<persistentProperty
+		name="progVal" />
+	<persistentProperty
+		name="ultEntVal" />
+	<persistentProperty
+		name="valoriz" />
+	<persistentProperty
+		name="progQta" />
+	<persistentProperty
+		name="ultEntQta" />
+	<persistentProperty
+		name="progscaVal" />
+	<persistentProperty
+		name="progSca" />
+	<persistentProperty
+		name="progcons" />
+	<persistentProperty
+		name="ultScaVal" />
+	<persistentProperty
+		name="ultScaQta" />
+	<persistentProperty
+		name="qtainzAnno" />
+	<persistentProperty
+		name="valinzAnno" />
+	<persistentProperty
+		name="medioappr" />
+	<persistentProperty
+		name="scortamin" />
+	<persistentProperty
+		name="qtaordi" />
+	<persistentProperty
+		name="giacCar" />
+	<persistentProperty
+		name="lottoForn" />
+	<persistentProperty
+		name="aggubic" />
+	<persistentProperty
+		name="qtainzLotto" />
+	<persistentProperty
+		name="importoLotto" />
+	<persistentProperty
+		name="carico" />
+	<persistentProperty
+		name="cdCdsRif" />
+	<persistentProperty
+		name="cdTipoMovimentoRif" />
+	<persistentProperty
+		name="flagSpese" />
+	<persistentProperty
+		name="qtacarico" />
+	<persistentProperty
+		name="costo" />
+	<persistentProperty
+		name="flagBlocco" />
+	<persistentProperty
+		name="qtapropsca" />
+	<persistentProperty
+		name="bollasca" />
+	<persistentProperty
+		name="attivo" />
+	<persistentProperty
+		name="flagCeff" />
+	<persistentProperty
+		name="qtainprod" />
+	<persistentProperty
+		name="caricoIniziale" />
+	<persistentProperty
+		name="tipoDaEstrarre" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

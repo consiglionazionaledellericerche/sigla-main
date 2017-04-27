@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.TipoOperazioneOrdKey">
+	<defaultColumnMap
+		tableName="TIPO_OPERAZIONE_ORD">
+		<columnMapping
+			columnName="CD_TIPO_OPERAZIONE"
+			propertyName="cdTipoOperazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdTipoOperazione"
+		partOfOid="true" />
+</SQLPersistentInfo>
