@@ -17,7 +17,7 @@
 <table class="Form" width="100%">
   <tr>
 	<td><b><big>CdR</big></b><% JSPUtils.button(out,bp.encodePath("img/conferma.gif"),bp.encodePath("img/conferma.gif"),null,"javascript:submitForm('doCaricaLineeAttivita')", obbligazione.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable()); %>
-		<% Button.write(out,bp.encodePath("img/zoom16.gif"),bp.encodePath("img/zoom16.gif"),null,"javascript:submitForm('doVisualizzaSpeseCdr')", null, "Prospetto situazione spese", bp.isVisualizzaSpeseCdrButtonEnabled()  ); %>
+		<% Button.write(out,bp.encodePath("img/zoom16.gif"),bp.encodePath("img/zoom16.gif"),null,"javascript:submitForm('doVisualizzaSpeseCdr')", null, "Prospetto situazione spese", bp.isVisualizzaSpeseCdrButtonEnabled(), bp.getParentRoot().isBootstrap()); %>
 
 	</td>
 	</tr>

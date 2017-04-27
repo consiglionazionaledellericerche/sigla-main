@@ -1476,17 +1476,17 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
 					s2,
 					"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"",
-					getInputPrefix(), getStatus(), getFieldValidationMap());
+					getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 		} else if (fp != null && fp.isRiportataInScrivania() && !fp.isPagata()
 				&& isInputReadonly() && s1.equals("causale")) {
 			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
 					s2, "onChange=\"submitForm('doOnCausaleChange')\"",
-					getInputPrefix(), getStatus(), getFieldValidationMap());
+					getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 		} else if (fp != null && fp.isRiportataInScrivania() && !fp.isPagata()
 				&& isInputReadonly() && s1.equals("sospeso")) {
 			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
 					s2,"" ,
-					getInputPrefix(), getStatus(), getFieldValidationMap());
+					getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 		}  
 		else
 			super.writeFormInput(jspwriter, s, s1, flag, s2, s3);

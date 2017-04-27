@@ -32,9 +32,9 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaAggFunzione')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaAggNatura')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaAggCapitolo')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaAggFunzione')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaAggNatura')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaAggCapitolo')", bp.getParentRoot().isBootstrap());%></td>
 		<td></td>
 	</tr>
 
@@ -47,8 +47,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Entrate", "if (disableDblClick()) javascript:submitForm('doStampaAggEtrVar')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Spese", "if (disableDblClick()) javascript:submitForm('doStampaAggSpeVar')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Entrate", "if (disableDblClick()) javascript:submitForm('doStampaAggEtrVar')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Spese", "if (disableDblClick()) javascript:submitForm('doStampaAggSpeVar')", bp.getParentRoot().isBootstrap());%></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -58,8 +58,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Entrate", "if (disableDblClick()) javascript:submitForm('doStampaAggEtrDelta')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Spese", "if (disableDblClick()) javascript:submitForm('doStampaAggSpeDelta')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Entrate", "if (disableDblClick()) javascript:submitForm('doStampaAggEtrDelta')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Spese", "if (disableDblClick()) javascript:submitForm('doStampaAggSpeDelta')", bp.getParentRoot().isBootstrap());%></td>
 		<td></td>
 		<td></td>
 	</tr>
