@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Archivio per associazione Utente/Uo/Tipo Operazione per la gestione delle Abilitazioni"
+	longDescription="Archivio per associazione Utente/Uo/Tipo Operazione per la gestione delle Abilitazioni">
+	<fieldProperty
+		name="cdUtente"
+		property="cdUtente"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdUtente" />
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UnitaOperativaOrd" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="unitaOperativaOrd.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdUnitaOperativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="findTipoOperazioneOrd"
+		property="tipoOperazioneOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="TipoOperazioneOrd" />
+	<fieldProperty
+		name="cdTipoOperazione"
+		property="tipoOperazioneOrd.cdTipoOperazione"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdTipoOperazione" />
+	<fieldProperty
+		name="tuttiMagazzini"
+		property="tuttiMagazzini"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tuttiMagazzini" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUtente" />
+		<formFieldProperty
+			name="cdUnitaOperativa" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdTipoOperazione" />
+	</form>
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="findTipoOperazioneOrd" />
+	<formFieldProperty
+		name="tuttiMagazzini" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdUtente" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdTipoOperazione" />
+	<findFieldProperty
+		name="tuttiMagazzini" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdUtente" />
+	<columnFieldProperty
+		name="cdUnitaOperativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdTipoOperazione" />
+	<columnFieldProperty
+		name="tuttiMagazzini" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Archivio di codifica del "comportamento" delle  varie tipologie di movimento"
+	longDescription="Archivio di codifica del "comportamento" delle  varie tipologie di movimento">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdTipoMovimento"
+		property="cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdTipoMovimento" />
+	<fieldProperty
+		name="ultPrel"
+		property="ultPrel"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="ultPrel" />
+	<fieldProperty
+		name="tipmovPrel"
+		property="tipmovPrel"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tipmovPrel" />
+	<fieldProperty
+		name="ultEnt"
+		property="ultEnt"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="ultEnt" />
+	<fieldProperty
+		name="tipmovEnt"
+		property="tipmovEnt"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tipmovEnt" />
+	<fieldProperty
+		name="ultForn"
+		property="ultForn"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="ultForn" />
+	<fieldProperty
+		name="progVal"
+		property="progVal"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="progVal" />
+	<fieldProperty
+		name="ultEntVal"
+		property="ultEntVal"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="ultEntVal" />
+	<fieldProperty
+		name="valoriz"
+		property="valoriz"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="valoriz" />
+	<fieldProperty
+		name="progQta"
+		property="progQta"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="progQta" />
+	<fieldProperty
+		name="ultEntQta"
+		property="ultEntQta"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="ultEntQta" />
+	<fieldProperty
+		name="progscaVal"
+		property="progscaVal"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="progscaVal" />
+	<fieldProperty
+		name="progSca"
+		property="progSca"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="progSca" />
+	<fieldProperty
+		name="progcons"
+		property="progcons"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="progcons" />
+	<fieldProperty
+		name="ultScaVal"
+		property="ultScaVal"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="ultScaVal" />
+	<fieldProperty
+		name="ultScaQta"
+		property="ultScaQta"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="ultScaQta" />
+	<fieldProperty
+		name="qtainzAnno"
+		property="qtainzAnno"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="qtainzAnno" />
+	<fieldProperty
+		name="valinzAnno"
+		property="valinzAnno"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="valinzAnno" />
+	<fieldProperty
+		name="medioappr"
+		property="medioappr"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="medioappr" />
+	<fieldProperty
+		name="scortamin"
+		property="scortamin"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="scortamin" />
+	<fieldProperty
+		name="qtaordi"
+		property="qtaordi"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="qtaordi" />
+	<fieldProperty
+		name="giacCar"
+		property="giacCar"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="giacCar" />
+	<fieldProperty
+		name="lottoForn"
+		property="lottoForn"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="lottoForn" />
+	<fieldProperty
+		name="aggubic"
+		property="aggubic"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="aggubic" />
+	<fieldProperty
+		name="qtainzLotto"
+		property="qtainzLotto"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="qtainzLotto" />
+	<fieldProperty
+		name="importoLotto"
+		property="importoLotto"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="importoLotto" />
+	<fieldProperty
+		name="carico"
+		property="carico"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="carico" />
+	<fieldProperty
+		name="findTipoMovimentoMag"
+		property="tipoMovimentoMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="TipoMovimentoMag" />
+	<fieldProperty
+		name="cdCdsRif"
+		property="tipoMovimentoMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCdsRif" />
+	<fieldProperty
+		name="cdTipoMovimentoRif"
+		property="tipoMovimentoMag.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="cdTipoMovimentoRif" />
+	<fieldProperty
+		name="flagSpese"
+		property="flagSpese"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="flagSpese" />
+	<fieldProperty
+		name="qtacarico"
+		property="qtacarico"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="qtacarico" />
+	<fieldProperty
+		name="costo"
+		property="costo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="costo" />
+	<fieldProperty
+		name="flagBlocco"
+		property="flagBlocco"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="flagBlocco" />
+	<fieldProperty
+		name="qtapropsca"
+		property="qtapropsca"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="qtapropsca" />
+	<fieldProperty
+		name="bollasca"
+		property="bollasca"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="bollasca" />
+	<fieldProperty
+		name="attivo"
+		property="attivo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="attivo" />
+	<fieldProperty
+		name="flagCeff"
+		property="flagCeff"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="flagCeff" />
+	<fieldProperty
+		name="qtainprod"
+		property="qtainprod"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="qtainprod" />
+	<fieldProperty
+		name="caricoIniziale"
+		property="caricoIniziale"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="caricoIniziale" />
+	<fieldProperty
+		name="tipoDaEstrarre"
+		property="tipoDaEstrarre"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tipoDaEstrarre" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdTipoMovimento" />
+	</form>
+	<formFieldProperty
+		name="cdTipoMovimento" />
+	<formFieldProperty
+		name="ultPrel" />
+	<formFieldProperty
+		name="tipmovPrel" />
+	<formFieldProperty
+		name="ultEnt" />
+	<formFieldProperty
+		name="tipmovEnt" />
+	<formFieldProperty
+		name="ultForn" />
+	<formFieldProperty
+		name="progVal" />
+	<formFieldProperty
+		name="ultEntVal" />
+	<formFieldProperty
+		name="valoriz" />
+	<formFieldProperty
+		name="progQta" />
+	<formFieldProperty
+		name="ultEntQta" />
+	<formFieldProperty
+		name="progscaVal" />
+	<formFieldProperty
+		name="progSca" />
+	<formFieldProperty
+		name="progcons" />
+	<formFieldProperty
+		name="ultScaVal" />
+	<formFieldProperty
+		name="ultScaQta" />
+	<formFieldProperty
+		name="qtainzAnno" />
+	<formFieldProperty
+		name="valinzAnno" />
+	<formFieldProperty
+		name="medioappr" />
+	<formFieldProperty
+		name="scortamin" />
+	<formFieldProperty
+		name="qtaordi" />
+	<formFieldProperty
+		name="giacCar" />
+	<formFieldProperty
+		name="lottoForn" />
+	<formFieldProperty
+		name="aggubic" />
+	<formFieldProperty
+		name="qtainzLotto" />
+	<formFieldProperty
+		name="importoLotto" />
+	<formFieldProperty
+		name="carico" />
+	<formFieldProperty
+		name="findTipoMovimentoMag" />
+	<formFieldProperty
+		name="flagSpese" />
+	<formFieldProperty
+		name="qtacarico" />
+	<formFieldProperty
+		name="costo" />
+	<formFieldProperty
+		name="flagBlocco" />
+	<formFieldProperty
+		name="qtapropsca" />
+	<formFieldProperty
+		name="bollasca" />
+	<formFieldProperty
+		name="attivo" />
+	<formFieldProperty
+		name="flagCeff" />
+	<formFieldProperty
+		name="qtainprod" />
+	<formFieldProperty
+		name="caricoIniziale" />
+	<formFieldProperty
+		name="tipoDaEstrarre" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdTipoMovimento" />
+	<findFieldProperty
+		name="ultPrel" />
+	<findFieldProperty
+		name="tipmovPrel" />
+	<findFieldProperty
+		name="ultEnt" />
+	<findFieldProperty
+		name="tipmovEnt" />
+	<findFieldProperty
+		name="ultForn" />
+	<findFieldProperty
+		name="progVal" />
+	<findFieldProperty
+		name="ultEntVal" />
+	<findFieldProperty
+		name="valoriz" />
+	<findFieldProperty
+		name="progQta" />
+	<findFieldProperty
+		name="ultEntQta" />
+	<findFieldProperty
+		name="progscaVal" />
+	<findFieldProperty
+		name="progSca" />
+	<findFieldProperty
+		name="progcons" />
+	<findFieldProperty
+		name="ultScaVal" />
+	<findFieldProperty
+		name="ultScaQta" />
+	<findFieldProperty
+		name="qtainzAnno" />
+	<findFieldProperty
+		name="valinzAnno" />
+	<findFieldProperty
+		name="medioappr" />
+	<findFieldProperty
+		name="scortamin" />
+	<findFieldProperty
+		name="qtaordi" />
+	<findFieldProperty
+		name="giacCar" />
+	<findFieldProperty
+		name="lottoForn" />
+	<findFieldProperty
+		name="aggubic" />
+	<findFieldProperty
+		name="qtainzLotto" />
+	<findFieldProperty
+		name="importoLotto" />
+	<findFieldProperty
+		name="carico" />
+	<findFieldProperty
+		name="cdCdsRif" />
+	<findFieldProperty
+		name="cdTipoMovimentoRif" />
+	<findFieldProperty
+		name="flagSpese" />
+	<findFieldProperty
+		name="qtacarico" />
+	<findFieldProperty
+		name="costo" />
+	<findFieldProperty
+		name="flagBlocco" />
+	<findFieldProperty
+		name="qtapropsca" />
+	<findFieldProperty
+		name="bollasca" />
+	<findFieldProperty
+		name="attivo" />
+	<findFieldProperty
+		name="flagCeff" />
+	<findFieldProperty
+		name="qtainprod" />
+	<findFieldProperty
+		name="caricoIniziale" />
+	<findFieldProperty
+		name="tipoDaEstrarre" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdTipoMovimento" />
+	<columnFieldProperty
+		name="ultPrel" />
+	<columnFieldProperty
+		name="tipmovPrel" />
+	<columnFieldProperty
+		name="ultEnt" />
+	<columnFieldProperty
+		name="tipmovEnt" />
+	<columnFieldProperty
+		name="ultForn" />
+	<columnFieldProperty
+		name="progVal" />
+	<columnFieldProperty
+		name="ultEntVal" />
+	<columnFieldProperty
+		name="valoriz" />
+	<columnFieldProperty
+		name="progQta" />
+	<columnFieldProperty
+		name="ultEntQta" />
+	<columnFieldProperty
+		name="progscaVal" />
+	<columnFieldProperty
+		name="progSca" />
+	<columnFieldProperty
+		name="progcons" />
+	<columnFieldProperty
+		name="ultScaVal" />
+	<columnFieldProperty
+		name="ultScaQta" />
+	<columnFieldProperty
+		name="qtainzAnno" />
+	<columnFieldProperty
+		name="valinzAnno" />
+	<columnFieldProperty
+		name="medioappr" />
+	<columnFieldProperty
+		name="scortamin" />
+	<columnFieldProperty
+		name="qtaordi" />
+	<columnFieldProperty
+		name="giacCar" />
+	<columnFieldProperty
+		name="lottoForn" />
+	<columnFieldProperty
+		name="aggubic" />
+	<columnFieldProperty
+		name="qtainzLotto" />
+	<columnFieldProperty
+		name="importoLotto" />
+	<columnFieldProperty
+		name="carico" />
+	<columnFieldProperty
+		name="cdCdsRif" />
+	<columnFieldProperty
+		name="cdTipoMovimentoRif" />
+	<columnFieldProperty
+		name="flagSpese" />
+	<columnFieldProperty
+		name="qtacarico" />
+	<columnFieldProperty
+		name="costo" />
+	<columnFieldProperty
+		name="flagBlocco" />
+	<columnFieldProperty
+		name="qtapropsca" />
+	<columnFieldProperty
+		name="bollasca" />
+	<columnFieldProperty
+		name="attivo" />
+	<columnFieldProperty
+		name="flagCeff" />
+	<columnFieldProperty
+		name="qtainprod" />
+	<columnFieldProperty
+		name="caricoIniziale" />
+	<columnFieldProperty
+		name="tipoDaEstrarre" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

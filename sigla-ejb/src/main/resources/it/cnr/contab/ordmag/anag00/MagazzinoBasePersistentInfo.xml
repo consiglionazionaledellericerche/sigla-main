@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.MagazzinoBase"
+	keyClassName="it.cnr.contab.ordmag.anag00.MagazzinoKey"
+	homeClassName="it.cnr.contab.ordmag.anag00.MagazzinoHome">
+	<defaultColumnMap
+		tableName="MAGAZZINO">
+		<columnMapping
+			columnName="DS_MAGAZZINO"
+			propertyName="dsMagazzino"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="cdUnitaOperativa"
+			sqlTypeName="VARCHAR"
+			columnSize="12"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_LUOGO"
+			propertyName="cdCdsLuogo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LUOGO_CONSEGNA"
+			propertyName="cdLuogoConsegna"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_CAR_MAG"
+			propertyName="cdCdsCarMag"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_CAR_MAG"
+			propertyName="cdTipoMovimentoCarMag"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_CAR_TRA"
+			propertyName="cdCdsCarTra"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_CAR_TRA"
+			propertyName="cdTipoMovimentoCarTra"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_CAR_FMA"
+			propertyName="cdCdsCarFma"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_CAR_FMA"
+			propertyName="cdTipoMovimentoCarFma"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_SCA_UO"
+			propertyName="cdCdsScaUo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_SCA_UO"
+			propertyName="cdTipoMovimentoScaUo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_TRA_SCA"
+			propertyName="cdCdsTraSca"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_TRA_SCA"
+			propertyName="cdTipoMovimentoTraSca"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_TRA_CAR"
+			propertyName="cdCdsTraCar"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_TRA_CAR"
+			propertyName="cdTipoMovimentoTraCar"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_RV_POS"
+			propertyName="cdCdsRvPos"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_RV_POS"
+			propertyName="cdTipoMovimentoRvPos"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_RV_NEG"
+			propertyName="cdCdsRvNeg"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_RV_NEG"
+			propertyName="cdTipoMovimentoRvNeg"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_CHI"
+			propertyName="cdCdsChi"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_CHI"
+			propertyName="cdTipoMovimentoChi"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_ULT_VAL_SCA"
+			propertyName="dtUltValSca"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_VAL_SCA"
+			propertyName="esercizioValSca"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_RAGGR_SCA"
+			propertyName="cdCdsRaggrSca"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_RAGGR_MAGAZZINO_SCA"
+			propertyName="cdRaggrMagazzinoSca"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="METODO_VAL_SCA"
+			propertyName="metodoValSca"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ULT_VAL_RIM"
+			propertyName="dtUltValRim"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_VAL_RIM"
+			propertyName="esercizioValRim"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_RAGGR_RIM"
+			propertyName="cdCdsRaggrRim"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_RAGGR_MAGAZZINO_RIM"
+			propertyName="cdRaggrMagazzinoRim"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="METODO_VAL_RIM"
+			propertyName="metodoValRim"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ABIL_TUTTI_BENI_SERV"
+			propertyName="abilTuttiBeniServ"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dsMagazzino" />
+	<persistentProperty
+		name="cdUnitaOperativa" />
+	<persistentProperty
+		name="cdCdsLuogo" />
+	<persistentProperty
+		name="cdLuogoConsegna" />
+	<persistentProperty
+		name="cdCdsCarMag" />
+	<persistentProperty
+		name="cdTipoMovimentoCarMag" />
+	<persistentProperty
+		name="cdCdsCarTra" />
+	<persistentProperty
+		name="cdTipoMovimentoCarTra" />
+	<persistentProperty
+		name="cdCdsCarFma" />
+	<persistentProperty
+		name="cdTipoMovimentoCarFma" />
+	<persistentProperty
+		name="cdCdsScaUo" />
+	<persistentProperty
+		name="cdTipoMovimentoScaUo" />
+	<persistentProperty
+		name="cdCdsTraSca" />
+	<persistentProperty
+		name="cdTipoMovimentoTraSca" />
+	<persistentProperty
+		name="cdCdsTraCar" />
+	<persistentProperty
+		name="cdTipoMovimentoTraCar" />
+	<persistentProperty
+		name="cdCdsRvPos" />
+	<persistentProperty
+		name="cdTipoMovimentoRvPos" />
+	<persistentProperty
+		name="cdCdsRvNeg" />
+	<persistentProperty
+		name="cdTipoMovimentoRvNeg" />
+	<persistentProperty
+		name="cdCdsChi" />
+	<persistentProperty
+		name="cdTipoMovimentoChi" />
+	<persistentProperty
+		name="dtUltValSca" />
+	<persistentProperty
+		name="esercizioValSca" />
+	<persistentProperty
+		name="cdCdsRaggrSca" />
+	<persistentProperty
+		name="cdRaggrMagazzinoSca" />
+	<persistentProperty
+		name="metodoValSca" />
+	<persistentProperty
+		name="dtUltValRim" />
+	<persistentProperty
+		name="esercizioValRim" />
+	<persistentProperty
+		name="cdCdsRaggrRim" />
+	<persistentProperty
+		name="cdRaggrMagazzinoRim" />
+	<persistentProperty
+		name="metodoValRim" />
+	<persistentProperty
+		name="abilTuttiBeniServ" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>
