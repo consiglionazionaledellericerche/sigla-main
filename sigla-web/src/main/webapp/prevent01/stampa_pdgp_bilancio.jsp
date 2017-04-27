@@ -66,12 +66,12 @@
 			<td class="GroupLabel" colspan="4">Aggiornamento Dati Rendiconto</td>
 		  </tr>
 		  <tr>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Competenza Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCompetenzaAC')",null,true);%></td>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residui Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoResiduiAC')",null,true);%></td>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCassaAC')",null,true);%></td>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Competenza Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCompetenzaAP')",null,true);%></td>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residui Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoResiduiAP')",null,true);%></td>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCassaAP')",null,true);%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Competenza Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCompetenzaAC')",null,true, bp.getParentRoot().isBootstrap());%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residui Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoResiduiAC')",null,true, bp.getParentRoot().isBootstrap());%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCassaAC')",null,true, bp.getParentRoot().isBootstrap());%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Competenza Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCompetenzaAP')",null,true, bp.getParentRoot().isBootstrap());%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residui Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoResiduiAP')",null,true, bp.getParentRoot().isBootstrap());%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaRendicontoCassaAP')",null,true, bp.getParentRoot().isBootstrap());%></td>
 		  </tr>
 		</div>
 	    </table>
@@ -81,11 +81,11 @@
 			<td class="GroupLabel" colspan="4">Aggiornamento Dati Bilancio</td>
 		  </tr>
 		  <tr>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaResiduoAC')",null,true);%></td>
-	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaCassaAC')",null,true);%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaResiduoAC')",null,true, bp.getParentRoot().isBootstrap());%></td>
+	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaCassaAC')",null,true, bp.getParentRoot().isBootstrap());%></td>
 		    <% if (Stampa_pdgp_bilancioBulk.TIPO_PROVVISORIO.equals(((Stampa_pdgp_bilancioBulk)bp.getModel()).getTi_origine())) { %>
-	 	    	<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Previsione Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaPrevisioneAC')",null,true);%></td>
-		 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaResiduoAP')",null,true);%></td>
+	 	    	<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Previsione Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaPrevisioneAC')",null,true, bp.getParentRoot().isBootstrap());%></td>
+		 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaResiduoAP')",null,true, bp.getParentRoot().isBootstrap());%></td>
 		 	<% } %>
 		  </tr>
 		</div>

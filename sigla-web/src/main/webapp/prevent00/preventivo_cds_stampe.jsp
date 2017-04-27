@@ -31,8 +31,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Spese", "if (disableDblClick()) javascript:submitForm('doStampaSpesa')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Spese (importi diversi da 0)", "if (disableDblClick()) javascript:submitForm('doStampaSpesaDZ')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Spese", "if (disableDblClick()) javascript:submitForm('doStampaSpesa')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Spese (importi diversi da 0)", "if (disableDblClick()) javascript:submitForm('doStampaSpesaDZ')", bp.getParentRoot().isBootstrap());%></td>
 	</tr>
 		<td colspan=3> </td>
 	<tr>
@@ -42,8 +42,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Entrate", "if (disableDblClick()) javascript:submitForm('doStampaEntrata')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Entrate (importi diversi da 0)", "if (disableDblClick()) javascript:submitForm('doStampaEntrataDZ')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Entrate", "if (disableDblClick()) javascript:submitForm('doStampaEntrata')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Entrate (importi diversi da 0)", "if (disableDblClick()) javascript:submitForm('doStampaEntrataDZ')", bp.getParentRoot().isBootstrap());%></td>
 	</tr>
 	
 </table>

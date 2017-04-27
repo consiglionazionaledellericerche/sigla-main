@@ -92,46 +92,46 @@ if (window.top.MessageCheckFrame) {
  </tr>
 
 <tr>
-	<td><%	JSPUtils.buttonWithTitle(out,"img/home16.gif","javascript:doLogout()","Logout"); %></td>
+	<td><%	JSPUtils.buttonWithTitle(out,"img/home16.gif","javascript:doLogout()","Logout", bp.getParentRoot().isBootstrap()); %></td>
 	<td><% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","userid"); %></td>
-	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","userid",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\" style=\"width:100%;background-color:transparent;\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
+	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","userid",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\" style=\"width:100%;background-color:transparent;\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
 </tr>
 <% if (bp.getUserInfo().getLdap_userid()!=null && !bp.getUserInfo().getLdap_userid().equals(bp.getUserInfo().getUserid())) {%>
 <tr>
 	<td><% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","ldap_userid"); %></td>
-	<td width="100%" colspan=2><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ldap_userid",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\" style=\"width:100%;background-color:transparent;\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
+	<td width="100%" colspan=2><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ldap_userid",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\" style=\"width:100%;background-color:transparent;\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
 </tr>
 <%}%>  
 <tr>
 	<% if (bp.getUserInfo().getUtente().isSupervisore()) { %>
-		<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaListaUnitaOrganizzativa()","Lista Unità Organizzative"); %></td>
+		<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaListaUnitaOrganizzativa()","Lista Unità Organizzative", bp.getParentRoot().isBootstrap()); %></td>
 	<% } else { %>
 		<td></td>
 	<% } %>
 	<td><% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","esercizio"); %></td>
-	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","esercizio",bp.getUserInfo().getUtente().isUtenteComune(),null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
+	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","esercizio",bp.getUserInfo().getUtente().isUtenteComune(),null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
 </tr>
 <% if (bp.getUserInfo().getUtente().isUtenteComune()) { %>
 <tr>
 	<% if (bp.getUserInfo().getUtente().isSupervisore()) { %>
 		<td><% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","ds_cdr"); %></td>
 	<% } else { %>
-		<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaCdr()","Lista Cdr"); %></td>
+		<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaCdr()","Lista Cdr", bp.getParentRoot().isBootstrap()); %></td>
 	<% } %>
-	<td><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","cd_centro_responsabilita",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
-	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ds_cdr",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
+	<td><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","cd_centro_responsabilita",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
+	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ds_cdr",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
 </tr>
 <% if (bp.getUserInfo().getUtente().getDipartimento() != null && bp.getUserInfo().getUtente().getDipartimento().getCd_dipartimento()!= null) { %>
 <tr>
 	<td><% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","ds_dipartimento"); %></td>
-	<td><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","cd_dipartimento",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
-	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ds_dipartimento",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
+	<td><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","cd_dipartimento",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
+	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ds_dipartimento",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
 </tr>
 <% } %>
 <tr>
-	<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaUnitaOrganizzativa()","Cambia Unità Organizzativa"); %></td>
-	<td><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","cd_unita_organizzativa",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
-	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ds_unita_organizzativa",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap()); %></td>
+	<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaUnitaOrganizzativa()","Cambia Unità Organizzativa", bp.getParentRoot().isBootstrap()); %></td>
+	<td><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","cd_unita_organizzativa",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
+	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ds_unita_organizzativa",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
 </tr>
 <% } %>
 <tr>

@@ -230,7 +230,7 @@ public void writeFPInventarioToolbar(javax.servlet.jsp.JspWriter writer) throws 
 
 	if (!isSearching() && !isDeleting()) {
 		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createFPInventarioToolbar(),this);
+		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createFPInventarioToolbar(),this, this.getParentRoot().isBootstrap());
 		closeToolbar(writer);
 	}
 }

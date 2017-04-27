@@ -42,8 +42,8 @@
 			<td><% bp.getController().writeFormLabel( out, "terzo_cd_terzo"); %></td>
 			<td ><% bp.getController().writeFormInput( out, "terzo_cd_terzo"); %></td>
 			<td ><% bp.getController().writeFormInput( out, "terzo_ds_terzo"); %></td>
-			<td ><% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza entrate", "javascript:submitForm('doVisualizzaEntrate')" ); %>
-				 <% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza spese", "javascript:submitForm('doVisualizzaSpese')"); %>							
+			<td ><% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza entrate", "javascript:submitForm('doVisualizzaEntrate')", bp.getParentRoot().isBootstrap() ); %>
+				 <% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza spese", "javascript:submitForm('doVisualizzaSpese')", bp.getParentRoot().isBootstrap()); %>							
 			</td>
 		<tr>			    
 			<td><% bp.getController().writeFormLabel( out, "terzo_tipo_bollo"); %></td>

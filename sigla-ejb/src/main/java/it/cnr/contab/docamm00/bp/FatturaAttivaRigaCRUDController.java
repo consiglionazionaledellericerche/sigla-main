@@ -137,7 +137,8 @@ public void writeHTMLToolbar(
 			"img/history16.gif",
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDFatturaAttivaBP)getParentController()).isSearching())? command : null,
 			true,
-			"Contabilizza");
+			"Contabilizza",
+			HttpActionContext.isFromBootstrap(context));
 
 		
 		if (getParentController() instanceof CRUDFatturaAttivaIBP) {
@@ -153,7 +154,8 @@ public void writeHTMLToolbar(
 					context,
 					"img/bookmarks16.gif",
 					enabled ? "javascript:submitForm('doSdoppiaDettaglio');" : null,
-					true,"Sdoppia");
+					true,"Sdoppia",
+					HttpActionContext.isFromBootstrap(context));
 		}
 }
 

@@ -106,7 +106,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/cnr16.gif",
 							"javascript:submitForm('doAddBandoToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Avviso da pubblicare");
+							"Avviso da pubblicare",
+							HttpActionContext.isFromBootstrap(context));
 					} 
 					if (procedura.getDecisioneAContrattare() == null) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
@@ -114,7 +115,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/book_leaf.gif",
 							"javascript:submitForm('doAddDecisioneAContrattareToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Decisione a Contrattare");
+							"Decisione a Contrattare",
+							HttpActionContext.isFromBootstrap(context));
 					} 
 					if (procedura.getProgetto()==null) {
 						try{
@@ -126,7 +128,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"img/tipoftheday16.gif",
 									"javascript:submitForm('doAddProgettoToCRUD(" + getInputPrefix() + ")')",
 									true,
-									"Progetto");
+									"Progetto",
+									HttpActionContext.isFromBootstrap(context));
 							}
 						} catch (Exception e) {}
 					}
@@ -135,7 +138,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/new16.gif",
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Allegato Generico");
+							"Allegato Generico",
+							HttpActionContext.isFromBootstrap(context));
 					super.writeHTMLToolbar(context, false, false, delete);
 				} else if (procedura != null && isGrowable() && 
 					      (procedura.isProceduraDefinitiva() || procedura.isProceduraInviataCorteConti() ||
@@ -146,7 +150,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/new16.gif",
 								"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Allegato Generico");
+								"Allegato Generico",
+								HttpActionContext.isFromBootstrap(context));
 						super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
 					}					
 				}
@@ -253,7 +258,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/cnr16.gif",
 							"javascript:submitForm('doAddBandoToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Avviso da pubblicare");
+							"Avviso da pubblicare",
+							HttpActionContext.isFromBootstrap(context));
 					} 
 					if (procedura.getDecisioneAContrattare() == null) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
@@ -261,7 +267,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/book_leaf.gif",
 							"javascript:submitForm('doAddDecisioneAContrattareToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Decisione a Contrattare");
+							"Decisione a Contrattare",
+							HttpActionContext.isFromBootstrap(context));
 					} 
 					if (procedura.getProgetto()==null) {
 						if (parametri!=null && ((parametri.getAllega_progetto()!=null && parametri.getAllega_progetto().equals("Y"))||
@@ -271,7 +278,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/tipoftheday16.gif",
 								"javascript:submitForm('doAddProgettoToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Progetto");
+								"Progetto",
+								HttpActionContext.isFromBootstrap(context));
 						}
 					}
 					if (procedura.getNr_contratti().compareTo(1)==0 &&
@@ -286,7 +294,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/history16.gif",
 								"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Contratto");
+								"Contratto",
+								HttpActionContext.isFromBootstrap(context));
 						}
 						if (incarico.getCurriculumVincitore()==null) {
 							if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) { 
@@ -295,7 +304,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"img/paste16.gif",
 									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 									true,
-									"Curriculum Vincitore");
+									"Curriculum Vincitore",
+									HttpActionContext.isFromBootstrap(context));
 							}
 						}
 						if (incarico.getDecretoDiNomina()==null) {
@@ -305,7 +315,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"img/book_closed.gif",
 									"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 									true,
-									"Decreto di Nomina");
+									"Decreto di Nomina",
+									HttpActionContext.isFromBootstrap(context));
 							}
 						}
 						if (incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()!=null && 
@@ -315,7 +326,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/bookmarks16.gif",
 								"javascript:submitForm('doAddAttoEsitoControlloToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Documentazione ricevuta dalla Corte dei Conti o Provvedimento Amm. Direttore");
+								"Documentazione ricevuta dalla Corte dei Conti o Provvedimento Amm. Direttore",
+								HttpActionContext.isFromBootstrap(context));
 						}
 					}
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
@@ -323,7 +335,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/new16.gif",
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Allegato Generico");
+							"Allegato Generico",
+							HttpActionContext.isFromBootstrap(context));
 					super.writeHTMLToolbar(context, false, false, delete);
 				} else if (procedura != null && isGrowable() && 
 						    (procedura.isProceduraDefinitiva() || procedura.isProceduraInviataCorteConti() ||
@@ -343,7 +356,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"img/history16.gif",
 										"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 										true,
-										"Contratto");
+										"Contratto",
+										HttpActionContext.isFromBootstrap(context));
 							}	
 							super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isContratto()));
 						}
@@ -359,7 +373,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"img/paste16.gif",
 									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 									true,
-									"Curriculum Vincitore");
+									"Curriculum Vincitore",
+									HttpActionContext.isFromBootstrap(context));
 							}
 						}
 						if (incarico.getDecretoDiNomina()==null) {
@@ -369,7 +384,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"img/book_closed.gif",
 									"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 									true,
-									"Decreto di Nomina");
+									"Decreto di Nomina",
+									HttpActionContext.isFromBootstrap(context));
 							}
 						}
 					}
@@ -379,7 +395,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/new16.gif",
 								"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Allegato Generico");
+								"Allegato Generico",
+								HttpActionContext.isFromBootstrap(context));
 						super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
 					}					
 				}
@@ -442,7 +459,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							  incarico.isIncaricoChiuso()||
 							  incarico.isIncaricoDefinitivo())? command : null,
 							true,
-							"Salva Definitivo");
+							"Salva Definitivo",
+							HttpActionContext.isFromBootstrap(context));
 					} 
 					
 					if (((Incarichi_repertorioBulk)getModel()).isIncaricoDefinitivo() && 
@@ -458,7 +476,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							  getModel()==null ||
 							  !((Incarichi_repertorioBulk)getModel()).isIncaricoDefinitivo())? command : null,
 							true,
-							"Annulla Definitivo");
+							"Annulla Definitivo",
+							HttpActionContext.isFromBootstrap(context));
 
 						if (bp.isConcludiMonoIncaricoButtonHidden() && isEditing()) {
 							String command2 = "javascript:submitForm('doConcludiIncarico')";
@@ -470,7 +489,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								  ((CRUDIncarichiProceduraBP)getParentController()).isSearching() ||
 								  getModel()==null )? command2 : null,
 								true,
-								"Concludi Incarico");
+								"Concludi Incarico",
+								HttpActionContext.isFromBootstrap(context));
 							}
 					}
 				}
@@ -522,7 +542,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/history16.gif",
 							"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Contratto");
+							"Contratto",
+							HttpActionContext.isFromBootstrap(context));
 					} 
 					if (incarico.getCurriculumVincitore()==null) {
 						if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) { 
@@ -531,7 +552,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/paste16.gif",
 								"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Curriculum Vincitore");
+								"Curriculum Vincitore",
+								HttpActionContext.isFromBootstrap(context));
 						}
 					}
 					if (incarico.getDecretoDiNomina()==null) {
@@ -541,7 +563,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/book_closed.gif",
 								"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Decreto di Nomina");
+								"Decreto di Nomina",
+								HttpActionContext.isFromBootstrap(context));
 						}
 					}
 					if (incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()!=null && 
@@ -551,14 +574,16 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/bookmarks16.gif",
 							"javascript:submitForm('doAddAttoEsitoControlloToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Documentazione ricevuta dalla Corte dei Conti o Provvedimento Amm. Direttore");
+							"Documentazione ricevuta dalla Corte dei Conti o Provvedimento Amm. Direttore",
+							HttpActionContext.isFromBootstrap(context));
 					}
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
 							"img/new16.gif",
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
-							"Allegato Generico");
+							"Allegato Generico",
+							HttpActionContext.isFromBootstrap(context));
 					super.writeHTMLToolbar(context, false, false, delete);
 				} else if (incarico != null && isGrowable() && 
 					    (incarico.isIncaricoDefinitivo() || incarico.isIncaricoChiuso() || incarico.isIncaricoAnnullato())) {
@@ -570,7 +595,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"img/history16.gif",
 									"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 									true,
-									"Contratto");
+									"Contratto",
+									HttpActionContext.isFromBootstrap(context));
 						}	
 						super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isContratto()));
 					}
@@ -581,7 +607,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/paste16.gif",
 								"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Curriculum Vincitore");
+								"Curriculum Vincitore",
+								HttpActionContext.isFromBootstrap(context));
 						}
 					}
 					if (((CRUDIncarichiProceduraBP)getParentController().getParentController()).isSuperUtente()){
@@ -590,7 +617,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"img/new16.gif",
 								"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 								true,
-								"Allegato Generico");
+								"Allegato Generico",
+								HttpActionContext.isFromBootstrap(context));
 						super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
 					}					
 				}
@@ -679,7 +707,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"img/saveall16.gif",
 							command,
 							true,
-							"Salva Definitivo Variazione Contratto");
+							"Salva Definitivo Variazione Contratto",
+							HttpActionContext.isFromBootstrap(context));
 					} 
 				}
 		}	
