@@ -86,7 +86,14 @@
 	</tr>
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_linea_attivita");%></td>
-		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput(out,null,"find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+		<td colspan=3>
+			<table>
+				<tr>
+					<td><% bp.getCrudDettagliGestionali().writeFormInput( out,"default","find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+					<td><% bp.getCrudDettagliGestionali().writeFormInput( out,"default","crea_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+				</tr>
+			</table>
+		</td>
 	</tr>
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_elemento_voce");%></td>
