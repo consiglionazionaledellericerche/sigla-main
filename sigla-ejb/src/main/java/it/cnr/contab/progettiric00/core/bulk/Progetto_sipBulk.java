@@ -10,6 +10,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
 
 /**
@@ -28,6 +30,8 @@ public class Progetto_sipBulk extends ProgettoBase {
 	private DipartimentoBulk dipartimento;
 	private Tipo_progettoBulk tipo;
 	private DivisaBulk divisa;
+	private Pdg_programmaBulk pdgProgramma;
+	private Pdg_missioneBulk pdgMissione;
 	
 	public Progetto_sipBulk() {
 		super();
@@ -216,5 +220,45 @@ public class Progetto_sipBulk extends ProgettoBase {
 	}
 	public boolean isModulo(){
 		return getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+	}
+
+	public Pdg_programmaBulk getPdgProgramma() {
+		return pdgProgramma;
+	}
+	
+	public void setPdgProgramma(Pdg_programmaBulk pdgProgramma) {
+		this.pdgProgramma = pdgProgramma;
+	}
+	@Override
+	public String getCd_programma() {
+		Pdg_programmaBulk pdgProgramma = this.getPdgProgramma();
+		if (pdgProgramma == null)
+			return null;
+		return pdgProgramma.getCd_programma();
+	}
+	
+	@Override
+	public void setCd_programma(String cd_programma) {
+		this.getPdgProgramma().setCd_programma(cd_programma);
+	}
+
+	public Pdg_missioneBulk getPdgMissione() {
+		return pdgMissione;
+	}
+	
+	public void setPdgMissione(Pdg_missioneBulk pdgMissione) {
+		this.pdgMissione = pdgMissione;
+	}
+	@Override
+	public String getCd_missione() {
+		Pdg_missioneBulk pdgMissione = this.getPdgMissione();
+		if (pdgMissione == null)
+			return null;
+		return pdgMissione.getCd_missione();
+	}
+	
+	@Override
+	public void setCd_missione(String cd_missione) {
+		this.getPdgMissione().setCd_missione(cd_missione);
 	}
 }
