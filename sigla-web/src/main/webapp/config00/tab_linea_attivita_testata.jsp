@@ -38,9 +38,9 @@
 			<% bp.getController().writeFormLabel(out,"cd_progetto2016");%>
 		  </td>
 		   <td colspan="3">	
-			<% bp.getController().writeFormInput(out,null,"cd_progetto2016",false,null,null); %>
-			<% bp.getController().writeFormInput(out,null,"ds_progetto2016",false,null,null); %>
-			<% bp.getController().writeFormInput(out,null,"find_nodo_padre_2016",false,null,null); %>
+			<% bp.getController().writeFormInput(out,null,"cd_progetto2016",bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %>
+			<% bp.getController().writeFormInput(out,null,"ds_progetto2016",bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %>
+			<% bp.getController().writeFormInput(out,null,"find_nodo_padre_2016",bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %>
 		  </td>
 		</tr>
 	<% } %>
@@ -49,7 +49,7 @@
 		<% bp.getController().writeFormLabel(out,"centro_responsabilita"); %>
 	</td>
 	 <td colspan="3">	
-		<% bp.getController().writeFormInput(out,null,"centro_responsabilita",isMapNotEditable,null,null); %> 
+		<% bp.getController().writeFormInput(out,null,"centro_responsabilita",isMapNotEditable||bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %> 
 	 </td>
 	</tr>
 	
@@ -78,17 +78,17 @@
 		<% bp.getController().writeFormInput(out,null,"ti_gestione",false,null,"onclick=\"submitForm('doCambiaGestione')\""); %>
 		</td>
 	</tr>
+	<% if (WorkpackageBulk.TI_GESTIONE_SPESE.equals(bulk.getTi_gestione()) || 
+		   WorkpackageBulk.TI_GESTIONE_ENTRAMBE.equals(bulk.getTi_gestione())) { %> 
 	<tr>
-		<% WorkpackageBulk workpackage = (WorkpackageBulk)bp.getModel();
-		   if (workpackage.TI_GESTIONE_SPESE.equals(workpackage.getTi_gestione()) || 
-			   workpackage.TI_GESTIONE_ENTRAMBE.equals(workpackage.getTi_gestione()))
-			   bp.getController().writeFormField(out,"funzione"); %>
+		<% bp.getController().writeFormField(out,"funzione"); %>
 	</tr>
+	<% } %>
 	<tr>
 		<% bp.getController().writeFormField(out,"natura"); %>
 	</tr>
 	<tr>
-	 <td>
+    <td>
 		<% bp.getController().writeFormLabel(out,"gruppo_linea_attivita"); %>
 	</td>
 	 <td colspan="3">	
@@ -118,17 +118,33 @@
 	</tr>
 	<tr>
 		<% bp.getController().writeFormField( out, "fl_limite_ass_obblig"); %>
-	</tr>	
-	<tr>
-		<% if (workpackage.TI_GESTIONE_SPESE.equals(workpackage.getTi_gestione()) || 
-			   workpackage.TI_GESTIONE_ENTRAMBE.equals(workpackage.getTi_gestione()))
-			bp.getController().writeFormField(out,"cofog");%>
 	</tr>
+	<% if (WorkpackageBulk.TI_GESTIONE_SPESE.equals(bulk.getTi_gestione()) || 
+			WorkpackageBulk.TI_GESTIONE_ENTRAMBE.equals(bulk.getTi_gestione())) { %>
 	<tr>
-		<% bp.getController().writeFormField( out, "pdgProgramma"); %>
+		<td>
+			<% bp.getController().writeFormLabel(out,"cofog"); %>
+		</td>
+	 	<td colspan="3">	
+			<% bp.getController().writeFormInput(out,null,"cofog",bp.isMapFromPianoGestioneSpese(),null,null); %>
+		</td> 
+	</tr>
+	<% } %>
+	<tr>
+		<td>
+			<% bp.getController().writeFormLabel(out,"pdgProgramma"); %>
+		</td>
+	 	<td colspan="3">	
+			<% bp.getController().writeFormInput(out,null,"pdgProgramma",bp.isMapFromPianoGestioneSpese(),null,null); %>
+		</td> 
 	</tr>	
 	<tr>
-		<% bp.getController().writeFormField( out, "pdgMissione"); %>
+		<td>
+			<% bp.getController().writeFormLabel(out,"pdgMissione"); %>
+		</td>
+	 	<td colspan="3">	
+			<% bp.getController().writeFormInput(out,null,"pdgMissione",bp.isMapFromPianoGestioneSpese(),null,null); %> 
+		</td> 
 	</tr>	
 	<% if (bp.getUoScrivania().getCd_unita_organizzativa().equals("999.000")) {%>
 		<tr>
