@@ -228,8 +228,7 @@ public boolean isROfind_nodo_padre() {
 	if (getCrudStatus() == UNDEFINED)
 		return false;
 
-	return getProgettopadre() == null ||
-	       !getProgettopadre().isOperabile();
+	return getProgettopadre() != null && !getProgettopadre().isOperabile();
 }
 
 /**
@@ -436,6 +435,8 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 		setUnita_organizzativa(unita_organizzativa);
 		setStato(ProgettoBulk.TIPO_STATO_PROPOSTA);
+		setFl_previsione(Boolean.FALSE);
+		setFl_gestione(Boolean.FALSE);
 	  }
 	  return this;
 	}
