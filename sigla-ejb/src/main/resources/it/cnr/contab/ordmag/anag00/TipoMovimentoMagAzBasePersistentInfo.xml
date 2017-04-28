@@ -6,158 +6,152 @@
 	<defaultColumnMap
 		tableName="TIPO_MOVIMENTO_MAG_AZ">
 		<columnMapping
-			columnName="ULT_PREL"
-			propertyName="ultPrel"
+			columnName="AGG_DATA_ULTIMO_CONSUMO"
+			propertyName="aggDataUltimoConsumo"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="TIPMOV_PREL"
-			propertyName="tipmovPrel"
+			columnName="AGG_TIPMOV_ULTIMO_CONSUMO"
+			propertyName="aggTipmovUltimoConsumo"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="ULT_ENT"
-			propertyName="ultEnt"
+			columnName="AGG_DATA_ULTIMO_CARICO"
+			propertyName="aggDataUltimoCarico"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="TIPMOV_ENT"
-			propertyName="tipmovEnt"
+			columnName="AGG_TIPMOV_ULTIMO_CARICO"
+			propertyName="aggTipmovUltimoCarico"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="ULT_FORN"
-			propertyName="ultForn"
+			columnName="AGG_ULTIMO_FORNITORE"
+			propertyName="aggUltimoFornitore"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="PROG_VAL"
-			propertyName="progVal"
+			columnName="MOD_AGG_PROGR_VAL_CARICHI"
+			propertyName="modAggProgrValCarichi"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="ULT_ENT_VAL"
-			propertyName="ultEntVal"
+			columnName="AGG_DATA_ULTIMO_CARICO_VAL"
+			propertyName="aggDataUltimoCaricoVal"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="VALORIZ"
-			propertyName="valoriz"
+			columnName="MOD_AGG_QTA_VAL_MAGAZZINO"
+			propertyName="modAggQtaValMagazzino"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="PROG_QTA"
-			propertyName="progQta"
+			columnName="MOD_AGG_PROGR_QTA_CARICHI"
+			propertyName="modAggProgrQtaCarichi"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="ULT_ENT_QTA"
-			propertyName="ultEntQta"
+			columnName="AGG_DATA_ULTIMO_CARICO_QTA"
+			propertyName="aggDataUltimoCaricoQta"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="PROGSCA_VAL"
-			propertyName="progscaVal"
+			columnName="MOD_AGG_PROGR_VAL_SCARICHI"
+			propertyName="modAggProgrValScarichi"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="PROG_SCA"
-			propertyName="progSca"
+			columnName="MOD_AGG_PROGR_QTA_SCARICHI"
+			propertyName="modAggProgrQtaScarichi"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="PROGCONS"
-			propertyName="progcons"
+			columnName="MOD_AGG_PROGR_CONSUMI"
+			propertyName="modAggProgrConsumi"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="ULT_SCA_VAL"
-			propertyName="ultScaVal"
+			columnName="AGG_DATA_ULTIMO_SCARICO_VAL"
+			propertyName="aggDataUltimoScaricoVal"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="ULT_SCA_QTA"
-			propertyName="ultScaQta"
+			columnName="AGG_DATA_ULTIMO_SCARICO_QTA"
+			propertyName="aggDataUltimoScaricoQta"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="QTAINZ_ANNO"
-			propertyName="qtainzAnno"
+			columnName="MOD_AGG_QTA_INIZIO_ANNO"
+			propertyName="modAggQtaInizioAnno"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="VALINZ_ANNO"
-			propertyName="valinzAnno"
+			columnName="MOD_AGG_VALORE_INIZIO_ANNO"
+			propertyName="modAggValoreInizioAnno"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="MEDIOAPPR"
-			propertyName="medioappr"
+			columnName="MOD_AGG_TEMPO_MEDIO_APPROV"
+			propertyName="modAggTempoMedioApprov"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="SCORTAMIN"
-			propertyName="scortamin"
+			columnName="MOD_AGG_SCORTA_MIN"
+			propertyName="modAggScortaMin"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="QTAORDI"
-			propertyName="qtaordi"
+			columnName="MOD_AGG_QTA_ORDINE"
+			propertyName="modAggQtaOrdine"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="GIAC_CAR"
-			propertyName="giacCar"
+			columnName="MOD_AGG_QTA_MAGAZZINO"
+			propertyName="modAggQtaMagazzino"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="LOTTO_FORN"
-			propertyName="lottoForn"
+			columnName="RIPORTA_LOTTO_FORNITORE"
+			propertyName="riportaLottoFornitore"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="AGGUBIC"
-			propertyName="aggubic"
+			columnName="QTA_INIZIALE_LOTTO"
+			propertyName="qtaInizialeLotto"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="QTAINZ_LOTTO"
-			propertyName="qtainzLotto"
+			columnName="VALORE_INIZIALE_LOTTO"
+			propertyName="valoreInizialeLotto"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="IMPORTO_LOTTO"
-			propertyName="importoLotto"
-			sqlTypeName="VARCHAR"
-			columnSize="1"
-			nullable="true" />
-		<columnMapping
-			columnName="CARICO"
-			propertyName="carico"
+			columnName="RIPORTO_DATA_CARICO_LOTTO"
+			propertyName="riportoDataCaricoLotto"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
@@ -180,65 +174,47 @@
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="QTACARICO"
-			propertyName="qtacarico"
+			columnName="QTA_CARICO_LOTTO"
+			propertyName="qtaCaricoLotto"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="COSTO"
-			propertyName="costo"
+			columnName="MOD_AGG_VALORE_LOTTO"
+			propertyName="modAggValoreLotto"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="FLAG_BLOCCO"
-			propertyName="flagBlocco"
+			columnName="MOVIMENTA_LOTTI_BLOCCATI"
+			propertyName="movimentaLottiBloccati"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="QTAPROPSCA"
-			propertyName="qtapropsca"
+			columnName="MOD_AGG_QTA_PROP_SCA"
+			propertyName="modAggQtaPropSca"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="BOLLASCA"
-			propertyName="bollasca"
+			columnName="GENERA_BOLLA_SCARICO"
+			propertyName="generaBollaScarico"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="ATTIVO"
-			propertyName="attivo"
+			columnName="VALIDO"
+			propertyName="valido"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="false" />
 		<columnMapping
-			columnName="FLAG_CEFF"
-			propertyName="flagCeff"
+			columnName="VALORIZZAZIONE_COSTO_EFFETTIVO"
+			propertyName="valorizzazioneCostoEffettivo"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="true" />
-		<columnMapping
-			columnName="QTAINPROD"
-			propertyName="qtainprod"
-			sqlTypeName="VARCHAR"
-			columnSize="1"
-			nullable="true" />
-		<columnMapping
-			columnName="CARICO_INIZIALE"
-			propertyName="caricoIniziale"
-			sqlTypeName="VARCHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="TIPO_DA_ESTRARRE"
-			propertyName="tipoDaEstrarre"
-			sqlTypeName="VARCHAR"
-			columnSize="1"
-			nullable="false" />
 		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
@@ -277,57 +253,55 @@
 			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="ultPrel" />
+		name="aggDataUltimoConsumo" />
 	<persistentProperty
-		name="tipmovPrel" />
+		name="aggTipmovUltimoConsumo" />
 	<persistentProperty
-		name="ultEnt" />
+		name="aggDataUltimoCarico" />
 	<persistentProperty
-		name="tipmovEnt" />
+		name="aggTipmovUltimoCarico" />
 	<persistentProperty
-		name="ultForn" />
+		name="aggUltimoFornitore" />
 	<persistentProperty
-		name="progVal" />
+		name="modAggProgrValCarichi" />
 	<persistentProperty
-		name="ultEntVal" />
+		name="aggDataUltimoCaricoVal" />
 	<persistentProperty
-		name="valoriz" />
+		name="modAggQtaValMagazzino" />
 	<persistentProperty
-		name="progQta" />
+		name="modAggProgrQtaCarichi" />
 	<persistentProperty
-		name="ultEntQta" />
+		name="aggDataUltimoCaricoQta" />
 	<persistentProperty
-		name="progscaVal" />
+		name="modAggProgrValScarichi" />
 	<persistentProperty
-		name="progSca" />
+		name="modAggProgrQtaScarichi" />
 	<persistentProperty
-		name="progcons" />
+		name="modAggProgrConsumi" />
 	<persistentProperty
-		name="ultScaVal" />
+		name="aggDataUltimoScaricoVal" />
 	<persistentProperty
-		name="ultScaQta" />
+		name="aggDataUltimoScaricoQta" />
 	<persistentProperty
-		name="qtainzAnno" />
+		name="modAggQtaInizioAnno" />
 	<persistentProperty
-		name="valinzAnno" />
+		name="modAggValoreInizioAnno" />
 	<persistentProperty
-		name="medioappr" />
+		name="modAggTempoMedioApprov" />
 	<persistentProperty
-		name="scortamin" />
+		name="modAggScortaMin" />
 	<persistentProperty
-		name="qtaordi" />
+		name="modAggQtaOrdine" />
 	<persistentProperty
-		name="giacCar" />
+		name="modAggQtaMagazzino" />
 	<persistentProperty
-		name="lottoForn" />
+		name="riportaLottoFornitore" />
 	<persistentProperty
-		name="aggubic" />
+		name="qtaInizialeLotto" />
 	<persistentProperty
-		name="qtainzLotto" />
+		name="valoreInizialeLotto" />
 	<persistentProperty
-		name="importoLotto" />
-	<persistentProperty
-		name="carico" />
+		name="riportoDataCaricoLotto" />
 	<persistentProperty
 		name="cdCdsRif" />
 	<persistentProperty
@@ -335,25 +309,19 @@
 	<persistentProperty
 		name="flagSpese" />
 	<persistentProperty
-		name="qtacarico" />
+		name="qtaCaricoLotto" />
 	<persistentProperty
-		name="costo" />
+		name="modAggValoreLotto" />
 	<persistentProperty
-		name="flagBlocco" />
+		name="movimentaLottiBloccati" />
 	<persistentProperty
-		name="qtapropsca" />
+		name="modAggQtaPropSca" />
 	<persistentProperty
-		name="bollasca" />
+		name="generaBollaScarico" />
 	<persistentProperty
-		name="attivo" />
+		name="valido" />
 	<persistentProperty
-		name="flagCeff" />
-	<persistentProperty
-		name="qtainprod" />
-	<persistentProperty
-		name="caricoIniziale" />
-	<persistentProperty
-		name="tipoDaEstrarre" />
+		name="valorizzazioneCostoEffettivo" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty

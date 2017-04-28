@@ -26,213 +26,205 @@
 		nullable="false"
 		label="Tipo Movimento" />
 	<fieldProperty
-		name="ultPrel"
-		property="ultPrel"
+		name="aggDataUltimoConsumo"
+		property="aggDataUltimoConsumo"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="Ultimo Prelievo" />
+		label="Aggiorna Data Ultimo Consumo" />
 	<fieldProperty
-		name="tipmovPrel"
-		property="tipmovPrel"
+		name="aggTipmovUltimoConsumo"
+		property="aggTipmovUltimoConsumo"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="TipmovPrel" />
+		label="Aggiorna Tipo Movimento Ultimo Consumo" />
 	<fieldProperty
-		name="ultEnt"
-		property="ultEnt"
+		name="aggDataUltimoCarico"
+		property="aggDataUltimoCarico"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="ultEnt" />
+		label="Aggiorna Data Ultimo Carico" />
 	<fieldProperty
-		name="tipmovEnt"
-		property="tipmovEnt"
+		name="aggTipmovUltimoCarico"
+		property="aggTipmovUltimoCarico"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="tipmovEnt" />
+		label="Aggiorna Tipo movimento Ultimo Carico" />
 	<fieldProperty
-		name="ultForn"
-		property="ultForn"
+		name="aggUltimoFornitore"
+		property="aggUltimoFornitore"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="ultForn" />
+		label="Aggiorna Ultimo Fornitore" />
 	<fieldProperty
-		name="progVal"
-		property="progVal"
+		name="modAggProgrValCarichi"
+		property="modAggProgrValCarichi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="progVal" />
+		label="Modalità Aggiornamento Progressivo a Valore Carichi" />
 	<fieldProperty
-		name="ultEntVal"
-		property="ultEntVal"
+		name="aggDataUltimoCaricoVal"
+		property="aggDataUltimoCaricoVal"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="ultEntVal" />
+		label="Aggiorna Data Ultimo Carico a Valore" />
 	<fieldProperty
-		name="valoriz"
-		property="valoriz"
+		name="modAggQtaValMagazzino"
+		property="modAggQtaValMagazzino"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="valoriz" />
+		label="Modalità Aggiornamento Quantità a Valore Magazzino" />
 	<fieldProperty
-		name="progQta"
-		property="progQta"
+		name="modAggProgrQtaCarichi"
+		property="modAggProgrQtaCarichi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="progQta" />
+		label="Modalità Aggiornamento Progressivo Carichi a Quantita" />
 	<fieldProperty
-		name="ultEntQta"
-		property="ultEntQta"
+		name="aggDataUltimoCaricoQta"
+		property="aggDataUltimoCaricoQta"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="ultEntQta" />
+		label="Aggiorna Data Ultimo Carico a Quantità" />
 	<fieldProperty
-		name="progscaVal"
-		property="progscaVal"
+		name="modAggProgrValScarichi"
+		property="modAggProgrValScarichi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="progscaVal" />
+		label="Modalità Aggiornamento Progressivo Scarichi a Valore" />
 	<fieldProperty
-		name="progSca"
-		property="progSca"
+		name="modAggProgrQtaScarichi"
+		property="modAggProgrQtaScarichi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="progSca" />
+		label="Modalità Aggiornamento Progressivo Scarichi a quantità" />
 	<fieldProperty
-		name="progcons"
-		property="progcons"
+		name="modAggProgrConsumi"
+		property="modAggProgrConsumi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="progcons" />
+		label="Modalità Aggiornamento Progressivo Consumi" />
 	<fieldProperty
-		name="ultScaVal"
-		property="ultScaVal"
+		name="aggDataUltimoScaricoVal"
+		property="aggDataUltimoScaricoVal"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="ultScaVal" />
+		label="Aggiorna Data Ultimo Scarico a Valore" />
 	<fieldProperty
-		name="ultScaQta"
-		property="ultScaQta"
+		name="aggDataUltimoScaricoQta"
+		property="aggDataUltimoScaricoQta"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="ultScaQta" />
+		label="Aggiorna Data Ultimo Scarico a Quantità" />
 	<fieldProperty
-		name="qtainzAnno"
-		property="qtainzAnno"
+		name="modAggQtaInizioAnno"
+		property="modAggQtaInizioAnno"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="qtainzAnno" />
+		label="Modalità Aggiornamento Quantità di Inizio Anno" />
 	<fieldProperty
-		name="valinzAnno"
-		property="valinzAnno"
+		name="modAggValoreInizioAnno"
+		property="modAggValoreInizioAnno"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="valinzAnno" />
+		label="Modalità Aggiornamento Valore di Inizio Anno" />
 	<fieldProperty
-		name="medioappr"
-		property="medioappr"
+		name="modAggTempoMedioApprov"
+		property="modAggTempoMedioApprov"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="medioappr" />
+		label="Modalità Aggiornamento Tempo Medio di Approvvigiornamento" />
 	<fieldProperty
-		name="scortamin"
-		property="scortamin"
+		name="modAggScortaMin"
+		property="modAggScortaMin"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="scortamin" />
+		label="Modalità Aggiornamento Scorta Minima" />
 	<fieldProperty
-		name="qtaordi"
-		property="qtaordi"
+		name="modAggQtaOrdine"
+		property="modAggQtaOrdine"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="qtaordi" />
+		label="Modalità Aggiornamento Quantità in Ordine" />
 	<fieldProperty
-		name="giacCar"
-		property="giacCar"
+		name="modAggQtaMagazzino"
+		property="modAggQtaMagazzino"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="giacCar" />
+		label="Modalità Aggiornamento Quantità a Magazzino" />
 	<fieldProperty
-		name="lottoForn"
-		property="lottoForn"
+		name="riportaLottoFornitore"
+		property="riportaLottoFornitore"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="lottoForn" />
+		label="Riporta Lotto Fornitore" />
 	<fieldProperty
-		name="aggubic"
-		property="aggubic"
+		name="qtaInizialeLotto"
+		property="qtaInizialeLotto"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="aggubic" />
+		label="Quantità Iniziale Lotto" />
 	<fieldProperty
-		name="qtainzLotto"
-		property="qtainzLotto"
+		name="valoreInizialeLotto"
+		property="valoreInizialeLotto"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="qtainzLotto" />
+		label="Valore Iniziale Lotto" />
 	<fieldProperty
-		name="importoLotto"
-		property="importoLotto"
+		name="riportoDataCaricoLotto"
+		property="riportoDataCaricoLotto"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="importoLotto" />
-	<fieldProperty
-		name="carico"
-		property="carico"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		enabledOnEdit="false"
-		label="carico" />
+		label="Riporto Data Carico Lotto" />
 	<fieldProperty
 		name="findTipoMovimentoMag"
 		property="tipoMovimentoMag"
@@ -242,21 +234,21 @@
 		label="TipoMovimentoMag" />
 	<fieldProperty
 		name="cdCdsRif"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagRif.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsRif" />
+		label="Cds Rif" />
 	<fieldProperty
 		name="cdTipoMovimentoRif"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagRif.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="cdTipoMovimentoRif" />
+		label="Tipo Movimento Riferimento" />
 	<fieldProperty
 		name="flagSpese"
 		property="flagSpese"
@@ -264,97 +256,71 @@
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="flagSpese" />
+		label="Considera Spese" />
 	<fieldProperty
-		name="qtacarico"
-		property="qtacarico"
+		name="qtaCaricoLotto"
+		property="qtaCaricoLotto"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="qtacarico" />
+		label="Quantità di Carico Lotto" />
 	<fieldProperty
-		name="costo"
-		property="costo"
+		name="modAggValoreLotto"
+		property="modAggValoreLotto"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="costo" />
+		label="Modalità Aggiornamento Valore Lotto" />
 	<fieldProperty
-		name="flagBlocco"
-		property="flagBlocco"
+		name="movimentaLottiBloccati"
+		property="movimentaLottiBloccati"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="flagBlocco" />
+		label="Movimenta Lotti Bloccati" />
 	<fieldProperty
-		name="qtapropsca"
-		property="qtapropsca"
+		name="modAggQtaPropSca"
+		property="modAggQtaPropSca"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="qtapropsca" />
+		label="Modalità Aggiornamento Quantità in Proposta di Scarico" />
 	<fieldProperty
-		name="bollasca"
-		property="bollasca"
+		name="generaBollaScarico"
+		property="generaBollaScarico"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="bollasca" />
+		label="Genera Bolla di Scarico" />
 	<fieldProperty
-		name="attivo"
-		property="attivo"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		enabledOnEdit="false"
-		nullable="false"
-		label="attivo" />
-	<fieldProperty
-		name="flagCeff"
-		property="flagCeff"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		enabledOnEdit="false"
-		label="flagCeff" />
-	<fieldProperty
-		name="qtainprod"
-		property="qtainprod"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		enabledOnEdit="false"
-		label="qtainprod" />
-	<fieldProperty
-		name="caricoIniziale"
-		property="caricoIniziale"
+		name="valido"
+		property="valido"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
 		nullable="false"
-		label="caricoIniziale" />
+		label="Valido" />
 	<fieldProperty
-		name="tipoDaEstrarre"
-		property="tipoDaEstrarre"
+		name="valorizzazioneCostoEffettivo"
+		property="valorizzazioneCostoEffettivo"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		nullable="false"
-		label="tipoDaEstrarre" />
+		label="Valorizzazione a Costo Effettivo" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -365,81 +331,73 @@
 	<formFieldProperty
 		name="cdTipoMovimento" />
 	<formFieldProperty
-		name="ultPrel" />
+		name="aggDataUltimoConsumo" />
 	<formFieldProperty
-		name="tipmovPrel" />
+		name="aggTipmovUltimoConsumo" />
 	<formFieldProperty
-		name="ultEnt" />
+		name="aggDataUltimoCarico" />
 	<formFieldProperty
-		name="tipmovEnt" />
+		name="aggTipmovUltimoCarico" />
 	<formFieldProperty
-		name="ultForn" />
+		name="aggUltimoFornitore" />
 	<formFieldProperty
-		name="progVal" />
+		name="modAggProgrValCarichi" />
 	<formFieldProperty
-		name="ultEntVal" />
+		name="aggDataUltimoCaricoVal" />
 	<formFieldProperty
-		name="valoriz" />
+		name="modAggQtaValMagazzino" />
 	<formFieldProperty
-		name="progQta" />
+		name="modAggProgrQtaCarichi" />
 	<formFieldProperty
-		name="ultEntQta" />
+		name="aggDataUltimoCaricoQta" />
 	<formFieldProperty
-		name="progscaVal" />
+		name="modAggProgrValScarichi" />
 	<formFieldProperty
-		name="progSca" />
+		name="modAggProgrQtaScarichi" />
 	<formFieldProperty
-		name="progcons" />
+		name="modAggProgrConsumi" />
 	<formFieldProperty
-		name="ultScaVal" />
+		name="aggDataUltimoScaricoVal" />
 	<formFieldProperty
-		name="ultScaQta" />
+		name="aggDataUltimoScaricoQta" />
 	<formFieldProperty
-		name="qtainzAnno" />
+		name="modAggQtaInizioAnno" />
 	<formFieldProperty
-		name="valinzAnno" />
+		name="modAggValoreInizioAnno" />
 	<formFieldProperty
-		name="medioappr" />
+		name="modAggTempoMedioApprov" />
 	<formFieldProperty
-		name="scortamin" />
+		name="modAggScortaMin" />
 	<formFieldProperty
-		name="qtaordi" />
+		name="modAggQtaOrdine" />
 	<formFieldProperty
-		name="giacCar" />
+		name="modAggQtaMagazzino" />
 	<formFieldProperty
-		name="lottoForn" />
+		name="riportaLottoFornitore" />
 	<formFieldProperty
-		name="aggubic" />
+		name="qtaInizialeLotto" />
 	<formFieldProperty
-		name="qtainzLotto" />
+		name="valoreInizialeLotto" />
 	<formFieldProperty
-		name="importoLotto" />
-	<formFieldProperty
-		name="carico" />
+		name="riportoDataCaricoLotto" />
 	<formFieldProperty
 		name="findTipoMovimentoMag" />
 	<formFieldProperty
 		name="flagSpese" />
 	<formFieldProperty
-		name="qtacarico" />
+		name="qtaCaricoLotto" />
 	<formFieldProperty
-		name="costo" />
+		name="modAggValoreLotto" />
 	<formFieldProperty
-		name="flagBlocco" />
+		name="movimentaLottiBloccati" />
 	<formFieldProperty
-		name="qtapropsca" />
+		name="modAggQtaPropSca" />
 	<formFieldProperty
-		name="bollasca" />
+		name="generaBollaScarico" />
 	<formFieldProperty
-		name="attivo" />
+		name="valido" />
 	<formFieldProperty
-		name="flagCeff" />
-	<formFieldProperty
-		name="qtainprod" />
-	<formFieldProperty
-		name="caricoIniziale" />
-	<formFieldProperty
-		name="tipoDaEstrarre" />
+		name="valorizzazioneCostoEffettivo" />
 	<formFieldProperty
 		name="dtCancellazione" />
 	<findFieldProperty
@@ -447,57 +405,55 @@
 	<findFieldProperty
 		name="cdTipoMovimento" />
 	<findFieldProperty
-		name="ultPrel" />
+		name="aggDataUltimoConsumo" />
 	<findFieldProperty
-		name="tipmovPrel" />
+		name="aggTipmovUltimoConsumo" />
 	<findFieldProperty
-		name="ultEnt" />
+		name="aggDataUltimoCarico" />
 	<findFieldProperty
-		name="tipmovEnt" />
+		name="aggTipmovUltimoCarico" />
 	<findFieldProperty
-		name="ultForn" />
+		name="aggUltimoFornitore" />
 	<findFieldProperty
-		name="progVal" />
+		name="modAggProgrValCarichi" />
 	<findFieldProperty
-		name="ultEntVal" />
+		name="aggDataUltimoCaricoVal" />
 	<findFieldProperty
-		name="valoriz" />
+		name="modAggQtaValMagazzino" />
 	<findFieldProperty
-		name="progQta" />
+		name="modAggProgrQtaCarichi" />
 	<findFieldProperty
-		name="ultEntQta" />
+		name="aggDataUltimoCaricoQta" />
 	<findFieldProperty
-		name="progscaVal" />
+		name="modAggProgrValScarichi" />
 	<findFieldProperty
-		name="progSca" />
+		name="modAggProgrQtaScarichi" />
 	<findFieldProperty
-		name="progcons" />
+		name="modAggProgrConsumi" />
 	<findFieldProperty
-		name="ultScaVal" />
+		name="aggDataUltimoScaricoVal" />
 	<findFieldProperty
-		name="ultScaQta" />
+		name="aggDataUltimoScaricoQta" />
 	<findFieldProperty
-		name="qtainzAnno" />
+		name="modAggQtaInizioAnno" />
 	<findFieldProperty
-		name="valinzAnno" />
+		name="modAggValoreInizioAnno" />
 	<findFieldProperty
-		name="medioappr" />
+		name="modAggTempoMedioApprov" />
 	<findFieldProperty
-		name="scortamin" />
+		name="modAggScortaMin" />
 	<findFieldProperty
-		name="qtaordi" />
+		name="modAggQtaOrdine" />
 	<findFieldProperty
-		name="giacCar" />
+		name="modAggQtaMagazzino" />
 	<findFieldProperty
-		name="lottoForn" />
+		name="riportaLottoFornitore" />
 	<findFieldProperty
-		name="aggubic" />
+		name="qtaInizialeLotto" />
 	<findFieldProperty
-		name="qtainzLotto" />
+		name="valoreInizialeLotto" />
 	<findFieldProperty
-		name="importoLotto" />
-	<findFieldProperty
-		name="carico" />
+		name="riportoDataCaricoLotto" />
 	<findFieldProperty
 		name="cdCdsRif" />
 	<findFieldProperty
@@ -505,25 +461,19 @@
 	<findFieldProperty
 		name="flagSpese" />
 	<findFieldProperty
-		name="qtacarico" />
+		name="qtaCaricoLotto" />
 	<findFieldProperty
-		name="costo" />
+		name="modAggValoreLotto" />
 	<findFieldProperty
-		name="flagBlocco" />
+		name="movimentaLottiBloccati" />
 	<findFieldProperty
-		name="qtapropsca" />
+		name="modAggQtaPropSca" />
 	<findFieldProperty
-		name="bollasca" />
+		name="generaBollaScarico" />
 	<findFieldProperty
-		name="attivo" />
+		name="valido" />
 	<findFieldProperty
-		name="flagCeff" />
-	<findFieldProperty
-		name="qtainprod" />
-	<findFieldProperty
-		name="caricoIniziale" />
-	<findFieldProperty
-		name="tipoDaEstrarre" />
+		name="valorizzazioneCostoEffettivo" />
 	<findFieldProperty
 		name="dtCancellazione" />
 	<columnFieldProperty
@@ -531,57 +481,55 @@
 	<columnFieldProperty
 		name="cdTipoMovimento" />
 	<columnFieldProperty
-		name="ultPrel" />
+		name="aggDataUltimoConsumo" />
 	<columnFieldProperty
-		name="tipmovPrel" />
+		name="aggTipmovUltimoConsumo" />
 	<columnFieldProperty
-		name="ultEnt" />
+		name="aggDataUltimoCarico" />
 	<columnFieldProperty
-		name="tipmovEnt" />
+		name="aggTipmovUltimoCarico" />
 	<columnFieldProperty
-		name="ultForn" />
+		name="aggUltimoFornitore" />
 	<columnFieldProperty
-		name="progVal" />
+		name="modAggProgrValCarichi" />
 	<columnFieldProperty
-		name="ultEntVal" />
+		name="aggDataUltimoCaricoVal" />
 	<columnFieldProperty
-		name="valoriz" />
+		name="modAggQtaValMagazzino" />
 	<columnFieldProperty
-		name="progQta" />
+		name="modAggProgrQtaCarichi" />
 	<columnFieldProperty
-		name="ultEntQta" />
+		name="aggDataUltimoCaricoQta" />
 	<columnFieldProperty
-		name="progscaVal" />
+		name="modAggProgrValScarichi" />
 	<columnFieldProperty
-		name="progSca" />
+		name="modAggProgrQtaScarichi" />
 	<columnFieldProperty
-		name="progcons" />
+		name="modAggProgrConsumi" />
 	<columnFieldProperty
-		name="ultScaVal" />
+		name="aggDataUltimoScaricoVal" />
 	<columnFieldProperty
-		name="ultScaQta" />
+		name="aggDataUltimoScaricoQta" />
 	<columnFieldProperty
-		name="qtainzAnno" />
+		name="modAggQtaInizioAnno" />
 	<columnFieldProperty
-		name="valinzAnno" />
+		name="modAggValoreInizioAnno" />
 	<columnFieldProperty
-		name="medioappr" />
+		name="modAggTempoMedioApprov" />
 	<columnFieldProperty
-		name="scortamin" />
+		name="modAggScortaMin" />
 	<columnFieldProperty
-		name="qtaordi" />
+		name="modAggQtaOrdine" />
 	<columnFieldProperty
-		name="giacCar" />
+		name="modAggQtaMagazzino" />
 	<columnFieldProperty
-		name="lottoForn" />
+		name="riportaLottoFornitore" />
 	<columnFieldProperty
-		name="aggubic" />
+		name="qtaInizialeLotto" />
 	<columnFieldProperty
-		name="qtainzLotto" />
+		name="valoreInizialeLotto" />
 	<columnFieldProperty
-		name="importoLotto" />
-	<columnFieldProperty
-		name="carico" />
+		name="riportoDataCaricoLotto" />
 	<columnFieldProperty
 		name="cdCdsRif" />
 	<columnFieldProperty
@@ -589,25 +537,19 @@
 	<columnFieldProperty
 		name="flagSpese" />
 	<columnFieldProperty
-		name="qtacarico" />
+		name="qtaCaricoLotto" />
 	<columnFieldProperty
-		name="costo" />
+		name="modAggValoreLotto" />
 	<columnFieldProperty
-		name="flagBlocco" />
+		name="movimentaLottiBloccati" />
 	<columnFieldProperty
-		name="qtapropsca" />
+		name="modAggQtaPropSca" />
 	<columnFieldProperty
-		name="bollasca" />
+		name="generaBollaScarico" />
 	<columnFieldProperty
-		name="attivo" />
+		name="valido" />
 	<columnFieldProperty
-		name="flagCeff" />
-	<columnFieldProperty
-		name="qtainprod" />
-	<columnFieldProperty
-		name="caricoIniziale" />
-	<columnFieldProperty
-		name="tipoDaEstrarre" />
+		name="valorizzazioneCostoEffettivo" />
 	<columnFieldProperty
 		name="dtCancellazione" />
 </bulkInfo>
