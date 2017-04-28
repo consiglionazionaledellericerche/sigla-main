@@ -1,10 +1,9 @@
 /*
  * Created by BulkGenerator 2.0 [07/12/2009]
- * Date 26/04/2017
+ * Date 28/04/2017
  */
 package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.jada.bulk.OggettoBulk;
 public class TipoMovimentoMagAzBulk extends TipoMovimentoMagAzBase {
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
@@ -107,13 +106,5 @@ public class TipoMovimentoMagAzBulk extends TipoMovimentoMagAzBase {
 	 **/
 	public void setCdTipoMovimentoRif(java.lang.String cdTipoMovimentoRif)  {
 		this.getTipoMovimentoMagRif().setCdTipoMovimento(cdTipoMovimentoRif);
-	}
-
-	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
-
-		super.initializeForInsert(bp,context);
-		
-		setTipoMovimentoMagRif(new TipoMovimentoMagBulk());
-		return this;
 	}
 }

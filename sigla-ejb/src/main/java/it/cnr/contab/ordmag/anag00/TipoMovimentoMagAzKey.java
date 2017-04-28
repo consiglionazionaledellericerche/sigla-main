@@ -1,6 +1,6 @@
 /*
  * Created by BulkGenerator 2.0 [07/12/2009]
- * Date 26/04/2017
+ * Date 28/04/2017
  */
 package it.cnr.contab.ordmag.anag00;
 import it.cnr.jada.bulk.OggettoBulk;
