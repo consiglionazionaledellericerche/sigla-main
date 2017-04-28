@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="cdCausaleSpesa"
 		property="cdCausaleSpesa"
@@ -34,7 +34,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCausaleSpesa" />
+		label="Codice" />
 	<fieldProperty
 		name="dsCausaleSpesa"
 		property="dsCausaleSpesa"
@@ -44,7 +44,7 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsCausaleSpesa" />
+		label="Descrizione" />
 	<fieldProperty
 		name="cdVoceIva"
 		property="cdVoceIva"
@@ -52,7 +52,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdVoceIva" />
+		label="Codice IVA" />
 	<fieldProperty
 		name="flagSpese"
 		property="flagSpese"
@@ -61,14 +61,14 @@
 		maxLength="1"
 		enabledOnEdit="false"
 		nullable="false"
-		label="flagSpese" />
+		label="Spese" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

@@ -21,7 +21,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdMagazzino"
 		property="magazzino.cdMagazzino"
@@ -31,7 +31,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdMagazzino" />
+		label="Codice Magazzino" />
 	<fieldProperty
 		name="cdBeneServizio"
 		property="cdBeneServizio"
@@ -41,7 +41,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdBeneServizio" />
+		label="Codice Bene Servizio" />
 	<fieldProperty
 		name="dtIniValidita"
 		property="dtIniValidita"
@@ -50,14 +50,14 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="dtIniValidita" />
+		label="Data Inizio Validità" />
 	<fieldProperty
 		name="findUnitaMisura"
 		property="unitaMisura"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaMisura" />
+		label="Unità di Misura" />
 	<fieldProperty
 		name="cdUnitaMisuraCar"
 		property="unitaMisura.cdUnitaMisura"
@@ -65,7 +65,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdUnitaMisuraCar" />
+		label="Codice Unità Misura di carico" />
 	<fieldProperty
 		name="coefConvCar"
 		property="coefConvCar"
@@ -73,7 +73,7 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
-		label="coefConvCar" />
+		label="Coefficienti di conversione di carico" />
 	<fieldProperty
 		name="cdUnitaMisuraSca"
 		property="unitaMisura.cdUnitaMisura"
@@ -81,7 +81,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdUnitaMisuraSca" />
+		label="Codice Unità Misura di scarico" />
 	<fieldProperty
 		name="coefConvSca"
 		property="coefConvSca"
@@ -89,14 +89,14 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
-		label="coefConvSca" />
+		label="Coefficienti di conversione di scarico" />
 	<fieldProperty
 		name="dtFinValidita"
 		property="dtFinValidita"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtFinValidita" />
+		label="Data Fine Validità" />
 	<form
 		name="searchtool">
 		<formFieldProperty
