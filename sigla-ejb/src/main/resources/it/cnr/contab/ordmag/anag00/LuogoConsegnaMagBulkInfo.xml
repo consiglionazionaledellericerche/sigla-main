@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdLuogoConsegna"
 		property="cdLuogoConsegna"
@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdLuogoConsegna" />
+		label="Codice" />
 	<fieldProperty
 		name="dsLuogoConsegna"
 		property="dsLuogoConsegna"
@@ -34,7 +34,7 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsLuogoConsegna" />
+		label="Descrizione" />
 	<fieldProperty
 		name="indirizzo"
 		property="indirizzo"
@@ -44,7 +44,7 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="indirizzo" />
+		label="Indirizzo" />
 	<fieldProperty
 		name="cap"
 		property="cap"
@@ -52,7 +52,7 @@
 		inputSize="5"
 		maxLength="5"
 		enabledOnEdit="false"
-		label="cap" />
+		label="Cap" />
 	<fieldProperty
 		name="pgComune"
 		property="pgComune"
@@ -60,7 +60,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="pgComune" />
+		label="Comune" />
 	<fieldProperty
 		name="pgNazione"
 		property="pgNazione"
@@ -68,14 +68,14 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="pgNazione" />
+		label="Nazione" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

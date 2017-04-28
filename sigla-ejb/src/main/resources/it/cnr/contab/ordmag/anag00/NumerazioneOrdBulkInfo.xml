@@ -11,7 +11,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="unitaOperativaOrd.cdUnitaOperativa"
@@ -21,7 +21,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUnitaOperativa" />
+		label="Codice Unità Operativa" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -31,7 +31,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="cdNumeratore"
 		property="cdNumeratore"
@@ -41,7 +41,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNumeratore" />
+		label="Codice Numeratore" />
 	<fieldProperty
 		name="dsNumeratore"
 		property="dsNumeratore"
@@ -51,14 +51,14 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsNumeratore" />
+		label="Descrizione Numeratore" />
 	<fieldProperty
 		name="findTipoOperazioneOrd"
 		property="tipoOperazioneOrd"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="TipoOperazioneOrd" />
+		label="Tipo Operazione" />
 	<fieldProperty
 		name="cdTipoOperazione"
 		property="tipoOperazioneOrd.cdTipoOperazione"
@@ -67,7 +67,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoOperazione" />
+		label="Tipo Operazione" />
 	<fieldProperty
 		name="corrente"
 		property="corrente"
@@ -75,14 +75,14 @@
 		inputSize="6"
 		maxLength="6"
 		enabledOnEdit="false"
-		label="corrente" />
+		label="Progressivo Corrente" />
 	<fieldProperty
 		name="dataProgressivo"
 		property="dataProgressivo"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dataProgressivo" />
+		label="Data Progressivo" />
 	<fieldProperty
 		name="cdTipoSezionale"
 		property="cdTipoSezionale"
@@ -90,14 +90,14 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdTipoSezionale" />
+		label="Codice Tipo Sezionale" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

@@ -14,14 +14,14 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUtente" />
+		label="Utente" />
 	<fieldProperty
 		name="findUnitaOperativaOrd"
 		property="unitaOperativaOrd"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="unitaOperativaOrd.cdUnitaOperativa"
@@ -31,7 +31,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUnitaOperativa" />
+		label="Codice Unità Operativa" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -41,14 +41,14 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="findTipoOperazioneOrd"
 		property="tipoOperazioneOrd"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="TipoOperazioneOrd" />
+		label="Tipo Operazione" />
 	<fieldProperty
 		name="cdTipoOperazione"
 		property="tipoOperazioneOrd.cdTipoOperazione"
@@ -58,7 +58,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdTipoOperazione" />
+		label="Tipo Operazione" />
 	<fieldProperty
 		name="tuttiMagazzini"
 		property="tuttiMagazzini"
@@ -67,14 +67,14 @@
 		maxLength="1"
 		enabledOnEdit="false"
 		nullable="false"
-		label="tuttiMagazzini" />
+		label="Tutti Magazzini" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty
