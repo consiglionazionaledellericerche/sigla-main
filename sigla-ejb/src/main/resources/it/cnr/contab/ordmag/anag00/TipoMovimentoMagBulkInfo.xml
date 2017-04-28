@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdTipoMovimento"
 		property="cdTipoMovimento"
@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdTipoMovimento" />
+		label="Codice" />
 	<fieldProperty
 		name="dsTipoMovimento"
 		property="dsTipoMovimento"
@@ -34,7 +34,7 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsTipoMovimento" />
+		label="Descrizione" />
 	<fieldProperty
 		name="tipo"
 		property="tipo"
@@ -43,7 +43,7 @@
 		maxLength="2"
 		enabledOnEdit="false"
 		nullable="false"
-		label="tipo" />
+		label="Tipo" />
 	<fieldProperty
 		name="segno"
 		property="segno"
@@ -51,7 +51,7 @@
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="segno" />
+		label="Segno" />
 	<fieldProperty
 		name="cdCdsStorno"
 		property="cdCdsStorno"
@@ -59,7 +59,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdCdsStorno" />
+		label="Cds Storno" />
 	<fieldProperty
 		name="cdTipoMovimentoStorno"
 		property="cdTipoMovimentoStorno"
@@ -67,7 +67,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="cdTipoMovimentoStorno" />
+		label="Codice Movimento di Storno" />
 	<fieldProperty
 		name="cdCdsAlt"
 		property="cdCdsAlt"
@@ -75,7 +75,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdCdsAlt" />
+		label="Cds Alternativo" />
 	<fieldProperty
 		name="cdTipoMovimentoAlt"
 		property="cdTipoMovimentoAlt"
@@ -83,14 +83,14 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="cdTipoMovimentoAlt" />
+		label="Codice Movimento Alternativo" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdNotaPrecodificata"
 		property="cdNotaPrecodificata"
@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNotaPrecodificata" />
+		label="Codice" />
 	<fieldProperty
 		name="nota"
 		property="nota"
@@ -34,7 +34,7 @@
 		maxLength="1000"
 		enabledOnEdit="false"
 		nullable="false"
-		label="nota" />
+		label="Nota" />
 	<fieldProperty
 		name="nota2"
 		property="nota2"
@@ -43,14 +43,14 @@
 		rows="5"
 		maxLength="4000"
 		enabledOnEdit="false"
-		label="nota2" />
+		label="Nota aggiuntiva" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

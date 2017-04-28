@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCausaleAnnull" />
+		label="Codice" />
 	<fieldProperty
 		name="dsCausaleAnnull"
 		property="dsCausaleAnnull"
@@ -24,14 +24,14 @@
 		maxLength="1000"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsCausaleAnnull" />
+		label="Descrizione" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

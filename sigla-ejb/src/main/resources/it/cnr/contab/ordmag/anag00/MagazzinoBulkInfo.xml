@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdMagazzino"
 		property="cdMagazzino"
@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdMagazzino" />
+		label="Codice" />
 	<fieldProperty
 		name="dsMagazzino"
 		property="dsMagazzino"
@@ -34,14 +34,14 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsMagazzino" />
+		label="Descrizione" />
 	<fieldProperty
 		name="findUnitaOperativaOrd"
 		property="unitaOperativaOrd"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="unitaOperativaOrd.cdUnitaOperativa"
@@ -49,14 +49,14 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
-		label="cdUnitaOperativa" />
+		label="Codice Unità Operativa" />
 	<fieldProperty
 		name="findLuogoConsegnaMag"
 		property="luogoConsegnaMag"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="LuogoConsegnaMag" />
+		label="Luogo di Consegna" />
 	<fieldProperty
 		name="cdCdsLuogo"
 		property="luogoConsegnaMag.cdCds"
@@ -65,7 +65,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsLuogo" />
+		label="Cds Luogo di Consegna" />
 	<fieldProperty
 		name="cdLuogoConsegna"
 		property="luogoConsegnaMag.cdLuogoConsegna"
@@ -74,14 +74,14 @@
 		maxLength="10"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdLuogoConsegna" />
+		label="Codice Luogo di Consegna" />
 	<fieldProperty
 		name="findTipoMovimentoMag"
 		property="tipoMovimentoMag"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="TipoMovimentoMag" />
+		label="Tipo Movimento" />
 	<fieldProperty
 		name="cdCdsCarMag"
 		property="tipoMovimentoMag.cdCds"
@@ -90,7 +90,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsCarMag" />
+		label="Cds Car Mag" />
 	<fieldProperty
 		name="cdTipoMovimentoCarMag"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -99,7 +99,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoCarMag" />
+		label="Movimento Carico a Magazzino" />
 	<fieldProperty
 		name="cdCdsCarTra"
 		property="tipoMovimentoMag.cdCds"
@@ -108,7 +108,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsCarTra" />
+		label="Cds Car Tra" />
 	<fieldProperty
 		name="cdTipoMovimentoCarTra"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -117,7 +117,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoCarTra" />
+		label="Movimento Carico in transito" />
 	<fieldProperty
 		name="cdCdsCarFma"
 		property="tipoMovimentoMag.cdCds"
@@ -126,7 +126,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsCarFma" />
+		label="Cds Car Fma" />
 	<fieldProperty
 		name="cdTipoMovimentoCarFma"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -135,7 +135,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoCarFma" />
+		label="Movimento Carico fuori Magazzino" />
 	<fieldProperty
 		name="cdCdsScaUo"
 		property="tipoMovimentoMag.cdCds"
@@ -144,7 +144,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsScaUo" />
+		label="Cds Sca Uo" />
 	<fieldProperty
 		name="cdTipoMovimentoScaUo"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -153,7 +153,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoScaUo" />
+		label="Movimento Scarico a UO" />
 	<fieldProperty
 		name="cdCdsTraSca"
 		property="tipoMovimentoMag.cdCds"
@@ -162,7 +162,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsTraSca" />
+		label="Cds Tra Sca" />
 	<fieldProperty
 		name="cdTipoMovimentoTraSca"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -171,7 +171,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoTraSca" />
+		label="Movimento scarico per trasferimento" />
 	<fieldProperty
 		name="cdCdsTraCar"
 		property="tipoMovimentoMag.cdCds"
@@ -180,7 +180,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsTraCar" />
+		label="Cds car tra" />
 	<fieldProperty
 		name="cdTipoMovimentoTraCar"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -189,7 +189,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoTraCar" />
+		label="Movimento carico per trasferimento" />
 	<fieldProperty
 		name="cdCdsRvPos"
 		property="tipoMovimentoMag.cdCds"
@@ -198,7 +198,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsRvPos" />
+		label="Cds Rv Pos" />
 	<fieldProperty
 		name="cdTipoMovimentoRvPos"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -207,7 +207,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoRvPos" />
+		label="Movimento variazione valore positiva" />
 	<fieldProperty
 		name="cdCdsRvNeg"
 		property="tipoMovimentoMag.cdCds"
@@ -216,7 +216,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsRvNeg" />
+		label="cds Rv Neg" />
 	<fieldProperty
 		name="cdTipoMovimentoRvNeg"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -225,7 +225,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoRvNeg" />
+		label="Movimento variazione valore negativa" />
 	<fieldProperty
 		name="cdCdsChi"
 		property="tipoMovimentoMag.cdCds"
@@ -234,7 +234,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdCdsChi" />
+		label="Cds Chi" />
 	<fieldProperty
 		name="cdTipoMovimentoChi"
 		property="tipoMovimentoMag.cdTipoMovimento"
@@ -243,14 +243,14 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimentoChi" />
+		label="Movimento Chiusura" />
 	<fieldProperty
 		name="dtUltValSca"
 		property="dtUltValSca"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtUltValSca" />
+		label="Data Ultima Valorizzazione Scarichi" />
 	<fieldProperty
 		name="esercizioValSca"
 		property="esercizioValSca"
@@ -258,14 +258,14 @@
 		inputSize="4"
 		maxLength="4"
 		enabledOnEdit="false"
-		label="esercizioValSca" />
+		label="Esercizio Val Sca" />
 	<fieldProperty
 		name="findRaggrMagazzino"
 		property="raggrMagazzino"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="RaggrMagazzino" />
+		label="Raggruppamento di Magazzino" />
 	<fieldProperty
 		name="cdCdsRaggrSca"
 		property="raggrMagazzino.cdCds"
@@ -273,7 +273,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdCdsRaggrSca" />
+		label="Cds Raggr Sca" />
 	<fieldProperty
 		name="cdRaggrMagazzinoSca"
 		property="raggrMagazzino.cdRaggrMagazzino"
@@ -281,7 +281,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="cdRaggrMagazzinoSca" />
+		label="Raggruppamento per gli scarichi" />
 	<fieldProperty
 		name="metodoValSca"
 		property="metodoValSca"
@@ -289,14 +289,14 @@
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="metodoValSca" />
+		label="Ultimo metodo Valorizzazione Scarichi" />
 	<fieldProperty
 		name="dtUltValRim"
 		property="dtUltValRim"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtUltValRim" />
+		label="Data Ultima Valorizzazione Scarichi" />
 	<fieldProperty
 		name="esercizioValRim"
 		property="esercizioValRim"
@@ -304,7 +304,7 @@
 		inputSize="4"
 		maxLength="4"
 		enabledOnEdit="false"
-		label="esercizioValRim" />
+		label="EsercizioValRim" />
 	<fieldProperty
 		name="cdCdsRaggrRim"
 		property="raggrMagazzino.cdCds"
@@ -312,7 +312,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdCdsRaggrRim" />
+		label="Cds Raggr Rim" />
 	<fieldProperty
 		name="cdRaggrMagazzinoRim"
 		property="raggrMagazzino.cdRaggrMagazzino"
@@ -320,7 +320,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="cdRaggrMagazzinoRim" />
+		label="Raggruppamento Valorizzazione Rimanenze" />
 	<fieldProperty
 		name="metodoValRim"
 		property="metodoValRim"
@@ -328,7 +328,7 @@
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="metodoValRim" />
+		label="Ultimo metodo Valorizzazione Rimanenze" />
 	<fieldProperty
 		name="abilTuttiBeniServ"
 		property="abilTuttiBeniServ"
@@ -337,14 +337,14 @@
 		maxLength="1"
 		enabledOnEdit="false"
 		nullable="false"
-		label="abilTuttiBeniServ" />
+		label="Abilitato a tutti i beni/servizi" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty
