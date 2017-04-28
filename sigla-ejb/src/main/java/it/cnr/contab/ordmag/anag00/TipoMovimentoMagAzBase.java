@@ -1,87 +1,84 @@
 /*
  * Created by BulkGenerator 2.0 [07/12/2009]
- * Date 26/04/2017
+ * Date 28/04/2017
  */
 package it.cnr.contab.ordmag.anag00;
 import it.cnr.jada.persistency.Keyed;
 public class TipoMovimentoMagAzBase extends TipoMovimentoMagAzKey implements Keyed {
-//    ULT_PREL VARCHAR(1)
-	private java.lang.String ultPrel;
+//    AGG_DATA_ULTIMO_CONSUMO VARCHAR(1)
+	private java.lang.String aggDataUltimoConsumo;
  
-//    TIPMOV_PREL VARCHAR(1)
-	private java.lang.String tipmovPrel;
+//    AGG_TIPMOV_ULTIMO_CONSUMO VARCHAR(1)
+	private java.lang.String aggTipmovUltimoConsumo;
  
-//    ULT_ENT VARCHAR(1)
-	private java.lang.String ultEnt;
+//    AGG_DATA_ULTIMO_CARICO VARCHAR(1)
+	private java.lang.String aggDataUltimoCarico;
  
-//    TIPMOV_ENT VARCHAR(1)
-	private java.lang.String tipmovEnt;
+//    AGG_TIPMOV_ULTIMO_CARICO VARCHAR(1)
+	private java.lang.String aggTipmovUltimoCarico;
  
-//    ULT_FORN VARCHAR(1)
-	private java.lang.String ultForn;
+//    AGG_ULTIMO_FORNITORE VARCHAR(1)
+	private java.lang.String aggUltimoFornitore;
  
-//    PROG_VAL VARCHAR(1)
-	private java.lang.String progVal;
+//    MOD_AGG_PROGR_VAL_CARICHI VARCHAR(1)
+	private java.lang.String modAggProgrValCarichi;
  
-//    ULT_ENT_VAL VARCHAR(1)
-	private java.lang.String ultEntVal;
+//    AGG_DATA_ULTIMO_CARICO_VAL VARCHAR(1)
+	private java.lang.String aggDataUltimoCaricoVal;
  
-//    VALORIZ VARCHAR(1)
-	private java.lang.String valoriz;
+//    MOD_AGG_QTA_VAL_MAGAZZINO VARCHAR(1)
+	private java.lang.String modAggQtaValMagazzino;
  
-//    PROG_QTA VARCHAR(1)
-	private java.lang.String progQta;
+//    MOD_AGG_PROGR_QTA_CARICHI VARCHAR(1)
+	private java.lang.String modAggProgrQtaCarichi;
  
-//    ULT_ENT_QTA VARCHAR(1)
-	private java.lang.String ultEntQta;
+//    AGG_DATA_ULTIMO_CARICO_QTA VARCHAR(1)
+	private java.lang.String aggDataUltimoCaricoQta;
  
-//    PROGSCA_VAL VARCHAR(1)
-	private java.lang.String progscaVal;
+//    MOD_AGG_PROGR_VAL_SCARICHI VARCHAR(1)
+	private java.lang.String modAggProgrValScarichi;
  
-//    PROG_SCA VARCHAR(1)
-	private java.lang.String progSca;
+//    MOD_AGG_PROGR_QTA_SCARICHI VARCHAR(1)
+	private java.lang.String modAggProgrQtaScarichi;
  
-//    PROGCONS VARCHAR(1)
-	private java.lang.String progcons;
+//    MOD_AGG_PROGR_CONSUMI VARCHAR(1)
+	private java.lang.String modAggProgrConsumi;
  
-//    ULT_SCA_VAL VARCHAR(1)
-	private java.lang.String ultScaVal;
+//    AGG_DATA_ULTIMO_SCARICO_VAL VARCHAR(1)
+	private java.lang.String aggDataUltimoScaricoVal;
  
-//    ULT_SCA_QTA VARCHAR(1)
-	private java.lang.String ultScaQta;
+//    AGG_DATA_ULTIMO_SCARICO_QTA VARCHAR(1)
+	private java.lang.String aggDataUltimoScaricoQta;
  
-//    QTAINZ_ANNO VARCHAR(1)
-	private java.lang.String qtainzAnno;
+//    MOD_AGG_QTA_INIZIO_ANNO VARCHAR(1)
+	private java.lang.String modAggQtaInizioAnno;
  
-//    VALINZ_ANNO VARCHAR(1)
-	private java.lang.String valinzAnno;
+//    MOD_AGG_VALORE_INIZIO_ANNO VARCHAR(1)
+	private java.lang.String modAggValoreInizioAnno;
  
-//    MEDIOAPPR VARCHAR(1)
-	private java.lang.String medioappr;
+//    MOD_AGG_TEMPO_MEDIO_APPROV VARCHAR(1)
+	private java.lang.String modAggTempoMedioApprov;
  
-//    SCORTAMIN VARCHAR(1)
-	private java.lang.String scortamin;
+//    MOD_AGG_SCORTA_MIN VARCHAR(1)
+	private java.lang.String modAggScortaMin;
  
-//    QTAORDI VARCHAR(1)
-	private java.lang.String qtaordi;
+//    MOD_AGG_QTA_ORDINE VARCHAR(1)
+	private java.lang.String modAggQtaOrdine;
  
-//    GIAC_CAR VARCHAR(1)
-	private java.lang.String giacCar;
+//    MOD_AGG_QTA_MAGAZZINO VARCHAR(1)
+	private java.lang.String modAggQtaMagazzino;
  
-//    LOTTO_FORN VARCHAR(1)
-	private java.lang.String lottoForn;
+//    RIPORTA_LOTTO_FORNITORE VARCHAR(1)
+	private java.lang.String riportaLottoFornitore;
  
-//    AGGUBIC VARCHAR(1)
-	private java.lang.String aggubic;
+//    QTA_INIZIALE_LOTTO VARCHAR(1)
+	private java.lang.String qtaInizialeLotto;
  
-//    QTAINZ_LOTTO VARCHAR(1)
-	private java.lang.String qtainzLotto;
+//    VALORE_INIZIALE_LOTTO VARCHAR(1)
+	private java.lang.String valoreInizialeLotto;
  
-//    IMPORTO_LOTTO VARCHAR(1)
-	private java.lang.String importoLotto;
- 
-//    CARICO VARCHAR(1)
-	private java.lang.String carico;
+//    RIPORTO_DATA_CARICO_LOTTO VARCHAR(1)
+	private java.lang.String riportoDataCaricoLotto;
  
 //    CD_CDS_RIF VARCHAR(30) NOT NULL
 	private java.lang.String cdCdsRif;
@@ -92,35 +89,26 @@ public class TipoMovimentoMagAzBase extends TipoMovimentoMagAzKey implements Key
 //    FLAG_SPESE VARCHAR(1)
 	private java.lang.String flagSpese;
  
-//    QTACARICO VARCHAR(1)
-	private java.lang.String qtacarico;
+//    QTA_CARICO_LOTTO VARCHAR(1)
+	private java.lang.String qtaCaricoLotto;
  
-//    COSTO VARCHAR(1)
-	private java.lang.String costo;
+//    MOD_AGG_VALORE_LOTTO VARCHAR(1)
+	private java.lang.String modAggValoreLotto;
  
-//    FLAG_BLOCCO VARCHAR(1)
-	private java.lang.String flagBlocco;
+//    MOVIMENTA_LOTTI_BLOCCATI VARCHAR(1)
+	private java.lang.String movimentaLottiBloccati;
  
-//    QTAPROPSCA VARCHAR(1)
-	private java.lang.String qtapropsca;
+//    MOD_AGG_QTA_PROP_SCA VARCHAR(1)
+	private java.lang.String modAggQtaPropSca;
  
-//    BOLLASCA VARCHAR(1)
-	private java.lang.String bollasca;
+//    GENERA_BOLLA_SCARICO VARCHAR(1)
+	private java.lang.String generaBollaScarico;
  
-//    ATTIVO VARCHAR(1) NOT NULL
-	private java.lang.String attivo;
+//    VALIDO VARCHAR(1) NOT NULL
+	private java.lang.String valido;
  
-//    FLAG_CEFF VARCHAR(1)
-	private java.lang.String flagCeff;
- 
-//    QTAINPROD VARCHAR(1)
-	private java.lang.String qtainprod;
- 
-//    CARICO_INIZIALE VARCHAR(1) NOT NULL
-	private java.lang.String caricoIniziale;
- 
-//    TIPO_DA_ESTRARRE VARCHAR(1) NOT NULL
-	private java.lang.String tipoDaEstrarre;
+//    VALORIZZAZIONE_COSTO_EFFETTIVO VARCHAR(1)
+	private java.lang.String valorizzazioneCostoEffettivo;
  
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
@@ -137,367 +125,353 @@ public class TipoMovimentoMagAzBase extends TipoMovimentoMagAzKey implements Key
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [ultPrel]
+	 * Restituisce il valore di: [aggDataUltimoConsumo]
 	 **/
-	public java.lang.String getUltPrel() {
-		return ultPrel;
+	public java.lang.String getAggDataUltimoConsumo() {
+		return aggDataUltimoConsumo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [ultPrel]
+	 * Setta il valore di: [aggDataUltimoConsumo]
 	 **/
-	public void setUltPrel(java.lang.String ultPrel)  {
-		this.ultPrel=ultPrel;
+	public void setAggDataUltimoConsumo(java.lang.String aggDataUltimoConsumo)  {
+		this.aggDataUltimoConsumo=aggDataUltimoConsumo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [tipmovPrel]
+	 * Restituisce il valore di: [aggTipmovUltimoConsumo]
 	 **/
-	public java.lang.String getTipmovPrel() {
-		return tipmovPrel;
+	public java.lang.String getAggTipmovUltimoConsumo() {
+		return aggTipmovUltimoConsumo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [tipmovPrel]
+	 * Setta il valore di: [aggTipmovUltimoConsumo]
 	 **/
-	public void setTipmovPrel(java.lang.String tipmovPrel)  {
-		this.tipmovPrel=tipmovPrel;
+	public void setAggTipmovUltimoConsumo(java.lang.String aggTipmovUltimoConsumo)  {
+		this.aggTipmovUltimoConsumo=aggTipmovUltimoConsumo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [ultEnt]
+	 * Restituisce il valore di: [aggDataUltimoCarico]
 	 **/
-	public java.lang.String getUltEnt() {
-		return ultEnt;
+	public java.lang.String getAggDataUltimoCarico() {
+		return aggDataUltimoCarico;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [ultEnt]
+	 * Setta il valore di: [aggDataUltimoCarico]
 	 **/
-	public void setUltEnt(java.lang.String ultEnt)  {
-		this.ultEnt=ultEnt;
+	public void setAggDataUltimoCarico(java.lang.String aggDataUltimoCarico)  {
+		this.aggDataUltimoCarico=aggDataUltimoCarico;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [tipmovEnt]
+	 * Restituisce il valore di: [aggTipmovUltimoCarico]
 	 **/
-	public java.lang.String getTipmovEnt() {
-		return tipmovEnt;
+	public java.lang.String getAggTipmovUltimoCarico() {
+		return aggTipmovUltimoCarico;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [tipmovEnt]
+	 * Setta il valore di: [aggTipmovUltimoCarico]
 	 **/
-	public void setTipmovEnt(java.lang.String tipmovEnt)  {
-		this.tipmovEnt=tipmovEnt;
+	public void setAggTipmovUltimoCarico(java.lang.String aggTipmovUltimoCarico)  {
+		this.aggTipmovUltimoCarico=aggTipmovUltimoCarico;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [ultForn]
+	 * Restituisce il valore di: [aggUltimoFornitore]
 	 **/
-	public java.lang.String getUltForn() {
-		return ultForn;
+	public java.lang.String getAggUltimoFornitore() {
+		return aggUltimoFornitore;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [ultForn]
+	 * Setta il valore di: [aggUltimoFornitore]
 	 **/
-	public void setUltForn(java.lang.String ultForn)  {
-		this.ultForn=ultForn;
+	public void setAggUltimoFornitore(java.lang.String aggUltimoFornitore)  {
+		this.aggUltimoFornitore=aggUltimoFornitore;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [progVal]
+	 * Restituisce il valore di: [modAggProgrValCarichi]
 	 **/
-	public java.lang.String getProgVal() {
-		return progVal;
+	public java.lang.String getModAggProgrValCarichi() {
+		return modAggProgrValCarichi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [progVal]
+	 * Setta il valore di: [modAggProgrValCarichi]
 	 **/
-	public void setProgVal(java.lang.String progVal)  {
-		this.progVal=progVal;
+	public void setModAggProgrValCarichi(java.lang.String modAggProgrValCarichi)  {
+		this.modAggProgrValCarichi=modAggProgrValCarichi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [ultEntVal]
+	 * Restituisce il valore di: [aggDataUltimoCaricoVal]
 	 **/
-	public java.lang.String getUltEntVal() {
-		return ultEntVal;
+	public java.lang.String getAggDataUltimoCaricoVal() {
+		return aggDataUltimoCaricoVal;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [ultEntVal]
+	 * Setta il valore di: [aggDataUltimoCaricoVal]
 	 **/
-	public void setUltEntVal(java.lang.String ultEntVal)  {
-		this.ultEntVal=ultEntVal;
+	public void setAggDataUltimoCaricoVal(java.lang.String aggDataUltimoCaricoVal)  {
+		this.aggDataUltimoCaricoVal=aggDataUltimoCaricoVal;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [valoriz]
+	 * Restituisce il valore di: [modAggQtaValMagazzino]
 	 **/
-	public java.lang.String getValoriz() {
-		return valoriz;
+	public java.lang.String getModAggQtaValMagazzino() {
+		return modAggQtaValMagazzino;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [valoriz]
+	 * Setta il valore di: [modAggQtaValMagazzino]
 	 **/
-	public void setValoriz(java.lang.String valoriz)  {
-		this.valoriz=valoriz;
+	public void setModAggQtaValMagazzino(java.lang.String modAggQtaValMagazzino)  {
+		this.modAggQtaValMagazzino=modAggQtaValMagazzino;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [progQta]
+	 * Restituisce il valore di: [modAggProgrQtaCarichi]
 	 **/
-	public java.lang.String getProgQta() {
-		return progQta;
+	public java.lang.String getModAggProgrQtaCarichi() {
+		return modAggProgrQtaCarichi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [progQta]
+	 * Setta il valore di: [modAggProgrQtaCarichi]
 	 **/
-	public void setProgQta(java.lang.String progQta)  {
-		this.progQta=progQta;
+	public void setModAggProgrQtaCarichi(java.lang.String modAggProgrQtaCarichi)  {
+		this.modAggProgrQtaCarichi=modAggProgrQtaCarichi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [ultEntQta]
+	 * Restituisce il valore di: [aggDataUltimoCaricoQta]
 	 **/
-	public java.lang.String getUltEntQta() {
-		return ultEntQta;
+	public java.lang.String getAggDataUltimoCaricoQta() {
+		return aggDataUltimoCaricoQta;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [ultEntQta]
+	 * Setta il valore di: [aggDataUltimoCaricoQta]
 	 **/
-	public void setUltEntQta(java.lang.String ultEntQta)  {
-		this.ultEntQta=ultEntQta;
+	public void setAggDataUltimoCaricoQta(java.lang.String aggDataUltimoCaricoQta)  {
+		this.aggDataUltimoCaricoQta=aggDataUltimoCaricoQta;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [progscaVal]
+	 * Restituisce il valore di: [modAggProgrValScarichi]
 	 **/
-	public java.lang.String getProgscaVal() {
-		return progscaVal;
+	public java.lang.String getModAggProgrValScarichi() {
+		return modAggProgrValScarichi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [progscaVal]
+	 * Setta il valore di: [modAggProgrValScarichi]
 	 **/
-	public void setProgscaVal(java.lang.String progscaVal)  {
-		this.progscaVal=progscaVal;
+	public void setModAggProgrValScarichi(java.lang.String modAggProgrValScarichi)  {
+		this.modAggProgrValScarichi=modAggProgrValScarichi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [progSca]
+	 * Restituisce il valore di: [modAggProgrQtaScarichi]
 	 **/
-	public java.lang.String getProgSca() {
-		return progSca;
+	public java.lang.String getModAggProgrQtaScarichi() {
+		return modAggProgrQtaScarichi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [progSca]
+	 * Setta il valore di: [modAggProgrQtaScarichi]
 	 **/
-	public void setProgSca(java.lang.String progSca)  {
-		this.progSca=progSca;
+	public void setModAggProgrQtaScarichi(java.lang.String modAggProgrQtaScarichi)  {
+		this.modAggProgrQtaScarichi=modAggProgrQtaScarichi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [progcons]
+	 * Restituisce il valore di: [modAggProgrConsumi]
 	 **/
-	public java.lang.String getProgcons() {
-		return progcons;
+	public java.lang.String getModAggProgrConsumi() {
+		return modAggProgrConsumi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [progcons]
+	 * Setta il valore di: [modAggProgrConsumi]
 	 **/
-	public void setProgcons(java.lang.String progcons)  {
-		this.progcons=progcons;
+	public void setModAggProgrConsumi(java.lang.String modAggProgrConsumi)  {
+		this.modAggProgrConsumi=modAggProgrConsumi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [ultScaVal]
+	 * Restituisce il valore di: [aggDataUltimoScaricoVal]
 	 **/
-	public java.lang.String getUltScaVal() {
-		return ultScaVal;
+	public java.lang.String getAggDataUltimoScaricoVal() {
+		return aggDataUltimoScaricoVal;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [ultScaVal]
+	 * Setta il valore di: [aggDataUltimoScaricoVal]
 	 **/
-	public void setUltScaVal(java.lang.String ultScaVal)  {
-		this.ultScaVal=ultScaVal;
+	public void setAggDataUltimoScaricoVal(java.lang.String aggDataUltimoScaricoVal)  {
+		this.aggDataUltimoScaricoVal=aggDataUltimoScaricoVal;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [ultScaQta]
+	 * Restituisce il valore di: [aggDataUltimoScaricoQta]
 	 **/
-	public java.lang.String getUltScaQta() {
-		return ultScaQta;
+	public java.lang.String getAggDataUltimoScaricoQta() {
+		return aggDataUltimoScaricoQta;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [ultScaQta]
+	 * Setta il valore di: [aggDataUltimoScaricoQta]
 	 **/
-	public void setUltScaQta(java.lang.String ultScaQta)  {
-		this.ultScaQta=ultScaQta;
+	public void setAggDataUltimoScaricoQta(java.lang.String aggDataUltimoScaricoQta)  {
+		this.aggDataUltimoScaricoQta=aggDataUltimoScaricoQta;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [qtainzAnno]
+	 * Restituisce il valore di: [modAggQtaInizioAnno]
 	 **/
-	public java.lang.String getQtainzAnno() {
-		return qtainzAnno;
+	public java.lang.String getModAggQtaInizioAnno() {
+		return modAggQtaInizioAnno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [qtainzAnno]
+	 * Setta il valore di: [modAggQtaInizioAnno]
 	 **/
-	public void setQtainzAnno(java.lang.String qtainzAnno)  {
-		this.qtainzAnno=qtainzAnno;
+	public void setModAggQtaInizioAnno(java.lang.String modAggQtaInizioAnno)  {
+		this.modAggQtaInizioAnno=modAggQtaInizioAnno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [valinzAnno]
+	 * Restituisce il valore di: [modAggValoreInizioAnno]
 	 **/
-	public java.lang.String getValinzAnno() {
-		return valinzAnno;
+	public java.lang.String getModAggValoreInizioAnno() {
+		return modAggValoreInizioAnno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [valinzAnno]
+	 * Setta il valore di: [modAggValoreInizioAnno]
 	 **/
-	public void setValinzAnno(java.lang.String valinzAnno)  {
-		this.valinzAnno=valinzAnno;
+	public void setModAggValoreInizioAnno(java.lang.String modAggValoreInizioAnno)  {
+		this.modAggValoreInizioAnno=modAggValoreInizioAnno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [medioappr]
+	 * Restituisce il valore di: [modAggTempoMedioApprov]
 	 **/
-	public java.lang.String getMedioappr() {
-		return medioappr;
+	public java.lang.String getModAggTempoMedioApprov() {
+		return modAggTempoMedioApprov;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [medioappr]
+	 * Setta il valore di: [modAggTempoMedioApprov]
 	 **/
-	public void setMedioappr(java.lang.String medioappr)  {
-		this.medioappr=medioappr;
+	public void setModAggTempoMedioApprov(java.lang.String modAggTempoMedioApprov)  {
+		this.modAggTempoMedioApprov=modAggTempoMedioApprov;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [scortamin]
+	 * Restituisce il valore di: [modAggScortaMin]
 	 **/
-	public java.lang.String getScortamin() {
-		return scortamin;
+	public java.lang.String getModAggScortaMin() {
+		return modAggScortaMin;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [scortamin]
+	 * Setta il valore di: [modAggScortaMin]
 	 **/
-	public void setScortamin(java.lang.String scortamin)  {
-		this.scortamin=scortamin;
+	public void setModAggScortaMin(java.lang.String modAggScortaMin)  {
+		this.modAggScortaMin=modAggScortaMin;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [qtaordi]
+	 * Restituisce il valore di: [modAggQtaOrdine]
 	 **/
-	public java.lang.String getQtaordi() {
-		return qtaordi;
+	public java.lang.String getModAggQtaOrdine() {
+		return modAggQtaOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [qtaordi]
+	 * Setta il valore di: [modAggQtaOrdine]
 	 **/
-	public void setQtaordi(java.lang.String qtaordi)  {
-		this.qtaordi=qtaordi;
+	public void setModAggQtaOrdine(java.lang.String modAggQtaOrdine)  {
+		this.modAggQtaOrdine=modAggQtaOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [giacCar]
+	 * Restituisce il valore di: [modAggQtaMagazzino]
 	 **/
-	public java.lang.String getGiacCar() {
-		return giacCar;
+	public java.lang.String getModAggQtaMagazzino() {
+		return modAggQtaMagazzino;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [giacCar]
+	 * Setta il valore di: [modAggQtaMagazzino]
 	 **/
-	public void setGiacCar(java.lang.String giacCar)  {
-		this.giacCar=giacCar;
+	public void setModAggQtaMagazzino(java.lang.String modAggQtaMagazzino)  {
+		this.modAggQtaMagazzino=modAggQtaMagazzino;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [lottoForn]
+	 * Restituisce il valore di: [riportaLottoFornitore]
 	 **/
-	public java.lang.String getLottoForn() {
-		return lottoForn;
+	public java.lang.String getRiportaLottoFornitore() {
+		return riportaLottoFornitore;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [lottoForn]
+	 * Setta il valore di: [riportaLottoFornitore]
 	 **/
-	public void setLottoForn(java.lang.String lottoForn)  {
-		this.lottoForn=lottoForn;
+	public void setRiportaLottoFornitore(java.lang.String riportaLottoFornitore)  {
+		this.riportaLottoFornitore=riportaLottoFornitore;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [aggubic]
+	 * Restituisce il valore di: [qtaInizialeLotto]
 	 **/
-	public java.lang.String getAggubic() {
-		return aggubic;
+	public java.lang.String getQtaInizialeLotto() {
+		return qtaInizialeLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [aggubic]
+	 * Setta il valore di: [qtaInizialeLotto]
 	 **/
-	public void setAggubic(java.lang.String aggubic)  {
-		this.aggubic=aggubic;
+	public void setQtaInizialeLotto(java.lang.String qtaInizialeLotto)  {
+		this.qtaInizialeLotto=qtaInizialeLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [qtainzLotto]
+	 * Restituisce il valore di: [valoreInizialeLotto]
 	 **/
-	public java.lang.String getQtainzLotto() {
-		return qtainzLotto;
+	public java.lang.String getValoreInizialeLotto() {
+		return valoreInizialeLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [qtainzLotto]
+	 * Setta il valore di: [valoreInizialeLotto]
 	 **/
-	public void setQtainzLotto(java.lang.String qtainzLotto)  {
-		this.qtainzLotto=qtainzLotto;
+	public void setValoreInizialeLotto(java.lang.String valoreInizialeLotto)  {
+		this.valoreInizialeLotto=valoreInizialeLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [importoLotto]
+	 * Restituisce il valore di: [riportoDataCaricoLotto]
 	 **/
-	public java.lang.String getImportoLotto() {
-		return importoLotto;
+	public java.lang.String getRiportoDataCaricoLotto() {
+		return riportoDataCaricoLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [importoLotto]
+	 * Setta il valore di: [riportoDataCaricoLotto]
 	 **/
-	public void setImportoLotto(java.lang.String importoLotto)  {
-		this.importoLotto=importoLotto;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [carico]
-	 **/
-	public java.lang.String getCarico() {
-		return carico;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [carico]
-	 **/
-	public void setCarico(java.lang.String carico)  {
-		this.carico=carico;
+	public void setRiportoDataCaricoLotto(java.lang.String riportoDataCaricoLotto)  {
+		this.riportoDataCaricoLotto=riportoDataCaricoLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -543,143 +517,101 @@ public class TipoMovimentoMagAzBase extends TipoMovimentoMagAzKey implements Key
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [qtacarico]
+	 * Restituisce il valore di: [qtaCaricoLotto]
 	 **/
-	public java.lang.String getQtacarico() {
-		return qtacarico;
+	public java.lang.String getQtaCaricoLotto() {
+		return qtaCaricoLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [qtacarico]
+	 * Setta il valore di: [qtaCaricoLotto]
 	 **/
-	public void setQtacarico(java.lang.String qtacarico)  {
-		this.qtacarico=qtacarico;
+	public void setQtaCaricoLotto(java.lang.String qtaCaricoLotto)  {
+		this.qtaCaricoLotto=qtaCaricoLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [costo]
+	 * Restituisce il valore di: [modAggValoreLotto]
 	 **/
-	public java.lang.String getCosto() {
-		return costo;
+	public java.lang.String getModAggValoreLotto() {
+		return modAggValoreLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [costo]
+	 * Setta il valore di: [modAggValoreLotto]
 	 **/
-	public void setCosto(java.lang.String costo)  {
-		this.costo=costo;
+	public void setModAggValoreLotto(java.lang.String modAggValoreLotto)  {
+		this.modAggValoreLotto=modAggValoreLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [flagBlocco]
+	 * Restituisce il valore di: [movimentaLottiBloccati]
 	 **/
-	public java.lang.String getFlagBlocco() {
-		return flagBlocco;
+	public java.lang.String getMovimentaLottiBloccati() {
+		return movimentaLottiBloccati;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [flagBlocco]
+	 * Setta il valore di: [movimentaLottiBloccati]
 	 **/
-	public void setFlagBlocco(java.lang.String flagBlocco)  {
-		this.flagBlocco=flagBlocco;
+	public void setMovimentaLottiBloccati(java.lang.String movimentaLottiBloccati)  {
+		this.movimentaLottiBloccati=movimentaLottiBloccati;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [qtapropsca]
+	 * Restituisce il valore di: [modAggQtaPropSca]
 	 **/
-	public java.lang.String getQtapropsca() {
-		return qtapropsca;
+	public java.lang.String getModAggQtaPropSca() {
+		return modAggQtaPropSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [qtapropsca]
+	 * Setta il valore di: [modAggQtaPropSca]
 	 **/
-	public void setQtapropsca(java.lang.String qtapropsca)  {
-		this.qtapropsca=qtapropsca;
+	public void setModAggQtaPropSca(java.lang.String modAggQtaPropSca)  {
+		this.modAggQtaPropSca=modAggQtaPropSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [bollasca]
+	 * Restituisce il valore di: [generaBollaScarico]
 	 **/
-	public java.lang.String getBollasca() {
-		return bollasca;
+	public java.lang.String getGeneraBollaScarico() {
+		return generaBollaScarico;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [bollasca]
+	 * Setta il valore di: [generaBollaScarico]
 	 **/
-	public void setBollasca(java.lang.String bollasca)  {
-		this.bollasca=bollasca;
+	public void setGeneraBollaScarico(java.lang.String generaBollaScarico)  {
+		this.generaBollaScarico=generaBollaScarico;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [attivo]
+	 * Restituisce il valore di: [valido]
 	 **/
-	public java.lang.String getAttivo() {
-		return attivo;
+	public java.lang.String getValido() {
+		return valido;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [attivo]
+	 * Setta il valore di: [valido]
 	 **/
-	public void setAttivo(java.lang.String attivo)  {
-		this.attivo=attivo;
+	public void setValido(java.lang.String valido)  {
+		this.valido=valido;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [flagCeff]
+	 * Restituisce il valore di: [valorizzazioneCostoEffettivo]
 	 **/
-	public java.lang.String getFlagCeff() {
-		return flagCeff;
+	public java.lang.String getValorizzazioneCostoEffettivo() {
+		return valorizzazioneCostoEffettivo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [flagCeff]
+	 * Setta il valore di: [valorizzazioneCostoEffettivo]
 	 **/
-	public void setFlagCeff(java.lang.String flagCeff)  {
-		this.flagCeff=flagCeff;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [qtainprod]
-	 **/
-	public java.lang.String getQtainprod() {
-		return qtainprod;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [qtainprod]
-	 **/
-	public void setQtainprod(java.lang.String qtainprod)  {
-		this.qtainprod=qtainprod;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [caricoIniziale]
-	 **/
-	public java.lang.String getCaricoIniziale() {
-		return caricoIniziale;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [caricoIniziale]
-	 **/
-	public void setCaricoIniziale(java.lang.String caricoIniziale)  {
-		this.caricoIniziale=caricoIniziale;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [tipoDaEstrarre]
-	 **/
-	public java.lang.String getTipoDaEstrarre() {
-		return tipoDaEstrarre;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [tipoDaEstrarre]
-	 **/
-	public void setTipoDaEstrarre(java.lang.String tipoDaEstrarre)  {
-		this.tipoDaEstrarre=tipoDaEstrarre;
+	public void setValorizzazioneCostoEffettivo(java.lang.String valorizzazioneCostoEffettivo)  {
+		this.valorizzazioneCostoEffettivo=valorizzazioneCostoEffettivo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
