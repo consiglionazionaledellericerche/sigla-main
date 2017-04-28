@@ -23,6 +23,16 @@
 		nullable="false"
 		label="Codice Unità Operativa" />
 	<fieldProperty
+		name="dsUnitaOperativa"
+		property="unitaOperativaOrd.dsUnitaOperativa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione Unità Operativa" />
+	<fieldProperty
 		name="cdUnitaOperativaRif"
 		property="unitaOperativaOrdRif.cdUnitaOperativa"
 		inputType="TEXT"
