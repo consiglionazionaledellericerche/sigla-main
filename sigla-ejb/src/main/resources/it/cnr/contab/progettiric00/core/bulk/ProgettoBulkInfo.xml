@@ -938,6 +938,44 @@
 			name="note" />
 	</columnSet>
 	
+	<columnSet name="nuovoPdgLiv1">
+		<columnFieldProperty
+			name="livello2016" />
+		<columnFieldProperty
+			name="cd_progetto" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="ds_unita_organizzativa" />
+		<columnFieldProperty
+			name="importo_progetto" />
+		<columnFieldProperty
+			name="importo_divisa" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="cd_divisa" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="cd_responsabile_denominazione"
+			property="responsabile.denominazione_sede" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
+	</columnSet>
+
 	<columnSet	name="restService">
 		<columnFieldProperty name="cd_progetto"/>
 		<columnFieldProperty name="pg_progetto"/>

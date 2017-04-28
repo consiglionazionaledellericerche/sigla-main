@@ -45,8 +45,8 @@
 			<td><% bp.getController().writeFormInput(out,"cd_progetto_liv2"); %></td>
 			<td><% bp.getController().writeFormLabel(out,"cd_progetto_liv1"); %></td>
 			<td><% bp.getController().writeFormInput(out,"cd_progetto_liv1"); %></td>
-			<td><% bp.getController().writeFormLabel(out,"dipartimento_liv2"); %></td>
-			<td><% bp.getController().writeFormInput(out,"dipartimento_liv2"); %></td>
+			<td><% bp.getController().writeFormLabel(out,"programma_liv2"); %></td>
+			<td><% bp.getController().writeFormInput(out,"programma_liv2"); %></td>
 		<% } %>		
 	</tr>
 	<tr>
