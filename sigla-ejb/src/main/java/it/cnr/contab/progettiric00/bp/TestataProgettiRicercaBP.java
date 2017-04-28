@@ -62,7 +62,10 @@ protected void init(Config config, ActionContext actioncontext) throws BusinessP
 public BulkInfo getBulkInfo()
 {
 	BulkInfo infoBulk = super.getBulkInfo();
-	infoBulk.setShortDescription("Commesse");
+	if (!this.isFlNuovoPdg())
+		infoBulk.setShortDescription("Commesse");
+	else
+		infoBulk.setShortDescription(ProgettoBulk.LABEL_AREA_PROGETTUALE);
 	return infoBulk;
 }
 	public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudDettagli() {
