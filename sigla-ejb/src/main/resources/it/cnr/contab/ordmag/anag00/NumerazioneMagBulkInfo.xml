@@ -21,7 +21,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdMagazzino"
 		property="magazzino.cdMagazzino"
@@ -31,7 +31,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdMagazzino" />
+		label="Codice Magazzino" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -41,7 +41,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="cdNumeratoreMag"
 		property="cdNumeratoreMag"
@@ -51,7 +51,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNumeratoreMag" />
+		label="Codice Numeratore" />
 	<fieldProperty
 		name="corrente"
 		property="corrente"
@@ -60,14 +60,14 @@
 		maxLength="10"
 		enabledOnEdit="false"
 		nullable="false"
-		label="corrente" />
+		label="Progressivo corrente" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

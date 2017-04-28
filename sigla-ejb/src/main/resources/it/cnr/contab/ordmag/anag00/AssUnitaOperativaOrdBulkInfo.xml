@@ -11,7 +11,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="unitaOperativaOrd.cdUnitaOperativa"
@@ -21,24 +21,24 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUnitaOperativa" />
+		label="Codice Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativaRif"
-		property="unitaOperativaOrd.cdUnitaOperativa"
+		property="unitaOperativaOrdRif.cdUnitaOperativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUnitaOperativaRif" />
+		label="Codice Unità Operativa di Riferimento" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

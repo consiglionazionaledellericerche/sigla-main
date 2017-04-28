@@ -21,7 +21,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdMagazzino"
 		property="magazzino.cdMagazzino"
@@ -31,7 +31,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdMagazzino" />
+		label="Magazzino" />
 	<fieldProperty
 		name="cdBeneServizio"
 		property="cdBeneServizio"
@@ -41,7 +41,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdBeneServizio" />
+		label="Bene/Servizio" />
 	<fieldProperty
 		name="dtIniValidita"
 		property="dtIniValidita"
@@ -50,7 +50,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="dtIniValidita" />
+		label="Data inizio Validita" />
 	<fieldProperty
 		name="tipoGestione"
 		property="tipoGestione"
@@ -59,14 +59,14 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="tipoGestione" />
+		label="Tipo Gestione" />
 	<fieldProperty
 		name="dtFinValidita"
 		property="dtFinValidita"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtFinValidita" />
+		label="Data Fine Validita" />
 	<form
 		name="searchtool">
 		<formFieldProperty

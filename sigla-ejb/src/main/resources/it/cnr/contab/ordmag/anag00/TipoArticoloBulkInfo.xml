@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdTipoArticolo" />
+		label="Codice" />
 	<fieldProperty
 		name="dsTipoArticolo"
 		property="dsTipoArticolo"
@@ -24,14 +24,14 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsTipoArticolo" />
+		label="Descrizione" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty
