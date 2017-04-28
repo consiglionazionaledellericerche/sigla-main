@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdRaggrMagazzino"
 		property="cdRaggrMagazzino"
@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdRaggrMagazzino" />
+		label="Codice" />
 	<fieldProperty
 		name="dsRaggrMagazzino"
 		property="dsRaggrMagazzino"
@@ -34,7 +34,7 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsRaggrMagazzino" />
+		label="Descrizione" />
 	<fieldProperty
 		name="tipo"
 		property="tipo"
@@ -43,7 +43,7 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="tipo" />
+		label="Tipo" />
 	<fieldProperty
 		name="metodo"
 		property="metodo"
@@ -52,14 +52,14 @@
 		maxLength="1"
 		enabledOnEdit="false"
 		nullable="false"
-		label="metodo" />
+		label="Metodo" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty

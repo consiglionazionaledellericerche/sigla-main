@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="cdTipoMovimento"
 		property="cdTipoMovimento"
@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdTipoMovimento" />
+		label="Tipo Movimento" />
 	<fieldProperty
 		name="ultPrel"
 		property="ultPrel"
@@ -32,7 +32,7 @@
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="ultPrel" />
+		label="Ultimo Prelievo" />
 	<fieldProperty
 		name="tipmovPrel"
 		property="tipmovPrel"
@@ -40,7 +40,7 @@
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
-		label="tipmovPrel" />
+		label="TipmovPrel" />
 	<fieldProperty
 		name="ultEnt"
 		property="ultEnt"
