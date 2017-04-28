@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUnitaOperativa" />
+		label="Codice" />
 	<fieldProperty
 		name="dsUnitaOperativa"
 		property="dsUnitaOperativa"
@@ -24,7 +24,7 @@
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dsUnitaOperativa" />
+		label="Descrizione" />
 	<fieldProperty
 		name="cdUnitaOrganizzativa"
 		property="cdUnitaOrganizzativa"
@@ -32,14 +32,14 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdUnitaOrganizzativa" />
+		label="Codice Unità Organizzativa" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCancellazione" />
+		label="Data Cancellazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty
