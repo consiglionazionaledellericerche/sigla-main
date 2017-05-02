@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.NumerazioneMagBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.NumerazioneMagHome">
+	<defaultColumnMap
+		tableName="NUMERAZIONE_MAG">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="magazzino.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="magazzino.cd_magazzino" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="magazzino"
+		partOfOid="true" />
+</SQLPersistentInfo>
