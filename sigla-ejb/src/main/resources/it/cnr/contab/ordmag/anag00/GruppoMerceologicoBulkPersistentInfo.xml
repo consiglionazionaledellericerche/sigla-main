@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.GruppoMerceologicoBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.GruppoMerceologicoHome">
+	<defaultColumnMap
+		tableName="GRUPPO_MERCEOLOGICO">
+	</defaultColumnMap>
+</SQLPersistentInfo>
