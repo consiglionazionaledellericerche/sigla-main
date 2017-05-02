@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome">
+	<defaultColumnMap
+		tableName="UNITA_OPERATIVA_ORD">
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOrganizzativa" />
+</SQLPersistentInfo>
