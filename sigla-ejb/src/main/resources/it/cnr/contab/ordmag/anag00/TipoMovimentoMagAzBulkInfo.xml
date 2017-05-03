@@ -12,7 +12,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -22,7 +23,8 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Tipo Movimento" />
 	<fieldProperty
@@ -31,7 +33,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Data Ultimo Consumo" />
 	<fieldProperty
 		name="aggTipmovUltimoConsumo"
@@ -39,7 +40,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Tipo Movimento Ultimo Consumo" />
 	<fieldProperty
 		name="aggDataUltimoCarico"
@@ -47,7 +47,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Data Ultimo Carico" />
 	<fieldProperty
 		name="aggTipmovUltimoCarico"
@@ -55,7 +54,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Tipo movimento Ultimo Carico" />
 	<fieldProperty
 		name="aggUltimoFornitore"
@@ -63,7 +61,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Ultimo Fornitore" />
 	<fieldProperty
 		name="modAggProgrValCarichi"
@@ -71,7 +68,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Progressivo a Valore Carichi" />
 	<fieldProperty
 		name="aggDataUltimoCaricoVal"
@@ -79,7 +75,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Data Ultimo Carico a Valore" />
 	<fieldProperty
 		name="modAggQtaValMagazzino"
@@ -87,7 +82,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Quantità a Valore Magazzino" />
 	<fieldProperty
 		name="modAggProgrQtaCarichi"
@@ -95,7 +89,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Progressivo Carichi a Quantita" />
 	<fieldProperty
 		name="aggDataUltimoCaricoQta"
@@ -103,7 +96,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Data Ultimo Carico a Quantità" />
 	<fieldProperty
 		name="modAggProgrValScarichi"
@@ -111,7 +103,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Progressivo Scarichi a Valore" />
 	<fieldProperty
 		name="modAggProgrQtaScarichi"
@@ -119,7 +110,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Progressivo Scarichi a quantità" />
 	<fieldProperty
 		name="modAggProgrConsumi"
@@ -127,7 +117,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Progressivo Consumi" />
 	<fieldProperty
 		name="aggDataUltimoScaricoVal"
@@ -135,7 +124,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Data Ultimo Scarico a Valore" />
 	<fieldProperty
 		name="aggDataUltimoScaricoQta"
@@ -143,7 +131,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Aggiorna Data Ultimo Scarico a Quantità" />
 	<fieldProperty
 		name="modAggQtaInizioAnno"
@@ -151,7 +138,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Quantità di Inizio Anno" />
 	<fieldProperty
 		name="modAggValoreInizioAnno"
@@ -159,7 +145,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Valore di Inizio Anno" />
 	<fieldProperty
 		name="modAggTempoMedioApprov"
@@ -167,7 +152,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Tempo Medio di Approvvigiornamento" />
 	<fieldProperty
 		name="modAggScortaMin"
@@ -175,7 +159,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Scorta Minima" />
 	<fieldProperty
 		name="modAggQtaOrdine"
@@ -183,7 +166,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Quantità in Ordine" />
 	<fieldProperty
 		name="modAggQtaMagazzino"
@@ -191,7 +173,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Quantità a Magazzino" />
 	<fieldProperty
 		name="riportaLottoFornitore"
@@ -199,7 +180,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Riporta Lotto Fornitore" />
 	<fieldProperty
 		name="qtaInizialeLotto"
@@ -207,7 +187,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Quantità Iniziale Lotto" />
 	<fieldProperty
 		name="valoreInizialeLotto"
@@ -215,7 +194,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Valore Iniziale Lotto" />
 	<fieldProperty
 		name="riportoDataCaricoLotto"
@@ -223,7 +201,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Riporto Data Carico Lotto" />
 	<fieldProperty
 		name="findTipoMovimentoMag"
@@ -238,8 +215,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
-		nullable="false"
 		label="Cds Rif" />
 	<fieldProperty
 		name="cdTipoMovimentoRif"
@@ -247,7 +222,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		label="Tipo Movimento Riferimento" />
 	<fieldProperty
 		name="flagSpese"
@@ -255,7 +229,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Considera Spese" />
 	<fieldProperty
 		name="qtaCaricoLotto"
@@ -263,7 +236,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Quantità di Carico Lotto" />
 	<fieldProperty
 		name="modAggValoreLotto"
@@ -271,7 +243,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Valore Lotto" />
 	<fieldProperty
 		name="movimentaLottiBloccati"
@@ -279,7 +250,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Movimenta Lotti Bloccati" />
 	<fieldProperty
 		name="modAggQtaPropSca"
@@ -287,7 +257,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Modalità Aggiornamento Quantità in Proposta di Scarico" />
 	<fieldProperty
 		name="generaBollaScarico"
@@ -295,7 +264,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Genera Bolla di Scarico" />
 	<fieldProperty
 		name="valido"
@@ -303,7 +271,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Valido" />
 	<fieldProperty
@@ -312,14 +279,12 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Valorizzazione a Costo Effettivo" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">

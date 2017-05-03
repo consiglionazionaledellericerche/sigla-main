@@ -12,7 +12,8 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
@@ -20,9 +21,8 @@
 		property="dsCausaleAnnull"
 		inputType="TEXTAREA"
 		cols="60"
-		rows="5"
+		rows="1"
 		maxLength="1000"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
@@ -30,7 +30,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">
