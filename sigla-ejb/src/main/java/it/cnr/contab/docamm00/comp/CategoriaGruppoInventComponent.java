@@ -83,6 +83,8 @@ public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk bulk) throws
 
     Categoria_gruppo_inventBulk cgi= (Categoria_gruppo_inventBulk) bulk;
     cgi= (Categoria_gruppo_inventBulk) validaCgi(userContext, cgi);
+    if(!cgi.getFl_gestione_inventario().booleanValue())
+		cgi.setFl_ammortamento(Boolean.FALSE);
     super.creaConBulk(userContext, cgi);
     return cgi;
 }

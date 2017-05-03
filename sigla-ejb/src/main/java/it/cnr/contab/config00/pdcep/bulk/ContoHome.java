@@ -53,4 +53,12 @@ public SQLBuilder selectContiRicavoByClause( Voce_epBulk bulk,it.cnr.jada.bulk.B
 	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
 	return sql;
 }
+public SQLBuilder selectRiapre_a_contoByClause( Voce_epBulk bulk,it.cnr.jada.bulk.BulkHome home,it.cnr.jada.bulk.OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
+	SQLBuilder sql = home.selectByClause(clause);
+	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
+	if (bulk!=null && bulk.getRiepiloga_a()!=null)
+		sql.addClause("AND", "riepiloga_a", SQLBuilder.EQUALS, bulk.getRiepiloga_a() );		
+	return sql;
+}
+
 }
