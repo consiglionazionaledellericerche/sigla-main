@@ -19,9 +19,8 @@
 	<fieldProperty
 		name="dsUnitaOperativa"
 		property="dsUnitaOperativa"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
 		nullable="false"
 		label="Descrizione" />
@@ -42,6 +41,8 @@
 		name="searchtool">
 		<formFieldProperty
 			name="cdUnitaOperativa" />
+		<formFieldProperty
+			name="dsUnitaOperativa" />
 	</form>
 	<formFieldProperty
 		name="cdUnitaOperativa" />
