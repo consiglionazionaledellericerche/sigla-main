@@ -225,7 +225,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
     		throws IOException {
     	DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
     	documentoEleTestata.getDocumentoEleTrasmissione().getBulkInfo().writeFormLabel(
-    			this, jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), null, s, null);
+    			this, jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), null, s, null, this.getParentRoot().isBootstrap());
     }
 	
     public void writeFormInputTrasmissione(JspWriter jspwriter, String s)

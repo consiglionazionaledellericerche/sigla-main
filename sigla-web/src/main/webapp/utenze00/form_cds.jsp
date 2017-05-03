@@ -25,7 +25,7 @@
 		<table cellspacing=8>
 			<tr>
 				<td>
-					<% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","esercizio"); %>
+					<% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","esercizio", bp.getParentRoot().isBootstrap()); %>
 				</td>
 				<td>
 					<% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","esercizio",false,null,"onchange=\"submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %>
