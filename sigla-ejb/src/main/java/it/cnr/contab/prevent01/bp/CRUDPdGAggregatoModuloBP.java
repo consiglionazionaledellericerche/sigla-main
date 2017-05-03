@@ -112,8 +112,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				setUtenteDirettore(false);
 
 			setParametriEnte(Utility.createParametriEnteComponentSession().getParametriEnte(context.getUserContext())); 
-			if (getParametriEnte().getFl_informix())
-				aggiornaGECO(context);
+			aggiornaGECO(context);
 		} catch (ComponentException e1) {
 			throw handleException(e1);
 		} catch (RemoteException e1) {

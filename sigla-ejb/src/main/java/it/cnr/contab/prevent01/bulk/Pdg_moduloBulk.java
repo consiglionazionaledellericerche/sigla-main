@@ -8,12 +8,9 @@ import java.math.BigDecimal;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
-import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
-import it.cnr.jada.util.action.CRUDBP;
 public class Pdg_moduloBulk extends Pdg_moduloBase {
 
 	private it.cnr.contab.config00.sto.bulk.CdrBulk cdr;
@@ -70,6 +67,11 @@ public class Pdg_moduloBulk extends Pdg_moduloBase {
 	}
 
 	private java.lang.String cambia_stato;
+	
+	private Boolean existDecisionaleE = Boolean.FALSE;	
+	private Boolean existDecisionaleS = Boolean.FALSE;	
+	private Boolean existGestionaleE = Boolean.FALSE;	
+	private Boolean existGestionaleS = Boolean.FALSE;
 	
 	private SimpleBulkList dettagli_entrata= new SimpleBulkList();
 	private BigDecimal importo_progetto;
@@ -231,5 +233,56 @@ public class Pdg_moduloBulk extends Pdg_moduloBase {
 	public void setImporto_progetto(BigDecimal decimal) {
 		importo_progetto = decimal;
 	}
+	
+	public Boolean getExistDecisionaleE() {
+		return existDecisionaleE;
+	}
+	
+	public void setExistDecisionaleE(Boolean existDecisionaleE) {
+		this.existDecisionaleE = existDecisionaleE;
+	}
+	
+	public Boolean getExistDecisionaleS() {
+		return existDecisionaleS;
+	}
+	
+	public void setExistDecisionaleS(Boolean existDecisionaleS) {
+		this.existDecisionaleS = existDecisionaleS;
+	}
+	
+	public Boolean getExistGestionaleE() {
+		return existGestionaleE;
+	}
+	
+	public void setExistGestionaleE(Boolean existGestionaleE) {
+		this.existGestionaleE = existGestionaleE;
+	}
+	
+	public Boolean getExistGestionaleS() {
+		return existGestionaleS;
+	}
+	
+	public void setExistGestionaleS(Boolean existGestionaleS) {
+		this.existGestionaleS = existGestionaleS;
+	}
+	
+	public String getStatoDecisionale() {
+		if (getExistDecisionaleE() && getExistDecisionaleS())
+			return "T";
+		if (getExistDecisionaleE())
+			return "E";
+		if (getExistDecisionaleS())
+			return "S";
+		return null;
+	}
 
+	public String getStatoGestionale() {
+		if (getExistGestionaleE() && getExistGestionaleS())
+			return "T";
+		if (getExistGestionaleE())
+			return "E";
+		if (getExistGestionaleS())
+			return "S";
+		return null;
+	}
 }

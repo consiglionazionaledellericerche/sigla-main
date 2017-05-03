@@ -6,9 +6,15 @@
  */
 package it.cnr.contab.pdg01.action;
 
+import it.cnr.contab.anagraf00.bp.CRUDTerzoBP;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.bp.CRUDWorkpackageBP;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgModuloSpeseGestBP;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
@@ -16,9 +22,14 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDAction;
+import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
 
 
 /**
@@ -102,5 +113,24 @@ public class CRUDPdgModuloSpeseGestAction extends CRUDAction {
 	public Forward doEliminaDettagliGestionali(ActionContext actioncontext) throws BusinessProcessException {
 		CRUDPdgModuloSpeseGestBP bp = ((CRUDPdgModuloSpeseGestBP)getBusinessProcess( actioncontext ));
 		return openConfirm(actioncontext,"Tutti i dettagli di spesa relativi al modulo e " + bp.getLabelDesctool_classificazione() + " verranno cancellati definitivamente. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfermaEliminaDettagliGestionali");		
+	}
+
+	public Forward doCRUDCrea_linea_attivita(ActionContext actioncontext) throws FillException, BusinessProcessException {
+		CRUDPdgModuloSpeseGestBP bulkbp = (CRUDPdgModuloSpeseGestBP)actioncontext.getBusinessProcess();
+
+		FormField formfield = getFormField(actioncontext, "main.DettagliGestionali.crea_linea_attivita");
+		try {
+            CRUDBP crudbp = (CRUDBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext, formfield.getField().getCRUDBusinessProcessName(), new Object[] {
+                    bulkbp.isEditable() ? "MR" : "R", bulkbp.getModel(), ((Pdg_modulo_spese_gestBulk)bulkbp.getCrudDettagliGestionali().getModel()).getCdr_assegnatario()
+                });
+
+            actioncontext.addHookForward("bringback", this, "doBringBackCRUD");
+			HookForward hookforward = (HookForward)actioncontext.findForward("bringback");
+			hookforward.addParameter("field", formfield);
+			crudbp.setBringBack(true);
+			return actioncontext.addBusinessProcess(crudbp);
+		} catch(Throwable e) {
+			return handleException(actioncontext,e);
+		}
 	}
 }

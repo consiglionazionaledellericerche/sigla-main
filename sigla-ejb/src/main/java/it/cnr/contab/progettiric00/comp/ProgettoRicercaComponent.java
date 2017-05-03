@@ -99,7 +99,8 @@ public ProgettoRicercaComponent() {
 					}
 					/*Fine valorizzazione id PostIt*/
 				  ((PostItBulk) ((ProgettoBulk)bulk).getDettagliPostIt().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
-				}                	                
+				}    
+				((ProgettoBulk)bulk).setStato(ProgettoBulk.TIPO_STATO_APPROVATO);
 				try {
 					validaCreaConBulk(uc, bulk);
 					if (((ProgettoBulk)bulk).getFl_previsione()) {
@@ -977,15 +978,15 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	}
 	
 	private void allineaAbilitazioniTerzoLivello(UserContext uc, ProgettoBulk prg, String pTipoFase, Boolean pFaseAttiva) throws ComponentException, PersistencyException{
-		ProgettoHome homeSic = (ProgettoHome)getHome(uc, ProgettoBulk.class, "PROGETTO_SIC");
+		ProgettoHome homeSip = (ProgettoHome)getHome(uc, ProgettoBulk.class, "PROGETTO_SIP");
 
-		SQLBuilder sql = homeSic.createSQLBuilder();
+		SQLBuilder sql = homeSip.createSQLBuilder();
 		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, prg.getEsercizio());
 		sql.addClause(FindClause.AND, "tipo_fase", SQLBuilder.EQUALS, pTipoFase);
 		sql.addClause(FindClause.AND, "progettopadre", SQLBuilder.EQUALS, prg);
 		sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO.intValue());
 			
-		List<ProgettoBulk> list = homeSic.fetchAll(sql);
+		List<ProgettoBulk> list = homeSip.fetchAll(sql);
 		List<ProgettoBulk> listAbilitate = new ArrayList<>();
 		List<ProgettoBulk> listToDelete = new ArrayList<>();
 
@@ -1008,7 +1009,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		}
 		
 		for (ProgettoBulk progettoBulk : listToDelete)
-			homeSic.delete(progettoBulk, uc);
+			homeSip.delete(progettoBulk, uc);
 
 		if (pFaseAttiva) { 
 			for(int i = 0; prg.getDettagli().size() > i; i++) {
@@ -1036,7 +1037,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 					ProgettoBulk progettoTerzo = copyProgettoAbilUo(uc, prg, pgProgetto, progettoUO.getUnita_organizzativa());
 					progettoTerzo.setTipo_fase(pTipoFase);
 					progettoTerzo.setTipo_fase_progetto_padre(pTipoFase);					
-					homeSic.insert(progettoTerzo, uc);
+					homeSip.insert(progettoTerzo, uc);
 				}
 			}
 		}
