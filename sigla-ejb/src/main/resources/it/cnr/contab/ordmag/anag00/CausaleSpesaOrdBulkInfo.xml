@@ -12,7 +12,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -22,7 +23,8 @@
 		inputSize="4"
 		maxLength="4"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Esercizio" />
 	<fieldProperty
@@ -32,7 +34,8 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
@@ -40,9 +43,8 @@
 		property="dsCausaleSpesa"
 		inputType="TEXTAREA"
 		cols="60"
-		rows="5"
+		rows="1"
 		maxLength="100"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
@@ -51,7 +53,6 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		enabledOnEdit="false"
 		label="Codice IVA" />
 	<fieldProperty
 		name="flagSpese"
@@ -59,7 +60,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Spese" />
 	<fieldProperty
@@ -67,7 +67,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">

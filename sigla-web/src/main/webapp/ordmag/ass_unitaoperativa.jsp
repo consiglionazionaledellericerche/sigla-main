@@ -35,14 +35,16 @@ CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.
 		<TR>
 		 	<TD colspan="3">
 			<fieldset>
-				<legend class="GroupLabel">Repertorio Limiti per anno</legend>
+				<legend class="GroupLabel">Unità operative associate</legend>
 				<table width="100%">
 				<tr>
 					<td colspan="4">
 					<% JSPUtils.tabbed(
 									pageContext,
 									"tab",
-									bp.getTabs(),
+									new String[][] {
+										{ "tabUop","Uop associate","/ordmag/tab_ass_uop.jsp" }							
+									},
 									bp.getTab("tab"),
 									"center",
 									"100%",
@@ -55,15 +57,5 @@ CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.
 			</TD>
 		</TR>
 	</table>
-	<table class="Panel">
-		<tr>
-			<td><% bp.getRepertorioLimiti().writeFormLabel(out,"esercizio"); %></td>
-			<td><% bp.getRepertorioLimiti().writeFormInput(out,"esercizio"); %></td>
-		</tr>
-		<tr>
-	  	    <td><% bp.getRepertorioLimiti().writeFormLabel(out,"importo_limite"); %></td>
-			<td><% bp.getRepertorioLimiti().writeFormInput(out,"importo_limite"); %></td>
-		</tr>
-	</table>
-<%	bp.closeFormWindow(pageContext); %>
+	bp.closeFormWindow(pageContext); %>
 </body>

@@ -12,7 +12,8 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
@@ -22,7 +23,6 @@
 		cols="60"
 		rows="5"
 		maxLength="100"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
@@ -30,7 +30,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">

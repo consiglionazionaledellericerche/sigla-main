@@ -19,7 +19,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Unità Operativa" />
 	<fieldProperty
@@ -30,6 +31,7 @@
 		rows="5"
 		maxLength="100"
 		enabledOnEdit="false"
+		enabledOnSearch="false"
 		nullable="false"
 		label="Descrizione Unità Operativa" />
 	<fieldProperty
@@ -39,7 +41,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Unità Operativa di Riferimento" />
 	<fieldProperty
@@ -47,7 +50,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">

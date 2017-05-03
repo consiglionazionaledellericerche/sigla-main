@@ -25,7 +25,7 @@
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
   <businessProcess name="CRUDAssUnitaOperativaBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/ordmag/assunitaoperativa.jsp"/>
+    <forward name="default" path="/ordmag/ass_unitaoperativa.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.AssUnitaOperativaOrdBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
@@ -35,7 +35,7 @@
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
   <businessProcess name="CRUDTipoOperazioneBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/ordmag/tipooperazione.jsp"/>
+    <forward name="default" path="/ordmag/tipo_operazione.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
@@ -70,7 +70,7 @@
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
   <businessProcess name="CRUDCausaleAnnOrdBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/ordmag/causaleannullamento.jsp"/>
+    <forward name="default" path="/ordmag/causale_annullamento.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.CausaleAnnullOrdBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
