@@ -1,6 +1,7 @@
 package it.cnr.contab.progettiric00.comp;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.blob.bulk.PostItHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -317,6 +319,7 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 				}
 				((ProgettoBulk)bulk).setFl_piano_triennale(false);
 				
+				((ProgettoBulk)bulk).setStato(ProgettoBulk.TIPO_STATO_APPROVATO);
 				try {
 					validaCreaConBulk(uc, bulk);
 					((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
@@ -689,12 +692,20 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 		return param;
 	}
 	public void aggiornaGECO(UserContext userContext) throws ComponentException{
-    	ProgettoHome progettoHome = ((ProgettoHome)getHome(userContext,ProgettoBulk.class));
-    	progettoHome.aggiornaGeco(userContext,null);
-    	DipartimentoHome dipartimentoHome = ((DipartimentoHome)getHome(userContext,DipartimentoBulk.class));
-    	dipartimentoHome.aggiornaDipartimenti(userContext, null);
-    	if (userContext.getUser().equalsIgnoreCase("GECO"))
-    	   cancellaProgettoSIP(userContext);
+		try {
+			//L'aggiornamento parte solo se attivo informix
+			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(userContext); 
+			if (parEnte.getFl_informix()) {
+		    	ProgettoHome progettoHome = ((ProgettoHome)getHome(userContext,ProgettoBulk.class));
+		    	progettoHome.aggiornaGeco(userContext,null);
+		    	DipartimentoHome dipartimentoHome = ((DipartimentoHome)getHome(userContext,DipartimentoBulk.class));
+		    	dipartimentoHome.aggiornaDipartimenti(userContext, null);
+		    	if (userContext.getUser().equalsIgnoreCase("GECO"))
+		    	   cancellaProgettoSIP(userContext);
+			}
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		} 
 	}
 	private void handleExceptionMail(UserContext userContext, Exception e){
 	}
