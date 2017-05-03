@@ -19,7 +19,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -29,7 +30,8 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Magazzino" />
 	<fieldProperty
@@ -39,7 +41,8 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Categoria Gruppo" />
 	<fieldProperty
@@ -47,8 +50,6 @@
 		property="dtIniValidita"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
 		nullable="false"
 		label="Data Inizio Validita" />
 	<fieldProperty
@@ -56,7 +57,6 @@
 		property="dtFinValidita"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Fine Validita" />
 	<form
 		name="searchtool">

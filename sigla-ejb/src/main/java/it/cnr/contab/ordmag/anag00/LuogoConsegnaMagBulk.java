@@ -6,6 +6,7 @@ package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.jada.bulk.OggettoBulk;
 public class LuogoConsegnaMagBulk extends LuogoConsegnaMagBase {
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
@@ -126,5 +127,9 @@ public class LuogoConsegnaMagBulk extends LuogoConsegnaMagBase {
 	 **/
 	public void setPgNazione(java.lang.Long pgNazione)  {
 		this.getNazione().setPg_nazione(pgNazione);
+	}
+	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+		return super.initialize(bp,context);
 	}
 }
