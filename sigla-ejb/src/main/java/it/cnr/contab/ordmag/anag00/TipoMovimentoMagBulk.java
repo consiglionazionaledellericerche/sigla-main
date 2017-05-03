@@ -158,5 +158,9 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 		setTipoMovimentoMagStorno(new TipoMovimentoMagBulk());
 		return this;
 	}
+	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+		return super.initialize(bp,context);
+	}
 
 }

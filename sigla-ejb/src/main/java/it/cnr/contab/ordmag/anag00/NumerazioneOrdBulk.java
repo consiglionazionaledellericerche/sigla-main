@@ -4,6 +4,7 @@
  */
 package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.jada.bulk.OggettoBulk;
 public class NumerazioneOrdBulk extends NumerazioneOrdBase {
 	/**
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
