@@ -142,7 +142,7 @@ public class OfflineReportPrintBP extends ReportPrintBP {
 		getBulkInfo().writeFormInput(out,getModel(),null,name,false,null,null,"main",it.cnr.jada.util.action.FormController.EDIT,getFieldValidationMap(), getParentRoot().isBootstrap());
 	}
 	public void writeFormLabel(javax.servlet.jsp.JspWriter out,String name) throws java.io.IOException {
-		getBulkInfo().writeFormLabel(out,getModel(),null,name,null);
+		getBulkInfo().writeFormLabel(out,getModel(),null,name,null, this.getParentRoot().isBootstrap());
 	}
 	public void initCdServizioPEC(String cdServizioPEC) {
 		((Print_spoolerBulk) getModel()).setCd_servizio_pec(cdServizioPEC);
