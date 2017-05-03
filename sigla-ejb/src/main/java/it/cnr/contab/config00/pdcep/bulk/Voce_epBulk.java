@@ -2,6 +2,7 @@ package it.cnr.contab.config00.pdcep.bulk;
 
 import java.util.*;
 
+import it.cnr.contab.config00.pdcep.cla.bulk.V_classificazione_voci_epBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -33,6 +34,7 @@ public class Voce_epBulk extends Voce_epBase {
 		natura_voce_Keys.put("CDO", "CDO - Conto d'Ordine");
 		natura_voce_Keys.put("CDC", "CDC - Conto di Capitale");
 	}	
+	private V_classificazione_voci_epBulk v_classificazione_voci_ep;
 
 public Voce_epBulk() {
 	super();
@@ -160,5 +162,12 @@ public void validate() throws ValidationException {
 				throw new ValidationException( "Il campo ESERCIZIO è obbligatorio." );
 			if ( getEsercizio().toString().length() != 4 )
 				throw new ValidationException( "Il campo ESERCIZIO deve essere di quattro cifre." );
+}
+public V_classificazione_voci_epBulk getV_classificazione_voci_ep() {
+	return v_classificazione_voci_ep;
+}
+public void setV_classificazione_voci_ep(
+		V_classificazione_voci_epBulk v_classificazione_voci_ep) {
+	this.v_classificazione_voci_ep = v_classificazione_voci_ep;
 }
 }
