@@ -12,7 +12,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -22,7 +23,8 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
@@ -32,7 +34,6 @@
 		cols="60"
 		rows="5"
 		maxLength="100"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
@@ -48,7 +49,6 @@
 		inputType="TEXT"
 		inputSize="12"
 		maxLength="12"
-		enabledOnEdit="false"
 		label="Codice Unità Operativa" />
 	<fieldProperty
 		name="findLuogoConsegnaMag"
@@ -63,7 +63,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds Luogo di Consegna" />
 	<fieldProperty
@@ -72,7 +71,6 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Codice Luogo di Consegna" />
 	<fieldProperty
@@ -88,7 +86,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds Car Mag" />
 	<fieldProperty
@@ -97,7 +94,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento Carico a Magazzino" />
 	<fieldProperty
@@ -106,7 +102,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds Car Tra" />
 	<fieldProperty
@@ -115,7 +110,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento Carico in transito" />
 	<fieldProperty
@@ -124,7 +118,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds Car Fma" />
 	<fieldProperty
@@ -133,7 +126,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento Carico fuori Magazzino" />
 	<fieldProperty
@@ -142,7 +134,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds Sca Uo" />
 	<fieldProperty
@@ -151,7 +142,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento Scarico a UO" />
 	<fieldProperty
@@ -160,7 +150,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds Tra Sca" />
 	<fieldProperty
@@ -169,7 +158,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento scarico per trasferimento" />
 	<fieldProperty
@@ -178,7 +166,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds car tra" />
 	<fieldProperty
@@ -187,7 +174,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento carico per trasferimento" />
 	<fieldProperty
@@ -196,7 +182,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds Rv Pos" />
 	<fieldProperty
@@ -205,7 +190,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento variazione valore positiva" />
 	<fieldProperty
@@ -214,7 +198,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="cds Rv Neg" />
 	<fieldProperty
@@ -223,7 +206,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento variazione valore negativa" />
 	<fieldProperty
@@ -232,7 +214,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Cds Chi" />
 	<fieldProperty
@@ -241,7 +222,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Movimento Chiusura" />
 	<fieldProperty
@@ -249,7 +229,6 @@
 		property="dtUltValSca"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Ultima Valorizzazione Scarichi" />
 	<fieldProperty
 		name="esercizioValSca"
@@ -257,7 +236,6 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
-		enabledOnEdit="false"
 		label="Esercizio Val Sca" />
 	<fieldProperty
 		name="findRaggrMagazzino"
@@ -272,7 +250,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		label="Cds Raggr Sca" />
 	<fieldProperty
 		name="cdRaggrMagazzinoSca"
@@ -280,7 +257,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		label="Raggruppamento per gli scarichi" />
 	<fieldProperty
 		name="metodoValSca"
@@ -288,14 +264,12 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Ultimo metodo Valorizzazione Scarichi" />
 	<fieldProperty
 		name="dtUltValRim"
 		property="dtUltValRim"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Ultima Valorizzazione Scarichi" />
 	<fieldProperty
 		name="esercizioValRim"
@@ -303,7 +277,6 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
-		enabledOnEdit="false"
 		label="EsercizioValRim" />
 	<fieldProperty
 		name="cdCdsRaggrRim"
@@ -311,7 +284,6 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
 		label="Cds Raggr Rim" />
 	<fieldProperty
 		name="cdRaggrMagazzinoRim"
@@ -319,7 +291,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		enabledOnEdit="false"
 		label="Raggruppamento Valorizzazione Rimanenze" />
 	<fieldProperty
 		name="metodoValRim"
@@ -327,7 +298,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		label="Ultimo metodo Valorizzazione Rimanenze" />
 	<fieldProperty
 		name="abilTuttiBeniServ"
@@ -335,7 +305,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Abilitato a tutti i beni/servizi" />
 	<fieldProperty
@@ -343,7 +312,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">

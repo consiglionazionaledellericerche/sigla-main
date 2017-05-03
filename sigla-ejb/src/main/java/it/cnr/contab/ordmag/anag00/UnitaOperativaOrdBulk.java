@@ -4,6 +4,7 @@
  */
 package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.jada.bulk.OggettoBulk;
 public class UnitaOperativaOrdBulk extends UnitaOperativaOrdBase {
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
@@ -53,5 +54,9 @@ public class UnitaOperativaOrdBulk extends UnitaOperativaOrdBase {
 	 **/
 	public void setCdUnitaOrganizzativa(java.lang.String cdUnitaOrganizzativa)  {
 		this.getUnitaOrganizzativa().setCd_unita_organizzativa(cdUnitaOrganizzativa);
+	}
+	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		setCdUnitaOrganizzativa(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
+		return super.initialize(bp,context);
 	}
 }
