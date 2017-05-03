@@ -68,7 +68,7 @@
   </businessProcess>
 	
 	<businessProcess
-      name="CRUDConfigContoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+      name="CRUDConfigContoBP" className="it.cnr.contab.config00.bp.CRUDContoBP">
     <forward name="default" path="/config00/pdc_ep_conto.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcep.bulk.ContoBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_PDCEconPatrComponentSession" />
