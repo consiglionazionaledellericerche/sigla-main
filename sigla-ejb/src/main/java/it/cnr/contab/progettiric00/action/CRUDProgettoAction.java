@@ -153,6 +153,8 @@ public it.cnr.jada.action.Forward doSearchFind_nodo_padre(ActionContext context)
 			// Apre un Selezionatore ad Albero per cercare i Progetti selezionando i vari livelli
 			ProgettoAlberoBP slaBP = (ProgettoAlberoBP)context.createBusinessProcess("ProgettoAlberoBP");
 			slaBP.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(ProgettoBulk.class));
+			if (bp.isFlNuovoPdg())
+				slaBP.setColumns(slaBP.getBulkInfo().getColumnFieldPropertyDictionary("nuovoPdgLiv1"));
 			slaBP.setRemoteBulkTree(context,bp.getProgettiTree(context),roots);
 			HookForward hook = (HookForward)context.addHookForward("seleziona",this,"doBringBackSearchResult");
 			hook.addParameter("field",getFormField(context,"main.find_nodo_padre"));

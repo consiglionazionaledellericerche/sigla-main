@@ -3,16 +3,18 @@
 * Date 19/09/2005
 */
 package it.cnr.contab.prevent01.bulk;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import java.sql.SQLException;
+
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
-import it.cnr.jada.UserContext;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+
 public class Pdg_moduloHome extends BulkHome {
 	public Pdg_moduloHome(java.sql.Connection conn) {
 		super(Pdg_moduloBulk.class, conn);
@@ -52,5 +54,41 @@ public class Pdg_moduloHome extends BulkHome {
 		sql.closeParenthesis();
 
 		return cdsHome.fetchAll(sql);
+	}	
+	
+	public boolean existsDecisionaleE(Pdg_moduloBulk modulo) throws PersistencyException, SQLException {
+		PersistentHome etrHome = getHomeCache().getHome(Pdg_Modulo_EntrateBulk.class);
+		SQLBuilder sql = etrHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,modulo.getEsercizio());
+		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,modulo.getCd_centro_responsabilita());
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,modulo.getPg_progetto());
+		return sql.executeExistsQuery(getConnection());
+	}
+	
+	public boolean existsDecisionaleS(Pdg_moduloBulk modulo) throws PersistencyException, SQLException {
+		PersistentHome speHome = getHomeCache().getHome(Pdg_modulo_speseBulk.class);
+		SQLBuilder sql = speHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,modulo.getEsercizio());
+		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,modulo.getCd_centro_responsabilita());
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,modulo.getPg_progetto());
+		return sql.executeExistsQuery(getConnection());
+	}
+	
+	public boolean existsGestionaleE(Pdg_moduloBulk modulo) throws PersistencyException, SQLException {
+		PersistentHome etrHome = getHomeCache().getHome(Pdg_modulo_entrate_gestBulk.class);
+		SQLBuilder sql = etrHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,modulo.getEsercizio());
+		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,modulo.getCd_centro_responsabilita());
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,modulo.getPg_progetto());
+		return sql.executeExistsQuery(getConnection());
+	}
+	
+	public boolean existsGestionaleS(Pdg_moduloBulk modulo) throws PersistencyException, SQLException {
+		PersistentHome speHome = getHomeCache().getHome(Pdg_modulo_spese_gestBulk.class);
+		SQLBuilder sql = speHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,modulo.getEsercizio());
+		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,modulo.getCd_centro_responsabilita());
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,modulo.getPg_progetto());
+		return sql.executeExistsQuery(getConnection());
 	}	
 }
