@@ -20,7 +20,7 @@
 		<table class="Panel" width="100%" height="100%">
 			<tr>
 				<td>
-					<% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","esercizio"); %>
+					<% bp.getUserInfo().writeFormLabel(out,"scelta_esercizio_uo","esercizio", bp.getParentRoot().isBootstrap()); %>
 					<% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","esercizio",false,null,"onchange=\"submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
 				</td>
 			</tr>
