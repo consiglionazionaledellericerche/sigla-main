@@ -20,7 +20,9 @@
         <%bp.getCrudAssUODisponibili().writeHTMLTable(pageContext,"codice_descrizione",false,false,false,"100%","300px"); %>
 		</td>
 		<td>
-		<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),null,"javascript:submitForm('doAggiungiUO')",bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW); %>
+		<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),
+				null,"javascript:submitForm('doAggiungiUO')",bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW,
+				bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td rowspan="2">
           <%bp.getCrudAssUO().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
@@ -28,7 +30,9 @@
 	</tr>
 	<tr>
 		<td>
-		<% JSPUtils.button(out,bp.encodePath("img/doubleleftarrow24.gif"),bp.encodePath("img/doubleleftarrow24.gif"),null,"javascript:submitForm('doRimuoviUO')",bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW); %>		
+		<% JSPUtils.button(out,bp.encodePath("img/doubleleftarrow24.gif"),bp.encodePath("img/doubleleftarrow24.gif"),null,
+				"javascript:submitForm('doRimuoviUO')",bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW,
+				bp.getParentRoot().isBootstrap()); %>		
 		</td>
 	</tr>
 </table>
