@@ -54,7 +54,7 @@ function doScaricaFile(path) {
 								<td><% bp.getController().writeFormLabel( out, "nome_file_inv"); %></td>
 								<td><% bp.getController().writeFormInput( out, "nome_file_inv"); %></td>
 								<% if (bulk!=null && bulk.getFile_inv()!=null) {%>
-									<td align="left"><% JSPUtils.button(out,bp.encodePath("img/open24.gif"),bp.encodePath("img/open24.gif"),"","javascript:doScaricaFile('tmp/"+bulk.getNome_file_inv()+"')",true); %></td>
+									<td align="left"><% JSPUtils.button(out,bp.encodePath("img/open24.gif"),bp.encodePath("img/open24.gif"),"","javascript:doScaricaFile('tmp/"+bulk.getNome_file_inv()+"')",true,bp.getParentRoot().isBootstrap()); %></td>
 								<% } %>
 							</tr>
 						</table>
@@ -97,7 +97,7 @@ function doScaricaFile(path) {
 								<td><% bp.getController().writeFormLabel( out, "nome_file_ric"); %></td>
 								<td><% bp.getController().writeFormInput( out, "nome_file_ric"); %></td>
 								<% if (bulk!=null && bulk.getFile_ric()!=null) {%>
-									<td align="left"><% JSPUtils.button(out,bp.encodePath("img/open24.gif"),bp.encodePath("img/open24.gif"),"","javascript:doScaricaFile('tmp/"+bulk.getNome_file_ric()+"')",true); %></td>
+									<td align="left"><% JSPUtils.button(out,bp.encodePath("img/open24.gif"),bp.encodePath("img/open24.gif"),"","javascript:doScaricaFile('tmp/"+bulk.getNome_file_ric()+"')",true,bp.getParentRoot().isBootstrap()); %></td>
 								<% } %>
 							</tr>
 						</table>
@@ -167,7 +167,7 @@ function doScaricaFile(path) {
 								<td><% bp.getController().writeFormLabel( out, "nome_file_ric"); %></td>
 								<td><% bp.getController().writeFormInput( out, "nome_file_ric"); %></td>
 								<% if (bulk!=null && bulk.getFile_ric()!=null) {%>
-									<td align="left"><% JSPUtils.button(out,bp.encodePath("img/open24.gif"),bp.encodePath("img/open24.gif"),"","javascript:doScaricaFile('tmp/"+bulk.getNome_file_ric()+"')",true); %></td>
+									<td align="left"><% JSPUtils.button(out,bp.encodePath("img/open24.gif"),bp.encodePath("img/open24.gif"),"","javascript:doScaricaFile('tmp/"+bulk.getNome_file_ric()+"')",true, bp.getParentRoot().isBootstrap()); %></td>
 								<% } %>
 							</tr>
 						</table>

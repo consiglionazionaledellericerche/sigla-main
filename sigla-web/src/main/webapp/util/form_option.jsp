@@ -20,21 +20,21 @@
 <body class="Workspace">
 <FORM name="mainForm" action="Option.do" method=post onSubmit="return disableDblClick()">
 <input type=hidden name="comando">
-<table class="Window card" cellspacing="0" cellpadding="2" align="center" width="280">
+<table class="Window card col-5" cellspacing="0" cellpadding="2" align="center" width="280">
 <% 	OptionBP bp = (OptionBP)BusinessProcess.getBusinessProcess(request);
 	 	BusinessProcess.encode(bp,pageContext);
 		HttpActionContext.encodeActionCounter(pageContext);
 		String msg = bp.getAndClearMessage();
 		String src = "img/question.gif";
-		String iconClass = "fa fa-question-circle fa-2x text-info";
+		String iconClass = "fa fa-question-circle fa-fw fa-2x text-info";
 		if (msg != null)
 			switch(bp.getMessageStatus()) {
 				case OptionBP.WARNING_MESSAGE:	
 					src = "img/warning.gif";
-					iconClass = "fa fa-exclamation-triangle fa-2x text-warning";
+					iconClass = "fa fa-exclamation-triangle fa-fw fa-2x text-warning";
 					break;
 				case OptionBP.ERROR_MESSAGE: 
-					iconClass = "fa  fa-exclamation-circle fa-2x text-danger";
+					iconClass = "fa  fa-exclamation-circle fa-fw fa-2x text-danger";
 					src = "img/error.gif";
 					break;
 				case OptionBP.QUESTION_MESSAGE: 
@@ -43,7 +43,12 @@
 				break;
 			} %>
 		<tr>
-			<td class="FormTitle card-header h5"><%if (bp.getParentRoot().isBootstrap()) { %><i class="<%=iconClass%>" aria-hidden="true"></i><%}%>Informazione</td>
+			<td class="FormTitle card-header h5">
+				<%if (bp.getParentRoot().isBootstrap()) { %>
+					<i class="<%=iconClass%>" aria-hidden="true"></i>
+				<%}%>
+				Informazione
+			</td>
 		</tr>
 		<tr>
 			<td>

@@ -16,7 +16,10 @@
 
 <table class="Form" width="100%">
   <tr>
-	<td><b><big>CdR</big></b><% JSPUtils.button(out,bp.encodePath("img/conferma.gif"),bp.encodePath("img/conferma.gif"),null,"javascript:submitForm('doCaricaLineeAttivita')", obbligazione.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable()); %>
+	<td><b><big>CdR</big></b><% JSPUtils.button(out,bp.encodePath("img/conferma.gif"),bp.encodePath("img/conferma.gif"),
+			null,"javascript:submitForm('doCaricaLineeAttivita')", 
+			obbligazione.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
+			bp.getParentRoot().isBootstrap()); %>
 		<% Button.write(out,bp.encodePath("img/zoom16.gif"),bp.encodePath("img/zoom16.gif"),null,"javascript:submitForm('doVisualizzaSpeseCdr')", null, "Prospetto situazione spese", bp.isVisualizzaSpeseCdrButtonEnabled(), bp.getParentRoot().isBootstrap()); %>
 
 	</td>
@@ -26,7 +29,10 @@
 	</tr>
 	<tr>
 	<td colspan=2>
-			<b ALIGN="CENTER"><big>GAE</big></b><% JSPUtils.button(out,bp.encodePath("img/conferma.gif"),bp.encodePath("img/conferma.gif"), null,"javascript:submitForm('doConfermaLineeAttivita')", obbligazione.isConfermaLineeAttivitaEnabled() && bp.isEditable()); %>
+			<b ALIGN="CENTER"><big>GAE</big></b><% JSPUtils.button(out,bp.encodePath("img/conferma.gif"),
+					bp.encodePath("img/conferma.gif"), null,"javascript:submitForm('doConfermaLineeAttivita')", 
+					obbligazione.isConfermaLineeAttivitaEnabled() && bp.isEditable(),
+					bp.getParentRoot().isBootstrap()); %>
 	</td>
 	</tr>
 	<tr>
