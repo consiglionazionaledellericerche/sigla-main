@@ -26,9 +26,9 @@
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "im_accertamento"); %></td>
   		<% if (bp.isROImporto()){ %>
-			<td><% bp.getController().writeFormInput( out, "default", "im_accertamento_ro", false, "FormInput", null); %></td>
+			<td><% bp.getController().writeFormInput( out, "default", "im_accertamento_ro", false, null, null); %></td>
 	  	<%} else {%>
-			<td><% bp.getController().writeFormInput( out, "default", "im_accertamento", true, "FormInput", null); %></td>
+			<td><% bp.getController().writeFormInput( out, "default", "im_accertamento", true, null, null); %></td>
 	  	<%}%>
 		</tr>
 		<tr>

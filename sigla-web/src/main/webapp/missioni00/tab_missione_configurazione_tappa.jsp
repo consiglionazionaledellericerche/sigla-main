@@ -42,7 +42,7 @@
 	<tr>
 	<td>
 		<% bp.getTappaController().writeFormLabel( out, "dt_inizio_tappa"); %>
-		<% bp.getTappaController().writeFormInput( out,"default","dt_inizio_tappa",!bp.isEditingTappa(),"FormInput", "onChange=\"submitForm('doCambiaDataTappa')\""); %>
+		<% bp.getTappaController().writeFormInput( out,"default","dt_inizio_tappa",!bp.isEditingTappa(),null, "onChange=\"submitForm('doCambiaDataTappa')\""); %>
 	</td>	
 	</tr>
 
@@ -53,16 +53,16 @@
 <div class="Group" style="width:100%">
 <table width="100%">
 	<tr>																								
-	<td><% bp.getTappaController().writeFormInput(out,"default","comuneRadioGroup",!bp.isEditingTappa(),"FormInput","onClick=\"submitForm('doSetNazioneDivisaCambioItalia')\"");%></td>
+	<td><% bp.getTappaController().writeFormInput(out,"default","comuneRadioGroup",!bp.isEditingTappa(),null,"onClick=\"submitForm('doSetNazioneDivisaCambioItalia')\"");%></td>
 	</tr>
 </table>	
 
 <table width="100%">
 	<tr>
 	<td><% bp.getTappaController().writeFormLabel( out, "pg_nazione");%></td>
-	<td><% bp.getTappaController().writeFormInput(out,"default","pg_nazione",bp.isNazioneReadOnly(),"FormInput", null);%>	
-		<% bp.getTappaController().writeFormInput(out,"default","ds_nazione",bp.isNazioneReadOnly(),"FormInput", null);%>	
-		<% bp.getTappaController().writeFormInput(out,"default","find_nazione",bp.isNazioneReadOnly(),"FormInput", null);%>	
+	<td><% bp.getTappaController().writeFormInput(out,"default","pg_nazione",bp.isNazioneReadOnly(),null, null);%>	
+		<% bp.getTappaController().writeFormInput(out,"default","ds_nazione",bp.isNazioneReadOnly(),null, null);%>	
+		<% bp.getTappaController().writeFormInput(out,"default","find_nazione",bp.isNazioneReadOnly(),null, null);%>	
 	</tr>
 
 	<tr>
@@ -71,7 +71,7 @@
 		<% bp.getTappaController().writeFormInput(out,"ds_divisa_tappa");%>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<% bp.getTappaController().writeFormLabel( out, "cambio_tappa");%>
-		<% bp.getTappaController().writeFormInput(out,"default","cambio_tappa",bp.isCambioTappaReadOnly(),"FormInput", null);%>
+		<% bp.getTappaController().writeFormInput(out,"default","cambio_tappa",bp.isCambioTappaReadOnly(),null, null);%>
 	</td>		
 	</tr>
 
@@ -85,15 +85,15 @@
 <div class="Group" style="width:100%">
 <table width="100%">
 	<tr>
-	<td><% bp.getTappaController().writeFormInput(out,"default","vittoAlloggioNavigazioneRadioGroup",!bp.isEditingTappa(),"FormInput", null);%></td>	
+	<td><% bp.getTappaController().writeFormInput(out,"default","vittoAlloggioNavigazioneRadioGroup",!bp.isEditingTappa(),null, null);%></td>	
 	</tr>
 </table>
 <table width="100%">
 	<tr>
 	<td><% bp.getTappaController().writeFormLabel( out, "fl_no_diaria"); %>
-		<% bp.getTappaController().writeFormInput(out,"default","fl_no_diaria",!bp.isEditingTappa()||!bp.isDiariaEditable(HttpActionContext.getUserContext(session)),"FormInput", "onChange=\"submitForm('doOnFlDiariaChange')\"");%></td>
+		<% bp.getTappaController().writeFormInput(out,"default","fl_no_diaria",!bp.isEditingTappa()||!bp.isDiariaEditable(HttpActionContext.getUserContext(session)),null, "onChange=\"submitForm('doOnFlDiariaChange')\"");%></td>
 		<% if (bp.isRimborsoVisible(HttpActionContext.getUserContext(session))) { %>
-	         <td><% bp.getTappaController().writeFormInput(out,"default","tipoRimborsoRadioGroup",!bp.isEditingTappa()||!bp.isRimborsoEditable(HttpActionContext.getUserContext(session)),"FormInput", null);%></td>
+	         <td><% bp.getTappaController().writeFormInput(out,"default","tipoRimborsoRadioGroup",!bp.isEditingTappa()||!bp.isRimborsoEditable(HttpActionContext.getUserContext(session)),null, null);%></td>
         <% } %>	
 	</tr>			
 </table>
@@ -104,11 +104,11 @@
 	<tr>
 	<td>
 		<% bp.getTappaController().writeFormLabel( out, "dt_ingresso_estero"); %>
-		<% bp.getTappaController().writeFormInput(out,"default","dt_ingresso_estero",bp.isDataIngressoAbilitata(),"FormInput", null);%>
+		<% bp.getTappaController().writeFormInput(out,"default","dt_ingresso_estero",bp.isDataIngressoAbilitata(),null, null);%>
 	</td>		
 	<td>
 		<% bp.getTappaController().writeFormLabel( out, "dt_uscita_estero"); %>
-		<% bp.getTappaController().writeFormInput(out,"default","dt_uscita_estero",bp.isDataIngressoAbilitata(),"FormInput", null);%>
+		<% bp.getTappaController().writeFormInput(out,"default","dt_uscita_estero",bp.isDataIngressoAbilitata(),null, null);%>
 	</td>
 	</tr>
 </table>
