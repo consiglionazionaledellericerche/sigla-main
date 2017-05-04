@@ -16,7 +16,7 @@
 	<table class="Panel">
 	  <tr>
 	    <td><% bp.getController().writeFormLabel(out,"dt_registrazione");%></td>
-	    <td><% bp.getController().writeFormInput(out,"default","dt_registrazione", bp.isPublishHidden(),"FormInput",null);%></td>
+	    <td><% bp.getController().writeFormInput(out,"default","dt_registrazione", bp.isPublishHidden(),null,null);%></td>
         <td><% bp.getController().writeFormLabel(out,"cd_protocollo");%></td>
         <td><% bp.getController().writeFormInput(out,"cd_protocollo");%></td>
       </tr>  	
@@ -38,21 +38,21 @@
       </tr>  	      
 	  <tr>
          <td><% bp.getController().writeFormLabel(out, "figura_giuridica_interna");%></td>
-         <td><% bp.getController().writeFormInput(out, "default", "figura_giuridica_interna", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td><% bp.getController().writeFormInput(out, "default", "figura_giuridica_interna", bp.isPublishHidden(),null,null);%></td>
       </tr>  	
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"firmatario");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","firmatario", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td><% bp.getController().writeFormInput(out,"default","firmatario", bp.isPublishHidden(),null,null);%></td>
       </tr>            
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","cd_terzo_resp", bp.isPublishHidden(),"FormInput",null);%>
+         <td><% bp.getController().writeFormInput(out,"default","cd_terzo_resp", bp.isPublishHidden(),null,null);%>
              <% bp.getController().writeFormInput(out,"ds_responsabile");%>
-             <% bp.getController().writeFormInput(out,"default","responsabile", bp.isPublishHidden(),"FormInput",null);%></td>
+             <% bp.getController().writeFormInput(out,"default","responsabile", bp.isPublishHidden(),null,null);%></td>
       </tr>
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"direttore");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","direttore", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td><% bp.getController().writeFormInput(out,"default","direttore", bp.isPublishHidden(),null,null);%></td>
       </tr>
       </table></div>
       </td></tr>
@@ -60,11 +60,11 @@
       <div class="Group"><table>      
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"figura_giuridica_esterna");%></td>
-         <td colspan="5"><% bp.getController().writeFormInput(out,"default", "figura_giuridica_esterna", bp.isContrattoDefinitivo(),"FormInput",null);%></td>
+         <td colspan="5"><% bp.getController().writeFormInput(out,"default", "figura_giuridica_esterna", bp.isContrattoDefinitivo(),null,null);%></td>
       </tr>      
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"resp_esterno");%></td>
-         <td colspan="5"><% bp.getController().writeFormInput(out,"default","resp_esterno", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td colspan="5"><% bp.getController().writeFormInput(out,"default","resp_esterno", bp.isPublishHidden(),null,null);%></td>
       </tr>            
       </table></div>
       </td></tr>   
@@ -72,28 +72,28 @@
       <div class="Group"><table>      
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"atto");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","atto", bp.isPublishHidden(),"FormInput",null);%></td>
-         <td><% bp.getController().writeFormInput(out,"default","crea_atto", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td><% bp.getController().writeFormInput(out,"default","atto", bp.isPublishHidden(),null,null);%></td>
+         <td><% bp.getController().writeFormInput(out,"default","crea_atto", bp.isPublishHidden(),null,null);%></td>
       </tr>
       <% if (((ContrattoBulk)bp.getModel()).isDs_atto_non_definitoVisible()){%>
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"ds_atto_non_definito");%></td>
-         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_atto_non_definito", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_atto_non_definito", bp.isPublishHidden(),null,null);%></td>
       </tr>      
       <%}%>
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"ds_atto");%></td>
-         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_atto", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_atto", bp.isPublishHidden(),null,null);%></td>
       </tr>
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"organo");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","organo", bp.isPublishHidden(),"FormInput",null);%></td>
-         <td><% bp.getController().writeFormInput(out,"default","crea_organo", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td><% bp.getController().writeFormInput(out,"default","organo", bp.isPublishHidden(),null,null);%></td>
+         <td><% bp.getController().writeFormInput(out,"default","crea_organo", bp.isPublishHidden(),null,null);%></td>
       </tr>
       <% if (((ContrattoBulk)bp.getModel()).isDs_organo_non_definitoVisible()){%>
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"ds_organo_non_definito");%></td>
-         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_organo_non_definito", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_organo_non_definito", bp.isPublishHidden(),null,null);%></td>
       </tr>      
       <%}%>                        
       </table></div>
@@ -103,7 +103,7 @@
 	      <table>            
 			  <tr>         
 		         <td><% bp.getController().writeFormLabel(out,"oggetto");%></td>
-		         <td colspan="5"><% bp.getController().writeFormInput(out,"default","oggetto", bp.isPublishHidden(),"FormInput",null);%></td>
+		         <td colspan="5"><% bp.getController().writeFormInput(out,"default","oggetto", bp.isPublishHidden(),null,null);%></td>
 		      </tr>                     	
 			  <tr>      
 			    <td><% bp.getController().writeFormLabel(out,"natura_contabile");%></td>
@@ -112,36 +112,36 @@
 		      <% if ((ContrattoBulk)bp.getModel() != null && ((ContrattoBulk)bp.getModel()).isPassivo() || ((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo()){%>
 			  <tr>         
 		         <td><% bp.getController().writeFormLabel(out,"fl_mepa");%></td>
-		         <td><% bp.getController().writeFormInput(out,"default","fl_mepa", bp.isPublishHidden(),"FormInput",null);%></td>
+		         <td><% bp.getController().writeFormInput(out,"default","fl_mepa", bp.isPublishHidden(),null,null);%></td>
 		      </tr>
 			 <%}%>
 			  <tr>         
 		         <td><% bp.getController().writeFormLabel(out,"tipo_contratto");%></td>
 		         <td>
-		         	<div style="float:left"><% bp.getController().writeFormInput(out,"default","tipo_contratto", bp.isPublishHidden(),"FormInput",null);%></div>
-		         	<div style="float:left"><% bp.getController().writeFormInput(out,"default","crea_tipo_contratto", bp.isPublishHidden(),"FormInput",null);%></div>
+		         	<div style="float:left"><% bp.getController().writeFormInput(out,"default","tipo_contratto", bp.isPublishHidden(),null,null);%></div>
+		         	<div style="float:left"><% bp.getController().writeFormInput(out,"default","crea_tipo_contratto", bp.isPublishHidden(),null,null);%></div>
 		         </td>
 		      </tr>
 		      <% if (((ContrattoBulk)bp.getModel()).isCIGVisible()){%>
 			  <tr>         
 		         <td><% bp.getController().writeFormLabel(out,"cig");%></td>
 		         <td>
-		         	<div style="float:left"><% bp.getController().writeFormInput(out,"default","cig", bp.isPublishHidden(),"FormInput",null);%></div>
-		         	<div style="float:left"><% bp.getController().writeFormInput(out,"default","crea_cig", bp.isPublishHidden(),"FormInput",null);%></div>
+		         	<div style="float:left"><% bp.getController().writeFormInput(out,"default","cig", bp.isPublishHidden(),null,null);%></div>
+		         	<div style="float:left"><% bp.getController().writeFormInput(out,"default","crea_cig", bp.isPublishHidden(),null,null);%></div>
 		         </td>
 		      </tr>
 		      <%}%>
 			  <tr>
 		        <td><% bp.getController().writeFormLabel(out,"procedura_amministrativa");%></td>
 		        <td>
-		        	<div style="float:left"><% bp.getController().writeFormInput(out,"default","procedura_amministrativa", bp.isPublishHidden(),"FormInput",null);%></div>
-		        	<div style="float:left"><% bp.getController().writeFormInput(out,"default","crea_procedura_amministrativa", bp.isPublishHidden(),"FormInput",null);%></div>
+		        	<div style="float:left"><% bp.getController().writeFormInput(out,"default","procedura_amministrativa", bp.isPublishHidden(),null,null);%></div>
+		        	<div style="float:left"><% bp.getController().writeFormInput(out,"default","crea_procedura_amministrativa", bp.isPublishHidden(),null,null);%></div>
 		        </td>	  
 		      </tr>
 		      <% if ((ContrattoBulk)bp.getModel() != null && ((ContrattoBulk)bp.getModel()).isPassivo() || ((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo()){%>
 			  <tr>         
 		         <td><% bp.getController().writeFormLabel(out,"tipoNormaPerla");%></td>
-		         <td><% bp.getController().writeFormInput(out,"default","tipoNormaPerla", bp.isPublishHidden(),"FormInput",null);%></td>
+		         <td><% bp.getController().writeFormInput(out,"default","tipoNormaPerla", bp.isPublishHidden(),null,null);%></td>
 		      </tr>
 		      <%}%>
 			  <tr>         
@@ -149,7 +149,7 @@
 		      <% if (((ContrattoBulk)bp.getModel() == null)  || ((ContrattoBulk)bp.getModel() != null && (((ContrattoBulk)bp.getModel()).getCup() == null || ((ContrattoBulk)bp.getModel()).getCup().getCdCup() == null ))){%>
         			<td><% bp.getController().writeFormInput(out,"default","cup",false,null,"");%></td>                	            
 		      <%} else {%>
-        			<td><% bp.getController().writeFormInput(out,"default","cup", bp.isPublishHidden(),"FormInput",null);%></td>                	            
+        			<td><% bp.getController().writeFormInput(out,"default","cup", bp.isPublishHidden(),null,null);%></td>                	            
 		      <%}%>
 		      </tr>
 		      <% if ((ContrattoBulk)bp.getModel() != null && (((ContrattoBulk)bp.getModel()).isAttivo() || ((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo())){%>
@@ -158,7 +158,7 @@
 		      	  <% if (((ContrattoBulk)bp.getModel()).getCdCigFatturaAttiva() == null ){%>
         			<td><% bp.getController().writeFormInput(out,null,"cdCigFatturaAttiva",false,null,"");%></td>                	            
 			      <%} else {%>
-        			<td><% bp.getController().writeFormInput(out,"default","cdCigFatturaAttiva", bp.isPublishHidden(),"FormInput",null);%></td>                	            
+        			<td><% bp.getController().writeFormInput(out,"default","cdCigFatturaAttiva", bp.isPublishHidden(),null,null);%></td>                	            
 			      <%}%>
 		      <%}%>
 	      </table>
@@ -169,36 +169,36 @@
       <% if (((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo()){%>
 	  <tr>
         <td><% bp.getController().writeFormLabel(out,"im_contratto_attivo");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","im_contratto_attivo", bp.isPublishHidden(),"FormInput",null);%></td>                	    
+        <td><% bp.getController().writeFormInput(out,"default","im_contratto_attivo", bp.isPublishHidden(),null,null);%></td>                	    
         <td><% bp.getController().writeFormLabel(out,"im_contratto_passivo");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),"FormInput",null);%></td>                	            
+        <td><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),null,null);%></td>                	            
       </tr>      
       <%} else if(((ContrattoBulk)bp.getModel()).isAttivo()){%>
 	  <tr>
         <td><% bp.getController().writeFormLabel(out,"im_contratto_attivo");%></td>
-        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_attivo", bp.isPublishHidden(),"FormInput",null);%></td>                	    
+        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_attivo", bp.isPublishHidden(),null,null);%></td>                	    
       </tr>            
       <%} else if(((ContrattoBulk)bp.getModel()).isPassivo()){%>
 	  <tr>
         <td><% bp.getController().writeFormLabel(out,"im_contratto_passivo");%></td>
-        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),"FormInput",null);%></td>                	    
+        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),null,null);%></td>                	    
       </tr>                  
       <%}%>
 	  <tr>
 	    <td><% bp.getController().writeFormLabel(out,"dt_stipula");%></td>
-	    <td><% bp.getController().writeFormInput(out,"default","dt_stipula", bp.isPublishHidden(),"FormInput",null);%></td>
+	    <td><% bp.getController().writeFormInput(out,"default","dt_stipula", bp.isPublishHidden(),null,null);%></td>
         <td><% bp.getController().writeFormLabel(out,"dt_inizio_validita");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","dt_inizio_validita", bp.isPublishHidden(),"FormInput",null);%></td>                	    
+        <td><% bp.getController().writeFormInput(out,"default","dt_inizio_validita", bp.isPublishHidden(),null,null);%></td>                	    
       </tr>      
 	  <tr>
         <td><% bp.getController().writeFormLabel(out,"dt_fine_validita");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","dt_fine_validita", bp.isPublishHidden(),"FormInput",null);%></td>        
+        <td><% bp.getController().writeFormInput(out,"default","dt_fine_validita", bp.isPublishHidden(),null,null);%></td>        
         <td><% bp.getController().writeFormLabel(out,"dt_proroga");%></td>
         <td><% bp.getController().writeFormInput(out,null,"dt_proroga",false,null,"");%></td>        	          
       </tr>
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"contratto_padre");%></td>
-         <td colspan="5"><% bp.getController().writeFormInput(out,"default","contratto_padre", bp.isPublishHidden(),"FormInput",null);%></td>
+         <td colspan="5"><% bp.getController().writeFormInput(out,"default","contratto_padre", bp.isPublishHidden(),null,null);%></td>
       </tr>
       </table></div>
       </td></tr>

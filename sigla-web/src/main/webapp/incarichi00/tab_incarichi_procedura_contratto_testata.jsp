@@ -79,7 +79,7 @@ if (bp.getModel()!=null &&
 		      </tr>
 			  <tr>
 		        <td><% controller.writeFormLabel(out,"dt_proroga");%></td>
-				<td><% controller.writeFormInput(out,"default","dt_proroga",bp.isViewing()||!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),"FormInput",null); %></td>
+				<td><% controller.writeFormInput(out,"default","dt_proroga",bp.isViewing()||!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),null,null); %></td>
 			  <% if (bp.isUoEnte()) { %>
 		        <td><% controller.writeFormLabel(out,"dt_proroga_pagam");%></td>
 			    <td><% controller.writeFormInput(out,"dt_proroga_pagam");%></td>
@@ -100,7 +100,7 @@ if (bp.getModel()!=null &&
 		        <td><% controller.writeFormLabel(out,"dt_fine_validita");%></td>
 		        <td><% controller.writeFormInput(out,"dt_fine_validita");%></td>        
 		        <td><% controller.writeFormLabel(out,"dt_proroga");%></td>
-				<td><% controller.writeFormInput(out,"default","dt_proroga",bp.isViewing()||!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),"FormInput",null); %></td>
+				<td><% controller.writeFormInput(out,"default","dt_proroga",bp.isViewing()||!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),null,null); %></td>
 		      </tr>
 			  <% if (bp.isUoEnte()) { %>
 				  <tr>
@@ -115,7 +115,7 @@ if (bp.getModel()!=null &&
       <div class="Group"><table <%=widthTable%>>
   	  <tr>
 		<td><% bp.writeFormLabel(out,"firmatario");%></td>
-		<td><% bp.writeFormInput(out,"default","cd_firmatario",true,"FormInput",null);%>
+		<td><% bp.writeFormInput(out,"default","cd_firmatario",true,null,null);%>
 		    <% bp.writeFormInput(out,"ds_firmatario");%></td>
 	  </tr>            
       </table></div>
@@ -127,11 +127,11 @@ if (bp.getModel()!=null &&
       <table <%=widthTable%>>
 		  <tr>
 		    <td><% controller.writeFormLabel(out,"cd_provv");%></td>
-			<td><% controller.writeFormInput(out,"default","cd_provv",bp.isViewing()||(!bp.isSuperUtente()&&incarico!=null&&incarico.isROIncarico()),"FormInput",null); %></td>
+			<td><% controller.writeFormInput(out,"default","cd_provv",bp.isViewing()||(!bp.isSuperUtente()&&incarico!=null&&incarico.isROIncarico()),null,null); %></td>
 		    <td><% controller.writeFormLabel(out,"nr_provv");%></td>
-			<td><% controller.writeFormInput(out,"default","nr_provv",bp.isViewing()||(!bp.isSuperUtente()&&incarico!=null&&incarico.isROIncarico()),"FormInput",null); %></td>
+			<td><% controller.writeFormInput(out,"default","nr_provv",bp.isViewing()||(!bp.isSuperUtente()&&incarico!=null&&incarico.isROIncarico()),null,null); %></td>
 		    <td><% controller.writeFormLabel(out,"dt_provv");%></td>
-			<td><% controller.writeFormInput(out,"default","dt_provv",bp.isViewing()||(!bp.isSuperUtente()&&incarico!=null&&incarico.isROIncarico()),"FormInput",null); %></td>
+			<td><% controller.writeFormInput(out,"default","dt_provv",bp.isViewing()||(!bp.isSuperUtente()&&incarico!=null&&incarico.isROIncarico()),null,null); %></td>
 	      </tr>
       </table>
       </fieldset>
@@ -142,12 +142,12 @@ if (bp.getModel()!=null &&
 	  <tr>         
 		<% if (!bp.isSearching()) {%>
 			<td><% controller.writeFormLabel(out,"terzo");%></td>
-			<td><% controller.writeFormInput(out,"default", "cd_terzo", false,"FormInput",null); %>
-			    <% controller.writeFormInput(out,"default", "terzo", false,"FormInput",null); %></td>
+			<td><% controller.writeFormInput(out,"default", "cd_terzo", false,null,null); %>
+			    <% controller.writeFormInput(out,"default", "terzo", false,null,null); %></td>
 		<% } else {%>
 			<td><% controller.writeFormLabel(out,"terzoSearch");%></td>
-			<td><% controller.writeFormInput(out,"default", "cd_terzoSearch", false,"FormInput",null); %>
-			    <% controller.writeFormInput(out,"default", "terzoSearch", false,"FormInput",null); %></td>
+			<td><% controller.writeFormInput(out,"default", "cd_terzoSearch", false,null,null); %>
+			    <% controller.writeFormInput(out,"default", "terzoSearch", false,null,null); %></td>
 		<% } %>
 	  </tr>
 	  <tr>

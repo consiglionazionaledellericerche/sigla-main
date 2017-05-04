@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "im_tot_obbligazione"); %></td>
-	<td><% bp.getController().writeFormInput( out, "default", "im_tot_obbligazione", true, "FormInput", null); %></td>
+	<td><% bp.getController().writeFormInput( out, "default", "im_tot_obbligazione", true, null, null); %></td>
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "im_parz_scadenze"); %></td>

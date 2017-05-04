@@ -25,17 +25,17 @@
 		<% if ( !filtro.isEnteInScrivania() ) { %>
 			<tr>
 				<td><% bp.getController().writeFormLabel( out, "fl_ente"); %></td>		
-				<td><% bp.getController().writeFormInput(out,"default","fl_ente",false,"FormInput","onclick=\"submitForm('doOnFl_enteChange')\""); %></td>
+				<td><% bp.getController().writeFormInput(out,"default","fl_ente",false,null,"onclick=\"submitForm('doOnFl_enteChange')\""); %></td>
 			</tr>
 			<tr>
 				<td><% bp.getController().writeFormLabel( out, "ti_gestione"); %></td>		
-				<td><% bp.getController().writeFormInput( out, "default","ti_gestione",filtro.getFl_ente().booleanValue(),"FormInput","onChange=\"submitForm('doOnTi_gestioneChange')\""); %></td>		
+				<td><% bp.getController().writeFormInput( out, "default","ti_gestione",filtro.getFl_ente().booleanValue(),null,"onChange=\"submitForm('doOnTi_gestioneChange')\""); %></td>		
 			</tr>
 			<% if ( filtro.getFl_ente().booleanValue()) { 
 					if (!filtro.isEntrata()) { %>	
 						<tr>
 							<td><% bp.getController().writeFormLabel( out,"fl_partita_giro"); %></td>		
-							<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,"FormInput","onclick=\"submitForm('doOnFl_partita_giroChange')\""); %></td>		
+							<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,null,"onclick=\"submitForm('doOnFl_partita_giroChange')\""); %></td>		
 						</tr>
 						<tr>
 						   <td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>	 	
@@ -53,7 +53,7 @@
   			<% } else {%>
   						<tr>
 							<td><% bp.getController().writeFormLabel( out, "fl_partita_giro"); %></td>		
-							<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,"FormInput","onclick=\"submitForm('doOnFl_partita_giroChange')\""); %></td>		
+							<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,null,"onclick=\"submitForm('doOnFl_partita_giroChange')\""); %></td>		
 						</tr>
 						<tr>
 						   <td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>		
@@ -71,13 +71,13 @@
 	  	<% } else { %>
 			<tr>
 				<td><% bp.getController().writeFormLabel( out, "ti_gestione"); %></td>		
-				<td><% bp.getController().writeFormInput( out, "default","ti_gestione",false,"FormInput","onChange=\"submitForm('doDefault')\""); %></td>		
+				<td><% bp.getController().writeFormInput( out, "default","ti_gestione",false,null,"onChange=\"submitForm('doDefault')\""); %></td>		
 			</tr>
 			<% if (filtro.isEntrata()) { %>
 				
 				<tr>
 					<td><% bp.getController().writeFormLabel( out, "fl_partita_giro"); %></td>		
-					<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,"FormInput","onclick=\"submitForm('doOnFl_partita_giroChange')\""); %></td>		
+					<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,null,"onclick=\"submitForm('doOnFl_partita_giroChange')\""); %></td>		
 				<tr>
 				   <td><% bp.getController().writeFormLabel( out, "cd_unita_organizzativa"); %></td>		
 				   <td><% bp.getController().writeFormInput( out, "cd_unita_organizzativa");
@@ -98,7 +98,7 @@
 				</tr>
 				<tr>
 					<td><% bp.getController().writeFormLabel( out, "fl_partita_giro"); %></td>		
-					<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,"FormInput","onclick=\"submitForm('doOnFl_partita_giroChange')\"");%></td>		
+					<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,null,"onclick=\"submitForm('doOnFl_partita_giroChange')\"");%></td>		
 				</tr>
 				<tr>
 				   <td><% bp.getController().writeFormLabel( out, "cd_cds_proprio"); %></td>		

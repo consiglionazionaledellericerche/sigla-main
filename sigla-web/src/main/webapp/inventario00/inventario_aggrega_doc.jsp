@@ -34,9 +34,9 @@
 			<td colspan="2">
 				<% bp.getRigheInventarioDaDocumento().writeFormLabel(out,"gruppi"); %>	
 				<% if (bp.isNumGruppiErrato()){ %>
-					<input type=text name="groups" class="FormInput" maxLength=3 size=10 style="background: coral">
+					<input type=text name="groups" class=null maxLength=3 size=10 style="background: coral">
 				<% } else { %>
-					<input type=text name="groups" class="FormInput" maxLength=3 size=10 style="background: #F5F5DC">
+					<input type=text name="groups" class=null maxLength=3 size=10 style="background: #F5F5DC">
 				<% } %>
 			</td>
 			
