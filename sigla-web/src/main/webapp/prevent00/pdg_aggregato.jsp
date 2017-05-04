@@ -35,7 +35,7 @@
 <table class="Panel">
 	<tr>
 		<td><% bp.getController().writeFormLabel(out,"cdr");%></td>
-		<td colspan="2"><% bp.getController().writeFormInput(out,"default","cdr",false,"FormInput","onchange=\"if (disableDblClick()) submitForm('doCambiaCdR')\"");%></td>
+		<td colspan="2"><% bp.getController().writeFormInput(out,"default","cdr",false,null,"onchange=\"if (disableDblClick()) submitForm('doCambiaCdR')\"");%></td>
 	</tr>
 	<% if (pdg_selezionato) { %>
 	<tr>

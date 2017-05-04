@@ -19,7 +19,7 @@
 <legend class="GroupLabel card-header h3 text-primary">Tipologia</legend>
 	<table class="card-block">
 		<tr>
-			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,"FormInput","onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
+			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,null,"onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
 			 	<td>
 					<% if (anagrafico.getDt_fine_rapporto()!=null) { %>
 						<span class="FormLabel" style="color:red">
@@ -40,11 +40,11 @@
 	<%} %>
 	<%if (anagrafico.isPersonaFisica() || anagrafico.isDiversi()) {%>
 		<tr>
-			<td><%bp.getController().writeFormInput(out,"default","ti_entita_fisica",false,"FormInput","onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
+			<td><%bp.getController().writeFormInput(out,"default","ti_entita_fisica",false,null,"onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
 		</tr>
 			<%} else if (anagrafico.isPersonaGiuridica()) {%>
 		<tr>
-			<td><%bp.getController().writeFormInput(out,"default","ti_entita_giuridica",false,"FormInput","onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
+			<td><%bp.getController().writeFormInput(out,"default","ti_entita_giuridica",false,null,"onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
 		</tr>
 	<%} %>
 <%if (!anagrafico.isStrutturaCNR()) { %>
@@ -71,7 +71,7 @@
 		</tr>
 		<tr>	
 			<td colspan="2">		
-				<% bp.getController().writeFormInput(out,"default","fl_cervellone",false,"FormInput","onclick=\"submitForm('doCambiaFl_cervellone')\"");%>
+				<% bp.getController().writeFormInput(out,"default","fl_cervellone",false,null,"onclick=\"submitForm('doCambiaFl_cervellone')\"");%>
 				<% bp.getController().writeFormLabel(out,"fl_cervellone");%>
 			</td>	
 		</tr>	
@@ -94,7 +94,7 @@
 		<%if (bp.isAbilitatoAutorizzareDiaria()) { %>	
 			<tr>	
 				<td colspan="2">		
-					<% bp.getController().writeFormInput(out,"default","fl_abilita_diaria_miss_est",false,"FormInput","onclick=\"submitForm('doCambiaFl_abilita_diaria_miss_est')\"");%>
+					<% bp.getController().writeFormInput(out,"default","fl_abilita_diaria_miss_est",false,null,"onclick=\"submitForm('doCambiaFl_abilita_diaria_miss_est')\"");%>
 					<% bp.getController().writeFormLabel(out,"fl_abilita_diaria_miss_est");%>
 				</td>	
 			</tr>	

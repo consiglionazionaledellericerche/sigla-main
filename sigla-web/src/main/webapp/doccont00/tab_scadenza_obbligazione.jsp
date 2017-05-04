@@ -20,9 +20,9 @@
 	<tr>			
 	<td><% bp.getScadenzario().writeFormLabel( out, "dt_scadenza"); %></td>
 	<td>
-    	<% bp.getScadenzario().writeFormInput( out,"default","dt_scadenza",!bp.isEditingScadenza(),"FormInput",null); %>
+    	<% bp.getScadenzario().writeFormInput( out,"default","dt_scadenza",!bp.isEditingScadenza(),null,null); %>
 		<% bp.getScadenzario().writeFormLabel( out, "fl_aggiorna_scad_successiva"); %>
-    	<% bp.getScadenzario().writeFormInput( out,"default","fl_aggiorna_scad_successiva",!bp.isEditingScadenza(),"FormInput",null); %>		
+    	<% bp.getScadenzario().writeFormInput( out,"default","fl_aggiorna_scad_successiva",!bp.isEditingScadenza(),null,null); %>		
 	</td>
 	</tr>
 	<%} 
@@ -31,19 +31,19 @@
 	<tr>			
 	<td><% bp.getScadenzario().writeFormLabel( out, "dt_scadenza"); %></td>
 	<td>
-    	<% bp.getScadenzario().writeFormInput( out,"default","dt_scadenza",!bp.isEditingScadenza(),"FormInput",null); %>
+    	<% bp.getScadenzario().writeFormInput( out,"default","dt_scadenza",!bp.isEditingScadenza(),null,null); %>
     </td>	
 	</tr>
 	<%}%>
 	
 	<tr>
 	<td><% bp.getScadenzario().writeFormLabel( out, "im_scadenza"); %></td>	
-	<td><% bp.getScadenzario().writeFormInput( out,"default","im_scadenza",!bp.isEditingScadenza(),"FormInput",null); %></td>
+	<td><% bp.getScadenzario().writeFormInput( out,"default","im_scadenza",!bp.isEditingScadenza(),null,null); %></td>
 	</tr>
 	<tr>			
 	<td><% bp.getScadenzario().writeFormLabel( out, "ds_scadenza"); %></td>
 	<td>
-    	<% bp.getScadenzario().writeFormInput( out,"default","ds_scadenza",!bp.isEditingScadenza(),"FormInput",null); %>
+    	<% bp.getScadenzario().writeFormInput( out,"default","ds_scadenza",!bp.isEditingScadenza(),null,null); %>
     </td>	
 
 	</tr>
