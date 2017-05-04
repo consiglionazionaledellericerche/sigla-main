@@ -29,10 +29,11 @@ restoreWorkspace();
 	</table>
 <%} %>	
 <%
-	if (bp instanceof GestioneUtenteBP && !bp.getParentRoot().isBootstrap()) {
+	if (bp instanceof GestioneUtenteBP) {
 		GestioneUtenteBP gestioneUtenteBP = (GestioneUtenteBP)bp;
 		gestioneUtenteBP.openForm(pageContext);
-		gestioneUtenteBP.writePreferiti(out, HttpActionContext.getUserContext(session));
+		if (!bp.getParentRoot().isBootstrap())
+			gestioneUtenteBP.writePreferiti(out, HttpActionContext.getUserContext(session));
 		gestioneUtenteBP.closeForm(pageContext);
 	}
 %>
