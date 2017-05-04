@@ -61,7 +61,7 @@ function doScaricaAllegato() {
 				<% if (!bp.isSigned()){%>
 					<tr>
 				        <td><% controller.writeFormLabel(out,"default","file"); %></td>
-				        <td colspan="2"><% controller.writeFormInput(out,"default","file", bp.isSigned(),"FormInput",null); %></td>
+				        <td colspan="2"><% controller.writeFormInput(out,"default","file", bp.isSigned(),null,null); %></td>
 				    </tr>
 			    <%}%>
 				<tr>
@@ -71,11 +71,11 @@ function doScaricaAllegato() {
 			    </tr>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","descrizione"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","descrizione", bp.isSigned(),"FormInput",null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","descrizione", bp.isSigned(),null,null); %></td>
 				</tr>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","titolo"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","titolo", bp.isSigned(),"FormInput",null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","titolo", bp.isSigned(),null,null); %></td>
 				</tr>
 			</table>  	
 	  	</td>

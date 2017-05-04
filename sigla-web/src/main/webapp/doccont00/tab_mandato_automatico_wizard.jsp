@@ -37,7 +37,7 @@
 		</tr>			    
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "cd_modalita_pag"); %></td>
-		    <td colspan= "5"><% bp.getController().writeFormInput( out,"default", "cd_modalita_pag", false, "FormInput","onchange=\"submitForm('doCambiaModalitaPagamento')\"" ); %>	
+		    <td colspan= "5"><% bp.getController().writeFormInput( out,"default", "cd_modalita_pag", false, null,"onchange=\"submitForm('doCambiaModalitaPagamento')\"" ); %>	
 						     <% bp.getController().writeFormLabel( out, "banca"); %>
 		  					 <% bp.getController().writeFormInput( out, "banca"); %></td>
 		</tr>
@@ -59,7 +59,7 @@
 			<tr>
 				<td><b ALIGN="CENTER">Impegni</b></td>
 				<% if (bp.isFlCalcoloAutomaticoCheckboxVisible()) { %>
-				  <td align="right"><% bp.getController().writeFormInput(out,null,"fl_imputazione_manuale",!bp.isFlCalcoloAutomaticoCheckboxEnabled(),"FormInput","onclick=\"submitForm('doCambiaFl_imputazione_manuale')\""); %>
+				  <td align="right"><% bp.getController().writeFormInput(out,null,"fl_imputazione_manuale",!bp.isFlCalcoloAutomaticoCheckboxEnabled(),null,"onclick=\"submitForm('doCambiaFl_imputazione_manuale')\""); %>
 	 	   			 			    <% bp.getController().writeFormLabel( out, "fl_imputazione_manuale"); %></td>
 			    <% } %>
 			</tr>
