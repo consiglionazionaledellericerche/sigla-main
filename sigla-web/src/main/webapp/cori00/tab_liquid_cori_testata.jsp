@@ -89,14 +89,14 @@
 		<table>
 			<tr>	
 				<td>
-					<% JSPUtils.button(out,null,null,"Calcola liquidazione","javascript:submitForm('doCalcolaLiquidazione')", !bp.isCalcolato()); %>
+					<% JSPUtils.button(out,null,null,"Calcola liquidazione","javascript:submitForm('doCalcolaLiquidazione')", !bp.isCalcolato(),bp.getParentRoot().isBootstrap()); %>
 				</td>
 				<% if (bp.isAbilitatoF24()){ %>
 				<td>
-					<% JSPUtils.button(out,null,null,"Seleziona Gruppi F24","javascript:submitForm('doSelezionaF24')",bp.isCalcolato()); %>
+					<% JSPUtils.button(out,null,null,"Seleziona Gruppi F24","javascript:submitForm('doSelezionaF24')",bp.isCalcolato(),bp.getParentRoot().isBootstrap()); %>
 				</td>
 				<td>
-					<% JSPUtils.button(out,null,null,"Seleziona Gruppi F24 Previd.","javascript:submitForm('doSelezionaF24Prev')",bp.isCalcolato()); %>
+					<% JSPUtils.button(out,null,null,"Seleziona Gruppi F24 Previd.","javascript:submitForm('doSelezionaF24Prev')",bp.isCalcolato(), bp.getParentRoot().isBootstrap()); %>
 				</td>
 				<% } %>
 		</tr>
@@ -119,7 +119,7 @@
 		<% if (bp.isInserting()){ %>
 		       <tr>	
 				<td>
-					<% JSPUtils.button(out,null,null,"Liquida","javascript:submitForm('doLiquidazione')", !bp.isLiquidato()); %>
+					<% JSPUtils.button(out,null,null,"Liquida","javascript:submitForm('doLiquidazione')", !bp.isLiquidato(),bp.getParentRoot().isBootstrap()); %>
 				</td>
 			   </tr>
 		<% } %>

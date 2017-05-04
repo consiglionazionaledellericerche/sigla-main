@@ -41,11 +41,11 @@
 	<table border="0" cellspacing="0" cellpadding="20">
 	<td><% controller.writeFormInput( out, "stato" ); %></td>
 	<td ALIGN="CENTER"> 
-		<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"),"Cambia stato","javascript:submitForm('doCambiaStato')",bp.isCambiaStatoButtonEnabled()); %>
+		<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"),"Cambia stato","javascript:submitForm('doCambiaStato')",bp.isCambiaStatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
 	</td>	
 
 	<td ALIGN="CENTER"> 
-		<% JSPUtils.button(out,bp.encodePath("img/undo24.gif"),bp.encodePath("img/undo24.gif"),"Riporta a stato precedente","javascript:submitForm('doRiportaStatoPrecedente')",bp.isRiportaStatoPrecedenteButtonEnabled()); %>
+		<% JSPUtils.button(out,bp.encodePath("img/undo24.gif"),bp.encodePath("img/undo24.gif"),"Riporta a stato precedente","javascript:submitForm('doRiportaStatoPrecedente')",bp.isRiportaStatoPrecedenteButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
 	</td>	
 	</table>
 	</div>
