@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "unita_organizzativa"); %></td>
-		<td><% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, "FormInput","onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %></td>
+		<td><% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, null,"onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %></td>
 		<td colspan=2></td>						
 	</tr>
   </table>
@@ -62,7 +62,7 @@
 	</tr>
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "ds_reversale"); %></td>
-			<td colspan=3><% bp.getController().writeFormInput( out,"default", "ds_reversale",reversale.isAnnullato(),"FormInput",null); %></td> 
+			<td colspan=3><% bp.getController().writeFormInput( out,"default", "ds_reversale",reversale.isAnnullato(),null,null); %></td> 
 	</tr>
 	
 	<% if (!bp.isSearching() && reversale!=null && reversale.getStato().equals(ReversaleBulk.STATO_REVERSALE_ANNULLATO) && reversale.getDt_trasmissione() !=null) {%>
@@ -73,9 +73,9 @@
 		<% if ( reversale.getFl_riemissione().booleanValue()) {%>
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "pg_reversale_riemissione"); %></td>
-			<td colspan=3><% bp.getController().writeFormInput( out, "default","pg_reversale_riemissione",!(reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)),"FormInput",null); %>
+			<td colspan=3><% bp.getController().writeFormInput( out, "default","pg_reversale_riemissione",!(reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)),null,null); %>
 				<% bp.getController().writeFormInput( out, "ds_documento_cont"); %>
-				<% bp.getController().writeFormInput( out, "default","find_documento_cont",!(reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)),"FormInput",null); %>
+				<% bp.getController().writeFormInput( out, "default","find_documento_cont",!(reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)),null,null); %>
 			</td>
 		</tr>	
 		<% } %>

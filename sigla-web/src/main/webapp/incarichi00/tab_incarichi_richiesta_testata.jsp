@@ -37,11 +37,11 @@
       <div class="Group"><table>
 	  <tr>
          <td><% bp.getController().writeFormLabel(out,"cds");%></td>
-		 <td><% bp.getController().writeFormInput(out,"default","cds",!bp.isUoEnte(),"FormInput",null); %></td>
+		 <td><% bp.getController().writeFormInput(out,"default","cds",!bp.isUoEnte(),null,null); %></td>
       </tr>  	      
 	  <tr>
          <td><% bp.getController().writeFormLabel(out,"unita_organizzativa");%></td>
-		 <td><% bp.getController().writeFormInput(out,"default","unita_organizzativa",!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),"FormInput",null); %></td>
+		 <td><% bp.getController().writeFormInput(out,"default","unita_organizzativa",!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),null,null); %></td>
       </tr>  	      
 	  <tr>
          <td><% bp.getController().writeFormLabel(out,"email_risposte");%></td>

@@ -39,7 +39,7 @@
 	   <% if ( !modello.isEnteInScrivania() ) { %>
 		<tr>
 		   <td><% bp.getController().writeFormLabel( out, "fl_ente"); %></td>		
-		   <td><% bp.getController().writeFormInput(out,"default","fl_ente", !bp.isUoEnte(),"FormInput","onclick=\"submitForm('doDefault')\""); %></td>
+		   <td><% bp.getController().writeFormInput(out,"default","fl_ente", !bp.isUoEnte(),null,"onclick=\"submitForm('doDefault')\""); %></td>
 
 		</tr>
 		<tr>

@@ -27,7 +27,7 @@
 <table class="Panel" height="150px">
 	<tr>
 		<td rowspan=2><% bp.getController().writeFormLabel(out,"centro_responsabilita");%></td>
-		<td rowspan=2><% bp.getController().writeFormInput(out,"default","centro_responsabilita",false,"FormInput","if (disableDblClick()) onchange=\"submitForm('doCambiaCdR')\"");%></td>
+		<td rowspan=2><% bp.getController().writeFormInput(out,"default","centro_responsabilita",false,null,"if (disableDblClick()) onchange=\"submitForm('doCambiaCdR')\"");%></td>
         <td><center><%JSPUtils.button(out, "img/edit16.gif","img/edit16.gif", "Dettagli Spese", "if (disableDblClick()) javascript:submitForm('doDettagliSpePdG')",null,isCdrSet, bp.getParentRoot().isBootstrap());%></center></td>
 	</tr>
 	<tr>

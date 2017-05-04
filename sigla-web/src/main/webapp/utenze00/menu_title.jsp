@@ -135,7 +135,7 @@ if (window.top.MessageCheckFrame) {
 </tr>
 <% } %>
 <tr>
-	<td colspan="3"><span id="rotext" class="FormInput" style="width:7em; heigth: 2em;"><%= request.getSession().getId()%></span>
+	<td colspan="3"><span id="rotext" class=null style="width:7em; heigth: 2em;"><%= request.getSession().getId()%></span>
 </tr>
 </table>
 </form>
