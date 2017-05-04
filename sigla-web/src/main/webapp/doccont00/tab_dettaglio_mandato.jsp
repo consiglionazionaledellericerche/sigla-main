@@ -21,7 +21,7 @@
 			<td><% bp.getController().writeFormInput( out, "terzo_cd_terzo"); %>
 			    <% bp.getController().writeFormInput( out, "terzo_ds_terzo"); %></td>						
 			<td><% bp.getController().writeFormLabel( out, "terzo_tipo_bollo"); %></td>
-			<td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", mandato.isAnnullato(), "FormInput","onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
+			<td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", mandato.isAnnullato(), null,"onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
 			    <% bp.getController().writeFormInput( out, "terzo_im_tipo_bollo"); %></td>						
 		</tr>
 		<% if (mandato.getTerzo_cedente() != null && mandato.getTerzo_cedente().getCd_terzo() != null ) { %>

@@ -16,6 +16,6 @@
 <table class="Panel" cellspacing=2>
 	<tr>
         <td><% controller.writeFormLabel(out,"nota"); %></td>
-        <td colspan=4><% controller.writeFormInput(out,"default","nota", !(nota!=null && nota.isToBeCreated()),"FormInput",null); %></td>
+        <td colspan=4><% controller.writeFormInput(out,"default","nota", !(nota!=null && nota.isToBeCreated()),null,null); %></td>
 	</tr>
 </table>

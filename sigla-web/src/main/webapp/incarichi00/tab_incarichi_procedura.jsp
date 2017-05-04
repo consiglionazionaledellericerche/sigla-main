@@ -24,11 +24,11 @@
       <table>
 	  <tr>
          <td><% bp.getController().writeFormLabel(out,"cds");%></td>
-		 <td colspan=3><% bp.getController().writeFormInput(out,"default","cds",!bp.isUoEnte()||bp.isROIncaricoRichiesta(),"FormInput",null); %></td>
+		 <td colspan=3><% bp.getController().writeFormInput(out,"default","cds",!bp.isUoEnte()||bp.isROIncaricoRichiesta(),null,null); %></td>
       </tr>  	      
 	  <tr>
          <td><% bp.getController().writeFormLabel(out,"unita_organizzativa");%></td>
-		 <td colspan=3><% bp.getController().writeFormInput(out,"default","unita_organizzativa",!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi())||bp.isROIncaricoRichiesta(),"FormInput",null); %></td>
+		 <td colspan=3><% bp.getController().writeFormInput(out,"default","unita_organizzativa",!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi())||bp.isROIncaricoRichiesta(),null,null); %></td>
       </tr>  	      
 	  <tr>
          <td><% bp.getController().writeFormLabel(out,"indirizzo_unita_organizzativa");%></td>
@@ -228,7 +228,7 @@
 	      <div class="Group"><table>            
 		  <tr>
 	         <td><% bp.getController().writeFormLabel(out,"incarichi_richiesta");%></td>
-	         <td colspan=3><% bp.getController().writeFormInput(out,"default","incarichi_richiesta",bp.isROIncaricoRichiesta(),"FormInput",null); %></td>
+	         <td colspan=3><% bp.getController().writeFormInput(out,"default","incarichi_richiesta",bp.isROIncaricoRichiesta(),null,null); %></td>
 	      </tr>
 	      </table></div>
 	      </td></tr>

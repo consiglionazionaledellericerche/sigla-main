@@ -40,7 +40,7 @@
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "unita_organizzativa"); %></td>
 	<td>
-		<% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, "FormInput","onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %>
+		<% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, null,"onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %>
 	</td>		
 
 	</tr>
