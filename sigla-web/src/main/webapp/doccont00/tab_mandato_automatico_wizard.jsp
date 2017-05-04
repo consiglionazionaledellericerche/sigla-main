@@ -85,7 +85,7 @@
 			</tr>
 	    <% } %>
 		<tr>		
-		<td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"),"Genera", "javascript:submitForm('doEmettiMandato')", bp.isEmettiMandatoButtonEnabled()); %></td>
+		<td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"),"Genera", "javascript:submitForm('doEmettiMandato')", bp.isEmettiMandatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %></td>
 		</tr>
 		<tr>
 		<td colspan="2"><b>Mandati Generati</b></td>
@@ -97,7 +97,7 @@
 		   </td>
 		</tr>
 		<tr>		
-		   <td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"),"Visualizza", "javascript:submitForm('doVisualizzaMandato')", bp.isVisualizzaMandatoButtonEnabled()); %></td>
+		   <td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"),"Visualizza", "javascript:submitForm('doVisualizzaMandato')", bp.isVisualizzaMandatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %></td>
 		</tr>		
 	</table>
 </html>
