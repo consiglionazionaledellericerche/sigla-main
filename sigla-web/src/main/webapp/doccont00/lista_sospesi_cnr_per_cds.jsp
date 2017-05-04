@@ -66,7 +66,8 @@
 	<table align="center" class="Panel">	
 		<tr>
 			<td align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaSospesiCNR')",null, bp.getParentRoot().isBootstrap()); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), 
+						"javascript:submitForm('doCercaSospesiCNR')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>		
 		</tr>
 	</table>

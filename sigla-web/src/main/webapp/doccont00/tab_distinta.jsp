@@ -13,10 +13,10 @@ it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp = (it.cnr.contab.doccont00.
 %>
 <script language="JavaScript">
 function doScarica() {	
-	 doPrint('genericdownload/<%=bp.getDocumento()%>?methodName=scaricaDistinta&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	 doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getDocumento()%>?methodName=scaricaDistinta&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 function doScaricaFirmato() {	
-	 doPrint('genericdownload/<%=bp.getDocumentoFirmato()%>?methodName=scaricaDistintaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	 doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getDocumentoFirmato()%>?methodName=scaricaDistintaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 

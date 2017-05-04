@@ -33,7 +33,7 @@
 			<td><% bp.writeFormLabel( out, "im_mandato"); %></td>
 			<td><% bp.writeFormInput( out, "im_mandato"); %></td>
 			<td colspan=2 align = "center">
-				<% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"), bp.encodePath("img/zoom24.gif"), bp.encodePath("Disp.sui capitoli"),"javascript:submitForm('doVisualizzaDispCassaCapitolo')",bp.isDispCassaCapitoloButtonEnabled() ); %>
+				<% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"), bp.encodePath("img/zoom24.gif"), bp.encodePath("Disp.sui capitoli"),"javascript:submitForm('doVisualizzaDispCassaCapitolo')",bp.isDispCassaCapitoloButtonEnabled(), bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 		
@@ -67,7 +67,7 @@
 					        <% bp.getCodiciSiopeCollegati().writeHTMLTable(pageContext,"collegaARigaMandato",false,false,false,"100%","100px",  mandato.isAnnullato()); %>
 						</td>
 						<td  width="4%" align="center">
-							<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),null,"javascript:submitForm('doRimuoviCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled()); %>
+							<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),null,"javascript:submitForm('doRimuoviCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled(),bp.getParentRoot().isBootstrap()); %>
 						</td>
 						<td  width="41%" rowspan="2">
 					      	<% bp.getCodiciSiopeCollegabili().writeHTMLTable(pageContext,"collegaARigaDocCont",false,false,false,"100%","100px", true); %>
@@ -75,7 +75,7 @@
 					</tr>
 					<tr>
 						<td align="center">
-						<% JSPUtils.button(out,bp.encodePath("img/doubleleftarrow24.gif"),bp.encodePath("img/doubleleftarrow24.gif"),null,"javascript:submitForm('doAggiungiCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled()); %>
+						<% JSPUtils.button(out,bp.encodePath("img/doubleleftarrow24.gif"),bp.encodePath("img/doubleleftarrow24.gif"),null,"javascript:submitForm('doAggiungiCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled(), bp.getParentRoot().isBootstrap()); %>
 						</td>
 					</tr>
 				</table>

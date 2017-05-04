@@ -56,7 +56,7 @@
 	<td><% bp.getController().writeFormInput( out, "dt_fine_validita"); %></td>
 	</tr>
 	<tr>
-	<td><% JSPUtils.button(out,bp.encodePath("img/cut24.gif"),bp.encodePath("img/cut24.gif"),"Annulla password","javascript:submitForm('doResetPassword')",bp.isEditing()); %></td>
+	<td><% JSPUtils.button(out,bp.encodePath("img/cut24.gif"),bp.encodePath("img/cut24.gif"),"Annulla password","javascript:submitForm('doResetPassword')",bp.isEditing(),bp.getParentRoot().isBootstrap()); %></td>
 	<td><% bp.getController().writeFormInput( out, "fl_password_change"); %>
 			<% bp.getController().writeFormLabel( out, "fl_password_change"); %></td>
 	</tr>
