@@ -228,9 +228,9 @@
 	
 	<tr>
 	<td ALIGN="CENTER">
-			<% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"), "Modifica","javascript:submitForm('doEditaSpesa')", bp.isEditSpesaButtonEnabled()); %>
-			<% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"), "Conferma","javascript:submitForm('doConfermaSpesa')", bp.isConfermaSpesaButtonEnabled()); %>
-			<% JSPUtils.button(out,bp.encodePath("img/undo24.gif"),bp.encodePath("img/undo24.gif"), "Annulla","javascript:submitForm('doUndoSpesa')", bp.isUndoSpesaButtonEnabled()); %>				
+			<% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"), "Modifica","javascript:submitForm('doEditaSpesa')", bp.isEditSpesaButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
+			<% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"), "Conferma","javascript:submitForm('doConfermaSpesa')", bp.isConfermaSpesaButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
+			<% JSPUtils.button(out,bp.encodePath("img/undo24.gif"),bp.encodePath("img/undo24.gif"), "Annulla","javascript:submitForm('doUndoSpesa')", bp.isUndoSpesaButtonEnabled(),bp.getParentRoot().isBootstrap()); %>				
 	</td>
 	</tr>
 	

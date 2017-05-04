@@ -19,10 +19,10 @@
 <title><%=bp.getBulkInfo().getShortDescription()%></title>
 <script language="JavaScript">
 function doScaricaFile() {	
-  doPrint('genericdownload/<%=bp.getNomeFile()!=null?bp.getNomeFile().replace("'", "_"):""%>?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeFile()!=null?bp.getNomeFile().replace("'", "_"):""%>?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 function doScaricaAllegato() {	
-	  doPrint('genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 

@@ -46,7 +46,7 @@
 		<tr>
 			<td colspan="1"><span class="FormLabel">Upload file firmato e invio al protocollo informatico</span></td>
 			<td><input type=file name="main.file_to_upload" class=null style="background: #F5F5DC" maxLength=400 size=80 onclick="cancelBubble(event)"></td>
-			<td><% JSPUtils.button(out,bp.encodePath("img/import24.gif"),bp.encodePath("img/import24.gif"), "Invia File","javascript:submitForm('doInvia')", true); %></td>
+			<td><% JSPUtils.button(out,bp.encodePath("img/import24.gif"),bp.encodePath("img/import24.gif"), "Invia File","javascript:submitForm('doInvia')", true, bp.getParentRoot().isBootstrap()); %></td>
 		</tr>	
 		<% } %>
 		<tr height="100%">

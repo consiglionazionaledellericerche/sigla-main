@@ -36,7 +36,7 @@
 		<tr>
 			<td>
 				<input type="file" name="fileCassiere">			
-				<% JSPUtils.button(out,null,null,"Invia File","javascript:submitForm('doCaricaFile')", true); %>
+				<% JSPUtils.button(out,null,null,"Invia File","javascript:submitForm('doCaricaFile')", true, bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>
