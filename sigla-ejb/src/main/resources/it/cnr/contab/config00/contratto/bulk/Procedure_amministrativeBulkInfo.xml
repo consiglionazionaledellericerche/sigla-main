@@ -89,7 +89,15 @@
 		enabledOnEdit="false"
 		enabledOnInsert="true"		
 		label="Gestione dei Collaboratori Meramente Occasionali" />
-		
+	<fieldProperty
+		name="codice_anac"
+		property="codice_anac"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Codice Anac" />	
     <form name="searchtool">
 	  <formFieldProperty
 		name="cd_proc_amm" />	
@@ -122,7 +130,8 @@
 		name="find_gruppo_file" />
 	<formFieldProperty
 		name="fl_meramente_occasionale" />
-
+	<formFieldProperty
+		name="codice_anac" />
 	<findFieldProperty
 		name="cd_proc_amm" />
 	<findFieldProperty
