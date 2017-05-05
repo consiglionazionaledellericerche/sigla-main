@@ -2324,6 +2324,7 @@ public class DistintaCassiereComponent extends
 				// aggiungo i mandati da ritrasmettere
 					aggiungiMandatiEReversaliDaRitrasmettere(userContext, distinta);
 				}
+			verificaDuplicazioniProgDocCont(userContext, distinta);
 
 			// aggiorno lo stato trasmissione di mandati/reversali
 			aggiornaStatoDocContabili(userContext, distinta,
@@ -3201,8 +3202,9 @@ public class DistintaCassiereComponent extends
 	protected void validaCreaModificaConBulk(UserContext userContext,
 			OggettoBulk bulk) throws ComponentException {
 		super.validaCreaModificaConBulk(userContext, bulk);
-
+		
 		Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) bulk;
+		
 		try {
 			long nrDettagli = ((Distinta_cassiere_detHome) getHome(userContext,
 					Distinta_cassiere_detBulk.class)).getNrDettagli(
@@ -3210,7 +3212,7 @@ public class DistintaCassiereComponent extends
 			if (nrDettagli == 0)
 				throw new ApplicationException(
 						" La distinta deve avere almeno un dettaglio!");
-
+			//verificaDuplicazioniProgDocCont(userContext, distinta); 
 			// Controlla i documenti inseriti nella distinta
 			validaDocumentiContabiliAssociati(userContext, distinta);
 			if(distinta.getFl_annulli().booleanValue())
@@ -3365,27 +3367,10 @@ public class DistintaCassiereComponent extends
 			SQLBuilder sql = selectDistinta_cassiere_detCollByClause(
 					userContext, distinta, V_mandato_reversaleBulk.class, null);
 			List list = home.fetchAll(sql);
-			List lista= home.fetchAll(sql);
 			for (Iterator i = list.iterator(); i.hasNext();) {
 				V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i
 						.next();
-				if(tesoreriaUnica(userContext, distinta)){
-					Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
-							.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-					if (sess.getVal01(userContext, new Integer(0), null, "COSTANTI",
-							"BLOCCO_UNICITA_PG_MANREV") != null &&
-						sess.getVal01(userContext, new Integer(0), null, "COSTANTI",
-									"BLOCCO_UNICITA_PG_MANREV").compareTo("S")==0){
-						if(distinta.getFl_flusso().booleanValue()){
-							for (Iterator iter = lista.iterator(); iter.hasNext();) {
-								V_mandato_reversaleBulk copia = (V_mandato_reversaleBulk) iter.next();
-								if (copia.getPg_documento_cont().compareTo(bulk.getPg_documento_cont())==0 && copia.getCd_tipo_documento_cont().compareTo(bulk.getCd_tipo_documento_cont())!=0)
-									throw new ApplicationException(
-											"Risultano presenti in distinta sia il mandato che la reversale n." + bulk.getPg_documento_cont());
-							}
-						}
-					}
-				}
+				
 				if (Utility.createParametriCnrComponentSession()
 						.getParametriCnr(userContext, distinta.getEsercizio())
 						.getFl_siope().booleanValue()) {
@@ -4298,6 +4283,7 @@ public class DistintaCassiereComponent extends
 				throw new ApplicationException(
 						"Attenzione! La distinta e' stata cancellata");
 			validaCreaModificaConBulk(userContext, distinta);
+			verificaDuplicazioniProgDocCont(userContext, distinta);
 			// aggiungo i mandati da ritrasmettere
 				if(!tesoreriaUnica(userContext,distinta )) {	
 					aggiungiMandatiEReversaliDaRitrasmettere(userContext, distinta);
@@ -4473,5 +4459,41 @@ public class DistintaCassiereComponent extends
 		}
 	}
 
-
+private void verificaDuplicazioniProgDocCont(UserContext userContext,
+		Distinta_cassiereBulk distinta) throws ComponentException {
+try {
+	V_mandato_reversaleHome home = (V_mandato_reversaleHome) getHome(
+			userContext, V_mandato_reversaleBulk.class);
+	SQLBuilder sql = selectDistinta_cassiere_detCollByClause(
+			userContext, distinta, V_mandato_reversaleBulk.class, null);
+	List list = home.fetchAll(sql);
+	List lista= home.fetchAll(sql);
+	String duplicati=null;
+		for (Iterator i = list.iterator(); i.hasNext();) {
+			V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i.next();
+			if(tesoreriaUnica(userContext, distinta)){
+				Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+					.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+				if (sess.getVal01(userContext, new Integer(0), null, "COSTANTI", "BLOCCO_UNICITA_PG_MANREV") != null && 
+					sess.getVal01(userContext, new Integer(0), null, "COSTANTI","BLOCCO_UNICITA_PG_MANREV").compareTo("S")==0){
+					if(distinta.getFl_flusso().booleanValue()){
+						for (Iterator iter = lista.iterator(); iter.hasNext();) {
+							V_mandato_reversaleBulk copia = (V_mandato_reversaleBulk) iter.next();
+							if (copia.getPg_documento_cont().compareTo(bulk.getPg_documento_cont())==0 && copia.getCd_tipo_documento_cont().compareTo(bulk.getCd_tipo_documento_cont())!=0)
+								if (duplicati != null) {
+									if (!duplicati.contains(" "+bulk.getPg_documento_cont()))
+										duplicati=duplicati+" "+bulk.getPg_documento_cont();
+								} else
+									duplicati="Risultano presenti in distinta sia il mandato che la reversale n. " +bulk.getPg_documento_cont();
+						}
+					}
+				}
+			}
+		}
+		if (duplicati!=null)
+			throw new ApplicationException(duplicati);
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
 }
