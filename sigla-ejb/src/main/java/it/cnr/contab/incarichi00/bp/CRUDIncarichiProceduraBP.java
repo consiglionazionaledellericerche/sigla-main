@@ -392,10 +392,11 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					if (((CRUDIncarichiProceduraBP)getParentController()).isSuperUtente()){
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 								context,
-								"img/new16.gif",
+								HttpActionContext.isFromBootstrap(context)? "fa fa-plus text-primary":"img/new16.gif",
 								"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Allegato Generico",
+								"btn-sm",
 								HttpActionContext.isFromBootstrap(context));
 						super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
 					}					
