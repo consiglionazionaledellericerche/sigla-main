@@ -32,6 +32,7 @@ function doVisualizzaDocumenti() {
 <body class="Form">
 
 <% bp.openFormWindow(pageContext); %>
+<div class="div-sigla-table table-responsive col-sm-12">
 	<table class="Panel" width="100%" height="100%">
 		<tr>
 			<td>
@@ -52,6 +53,7 @@ function doVisualizzaDocumenti() {
 			</td>
 		</tr>
 	</table>
-	<%	bp.closeFormWindow(pageContext); %>
+</div>	
+<%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>
