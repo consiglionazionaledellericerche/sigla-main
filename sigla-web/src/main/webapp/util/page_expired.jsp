@@ -18,14 +18,20 @@ restoreWorkspace();
 <% BusinessProcess bp = BusinessProcess.getBusinessProcess(request);
 	BusinessProcess.encode(bp,pageContext); %>
 <input type="hidden" name="comando" value="doDefault">
-<table class="Window" cellspacing="0" cellpadding="2" align="center" width="280">
-		<tr><td class="FormTitle">Informazione</td></tr>
+<table class="Window card col-5" cellspacing="0" cellpadding="2" align="center" width="280">
+		<tr><td class="FormTitle card-header h5">Informazione</td></tr>
 	<tr>
 		<td align="center">
 			<table class="Panel" width="100%">
 			  <tr>
-					<td valign="center"><img src="img/error.gif"></td>
-				  	<td valign="center" width="100%">
+					<td valign="center">
+						<%if (bp.getParentRoot().isBootstrap()) { %>
+		  					<i class="fa fa-exclamation-circle fa-fw fa-2x text-danger" aria-hidden="true"></i>
+		  				<%} else {%>
+		  					<img src="img/error.gif">
+		  				<%}%>
+					</td>
+				  	<td valign="center h5" width="100%">
 				  		Pagina scaduta.
 				  		<br>E' stata richiesta una operazione da una pagina non più valida.
 <% if (bp != null) { %>
