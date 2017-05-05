@@ -35,8 +35,8 @@ function doVisualizzaDistinta() {
 			<td rowspan="2">			
 				<% if (bp.isDistintaInviata()) {
 					JSPUtils.button(out,
-						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-file-pdf-o text-primary" : bp.encodePath("img/application-pdf.png"),
-						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-file-pdf-o text-primary" : bp.encodePath("img/application-pdf.png"),
+						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-file-pdf-o text-danger" : bp.encodePath("img/application-pdf.png"),
+						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-file-pdf-o text-danger" : bp.encodePath("img/application-pdf.png"),
 						bp.encodePath("Visualizza distinta firmata"), 
 						"javascript:doVisualizzaDistinta()", 
 						true,
