@@ -32,28 +32,26 @@ function doVisualizzaDocumenti() {
 <body class="Form">
 
 <% bp.openFormWindow(pageContext); %>
-<div class="div-sigla-table table-responsive col-sm-12">
-	<table class="Panel" width="100%" height="100%">
-		<tr>
-			<td>
-				<fieldset>
-				<% bp.writeFormLabel(out,"stato_trasmissione"); %>
-				<% bp.writeFormInput(out,null,"stato_trasmissione",false,null,"onchange=\"javascript:submitForm('doCambiaVisibilita')\""); %>
-				</fieldset>
-			</td>		
-		</tr>
-		<tr height="100%">
-			<td colspan="4">
-				<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
-			</td> 
-		</tr>
-		<tr>
-			<td colspan="4">
-				<% bp.writeHTMLNavigator(out); %>
-			</td>
-		</tr>
-	</table>
-</div>	
+<table class="Panel" width="100%" height="100%">
+	<tr>
+		<td>
+			<fieldset>
+			<% bp.writeFormLabel(out,"stato_trasmissione"); %>
+			<% bp.writeFormInput(out,null,"stato_trasmissione",false,null,"onchange=\"javascript:submitForm('doCambiaVisibilita')\""); %>
+			</fieldset>
+		</td>		
+	</tr>
+	<tr height="100%">
+		<td colspan="4">
+			<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
+		</td> 
+	</tr>
+	<tr>
+		<td colspan="4">
+			<% bp.writeHTMLNavigator(out); %>
+		</td>
+	</tr>
+</table>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>
