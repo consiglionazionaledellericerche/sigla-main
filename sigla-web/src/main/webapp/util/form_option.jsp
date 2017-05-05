@@ -20,7 +20,7 @@
 <body class="Workspace">
 <FORM name="mainForm" action="Option.do" method=post onSubmit="return disableDblClick()">
 <input type=hidden name="comando">
-<table class="Window card col-5" cellspacing="0" cellpadding="2" align="center" width="280">
+<table class="Window card" cellspacing="0" cellpadding="2" align="center" width="280">
 <% 	OptionBP bp = (OptionBP)BusinessProcess.getBusinessProcess(request);
 	 	BusinessProcess.encode(bp,pageContext);
 		HttpActionContext.encodeActionCounter(pageContext);
@@ -73,13 +73,13 @@
 						<td><input type="button"  class="btn btn-primary" name="comando.doYes" value="Si" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doYes')"></td>
 					<% } 
 						 if (bp.hasButton(bp.NO_BUTTON)) { %>
-						<td><input type="button" class="btn btn-primary" name="comando.doNo" value="No" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doNo')"></td>
+						<td><input type="button" class="btn btn-danger" name="comando.doNo" value="No" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doNo')"></td>
 					<% } 
 						 if (bp.hasButton(bp.OK_BUTTON)) { %>
 						<td><input type="button" class="btn btn-primary" name="comando.doOk" value="Ok" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doOk')"></td>
 					<% } 
 						 if (bp.hasButton(bp.CANCEL_BUTTON)) { %>
-						<td><input type="button" class="btn btn-primary" name="comando.doCancel" value="Annulla" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doCancel')"></td>
+						<td><input type="button" class="btn btn-danger" name="comando.doCancel" value="Annulla" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doCancel')"></td>
 					<% } 
 						 if (bp.hasButton(bp.CLOSE_BUTTON)) { %>
 						<td><input type="button" class="btn btn-primary" name="comando.doClose" value="Chiudi" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doClose')"></td>

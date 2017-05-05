@@ -18,7 +18,7 @@ restoreWorkspace();
 <% BusinessProcess bp = BusinessProcess.getBusinessProcess(request);
 	BusinessProcess.encode(bp,pageContext); %>
 <input type="hidden" name="comando" value="doDefault">
-<table class="Window card col-5" cellspacing="0" cellpadding="2" align="center" width="280">
+<table class="Window card" cellspacing="0" cellpadding="2" align="center" width="280">
 		<tr><td class="FormTitle card-header h5">Informazione</td></tr>
 	<tr>
 		<td align="center">
@@ -42,7 +42,7 @@ restoreWorkspace();
 			</table>
 			<hr>
 <% if (bp != null) { %>
-			<button onclick="if (disableDblClick()) submitForm('doDefault')">Chiudi</button>
+			<button class="btn btn-primary" onclick="if (disableDblClick()) submitForm('doDefault')">Chiudi</button>
 <% } %>
 		</td>
 	</tr>
