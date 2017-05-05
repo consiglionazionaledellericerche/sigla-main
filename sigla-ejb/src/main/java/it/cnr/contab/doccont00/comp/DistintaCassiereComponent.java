@@ -3212,7 +3212,6 @@ public class DistintaCassiereComponent extends
 			if (nrDettagli == 0)
 				throw new ApplicationException(
 						" La distinta deve avere almeno un dettaglio!");
-			//verificaDuplicazioniProgDocCont(userContext, distinta); 
 			// Controlla i documenti inseriti nella distinta
 			validaDocumentiContabiliAssociati(userContext, distinta);
 			if(distinta.getFl_annulli().booleanValue())
