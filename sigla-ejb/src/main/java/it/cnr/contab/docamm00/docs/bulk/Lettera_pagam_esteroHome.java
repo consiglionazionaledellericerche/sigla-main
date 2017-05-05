@@ -45,7 +45,7 @@ public class Lettera_pagam_esteroHome extends BulkHome {
 					if (((CNRUserContext)userContext).isFromBootstrap()) {
 						bulk.setDocumento("<a class='btn btn-link' onclick='"+
 								"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\");' "+
-								"title='Visualizza Documento Contabile'><i class='fa fa-fw fa-file-pdf-o text-primary' aria-hidden='true'></i></a>");															
+								"title='Visualizza Documento Contabile'><i class='fa fa-fw fa-file-pdf-o text-danger' aria-hidden='true'></i></a>");															
 					} else {
 						bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
 								"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
