@@ -7,7 +7,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script>
-function doWindowStampa() {
+function doStampa() {
 	if (confirm('Vuoi continuare?')) {
 		window.top.PrintFrame.focus();
 		window.top.PrintFrame.print();
