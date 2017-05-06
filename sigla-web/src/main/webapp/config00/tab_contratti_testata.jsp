@@ -31,30 +31,32 @@
       </table></div>
       </td></tr>	      
       <tr><td colspan=4>
-      <div class="Group"><table>
-	  <tr>
-         <td><% bp.getController().writeFormLabel(out,"unita_organizzativa");%></td>
-         <td><% bp.getController().writeFormInput(out,"unita_organizzativa");%></td>
-      </tr>  	      
-	  <tr>
-         <td><% bp.getController().writeFormLabel(out, "figura_giuridica_interna");%></td>
-         <td><% bp.getController().writeFormInput(out, "default", "figura_giuridica_interna", bp.isPublishHidden(),null,null);%></td>
-      </tr>  	
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"firmatario");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","firmatario", bp.isPublishHidden(),null,null);%></td>
-      </tr>            
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","cd_terzo_resp", bp.isPublishHidden(),null,null);%>
-             <% bp.getController().writeFormInput(out,"ds_responsabile");%>
-             <% bp.getController().writeFormInput(out,"default","responsabile", bp.isPublishHidden(),null,null);%></td>
-      </tr>
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"direttore");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","direttore", bp.isPublishHidden(),null,null);%></td>
-      </tr>
-      </table></div>
+      <div class="Group">
+	      <table>
+		  <tr>
+	         <td><% bp.getController().writeFormLabel(out,"unita_organizzativa");%></td>
+	         <td><% bp.getController().writeFormInput(out,"unita_organizzativa");%></td>
+	      </tr>  	      
+		  <tr>
+	         <td><% bp.getController().writeFormLabel(out, "figura_giuridica_interna");%></td>
+	         <td><% bp.getController().writeFormInput(out, "default", "figura_giuridica_interna", bp.isPublishHidden(),null,null);%></td>
+	      </tr>  	
+		  <tr>         
+	         <td><% bp.getController().writeFormLabel(out,"firmatario");%></td>
+	         <td><% bp.getController().writeFormInput(out,"default","firmatario", bp.isPublishHidden(),null,null);%></td>
+	      </tr>            
+		  <tr>         
+	         <td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
+	         <td><% bp.getController().writeFormInput(out,"default","cd_terzo_resp", bp.isPublishHidden(),null,null);%>
+	             <% bp.getController().writeFormInput(out,"ds_responsabile");%>
+	             <% bp.getController().writeFormInput(out,"default","responsabile", bp.isPublishHidden(),null,null);%></td>
+	      </tr>
+		  <tr>         
+	         <td><% bp.getController().writeFormLabel(out,"direttore");%></td>
+	         <td><% bp.getController().writeFormInput(out,"default","direttore", bp.isPublishHidden(),null,null);%></td>
+	      </tr>
+	      </table>
+      </div>
       </td></tr>
       <tr><td colspan=4>
       <div class="Group"><table>      

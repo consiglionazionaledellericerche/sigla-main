@@ -70,19 +70,19 @@
 			<table class="Panel" <%=bp.isNowrap()? "":"width=\"100%\"" %>>
 				<tr>
 					<% if (bp.hasButton(bp.YES_BUTTON)) { %>
-						<td><input type="button"  class="btn btn-primary" name="comando.doYes" value="Si" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doYes')"></td>
+						<td><input type="button"  class="btn btn-outline-primary" name="comando.doYes" value="Si" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doYes')"></td>
 					<% } 
 						 if (bp.hasButton(bp.NO_BUTTON)) { %>
-						<td><input type="button" class="btn btn-danger" name="comando.doNo" value="No" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doNo')"></td>
+						<td><input type="button" class="btn btn-outline-primary" name="comando.doNo" value="No" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doNo')"></td>
 					<% } 
 						 if (bp.hasButton(bp.OK_BUTTON)) { %>
-						<td><input type="button" class="btn btn-primary" name="comando.doOk" value="Ok" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doOk')"></td>
+						<td><input type="button" class="btn btn-outline-primary" name="comando.doOk" value="Ok" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doOk')"></td>
 					<% } 
 						 if (bp.hasButton(bp.CANCEL_BUTTON)) { %>
-						<td><input type="button" class="btn btn-danger" name="comando.doCancel" value="Annulla" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doCancel')"></td>
+						<td><input type="button" class="btn btn-outline-primary" name="comando.doCancel" value="Annulla" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doCancel')"></td>
 					<% } 
 						 if (bp.hasButton(bp.CLOSE_BUTTON)) { %>
-						<td><input type="button" class="btn btn-primary" name="comando.doClose" value="Chiudi" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doClose')"></td>
+						<td><input type="button" class="btn btn-outline-primary" name="comando.doClose" value="Chiudi" style="<%=bp.isNowrap()? "width:150px":"width:100%" %>" onclick="submitForm('doClose')"></td>
 					<% } %>
 				</tr>
 			</table>

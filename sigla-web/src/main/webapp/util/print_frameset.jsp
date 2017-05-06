@@ -9,7 +9,7 @@
 <script language="javascript" src="scripts/css.js"></script>
 <% AbstractPrintBP bp = (AbstractPrintBP)BusinessProcess.getBusinessProcess(request); %>
 <script>
-function doWindowStampa() {
+function doStampa() {
 	if (confirm('Vuoi continuare?')) {
 		window.print();
 	}
