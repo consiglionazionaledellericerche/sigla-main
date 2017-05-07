@@ -20,7 +20,7 @@
 <body class="Workspace">
 <FORM name="mainForm" action="Option.do" method=post onSubmit="return disableDblClick()">
 <input type=hidden name="comando">
-<table class="Window card" cellspacing="0" cellpadding="2" align="center" width="280">
+<table class="Window card col-5" cellspacing="0" cellpadding="2" align="center" width="280">
 <% 	OptionBP bp = (OptionBP)BusinessProcess.getBusinessProcess(request);
 	 	BusinessProcess.encode(bp,pageContext);
 		HttpActionContext.encodeActionCounter(pageContext);
