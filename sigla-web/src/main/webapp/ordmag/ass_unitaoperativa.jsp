@@ -2,8 +2,7 @@
 <%@ page 
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.util.jsp.*,
-		it.cnr.contab.incarichi00.bp.*,
-		it.cnr.contab.incarichi00.bulk.*"
+		it.cnr.contab.ordmag.anag00.bp.*"
 %>
 
 <%
