@@ -12,7 +12,7 @@
 			propertyName="magazzino.cdMagazzino" />
 		<columnMapping
 			columnName="CD_CATEGORIA_GRUPPO"
-			propertyName="categoriaGruppoInvent.cdCategoriaGruppo" />
+			propertyName="categoriaGruppoInvent.cd_categoria_gruppo" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="magazzino"

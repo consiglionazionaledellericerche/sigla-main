@@ -195,10 +195,6 @@
 			name="cd_categoria_gruppo"/>
 		<formFieldProperty
 			name="ds_categoria_gruppo"
-			enabledOnFreeSearch="true"
-			enabledOnSearch="true"
-			inputType="TEXT"
-			inputSize="50"
 		 />
     </form>    	
 </bulkInfo>

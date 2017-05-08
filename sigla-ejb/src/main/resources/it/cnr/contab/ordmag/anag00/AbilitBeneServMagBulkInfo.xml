@@ -13,6 +13,14 @@
 		enabledOnSearch="true"
 		label="Magazzino" />
 	<fieldProperty
+		name="findCategoriaGruppo"
+		property="categoriaGruppoInvent"
+		inputType="SEARCHTOOL" 
+		formName="searchtool" 
+		label="Categoria-Gruppo"
+		enabledOnSearch="true"		
+	/>
+	<fieldProperty
 		name="cdCds"
 		property="magazzino.cdCds"
 		inputType="TEXT"
@@ -36,7 +44,7 @@
 		label="Codice Magazzino" />
 	<fieldProperty
 		name="cdCategoriaGruppo"
-		property="categoriaGruppoInvent.cdCategoriaGruppo"
+		property="categoriaGruppoInvent.cd_categoria_gruppo"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
