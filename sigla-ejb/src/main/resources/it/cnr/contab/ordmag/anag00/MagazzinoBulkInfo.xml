@@ -72,15 +72,15 @@
 		nullable="false"
 		label="Codice Luogo di Consegna" />
 	<fieldProperty
-		name="findTipoMovimentoMag"
-		property="tipoMovimentoMag"
+		name="findTipoMovimentoMagCarMag"
+		property="tipoMovimentoMagCarMag"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Tipo Movimento" />
 	<fieldProperty
 		name="cdCdsCarMag"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagCarMag.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -88,7 +88,7 @@
 		label="Cds Car Mag" />
 	<fieldProperty
 		name="cdTipoMovimentoCarMag"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagCarMag.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -96,7 +96,7 @@
 		label="Movimento Carico a Magazzino" />
 	<fieldProperty
 		name="cdCdsCarTra"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagCarTra.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -104,7 +104,7 @@
 		label="Cds Car Tra" />
 	<fieldProperty
 		name="cdTipoMovimentoCarTra"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagCarTra.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -112,7 +112,7 @@
 		label="Movimento Carico in transito" />
 	<fieldProperty
 		name="cdCdsCarFma"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagCarFma.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -120,7 +120,7 @@
 		label="Cds Car Fma" />
 	<fieldProperty
 		name="cdTipoMovimentoCarFma"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagCarFma.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -128,7 +128,7 @@
 		label="Movimento Carico fuori Magazzino" />
 	<fieldProperty
 		name="cdCdsScaUo"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagScaUo.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -136,7 +136,7 @@
 		label="Cds Sca Uo" />
 	<fieldProperty
 		name="cdTipoMovimentoScaUo"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagScaUo.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -144,7 +144,7 @@
 		label="Movimento Scarico a UO" />
 	<fieldProperty
 		name="cdCdsTraSca"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagTraSca.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -152,7 +152,7 @@
 		label="Cds Tra Sca" />
 	<fieldProperty
 		name="cdTipoMovimentoTraSca"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagTraSca.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -160,7 +160,7 @@
 		label="Movimento scarico per trasferimento" />
 	<fieldProperty
 		name="cdCdsTraCar"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagTraCar.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -168,7 +168,7 @@
 		label="Cds car tra" />
 	<fieldProperty
 		name="cdTipoMovimentoTraCar"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagTraCar.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -176,7 +176,7 @@
 		label="Movimento carico per trasferimento" />
 	<fieldProperty
 		name="cdCdsRvPos"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagRvPos.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -184,7 +184,7 @@
 		label="Cds Rv Pos" />
 	<fieldProperty
 		name="cdTipoMovimentoRvPos"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagRvPos.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -192,7 +192,7 @@
 		label="Movimento variazione valore positiva" />
 	<fieldProperty
 		name="cdCdsRvNeg"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagRvNeg.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -200,7 +200,7 @@
 		label="cds Rv Neg" />
 	<fieldProperty
 		name="cdTipoMovimentoRvNeg"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagRvNeg.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -208,7 +208,7 @@
 		label="Movimento variazione valore negativa" />
 	<fieldProperty
 		name="cdCdsChi"
-		property="tipoMovimentoMag.cdCds"
+		property="tipoMovimentoMagChi.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -216,7 +216,7 @@
 		label="Cds Chi" />
 	<fieldProperty
 		name="cdTipoMovimentoChi"
-		property="tipoMovimentoMag.cdTipoMovimento"
+		property="tipoMovimentoMagChi.cdTipoMovimento"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -236,22 +236,22 @@
 		maxLength="4"
 		label="Esercizio Val Sca" />
 	<fieldProperty
-		name="findRaggrMagazzino"
-		property="raggrMagazzino"
+		name="findRaggrMagazzinoRim"
+		property="raggrMagazzinoRim"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Raggruppamento di Magazzino" />
 	<fieldProperty
 		name="cdCdsRaggrSca"
-		property="raggrMagazzino.cdCds"
+		property="raggrMagazzinoSca.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
 		label="Cds Raggr Sca" />
 	<fieldProperty
 		name="cdRaggrMagazzinoSca"
-		property="raggrMagazzino.cdRaggrMagazzino"
+		property="raggrMagazzinoSca.cdRaggrMagazzino"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -278,14 +278,14 @@
 		label="EsercizioValRim" />
 	<fieldProperty
 		name="cdCdsRaggrRim"
-		property="raggrMagazzino.cdCds"
+		property="raggrMagazzinoRim.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
 		label="Cds Raggr Rim" />
 	<fieldProperty
 		name="cdRaggrMagazzinoRim"
-		property="raggrMagazzino.cdRaggrMagazzino"
+		property="raggrMagazzinoRim.cdRaggrMagazzino"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -327,13 +327,13 @@
 	<formFieldProperty
 		name="findLuogoConsegnaMag" />
 	<formFieldProperty
-		name="findTipoMovimentoMag" />
+		name="findTipoMovimentoMagCarMag" />
 	<formFieldProperty
 		name="dtUltValSca" />
 	<formFieldProperty
 		name="esercizioValSca" />
 	<formFieldProperty
-		name="findRaggrMagazzino" />
+		name="findRaggrMagazzinoRim" />
 	<formFieldProperty
 		name="metodoValSca" />
 	<formFieldProperty
