@@ -1,10 +1,16 @@
+<%@page import="it.cnr.jada.action.HttpActionContext"%>
 <%@ page session="false" import="it.cnr.jada.util.jsp.*" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//Dtd HTML 4.0 Transitional//EN">
 
 <html>
 	<head>
 		<script language="JavaScript" src="scripts/util.js"></script>
-		<% 	JSPUtils.printBaseUrl(pageContext); %>
+		<% 	
+			JSPUtils.printBaseUrl(pageContext);
+			if (HttpActionContext.isFromBootstrap(pageContext)) {
+				response.setStatus(401);				
+			}
+		%>
 		<script language="javascript" src="scripts/css.js"></script>
 		<script>
 			function loader() {
