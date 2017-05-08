@@ -8,7 +8,6 @@ import it.cnr.jada.persistency.KeyedPersistent;
 public class AbilUtenteUopOperKey extends OggettoBulk implements KeyedPersistent {
 	private java.lang.String cdUtente;
 	private java.lang.String cdUnitaOperativa;
-	private java.lang.Integer esercizio;
 	private java.lang.String cdTipoOperazione;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -17,11 +16,10 @@ public class AbilUtenteUopOperKey extends OggettoBulk implements KeyedPersistent
 	public AbilUtenteUopOperKey() {
 		super();
 	}
-	public AbilUtenteUopOperKey(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdTipoOperazione) {
+	public AbilUtenteUopOperKey(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.String cdTipoOperazione) {
 		super();
 		this.cdUtente=cdUtente;
 		this.cdUnitaOperativa=cdUnitaOperativa;
-		this.esercizio=esercizio;
 		this.cdTipoOperazione=cdTipoOperazione;
 	}
 	public boolean equalsByPrimaryKey(Object o) {
@@ -30,7 +28,6 @@ public class AbilUtenteUopOperKey extends OggettoBulk implements KeyedPersistent
 		AbilUtenteUopOperKey k = (AbilUtenteUopOperKey) o;
 		if (!compareKey(getCdUtente(), k.getCdUtente())) return false;
 		if (!compareKey(getCdUnitaOperativa(), k.getCdUnitaOperativa())) return false;
-		if (!compareKey(getEsercizio(), k.getEsercizio())) return false;
 		if (!compareKey(getCdTipoOperazione(), k.getCdTipoOperazione())) return false;
 		return true;
 	}
@@ -38,7 +35,6 @@ public class AbilUtenteUopOperKey extends OggettoBulk implements KeyedPersistent
 		int i = 0;
 		i = i + calculateKeyHashCode(getCdUtente());
 		i = i + calculateKeyHashCode(getCdUnitaOperativa());
-		i = i + calculateKeyHashCode(getEsercizio());
 		i = i + calculateKeyHashCode(getCdTipoOperazione());
 		return i;
 	}
@@ -69,20 +65,6 @@ public class AbilUtenteUopOperKey extends OggettoBulk implements KeyedPersistent
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
 		return cdUnitaOperativa;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [esercizio]
-	 **/
-	public void setEsercizio(java.lang.Integer esercizio)  {
-		this.esercizio=esercizio;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [esercizio]
-	 **/
-	public java.lang.Integer getEsercizio() {
-		return esercizio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
