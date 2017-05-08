@@ -8,7 +8,6 @@ import it.cnr.jada.persistency.KeyedPersistent;
 public class AbilUtenteUopOperMagKey extends OggettoBulk implements KeyedPersistent {
 	private java.lang.String cdUtente;
 	private java.lang.String cdUnitaOperativa;
-	private java.lang.Integer esercizio;
 	private java.lang.String cdTipoOperazione;
 	private java.lang.String cdCds;
 	private java.lang.String cdMagazzino;
@@ -19,11 +18,10 @@ public class AbilUtenteUopOperMagKey extends OggettoBulk implements KeyedPersist
 	public AbilUtenteUopOperMagKey() {
 		super();
 	}
-	public AbilUtenteUopOperMagKey(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdTipoOperazione, java.lang.String cdCds, java.lang.String cdMagazzino) {
+	public AbilUtenteUopOperMagKey(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.String cdTipoOperazione, java.lang.String cdCds, java.lang.String cdMagazzino) {
 		super();
 		this.cdUtente=cdUtente;
 		this.cdUnitaOperativa=cdUnitaOperativa;
-		this.esercizio=esercizio;
 		this.cdTipoOperazione=cdTipoOperazione;
 		this.cdCds=cdCds;
 		this.cdMagazzino=cdMagazzino;
@@ -34,7 +32,6 @@ public class AbilUtenteUopOperMagKey extends OggettoBulk implements KeyedPersist
 		AbilUtenteUopOperMagKey k = (AbilUtenteUopOperMagKey) o;
 		if (!compareKey(getCdUtente(), k.getCdUtente())) return false;
 		if (!compareKey(getCdUnitaOperativa(), k.getCdUnitaOperativa())) return false;
-		if (!compareKey(getEsercizio(), k.getEsercizio())) return false;
 		if (!compareKey(getCdTipoOperazione(), k.getCdTipoOperazione())) return false;
 		if (!compareKey(getCdCds(), k.getCdCds())) return false;
 		if (!compareKey(getCdMagazzino(), k.getCdMagazzino())) return false;
@@ -44,7 +41,6 @@ public class AbilUtenteUopOperMagKey extends OggettoBulk implements KeyedPersist
 		int i = 0;
 		i = i + calculateKeyHashCode(getCdUtente());
 		i = i + calculateKeyHashCode(getCdUnitaOperativa());
-		i = i + calculateKeyHashCode(getEsercizio());
 		i = i + calculateKeyHashCode(getCdTipoOperazione());
 		i = i + calculateKeyHashCode(getCdCds());
 		i = i + calculateKeyHashCode(getCdMagazzino());
@@ -77,20 +73,6 @@ public class AbilUtenteUopOperMagKey extends OggettoBulk implements KeyedPersist
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
 		return cdUnitaOperativa;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [esercizio]
-	 **/
-	public void setEsercizio(java.lang.Integer esercizio)  {
-		this.esercizio=esercizio;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [esercizio]
-	 **/
-	public java.lang.Integer getEsercizio() {
-		return esercizio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
