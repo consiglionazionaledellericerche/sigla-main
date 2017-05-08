@@ -50,18 +50,15 @@ CRUDAbilitBeneServMagBP bp = (CRUDAbilitBeneServMagBP)BusinessProcess.getBusines
 		<tr></tr>
 		<tr>
 		<td><% bp.getAbilitBeneServMagController().writeFormLabel( out, "cdCategoriaGruppo");%></td>
-			<% bp.getAbilitBeneServMagController().writeFormInput(out,"default","findMagazzino",!bp.isEditingAbilitazione(),"FormInput", null);%></td>	
+			<% bp.getAbilitBeneServMagController().writeFormInput(out,"default","findCategoriaGruppo",!bp.isEditingAbilitazione(),"FormInput", null);%></td>	
 		</tr>
-	
-		<tr></tr>
-		<tr></tr>
 		<tr>
 		  <td><% bp.getAbilitBeneServMagController().writeFormLabel(out,"dtIniValidita");%></td>
-		  <td colspan="2"><% bp.getAbilitBeneServMagController().writeFormInput(out,"dtIniValidita");%></td>
+		  <td colspan="1"><% bp.getAbilitBeneServMagController().writeFormInput(out,"dtIniValidita");%></td>
 		</tr>
 		<tr>
 		  <td><% bp.getAbilitBeneServMagController().writeFormLabel(out,"dtFinValidita");%></td>
-		  <td colspan="2"><% bp.getAbilitBeneServMagController().writeFormInput(out,"dtFinValidita");%></td>
+		  <td colspan="1"><% bp.getAbilitBeneServMagController().writeFormInput(out,"dtFinValidita");%></td>
 		</tr>
 	</table>
 <%	bp.closeFormWindow(pageContext); %>
