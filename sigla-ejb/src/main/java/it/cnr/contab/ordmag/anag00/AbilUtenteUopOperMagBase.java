@@ -15,8 +15,8 @@ public class AbilUtenteUopOperMagBase extends AbilUtenteUopOperMagKey implements
 	public AbilUtenteUopOperMagBase() {
 		super();
 	}
-	public AbilUtenteUopOperMagBase(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdTipoOperazione, java.lang.String cdCds, java.lang.String cdMagazzino) {
-		super(cdUtente, cdUnitaOperativa, esercizio, cdTipoOperazione, cdCds, cdMagazzino);
+	public AbilUtenteUopOperMagBase(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.String cdTipoOperazione, java.lang.String cdCds, java.lang.String cdMagazzino) {
+		super(cdUtente, cdUnitaOperativa, cdTipoOperazione, cdCds, cdMagazzino);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

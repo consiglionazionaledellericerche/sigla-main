@@ -9,10 +9,10 @@
 			propertyName="utente.cd_utente" />
 		<columnMapping
 			columnName="CD_UNITA_OPERATIVA"
-			propertyName="unitaOperativaOrd.cd_unita_operativa" />
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
 			columnName="CD_TIPO_OPERAZIONE"
-			propertyName="tipoOperazioneOrd.cd_tipo_operazione" />
+			propertyName="tipoOperazioneOrd.cdTipoOperazione" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="utente"
