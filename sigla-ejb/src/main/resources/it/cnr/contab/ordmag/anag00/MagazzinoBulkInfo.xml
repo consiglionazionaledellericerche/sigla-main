@@ -30,9 +30,7 @@
 	<fieldProperty
 		name="dsMagazzino"
 		property="dsMagazzino"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="100"
 		nullable="false"
 		label="Descrizione" />
@@ -316,9 +314,9 @@
 	<form
 		name="searchtool">
 		<formFieldProperty
-			name="cdCds" />
-		<formFieldProperty
 			name="cdMagazzino" />
+		<formFieldProperty
+			name="dsMagazzino" />
 	</form>
 	<formFieldProperty
 		name="cdMagazzino" />
