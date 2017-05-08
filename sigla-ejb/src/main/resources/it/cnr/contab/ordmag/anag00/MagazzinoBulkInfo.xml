@@ -49,6 +49,13 @@
 		maxLength="12"
 		label="Codice Unità Operativa" />
 	<fieldProperty
+		name="dsUnitaOperativa"
+		property="unitaOperativaOrd.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		label="Descrizione Unità Operativa" />
+	<fieldProperty
 		name="findLuogoConsegnaMag"
 		property="luogoConsegnaMag"
 		inputType="searchtool"
@@ -71,6 +78,14 @@
 		maxLength="10"
 		nullable="false"
 		label="Codice Luogo di Consegna" />
+	<fieldProperty
+		name="dsLuogoConsegna"
+		property="luogoConsegnaMag.dsLuogoConsegna"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione Luogo di Consegna" />
 	<fieldProperty
 		name="findTipoMovimentoMagCarMag"
 		property="tipoMovimentoMagCarMag"
@@ -490,4 +505,13 @@
 		name="abilTuttiBeniServ" />
 	<columnFieldProperty
 		name="dtCancellazione" />
+	<columnSet name="default" >
+		<columnFieldProperty name="cdMagazzino"/>
+		<columnFieldProperty name="dsMagazzino"/>
+		<columnFieldProperty name="cdUnitaOperativa"/>
+		<columnFieldProperty name="dsUnitaOperativa"/>
+		<columnFieldProperty name="cdLuogoConsegna"/>
+		<columnFieldProperty name="dsLuogoConsegna"/>
+		<columnFieldProperty name="abilTuttiBeniServ"/>
+	</columnSet>
 </bulkInfo>
