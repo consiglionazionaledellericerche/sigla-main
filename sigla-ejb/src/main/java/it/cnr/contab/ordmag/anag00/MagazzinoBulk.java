@@ -38,7 +38,6 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 **/
 	private RaggrMagazzinoBulk raggrMagazzinoSca =  new RaggrMagazzinoBulk();
 	private RaggrMagazzinoBulk raggrMagazzinoRim =  new RaggrMagazzinoBulk();
-
 	private BulkList categoriaGruppoColl = new BulkList();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -646,7 +645,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 		abilit.setMagazzino(this);
 		return categoriaGruppoColl.size()-1;
 	}
-	public AbilitBeneServMagBulk removeFromCategoriaGruppo(int index) 
+	public AbilitBeneServMagBulk removeFromCategoriaGruppoColl(int index) 
 	{
 		// Gestisce la selezione del bottone cancella repertorio
 		return (AbilitBeneServMagBulk)categoriaGruppoColl.remove(index);
