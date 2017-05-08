@@ -36,7 +36,7 @@
 		label="Codice Magazzino" />
 	<fieldProperty
 		name="cdCategoriaGruppo"
-		property="cdCategoriaGruppo"
+		property="categoriaGruppoInvent.cdCategoriaGruppo"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
@@ -45,6 +45,16 @@
 		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Categoria Gruppo" />
+	<fieldProperty
+		name="dsCategoriaGruppo"
+		property="categoriaGruppoInvent.ds_categoria_gruppo"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Descrizione Categoria Gruppo" />
 	<fieldProperty
 		name="dtIniValidita"
 		property="dtIniValidita"
@@ -61,8 +71,6 @@
 	<form
 		name="searchtool">
 		<formFieldProperty
-			name="cdCds" />
-		<formFieldProperty
 			name="cdMagazzino" />
 		<formFieldProperty
 			name="cdCategoriaGruppo" />
@@ -72,6 +80,10 @@
 	<formFieldProperty
 		name="findMagazzino" />
 	<formFieldProperty
+		name="cdCategoriaGruppo" />
+	<formFieldProperty
+		name="dsCategoriaGruppo" />
+	<formFieldProperty
 		name="dtIniValidita" />
 	<formFieldProperty
 		name="dtFinValidita" />
@@ -86,11 +98,9 @@
 	<findFieldProperty
 		name="dtFinValidita" />
 	<columnFieldProperty
-		name="cdCds" />
-	<columnFieldProperty
-		name="cdMagazzino" />
-	<columnFieldProperty
 		name="cdCategoriaGruppo" />
+	<columnFieldProperty
+		name="dsCategoriaGruppo" />
 	<columnFieldProperty
 		name="dtIniValidita" />
 	<columnFieldProperty

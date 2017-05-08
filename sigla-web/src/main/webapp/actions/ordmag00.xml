@@ -79,10 +79,10 @@
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.MagazzinoBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
-  <businessProcess name="CRUDAbilMagBeneServBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/ordmag/abilmagbeneserv.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.AbilitBeneServMagBulk"/>
-    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+  <businessProcess name="CRUDAbilMagBeneServBP" className="it.cnr.contab.ordmag.anag00.bp.CRUDAbilitBeneServMagBP">
+    <forward name="default" path="/ordmag/abilit_bene_serv_mag.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.MagazzinoBulk"/>
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_AbilitBeneServMagComponentSession"/>
   </businessProcess>
   <businessProcess name="CRUDNumerazioneMagBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/numerazionemag.jsp"/>
