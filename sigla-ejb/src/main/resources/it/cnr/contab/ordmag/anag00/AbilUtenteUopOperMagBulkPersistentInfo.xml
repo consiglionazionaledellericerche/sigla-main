@@ -6,28 +6,22 @@
 		tableName="ABIL_UTENTE_UOP_OPER_MAG">
 		<columnMapping
 			columnName="CD_UTENTE"
-			propertyName="utente.cd_utente" />
+			propertyName="abilUtenteUopOperBulk.cd_utente" />
 		<columnMapping
 			columnName="CD_UNITA_OPERATIVA"
-			propertyName="unitaOperativaOrd.cd_unita_operativa" />
+			propertyName="abilUtenteUopOperBulk.cdUnitaOperativa" />
 		<columnMapping
 			columnName="CD_TIPO_OPERAZIONE"
-			propertyName="tipoOperazioneOrd.cd_tipo_operazione" />
+			propertyName="abilUtenteUopOperBulk.cdTipoOperazione" />
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="magazzino.cd_cds" />
+			propertyName="magazzino.cdCds" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
-			propertyName="magazzino.cd_magazzino" />
+			propertyName="magazzino.cdMagazzino" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="utente"
-		partOfOid="true" />
-	<persistentProperty
-		name="unitaOperativaOrd"
-		partOfOid="true" />
-	<persistentProperty
-		name="tipoOperazioneOrd"
+		name="abilUtenteUopOperBulk"
 		partOfOid="true" />
 	<persistentProperty
 		name="magazzino"
