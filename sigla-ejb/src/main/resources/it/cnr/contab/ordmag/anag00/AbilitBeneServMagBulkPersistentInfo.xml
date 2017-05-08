@@ -6,13 +6,13 @@
 		tableName="ABILIT_BENE_SERV_MAG">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="magazzino.cd_cds" />
+			propertyName="magazzino.cdCds" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
-			propertyName="magazzino.cd_magazzino" />
+			propertyName="magazzino.cdMagazzino" />
 		<columnMapping
 			columnName="CD_CATEGORIA_GRUPPO"
-			propertyName="categoriaGruppoInvent.cd_categoria_gruppo" />
+			propertyName="categoriaGruppoInvent.cdCategoriaGruppo" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="magazzino"

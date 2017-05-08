@@ -58,8 +58,6 @@
 			name="cdUnitaOperativaRif" />
 	</form>
 	<formFieldProperty
-		name="findUnitaOperativaOrd" />
-	<formFieldProperty
 		name="dtCancellazione" />
 	<formFieldProperty
 		name="cdUnitaOperativaRif" />

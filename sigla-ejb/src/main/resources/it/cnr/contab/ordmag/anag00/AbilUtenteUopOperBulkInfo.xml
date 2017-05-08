@@ -84,14 +84,10 @@
 		<formFieldProperty
 			name="cdUnitaOperativa" />
 		<formFieldProperty
-			name="esercizio" />
-		<formFieldProperty
 			name="cdTipoOperazione" />
 	</form>
 	<formFieldProperty
 		name="findUnitaOperativaOrd" />
-	<formFieldProperty
-		name="esercizio" />
 	<formFieldProperty
 		name="findTipoOperazioneOrd" />
 	<formFieldProperty
@@ -103,8 +99,6 @@
 	<findFieldProperty
 		name="cdUnitaOperativa" />
 	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
 		name="cdTipoOperazione" />
 	<findFieldProperty
 		name="tuttiMagazzini" />
@@ -114,8 +108,6 @@
 		name="cdUtente" />
 	<columnFieldProperty
 		name="cdUnitaOperativa" />
-	<columnFieldProperty
-		name="esercizio" />
 	<columnFieldProperty
 		name="cdTipoOperazione" />
 	<columnFieldProperty
