@@ -35,17 +35,6 @@
 		nullable="false"
 		label="Codice Unità Operativa" />
 	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		nullable="false"
-		label="Esercizio" />
-	<fieldProperty
 		name="findTipoOperazioneOrd"
 		property="tipoOperazioneOrd"
 		inputType="searchtool"
