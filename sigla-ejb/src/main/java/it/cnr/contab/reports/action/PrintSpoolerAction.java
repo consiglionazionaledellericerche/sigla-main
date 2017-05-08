@@ -52,7 +52,6 @@ public class  PrintSpoolerAction extends it.cnr.jada.util.action.SelezionatoreLi
 				array[0] = (Print_spoolerBulk)bp.getFocusedElement();
 			}
 			if (array != null){
-				EJBCommonServices.closeRemoteIterator(context, bp.getIterator());			
 				bp.createComponentSession().deleteJobs(context.getUserContext(),array);
 				for (int i = 0;i < array.length;i++) {
 					try {
@@ -71,6 +70,7 @@ public class  PrintSpoolerAction extends it.cnr.jada.util.action.SelezionatoreLi
 						// tabella della coda!!
 					}
 				}
+				EJBCommonServices.closeRemoteIterator(context, bp.getIterator());							
 			} else{
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: selezionare almeno una riga.");
 			}
