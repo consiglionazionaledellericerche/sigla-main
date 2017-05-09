@@ -21,7 +21,7 @@
 		property="dsCausaleAnnull"
 		inputType="TEXTAREA"
 		cols="60"
-		rows="1"
+		rows="3"
 		maxLength="1000"
 		nullable="false"
 		label="Descrizione" />
