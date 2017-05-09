@@ -1,6 +1,10 @@
 package it.cnr.contab.ordmag.anag00.bp;
 
 import it.cnr.contab.ordmag.anag00.AbilitBeneServMagBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
@@ -34,5 +38,22 @@ public class CRUDAbilitBeneServMagBP extends SimpleCRUDBP{
 			return true;
 			
 		return false;
+	}
+
+	@Override
+	public OggettoBulk initializeModelForFreeSearch(ActionContext actioncontext, OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+		MagazzinoBulk mag = (MagazzinoBulk)oggettobulk;
+		mag.setInQuery(true);
+		return super.initializeModelForFreeSearch(actioncontext, mag);
+	}
+
+	@Override
+	public OggettoBulk initializeModelForSearch(ActionContext actioncontext, OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+		MagazzinoBulk mag = (MagazzinoBulk)oggettobulk;
+		mag.setInQuery(true);
+		return super.initializeModelForSearch(actioncontext, mag);
 	}	
 }
+

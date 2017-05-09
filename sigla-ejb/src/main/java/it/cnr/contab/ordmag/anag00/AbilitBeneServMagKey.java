@@ -9,7 +9,6 @@ public class AbilitBeneServMagKey extends OggettoBulk implements KeyedPersistent
 	private java.lang.String cdCds;
 	private java.lang.String cdMagazzino;
 	private java.lang.String cdCategoriaGruppo;
-	private java.sql.Timestamp dtIniValidita;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ABILIT_BENE_SERV_MAG
@@ -17,12 +16,11 @@ public class AbilitBeneServMagKey extends OggettoBulk implements KeyedPersistent
 	public AbilitBeneServMagKey() {
 		super();
 	}
-	public AbilitBeneServMagKey(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.String cdCategoriaGruppo, java.sql.Timestamp dtIniValidita) {
+	public AbilitBeneServMagKey(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.String cdCategoriaGruppo) {
 		super();
 		this.cdCds=cdCds;
 		this.cdMagazzino=cdMagazzino;
 		this.cdCategoriaGruppo=cdCategoriaGruppo;
-		this.dtIniValidita=dtIniValidita;
 	}
 	public boolean equalsByPrimaryKey(Object o) {
 		if (this== o) return true;
@@ -31,7 +29,6 @@ public class AbilitBeneServMagKey extends OggettoBulk implements KeyedPersistent
 		if (!compareKey(getCdCds(), k.getCdCds())) return false;
 		if (!compareKey(getCdMagazzino(), k.getCdMagazzino())) return false;
 		if (!compareKey(getCdCategoriaGruppo(), k.getCdCategoriaGruppo())) return false;
-		if (!compareKey(getDtIniValidita(), k.getDtIniValidita())) return false;
 		return true;
 	}
 	public int primaryKeyHashCode() {
@@ -39,7 +36,6 @@ public class AbilitBeneServMagKey extends OggettoBulk implements KeyedPersistent
 		i = i + calculateKeyHashCode(getCdCds());
 		i = i + calculateKeyHashCode(getCdMagazzino());
 		i = i + calculateKeyHashCode(getCdCategoriaGruppo());
-		i = i + calculateKeyHashCode(getDtIniValidita());
 		return i;
 	}
 	/**
@@ -83,19 +79,5 @@ public class AbilitBeneServMagKey extends OggettoBulk implements KeyedPersistent
 	 **/
 	public java.lang.String getCdCategoriaGruppo() {
 		return cdCategoriaGruppo;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [dtIniValidita]
-	 **/
-	public void setDtIniValidita(java.sql.Timestamp dtIniValidita)  {
-		this.dtIniValidita=dtIniValidita;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [dtIniValidita]
-	 **/
-	public java.sql.Timestamp getDtIniValidita() {
-		return dtIniValidita;
 	}
 }

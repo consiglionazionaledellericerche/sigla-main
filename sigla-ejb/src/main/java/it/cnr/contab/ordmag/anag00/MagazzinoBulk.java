@@ -40,6 +40,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 	private RaggrMagazzinoBulk raggrMagazzinoRim =  new RaggrMagazzinoBulk();
 	private BulkList categoriaGruppoColl = new BulkList();
 	private BulkList numeratoreColl = new BulkList();
+	private boolean isInQuery = false;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: MAGAZZINO
@@ -667,5 +668,11 @@ public class MagazzinoBulk extends MagazzinoBase {
 	{
 		// Gestisce la selezione del bottone cancella repertorio
 		return (NumerazioneMagBulk)numeratoreColl.remove(index);
+	}
+	public boolean isInQuery() {
+		return isInQuery;
+	}
+	public void setInQuery(boolean isInQuery) {
+		this.isInQuery = isInQuery;
 	}
 }

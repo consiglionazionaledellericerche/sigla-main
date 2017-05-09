@@ -9,13 +9,13 @@
 			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_CDS_STORNO"
-			propertyName="tipoMovimentoMagStorno.cdCds" />
+			propertyName="tipoMovimentoMagStorno.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_TIPO_MOVIMENTO_STORNO"
 			propertyName="tipoMovimentoMagStorno.cdTipoMovimento" />
 		<columnMapping
 			columnName="CD_CDS_ALT"
-			propertyName="tipoMovimentoMagAlt.cdCds" />
+			propertyName="tipoMovimentoMagAlt.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_TIPO_MOVIMENTO_ALT"
 			propertyName="tipoMovimentoMagAlt.cdTipoMovimento" />

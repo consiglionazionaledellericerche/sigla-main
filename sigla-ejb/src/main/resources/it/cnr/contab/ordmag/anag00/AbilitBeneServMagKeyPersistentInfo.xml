@@ -24,13 +24,6 @@
 			columnSize="10"
 			nullable="false"
 			primary="true" />
-		<columnMapping
-			columnName="DT_INI_VALIDITA"
-			propertyName="dtIniValidita"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false"
-			primary="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cdCds"
@@ -40,8 +33,5 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="cdCategoriaGruppo"
-		partOfOid="true" />
-	<persistentProperty
-		name="dtIniValidita"
 		partOfOid="true" />
 </SQLPersistentInfo>
