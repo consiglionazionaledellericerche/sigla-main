@@ -15,7 +15,7 @@
 	<fieldProperty
 		name="findCategoriaGruppo"
 		property="categoriaGruppoInvent"
-		inputType="SEARCHTOOL" 
+		inputType="searchtool" 
 		formName="searchtool" 
 		label="Categoria-Gruppo"
 		enabledOnSearch="true"		
@@ -64,13 +64,6 @@
 		nullable="false"
 		label="Descrizione Categoria Gruppo" />
 	<fieldProperty
-		name="dtIniValidita"
-		property="dtIniValidita"
-		inputType="TEXT"
-		formatName="date_short"
-		nullable="false"
-		label="Data Inizio Validita" />
-	<fieldProperty
 		name="dtFinValidita"
 		property="dtFinValidita"
 		inputType="TEXT"
@@ -82,17 +75,15 @@
 			name="cdMagazzino" />
 		<formFieldProperty
 			name="cdCategoriaGruppo" />
-		<formFieldProperty
-			name="dtIniValidita" />
 	</form>
 	<formFieldProperty
 		name="findMagazzino" />
 	<formFieldProperty
+		name="findCategoriaGruppo" />
+	<formFieldProperty
 		name="cdCategoriaGruppo" />
 	<formFieldProperty
 		name="dsCategoriaGruppo" />
-	<formFieldProperty
-		name="dtIniValidita" />
 	<formFieldProperty
 		name="dtFinValidita" />
 	<findFieldProperty
@@ -102,15 +93,11 @@
 	<findFieldProperty
 		name="cdCategoriaGruppo" />
 	<findFieldProperty
-		name="dtIniValidita" />
-	<findFieldProperty
 		name="dtFinValidita" />
 	<columnFieldProperty
 		name="cdCategoriaGruppo" />
 	<columnFieldProperty
 		name="dsCategoriaGruppo" />
-	<columnFieldProperty
-		name="dtIniValidita" />
 	<columnFieldProperty
 		name="dtFinValidita" />
 </bulkInfo>
