@@ -14,6 +14,7 @@ public class UnitaOperativaOrdBulk extends UnitaOperativaOrdBase {
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
 	private BulkList unitaOperativaColl = new BulkList();
+	private BulkList numeratoreColl = new BulkList();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: UNITA_OPERATIVA_ORD
@@ -82,7 +83,7 @@ public class UnitaOperativaOrdBulk extends UnitaOperativaOrdBase {
 	}
 	public BulkCollection[] getBulkLists() {
 		 return new it.cnr.jada.bulk.BulkCollection[] { 
-				 unitaOperativaColl};
+				 unitaOperativaColl,numeratoreColl};
 	}
 	public int addToUnitaOperativaColl( AssUnitaOperativaOrdBulk ass) 
 	{
@@ -94,5 +95,22 @@ public class UnitaOperativaOrdBulk extends UnitaOperativaOrdBase {
 	{
 		// Gestisce la selezione del bottone cancella repertorio
 		return (AssUnitaOperativaOrdBulk)unitaOperativaColl.remove(index);
+	}
+	public BulkList getNumeratoreColl() {
+		return numeratoreColl;
+	}
+	public void setNumeratoreColl(BulkList numeratoreColl) {
+		this.numeratoreColl = numeratoreColl;
+	}
+	public int addToNumeratoreColl( NumerazioneOrdBulk num) 
+	{
+		numeratoreColl.add(num);
+		num.setUnitaOperativaOrd(this);
+		return numeratoreColl.size()-1;
+	}
+	public NumerazioneOrdBulk removeFromNumeratoreColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (NumerazioneOrdBulk)numeratoreColl.remove(index);
 	}
 }

@@ -32,7 +32,7 @@
 		property="nota"
 		inputType="TEXTAREA"
 		cols="60"
-		rows="5"
+		rows="3"
 		maxLength="1000"
 		nullable="false"
 		label="Nota" />
@@ -41,7 +41,7 @@
 		property="nota2"
 		inputType="TEXTAREA"
 		cols="60"
-		rows="5"
+		rows="3"
 		maxLength="4000"
 		label="Nota aggiuntiva" />
 	<fieldProperty
