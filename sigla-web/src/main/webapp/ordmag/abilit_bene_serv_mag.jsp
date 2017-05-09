@@ -1,3 +1,4 @@
+<%@page import="it.cnr.contab.ordmag.anag00.MagazzinoBulk"%>
 <%@page import="it.cnr.contab.ordmag.anag00.bp.CRUDAssUnitaOperativaBP"%>
 <%@ page 
 	import="it.cnr.jada.action.*,
@@ -7,6 +8,7 @@
 
 <%
 CRUDAbilitBeneServMagBP bp = (CRUDAbilitBeneServMagBP)BusinessProcess.getBusinessProcess(request);
+MagazzinoBulk mag = (MagazzinoBulk)bp.getModel();
 %>
 
 <html>
@@ -24,7 +26,7 @@ CRUDAbilitBeneServMagBP bp = (CRUDAbilitBeneServMagBP)BusinessProcess.getBusines
 	<table class="Panel">
 		<TR>
 		   <TD><% bp.getController().writeFormLabel(out,"cdMagazzino");%></TD>
-		   <TD><% bp.getController().writeFormInput(out,"cdMagazzino");%></TD>
+		   <TD><% bp.getController().writeFormInput(out,null,"cdMagazzino", !mag.isInQuery(),null,null);%></TD>
 		</TR>
 		<TR>
 		   <TD><% bp.getController().writeFormLabel(out,"dsMagazzino");%></TD>
@@ -49,16 +51,8 @@ CRUDAbilitBeneServMagBP bp = (CRUDAbilitBeneServMagBP)BusinessProcess.getBusines
 		<tr></tr>
 		<tr></tr>
 		<tr>
-		<td><% bp.getAbilitBeneServMagController().writeFormLabel( out, "cdCategoriaGruppo");%></td>
+		<td><% bp.getAbilitBeneServMagController().writeFormLabel( out, "findCategoriaGruppo");%></td>
 			<% bp.getAbilitBeneServMagController().writeFormInput(out,"default","findCategoriaGruppo",!bp.isEditingAbilitazione(),"FormInput", null);%></td>	
-		</tr>
-		<tr>
-		  <td><% bp.getAbilitBeneServMagController().writeFormLabel(out,"dtIniValidita");%></td>
-		  <td colspan="1"><% bp.getAbilitBeneServMagController().writeFormInput(out,"dtIniValidita");%></td>
-		</tr>
-		<tr>
-		  <td><% bp.getAbilitBeneServMagController().writeFormLabel(out,"dtFinValidita");%></td>
-		  <td colspan="1"><% bp.getAbilitBeneServMagController().writeFormInput(out,"dtFinValidita");%></td>
 		</tr>
 	</table>
 <%	bp.closeFormWindow(pageContext); %>
