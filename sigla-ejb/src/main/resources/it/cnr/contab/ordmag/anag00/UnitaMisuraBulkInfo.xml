@@ -19,9 +19,8 @@
 	<fieldProperty
 		name="dsUnitaMisura"
 		property="dsUnitaMisura"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
 		nullable="false"
 		label="Descrizione" />
