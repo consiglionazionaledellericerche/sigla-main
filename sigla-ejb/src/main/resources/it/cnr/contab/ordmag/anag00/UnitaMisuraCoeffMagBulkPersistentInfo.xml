@@ -6,19 +6,19 @@
 		tableName="UNITA_MISURA_COEFF_MAG">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="magazzino.cd_cds" />
+			propertyName="magazzino.cdCds" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
-			propertyName="magazzino.cd_magazzino" />
+			propertyName="magazzino.cdMagazzino" />
 		<columnMapping
 			columnName="CD_BENE_SERVIZIO"
 			propertyName="beneServizio.cd_bene_servizio" />
 		<columnMapping
 			columnName="CD_UNITA_MISURA_CAR"
-			propertyName="unitaMisuraCar.cd_unita_misura" />
+			propertyName="unitaMisuraCar.cdUnitaMisura" />
 		<columnMapping
 			columnName="CD_UNITA_MISURA_SCA"
-			propertyName="unitaMisuraSca.cd_unita_misura" />
+			propertyName="unitaMisuraSca.cdUnitaMisura" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="magazzino"

@@ -39,6 +39,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 	private RaggrMagazzinoBulk raggrMagazzinoSca =  new RaggrMagazzinoBulk();
 	private RaggrMagazzinoBulk raggrMagazzinoRim =  new RaggrMagazzinoBulk();
 	private BulkList categoriaGruppoColl = new BulkList();
+	private BulkList numeratoreColl = new BulkList();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: MAGAZZINO
@@ -637,7 +638,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 	}
 	public BulkCollection[] getBulkLists() {
 		 return new it.cnr.jada.bulk.BulkCollection[] { 
-				 categoriaGruppoColl};
+				 categoriaGruppoColl, numeratoreColl};
 	}
 	public int addToCategoriaGruppoColl( AbilitBeneServMagBulk abilit) 
 	{
@@ -649,5 +650,22 @@ public class MagazzinoBulk extends MagazzinoBase {
 	{
 		// Gestisce la selezione del bottone cancella repertorio
 		return (AbilitBeneServMagBulk)categoriaGruppoColl.remove(index);
+	}
+	public BulkList getNumeratoreColl() {
+		return numeratoreColl;
+	}
+	public void setNumeratoreColl(BulkList numeratoreColl) {
+		this.numeratoreColl = numeratoreColl;
+	}
+	public int addToNumeratoreColl( NumerazioneMagBulk num) 
+	{
+		numeratoreColl.add(num);
+		num.setMagazzino(this);
+		return numeratoreColl.size()-1;
+	}
+	public NumerazioneMagBulk removeFromNumeratoreColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (NumerazioneMagBulk)numeratoreColl.remove(index);
 	}
 }

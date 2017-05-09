@@ -6,10 +6,10 @@
 		tableName="NUMERAZIONE_MAG">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="magazzino.cd_cds" />
+			propertyName="magazzino.cdCds" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
-			propertyName="magazzino.cd_magazzino" />
+			propertyName="magazzino.cdMagazzino" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="magazzino"
