@@ -41,9 +41,8 @@
 	<fieldProperty
 		name="dsCausaleSpesa"
 		property="dsCausaleSpesa"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="1"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
 		nullable="false"
 		label="Descrizione" />
