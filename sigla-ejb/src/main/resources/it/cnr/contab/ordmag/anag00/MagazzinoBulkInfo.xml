@@ -32,6 +32,7 @@
 		property="dsMagazzino"
 		inputType="TEXT"
 		maxLength="100"
+		inputSize="100"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty

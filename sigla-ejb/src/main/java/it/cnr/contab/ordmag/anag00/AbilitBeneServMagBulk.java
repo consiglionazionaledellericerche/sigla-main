@@ -31,8 +31,8 @@ Ogni categoria deve essere associata ad un capitolo del piano dei conti  economi
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ABILIT_BENE_SERV_MAG
 	 **/
-	public AbilitBeneServMagBulk(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.String cdCategoriaGruppo, java.sql.Timestamp dtIniValidita) {
-		super(cdCds, cdMagazzino, cdCategoriaGruppo, dtIniValidita);
+	public AbilitBeneServMagBulk(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.String cdCategoriaGruppo) {
+		super(cdCds, cdMagazzino, cdCategoriaGruppo);
 		setMagazzino( new MagazzinoBulk(cdCds,cdMagazzino) );
 		setCategoriaGruppoInvent( new Categoria_gruppo_inventBulk(cdCategoriaGruppo) );
 	}
