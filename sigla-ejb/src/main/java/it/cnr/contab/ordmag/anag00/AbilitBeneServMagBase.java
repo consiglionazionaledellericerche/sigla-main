@@ -15,8 +15,8 @@ public class AbilitBeneServMagBase extends AbilitBeneServMagKey implements Keyed
 	public AbilitBeneServMagBase() {
 		super();
 	}
-	public AbilitBeneServMagBase(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.String cdCategoriaGruppo, java.sql.Timestamp dtIniValidita) {
-		super(cdCds, cdMagazzino, cdCategoriaGruppo, dtIniValidita);
+	public AbilitBeneServMagBase(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.String cdCategoriaGruppo) {
+		super(cdCds, cdMagazzino, cdCategoriaGruppo);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
