@@ -120,10 +120,7 @@ protected void setFocusedElement(it.cnr.jada.action.ActionContext context,Object
 			toolbar[1].setHref("doPrint('"+ JSPUtils.getAppRoot((HttpServletRequest) pageContext.getRequest()) + "offline_report/"+print_spool.getNomeFile()+"?pg="+print_spool.getPgStampa().longValue()+"')");
 		else
 			toolbar[1].setHref(null);
-		if (HttpActionContext.isFromBootstrap(pageContext))
-			writeToolbarBootstrap(pageContext.getOut(), Arrays.asList(toolbar));		
-		else
-			writeToolbar(pageContext.getOut(), toolbar);
+		writeToolbar(pageContext.getOut(), toolbar);
 	}
 	public void sign(ActionContext context) throws BusinessProcessException {
 		try {
