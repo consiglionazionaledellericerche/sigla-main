@@ -352,9 +352,11 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		try {
 			Date data_stipula_contratti = Utility.createParametriCnrComponentSession().
 			getParametriCnr(uc, CNRUserContext.getEsercizio(uc)).getData_stipula_contratti();
-			if (!(bulk.getDt_stipula().before(data_stipula_contratti)) && bulk.isDefinitivo()){
-				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && bulk.getDirettore() == null) 
+			if (!(bulk.getDt_stipula().before(data_stipula_contratti))){
+				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && ((bulk.getDirettore() == null)|| bulk.getDirettore().getCd_terzo()==null ))
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("direttore").getLabel());
+			}
+			if (!(bulk.getDt_stipula().before(data_stipula_contratti)) && bulk.isDefinitivo()){
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getFl_mepa() == null) 
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("fl_mepa").getLabel());
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getTipoNormaPerla() == null) 
