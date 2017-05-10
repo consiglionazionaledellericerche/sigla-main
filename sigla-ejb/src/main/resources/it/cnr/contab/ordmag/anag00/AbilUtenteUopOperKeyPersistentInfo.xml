@@ -18,13 +18,6 @@
 			nullable="false"
 			primary="true" />
 		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="esercizio"
-			sqlTypeName="DECIMAL"
-			columnSize="4"
-			nullable="false"
-			primary="true" />
-		<columnMapping
 			columnName="CD_TIPO_OPERAZIONE"
 			propertyName="cdTipoOperazione"
 			sqlTypeName="VARCHAR"
@@ -37,9 +30,6 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="cdUnitaOperativa"
-		partOfOid="true" />
-	<persistentProperty
-		name="esercizio"
 		partOfOid="true" />
 	<persistentProperty
 		name="cdTipoOperazione"

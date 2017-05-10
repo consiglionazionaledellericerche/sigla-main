@@ -19,7 +19,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -29,7 +30,8 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Magazzino" />
 	<fieldProperty
@@ -39,7 +41,8 @@
 		inputSize="15"
 		maxLength="15"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Bene Servizio" />
 	<fieldProperty
@@ -48,7 +51,8 @@
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Data Inizio Validità" />
 	<fieldProperty
@@ -65,6 +69,8 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Codice Unità Misura di carico" />
 	<fieldProperty
 		name="coefConvCar"
@@ -73,6 +79,8 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Coefficienti di conversione di carico" />
 	<fieldProperty
 		name="cdUnitaMisuraSca"
@@ -81,6 +89,8 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Codice Unità Misura di scarico" />
 	<fieldProperty
 		name="coefConvSca"
@@ -89,6 +99,8 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Coefficienti di conversione di scarico" />
 	<fieldProperty
 		name="dtFinValidita"
@@ -96,6 +108,8 @@
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Data Fine Validità" />
 	<form
 		name="searchtool">

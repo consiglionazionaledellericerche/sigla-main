@@ -19,7 +19,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -29,7 +30,8 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Magazzino" />
 	<fieldProperty
@@ -39,7 +41,8 @@
 		inputSize="4"
 		maxLength="4"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Esercizio" />
 	<fieldProperty
@@ -49,7 +52,8 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Numeratore" />
 	<fieldProperty
@@ -58,7 +62,6 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Progressivo corrente" />
 	<fieldProperty
@@ -66,7 +69,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">
