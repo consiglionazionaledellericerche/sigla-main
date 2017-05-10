@@ -16,6 +16,7 @@ import java.util.List;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -1112,18 +1113,23 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 		try {
 			Pdg_Modulo_EntrateHome home = (Pdg_Modulo_EntrateHome)getHome(userContext,Pdg_Modulo_EntrateBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
-			sql.addTableToHeader("CLASSIFICAZIONE_VOCI");
-			sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
 			CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
 			cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 			
-			if (pdg.getCdr().isCdrSAC())
+			if (pdg.getCdr().isCdrSAC()) {
+				sql.addTableToHeader("CLASSIFICAZIONE_VOCI");
+				sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
 				sql.addSQLClause("AND","CLASSIFICAZIONE_VOCI.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
+			}
 			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
 			sql.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
 			sql.addClause("AND","pg_progetto",SQLBuilder.EQUALS,pdg.getPg_progetto());
 			if (cds!=null && cds.getCd_unita_organizzativa()!=null)
 				sql.addClause("AND","cd_cds_area",SQLBuilder.EQUALS,cds.getCd_unita_organizzativa());
+
+			sql.addTableToHeader("NATURA");
+			sql.addSQLJoin("PDG_MODULO_ENTRATE.CD_NATURA","NATURA.CD_NATURA");
+			sql.addSQLClause("AND","NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);
 
 			SQLBroker broker = home.createBroker(sql);
 			
