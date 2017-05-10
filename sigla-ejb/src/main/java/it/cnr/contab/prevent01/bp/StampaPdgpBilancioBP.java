@@ -45,7 +45,7 @@ public class StampaPdgpBilancioBP extends ParametricPrintBP {
 				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_aggregazione(Stampa_pdgp_bilancioBulk.TIPO_SCIENTIFICO);				
 				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_origine(Stampa_pdgp_bilancioBulk.TIPO_PROVVISORIO);				
 				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_gestione(Stampa_pdgp_bilancioBulk.TIPO_GESTIONE_ENTRATA);
-				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_parte(Stampa_pdgp_bilancioBulk.TIPO_PARTE_PRIMA);
+				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_parte(Stampa_pdgp_bilancioBulk.TIPO_PARTE_ENTRAMBE);
 				
 				loadModelBulkOptions(context, (Stampa_pdgp_bilancioBulk) oggettoBulk);
 			}
@@ -160,8 +160,10 @@ public class StampaPdgpBilancioBP extends ParametricPrintBP {
 				return "/preventivo/preventivo/stampa_pdg_renddec.jasper";
 			else if (Stampa_pdgp_bilancioBulk.TIPO_PARTE_PRIMA.equals(oggettoBulk.getTi_parte()))
 				return "/preventivo/preventivo/stampa_pdg_rendges_competenza.jasper";
-			else
+			else if (Stampa_pdgp_bilancioBulk.TIPO_PARTE_SECONDA.equals(oggettoBulk.getTi_parte()))
 				return "/preventivo/preventivo/stampa_pdg_rendges_residui.jasper";
+			else 
+				return "/preventivo/preventivo/stampa_pdg_rendges_all.jasper";
 		} else
 			return "/preventivo/preventivo/stampa_pdgp_bilancio.jasper";
 	}

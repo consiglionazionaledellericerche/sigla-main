@@ -80,6 +80,7 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 
 	public final static String TIPO_PARTE_PRIMA = "I";
 	public final static String TIPO_PARTE_SECONDA = "II";
+	public final static String TIPO_PARTE_ENTRAMBE = "III";
 
 	public final static java.util.Dictionary ti_parteKeys;
 	
@@ -87,6 +88,7 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 		ti_parteKeys = new it.cnr.jada.util.OrderedHashtable();
 		ti_parteKeys.put(TIPO_PARTE_PRIMA,"Prima");
 		ti_parteKeys.put(TIPO_PARTE_SECONDA,"Seconda");
+		ti_parteKeys.put(TIPO_PARTE_ENTRAMBE,"Entrambe");
 	}
 
 	public final static String TIPO_DECISIONALE_SCIENTIFICO = "DECSCI";
