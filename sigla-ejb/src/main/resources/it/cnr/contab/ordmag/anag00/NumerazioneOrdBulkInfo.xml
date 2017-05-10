@@ -45,9 +45,8 @@
 	<fieldProperty
 		name="dsNumeratore"
 		property="dsNumeratore"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
 		enabledOnEdit="false"
 		nullable="false"
