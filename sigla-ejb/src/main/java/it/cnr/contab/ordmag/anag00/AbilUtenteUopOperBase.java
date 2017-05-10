@@ -18,8 +18,8 @@ public class AbilUtenteUopOperBase extends AbilUtenteUopOperKey implements Keyed
 	public AbilUtenteUopOperBase() {
 		super();
 	}
-	public AbilUtenteUopOperBase(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdTipoOperazione) {
-		super(cdUtente, cdUnitaOperativa, esercizio, cdTipoOperazione);
+	public AbilUtenteUopOperBase(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.String cdTipoOperazione) {
+		super(cdUtente, cdUnitaOperativa, cdTipoOperazione);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

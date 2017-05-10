@@ -12,7 +12,8 @@
 		inputSize="20"
 		maxLength="20"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Utente" />
 	<fieldProperty
@@ -29,19 +30,10 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Unità Operativa" />
-	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="Esercizio" />
 	<fieldProperty
 		name="findTipoOperazioneOrd"
 		property="tipoOperazioneOrd"
@@ -56,7 +48,8 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Tipo Operazione" />
 	<fieldProperty
@@ -65,7 +58,6 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Tutti Magazzini" />
 	<fieldProperty
@@ -73,7 +65,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">
@@ -82,14 +73,10 @@
 		<formFieldProperty
 			name="cdUnitaOperativa" />
 		<formFieldProperty
-			name="esercizio" />
-		<formFieldProperty
 			name="cdTipoOperazione" />
 	</form>
 	<formFieldProperty
 		name="findUnitaOperativaOrd" />
-	<formFieldProperty
-		name="esercizio" />
 	<formFieldProperty
 		name="findTipoOperazioneOrd" />
 	<formFieldProperty
@@ -101,8 +88,6 @@
 	<findFieldProperty
 		name="cdUnitaOperativa" />
 	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
 		name="cdTipoOperazione" />
 	<findFieldProperty
 		name="tuttiMagazzini" />
@@ -112,8 +97,6 @@
 		name="cdUtente" />
 	<columnFieldProperty
 		name="cdUnitaOperativa" />
-	<columnFieldProperty
-		name="esercizio" />
 	<columnFieldProperty
 		name="cdTipoOperazione" />
 	<columnFieldProperty

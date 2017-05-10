@@ -96,6 +96,9 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 	 * Setta il valore di: [cdCdsStorno]
 	 **/
 	public void setCdCdsStorno(java.lang.String cdCdsStorno)  {
+		if (this.getTipoMovimentoMagStorno() == null){
+			setTipoMovimentoMagStorno(new TipoMovimentoMagBulk());
+		}
 		this.getTipoMovimentoMagStorno().setCdCds(cdCdsStorno);
 	}
 	/**
@@ -113,6 +116,9 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 	 * Setta il valore di: [cdTipoMovimentoStorno]
 	 **/
 	public void setCdTipoMovimentoStorno(java.lang.String cdTipoMovimentoStorno)  {
+		if (this.getTipoMovimentoMagStorno() == null){
+			setTipoMovimentoMagStorno(new TipoMovimentoMagBulk());
+		}
 		this.getTipoMovimentoMagStorno().setCdTipoMovimento(cdTipoMovimentoStorno);
 	}
 	/**
@@ -130,6 +136,9 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 	 * Setta il valore di: [cdCdsAlt]
 	 **/
 	public void setCdCdsAlt(java.lang.String cdCdsAlt)  {
+		if (this.getTipoMovimentoMagAlt() == null){
+			setTipoMovimentoMagAlt(new TipoMovimentoMagBulk());
+		}
 		this.getTipoMovimentoMagAlt().setCdCds(cdCdsAlt);
 	}
 	/**
@@ -147,6 +156,9 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 	 * Setta il valore di: [cdTipoMovimentoAlt]
 	 **/
 	public void setCdTipoMovimentoAlt(java.lang.String cdTipoMovimentoAlt)  {
+		if (this.getTipoMovimentoMagAlt() == null){
+			setTipoMovimentoMagAlt(new TipoMovimentoMagBulk());
+		}
 		this.getTipoMovimentoMagAlt().setCdTipoMovimento(cdTipoMovimentoAlt);
 	}
 
@@ -157,6 +169,10 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 		setTipoMovimentoMagAlt(new TipoMovimentoMagBulk());
 		setTipoMovimentoMagStorno(new TipoMovimentoMagBulk());
 		return this;
+	}
+	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+		return super.initialize(bp,context);
 	}
 
 }
