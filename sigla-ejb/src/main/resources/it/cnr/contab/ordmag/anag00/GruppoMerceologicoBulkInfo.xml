@@ -12,15 +12,15 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
 		name="dsGruppoMerceologico"
 		property="dsGruppoMerceologico"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="1"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
 		nullable="false"
 		label="Descrizione" />

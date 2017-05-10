@@ -182,4 +182,8 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		setUnitaMisuraSca(new UnitaMisuraBulk());
 		return this;
 	}
+	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+		return super.initialize(bp,context);
+	}
 }
