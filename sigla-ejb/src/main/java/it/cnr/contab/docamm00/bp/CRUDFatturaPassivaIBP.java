@@ -364,13 +364,6 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 		writeFPToolbar(writer);
 		writeFPInventarioToolbar(writer);
 	}
-
-	@Override
-	public void writeToolbar(PageContext pagecontext) throws IOException, ServletException {
-		super.writeToolbar(pagecontext);
-		writeFPToolbar(pagecontext.getOut());
-		writeFPInventarioToolbar(pagecontext.getOut());		
-	}
 	
 	public boolean isCreaCompensoButtonEnabled() {
 
