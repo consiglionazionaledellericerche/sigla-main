@@ -1,12 +1,12 @@
+<%@page import="it.cnr.contab.ordmag.anag00.bp.CRUDAssUnitaOperativaBP"%>
 <%@ page 
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.util.jsp.*,
-		it.cnr.contab.incarichi00.bp.*,
-		it.cnr.contab.incarichi00.bulk.*"
+		it.cnr.contab.ordmag.anag00.bp.*"
 %>
 
 <%
-CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.getBusinessProcess(request);
+CRUDAssUnitaOperativaBP bp = (CRUDAssUnitaOperativaBP)BusinessProcess.getBusinessProcess(request);
 %>
 
 <html>
@@ -28,42 +28,33 @@ CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.
 		</TR>
 		<TR>
 		   <TD><% bp.getController().writeFormLabel(out,"dsUnitaOperativa");%></TD>
-		   <TD><% bp.getController().writeFormInput(out,"dsUnitaOperativa");%></TD>
+		   <TD><% bp.getController().writeFormInput(out,null,"dsUnitaOperativa",true,null,null);%></TD>
 		</TR>
 	</table>
 	<table class="Panel">
 		<TR>
 		 	<TD colspan="3">
 			<fieldset>
-				<legend class="GroupLabel">Repertorio Limiti per anno</legend>
+				<legend class="GroupLabel">Unità operative associate</legend>
 				<table width="100%">
 				<tr>
-					<td colspan="4">
-					<% JSPUtils.tabbed(
-									pageContext,
-									"tab",
-									bp.getTabs(),
-									bp.getTab("tab"),
-									"center",
-									"100%",
-									null ); %>
-				
-				    </td>
+					<td ><%bp.getAssUnitaOperativaController().writeHTMLTable(pageContext,null,true,false,true,"100%","200px"); %></td>
 				</tr>
 				</table>
 			</fieldset>
 			</TD>
 		</TR>
 	</table>
-	<table class="Panel">
+	<table width="100%">
+		<tr></tr>
+		<tr></tr>
 		<tr>
-			<td><% bp.getRepertorioLimiti().writeFormLabel(out,"esercizio"); %></td>
-			<td><% bp.getRepertorioLimiti().writeFormInput(out,"esercizio"); %></td>
+		<td><% bp.getAssUnitaOperativaController().writeFormLabel( out, "cdUnitaOperativaRif");%></td>
+			<% bp.getAssUnitaOperativaController().writeFormInput(out,"default","findUnitaOperativaRif",!bp.isEditingAssociazione(),"FormInput", null);%></td>	
 		</tr>
-		<tr>
-	  	    <td><% bp.getRepertorioLimiti().writeFormLabel(out,"importo_limite"); %></td>
-			<td><% bp.getRepertorioLimiti().writeFormInput(out,"importo_limite"); %></td>
-		</tr>
+	
+		<tr></tr>
+		<tr></tr>
 	</table>
 <%	bp.closeFormWindow(pageContext); %>
 </body>

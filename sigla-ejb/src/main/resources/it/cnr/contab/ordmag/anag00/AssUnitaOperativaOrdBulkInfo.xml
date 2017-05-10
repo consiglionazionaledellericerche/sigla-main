@@ -6,8 +6,8 @@
 	shortDescription="Rappresenta le associazioni/gerarchie tra unità operative per indirizzare le abilitazioni."
 	longDescription="Rappresenta le associazioni/gerarchie tra unità operative per indirizzare le abilitazioni.">
 	<fieldProperty
-		name="findUnitaOperativaOrd"
-		property="unitaOperativaOrd"
+		name="findUnitaOperativaRif"
+		property="unitaOperativaOrdRif"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
@@ -19,19 +19,20 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Unità Operativa" />
 	<fieldProperty
-		name="dsUnitaOperativa"
-		property="unitaOperativaOrd.dsUnitaOperativa"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		name="dsUnitaOperativaRif"
+		property="unitaOperativaOrdRif.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
 		enabledOnEdit="false"
+		enabledOnSearch="false"
 		nullable="false"
-		label="Descrizione Unità Operativa" />
+		label="Descrizione Unità Operativa di Riferimento" />
 	<fieldProperty
 		name="cdUnitaOperativaRif"
 		property="unitaOperativaOrdRif.cdUnitaOperativa"
@@ -39,7 +40,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Unità Operativa di Riferimento" />
 	<fieldProperty
@@ -47,7 +49,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">
@@ -57,9 +58,12 @@
 			name="cdUnitaOperativaRif" />
 	</form>
 	<formFieldProperty
-		name="findUnitaOperativaOrd" />
+		name="dtCancellazione" />
 	<formFieldProperty
-		name="dtCancellazione" />
+		name="cdUnitaOperativaRif" />
+	<formFieldProperty
+		name="dsUnitaOperativaRif" />
+	<formFieldProperty name="findUnitaOperativaRif" />
 	<findFieldProperty
 		name="cdUnitaOperativa" />
 	<findFieldProperty
@@ -67,9 +71,7 @@
 	<findFieldProperty
 		name="dtCancellazione" />
 	<columnFieldProperty
-		name="cdUnitaOperativa" />
-	<columnFieldProperty
 		name="cdUnitaOperativaRif" />
 	<columnFieldProperty
-		name="dtCancellazione" />
+		name="dsUnitaOperativaRif" />
 </bulkInfo>

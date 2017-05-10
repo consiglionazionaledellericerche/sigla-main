@@ -28,8 +28,8 @@ public class AbilUtenteUopOperBulk extends AbilUtenteUopOperBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ABIL_UTENTE_UOP_OPER
 	 **/
-	public AbilUtenteUopOperBulk(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdTipoOperazione) {
-		super(cdUtente, cdUnitaOperativa, esercizio, cdTipoOperazione);
+	public AbilUtenteUopOperBulk(java.lang.String cdUtente, java.lang.String cdUnitaOperativa, java.lang.String cdTipoOperazione) {
+		super(cdUtente, cdUnitaOperativa, cdTipoOperazione);
 		setUtente( new UtenteBulk(cdUtente) );
 		setUnitaOperativaOrd( new UnitaOperativaOrdBulk(cdUnitaOperativa) );
 		setTipoOperazioneOrd( new TipoOperazioneOrdBulk(cdTipoOperazione) );

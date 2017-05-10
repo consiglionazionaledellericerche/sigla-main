@@ -12,7 +12,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -22,7 +23,8 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
@@ -30,9 +32,8 @@
 		property="nota"
 		inputType="TEXTAREA"
 		cols="60"
-		rows="5"
+		rows="3"
 		maxLength="1000"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Nota" />
 	<fieldProperty
@@ -40,16 +41,14 @@
 		property="nota2"
 		inputType="TEXTAREA"
 		cols="60"
-		rows="5"
+		rows="3"
 		maxLength="4000"
-		enabledOnEdit="false"
 		label="Nota aggiuntiva" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">
