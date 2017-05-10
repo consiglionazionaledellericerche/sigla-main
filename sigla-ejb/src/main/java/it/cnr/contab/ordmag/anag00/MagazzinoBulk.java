@@ -4,6 +4,10 @@
  */
 package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.action.CRUDBP;
 public class MagazzinoBulk extends MagazzinoBase {
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
@@ -34,6 +38,9 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 **/
 	private RaggrMagazzinoBulk raggrMagazzinoSca =  new RaggrMagazzinoBulk();
 	private RaggrMagazzinoBulk raggrMagazzinoRim =  new RaggrMagazzinoBulk();
+	private BulkList categoriaGruppoColl = new BulkList();
+	private BulkList numeratoreColl = new BulkList();
+	private boolean isInQuery = false;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: MAGAZZINO
@@ -611,5 +618,61 @@ public class MagazzinoBulk extends MagazzinoBase {
 	}
 	public void setTipoMovimentoMagChi(TipoMovimentoMagBulk tipoMovimentoMagChi) {
 		this.tipoMovimentoMagChi = tipoMovimentoMagChi;
+	}
+	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		impostaCds(context);
+		return super.initialize(bp,context);
+	}
+	public OggettoBulk initializeForSearch(CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		super.initializeForSearch(bp,context);
+		impostaCds(context);
+		return this;
+	}
+	private void impostaCds(it.cnr.jada.action.ActionContext context) {
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+	}
+	public BulkList getCategoriaGruppoColl() {
+		return categoriaGruppoColl;
+	}
+	public void setCategoriaGruppoColl(BulkList categoriaGruppoColl) {
+		this.categoriaGruppoColl = categoriaGruppoColl;
+	}
+	public BulkCollection[] getBulkLists() {
+		 return new it.cnr.jada.bulk.BulkCollection[] { 
+				 categoriaGruppoColl, numeratoreColl};
+	}
+	public int addToCategoriaGruppoColl( AbilitBeneServMagBulk abilit) 
+	{
+		categoriaGruppoColl.add(abilit);
+		abilit.setMagazzino(this);
+		return categoriaGruppoColl.size()-1;
+	}
+	public AbilitBeneServMagBulk removeFromCategoriaGruppoColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (AbilitBeneServMagBulk)categoriaGruppoColl.remove(index);
+	}
+	public BulkList getNumeratoreColl() {
+		return numeratoreColl;
+	}
+	public void setNumeratoreColl(BulkList numeratoreColl) {
+		this.numeratoreColl = numeratoreColl;
+	}
+	public int addToNumeratoreColl( NumerazioneMagBulk num) 
+	{
+		numeratoreColl.add(num);
+		num.setMagazzino(this);
+		return numeratoreColl.size()-1;
+	}
+	public NumerazioneMagBulk removeFromNumeratoreColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (NumerazioneMagBulk)numeratoreColl.remove(index);
+	}
+	public boolean isInQuery() {
+		return isInQuery;
+	}
+	public void setInQuery(boolean isInQuery) {
+		this.isInQuery = isInQuery;
 	}
 }

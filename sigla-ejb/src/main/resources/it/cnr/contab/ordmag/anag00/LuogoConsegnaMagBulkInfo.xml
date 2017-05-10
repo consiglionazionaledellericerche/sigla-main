@@ -12,7 +12,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -22,27 +23,23 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
 		name="dsLuogoConsegna"
 		property="dsLuogoConsegna"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
 		name="indirizzo"
 		property="indirizzo"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="100"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Indirizzo" />
 	<fieldProperty
@@ -51,7 +48,6 @@
 		inputType="TEXT"
 		inputSize="5"
 		maxLength="5"
-		enabledOnEdit="false"
 		label="Cap" />
 	<fieldProperty
 		name="pgComune"
@@ -59,7 +55,6 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		enabledOnEdit="false"
 		label="Comune" />
 	<fieldProperty
 		name="pgNazione"
@@ -67,14 +62,12 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		enabledOnEdit="false"
 		label="Nazione" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">

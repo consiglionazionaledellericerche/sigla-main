@@ -12,17 +12,16 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
 		name="dsTipoOperazione"
 		property="dsTipoOperazione"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
-		enabledOnEdit="false"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
@@ -30,7 +29,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">

@@ -12,51 +12,37 @@
 		inputSize="20"
 		maxLength="20"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Utente" />
 	<fieldProperty
-		name="findUnitaOperativaOrd"
-		property="unitaOperativaOrd"
+		name="findAbilUtenteUopOperBulk"
+		property="abilUtenteUopOperBulk"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa" />
+		label="Abilitazione utente uop operazione" />
 	<fieldProperty
 		name="cdUnitaOperativa"
-		property="unitaOperativaOrd.cdUnitaOperativa"
+		property="abilUtenteUopOperBulk.cdUnitaOperativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Unità Operativa" />
 	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="Esercizio" />
-	<fieldProperty
-		name="findTipoOperazioneOrd"
-		property="tipoOperazioneOrd"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="Tipo Operazione" />
-	<fieldProperty
 		name="cdTipoOperazione"
-		property="tipoOperazioneOrd.cdTipoOperazione"
+		property="abilUtenteUopOperBulk.cdTipoOperazione"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Tipo Operazione" />
 	<fieldProperty
@@ -73,7 +59,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -82,8 +69,6 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
 		nullable="false"
 		label="Codice Magazzino" />
 	<fieldProperty
@@ -91,7 +76,6 @@
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
 		label="Data Cancellazione" />
 	<form
 		name="searchtool">
@@ -100,8 +84,6 @@
 		<formFieldProperty
 			name="cdUnitaOperativa" />
 		<formFieldProperty
-			name="esercizio" />
-		<formFieldProperty
 			name="cdTipoOperazione" />
 		<formFieldProperty
 			name="cdCds" />
@@ -109,11 +91,7 @@
 			name="cdMagazzino" />
 	</form>
 	<formFieldProperty
-		name="findUnitaOperativaOrd" />
-	<formFieldProperty
-		name="esercizio" />
-	<formFieldProperty
-		name="findTipoOperazioneOrd" />
+		name="findAbilUtenteUopOperBulk" />
 	<formFieldProperty
 		name="findMagazzino" />
 	<formFieldProperty
@@ -122,8 +100,6 @@
 		name="cdUtente" />
 	<findFieldProperty
 		name="cdUnitaOperativa" />
-	<findFieldProperty
-		name="esercizio" />
 	<findFieldProperty
 		name="cdTipoOperazione" />
 	<findFieldProperty
@@ -136,8 +112,6 @@
 		name="cdUtente" />
 	<columnFieldProperty
 		name="cdUnitaOperativa" />
-	<columnFieldProperty
-		name="esercizio" />
 	<columnFieldProperty
 		name="cdTipoOperazione" />
 	<columnFieldProperty

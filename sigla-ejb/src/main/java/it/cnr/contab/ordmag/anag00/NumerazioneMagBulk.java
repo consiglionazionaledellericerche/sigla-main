@@ -4,6 +4,8 @@
  */
 package it.cnr.contab.ordmag.anag00;
 
+import it.cnr.jada.bulk.OggettoBulk;
+
 public class NumerazioneMagBulk extends NumerazioneMagBase {
 	/**
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
@@ -71,5 +73,9 @@ public class NumerazioneMagBulk extends NumerazioneMagBase {
 	 **/
 	public void setCdMagazzino(java.lang.String cdMagazzino)  {
 		this.getMagazzino().setCdMagazzino(cdMagazzino);
+	}
+	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+		return super.initialize(bp,context);
 	}
 }
