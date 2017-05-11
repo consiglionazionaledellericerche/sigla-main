@@ -59,6 +59,7 @@
 	
  	<tr>
  	<td colspan=2>
+ 		  <br>
 	      <%JSPUtils.tabbed(pageContext,
 							"tabScadenzario",
 							new String[][] {
@@ -66,7 +67,7 @@
 								{ "tabDettaglioScadenza","Dettaglio Scadenza","/doccont00/tab_dettaglio_scadenza_accertamento.jsp" } },
 							bp.getTab("tabScadenzario"),
 							"center", 
-							"500px", null,
+							"100%", null,
 							!bp.isEditingScadenza() );
 			
 		%>
