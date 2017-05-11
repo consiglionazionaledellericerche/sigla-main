@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_rendges_all_presunto" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1190" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f86d11ee-c14c-4bcc-9921-6d60cb6e7308">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="5.054470284992949"/>
-	<property name="ireport.x" value="4861"/>
+	<property name="ireport.zoom" value="1.3310000000000026"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -24,7 +24,7 @@
 		<![CDATA[Select cd_chiave_secondaria, im01, im02,
 val01, val02, val03, val04
 From CONFIGURAZIONE_CNR
-Where Esercizio = 2005
+Where Esercizio = $P{P_ESERCIZIO}
   And cd_unita_funzionale = '*'
   And cd_chiave_primaria = 'RENDICONTO_FINANZIARIO'
   And (cd_chiave_secondaria = 'AVANZO_AMMINISTRAZIONE' OR
