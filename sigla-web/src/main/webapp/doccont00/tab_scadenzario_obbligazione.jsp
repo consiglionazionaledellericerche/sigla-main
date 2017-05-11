@@ -38,16 +38,17 @@
 	</td>
 	</tr>
   <tr><td colspan=2>
+  		<br>
 	      <%	JSPUtils.tabbed(
-							pageContext,
-							"tabScadenzario",
-							new String[][] {
-								{ "tabScadenza","Scadenza","/doccont00/tab_scadenza_obbligazione.jsp" },
-								{ "tabDettaglioScadenza","Dettaglio Scadenza","/doccont00/tab_dettaglio_scadenza_obbligazione.jsp" } },
-							bp.getTab("tabScadenzario"),
-							"center", 
-							"510px", null,
-							!bp.isEditingScadenza() );
+					pageContext,
+					"tabScadenzario",
+					new String[][] {
+						{ "tabScadenza","Scadenza","/doccont00/tab_scadenza_obbligazione.jsp" },
+						{ "tabDettaglioScadenza","Dettaglio Scadenza","/doccont00/tab_dettaglio_scadenza_obbligazione.jsp" } },
+					bp.getTab("tabScadenzario"),
+					"center", 
+					"100%", null,
+					!bp.isEditingScadenza() );
 			
 		%>
 	</td></tr>
