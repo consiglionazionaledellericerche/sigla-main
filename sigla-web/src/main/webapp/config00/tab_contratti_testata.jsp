@@ -12,7 +12,10 @@
 %>
 
    <fieldset class="fieldset">
-    <legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"statoText",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%></legend>    
+    <legend class="GroupLabel">
+    	<% bp.getController().writeFormInput(out,null,"statoText",true,
+    			"GroupLabel text-primary h3 inputFieldReadOnly", null);%>
+    </legend>    
 	<table class="Panel">
 	  <tr>
 	    <td><% bp.getController().writeFormLabel(out,"dt_registrazione");%></td>
@@ -21,17 +24,18 @@
         <td><% bp.getController().writeFormInput(out,"cd_protocollo");%></td>
       </tr>  	
       <tr><td colspan=4>
-      <div class="GroupLabel">Estremi del protocollo informatico</div>          
-      <div class="Group">
-      <table>      
-      <tr>
-         <td><% bp.getController().writeFormField(out,"esercizio_protocollo");%></td>
-         <td><% bp.getController().writeFormField(out,"cd_protocollo_generale");%></td>         
-      </tr>            
-      </table></div>
+	      <div class="GroupLabel h3 text-primary">Estremi del protocollo informatico</div>          
+	      <div class="Group card">
+		      <table>      
+		      <tr>
+		         <td><% bp.getController().writeFormField(out,"esercizio_protocollo");%></td>
+		         <td><% bp.getController().writeFormField(out,"cd_protocollo_generale");%></td>         
+		      </tr>            
+		      </table>
+		  </div>
       </td></tr>	      
       <tr><td colspan=4>
-      <div class="Group">
+      <div class="Group card">
 	      <table>
 		  <tr>
 	         <td><% bp.getController().writeFormLabel(out,"unita_organizzativa");%></td>
@@ -59,7 +63,7 @@
       </div>
       </td></tr>
       <tr><td colspan=4>
-      <div class="Group"><table>      
+      <div class="Group card"><table>      
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"figura_giuridica_esterna");%></td>
          <td colspan="5"><% bp.getController().writeFormInput(out,"default", "figura_giuridica_esterna", bp.isContrattoDefinitivo(),null,null);%></td>
@@ -71,7 +75,7 @@
       </table></div>
       </td></tr>   
       <tr><td colspan=4>
-      <div class="Group"><table>      
+      <div class="Group card"><table>      
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"atto");%></td>
          <td><% bp.getController().writeFormInput(out,"default","atto", bp.isPublishHidden(),null,null);%></td>
@@ -101,7 +105,7 @@
       </table></div>
       </td></tr>          
       <tr><td colspan=4>
-      <div class="Group">
+      <div class="Group card">
 	      <table>            
 			  <tr>         
 		         <td><% bp.getController().writeFormLabel(out,"oggetto");%></td>
@@ -167,79 +171,144 @@
       </div>
       </td></tr>
       <tr><td colspan=4>
-      <div class="Group"><table>
-      <% if (((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo()){%>
-	  <tr>
-        <td><% bp.getController().writeFormLabel(out,"im_contratto_attivo");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","im_contratto_attivo", bp.isPublishHidden(),null,null);%></td>                	    
-        <td><% bp.getController().writeFormLabel(out,"im_contratto_passivo");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),null,null);%></td>                	            
-      </tr>      
-      <%} else if(((ContrattoBulk)bp.getModel()).isAttivo()){%>
-	  <tr>
-        <td><% bp.getController().writeFormLabel(out,"im_contratto_attivo");%></td>
-        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_attivo", bp.isPublishHidden(),null,null);%></td>                	    
-      </tr>            
-      <%} else if(((ContrattoBulk)bp.getModel()).isPassivo()){%>
-	  <tr>
-        <td><% bp.getController().writeFormLabel(out,"im_contratto_passivo");%></td>
-        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),null,null);%></td>                	    
-      </tr>                  
-      <%}%>
-	  <tr>
-	    <td><% bp.getController().writeFormLabel(out,"dt_stipula");%></td>
-	    <td><% bp.getController().writeFormInput(out,"default","dt_stipula", bp.isPublishHidden(),null,null);%></td>
-        <td><% bp.getController().writeFormLabel(out,"dt_inizio_validita");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","dt_inizio_validita", bp.isPublishHidden(),null,null);%></td>                	    
-      </tr>      
-	  <tr>
-        <td><% bp.getController().writeFormLabel(out,"dt_fine_validita");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","dt_fine_validita", bp.isPublishHidden(),null,null);%></td>        
-        <td><% bp.getController().writeFormLabel(out,"dt_proroga");%></td>
-        <td><% bp.getController().writeFormInput(out,null,"dt_proroga",false,null,"");%></td>        	          
-      </tr>
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"contratto_padre");%></td>
-         <td colspan="5"><% bp.getController().writeFormInput(out,"default","contratto_padre", bp.isPublishHidden(),null,null);%></td>
-      </tr>
-      </table></div>
+      <div class="Group card">
+      <table>
+	      <% if (((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo()){%>
+		  <tr>
+	        <td><% bp.getController().writeFormLabel(out,"im_contratto_attivo");%></td>
+	        <td><% bp.getController().writeFormInput(out,"default","im_contratto_attivo", bp.isPublishHidden(),null,null);%></td>                	    
+	        <td><% bp.getController().writeFormLabel(out,"im_contratto_passivo");%></td>
+	        <td><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),null,null);%></td>                	            
+	      </tr>      
+	      <%} else if(((ContrattoBulk)bp.getModel()).isAttivo()){%>
+		  <tr>
+	        <td><% bp.getController().writeFormLabel(out,"im_contratto_attivo");%></td>
+	        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_attivo", bp.isPublishHidden(),null,null);%></td>                	    
+	      </tr>            
+	      <%} else if(((ContrattoBulk)bp.getModel()).isPassivo()){%>
+		  <tr>
+	        <td><% bp.getController().writeFormLabel(out,"im_contratto_passivo");%></td>
+	        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),null,null);%></td>                	    
+	      </tr>                  
+	      <%}%>
+		  <tr>
+		    <td><% bp.getController().writeFormLabel(out,"dt_stipula");%></td>
+		    <td><% bp.getController().writeFormInput(out,"default","dt_stipula", bp.isPublishHidden(),null,null);%></td>
+	        <td><% bp.getController().writeFormLabel(out,"dt_inizio_validita");%></td>
+	        <td><% bp.getController().writeFormInput(out,"default","dt_inizio_validita", bp.isPublishHidden(),null,null);%></td>                	    
+	      </tr>      
+		  <tr>
+	        <td><% bp.getController().writeFormLabel(out,"dt_fine_validita");%></td>
+	        <td><% bp.getController().writeFormInput(out,"default","dt_fine_validita", bp.isPublishHidden(),null,null);%></td>        
+	        <td><% bp.getController().writeFormLabel(out,"dt_proroga");%></td>
+	        <td><% bp.getController().writeFormInput(out,null,"dt_proroga",false,null,"");%></td>        	          
+	      </tr>
+		  <tr>         
+	         <td><% bp.getController().writeFormLabel(out,"contratto_padre");%></td>
+	         <td colspan="5"><% bp.getController().writeFormInput(out,"default","contratto_padre", bp.isPublishHidden(),null,null);%></td>
+	      </tr>
+      </table>
+      </div>
       </td></tr>
       <tr>                        
          <td colspan=5>
-		   <div class="Group" style="width:100%;">		
+		   <div class="Group card" style="width:100%;">		
 		   <table border="0" cellspacing="0" cellpadding="2">
 			<tr>
-			<td><% bp.getController().writeFormLabel( out, "tot_doc_cont_etr"); %></td>
-			<td><% bp.getController().writeFormInput( out, "tot_doc_cont_etr"); %></td>
-			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Accertato","javascript:submitForm('doVisualizzaDocContEtr')", null, "Visualizza gli accertamenti associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContEtrButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>
-			
-			<td><% bp.getController().writeFormLabel( out, "tot_doc_cont_spe"); %></td>
-			<td><% bp.getController().writeFormInput( out, "tot_doc_cont_spe"); %></td>
-			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Impegnato","javascript:submitForm('doVisualizzaDocContSpe')", null, "Visualizza gli impegni associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContSpeButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>
-			
-			<td rowspan="2"><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Commesse associate","javascript:submitForm('doVisualizzaDocContForCommessaContratto')", null, "Visualizza le commesse associate al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaCommessaButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>			
+				<td><% bp.getController().writeFormLabel( out, "tot_doc_cont_etr"); %></td>
+				<td><% bp.getController().writeFormInput( out, "tot_doc_cont_etr"); %></td>
+				<td><% Button.write(out,
+						bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+						bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+						"Accertato",
+						"javascript:submitForm('doVisualizzaDocContEtr')", 
+						"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+						bp.getParentRoot().isBootstrap() ? "Accertato" : "Visualizza gli accertamenti associati al contratto", 
+						((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContEtrButtonEnabled(), 
+						bp.getParentRoot().isBootstrap()); %>
+				</td>			
+				<td><% bp.getController().writeFormLabel( out, "tot_doc_cont_spe"); %></td>
+				<td><% bp.getController().writeFormInput( out, "tot_doc_cont_spe"); %></td>
+				<td><% Button.write(out,
+						bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+						bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+						"Impegnato",
+						"javascript:submitForm('doVisualizzaDocContSpe')", 
+						"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+						bp.getParentRoot().isBootstrap() ? "Impegnato" : "Visualizza gli impegni associati al contratto", 
+						((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContSpeButtonEnabled(), 
+						bp.getParentRoot().isBootstrap()); %>
+				</td>
+				
+				<td rowspan="2">
+					<% Button.write(out,
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							"Commesse associate",
+							"javascript:submitForm('doVisualizzaDocContForCommessaContratto')", 
+							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							bp.getParentRoot().isBootstrap() ? "Commesse associate" : "Visualizza le commesse associate al contratto", 
+							((CRUDConfigAnagContrattoBP)bp).isVisualizzaCommessaButtonEnabled(), 
+							bp.getParentRoot().isBootstrap()); %>
+				</td>			
 			</tr>
-			<tr>
-			
-			<td><% bp.getController().writeFormLabel( out, "tot_docamm_cont_etr"); %></td>
-			<td><% bp.getController().writeFormInput( out, "tot_docamm_cont_etr"); %></td>
-			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Liquidato Entrate","javascript:submitForm('doVisualizzaDocammContEtr')", null, "Visualizza i documenti amministrativi associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocammContEtrButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>
-			
-			<td><% bp.getController().writeFormLabel( out, "tot_docamm_cont_spe"); %></td>
-			<td><% bp.getController().writeFormInput( out, "tot_docamm_cont_spe"); %></td>
-			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Liquidato Spese","javascript:submitForm('doVisualizzaDocammContSpe')", null, "Visualizza  i documenti amministrativi associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocammContSpeButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>
-			<td></td>
+			<tr>				
+				<td><% bp.getController().writeFormLabel( out, "tot_docamm_cont_etr"); %></td>
+				<td><% bp.getController().writeFormInput( out, "tot_docamm_cont_etr"); %></td>
+				<td>
+					<% Button.write(out,
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							"Liquidato Entrate",
+							"javascript:submitForm('doVisualizzaDocammContEtr')", 
+							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							bp.getParentRoot().isBootstrap() ? "Liquidato Entrate" : "Visualizza i documenti amministrativi associati al contratto", 
+							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocammContEtrButtonEnabled(), 
+							bp.getParentRoot().isBootstrap()); %>
+				</td>				
+				<td><% bp.getController().writeFormLabel( out, "tot_docamm_cont_spe"); %></td>
+				<td><% bp.getController().writeFormInput( out, "tot_docamm_cont_spe"); %></td>
+				<td>
+					<% Button.write(out,
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							"Liquidato Spese",
+							"javascript:submitForm('doVisualizzaDocammContSpe')", 
+							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							bp.getParentRoot().isBootstrap() ? "Liquidato Spese" : "Visualizza  i documenti amministrativi associati al contratto", 
+							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocammContSpeButtonEnabled(), 
+							bp.getParentRoot().isBootstrap()); %>
+				</td>
+				<td></td>
 			</tr>
-			<tr>
-			
-			<td><% bp.getController().writeFormLabel( out, "tot_doccont_cont_etr"); %></td>
-			<td><% bp.getController().writeFormInput( out, "tot_doccont_cont_etr"); %></td>
-			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Incassato","javascript:submitForm('doVisualizzaDoccontContEtr')", null, "Visualizza le reversali associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContEtrButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>
-			
-			<td><% bp.getController().writeFormLabel( out, "tot_doccont_cont_spe"); %></td>
-			<td><% bp.getController().writeFormInput( out, "tot_doccont_cont_spe"); %></td>
-			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Pagato","javascript:submitForm('doVisualizzaDoccontContSpe')", null, "Visualizza i mandati associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContSpeButtonEnabled(), bp.getParentRoot().isBootstrap()); %></td>
-			<td></td>
+			<tr>			
+				<td><% bp.getController().writeFormLabel( out, "tot_doccont_cont_etr"); %></td>
+				<td><% bp.getController().writeFormInput( out, "tot_doccont_cont_etr"); %></td>
+				<td>
+					<% Button.write(out,
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							"Incassato",
+							"javascript:submitForm('doVisualizzaDoccontContEtr')", 
+							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							bp.getParentRoot().isBootstrap() ? "Incassato" : "Visualizza le reversali associati al contratto", 
+							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContEtrButtonEnabled(), 
+							bp.getParentRoot().isBootstrap()); %>
+				</td>				
+				<td><% bp.getController().writeFormLabel( out, "tot_doccont_cont_spe"); %></td>
+				<td><% bp.getController().writeFormInput( out, "tot_doccont_cont_spe"); %></td>
+				<td>
+					<% Button.write(out,
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+							"Pagato",
+							"javascript:submitForm('doVisualizzaDoccontContSpe')", 
+							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							bp.getParentRoot().isBootstrap() ? "Pagato" : "Visualizza i mandati associati al contratto", 
+							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContSpeButtonEnabled(), 
+							bp.getParentRoot().isBootstrap()); %>
+				</td>
+				<td></td>
 			</tr>
 		   </table>
 		   </div>            
