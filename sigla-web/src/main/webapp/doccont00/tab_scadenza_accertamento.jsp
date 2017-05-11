@@ -47,11 +47,43 @@
 	
 	<tr>
 	<td colspan=2 ALIGN="CENTER">
-		<% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"), "Modifica","javascript:submitForm('doEditaScadenza')", bp.isEditScadenzaButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
-		<% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"), "Conferma","javascript:submitForm('doConfermaScadenza')", bp.isConfermaScadenzaButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
-		<% JSPUtils.button(out,bp.encodePath("img/undo24.gif"),bp.encodePath("img/undo24.gif"), "Annulla","javascript:submitForm('doUndoScadenza')", bp.isUndoScadenzaButtonEnabled(),bp.getParentRoot().isBootstrap()); %>		
+		<div class="btn-group mr-2" role="group">
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-pencil-square-o text-success" : "img/edit24.gif",
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-pencil-square-o text-success" : "img/edit24.gif", 
+				"Modifica",
+				"javascript:submitForm('doEditaScadenza')", 
+				"btn-secondary btn-title",
+				bp.isEditScadenzaButtonEnabled(),
+				bp.getParentRoot().isBootstrap()); 
+		%>
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/save24.gif",
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/save24.gif", 
+				"Conferma",
+				"javascript:submitForm('doConfermaScadenza')", 
+				"btn-secondary btn-title",
+				bp.isConfermaScadenzaButtonEnabled(),
+				bp.getParentRoot().isBootstrap()); 
+		%>
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo text-warning" : "img/undo24.gif",
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo text-warning" : "img/undo24.gif", 
+				"Annulla",
+				"javascript:submitForm('doUndoScadenza')",
+				"btn-secondary btn-title",
+				bp.isUndoScadenzaButtonEnabled(),
+				bp.getParentRoot().isBootstrap()); %>		
 		<% if (bp instanceof CRUDAccertamentoResiduoBP && accertamento.isAccertamentoResiduo())  %>
-			<% JSPUtils.button(out,bp.encodePath("img/remove24.gif"),bp.encodePath("img/remove24.gif"), "Azzera","javascript:submitForm('doAnnullaScadenza')", bp.isAnnullaScadenzaButtonEnabled(),bp.getParentRoot().isBootstrap()); %>		
+			<% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-trash text-danger" : "img/remove24.gif",
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-trash text-danger" : "img/remove24.gif", 
+					"Azzera",
+					"javascript:submitForm('doAnnullaScadenza')", 
+					"btn-secondary btn-title",
+					bp.isAnnullaScadenzaButtonEnabled(),
+					bp.getParentRoot().isBootstrap()); %>
+		</div>		
 	</td>
 	</tr>
 	
