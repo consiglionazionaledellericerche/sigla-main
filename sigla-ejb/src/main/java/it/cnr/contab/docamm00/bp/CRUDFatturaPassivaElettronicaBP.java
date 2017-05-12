@@ -155,9 +155,9 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		toolbar.addAll(Arrays.asList(buttons));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.download"));
+		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.downloadFatturaFirmata"));
-		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.rifiuta"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
@@ -165,9 +165,6 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.getHandler().getProperties(getClass()), "Toolbar.accetta"));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.visuallizza.fattura"));
-		toolbar.get(toolbar.size() - 1).setSeparator(true);
-		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-				.getHandler().getProperties(getClass()), "Toolbar.esito.rifiuto"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.esito.rifiutato"));
