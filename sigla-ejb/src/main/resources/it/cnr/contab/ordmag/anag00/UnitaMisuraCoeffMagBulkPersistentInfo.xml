@@ -6,7 +6,7 @@
 		tableName="UNITA_MISURA_COEFF_MAG">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="magazzino.cdCds" />
+			propertyName="magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
 			propertyName="magazzino.cdMagazzino" />
