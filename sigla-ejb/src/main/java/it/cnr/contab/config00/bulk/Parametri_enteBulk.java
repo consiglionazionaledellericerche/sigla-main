@@ -69,4 +69,8 @@ public class Parametri_enteBulk extends Parametri_enteBase
 		}
 		return "logo_mini_altro.gif";
 	}
+	
+	public boolean isEnteCNR() {
+		return "CNR".equals(getDescrizione());
+	}
 }
