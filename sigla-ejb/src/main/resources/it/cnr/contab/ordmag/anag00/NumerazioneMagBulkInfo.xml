@@ -73,12 +73,6 @@
 	<form
 		name="searchtool">
 		<formFieldProperty
-			name="cdCds" />
-		<formFieldProperty
-			name="cdMagazzino" />
-		<formFieldProperty
-			name="esercizio" />
-		<formFieldProperty
 			name="cdNumeratoreMag" />
 	</form>
 	<formFieldProperty
@@ -103,12 +97,6 @@
 		name="corrente" />
 	<findFieldProperty
 		name="dtCancellazione" />
-	<columnFieldProperty
-		name="cdCds" />
-	<columnFieldProperty
-		name="cdMagazzino" />
-	<columnFieldProperty
-		name="esercizio" />
 	<columnFieldProperty
 		name="cdNumeratoreMag" />
 	<columnFieldProperty
