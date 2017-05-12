@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk"
+	homeClassName="it.cnr.contab.ordmag.richieste.bulk.RichiestaUopHome">
+	<defaultColumnMap
+		tableName="RICHIESTA_UOP">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="numerazioneOrd.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE"
+			propertyName="numerazioneOrd.cdNumeratore" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA_DEST"
+			propertyName="unitaOperativaOrdDest.cdUnitaOperativa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="numerazioneOrd"
+		partOfOid="true" />
+	<persistentProperty
+		name="unitaOperativaOrdDest" />
+</SQLPersistentInfo>
