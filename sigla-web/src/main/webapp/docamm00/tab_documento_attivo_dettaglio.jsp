@@ -90,7 +90,7 @@
     </table>
    </div>
 
-   <div class="Group">   
+   <div class="Group card">   
 	<table>	
 	  <tr>
   		<% bp.getDettaglio().writeFormField(out,"termini_pagamento_uo_cds");%>
