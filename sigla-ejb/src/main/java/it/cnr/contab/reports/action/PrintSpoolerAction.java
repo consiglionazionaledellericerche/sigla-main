@@ -70,7 +70,6 @@ public class  PrintSpoolerAction extends it.cnr.jada.util.action.SelezionatoreLi
 						// tabella della coda!!
 					}
 				}
-				EJBCommonServices.closeRemoteIterator(context, bp.getIterator());							
 			} else{
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: selezionare almeno una riga.");
 			}
