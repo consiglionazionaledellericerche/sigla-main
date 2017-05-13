@@ -182,12 +182,13 @@ public boolean isGeneraNdCButtonEnabled() {
 			fa != null && 
 			fa.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 			!fa.isAnnullato() &&
-			!fa.isCongelata() &&
+			!fa.isCongelata();/* &&
 			((isAnnoDiCompetenza() && !fa.isRiportata()) ||	 				
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato
 				//	DA UN ES. PRECEDENTE a quello di scrivania.		
 				(!isAnnoDiCompetenza() && fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportataInScrivania())));
+				*/
 }
 public boolean isGeneraNdCButtonHidden() {
 	
@@ -200,12 +201,13 @@ public boolean isGeneraNdDButtonEnabled() {
 			fa != null && 
 			fa.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
 			!fa.isAnnullato() &&
-			!fa.isCongelata() &&
+			!fa.isCongelata();/* &&
 			((isAnnoDiCompetenza() && !fa.isRiportata()) || 				
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato
 				//	DA UN ES. PRECEDENTE a quello di scrivania.
 				(!isAnnoDiCompetenza() && fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportataInScrivania())));
+				*/
 }
 public boolean isGeneraNdDButtonHidden() {
 	
