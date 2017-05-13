@@ -92,9 +92,10 @@
 	<fieldProperty
 		name="codice_anac"
 		property="codice_anac"
-		inputType="TEXT"
-		inputSize="3"
-		maxLength="3"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
 		enabledOnSearch="true"
 		nullable="true"
 		label="Codice Anac" />	
