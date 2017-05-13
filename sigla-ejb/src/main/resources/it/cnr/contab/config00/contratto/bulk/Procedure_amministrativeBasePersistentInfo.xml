@@ -90,7 +90,7 @@
 			columnName="CODICE_ANAC"
 			propertyName="codice_anac"
 			sqlTypeName="VARCHAR"
-			columnSize="3"
+			columnSize="200"
 			nullable="true" />	
 	</defaultColumnMap>
 	<persistentProperty
