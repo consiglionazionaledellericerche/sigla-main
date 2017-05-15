@@ -84,7 +84,6 @@
 		enabledOnSearch="true"
 		label="Tipo Operazione" />
 	<fieldProperty
-	<fieldProperty
 		name="cdTipoSezionale"
 		property="tipoSezionale.cd_tipo_sezionale"
 		inputType="TEXT"

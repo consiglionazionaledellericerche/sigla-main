@@ -21,10 +21,17 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="Numeratore" />
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
-		property="numerazioneOrd.cdUnitaOperativa"
+		property="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -61,7 +68,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="numero" />
+		label="Numero" />
 	<fieldProperty
 		name="dataRichiesta"
 		property="dataRichiesta"
@@ -146,6 +153,8 @@
 		<formFieldProperty
 			name="numero" />
 	</form>
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
 	<formFieldProperty
 		name="findNumerazioneOrd" />
 	<formFieldProperty
