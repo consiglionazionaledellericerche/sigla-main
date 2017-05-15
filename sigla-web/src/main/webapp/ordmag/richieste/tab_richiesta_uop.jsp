@@ -16,11 +16,13 @@
 <div class="Group">
 	<table class="Panel">
 	  	<tr>
-		 	<% bp.getController().writeFormField(out,"cdUnitaOperativa"); %>
-		 	<% bp.getController().writeFormField(out,"numero"); %>
-		 	<% bp.getController().writeFormField(out,"esercizio"); %>
-		</tr>
-	    <% if (!bp.isSearching()) { %>	 
+		 	<% bp.getController().writeFormField(out,"findUnitaOperativa"); %>
+	    <% if (!bp.isSearching() || richiesta.getCdUnitaOperativa() != null) { %>	 
+		  	<tr>
+			 	<% bp.getController().writeFormField(out,"esercizio"); %>
+			 	<% bp.getController().writeFormField(out,"cdNumeratore"); %>
+			 	<% bp.getController().writeFormField(out,"numero"); %>
+			</tr>
 			<tr>
 				<td>
 					<% bp.getController().writeFormLabel(out,"tipo_doc");%>
