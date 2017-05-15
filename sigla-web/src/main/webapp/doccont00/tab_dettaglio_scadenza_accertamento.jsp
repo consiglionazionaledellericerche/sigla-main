@@ -11,30 +11,12 @@
 			it.cnr.jada.util.action.*,
 			it.cnr.contab.doccont00.bp.*"
 %>
-
-
 <%  
-		CRUDAccertamentoBP bp = (CRUDAccertamentoBP)BusinessProcess.getBusinessProcess(request);
-		it.cnr.contab.doccont00.core.bulk.AccertamentoBulk accertamento = (it.cnr.contab.doccont00.core.bulk.AccertamentoBulk)bp.getModel();
+	CRUDAccertamentoBP bp = (CRUDAccertamentoBP)BusinessProcess.getBusinessProcess(request);
+	it.cnr.contab.doccont00.core.bulk.AccertamentoBulk accertamento = (it.cnr.contab.doccont00.core.bulk.AccertamentoBulk)bp.getModel();
+	if ( accertamento.getFl_calcolo_automatico()!= null && accertamento.getFl_calcolo_automatico().booleanValue() ) {
+     		bp.getScadenzarioDettaglio().writeHTMLTable(pageContext,null,false,false,false,"100%","100px", true);
+	} else {
+		bp.getScadenzarioDettaglio().writeHTMLTable(pageContext,null,false,false,false,"100%","100px", false);
+	} 
 %>
-
-
-	<% if ( accertamento.getFl_calcolo_automatico()!= null && accertamento.getFl_calcolo_automatico().booleanValue() ) {%>
-		<table border="0" cellspacing="0" cellpadding="2">
-			<tr>
-			<td colspan=2>
-			      <%	bp.getScadenzarioDettaglio().writeHTMLTable(pageContext,null,false,false,false,"100%","100px", true); %>
-			</td>
-			</tr>
-		</table>
-	<%} 
-	
-	 else {%> 
-		<table border="0" cellspacing="0" cellpadding="2">
-			<tr>
-			<td colspan=2>
-			      <%	bp.getScadenzarioDettaglio().writeHTMLTable(pageContext,null,false,false,false,"100%","100px", false); %>
-			</td>
-			</tr>
-		</table>
-	<%} %>

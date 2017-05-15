@@ -153,39 +153,39 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP
 		jspwriter.println("<tr align=center valign=middle>");
 		for (int i = 0; i<getNavPosition();i++) {
 			jspwriter.print("<td>");
-			abutton[i].write(jspwriter, this);
+			abutton[i].write(jspwriter, this, this.getParentRoot().isBootstrap());
 			jspwriter.println("</td>");
 		}
 		jspwriter.print("<td");
 		if(abutton[getNavPosition()].hasSeparator())
 			jspwriter.print(" class=\"VSeparator\"");
 		jspwriter.print(">");
-		abutton[getNavPosition()].write(jspwriter, this);
+		abutton[getNavPosition()].write(jspwriter, this, this.getParentRoot().isBootstrap());
 		jspwriter.println("</td>");
 		jspwriter.print("<td>");
-		abutton[getNavPosition()+1].write(jspwriter, this);
+		abutton[getNavPosition()+1].write(jspwriter, this, this.getParentRoot().isBootstrap());
 		jspwriter.println("</td>");
 		getLastPage();
 		for(int i = getFirstPage(); i < getLastPage(); i++)
 		{
 			jspwriter.print("<td width=\"16\">");
 			if(getCurrentPage() != i)
-				JSPUtils.button(jspwriter, null, String.valueOf(i), "javascript:submitForm('doGotoPage(" + i + ")')");
+				JSPUtils.button(jspwriter, null, String.valueOf(i), "javascript:submitForm('doGotoPage(" + i + ")')", this.getParentRoot().isBootstrap());
 			else
-				JSPUtils.button(jspwriter, null, String.valueOf(i), null, "background: Highlight;color: HighlightText;");
+				JSPUtils.button(jspwriter, null, String.valueOf(i), null, "background: Highlight;color: HighlightText;", this.getParentRoot().isBootstrap());
 			jspwriter.println("</td>");
 		}
 
 		jspwriter.print("<td>");
-		abutton[getNavPosition()+2].write(jspwriter, this);
+		abutton[getNavPosition()+2].write(jspwriter, this, this.getParentRoot().isBootstrap());
 		jspwriter.println("</td>");
 		jspwriter.print("<td>");
-		abutton[getNavPosition()+3].write(jspwriter, this);
+		abutton[getNavPosition()+3].write(jspwriter, this, this.getParentRoot().isBootstrap());
 		jspwriter.println("</td>");
 		for(int j = getNavPosition()+4; j < abutton.length; j++)
 		{
 			jspwriter.print("<td>");
-			abutton[getNavPosition()+j].write(jspwriter, this);
+			abutton[getNavPosition()+j].write(jspwriter, this, this.getParentRoot().isBootstrap());
 			jspwriter.println("</td>");
 		}
 

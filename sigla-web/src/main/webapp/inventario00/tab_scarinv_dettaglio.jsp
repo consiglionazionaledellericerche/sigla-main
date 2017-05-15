@@ -29,7 +29,7 @@
 		<td colspan="1">
 		</td >
 		<td colspan="4">
-				<% JSPUtils.button(out,null,"Scarica Tutti definitivamente","javascript:submitForm('doScaricaTutti')"); %>
+				<% JSPUtils.button(out,null,"Scarica Tutti definitivamente","javascript:submitForm('doScaricaTutti')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</tr>
 	</table>

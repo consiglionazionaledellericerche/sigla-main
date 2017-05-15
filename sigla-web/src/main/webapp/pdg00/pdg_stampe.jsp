@@ -29,17 +29,17 @@
     </td>
   </tr>
   <tr> 
-    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaFunzione')");%></td>
-    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaNatura')");%></td>
-    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaCapitolo')");%></td>
-    <td><%JSPUtils.button(out, "img/print16.gif", "Per singolo dettaglio", "if (disableDblClick()) javascript:submitForm('doStampaDettagliata')");%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaFunzione')", bp.getParentRoot().isBootstrap());%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaNatura')", bp.getParentRoot().isBootstrap());%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaCapitolo')", bp.getParentRoot().isBootstrap());%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Per singolo dettaglio", "if (disableDblClick()) javascript:submitForm('doStampaDettagliata')", bp.getParentRoot().isBootstrap());%></td>
   </tr>
   <tr> 
     <td colspan=4><b>Stampa GAE</b>
     </td>
   </tr>
   <tr> 
-    <td><%JSPUtils.button(out, "img/print16.gif", "Stampa", "if (disableDblClick()) javascript:submitForm('doStampaLA')");%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Stampa", "if (disableDblClick()) javascript:submitForm('doStampaLA')", bp.getParentRoot().isBootstrap());%></td>
     <td></td>
     <td></td>
     <td></td>
@@ -49,16 +49,16 @@
     </td>
   </tr>
   <tr> 
-    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaUOFunzione')");%></td>
-    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaUONatura')");%></td>
-    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaUOCapitolo')");%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaUOFunzione')", bp.getParentRoot().isBootstrap());%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaUONatura')", bp.getParentRoot().isBootstrap());%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaUOCapitolo')", bp.getParentRoot().isBootstrap());%></td>
     <td></td>
   </tr>
   <tr> 
     <td colspan=4><b>Stampa discrepanze spese/entrate su insieme GAE</b></td>
   </tr>
   <tr> 
-    <td><%JSPUtils.button(out, "img/print16.gif", "Stampa", "if (disableDblClick()) javascript:submitForm('doStampaDiscrepanzeInsieme')");%></td>
+    <td><%JSPUtils.button(out, "img/print16.gif", "Stampa", "if (disableDblClick()) javascript:submitForm('doStampaDiscrepanzeInsieme')", bp.getParentRoot().isBootstrap());%></td>
     <td></td>
     <td></td>
     <td></td>
@@ -77,13 +77,13 @@
   </tr>
   <tr> 
     <td> 
-      <%JSPUtils.button(out, "img/print16.gif", "Per natura", "if (disableDblClick()) javascript:submitForm('doStampaCDRNaturaC')");%>
+      <%JSPUtils.button(out, "img/print16.gif", "Per natura", "if (disableDblClick()) javascript:submitForm('doStampaCDRNaturaC')", bp.getParentRoot().isBootstrap());%>
     </td>
     <td> 
-      <%JSPUtils.button(out, "img/print16.gif", "Per natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaCDRCapitoloC')");%>
+      <%JSPUtils.button(out, "img/print16.gif", "Per natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaCDRCapitoloC')", bp.getParentRoot().isBootstrap());%>
     </td>
     <td> 
-      <%JSPUtils.button(out, "img/print16.gif", "Per singolo dettaglio", "if (disableDblClick()) javascript:submitForm('doStampaCDRDettagliataC')");%>
+      <%JSPUtils.button(out, "img/print16.gif", "Per singolo dettaglio", "if (disableDblClick()) javascript:submitForm('doStampaCDRDettagliataC')", bp.getParentRoot().isBootstrap());%>
     </td>
     <td>&nbsp;</td>
   </tr>
@@ -92,10 +92,10 @@
   </tr>
   <tr> 
     <td> 
-      <%JSPUtils.button(out, "img/print16.gif", "Per natura", "if (disableDblClick()) javascript:submitForm('doStampaUONaturaC')");%>
+      <%JSPUtils.button(out, "img/print16.gif", "Per natura", "if (disableDblClick()) javascript:submitForm('doStampaUONaturaC')", bp.getParentRoot().isBootstrap());%>
     </td>
     <td> 
-      <%JSPUtils.button(out, "img/print16.gif", "Per natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaUOCapitoloC')");%>
+      <%JSPUtils.button(out, "img/print16.gif", "Per natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaUOCapitoloC')", bp.getParentRoot().isBootstrap());%>
     </td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -105,10 +105,10 @@
   </tr>
   <tr> 
     <td> 
-      <%JSPUtils.button(out, "img/print16.gif", "img/print16.gif", "Per natura", "if (disableDblClick()) javascript:submitForm('doStampaCDSNaturaC')", bp.isUoPrincipale(userInfo));%>
+      <%JSPUtils.button(out, "img/print16.gif", "img/print16.gif", "Per natura", "if (disableDblClick()) javascript:submitForm('doStampaCDSNaturaC')", bp.isUoPrincipale(userInfo), bp.getParentRoot().isBootstrap());%>
     </td>
     <td> 
-      <%JSPUtils.button(out, "img/print16.gif", "img/print16.gif", "Per natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaCDSCapitoloC')", bp.isUoPrincipale(userInfo));%>
+      <%JSPUtils.button(out, "img/print16.gif", "img/print16.gif", "Per natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaCDSCapitoloC')", bp.isUoPrincipale(userInfo), bp.getParentRoot().isBootstrap());%>
     </td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>

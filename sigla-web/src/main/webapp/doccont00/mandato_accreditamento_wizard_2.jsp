@@ -42,17 +42,17 @@
 			<td><% bp.getController().writeFormLabel( out, "terzo_cd_terzo"); %></td>
 			<td ><% bp.getController().writeFormInput( out, "terzo_cd_terzo"); %></td>
 			<td ><% bp.getController().writeFormInput( out, "terzo_ds_terzo"); %></td>
-			<td ><% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza entrate", "javascript:submitForm('doVisualizzaEntrate')" ); %>
-				 <% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza spese", "javascript:submitForm('doVisualizzaSpese')"); %>							
+			<td ><% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza entrate", "javascript:submitForm('doVisualizzaEntrate')", bp.getParentRoot().isBootstrap() ); %>
+				 <% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza spese", "javascript:submitForm('doVisualizzaSpese')", bp.getParentRoot().isBootstrap()); %>							
 			</td>
 		<tr>			    
 			<td><% bp.getController().writeFormLabel( out, "terzo_tipo_bollo"); %></td>
-			<td colspan= "3"><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", false, "FormInput","onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
+			<td colspan= "3"><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", false, null,"onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
 			    <% bp.getController().writeFormInput( out, "terzo_im_tipo_bollo"); %></td>
 		</tr>
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "cd_modalita_pag"); %></td>
-		   <td><% bp.getController().writeFormInput( out,"default", "cd_modalita_pag", false, "FormInput","onchange=\"submitForm('doCambiaModalitaPagamento')\"" ); %></td>			
+		   <td><% bp.getController().writeFormInput( out,"default", "cd_modalita_pag", false, null,"onchange=\"submitForm('doCambiaModalitaPagamento')\"" ); %></td>			
 			<td colspan= "2"><% bp.getController().writeFormLabel( out, "banca"); %>
 			  <% bp.getController().writeFormInput( out, "banca"); %></td>
 		</tr>
@@ -66,7 +66,7 @@
 	<table class="Panel">	
 		<tr>
 			<td><b ALIGN="CENTER">Voci Bilancio CNR</b></td>
-			<td align="right"><% bp.getController().writeFormInput(out,null,"fl_imputazione_manuale",!bp.isFlCalcoloAutomaticoCheckboxEnabled(),"FormInput","onclick=\"submitForm('doCambiaFl_imputazione_manuale')\""); %>
+			<td align="right"><% bp.getController().writeFormInput(out,null,"fl_imputazione_manuale",!bp.isFlCalcoloAutomaticoCheckboxEnabled(),null,"onclick=\"submitForm('doCambiaFl_imputazione_manuale')\""); %>
 	 	   					  <% bp.getController().writeFormLabel( out, "fl_imputazione_manuale"); %></td>
 		</tr>
 		<tr>
@@ -79,7 +79,7 @@
 			</td>
 		</tr>
 		<tr>		
-		<td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"),"Genera", "javascript:submitForm('doEmettiMandato')", bp.isEmettiMandatoButtonEnabled()); %></td>
+		<td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"),"Genera", "javascript:submitForm('doEmettiMandato')", bp.isEmettiMandatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %></td>
 		</tr>
 		<tr>
 		<td colspan="2"><b>Mandati Generati</b></td>
@@ -91,7 +91,7 @@
 		   </td>
 		</tr>
 		<tr>		
-		   <td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"),"Visualizza", "javascript:submitForm('doVisualizzaMandato')", bp.isVisualizzaMandatoButtonEnabled()); %></td>
+		   <td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"),"Visualizza", "javascript:submitForm('doVisualizzaMandato')", bp.isVisualizzaMandatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %></td>
 		</tr>		
 	</table>
 	<%	bp.closeFormWindow(pageContext); %>
