@@ -25,10 +25,10 @@
 <div class="Group">	
 	<table class="Panel">
 		<tr>
-			<td><%JSPUtils.button(out, "img/import24.gif", "Carica Fattura", "if (disableDblClick()) javascript:submitForm('doCaricaFattura')");%></td>
-			<td><%JSPUtils.button(out, "img/export24.gif", "Controlla Fatture Ricevute", "if (disableDblClick()) javascript:submitForm('doControllaFatture')");%></td>
-			<td><%JSPUtils.button(out, "img/export24.gif", "Allinea Notifiche di Esito", "if (disableDblClick()) javascript:submitForm('doAllineaNotifiche')");%></td>
-			<td><%JSPUtils.button(out, "img/import24.gif", "Scan PEC", "if (disableDblClick()) javascript:submitForm('doScaricaFatture')");%></td>
+			<td><%JSPUtils.button(out, "img/import24.gif", "Carica Fattura", "if (disableDblClick()) javascript:submitForm('doCaricaFattura')", bp.getParentRoot().isBootstrap());%></td>
+			<td><%JSPUtils.button(out, "img/export24.gif", "Controlla Fatture Ricevute", "if (disableDblClick()) javascript:submitForm('doControllaFatture')", bp.getParentRoot().isBootstrap());%></td>
+			<td><%JSPUtils.button(out, "img/export24.gif", "Allinea Notifiche di Esito", "if (disableDblClick()) javascript:submitForm('doAllineaNotifiche')", bp.getParentRoot().isBootstrap());%></td>
+			<td><%JSPUtils.button(out, "img/import24.gif", "Scan PEC", "if (disableDblClick()) javascript:submitForm('doScaricaFatture')", bp.getParentRoot().isBootstrap());%></td>
 		</tr>				
 	</table>
 </div>

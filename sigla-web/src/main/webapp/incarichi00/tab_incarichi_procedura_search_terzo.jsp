@@ -13,8 +13,8 @@ CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)BusinessProcess.getBusin
       <div class="Group"><table>      
 	  <tr>         
 		<td><% bp.getController().writeFormLabel(out,"terzoSearch");%></td>
-		<td><% bp.getController().writeFormInput(out,"default", "cd_terzoSearch", false,"FormInput",null); %>
-		    <% bp.getController().writeFormInput(out,"default", "terzoSearch", false,"FormInput",null); %></td>
+		<td><% bp.getController().writeFormInput(out,"default", "cd_terzoSearch", false,null,null); %>
+		    <% bp.getController().writeFormInput(out,"default", "terzoSearch", false,null,null); %></td>
 	  </tr>
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"nome");%></td>

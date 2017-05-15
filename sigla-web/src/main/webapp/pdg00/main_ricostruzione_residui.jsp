@@ -41,7 +41,7 @@
 			</table>
 		</td>
 		<td>
-			<% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Consultazione residui inseriti","javascript:submitForm('doVisualizzaRicosResidui')", null, "Visualizza i dettagli della ricostruzione residui", true ); %>
+			<% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Consultazione residui inseriti","javascript:submitForm('doVisualizzaRicosResidui')", null, "Visualizza i dettagli della ricostruzione residui", true, bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</table>
 </div>

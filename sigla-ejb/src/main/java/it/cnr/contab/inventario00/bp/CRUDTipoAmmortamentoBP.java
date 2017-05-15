@@ -352,7 +352,7 @@ public void writeRiassociaToolbar(javax.servlet.jsp.JspWriter writer) throws jav
 
 	if (!isSearching()) {
 		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createRiassociaToolbar(),this);
+		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createRiassociaToolbar(),this, this.getParentRoot().isBootstrap());
 		closeToolbar(writer);
 	}
 }

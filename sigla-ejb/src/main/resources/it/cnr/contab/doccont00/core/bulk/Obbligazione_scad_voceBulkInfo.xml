@@ -106,36 +106,38 @@
 		 -->
 	<columnFieldProperty
 		name="cd_centro_responsabilita"
-		columnStyle="width:80px; text-align:left"
-		enabledOnEdit="false"		
+		columnStyle="width:15%; text-align:left"
+		enabledOnEdit="false"
 		/>
 	<columnFieldProperty
 		name="cd_linea_attivita"
-		enabledOnEdit="false"		
+		enabledOnEdit="false"	
+		columnStyle="width:15%;"					
 		/>
 	<columnFieldProperty
 		name="cd_funzione"
 		enabledOnEdit="false"		
+		columnStyle="width:10%;"
 		/>
 	<columnFieldProperty
 		name="cd_natura"
-		enabledOnEdit="false"		
+		enabledOnEdit="false"
+		columnStyle="width:10%;"		
 		/>
 	<columnFieldProperty
 		name="prc"
 		headerStyle="text-align: center"
-		columnStyle="width:50px; text-align: right"
-		enabledOnEdit="false"		
+		columnStyle="width:20%; text-align: right"
+		enabledOnEdit="false"
+		inputCssClass="form-control column"		
 		/>
 	<columnFieldProperty
 		name="im_voce"
-		columnStyle="width:80px; text-align: right"
+		columnStyle="width:30%; text-align: right"
 		enabledOnEdit="true"
-		enabledOnInsert="true"				
+		enabledOnInsert="true"
+		inputCssClass="form-control column"
 		/>
-
-	
-
 
 	<formFieldProperty
 		name="cd_cds"

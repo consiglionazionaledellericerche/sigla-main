@@ -80,28 +80,28 @@
 						<tr>
 							<td>
 								<center>
-									<%JSPUtils.button(out, "img/preferences16.gif", "img/preferences16.gif", "Associa/Disassocia Spese", "if (disableDblClick()) javascript:submitForm('doApriRicercaObbScad')", null, bp.isEditing() && !fondo.isChiuso()); %>
+									<%JSPUtils.button(out, "img/preferences16.gif", "img/preferences16.gif", "Associa/Disassocia Spese", "if (disableDblClick()) javascript:submitForm('doApriRicercaObbScad')", null, bp.isEditing() && !fondo.isChiuso(), bp.getParentRoot().isBootstrap()); %>
 								</center>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<center>
-									<%JSPUtils.button(out, "img/import16.gif", "img/import16.gif", "Reintegro Spese Associate", "if (disableDblClick()) javascript:submitForm('doReintegro')", null, bp.isEditing() && !fondo.isChiuso() && !fondo.isOnlyForClose()); %>
+									<%JSPUtils.button(out, "img/import16.gif", "img/import16.gif", "Reintegro Spese Associate", "if (disableDblClick()) javascript:submitForm('doReintegro')", null, bp.isEditing() && !fondo.isChiuso() && !fondo.isOnlyForClose(), bp.getParentRoot().isBootstrap()); %>
 								</center>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<center>
-									<% JSPUtils.button(out, "img/refresh16.gif", "img/refresh16.gif", "Chiudi Spese", "if (disableDblClick()) javascript:submitForm('doChiudiSpese')", null, bp.isEditing() && !fondo.isChiuso()); %>
+									<% JSPUtils.button(out, "img/refresh16.gif", "img/refresh16.gif", "Chiudi Spese", "if (disableDblClick()) javascript:submitForm('doChiudiSpese')", null, bp.isEditing() && !fondo.isChiuso(), bp.getParentRoot().isBootstrap()); %>
 								</center>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<center>
-									<% JSPUtils.button(out, "img/stop16.gif", "img/stop16.gif", "Chiudi Fondo", "if (disableDblClick()) javascript:submitForm('doChiudiFondo')", null, bp.isEditing() && fondo.isChiuso() && fondo.isReversaleNecessaria()); %>
+									<% JSPUtils.button(out, "img/stop16.gif", "img/stop16.gif", "Chiudi Fondo", "if (disableDblClick()) javascript:submitForm('doChiudiFondo')", null, bp.isEditing() && fondo.isChiuso() && fondo.isReversaleNecessaria(), bp.getParentRoot().isBootstrap()); %>
 								</center>
 							</td>
 						</tr>
