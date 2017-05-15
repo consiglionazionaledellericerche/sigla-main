@@ -23,6 +23,7 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	 * [NUMERAZIONE_ORD Numeratori Ordini]
 	 **/
 	private NumerazioneOrdBulk numerazioneOrd =  new NumerazioneOrdBulk();
+	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
 	/**
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
 	 **/
@@ -107,16 +108,21 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	 * Restituisce il valore di: [cdUnitaOperativa]
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
-		NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
-		if (numerazioneOrd == null)
-			return null;
-		return getNumerazioneOrd().getCdUnitaOperativa();
+		UnitaOperativaOrdBulk uop = this.getUnitaOperativaOrd();
+		if (numerazioneOrd == null){
+			NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
+			if (numerazioneOrd == null)
+				return null;
+			return getNumerazioneOrd().getCdUnitaOperativa();
+		}
+		return getUnitaOperativaOrd().getCdUnitaOperativa();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativa]
 	 **/
 	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
+		this.getUnitaOperativaOrd().setCdUnitaOperativa(cdUnitaOperativa);
 		this.getNumerazioneOrd().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	/**
@@ -226,5 +232,11 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	}
 	public void setRigheRichiestaColl(BulkList righeRichiestaColl) {
 		this.righeRichiestaColl = righeRichiestaColl;
+	}
+	public UnitaOperativaOrdBulk getUnitaOperativaOrd() {
+		return unitaOperativaOrd;
+	}
+	public void setUnitaOperativaOrd(UnitaOperativaOrdBulk unitaOperativaOrd) {
+		this.unitaOperativaOrd = unitaOperativaOrd;
 	}
 }
