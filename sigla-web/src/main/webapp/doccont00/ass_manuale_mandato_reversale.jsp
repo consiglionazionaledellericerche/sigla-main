@@ -44,11 +44,11 @@
   </tr>
   <tr>
 	<td rowspan="2"><%bp.getReversaliDisponibiliCRUDController().writeHTMLTable(pageContext,"ASS_MANUALE_MAN_REV",false,false,false,"100%","200px"); %></td>
-	<td><% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiReversali')"); %></td>
+	<td><% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiReversali')", bp.getParentRoot().isBootstrap()); %></td>
 	<td rowspan="2"><%	bp.getReversaliAssociateCRUDController().writeHTMLTable(pageContext,"ASS_MANUALE_MAN_REV",false,false,false,"100%","200px"); %></td>
   </tr>
   <tr>
-	<td><% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviReversali')"); %></td>
+	<td><% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviReversali')", bp.getParentRoot().isBootstrap()); %></td>
   </tr>
 </table>
 

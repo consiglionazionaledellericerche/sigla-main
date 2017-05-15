@@ -68,7 +68,7 @@
 						<tr>
 							<td><% controller.writeFormLabel(out,"cambia_stato");%></td>
 							<td><% controller.writeFormInput( out, null, "cambia_stato", bp.isROStato(), null, null);%></td>
-							<td><center><%JSPUtils.button(out, "img/import24.gif", "img/import24.gif", "Cambia Stato", "if (disableDblClick()) javascript:submitForm('doCambiaStato')", null, !bp.isROStato());%></center></td>
+							<td><center><%JSPUtils.button(out, "img/import24.gif", "img/import24.gif", "Cambia Stato", "if (disableDblClick()) javascript:submitForm('doCambiaStato')", null, !bp.isROStato(), bp.getParentRoot().isBootstrap());%></center></td>
 						</tr>					
 					</table>
 				</div>
@@ -78,8 +78,8 @@
 				<div class="Group" style="width: 360; height: 56">
 					<table>
 						<tr>
-							<td halign="middle" width="178"><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Contrattazione Entrate", "if (disableDblClick()) submitForm('doContrattazioneEntrate')","width:178; height:46",pdg_selezionato);%></td>
-							<td halign="middle" width="171"><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Contrattazione Spese", "if (disableDblClick()) submitForm('doContrattazioneSpese')","width:178; height:46",pdg_selezionato);%></td>
+							<td halign="middle" width="178"><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Contrattazione Entrate", "if (disableDblClick()) submitForm('doContrattazioneEntrate')","width:178; height:46",pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
+							<td halign="middle" width="171"><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Contrattazione Spese", "if (disableDblClick()) submitForm('doContrattazioneSpese')","width:178; height:46",pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
 						</tr>
 					</table>
 				</div>
@@ -93,8 +93,8 @@
 				<div class="Group" style="width: 360; height: 56">
 					<table  width="361">
 						<tr>
-							<td halign="middle" width="178"><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Gestionale Entrate", "if (disableDblClick()) submitForm('doGestionaleEntrate')","width:178; height:46",pdg_selezionato&&bp.isGestionaleAccessibile());%></td>
-							<td halign="middle" width="171"><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Gestionale Spese", "if (disableDblClick()) submitForm('doGestionaleSpese')","width:178; height:46",pdg_selezionato&&bp.isGestionaleAccessibile());%></td>
+							<td halign="middle" width="178"><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Gestionale Entrate", "if (disableDblClick()) submitForm('doGestionaleEntrate')","width:178; height:46",pdg_selezionato&&bp.isGestionaleAccessibile(), bp.getParentRoot().isBootstrap());%></td>
+							<td halign="middle" width="171"><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Gestionale Spese", "if (disableDblClick()) submitForm('doGestionaleSpese')","width:178; height:46",pdg_selezionato&&bp.isGestionaleAccessibile(), bp.getParentRoot().isBootstrap());%></td>
 						</tr>
 					</table>
 				</div>

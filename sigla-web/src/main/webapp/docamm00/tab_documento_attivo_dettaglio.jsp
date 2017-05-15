@@ -90,7 +90,7 @@
     </table>
    </div>
 
-   <div class="Group">   
+   <div class="Group card">   
 	<table>	
 	  <tr>
   		<% bp.getDettaglio().writeFormField(out,"termini_pagamento_uo_cds");%>
@@ -100,11 +100,11 @@
  	     	<% bp.getDettaglio().writeFormLabel(out,"modalita_pagamento_uo_cds");%>
       	</td>      	
      	<td>
-	      	<% bp.getDettaglio().getBulkInfo().writeFormInput(out,bp.getDettaglio().getModel(),null, "modalita_pagamento_uo_cds",bp.isROBank_ModPag(riga),null,"onChange=\"submitForm('doOnModalitaPagamentoUOCDSChange')\"",bp.getDettaglio().getInputPrefix(), bp.getDettaglio().getStatus(), bp.getDettaglio().getFieldValidationMap());%>	
+	      	<% bp.getDettaglio().getBulkInfo().writeFormInput(out,bp.getDettaglio().getModel(),null, "modalita_pagamento_uo_cds",bp.isROBank_ModPag(riga),null,"onChange=\"submitForm('doOnModalitaPagamentoUOCDSChange')\"",bp.getDettaglio().getInputPrefix(), bp.getDettaglio().getStatus(), bp.getDettaglio().getFieldValidationMap(), bp.getParentRoot().isBootstrap());%>	
 	      </td>   
 		<td>
 			<% 	if (riga != null && riga.getBanca_uo_cds() != null) {
-				bp.getDettaglio().getBulkInfo().writeFormInput(out,bp.getDettaglio().getModel(),null, "listabanche_uo_cds",bp.isROBank(riga),null,"onChange=\"submitForm('doOnModalitaPagamentoUOCDSChange')\"",bp.getDettaglio().getInputPrefix(), bp.getDettaglio().getStatus(), bp.getDettaglio().getFieldValidationMap());
+				bp.getDettaglio().getBulkInfo().writeFormInput(out,bp.getDettaglio().getModel(),null, "listabanche_uo_cds",bp.isROBank(riga),null,"onChange=\"submitForm('doOnModalitaPagamentoUOCDSChange')\"",bp.getDettaglio().getInputPrefix(), bp.getDettaglio().getStatus(), bp.getDettaglio().getFieldValidationMap(), bp.getParentRoot().isBootstrap());
 				} %>
    		</td>
       </tr>

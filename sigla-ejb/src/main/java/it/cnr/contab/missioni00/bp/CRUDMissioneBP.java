@@ -49,7 +49,8 @@ public class CRUDMissioneBP extends it.cnr.jada.util.action.SimpleCRUDBP	impleme
 			super.writeHTMLToolbar(context, reset, find, delete);
 
 			// Aggiungo alla table delle tappe il bottone di fine configurazione tappa	
-			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif", isViewing() ? null : "javascript:submitForm('doFineConfigurazioneTappa')",true,"Fine Configurazione");			
+			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif", isViewing() ? null : "javascript:submitForm('doFineConfigurazioneTappa')",true,"Fine Configurazione",
+					HttpActionContext.isFromBootstrap(context));			
 		}
 	};	
 	private final CRUDMissione_spesaController spesaController = new CRUDMissione_spesaController("Spesa", Missione_dettaglioBulk.class,"speseMissioneColl",this)
@@ -59,7 +60,8 @@ public class CRUDMissioneBP extends it.cnr.jada.util.action.SimpleCRUDBP	impleme
 			super.writeHTMLToolbar(context, reset, find, delete);
 
 			// Aggiungo alla table delle spese il bottone di fine inserimento spese
-			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif",isViewing() ? null : "javascript:submitForm('doFineInserimentoSpese')",true,"Fine Inserimento Spese");			
+			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif",isViewing() ? null : "javascript:submitForm('doFineInserimentoSpese')",true,"Fine Inserimento Spese",
+					HttpActionContext.isFromBootstrap(context));			
 		}
 	};	
 	
@@ -1584,7 +1586,7 @@ public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String
 		!missione.isPagata()&&
 		isInputReadonly()&& 
 		s1.equals("stato_liquidazione")){ 
-		getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doSelezionaStatoLiquidazione')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+		getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doSelezionaStatoLiquidazione')\"", getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 	}
 	else
 		super.writeFormInput(jspwriter,s,s1,flag,s2,s3);

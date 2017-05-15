@@ -13,7 +13,7 @@
 %>
 <script language="JavaScript">
 function doScaricaAllegato() {	
-	  doPrint('genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 	<table width=100%>
@@ -52,18 +52,18 @@ function doScaricaAllegato() {
 				</td></tr>					
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","type"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","type", !bp.isAllegatiEnabled(),"FormInput",null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","type", !bp.isAllegatiEnabled(),null,null); %></td>
 				</tr>
 				<% if (bulk != null && AllegatoContrattoDocumentBulk.PROGETTO.equals(bulk.getType())){%>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","link"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","link", !bp.isAllegatiEnabled(),"FormInput",null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","link", !bp.isAllegatiEnabled(),null,null); %></td>
 				</tr>
 			    <%}%>
 				<% if (bp.isAllegatiEnabled()){%>
 					<tr>
 				        <td><% controller.writeFormLabel(out,"default","file"); %></td>
-				        <td colspan="2"><% controller.writeFormInput(out,"default","file", !bp.isAllegatiEnabled(),"FormInput",null); %></td>
+				        <td colspan="2"><% controller.writeFormInput(out,"default","file", !bp.isAllegatiEnabled(),null,null); %></td>
 				    </tr>
 			    <%}%>
 				<tr>
@@ -75,11 +75,11 @@ function doScaricaAllegato() {
 			    </tr>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","descrizione"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","descrizione", !bp.isAllegatiEnabled(),"FormInput",null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","descrizione", !bp.isAllegatiEnabled(),null,null); %></td>
 				</tr>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","titolo"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","titolo", !bp.isAllegatiEnabled(),"FormInput",null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","titolo", !bp.isAllegatiEnabled(),null,null); %></td>
 				</tr>
 			</table>  	
 	  	</td>
