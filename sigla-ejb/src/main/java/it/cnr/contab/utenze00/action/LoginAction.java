@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -15,12 +16,15 @@ import org.slf4j.LoggerFactory;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utente00.nav.comp.GestioneLoginComponent;
 import it.cnr.contab.utente00.nav.comp.UtenteLdapNuovoException;
 import it.cnr.contab.utente00.nav.comp.UtenteMultiploException;
 import it.cnr.contab.utente00.nav.ejb.*;
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.utenze00.bulk.*;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.ejb.CRUDComponentSession;
@@ -224,6 +228,22 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			return handleException(context,e);
 		}
 	}
+	
+	private void fillContextFromRequest(ActionContext context) {
+		HttpActionContext httpActionContext = (HttpActionContext)context;
+		if (Optional.ofNullable(httpActionContext.getParameter("context.esercizio")).isPresent()) {
+			doSelezionaContesto(context, 
+					Optional.ofNullable(httpActionContext.getParameter("context.esercizio"))
+						.map(x -> Integer.valueOf(x)).orElse(null), 
+					Optional.ofNullable(httpActionContext.getParameter("context.cds"))
+						.map(x -> x).orElse(null), 
+					Optional.ofNullable(httpActionContext.getParameter("context.uo"))
+						.map(x -> x).orElse(null), 
+					Optional.ofNullable(httpActionContext.getParameter("context.cdr"))
+						.map(x -> x).orElse(null));			
+		}
+	}
+	
 	private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
 		boolean utentiMultipliFound=false;
 		CNRUserInfo ui = null;
@@ -431,8 +451,16 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	}
 	private Forward initializeWorkspace(ActionContext context) throws java.text.ParseException,javax.ejb.EJBException,java.rmi.RemoteException,it.cnr.jada.comp.ComponentException,BusinessProcessException {
 		CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
+		LoginBP loginBP = (LoginBP)context.getBusinessProcess();
+		
 		UtenteBulk utente = ui.getUtente();
-	
+		context.setUserContext(new CNRUserContext(
+				loginBP.getUserInfo().getUtente().getCd_utente(),
+				context.getSessionId(),
+				null,
+				null,
+				null,
+				null));
 		Integer[] esercizi = getComponentSession().listaEserciziPerUtente(context.getUserContext(),utente);
 		int annoInCorso = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
 		if (esercizi.length == 0 && !utente.isSuperutente()) {
@@ -460,6 +488,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			return context.findDefaultForward();        	
         }
 		ui.setCd_tipo_rapporto(paramBulk.getCd_tipo_rapporto());		
+		fillContextFromRequest(context);
 		 
 		GestioneUtenteBP bp = (GestioneUtenteBP)context.createBusinessProcess("GestioneUtenteBP");
 		context.addBusinessProcess(bp);
@@ -512,19 +541,46 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			context.setUserContext(userContext);
 			bp.setRadiceAlbero_main(context, getComponentSession().generaAlberoPerUtente(context.getUserContext(),utente,null,null,(short)0));
 			return context.findForward("desktop");
-		} else {
-			context.setUserContext(new CNRUserContext(
-				bp.getUserInfo().getUtente().getCd_utente(),
-				context.getSessionId(),
-				null,
-				null,
-				null,
-				null));
 		}
 		if (utente.isSupervisore())
 			bp.cercaCds(context);
 		else
 			bp.cercaUnitaOrganizzative(context);
 		return context.findForward("desktop");
+	}
+	
+	/**
+	 * Gestisce l'azione di selezione di un contesto
+	 *
+	 * @param context	L'ActionContext della richiesta
+	 * @return Il Forward alla pagina di risposta
+	 */
+	public Forward doSelezionaContesto(ActionContext context, Integer esercizio, String cds, String uo, String cdr) {
+		try {
+			LoginBP bp = (LoginBP)context.getBusinessProcess();			
+			CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
+			ui.setEsercizio(esercizio);
+			CNRUserContext userContext = new CNRUserContext(
+				ui.getUtente().getCd_utente(),
+				context.getSessionId(),
+				ui.getEsercizio(),
+				Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
+				Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cds(context.getUserContext())),
+				Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
+			if (Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
+				ui.setUnita_organizzativa((Unita_organizzativaBulk) Utility.createUnita_organizzativaComponentSession()
+						.findByPrimaryKey(userContext, new Unita_organizzativaBulk(uo)));
+			}
+			if (Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
+				ui.setCdr((CdrBulk) Utility.createCdrComponentSession()
+						.findByPrimaryKey(userContext, new CdrBulk(cdr)));
+			}
+			userContext.getAttributes().put("bootstrap", true);
+			bp.setBootstrap(true);
+			context.setUserContext(userContext);
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
 	}
 }

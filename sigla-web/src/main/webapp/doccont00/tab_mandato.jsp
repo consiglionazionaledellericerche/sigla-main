@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "unita_organizzativa"); %></td>
-		<td><% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, "FormInput","onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %></td>
+		<td><% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, null,"onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %></td>
 		<% if( mandato.getCd_unita_organizzativa() != null && (!mandato.getCd_unita_organizzativa().equals( mandato.getCd_uo_origine())||bp.isTesoreria_unica()) ) { %>
 		   	<td colspan=2></td>
 		<% } else { %>
@@ -42,7 +42,7 @@
   <div class="Group">		
   <table border="0" cellspacing="0" cellpadding="2">
 	<tr>
-			<td><% bp.getController().writeFormInput( out,"default", "ti_mandato", false, "FormInput","onclick=\"submitForm('doCambiaTipoMandato')\"" ); %></td>						
+			<td><% bp.getController().writeFormInput( out,"default", "ti_mandato", false, null,"onclick=\"submitForm('doCambiaTipoMandato')\"" ); %></td>						
 	</tr>
   </table>
   </div>
@@ -67,7 +67,7 @@
 	</tr> 
 	<tr> 
 			<td><% bp.getController().writeFormLabel( out, "ds_mandato"); %></td>
-			<td colspan=3><% bp.getController().writeFormInput( out,"default", "ds_mandato",mandato.isAnnullato(),"FormInput",null); %></td> 
+			<td colspan=3><% bp.getController().writeFormInput( out,"default", "ds_mandato",mandato.isAnnullato(),null,null); %></td> 
 	</tr> 
 	<% if (!bp.isSearching() && mandato!=null && mandato.getStato().equals(MandatoBulk.STATO_MANDATO_ANNULLATO) && mandato.getDt_trasmissione() !=null) {%>
 	<tr>
@@ -77,9 +77,9 @@
 		<% if ( mandato.getFl_riemissione().booleanValue()) {%>
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "pg_mandato_riemissione"); %></td>
-			<td colspan=3><% bp.getController().writeFormInput( out, "default","pg_mandato_riemissione",!(mandato.getStato_trasmissione_annullo().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)),"FormInput",null); %>
+			<td colspan=3><% bp.getController().writeFormInput( out, "default","pg_mandato_riemissione",!(mandato.getStato_trasmissione_annullo().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)),null,null); %>
 				<% bp.getController().writeFormInput( out, "ds_documento_cont"); %>
-				<% bp.getController().writeFormInput( out, "default","find_documento_cont",!(mandato.getStato_trasmissione_annullo().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)),"FormInput",null); %>
+				<% bp.getController().writeFormInput( out, "default","find_documento_cont",!(mandato.getStato_trasmissione_annullo().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)),null,null); %>
 			</td> 
 		</tr>	
 		<% } %>

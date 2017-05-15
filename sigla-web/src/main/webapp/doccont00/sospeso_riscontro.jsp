@@ -38,14 +38,14 @@
 		<td><% bp.getController().writeFormLabel( out, "cd_sospeso"); %></td>
 		<td><% bp.getController().writeFormInput( out, "cd_sospeso"); %>
 			<% bp.getController().writeFormLabel( out, "ti_sospeso_riscontro"); %>
-			<% bp.getController().writeFormInput( out,"default", "ti_sospeso_riscontro", false, "FormInput", "onchange=\"submitForm('doCambiaTipoSospesoRiscontro')\"" ); %>
+			<% bp.getController().writeFormInput( out,"default", "ti_sospeso_riscontro", false, null, "onchange=\"submitForm('doCambiaTipoSospesoRiscontro')\"" ); %>
 			<% bp.getController().writeFormLabel( out, "dt_registrazione"); %>
 			<% bp.getController().writeFormInput( out, "dt_registrazione"); %></td>
 		
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "ti_entrata_spesa"); %></td>
-		<td><% bp.getController().writeFormInput( out,"default", "ti_entrata_spesa", false, "FormInput", "onchange=\"submitForm('doCambiaTipoEntrataSpesa')\"" ); %>
+		<td><% bp.getController().writeFormInput( out,"default", "ti_entrata_spesa", false, null, "onchange=\"submitForm('doCambiaTipoEntrataSpesa')\"" ); %>
 			<% bp.getController().writeFormLabel( out, "ti_cc_bi"); %>
 			<% bp.getController().writeFormInput( out, "ti_cc_bi"); %></td>
 	</tr>

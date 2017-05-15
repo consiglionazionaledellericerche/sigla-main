@@ -12,7 +12,7 @@
 <%	FatturaPassivaElettronicaBP bp = (FatturaPassivaElettronicaBP)BusinessProcess.getBusinessProcess(request);%>
 <script language="JavaScript">
 function doScaricaFile() {	
-  doPrint('genericdownload/<%=bp.getNomeFileAllegato()!=null?bp.getNomeFileAllegato().replace("'", "_"):""%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeFileAllegato()!=null?bp.getNomeFileAllegato().replace("'", "_"):""%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 <%  bp.getCrudDocEleAllegatiColl().writeHTMLTable(pageContext,"default",false,false,false,"100%","150px"); %>  

@@ -39,7 +39,7 @@
 	   <% if ( !modello.isEnteInScrivania() ) { %>
 		<tr>
 		   <td><% bp.getController().writeFormLabel( out, "fl_ente"); %></td>		
-		   <td><% bp.getController().writeFormInput(out,"default","fl_ente", !bp.isUoEnte(),"FormInput","onclick=\"submitForm('doDefault')\""); %></td>
+		   <td><% bp.getController().writeFormInput(out,"default","fl_ente", !bp.isUoEnte(),null,"onclick=\"submitForm('doDefault')\""); %></td>
 
 		</tr>
 		<tr>
@@ -90,16 +90,16 @@
 	<table align="center" class="Panel">	
 		<tr>
 			<td align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocDaRiportare')",null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocDaRiportare')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>
 			<% if (!bp.isRiaccertamentoChiuso()) {%>		
 				<td align="center">
-					<% JSPUtils.button(out,bp.encodePath("img/log24.gif"),bp.encodePath("Elenco Residui Attivi da Riaccertare"), "javascript:submitForm('doCercaResiduiForRiaccertamento')",null); %>
+					<% JSPUtils.button(out,bp.encodePath("img/log24.gif"),bp.encodePath("Elenco Residui Attivi da Riaccertare"), "javascript:submitForm('doCercaResiduiForRiaccertamento')",null, bp.getParentRoot().isBootstrap()); %>
 				</td>
 			<% } %>		
 			<% if (!bp.isGaeCollegateProgetti()) {%>		
 				<td align="center">
-					<% JSPUtils.button(out,bp.encodePath("img/log24.gif"),bp.encodePath("Elenco Documenti con Gae senza Progetto"), "javascript:submitForm('doCercaGaeSenzaProgettiForRibaltamento')",null); %>
+					<% JSPUtils.button(out,bp.encodePath("img/log24.gif"),bp.encodePath("Elenco Documenti con Gae senza Progetto"), "javascript:submitForm('doCercaGaeSenzaProgettiForRibaltamento')",null, bp.getParentRoot().isBootstrap()); %>
 				</td>		
 			<% } %>		
 		</tr>
