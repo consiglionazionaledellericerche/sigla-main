@@ -1,48 +1,5 @@
 package it.cnr.contab.ordmag.richieste.action;
 
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.*;
-
-import java.math.*;
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-
-import javax.ejb.EJBException;
-
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.bp.*;
-import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.inventario00.bp.AssBeneFatturaBP;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
-import it.cnr.contab.inventario01.bp.CRUDScaricoInventarioBP;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
-import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.IntrospectionException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.ejb.EJBCommonServices;
-
 public class CRUDRichiestaUopAction extends it.cnr.jada.util.action.CRUDAction {
 
 public CRUDRichiestaUopAction() {
