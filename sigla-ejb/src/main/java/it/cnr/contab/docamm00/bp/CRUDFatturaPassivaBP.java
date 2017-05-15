@@ -48,6 +48,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
@@ -635,7 +636,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	}
 	public boolean isInputReadonly() {
 		Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
-		
 		return super.isInputReadonly() || isDeleting() || isModelVoided()|| (!isAnnoDiCompetenza() && isEditing()) ||
 				     (fp != null && ((fp.isPagata() || 
 					 ((isAnnoDiCompetenza() && fp.isRiportata())) ||
@@ -644,9 +644,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	}
 
 	public boolean isInputReadonlyDoc1210() {
-
 		return super.isInputReadonly();
 	}
+	
 	public boolean isInventariaButtonEnabled() {
 
 		return (isEditing() || isInserting()) && getModel() != null
@@ -1060,6 +1060,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 			throws it.cnr.jada.action.BusinessProcessException {
 
 		try {
+			archiviaAllegati(context, null);			
 			getModel().setToBeUpdated();
 			setModel(context,
 					((FatturaPassivaComponentSession) createComponentSession())
