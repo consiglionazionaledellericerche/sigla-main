@@ -17,13 +17,11 @@
 <table class="Form" width="100%">
   <tr>
 	<td>
-		<% if (!bp.getParentRoot().isBootstrap()) { %>
-		<b><big>CdR</big></b>
-		<% } %>
+		<b><big class="text-primary h5">CdR</big></b>
 		<% JSPUtils.button(out,
 				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
 				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
-				"CdR",
+				bp.getParentRoot().isBootstrap() ?"Conferma" : null,
 				"javascript:submitForm('doCaricaLineeAttivita')",
 				"btn-secondary btn-title",
 				accertamento.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
@@ -36,13 +34,11 @@
 	</tr>
 	<tr>
 		<td colspan=2>
-				<% if (!bp.getParentRoot().isBootstrap()) { %>
-					<b ALIGN="CENTER"><big>GAE</big></b>
-				<% } %>					
+				<b ALIGN="CENTER"><big class="text-primary h5">GAE</big></b>
 				<% JSPUtils.button(out,
 						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
 						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
-						"GAE",
+						bp.getParentRoot().isBootstrap() ?"Conferma" : null,
 						"javascript:submitForm('doConfermaLineeAttivita')", 
 						"btn-secondary btn-title",
 						accertamento.isConfermaLineeAttivitaEnabled() && bp.isEditable(),
@@ -51,10 +47,10 @@
 	</tr>
 	<tr>
 		<td colspan=2>
-			<b class="h5">GAE da PdG approvato</b>
+			<b class="h5 text-info">GAE da PdG approvato</b>
 		</td>
 		<td>
-			<b ALIGN="CENTER" class="h5">Altri GAE</b>
+			<b ALIGN="CENTER" class="h5 text-info">Altri GAE</b>
 		</td>
 	</tr>
 	<tr>

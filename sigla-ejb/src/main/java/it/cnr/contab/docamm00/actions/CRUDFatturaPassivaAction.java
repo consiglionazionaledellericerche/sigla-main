@@ -4150,7 +4150,7 @@ public Forward doTab(ActionContext context,String tabName,String pageName) {
 				
 			fattura = (Fattura_passivaBulk)h.calcoloConsuntivi(context.getUserContext(), fattura);
 			bp.setModel(context,fattura);
-		}	
+		}
 		return super.doTab( context, tabName, pageName );
 	} catch(Throwable e) {
 		return handleException(context,e);
