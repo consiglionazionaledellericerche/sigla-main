@@ -109,7 +109,7 @@
 <div class="Panel" style="width:100%">
 <table>
   <tr>
-	<td colspan=2><% JSPUtils.button(out,null,null,"Abilita conguaglio","javascript:submitForm('doAbilitaConguaglio')",null,bp.isBottoneAbilitaConguaglioEnabled());%></td>
+	<td colspan=2><% JSPUtils.button(out,null,null,"Abilita conguaglio","javascript:submitForm('doAbilitaConguaglio')",null,bp.isBottoneAbilitaConguaglioEnabled(), bp.getParentRoot().isBootstrap());%></td>
   </tr>
 </table>
 </div>

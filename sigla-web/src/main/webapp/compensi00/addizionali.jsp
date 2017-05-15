@@ -29,7 +29,10 @@
 			<input type="file" name="file">			
 		</td>
 		<td>
-			<% JSPUtils.button(out,null,null,"Carica Aggiornamenti","javascript:submitForm('doCarica')", bp.getDettagliCRUDController()==null||bp.getDettagliCRUDController().countDetails()==0); %>
+			<% JSPUtils.button(out,null,null,
+					"Carica Aggiornamenti","javascript:submitForm('doCarica')", 
+					bp.getDettagliCRUDController()==null||bp.getDettagliCRUDController().countDetails()==0,
+					bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</tr>
 	

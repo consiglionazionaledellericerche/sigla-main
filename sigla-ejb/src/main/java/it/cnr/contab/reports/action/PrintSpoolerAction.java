@@ -52,7 +52,6 @@ public class  PrintSpoolerAction extends it.cnr.jada.util.action.SelezionatoreLi
 				array[0] = (Print_spoolerBulk)bp.getFocusedElement();
 			}
 			if (array != null){
-				EJBCommonServices.closeRemoteIterator(context, bp.getIterator());			
 				bp.createComponentSession().deleteJobs(context.getUserContext(),array);
 				for (int i = 0;i < array.length;i++) {
 					try {
