@@ -14,12 +14,9 @@
 	<body class="Workspace">
 
 	<%	
-	    it.cnr.contab.utenze00.bp.LoginBP bp = null;
-	    try{
-	       bp = (it.cnr.contab.utenze00.bp.LoginBP)BusinessProcess.getBusinessProcessRoot(request);
-	    }catch (NullPointerException e){
+	    it.cnr.contab.utenze00.bp.LoginBP bp = (it.cnr.contab.utenze00.bp.LoginBP)BusinessProcess.getBusinessProcessRoot(request);
+		if (bp == null)
 	       bp = (it.cnr.contab.utenze00.bp.LoginBP)new HttpActionContext(this,request,response).getBusinessProcessRoot(true);
-	    }   
 	    if (bp!=null)
 			bp.openForm(pageContext); 
 	    else
