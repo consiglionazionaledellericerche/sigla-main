@@ -18,7 +18,7 @@
 
 <script language="JavaScript">
 function doVisualizzaDocumentoFatturaElettronica() {
-	doPrint('genericdownload/visualizzaDocumentoAttivo.html?methodName=visualizzaDocumentoAttivo&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/visualizzaDocumentoAttivo.html?methodName=visualizzaDocumentoAttivo&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
 			'Documento', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
 }
 </script>

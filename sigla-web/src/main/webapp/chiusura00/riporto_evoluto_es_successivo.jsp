@@ -39,12 +39,12 @@
 	   <% if ( !modello.isEnteInScrivania() ) { %>
 		<tr>
 		   <td><% bp.getController().writeFormLabel( out, "fl_ente"); %></td>		
-		   <td><% bp.getController().writeFormInput(out,"default","fl_ente",!bp.isUoEnte(),"FormInput","onclick=\"submitForm('doAnnullaVoce')\""); %></td>
+		   <td><% bp.getController().writeFormInput(out,"default","fl_ente",!bp.isUoEnte(),null,"onclick=\"submitForm('doAnnullaVoce')\""); %></td>
 
 		</tr>
 		<tr>
 		   <td><% bp.getController().writeFormLabel( out, "ti_gestione"); %></td>		
-		   <td><% bp.getController().writeFormInput(out,"default","ti_gestione",false,"FormInput","onchange=\"submitForm('doAnnullaVoce')\""); %></td>		   
+		   <td><% bp.getController().writeFormInput(out,"default","ti_gestione",false,null,"onchange=\"submitForm('doAnnullaVoce')\""); %></td>		   
 		</tr>
 	   <% } else { %>
 			<tr>
@@ -110,7 +110,7 @@
 	<table align="center" class="Panel">	
 		<tr>
 			<td align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocDaRiportare')",null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocDaRiportare')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>		
 		</tr>
 	</table>

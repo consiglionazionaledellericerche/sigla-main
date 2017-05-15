@@ -12,7 +12,7 @@ SelezionatoreMandatiInDistintaBP bp = (SelezionatoreMandatiInDistintaBP)Business
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript">
 function doVisualizzaSingoloDocumento(esercizio, cds , numero_documento, tipo) {	
-	doPrint('genericdownload/Documento contabile '+esercizio+'-'+cds+'-'+numero_documento+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_documento='+numero_documento+'&tipo='+tipo+'&methodName=scaricaDocumento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Documento contabile '+esercizio+'-'+cds+'-'+numero_documento+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_documento='+numero_documento+'&tipo='+tipo+'&methodName=scaricaDocumento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 </head>

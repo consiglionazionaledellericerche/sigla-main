@@ -10,6 +10,7 @@ import it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrBulk;
 import it.cnr.contab.doccont00.core.bulk.Sospeso_det_uscBulk;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
@@ -254,10 +255,16 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 		if (persistent instanceof V_mandato_reversaleBulk){
 			V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk)persistent;
 			if (!bulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)){
-				bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-						"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
-					"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
-					"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");			
+				if (((CNRUserContext)userContext).isFromBootstrap()) {
+					bulk.setDocumento("<a class='btn btn-link' onclick='"+
+							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\");' "+
+							"title='Visualizza Documento Contabile'><i class='fa fa-fw fa-2x fa-file-pdf-o text-danger' aria-hidden='true'></i></a>");															
+				} else {				
+					bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
+							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
+						"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
+						"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");			
+				}
 			}		
 			if (bulk.isReversaleTrasferimento()){
 				SQLBuilder sql  = getHomeCache().getHome(Distinta_cassiere_detBulk.class).createSQLBuilder();

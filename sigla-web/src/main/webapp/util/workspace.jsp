@@ -18,6 +18,7 @@ restoreWorkspace();
 <%
 	BusinessProcess bp = BusinessProcess.getBusinessProcess(request);
 %>
+<% if (!bp.getParentRoot().isBootstrap()) {%>
 	<table cellspacing="0" cellpadding="0" style="font-family : sans-serif; font-size : 12px; width: 100%">
 		<tr valign=bottom>
 			<td align=center><img id="AttendereImg" width="174" height="14" src="img/spacer.gif"></td>
@@ -26,11 +27,13 @@ restoreWorkspace();
 			<td align=center id="AttendereMessage" style="width:100%;color:white;font-size: 20px">&nbsp;</td>
 		</tr>
 	</table>
+<%} %>	
 <%
 	if (bp instanceof GestioneUtenteBP) {
 		GestioneUtenteBP gestioneUtenteBP = (GestioneUtenteBP)bp;
 		gestioneUtenteBP.openForm(pageContext);
-		gestioneUtenteBP.writePreferiti(out, HttpActionContext.getUserContext(session));
+		if (!bp.getParentRoot().isBootstrap())
+			gestioneUtenteBP.writePreferiti(out, HttpActionContext.getUserContext(session));
 		gestioneUtenteBP.closeForm(pageContext);
 	}
 %>
