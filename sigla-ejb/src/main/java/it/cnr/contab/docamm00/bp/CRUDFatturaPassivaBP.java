@@ -636,6 +636,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	}
 	public boolean isInputReadonly() {
 		Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+		if (Optional.ofNullable(getTab("tab")).filter(x -> x.equals("tabAllegati")).isPresent())
+			return false;		
 		return super.isInputReadonly() || isDeleting() || isModelVoided()|| (!isAnnoDiCompetenza() && isEditing()) ||
 				     (fp != null && ((fp.isPagata() || 
 					 ((isAnnoDiCompetenza() && fp.isRiportata())) ||
@@ -752,6 +754,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
 	public boolean isSaveButtonEnabled() {
 	Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+	if (Optional.ofNullable(getTab("tab")).filter(x -> x.equals("tabAllegati")).isPresent())
+		return true;	
 	return super.isSaveButtonEnabled() && 
 			!isModelVoided() &&
 			//commentato per consentire modifiche fatt elettr
