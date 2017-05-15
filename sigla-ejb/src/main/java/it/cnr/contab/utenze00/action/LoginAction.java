@@ -228,6 +228,22 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			return handleException(context,e);
 		}
 	}
+	
+	private void fillContextFromRequest(ActionContext context) {
+		HttpActionContext httpActionContext = (HttpActionContext)context;
+		if (Optional.ofNullable(httpActionContext.getParameter("context.esercizio")).isPresent()) {
+			doSelezionaContesto(context, 
+					Optional.ofNullable(httpActionContext.getParameter("context.esercizio"))
+						.map(x -> Integer.valueOf(x)).orElse(null), 
+					Optional.ofNullable(httpActionContext.getParameter("context.cds"))
+						.map(x -> x).orElse(null), 
+					Optional.ofNullable(httpActionContext.getParameter("context.uo"))
+						.map(x -> x).orElse(null), 
+					Optional.ofNullable(httpActionContext.getParameter("context.cdr"))
+						.map(x -> x).orElse(null));			
+		}
+	}
+	
 	private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
 		boolean utentiMultipliFound=false;
 		CNRUserInfo ui = null;
@@ -435,8 +451,16 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	}
 	private Forward initializeWorkspace(ActionContext context) throws java.text.ParseException,javax.ejb.EJBException,java.rmi.RemoteException,it.cnr.jada.comp.ComponentException,BusinessProcessException {
 		CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
+		LoginBP loginBP = (LoginBP)context.getBusinessProcess();
+		
 		UtenteBulk utente = ui.getUtente();
-	
+		context.setUserContext(new CNRUserContext(
+				loginBP.getUserInfo().getUtente().getCd_utente(),
+				context.getSessionId(),
+				null,
+				null,
+				null,
+				null));
 		Integer[] esercizi = getComponentSession().listaEserciziPerUtente(context.getUserContext(),utente);
 		int annoInCorso = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
 		if (esercizi.length == 0 && !utente.isSuperutente()) {
@@ -464,6 +488,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			return context.findDefaultForward();        	
         }
 		ui.setCd_tipo_rapporto(paramBulk.getCd_tipo_rapporto());		
+		fillContextFromRequest(context);
 		 
 		GestioneUtenteBP bp = (GestioneUtenteBP)context.createBusinessProcess("GestioneUtenteBP");
 		context.addBusinessProcess(bp);
@@ -516,14 +541,6 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			context.setUserContext(userContext);
 			bp.setRadiceAlbero_main(context, getComponentSession().generaAlberoPerUtente(context.getUserContext(),utente,null,null,(short)0));
 			return context.findForward("desktop");
-		} else {
-			context.setUserContext(new CNRUserContext(
-				bp.getUserInfo().getUtente().getCd_utente(),
-				context.getSessionId(),
-				null,
-				null,
-				null,
-				null));
 		}
 		if (utente.isSupervisore())
 			bp.cercaCds(context);
