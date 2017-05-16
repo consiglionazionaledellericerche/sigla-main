@@ -3,6 +3,7 @@
  * Date 12/05/2017
  */
 package it.cnr.contab.ordmag.richieste.bulk;
+import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 public class RichiestaUopBulk extends RichiestaUopBase {
 	protected BulkList righeRichiestaColl= new BulkList();
@@ -28,6 +30,15 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrdDest =  new UnitaOperativaOrdBulk();
+	public final static String STATO_ANNULLATO = "ANN";
+	public final static String STATO_INSERITO = "INS";
+
+	public final static Dictionary STATO;
+	static{
+		STATO = new it.cnr.jada.util.OrderedHashtable();
+		STATO.put(STATO_INSERITO,"Inserito");
+		STATO.put(STATO_ANNULLATO,"Annullato");
+	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: RICHIESTA_UOP
@@ -238,5 +249,16 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	}
 	public void setUnitaOperativaOrd(UnitaOperativaOrdBulk unitaOperativaOrd) {
 		this.unitaOperativaOrd = unitaOperativaOrd;
+	}
+	public Dictionary getStatoKeys() {
+		return STATO;
+	}
+	public Dictionary getStatoKeysForSearch() {
+
+		OrderedHashtable d = (OrderedHashtable)getStatoKeys();
+		if (d == null) return null;
+
+		OrderedHashtable clone = (OrderedHashtable)d.clone();
+		return clone;
 	}
 }
