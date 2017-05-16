@@ -93,7 +93,7 @@
 		</tr>
 	</table>
 <% } else { %>	
-	<div class="col-md-6">
+	<div class="col-md-6 offset-md-3">
 		<div class="card">
 		  <h3 class="card-header"><i class="<%=iconClass%>" aria-hidden="true"></i> Informazione</h3>
 		  <div class="card-block">
