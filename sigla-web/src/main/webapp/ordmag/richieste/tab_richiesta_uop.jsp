@@ -13,16 +13,62 @@
 %>
 
 <div class="Group">
-	<table class="Panel">
-	  	<tr>
-		 	<% bp.getController().writeFormField(out,"findUnitaOperativaOrd"); %>
-		    <% if (!bp.isSearching() || (richiesta != null && richiesta.getCdUnitaOperativa() != null)) { %>	 
-			  	<tr>
-				 	<% bp.getController().writeFormField(out,"esercizio"); %>
-				 	<% bp.getController().writeFormField(out,"cdNumeratore"); %>
-				 	<% bp.getController().writeFormField(out,"numero"); %>
-				</tr>
-			<% } %>
+	<table>
+		<tr>
+			<%
+				bp.getController().writeFormField(out, "findUnitaOperativaOrd");
+			%>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<%
+				bp.getController().writeFormField(out, "findNumerazioneOrd");
+			%>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<%
+				bp.getController().writeFormField(out, "esercizio");
+			%>
+			<%
+				bp.getController().writeFormField(out, "cdNumeratore");
+			%>
+			<%
+				bp.getController().writeFormField(out, "numero");
+			%>
+			<%
+				bp.getController().writeFormField(out, "dataRichiesta");
+			%>
+			<%
+				bp.getController().writeFormField(out, "stato");
+			%>
+		</tr>
+	</table>
+    <table>
+      <tr>      	
+			<td>
+				<% bp.getController().writeFormLabel(out,"dsRichiesta");%>
+			</td>      	
+			<td colspan="4">
+				<% bp.getController().writeFormInput(out,"dsRichiesta");%>
+			</td>
+      </tr>
+      <tr>      	
+			<td>
+				<% bp.getController().writeFormLabel(out,"nota");%>
+			</td>      	
+			<td colspan="4">
+				<% bp.getController().writeFormInput(out,"nota");%>
+			</td>
+      </tr>
+	</table>
+    <table>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "findUnitaOperativaOrdDest");
+			%>
 		</tr>
 	</table>
 </div>

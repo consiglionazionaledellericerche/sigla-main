@@ -45,10 +45,11 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="cdNumeratore"
 		property="numerazioneOrd.cdNumeratore"
@@ -65,8 +66,9 @@
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="6"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
 		nullable="false"
 		label="Numero" />
 	<fieldProperty
@@ -74,9 +76,10 @@
 		property="dataRichiesta"
 		inputType="TEXT"
 		formatName="date_short"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
-		nullable="false"
-		label="dataRichiesta" />
+		enabledOnSearch="true"
+		label="Data Richiesta" />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -85,31 +88,33 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="stato" />
+		keysProperty="statoKeys"
+		label="Stato" />
 	<fieldProperty
 		name="dsRichiesta"
 		property="dsRichiesta"
-		inputType="TEXT"
-		inputSize="100"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="3"
 		maxLength="300"
 		enabledOnEdit="false"
-		label="dsRichiesta" />
+		label="Descrizione" />
 	<fieldProperty
 		name="nota"
 		property="nota"
 		inputType="TEXTAREA"
-		cols="60"
+		cols="100"
 		rows="5"
 		maxLength="2000"
 		enabledOnEdit="false"
-		label="nota" />
+		label="Nota" />
 	<fieldProperty
 		name="findUnitaOperativaOrdDest"
 		property="unitaOperativaOrdDest"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="Unità Operativa di Destinazione" />
 	<fieldProperty
 		name="cdUnitaOperativaDest"
 		property="unitaOperativaOrdDest.cdUnitaOperativa"
@@ -157,6 +162,8 @@
 		name="findUnitaOperativaOrd" />
 	<formFieldProperty
 		name="findNumerazioneOrd" />
+	<formFieldProperty
+		name="esercizio" />
 	<formFieldProperty
 		name="numero" />
 	<formFieldProperty
