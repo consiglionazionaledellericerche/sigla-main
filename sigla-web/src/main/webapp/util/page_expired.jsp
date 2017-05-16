@@ -63,7 +63,7 @@ restoreWorkspace();
 	</tbody>
 </table>
 <% } else { %>	
-	<div class="col-md-6">
+	<div class="col-md-6 offset-md-3">
 		<div class="card">
 		  <h3 class="card-header h2 text-danger"><i class="fa fa-exclamation-circle fa-fw fa-2x text-danger" aria-hidden="true"></i> Errore</h3>
 		  <div class="card-block">
