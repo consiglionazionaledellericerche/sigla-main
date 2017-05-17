@@ -40,14 +40,14 @@ function doScaricaFile() {
 <table class="Panel" cellspacing=2>
 	<tr>
         <td><% controller.writeFormLabel(out,bp.getFieldTipoVariazione()); %></td>
-	    <td colspan=4><% controller.writeFormInput(out,"default",bp.getFieldTipoVariazione(), isRODettaglio||!variazione.isToBeCreated(),"FormInput",null); %></td>
+	    <td colspan=4><% controller.writeFormInput(out,"default",bp.getFieldTipoVariazione(), isRODettaglio||!variazione.isToBeCreated(),null,null); %></td>
 	</tr>
 <% if (variazione==null || variazione.getTipo_variazione()!=null) {%>
     <% if (variazione!=null && variazione.getTipo_variazione()!=null &&
 		   variazione.isVariazioneIntegrazioneIncarico()) {%>
 	<tr>
         <td><% controller.writeFormLabel(out,"dt_variazione"); %></td>
-	    <td colspan=4><% controller.writeFormInput(out,"default","dt_variazione", isRODettaglio,"FormInput",null); %></td>
+	    <td colspan=4><% controller.writeFormInput(out,"default","dt_variazione", isRODettaglio,null,null); %></td>
 	</tr>
 	<tr>
 		<td colspan=5>
@@ -56,11 +56,11 @@ function doScaricaFile() {
 		<table>
 		<tr>
 	        <td><% controller.writeFormLabel(out,"dt_fine_validita"); %></td>
-		    <td><% controller.writeFormInput(out,"default","dt_fine_validita", isRODettaglio,"FormInput",null); %></td>
+		    <td><% controller.writeFormInput(out,"default","dt_fine_validita", isRODettaglio,null,null); %></td>
 			<td><% controller.writeFormLabel(out,"importo_lordo"); %></td>
-			<td><% controller.writeFormInput(out,"default","importo_lordo", isRODettaglio,"FormInput",null); %></td>
+			<td><% controller.writeFormInput(out,"default","importo_lordo", isRODettaglio,null,null); %></td>
 			<td><% controller.writeFormLabel(out,"importo_complessivo"); %></td>
-			<td><% controller.writeFormInput(out,"default","importo_complessivo", isRODettaglio,"FormInput",null); %></td>
+			<td><% controller.writeFormInput(out,"default","importo_complessivo", isRODettaglio,null,null); %></td>
 		</tr>
 		</table>
 		</fieldset>
@@ -69,13 +69,13 @@ function doScaricaFile() {
 	<% } else {%>
 	<tr>
 	    <td><% controller.writeFormLabel(out,"importo_complessivo"); %></td>
-	    <td colspan=4><% controller.writeFormInput(out,"default","importo_complessivo", isRODettaglio,"FormInput",null); %></td>
+	    <td colspan=4><% controller.writeFormInput(out,"default","importo_complessivo", isRODettaglio,null,null); %></td>
 	</tr>
 	<% } %>
 
 	<tr>
 	    <td><% controller.writeFormLabel(out,"ds_variazione"); %></td>
-	    <td colspan=4><% controller.writeFormInput(out,"default","ds_variazione", isRODettaglio,"FormInput",null); %></td>
+	    <td colspan=4><% controller.writeFormInput(out,"default","ds_variazione", isRODettaglio,null,null); %></td>
 	</tr>
 
    <% if (variazione!=null && variazione.getTipo_variazione()!=null &&
@@ -138,11 +138,11 @@ function doScaricaFile() {
 	</tr>
 	<tr>
   	    <td><% controller.writeFormLabel(out,"utcr"); %></td>
-		<td colspan=4><% controller.writeFormInput(out,"default","utcr",true,"FormInput",null); %></td>
+		<td colspan=4><% controller.writeFormInput(out,"default","utcr",true,null,null); %></td>
 	</tr>
 	<tr>
   	    <td><% controller.writeFormLabel(out,"default","data_creazione"); %></td>
-		<td colspan=4><% controller.writeFormInput(out,"default","data_creazione",true,"FormInput",null); %></td>
+		<td colspan=4><% controller.writeFormInput(out,"default","data_creazione",true,null,null); %></td>
 	</tr>
 	<% } %>
 <% } %>

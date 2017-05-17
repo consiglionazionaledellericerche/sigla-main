@@ -59,10 +59,10 @@
   </tr>
   <tr>
 	<td colspan=2>
-		<% JSPUtils.button(out,"img/new24.gif","img/new24.gif","Crea/Ricerca<br>impegno","if (disableDblClick()) submitForm('doRicercaObbligazione')",null,bp.isBottoneCreaObbligazioneEnabled());%>
-		<% JSPUtils.button(out,"img/remove24.gif","img/remove24.gif","Elimina<br>impegno","if (disableDblClick()) submitForm('doEliminaObbligazione')",null,bp.isBottoneEliminaObbligazioneEnabled());%>
-		<% JSPUtils.button(out,"img/redo24.gif","img/redo24.gif","Aggiorna in<br>manuale","if (disableDblClick()) submitForm('doModificaManualeObbligazione')",null,bp.isBottoneModificaManualeObbligazioneEnabled());%>
-		<% JSPUtils.button(out,"img/refresh24.gif","img/refresh24.gif","Aggiorna in<br>automatico","if (disableDblClick()) submitForm('doModificaAutomaticaObbligazione')",null,bp.isBottoneModificaAutomaticaObbligazioneEnabled());%>
+		<% JSPUtils.button(out,"img/new24.gif","img/new24.gif","Crea/Ricerca<br>impegno","if (disableDblClick()) submitForm('doRicercaObbligazione')",null,bp.isBottoneCreaObbligazioneEnabled(), bp.getParentRoot().isBootstrap());%>
+		<% JSPUtils.button(out,"img/remove24.gif","img/remove24.gif","Elimina<br>impegno","if (disableDblClick()) submitForm('doEliminaObbligazione')",null,bp.isBottoneEliminaObbligazioneEnabled(), bp.getParentRoot().isBootstrap());%>
+		<% JSPUtils.button(out,"img/redo24.gif","img/redo24.gif","Aggiorna in<br>manuale","if (disableDblClick()) submitForm('doModificaManualeObbligazione')",null,bp.isBottoneModificaManualeObbligazioneEnabled(), bp.getParentRoot().isBootstrap());%>
+		<% JSPUtils.button(out,"img/refresh24.gif","img/refresh24.gif","Aggiorna in<br>automatico","if (disableDblClick()) submitForm('doModificaAutomaticaObbligazione')",null,bp.isBottoneModificaAutomaticaObbligazioneEnabled(), bp.getParentRoot().isBootstrap());%>
 	</td>
   </tr>
 

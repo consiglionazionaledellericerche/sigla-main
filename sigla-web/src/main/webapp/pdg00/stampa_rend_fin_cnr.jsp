@@ -31,8 +31,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per capitolo", "if (disableDblClick()) javascript:submitForm('doStampaEntratePerCapitolo')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per articolo", "if (disableDblClick()) javascript:submitForm('doStampaEntratePerArticolo')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per capitolo", "if (disableDblClick()) javascript:submitForm('doStampaEntratePerCapitolo')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per articolo", "if (disableDblClick()) javascript:submitForm('doStampaEntratePerArticolo')", bp.getParentRoot().isBootstrap());%></td>
 		<td></td>
 	</tr>
 
@@ -44,8 +44,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per capitolo", "if (disableDblClick()) javascript:submitForm('doStampaSpesePerCapitolo')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per articolo", "if (disableDblClick()) javascript:submitForm('doStampaSpesePerArticolo')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per capitolo", "if (disableDblClick()) javascript:submitForm('doStampaSpesePerCapitolo')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per articolo", "if (disableDblClick()) javascript:submitForm('doStampaSpesePerArticolo')", bp.getParentRoot().isBootstrap());%></td>
 		<td></td>
 	</tr>
 

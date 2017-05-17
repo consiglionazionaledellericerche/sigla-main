@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "im_tot_obbligazione"); %></td>
-	<td><% bp.getController().writeFormInput( out, "default", "im_tot_obbligazione", true, "FormInput", null); %></td>
+	<td><% bp.getController().writeFormInput( out, "default", "im_tot_obbligazione", true, null, null); %></td>
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "im_parz_scadenze"); %></td>
@@ -38,16 +38,17 @@
 	</td>
 	</tr>
   <tr><td colspan=2>
+  		<br>
 	      <%	JSPUtils.tabbed(
-							pageContext,
-							"tabScadenzario",
-							new String[][] {
-								{ "tabScadenza","Scadenza","/doccont00/tab_scadenza_obbligazione.jsp" },
-								{ "tabDettaglioScadenza","Dettaglio Scadenza","/doccont00/tab_dettaglio_scadenza_obbligazione.jsp" } },
-							bp.getTab("tabScadenzario"),
-							"center", 
-							"510px", null,
-							!bp.isEditingScadenza() );
+					pageContext,
+					"tabScadenzario",
+					new String[][] {
+						{ "tabScadenza","Scadenza","/doccont00/tab_scadenza_obbligazione.jsp" },
+						{ "tabDettaglioScadenza","Dettaglio Scadenza","/doccont00/tab_dettaglio_scadenza_obbligazione.jsp" } },
+					bp.getTab("tabScadenzario"),
+					"center", 
+					"100%", null,
+					!bp.isEditingScadenza() );
 			
 		%>
 	</td></tr>

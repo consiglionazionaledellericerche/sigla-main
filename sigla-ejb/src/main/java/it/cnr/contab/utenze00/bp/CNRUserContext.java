@@ -197,6 +197,15 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	public String getName() {
 		return getUser();
 	}
+
+	public boolean isFromBootstrap() {
+		return (boolean) this.getAttributes().getOrDefault("bootstrap", false);		
+	}
+
+	public static boolean isFromBootstrap(it.cnr.jada.UserContext userContext) {
+		return (boolean) ((CNRUserContext)userContext).isFromBootstrap();
+	}
+	
 	@Override
 	public String toString() {
 		return "CNRUserContext [attributes=" + attributes + "]";

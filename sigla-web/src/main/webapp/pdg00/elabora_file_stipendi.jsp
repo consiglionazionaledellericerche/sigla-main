@@ -57,10 +57,10 @@
    	    		  <span style="font-weight:bold; font-family:sans-serif; font-size:16px; color:blue">Risultato dell'Elaborazione</span>
  				</td>    
  				<td>
-				  <% JSPUtils.button(out,"img/history24.gif", "Visualizza<br>Flusso <u>E</u>ntrata","javascript:submitForm('doVisualizzaEntrata')"); %>
+				  <% JSPUtils.button(out,"img/history24.gif", "Visualizza<br>Flusso <u>E</u>ntrata","javascript:submitForm('doVisualizzaEntrata')", bp.getParentRoot().isBootstrap()); %>
 				</td>
 				<td>	
-				  <% JSPUtils.button(out,"img/history24.gif", "Visualizza<br>Flusso <u>S</u>pesa","javascript:submitForm('doVisualizzaSpesa')"); %>
+				  <% JSPUtils.button(out,"img/history24.gif", "Visualizza<br>Flusso <u>S</u>pesa","javascript:submitForm('doVisualizzaSpesa')", bp.getParentRoot().isBootstrap()); %>
 				</td>
 			</tr>
 		</table>			
