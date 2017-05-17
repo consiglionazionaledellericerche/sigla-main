@@ -43,7 +43,21 @@
 	<table>
 		<tr>
 			<%
+				bp.getRighe().writeFormField(out, "findElementoVoce");
+			%>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<%
 				bp.getRighe().writeFormField(out, "findObbligazione");
+			%>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<%
+				bp.getRighe().writeFormField(out, "findProgetto");
 			%>
 		</tr>
 	</table>
@@ -58,13 +72,6 @@
 		<tr>
 			<%
 				bp.getRighe().writeFormField(out, "findLineaAttivita");
-			%>
-		</tr>
-	</table>
-	<table>
-		<tr>
-			<%
-				bp.getRighe().writeFormField(out, "findElementoVoce");
 			%>
 		</tr>
 	</table>
