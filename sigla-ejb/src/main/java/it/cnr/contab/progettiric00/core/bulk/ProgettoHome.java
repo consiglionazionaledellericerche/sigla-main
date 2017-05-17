@@ -9,6 +9,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
@@ -46,6 +48,7 @@ import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -197,6 +200,7 @@ public class ProgettoHome extends BulkHome {
 		ProgettoHome progettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_PROGETTO_PADRE");
 		SQLBuilder sql = progettohome.createSQLBuilder();   
 		sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
+ 	    sql.addSQLClause(FindClause.AND,"tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_NON_DEFINITA);
 		if (ubi == null){
 			sql.addSQLClause("AND","ESERCIZIO_PROGETTO_PADRE",sql.ISNULL,null);
 			sql.addSQLClause("AND","PG_PROGETTO_PADRE",sql.ISNULL,null);
@@ -210,12 +214,14 @@ public class ProgettoHome extends BulkHome {
 		  // Se uo 999.000 in scrivania: visualizza tutti i progetti
 		  Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk)  getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0);
 		  if (!((CNRUserContext) aUC).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-			if (ubi == null)
-			  sql.addSQLExistsClause("AND",abilitazioniProgetti(aUC));
-			if (ubi != null && ubi.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_PRIMO))
-			  sql.addSQLExistsClause("AND",abilitazioniCommesse(aUC));
-			else if (ubi != null && ubi.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_SECONDO))
-			  sql.addSQLExistsClause("AND",abilitazioniModuli(aUC)); 
+			  if (((Parametri_enteHome)getHomeCache().getHome(Parametri_enteBulk.class)).isInformixAttivo()) {
+				  if (ubi == null)
+					  sql.addSQLExistsClause("AND",abilitazioniProgetti(aUC));
+				  if (ubi != null && ubi.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_PRIMO))
+					  sql.addSQLExistsClause("AND",abilitazioniCommesse(aUC));
+				  else if (ubi != null && ubi.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_SECONDO))
+					  sql.addSQLExistsClause("AND",abilitazioniModuli(aUC)); 
+			  }
 		  }            				
 		}catch (PersistencyException ex){}
 		return sql;
@@ -337,13 +343,17 @@ public class ProgettoHome extends BulkHome {
 		if (CNRUserContext.getEsercizio(userContext) ==null )
 			return;
 		try {
-			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(userContext);
 
-			if (parCnr == null) return;
-			if (!parCnr.getFl_nuovo_pdg())
-				aggiornaGecoOldPdg(userContext, progetto);
-			else
-				aggiornaGecoNewPdg(userContext, progetto);
+			if (parEnte.getFl_informix()) {
+				Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+	
+				if (parCnr == null) return;
+				if (!parCnr.getFl_nuovo_pdg())
+					aggiornaGecoOldPdg(userContext, progetto);
+				else
+					aggiornaGecoNewPdg(userContext, progetto);
+			}				
 		} catch (Exception e) {
 			handleExceptionMail(userContext, e);
 		}

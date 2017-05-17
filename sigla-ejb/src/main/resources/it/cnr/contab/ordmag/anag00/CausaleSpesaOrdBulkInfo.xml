@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Causali Spese"
+	longDescription="Causali Spese">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdCausaleSpesa"
+		property="cdCausaleSpesa"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsCausaleSpesa"
+		property="dsCausaleSpesa"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="cdVoceIva"
+		property="cdVoceIva"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice IVA" />
+	<fieldProperty
+		name="flagSpese"
+		property="flagSpese"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Spese" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdCausaleSpesa" />
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdCausaleSpesa" />
+	<formFieldProperty
+		name="dsCausaleSpesa" />
+	<formFieldProperty
+		name="flagSpese" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdCausaleSpesa" />
+	<findFieldProperty
+		name="dsCausaleSpesa" />
+	<findFieldProperty
+		name="cdVoceIva" />
+	<findFieldProperty
+		name="flagSpese" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdCausaleSpesa" />
+	<columnFieldProperty
+		name="dsCausaleSpesa" />
+	<columnFieldProperty
+		name="cdVoceIva" />
+	<columnFieldProperty
+		name="flagSpese" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

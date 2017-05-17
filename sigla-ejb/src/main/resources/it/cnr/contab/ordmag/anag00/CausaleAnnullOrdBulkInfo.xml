@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Causali di annullamento consegne Ordini."
+	longDescription="Causali di annullamento consegne Ordini.">
+	<fieldProperty
+		name="cdCausaleAnnull"
+		property="cdCausaleAnnull"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsCausaleAnnull"
+		property="dsCausaleAnnull"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="3"
+		maxLength="1000"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCausaleAnnull" />
+	</form>
+	<formFieldProperty
+		name="cdCausaleAnnull" />
+	<formFieldProperty
+		name="dsCausaleAnnull" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCausaleAnnull" />
+	<findFieldProperty
+		name="dsCausaleAnnull" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCausaleAnnull" />
+	<columnFieldProperty
+		name="dsCausaleAnnull" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

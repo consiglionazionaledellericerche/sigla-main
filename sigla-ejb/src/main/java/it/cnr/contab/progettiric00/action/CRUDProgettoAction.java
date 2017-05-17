@@ -35,6 +35,8 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 		fillModel(context);
 
 		CRUDBP bp = getBusinessProcess(context);
+		if (bp instanceof TestataProgettiRicercaBP && ((TestataProgettiRicercaBP)bp).isFlNuovoPdg())
+			return doConfirmElimina(context, OptionBP.YES_BUTTON);	
 		return openConfirm(context,"Attenzione i Finanziatori del progetto, le UO partecipanti ed i Post-It saranno persi, vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmElimina");
 	} catch(Throwable e) {
 		return handleException(context,e);
@@ -151,6 +153,8 @@ public it.cnr.jada.action.Forward doSearchFind_nodo_padre(ActionContext context)
 			// Apre un Selezionatore ad Albero per cercare i Progetti selezionando i vari livelli
 			ProgettoAlberoBP slaBP = (ProgettoAlberoBP)context.createBusinessProcess("ProgettoAlberoBP");
 			slaBP.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(ProgettoBulk.class));
+			if (bp.isFlNuovoPdg())
+				slaBP.setColumns(slaBP.getBulkInfo().getColumnFieldPropertyDictionary("nuovoPdgLiv1"));
 			slaBP.setRemoteBulkTree(context,bp.getProgettiTree(context),roots);
 			HookForward hook = (HookForward)context.addHookForward("seleziona",this,"doBringBackSearchResult");
 			hook.addParameter("field",getFormField(context,"main.find_nodo_padre"));

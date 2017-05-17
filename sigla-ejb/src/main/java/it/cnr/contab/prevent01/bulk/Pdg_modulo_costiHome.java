@@ -116,17 +116,22 @@ public class Pdg_modulo_costiHome extends BulkHome {
 		PersistentHome dettHome = getHomeCache().getHome(Pdg_Modulo_EntrateBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.resetColumns();
-		sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
 		sql.addColumn("SUM(PDG_MODULO_ENTRATE.IM_ENTRATA) TOTALE");
 		sql.addSQLClause("AND","PDG_MODULO_ENTRATE.ESERCIZIO",sql.EQUALS,pdg_modulo_costi.getEsercizio());
 		sql.addSQLClause("AND","PDG_MODULO_ENTRATE.CD_CENTRO_RESPONSABILITA",sql.EQUALS,pdg_modulo_costi.getCd_centro_responsabilita());
 		sql.addSQLClause("AND","PDG_MODULO_ENTRATE.PG_PROGETTO",sql.EQUALS,pdg_modulo_costi.getPg_progetto());
-		sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+
+		sql.addTableToHeader("NATURA");
+		sql.addSQLJoin("PDG_MODULO_ENTRATE.CD_NATURA","NATURA.CD_NATURA");
+		sql.addSQLClause("AND","NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);
+		
 		CdrBulk cdr = (CdrBulk)getHomeCache().getHome(CdrBulk.class).findByPrimaryKey(pdg_modulo_costi.getPdg_modulo().getCdr());
 		cdr.setUnita_padre((Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
-
-		if (pdg_modulo_costi.getPdg_modulo().getCdr().isCdrSAC())
+		if (pdg_modulo_costi.getPdg_modulo().getCdr().isCdrSAC()) {
+			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
+			sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
 			sql.addSQLClause("AND","V_CLASSIFICAZIONE_VOCI_ALL.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
+		}
 		return sql;
 	}
 	public SQLBuilder calcolaTotaleSpeseCoperteFontiEsterneAnnoInCorso(it.cnr.jada.UserContext userContext,Pdg_modulo_costiBulk pdg_modulo_costi) throws IntrospectionException, PersistencyException {

@@ -38,13 +38,24 @@
         name="classificazione"
         property="classificazione"
         inputType="SEARCHTOOL"
+        formName="searchtool"
+        columnSet="searchtool"
+        freeSearchSet="searchtool"
+        enabledOnInsert="true"
+        enabledOnSearch="true"
+        readonlyPropertyOnEdit="classificazioneRO"
+        label="Classificazione" />		
+	<fieldProperty
+        name="classificazione_codlast"
+        property="classificazione"
+        inputType="SEARCHTOOL"
         formName="searchtool_codlast"
         columnSet="searchtool_codlast"
         freeSearchSet="searchtool_codlast"
         enabledOnInsert="true"
         enabledOnSearch="true"
         readonlyPropertyOnEdit="classificazioneRO"
-        label="Classificazione" />		
+        label="Classificazione" />	
 	<fieldProperty
 		name="id_classificazione"
 		property="classificazione.id_classificazione"
@@ -358,7 +369,17 @@
 		enabledOnInsert="false"
 		inputSize="5"
 		maxLength="10"
-		label="Programma" />		
+		label="Dipartimento" />		
+	<fieldProperty
+		name="programma_liv2"
+		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.cd_programma"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.pdgProgramma.ds_programma"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		maxLength="10"
+		label="Programma" />
 	<fieldProperty
 		name="cd_progetto_liv1"
 		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.cd_progetto"
@@ -436,7 +457,7 @@
 		inputSize="30"
 		maxLength="40"
 		nullable="false"
-		label="missione" />				
+		label="Missione" />				
 	<fieldProperty
 		name="label_gestione_decentrata"
 		label="Gestione Decentrata" />
@@ -508,6 +529,8 @@
 	<formFieldProperty
         name="classificazione"/>		
 	<formFieldProperty
+        name="classificazione_codlast"/>		
+	<formFieldProperty
 		name="id_classificazione" />
 	<formFieldProperty
 		name="cd_cds_area" />
@@ -558,6 +581,8 @@
 		name="modulo" />	
 	<formFieldProperty
 		name="dipartimento_liv2" />		
+	<formFieldProperty
+		name="programma_liv2" />		
 	<formFieldProperty
 		name="cd_progetto_liv1" />
 	<formFieldProperty

@@ -177,6 +177,15 @@
 		enabledOnSearch="true"
 		layout="HORIZONTAL" />
 	<fieldProperty
+		name="ti_gestioneES"
+		property="ti_gestione"
+		label="Gestione"
+		inputType="RADIOGROUP"
+		keysProperty="ti_gestioneESKeys"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
 		name="cd_progetto_padre"
 		property="progettopadre.cd_progetto"
 		maxLength="30"
