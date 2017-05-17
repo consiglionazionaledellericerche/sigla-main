@@ -21,7 +21,7 @@
 			<td><% bp.getController().writeFormInput( out, "terzo_cd_terzo"); %>
 			    <% bp.getController().writeFormInput( out, "terzo_ds_terzo"); %></td>						
 			<td><% bp.getController().writeFormLabel( out, "terzo_tipo_bollo"); %></td>
-			<td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", mandato.isAnnullato(), "FormInput","onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
+			<td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", mandato.isAnnullato(), null,"onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
 			    <% bp.getController().writeFormInput( out, "terzo_im_tipo_bollo"); %></td>						
 		</tr>
 		<% if (mandato.getTerzo_cedente() != null && mandato.getTerzo_cedente().getCd_terzo() != null ) { %>
@@ -33,7 +33,7 @@
 			<td><% bp.writeFormLabel( out, "im_mandato"); %></td>
 			<td><% bp.writeFormInput( out, "im_mandato"); %></td>
 			<td colspan=2 align = "center">
-				<% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"), bp.encodePath("img/zoom24.gif"), bp.encodePath("Disp.sui capitoli"),"javascript:submitForm('doVisualizzaDispCassaCapitolo')",bp.isDispCassaCapitoloButtonEnabled() ); %>
+				<% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"), bp.encodePath("img/zoom24.gif"), bp.encodePath("Disp.sui capitoli"),"javascript:submitForm('doVisualizzaDispCassaCapitolo')",bp.isDispCassaCapitoloButtonEnabled(), bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 		
@@ -67,7 +67,7 @@
 					        <% bp.getCodiciSiopeCollegati().writeHTMLTable(pageContext,"collegaARigaMandato",false,false,false,"100%","100px",  mandato.isAnnullato()); %>
 						</td>
 						<td  width="4%" align="center">
-							<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),null,"javascript:submitForm('doRimuoviCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled()); %>
+							<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),null,"javascript:submitForm('doRimuoviCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled(),bp.getParentRoot().isBootstrap()); %>
 						</td>
 						<td  width="41%" rowspan="2">
 					      	<% bp.getCodiciSiopeCollegabili().writeHTMLTable(pageContext,"collegaARigaDocCont",false,false,false,"100%","100px", true); %>
@@ -75,7 +75,7 @@
 					</tr>
 					<tr>
 						<td align="center">
-						<% JSPUtils.button(out,bp.encodePath("img/doubleleftarrow24.gif"),bp.encodePath("img/doubleleftarrow24.gif"),null,"javascript:submitForm('doAggiungiCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled()); %>
+						<% JSPUtils.button(out,bp.encodePath("img/doubleleftarrow24.gif"),bp.encodePath("img/doubleleftarrow24.gif"),null,"javascript:submitForm('doAggiungiCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled(), bp.getParentRoot().isBootstrap()); %>
 						</td>
 					</tr>
 				</table>

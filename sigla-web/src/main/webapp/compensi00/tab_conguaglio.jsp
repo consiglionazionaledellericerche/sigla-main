@@ -97,7 +97,7 @@
 <div class="Panel" style="width:100%">
 <table>
   <tr>
-	<td><% JSPUtils.button(out,null,null,"Visualizza Compenso","javascript:submitForm('doVisualizzaCompenso')",null,bp.isBottoneVisualizzaCompensoEnabled());%></td>
+	<td><% JSPUtils.button(out,null,null,"Visualizza Compenso","javascript:submitForm('doVisualizzaCompenso')",null,bp.isBottoneVisualizzaCompensoEnabled(), bp.getParentRoot().isBootstrap());%></td>
   </tr>
 </table>
 </div>

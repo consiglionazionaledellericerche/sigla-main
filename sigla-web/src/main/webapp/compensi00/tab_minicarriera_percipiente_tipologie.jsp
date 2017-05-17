@@ -91,10 +91,10 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<%JSPUtils.button(out, "img/new16.gif", "img/new16_d.gif", "Calcola aliquota media", "if (disableDblClick()) javascript:submitForm('doCalcolaAliquotaMedia')", null, ((bp.isInserting() || bp.isEditing()) && !carriera.isROImportiIrpef()) ); %>
+			<%JSPUtils.button(out, "img/new16.gif", "img/new16_d.gif", "Calcola aliquota media", "if (disableDblClick()) javascript:submitForm('doCalcolaAliquotaMedia')", null, ((bp.isInserting() || bp.isEditing()) && !carriera.isROImportiIrpef()), bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td colspan="2">
-			<%JSPUtils.button(out, "img/undo16.gif", "img/undo16_d.gif", "Azzera aliquota media", "if (disableDblClick()) javascript:submitForm('doAzzeraAliquotaMedia')", null, ((bp.isInserting() || bp.isEditing()) && !carriera.isROBottoniImportiIrpef()) ); %>
+			<%JSPUtils.button(out, "img/undo16.gif", "img/undo16_d.gif", "Azzera aliquota media", "if (disableDblClick()) javascript:submitForm('doAzzeraAliquotaMedia')", null, ((bp.isInserting() || bp.isEditing()) && !carriera.isROBottoniImportiIrpef()), bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</tr>
 	<tr>

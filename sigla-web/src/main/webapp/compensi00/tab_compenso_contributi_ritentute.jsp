@@ -46,8 +46,8 @@
   </tr>
   <tr>
 	<td colspan=2 align=center>
-		<% JSPUtils.button(out,"img/save24.gif","img/save24.gif", "Conferma","javascript:submitForm('doConfermaModificaCORI')", null, bp.isBottoneConfermaModificaCORIEnabled()); %>
-		<% JSPUtils.button(out,"img/undo24.gif","img/undo24.gif", "Annulla","javascript:submitForm('doAnnullaModificaCORI')", null, bp.isBottoneAnnullaModificaCORIEnabled()); %>
+		<% JSPUtils.button(out,"img/save24.gif","img/save24.gif", "Conferma","javascript:submitForm('doConfermaModificaCORI')", null, bp.isBottoneConfermaModificaCORIEnabled(), bp.getParentRoot().isBootstrap()); %>
+		<% JSPUtils.button(out,"img/undo24.gif","img/undo24.gif", "Annulla","javascript:submitForm('doAnnullaModificaCORI')", null, bp.isBottoneAnnullaModificaCORIEnabled(), bp.getParentRoot().isBootstrap()); %>
 	</td>
   </tr>
 </table>

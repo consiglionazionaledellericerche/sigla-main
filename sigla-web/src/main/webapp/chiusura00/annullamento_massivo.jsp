@@ -40,7 +40,7 @@
 		<tr>
 		   <td></td>
 		   <td>
-		      <% bp.getController().writeFormInput(out,"default","fl_ente",false,"FormInput","onclick=\"submitForm('doDefault')\""); %>
+		      <% bp.getController().writeFormInput(out,"default","fl_ente",false,null,"onclick=\"submitForm('doDefault')\""); %>
 		      <% bp.getController().writeFormLabel( out, "fl_ente"); %>
 		   </td>
 
@@ -86,7 +86,8 @@
 	<table align="center" class="Panel">	
 		<tr>
 			<td align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocDaAnnullare')",null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), 
+						"javascript:submitForm('doCercaDocDaAnnullare')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>		
 		</tr>
 	</table>

@@ -267,7 +267,7 @@
 						"submitForm('doApriFatturaEstera()')",
 						null,
 						"Apri fattura estera",
-						bp.isEditing() && (!bp.isDeleting() || !bp.isModelVoided())); %>
+						bp.isEditing() && (!bp.isDeleting() || !bp.isModelVoided()), bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	<% } %>
