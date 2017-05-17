@@ -26,21 +26,21 @@
 
 <table>
 	<tr>
-		<td><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Contrattazione entrate", "if (disableDblClick()) submitForm('doContrattazioneEntrate')",null,pdg_selezionato);%></td>
-		<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Contrattazione spese", "if (disableDblClick()) submitForm('doContrattazioneSpese')",null,pdg_selezionato);%></td>
-		<td><%JSPUtils.button(out, "img/print24.gif", "img/print24.gif", "Totali piano aggregati", "if (disableDblClick()) submitForm('doTotaliPianoAggregati')", null, pdg_selezionato);%></td>
+		<td><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Contrattazione entrate", "if (disableDblClick()) submitForm('doContrattazioneEntrate')",null,pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Contrattazione spese", "if (disableDblClick()) submitForm('doContrattazioneSpese')",null,pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print24.gif", "img/print24.gif", "Totali piano aggregati", "if (disableDblClick()) submitForm('doTotaliPianoAggregati')", null, pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
 	</tr>
 </table>
 
 <table class="Panel">
 	<tr>
 		<td><% bp.getController().writeFormLabel(out,"cdr");%></td>
-		<td colspan="2"><% bp.getController().writeFormInput(out,"default","cdr",false,"FormInput","onchange=\"if (disableDblClick()) submitForm('doCambiaCdR')\"");%></td>
+		<td colspan="2"><% bp.getController().writeFormInput(out,"default","cdr",false,null,"onchange=\"if (disableDblClick()) submitForm('doCambiaCdR')\"");%></td>
 	</tr>
 	<% if (pdg_selezionato) { %>
 	<tr>
 		<% bp.getController().writeFormField(out,"stato");%>
-		<td><%JSPUtils.button(out, "img/import24.gif", "img/import24.gif", "Cambia stato", "if (disableDblClick()) javascript:submitForm('doCambiaStato')",null,pdg_selezionato && !bp.isInputReadonly());%></td>
+		<td><%JSPUtils.button(out, "img/import24.gif", "img/import24.gif", "Cambia stato", "if (disableDblClick()) javascript:submitForm('doCambiaStato')",null,pdg_selezionato && !bp.isInputReadonly(), bp.getParentRoot().isBootstrap());%></td>
 	</tr>
 	<% } %>
 </table>

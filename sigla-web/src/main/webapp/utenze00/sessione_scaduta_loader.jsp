@@ -4,7 +4,10 @@
 <html>
 	<head>
 		<script language="JavaScript" src="scripts/util.js"></script>
-		<% 	JSPUtils.printBaseUrl(pageContext); %>
+		<% 	
+			JSPUtils.printBaseUrl(pageContext);
+			response.setStatus(401);				
+		%>
 		<script language="javascript" src="scripts/css.js"></script>
 		<script>
 			function loader() {

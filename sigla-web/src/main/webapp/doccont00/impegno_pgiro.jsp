@@ -40,7 +40,7 @@
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "unita_organizzativa"); %></td>
 	<td>
-		<% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, "FormInput","onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %>
+		<% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, null,"onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %>
 	</td>		
 
 	</tr>
@@ -104,9 +104,9 @@
 	<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>
 	
 	<td  colspan=2>
-		    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce",imp.isFl_isTronco()&&bp.isEditing(),"FormInput",null); %>
-		    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce", imp.isFl_isTronco()&&bp.isEditing(),"FormInput",null); %>
-		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",imp.isFl_isTronco()&&bp.isEditing(),"FormInput",null); %>
+		    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce",imp.isFl_isTronco()&&bp.isEditing(),null,null); %>
+		    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce", imp.isFl_isTronco()&&bp.isEditing(),null,null); %>
+		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",imp.isFl_isTronco()&&bp.isEditing(),null,null); %>
 	</td>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "dt_scadenza"); %></td>

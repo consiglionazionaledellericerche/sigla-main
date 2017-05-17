@@ -45,10 +45,10 @@
 		</tr>
 		<tr>
 			<td>
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"), bp.encodePath("img/find24.gif"),"Ricerca impegni", "javascript:submitForm('doCercaObbligazioni')", true); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"), bp.encodePath("img/find24.gif"),"Ricerca impegni", "javascript:submitForm('doCercaObbligazioni')", true,bp.getParentRoot().isBootstrap()); %>
 			</td>
 			<td>
-				<% JSPUtils.button(out,bp.encodePath("img/redo24.gif"),bp.encodePath("img/redo24.gif"), "Elenca tutti Cds", "javascript:submitForm('doCercaCds')",!((it.cnr.contab.doccont00.core.bulk.RicercaMandatoAccreditamentoBulk)bp.getModel()).isFlTuttiCdsCaricati() ); %>
+				<% JSPUtils.button(out,bp.encodePath("img/redo24.gif"),bp.encodePath("img/redo24.gif"), "Elenca tutti Cds", "javascript:submitForm('doCercaCds')",!((it.cnr.contab.doccont00.core.bulk.RicercaMandatoAccreditamentoBulk)bp.getModel()).isFlTuttiCdsCaricati(),bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>		
@@ -62,9 +62,9 @@
 		</tr>
 
 		<tr>
-				<td colspan=2> <center><% JSPUtils.button(out,bp.encodePath("img/export24.gif"),bp.encodePath("img/export24.gif"), bp.encodePath("Emetti mandati"),"javascript:submitForm('doApriMandatoWizard')" ,bp.isEmettiMandatiEnabled() ); %>
-				<% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"), "Visualizza entrate", "javascript:submitForm('doVisualizzaEntrate')",bp.isVisualizzaEntrateEnabled() ); %>
-				<% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"), "Visualizza spese", "javascript:submitForm('doVisualizzaSpese')",bp.isVisualizzaEntrateEnabled() ); %>				
+				<td colspan=2> <center><% JSPUtils.button(out,bp.encodePath("img/export24.gif"),bp.encodePath("img/export24.gif"), bp.encodePath("Emetti mandati"),"javascript:submitForm('doApriMandatoWizard')" ,bp.isEmettiMandatiEnabled(),bp.getParentRoot().isBootstrap()); %>
+				<% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"), "Visualizza entrate", "javascript:submitForm('doVisualizzaEntrate')",bp.isVisualizzaEntrateEnabled(),bp.getParentRoot().isBootstrap()); %>
+				<% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"), "Visualizza spese", "javascript:submitForm('doVisualizzaSpese')",bp.isVisualizzaEntrateEnabled(), bp.getParentRoot().isBootstrap()); %>				
 				</center></td>
 		</tr>
 	

@@ -62,10 +62,10 @@
 
 <table class="Panel">
  	<tr>
-	<td><% bp.getController().writeFormInput(out,"default","vittoAlloggioNavigazioneRadioGroup", false,"FormInput", null);%></td>	
+	<td><% bp.getController().writeFormInput(out,"default","vittoAlloggioNavigazioneRadioGroup", false,null, null);%></td>	
 	</tr>
 	<tr>
-	<td><% bp.getController().writeFormInput(out,"default","tipoSpeseRadioGroup", false,"FormInput", null);%></td>	
+	<td><% bp.getController().writeFormInput(out,"default","tipoSpeseRadioGroup", false,null, null);%></td>	
 	</tr>	
 </table>
 

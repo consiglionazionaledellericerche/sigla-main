@@ -19,10 +19,10 @@
 <title><%=bp.getBulkInfo().getShortDescription()%></title>
 <script language="JavaScript">
 function doScaricaFile() {	
-  doPrint('genericdownload/<%=bp.getNomeFile()!=null?bp.getNomeFile().replace("'", "_"):""%>?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeFile()!=null?bp.getNomeFile().replace("'", "_"):""%>?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 function doScaricaAllegato() {	
-	  doPrint('genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 
@@ -61,7 +61,7 @@ function doScaricaAllegato() {
 				<% if (!bp.isSigned()){%>
 					<tr>
 				        <td><% controller.writeFormLabel(out,"default","file"); %></td>
-				        <td colspan="2"><% controller.writeFormInput(out,"default","file", bp.isSigned(),"FormInput",null); %></td>
+				        <td colspan="2"><% controller.writeFormInput(out,"default","file", bp.isSigned(),null,null); %></td>
 				    </tr>
 			    <%}%>
 				<tr>
@@ -71,11 +71,11 @@ function doScaricaAllegato() {
 			    </tr>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","descrizione"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","descrizione", bp.isSigned(),"FormInput",null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","descrizione", bp.isSigned(),null,null); %></td>
 				</tr>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","titolo"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","titolo", bp.isSigned(),"FormInput",null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","titolo", bp.isSigned(),null,null); %></td>
 				</tr>
 			</table>  	
 	  	</td>
