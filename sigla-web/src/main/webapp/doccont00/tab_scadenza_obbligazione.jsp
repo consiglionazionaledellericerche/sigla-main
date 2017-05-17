@@ -20,9 +20,9 @@
 	<tr>			
 	<td><% bp.getScadenzario().writeFormLabel( out, "dt_scadenza"); %></td>
 	<td>
-    	<% bp.getScadenzario().writeFormInput( out,"default","dt_scadenza",!bp.isEditingScadenza(),"FormInput",null); %>
+    	<% bp.getScadenzario().writeFormInput( out,"default","dt_scadenza",!bp.isEditingScadenza(),null,null); %>
 		<% bp.getScadenzario().writeFormLabel( out, "fl_aggiorna_scad_successiva"); %>
-    	<% bp.getScadenzario().writeFormInput( out,"default","fl_aggiorna_scad_successiva",!bp.isEditingScadenza(),"FormInput",null); %>		
+    	<% bp.getScadenzario().writeFormInput( out,"default","fl_aggiorna_scad_successiva",!bp.isEditingScadenza(),null,null); %>		
 	</td>
 	</tr>
 	<%} 
@@ -31,27 +31,50 @@
 	<tr>			
 	<td><% bp.getScadenzario().writeFormLabel( out, "dt_scadenza"); %></td>
 	<td>
-    	<% bp.getScadenzario().writeFormInput( out,"default","dt_scadenza",!bp.isEditingScadenza(),"FormInput",null); %>
+    	<% bp.getScadenzario().writeFormInput( out,"default","dt_scadenza",!bp.isEditingScadenza(),null,null); %>
     </td>	
 	</tr>
 	<%}%>
 	
 	<tr>
 	<td><% bp.getScadenzario().writeFormLabel( out, "im_scadenza"); %></td>	
-	<td><% bp.getScadenzario().writeFormInput( out,"default","im_scadenza",!bp.isEditingScadenza(),"FormInput",null); %></td>
+	<td><% bp.getScadenzario().writeFormInput( out,"default","im_scadenza",!bp.isEditingScadenza(),null,null); %></td>
 	</tr>
 	<tr>			
 	<td><% bp.getScadenzario().writeFormLabel( out, "ds_scadenza"); %></td>
 	<td>
-    	<% bp.getScadenzario().writeFormInput( out,"default","ds_scadenza",!bp.isEditingScadenza(),"FormInput",null); %>
+    	<% bp.getScadenzario().writeFormInput( out,"default","ds_scadenza",!bp.isEditingScadenza(),null,null); %>
     </td>	
 
 	</tr>
 	<tr>
 	<td colspan=2 ALIGN="CENTER">
-			<% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"), "Modifica","javascript:submitForm('doEditaScadenza')", bp.isEditScadenzaButtonEnabled()); %>
-			<% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"), "Conferma","javascript:submitForm('doConfermaScadenza')", bp.isConfermaScadenzaButtonEnabled()); %>
-			<% JSPUtils.button(out,bp.encodePath("img/undo24.gif"),bp.encodePath("img/undo24.gif"), "Annulla","javascript:submitForm('doUndoScadenza')", bp.isUndoScadenzaButtonEnabled()); %>				
+		<div class="btn-group mr-2" role="group">
+			<% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-pencil-square-o text-success" : "img/edit24.gif",
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-pencil-square-o text-success" : "img/edit24.gif",
+					"Modifica",
+					"javascript:submitForm('doEditaScadenza')", 
+					"btn-secondary btn-title",
+					bp.isEditScadenzaButtonEnabled(),
+					bp.getParentRoot().isBootstrap()); %>
+			<% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/save24.gif",
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/save24.gif",
+					"Conferma",
+					"javascript:submitForm('doConfermaScadenza')",
+					"btn-secondary btn-title",
+					bp.isConfermaScadenzaButtonEnabled(),
+					bp.getParentRoot().isBootstrap()); %>
+			<% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo text-warning" : "img/undo24.gif",
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo text-warning" : "img/undo24.gif",
+					"Annulla",
+					"javascript:submitForm('doUndoScadenza')", 
+					"btn-secondary btn-title",
+					bp.isUndoScadenzaButtonEnabled(),
+					bp.getParentRoot().isBootstrap()); %>				
+		</div>
 	</td>
 	</tr>
   </table>

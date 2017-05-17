@@ -25,11 +25,11 @@
 	<table class="Panel">
 		<tr><td colspan="2"><span class="FormLabel">Utenti tracciati</span></td></tr>
 		<tr>
-			<td><input class="FormInput" type="text" name="newTraceUser"></td>
+			<td><input class=null type="text" name="newTraceUser"></td>
 			<td><button style="width:7em" onclick="if (disableDblClick()) submitForm('doAddUser')">Aggiungi</button></td></tr>
 		<tr valign="top">
 			<td rowspan="2">
-				<select class="FormInput" name="tracingUsers" multiple style="width:100%">
+				<select class=null name="tracingUsers" multiple style="width:100%">
 				<% for (java.util.Iterator i = tracer.getTracingUsers().iterator();i.hasNext();) { %>
 					<option><%= i.next()%>
 				<% }%>

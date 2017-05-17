@@ -1904,10 +1904,12 @@ public RemoteIterator cercaDettagliFatturaPerNdC(UserContext context, Fattura_at
 	if (it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context).equals(fatturaAttiva.getEsercizio())) {
 		if (!fatturaAttiva.NON_RIPORTATO.equals(statoR))
 			throw new it.cnr.jada.comp.ApplicationException("La fattura selezionata è stata riportata in altro esercizio! Operazione annullata.");
-	} else {
-		if (!fatturaAttiva.COMPLETAMENTE_RIPORTATO.equals(statoRipInScrivania))
-			throw new it.cnr.jada.comp.ApplicationException("La fattura selezionata o è stata riportata parzialmente o non è stata riportata nell'esercizio corrente! Operazione annullata.");
 	}
+	// Rospuc 11/05/2017
+//	else {
+//		if (!fatturaAttiva.COMPLETAMENTE_RIPORTATO.equals(statoRipInScrivania))
+//			throw new it.cnr.jada.comp.ApplicationException("La fattura selezionata o è stata riportata parzialmente o non è stata riportata nell'esercizio corrente! Operazione annullata.");
+//	}
 	
 	Fattura_attiva_rigaIHome home = (Fattura_attiva_rigaIHome)getHome(context, Fattura_attiva_rigaIBulk.class);
 	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
