@@ -24,6 +24,7 @@ public class Procedure_amministrativeBase extends Procedure_amministrativeKey im
 	private Integer incarico_ric_giorni_scad;
 
 	private java.lang.String cd_gruppo_file;
+	private java.lang.String codice_anac;
 
 //    FL_MERAMENTE_OCCASIONALE CHAR(1) NOT NULL
 	private java.lang.Boolean fl_meramente_occasionale;
@@ -83,5 +84,11 @@ public class Procedure_amministrativeBase extends Procedure_amministrativeKey im
 	}
 	public java.lang.Boolean getFl_meramente_occasionale() {
 		return fl_meramente_occasionale;
+	}
+	public java.lang.String getCodice_anac() {
+		return codice_anac;
+	}
+	public void setCodice_anac(java.lang.String codice_anac) {
+		this.codice_anac = codice_anac;
 	}
 }

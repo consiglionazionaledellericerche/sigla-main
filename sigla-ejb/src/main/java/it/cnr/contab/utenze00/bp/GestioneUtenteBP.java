@@ -242,7 +242,7 @@ public class GestioneUtenteBP extends it.cnr.jada.util.action.FormBP {
 					index=1;
 				}
 				out.println("<td align=\"center\" wrap>");
-				bt.write(out, true);
+				bt.write(out, true, CNRUserContext.isFromBootstrap(userContext));
 				out.println("</td>");
 			}
 			out.println("</tr>");

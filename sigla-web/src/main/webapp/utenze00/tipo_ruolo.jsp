@@ -45,7 +45,7 @@
       <%	bp.getCrudPrivilegi_disponibili().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
 		</td>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiPrivilegio')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiPrivilegio')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td rowspan="2">
       <%	bp.getCrudPrivilegi().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
@@ -53,7 +53,7 @@
 	</tr>
 	<tr>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviPrivilegio')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviPrivilegio')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</tr>
 	</table>

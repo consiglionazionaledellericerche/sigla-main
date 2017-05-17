@@ -67,7 +67,7 @@
 	<table border="0" cellspacing="0" cellpadding="2">	
 		<tr>
 			<td colspan = 4 align = "center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocAttivi')",null); %></td>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocAttivi')",null, bp.getParentRoot().isBootstrap()); %></td>
 		</tr>	
 		<tr>
 			<td colspan=2>
@@ -76,7 +76,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td  align = "center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("Conferma"), "javascript:submitForm('doAggiungiDocAttivi')"); %></td>
+			<td  align = "center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("Conferma"), "javascript:submitForm('doAggiungiDocAttivi')", bp.getParentRoot().isBootstrap()); %></td>
 		</tr>
 
 	</table>
