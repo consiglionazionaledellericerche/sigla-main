@@ -20,28 +20,46 @@
 
 <body class="Workspace">
 <% bp.openForm(pageContext);%>
-	<table align="center" class="Window">
+	<table align="center" class="Window card col-5">
 		<tr>
-			<td><img src="img/question.gif"></td>
-		  	<td>Inserire l'utente, la password e l'otp per la firma del documento.</td>
+		  	<td class="FormTitle card-header h5">
+		  		<%if (bp.getParentRoot().isBootstrap()) { %>
+		  			<i class="fa fa-question-circle fa-fw fa-2x text-info" aria-hidden="true"></i>
+		  		<%} else {%>
+		  		<img src="img/question.gif">
+		  		<%}%>
+		  		<span>Inserire l'utente, la password e l'otp per la firma del documento.</span>
+		  	</td>
 		</tr>
 		<tr>
-			<td colspan="2">
+			<td>
 				<table class="Panel" width="100%">
-					<tr><% bp.getController().writeFormField(out,"userNameOTP"); %></tr>
-					<tr><% bp.getController().writeFormField(out,"passwordOTP"); %></tr>
-					<tr><% bp.getController().writeFormField(out,"otp"); %></tr>
-					<tr><td>&nbsp;</td></tr>
+					<tr>
+						<td><% bp.getController().writeFormLabel(out,"userNameOTP"); %></td>
+						<td class="col-12"><% bp.getController().writeFormInput(out,"userNameOTP"); %></td>						
+					</tr>
+					<tr>
+						<td><% bp.getController().writeFormLabel(out,"passwordOTP"); %></td>
+						<td class="col-12"><% bp.getController().writeFormInput(out,"passwordOTP"); %></td>						
+					</tr>
+					<tr>
+						<td><% bp.getController().writeFormLabel(out,"otp"); %></td>
+						<td class="col-12"><% bp.getController().writeFormInput(out,"otp"); %></td>						
+					</tr>
 				</table>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2">
+			<td>
 				<hr>			
 				<table class="Panel" width="100%">
 					<tr>
-						<td style="width:50%"><input style="width:100%" type=submit value="Annulla" name="comando.doAnnulla"></td>
-						<td style="width:50%"><input style="width:100%" type=submit value="Conferma" name="comando.doConferma"></td>
+						<td style="width:50%">
+							<input type="button" class="btn btn-info" name="comando.doAnnulla" style="width:100%" value="Annulla" onclick="submitForm('doAnnulla')">
+						</td>
+						<td style="width:50%">
+							<input type="button" class="btn btn-primary" name="comando.doConferma" style="width:100%" value="Conferma" onclick="submitForm('doConferma')">
+						</td>
 					</tr>
 				</table>
 			</td>

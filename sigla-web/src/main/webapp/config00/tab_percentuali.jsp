@@ -22,14 +22,14 @@
 		</tr>
 		<tr>
 		   <td><% bp.getPercentuali().writeFormLabel(out,"esercizio"); %></td>
-		   <td><% bp.getPercentuali().writeFormInput( out,"default","esercizio",true,"FormInput",null); %></td>			      
+		   <td><% bp.getPercentuali().writeFormInput( out,"default","esercizio",true,null,null); %></td>			      
 		</tr>
 		<tr>		
 		   <td><% bp.getPercentuali().writeFormLabel(out,"prc_copertura_obblig_2"); %></td>
-		   <td><% bp.getPercentuali().writeFormInput( out,"default","prc_copertura_obblig_2",!bp.isPercentualeFieldEnaled(),"FormInput",null); %></td>			      
+		   <td><% bp.getPercentuali().writeFormInput( out,"default","prc_copertura_obblig_2",!bp.isPercentualeFieldEnaled(),null,null); %></td>			      
 		</tr>
 		<tr>		
 		   <td><% bp.getPercentuali().writeFormLabel(out,"prc_copertura_obblig_3"); %></td>
-		   <td><% bp.getPercentuali().writeFormInput( out,"default","prc_copertura_obblig_3",!bp.isPercentualeFieldEnaled(),"FormInput",null); %></td>			      
+		   <td><% bp.getPercentuali().writeFormInput( out,"default","prc_copertura_obblig_3",!bp.isPercentualeFieldEnaled(),null,null); %></td>			      
 		</tr>		   
 </table>

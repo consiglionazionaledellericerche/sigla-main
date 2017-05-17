@@ -134,10 +134,12 @@ public void writeHTMLToolbar(
 							"javascript:submitForm('doRicercaAccertamento')";
 		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 			context,
-			"img/history16.gif",
+			HttpActionContext.isFromBootstrap(context) ? "fa fa-bolt text-primary" : "img/history16.gif",
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDFatturaAttivaBP)getParentController()).isSearching())? command : null,
 			true,
-			"Contabilizza");
+			"Contabilizza",
+			"btn-sm btn-secondary btn-title",
+			HttpActionContext.isFromBootstrap(context));
 
 		
 		if (getParentController() instanceof CRUDFatturaAttivaIBP) {
@@ -151,9 +153,12 @@ public void writeHTMLToolbar(
 
 			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 					context,
-					"img/bookmarks16.gif",
+					HttpActionContext.isFromBootstrap(context) ? "fa fa-copy text-primary" : "img/bookmarks16.gif",
 					enabled ? "javascript:submitForm('doSdoppiaDettaglio');" : null,
-					true,"Sdoppia");
+					true,
+					"Sdoppia",
+					"btn-sm btn-secondary btn-title",
+					HttpActionContext.isFromBootstrap(context));
 		}
 }
 

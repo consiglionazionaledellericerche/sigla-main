@@ -35,18 +35,18 @@
 <table class="Panel" cellspacing=2>
 	<tr>
         <td><% controllerDet.writeFormLabel(out,"default","conferente_rapporto"); %></td>
-        <td><% controllerDet.writeFormInput(out,"default","conferente_rapporto", !isEditable,"FormInput",null); %></td>
+        <td><% controllerDet.writeFormInput(out,"default","conferente_rapporto", !isEditable,null,null); %></td>
 	</tr>
 	<tr>
 	    <td><% controllerDet.writeFormLabel(out,"default","natura_rapporto"); %></td>
-	    <td><% controllerDet.writeFormInput(out,"default","natura_rapporto", !isEditable,"FormInput",null); %></td>
+	    <td><% controllerDet.writeFormInput(out,"default","natura_rapporto", !isEditable,null,null); %></td>
 	</tr>
 	<tr>
 	    <td><% controllerDet.writeFormLabel(out,"default","dt_ini_rapporto"); %></td>
-	    <td><% controllerDet.writeFormInput(out,"default","dt_ini_rapporto", !isEditable,"FormInput",null); %></td>
+	    <td><% controllerDet.writeFormInput(out,"default","dt_ini_rapporto", !isEditable,null,null); %></td>
 	</tr>
 	<tr>
   	    <td><% controllerDet.writeFormLabel(out,"default","importo_rapporto"); %></td>
-		<td><% controllerDet.writeFormInput(out,"default","importo_rapporto", !isEditable,"FormInput",null); %></td>
+		<td><% controllerDet.writeFormInput(out,"default","importo_rapporto", !isEditable,null,null); %></td>
 	</tr>
 </table>

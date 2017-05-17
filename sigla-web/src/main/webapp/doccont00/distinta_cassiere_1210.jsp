@@ -18,10 +18,10 @@
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript">
 function doVisualizzaSingoloDocumento(esercizio, cds , numero_documento, tipo) {	
-	doPrint('genericdownload/Documento contabile '+esercizio+'-'+cds+'-'+numero_documento+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_documento='+numero_documento+'&tipo='+tipo+'&methodName=scaricaDocumento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Documento contabile '+esercizio+'-'+cds+'-'+numero_documento+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_documento='+numero_documento+'&tipo='+tipo+'&methodName=scaricaDocumento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 function doVisualizzaDistinta() {	
-	doPrint('genericdownload/Distinta.pdf?&methodName=scaricaDistinta&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Distinta.pdf?&methodName=scaricaDistinta&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 </head>
@@ -34,10 +34,13 @@ function doVisualizzaDistinta() {
 			<% bp.getController().writeFormField(out, "pgDistinta");%>
 			<td rowspan="2">			
 				<% if (bp.isDistintaInviata()) {
-					JSPUtils.button(out, bp.encodePath("img/application-pdf.png"),bp.encodePath("img/application-pdf.png"), 
+					JSPUtils.button(out,
+						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-file-pdf-o text-danger" : bp.encodePath("img/application-pdf.png"),
+						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-file-pdf-o text-danger" : bp.encodePath("img/application-pdf.png"),
 						bp.encodePath("Visualizza distinta firmata"), 
 						"javascript:doVisualizzaDistinta()", 
-						true); 
+						true,
+						bp.getParentRoot().isBootstrap()); 
 					}
 				%>
 			</td>
@@ -47,8 +50,8 @@ function doVisualizzaDistinta() {
 	</table>
 	<% if (!bp.isSearching()) {%>
 		<% if (!bp.isViewing()) {%>
-		<fieldset class="fieldset">
-			<legend class="GroupLabel">Documenti collegabili</legend>
+		<fieldset class="fieldset card">
+			<legend class="GroupLabel card-header h5 text-primary">Documenti collegabili</legend>
 		    <table class="Panel" style="width:100%">	   
 			<tr>
 				<td>   
@@ -59,13 +62,25 @@ function doVisualizzaDistinta() {
 		</fieldset>
 		<br>
 		<center>
-			<% JSPUtils.button(out, bp.encodePath("img/export24.gif"),bp.encodePath("img/export24.gif"), bp.encodePath("Rimuovi i documenti selezionati"), "javascript:submitForm('doRimuoviDocumento')", bp.isRimuoviButtonEnabled() ); %>
-			<% JSPUtils.button(out, bp.encodePath("img/import24.gif"),bp.encodePath("img/import24.gif"), bp.encodePath("Associa i documenti selezionati"), "javascript:submitForm('doAssociaDocumento')", bp.isAssociaButtonEnabled() ); %>
+			<% JSPUtils.button(out, 
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-arrow-up text-primary" : bp.encodePath("img/export24.gif"),
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-arrow-up text-primary" : bp.encodePath("img/export24.gif"),
+					bp.encodePath("Rimuovi i documenti selezionati"), 
+					"javascript:submitForm('doRimuoviDocumento')", 
+					bp.isRimuoviButtonEnabled(), 
+					bp.getParentRoot().isBootstrap() ); %>
+			<% JSPUtils.button(out, 
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-arrow-down text-primary" : bp.encodePath("img/import24.gif"),
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-arrow-down text-primary" : bp.encodePath("img/import24.gif"),
+					bp.encodePath("Associa i documenti selezionati"), 
+					"javascript:submitForm('doAssociaDocumento')", 
+					bp.isAssociaButtonEnabled(), 
+					bp.getParentRoot().isBootstrap() ); %>
 		</center>
 		<br>
 	<% } %>	
-	<fieldset class="fieldset">
-		<legend class="GroupLabel">Documenti collegati</legend>
+	<fieldset class="fieldset card">
+		<legend class="GroupLabel card-header h5 text-primary">Documenti collegati</legend>
 	    <table class="Panel" style="width:100%">	   
 		<tr>
 			<td>   

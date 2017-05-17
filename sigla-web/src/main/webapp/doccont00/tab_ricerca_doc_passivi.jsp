@@ -74,7 +74,7 @@
 	<table border="0" cellspacing="0" cellpadding="2">
 		<tr>
 			<td colspan=2 align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocPassivi')",null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocPassivi')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	
@@ -85,8 +85,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td  colspan=2 align = "center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("Conferma"), "javascript:submitForm('doAggiungiDocPassivi')"); %></td>
-<!-- 	<td><% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"), bp.encodePath("Dettaglio fattura"),"javascript:submitForm('doVisualizzaFatturaPerDoc_passivo')",bp.isDettaglioFatturaPerDoc_passivoEnabled() ); %></td>
+			<td  colspan=2 align = "center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("Conferma"), "javascript:submitForm('doAggiungiDocPassivi')", bp.getParentRoot().isBootstrap()); %></td>
+<!-- 	<td><% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"), bp.encodePath("Dettaglio fattura"),"javascript:submitForm('doVisualizzaFatturaPerDoc_passivo')",bp.isDettaglioFatturaPerDoc_passivoEnabled() , bp.getParentRoot().isBootstrap()); %></td>
 -->
 		</tr>
 
