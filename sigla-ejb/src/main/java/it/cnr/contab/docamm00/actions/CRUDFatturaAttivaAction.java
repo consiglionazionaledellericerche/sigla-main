@@ -431,8 +431,9 @@ private Forward basicDoGeneraNotaDiCredito(ActionContext context)
 		// Gennaro Borriello - (02/11/2004 16.48.21)
 		// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato 
 		//	riportato DA UN ES. PRECEDENTE a quello di scrivania.
-	else if (!fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportataInScrivania()) && esercizioScrivania.intValue() != fa.getEsercizio().intValue())
-		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
+	// rospuc 11/05/2017
+//	else if (!fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportataInScrivania()) && esercizioScrivania.intValue() != fa.getEsercizio().intValue())
+//		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
 
 	//if (fa.isRiportata() && !fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportata()))
 		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non riportate completamente!");
@@ -473,8 +474,10 @@ private Forward basicDoGeneraNotaDiDebito(ActionContext context)
 		// Gennaro Borriello - (02/11/2004 16.48.21)
 		// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato 
 		//	riportato DA UN ES. PRECEDENTE a quello di scrivania.
-	else if (!fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportataInScrivania()) && esercizioScrivania.intValue() != fa.getEsercizio().intValue())
-		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
+	
+	// rospuc 11/05/2017
+	//	else if (!fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportataInScrivania()) && esercizioScrivania.intValue() != fa.getEsercizio().intValue())
+	//		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
 
 	//if (fa.isRiportata() && !fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportata()))
 		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di debito per fatture non riportate completamente!");
@@ -3276,6 +3279,8 @@ public Forward doConfirmGeneraNotaDiCreditoAutomatica(ActionContext context,int 
 	} catch (RemoteException e) {
 		return handleException(context, e);
 	} catch (PersistencyException e) {
+		return handleException(context, e);
+	} catch (BusinessProcessException e) {
 		return handleException(context, e);
 	}
 }

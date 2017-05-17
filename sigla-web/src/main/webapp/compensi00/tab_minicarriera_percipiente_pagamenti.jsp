@@ -13,7 +13,7 @@
 	it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk percipiente = carriera.getPercipiente();
 %>
 
-<div class="Group">   
+<div class="Group card">   
 	<table>	
 	  <tr>
      	<td>

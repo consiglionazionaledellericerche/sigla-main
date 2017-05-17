@@ -29,7 +29,7 @@
 %>
 <script language="JavaScript">
 function doVisualizzaContabile() {	
-  doPrint('genericdownload/<%=bp.getContabileFileName()%>?methodName=scaricaContabile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getContabileFileName()%>?methodName=scaricaContabile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 <table class="Panel">

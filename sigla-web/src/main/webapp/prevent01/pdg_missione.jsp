@@ -36,7 +36,7 @@
       <%	bp.getCrudTipiUoAssociabili().writeHTMLTable(pageContext,"default",false,false,false,"100%","300px"); %>
 		</td>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiTipoUo')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiTipoUo')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td rowspan="2">
       <%	bp.getCrudAssPdgMissioneTipiUo().writeHTMLTable(pageContext,"csAssPdgMissione",false,false,false,"100%","300px"); %>
@@ -44,7 +44,7 @@
 	</tr>
 	<tr>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviTipoUo')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviTipoUo')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</tr>
 </table>   	

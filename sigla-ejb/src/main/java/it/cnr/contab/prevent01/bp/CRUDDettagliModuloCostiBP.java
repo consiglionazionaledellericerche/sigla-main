@@ -150,7 +150,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 		String label = "<SPAN style=\""+getBulkInfo().getFieldProperty(field_titolo).getLabelStyle()+"\">";
 		label += getBulkInfo().getFieldProperty(field_titolo).getLabel() + "</SPAN>";
 		openToolbar(jspwriter);
-		JSPUtils.toolbar(jspwriter, abutton, this,label);
+		JSPUtils.toolbar(jspwriter, abutton, this,label, this.getParentRoot().isBootstrap());
 		closeToolbar(jspwriter);
 	}
 

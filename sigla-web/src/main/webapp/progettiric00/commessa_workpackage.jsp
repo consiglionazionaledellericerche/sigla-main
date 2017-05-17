@@ -46,7 +46,7 @@
       <%	bp.getCrudWorkpackage_disponibili().writeHTMLTable(pageContext,"csCommessaWorkpackageDisponibili",false,false,false,"100%","300px"); %>
 		</td>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiWorkpackage')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiWorkpackage')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td rowspan="2">
       <%	bp.getCrudWorkpackage_collegati().writeHTMLTable(pageContext,"csCommessaWorkpackageCollegati",false,false,false,"100%","300px"); %>
