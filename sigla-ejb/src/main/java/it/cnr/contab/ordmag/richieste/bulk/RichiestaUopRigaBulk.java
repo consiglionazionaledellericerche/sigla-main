@@ -10,6 +10,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
 public class RichiestaUopRigaBulk extends RichiestaUopRigaBase {
@@ -57,6 +58,7 @@ Nella terna di tabelle relative alle obbligazioni sono gestiti anche i residui (
 	 **/
 	private WorkpackageBulk lineaAttivita = new WorkpackageBulk();
 	private CdrBulk centroResponsabilita;
+	private ProgettoBulk progetto = new ProgettoBulk();
 	/**
 	 * [ELEMENTO_VOCE Contiene l'anagrafica dei capitoli.
 Tale anagrafica viene utilizzata sia per il PDC Finanziario CNR che per quello CDS.
@@ -621,5 +623,11 @@ Capitolo definito dall"utente collegato a Categoria
 	}
 	public void setCentroResponsabilita(CdrBulk centroResponsabilita) {
 		this.centroResponsabilita = centroResponsabilita;
+	}
+	public ProgettoBulk getProgetto() {
+		return progetto;
+	}
+	public void setProgetto(ProgettoBulk progetto) {
+		this.progetto = progetto;
 	}
 }
