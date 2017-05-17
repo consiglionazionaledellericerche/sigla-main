@@ -86,6 +86,16 @@
 			</TD><TD>
 			<% bp.getController().writeFormInput(out,"ldap_link_cambio_password");%>
 		</TD></TR>
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_informix");%>
+			</TD><TD>
+			<% bp.getController().writeFormInput(out,"fl_informix");%>
+		</TD></TR>
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_gae_es");%>
+			</TD><TD>
+			<% bp.getController().writeFormInput(out,"fl_gae_es");%>
+		</TD></TR>
 		<TABLE width="400">
 		<TR>		
 		<TD align="center" width="50%"><% bp.getController().writeFormLabel(out,"box_scadenze");%></TD>
