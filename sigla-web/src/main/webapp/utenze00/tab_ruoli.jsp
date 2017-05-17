@@ -36,7 +36,7 @@
       <%	bp.getCrudRuoli_disponibili().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
 		</td>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiRuolo')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiRuolo')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td rowspan="2">
       <%	bp.getCrudRuoli().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
@@ -44,7 +44,7 @@
 	</tr>
 	<tr>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviRuolo')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviRuolo')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</tr>
 </table>

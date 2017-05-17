@@ -34,9 +34,9 @@
 			<td colspan="2">
 				<% bp.getRigheInventarioDaDocumento().writeFormLabel(out,"gruppi"); %>	
 				<% if (bp.isNumGruppiErrato()){ %>
-					<input type=text name="groups" class="FormInput" maxLength=3 size=10 style="background: coral">
+					<input type=text name="groups" class=null maxLength=3 size=10 style="background: coral">
 				<% } else { %>
-					<input type=text name="groups" class="FormInput" maxLength=3 size=10 style="background: #F5F5DC">
+					<input type=text name="groups" class=null maxLength=3 size=10 style="background: #F5F5DC">
 				<% } %>
 			</td>
 			
@@ -45,7 +45,7 @@
 	<table>
 		<tr>	
 			<td>
-				<% JSPUtils.button(out,null,"Crea Gruppi","javascript:submitForm('doCreaGruppiDoc')"); %>
+				<% JSPUtils.button(out,null,"Crea Gruppi","javascript:submitForm('doCreaGruppiDoc')", bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>
@@ -85,11 +85,11 @@
 		<% } %>
 		<tr>
 			<td colspan="4">
-				<% JSPUtils.button(out,null,"Crea Dettagli","javascript:submitForm('doCreaDettagliDoc')"); %>
+				<% JSPUtils.button(out,null,"Crea Dettagli","javascript:submitForm('doCreaDettagliDoc')", bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>
 	</div>
-<%	bp.closeFormWindow(pageContext); %>
+<% bp.closeFormWindow(pageContext); %>
 </body>
 </html>

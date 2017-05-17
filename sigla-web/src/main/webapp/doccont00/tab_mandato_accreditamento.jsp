@@ -29,8 +29,8 @@
 			<td><% bp.getController().writeFormInput( out, "cd_cds"); %></td>
 			<td colspan=2><% bp.getController().writeFormInput( out, "ds_cds"); %></td>
 			<td></td>
-<!-- 			<% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza entrate", "javascript:submitForm('doVisualizzaEntrate')" ); %>
-			<% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza spese", "javascript:submitForm('doVisualizzaSpese')" ); %>
+<!-- 			<% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza entrate", "javascript:submitForm('doVisualizzaEntrate')" , bp.getParentRoot().isBootstrap()); %>
+			<% JSPUtils.button(out,bp.encodePath("img/zoom16.gif"), "Visualizza spese", "javascript:submitForm('doVisualizzaSpese')", bp.getParentRoot().isBootstrap() ); %>
 -->			
 			
 		</tr>

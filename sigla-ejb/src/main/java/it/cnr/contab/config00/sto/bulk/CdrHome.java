@@ -361,15 +361,15 @@ public String findCdCdrAfferenzaForSAC( String codiceUO) throws PersistencyExcep
  * @throws ApplicationException	
  */
 public CdrBulk findCdrEnte(Integer esercizio) throws PersistencyException, ApplicationException {
-		BulkHome uo_home = (BulkHome)getHomeCache().getHome(Unita_organizzativaBulk.class);
-		SQLBuilder sql = uo_home.createSQLBuilder();
+		 Unita_organizzativaHome uo_home = (Unita_organizzativaHome)getHomeCache().getHome(Unita_organizzativaBulk.class);
+		SQLBuilder sql = uo_home.createSQLBuilderEsteso();
 		sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.FL_UO_CDS",sql.EQUALS,"Y");
 		sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_TIPO_UNITA",sql.EQUALS,Tipo_unita_organizzativaHome.TIPO_UO_ENTE);
 		sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.ESERCIZIO_INIZIO",sql.LESS_EQUALS, esercizio);
 		sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.ESERCIZIO_FINE",sql.GREATER_EQUALS, esercizio);				
 		java.util.List uo = uo_home.fetchAll(sql);
 		if (uo.isEmpty()) return null;
-		sql = createSQLBuilder();
+		sql = createSQLBuilderEsteso();
 		sql.addSQLClause("AND","CDR.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,((Unita_organizzativaBulk)uo.get(0)).getCd_unita_organizzativa());
 		sql.addSQLClause("AND","TO_NUMBER(CDR.CD_PROPRIO_CDR) = 0");
 		sql.addSQLClause("AND","ESERCIZIO_INIZIO",sql.LESS_EQUALS, esercizio);

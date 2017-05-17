@@ -88,7 +88,8 @@ public void writeHTMLToolbar(
 			context,
 			"img/history16.gif",
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDDocumentoGenericoAttivoBP)getParentController()).isSearching())? command : null,
-			true,"Contabilizza");
+			true,"Contabilizza",
+			HttpActionContext.isFromBootstrap(context));
 
 		it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP)getParentController();
 	    if (bp instanceof IDocumentoAmministrativoBP) {
@@ -109,7 +110,8 @@ public void writeHTMLToolbar(
 					context,
 					"img/bookmarks16.gif",
 					enabled ? "javascript:submitForm('doSdoppiaDettaglio');" : null,
-					true,"Sdoppia");
+					true,"Sdoppia",
+					HttpActionContext.isFromBootstrap(context));
 		}
 }
 }

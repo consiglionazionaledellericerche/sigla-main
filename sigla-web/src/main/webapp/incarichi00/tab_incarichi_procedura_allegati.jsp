@@ -111,7 +111,7 @@ function doScaricaFile() {
 		<% } %>
 		<tr>
 	        <td><% controller.writeFormLabel(out,"default","ds_file"); %></td>
-	        <td colspan=4><% controller.writeFormInput(out,"default","ds_file", isRODettaglio,"FormInput",null); %></td>
+	        <td colspan=4><% controller.writeFormInput(out,"default","ds_file", isRODettaglio,null,null); %></td>
 		</tr>
 		<% if (isFileDaAllegare) { %>
 			<tr>
@@ -126,16 +126,16 @@ function doScaricaFile() {
 		<% if (isUrlDaIndicare) { %>
 			<tr>
 		        <td><% controller.writeFormLabel(out,"default","url_file"); %></td>
-		        <td colspan=4><% controller.writeFormInput(out,"default","url_file", isRODettaglio,"FormInput",null); %></td>
+		        <td colspan=4><% controller.writeFormInput(out,"default","url_file", isRODettaglio,null,null); %></td>
 			</tr>
 		<% } %>
 		<tr>
 	  	    <td><% controller.writeFormLabel(out,"default","utcr"); %></td>
-			<td colspan=4><% controller.writeFormInput(out,"default","utcr",true,"FormInput",null); %></td>
+			<td colspan=4><% controller.writeFormInput(out,"default","utcr",true,null,null); %></td>
 		</tr>
 		<tr>
 	  	    <td><% controller.writeFormLabel(out,"default","data_creazione"); %></td>
-			<td colspan=4><% controller.writeFormInput(out,"default","data_creazione",true,"FormInput",null); %></td>
+			<td colspan=4><% controller.writeFormInput(out,"default","data_creazione",true,null,null); %></td>
 		</tr>
 	<% } %>
 </table>

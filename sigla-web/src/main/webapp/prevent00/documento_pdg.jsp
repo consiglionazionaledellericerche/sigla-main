@@ -32,9 +32,9 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgFunzione')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgNatura')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgCapitolo')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgFunzione')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgNatura')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgCapitolo')", bp.getParentRoot().isBootstrap());%></td>
 		<td></td>
 	</tr>
 
@@ -46,9 +46,9 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgEnteFunzione')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgEnteNatura')");%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgEnteCapitolo')");%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgEnteFunzione')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgEnteNatura')", bp.getParentRoot().isBootstrap());%></td>
+		<td><%JSPUtils.button(out, "img/print16.gif", "Per funzione/natura/voce", "if (disableDblClick()) javascript:submitForm('doStampaDocPdgEnteCapitolo')", bp.getParentRoot().isBootstrap());%></td>
 		<td></td>
 	</tr>
 

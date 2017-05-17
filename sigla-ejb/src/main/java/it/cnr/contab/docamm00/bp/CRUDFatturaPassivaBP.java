@@ -48,6 +48,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
@@ -635,7 +636,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	}
 	public boolean isInputReadonly() {
 		Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
-		
+		if (Optional.ofNullable(getTab("tab")).filter(x -> x.equals("tabAllegati")).isPresent())
+			return false;		
 		return super.isInputReadonly() || isDeleting() || isModelVoided()|| (!isAnnoDiCompetenza() && isEditing()) ||
 				     (fp != null && ((fp.isPagata() || 
 					 ((isAnnoDiCompetenza() && fp.isRiportata())) ||
@@ -644,9 +646,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	}
 
 	public boolean isInputReadonlyDoc1210() {
-
 		return super.isInputReadonly();
 	}
+	
 	public boolean isInventariaButtonEnabled() {
 
 		return (isEditing() || isInserting()) && getModel() != null
@@ -752,6 +754,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
 	public boolean isSaveButtonEnabled() {
 	Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+	if (Optional.ofNullable(getTab("tab")).filter(x -> x.equals("tabAllegati")).isPresent())
+		return true;	
 	return super.isSaveButtonEnabled() && 
 			!isModelVoided() &&
 			//commentato per consentire modifiche fatt elettr
@@ -1060,6 +1064,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 			throws it.cnr.jada.action.BusinessProcessException {
 
 		try {
+			archiviaAllegati(context, null);			
 			getModel().setToBeUpdated();
 			setModel(context,
 					((FatturaPassivaComponentSession) createComponentSession())
@@ -1476,17 +1481,17 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
 					s2,
 					"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"",
-					getInputPrefix(), getStatus(), getFieldValidationMap());
+					getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 		} else if (fp != null && fp.isRiportataInScrivania() && !fp.isPagata()
 				&& isInputReadonly() && s1.equals("causale")) {
 			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
 					s2, "onChange=\"submitForm('doOnCausaleChange')\"",
-					getInputPrefix(), getStatus(), getFieldValidationMap());
+					getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 		} else if (fp != null && fp.isRiportataInScrivania() && !fp.isPagata()
 				&& isInputReadonly() && s1.equals("sospeso")) {
 			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
 					s2,"" ,
-					getInputPrefix(), getStatus(), getFieldValidationMap());
+					getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 		}  
 		else
 			super.writeFormInput(jspwriter, s, s1, flag, s2, s3);
