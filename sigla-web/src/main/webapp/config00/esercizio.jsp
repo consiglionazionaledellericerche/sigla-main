@@ -46,8 +46,8 @@
 			<tr>
 			<td><% bp.getController().writeFormInput( out, "st_apertura_chiusura" ); %></td>
 			<td> 
-				<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"),"Cambia stato","javascript:submitForm('doCambiaStato')",bp.isCambiaStatoButtonEnabled()); %>
-				<% JSPUtils.button(out,bp.encodePath("img/open24.gif"),bp.encodePath("img/open24.gif"),"Apri PdG","javascript:submitForm('doApriPdG')",bp.isApriPdGButtonEnabled()); %>
+				<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"),"Cambia stato","javascript:submitForm('doCambiaStato')",bp.isCambiaStatoButtonEnabled(), bp.getParentRoot().isBootstrap()); %>
+				<% JSPUtils.button(out,bp.encodePath("img/open24.gif"),bp.encodePath("img/open24.gif"),"Apri PdG","javascript:submitForm('doApriPdG')",bp.isApriPdGButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
 			</td>	
 			</tr>
 		<%}
@@ -56,7 +56,7 @@
 			<tr>
 			<td><% bp.getController().writeFormInput( out, "st_apertura_chiusura" ); %></td>
 			<td ALIGN="CENTER"> 
-				<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"),"Cambia stato","javascript:submitForm('doCambiaStato')",bp.isCambiaStatoButtonEnabled()); %>
+				<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"),"Cambia stato","javascript:submitForm('doCambiaStato')",bp.isCambiaStatoButtonEnabled(), bp.getParentRoot().isBootstrap()); %>
 			</td>	
 			</tr>
 		<%}

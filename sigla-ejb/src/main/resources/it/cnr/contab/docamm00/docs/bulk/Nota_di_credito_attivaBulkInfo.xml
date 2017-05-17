@@ -39,6 +39,8 @@
 		property="banca"
 		inputType="BUTTON"
 		img="img/find16.gif"
+		iconClass="fa fa-search text-primary"
+		buttonClass="btn-secondary btn-title text-primary"		
 		readonlyProperty="abledToInsertBank"
 		label="Conto/i..."
 		href="javascript:submitForm('doSearch(main.listabanche)')" />

@@ -55,7 +55,7 @@
    		</table>
 	</div>
 
-   <div class="Group">   
+   <div class="Group card">   
 	<table>	
 	  <tr>
      	<% bp.getController().writeFormField(out,"termini_pagamento");%>

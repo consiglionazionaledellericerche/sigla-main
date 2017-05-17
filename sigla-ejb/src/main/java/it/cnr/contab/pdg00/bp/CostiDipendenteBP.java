@@ -118,7 +118,8 @@ public class CostiDipendenteBP extends BulkBP {
 						context,
 						"img/freesearch16.gif",
 						reset ? command : null,
-						true,"Ricerca guidata");
+						true,"Ricerca guidata",
+						HttpActionContext.isFromBootstrap(context));
 				}
 		}		
 	};

@@ -352,9 +352,11 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		try {
 			Date data_stipula_contratti = Utility.createParametriCnrComponentSession().
 			getParametriCnr(uc, CNRUserContext.getEsercizio(uc)).getData_stipula_contratti();
-			if (!(bulk.getDt_stipula().before(data_stipula_contratti)) && bulk.isDefinitivo()){
-				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && bulk.getDirettore() == null) 
+			if (!(bulk.getDt_stipula().before(data_stipula_contratti))){
+				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && ((bulk.getDirettore() == null)|| bulk.getDirettore().getCd_terzo()==null ))
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("direttore").getLabel());
+			}
+			if (!(bulk.getDt_stipula().before(data_stipula_contratti)) && bulk.isDefinitivo()){
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getFl_mepa() == null) 
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("fl_mepa").getLabel());
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getTipoNormaPerla() == null) 
@@ -1163,7 +1165,16 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			if(contratto.getDt_inizio_validita() == null)
 			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("dt_inizio_validita").getLabel()); 
 			if(contratto.getDt_fine_validita() == null)
-			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("dt_fine_validita").getLabel()); 
+			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("dt_fine_validita").getLabel());
+			if (!(contratto.getDt_stipula().before(dataStipulaParametri))){
+				if ((contratto.isPassivo() || contratto.isAttivo_e_Passivo()) && contratto.getFl_mepa() == null) 
+					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("fl_mepa").getLabel());
+				if ((contratto.isPassivo() || contratto.isAttivo_e_Passivo()) && contratto.getTipoNormaPerla() == null) 
+						  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("tipoNormaPerla").getLabel());
+				if (contratto.getTipo_contratto() != null && contratto.getTipo_contratto().getFl_cig() != null  && contratto.getTipo_contratto().getFl_cig() && contratto.getCig() == null)
+					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("cig").getLabel());
+			}
+			
 			Folder oldNode = contrattoService.getFolderContratto(contratto);
 			if (oldNode == null || !contrattoService.isDocumentoContrattoPresent(contratto))
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
@@ -1182,7 +1193,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				}
 		    }else 
 		    	contratto.setFl_pubblica_contratto(Boolean.FALSE);
-
+		    
+		
 			ContrattoBulk contrattoClone = (ContrattoBulk)contratto.clone();
 			try {
 				it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession numerazione =
@@ -1220,12 +1232,11 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				Folder node = contrattoService.getFolderContratto(contrattoDefinitivo);
 				if (node != null){
 					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
-					if (contrattoDefinitivo.isPassivo() || contrattoDefinitivo.isAttivo_e_Passivo()){
-							contrattoService.addConsumer(node,"GROUP_CONTRATTI");
-							contrattoService.setInheritedPermission(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo), Boolean.FALSE);
-						}
+					contrattoService.addConsumer(node,"GROUP_CONTRATTI");
+					contrattoService.setInheritedPermission(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo), Boolean.FALSE);
 				}
 			}
+			
 			return contrattoDefinitivo;
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 		 throw handleException(contratto,e);

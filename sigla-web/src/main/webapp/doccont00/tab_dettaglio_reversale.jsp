@@ -21,7 +21,7 @@
 			<td><% bp.getController().writeFormInput( out, "terzo_cd_terzo"); %>
 			    <% bp.getController().writeFormInput( out, "terzo_ds_terzo"); %></td>						
 			<td><% bp.getController().writeFormLabel( out, "terzo_tipo_bollo"); %></td>
-			<td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", reversale.isAnnullato(), "FormInput","onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
+			<td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", reversale.isAnnullato(), null,"onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
 			    <% bp.getController().writeFormInput( out, "terzo_im_tipo_bollo"); %></td>						
 		</tr>
 		<tr>
@@ -36,14 +36,14 @@
 	<table border="0" cellspacing="0" cellpadding="2">
 		<tr>
 			<td colspan=3>
-			      <b><font size=3>Righe reversale</font></b>
+			      <b><font size=3 class="h3 text-primary">Righe reversale</font></b>
 			      <% bp.getDocumentiAttiviSelezionati().writeHTMLTable(pageContext,(bp.isSiope_attiva() && reversale.isRequiredSiope())?"columnSetConSiope":null,false,false,bp.isInserting(),"100%","150px", true); %>
 			</td>
 		</tr>
 	</table>
 		
 	<% if (bp.isSiope_attiva() && reversale.isRequiredSiope()) {%>
-	<br><b><font size=3>Codici SIOPE</font></b>
+	<br><b><font size=3 class="h3 text-primary">Codici SIOPE</font></b>
 		<div class="Group">
 			<table border="0" cellspacing="0" cellpadding="2">
 			<tr>
@@ -51,33 +51,43 @@
 			<div class="Group">
 				<table border="0" cellspacing="0" cellpadding="2">
 					<tr>
-						<td><span class="GroupLabel">Associati</span></td>
+						<td><span class="GroupLabel h5 text-primary">Associati</span></td>
 						<td></td>
-						<td><span class="GroupLabel">Disponibili</span></td>
+						<td><span class="GroupLabel h5 text-primary">Disponibili</span></td>
 					</tr>
 					<tr>
 						<td  width="55%" rowspan="2">
-					        <% bp.getCodiciSiopeCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",false,false,false,"100%","100px", reversale.isAnnullato()); %>
+					        <% bp.getCodiciSiopeCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",false,false,false,"100%","150px", reversale.isAnnullato()); %>
 						</td>
 						<td  width="4%" align="center">
-							<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),null,"javascript:submitForm('doRimuoviCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled()); %>
+							<% JSPUtils.button(out,
+									bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-angle-double-right text-primary" : bp.encodePath("img/doublerightarrow24.gif"),
+									bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-angle-double-right text-primary" : bp.encodePath("img/doublerightarrow24.gif"),
+									null,"javascript:submitForm('doRimuoviCodiceSiope')",
+									bp.isAggiungiRimuoviCodiciSiopeEnabled(),
+									bp.getParentRoot().isBootstrap()); %>
 						</td>
 						<td  width="41%" rowspan="2">
-					      	<% bp.getCodiciSiopeCollegabili().writeHTMLTable(pageContext,"collegaARigaDocCont",false,false,false,"100%","100px", true); %>
+					      	<% bp.getCodiciSiopeCollegabili().writeHTMLTable(pageContext,"collegaARigaDocCont",false,false,false,"100%","150px", true); %>
 						</td>
 					</tr>
 					<tr>
 						<td align="center">
-						<% JSPUtils.button(out,bp.encodePath("img/doubleleftarrow24.gif"),bp.encodePath("img/doubleleftarrow24.gif"),null,"javascript:submitForm('doAggiungiCodiceSiope')",bp.isAggiungiRimuoviCodiciSiopeEnabled()); %>
+						<% JSPUtils.button(out,
+								bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-angle-double-left text-primary" : bp.encodePath("img/doubleleftarrow24.gif"),
+								bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-angle-double-left text-primary" : bp.encodePath("img/doubleleftarrow24.gif"),
+								null,"javascript:submitForm('doAggiungiCodiceSiope')",
+								bp.isAggiungiRimuoviCodiciSiopeEnabled(),
+								bp.getParentRoot().isBootstrap()); %>
 						</td>
 					</tr>
 				</table>
 			</div>
 			</td>
 			<td width="10%">
-			<fieldset class="fieldset">
-			<legend class="GroupLabel">RIEPILOGO</legend>
-				<table border="0" cellspacing="0" cellpadding="2">
+			<fieldset class="fieldset card">
+			<legend class="GroupLabel card-header h3 text-primary">RIEPILOGO</legend>
+				<table border="0" cellspacing="0" cellpadding="2" class="card-block">
 					<tr><td>&nbsp;</td></tr>
 					<tr>
 						<td><span class="GroupLabel">Importo</span></td>
@@ -104,7 +114,7 @@
 			<table border="0" cellspacing="0" cellpadding="2">
 					<tr>
 						<td colspan="6"> 
-					        <% bp.getCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",!reversale.isAnnullato(),false,!reversale.isAnnullato(),"100%","100px", true); %>
+					        <% bp.getCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",!reversale.isAnnullato(),false,!reversale.isAnnullato(),"100%","150px", true); %>
 						</td>
 					</tr> 
 						
@@ -123,7 +133,7 @@
 			<table border="0" cellspacing="0" cellpadding="2">
 					<tr>
 						<td colspan="6"> 
-					        <% bp.getSiopeCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversaleSiope",!reversale.isAnnullato(),false,!reversale.isAnnullato(),"100%","100px", true); %>
+					        <% bp.getSiopeCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversaleSiope",!reversale.isAnnullato(),false,!reversale.isAnnullato(),"100%","150px", true); %>
 						</td>
 					</tr> 
 						

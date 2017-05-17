@@ -91,8 +91,8 @@
   <% if (!bp.isEditing() && !bp.isSearching()) { %>
   <tr>
 	<td colspan="4" align="center">
-		<% JSPUtils.button(out,null,null,"Aggiungi","if (disableDblClick()) submitForm('doAggiungiScaglione')",null,bp.isBottoneAggiungiScaglioneEnabled());%>
-		<% JSPUtils.button(out,null,null,"Elimina","if (disableDblClick()) submitForm('doEliminaScaglione')",null,bp.isBottoneEliminaScaglioneEnabled());%>
+		<% JSPUtils.button(out,null,null,"Aggiungi","if (disableDblClick()) submitForm('doAggiungiScaglione')",null,bp.isBottoneAggiungiScaglioneEnabled(), bp.getParentRoot().isBootstrap());%>
+		<% JSPUtils.button(out,null,null,"Elimina","if (disableDblClick()) submitForm('doEliminaScaglione')",null,bp.isBottoneEliminaScaglioneEnabled(), bp.getParentRoot().isBootstrap());%>
 	</td>
   </tr>
   <% } %>
