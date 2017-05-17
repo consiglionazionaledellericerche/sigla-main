@@ -186,6 +186,17 @@
 		inputType="TEXT"
 		enabledOnEdit="false"
 		nullable="true" />		
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cd_tipo_sezionale" />
+		<formFieldProperty
+			name="ds_tipo_sezionale" />
+		<formFieldProperty
+			name="ti_acquisti_vendite" />	
+		<formFieldProperty
+			name="ti_istituz_commerc" />	
+	</form>
 	<formFieldProperty
 		name="cd_tipo_sezionale" />	
 	<formFieldProperty
