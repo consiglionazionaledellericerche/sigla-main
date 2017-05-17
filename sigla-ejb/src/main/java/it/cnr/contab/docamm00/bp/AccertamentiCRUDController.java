@@ -87,16 +87,20 @@ public void writeHTMLToolbar(
 	}
 	it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 		context,
-		"img/redo16.gif",
+		HttpActionContext.isFromBootstrap(context) ? "fa fa-repeat text-primary" : "img/redo16.gif",
 		(bp.isViewing() || enabled) ? "javascript:submitForm('doOpenAccertamentiWindow')" : null,
 		true,
-		"Aggiorna in manuale");
+		"Aggiorna in manuale",
+		"btn-sm btn-secondary",
+		HttpActionContext.isFromBootstrap(context));
 	it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 		context,
-		"img/refresh16.gif",
+		HttpActionContext.isFromBootstrap(context) ? "fa fa-refresh text-primary" : "img/refresh16.gif",
 		(!bp.isViewing() && enabled && modelEditable) ? "javascript:submitForm('doModificaScadenzaInAutomatico("+getInputPrefix()+")')" : null,
 		false,
-		"Aggiorna in automatico");
+		"Aggiorna in automatico",
+		"btn-sm btn-secondary",
+		HttpActionContext.isFromBootstrap(context));
 
 }
 }

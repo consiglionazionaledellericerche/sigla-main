@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.bp;
 
 import java.util.*;
+
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
@@ -122,7 +123,8 @@ public void writeHTMLToolbar(
 					context,
 					"img/find16.gif",
 					!(isInputReadonly() || getDetails().isEmpty() || ((CRUDMandatoBP)getParentController()).isSearching())? command : null,
-					true,"SIOPE - Vai a riga successiva da completare");
+					true,"SIOPE - Vai a riga successiva da completare",
+					HttpActionContext.isFromBootstrap(context));
 			}
 		}
 }

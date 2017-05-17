@@ -33,7 +33,7 @@
       <%	bp.getCrudAccessi_disponibili().writeHTMLTable(pageContext,null,false,true,false,"100%","300px"); %>
 		</td>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiAccesso')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiAccesso')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td rowspan="2">
       <%	bp.getCrudAccessi().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
@@ -41,7 +41,7 @@
 	</tr>
 	<tr>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviAccesso')"); %>
+		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviAccesso')", bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</tr>
 </table>

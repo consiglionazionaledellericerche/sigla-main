@@ -78,7 +78,7 @@
   <tr><td><% bp.getController().writeFormField( out, "fl_ammissibile_con_rimborso"); %></td></tr>
 </table>
 <table class="Panel" > 
-  <tr><td><% bp.getController().writeFormInput(out,"default","tipoSpeseRadioGroup", false,"FormInput", null);%></td></tr>	
+  <tr><td><% bp.getController().writeFormInput(out,"default","tipoSpeseRadioGroup", false,null, null);%></td></tr>	
 </table>
 
 <%	bp.closeFormWindow(pageContext); %>

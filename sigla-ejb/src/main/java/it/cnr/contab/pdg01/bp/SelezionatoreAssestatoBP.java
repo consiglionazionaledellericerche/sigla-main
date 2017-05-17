@@ -328,6 +328,8 @@ public class SelezionatoreAssestatoBP extends ConsultazioniBP{
 	public String getFormTitle(){
 	   String title = BulkInfo.getBulkInfo(V_assestatoBulk.class).getLongDescription();
 	   title = title.concat(" - " + (isGestioneSpesa()?"Spese":"Entrate")); 
+	   if (this.getParentRoot().isBootstrap())
+		   return title;
 	   return "<script>document.write(\""+title+"\")</script>";
 	}
 	public AssestatoReplacer getAssestatoReplacer() {

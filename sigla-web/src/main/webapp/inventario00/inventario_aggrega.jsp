@@ -37,9 +37,9 @@
 			<td colspan="2">
 				<% bp.getRigheInventarioDaFattura().writeFormLabel(out,"gruppi"); %>	
 				<% if (bp.isNumGruppiErrato()){ %>
-					<input type=text name="groups" class="FormInput" maxLength=3 size=10 style="background: coral">
+					<input type=text name="groups" class=null maxLength=3 size=10 style="background: coral">
 				<% } else { %>
-					<input type=text name="groups" class="FormInput" maxLength=3 size=10 style="background: #F5F5DC">
+					<input type=text name="groups" class=null maxLength=3 size=10 style="background: #F5F5DC">
 				<% } %>
 			</td>
 			
@@ -48,7 +48,7 @@
 	<table>
 		<tr>	
 			<td>
-				<% JSPUtils.button(out,null,"Crea Gruppi","javascript:submitForm('doCreaGruppi')"); %>
+				<% JSPUtils.button(out,null,"Crea Gruppi","javascript:submitForm('doCreaGruppi')", bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>
@@ -88,7 +88,7 @@
 		<% } %>
 		<tr>
 			<td colspan="4">
-				<% JSPUtils.button(out,null,"Crea Dettagli","javascript:submitForm('doCreaDettagli')"); %>
+				<% JSPUtils.button(out,null,"Crea Dettagli","javascript:submitForm('doCreaDettagli')", bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	</table>
