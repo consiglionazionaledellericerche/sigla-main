@@ -1,30 +1,7 @@
 package it.cnr.contab.ordmag.richieste.bp;
 
-import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
-import it.cnr.contab.docamm00.bp.IGenericSearchDocAmmBP;
-import it.cnr.contab.docamm00.bp.VoidableBP;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_ammVBulk;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Voidable;
-
-/**
- * Documento generico Attivo BP
- */
-
-import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
-import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
-import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 

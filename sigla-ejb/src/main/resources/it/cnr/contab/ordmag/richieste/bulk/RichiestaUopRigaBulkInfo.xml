@@ -6,13 +6,6 @@
 	shortDescription="Riga richieste"
 	longDescription="Riga richieste">
 	<fieldProperty
-		name="findRichiestaUop"
-		property="richiestaUop"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="RichiestaUop" />
-	<fieldProperty
 		name="cdCds"
 		property="richiestaUop.cdCds"
 		inputType="TEXT"
@@ -71,32 +64,16 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="riga" />
-	<fieldProperty
-		name="cdBeneServizio"
-		property="cdBeneServizio"
-		inputType="TEXT"
-		inputSize="15"
-		maxLength="15"
-		enabledOnEdit="false"
-		label="cdBeneServizio" />
-	<fieldProperty
-		name="dsBeneServizio"
-		property="dsBeneServizio"
-		inputType="TEXT"
-		inputSize="100"
-		maxLength="300"
-		enabledOnEdit="false"
-		label="dsBeneServizio" />
+		label="Riga" />
 	<fieldProperty
 		name="notaRiga"
 		property="notaRiga"
 		inputType="TEXTAREA"
-		cols="60"
+		cols="100"
 		rows="5"
 		maxLength="2000"
 		enabledOnEdit="false"
-		label="notaRiga" />
+		label="Note" />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -104,7 +81,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="stato" />
+		label="Stato" />
 	<fieldProperty
 		name="cdCategoriaGruppo"
 		property="cdCategoriaGruppo"
@@ -112,7 +89,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdCategoriaGruppo" />
+		label="Categoria" />
 	<fieldProperty
 		name="quantitaRichiesta"
 		property="quantitaRichiesta"
@@ -120,14 +97,48 @@
 		inputSize="17"
 		maxLength="17"
 		enabledOnEdit="false"
-		label="quantitaRichiesta" />
+		label="Quantità Richiesta" />
 	<fieldProperty
 		name="findUnitaMisura"
 		property="unitaMisura"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaMisura" />
+		label="Unità di Misura" />
+	<fieldProperty
+		name="findBeneServizio"
+		property="beneServizio"
+		inputType="SEARCHTOOL"
+        formName="searchtool"
+		enabledOnSearch="true"
+        enabledOnEdit="true" 
+		label="Bene/Servizio"/>	
+	<fieldProperty
+		name="cdBeneServizio"
+		property="beneServizio.cd_bene_servizio"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RObeneservizio"
+		label="Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsBeneServizio"
+		property="beneServizio.ds_bene_servizio"
+		maxLength="300"
+		inputSize="32"
+		inputType="ROTEXT"
+		label="Descr. Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cdUnitaMisuraMinima"
+		property="beneServizio.unitaMisura.cdUnitaMisura"
+		maxLength="30"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Unità Misura Minima"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cdUnitaMisura"
 		property="unitaMisura.cdUnitaMisura"
@@ -135,7 +146,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdUnitaMisura" />
+		label="Unità di Misura" />
 	<fieldProperty
 		name="coefConv"
 		property="coefConv"
@@ -143,15 +154,25 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
-		label="coefConv" />
+		label="Coefficiente di Conversione" />
 	<fieldProperty
 		name="cdBeneServizioDef"
-		property="cdBeneServizioDef"
+		property="beneServizioDef.cd_bene_servizio"
+		maxLength="30"
+		inputSize="6"
 		inputType="TEXT"
-		inputSize="15"
-		maxLength="15"
-		enabledOnEdit="false"
-		label="cdBeneServizioDef" />
+		nullable="false"
+		readonlyProperty="RObeneservizio"
+		label="Bene/Servizio Definitivo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsBeneServizioDef"
+		property="beneServizioDef.ds_bene_servizio"
+		maxLength="300"
+		inputSize="32"
+		inputType="ROTEXT"
+		label="Bene/Servizio Definitivo"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="quantitaAutorizzata"
 		property="quantitaAutorizzata"
@@ -168,10 +189,17 @@
 		rows="5"
 		maxLength="2000"
 		enabledOnEdit="false"
-		label="notaUopDest" />
+		label="Nota Uop Destinazione" />
+	<fieldProperty
+		name="findObbligazione"
+		property="obbligazione"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Obbligazione" />
 	<fieldProperty
 		name="cdCdsObbl"
-		property="cdCdsObbl"
+		property="obbligazione.cd_cds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -179,7 +207,7 @@
 		label="cdCdsObbl" />
 	<fieldProperty
 		name="esercizioObbl"
-		property="esercizioObbl"
+		property="obbligazione.esercizio"
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
@@ -187,39 +215,112 @@
 		label="esercizioObbl" />
 	<fieldProperty
 		name="esercizioOrigObbl"
-		property="esercizioOrigObbl"
+		property="obbligazione.esercizio_originale"
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
 		enabledOnEdit="false"
-		label="esercizioOrigObbl" />
+		label="Esercizio Obbligazione" />
 	<fieldProperty
 		name="pgObbligazione"
-		property="pgObbligazione"
+		property="obbligazione.pg_obbligazione"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="pgObbligazione" />
+		label="Obbligazione" />
+	<fieldProperty
+		name="dsObbligazione"
+		property="obbligazione.ds_obbligazione"
+		inputType="ROTEXT"
+		maxLength="20"
+		label="Descrizione" />
+    <fieldProperty
+        name="findCentroResponsabilita"
+        property="centroResponsabilita"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnSearch="true"
+        label="Centro di Responsabilità" />		
 	<fieldProperty
 		name="cdCentroResponsabilita"
-		property="cdCentroResponsabilita"
-		inputType="TEXT"
+		property="centroResponsabilita.cd_centro_responsabilita"
+		inputType="ROTEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
-		label="cdCentroResponsabilita" />
+		label="Centro di Responsabilità" />
+	<fieldProperty
+		name="dsCentroResponsabilita"
+		property="centroResponsabilita.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="50"
+		maxLength="50"
+		label="Descrizione" />
+	<fieldProperty
+		name="findLineaAttivita"
+		property="lineaAttivita"
+		inputType="SEARCHTOOL"
+		formName="searchtool_denominazione"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROLinea_attivita"
+		nullable="false"
+		label="G.a.e." />
 	<fieldProperty
 		name="cdLineaAttivita"
-		property="cdLineaAttivita"
+		property="lineaAttivita.cd_linea_attivita"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdLineaAttivita" />
+		label="Linea Attivita" />
+	<fieldProperty
+		name="dsLineaAttivita"
+		property="lineaAttivita.ds_linea_attivita"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="500"
+		enabledOnEdit="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="findElementoVoce"
+		property="elementoVoce"
+		inputType="SEARCHTOOL"
+        formName="searchtool"
+		label="Voce di bilancio"
+		enabledOnSearch="true"
+		completeOnSave="false"
+		/>
+	<fieldProperty
+		name="cdElementoVoce"
+		property="elementoVoce.cd_elemento_voce"
+		label="Codice Voce"
+		readonlyProperty="ROElemento_voce"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="cdElementoVoceRO"
+		property="elementoVoce.cd_elemento_voce"
+		label="Voce del piano"
+		inputType="ROTEXT"
+		maxLength="20"
+		inputSize="20"
+		/>		
+	<fieldProperty
+		name="dsElementoVoce"
+		property="elementoVoce.ds_elemento_voce"
+		label=""
+		readonlyProperty="ROElemento_voce"
+		inputType="ROTEXT"
+		inputSize="60"
+		/>
 	<fieldProperty
 		name="esercizioVoce"
-		property="esercizioVoce"
+		property="elementoVoce.esercizio"
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
@@ -227,7 +328,7 @@
 		label="esercizioVoce" />
 	<fieldProperty
 		name="tiAppartenenza"
-		property="tiAppartenenza"
+		property="elementoVoce.ti_appartenenza"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
@@ -235,28 +336,36 @@
 		label="tiAppartenenza" />
 	<fieldProperty
 		name="tiGestione"
-		property="tiGestione"
+		property="elementoVoce.ti_gestione"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
 		label="tiGestione" />
 	<fieldProperty
-		name="cdElementoVoce"
-		property="cdElementoVoce"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		enabledOnEdit="false"
-		label="cdElementoVoce" />
+		name="findProgetto"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROprogetto"
+		formName="form_searchtool_progetto"
+		columnSet="nuovoPdg"
+		label="Progetto" />
 	<fieldProperty
 		name="pgProgetto"
-		property="pgProgetto"
+		property="progetto.pg_progetto"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="pgProgetto" />
+		label="Progetto" />
+	<fieldProperty
+		name="dsProgetto"
+		property="progetto.ds_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="500"
+		enabledOnEdit="false"
+		label="Descrizione" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
@@ -264,6 +373,45 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<columnSet
+		name="righeSet">
+		<columnFieldProperty
+			name="riga" />
+		<columnFieldProperty
+			name="cdBeneServizio" />
+		<columnFieldProperty
+			name="dsBeneServizio" />
+		<columnFieldProperty
+			name="notaRiga" />
+		<columnFieldProperty
+			name="cdUnitaMisuraMinima"/>
+		<columnFieldProperty
+			name="cdUnitaMisura"/>
+		<columnFieldProperty
+			name="coefConv"/>
+		<columnFieldProperty
+			name="quantitaRichiesta"/>
+		<columnFieldProperty
+			name="esercizioOrigObbl"/>
+		<columnFieldProperty
+			name="pgObbligazione"/>
+		<columnFieldProperty
+			name="dsObbligazione"/>
+		<columnFieldProperty
+			name="cdCentroResponsabilita"/>
+		<columnFieldProperty
+			name="cdLineaAttivita"/>
+		<columnFieldProperty
+			name="dsLineaAttivita"/>
+		<columnFieldProperty
+			name="cdElementoVoce"/>
+		<columnFieldProperty
+			name="dsVoce"/>
+		<columnFieldProperty
+			name="dsProgetto"/>
+		<columnFieldProperty
+			name="notaUopDest"/>
+	</columnSet>
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -278,8 +426,6 @@
 			name="riga" />
 	</form>
 	<formFieldProperty
-		name="findRichiestaUop" />
-	<formFieldProperty
 		name="riga" />
 	<formFieldProperty
 		name="dsBeneServizio" />
@@ -290,7 +436,21 @@
 	<formFieldProperty
 		name="quantitaRichiesta" />
 	<formFieldProperty
+		name="cdUnitaMisuraMinima" />
+	<formFieldProperty
+		name="findElementoVoce" />
+	<formFieldProperty
+		name="findProgetto" />
+	<formFieldProperty
+		name="findObbligazione" />
+	<formFieldProperty
+		name="findLineaAttivita" />
+	<formFieldProperty
+		name="findCentroResponsabilita" />
+	<formFieldProperty
 		name="findUnitaMisura" />
+	<formFieldProperty
+		name="findBeneServizio" />
 	<formFieldProperty
 		name="coefConv" />
 	<formFieldProperty

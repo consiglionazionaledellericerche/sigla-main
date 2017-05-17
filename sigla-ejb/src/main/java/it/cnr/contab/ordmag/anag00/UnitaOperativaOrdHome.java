@@ -34,14 +34,6 @@ public class UnitaOperativaOrdHome extends BulkHome {
 		sql.addSQLClause( "AND", "cd_unita_operativa", SQLBuilder.EQUALS, uop.getCdUnitaOperativa());
 		return repHome.fetchAll(sql);
 	}
-	public SQLBuilder selectUnitaOrganizzativaByClause(UserContext userContext, UnitaOperativaOrdBulk uopBulk, 
-			Unita_organizzativaHome unita_organizzativaHome, Unita_organizzativaBulk unita_organizzativaBulk, 
-			CompoundFindClause compoundfindclause) throws PersistencyException{
-		SQLBuilder sql = unita_organizzativaHome.selectByClause(userContext, compoundfindclause);
-		filtraUO(userContext, sql, false);
-		return sql;
-	}
-
 	@Override
 	public SQLBuilder selectByClause(UserContext userContext,
 			CompoundFindClause compoundfindclause) throws PersistencyException {
