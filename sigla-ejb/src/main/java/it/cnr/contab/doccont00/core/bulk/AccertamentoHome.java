@@ -1327,6 +1327,12 @@ public AccertamentoBulk refreshNuoveLineeAttivitaColl( AccertamentoBulk accertam
 
 public java.util.List findCapitoliDiEntrataCds( AccertamentoBulk accertamento ) throws IntrospectionException,PersistencyException 
 {
+	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(accertamento.getEsercizio()));
+	
+	if (parCNR.getFl_nuovo_pdg())
+		return Arrays.asList(accertamento.getCapitolo());
+
 	PersistentHome evHome = getHomeCache().getHome(Voce_fBulk.class);
 	SQLBuilder sql = evHome.createSQLBuilder();
 	sql.addClause("AND","esercizio",sql.EQUALS, accertamento.getEsercizio());

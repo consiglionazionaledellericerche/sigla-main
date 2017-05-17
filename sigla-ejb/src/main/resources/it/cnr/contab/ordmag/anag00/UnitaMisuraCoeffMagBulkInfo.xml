@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Archivio per i coefficienti di conversione degli articoli nei magazzini"
+	longDescription="Archivio per i coefficienti di conversione degli articoli nei magazzini">
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzino"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="cdCds"
+		property="magazzino.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="magazzino.cdMagazzino"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Magazzino" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="cdBeneServizio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Bene Servizio" />
+	<fieldProperty
+		name="dtIniValidita"
+		property="dtIniValidita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Data Inizio Validità" />
+	<fieldProperty
+		name="findUnitaMisura"
+		property="unitaMisura"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità di Misura" />
+	<fieldProperty
+		name="cdUnitaMisuraCar"
+		property="unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Unità Misura di carico" />
+	<fieldProperty
+		name="coefConvCar"
+		property="coefConvCar"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Coefficienti di conversione di carico" />
+	<fieldProperty
+		name="cdUnitaMisuraSca"
+		property="unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Unità Misura di scarico" />
+	<fieldProperty
+		name="coefConvSca"
+		property="coefConvSca"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Coefficienti di conversione di scarico" />
+	<fieldProperty
+		name="dtFinValidita"
+		property="dtFinValidita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Fine Validità" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="cdBeneServizio" />
+		<formFieldProperty
+			name="dtIniValidita" />
+	</form>
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="dtIniValidita" />
+	<formFieldProperty
+		name="findUnitaMisura" />
+	<formFieldProperty
+		name="coefConvCar" />
+	<formFieldProperty
+		name="coefConvSca" />
+	<formFieldProperty
+		name="dtFinValidita" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="cdBeneServizio" />
+	<findFieldProperty
+		name="dtIniValidita" />
+	<findFieldProperty
+		name="cdUnitaMisuraCar" />
+	<findFieldProperty
+		name="coefConvCar" />
+	<findFieldProperty
+		name="cdUnitaMisuraSca" />
+	<findFieldProperty
+		name="coefConvSca" />
+	<findFieldProperty
+		name="dtFinValidita" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="cdBeneServizio" />
+	<columnFieldProperty
+		name="dtIniValidita" />
+	<columnFieldProperty
+		name="cdUnitaMisuraCar" />
+	<columnFieldProperty
+		name="coefConvCar" />
+	<columnFieldProperty
+		name="cdUnitaMisuraSca" />
+	<columnFieldProperty
+		name="coefConvSca" />
+	<columnFieldProperty
+		name="dtFinValidita" />
+</bulkInfo>
