@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Riga richieste"
+	longDescription="Riga richieste">
+	<fieldProperty
+		name="findRichiestaUop"
+		property="richiestaUop"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="RichiestaUop" />
+	<fieldProperty
+		name="cdCds"
+		property="richiestaUop.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="richiestaUop.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdUnitaOperativa" />
+	<fieldProperty
+		name="esercizio"
+		property="richiestaUop.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdNumeratore"
+		property="richiestaUop.cdNumeratore"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdNumeratore" />
+	<fieldProperty
+		name="numero"
+		property="richiestaUop.numero"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="numero" />
+	<fieldProperty
+		name="riga"
+		property="riga"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="riga" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="cdBeneServizio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		label="cdBeneServizio" />
+	<fieldProperty
+		name="dsBeneServizio"
+		property="dsBeneServizio"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="dsBeneServizio" />
+	<fieldProperty
+		name="notaRiga"
+		property="notaRiga"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="notaRiga" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="stato" />
+	<fieldProperty
+		name="cdCategoriaGruppo"
+		property="cdCategoriaGruppo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdCategoriaGruppo" />
+	<fieldProperty
+		name="quantitaRichiesta"
+		property="quantitaRichiesta"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="quantitaRichiesta" />
+	<fieldProperty
+		name="findUnitaMisura"
+		property="unitaMisura"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UnitaMisura" />
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdUnitaMisura" />
+	<fieldProperty
+		name="coefConv"
+		property="coefConv"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		label="coefConv" />
+	<fieldProperty
+		name="cdBeneServizioDef"
+		property="cdBeneServizioDef"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		label="cdBeneServizioDef" />
+	<fieldProperty
+		name="quantitaAutorizzata"
+		property="quantitaAutorizzata"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="quantitaAutorizzata" />
+	<fieldProperty
+		name="notaUopDest"
+		property="notaUopDest"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="notaUopDest" />
+	<fieldProperty
+		name="cdCdsObbl"
+		property="cdCdsObbl"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCdsObbl" />
+	<fieldProperty
+		name="esercizioObbl"
+		property="esercizioObbl"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioObbl" />
+	<fieldProperty
+		name="esercizioOrigObbl"
+		property="esercizioOrigObbl"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioOrigObbl" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgObbligazione" />
+	<fieldProperty
+		name="cdCentroResponsabilita"
+		property="cdCentroResponsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCentroResponsabilita" />
+	<fieldProperty
+		name="cdLineaAttivita"
+		property="cdLineaAttivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdLineaAttivita" />
+	<fieldProperty
+		name="esercizioVoce"
+		property="esercizioVoce"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioVoce" />
+	<fieldProperty
+		name="tiAppartenenza"
+		property="tiAppartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tiAppartenenza" />
+	<fieldProperty
+		name="tiGestione"
+		property="tiGestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tiGestione" />
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="cdElementoVoce" />
+	<fieldProperty
+		name="pgProgetto"
+		property="pgProgetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgProgetto" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUnitaOperativa" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdNumeratore" />
+		<formFieldProperty
+			name="numero" />
+		<formFieldProperty
+			name="riga" />
+	</form>
+	<formFieldProperty
+		name="findRichiestaUop" />
+	<formFieldProperty
+		name="riga" />
+	<formFieldProperty
+		name="dsBeneServizio" />
+	<formFieldProperty
+		name="notaRiga" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="quantitaRichiesta" />
+	<formFieldProperty
+		name="findUnitaMisura" />
+	<formFieldProperty
+		name="coefConv" />
+	<formFieldProperty
+		name="quantitaAutorizzata" />
+	<formFieldProperty
+		name="notaUopDest" />
+	<formFieldProperty
+		name="pgProgetto" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratore" />
+	<findFieldProperty
+		name="numero" />
+	<findFieldProperty
+		name="riga" />
+	<findFieldProperty
+		name="cdBeneServizio" />
+	<findFieldProperty
+		name="dsBeneServizio" />
+	<findFieldProperty
+		name="notaRiga" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cdCategoriaGruppo" />
+	<findFieldProperty
+		name="quantitaRichiesta" />
+	<findFieldProperty
+		name="cdUnitaMisura" />
+	<findFieldProperty
+		name="coefConv" />
+	<findFieldProperty
+		name="cdBeneServizioDef" />
+	<findFieldProperty
+		name="quantitaAutorizzata" />
+	<findFieldProperty
+		name="notaUopDest" />
+	<findFieldProperty
+		name="cdCdsObbl" />
+	<findFieldProperty
+		name="esercizioObbl" />
+	<findFieldProperty
+		name="esercizioOrigObbl" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="cdCentroResponsabilita" />
+	<findFieldProperty
+		name="cdLineaAttivita" />
+	<findFieldProperty
+		name="esercizioVoce" />
+	<findFieldProperty
+		name="tiAppartenenza" />
+	<findFieldProperty
+		name="tiGestione" />
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="pgProgetto" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOperativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratore" />
+	<columnFieldProperty
+		name="numero" />
+	<columnFieldProperty
+		name="riga" />
+	<columnFieldProperty
+		name="cdBeneServizio" />
+	<columnFieldProperty
+		name="dsBeneServizio" />
+	<columnFieldProperty
+		name="notaRiga" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cdCategoriaGruppo" />
+	<columnFieldProperty
+		name="quantitaRichiesta" />
+	<columnFieldProperty
+		name="cdUnitaMisura" />
+	<columnFieldProperty
+		name="coefConv" />
+	<columnFieldProperty
+		name="cdBeneServizioDef" />
+	<columnFieldProperty
+		name="quantitaAutorizzata" />
+	<columnFieldProperty
+		name="notaUopDest" />
+	<columnFieldProperty
+		name="cdCdsObbl" />
+	<columnFieldProperty
+		name="esercizioObbl" />
+	<columnFieldProperty
+		name="esercizioOrigObbl" />
+	<columnFieldProperty
+		name="pgObbligazione" />
+	<columnFieldProperty
+		name="cdCentroResponsabilita" />
+	<columnFieldProperty
+		name="cdLineaAttivita" />
+	<columnFieldProperty
+		name="esercizioVoce" />
+	<columnFieldProperty
+		name="tiAppartenenza" />
+	<columnFieldProperty
+		name="tiGestione" />
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="pgProgetto" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>
