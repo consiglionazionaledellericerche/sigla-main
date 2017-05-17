@@ -68,6 +68,39 @@
 		nullable="false"
 		label="Tipo Operazione" />
 	<fieldProperty
+		name="dsTipoOperazione"
+		property="tipoOperazioneOrd.dsTipoOperazione"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione Tipo Operazione" />
+	<fieldProperty
+		name="findTipoSezionale"
+		property="tipoOperazioneOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo Operazione" />
+	<fieldProperty
+		name="cdTipoSezionale"
+		property="tipoSezionale.cd_tipo_sezionale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Codice Tipo Sezionale" />
+	<fieldProperty
+		name="dsTipoSezionale"
+		property="tipoSezionale.ds_tipo_sezionale"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione Tipo Sezionale" />
+	<fieldProperty
 		name="corrente"
 		property="corrente"
 		inputType="TEXT"
@@ -83,14 +116,6 @@
 		enabledOnEdit="false"
 		label="Data Progressivo" />
 	<fieldProperty
-		name="cdTipoSezionale"
-		property="cdTipoSezionale"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="Codice Tipo Sezionale" />
-	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
@@ -100,11 +125,9 @@
 	<form
 		name="searchtool">
 		<formFieldProperty
-			name="cdUnitaOperativa" />
-		<formFieldProperty
-			name="esercizio" />
-		<formFieldProperty
 			name="cdNumeratore" />
+		<formFieldProperty
+			name="dsNumeratore" />
 	</form>
 	<formFieldProperty
 		name="findUnitaOperativaOrd" />
@@ -117,6 +140,8 @@
 	<formFieldProperty
 		name="findTipoOperazioneOrd" />
 	<formFieldProperty
+		name="findTipoSezionale" />
+	<formFieldProperty
 		name="corrente" />
 	<formFieldProperty
 		name="dataProgressivo" />
@@ -141,21 +166,21 @@
 	<findFieldProperty
 		name="dtCancellazione" />
 	<columnFieldProperty
-		name="cdUnitaOperativa" />
-	<columnFieldProperty
-		name="esercizio" />
-	<columnFieldProperty
 		name="cdNumeratore" />
 	<columnFieldProperty
 		name="dsNumeratore" />
 	<columnFieldProperty
 		name="cdTipoOperazione" />
 	<columnFieldProperty
+		name="dsTipoOperazione" />
+	<columnFieldProperty
 		name="corrente" />
 	<columnFieldProperty
 		name="dataProgressivo" />
 	<columnFieldProperty
 		name="cdTipoSezionale" />
+	<columnFieldProperty
+		name="dsTipoSezionale" />
 	<columnFieldProperty
 		name="dtCancellazione" />
 </bulkInfo>
