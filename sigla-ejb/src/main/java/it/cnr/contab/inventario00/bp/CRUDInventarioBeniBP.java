@@ -356,7 +356,7 @@ public void writeToolbar(javax.servlet.jsp.JspWriter writer) throws java.io.IOEx
 	
 	//super.writeToolbar(writer);
 	openToolbar(writer);
-	it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createToolbar(),this);
+	it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createToolbar(),this, this.getParentRoot().isBootstrap());
 	closeToolbar(writer);
 	writeViewAccessoriToolbar(writer);
 	
@@ -370,7 +370,7 @@ public void writeViewAccessoriToolbar(javax.servlet.jsp.JspWriter writer) throws
 
 	if (!isSearching()) {
 		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createViewAccessoriToolbar(),this);
+		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createViewAccessoriToolbar(),this, this.getParentRoot().isBootstrap());
 		closeToolbar(writer);
 	}
 }

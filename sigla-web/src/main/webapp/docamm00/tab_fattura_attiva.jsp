@@ -273,11 +273,11 @@
  	     	<% bp.getController().writeFormLabel(out,"modalita_pagamento_uo");%>
       	</td>      	
      	<td>
-	      	<% bp.getController().getBulkInfo().writeFormInput(out,bp.getModel(),null,"modalita_pagamento_uo",bp.isROBank_ModPag(uc,fatturaAttiva),null,"onChange=\"submitForm('doOnModalitaPagamentoUOChange')\"",bp.getInputPrefix(), bp.getStatus(), bp.getFieldValidationMap());%>	
+	      	<% bp.getController().getBulkInfo().writeFormInput(out,bp.getModel(),null,"modalita_pagamento_uo",bp.isROBank_ModPag(uc,fatturaAttiva),null,"onChange=\"submitForm('doOnModalitaPagamentoUOChange')\"",bp.getInputPrefix(), bp.getStatus(), bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%>	
       	</td>   
 		<td>
 			<% 	if (fatturaAttiva.getBanca_uo() != null) {
-					bp.getController().getBulkInfo().writeFormInput(out,bp.getModel(),null,"listabancheuo",bp.isROBank(uc,fatturaAttiva),null,null,bp.getInputPrefix(), bp.getStatus(), bp.getFieldValidationMap());
+					bp.getController().getBulkInfo().writeFormInput(out,bp.getModel(),null,"listabancheuo",bp.isROBank(uc,fatturaAttiva),null,null,bp.getInputPrefix(), bp.getStatus(), bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());
 				} %>
    		</td>
       </tr>

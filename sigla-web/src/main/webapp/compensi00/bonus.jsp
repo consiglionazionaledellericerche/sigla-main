@@ -84,14 +84,21 @@
 	<table>
 		<tr>	
 			<td>
-				<% JSPUtils.button(out,null,null,"Completa bonus"," javascript:submitForm('doCompletaBonus')",bonus.isModificabile()&&!bonus.getFl_trasmesso()); %>
+				<% JSPUtils.button(out,null,null,"Completa bonus",
+						"javascript:submitForm('doCompletaBonus')",
+						bonus.isModificabile()&&!bonus.getFl_trasmesso(),
+						bp.getParentRoot().isBootstrap()); %>
 			</td>
 			<td>
-				<% JSPUtils.button(out,null,null,"Crea compenso"," javascript:submitForm('doCreaCompenso')",bonus.isModificabile()&&!bonus.getFl_trasmesso() &&bonus.getPg_bonus()!=null &&!bp.isDirty()); %>
+				<% JSPUtils.button(out,null,null,"Crea compenso"," javascript:submitForm('doCreaCompenso')",
+						bonus.isModificabile()&&!bonus.getFl_trasmesso() &&bonus.getPg_bonus()!=null &&!bp.isDirty(),
+						bp.getParentRoot().isBootstrap()); %>
 			</td>
 			
 			<td>
-				<% JSPUtils.button(out,null,null, "Visualizza compenso"," javascript:submitForm('doVisualizzaCompenso')", bonus.getPg_bonus()!=null && !bonus.isModificabile()); %>
+				<% JSPUtils.button(out,null,null, "Visualizza compenso"," javascript:submitForm('doVisualizzaCompenso')", 
+						bonus.getPg_bonus()!=null && !bonus.isModificabile(),
+						bp.getParentRoot().isBootstrap()); %>
 			</td>
 			
 		</tr>

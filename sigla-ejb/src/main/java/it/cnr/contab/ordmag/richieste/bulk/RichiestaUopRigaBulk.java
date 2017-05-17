@@ -5,6 +5,7 @@
 package it.cnr.contab.ordmag.richieste.bulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -54,7 +55,8 @@ Nella terna di tabelle relative alle obbligazioni sono gestiti anche i residui (
 	/**
 	 * [LINEA_ATTIVITA Linea di attività definita per CDR]
 	 **/
-	WorkpackageBulk lineaAttivita = new WorkpackageBulk();
+	private WorkpackageBulk lineaAttivita = new WorkpackageBulk();
+	private CdrBulk centroResponsabilita;
 	/**
 	 * [ELEMENTO_VOCE Contiene l'anagrafica dei capitoli.
 Tale anagrafica viene utilizzata sia per il PDC Finanziario CNR che per quello CDS.
@@ -610,5 +612,14 @@ Capitolo definito dall"utente collegato a Categoria
 	}
 	private void impostaCds(it.cnr.jada.action.ActionContext context) {
 		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+	}
+	public boolean isROBeneServizioSearchTool() {
+		return 	false;
+	}
+	public CdrBulk getCentroResponsabilita() {
+		return centroResponsabilita;
+	}
+	public void setCentroResponsabilita(CdrBulk centroResponsabilita) {
+		this.centroResponsabilita = centroResponsabilita;
 	}
 }

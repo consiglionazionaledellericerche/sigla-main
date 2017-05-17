@@ -10,8 +10,6 @@
 <title>Risultato ricerca</title>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<script language="javascript" src="scripts/Ellips-sign.js"></script>
-<script language="javascript" src="scripts/applet_sign_actalis.js"></script>
 </head>
 
 <body class="Form">
@@ -26,18 +24,6 @@
 			<td>  	
 				<% bp.writeFormInput(out,null,"ti_visibilita",false,null,"onclick=\"javascript:submitForm('doCambiaVisibilita')\""); %>
 			</td>
-			<td>
-				<% if (bp.isSignEnabled()) {%>
-					<span class="FormLabel">Firma digitale</span>
-				<% } %>
-			</td>
-			<td>
-				<% if (bp.isSignEnabled()) {%>
-				    <script type="text/javascript" language="JavaScript">
-				  		loadApplet();
-				    </script>
-				<% } %>
-			</td>
 		</tr>
 		<tr height="100%">
 			<td colspan="4">
@@ -50,24 +36,6 @@
 			</td>
 		</tr>
 	</table>
-	<% if (bp.isSignEnabled() && bp.isSignFile()) {%>
-		<% bp.setSignFile(false);
-		   request.getSession().setAttribute("sign_pg_stampa", bp.getPgStampa()); %>
-	    <script type="text/javascript" language="JavaScript">
-		    var oldonload = window.onload;
-		    window.onload = function() {
-			    if (typeof oldonload != 'function') {
-			        oldonload();
-			    }
-		    	downloadFile="<%=bp.getDownloadFile(pageContext)%>";
-				uploadFile="<%=bp.getUploadFile(pageContext)%>";
-				bpPath="<%=bp.getPath()%>";
-				fileName="<%=bp.getFileName()%>";
-		    	signIterative(downloadFile, uploadFile, bpPath, fileName);
-		    }
-	    </script>
-	<%-- ATTENZIONE - non mettere altri javascript dopo la funzione "onload" altrimenti questa non funziona --%>
-	<% } %>
 	<% if (bp.isEMailEnabled()){ %>
 		<div class="GroupLabel">E-Mail</div>          
 		<table class="Group" >

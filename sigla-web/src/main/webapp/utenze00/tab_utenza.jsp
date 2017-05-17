@@ -54,7 +54,7 @@
 	<td><% bp.getController().writeFormInput( out, "dt_fine_validita"); %></td>
 	</tr>
 	<tr>
-	<td><% JSPUtils.button(out,bp.encodePath("img/cut24.gif"),bp.encodePath("img/cut24.gif"),"Annulla password","javascript:submitForm('doResetPassword')",bp.isEditing()); %></td>
+	<td><% JSPUtils.button(out,bp.encodePath("img/cut24.gif"),bp.encodePath("img/cut24.gif"),"Annulla password","javascript:submitForm('doResetPassword')",bp.isEditing(), bp.getParentRoot().isBootstrap()); %></td>
 	<td><% bp.getController().writeFormInput( out, "fl_password_change"); %>
 			<% bp.getController().writeFormLabel( out, "fl_password_change"); %></td>
 	</tr>
@@ -82,7 +82,7 @@
 	<%} %>
 		<tr>
 			<td colspan="2" align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/properties24.gif"),bp.encodePath("img/properties24.gif"),bp.encodePath("Abilitazione accesso in SIGLA"), "javascript:submitForm('doVerificaAbilitazioneUtenteLdap')",bulk!=null && bulk.getCd_utente_uid()!=null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/properties24.gif"),bp.encodePath("img/properties24.gif"),bp.encodePath("Abilitazione accesso in SIGLA"), "javascript:submitForm('doVerificaAbilitazioneUtenteLdap')",bulk!=null && bulk.getCd_utente_uid()!=null,bp.getParentRoot().isBootstrap()); %>
 			</td>		
 		</tr>
 	</table>
