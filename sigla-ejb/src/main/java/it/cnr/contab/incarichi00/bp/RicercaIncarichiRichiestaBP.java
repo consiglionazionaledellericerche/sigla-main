@@ -400,9 +400,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = contratto.getProcedura_amministrativa().getDs_proc_amm(); 
 		elementBeneficiario.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementBeneficiario);
-		
-		
-
+			
 		Element elementDataInizio = xmldoc.createElement(getTagRadice()+":datainizio");
 		String datai=null;
 		if(contratto.getDt_inizio_validita()!=null)
@@ -444,7 +442,12 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = contratto.getFigura_giuridica_interna().getAnagrafico().getCodice_fiscale(); 
 		elementCodFisCnr.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementCodFisCnr);
-		
+
+		Element elementCodiceAnac = xmldoc.createElement(getTagRadice()+":codice_anac");
+		dato = contratto.getProcedura_amministrativa().getCodice_anac(); 
+		elementCodiceAnac.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementContratto.appendChild(elementCodiceAnac);
+	
 		//eliminata pubblicazione dei file
 		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
 			if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO)){
