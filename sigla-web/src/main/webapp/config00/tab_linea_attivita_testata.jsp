@@ -75,7 +75,11 @@
 		<% bp.getController().writeFormLabel(out,"ti_gestione"); %>
 		</td>
 		<td>
-		<% bp.getController().writeFormInput(out,null,"ti_gestione",false,null,"onclick=\"submitForm('doCambiaGestione')\""); %>
+		<% if (bp.isFlTiGestioneES()) 
+				bp.getController().writeFormInput(out,null,"ti_gestioneES",false,null,"onclick=\"submitForm('doCambiaGestione')\"");
+		   else
+				bp.getController().writeFormInput(out,null,"ti_gestione",false,null,"onclick=\"submitForm('doCambiaGestione')\""); 
+		%>
 		</td>
 	</tr>
 	<% if (WorkpackageBulk.TI_GESTIONE_SPESE.equals(bulk.getTi_gestione()) || 
