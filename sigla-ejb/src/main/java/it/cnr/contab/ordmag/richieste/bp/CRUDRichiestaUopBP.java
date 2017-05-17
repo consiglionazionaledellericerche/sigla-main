@@ -274,9 +274,9 @@ public CRUDRichiestaUopBP(String function) throws BusinessProcessException{
 // *
 // * @return Il valore della proprietà 'dettaglio'
 // */
-//public final SimpleDetailCRUDController getRighe() {
-//	return righe;
-//}
+public final SimpleDetailCRUDController getRighe() {
+	return righe;
+}
 ///**
 // * Restituisce il valore della proprietà 'dettaglioObbligazioneController'
 // *
