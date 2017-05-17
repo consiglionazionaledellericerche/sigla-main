@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.UnitaMisuraCoeffMagBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.UnitaMisuraCoeffMagHome">
+	<defaultColumnMap
+		tableName="UNITA_MISURA_COEFF_MAG">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="beneServizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA_CAR"
+			propertyName="unitaMisuraCar.cdUnitaMisura" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA_SCA"
+			propertyName="unitaMisuraSca.cdUnitaMisura" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="magazzino"
+		partOfOid="true" />
+	<persistentProperty
+		name="beneServizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="unitaMisuraCar" />
+	<persistentProperty
+		name="unitaMisuraSca" />
+</SQLPersistentInfo>

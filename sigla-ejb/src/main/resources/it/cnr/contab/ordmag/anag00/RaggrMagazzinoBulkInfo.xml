@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta l'anagrafica dei raggruppamenti di magazzino."
+	longDescription="Rappresenta l'anagrafica dei raggruppamenti di magazzino.">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdRaggrMagazzino"
+		property="cdRaggrMagazzino"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsRaggrMagazzino"
+		property="dsRaggrMagazzino"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Tipo" />
+	<fieldProperty
+		name="metodo"
+		property="metodo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Metodo" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdRaggrMagazzino" />
+	</form>
+	<formFieldProperty
+		name="cdRaggrMagazzino" />
+	<formFieldProperty
+		name="dsRaggrMagazzino" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="metodo" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdRaggrMagazzino" />
+	<findFieldProperty
+		name="dsRaggrMagazzino" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="metodo" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdRaggrMagazzino" />
+	<columnFieldProperty
+		name="dsRaggrMagazzino" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="metodo" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>
