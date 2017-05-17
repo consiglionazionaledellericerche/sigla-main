@@ -3,8 +3,10 @@ package it.cnr.contab.config00.bulk;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -75,5 +77,16 @@ public class Parametri_enteHome extends BulkHome
     	if (parente!=null)
     		return parente.getFl_informix();
     	return true;
-	}	
+    }
+
+    @Override
+    public void initializeBulkForInsert(UserContext usercontext, OggettoBulk oggettobulk)
+    		throws PersistencyException, ComponentException {
+    	((Parametri_enteBulk)oggettobulk).setFl_autenticazione_ldap(Boolean.FALSE);
+    	((Parametri_enteBulk)oggettobulk).setAttivo(Boolean.FALSE);    	
+    	((Parametri_enteBulk)oggettobulk).setFl_informix(Boolean.FALSE);    	
+    	((Parametri_enteBulk)oggettobulk).setFl_gae_es(Boolean.FALSE);    	
+    	super.initializeBulkForInsert(usercontext, oggettobulk);
+    }
+    
 }
