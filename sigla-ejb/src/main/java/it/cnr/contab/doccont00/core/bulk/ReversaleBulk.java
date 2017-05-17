@@ -4,6 +4,7 @@ import java.math.*;
 import java.util.*;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
@@ -671,7 +672,15 @@ public void validate() throws ValidationException {
 	// controllo su campo DATA EMISSIONE
 	if ( getDt_emissione() == null )
 		throw new ValidationException( "Il campo DATA CONTABILITA' è obbligatorio." );
-
+	if(getDs_reversale()!=null && getDs_reversale().length()!=0){
+			for (int i = 0;i <getDs_reversale().length();i++){
+				if ((((int) RemoveAccent.convert(getDs_reversale()).charAt(i))<31||
+					  ((int) RemoveAccent.convert(getDs_reversale()).charAt(i))>126) &&
+					  (int) RemoveAccent.convert(getDs_reversale()).charAt(i)!=13&&
+					  (int) RemoveAccent.convert(getDs_reversale()).charAt(i)!=10 )					  
+				throw new ValidationException( "La descrizione contienere caratteri speciali non supportati." );
+			}
+		}
 	for (Iterator i = getSospeso_det_etrColl().iterator(); i.hasNext(); )
 		((Sospeso_det_etrBulk) i.next()).validate();
 
