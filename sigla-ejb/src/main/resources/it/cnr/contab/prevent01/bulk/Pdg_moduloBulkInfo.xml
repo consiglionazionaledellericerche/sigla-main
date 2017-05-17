@@ -276,7 +276,21 @@
 		inputType="ROTEXT"
 		maxLength="50"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Tot.Risorse per&lt;BR&gt;Progetto" />				
+		label="Tot.Risorse per&lt;BR&gt;Progetto" />	
+		
+	<fieldProperty
+		name="statoDecisionale"
+		property="statoDecisionale"
+		inputType="ROTEXT"
+		inputSize="5"
+		label="Contr." />
+	<fieldProperty
+		name="statoGestionale"
+		property="statoGestionale"
+		inputType="ROTEXT"
+		inputSize="5"
+		label="Contr." />
+					
 	<formFieldProperty
 		name="esercizio_ro" />
 	<formFieldProperty
@@ -334,6 +348,11 @@
 	<formFieldProperty
 		name="searchtool_progetto_liv2" />
 
+	<formFieldProperty
+		name="statoDecisionale" />
+	<formFieldProperty
+		name="statoGestionale" />
+
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -383,5 +402,17 @@
 		<columnFieldProperty
 			name="stato"
 			label="Stato attuale" />
+		<columnFieldProperty
+			name="statoDecisionale"
+			label="Contr."
+			headerStyle="text-align: center"
+			columnStyle="text-align: center"
+			headerLabel="DATI PRESENTI" />
+		<columnFieldProperty
+			name="statoGestionale"
+			label="Gest."
+			headerStyle="text-align: center"
+			columnStyle="text-align: center"
+			headerLabel="DATI PRESENTI" />
 	</columnSet>
 </bulkInfo>

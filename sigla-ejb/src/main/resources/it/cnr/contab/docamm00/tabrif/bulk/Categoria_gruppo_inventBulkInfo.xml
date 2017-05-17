@@ -190,15 +190,10 @@
 			name="livello" 
 			style="width:300px"/>			
 	</columnSet>
-	  <form name="searchtool">
+    <form name="searchtool">
 		<formFieldProperty
 			name="cd_categoria_gruppo"/>
 		<formFieldProperty
-			name="ds_categoria_gruppo"
-			enabledOnFreeSearch="true"
-			enabledOnSearch="true"
-			inputType="TEXT"
-			inputSize="50"
-		 />
+			name="ds_categoria_gruppo"/>
     </form>    	
 </bulkInfo>

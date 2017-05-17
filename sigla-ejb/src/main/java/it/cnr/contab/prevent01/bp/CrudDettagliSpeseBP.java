@@ -73,6 +73,9 @@ public class CrudDettagliSpeseBP extends SimpleDetailCRUDController{
 	public String getLabelClassificazione(){
 		return geModuloCosti().getDescrizioneClassificazione();
 	}
+	public String getLabelClassificazione_codlast(){
+		return geModuloCosti().getDescrizioneClassificazione();
+	}
 	public String getLabelTot_competenza_anno_in_corso(){
 		return "Totale competenza "+geModuloCosti().getAnno_corrente()+" (A+B)";
 	}

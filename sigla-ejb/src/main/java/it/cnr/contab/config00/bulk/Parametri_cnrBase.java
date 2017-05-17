@@ -1,7 +1,6 @@
 package it.cnr.contab.config00.bulk;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import it.cnr.jada.persistency.Keyed;
 
@@ -46,6 +45,7 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private String clausolaOrdine;
 	private java.sql.Timestamp data_stipula_contratti;
 	private Boolean fl_nuovo_pdg;
+	private Boolean fl_pdg_codlast;
 	private java.sql.Timestamp data_attivazione_new_voce;
 	
 	private Boolean fl_tesoreria_unica;
@@ -332,7 +332,16 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	public Boolean getFl_pubblica_contratto() {
 		return fl_pubblica_contratto;
 	}
+
 	public void setFl_pubblica_contratto(Boolean fl_pubblica_contratto) {
 		this.fl_pubblica_contratto = fl_pubblica_contratto;
 	}	
+
+	public Boolean getFl_pdg_codlast() {
+		return fl_pdg_codlast;
+	}
+	
+	public void setFl_pdg_codlast(Boolean fl_pdg_codlast) {
+		this.fl_pdg_codlast = fl_pdg_codlast;
+	}
 }

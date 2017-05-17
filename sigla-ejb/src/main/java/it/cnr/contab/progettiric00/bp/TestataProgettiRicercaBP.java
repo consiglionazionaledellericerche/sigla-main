@@ -4,8 +4,13 @@ import java.rmi.RemoteException;
 
 import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.config00.blob.bulk.*;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.progettiric00.ejb.*;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
+import it.cnr.jada.action.Config;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.*;
@@ -13,6 +18,8 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 
 public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IProgettoBP{
+	private boolean flNuovoPdg = false;
+	private boolean flInformix = false;
 
 	private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController( "Dettagli", Progetto_uoBulk.class, "dettagli", this) {
 		public void validateForDelete(ActionContext context, OggettoBulk detail)
@@ -39,10 +46,26 @@ public TestataProgettiRicercaBP() {
 public TestataProgettiRicercaBP(String function) {
 	super(function);
 }
+
+@Override
+protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+	super.init(config, actioncontext);
+	try {
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
+		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+		Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
+		setFlInformix(parEnte.getFl_informix().booleanValue());
+	}catch(Throwable e) {
+		throw new BusinessProcessException(e);
+	}
+}
 public BulkInfo getBulkInfo()
 {
 	BulkInfo infoBulk = super.getBulkInfo();
-	infoBulk.setShortDescription("Commesse");
+	if (!this.isFlNuovoPdg())
+		infoBulk.setShortDescription("Commesse");
+	else
+		infoBulk.setShortDescription(ProgettoBulk.LABEL_AREA_PROGETTUALE);
 	return infoBulk;
 }
 	public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudDettagli() {
@@ -246,7 +269,12 @@ public boolean isActive(OggettoBulk bulk,int sel) {
  * */
 public String getFormTitle()
 {
-	StringBuffer stringbuffer = new StringBuffer("Commesse");
+	StringBuffer stringbuffer = new StringBuffer();
+	if (isFlNuovoPdg())
+		stringbuffer = stringbuffer.append(ProgettoBulk.LABEL_PROGETTO);
+	else
+		stringbuffer = stringbuffer.append("Commesse");
+
 	stringbuffer.append(" - ");
 	switch(getStatus())
 	{
@@ -280,7 +308,8 @@ public int getLivelloProgetto() {
 public void validaUO(ActionContext context, it.cnr.jada.bulk.OggettoBulk detail) throws ValidationException {
 	try {
 		// controllo viene effettuato solo per i moduli attività
-		if (getLivelloProgetto()==ProgettoBulk.LIVELLO_PROGETTO_TERZO.intValue())
+		if ((this.isFlNuovoPdg() && getLivelloProgetto()==ProgettoBulk.LIVELLO_PROGETTO_SECONDO.intValue()) ||
+			(!this.isFlNuovoPdg() && getLivelloProgetto()==ProgettoBulk.LIVELLO_PROGETTO_TERZO.intValue()))
 			((ProgettoRicercaComponentSession)createComponentSession()).validaCancellazioneUoAssociata(
 				context.getUserContext(),
 				(ProgettoBulk)getModel(),
@@ -293,4 +322,21 @@ public void validaUO(ActionContext context, it.cnr.jada.bulk.OggettoBulk detail)
 		throw new ValidationException(e.getMessage());
 	}
 }
+
+public boolean isFlNuovoPdg() {
+	return flNuovoPdg;
+}
+
+private void setFlNuovoPdg(boolean flNuovoPdg) {
+	this.flNuovoPdg = flNuovoPdg;
+}
+
+public boolean isFlInformix() {
+	return flInformix;
+}
+
+public void setFlInformix(boolean flInformix) {
+	this.flInformix = flInformix;
+}
+
 }

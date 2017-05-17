@@ -75,7 +75,11 @@ public class ProgettoBase extends ProgettoKey implements Keyed {
 	//FL_PIANO_TRIENNALE CHAR(1) NOT NULL
 	private Boolean fl_piano_triennale;
 	
-public ProgettoBase() {
+	private String cd_programma;
+
+	private String cd_missione;
+
+	public ProgettoBase() {
 	super();
 }
 public ProgettoBase(java.lang.Integer esercizio,java.lang.Integer pg_progetto,java.lang.String tipo_fase) {
@@ -350,5 +354,17 @@ public void setNote(java.lang.String note) {
 	public void setFl_piano_triennale(Boolean fl_piano_triennale) {
 		this.fl_piano_triennale = fl_piano_triennale;
 	}
-
+	
+	public String getCd_programma() {
+		return cd_programma;
+	}
+	public void setCd_programma(String cd_programma) {
+		this.cd_programma = cd_programma;
+	}
+	public String getCd_missione() {
+		return cd_missione;
+	}
+	public void setCd_missione(String cd_missione) {
+		this.cd_missione = cd_missione;
+	}
 }
