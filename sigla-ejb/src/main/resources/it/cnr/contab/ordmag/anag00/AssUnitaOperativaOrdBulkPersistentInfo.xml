@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.AssUnitaOperativaOrdBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.AssUnitaOperativaOrdHome">
+	<defaultColumnMap
+		tableName="ASS_UNITA_OPERATIVA_ORD">
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA_RIF"
+			propertyName="unitaOperativaOrdRif.cdUnitaOperativa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOperativaOrd"
+		partOfOid="true" />
+	<persistentProperty
+		name="unitaOperativaOrdRif"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.TipoArticoloKey">
+	<defaultColumnMap
+		tableName="TIPO_ARTICOLO">
+		<columnMapping
+			columnName="CD_TIPO_ARTICOLO"
+			propertyName="cdTipoArticolo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdTipoArticolo"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,14 +1,19 @@
 package it.cnr.contab.config00.bp;
 
-
 import java.rmi.RemoteException;
 
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.latt.bulk.CofogBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
-import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
+import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -16,7 +21,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.action.SimpleCRUDBP;
@@ -26,15 +31,32 @@ public class CRUDWorkpackageBP extends SimpleCRUDBP {
 	private final SimpleDetailCRUDController risultati = new SimpleDetailCRUDController("risultati",it.cnr.contab.config00.latt.bulk.RisultatoBulk.class,"risultati",this);
 	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
 	private boolean flNuovoPdg = false;
+	private boolean flTiGestioneES = false;
 	
 	private Unita_organizzativaBulk uoScrivania;
 	private Integer esercizioScrivania;
+
+	private Pdg_modulo_speseBulk pdgModuloSpese;
+	private Pdg_Modulo_EntrateBulk pdgModuloEntrate;
+	private CdrBulk pdgCdrAssegnatario;
 
 	public CRUDWorkpackageBP() {
 	super();
 }
 public CRUDWorkpackageBP(String function) {
 	super(function);
+}
+public CRUDWorkpackageBP(String function, Pdg_modulo_speseBulk pdgModuloSpese, CdrBulk pdgCdrAssegnatario)
+		throws BusinessProcessException {
+	this(function);
+	this.pdgModuloSpese = pdgModuloSpese;
+	this.pdgCdrAssegnatario = pdgCdrAssegnatario;
+}
+public CRUDWorkpackageBP(String function, Pdg_Modulo_EntrateBulk pdgModuloEntrate, CdrBulk pdgCdrAssegnatario)
+		throws BusinessProcessException {
+	this(function);
+	this.pdgModuloEntrate = pdgModuloEntrate;
+	this.pdgCdrAssegnatario = pdgCdrAssegnatario;
 }
 /**
  * Ritorna i risultati della linea di attività
@@ -98,6 +120,8 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		setEsercizioScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(actioncontext));
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+		Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
+		setFlTiGestioneES(parEnte.getFl_gae_es().booleanValue());
 		aggiornaGECO(actioncontext.getUserContext());
 		super.initialize(actioncontext);
 	} catch (ComponentException e) {
@@ -153,9 +177,104 @@ public boolean isFlNuovoPdg() {
 private void setFlNuovoPdg(boolean flNuovoPdg) {
 	this.flNuovoPdg = flNuovoPdg;
 }
+public boolean isFlTiGestioneES() {
+	return flTiGestioneES;
+}
+public void setFlTiGestioneES(boolean flTiGestioneES) {
+	this.flTiGestioneES = flTiGestioneES;
+}
 @Override
 public String getSearchResultColumnSet() {
 	if (this.isFlNuovoPdg()) return "prg_liv2";
 	return super.getSearchResultColumnSet();
+}
+@Override
+public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk)
+		throws BusinessProcessException {
+	oggettobulk = super.initializeModelForInsert(actioncontext, oggettobulk);
+	try {
+		if (this.pdgCdrAssegnatario!=null) {
+			((WorkpackageBulk)oggettobulk).setCentro_responsabilita(this.pdgCdrAssegnatario);
+			if (this.pdgModuloSpese!=null) {
+				Progetto_sipBulk progettoSip = this.pdgModuloSpese.getPdg_modulo_costi().getPdg_modulo().getProgetto();
+				ProgettoBulk progetto = ((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progettoSip.getEsercizio(), progettoSip.getPg_progetto(), progettoSip.getTipo_fase())));
+				progetto.setProgettopadre((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+				
+				((WorkpackageBulk)oggettobulk).setTi_gestione(WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+				((WorkpackageBulk)oggettobulk).setProgetto2016(progetto);
+				((WorkpackageBulk)oggettobulk).setPdgMissione(this.pdgModuloSpese.getPdgMissione());				
+				((WorkpackageBulk)oggettobulk).setPdgProgramma((Pdg_programmaBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));			
+				((WorkpackageBulk)oggettobulk).setCofog(this.pdgModuloSpese.getCofog());			
+			} else if (this.pdgModuloEntrate!=null) {
+				Progetto_sipBulk progettoSip = this.pdgModuloEntrate.getTestata().getProgetto();
+				ProgettoBulk progetto = ((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progettoSip.getEsercizio(), progettoSip.getPg_progetto(), progettoSip.getTipo_fase())));
+				progetto.setProgettopadre((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+				
+				((WorkpackageBulk)oggettobulk).setTi_gestione(WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+				((WorkpackageBulk)oggettobulk).setProgetto2016(progetto);
+				((WorkpackageBulk)oggettobulk).setPdgProgramma((Pdg_programmaBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));			
+			}
+		}
+	} catch (ComponentException e) {
+		throw new BusinessProcessException(e);
+	} catch (RemoteException e) {
+		throw new BusinessProcessException(e);
+	} 
+	return oggettobulk;
+}
+@Override
+public OggettoBulk initializeModelForSearch(ActionContext actioncontext, OggettoBulk oggettobulk)
+		throws BusinessProcessException {
+	oggettobulk = super.initializeModelForSearch(actioncontext, oggettobulk);
+	try {
+		if (this.pdgCdrAssegnatario!=null) {
+			((WorkpackageBulk)oggettobulk).setCentro_responsabilita(this.pdgCdrAssegnatario);
+			if (this.pdgModuloSpese!=null) {
+				Progetto_sipBulk progettoSip = this.pdgModuloSpese.getPdg_modulo_costi().getPdg_modulo().getProgetto();
+				ProgettoBulk progetto = ((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progettoSip.getEsercizio(), progettoSip.getPg_progetto(), progettoSip.getTipo_fase())));
+				progetto.setProgettopadre((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+				
+				((WorkpackageBulk)oggettobulk).setProgetto2016(progetto);
+				((WorkpackageBulk)oggettobulk).setPdgMissione(this.pdgModuloSpese.getPdgMissione());				
+				((WorkpackageBulk)oggettobulk).setPdgProgramma((Pdg_programmaBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));			
+				((WorkpackageBulk)oggettobulk).setCofog(this.pdgModuloSpese.getCofog());			
+			} else if (this.pdgModuloEntrate!=null) {
+				Progetto_sipBulk progettoSip = this.pdgModuloEntrate.getTestata().getProgetto();
+				ProgettoBulk progetto = ((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progettoSip.getEsercizio(), progettoSip.getPg_progetto(), progettoSip.getTipo_fase())));
+				progetto.setProgettopadre((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+				
+				((WorkpackageBulk)oggettobulk).setTi_gestione(WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+				((WorkpackageBulk)oggettobulk).setProgetto2016(progetto);
+				((WorkpackageBulk)oggettobulk).setPdgProgramma((Pdg_programmaBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));			
+			}
+		}
+	} catch (ComponentException e) {
+		throw new BusinessProcessException(e);
+	} catch (RemoteException e) {
+		throw new BusinessProcessException(e);
+	} 
+	return oggettobulk;
+}
+public boolean isMapFromPianoGestioneSpese(){
+	return this.pdgModuloSpese!=null;
+}
+public boolean isMapFromPianoGestioneEntrate(){
+	return this.pdgModuloEntrate!=null;
+}
+@Override
+public void validate(ActionContext actioncontext) throws ValidationException {
+	if (this.pdgModuloSpese!=null && WorkpackageBulk.TI_GESTIONE_ENTRATE.equals(((WorkpackageBulk)getModel()).getTi_gestione()))
+		throw new ValidationException("Il tipo di gestione non può essere di tipo entrata.");
+	if (this.pdgModuloEntrate!=null && WorkpackageBulk.TI_GESTIONE_SPESE.equals(((WorkpackageBulk)getModel()).getTi_gestione()))
+		throw new ValidationException("Il tipo di gestione non può essere di tipo spesa.");
+	super.validate(actioncontext);
 }
 }
