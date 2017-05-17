@@ -18,6 +18,7 @@ restoreWorkspace();
 <% BusinessProcess bp = BusinessProcess.getBusinessProcess(request);
 	BusinessProcess.encode(bp,pageContext); %>
 <input type="hidden" name="comando" value="doDefault">
+<%if (!bp.getParentRoot().isBootstrap()) { %>
 <table class="Window" cellspacing="0" cellpadding="2" align="center" width="280">
 		<tr><td class="FormTitle">Informazione</td></tr>
 	<tr>
@@ -43,6 +44,26 @@ restoreWorkspace();
 		</td>
 	</tr>
 </table>
+<% } else { %>	
+	<div class="col-md-6 offset-md-3">
+		<div class="card">
+		  <h3 class="card-header h2 text-danger"><i class="fa fa-exclamation-circle fa-fw fa-2x text-danger" aria-hidden="true"></i> Errore</h3>
+		  <div class="card-block">
+		    <p class="card-title">
+						Operazione in corso.
+				  		<br>L'ultima operazione richiesta è ancora in corso.
+						<br>Per controllare se l'operazione è terminata premere il bottone 'riprova'.
+						<% if (bp != null) { %>
+							<br>Per chiudere la pagina premere il bottone 'chiudi' (l'operazione NON verrà interrotta).
+						<% } %>
+		    <div class="col-sm-offset-5 text-center">
+				<button class="btn btn-primary col-md-5" onclick="if (disableDblClick()) submitForm('doDefault')">Riprova</button>
+				<button class="btn btn-primary col-md-5" onclick="if (disableDblClick()) _submitForm(document.mainForm,'doCloseAll()',true,'GestioneMenu.do');">Chiudi</button>
+			</div>
+		  </div>
+		</div>
+	</div>
+<% }%>
 </form>
 </body>
 </html>

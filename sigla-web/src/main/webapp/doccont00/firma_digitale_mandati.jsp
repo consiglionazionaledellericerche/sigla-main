@@ -18,40 +18,40 @@ AbstractFirmaDigitaleDocContBP bp = (AbstractFirmaDigitaleDocContBP)BusinessProc
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript">
 function doVisualizzaSingoloDocumento(esercizio, cds , numero_documento, tipo) {	
-	doPrint('genericdownload/Documento contabile '+esercizio+'-'+cds+'-'+numero_documento+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_documento='+numero_documento+'&tipo='+tipo+'&methodName=scaricaDocumento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Documento contabile '+esercizio+'-'+cds+'-'+numero_documento+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_documento='+numero_documento+'&tipo='+tipo+'&methodName=scaricaDocumento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 function doVisualizzaDocumenti() {
 	elementName = "mainTable.selection", mainTableSelection = "";
 	for (j = 0;j < document.mainForm.elements.length;j++)
 		if (document.mainForm.elements[j].name == elementName && document.mainForm.elements[j].checked)
 			mainTableSelection += "&" + elementName + "=" + document.mainForm.elements[j].value;
-	doPrint('genericdownload/Documenti Contabili.pdf?methodName=scaricaDocumenti&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>&mainTable.focus=0' + mainTableSelection);
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Documenti Contabili.pdf?methodName=scaricaDocumenti&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>&mainTable.focus=0' + mainTableSelection);
 }
 </script>
 </head>
 <body class="Form">
 
 <% bp.openFormWindow(pageContext); %>
-	<table class="Panel" width="100%" height="100%">
-		<tr>
-			<td>
-				<fieldset>
-				<% bp.writeFormLabel(out,"stato_trasmissione"); %>
-				<% bp.writeFormInput(out,null,"stato_trasmissione",false,null,"onchange=\"javascript:submitForm('doCambiaVisibilita')\""); %>
-				</fieldset>
-			</td>		
-		</tr>
-		<tr height="100%">
-			<td colspan="4">
-				<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
-			</td> 
-		</tr>
-		<tr>
-			<td colspan="4">
-				<% bp.writeHTMLNavigator(out); %>
-			</td>
-		</tr>
-	</table>
-	<%	bp.closeFormWindow(pageContext); %>
+<table class="Panel" width="100%" height="100%">
+	<tr>
+		<td>
+			<fieldset>
+			<% bp.writeFormLabel(out,"stato_trasmissione"); %>
+			<% bp.writeFormInput(out,null,"stato_trasmissione",false,null,"onchange=\"javascript:submitForm('doCambiaVisibilita')\""); %>
+			</fieldset>
+		</td>		
+	</tr>
+	<tr height="100%">
+		<td colspan="4">
+			<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
+		</td> 
+	</tr>
+	<tr>
+		<td colspan="4">
+			<% bp.writeHTMLNavigator(out); %>
+		</td>
+	</tr>
+</table>
+<%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>

@@ -118,10 +118,10 @@
 <table width="100%">		
 	<tr>
 	<td ALIGN="CENTER">
-		<% JSPUtils.button(out,bp.encodePath("img/new24.gif"),bp.encodePath("img/new24.gif"),"Crea/Ricerca<br>impegno","javascript:submitForm('doRicercaScadenzaObbligazione')",bp.areBottoniObbligazioneAbilitati()); %>
-		<% JSPUtils.button(out,bp.encodePath("img/remove24.gif"),bp.encodePath("img/remove24.gif"),"Elimina<br>impegno","javascript:submitForm('doEliminaScadenzaObbligazione')",bp.areBottoniObbligazioneAbilitati()); %>
-		<% JSPUtils.button(out,bp.encodePath("img/redo24.gif"),bp.encodePath("img/redo24.gif"), "Aggiorna in<br>manuale", "javascript:submitForm('doOpenObbligazioniWindow')", bp.isBottoneObbligazioneAggiornaManualeAbilitato()); %>
-		<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"), "Aggiorna in<br>automatico", "javascript:submitForm('doModificaScadenzaInAutomatico')", bp.areBottoniObbligazioneAbilitati()); %>
+		<% JSPUtils.button(out,bp.encodePath("img/new24.gif"),bp.encodePath("img/new24.gif"),"Crea/Ricerca<br>impegno","javascript:submitForm('doRicercaScadenzaObbligazione')",bp.areBottoniObbligazioneAbilitati(),bp.getParentRoot().isBootstrap()); %>
+		<% JSPUtils.button(out,bp.encodePath("img/remove24.gif"),bp.encodePath("img/remove24.gif"),"Elimina<br>impegno","javascript:submitForm('doEliminaScadenzaObbligazione')",bp.areBottoniObbligazioneAbilitati(),bp.getParentRoot().isBootstrap()); %>
+		<% JSPUtils.button(out,bp.encodePath("img/redo24.gif"),bp.encodePath("img/redo24.gif"), "Aggiorna in<br>manuale", "javascript:submitForm('doOpenObbligazioniWindow')", bp.isBottoneObbligazioneAggiornaManualeAbilitato(),bp.getParentRoot().isBootstrap()); %>
+		<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"), "Aggiorna in<br>automatico", "javascript:submitForm('doModificaScadenzaInAutomatico')", bp.areBottoniObbligazioneAbilitati(), bp.getParentRoot().isBootstrap()); %>
 	</td>
 	</tr>
 </table>
@@ -154,7 +154,8 @@
 <table width="100%">
 	<tr>
 	<td ALIGN="CENTER">
-		<% JSPUtils.button(out, null, null, "Visualizza missione", "javascript:submitForm('doVisualizzaMissione')", true); %>
+		<% JSPUtils.button(out, null, null, "Visualizza missione", "javascript:submitForm('doVisualizzaMissione')", true,
+				bp.getParentRoot().isBootstrap()); %>
 	</td>
 	</tr>
 </table>

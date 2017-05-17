@@ -16,10 +16,10 @@
 	<tr>
 <!--
 	<td>	<% bp.getController().writeFormLabel( out, "esercizio_competenza"); %></td>
-	<td>	<% bp.getController().writeFormInput(out,"default","esercizio_competenza", bp.isFromDocAmm(),"FormInput",null); %>
+	<td>	<% bp.getController().writeFormInput(out,"default","esercizio_competenza", bp.isFromDocAmm(),null,null); %>
 -->	
 	<td><% bp.getController().writeFormLabel( out, "esercizio_originale"); %></td>
-	<td><% bp.getController().writeFormInput( out,"default","esercizio_originale",false,"FormInput",null); %>
+	<td><% bp.getController().writeFormInput( out,"default","esercizio_originale",false,null,null); %>
 	  		<% if ( !accertamento.isResiduo()) 
 	  			{ 
 			 		bp.getController().writeFormLabel( out, "dt_cancellazione"); 
@@ -28,11 +28,11 @@
 	</td>		
 	<td align="right">
 		<%if (bp instanceof CRUDAccertamentoResiduoBP && ((CRUDAccertamentoResiduoBP)bp).isFlagAutomaticoEnabledOnView()) { %>
-	        <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico_eov",false,"FormInput","onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
+	        <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico_eov",false,null,"onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
   	        <% bp.getController().writeFormLabel( out, "fl_calcolo_automatico_eov"); %></td>
 		<% } else { %>
 		<td align="right">
-	        <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico",false,"FormInput","onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
+	        <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico",false,null,"onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
   	        <% bp.getController().writeFormLabel( out, "fl_calcolo_automatico"); %></td>
 		<% } %>
 	</tr>
@@ -141,9 +141,9 @@
 	
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "cd_voce"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "default","cd_voce", bp.isROCapitolo(),"FormInput",null); %>
-			<% bp.getController().writeFormInput( out, "default","ds_voce", bp.isROCapitolo(),"FormInput",null); %>
-			<% bp.getController().writeFormInput( out, "default","find_capitolo", bp.isROFindCapitolo(),"FormInput",null); %></td>				 
+	<td>	<% bp.getController().writeFormInput( out, "default","cd_voce", bp.isROCapitolo(),null,null); %>
+			<% bp.getController().writeFormInput( out, "default","ds_voce", bp.isROCapitolo(),null,null); %>
+			<% bp.getController().writeFormInput( out, "default","find_capitolo", bp.isROFindCapitolo(),null,null); %></td>				 
 	</tr>
  	
  	<% if (bp.isElementoVoceNewVisible()){ %>

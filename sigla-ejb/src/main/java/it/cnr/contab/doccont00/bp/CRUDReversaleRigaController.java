@@ -105,7 +105,8 @@ public void writeHTMLToolbar(
 					context,
 					"img/find16.gif",
 					!(isInputReadonly() || getDetails().isEmpty() || ((CRUDReversaleBP)getParentController()).isSearching())? command : null,
-					true,"SIOPE - Vai a riga successiva da completare");
+					true,"SIOPE - Vai a riga successiva da completare",
+					HttpActionContext.isFromBootstrap(context));
 			}
 		}
 }
