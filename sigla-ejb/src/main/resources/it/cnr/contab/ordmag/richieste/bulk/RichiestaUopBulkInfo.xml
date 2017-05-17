@@ -91,6 +91,20 @@
 		keysProperty="statoKeys"
 		label="Stato" />
 	<fieldProperty
+		name="statoForSearch"
+		property="stato"
+		inputSize="20"
+		maxLength="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="statoKeysForSearch"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
 		name="dsRichiesta"
 		property="dsRichiesta"
 		inputType="TEXTAREA"
