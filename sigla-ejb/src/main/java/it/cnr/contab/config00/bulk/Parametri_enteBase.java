@@ -32,6 +32,9 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	// FL_INFORMIX CHAR(1)
 	private java.lang.Boolean fl_informix;
 
+	// FL_GAE_ES CHAR(1)
+	private java.lang.Boolean fl_gae_es;
+
 	private java.lang.String ldap_user;	
 
 	private java.lang.String ldap_password;	
@@ -212,5 +215,13 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 
 	public void setFl_informix(java.lang.Boolean fl_informix) {
 		this.fl_informix = fl_informix;
+	}
+	
+	public java.lang.Boolean getFl_gae_es() {
+		return fl_gae_es;
+	}
+	
+	public void setFl_gae_es(java.lang.Boolean fl_gae_es) {
+		this.fl_gae_es = fl_gae_es;
 	}
 }
