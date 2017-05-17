@@ -45,7 +45,7 @@
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"algoritmo"); %></td>
 	<td colspan=2><% bp.getController().writeFormInput(out,"algoritmo"); %></td>
-<!--	<td><% JSPUtils.button(out,null,null,"Inserisci Riga","if (disableDblClick()) submitForm('doAggiungiRiga')",null,true);%></td> -->
+<!--	<td><% JSPUtils.button(out,null,null,"Inserisci Riga","if (disableDblClick()) submitForm('doAggiungiRiga')",null,true, bp.getParentRoot().isBootstrap());%></td> -->
   </tr>			
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"dt_inizio_validita"); %></td>

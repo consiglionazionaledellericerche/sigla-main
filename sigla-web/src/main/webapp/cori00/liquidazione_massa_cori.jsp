@@ -66,7 +66,7 @@
 					<% bp.getController().writeFormInput(out,null,"pg_exec",false,null,"");%>
 				</td>
 				<td>
-					<% JSPUtils.button(out,"img/find24.gif", "Ricerca","javascript:submitForm('doCercaBatch')"); %>
+					<% JSPUtils.button(out,"img/find24.gif", "Ricerca","javascript:submitForm('doCercaBatch')", bp.getParentRoot().isBootstrap()); %>
 				</td>
 			</tr>
 			<table width="100%">

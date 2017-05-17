@@ -82,9 +82,12 @@ public void writeHTMLToolbar(
 			String command = "javascript:submitForm('doRaggruppaScadenze')";
 			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 				context,
-				"img/properties16.gif",
+				HttpActionContext.isFromBootstrap(context)?"fa fa-fw fa-object-group text-primary":"img/properties16.gif",
 				!(isInputReadonly() || getDetails().isEmpty() || ((CRUDObbligazioneBP)getParentController()).isSearching())? command : null,
-				true,"Raggruppa");
+				true,
+				"Raggruppa",
+				"btn-sm btn-secondary btn-title",
+				HttpActionContext.isFromBootstrap(context));
 		}
 }
 }

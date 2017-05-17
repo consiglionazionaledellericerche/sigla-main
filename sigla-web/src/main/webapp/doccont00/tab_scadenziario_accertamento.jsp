@@ -26,9 +26,9 @@
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "im_accertamento"); %></td>
   		<% if (bp.isROImporto()){ %>
-			<td><% bp.getController().writeFormInput( out, "default", "im_accertamento_ro", false, "FormInput", null); %></td>
+			<td><% bp.getController().writeFormInput( out, "default", "im_accertamento_ro", false, null, null); %></td>
 	  	<%} else {%>
-			<td><% bp.getController().writeFormInput( out, "default", "im_accertamento", true, "FormInput", null); %></td>
+			<td><% bp.getController().writeFormInput( out, "default", "im_accertamento", true, null, null); %></td>
 	  	<%}%>
 		</tr>
 		<tr>
@@ -59,6 +59,7 @@
 	
  	<tr>
  	<td colspan=2>
+ 		  <br>
 	      <%JSPUtils.tabbed(pageContext,
 							"tabScadenzario",
 							new String[][] {
@@ -66,7 +67,7 @@
 								{ "tabDettaglioScadenza","Dettaglio Scadenza","/doccont00/tab_dettaglio_scadenza_accertamento.jsp" } },
 							bp.getTab("tabScadenzario"),
 							"center", 
-							"500px", null,
+							"100%", null,
 							!bp.isEditingScadenza() );
 			
 		%>

@@ -127,7 +127,7 @@
 		</table>
 	</div>
 
-   <div class="Group">   
+   <div class="Group card">   
 	<table>	
 	  <tr>
      	<td>
@@ -178,7 +178,7 @@
     </table>
    </div>
 	<% if (fatturaPassiva.getModalita_pagamento() != null && fatturaPassiva.getCessionario() != null) { %>
-		<div class="Group">   
+		<div class="Group card">   
 			<table>	
 				<tr>
 					<td>
