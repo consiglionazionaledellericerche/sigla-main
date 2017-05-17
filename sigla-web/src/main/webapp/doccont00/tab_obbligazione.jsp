@@ -18,13 +18,13 @@
 	<tr colspan=3>
 <!--
 	<td><% bp.getController().writeFormLabel( out, "esercizio_competenza"); %></td>
-	<td><% bp.getController().writeFormInput(out,"default","esercizio_competenza", bp.isFromDocAmm(),"FormInput",null); %></td>	
+	<td><% bp.getController().writeFormInput(out,"default","esercizio_competenza", bp.isFromDocAmm(),null,null); %></td>	
 -->	
 	<td><% bp.getController().writeFormLabel( out, "esercizio_originale"); %></td>
-	<td><% bp.getController().writeFormInput( out,"default","esercizio_originale",false,"FormInput",null); %></td>
+	<td><% bp.getController().writeFormInput( out,"default","esercizio_originale",false,null,null); %></td>
 
 	<td align="right">
-	    <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico",false,"FormInput","onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
+	    <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico",false,null,"onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
 	    <% bp.getController().writeFormLabel( out, "fl_calcolo_automatico"); %></td>
 	</tr>
 	<tr>
@@ -51,7 +51,7 @@
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "ds_obbligazione"); %></td>
 	<td colspan=2>
-		<% bp.getController().writeFormInput( out,"default", "ds_obbligazione",bp.isRoCampiResiduoProprio(),"FormInput",null); %></td>
+		<% bp.getController().writeFormInput( out,"default", "ds_obbligazione",bp.isRoCampiResiduoProprio(),null,null); %></td>
 	</tr>
 
 <!-- 
@@ -130,10 +130,10 @@
 	  <tr>
 	   <td><% bp.getController().writeFormLabel( out, "cd_terzo"); %></td>
 	   <td colspan=2>
-		<% bp.getController().writeFormInput( out,"default","cd_terzo",bp.isRoCampiResiduoProprio(),"FormInput",null); %>
-		<% bp.getController().writeFormInput( out,"default","ds_creditore",bp.isRoCampiResiduoProprio(),"FormInput",null); %>
-		<% bp.getController().writeFormInput( out,"default","find_creditore",bp.isRoCampiResiduoProprio(),"FormInput",null); %>
-		<% bp.getController().writeFormInput( out,"default","crea_creditore",bp.isRoCampiResiduoProprio(),"FormInput",null); %>
+		<% bp.getController().writeFormInput( out,"default","cd_terzo",bp.isRoCampiResiduoProprio(),null,null); %>
+		<% bp.getController().writeFormInput( out,"default","ds_creditore",bp.isRoCampiResiduoProprio(),null,null); %>
+		<% bp.getController().writeFormInput( out,"default","find_creditore",bp.isRoCampiResiduoProprio(),null,null); %>
+		<% bp.getController().writeFormInput( out,"default","crea_creditore",bp.isRoCampiResiduoProprio(),null,null); %>
 	   </td>
 	  </tr>
 	  <tr>
@@ -178,12 +178,19 @@
 			<table>
 			<tr>
 			<td>
-		    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce", bp.isRoCampiResiduoProprio()||bp.isROElemento_voce(),"FormInput",null); %>
-		    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce", bp.isRoCampiResiduoProprio()||bp.isROElemento_voce(),"FormInput",null); %>
-		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",bp.isRoCampiResiduoProprio()|| bp.isROFindElemento_voce(),"FormInput",null); %>
+		    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce", bp.isRoCampiResiduoProprio()||bp.isROElemento_voce(),null,null); %>
+		    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce", bp.isRoCampiResiduoProprio()||bp.isROElemento_voce(),null,null); %>
+		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",bp.isRoCampiResiduoProprio()|| bp.isROFindElemento_voce(),null,null); %>
 			</td>
 			<td>
-			<%JSPUtils.button(out, "img/find16.gif", "img/find16.gif", "Disponibilità<BR>Voce", "if (disableDblClick()) submitForm('doConsultaInserisciVoce')",null,true);%>
+			<%JSPUtils.button(out, 
+					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/find16.gif",
+					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/find16.gif",
+					bp.getParentRoot().isBootstrap() ? "Disponibilità Voce":"Disponibilità<BR>Voce", 
+					"if (disableDblClick()) submitForm('doConsultaInserisciVoce')",
+					"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
+					true, 
+					bp.getParentRoot().isBootstrap());%>
 			</td>
 			</tr>
 			</table>			
@@ -209,16 +216,16 @@
     <%}%>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "cd_riferimento_contratto"); %></td>
-		<td><% bp.getController().writeFormInput( out,"default", "cd_riferimento_contratto", bp.isRoCampiResiduoProprio(),"FormInput",null); %></td>
+		<td><% bp.getController().writeFormInput( out,"default", "cd_riferimento_contratto", bp.isRoCampiResiduoProprio(),null,null); %></td>
 		<td><% bp.getController().writeFormLabel( out, "dt_scadenza_contratto"); %>
-		    <% bp.getController().writeFormInput( out,"default", "dt_scadenza_contratto", bp.isRoCampiResiduoProprio(),"FormInput",null); %></td>
+		    <% bp.getController().writeFormInput( out,"default", "dt_scadenza_contratto", bp.isRoCampiResiduoProprio(),null,null); %></td>
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "cd_tipo_obbligazione"); %></td>
 		<td colspan=2>
-			<% bp.getController().writeFormInput( out,"default", "cd_tipo_obbligazione", bp.isRoCampiResiduoProprio(),"FormInput",null); %>
-			<% bp.getController().writeFormInput( out,"default", "ds_tipo_obbligazione", bp.isRoCampiResiduoProprio(),"FormInput",null); %>
-			<% bp.getController().writeFormInput( out,"default", "find_tipo_obbligazione", bp.isRoCampiResiduoProprio(),"FormInput",null); %>
+			<% bp.getController().writeFormInput( out,"default", "cd_tipo_obbligazione", bp.isRoCampiResiduoProprio(),null,null); %>
+			<% bp.getController().writeFormInput( out,"default", "ds_tipo_obbligazione", bp.isRoCampiResiduoProprio(),null,null); %>
+			<% bp.getController().writeFormInput( out,"default", "find_tipo_obbligazione", bp.isRoCampiResiduoProprio(),null,null); %>
 		</td>
 	</tr>
   </table>

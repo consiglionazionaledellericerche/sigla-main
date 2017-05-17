@@ -122,7 +122,7 @@ public void writeHTMLToolbar(
 		boolean delete) throws java.io.IOException, javax.servlet.ServletException {
 
 		super.writeHTMLToolbar(context, reset, find, delete);
-
+		boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
 		String command = null;
 		if (getParentController() != null)
 			command = (getParentModel() instanceof it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk) ?
@@ -132,10 +132,12 @@ public void writeHTMLToolbar(
 							"javascript:submitForm('doRicercaObbligazione')";
 		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 			context,
-			"img/history16.gif",
+			isFromBootstrap ? "fa fa-fw fa-bolt" : "img/history16.gif",
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDFatturaPassivaBP)getParentController()).isSearching())? command : null,
 			true,
-			"Contabilizza");
+			"Contabilizza",
+			"btn-sm btn-outline-primary btn-title",
+			isFromBootstrap);
 		
 		if (getParentController() instanceof CRUDFatturaPassivaIBP) {
 			CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getParentController();
@@ -148,9 +150,11 @@ public void writeHTMLToolbar(
 
 			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 					context,
-					"img/bookmarks16.gif",
+					isFromBootstrap ? "fa fa-fw fa-clipboard" : "img/bookmarks16.gif",
 					enabled ? "javascript:submitForm('doSdoppiaDettaglio');" : null,
-					true,"Sdoppia");
+					true,"Sdoppia",
+					"btn-sm btn-outline-success btn-title",
+					HttpActionContext.isFromBootstrap(context));
 		}
 }
 }

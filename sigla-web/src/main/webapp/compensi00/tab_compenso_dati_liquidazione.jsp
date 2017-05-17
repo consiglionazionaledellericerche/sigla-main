@@ -115,7 +115,7 @@
 <div class="Panel" style="width:100%">
 <table width="100%">
   <tr>
-	<td colspan=2><% JSPUtils.button(out,null,null,"Esegui Calcolo","javascript:submitForm('doEseguiCalcolo')",null,bp.isBottoneEseguiCalcoloEnabled());%></td>
+	<td colspan=2><% JSPUtils.button(out,null,null,"Esegui Calcolo","javascript:submitForm('doEseguiCalcolo')",null,bp.isBottoneEseguiCalcoloEnabled(), bp.getParentRoot().isBootstrap());%></td>
   </tr>
 </table>
 </div>

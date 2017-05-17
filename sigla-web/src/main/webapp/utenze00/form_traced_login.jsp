@@ -46,15 +46,15 @@
 			<table class="Panel" width="100%">
 			  <tr>
 					<td><span class="FormLabel">Utente</span></td>
-					<td><input type=text readonly name=userid class="FormInput" value="<%= ui.getUserid()%>" size=10></td>
+					<td><input type=text readonly name=userid class=null value="<%= ui.getUserid()%>" size=10></td>
 	  		</tr>
 			  <tr>
 					<TD><span class="FormLabel">Password</span></TD>
-					<TD><input type=password readonly name=password class="FormInput" value="<%= ui.getPassword()%>" size=10></TD>
+					<TD><input type=password readonly name=password class=null value="<%= ui.getPassword()%>" size=10></TD>
 	  		</TR>
 			  <tr>
 					<TD><span class="FormLabel">Descrizione sessione</span></TD>
-					<TD><input type=text name="descrizioneSessione" class="FormInput" value="<%= request.getSession().getId()%>" size=30></TD>
+					<TD><input type=text name="descrizioneSessione" class=null value="<%= request.getSession().getId()%>" size=30></TD>
 	  		</TR>
 			  <TR><td>&nbsp;</td></TR>
 			  <TR>
