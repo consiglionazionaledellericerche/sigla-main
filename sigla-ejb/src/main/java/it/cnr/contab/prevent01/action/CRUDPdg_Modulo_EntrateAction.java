@@ -57,7 +57,21 @@ public Forward doBlankSearchLinea_attivita(ActionContext context, Pdg_Modulo_Ent
 				return handleException(context,e);
 		}
 }
-public Forward doBringBackSearchFind_classificazione_voci(ActionContext context, Pdg_Modulo_EntrateBulk dettaglio, V_classificazione_vociBulk clas) {
+	public Forward doBringBackSearchFind_classificazione_voci(ActionContext context, Pdg_Modulo_EntrateBulk dettaglio, V_classificazione_vociBulk clas) {
+	try {
+		fillModel(context);		
+		if (clas != null) {
+			dettaglio.setClassificazione_voci(clas);
+		}
+		java.util.Collection natura = ((PdgModuloEntrateComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPREVENT01_EJB_Pdg_Modulo_EntrateComponentSession",it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession.class)).findNatura(context.getUserContext(), dettaglio);
+																															 														
+        dettaglio.setNature(natura);
+		return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
+	}
+	public Forward doBringBackSearchFind_classificazione_voci_codlast(ActionContext context, Pdg_Modulo_EntrateBulk dettaglio, V_classificazione_vociBulk clas) {
 	try {
 		fillModel(context);		
 		if (clas != null) {

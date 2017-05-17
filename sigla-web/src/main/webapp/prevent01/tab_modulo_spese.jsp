@@ -15,10 +15,17 @@
 <tr>
  <td align=left>
   <table border="0" cellspacing="0" cellpadding="2">	
-	<tr>
-  	  <td NOWRAP><% bp.getCrudDettagliSpese().writeFormLabel(out,"classificazione");%></td>
-	  <td><% bp.getCrudDettagliSpese().writeFormInput(out,"classificazione");%>
-	</tr>
+	<% if (bp.isFlPdgCodlast()) { %> 
+		<tr>
+	  	  <td NOWRAP><% bp.getCrudDettagliSpese().writeFormLabel(out,"classificazione_codlast");%></td>
+		  <td><% bp.getCrudDettagliSpese().writeFormInput(out,"classificazione_codlast");%>
+		</tr>
+	<% } else { %>
+		<tr>
+	  	  <td NOWRAP><% bp.getCrudDettagliSpese().writeFormLabel(out,"classificazione");%></td>
+		  <td><% bp.getCrudDettagliSpese().writeFormInput(out,"classificazione");%>
+		</tr>
+	<% } %>
 	<br>
 	<tr>
 	  <td NOWRAP><% bp.getCrudDettagliSpese().writeFormLabel(out,"label_gestione_decentrata");%></td>

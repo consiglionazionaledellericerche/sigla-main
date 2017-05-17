@@ -92,7 +92,12 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 					linea_attivita.setCd_linea_attivita(String.valueOf(Long.parseLong(linea_attivita.getCd_linea_attivita().replace(aSuffix.charAt(0),'0'))+1).replace('0',aSuffix.charAt(0)));
 				}
 			}
-			linea_attivita.setCd_linea_attivita(lunghezzaChiavi.formatLinea_attivitaKey(userContext,linea_attivita.getCd_linea_attivita().replace(aSuffix.charAt(0),'0')));
+
+			if (Utility.createParametriEnteComponentSession().getParametriEnte(userContext).isEnteCNR())
+				linea_attivita.setCd_linea_attivita(lunghezzaChiavi.formatLinea_attivitaKey(userContext,linea_attivita.getCd_linea_attivita().replace(aSuffix.charAt(0),'0')));
+			else
+				linea_attivita.setCd_linea_attivita(lunghezzaChiavi.formatLinea_attivitaKey(userContext,linea_attivita.getCd_linea_attivita()));				
+
 			linea_attivita.setCd_linea_attivita(aSuffix+linea_attivita.getCd_linea_attivita().substring(1,linea_attivita.getCd_linea_attivita().length()));
 			/*Se la linea di attività del PostIt è vuota la valorizzo*/
 			for(int i = 0; linea_attivita.getDettagliPostIt().size() > i; i++) 

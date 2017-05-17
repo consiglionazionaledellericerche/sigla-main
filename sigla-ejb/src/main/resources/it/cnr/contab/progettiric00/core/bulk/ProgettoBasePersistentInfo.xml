@@ -156,10 +156,29 @@
 			propertyName="condiviso"
 			sqlTypeName="CHAR"
 			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_PROGRAMMA"
+			propertyName="cd_programma"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_MISSIONE"
+			propertyName="cd_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_PIANO_TRIENNALE"
+			propertyName="fl_piano_triennale"
+			sqlTypeName="CHAR"
+			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-			
 	</defaultColumnMap>
+
 	<persistentProperty
 		name="dt_fine" />
 	<persistentProperty
@@ -212,4 +231,10 @@
 		name="fl_utilizzabile" />										
 	<persistentProperty
 		name="condiviso" />										
+	<persistentProperty
+		name="fl_piano_triennale" />
+	<persistentProperty
+		name="cd_programma" />	
+	<persistentProperty
+		name="cd_missione" />
 </SQLPersistentInfo>
