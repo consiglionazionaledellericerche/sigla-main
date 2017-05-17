@@ -257,7 +257,6 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 
 		OrderedHashtable d = (OrderedHashtable)getStatoKeys();
 		if (d == null) return null;
-
 		OrderedHashtable clone = (OrderedHashtable)d.clone();
 		return clone;
 	}
