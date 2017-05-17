@@ -70,7 +70,7 @@
 	  </tr>
    </table>
    
-	<div class="Group">   
+	<div class="Group card">   
 	<table>	
 	  <tr>
 		<td><% bp.getRigheInventarioDaFattura().writeFormLabel(out,"valore_iniziale"); %></td>

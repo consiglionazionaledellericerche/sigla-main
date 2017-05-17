@@ -1,7 +1,11 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.jada.action.HttpActionContext;
+
 import javax.servlet.ServletException;
+
 import java.io.IOException;
+
 import javax.servlet.jsp.PageContext;
 /**
  * Controller creato per la visualizzazione dei Logs nel pannelo Carica File Cassiere.
@@ -64,8 +68,8 @@ public void writeHTMLToolbar(PageContext context,boolean add,boolean filter,bool
 		it.cnr.jada.util.jsp.Button button1;
 		button = crudToolbar[5];
 		button1 = crudToolbar[6];
-		button.writeToolbarButton(context.getOut(),isShrinkable());
-		button1.writeToolbarButton(context.getOut(),isShrinkable());
+		button.writeToolbarButton(context.getOut(),isShrinkable(), HttpActionContext.isFromBootstrap(context));
+		button1.writeToolbarButton(context.getOut(),isShrinkable(), HttpActionContext.isFromBootstrap(context));
 	}
 }
 }

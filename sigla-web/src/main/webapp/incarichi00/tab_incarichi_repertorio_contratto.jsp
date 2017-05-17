@@ -29,7 +29,7 @@ CRUDIncarichiRepertorioBP bp = (CRUDIncarichiRepertorioBP)BusinessProcess.getBus
         <td><% bp.getController().writeFormLabel(out,"dt_fine_validita");%></td>
         <td><% bp.getController().writeFormInput(out,"dt_fine_validita");%></td>        
         <td><% bp.getController().writeFormLabel(out,"dt_proroga");%></td>
-		<td><% bp.getController().writeFormInput(out,"default","dt_proroga",bp.isViewing()&&!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),"FormInput",null); %></td>
+		<td><% bp.getController().writeFormInput(out,"default","dt_proroga",bp.isViewing()&&!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),null,null); %></td>
       </tr>
       </table></div>
       </td></tr>
@@ -38,12 +38,12 @@ CRUDIncarichiRepertorioBP bp = (CRUDIncarichiRepertorioBP)BusinessProcess.getBus
 	  <tr>         
 		<% if (!bp.isSearching()) {%>
 			<td><% bp.getController().writeFormLabel(out,"terzo");%></td>
-			<td><% bp.getController().writeFormInput(out,"default", "cd_terzo", false,"FormInput",null); %>
-			    <% bp.getController().writeFormInput(out,"default", "terzo", false,"FormInput",null); %></td>
+			<td><% bp.getController().writeFormInput(out,"default", "cd_terzo", false,null,null); %>
+			    <% bp.getController().writeFormInput(out,"default", "terzo", false,null,null); %></td>
 		<% } else {%>
 			<td><% bp.getController().writeFormLabel(out,"terzoSearch");%></td>
-			<td><% bp.getController().writeFormInput(out,"default", "cd_terzoSearch", false,"FormInput",null); %>
-			    <% bp.getController().writeFormInput(out,"default", "terzoSearch", false,"FormInput",null); %></td>
+			<td><% bp.getController().writeFormInput(out,"default", "cd_terzoSearch", false,null,null); %>
+			    <% bp.getController().writeFormInput(out,"default", "terzoSearch", false,null,null); %></td>
 		<% } %>
 	  </tr>
 	  <tr>

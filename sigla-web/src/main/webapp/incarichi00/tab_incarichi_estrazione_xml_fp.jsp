@@ -89,21 +89,29 @@ function doScaricaFile(path) {
     <% if (bulk!=null && !bulk.isROSelezione()) { %>
 		<tr>
 			<td align="center"> 
-				<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),"Genera XML","javascript:submitForm('doGeneraXML')",true); %>
+				<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),
+						"Genera XML","javascript:submitForm('doGeneraXML')",true,
+						bp.getParentRoot().isBootstrap()); %>
 			</td>	
 		    <% if (!bulk.isFl_crea_file_da_file()) { %>
 				<td align="center"> 
-					<% JSPUtils.button(out,bp.encodePath("img/configure.png"),bp.encodePath("img/configure.png"),"Seleziona Incarichi","javascript:submitForm('doSelezionaIncarichidaEstrarre')",true); %>
+					<% JSPUtils.button(out,bp.encodePath("img/configure.png"),bp.encodePath("img/configure.png"),
+							"Seleziona Incarichi","javascript:submitForm('doSelezionaIncarichidaEstrarre')",true,
+							bp.getParentRoot().isBootstrap()); %>
 				</td>	
 			<% } %>
 		</tr>
 	<% } else { %>
 		<tr>
 			<td align="center"> 
-				<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),"Nuova Estrazione","javascript:submitForm('doClearSelection')",true); %>
+				<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),
+						"Nuova Estrazione","javascript:submitForm('doClearSelection')",true,
+						bp.getParentRoot().isBootstrap()); %>
 			</td>	
 			<td align="center"> 
-				<% JSPUtils.button(out,bp.encodePath("img/zip.png"),bp.encodePath("img/zip.png"),"Archivio Estrazione","javascript:doScaricaFile('"+bulk.getPathFileZip()+"')",true); %>
+				<% JSPUtils.button(out,bp.encodePath("img/zip.png"),bp.encodePath("img/zip.png"),"Archivio Estrazione",
+						"javascript:doScaricaFile('"+bulk.getPathFileZip()+"')",true,
+						bp.getParentRoot().isBootstrap()); %>
 			</td>	
 		</tr>		
 <!--
@@ -165,7 +173,9 @@ function doScaricaFile(path) {
 						<% } %>
 				   		<% if (i<=maxButton) {%>
 							<td> 
-								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),null,"javascript:doScaricaFile('"+filePath+"')",true); %>
+								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),
+										null,"javascript:doScaricaFile('"+filePath+"')",true,
+										bp.getParentRoot().isBootstrap()); %>
 					      	</td>
 						<% } %>
 				   		<% if (i==maxButton) {%>
@@ -191,7 +201,9 @@ function doScaricaFile(path) {
 						<% } %>
 				   		<% if (i<=maxButton) {%>
 							<td> 
-								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),null,"javascript:doScaricaFile('"+filePath+"')",true); %>
+								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),
+										null,"javascript:doScaricaFile('"+filePath+"')",true,
+										bp.getParentRoot().isBootstrap()); %>
 					      	</td>
 						<% } %>
 				   		<% if (i==maxButton) {%>
@@ -217,7 +229,9 @@ function doScaricaFile(path) {
 						<% } %>
 				   		<% if (i<=maxButton) {%>
 							<td> 
-								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),null,"javascript:doScaricaFile('"+filePath+"')",true); %>
+								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),
+										null,"javascript:doScaricaFile('"+filePath+"')",true,
+										bp.getParentRoot().isBootstrap()); %>
 					      	</td>
 						<% } %>
 				   		<% if (i==maxButton) {%>
@@ -282,7 +296,9 @@ function doScaricaFile(path) {
 						<% } %>
 				   		<% if (i<=maxButton) {%>
 							<td> 
-								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),null,"javascript:doScaricaFile('"+filePath+"')",true); %>
+								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),
+										null,"javascript:doScaricaFile('"+filePath+"')",true,
+										bp.getParentRoot().isBootstrap()); %>
 					      	</td>
 						<% } %>
 				   		<% if (i==maxButton) {%>
@@ -308,7 +324,9 @@ function doScaricaFile(path) {
 						<% } %>
 				   		<% if (i<=maxButton) {%>
 							<td> 
-								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),null,"javascript:doScaricaFile('"+filePath+"')",true); %>
+								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),
+										null,"javascript:doScaricaFile('"+filePath+"')",true,
+										bp.getParentRoot().isBootstrap()); %>
 					      	</td>
 						<% } %>
 				   		<% if (i==maxButton) {%>
@@ -334,7 +352,9 @@ function doScaricaFile(path) {
 						<% } %>
 				   		<% if (i<=maxButton) {%>
 							<td> 
-								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),null,"javascript:doScaricaFile('"+filePath+"')",true); %>
+								<% JSPUtils.button(out,bp.encodePath("img/application-xml.png"),bp.encodePath("img/application-xml.png"),
+										null,"javascript:doScaricaFile('"+filePath+"')",true,
+										bp.getParentRoot().isBootstrap()); %>
 					      	</td>
 						<% } %>
 				   		<% if (i==maxButton) {%>

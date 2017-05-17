@@ -9,7 +9,7 @@
 <%for (Enumeration f = columns.elements();f.hasMoreElements();) {
 		ColumnFieldProperty column = (ColumnFieldProperty)f.nextElement();
 %><td<% column.writeHeaderStyle(out,null,"TableHeader");%>><%
-		column.writeLabel(out,null);
+		column.writeLabel(out,null, HttpActionContext.isFromBootstrap(pageContext));
 %></td><%
 	}%>
 	</tr>
