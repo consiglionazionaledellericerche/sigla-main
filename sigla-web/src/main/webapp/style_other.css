@@ -445,3 +445,10 @@ Label {
 	font-size : 12px;
 	font-weight : bold;
 }
+input.inputFieldReadOnly {
+	background: #F5F5DC;
+	background-color:transparent;
+	border-style : none; 
+	cursor:default;
+	font-size : 16px;
+}

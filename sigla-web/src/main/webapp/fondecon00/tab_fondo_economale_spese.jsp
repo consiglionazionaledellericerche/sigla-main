@@ -101,11 +101,11 @@
 			<table width="100%">
 				<tr>
 					<td>
-						<%JSPUtils.button(out, "img/information24.gif", "img/information24.gif", "Calcola totale", "if (disableDblClick()) javascript:submitForm('doCalcolaTotaleSpesePerObblig')", null, (bp.isEditing() && fondo.getScadenza_ricerca() != null));%>
+						<%JSPUtils.button(out, "img/information24.gif", "img/information24.gif", "Calcola totale", "if (disableDblClick()) javascript:submitForm('doCalcolaTotaleSpesePerObblig')", null, (bp.isEditing() && fondo.getScadenza_ricerca() != null), bp.getParentRoot().isBootstrap());%>
 					</td>
 					<% bp.getController().writeFormField( out, "importo_totale_scadenze_non_doc"); %>
 					<td>
-						<%JSPUtils.button(out, "img/search24.gif", "img/search24.gif", "Ricerca spese", "if (disableDblClick()) javascript:submitForm('doRicercaSpeseAssociate')", null, (bp.isEditing() && fondo.getScadenza_ricerca() != null));%>
+						<%JSPUtils.button(out, "img/search24.gif", "img/search24.gif", "Ricerca spese", "if (disableDblClick()) javascript:submitForm('doRicercaSpeseAssociate')", null, (bp.isEditing() && fondo.getScadenza_ricerca() != null), bp.getParentRoot().isBootstrap());%>
 					</td>
 				</tr>
 				<tr>

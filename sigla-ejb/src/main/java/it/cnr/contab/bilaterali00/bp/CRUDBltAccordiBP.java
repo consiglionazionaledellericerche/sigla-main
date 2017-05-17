@@ -8,6 +8,7 @@ import it.cnr.contab.bilaterali00.bulk.Blt_programma_visiteBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
@@ -97,7 +98,8 @@ public class CRUDBltAccordiBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 						"img/import16.gif",
 						"javascript:submitForm('doApriBltVisitaIta')",
 						true,
-						"Apri Visita");
+						"Apri Visita",
+						HttpActionContext.isFromBootstrap(context));
 			}
 		}	
 	};
@@ -129,7 +131,8 @@ public class CRUDBltAccordiBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 						"img/import16.gif",
 						"javascript:submitForm('doApriBltVisitaStr')",
 						true,
-						"Apri Visita");
+						"Apri Visita",
+						HttpActionContext.isFromBootstrap(context));
 			}
 		}	
 	};

@@ -155,9 +155,9 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		toolbar.addAll(Arrays.asList(buttons));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.download"));
+		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.downloadFatturaFirmata"));
-		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.rifiuta"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
@@ -165,9 +165,6 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.getHandler().getProperties(getClass()), "Toolbar.accetta"));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.visuallizza.fattura"));
-		toolbar.get(toolbar.size() - 1).setSeparator(true);
-		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-				.getHandler().getProperties(getClass()), "Toolbar.esito.rifiuto"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.esito.rifiutato"));
@@ -218,21 +215,21 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
     	documentoEleTestata.getDocumentoEleTrasmissione().getBulkInfo().writeFormField(
     			this, jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), 
     			null, s, getInputPrefix(), 1, 1, getStatus(), 
-    			isInputReadonly(), getFieldValidationMap());
+    			isInputReadonly(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 	}
 
     public void writeFormLabelTrasmissione(JspWriter jspwriter, String s)
     		throws IOException {
     	DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
     	documentoEleTestata.getDocumentoEleTrasmissione().getBulkInfo().writeFormLabel(
-    			this, jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), null, s, null);
+    			this, jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), null, s, null, this.getParentRoot().isBootstrap());
     }
 	
     public void writeFormInputTrasmissione(JspWriter jspwriter, String s)
     		throws IOException {
     	DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
     	documentoEleTestata.getDocumentoEleTrasmissione().getBulkInfo().writeFormInput(
-    			jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), null, s, isInputReadonly(), null, null, getInputPrefix(), getStatus(), getFieldValidationMap());
+    			jspwriter, documentoEleTestata.getDocumentoEleTrasmissione(), null, s, isInputReadonly(), null, null, getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
     }
 
 	public SimpleDetailCRUDController getCrudDocEleLineaColl() {

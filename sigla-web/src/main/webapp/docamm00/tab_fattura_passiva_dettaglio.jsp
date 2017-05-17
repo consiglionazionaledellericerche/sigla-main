@@ -220,7 +220,7 @@
     </table>
    </div>
    	<% if (riga != null && riga.getModalita_pagamento() != null && riga.getCessionario() != null) { %>
-		<div class="Group">   
+		<div class="Group card">   
 			<table>	
 				<tr>
 					<td>

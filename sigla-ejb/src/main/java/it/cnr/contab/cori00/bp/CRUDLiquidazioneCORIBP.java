@@ -254,7 +254,7 @@ public void writeViewDettaglioGruppiToolbar(javax.servlet.jsp.JspWriter writer) 
 	//}
 
 	openToolbar(writer);
-	it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createViewDettaglioGruppiToolbar(),this);
+	it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createViewDettaglioGruppiToolbar(),this, this.getParentRoot().isBootstrap());
 	closeToolbar(writer);
 }
 private boolean F24 = true;

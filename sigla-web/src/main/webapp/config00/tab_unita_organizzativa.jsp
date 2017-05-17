@@ -20,7 +20,7 @@
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_proprio_unita"); %></td>	
 	<td><% bp.getController().writeFormInputByStatus( out, "cd_proprio_unita");
-	    	 bp.getController().writeFormInput(out,"default","fl_rubrica",false,"FormInput","onclick=\"submitForm('doCheckFl_rubrica')\"");
+	    	 bp.getController().writeFormInput(out,"default","fl_rubrica",false,null,"onclick=\"submitForm('doCheckFl_rubrica')\"");
 		     bp.getController().writeFormLabel( out, "fl_rubrica"); %>
 	</td> 
 	</tr>

@@ -26,15 +26,15 @@
 <title>FATTURA ELETTRONICA</title>
 <script language="JavaScript">
 function doScaricaFatturaHtml() {
-	window.open('genericdownload/fattura.html?methodName=scaricaFatturaHtml&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
+	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/fattura.html?methodName=scaricaFatturaHtml&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
 			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
 }
 function doScaricaFatturaFirmata() {
-	window.open('genericdownload/<%=nomeFileFirmato%>?methodName=scaricaFatturaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
+	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFileFirmato%>?methodName=scaricaFatturaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
 			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
 }
 function doScaricaEsito() {
-	window.open('genericdownload/<%=nomeFile%>?methodName=scaricaEsito&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFile%>?methodName=scaricaEsito&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
 			'Notifica', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus();
 }
 </script>
@@ -105,16 +105,16 @@ function doScaricaEsito() {
 	</div>	
 <%
 	String[][] pages = new String[][] {
-		{ "tabEleTrasmissione","Dati relativi alla trasmissione","/docamm00/tab_fatt_ele_trasmissione.jsp" },
-		{ "tabEleTestata","Dati generali del documento","/docamm00/tab_fatt_ele_testata.jsp" },					
+		{ "tabEleTrasmissione", bp.getParentRoot().isBootstrap() ? "Trasmissione" : "Dati relativi alla trasmissione","/docamm00/tab_fatt_ele_trasmissione.jsp" },
+		{ "tabEleTestata",bp.getParentRoot().isBootstrap() ? "Documento" : "Dati generali del documento","/docamm00/tab_fatt_ele_testata.jsp" },					
 		{ "tabEleDettaglio","Dettaglio","/docamm00/tab_fatt_ele_dettaglio.jsp" }, 
 		{ "tabEleIVA","Riepilogo IVA","/docamm00/tab_fatt_ele_iva.jsp" },
-		{ "tabEleOrdine","Riferimento acquisto","/docamm00/tab_fatt_ele_ordine.jsp" },
+		{ "tabEleOrdine",bp.getParentRoot().isBootstrap() ? "Acquisto" : "Riferimento acquisto","/docamm00/tab_fatt_ele_ordine.jsp" },
 		{ "tabEleTrasporto","Trasporto","/docamm00/tab_fatt_ele_trasporto.jsp" },
 		{ "tabEleTributi","Tributi","/docamm00/tab_fatt_ele_tributi.jsp" },
 		{ "tabEleSconto","Sconto","/docamm00/tab_fatt_ele_sconto.jsp" },
-		{ "tabEleAllegati","Allegati Ricevuti","/docamm00/tab_fatt_ele_allegati.jsp" },
-		{ "tabAllegati","Allegati Aggiunti","/util00/tab_allegati.jsp" }
+		{ "tabEleAllegati",bp.getParentRoot().isBootstrap() ? "<i class=\"fa fa-fw fa-file\" aria-hidden=\"true\"></i> Ricevuti" : "Allegati Ricevuti","/docamm00/tab_fatt_ele_allegati.jsp" },
+		{ "tabAllegati",bp.getParentRoot().isBootstrap() ? "<i class=\"fa fa-fw fa-file\" aria-hidden=\"true\"></i> Aggiunti" : "Allegati Aggiunti","/util00/tab_allegati.jsp" }
 	};
 	JSPUtils.tabbed(
 					pageContext,
