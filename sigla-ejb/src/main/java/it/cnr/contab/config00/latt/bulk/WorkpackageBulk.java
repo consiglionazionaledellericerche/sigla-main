@@ -39,8 +39,17 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 		ti_gestioneKeys = new it.cnr.jada.util.OrderedHashtable();
 		ti_gestioneKeys.put(TI_GESTIONE_SPESE, "Spese");
 		ti_gestioneKeys.put(TI_GESTIONE_ENTRATE, "Entrate");
-		ti_gestioneKeys.put(TI_GESTIONE_ENTRAMBE, "Entrambe");
 	}	
+
+	private final static java.util.Dictionary ti_gestioneESKeys;
+	
+	static {
+		ti_gestioneESKeys = new it.cnr.jada.util.OrderedHashtable();
+		ti_gestioneESKeys.put(TI_GESTIONE_SPESE, "Spese");
+		ti_gestioneESKeys.put(TI_GESTIONE_ENTRATE, "Entrate");
+		ti_gestioneESKeys.put(TI_GESTIONE_ENTRAMBE, "Entrambe");
+	}	
+
 	private Insieme_laBulk insieme_la;
 
 	private CofogBulk cofog;
@@ -194,6 +203,14 @@ public it.cnr.jada.bulk.BulkList getRisultati() {
  */
 public java.util.Dictionary getTi_gestioneKeys() {
 	return ti_gestioneKeys;
+}
+/**
+ * Restituisce il valore della proprietà 'ti_gestioneKeys'
+ *
+ * @return Il valore della proprietà 'ti_gestioneKeys'
+ */
+public java.util.Dictionary getTi_gestioneESKeys() {
+	return ti_gestioneESKeys;
 }
 /**
  * Restituisce il valore della proprietà 'dettagliPostIt'

@@ -76,11 +76,19 @@ public class Parametri_enteComponent extends CRUDComponent {
 	  try
 	  {
 		validaCampiObbligatori(userContext,parametri_ente);
+		
+	   	Parametri_enteHome testataHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
+		if (parametri_ente.isToBeUpdated()) {
+			Parametri_enteBulk parametriEnteDB = (Parametri_enteBulk)testataHome.findByPrimaryKey(parametri_ente);
+			if (!parametriEnteDB.getFl_informix().equals(parametri_ente.getFl_informix()))
+				throw new ApplicationException("Attenzione! Non è possibile modificare il flag \"Collegamento a Informix\".");
+			if (parametriEnteDB.getFl_gae_es() && !parametri_ente.getFl_gae_es())
+				throw new ApplicationException("Attenzione! Non è possibile modificare il flag \"Gestione GAE E/S\".");
+		}				
 
 		int totAttive = 0;
 		
 		if(parametri_ente.getAttivo().booleanValue()) {
-		   	Parametri_enteHome testataHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
 			SQLBuilder sql = testataHome.createSQLBuilder();
 			sql.addSQLClause("AND","ATTIVO",SQLBuilder.EQUALS,"Y");
 			sql.addSQLClause("AND","ID", SQLBuilder.NOT_EQUALS, parametri_ente.getId());

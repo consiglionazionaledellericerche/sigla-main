@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.latt.bulk.CofogBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -30,6 +31,7 @@ public class CRUDWorkpackageBP extends SimpleCRUDBP {
 	private final SimpleDetailCRUDController risultati = new SimpleDetailCRUDController("risultati",it.cnr.contab.config00.latt.bulk.RisultatoBulk.class,"risultati",this);
 	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
 	private boolean flNuovoPdg = false;
+	private boolean flTiGestioneES = false;
 	
 	private Unita_organizzativaBulk uoScrivania;
 	private Integer esercizioScrivania;
@@ -118,6 +120,8 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		setEsercizioScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(actioncontext));
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+		Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
+		setFlTiGestioneES(parEnte.getFl_gae_es().booleanValue());
 		aggiornaGECO(actioncontext.getUserContext());
 		super.initialize(actioncontext);
 	} catch (ComponentException e) {
@@ -172,6 +176,12 @@ public boolean isFlNuovoPdg() {
 }
 private void setFlNuovoPdg(boolean flNuovoPdg) {
 	this.flNuovoPdg = flNuovoPdg;
+}
+public boolean isFlTiGestioneES() {
+	return flTiGestioneES;
+}
+public void setFlTiGestioneES(boolean flTiGestioneES) {
+	this.flTiGestioneES = flTiGestioneES;
 }
 @Override
 public String getSearchResultColumnSet() {
