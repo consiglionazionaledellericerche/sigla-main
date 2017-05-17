@@ -41,9 +41,11 @@
 			<%
 				bp.getController().writeFormField(out, "dataRichiesta");
 			%>
-			<%
-				bp.getController().writeFormField(out, "stato");
-			%>
+			<% if (!bp.isSearching()) {
+				 bp.getController().writeFormField(out, "stato");
+			   } else {
+			     bp.getController().writeFormField(out, "statoKeysForSearch");
+			   } %>
 		</tr>
 	</table>
     <table>

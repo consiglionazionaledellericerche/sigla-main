@@ -1,17 +1,16 @@
 <%@ page 
-	import="it.cnr.jada.util.jsp.*,
+	import = "it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
 		java.util.*,
 		it.cnr.jada.util.action.*,
-		it.cnr.contab.docamm00.tabrif.bulk.*,
-		it.cnr.contab.docamm00.docs.bulk.*,
-		it.cnr.contab.docamm00.bp.*,
-		it.cnr.contab.anagraf00.tabrif.bulk.*"
+		it.cnr.contab.ordmag.richieste.bp.CRUDRichiestaUopBP,
+		it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk,
+		it.cnr.contab.ordmag.anag00.*"
 %>
 
-<% 	CRUDDocumentoGenericoPassivoBP bp = (CRUDDocumentoGenericoPassivoBP)BusinessProcess.getBusinessProcess(request);	
-	Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk)bp.getDettaglio().getModel();
-	bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",true,false,true,"100%","100px"); %>
+<% CRUDBP bp = (CRUDRichiestaUopBP)BusinessProcess.getBusinessProcess(request);
+    RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk)bp.getRighe().getModel();
+	bp.getDettaglio().writeHTMLTable(pageContext,"default",true,false,true,"100%","100px"); %>
   
 <div class="Group">
   <table>
