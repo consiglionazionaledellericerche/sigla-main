@@ -759,7 +759,7 @@ public void writeInventarioToolbar(javax.servlet.jsp.JspWriter writer) throws ja
 
 	if (!isSearching() && !isDeleting()) {
 		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createInventarioToolbar(),this);
+		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createInventarioToolbar(),this, this.getParentRoot().isBootstrap());
 		closeToolbar(writer);
 	}
 }
@@ -826,7 +826,7 @@ public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String
 		!doc.isPagata()&&
 		isInputReadonly()&& 
 		s1.equals("stato_liquidazione")){ 
-		getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnStatoLiquidazioneChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+		getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnStatoLiquidazioneChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 	}
 	else
 		if (doc!=null &&
@@ -834,13 +834,13 @@ public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String
 			!doc.isPagata()&& 
 			isInputReadonly()&& 
 			s1.equals("causale")){ 
-				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnCausaleChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnCausaleChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 		
 	} else if (doc != null && doc.isRiportataInScrivania() && !doc.isPagata()
 		&& isInputReadonly() && s1.equals("sospeso")) {
 	getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
 			s2,"" ,
-			getInputPrefix(), getStatus(), getFieldValidationMap());
+			getInputPrefix(), getStatus(), getFieldValidationMap(), this.getParentRoot().isBootstrap());
 	}  
 	else
 		super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
@@ -860,7 +860,7 @@ public void writeFormFieldDoc1210(javax.servlet.jsp.JspWriter out,String name) t
 	}
 
 	
-	getBulkInfo().writeFormField(out,dg,null,name,getInputPrefix(),1,1,getStatus(),isReadonly,getFieldValidationMap());	
+	getBulkInfo().writeFormField(out,dg,null,name,getInputPrefix(),1,1,getStatus(),isReadonly,getFieldValidationMap(), this.getParentRoot().isBootstrap());	
 }
 
 }

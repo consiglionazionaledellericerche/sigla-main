@@ -39,7 +39,7 @@
 	   <% if ( !modello.isEnteInScrivania() ) { %>
 		<tr>
 		   <td><% bp.getController().writeFormLabel( out, "fl_ente"); %></td>		
-		   <td><% bp.getController().writeFormInput(out,"default","fl_ente",false,"FormInput","onclick=\"submitForm('doDefault')\""); %></td>
+		   <td><% bp.getController().writeFormInput(out,"default","fl_ente",false,null,"onclick=\"submitForm('doDefault')\""); %></td>
 
 		</tr>
 		<tr>
@@ -78,7 +78,7 @@
 	<table align="center" class="Panel">	
 		<tr>
 			<td align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocDaRiportare')",null); %>
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocDaRiportare')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>		
 		</tr>
 	</table>

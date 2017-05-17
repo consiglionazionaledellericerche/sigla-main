@@ -13,20 +13,20 @@
 	<td><% bp.getMovimenti().writeFormLabel(out, "cd_voce_ep"); %></td>
 	<td><% bp.getMovimenti().writeFormInput(out, "cd_voce_ep");
 	       bp.getMovimenti().writeFormInput(out, "ds_voce_ep");
-	       bp.getMovimenti().writeFormInput(out,"default", "find_voce_ep", bp.isEditing(), "FormInput", null);
+	       bp.getMovimenti().writeFormInput(out,"default", "find_voce_ep", bp.isEditing(), null, null);
 	       bp.getMovimenti().writeFormLabel(out, "sezione");
-	       bp.getMovimenti().writeFormInput(out,"default", "sezione",bp.isEditing(),"FormInput",null);%></td>
+	       bp.getMovimenti().writeFormInput(out,"default", "sezione",bp.isEditing(),null,null);%></td>
 </tr>
 <tr>
 	<td><% bp.getMovimenti().writeFormLabel(out, "cd_linea_attivita"); %></td>
 	<td><% bp.getMovimenti().writeFormInput(out, "cd_centro_responsabilita");
 		   bp.getMovimenti().writeFormInput(out, "cd_linea_attivita");
 		   bp.getMovimenti().writeFormInput(out, "ds_linea_attivita");
-		   bp.getMovimenti().writeFormInput(out,"default", "find_linea_attivita", bp.isEditing(), "FormInput", null);%></td>	
+		   bp.getMovimenti().writeFormInput(out,"default", "find_linea_attivita", bp.isEditing(), null, null);%></td>	
 </tr>
 <tr>
 	<td><% bp.getMovimenti().writeFormLabel(out, "im_movimento"); %></td>
-	<td><% bp.getMovimenti().writeFormInput(out,"default", "im_movimento", bp.isEditing(), "FormInput",null);%></td>	
+	<td><% bp.getMovimenti().writeFormInput(out,"default", "im_movimento", bp.isEditing(), null,null);%></td>	
 </tr>
 
 </table>
