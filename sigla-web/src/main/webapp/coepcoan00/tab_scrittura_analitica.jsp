@@ -11,13 +11,13 @@
 
 <tr>
 	<td><% bp.getController().writeFormLabel(out,"ds_scrittura"); %></td>
-	<td><% bp.getController().writeFormInput(out,"default","ds_scrittura",bp.isEditing(),"FormInput", null); %></td>	
+	<td><% bp.getController().writeFormInput(out,"default","ds_scrittura",bp.isEditing(),null, null); %></td>	
 </tr>
 <tr>
 	<td><% bp.getController().writeFormLabel(out,"cd_terzo"); %></td>
-	<td><% bp.getController().writeFormInput(out,"default","cd_terzo", bp.isEditing(),"FormInput", null); 
+	<td><% bp.getController().writeFormInput(out,"default","cd_terzo", bp.isEditing(),null, null); 
 	       bp.getController().writeFormInput(out,"ds_terzo");
-	       bp.getController().writeFormInput(out,"default","find_terzo",bp.isEditing(),"FormInput", null); %></td>
+	       bp.getController().writeFormInput(out,"default","find_terzo",bp.isEditing(),null, null); %></td>
 </tr>
 
 <tr>

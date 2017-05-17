@@ -77,7 +77,7 @@
 <div class="Panel" style="width:100%">
 <table>
   <tr>
-	<td><% JSPUtils.button(out,null,null,"Crea Conguaglio","javascript:submitForm('doCreaCompensoConguaglio')",null,bp.isBottoneCreaCompensoConguaglioEnabled());%></td>
+	<td><% JSPUtils.button(out,null,null,"Crea Conguaglio","javascript:submitForm('doCreaCompensoConguaglio')",null,bp.isBottoneCreaCompensoConguaglioEnabled(), bp.getParentRoot().isBootstrap());%></td>
   </tr>
 </table>
 </div>

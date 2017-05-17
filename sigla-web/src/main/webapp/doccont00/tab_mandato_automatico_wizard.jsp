@@ -37,7 +37,7 @@
 		</tr>			    
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "cd_modalita_pag"); %></td>
-		    <td colspan= "5"><% bp.getController().writeFormInput( out,"default", "cd_modalita_pag", false, "FormInput","onchange=\"submitForm('doCambiaModalitaPagamento')\"" ); %>	
+		    <td colspan= "5"><% bp.getController().writeFormInput( out,"default", "cd_modalita_pag", false, null,"onchange=\"submitForm('doCambiaModalitaPagamento')\"" ); %>	
 						     <% bp.getController().writeFormLabel( out, "banca"); %>
 		  					 <% bp.getController().writeFormInput( out, "banca"); %></td>
 		</tr>
@@ -59,7 +59,7 @@
 			<tr>
 				<td><b ALIGN="CENTER">Impegni</b></td>
 				<% if (bp.isFlCalcoloAutomaticoCheckboxVisible()) { %>
-				  <td align="right"><% bp.getController().writeFormInput(out,null,"fl_imputazione_manuale",!bp.isFlCalcoloAutomaticoCheckboxEnabled(),"FormInput","onclick=\"submitForm('doCambiaFl_imputazione_manuale')\""); %>
+				  <td align="right"><% bp.getController().writeFormInput(out,null,"fl_imputazione_manuale",!bp.isFlCalcoloAutomaticoCheckboxEnabled(),null,"onclick=\"submitForm('doCambiaFl_imputazione_manuale')\""); %>
 	 	   			 			    <% bp.getController().writeFormLabel( out, "fl_imputazione_manuale"); %></td>
 			    <% } %>
 			</tr>
@@ -85,7 +85,7 @@
 			</tr>
 	    <% } %>
 		<tr>		
-		<td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"),"Genera", "javascript:submitForm('doEmettiMandato')", bp.isEmettiMandatoButtonEnabled()); %></td>
+		<td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("img/save24.gif"),"Genera", "javascript:submitForm('doEmettiMandato')", bp.isEmettiMandatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %></td>
 		</tr>
 		<tr>
 		<td colspan="2"><b>Mandati Generati</b></td>
@@ -97,7 +97,7 @@
 		   </td>
 		</tr>
 		<tr>		
-		   <td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"),"Visualizza", "javascript:submitForm('doVisualizzaMandato')", bp.isVisualizzaMandatoButtonEnabled()); %></td>
+		   <td colspan="2" align="center"><% JSPUtils.button(out,bp.encodePath("img/edit24.gif"),bp.encodePath("img/edit24.gif"),"Visualizza", "javascript:submitForm('doVisualizzaMandato')", bp.isVisualizzaMandatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %></td>
 		</tr>		
 	</table>
 </html>

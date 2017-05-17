@@ -47,11 +47,11 @@ function doScaricaFile() {
 	</tr>
 	<tr>
 	    <td><% controller.writeFormLabel(out,"default","dt_dichiarazione"); %></td>
-	    <td><% controller.writeFormInput(out,"default","dt_dichiarazione", !isEditable,"FormInput",null); %></td>
+	    <td><% controller.writeFormInput(out,"default","dt_dichiarazione", !isEditable,null,null); %></td>
 	</tr>
 	<tr>
 	    <td><% controller.writeFormLabel(out,"default","fl_altri_rapporti"); %></td>
-	    <td><% controller.writeFormInput(out,"default","fl_altri_rapporti", !isEditable,"FormInput",null); %></td>
+	    <td><% controller.writeFormInput(out,"default","fl_altri_rapporti", !isEditable,null,null); %></td>
 	</tr>
    
    	<% if (!bp.isSearching() && rapporto!=null && !rapporto.isAnnullato() && isEditable) { %>
@@ -70,10 +70,10 @@ function doScaricaFile() {
 	</tr>
 	<tr>
   	    <td><% controller.writeFormLabel(out,"utcr"); %></td>
-		<td colspan=4><% controller.writeFormInput(out,"default","utcr",true,"FormInput",null); %></td>
+		<td colspan=4><% controller.writeFormInput(out,"default","utcr",true,null,null); %></td>
 	</tr>
 	<tr>
   	    <td><% controller.writeFormLabel(out,"default","data_creazione"); %></td>
-		<td colspan=4><% controller.writeFormInput(out,"default","data_creazione",true,"FormInput",null); %></td>
+		<td colspan=4><% controller.writeFormInput(out,"default","data_creazione",true,null,null); %></td>
 	</tr>
 </table>

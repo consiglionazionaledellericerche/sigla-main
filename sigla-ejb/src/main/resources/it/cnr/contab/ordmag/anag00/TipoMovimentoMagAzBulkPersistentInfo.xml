@@ -9,7 +9,7 @@
 			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_CDS_RIF"
-			propertyName="tipoMovimentoMagRif.cdCds" />
+			propertyName="tipoMovimentoMagRif.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_TIPO_MOVIMENTO_RIF"
 			propertyName="tipoMovimentoMagRif.cdTipoMovimento" />

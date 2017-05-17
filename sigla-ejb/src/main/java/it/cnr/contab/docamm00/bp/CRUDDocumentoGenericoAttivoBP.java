@@ -928,7 +928,7 @@ public void writeInventarioToolbar(javax.servlet.jsp.JspWriter writer) throws ja
 
 	if (!isSearching() && !isDeleting()) {
 		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createInventarioToolbar(),this);
+		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createInventarioToolbar(),this, this.getParentRoot().isBootstrap());
 		closeToolbar(writer);
 	}
 }
