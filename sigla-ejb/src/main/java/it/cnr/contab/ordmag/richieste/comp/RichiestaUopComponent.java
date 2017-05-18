@@ -2,8 +2,21 @@ package it.cnr.contab.ordmag.richieste.comp;
 
 import java.io.Serializable;
 
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
+import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
+import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class RichiestaUopComponent
 	extends it.cnr.jada.comp.CRUDComponent
@@ -19,6 +32,7 @@ public class RichiestaUopComponent
 
 
     }
+    
 //private void aggiornaAccertamenti(UserContext userContext, RichiestaUopBulk documento,
 //	OptionRequestParameter status) throws ComponentException {
 //
@@ -558,17 +572,17 @@ public class RichiestaUopComponent
 //								String action) 
 //								throws it.cnr.jada.comp.ComponentException {
 //}
-//	private void assegnaProgressivo(UserContext userContext,RichiestaUopBulk documento) throws ComponentException {
-//
-//	try {
-//		// Assegno un nuovo progressivo al documento
-//		ProgressiviAmmComponentSession progressiviSession = (ProgressiviAmmComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_ProgressiviAmmComponentSession", ProgressiviAmmComponentSession.class);
-//		Numerazione_doc_ammBulk numerazione = new Numerazione_doc_ammBulk(documento);
-//		documento.setPg_documento_generico(progressiviSession.getNextPG(userContext, numerazione));
-//	} catch (Throwable t) {
-//		throw handleException(documento, t);
-//	}
-//}
+	private void assegnaProgressivo(UserContext userContext,RichiestaUopBulk richiesta) throws ComponentException {
+
+	try {
+		// Assegno un nuovo progressivo al documento
+		NumeratoriOrdMagComponentSession progressiviSession = (NumeratoriOrdMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG_EJB_NumeratoriOrdMagComponentSession", NumeratoriOrdMagComponentSession.class);
+		NumerazioneOrdBulk numerazione = new NumerazioneOrdBulk(richiesta.getCdUnitaOperativa(), richiesta.getEsercizio(), richiesta.getCdNumeratore());
+		richiesta.setNumero(progressiviSession.getNextPG(userContext, numerazione));
+	} catch (Throwable t) {
+		throw handleException(richiesta, t);
+	}
+}
 //private void basicAggiornaLetteraPagamentoEstero(
 //	UserContext userContext,
 //	Lettera_pagam_esteroBulk lettera,
@@ -2034,99 +2048,99 @@ public class RichiestaUopComponent
 //  *      Informa l'utente della causa per la quale non è possibile salvare
 // */
 ////^^@@
-//public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status)
-//    throws it.cnr.jada.comp.ComponentException {
-//	
-//    RichiestaUopBulk documento= (RichiestaUopBulk) bulk;
-//    documento.setAndVerifyStatus();
-//    try {
-//    
-//        // controlla che la data di registrazione sia successiava all'ultima data di registrazione inserita
-//        java.sql.Timestamp ultimaRegistrazione= ((Documento_genericoHome) getHome(userContext, RichiestaUopBulk.class)).findForMaxDataRegistrazione(userContext, documento);
-//        if (ultimaRegistrazione != null && documento.getData_registrazione().before(ultimaRegistrazione))
-//            throw new it.cnr.jada.comp.ApplicationException("La data di registrazione non e' valida essendo precedente all'ultima data di registrazione immessa");
-//   
-//    //effettua il controllo di validazione    
-//    try {		
-//			if (existARowToBeInventoried(userContext,documento)) {
-//				verificaEsistenzaEdAperturaInventario(userContext, documento);
-//				if (documento.hasCompetenzaCOGEInAnnoPrecedente())
-//				  throw new it.cnr.jada.comp.ApplicationException("Attenzione: per le date competenza indicate non è possibile inventariare i beni.");		
-//						
-//				if(hasDocumentoPassivoARowNotInventoried(userContext, documento))
-//					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
+	public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status)
+			throws it.cnr.jada.comp.ComponentException {
+
+		RichiestaUopBulk richiesta= (RichiestaUopBulk) bulk;
+//		richiesta.setAndVerifyStatus();
+//		try {
+
+			// controlla che la data di registrazione sia successiava all'ultima data di registrazione inserita
+//			java.sql.Timestamp ultimaRegistrazione= ((Documento_genericoHome) getHome(userContext, RichiestaUopBulk.class)).findForMaxDataRegistrazione(userContext, documento);
+//			if (ultimaRegistrazione != null && documento.getData_registrazione().before(ultimaRegistrazione))
+//				throw new it.cnr.jada.comp.ApplicationException("La data di registrazione non e' valida essendo precedente all'ultima data di registrazione immessa");
+//
+//			//effettua il controllo di validazione    
+//			try {		
+//				if (existARowToBeInventoried(userContext,documento)) {
+//					verificaEsistenzaEdAperturaInventario(userContext, documento);
+//					if (documento.hasCompetenzaCOGEInAnnoPrecedente())
+//						throw new it.cnr.jada.comp.ApplicationException("Attenzione: per le date competenza indicate non è possibile inventariare i beni.");		
+//
+//					if(hasDocumentoPassivoARowNotInventoried(userContext, documento))
+//						throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
+//				}
+//				validaDocumento(userContext, documento);
+//			} catch (it.cnr.jada.comp.ApplicationException e) {
+//				throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
 //			}
-//			validaDocumento(userContext, documento);
-//	} catch (it.cnr.jada.comp.ApplicationException e) {
-//		throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-//	}
-//    Lettera_pagam_esteroBulk lettera = documento.getLettera_pagamento_estero();
-//	if (lettera != null) {
-//		
-//			Lettera_pagam_esteroBulk original1210 = (Lettera_pagam_esteroBulk)getHome(userContext, lettera).findByPrimaryKey(lettera);
-//			aggiornaLetteraPagamentoEstero(userContext, lettera);
-//			if (!documento.isFlagEnte() &&
-//				(original1210 == null ||
-//				lettera.getIm_pagamento().compareTo(original1210.getIm_pagamento()) != 0))
-//				validaDisponibilitaDiCassaCDS(userContext, documento);
-//		
-//	}
+//			Lettera_pagam_esteroBulk lettera = documento.getLettera_pagamento_estero();
+//			if (lettera != null) {
 //
-//    //assegna un progressivo al documento all'atto della creazione.
-//    assegnaProgressivo(userContext, documento);
+//				Lettera_pagam_esteroBulk original1210 = (Lettera_pagam_esteroBulk)getHome(userContext, lettera).findByPrimaryKey(lettera);
+//				aggiornaLetteraPagamentoEstero(userContext, lettera);
+//				if (!documento.isFlagEnte() &&
+//						(original1210 == null ||
+//						lettera.getIm_pagamento().compareTo(original1210.getIm_pagamento()) != 0))
+//					validaDisponibilitaDiCassaCDS(userContext, documento);
 //
-//    // Salvo temporaneamente l'hash map dei saldi
-//    PrimaryKeyHashMap aTempDiffSaldi=new PrimaryKeyHashMap();
-//    if (documento.getDefferredSaldi() != null)
-//	    aTempDiffSaldi=(PrimaryKeyHashMap)documento.getDefferredSaldi().clone();    
-//    
-//    if (!documento.isGenericoAttivo()) {
-//        manageDocumentiContabiliCancellatiPerGenericoPassivo(userContext, documento,status);
-//        aggiornaObbligazioni(userContext, documento, status);
-//    }
-//    if (documento.isGenericoAttivo()) {
-//        manageDocumentiContabiliCancellatiPerGenericoAttivo(userContext, documento,status);
-//        aggiornaAccertamenti(userContext, documento, status);
-//    }
-//    documento = (RichiestaUopBulk)super.creaConBulk(userContext, documento);
-//    // Restore dell'hash map dei saldi
-//    if (documento.getDefferredSaldi() != null)
-//		documento.getDefferredSaldi().putAll(aTempDiffSaldi);
+//			}
+
+			//assegna un progressivo al documento all'atto della creazione.
+			assegnaProgressivo(userContext, richiesta);
+
+//			// Salvo temporaneamente l'hash map dei saldi
+//			PrimaryKeyHashMap aTempDiffSaldi=new PrimaryKeyHashMap();
+//			if (documento.getDefferredSaldi() != null)
+//				aTempDiffSaldi=(PrimaryKeyHashMap)documento.getDefferredSaldi().clone();    
 //
-//	aggiornaCogeCoanDocAmm(userContext, documento); 
-//	try {
-//        if (!verificaStatoEsercizio(
-//	        					userContext, 
-//	        					new EsercizioBulk( 
-//		        							documento.getCd_cds(), 
-//		        							((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio())))
-//            throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare un documento per un esercizio non aperto!");
-//	} catch (it.cnr.jada.comp.ApplicationException e) {
-//		throw handleException(bulk, e);
-//	}
-//	
-//	if (documento.getTi_entrate_spese()==RichiestaUopBulk.SPESE){
-//		prepareCarichiInventario(userContext, documento);
-//		aggiornaCarichiInventario(userContext, documento);
-//		// Le operazioni che rendono persistenti le modifiche fatte sull'Inventario,
-//		//	potrebbero rimandare un messaggio all'utente.
-//		String messaggio = aggiornaAssociazioniInventario(userContext, documento);
+//			if (!documento.isGenericoAttivo()) {
+//				manageDocumentiContabiliCancellatiPerGenericoPassivo(userContext, documento,status);
+//				aggiornaObbligazioni(userContext, documento, status);
+//			}
+//			if (documento.isGenericoAttivo()) {
+//				manageDocumentiContabiliCancellatiPerGenericoAttivo(userContext, documento,status);
+//				aggiornaAccertamenti(userContext, documento, status);
+//			}
+//			documento = (RichiestaUopBulk)super.creaConBulk(userContext, documento);
+//			// Restore dell'hash map dei saldi
+//			if (documento.getDefferredSaldi() != null)
+//				documento.getDefferredSaldi().putAll(aTempDiffSaldi);
 //
-//	}
-//	else{
-//		prepareScarichiInventario(userContext, documento);
-//		aggiornaScarichiInventario(userContext, documento);
-//		String messaggio = aggiornaAssociazioniInventario(userContext, documento);
-//	}
-//	
-//	
-//	controllaQuadraturaInventario(userContext,documento);
-//   
-//    } catch (it.cnr.jada.persistency.PersistencyException ex) {
-//        throw handleException( ex);
-//    }
-//    return documento;
-//}
+//			aggiornaCogeCoanDocAmm(userContext, documento); 
+//			try {
+//				if (!verificaStatoEsercizio(
+//						userContext, 
+//						new EsercizioBulk( 
+//								documento.getCd_cds(), 
+//								((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio())))
+//					throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare un documento per un esercizio non aperto!");
+//			} catch (it.cnr.jada.comp.ApplicationException e) {
+//				throw handleException(bulk, e);
+//			}
+//
+//			if (documento.getTi_entrate_spese()==RichiestaUopBulk.SPESE){
+//				prepareCarichiInventario(userContext, documento);
+//				aggiornaCarichiInventario(userContext, documento);
+//				// Le operazioni che rendono persistenti le modifiche fatte sull'Inventario,
+//				//	potrebbero rimandare un messaggio all'utente.
+//				String messaggio = aggiornaAssociazioniInventario(userContext, documento);
+//
+//			}
+//			else{
+//				prepareScarichiInventario(userContext, documento);
+//				aggiornaScarichiInventario(userContext, documento);
+//				String messaggio = aggiornaAssociazioniInventario(userContext, documento);
+//			}
+//
+//
+//			controllaQuadraturaInventario(userContext,documento);
+
+//		} catch (it.cnr.jada.persistency.PersistencyException ex) {
+//			throw handleException( ex);
+//		}
+		return richiesta;
+	}
 ////^^@@
 ///** 
 //  *  tutti i controlli superati.
