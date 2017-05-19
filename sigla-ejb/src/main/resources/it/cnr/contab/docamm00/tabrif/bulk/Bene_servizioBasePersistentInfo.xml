@@ -18,6 +18,18 @@
 			columnSize="10"
 			nullable="false" />
 		<columnMapping
+			columnName="CD_TIPO_ARTICOLO"
+			propertyName="cdTipoArticolo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_GRUPPO_MERCEOLOGICO"
+			propertyName="cdGruppoMerceologico"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
 			columnName="FL_GESTIONE_INVENTARIO"
 			propertyName="fl_gestione_inventario"
 			sqlTypeName="CHAR"
@@ -121,6 +133,10 @@
 		name="fl_gestione_inventario" />
 	<persistentProperty
 		name="cd_voce_iva" />
+	<persistentProperty
+		name="cdGruppoMerceologico" />
+	<persistentProperty
+		name="cdTipoArticolo" />
 	<persistentProperty
 		name="utcr" />
 	<persistentProperty

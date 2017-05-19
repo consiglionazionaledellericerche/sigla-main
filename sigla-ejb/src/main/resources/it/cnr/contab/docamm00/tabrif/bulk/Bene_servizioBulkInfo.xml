@@ -28,13 +28,33 @@
 		enabledOnFreeSearch="false"
 		label="Descrizione Iva"
 		caseSensitiveSearch="false" />
-
 	<fieldProperty
 		name="categoria_gruppo"
 		property="categoria_gruppo"
 		inputType="SEARCHTOOL" 		
 		enabledOnSearch="false"
 		label="Categoria Gruppo"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="unitaMisura"
+		property="unitaMisura"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		label="Unita di Misura"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="tipoArticolo"
+		property="tipoArticolo"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		label="Tipo Articolo"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="gruppoMerceologico"
+		property="gruppoMerceologico"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		label="Gruppo Merceologico"
         enabledOnEdit="true" />	
 	<fieldProperty
 		name="cd_categoria_gruppo"
@@ -52,7 +72,6 @@
 		inputType="ROTEXT"
 		label="Categoria Gruppo"
 		caseSensitiveSearch="false" />
-
 	<fieldProperty
 		name="cd_bene_servizio"
 		property="cd_bene_servizio"
@@ -80,7 +99,7 @@
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="unita_misura"
-		property="unita_misura"
+		property="unitaMisura.cdUnitaMisura"
 		maxLength="10"
 		inputSize="6"
 		inputType="TEXT"
@@ -173,6 +192,12 @@
 	<formFieldProperty
 		name="categoria_gruppo" />
 	<formFieldProperty
+		name="unitaMisura" />
+	<formFieldProperty
+		name="gruppoMerceologico" />
+	<formFieldProperty
+		name="tipoArticolo" />
+	<formFieldProperty
 		name="ds_bene_servizio" />
 	<formFieldProperty
 		name="voce_iva" />
@@ -202,21 +227,21 @@
 		name="fl_bollo" />	
 		
 	<columnFieldProperty
-		name="cd_voce_iva" />
-	<columnFieldProperty
 		name="cd_bene_servizio" />
-	<columnFieldProperty
-		name="fl_gestione_magazzino" />
 	<columnFieldProperty
 		name="ds_bene_servizio" />
 	<columnFieldProperty
+		name="cd_categoria_gruppo" />
+	<columnFieldProperty
 		name="unita_misura" />
 	<columnFieldProperty
-		name="cd_categoria_gruppo" />
+		name="cd_voce_iva" />
+	<columnFieldProperty
+		name="ti_bene_servizio" />
 	<columnFieldProperty
 		name="fl_gestione_inventario" />
 	<columnFieldProperty
-		name="ti_bene_servizio" />
+		name="fl_gestione_magazzino" />
 	<columnFieldProperty
 		name="fl_obb_intrastat_acq" />
 	<columnFieldProperty
