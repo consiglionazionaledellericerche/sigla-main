@@ -27,6 +27,10 @@ public class Bene_servizioBase extends Bene_servizioKey implements Keyed {
 	// UNITA_MISURA VARCHAR(10) NOT NULL
 	private java.lang.String unita_misura;
 	
+	private java.lang.String cdTipoArticolo;
+	
+	private java.lang.String cdGruppoMerceologico;
+	
 	private java.lang.Boolean fl_valido;
 
 	private java.lang.Boolean fl_obb_intrastat_acq;
@@ -155,5 +159,17 @@ public java.lang.Boolean getFl_bollo() {
 }
 public void setFl_bollo(java.lang.Boolean fl_bollo) {
 	this.fl_bollo = fl_bollo;
+}
+public java.lang.String getCdTipoArticolo() {
+	return cdTipoArticolo;
+}
+public void setCdTipoArticolo(java.lang.String cdTipoArticolo) {
+	this.cdTipoArticolo = cdTipoArticolo;
+}
+public java.lang.String getCdGruppoMerceologico() {
+	return cdGruppoMerceologico;
+}
+public void setCdGruppoMerceologico(java.lang.String cdGruppoMerceologico) {
+	this.cdGruppoMerceologico = cdGruppoMerceologico;
 }
 }

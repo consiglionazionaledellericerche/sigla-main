@@ -1,5 +1,14 @@
 package it.cnr.contab.ordmag.richieste.action;
 
+import java.math.BigDecimal;
+
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.util.action.CRUDBP;
+
 public class CRUDRichiestaUopAction extends it.cnr.jada.util.action.CRUDAction {
 
 public CRUDRichiestaUopAction() {
@@ -773,28 +782,13 @@ public CRUDRichiestaUopAction() {
 //* @param doc Documento_genericoBulk
 //* @return it.cnr.jada.action.Forward
 //*/
-//public Forward doBlankSearchSospeso(ActionContext context,
-//	Documento_genericoBulk doc) 
+//public Forward doBlankSearchFindUnitaMisura(ActionContext context,
+//	RichiestaUopRigaBulk riga) 
 //	throws java.rmi.RemoteException {
 //		
 //	try{
-//		Lettera_pagam_esteroBulk lettera = doc.getLettera_pagamento_estero();
-//		SospesoBulk vecchioSospeso = lettera.getSospeso();
-//		if (vecchioSospeso != null)
-//			lettera.addToSospesiCancellati(vecchioSospeso);
-//		
-//		SospesoBulk sospeso = new SospesoBulk();
-//		sospeso.setEsercizio(lettera.getEsercizio());
-//		if (!Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),lettera.getEsercizio()).getFl_tesoreria_unica().booleanValue())
-//			sospeso.setCd_cds(lettera.getCd_cds());
-//		sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
-//		sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
-//		lettera.setSospeso(sospeso);
-//		java.math.BigDecimal zero = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
-//		lettera.setIm_pagamento(zero);
-//		//lettera.setIm_commissioni(zero);
-//		//lettera.setDt_registrazione(new java.sql.Timestamp(System.currentTimeMillis()));
-//		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+//		riga.setCoefConv(null);
+//		riga.setUnitaMisura(null);
 //		return context.findDefaultForward();
 //
 //	} catch(Exception e) {
@@ -1017,26 +1011,46 @@ public CRUDRichiestaUopAction() {
 // * @return Il Forward alla pagina di risposta
 // * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
 // */
-//public Forward doBringBackSearchSospeso(ActionContext context,
-//	Documento_genericoBulk doc,
-//	SospesoBulk sospesoTrovato) 
-//	throws java.rmi.RemoteException {
-//		
-//	try{
-//		Lettera_pagam_esteroBulk lettera = doc.getLettera_pagamento_estero();
-//		if (sospesoTrovato!=null && lettera != null) {
-//			lettera.removeFromSospesiCancellati(sospesoTrovato);
-//			lettera.setSospeso(sospesoTrovato);
-//			lettera.setIm_pagamento(sospesoTrovato.getIm_sospeso());
-//			//lettera.setDt_registrazione(sospesoTrovato.getDt_registrazione());
-//			((CRUDBP)context.getBusinessProcess()).setDirty(true);
-//		}
-//		return context.findDefaultForward();
-//
-//	} catch(Exception e) {
-//		return handleException(context,e);
-//	}
-//}
+public Forward doBringBackSearchFindUnitaMisura(ActionContext context,
+	RichiestaUopRigaBulk riga,
+	UnitaMisuraBulk unitaMisura) 
+	throws java.rmi.RemoteException {
+
+	riga.setUnitaMisura(unitaMisura);
+	((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		
+	try{
+		if (unitaMisura!=null && riga.getBeneServizio() != null && riga.getBeneServizio().getUnitaMisura() != null && unitaMisura.getCdUnitaMisura().equals(riga.getBeneServizio().getUnitaMisura().getCdUnitaMisura())) {
+			riga.setCoefConv(BigDecimal.ONE);
+		} else {
+			riga.setCoefConv(null);
+		}
+		return context.findDefaultForward();
+
+	} catch(Exception e) {
+		return handleException(context,e);
+	}
+}
+public Forward doBringBackSearchFindBeneServizio(ActionContext context,
+		RichiestaUopRigaBulk riga,
+		Bene_servizioBulk bene) 
+		throws java.rmi.RemoteException {
+
+		riga.setBeneServizio(bene);
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+			
+		try{
+			if (riga.getUnitaMisura()!=null && riga.getUnitaMisura().getCdUnitaMisura()!=null && riga.getBeneServizio() != null && riga.getBeneServizio().getUnitaMisura() != null && riga.getUnitaMisura().getCdUnitaMisura().equals(riga.getBeneServizio().getUnitaMisura().getCdUnitaMisura())) {
+				riga.setCoefConv(BigDecimal.ONE);
+			} else {
+				riga.setCoefConv(null);
+			}
+			return context.findDefaultForward();
+
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
 ///**
 // * Gestisce una richiesta di ricerca del searchtool "terzo"
 // *

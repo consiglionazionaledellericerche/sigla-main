@@ -9,6 +9,15 @@
 		<columnMapping
 			columnName="CD_CATEGORIA_GRUPPO"
 			propertyName="categoria_gruppo.cd_categoria_gruppo" />
+		<columnMapping
+			columnName="CD_GRUPPO_MERCEOLOGICO"
+			propertyName="gruppoMerceologico.cdGruppoMerceologico" />
+		<columnMapping
+			columnName="CD_TIPO_ARTICOLO"
+			propertyName="tipoArticolo.cdTipoArticolo" />
+		<columnMapping
+			columnName="UNITA_MISURA"
+			propertyName="unitaMisura.cdUnitaMisura" />
 
 	</defaultColumnMap>
 
@@ -16,5 +25,11 @@
 		name="voce_iva" />
 	<persistentProperty
 		name="categoria_gruppo" />
+	<persistentProperty
+		name="gruppoMerceologico" />
+	<persistentProperty
+		name="tipoArticolo" />
+	<persistentProperty
+		name="unitaMisura" />
 
 </SQLPersistentInfo>
