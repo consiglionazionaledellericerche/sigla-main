@@ -10,11 +10,13 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -5947,4 +5949,42 @@ public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext aUC, i
 //		return eliminaLetteraPagamentoEstero(context,docGen,true);
 //	}
 //	
+
+@Override
+public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk)
+		throws ComponentException {
+	OggettoBulk oggetto = super.inizializzaBulkPerInserimento(usercontext, oggettobulk);
+	return inizializzaBulk(usercontext, oggetto);
+}
+
+private OggettoBulk inizializzaBulk(UserContext usercontext, OggettoBulk oggetto) throws ComponentException {
+	RichiestaUopHome home = (RichiestaUopHome) getHomeCache(usercontext).getHome(RichiestaUopBulk.class);
+	try {
+		home.inizializzaBulk(usercontext, oggetto);
+	} catch (PersistencyException e) {
+		throw new ComponentException(e);
+	}
+	return oggetto;
+}
+
+@Override
+public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBulk oggettobulk)
+		throws ComponentException {
+	OggettoBulk oggetto = super.inizializzaBulkPerModifica(usercontext, oggettobulk);
+	return inizializzaBulk(usercontext, oggetto);
+}
+
+@Override
+public OggettoBulk inizializzaBulkPerRicerca(UserContext usercontext, OggettoBulk oggettobulk)
+		throws ComponentException {
+	OggettoBulk oggetto = super.inizializzaBulkPerRicerca(usercontext, oggettobulk);
+	return inizializzaBulk(usercontext, oggetto);
+}
+
+@Override
+public OggettoBulk inizializzaBulkPerRicercaLibera(UserContext usercontext, OggettoBulk oggettobulk)
+		throws ComponentException {
+	OggettoBulk oggetto = super.inizializzaBulkPerRicercaLibera(usercontext, oggettobulk);
+	return inizializzaBulk(usercontext, oggetto);
+}
 }
