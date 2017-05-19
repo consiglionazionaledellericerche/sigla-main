@@ -33,11 +33,20 @@
 	</table>
 	<table>
 		<tr>
-			<%
-				bp.getRighe().writeFormField(out, "findUnitaMisura");
-				bp.getRighe().writeFormField(out, "coefConv");
-				bp.getRighe().writeFormField(out, "quantitaRichiesta");
-			%>
+			<% bp.getRighe().writeFormField(out, "findUnitaMisura");%>
+			<td>
+				<% bp.getRighe().writeFormLabel(out,"coefConv");%>
+			</td>      	
+			<td>
+				<%
+					if (riga != null){
+						bp.getRighe().writeFormInput(out,null,"coefConv",riga.isROCoefConv(),null,"");
+			    	} else {
+						bp.getRighe().writeFormInput(out,null,"coefConv",false,null,"");
+			    	}
+			    %>
+			</td>
+				<%bp.getRighe().writeFormField(out, "quantitaRichiesta"); %>
 		</tr>
 	</table>
 	<table>

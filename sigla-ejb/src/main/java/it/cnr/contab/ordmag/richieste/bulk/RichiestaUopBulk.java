@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.ordmag.anag00.AssUnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -32,7 +33,7 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrdDest =  new UnitaOperativaOrdBulk();
 	public final static String STATO_ANNULLATO = "ANN";
-	public final static String STATO_INSERITO = "INS";
+	public final static String STATO_INSERITO = "INS";	
 
 	public final static Dictionary STATO;
 	static{
@@ -199,6 +200,11 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	}
 	private void impostaCds(it.cnr.jada.action.ActionContext context) {
 		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+	}
+	public RichiestaUopRigaBulk removeFromRigheRichiestaColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (RichiestaUopRigaBulk)righeRichiestaColl.remove(index);
 	}
 	public int addToRigheRichiestaColl( RichiestaUopRigaBulk nuovoRigo ) 
 	{

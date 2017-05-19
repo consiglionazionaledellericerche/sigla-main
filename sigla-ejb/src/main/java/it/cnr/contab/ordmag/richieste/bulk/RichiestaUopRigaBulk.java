@@ -630,4 +630,12 @@ Capitolo definito dall"utente collegato a Categoria
 	public void setProgetto(ProgettoBulk progetto) {
 		this.progetto = progetto;
 	}
-}
+	public Boolean isROCoefConv(){
+		if (getUnitaMisura() != null && getUnitaMisura().getCdUnitaMisura() != null && 
+				getBeneServizio() != null && getBeneServizio().getUnitaMisura() != null && getBeneServizio().getCdUnitaMisura() != null && 
+				!getUnitaMisura().getCdUnitaMisura().equals(getBeneServizio().getCdUnitaMisura())){
+			return false;
+		}
+		return true;
+	}
+	}
