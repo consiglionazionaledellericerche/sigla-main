@@ -4,6 +4,7 @@
  */
 package it.cnr.contab.ordmag.richieste.bulk;
 import java.sql.Connection;
+
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistentCache;
 public class RichiestaUopRigaHome extends BulkHome {
