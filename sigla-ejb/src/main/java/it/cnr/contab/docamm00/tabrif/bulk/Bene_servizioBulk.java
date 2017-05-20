@@ -20,6 +20,18 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	public final static String SERVIZIO = "S";
 	public final static String BENE = "B";
 
+	public final static String STATO_VALIDO = "Y";
+	public final static String STATO_NON_ORDINABILE = "O";
+	public final static String STATO_NON_VALIDO = "N";
+
+	public final static Dictionary statoKeys;
+	static {
+		statoKeys = new it.cnr.jada.util.OrderedHashtable();
+		statoKeys.put(STATO_VALIDO,"Valido");
+		statoKeys.put(STATO_NON_ORDINABILE,"Non Ordinabile");
+		statoKeys.put(STATO_NON_VALIDO,"Non Valido");	
+	};
+
 	public final static Dictionary BENI_SERVIZI;
 
 	static {
@@ -116,7 +128,7 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 		if (getFl_obb_intrastat_ven()==null)
 			setFl_obb_intrastat_ven(TRUE);	
 		if (getFl_valido()==null)
-			setFl_valido(TRUE);
+			setFl_valido(STATO_VALIDO);
 		if (getFl_autofattura()==null)
 			setFl_autofattura(FALSE);	
 		if (getFl_bollo()==null)
