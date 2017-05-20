@@ -14,7 +14,7 @@
 		<columnMapping
 			columnName="STATO"
 			propertyName="stato"
-			sqlTypeName="DECIMAL"
+			sqlTypeName="VARCHAR"
 			columnSize="3"
 			nullable="false" />
 		<columnMapping

@@ -33,13 +33,15 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrdDest =  new UnitaOperativaOrdBulk();
 	public final static String STATO_ANNULLATO = "ANN";
-	public final static String STATO_INSERITO = "INS";	
+	public final static String STATO_INSERITO = "INS";
+	public final static String STATO_CONFERMATO = "CON";
 
 	public final static Dictionary STATO;
 	static{
 		STATO = new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INSERITO,"Inserito");
 		STATO.put(STATO_ANNULLATO,"Annullato");
+		STATO.put(STATO_CONFERMATO,"Confermato");
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
