@@ -110,8 +110,7 @@
 			propertyName="fl_valido"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			nullable="false"/>
 		<columnMapping
 			columnName="FL_AUTOFATTURA"
 			propertyName="fl_autofattura"
