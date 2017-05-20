@@ -8,8 +8,8 @@ public class RichiestaUopBase extends RichiestaUopKey implements Keyed {
 //    DATA_RICHIESTA TIMESTAMP(7) NOT NULL
 	private java.sql.Timestamp dataRichiesta;
  
-//    STATO DECIMAL(3,0) NOT NULL
-	private java.lang.Integer stato;
+//    STATO VARCHAR(3) NOT NULL
+	private java.lang.String stato;
  
 //    DS_RICHIESTA VARCHAR(300)
 	private java.lang.String dsRichiesta;
