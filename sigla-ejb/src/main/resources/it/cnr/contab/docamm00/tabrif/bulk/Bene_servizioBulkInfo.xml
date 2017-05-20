@@ -159,8 +159,9 @@
 	<fieldProperty
 		name="fl_valido"
 		property="fl_valido"
-		inputType="CHECKBOX"
-		label="valido"
+		inputType="SELECT"
+		keysProperty="statoKeys"
+		label="Stato"
 		enabledOnFreeSearch="true"
 		enabledOnSearch="true"/>	
 	<fieldProperty
