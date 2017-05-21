@@ -4,30 +4,21 @@
  */
 package it.cnr.contab.ordmag.richieste.bulk;
 import java.sql.Connection;
-import java.util.Iterator;
 import java.util.List;
 
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
-import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
-import it.cnr.contab.ordmag.anag00.AssUnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdHome;
 import it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SimpleFindClause;
 public class RichiestaUopHome extends BulkHome {
 	public RichiestaUopHome(Connection conn) {
 		super(RichiestaUopBulk.class, conn);
@@ -85,7 +76,28 @@ public class RichiestaUopHome extends BulkHome {
 			List listUop=uopHome.fetchAll(sql);
 			if (listUop != null && listUop.size() == 1){
 				richiesta.setUnitaOperativaOrd((UnitaOperativaOrdBulk)listUop.get(0));
+				if (richiesta.getCdUnitaOperativaDest() == null){
+					SQLBuilder sqlAss = selectUnitaOperativaOrdDestByClause(usercontext, richiesta, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
+					List listAssUop=uopHome.fetchAll(sqlAss);
+					if (listAssUop != null && listAssUop.size() == 1){
+						richiesta.setUnitaOperativaOrdDest((UnitaOperativaOrdBulk)listAssUop.get(0));
+					}
+				}
 			}
 		}
+		if (richiesta.getCdNumeratore() == null){
+			NumerazioneOrdHome numerazioneHome = (NumerazioneOrdHome)getHomeCache().getHome(NumerazioneOrdBulk.class);
+			SQLBuilder sql = selectNumerazioneOrdByClause(usercontext, richiesta, numerazioneHome, new NumerazioneOrdBulk(), new CompoundFindClause());
+			List listNum=numerazioneHome.fetchAll(sql);
+			if (listNum != null && listNum.size() == 1){
+				richiesta.setNumerazioneOrd((NumerazioneOrdBulk)listNum.get(0));
+			}
+		}
+	}
+	@Override
+	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause)
+			throws PersistencyException {
+		// TODO Auto-generated method stub
+		return super.selectByClause(usercontext, compoundfindclause);
 	}
 }

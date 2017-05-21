@@ -71,6 +71,13 @@
 		readonlyPropertyOnEdit="RODenominazione"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="denominazioneForSimpleSearchtool"
+		property="denominazione"
+		maxLength="300"
+		inputType="TEXT"
+		label="Denominazione"
+		enabledOnSearch="false"/>
+	<fieldProperty
 		name="cd_cdr_linea"
 		property="cd_centro_responsabilita"
 		maxLength="30"
@@ -414,12 +421,24 @@
 		name="searchtool" >
 		<formFieldProperty
 			name="cd_linea_attivita"
-			inputType="TEXT" />
+			inputType="TEXT"/>
 		<formFieldProperty
 			name="denominazione"
 			inputType="TEXT"
 			inputSize="20" />
 	</form>
+	<form
+		name="simple_searchtool" >
+		<formFieldProperty
+			name="cd_linea_attivita"
+			inputType="TEXT" 
+			inputSize="12"/>
+		<formFieldProperty
+			name="denominazioneForSimpleSearchtool"
+			inputType="TEXT"
+			inputSize="60" />
+	</form>
+
 
 	<form
 		name="searchtool_x_var_stanz_res" >

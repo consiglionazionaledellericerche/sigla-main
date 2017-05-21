@@ -11,6 +11,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
 public class RichiestaUopRigaBulk extends RichiestaUopRigaBase {
@@ -638,4 +639,14 @@ Capitolo definito dall"utente collegato a Categoria
 		}
 		return true;
 	}
+	/**
+	 * Il metodo inzializza la missione da modificare
+	 */
+	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
+	{
+		setStato(STATO_INSERITO);
+		//	La data di registrazione la inizializzo sulla Component
+
+		return this;
 	}
+}

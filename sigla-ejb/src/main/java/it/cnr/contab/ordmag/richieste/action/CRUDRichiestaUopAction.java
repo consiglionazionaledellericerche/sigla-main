@@ -1039,18 +1039,23 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 		riga.setBeneServizio(bene);
 		((CRUDBP)context.getBusinessProcess()).setDirty(true);
 			
-		try{
-			if (riga.getUnitaMisura()!=null && riga.getUnitaMisura().getCdUnitaMisura()!=null && riga.getBeneServizio() != null && riga.getBeneServizio().getUnitaMisura() != null && riga.getUnitaMisura().getCdUnitaMisura().equals(riga.getBeneServizio().getUnitaMisura().getCdUnitaMisura())) {
-				riga.setCoefConv(BigDecimal.ONE);
-			} else {
-				riga.setCoefConv(null);
-			}
-			return context.findDefaultForward();
-
-		} catch(Exception e) {
-			return handleException(context,e);
+		if (bene.getUnitaMisura() != null){
+			riga.setUnitaMisura(bene.getUnitaMisura());
+			riga.setCoefConv(BigDecimal.ONE);
 		}
-	}
+//		try{
+//			if (riga.getUnitaMisura()!=null && riga.getUnitaMisura().getCdUnitaMisura()!=null && riga.getBeneServizio() != null && riga.getBeneServizio().getUnitaMisura() != null && riga.getUnitaMisura().getCdUnitaMisura().equals(riga.getBeneServizio().getUnitaMisura().getCdUnitaMisura())) {
+//				riga.setCoefConv(BigDecimal.ONE);
+//			} else {
+//				riga.setCoefConv(null);
+//			}
+//			return context.findDefaultForward();
+//
+//		} catch(Exception e) {
+//			return handleException(context,e);
+//		}
+		return context.findDefaultForward();
+}
 ///**
 // * Gestisce una richiesta di ricerca del searchtool "terzo"
 // *
