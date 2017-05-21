@@ -8,10 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.ordmag.anag00.AssUnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -268,5 +267,24 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 		if (d == null) return null;
 		OrderedHashtable clone = (OrderedHashtable)d.clone();
 		return clone;
+	}
+	/**
+	 * Il metodo inzializza la missione da modificare
+	 */
+	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
+	{
+		setStato(STATO_INSERITO);
+		java.sql.Timestamp dataReg = null;
+		try {
+			dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+		} catch (javax.ejb.EJBException e) {
+			throw new it.cnr.jada.DetailedRuntimeException(e);
+		}
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_padre());
+		setDataRichiesta(dataReg);
+		
+		//	La data di registrazione la inizializzo sulla Component
+
+		return this;
 	}
 }
