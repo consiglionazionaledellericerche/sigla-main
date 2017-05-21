@@ -11,7 +11,7 @@ import it.cnr.contab.ordmag.comp.NumeratoriOrdMagComponent;
 public class NumeratoriOrdMagComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements NumeratoriOrdMagComponentSession {
 	@PostConstruct
 	public void ejbCreate() {
-		componentObj = new it.cnr.contab.docamm00.comp.ProgressiviAmmComponent();
+		componentObj = new NumeratoriOrdMagComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
 		return new NumeratoriOrdMagComponentSessionBean();

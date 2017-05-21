@@ -54,14 +54,14 @@ public class RichiestaUopBase extends RichiestaUopKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [stato]
 	 **/
-	public java.lang.Integer getStato() {
+	public java.lang.String getStato() {
 		return stato;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [stato]
 	 **/
-	public void setStato(java.lang.Integer stato)  {
+	public void setStato(java.lang.String stato)  {
 		this.stato=stato;
 	}
 	/**

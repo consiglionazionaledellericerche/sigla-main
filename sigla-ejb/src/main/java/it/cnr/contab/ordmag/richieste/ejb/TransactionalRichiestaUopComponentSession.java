@@ -1,14 +1,5 @@
 package it.cnr.contab.ordmag.richieste.ejb;
-import java.rmi.*;
-
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.ejb.*;
+import java.rmi.RemoteException;
 
 public class TransactionalRichiestaUopComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements RichiestaUopComponentSession {
 //public it.cnr.jada.bulk.OggettoBulk aggiornaModalita(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk param1,it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk param2,it.cnr.contab.anagraf00.core.bulk.TerzoBulk param3) throws RemoteException,it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException {

@@ -9,12 +9,21 @@ import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
+import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
+import it.cnr.contab.ordmag.anag00.UnitaMisuraHome;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopHome;
@@ -59,23 +68,6 @@ public class RichiestaUopComponent
 		throw handleException(richiesta, t);
 	}
 }
-//private java.math.BigDecimal calcolaTotale(it.cnr.jada.UserContext userContext, RichiestaUopBulk documento) throws it.cnr.jada.comp.ComponentException {
-//
-//	Documento_generico_rigaBulk riga=null;
-//	java.math.BigDecimal importo=new java.math.BigDecimal(0);
-//    for (java.util.Iterator i= documento.getDocumento_generico_dettColl().iterator(); i.hasNext();) {
-//        riga= (Documento_generico_rigaBulk) i.next();
-//        //if (Documento_generico_rigaBulk.STATO_INIZIALE.equals(riga.getStato_cofi()))
-//            //numeroDiRigheNonContabilizzate++;
-//        if (riga.getIm_riga() != null) {
-//            importo= importo.add(riga.getIm_riga()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
-//            riga.setIm_riga(riga.getIm_riga().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
-//        }
-//    }
-//    importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
-//
-//    return importo;
-//}
 public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws ComponentException {
 
 	return creaConBulk(userContext, bulk, null);
@@ -100,87 +92,9 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 			throws it.cnr.jada.comp.ComponentException {
 
 		RichiestaUopBulk richiesta= (RichiestaUopBulk) bulk;
-		try {
-
-			//effettua il controllo di validazione    
-			try {		
-				if (existARowToBeInventoried(userContext,documento)) {
-					verificaEsistenzaEdAperturaInventario(userContext, documento);
-					if (documento.hasCompetenzaCOGEInAnnoPrecedente())
-						throw new it.cnr.jada.comp.ApplicationException("Attenzione: per le date competenza indicate non è possibile inventariare i beni.");		
-
-					if(hasDocumentoPassivoARowNotInventoried(userContext, documento))
-						throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
-				}
-				validaDocumento(userContext, documento);
-			} catch (it.cnr.jada.comp.ApplicationException e) {
-				throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-			}
-			Lettera_pagam_esteroBulk lettera = documento.getLettera_pagamento_estero();
-			if (lettera != null) {
-
-				Lettera_pagam_esteroBulk original1210 = (Lettera_pagam_esteroBulk)getHome(userContext, lettera).findByPrimaryKey(lettera);
-				aggiornaLetteraPagamentoEstero(userContext, lettera);
-				if (!documento.isFlagEnte() &&
-						(original1210 == null ||
-						lettera.getIm_pagamento().compareTo(original1210.getIm_pagamento()) != 0))
-					validaDisponibilitaDiCassaCDS(userContext, documento);
-
-			}
-
-			//assegna un progressivo al documento all'atto della creazione.
+//			//assegna un progressivo al documento all'atto della creazione.
 			assegnaProgressivo(userContext, richiesta);
-
-			// Salvo temporaneamente l'hash map dei saldi
-			PrimaryKeyHashMap aTempDiffSaldi=new PrimaryKeyHashMap();
-			if (documento.getDefferredSaldi() != null)
-				aTempDiffSaldi=(PrimaryKeyHashMap)documento.getDefferredSaldi().clone();    
-
-			if (!documento.isGenericoAttivo()) {
-				manageDocumentiContabiliCancellatiPerGenericoPassivo(userContext, documento,status);
-				aggiornaObbligazioni(userContext, documento, status);
-			}
-			if (documento.isGenericoAttivo()) {
-				manageDocumentiContabiliCancellatiPerGenericoAttivo(userContext, documento,status);
-				aggiornaAccertamenti(userContext, documento, status);
-			}
-			documento = (RichiestaUopBulk)super.creaConBulk(userContext, documento);
-			// Restore dell'hash map dei saldi
-			if (documento.getDefferredSaldi() != null)
-				documento.getDefferredSaldi().putAll(aTempDiffSaldi);
-
-			aggiornaCogeCoanDocAmm(userContext, documento); 
-			try {
-				if (!verificaStatoEsercizio(
-						userContext, 
-						new EsercizioBulk( 
-								documento.getCd_cds(), 
-								((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio())))
-					throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare un documento per un esercizio non aperto!");
-			} catch (it.cnr.jada.comp.ApplicationException e) {
-				throw handleException(bulk, e);
-			}
-
-			if (documento.getTi_entrate_spese()==RichiestaUopBulk.SPESE){
-				prepareCarichiInventario(userContext, documento);
-				aggiornaCarichiInventario(userContext, documento);
-				// Le operazioni che rendono persistenti le modifiche fatte sull'Inventario,
-				//	potrebbero rimandare un messaggio all'utente.
-				String messaggio = aggiornaAssociazioniInventario(userContext, documento);
-
-			}
-			else{
-				prepareScarichiInventario(userContext, documento);
-				aggiornaScarichiInventario(userContext, documento);
-				String messaggio = aggiornaAssociazioniInventario(userContext, documento);
-			}
-
-
-			controllaQuadraturaInventario(userContext,documento);
-
-		} catch (it.cnr.jada.persistency.PersistencyException ex) {
-			throw handleException( ex);
-		}
+			richiesta = (RichiestaUopBulk)super.creaConBulk(userContext, richiesta);
 		return richiesta;
 	}
 ////^^@@
@@ -2923,95 +2837,95 @@ public void validaDocumento(UserContext aUC, RichiestaUopBulk richiesta) throws 
     	 throw new it.cnr.jada.comp.ApplicationException("Attenzione non si può modificare nulla in un documento pagato");
 
     //controllo dettagli
-    if (documentoGenerico.getDocumento_generico_dettColl().isEmpty())
-        throw new it.cnr.jada.comp.ApplicationException(
-            "Attenzione non possono esistere documenti senza almeno un dettaglio");
-	try {
-    RichiestaUopBulk documentoDB = (RichiestaUopBulk)getTempHome(aUC, RichiestaUopBulk.class).findByPrimaryKey(documentoGenerico);
-	if (documentoDB==null || (documentoGenerico.getDt_da_competenza_coge().compareTo(documentoDB.getDt_da_competenza_coge())!=0 ||
-		documentoGenerico.getDt_a_competenza_coge().compareTo(documentoDB.getDt_a_competenza_coge())!=0)){
-		    //controlla le date di competenza COGE
-		    try {
-			    documentoGenerico.validaDateCompetenza();
-		    } catch (ValidationException e) {
-			    throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-		    }
-		}
-	} catch (PersistencyException e) {
-		throw handleException(e);
-	}
-    controllaCompetenzaCOGEDettagli(aUC, documentoGenerico);
-
-    //controlla il tipo ti documento
-    if (documentoGenerico.getCd_tipo_documento_amm() == null)
-        documentoGenerico.setCd_tipo_documento_amm(documentoGenerico.getTipo_documento().getCd_tipo_documento_amm());
-
-	//controlla compatibilità dei clienti/fornitori x accertamenti/obbligazioni
-    for (java.util.Iterator i = documentoGenerico.getDocumento_generico_dettColl().iterator(); i.hasNext();) {
-        Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk) i.next();
-        if (riga.getStato_cofi().equals(riga.STATO_INIZIALE))
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione la riga " + riga.getDs_riga() + " è in stato iniziale");
-        if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.ENTRATE) {
-            if (!riga.getTerzo().getCd_terzo().equals(riga.getAccertamento_scadenziario().getAccertamento().getCd_terzo())
-                && (!riga
-                    .getAccertamento_scadenziario()
-                    .getAccertamento()
-                    .getDebitore()
-                    .getAnagrafico()
-                    .getTi_entita()
-                    .equals(AnagraficoBulk.DIVERSI)
-                    && !(riga.getTerzo().getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI))))
-                throw new it.cnr.jada.comp.ApplicationException(
-                    "Attenzione la riga " + riga.getDs_riga() + " ha un terzo incompatibile con il documento contabile associato.");
-        } else {
-            if (!riga.getTerzo().getCd_terzo().equals(riga.getObbligazione_scadenziario().getObbligazione().getCd_terzo())
-                && (!riga
-                    .getObbligazione_scadenziario()
-                    .getObbligazione()
-                    .getCreditore()
-                    .getAnagrafico()
-                    .getTi_entita()
-                    .equals(AnagraficoBulk.DIVERSI)
-                    && !(riga.getTerzo().getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI))))
-                throw new it.cnr.jada.comp.ApplicationException(
-                    "Attenzione la riga " + riga.getDs_riga() + " ha un terzo incompatibile con il documento contabile associato.");
-        }
-    }
-    
-    //controllo obbligazione/accertamento
-    if (!documentoGenerico.isPassivo_ente()) {
-        if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
-            controllaQuadraturaObbligazioni(aUC, documentoGenerico);
-        } else {
-            controllaQuadraturaAccertamenti(aUC, documentoGenerico);
-        }
-    } else {
-        if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
-	        ObbligazioniTable obbligazioniHash = documentoGenerico.getObbligazioniHash();
-	        if (obbligazioniHash != null)
-	            for (java.util.Enumeration e = obbligazioniHash.keys(); e.hasMoreElements();) {
-	                Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) e.nextElement();
-	                controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)obbligazioniHash.get(scadenza));
-	            	controlloTrovato(aUC, scadenza);		
-	            }
-        } else {
-	        AccertamentiTable accertamentiHash = documentoGenerico.getAccertamentiHash();
-	        if (accertamentiHash != null)
-	            for (java.util.Enumeration e = accertamentiHash.keys(); e.hasMoreElements();) {
-	                Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk) e.nextElement();
-	                controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)accertamentiHash.get(scadenza));
-	            	controlloTrovato(aUC, scadenza);		
-	            }
-        }
-    }
-    
-    controllaContabilizzazioneDiTutteLeRighe(aUC, documentoGenerico);
-
-    //controlli per la lettera di pagamento
-    if (documentoGenerico.getLettera_pagamento_estero() != null) {
-	    if (!documentoGenerico.controllaCompatibilitaPer1210() || documentoGenerico.isByFondoEconomale())
-	    	throw new it.cnr.jada.comp.ApplicationException("E' stata selezionata una lettera di pagamento per un documento in cui o i terzi e le modalità di pagamento sono differenti o il pagamento del fondo economale è stato selezionato");
-    }
+//    if (documentoGenerico.getDocumento_generico_dettColl().isEmpty())
+//        throw new it.cnr.jada.comp.ApplicationException(
+//            "Attenzione non possono esistere documenti senza almeno un dettaglio");
+//	try {
+//    RichiestaUopBulk documentoDB = (RichiestaUopBulk)getTempHome(aUC, RichiestaUopBulk.class).findByPrimaryKey(documentoGenerico);
+//	if (documentoDB==null || (documentoGenerico.getDt_da_competenza_coge().compareTo(documentoDB.getDt_da_competenza_coge())!=0 ||
+//		documentoGenerico.getDt_a_competenza_coge().compareTo(documentoDB.getDt_a_competenza_coge())!=0)){
+//		    //controlla le date di competenza COGE
+//		    try {
+//			    documentoGenerico.validaDateCompetenza();
+//		    } catch (ValidationException e) {
+//			    throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+//		    }
+//		}
+//	} catch (PersistencyException e) {
+//		throw handleException(e);
+//	}
+//    controllaCompetenzaCOGEDettagli(aUC, documentoGenerico);
+//
+//    //controlla il tipo ti documento
+//    if (documentoGenerico.getCd_tipo_documento_amm() == null)
+//        documentoGenerico.setCd_tipo_documento_amm(documentoGenerico.getTipo_documento().getCd_tipo_documento_amm());
+//
+//	//controlla compatibilità dei clienti/fornitori x accertamenti/obbligazioni
+//    for (java.util.Iterator i = documentoGenerico.getDocumento_generico_dettColl().iterator(); i.hasNext();) {
+//        Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk) i.next();
+//        if (riga.getStato_cofi().equals(riga.STATO_INIZIALE))
+//            throw new it.cnr.jada.comp.ApplicationException("Attenzione la riga " + riga.getDs_riga() + " è in stato iniziale");
+//        if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.ENTRATE) {
+//            if (!riga.getTerzo().getCd_terzo().equals(riga.getAccertamento_scadenziario().getAccertamento().getCd_terzo())
+//                && (!riga
+//                    .getAccertamento_scadenziario()
+//                    .getAccertamento()
+//                    .getDebitore()
+//                    .getAnagrafico()
+//                    .getTi_entita()
+//                    .equals(AnagraficoBulk.DIVERSI)
+//                    && !(riga.getTerzo().getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI))))
+//                throw new it.cnr.jada.comp.ApplicationException(
+//                    "Attenzione la riga " + riga.getDs_riga() + " ha un terzo incompatibile con il documento contabile associato.");
+//        } else {
+//            if (!riga.getTerzo().getCd_terzo().equals(riga.getObbligazione_scadenziario().getObbligazione().getCd_terzo())
+//                && (!riga
+//                    .getObbligazione_scadenziario()
+//                    .getObbligazione()
+//                    .getCreditore()
+//                    .getAnagrafico()
+//                    .getTi_entita()
+//                    .equals(AnagraficoBulk.DIVERSI)
+//                    && !(riga.getTerzo().getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI))))
+//                throw new it.cnr.jada.comp.ApplicationException(
+//                    "Attenzione la riga " + riga.getDs_riga() + " ha un terzo incompatibile con il documento contabile associato.");
+//        }
+//    }
+//    
+//    //controllo obbligazione/accertamento
+//    if (!documentoGenerico.isPassivo_ente()) {
+//        if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
+//            controllaQuadraturaObbligazioni(aUC, documentoGenerico);
+//        } else {
+//            controllaQuadraturaAccertamenti(aUC, documentoGenerico);
+//        }
+//    } else {
+//        if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
+//	        ObbligazioniTable obbligazioniHash = documentoGenerico.getObbligazioniHash();
+//	        if (obbligazioniHash != null)
+//	            for (java.util.Enumeration e = obbligazioniHash.keys(); e.hasMoreElements();) {
+//	                Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) e.nextElement();
+//	                controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)obbligazioniHash.get(scadenza));
+//	            	controlloTrovato(aUC, scadenza);		
+//	            }
+//        } else {
+//	        AccertamentiTable accertamentiHash = documentoGenerico.getAccertamentiHash();
+//	        if (accertamentiHash != null)
+//	            for (java.util.Enumeration e = accertamentiHash.keys(); e.hasMoreElements();) {
+//	                Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk) e.nextElement();
+//	                controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)accertamentiHash.get(scadenza));
+//	            	controlloTrovato(aUC, scadenza);		
+//	            }
+//        }
+//    }
+//    
+//    controllaContabilizzazioneDiTutteLeRighe(aUC, documentoGenerico);
+//
+//    //controlli per la lettera di pagamento
+//    if (documentoGenerico.getLettera_pagamento_estero() != null) {
+//	    if (!documentoGenerico.controllaCompatibilitaPer1210() || documentoGenerico.isByFondoEconomale())
+//	    	throw new it.cnr.jada.comp.ApplicationException("E' stata selezionata una lettera di pagamento per un documento in cui o i terzi e le modalità di pagamento sono differenti o il pagamento del fondo economale è stato selezionato");
+//    }
 
     return;
 }
@@ -4008,8 +3922,70 @@ private OggettoBulk inizializzaBulk(UserContext usercontext, OggettoBulk oggetto
 @Override
 public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBulk oggettobulk)
 		throws ComponentException {
-	OggettoBulk oggetto = super.inizializzaBulkPerModifica(usercontext, oggettobulk);
-	return inizializzaBulk(usercontext, oggetto);
+	RichiestaUopBulk richiesta = (RichiestaUopBulk)super.inizializzaBulkPerModifica(usercontext, oggettobulk);
+
+	it.cnr.jada.bulk.BulkHome home= getHome(usercontext, RichiestaUopRigaBulk.class);
+    it.cnr.jada.persistency.sql.SQLBuilder sql= home.createSQLBuilder();
+    sql.addClause("AND", "numero", sql.EQUALS, richiesta.getNumero());
+    sql.addClause("AND", "cdCds", sql.EQUALS, richiesta.getCdCds());
+    sql.addClause("AND", "esercizio", sql.EQUALS, richiesta.getEsercizio());
+    sql.addClause("AND", "cdNumeratore", sql.EQUALS, richiesta.getCdNumeratore());
+
+    try {
+    	getHomeCache(usercontext).fetchAll(usercontext);
+
+    	richiesta.setRigheRichiestaColl(new it.cnr.jada.bulk.BulkList(home.fetchAll(sql)));
+
+    	for (java.util.Iterator i= richiesta.getRigheRichiestaColl().iterator(); i.hasNext();) {
+    		OggettoBulk rigabulk= (OggettoBulk) i.next();
+    		RichiestaUopRigaBulk riga= (RichiestaUopRigaBulk) rigabulk;
+    		if (riga.getBeneServizio() != null){
+    			Bene_servizioHome Home = (Bene_servizioHome)getHome(usercontext, Bene_servizioBulk.class);
+    			Bene_servizioBulk bene = (Bene_servizioBulk)Home.findByPrimaryKey(new Bene_servizioBulk(riga.getCdBeneServizio()));
+    			riga.setBeneServizio(bene);
+    		}
+    		if (riga.getUnitaMisura() != null){
+    			UnitaMisuraHome Home = (UnitaMisuraHome)getHome(usercontext, UnitaMisuraBulk.class);
+    			UnitaMisuraBulk um = (UnitaMisuraBulk)Home.findByPrimaryKey(new UnitaMisuraBulk(riga.getCdUnitaMisura()));
+    			riga.setUnitaMisura(um);
+    		}
+    		if (riga.getElementoVoce() != null){
+    			Elemento_voceHome Home = (Elemento_voceHome)getHome(usercontext, Elemento_voceBulk.class);
+    			Elemento_voceBulk elem_voce = (Elemento_voceBulk)Home.findByPrimaryKey(new Elemento_voceBulk(riga.getCdElementoVoce(), riga.getEsercizioVoce(), riga.getTiAppartenenza(), riga.getTiGestione()));
+    			riga.setElementoVoce(elem_voce);
+    		}
+    		if (riga.getCentroResponsabilita() != null){
+    			CdrHome Home = (CdrHome)getHome(usercontext, CdrBulk.class);
+    			CdrBulk cdr = (CdrBulk)Home.findByPrimaryKey(new CdrBulk(riga.getCdCentroResponsabilita()));
+    			riga.setCentroResponsabilita(cdr);
+    		}
+    		if (riga.getLineaAttivita() != null){
+    			WorkpackageHome Home = (WorkpackageHome)getHome(usercontext, WorkpackageBulk.class);
+    			WorkpackageBulk wp = (WorkpackageBulk)Home.findByPrimaryKey(new WorkpackageBulk(riga.getCdCentroResponsabilita(), riga.getCdLineaAttivita()));
+    			riga.setLineaAttivita(wp);
+    		}
+//    		if (riga.getProgetto() != null){
+//    			ProgettoHome Home = (ProgettoHome)getHome(usercontext, ProgettoBulk.class);
+//    			ProgettoGestBulk prog = (ProgettoGestBulk)Home.findByPrimaryKey(new ProgettoGestBulk(riga.getPgProgetto()));
+//    			riga.setpro(prog);
+//    		}
+    		if (riga.getObbligazione() != null){
+    			ObbligazioneHome Home = (ObbligazioneHome)getHome(usercontext, ObbligazioneBulk.class);
+    			ObbligazioneBulk obbl = (ObbligazioneBulk)Home.findByPrimaryKey(new ObbligazioneBulk(riga.getCdCdsObbl(), riga.getEsercizioObbl(), riga.getEsercizioOrigObbl(), riga.getPgObbligazione()));
+    			riga.setObbligazione(obbl);
+    		}
+    		if (riga.getCategoriaGruppoInvent() != null){
+    			Categoria_gruppo_inventHome Home = (Categoria_gruppo_inventHome)getHome(usercontext, Categoria_gruppo_inventBulk.class);
+    			Categoria_gruppo_inventBulk cat = (Categoria_gruppo_inventBulk)Home.findByPrimaryKey(new Categoria_gruppo_inventBulk(riga.getCdCategoriaGruppo()));
+    			riga.setCategoriaGruppoInvent(cat);
+    		}
+    	}
+
+    } catch (PersistencyException e) {
+    	throw handleException(e);
+    }
+        
+	return inizializzaBulk(usercontext, (OggettoBulk)richiesta);
 }
 
 @Override
@@ -4150,12 +4126,12 @@ public SQLBuilder selectProgettoByClause (UserContext userContext,
 
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
-	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-		if (parCnrBulk.getFl_nuovo_pdg())
-			sql.addSQLExistsClause("AND",progettoHome.abilitazioniCommesse(userContext));
-		else
-			sql.addSQLExistsClause("AND",progettoHome.abilitazioniModuli(userContext));
-	}	  
+//	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+//		if (parCnrBulk.getFl_nuovo_pdg())
+//			sql.addSQLExistsClause("AND",progettoHome.abilitazioniCommesse(userContext));
+//		else
+//			sql.addSQLExistsClause("AND",progettoHome.abilitazioniModuli(userContext));
+//	}	  
 	if (clause != null) sql.addClause(clause);
 	return sql; 
 }	
