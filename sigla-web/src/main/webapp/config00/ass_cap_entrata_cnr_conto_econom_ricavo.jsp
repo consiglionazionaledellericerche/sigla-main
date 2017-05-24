@@ -46,6 +46,16 @@
 	</td>				 
 	
 	</tr>
+	<tr>
+	<td><% bp.getController().writeFormLabel( out, "cd_voce_ep_contr"); %></td>
+	<td>
+	    <% bp.getController().writeFormInput( out, "cd_voce_ep_contr"); %>
+	    <% bp.getController().writeFormInput( out, "ds_voce_ep_contr"); %>
+      <% bp.getController().writeFormInputByStatus( out, "find_voce_ep_contr"); %>	
+	</td>				 
+	
+	</tr>
+	
 	</table>
 
 <%	bp.closeFormWindow(pageContext); %>

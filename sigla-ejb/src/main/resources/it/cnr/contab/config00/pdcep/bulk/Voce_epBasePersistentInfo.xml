@@ -76,7 +76,7 @@
 			columnName="CD_PROPRIO_VOCE_EP"
 			propertyName="cd_proprio_voce_ep"
 			sqlTypeName="VARCHAR"
-			columnSize="5"
+			columnSize="10"
 			nullable="false" />
 		<columnMapping
 			columnName="FL_A_PAREGGIO"
@@ -99,7 +99,7 @@
 			columnName="DS_VOCE_EP"
 			propertyName="ds_voce_ep"
 			sqlTypeName="VARCHAR"
-			columnSize="100" />
+			columnSize="200" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="riepiloga_a" />
