@@ -54,7 +54,31 @@
 		inputSize="20"
 		enabledOnSearch="true"
 		/>
-	
+	<fieldProperty
+		name="find_voce_ep_contr"
+		property="voce_ep_contr"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_voce_ep_contr"
+		property="voce_ep_contr.cd_voce_ep"
+		label="Conto EP Contr."
+		readonlyProperty="ROVoce_ep"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_voce_ep_contr"
+		property="voce_ep_contr.ds_voce_ep"
+		label=""
+		inputType="ROTEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		/>
 	<columnFieldProperty
 		name="cd_elemento_voce"
 		/>
@@ -80,7 +104,15 @@
 	<formFieldProperty
 		name="ds_voce_ep"
 		/>
-	
+	<formFieldProperty
+		name="find_voce_ep_contr"
+		/>
+	<formFieldProperty
+		name="cd_voce_ep_contr"
+		/>
+	<formFieldProperty
+		name="ds_voce_ep_contr"
+		/>
 	<findFieldProperty
 		name="cd_elemento_voce"
 		/>

@@ -272,6 +272,18 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="LIVELLO_ECO"
+			propertyName="livello_eco"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO_PAT"
+			propertyName="livello_pat"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
 				
 	</defaultColumnMap>
 	<persistentProperty
@@ -357,4 +369,9 @@
 		name="fl_tesoreria_unica" />
 	<persistentProperty
 		name="fl_pubblica_contratto" />		
+	<persistentProperty
+		name="livello_eco" />
+	<persistentProperty
+		name="livello_pat" />
+		
 </SQLPersistentInfo>
