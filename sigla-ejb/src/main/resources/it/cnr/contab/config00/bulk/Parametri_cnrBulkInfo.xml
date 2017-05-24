@@ -271,6 +271,23 @@
 		label="Pubblica contratto" 
 		inputType="CHECKBOX" />			
 	
+	<fieldProperty
+		name="livello_pat"
+		property="livello_pat"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Livello Classificazione Patrimoniale" />
+	<fieldProperty
+		name="livello_eco"
+		property="livello_eco"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Livello Classificazione Economica" />
+	
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -354,8 +371,11 @@
 		name="fl_tesoreria_unica"/>				       
 	<formFieldProperty
 		name="fl_pubblica_contratto"/>				       
+	<formFieldProperty
+		name="livello_pat" />
+	<formFieldProperty
+		name="livello_eco" />
 	
-
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -428,7 +448,11 @@
 		name="fl_tesoreria_unica"/>				       
 	<columnFieldProperty
 		name="fl_pubblica_contratto"/>				       
-		              
+	<columnFieldProperty
+		name="livello_pat" />
+	<columnFieldProperty
+		name="livello_eco" />
+	              
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
