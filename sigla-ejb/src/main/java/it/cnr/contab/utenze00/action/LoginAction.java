@@ -130,24 +130,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 				}
 			} catch(NoSuchBusinessProcessException e) {
 			}
-			String hostname="";
-			try {
-				InetAddress addr = InetAddress.getLocalHost();
-				//byte[] ipAddr = addr.getAddress();
-				hostname = addr.getHostName();
-			} catch (UnknownHostException e) {
-			}
-				
-			ApplicationServerBulk server = new ApplicationServerBulk();
-			server.setHostname(hostname.toLowerCase());
-			if (context.getUserContext() == null)
-				context.setUserContext(new CNRUserContext("LOGIN",context.getSessionId(),null,null,null,null));
-	
-			server = getComponentSession().validaServerAttivo(context.getUserContext(),server);
-			
 			return context.findForward("home");
-		} catch(it.cnr.contab.utente00.nav.comp.LoginBloccatoException e) {
-			return context.findForward("workinprogress");	
 		} catch(Throwable e) {
 			return handleException(context,e);
 		}
