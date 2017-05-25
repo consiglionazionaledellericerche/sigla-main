@@ -1,12 +1,18 @@
 package it.cnr.contab.ordmag.richieste.action;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 
+import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
+import it.cnr.contab.ordmag.richieste.bp.CRUDRichiestaUopBP;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDBP;
 
 public class CRUDRichiestaUopAction extends it.cnr.jada.util.action.CRUDAction {
@@ -1038,10 +1044,12 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 
 		riga.setBeneServizio(bene);
 		((CRUDBP)context.getBusinessProcess()).setDirty(true);
-			
-		if (bene.getUnitaMisura() != null){
-			riga.setUnitaMisura(bene.getUnitaMisura());
-			riga.setCoefConv(BigDecimal.ONE);
+		if (bene != null){
+			riga.setDsBeneServizio(bene.getDs_bene_servizio());
+			if (bene.getUnitaMisura() != null){
+				riga.setUnitaMisura(bene.getUnitaMisura());
+				riga.setCoefConv(BigDecimal.ONE);
+			}
 		}
 //		try{
 //			if (riga.getUnitaMisura()!=null && riga.getUnitaMisura().getCdUnitaMisura()!=null && riga.getBeneServizio() != null && riga.getBeneServizio().getUnitaMisura() != null && riga.getUnitaMisura().getCdUnitaMisura().equals(riga.getBeneServizio().getUnitaMisura().getCdUnitaMisura())) {
@@ -2392,6 +2400,7 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 ///**
 // * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
 // */
+
 //public Forward doSalva(ActionContext context) throws java.rmi.RemoteException {
 //
 //    it.cnr.jada.util.action.CRUDBP bp= (it.cnr.jada.util.action.CRUDBP) getBusinessProcess(context);
@@ -2592,101 +2601,30 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 ///**
 // * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
 // */
-//public Forward doTab(ActionContext context, String tabName, String pageName) {
-//
-//    it.cnr.jada.util.action.CRUDBP bp= (it.cnr.jada.util.action.CRUDBP) getBusinessProcess(context);
-//    Documento_genericoBulk documento= (Documento_genericoBulk) bp.getModel();
-//    
-//	java.sql.Timestamp competenzaABck = documento.getDt_a_competenza_coge();
-//    java.sql.Timestamp competenzaDaBck = documento.getDt_da_competenza_coge();
-//    
-//    java.util.GregorianCalendar tsOdiernoGregorian = new GregorianCalendar();
-//	String cds = CNRUserContext.getCd_cds(context.getUserContext());
-//		
-//		try {
-//			fillModel(context);
-//			java.sql.Timestamp competenzaA = documento.getDt_a_competenza_coge();
-//			java.sql.Timestamp competenzaDa = documento.getDt_da_competenza_coge();
-//			
-//			if (bp instanceof CRUDDocumentoGenericoAttivoBP){
-//			CRUDDocumentoGenericoAttivoBP bpA= (CRUDDocumentoGenericoAttivoBP) getBusinessProcess(context);
-//			
-//			if (competenzaA!=null )
-//				if(competenzaA!=competenzaABck){
-//				tsOdiernoGregorian.setTime(new Date(competenzaA.getTime()));
-//				Integer esercizioCompetenzaA = new Integer (tsOdiernoGregorian.get(java.util.GregorianCalendar.YEAR));
-//				if (((DocumentoGenericoComponentSession)bpA.createComponentSession()).isEsercizioChiusoPerDataCompetenza(context.getUserContext(),esercizioCompetenzaA,cds))
-//					throw new it.cnr.jada.comp.ApplicationException("Le date \"Competenza da\" e \"Competenza a\" non possono appartenere ad un esercizio chiuso");
-//			
-//			}
-//			if (competenzaDa !=null)
-//				if ( competenzaDa!=competenzaDaBck){
-//				tsOdiernoGregorian.setTime(new Date(competenzaDa.getTime()));
-//				Integer esercizioCompetenzaDa = new Integer (tsOdiernoGregorian.get(java.util.GregorianCalendar.YEAR));
-//				if (((DocumentoGenericoComponentSession)bpA.createComponentSession()).isEsercizioChiusoPerDataCompetenza(context.getUserContext(),esercizioCompetenzaDa,cds))
-//					throw new it.cnr.jada.comp.ApplicationException("Le date \"Competenza da\" e \"Competenza a\" non possono appartenere ad un esercizio chiuso");
-//			}	
-//			}
-//			
-//			if (bp instanceof CRUDDocumentoGenericoPassivoBP){
-//				CRUDDocumentoGenericoPassivoBP bpP= (CRUDDocumentoGenericoPassivoBP) getBusinessProcess(context);
-//			if (competenzaA!=null )	
-//			if (competenzaA!=competenzaABck){
-//					tsOdiernoGregorian.setTime(new Date(competenzaA.getTime()));
-//					Integer esercizioCompetenzaA = new Integer (tsOdiernoGregorian.get(java.util.GregorianCalendar.YEAR));
-//					if (((DocumentoGenericoComponentSession)bpP.createComponentSession()).isEsercizioChiusoPerDataCompetenza(context.getUserContext(),esercizioCompetenzaA,cds))
-//						throw new it.cnr.jada.comp.ApplicationException("Le date \"Competenza da\" e \"Competenza a\" non possono appartenere ad un esercizio chiuso");
-//			}
-//			if (competenzaDa!=null )
-//			if (competenzaDa!=competenzaDaBck){
-//				tsOdiernoGregorian.setTime(new Date(competenzaDa.getTime()));
-//				Integer esercizioCompetenzaDa = new Integer (tsOdiernoGregorian.get(java.util.GregorianCalendar.YEAR));
-//				if (((DocumentoGenericoComponentSession)bpP.createComponentSession()).isEsercizioChiusoPerDataCompetenza(context.getUserContext(),esercizioCompetenzaDa,cds))
-//					throw new it.cnr.jada.comp.ApplicationException("Le date \"Competenza da\" e \"Competenza a\" non possono appartenere ad un esercizio chiuso");
-//			}
-//			}
-//		} catch (Throwable t) {
-//			documento.setDt_a_competenza_coge(competenzaABck);
-//			documento.setDt_da_competenza_coge(competenzaDaBck);
-//			return handleException(context, t);
-//		}
-//		
-//    try {
-//		fillModel(context);
-//		if (documento.getTipo_documento()==null || documento.getTipo_documento().getCd_tipo_documento_amm() == null)
-//			throw new ValidationException("Selezionare un tipo di documento");
-//
-//        if (("tabDocumentoAttivo".equalsIgnoreCase(bp.getTab(tabName)) ||
-//	        "tabDocumentoPassivo".equalsIgnoreCase(bp.getTab(tabName))) &&
-//        	!bp.isSearching() && !bp.isViewing() && !documento.isRODateCompetenzaCOGE())
-//				documento.validaDateCompetenza();
-//
-//		if ("tabDocumentoGenericoObbligazioni".equalsIgnoreCase(bp.getTab(tabName))) {
-//            try {
-//                fillModel(context);
-//                if (!documento.isPassivo_ente())
-//                    controllaQuadraturaObbligazioni(context, documento);
-//            } catch (it.cnr.jada.comp.ApplicationException e) {
-//                bp.setErrorMessage(e.getMessage());
-//            }
-//        }
-//        if ("tabDocumentoGenericoAccertamenti".equalsIgnoreCase(bp.getTab(tabName))) {
-//            try {
-//                fillModel(context);
-//                if (!Numerazione_doc_ammBulk.TIPO_REGOLA_E.equalsIgnoreCase(documento.getTipo_documento().getCd_tipo_documento_amm()) &&
-//	                !Numerazione_doc_ammBulk.TIPO_GEN_CH_FON.equalsIgnoreCase(documento.getTipo_documento().getCd_tipo_documento_amm()))
-//                    if (!documento.isPassivo_ente())
-//                    	controllaQuadraturaAccertamenti(context, documento);
-//            } catch (it.cnr.jada.comp.ApplicationException e) {
-//                bp.setErrorMessage(e.getMessage());
-//            }
-//        }
-//    		
-//        return super.doTab(context, tabName, pageName);
-//    } catch (Throwable e) {
-//        return handleException(context, e);
-//    }
-//}
+public Forward doTab(ActionContext context,String tabName,String pageName) 
+{
+	try
+	{
+		fillModel( context );
+		CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)getBusinessProcess(context);
+		RichiestaUopBulk richiesta = (RichiestaUopBulk)bp.getModel();
+
+		if(richiesta == null)
+			return super.doTab( context, tabName, pageName );
+
+		if( bp.isEditable() && !bp.isSearching() && bp.getTab( tabName ).equalsIgnoreCase("tabRichiestaUop"))
+		{
+		}	
+        if ("tabRichiestaAllegati".equalsIgnoreCase(bp.getTab(tabName))) {
+			fillModel( context );
+		}
+		return super.doTab( context, tabName, pageName );		
+	}
+	catch(Throwable e) 
+	{
+		return handleException(context,e);
+	}	
+}
 ///**
 // * Gestisce il comando di aggiunta di un nuovo dettaglio su un CRUDController
 // * figlio del ricevente
@@ -3791,4 +3729,28 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 //		  }
 //		 return context.findDefaultForward();
 //	}
+
+@Override
+public Forward doSalva(ActionContext actioncontext) throws RemoteException {
+	try
+	{
+		fillModel(actioncontext);
+		getBusinessProcess(actioncontext).save(actioncontext);
+		postSalvataggio(actioncontext);
+		return actioncontext.findDefaultForward();
+	}
+	catch(ValidationException validationexception)
+	{
+		getBusinessProcess(actioncontext).setErrorMessage(validationexception.getMessage());
+	}
+	catch(Throwable throwable)
+	{
+		return handleException(actioncontext, throwable);
+	}
+	return actioncontext.findDefaultForward();
+}
+protected void postSalvataggio(ActionContext context) throws BusinessProcessException {
+    CRUDRichiestaUopBP bp= (CRUDRichiestaUopBP) getBusinessProcess(context);
+	bp.gestionePostSalvataggio(context);
+}
 }
