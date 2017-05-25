@@ -3,6 +3,8 @@
  * Date 12/05/2017
  */
 package it.cnr.contab.ordmag.richieste.bulk;
+import java.util.Optional;
+
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -11,8 +13,12 @@ import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
 public class RichiestaUopRigaBulk extends RichiestaUopRigaBase {
     public final static String STATO_INSERITO= "INS";
@@ -26,8 +32,10 @@ public class RichiestaUopRigaBulk extends RichiestaUopRigaBase {
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
+	private BulkList<AllegatoRichiestaDettaglioBulk> dettaglioAllegati = new BulkList<AllegatoRichiestaDettaglioBulk>();
 	private Bene_servizioBulk beneServizio =  new Bene_servizioBulk();
 	private Bene_servizioBulk beneServizioDef =  new Bene_servizioBulk();
+	private String allegatiDocumentale;
 	/**
 	 * [CATEGORIA_GRUPPO_INVENT Definisce le categorie ed i relativi gruppi di beni associabili ad un record della tabella BENE_SERVIZIO. Tale gestione si applica
 
@@ -545,7 +553,7 @@ Capitolo definito dall"utente collegato a Categoria
 	 * Setta il valore di: [esercizioVoce]
 	 **/
 	public void setEsercizioVoce(java.lang.Integer esercizioVoce)  {
-		this.getElementoVoce().setEsercizio(esercizioVoce);
+		Optional.ofNullable(this.getElementoVoce()).ifPresent(x -> x.setEsercizio(esercizioVoce)); 
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -648,5 +656,46 @@ Capitolo definito dall"utente collegato a Categoria
 		//	La data di registrazione la inizializzo sulla Component
 
 		return this;
+	}
+	public String getAllegatiDocumentale() {
+		return allegatiDocumentale;
+	}
+	public void setAllegatiDocumentale(String allegatiDocumentale) {
+		this.allegatiDocumentale = allegatiDocumentale;
+	}
+	public BulkList<AllegatoRichiestaDettaglioBulk> getDettaglioAllegati() {
+		return dettaglioAllegati;
+	}
+	public void setDettaglioAllegati(BulkList<AllegatoRichiestaDettaglioBulk> dettaglioAllegati) {
+		this.dettaglioAllegati = dettaglioAllegati;
+	}
+	/**
+	 * Restituisce un array di <code>BulkCollection</code> contenenti oggetti
+	 * bulk da rendere persistenti insieme al ricevente.
+	 * L'implementazione standard restituisce <code>null</code>.
+	 * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
+	 */ 
+	public BulkCollection[] getBulkLists() {
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				dettaglioAllegati };
+	}
+	/**
+	 * Il metodo rimuove dalla collection dei dettagli di spesa un solo dettaglio
+	 */
+	public AllegatoRichiestaDettaglioBulk removeFromDettaglioAllegati(int index) 
+	{
+		AllegatoRichiestaDettaglioBulk allegato = (AllegatoRichiestaDettaglioBulk)dettaglioAllegati.remove(index);
+		allegato.setToBeDeleted();
+
+		return allegato;
+	}
+	public int addToDettaglioAllegati(AllegatoRichiestaDettaglioBulk allegato) {
+		dettaglioAllegati.add(allegato);
+		return dettaglioAllegati.size()-1;		
+	}
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(StrServ.lpad(this.getRiga().toString(),5,"0"));
+		return nomeFile.toString();
 	}
 }

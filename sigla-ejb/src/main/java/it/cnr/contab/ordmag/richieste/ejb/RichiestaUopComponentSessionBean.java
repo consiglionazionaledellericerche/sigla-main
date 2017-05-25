@@ -1,8 +1,12 @@
 package it.cnr.contab.ordmag.richieste.ejb;
+import java.rmi.RemoteException;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.comp.RichiestaUopComponent;
+import it.cnr.jada.UserContext;
 @Stateless(name="CNRORDMAG00_EJB_RichiestaUopComponentSession")
 public class RichiestaUopComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements RichiestaUopComponentSession {
 @PostConstruct
@@ -36,23 +40,23 @@ public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws java
 //		throw uncaughtError(param0,componentObj,e);
 //	}
 //}
-//public void aggiornaStatoDocumentiAmministrativi(it.cnr.jada.UserContext param0,java.lang.String param1,java.lang.String param2,java.lang.String param3,java.lang.Integer param4,java.lang.Long param5,java.lang.String param6) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
-//	pre_component_invocation(param0,componentObj);
-//	try {
-//		((DocumentoGenericoComponent)componentObj).aggiornaStatoDocumentiAmministrativi(param0,param1,param2,param3,param4,param5,param6);
-//		component_invocation_succes(param0,componentObj);
-//	} catch(it.cnr.jada.comp.NoRollbackException e) {
-//		component_invocation_succes(param0,componentObj);
-//		throw e;
-//	} catch(it.cnr.jada.comp.ComponentException e) {
-//		component_invocation_failure(param0,componentObj);
-//		throw e;
-//	} catch(RuntimeException e) {
-//		throw uncaughtRuntimeException(param0,componentObj,e);
-//	} catch(Error e) {
-//		throw uncaughtError(param0,componentObj,e);
-//	}
-//}
+public void gestioneStampaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, RemoteException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		((RichiestaUopComponent)componentObj).gestioneStampaRichiesta(userContext, richiesta);
+		component_invocation_succes(userContext,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
 //public it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk calcoloConsuntivi(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 //	pre_component_invocation(param0,componentObj);
 //	try {

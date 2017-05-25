@@ -8,10 +8,11 @@
 		it.cnr.contab.ordmag.anag00.*"
 %>
 
-<% CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)BusinessProcess.getBusinessProcess(request);
-    RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk)bp.getRighe().getModel();
-	bp.getRighe().writeHTMLTable(pageContext,"righeSet",true,false,true,"100%","200px"); %>
-  
+<%  
+	CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)BusinessProcess.getBusinessProcess(request);
+	RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk)bp.getRighe().getModel();
+%>
+
 <div class="Group">
 	<table>
 		<tr>

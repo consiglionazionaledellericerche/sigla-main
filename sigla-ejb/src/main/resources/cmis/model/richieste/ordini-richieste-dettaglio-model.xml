@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="ordini_richieste_dettaglio:ordini_richieste_dettaglio_model" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>Richiesta Dettaglio extension Content Model - Richiesta Dettaglio </description>
+	<author>Gianfranco Gasparro</author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/ordini/richieste/dettaglio/cmis" prefix="ordini_richieste_dettaglio" />
+	</namespaces>
+
+	<types>
+		<type name="ordini_richieste_dettaglio:main">
+			<title>Dati Dettaglio Richiesta</title>
+			<description>Dati Dettaglio Richiesta</description>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="ordini_richieste_dettaglio:riga">
+					<title>Numero riga dettaglio Missione</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</type>
+	</types>
+</model>
