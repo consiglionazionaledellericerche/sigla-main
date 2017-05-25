@@ -47,6 +47,9 @@
 			columnName="CD_CENTRO_RESPONSABILITA"
 			propertyName="centroResponsabilita.cd_centro_responsabilita" />
 		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="lineaAttivita.centro_responsabilita.cd_centro_responsabilita" />
+		<columnMapping
 			columnName="CD_LINEA_ATTIVITA"
 			propertyName="lineaAttivita.cd_linea_attivita" />
 		<columnMapping

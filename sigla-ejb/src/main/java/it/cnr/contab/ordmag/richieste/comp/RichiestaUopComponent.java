@@ -1,10 +1,28 @@
 package it.cnr.contab.ordmag.richieste.comp;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import javax.ejb.EJBException;
 
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
+
+import it.cnr.contab.cmis.MimeTypes;
+import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
@@ -15,6 +33,10 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
+import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
@@ -25,17 +47,24 @@ import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraHome;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
+import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopHome;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
+import it.cnr.contab.ordmag.richieste.service.RichiesteCMISService;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.GenerazioneReportException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -3928,6 +3957,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     it.cnr.jada.persistency.sql.SQLBuilder sql= home.createSQLBuilder();
     sql.addClause("AND", "numero", sql.EQUALS, richiesta.getNumero());
     sql.addClause("AND", "cdCds", sql.EQUALS, richiesta.getCdCds());
+    sql.addClause("AND", "cdUnitaOperativa", sql.EQUALS, richiesta.getCdUnitaOperativa());
     sql.addClause("AND", "esercizio", sql.EQUALS, richiesta.getEsercizio());
     sql.addClause("AND", "cdNumeratore", sql.EQUALS, richiesta.getCdNumeratore());
 
@@ -4142,5 +4172,101 @@ public SQLBuilder selectBeneServizioByClause(UserContext userContext, RichiestaU
 	sql.addSQLClause("AND", "FL_VALIDO", SQLBuilder.EQUALS, Bene_servizioBulk.STATO_VALIDO);
 	
 	return sql;
+}
+
+public void gestioneStampaRichiesta(UserContext userContext,
+		RichiestaUopBulk richiesta) throws RemoteException,ComponentException {
+	RichiesteCMISService richiesteCMISService = SpringUtil.getBean("richiesteCMISService",RichiesteCMISService.class);	
+	File file = lanciaStampaRichiesta(userContext, richiesta);
+	archiviaFileCMIS(userContext, richiesteCMISService, richiesta, file);
+}
+
+public File lanciaStampaRichiesta(
+		UserContext userContext,
+		RichiestaUopBulk richiesta) throws ComponentException {
+	try {
+		String nomeProgrammaStampa = "richiesta_ordine_uop.jasper";
+		String nomeFileStampaFattura = getOutputFileNameRichiesta(nomeProgrammaStampa, richiesta);
+	  	File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + nomeFileStampaFattura);
+	  	Print_spoolerBulk print = new Print_spoolerBulk(); 
+		print.setFlEmail(false);
+		print.setReport("/ordmag/richiesta/"+ nomeProgrammaStampa);
+		print.setNomeFile(nomeFileStampaFattura);
+		print.setUtcr(userContext.getUser());
+		print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+		print.addParam("esercizio",richiesta.getEsercizio(), Integer.class);
+		print.addParam("cds",richiesta.getCdCds(), String.class);
+		print.addParam("cd_unita_operativa",richiesta.getCdUnitaOperativa(), String.class);
+		print.addParam("cd_numeratore",richiesta.getCdNumeratore(), String.class);
+		print.addParam("numero",new Long(richiesta.getNumero()), Long.class);
+		Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
+		
+		FileOutputStream f = new FileOutputStream(output);   
+		f.write(report.getBytes());    
+		return output;
+	} catch (IOException e) {
+		throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
+	}
+}
+
+private String getOutputFileNameRichiesta(String reportName, RichiestaUopBulk richiesta)
+
+{
+	String fileName = preparaFileNamePerStampa(reportName);
+	fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + richiesta.recuperoIdRichiestaAsString() + '_' + fileName;
+	return fileName;
+}
+private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
+private String preparaFileNamePerStampa(String reportName) {
+	String fileName = reportName;
+	fileName = fileName.replace('/', '_');
+	fileName = fileName.replace('\\', '_');
+	if(fileName.startsWith("_"))
+		fileName = fileName.substring(1);
+	if(fileName.endsWith(".jasper"))
+		fileName = fileName.substring(0, fileName.length() - 7);
+	fileName = fileName + ".pdf";
+	return fileName;
+}
+
+private Document archiviaFileCMIS(UserContext userContext, RichiesteCMISService cmisService, RichiestaUopBulk richiesta, File file) throws ComponentException{
+	List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
+	List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
+	try {
+		CMISPath cmisPath = cmisService.getCMISPath(richiesta, true);		
+		AllegatoRichiestaBulk allegato = new AllegatoRichiestaBulk();
+		allegato.setFile(file);
+		allegato.setTitolo("Stampa Richiesta");
+		allegato.setNome("Stampa Richiesta");
+		allegato.setDescrizione("Stampa Richiesta");
+		allegato.setContentType(MimeTypes.PDF.mimetype());
+		try {
+			Document node = cmisService.storeSimpleDocument(allegato, 
+					new FileInputStream(allegato.getFile()),
+					allegato.getContentType(),
+					allegato.getNome(), cmisPath);
+			allegato.setCrudStatus(OggettoBulk.NORMAL);
+			cmisService.addAspect(node, RichiesteCMISService.ASPECT_STAMPA_RICHIESTA_ORDINI);
+			return node;
+		} catch (FileNotFoundException e) {
+			throw handleException(e);
+		} catch(CmisContentAlreadyExistsException _ex) {
+			throw new ApplicationException("Il file " + allegato.getNome() +" già esiste!");
+		}
+	} catch (Exception e){
+		//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+		for (CMISFile cmisFile : cmisFileCreate)
+			cmisService.deleteNode(cmisFile.getDocument());
+		for (CMISFile cmisFile : cmisFileAnnullati) {
+			String cmisFileName = cmisFile.getFileName();
+			String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
+			String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
+			cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
+			cmisService.updateProperties(cmisFile, cmisFile.getDocument());
+			cmisService.removeAspect(cmisFile.getDocument());
+		}
+		throw new ApplicationException(e.getMessage());
+	}
 }
 }
