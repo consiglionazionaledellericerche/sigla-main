@@ -373,6 +373,16 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<fieldProperty
+		name="allegatiDocumentale"
+		property="allegatiDocumentale"
+		inputType="BUTTON"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnView="true"
+		img="img/import24.gif"
+		href="javascript:doVisualizzaDocumentiCollegati()"
+		label="Visualizza Documenti Allegati" />
 	<columnSet
 		name="righeSet">
 		<columnFieldProperty
@@ -441,6 +451,7 @@
 		name="findElementoVoce" />
 	<formFieldProperty
 		name="findProgetto" />
+	<formFieldProperty name="allegatiDocumentale" />	
 	<formFieldProperty
 		name="findObbligazione" />
 	<formFieldProperty
@@ -549,6 +560,7 @@
 		name="coefConv" />
 	<columnFieldProperty
 		name="cdBeneServizioDef" />
+	<columnFieldProperty name="allegatiDocumentale" />	
 	<columnFieldProperty
 		name="quantitaAutorizzata" />
 	<columnFieldProperty

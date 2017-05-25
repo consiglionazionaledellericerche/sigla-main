@@ -28,7 +28,8 @@
 					"tab",
 					new String[][] {
 					{ "tabRichiestaUop","Richiesta","/ordmag/richieste/tab_richiesta_uop.jsp" },
-					{ "tabRichiestaUopDettaglio","Dettaglio","/ordmag/richieste/tab_richiesta_uop_dettaglio.jsp" }},
+					{ "tabRichiestaUopDettaglio","Dettaglio","/ordmag/richieste/tab_richiesta_uop_dettagli.jsp" },
+					{ "tabAllegati","Allegati","/ordmag/richieste/tab_richiesta_allegati.jsp" }},
 					bp.getTab("tab"),
 					"center",
 					"100%",
