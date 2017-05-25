@@ -1,6 +1,10 @@
 package it.cnr.contab.ordmag.richieste.ejb;
 import java.rmi.RemoteException;
 
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.contab.ordmag.richieste.comp.RichiestaUopComponent;
+import it.cnr.jada.UserContext;
+
 public class TransactionalRichiestaUopComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements RichiestaUopComponentSession {
 //public it.cnr.jada.bulk.OggettoBulk aggiornaModalita(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk param1,it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk param2,it.cnr.contab.anagraf00.core.bulk.TerzoBulk param3) throws RemoteException,it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException {
 //	try {
@@ -736,6 +740,25 @@ public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(it.cnr.jada.UserCon
 //		}
 //	}
 //}
+
+public void gestioneStampaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,it.cnr.jada.comp.ComponentException{
+	try {
+		invoke("gestioneStampaRichiesta",new Object[] {
+			userContext,
+			richiesta });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+
 public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.jada.bulk.OggettoBulk)invoke("stampaConBulk",new Object[] {

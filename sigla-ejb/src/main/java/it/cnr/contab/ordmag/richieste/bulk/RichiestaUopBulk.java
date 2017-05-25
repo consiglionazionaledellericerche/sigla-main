@@ -10,18 +10,22 @@ import java.util.List;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
-public class RichiestaUopBulk extends RichiestaUopBase {
+public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParentBulk{
 	protected BulkList righeRichiestaColl= new BulkList();
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	/**
 	 * [NUMERAZIONE_ORD Numeratori Ordini]
 	 **/
@@ -56,6 +60,7 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	public RichiestaUopBulk(java.lang.String cdCds, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdNumeratore, java.lang.Integer numero) {
 		super(cdCds, cdUnitaOperativa, esercizio, cdNumeratore, numero);
 		setUnitaOrganizzativa( new Unita_organizzativaBulk(cdCds) );
+		setUnitaOperativaOrd(new UnitaOperativaOrdBulk(cdUnitaOperativa) );
 		setNumerazioneOrd( new NumerazioneOrdBulk(cdUnitaOperativa,esercizio,cdNumeratore) );
 	}
 	/**
@@ -123,13 +128,13 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
 		UnitaOperativaOrdBulk uop = this.getUnitaOperativaOrd();
-		if (numerazioneOrd == null){
+		if (uop == null){
 			NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
 			if (numerazioneOrd == null)
 				return null;
 			return getNumerazioneOrd().getCdUnitaOperativa();
 		}
-		return getUnitaOperativaOrd().getCdUnitaOperativa();
+		return this.getUnitaOperativaOrd().getCdUnitaOperativa();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -286,5 +291,27 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 		//	La data di registrazione la inizializzo sulla Component
 
 		return this;
+	}
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(StrServ.lpad(this.getNumero().toString(),9,"0"));
+		return nomeFile.toString();
+	}
+	public String recuperoIdRichiestaAsString(){
+		return StrServ.replace(getCdCds(), ".", "")+getEsercizio()+StrServ.replace(getCdUnitaOperativa(), ".", "")+StrServ.replace(getCdNumeratore(), ".", "")+StrServ.lpad(getNumero().toString(), 5);
 	}
 }
