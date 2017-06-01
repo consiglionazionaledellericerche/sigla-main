@@ -4,7 +4,6 @@
  */
 package it.cnr.contab.ordmag.richieste.bulk;
 import java.sql.Connection;
-import java.util.List;
 
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdHome;
@@ -13,8 +12,6 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -33,10 +30,31 @@ public class RichiestaUopHome extends BulkHome {
 		SQLBuilder sql = unitaOperativaHome.selectByClause(userContext, compoundfindclause);
 		sql.addTableToHeader("ABIL_UTENTE_UOP_OPER");
 		sql.addSQLJoin("UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", "ABIL_UTENTE_UOP_OPER.CD_UNITA_OPERATIVA");
-		sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
+		if (richiestaBulk.getIsForApprovazione()){
+			sql.addSQLClause("OR", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_RICHIESTA);
+		} else {
+			sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
+		}
 		sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
 
 		return sql;
+	}
+
+	public void addConditionAbilUtenteUop(UserContext userContext, SQLBuilder sql) {
+		sql.addTableToHeader("ABIL_UTENTE_UOP_OPER");
+		sql.openParenthesis("AND");
+		sql.openParenthesis("AND");
+		sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
+		sql.closeParenthesis();
+		sql.openParenthesis("OR");
+		sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_RICHIESTA);
+		sql.openParenthesis("AND");
+		sql.addSQLClause("AND", "RICHIESTA_UOP.STATO", SQLBuilder.EQUALS, RichiestaUopBulk.STATO_DEFINITIVA);
+		sql.addSQLClause("OR", "RICHIESTA_UOP.STATO", SQLBuilder.EQUALS, RichiestaUopBulk.STATO_INVIATA_ORDINE);
+		sql.closeParenthesis();
+		sql.closeParenthesis();
+		sql.closeParenthesis();
+		sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
 	}
 
 	public SQLBuilder selectNumerazioneOrdByClause(UserContext userContext, RichiestaUopBulk richiestaBulk, 
@@ -54,7 +72,8 @@ public class RichiestaUopHome extends BulkHome {
 	public SQLBuilder selectUnitaOperativaOrdDestByClause(UserContext userContext, RichiestaUopBulk richiestaBulk, 
 			UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk, 
 			CompoundFindClause compoundfindclause) throws PersistencyException{
-		SQLBuilder sql = unitaOperativaHome.selectByClause(userContext, compoundfindclause);
+		SQLBuilder sql = unitaOperativaHome.createSQLBuilder();
+		sql.addClause(compoundfindclause);
 
 		sql.addTableToHeader("ASS_UNITA_OPERATIVA_ORD");
 		sql.addSQLJoin("UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", "ASS_UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA_RIF");
@@ -66,34 +85,6 @@ public class RichiestaUopHome extends BulkHome {
 		return sql;
 	}
 
-	public void inizializzaBulk(UserContext usercontext, OggettoBulk oggettobulk)
-			throws PersistencyException, ComponentException {
-		super.initializeBulkForInsert(usercontext, oggettobulk);
-		RichiestaUopBulk richiesta = (RichiestaUopBulk)oggettobulk;
-		if (richiesta.getCdUnitaOperativa() == null){
-			UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHomeCache().getHome(UnitaOperativaOrdBulk.class);
-			SQLBuilder sql = selectUnitaOperativaOrdByClause(usercontext, richiesta, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
-			List listUop=uopHome.fetchAll(sql);
-			if (listUop != null && listUop.size() == 1){
-				richiesta.setUnitaOperativaOrd((UnitaOperativaOrdBulk)listUop.get(0));
-				if (richiesta.getCdUnitaOperativaDest() == null){
-					SQLBuilder sqlAss = selectUnitaOperativaOrdDestByClause(usercontext, richiesta, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
-					List listAssUop=uopHome.fetchAll(sqlAss);
-					if (listAssUop != null && listAssUop.size() == 1){
-						richiesta.setUnitaOperativaOrdDest((UnitaOperativaOrdBulk)listAssUop.get(0));
-					}
-				}
-			}
-		}
-		if (richiesta.getCdNumeratore() == null){
-			NumerazioneOrdHome numerazioneHome = (NumerazioneOrdHome)getHomeCache().getHome(NumerazioneOrdBulk.class);
-			SQLBuilder sql = selectNumerazioneOrdByClause(usercontext, richiesta, numerazioneHome, new NumerazioneOrdBulk(), new CompoundFindClause());
-			List listNum=numerazioneHome.fetchAll(sql);
-			if (listNum != null && listNum.size() == 1){
-				richiesta.setNumerazioneOrd((NumerazioneOrdBulk)listNum.get(0));
-			}
-		}
-	}
 	@Override
 	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause)
 			throws PersistencyException {
