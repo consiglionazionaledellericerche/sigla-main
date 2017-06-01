@@ -180,9 +180,13 @@
 		enabledOnSearch="true"/>
 	<form name="searchtool">
 		<formFieldProperty
-			name="cd_bene_servizio" />
+			name="cd_bene_servizio" 
+		    inputSize="15" />
 		<formFieldProperty
-			name="ds_bene_servizio" />		    	    
+			name="ds_bene_servizio" 
+		    inputSize="80"  />
+		<formFieldProperty
+			name="unita_misura" />
 	</form>		
 	<formFieldProperty
 		name="cd_bene_servizio" />

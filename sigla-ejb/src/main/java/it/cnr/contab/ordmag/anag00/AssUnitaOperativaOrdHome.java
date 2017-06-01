@@ -25,8 +25,9 @@ public class AssUnitaOperativaOrdHome extends BulkHome {
 	public SQLBuilder selectUnitaOperativaOrdRifByClause(UserContext userContext, AssUnitaOperativaOrdBulk assUopBulk, 
 			UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk, 
 			CompoundFindClause compoundfindclause) throws PersistencyException{
-		SQLBuilder sql = unitaOperativaHome.selectByClause(userContext, compoundfindclause);
-		filtraUO(userContext, sql, false);
+		SQLBuilder sql = unitaOperativaHome.createSQLBuilder();
+		sql.addClause(compoundfindclause);
+		filtraUO(userContext, sql, true);
 		if (assUopBulk.getCdUnitaOperativa() != null){
 			sql.addSQLClause("AND","cd_unita_operativa",SQLBuilder.NOT_EQUALS,assUopBulk.getCdUnitaOperativa());
 		}
@@ -39,9 +40,9 @@ public class AssUnitaOperativaOrdHome extends BulkHome {
 		if (!CNRUserContext.getCd_unita_organizzativa(userContext).equals(ente.getCd_unita_organizzativa())){
 			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).
 					findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
-			if(!uoScrivania.isUoCds())
-				sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
-			else {
+//			if(!uoScrivania.isUoCds())
+//				sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+//			else {
 				if (join){
 					sql.addTableToHeader("UNITA_ORGANIZZATIVA");
 					sql.addSQLJoin("UNITA_OPERATIVA_ORD.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
@@ -49,7 +50,7 @@ public class AssUnitaOperativaOrdHome extends BulkHome {
 				}else {
 					sql.addSQLClause("AND","CD_UNITA_PADRE",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(userContext));
 				}
-			}
+//			}
 		}
 	}
 }

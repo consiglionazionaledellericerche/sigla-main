@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="findNumerazioneOrd"
 		property="numerazioneOrd"
@@ -38,7 +38,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUnitaOperativa" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="esercizio"
 		property="numerazioneOrd.esercizio"
@@ -59,7 +59,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNumeratore" />
+		label="Numeratore" />
 	<fieldProperty
 		name="numero"
 		property="numero"
@@ -136,8 +136,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		nullable="false"
-		label="cdUnitaOperativaDest" />
+		nullable="true"
+		label="Unità Operativa Destinataria" />
 	<fieldProperty
 		name="dsUnitaOperativaDest"
 		property="unitaOperativaOrdDest.dsUnitaOperativa"
@@ -145,7 +145,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		nullable="false"
+		nullable="true"
 		label="dsUnitaOperativaDest" />
 	<fieldProperty
 		name="dataInvio"
@@ -153,7 +153,7 @@
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dataInvio" />
+		label="Data Invio" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
