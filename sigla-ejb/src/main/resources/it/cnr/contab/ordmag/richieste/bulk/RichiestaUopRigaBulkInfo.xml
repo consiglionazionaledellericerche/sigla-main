@@ -118,7 +118,7 @@
 		name="cdBeneServizio"
 		property="beneServizio.cd_bene_servizio"
 		maxLength="30"
-		inputSize="6"
+		inputSize="20"
 		inputType="TEXT"
 		nullable="false"
 		readonlyProperty="RObeneservizio"
@@ -128,7 +128,7 @@
 		name="dsBeneServizio"
 		property="beneServizio.ds_bene_servizio"
 		maxLength="300"
-		inputSize="32"
+		inputSize="40"
 		inputType="ROTEXT"
 		label="Descr. Bene/Servizio"
 		caseSensitiveSearch="false" />

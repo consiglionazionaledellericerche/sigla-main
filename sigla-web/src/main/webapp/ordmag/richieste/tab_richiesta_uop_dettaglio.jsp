@@ -67,14 +67,14 @@
 	<table>
 		<tr>
 			<%
-				bp.getRighe().writeFormField(out, "findProgetto");
+				bp.getRighe().writeFormField(out, "findCentroResponsabilita");
 			%>
 		</tr>
 	</table>
 	<table>
 		<tr>
 			<%
-				bp.getRighe().writeFormField(out, "findCentroResponsabilita");
+				bp.getRighe().writeFormField(out, "findProgetto");
 			%>
 		</tr>
 	</table>

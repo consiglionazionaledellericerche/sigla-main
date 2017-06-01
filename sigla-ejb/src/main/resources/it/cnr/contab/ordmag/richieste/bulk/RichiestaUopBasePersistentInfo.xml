@@ -34,7 +34,7 @@
 			propertyName="cdUnitaOperativaDest"
 			sqlTypeName="VARCHAR"
 			columnSize="30"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="DATA_INVIO"
 			propertyName="dataInvio"
