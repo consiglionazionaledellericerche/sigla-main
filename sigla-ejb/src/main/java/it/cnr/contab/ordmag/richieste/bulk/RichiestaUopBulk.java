@@ -35,16 +35,21 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrdDest =  new UnitaOperativaOrdBulk();
-	public final static String STATO_ANNULLATO = "ANN";
-	public final static String STATO_INSERITO = "INS";
-	public final static String STATO_CONFERMATO = "CON";
-
+	public final static String STATO_ANNULLATA = "ANN";
+	public final static String STATO_INSERITA = "INS";
+	public final static String STATO_DEFINITIVA = "DEF";
+	public final static String STATO_INVIATA_ORDINE = "INV";
+	
+	private Boolean isUtenteAbilitatoInserimentoRichiesta = true;
+	private Boolean isForApprovazione = false;
+		
 	public final static Dictionary STATO;
 	static{
 		STATO = new it.cnr.jada.util.OrderedHashtable();
-		STATO.put(STATO_INSERITO,"Inserito");
-		STATO.put(STATO_ANNULLATO,"Annullato");
-		STATO.put(STATO_CONFERMATO,"Confermato");
+		STATO.put(STATO_INSERITA,"Inserita");
+		STATO.put(STATO_ANNULLATA,"Annullata");
+		STATO.put(STATO_DEFINITIVA,"Definitiva");
+		STATO.put(STATO_INVIATA_ORDINE,"Inviata in Ordine");
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -278,7 +283,7 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	 */
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
 	{
-		setStato(STATO_INSERITO);
+		setStato(STATO_INSERITA);
 		java.sql.Timestamp dataReg = null;
 		try {
 			dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
@@ -313,5 +318,29 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	}
 	public String recuperoIdRichiestaAsString(){
 		return StrServ.replace(getCdCds(), ".", "")+getEsercizio()+StrServ.replace(getCdUnitaOperativa(), ".", "")+StrServ.replace(getCdNumeratore(), ".", "")+StrServ.lpad(getNumero().toString(), 5);
+	}
+	public Boolean isInserita(){
+		return getStato() != null && getStato().equals(STATO_INSERITA);
+	}
+	public Boolean isAnnullata(){
+		return getStato() != null && getStato().equals(STATO_ANNULLATA);
+	}
+	public Boolean isDefinitiva(){
+		return getStato() != null && getStato().equals(STATO_DEFINITIVA);
+	}
+	public Boolean isInviataOrdine(){
+		return getStato() != null && getStato().equals(STATO_INVIATA_ORDINE);
+	}
+	public Boolean getIsUtenteAbilitatoInserimentoRichiesta() {
+		return isUtenteAbilitatoInserimentoRichiesta;
+	}
+	public void setIsUtenteAbilitatoInserimentoRichiesta(Boolean isUtenteAbilitatoInserimentoRichiesta) {
+		this.isUtenteAbilitatoInserimentoRichiesta = isUtenteAbilitatoInserimentoRichiesta;
+	}
+	public Boolean getIsForApprovazione() {
+		return isForApprovazione;
+	}
+	public void setIsForApprovazione(Boolean isForApprovazione) {
+		this.isForApprovazione = isForApprovazione;
 	}
 }
