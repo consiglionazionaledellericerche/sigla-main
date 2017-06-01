@@ -1,5 +1,6 @@
 package it.cnr.contab.ordmag.richieste.service;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +17,10 @@ import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
+import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaDettaglioBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
@@ -185,5 +188,17 @@ public class RichiesteCMISService extends SiglaCMISService {
 		} catch (ComponentException e) {
 			throw new BusinessProcessException(e);
 		}
+	}
+
+	public InputStream getStreamRichiesta(RichiestaUopBulk richiestaUopBulk) throws Exception{
+		ItemIterable<CmisObject> files = getFilesRichiesta(richiestaUopBulk);
+		if (files != null){
+			for (CmisObject cmisObject : files) {
+				if (hasAspect(cmisObject, ASPECT_STAMPA_RICHIESTA_ORDINI)){
+					return ((Document)cmisObject).getContentStream().getStream();
+				}
+			}
+		}
+		return null;
 	}
 }
