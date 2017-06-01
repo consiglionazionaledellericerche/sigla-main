@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="richiesta_ordine_uop" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2bf91820-ada4-4c92-a071-f0294de9e914">
 	<property name="ireport.zoom" value="4.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="932"/>
 	<property name="ireport.y" value="564"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
 	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -28,17 +28,17 @@
 		<defaultValueExpression><![CDATA[2017]]></defaultValueExpression>
 	</parameter>
 	<parameter name="numero" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long(2)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long(1)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["001"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cd_numeratore" class="java.lang.String">
+	<parameter name="cd_numeratore" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[Numeratore]]></parameterDescription>
 		<defaultValueExpression><![CDATA["RIC"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cd_unita_operativa" class="java.lang.String">
-		<defaultValueExpression><![CDATA["SA.BIL"]]></defaultValueExpression>
+	<parameter name="cd_unita_operativa" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CNMR"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select distinct uop.ds_unita_operativa as ds_unita_operativa, uo.ds_unita_organizzativa as ds_unita_organizzativa, r.esercizio, r.numero, r.cd_numeratore, r.data_richiesta, R.NOTA,
@@ -169,7 +169,7 @@ and rr.cd_elemento_voce = v.cd_elemento_voce(+)]]>
 				<text><![CDATA[Unità di Misura]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TNR10" x="335" y="17" width="200" height="14" isRemoveLineWhenBlank="true" uuid="ff23a957-753c-4bef-8d13-ebeb4a684f6e"/>
+				<reportElement style="TNR10" x="351" y="17" width="184" height="14" isRemoveLineWhenBlank="true" uuid="ff23a957-753c-4bef-8d13-ebeb4a684f6e"/>
 				<textFieldExpression><![CDATA[$F{DS_UNITA_MISURA}]]></textFieldExpression>
 			</textField>
 			<line>
