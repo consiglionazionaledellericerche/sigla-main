@@ -3,11 +3,16 @@ package it.cnr.contab.ordmag.richieste.action;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
+import javax.persistence.PersistenceException;
+
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.richieste.bp.CRUDRichiestaUopBP;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
+import it.cnr.contab.ordmag.richieste.comp.RichiestaUopComponent;
+import it.cnr.contab.ordmag.richieste.ejb.RichiestaUopComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -60,6 +65,42 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 			if (bene.getUnitaMisura() != null){
 				riga.setUnitaMisura(bene.getUnitaMisura());
 				riga.setCoefConv(BigDecimal.ONE);
+			}
+		}
+//		try{
+//			if (riga.getUnitaMisura()!=null && riga.getUnitaMisura().getCdUnitaMisura()!=null && riga.getBeneServizio() != null && riga.getBeneServizio().getUnitaMisura() != null && riga.getUnitaMisura().getCdUnitaMisura().equals(riga.getBeneServizio().getUnitaMisura().getCdUnitaMisura())) {
+//				riga.setCoefConv(BigDecimal.ONE);
+//			} else {
+//				riga.setCoefConv(null);
+//			}
+//			return context.findDefaultForward();
+//
+//		} catch(Exception e) {
+//			return handleException(context,e);
+//		}
+		return context.findDefaultForward();
+}
+public Forward doBringBackSearchFindUnitaOperativaOrd(ActionContext context,
+		RichiestaUopBulk richiesta,
+		UnitaOperativaOrdBulk uop) 
+		throws java.rmi.RemoteException {
+
+		richiesta.setUnitaOperativaOrd(uop);
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		if (uop != null){
+			CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)context.getBusinessProcess();
+
+			try {
+				RichiestaUopComponentSession h = (RichiestaUopComponentSession)bp.createComponentSession();
+				h.completaRichiesta(context.getUserContext(), richiesta);
+				try {
+					bp.setModel(context,richiesta);
+				} catch (BusinessProcessException e) {
+				}
+			} catch (java.rmi.RemoteException e) {
+				return handleException(context,e);
+			} catch (PersistenceException e) {
+				return handleException(context,e);
 			}
 		}
 //		try{
@@ -132,7 +173,23 @@ public Forward doSalvaDefinitivo(ActionContext actioncontext) throws RemoteExcep
 			richiesta.setStato(RichiestaUopBulk.STATO_INVIATA_ORDINE);
 		}
 		if (richiesta.isInserita()){
-			richiesta.setStato(RichiestaUopBulk.STATO_DEFINITIVA);
+			try {
+				RichiestaUopComponentSession h = (RichiestaUopComponentSession)bp.createComponentSession();
+				if (h.isUtenteAbilitatoValidazioneRichiesta(context.getUserContext(), richiesta){
+					richiesta.setStato(RichiestaUopBulk.STATO_INVIATA_ORDINE);
+				} else {
+					richiesta.setStato(RichiestaUopBulk.STATO_DEFINITIVA);
+				}
+				try {
+					bp.setModel(context,richiesta);
+				} catch (BusinessProcessException e) {
+				}
+			} catch (java.rmi.RemoteException e) {
+				return handleException(context,e);
+			} catch (PersistenceException e) {
+				return handleException(context,e);
+			}
+
 		}
 		gestioneSalvataggio(actioncontext);
 		return actioncontext.findDefaultForward();
