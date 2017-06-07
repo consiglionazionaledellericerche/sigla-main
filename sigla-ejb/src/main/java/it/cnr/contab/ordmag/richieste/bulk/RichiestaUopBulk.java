@@ -7,6 +7,8 @@ import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.ValidationException;
+
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
@@ -343,4 +345,13 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	public void setIsForApprovazione(Boolean isForApprovazione) {
 		this.isForApprovazione = isForApprovazione;
 	}
+
+	public void validate() throws ValidationException{
+		super.validate();
+		if(isDefinitiva() || isInviataOrdine()){
+			if (getUnitaOperativaOrdDest() == null || getUnitaOperativaOrdDest().getCdUnitaOperativa() == null)
+			throw new ValidationException("Non è possibile rendere definitiva una richiesta senza aver prima indicato l'unità operativa di destinazione.");
+		}
+	}
+	
 }

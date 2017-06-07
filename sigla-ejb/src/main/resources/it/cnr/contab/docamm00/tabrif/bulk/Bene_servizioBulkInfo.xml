@@ -66,6 +66,14 @@
 	 	label="Categoria Gruppo"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="cd_categoria_gruppoForSearch"
+		property="categoria_gruppo.cd_categoria_gruppo"
+		maxLength="10"
+		inputSize="6"
+		inputType="TEXT"		
+	 	label="Categoria Gruppo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
 		name="ds_categoria_gruppo"
 		property="categoria_gruppo.ds_categoria_gruppo"
 		inputSize="15"
@@ -269,7 +277,7 @@
 	<findFieldProperty
 		name="unita_misura" />
 	<findFieldProperty
-		name="cd_categoria_gruppo" />
+		name="cd_categoria_gruppoForSearch" />
 	<findFieldProperty
 		name="ti_bene_servizioForSearch" />
 	<findFieldProperty

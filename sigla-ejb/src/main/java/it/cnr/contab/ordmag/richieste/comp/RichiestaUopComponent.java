@@ -545,37 +545,55 @@ private OggettoBulk inizializzaRichiesta(UserContext usercontext, OggettoBulk og
 			List listUop=uopHome.fetchAll(sql);
 			if (listUop != null && listUop.size() == 1){
 				richiesta.setUnitaOperativaOrd((UnitaOperativaOrdBulk)listUop.get(0));
-				if (richiesta.getCdUnitaOperativaDest() == null){
-					SQLBuilder sqlAss = home.selectUnitaOperativaOrdDestByClause(usercontext, richiesta, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
-					List listAssUop=uopHome.fetchAll(sqlAss);
-					if (listAssUop != null && listAssUop.size() == 1){
-						richiesta.setUnitaOperativaOrdDest((UnitaOperativaOrdBulk)listAssUop.get(0));
-					}
-				}
+				assegnaUnitaOperativaDest(usercontext, richiesta, home, uopHome);
 			}
 		}
-		if (richiesta.getCdNumeratore() == null && richiesta.getCdUnitaOperativa() != null){
-//			AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(usercontext, AbilUtenteUopOperBulk.class);
-//			AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(usercontext.getUser(), richiesta.getCdUnitaOperativa(), TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
-//			abil = (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(usercontext, abil);
-//			if (abil != null){
-				NumerazioneOrdHome numerazioneHome = (NumerazioneOrdHome)getHome(usercontext, NumerazioneOrdBulk.class);
-				SQLBuilder sql = home.selectNumerazioneOrdByClause(usercontext, richiesta, numerazioneHome, new NumerazioneOrdBulk(), new CompoundFindClause());
-				List listNum=numerazioneHome.fetchAll(sql);
-				if (listNum != null && listNum.size() == 1){
-					richiesta.setNumerazioneOrd((NumerazioneOrdBulk)listNum.get(0));
-				}
-//			}
-		}
+		assegnaNumeratoreOrd(usercontext, richiesta, home);
 	} catch (PersistencyException e){
 		throw new ComponentException(e);
 	}
 	return richiesta;
 }
+
+private void assegnaUnitaOperativaDest(UserContext usercontext, RichiestaUopBulk richiesta, RichiestaUopHome home,
+		UnitaOperativaOrdHome uopHome) throws it.cnr.contab.ordmag.richieste.bulk.PersistencyException {
+	if (richiesta.getCdUnitaOperativaDest() == null){
+		SQLBuilder sqlAss = home.selectUnitaOperativaOrdDestByClause(usercontext, richiesta, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
+		List listAssUop=uopHome.fetchAll(sqlAss);
+		if (listAssUop != null && listAssUop.size() == 1){
+			richiesta.setUnitaOperativaOrdDest((UnitaOperativaOrdBulk)listAssUop.get(0));
+		}
+	}
+}
+
+private void assegnaNumeratoreOrd(UserContext usercontext, RichiestaUopBulk richiesta, RichiestaUopHome home)
+		throws it.cnr.contab.ordmag.richieste.bulk.PersistencyException {
+	if (richiesta.getCdNumeratore() == null && richiesta.getCdUnitaOperativa() != null){
+//			AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(usercontext, AbilUtenteUopOperBulk.class);
+//			AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(usercontext.getUser(), richiesta.getCdUnitaOperativa(), TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
+//			abil = (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(usercontext, abil);
+//			if (abil != null){
+			NumerazioneOrdHome numerazioneHome = (NumerazioneOrdHome)getHome(usercontext, NumerazioneOrdBulk.class);
+			SQLBuilder sql = home.selectNumerazioneOrdByClause(usercontext, richiesta, numerazioneHome, new NumerazioneOrdBulk(), new CompoundFindClause());
+			List listNum=numerazioneHome.fetchAll(sql);
+			if (listNum != null && listNum.size() == 1){
+				richiesta.setNumerazioneOrd((NumerazioneOrdBulk)listNum.get(0));
+			}
+//			}
+	}
+}
 public Boolean isUtenteAbilitatoRichiesta(UserContext usercontext, RichiestaUopBulk richiesta) throws ComponentException, PersistencyException{
+	return isUtenteAbilitato(usercontext, richiesta, TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
+}
+
+public Boolean isUtenteAbilitatoValidazioneRichiesta(UserContext usercontext, RichiestaUopBulk richiesta) throws ComponentException, PersistencyException{
+	return isUtenteAbilitato(usercontext, richiesta, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_RICHIESTA);
+}
+
+private Boolean isUtenteAbilitato(UserContext usercontext, RichiestaUopBulk richiesta, String tipoOperazione) {
 	if (richiesta.getCdUnitaOperativa() != null){
 		AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(usercontext, AbilUtenteUopOperBulk.class);
-		AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(usercontext.getUser(), richiesta.getCdUnitaOperativa(), TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
+		AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(usercontext.getUser(), richiesta.getCdUnitaOperativa(), tipoOperazione);
 		abil = (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(usercontext, abil);
 		if (abil != null){
 			return true;
@@ -584,4 +602,13 @@ public Boolean isUtenteAbilitatoRichiesta(UserContext usercontext, RichiestaUopB
 	}
 	return true;
 }
+
+public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException{
+	RichiestaUopHome home = (RichiestaUopHome) getHomeCache(usercontext).getHome(RichiestaUopBulk.class);
+	assegnaNumeratoreOrd(usercontext, richiesta, home);
+	UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
+	assegnaUnitaOperativaDest(usercontext, richiesta, home, uopHome);
+	return sql;
+}
+
 }
