@@ -24,7 +24,7 @@ public void gestioneStampaRichiesta(UserContext userContext, RichiestaUopBulk ri
 		}
 	}
 }
-public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,PersistencyException{
+public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException{
 	try {
 		invoke("completaRichiesta",new Object[] {
 			userContext,
