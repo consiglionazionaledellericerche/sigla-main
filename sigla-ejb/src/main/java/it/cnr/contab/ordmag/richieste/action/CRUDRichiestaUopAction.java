@@ -17,6 +17,8 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.CRUDBP;
 
 public class CRUDRichiestaUopAction extends it.cnr.jada.util.action.CRUDAction {
@@ -97,9 +99,15 @@ public Forward doBringBackSearchFindUnitaOperativaOrd(ActionContext context,
 					bp.setModel(context,richiesta);
 				} catch (BusinessProcessException e) {
 				}
+			} catch (BusinessProcessException e) {
+				return handleException(context,e);
 			} catch (java.rmi.RemoteException e) {
 				return handleException(context,e);
 			} catch (PersistenceException e) {
+				return handleException(context,e);
+			} catch (PersistencyException e) {
+				return handleException(context,e);
+			} catch (ComponentException e) {
 				return handleException(context,e);
 			}
 		}
@@ -175,19 +183,19 @@ public Forward doSalvaDefinitivo(ActionContext actioncontext) throws RemoteExcep
 		if (richiesta.isInserita()){
 			try {
 				RichiestaUopComponentSession h = (RichiestaUopComponentSession)bp.createComponentSession();
-				if (h.isUtenteAbilitatoValidazioneRichiesta(context.getUserContext(), richiesta){
+				if (h.isUtenteAbilitatoValidazioneRichiesta(actioncontext.getUserContext(), richiesta)){
 					richiesta.setStato(RichiestaUopBulk.STATO_INVIATA_ORDINE);
 				} else {
 					richiesta.setStato(RichiestaUopBulk.STATO_DEFINITIVA);
 				}
 				try {
-					bp.setModel(context,richiesta);
+					bp.setModel(actioncontext,richiesta);
 				} catch (BusinessProcessException e) {
 				}
 			} catch (java.rmi.RemoteException e) {
-				return handleException(context,e);
+				return handleException(actioncontext,e);
 			} catch (PersistenceException e) {
-				return handleException(context,e);
+				return handleException(actioncontext,e);
 			}
 
 		}

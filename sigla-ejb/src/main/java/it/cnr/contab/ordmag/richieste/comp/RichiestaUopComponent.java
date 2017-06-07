@@ -556,7 +556,7 @@ private OggettoBulk inizializzaRichiesta(UserContext usercontext, OggettoBulk og
 }
 
 private void assegnaUnitaOperativaDest(UserContext usercontext, RichiestaUopBulk richiesta, RichiestaUopHome home,
-		UnitaOperativaOrdHome uopHome) throws it.cnr.contab.ordmag.richieste.bulk.PersistencyException {
+		UnitaOperativaOrdHome uopHome) throws PersistencyException {
 	if (richiesta.getCdUnitaOperativaDest() == null){
 		SQLBuilder sqlAss = home.selectUnitaOperativaOrdDestByClause(usercontext, richiesta, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
 		List listAssUop=uopHome.fetchAll(sqlAss);
@@ -567,7 +567,7 @@ private void assegnaUnitaOperativaDest(UserContext usercontext, RichiestaUopBulk
 }
 
 private void assegnaNumeratoreOrd(UserContext usercontext, RichiestaUopBulk richiesta, RichiestaUopHome home)
-		throws it.cnr.contab.ordmag.richieste.bulk.PersistencyException {
+		throws PersistencyException, ComponentException {
 	if (richiesta.getCdNumeratore() == null && richiesta.getCdUnitaOperativa() != null){
 //			AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(usercontext, AbilUtenteUopOperBulk.class);
 //			AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(usercontext.getUser(), richiesta.getCdUnitaOperativa(), TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
@@ -590,11 +590,15 @@ public Boolean isUtenteAbilitatoValidazioneRichiesta(UserContext usercontext, Ri
 	return isUtenteAbilitato(usercontext, richiesta, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_RICHIESTA);
 }
 
-private Boolean isUtenteAbilitato(UserContext usercontext, RichiestaUopBulk richiesta, String tipoOperazione) {
+private Boolean isUtenteAbilitato(UserContext usercontext, RichiestaUopBulk richiesta, String tipoOperazione) throws ComponentException {
 	if (richiesta.getCdUnitaOperativa() != null){
 		AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(usercontext, AbilUtenteUopOperBulk.class);
 		AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(usercontext.getUser(), richiesta.getCdUnitaOperativa(), tipoOperazione);
-		abil = (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(usercontext, abil);
+		try {
+			abil = (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(usercontext, abil);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
 		if (abil != null){
 			return true;
 		}
@@ -603,12 +607,11 @@ private Boolean isUtenteAbilitato(UserContext usercontext, RichiestaUopBulk rich
 	return true;
 }
 
-public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException{
-	RichiestaUopHome home = (RichiestaUopHome) getHomeCache(usercontext).getHome(RichiestaUopBulk.class);
-	assegnaNumeratoreOrd(usercontext, richiesta, home);
-	UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
-	assegnaUnitaOperativaDest(usercontext, richiesta, home, uopHome);
-	return sql;
+public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException, ComponentException{
+	RichiestaUopHome home = (RichiestaUopHome) getHomeCache(userContext).getHome(RichiestaUopBulk.class);
+	assegnaNumeratoreOrd(userContext, richiesta, home);
+	UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(userContext, UnitaOperativaOrdBulk.class);
+	assegnaUnitaOperativaDest(userContext, richiesta, home, uopHome);
 }
 
 }
