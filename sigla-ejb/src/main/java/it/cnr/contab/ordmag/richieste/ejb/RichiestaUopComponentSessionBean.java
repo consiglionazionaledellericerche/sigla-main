@@ -77,7 +77,7 @@ public void gestioneStampaRichiesta(UserContext userContext, RichiestaUopBulk ri
 		throw uncaughtError(userContext,componentObj,e);
 	}
 }
-public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException,javax.ejb.EJBException, RemoteException {
+public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException,ComponentException, javax.ejb.EJBException, RemoteException {
 	pre_component_invocation(userContext,componentObj);
 	try {
 		((RichiestaUopComponent)componentObj).completaRichiesta(userContext, richiesta);
