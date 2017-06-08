@@ -2886,7 +2886,7 @@ private void recuperoAllegatiDettaglioMissioneSigla(MissioneBulk allegatoParentB
 							for ( java.util.Iterator i = allegatoParentBulk.getSpeseMissioneColl().iterator(); i.hasNext(); )
 							{
 								Missione_dettaglioBulk spesa = (Missione_dettaglioBulk) i.next();
-								if (spesa.getPg_riga().equals(new Long(rigaString))){
+								if (spesa.getPg_riga().compareTo(new Long(rigaString)) == 0){
 									spesa.addToDettaglioSpesaAllegati(allegato);
 								}
 							}
@@ -2914,7 +2914,7 @@ private void recuperoAllegatiDettaglioMissioneSigla(MissioneBulk allegatoParentB
 							for ( java.util.Iterator i = allegatoParentBulk.getSpeseMissioneColl().iterator(); i.hasNext(); )
 							{
 								Missione_dettaglioBulk spesa = (Missione_dettaglioBulk) i.next();
-								if (spesa.getPg_riga().equals(new Long(rigaString))){
+								if (spesa.getPg_riga().compareTo(new Long(rigaString)) == 0){
 									spesa.addToDettaglioSpesaAllegati(allegato);
 								}
 							}
