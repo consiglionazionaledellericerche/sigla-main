@@ -3775,6 +3775,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 			compenso.setTipoTrattamento(tratt);
 			if (isCompensoSoloInailEnte(tratt)){
+				if (compenso.isDaMinicarriera()){
+					throw new ApplicationException(
+							"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
+				}
 				compenso.setCompensoSoloInailEnte(true);
 			}
 
@@ -4712,6 +4716,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 							compenso));
 				}
 				if (isCompensoSoloInailEnte(compenso.getTipoTrattamento())){
+					if (compenso.isDaMinicarriera()){
+						throw new ApplicationException(
+								"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
+					}
 					compenso.setCompensoSoloInailEnte(true);
 				}
 				if (obj.getCd_cori().startsWith(compenso.CODICE_INAIL))
@@ -4891,6 +4899,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 **/
 	private void validaCompenso(UserContext userContext, CompensoBulk compenso)
 			throws ComponentException {
+		if (isCompensoSoloInailEnte(compenso.getTipoTrattamento())){
+			if (compenso.isDaMinicarriera()){
+				throw new ApplicationException(
+						"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
+			}
+		}
 		// Controllo Testata Compenso
 		try {
 	
