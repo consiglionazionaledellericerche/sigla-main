@@ -156,4 +156,9 @@
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"fl_pdg_codlast");%>
 		</TD></TR>					
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_pdg_contrattazione");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_pdg_contrattazione");%>
+		</TD></TR>					
 	</table>

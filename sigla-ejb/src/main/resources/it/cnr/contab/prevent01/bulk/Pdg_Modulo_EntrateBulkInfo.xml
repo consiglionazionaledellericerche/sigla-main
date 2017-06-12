@@ -383,6 +383,12 @@
 		nullable="false"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo da Ripartire" />
+	<fieldProperty
+		name="voce_piano"
+		property="voce_piano_economico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />
 
 
 	<formFieldProperty
@@ -479,7 +485,9 @@
 		name="dettagli_gestionali_tot" />
 	<formFieldProperty
 		name="dettagli_gestionali_res" />
-
+	<formFieldProperty 
+		name="voce_piano" />
+		
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty

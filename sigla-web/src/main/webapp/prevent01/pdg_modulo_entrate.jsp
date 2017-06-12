@@ -3,12 +3,14 @@
 		it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
+		it.cnr.contab.progettiric00.core.bulk.*,
 		it.cnr.contab.prevent01.action.*,
 		it.cnr.contab.prevent01.bp.*,
 		it.cnr.contab.prevent01.bulk.*"
 %>
 <%
 	CRUDPdg_Modulo_EntrateBP bp = (CRUDPdg_Modulo_EntrateBP)BusinessProcess.getBusinessProcess(request);
+	Progetto_sipBulk progetto = ((Pdg_moduloBulk)bp.getModel()).getProgetto();
 %>
 <head>
 <% if (bp.getParametriCnr()!=null && bp.getParametriCnr().getFl_nuovo_pdg()) { %>
@@ -232,6 +234,16 @@
 		</table>
 		</td>	
 	</tr>		
+	<% if (bp.getParametriEnte().getFl_prg_pianoeco() && progetto.getFl_piano_economico()) {%>
+	<tr>
+		<td>			
+			<%bp.getCrudDettagliEntrate().writeFormLabel(out,"voce_piano"); %>				
+		</td>	
+		<td>	
+			<%bp.getCrudDettagliEntrate().writeFormInput(out,null,"voce_piano",bp.isUtente_Ente(),null,null); %>
+		</td>	
+	</tr>
+	<% } %>
 <% if (!bp.getParametriCnr().getFl_nuovo_pdg()){%>
 	<tr>
 		<td>			

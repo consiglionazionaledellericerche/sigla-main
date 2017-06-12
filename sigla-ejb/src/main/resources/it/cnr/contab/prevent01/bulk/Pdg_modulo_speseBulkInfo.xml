@@ -516,6 +516,13 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnFreeSearch="true" />		
+	<fieldProperty
+		name="voce_piano"
+		property="voce_piano_economico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -649,7 +656,10 @@
 	<formFieldProperty
 		name="cd_cofog"/>	
 	<formFieldProperty
-		name="cofog"/>	
+		name="cofog"/>
+	<formFieldProperty 
+		name="voce_piano" />
+				
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -675,7 +685,8 @@
 	<findFieldProperty
 		name="im_spese_a3" />
 	<findFieldProperty
-		name="cd_missione"/>			
+		name="cd_missione"/>
+		
 	<columnFieldProperty
 		name="cd_classificazione"
 		descProperty="classificazione.ds_classificazione"
