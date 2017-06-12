@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="ordini_richieste:ordini_richieste_model" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>Richieste Ordini Acquisto extension Content Model - Richieste</description>
+	<author>Gianfranco Gasparro</author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<import uri="http://www.cnr.it/str/org/1.0/" prefix="strorg" />
+		<import uri="http://www.cnr.it/model/sigla/commons_aspect/" prefix="sigla_commons_aspect" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/ordini/richieste/cmis" prefix="ordini_richieste" />
+	</namespaces>
+
+	<types>
+		<type name="ordini_richieste:main">
+			<title>Dati Generali Documento Richiesta</title>
+			<description>Dati Generali Documento Richiesta</description>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="ordini_richieste:anno">
+					<title>Anno</title>
+					<type>d:int</type>
+				</property>
+				<property name="ordini_richieste:numero">
+					<title>Numero Richiesta</title>
+					<type>d:long</type>
+				</property>
+				<property name="ordini_richieste:cd_unita_operativa">
+					<title>Descrizione Richiesta</title>
+					<type>d:text</type>
+				</property>
+				<property name="ordini_richieste:cd_numeratore">
+					<title>Descrizione Richiesta</title>
+					<type>d:text</type>
+				</property>
+				<property name="ordini_richieste:oggetto">
+					<title>Descrizione Richiesta</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>sigla_commons_aspect:utente_applicativo_sigla</aspect>
+			</mandatory-aspects>
+		</type>
+	</types>
+</model>
