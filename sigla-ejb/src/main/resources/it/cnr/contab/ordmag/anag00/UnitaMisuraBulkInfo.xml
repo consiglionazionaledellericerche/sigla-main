@@ -20,7 +20,7 @@
 		name="dsUnitaMisura"
 		property="dsUnitaMisura"
 		inputType="TEXT"
-		inputSize="100"
+		inputSize="50"
 		maxLength="100"
 		nullable="false"
 		label="Descrizione" />
@@ -34,6 +34,8 @@
 		name="searchtool">
 		<formFieldProperty
 			name="cdUnitaMisura" />
+		<formFieldProperty
+			name="dsUnitaMisura" />
 	</form>
 	<formFieldProperty
 		name="cdUnitaMisura" />

@@ -274,6 +274,25 @@ public class SiglaCMISService implements Serializable{
 		return CMISPath.construct(folder.getPath());
 	}
 
+	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, Map<String, Object> metadataProperties, List<String> aspectsToAdd, String folderName) throws ApplicationException {
+		CmisObject cmisObject = getNodeByPath(cmisPath);
+		try{
+			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspectsToAdd);
+			Folder folder = (Folder) getNodeByNodeRef(getSiglaSession().createFolder(metadataProperties, cmisObject).getId());
+			return CMISPath.construct(folder.getPath());
+		}catch(CmisContentAlreadyExistsException _ex){
+				Folder folder = (Folder) getNodeByPath(cmisPath.getPath()+(cmisPath.getPath().equals("/")?"":"/")+sanitizeFilename(folderName).toLowerCase());
+		        List<String> aspects = folder.getPropertyValue(PropertyIds.SECONDARY_OBJECT_TYPE_IDS);
+		        aspects.addAll(aspectsToAdd);
+		        metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspects);
+				folder.updateProperties(metadataProperties, true);
+				return CMISPath.construct(folder.getPath());
+		} catch (Exception e) {
+			logger.error("Errore nella creazione della folder.", e);
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk, String objectTypeName) throws ApplicationException{
 		CmisObject cmisObject = getNodeByPath(cmisPath);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();

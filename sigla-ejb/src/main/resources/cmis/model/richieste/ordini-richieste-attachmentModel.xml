@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="ordini_richieste_attachment:ordini_richieste_attachmentModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+	<description>Sigla Dynamic Model</description>
+	<author>gianfranco.gasparro</author>
+	<version>1.0</version>
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/ordini/richieste/attachment/cmis" prefix="ordini_richieste_attachment" />
+	</namespaces>
+	<types>
+		<type name="ordini_richieste_attachment:document">
+			<title>Allegati alla Richiesta</title>
+			<description>Allegati alla Richiesta</description>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="ordini_richieste_attachment:original_name">
+					<title>Nome Originale del File</title>
+					<description>Nome Originale del File</description>
+					<type>d:text</type>
+				</property>
+				<property name="ordini_richieste_attachment:id_sigla">
+					<title>Id Collegato</title>
+					<description>Id Collegato</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+	</types>
+	<aspects>
+		<aspect name="ordini_richieste_attachment:stampa">
+			<title>Stampa Richiesta Acquisto</title>
+			<description>Stampa Richiesta Acquisto</description>
+		</aspect>
+		<aspect name="ordini_richieste_attachment:allegati">
+			<title>Allegati alla Richiesta</title>
+			<description>Allegati alla Richiesta</description>
+		</aspect>
+		<aspect name="ordini_richieste_attachment:allegati_dettaglio">
+			<title>Allegati collegati alla riga della Richiesta</title>
+			<description>Allegati collegati alla riga della Richiesta</description>
+		</aspect>
+	</aspects>
+</model>

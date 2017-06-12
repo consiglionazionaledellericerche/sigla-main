@@ -8,10 +8,11 @@
 		it.cnr.contab.ordmag.anag00.*"
 %>
 
-<% CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)BusinessProcess.getBusinessProcess(request);
-    RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk)bp.getRighe().getModel();
-	bp.getRighe().writeHTMLTable(pageContext,"righeSet",true,false,true,"100%","200px"); %>
-  
+<%  
+	CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)BusinessProcess.getBusinessProcess(request);
+	RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk)bp.getRighe().getModel();
+%>
+
 <div class="Group">
 	<table>
 		<tr>
@@ -33,10 +34,26 @@
 	</table>
 	<table>
 		<tr>
+			<% bp.getRighe().writeFormField(out, "findUnitaMisura");%>
+			<td>
+				<% bp.getRighe().writeFormLabel(out,"coefConv");%>
+			</td>      	
+			<td>
+				<%
+					if (riga != null){
+						bp.getRighe().writeFormInput(out,null,"coefConv",riga.isROCoefConv(),null,"");
+			    	} else {
+						bp.getRighe().writeFormInput(out,null,"coefConv",false,null,"");
+			    	}
+			    %>
+			</td>
+				<%bp.getRighe().writeFormField(out, "quantitaRichiesta"); %>
+		</tr>
+	</table>
+	<table>
+		<tr>
 			<%
-				bp.getRighe().writeFormField(out, "findUnitaMisura");
-				bp.getRighe().writeFormField(out, "coefConv");
-				bp.getRighe().writeFormField(out, "quantitaRichiesta");
+				bp.getRighe().writeFormField(out, "findElementoVoce");
 			%>
 		</tr>
 	</table>
@@ -57,14 +74,14 @@
 	<table>
 		<tr>
 			<%
-				bp.getRighe().writeFormField(out, "findLineaAttivita");
+				bp.getRighe().writeFormField(out, "findProgetto");
 			%>
 		</tr>
 	</table>
 	<table>
 		<tr>
 			<%
-				bp.getRighe().writeFormField(out, "findElementoVoce");
+				bp.getRighe().writeFormField(out, "findLineaAttivita");
 			%>
 		</tr>
 	</table>
