@@ -13,7 +13,7 @@
 	boolean isFlInformix = bp.isFlInformix();
 	ProgettoBulk bulk = (ProgettoBulk)bp.getModel();
 %>
-	<% if ((bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT)){%>
+	<% if ((bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT || bp.getStatus() == bp.VIEW)){%>
      <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
 			   bp.getController().writeFormInput(out,null,"livello_padre2016",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
@@ -164,15 +164,32 @@
 		  </TD></TR>
 	  <% } %>  
 	  
+	  <% if (bp.isFlPrgPianoEconomico()) {%>
+	  <TR><TD>
+	  	<% bp.getController().writeFormLabel(out,"fl_piano_economico");%>
+	  	</TD><TD colspan="3">
+	  	<% bp.getController().writeFormInput(out,"fl_piano_economico");%>
+	  </TD></TR>
+	  <% } %>  
+
 	  <TR><TD>
 	  	<% bp.getController().writeFormLabel(out,"note");%>
 	  	</TD><TD colspan="3">
 	  	<% bp.getController().writeFormInput(out,"note");%>
 	  </TD></TR>
+	  
          </table>
         </div> 
 	<%}else{%>
-        <div class="GroupLabel"><% bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");%></div><div class="Group">
+        <div class="GroupLabel">
+           	<% if (isFlNuovoPdg) {
+				   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+			  } else {
+				   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+			  } 
+			%>
+        </div>
+ <div class="Group">
 	<table class="Panel">	
 	  <TR><TD>
 	  	<% bp.getController().writeFormLabel(out,"cd_progetto");%>

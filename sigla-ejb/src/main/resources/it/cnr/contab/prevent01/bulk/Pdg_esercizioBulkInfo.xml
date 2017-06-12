@@ -49,6 +49,17 @@
 		keysProperty="statoKeys"
 		enabledOnSearch="true"
 		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="statoSenzaContrattazione"
+		property="stato"
+		maxLength="2"
+		inputSize="2"
+		inputType="RADIOGROUP"
+		label="Stato del CdR"
+		keysProperty="statoSenzaContrattazioneKeys"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -57,6 +68,10 @@
 		name="ds_cdr" />
 	<formFieldProperty
 		name="stato"
+		readonlyProperty="ROStato"
+		 />
+	<formFieldProperty
+		name="statoSenzaContrattazione"
 		readonlyProperty="ROStato"
 		 />
 	<findFieldProperty
