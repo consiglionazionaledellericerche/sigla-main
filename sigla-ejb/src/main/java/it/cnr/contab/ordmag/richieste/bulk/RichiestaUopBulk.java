@@ -10,17 +10,23 @@ import java.util.List;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
-public class RichiestaUopBulk extends RichiestaUopBase {
+public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParentBulk{
 	protected BulkList righeRichiestaColl= new BulkList();
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	/**
 	 * [NUMERAZIONE_ORD Numeratori Ordini]
 	 **/
@@ -30,14 +36,21 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrdDest =  new UnitaOperativaOrdBulk();
-	public final static String STATO_ANNULLATO = "ANN";
-	public final static String STATO_INSERITO = "INS";
-
+	public final static String STATO_ANNULLATA = "ANN";
+	public final static String STATO_INSERITA = "INS";
+	public final static String STATO_DEFINITIVA = "DEF";
+	public final static String STATO_INVIATA_ORDINE = "INV";
+	
+	private Boolean isUtenteAbilitatoInserimentoRichiesta = true;
+	private Boolean isForApprovazione = false;
+		
 	public final static Dictionary STATO;
 	static{
 		STATO = new it.cnr.jada.util.OrderedHashtable();
-		STATO.put(STATO_INSERITO,"Inserito");
-		STATO.put(STATO_ANNULLATO,"Annullato");
+		STATO.put(STATO_INSERITA,"Inserita");
+		STATO.put(STATO_ANNULLATA,"Annullata");
+		STATO.put(STATO_DEFINITIVA,"Definitiva");
+		STATO.put(STATO_INVIATA_ORDINE,"Inviata in Ordine");
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -53,6 +66,7 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	public RichiestaUopBulk(java.lang.String cdCds, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdNumeratore, java.lang.Integer numero) {
 		super(cdCds, cdUnitaOperativa, esercizio, cdNumeratore, numero);
 		setUnitaOrganizzativa( new Unita_organizzativaBulk(cdCds) );
+		setUnitaOperativaOrd(new UnitaOperativaOrdBulk(cdUnitaOperativa) );
 		setNumerazioneOrd( new NumerazioneOrdBulk(cdUnitaOperativa,esercizio,cdNumeratore) );
 	}
 	/**
@@ -120,13 +134,13 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
 		UnitaOperativaOrdBulk uop = this.getUnitaOperativaOrd();
-		if (numerazioneOrd == null){
+		if (uop == null){
 			NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
 			if (numerazioneOrd == null)
 				return null;
 			return getNumerazioneOrd().getCdUnitaOperativa();
 		}
-		return getUnitaOperativaOrd().getCdUnitaOperativa();
+		return this.getUnitaOperativaOrd().getCdUnitaOperativa();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -199,6 +213,11 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 	private void impostaCds(it.cnr.jada.action.ActionContext context) {
 		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
 	}
+	public RichiestaUopRigaBulk removeFromRigheRichiestaColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (RichiestaUopRigaBulk)righeRichiestaColl.remove(index);
+	}
 	public int addToRigheRichiestaColl( RichiestaUopRigaBulk nuovoRigo ) 
 	{
 
@@ -260,4 +279,79 @@ public class RichiestaUopBulk extends RichiestaUopBase {
 		OrderedHashtable clone = (OrderedHashtable)d.clone();
 		return clone;
 	}
+	/**
+	 * Il metodo inzializza la missione da modificare
+	 */
+	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
+	{
+		setStato(STATO_INSERITA);
+		java.sql.Timestamp dataReg = null;
+		try {
+			dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+		} catch (javax.ejb.EJBException e) {
+			throw new it.cnr.jada.DetailedRuntimeException(e);
+		}
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_padre());
+		setDataRichiesta(dataReg);
+		
+		//	La data di registrazione la inizializzo sulla Component
+
+		return this;
+	}
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(StrServ.lpad(this.getNumero().toString(),9,"0"));
+		return nomeFile.toString();
+	}
+	public String recuperoIdRichiestaAsString(){
+		return StrServ.replace(getCdCds(), ".", "")+getEsercizio()+StrServ.replace(getCdUnitaOperativa(), ".", "")+StrServ.replace(getCdNumeratore(), ".", "")+StrServ.lpad(getNumero().toString(), 5);
+	}
+	public Boolean isInserita(){
+		return getStato() != null && getStato().equals(STATO_INSERITA);
+	}
+	public Boolean isAnnullata(){
+		return getStato() != null && getStato().equals(STATO_ANNULLATA);
+	}
+	public Boolean isDefinitiva(){
+		return getStato() != null && getStato().equals(STATO_DEFINITIVA);
+	}
+	public Boolean isInviataOrdine(){
+		return getStato() != null && getStato().equals(STATO_INVIATA_ORDINE);
+	}
+	public Boolean getIsUtenteAbilitatoInserimentoRichiesta() {
+		return isUtenteAbilitatoInserimentoRichiesta;
+	}
+	public void setIsUtenteAbilitatoInserimentoRichiesta(Boolean isUtenteAbilitatoInserimentoRichiesta) {
+		this.isUtenteAbilitatoInserimentoRichiesta = isUtenteAbilitatoInserimentoRichiesta;
+	}
+	public Boolean getIsForApprovazione() {
+		return isForApprovazione;
+	}
+	public void setIsForApprovazione(Boolean isForApprovazione) {
+		this.isForApprovazione = isForApprovazione;
+	}
+	@Override
+	public void validate() throws ValidationException {
+		super.validate();
+		if(isDefinitiva() || isInviataOrdine()){
+			if (getUnitaOperativaOrdDest() == null || getUnitaOperativaOrdDest().getCdUnitaOperativa() == null)
+			throw new ValidationException("Non è possibile rendere definitiva una richiesta senza aver prima indicato l'unità operativa di destinazione.");
+		}
+	}
+
+	
 }

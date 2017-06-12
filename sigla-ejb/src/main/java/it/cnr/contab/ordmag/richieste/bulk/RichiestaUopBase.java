@@ -8,8 +8,8 @@ public class RichiestaUopBase extends RichiestaUopKey implements Keyed {
 //    DATA_RICHIESTA TIMESTAMP(7) NOT NULL
 	private java.sql.Timestamp dataRichiesta;
  
-//    STATO DECIMAL(3,0) NOT NULL
-	private java.lang.Integer stato;
+//    STATO VARCHAR(3) NOT NULL
+	private java.lang.String stato;
  
 //    DS_RICHIESTA VARCHAR(300)
 	private java.lang.String dsRichiesta;
@@ -54,14 +54,14 @@ public class RichiestaUopBase extends RichiestaUopKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [stato]
 	 **/
-	public java.lang.Integer getStato() {
+	public java.lang.String getStato() {
 		return stato;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [stato]
 	 **/
-	public void setStato(java.lang.Integer stato)  {
+	public void setStato(java.lang.String stato)  {
 		this.stato=stato;
 	}
 	/**
