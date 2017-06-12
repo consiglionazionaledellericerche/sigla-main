@@ -6,13 +6,13 @@
 		tableName="RICHIESTA_UOP_RIGA">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="richiestaUop.unita_organizzativa.cd_unita_organizzativa" />
+			propertyName="richiestaUop.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_UNITA_OPERATIVA"
-			propertyName="richiestaUop.numerazioneOrd.cdUnitaOperativa" />
+			propertyName="richiestaUop.numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
 			columnName="ESERCIZIO"
-			propertyName="richiestaUop.esercizio" />
+			propertyName="richiestaUop.numerazioneOrd.esercizio" />
 		<columnMapping
 			columnName="CD_NUMERATORE"
 			propertyName="richiestaUop.numerazioneOrd.cdNumeratore" />
@@ -45,7 +45,10 @@
 			propertyName="obbligazione.pg_obbligazione" />
 		<columnMapping
 			columnName="CD_CENTRO_RESPONSABILITA"
-			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita" />
+			propertyName="centroResponsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="lineaAttivita.centro_responsabilita.cd_centro_responsabilita" />
 		<columnMapping
 			columnName="CD_LINEA_ATTIVITA"
 			propertyName="lineaAttivita.cd_linea_attivita" />
@@ -80,4 +83,6 @@
 		name="lineaAttivita" />
 	<persistentProperty
 		name="elementoVoce" />
+	<persistentProperty
+		name="centroResponsabilita" />
 </SQLPersistentInfo>

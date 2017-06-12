@@ -72,7 +72,7 @@
 		cols="100"
 		rows="5"
 		maxLength="2000"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		label="Note" />
 	<fieldProperty
 		name="stato"
@@ -93,10 +93,11 @@
 	<fieldProperty
 		name="quantitaRichiesta"
 		property="quantitaRichiesta"
+		nullable="false"
 		inputType="TEXT"
 		inputSize="17"
 		maxLength="17"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		label="Quantità Richiesta" />
 	<fieldProperty
 		name="findUnitaMisura"
@@ -117,7 +118,7 @@
 		name="cdBeneServizio"
 		property="beneServizio.cd_bene_servizio"
 		maxLength="30"
-		inputSize="6"
+		inputSize="20"
 		inputType="TEXT"
 		nullable="false"
 		readonlyProperty="RObeneservizio"
@@ -127,7 +128,7 @@
 		name="dsBeneServizio"
 		property="beneServizio.ds_bene_servizio"
 		maxLength="300"
-		inputSize="32"
+		inputSize="40"
 		inputType="ROTEXT"
 		label="Descr. Bene/Servizio"
 		caseSensitiveSearch="false" />
@@ -153,7 +154,7 @@
 		inputType="TEXT"
 		inputSize="12"
 		maxLength="12"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		label="Coefficiente di Conversione" />
 	<fieldProperty
 		name="cdBeneServizioDef"
@@ -260,10 +261,9 @@
 		name="findLineaAttivita"
 		property="lineaAttivita"
 		inputType="SEARCHTOOL"
-		formName="searchtool_denominazione"
+		formName="simple_searchtool"
 		enabledOnEdit="true"
 		enabledOnSearch="true"
-		readonlyProperty="ROLinea_attivita"
 		nullable="false"
 		label="G.a.e." />
 	<fieldProperty
@@ -286,7 +286,7 @@
 		name="findElementoVoce"
 		property="elementoVoce"
 		inputType="SEARCHTOOL"
-        formName="searchtool"
+        formName="simple_searchtool"
 		label="Voce di bilancio"
 		enabledOnSearch="true"
 		completeOnSave="false"
@@ -313,10 +313,11 @@
 	<fieldProperty
 		name="dsElementoVoce"
 		property="elementoVoce.ds_elemento_voce"
-		label=""
+		label="Descrizione Voce"
 		readonlyProperty="ROElemento_voce"
-		inputType="ROTEXT"
+		inputType="TEXT"
 		inputSize="60"
+		maxLength="500"
 		/>
 	<fieldProperty
 		name="esercizioVoce"
@@ -346,7 +347,6 @@
 		name="findProgetto"
 		property="progetto"
 		inputType="SEARCHTOOL"
-		readonlyProperty="ROprogetto"
 		formName="form_searchtool_progetto"
 		columnSet="nuovoPdg"
 		label="Progetto" />
@@ -373,6 +373,16 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<fieldProperty
+		name="allegatiDocumentale"
+		property="allegatiDocumentale"
+		inputType="BUTTON"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnView="true"
+		img="img/import24.gif"
+		href="javascript:doVisualizzaDocumentiCollegati()"
+		label="Visualizza Documenti Allegati" />
 	<columnSet
 		name="righeSet">
 		<columnFieldProperty
@@ -406,7 +416,7 @@
 		<columnFieldProperty
 			name="cdElementoVoce"/>
 		<columnFieldProperty
-			name="dsVoce"/>
+			name="dsElementoVoce"/>
 		<columnFieldProperty
 			name="dsProgetto"/>
 		<columnFieldProperty
@@ -441,6 +451,7 @@
 		name="findElementoVoce" />
 	<formFieldProperty
 		name="findProgetto" />
+	<formFieldProperty name="allegatiDocumentale" />	
 	<formFieldProperty
 		name="findObbligazione" />
 	<formFieldProperty
@@ -549,6 +560,7 @@
 		name="coefConv" />
 	<columnFieldProperty
 		name="cdBeneServizioDef" />
+	<columnFieldProperty name="allegatiDocumentale" />	
 	<columnFieldProperty
 		name="quantitaAutorizzata" />
 	<columnFieldProperty
