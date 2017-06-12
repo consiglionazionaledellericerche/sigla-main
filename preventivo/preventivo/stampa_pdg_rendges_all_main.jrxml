@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.6105100000000179"/>
-	<property name="ireport.x" value="1273"/>
-	<property name="ireport.y" value="278"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -5867,10 +5867,10 @@ definitiva]]></text>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="6" splitType="Stretch">
+		<band splitType="Stretch">
 			<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) )) && "E".equals($P{P_TIPO})]]></printWhenExpression>
 			<subreport isUsingCache="true">
-				<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1171" height="6" uuid="3dafd8b0-df98-4b15-a0fe-ee5d06a96d18">
+				<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1171" height="0" uuid="3dafd8b0-df98-4b15-a0fe-ee5d06a96d18">
 					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) )) && "E".equals($P{P_TIPO})]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="P_ESERCIZIO">
