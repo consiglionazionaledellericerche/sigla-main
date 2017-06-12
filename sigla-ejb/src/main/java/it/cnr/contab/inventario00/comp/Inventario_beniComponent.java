@@ -1,9 +1,24 @@
 package it.cnr.contab.inventario00.comp;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.ejb.EJBException;
+
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.CdsHome;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.comp.DateServices;
 /**
@@ -13,16 +28,24 @@ import it.cnr.contab.doccont00.comp.DateServices;
  */
 import it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioBulk;
 import it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioHome;
-import it.cnr.contab.inventario00.docs.bulk.*;
-import it.cnr.contab.inventario00.tabrif.bulk.*;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoHome;
+import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
+import it.cnr.contab.inventario00.docs.bulk.Inventario_beniHome;
+import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk;
+import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laHome;
+import it.cnr.contab.inventario00.docs.bulk.Stampa_beni_senza_utilizVBulk;
+import it.cnr.contab.inventario00.docs.bulk.Stampa_registro_inventarioVBulk;
+import it.cnr.contab.inventario00.docs.bulk.Utilizzatore_CdrVBulk;
+import it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk;
+import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
+import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
+import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioHome;
+import it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoBulk;
+import it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoHome;
+import it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoBulk;
+import it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoHome;
+import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettHome;
-import it.cnr.contab.config00.sto.bulk.*;
-import java.io.Serializable;
-import java.rmi.RemoteException;
-import javax.ejb.EJBException;
-import java.math.BigDecimal;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -35,7 +58,11 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
  
 public class Inventario_beniComponent 
@@ -1144,7 +1171,12 @@ public SQLBuilder selectLinea_attivitaByClause(UserContext userContext, Inventar
 	SQLBuilder sql = getHome(userContext, it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class,"V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
 		sql.addClause( clauses );
 		sql.addTableToHeader("FUNZIONE,NATURA,PARAMETRI_CNR,UNITA_ORGANIZZATIVA,CDR");
-		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE",sql.EQUALS,"S");
+
+		sql.openParenthesis(FindClause.AND);
+		sql.addSQLClause(FindClause.OR,"V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_SPESE);
+		sql.addSQLClause(FindClause.OR,"V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+		sql.closeParenthesis();
+
 		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",sql.EQUALS, utilizzatori_la.getCdr().getCd_centro_responsabilita());
 		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 		sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));

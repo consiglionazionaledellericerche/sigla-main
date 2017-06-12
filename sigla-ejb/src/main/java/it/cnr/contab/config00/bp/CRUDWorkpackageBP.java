@@ -32,6 +32,7 @@ public class CRUDWorkpackageBP extends SimpleCRUDBP {
 	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
 	private boolean flNuovoPdg = false;
 	private boolean flTiGestioneES = false;
+	private boolean flPrgPianoeco = false;
 	
 	private Unita_organizzativaBulk uoScrivania;
 	private Integer esercizioScrivania;
@@ -122,6 +123,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 		Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
 		setFlTiGestioneES(parEnte.getFl_gae_es().booleanValue());
+		setFlPrgPianoeco(parEnte.getFl_prg_pianoeco().booleanValue());
 		aggiornaGECO(actioncontext.getUserContext());
 		super.initialize(actioncontext);
 	} catch (ComponentException e) {
@@ -182,6 +184,12 @@ public boolean isFlTiGestioneES() {
 }
 public void setFlTiGestioneES(boolean flTiGestioneES) {
 	this.flTiGestioneES = flTiGestioneES;
+}
+public boolean isFlPrgPianoeco() {
+	return flPrgPianoeco;
+}
+public void setFlPrgPianoeco(boolean flPrgPianoeco) {
+	this.flPrgPianoeco = flPrgPianoeco;
 }
 @Override
 public String getSearchResultColumnSet() {

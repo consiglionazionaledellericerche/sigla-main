@@ -149,7 +149,19 @@
 	 	<td colspan="3">	
 			<% bp.getController().writeFormInput(out,null,"pdgMissione",bp.isMapFromPianoGestioneSpese(),null,null); %> 
 		</td> 
-	</tr>	
+	</tr>
+
+	<% if (bp.isFlPrgPianoeco() && bulk.getProgetto2016()!=null && bulk.getProgetto2016().getFl_piano_economico()) { %>
+	<tr>
+		<td>
+			<% bp.getController().writeFormLabel(out,"voce_piano_economico2016"); %>
+		</td>
+	 	<td colspan="3">	
+			<% bp.getController().writeFormInput(out,null,"voce_piano_economico2016",false,null,null); %> 
+		</td> 
+	</tr>
+	<% } %>	
+
 	<% if (bp.getUoScrivania().getCd_unita_organizzativa().equals("999.000")) {%>
 		<tr>
 		  <td>

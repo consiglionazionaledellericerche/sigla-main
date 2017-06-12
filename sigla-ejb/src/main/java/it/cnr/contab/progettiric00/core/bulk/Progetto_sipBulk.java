@@ -32,6 +32,7 @@ public class Progetto_sipBulk extends ProgettoBase {
 	private DivisaBulk divisa;
 	private Pdg_programmaBulk pdgProgramma;
 	private Pdg_missioneBulk pdgMissione;
+	private Progetto_other_fieldBulk otherField;
 	
 	public Progetto_sipBulk() {
 		super();
@@ -260,5 +261,32 @@ public class Progetto_sipBulk extends ProgettoBase {
 	@Override
 	public void setCd_missione(String cd_missione) {
 		this.getPdgMissione().setCd_missione(cd_missione);
+	}
+
+	public void setOtherField(Progetto_other_fieldBulk otherField) {
+		this.otherField = otherField;
+	}
+	
+	public Progetto_other_fieldBulk getOtherField() {
+		return otherField;
+	}
+
+	public Boolean getFl_piano_economico() {
+		return getOtherField()!=null && 
+			   getOtherField().getFl_piano_economico()!=null &&
+			   getOtherField().getFl_piano_economico();
+	}
+	
+	public void setFl_piano_economico(Boolean fl_piano_economico) {
+		if (getOtherField()==null) {
+			Progetto_other_fieldBulk bulk = new Progetto_other_fieldBulk(this.getPg_progetto());
+			bulk.setToBeCreated();
+			setOtherField(bulk); 
+		}
+		if (getFl_piano_economico()!=null && fl_piano_economico!=null && 
+				getFl_piano_economico()!=fl_piano_economico) {
+			getOtherField().setFl_piano_economico(fl_piano_economico);
+			getOtherField().setToBeUpdated();	
+		}
 	}
 }

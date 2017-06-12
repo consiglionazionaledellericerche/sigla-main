@@ -412,6 +412,7 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 				((ProgettoBulk)bulk).setFl_utilizzabile(Boolean.TRUE);
 				((ProgettoBulk)bulk).setEsercizio(CNRUserContext.getEsercizio(aUC));
 				if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, CNRUserContext.getEsercizio(aUC)).getFl_nuovo_pdg()) {
+					((ProgettoBulk)bulk).setLivello(1);
 					((ProgettoBulk)bulk).setResponsabile(((TerzoHome)getHome(aUC, TerzoBulk.class)).findTerzoEnte());
 					((ProgettoBulk)bulk).setDt_inizio(DateUtils.firstDateOfTheYear(CNRUserContext.getEsercizio(aUC)));
 					((ProgettoBulk)bulk).setImporto_progetto(BigDecimal.ZERO);

@@ -88,6 +88,18 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"/>	
 		<columnMapping
+			columnName="CD_UNITA_PIANO"
+			propertyName="cd_unita_piano"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="CD_VOCE_PIANO"
+			propertyName="cd_voce_piano"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true"/>
+		<columnMapping
 			columnName="UTCR"
 			propertyName="utcr"
 			sqlTypeName="VARCHAR"
@@ -117,7 +129,6 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
-			
 	</defaultColumnMap>
 <!--	<persistentProperty
 		name="cdr_linea" />
@@ -145,6 +156,10 @@
 		name="im_spese_vive" />
 	<persistentProperty
 		name="ds_spese_vive" />
+	<persistentProperty 
+		name="cd_unita_piano"/>
+	<persistentProperty 
+		name="cd_voce_piano"/>
 	<persistentProperty
 		name="utcr" />
 	<persistentProperty
