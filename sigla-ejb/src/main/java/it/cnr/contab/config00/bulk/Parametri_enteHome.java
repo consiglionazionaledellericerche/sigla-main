@@ -86,6 +86,7 @@ public class Parametri_enteHome extends BulkHome
     	((Parametri_enteBulk)oggettobulk).setAttivo(Boolean.FALSE);    	
     	((Parametri_enteBulk)oggettobulk).setFl_informix(Boolean.FALSE);    	
     	((Parametri_enteBulk)oggettobulk).setFl_gae_es(Boolean.FALSE);    	
+    	((Parametri_enteBulk)oggettobulk).setFl_prg_pianoeco(Boolean.FALSE);    	
     	super.initializeBulkForInsert(usercontext, oggettobulk);
     }
     

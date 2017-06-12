@@ -6,23 +6,19 @@ package it.cnr.contab.prevent01.bulk;
 
 import java.sql.Timestamp;
 import java.util.Iterator;
+
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
-import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_voci_etrBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.util.action.SimpleCRUDBP;
 
 public class Pdg_Modulo_EntrateBulk extends Pdg_Modulo_EntrateBase {
 	public Pdg_Modulo_EntrateBulk() {
@@ -38,6 +34,7 @@ public class Pdg_Modulo_EntrateBulk extends Pdg_Modulo_EntrateBase {
 		setArea(new CdsBulk(cd_cds_area));
 	}
 	
+	private Voce_piano_economico_prgBulk voce_piano_economico;
 	
 	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk contraente;
 	
@@ -57,7 +54,7 @@ public class Pdg_Modulo_EntrateBulk extends Pdg_Modulo_EntrateBase {
 	
 	private SimpleBulkList dettagli_gestionali = new SimpleBulkList();
 	private java.math.BigDecimal dettagli_gestionali_tot;
-	
+		
 	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getContraente() {
 		return contraente;
 	}
@@ -282,5 +279,39 @@ public class Pdg_Modulo_EntrateBulk extends Pdg_Modulo_EntrateBase {
 	 */
 	public java.math.BigDecimal getDettagli_gestionali_res() {
 		return Utility.nvl(getIm_entrata()).subtract(Utility.nvl(getDettagli_gestionali_tot()));
+	}
+
+	public Voce_piano_economico_prgBulk getVoce_piano_economico() {
+		return voce_piano_economico;
+	}
+
+	public void setVoce_piano_economico(Voce_piano_economico_prgBulk voce_piano_economico) {
+		this.voce_piano_economico = voce_piano_economico;
+	}	
+
+	@Override
+	public String getCd_unita_piano() {
+		Voce_piano_economico_prgBulk vocePiano = this.getVoce_piano_economico();
+		if (vocePiano == null)
+			return null;
+		return vocePiano.getCd_unita_organizzativa();
+	}
+	
+	@Override
+	public void setCd_unita_piano(String cd_unita_piano) {
+		this.getVoce_piano_economico().setCd_unita_organizzativa(cd_unita_piano);
+	}
+	
+	@Override
+	public String getCd_voce_piano() {
+		Voce_piano_economico_prgBulk vocePiano = this.getVoce_piano_economico();
+		if (vocePiano == null)
+			return null;
+		return vocePiano.getCd_voce_piano();
+	}
+	
+	@Override
+	public void setCd_voce_piano(String cd_voce_piano) {
+		this.getVoce_piano_economico().setCd_voce_piano(cd_voce_piano);
 	}
 }

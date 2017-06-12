@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_voce_piano"
+		property="cd_voce_piano"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"		
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		label="Codice Voce Piano Economico" />
+	<fieldProperty
+		name="ds_voce_piano"
+		property="ds_voce_piano"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		label="Descrizione Voce Piano Economico"
+		caseSensitiveSearch="false" 
+		nullable="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice UO Titolare"
+		caseSensitiveSearch="false"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="false"		
+		nullable="false" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Descrizione UO Titolare"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="false"				
+		caseSensitiveSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="fl_valido"
+		property="fl_valido"
+		inputType="CHECKBOX"
+		label="Valido" />
+
+	<formFieldProperty name="cd_voce_piano" />
+	<formFieldProperty name="ds_voce_piano" />
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="ds_unita_organizzativa" />
+	<formFieldProperty name="fl_valido" />
+	
+	<columnFieldProperty name="cd_voce_piano" />
+	<columnFieldProperty name="ds_voce_piano" />
+	<columnFieldProperty name="cd_unita_organizzativa" />
+	<columnFieldProperty name="ds_unita_organizzativa" />
+	<columnFieldProperty name="fl_valido" />
+
+	<findFieldProperty name="cd_voce_piano" />
+	<findFieldProperty name="ds_voce_piano" />
+	<findFieldProperty name="fl_valido" />
+
+	<form name="searchtool">
+		<formFieldProperty
+			name="cd_voce_piano" />			
+		<formFieldProperty
+			name="ds_voce_piano"/>
+	</form>
+</bulkInfo>

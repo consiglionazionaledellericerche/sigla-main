@@ -91,6 +91,12 @@
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_PRG_PIANOECO"
+			propertyName="fl_prg_pianoeco"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="LDAP_USER"
 			propertyName="ldap_user"
 			sqlTypeName="VARCHAR"
@@ -167,6 +173,8 @@
 		name="fl_informix" />
 	<persistentProperty
 		name="fl_gae_es" />
+	<persistentProperty
+		name="fl_prg_pianoeco" />
 	<persistentProperty
 		name="ldap_user" />
 	<persistentProperty		
