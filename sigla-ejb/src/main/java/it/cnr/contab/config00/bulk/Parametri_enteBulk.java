@@ -58,7 +58,8 @@ public class Parametri_enteBulk extends Parametri_enteBase
 		setAttivo(Boolean.FALSE);
     	setFl_autenticazione_ldap(Boolean.FALSE);
     	setFl_informix(Boolean.FALSE);    	
-    	setFl_gae_es(Boolean.FALSE);  		
+    	setFl_gae_es(Boolean.FALSE);
+    	setFl_prg_pianoeco(Boolean.FALSE);
 	  return this;
 	}
 
