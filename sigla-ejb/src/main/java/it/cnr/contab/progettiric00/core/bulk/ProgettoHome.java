@@ -626,4 +626,16 @@ public class ProgettoHome extends BulkHome {
 	@Override
 	public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
 	}
+	
+	public java.util.Collection findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,ProgettoBulk testata) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Progetto_piano_economicoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,testata.getPg_progetto());
+		return dettHome.fetchAll(sql);
+	}
+	
+	public Progetto_other_fieldBulk findProgettoOtherField(it.cnr.jada.UserContext userContext,ProgettoBulk testata) throws IntrospectionException, PersistencyException {
+		PersistentHome otherHome = getHomeCache().getHome(Progetto_other_fieldBulk.class);
+		return (Progetto_other_fieldBulk)otherHome.findByPrimaryKey(new Progetto_other_fieldBulk(testata.getPg_progetto()));
+	}
 }
