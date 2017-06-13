@@ -59,13 +59,17 @@
 		<defaultValueExpression><![CDATA["SCI"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[Select
-SUM(DECODE(TIPO,'S',TOT_ACC_IMP, -TOT_ACC_IMP)) TOT_ACC_IMP,
-SUM(DECODE(TIPO,'E',CASSA_RIS_PAG, -CASSA_RIS_PAG)) CASSA_RIS_PAG
-FROM TMP_STAMPA_RENDICONTO]]>
+		<![CDATA[SELECT TOT_ACC_IMP, CASSA_RIS_PAG,
+(SELECT decode(DESCRIZIONE, 'CNR','Y','N') FROM PARAMETRI_ENTE WHERE ATTIVO='Y') ISCNR
+from(Select
+NVL(SUM(DECODE(TIPO,'S',TOT_ACC_IMP, -TOT_ACC_IMP)),0) TOT_ACC_IMP,
+NVL(SUM(DECODE(TIPO,'E',CASSA_RIS_PAG, -CASSA_RIS_PAG)),0) CASSA_RIS_PAG
+FROM TMP_STAMPA_RENDICONTO
+WHERE EXISTS(SELECT '1' FROM PARAMETRI_ENTE WHERE ATTIVO='Y' AND DESCRIZIONE!='CNR'))]]>
 	</queryString>
 	<field name="TOT_ACC_IMP" class="java.math.BigDecimal"/>
 	<field name="CASSA_RIS_PAG" class="java.math.BigDecimal"/>
+	<field name="ISCNR" class="java.lang.String"/>
 	<variable name="TOT_ACC_IMP" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($P{P_TIPO}.equals("E")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)>0?
 $F{TOT_ACC_IMP}.abs():($P{P_TIPO}.equals("S")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)<0?
@@ -74,12 +78,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 	<variable name="CASSA_RIS_PAG" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[$F{CASSA_RIS_PAG}!=null && $P{P_TIPO}.equals("E")?$F{CASSA_RIS_PAG}:BigDecimal.ZERO]]></variableExpression>
 	</variable>
-	<title>
-		<band/>
-	</title>
 	<detail>
 		<band height="15" splitType="Stretch">
-			<printWhenExpression><![CDATA[($P{P_TIPO}.equals("E")? Boolean.TRUE:Boolean.FALSE)]]></printWhenExpression>
+			<printWhenExpression><![CDATA["N".equals($F{ISCNR}) && $P{P_TIPO}.equals("E")?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" stretchType="RelativeToBandHeight" x="3" y="0" width="173" height="15" uuid="ba858c76-150c-42dd-b4bf-841a4f2c8e0c"/>
 				<box leftPadding="4">
@@ -315,7 +316,8 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 			</textField>
 		</band>
 		<band height="15">
-			<printWhenExpression><![CDATA[(($P{P_TIPO}.equals("E")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)>0)||
+			<printWhenExpression><![CDATA["N".equals($F{ISCNR}) &&
+(($P{P_TIPO}.equals("E")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)>0)||
  ($P{P_TIPO}.equals("S")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)<0)
     ? Boolean.TRUE:Boolean.FALSE)]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">

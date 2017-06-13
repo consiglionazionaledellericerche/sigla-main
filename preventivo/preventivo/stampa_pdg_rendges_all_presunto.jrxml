@@ -2,42 +2,56 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_rendges_all_presunto" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1190" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f86d11ee-c14c-4bcc-9921-6d60cb6e7308">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="2.853116706110008"/>
+	<property name="ireport.zoom" value="1.3310000000000035"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="TNR6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman"/>
-	<style name="TNRG6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRG8ITALIC" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG7ITALIC" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(2010)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[Select cd_chiave_secondaria, im01, im02,
-val01, val02, val03, val04
-From CONFIGURAZIONE_CNR
-Where Esercizio = $P{P_ESERCIZIO}
-  And cd_unita_funzionale = '*'
-  And cd_chiave_primaria = 'RENDICONTO_FINANZIARIO'
-  And (cd_chiave_secondaria = 'AVANZO_AMMINISTRAZIONE' OR
-       cd_chiave_secondaria = 'FONDO_INIZIALE_CASSA')
-Order By cd_chiave_secondaria]]>
+		<![CDATA[Select TIPO, SUM(AVANZO_PREV) AVANZO_PREV, SUM(AVANZO_DEF) AVANZO_DEF, SUM(FONDO_CASSA_DEF) FONDO_CASSA_DEF
+FROM (
+Select 'AVA' TIPO, IM01 AVANZO_PREV, 0 AVANZO_DEF, 0 FONDO_CASSA_DEF, 'Y' ISCNR
+FROM CONFIGURAZIONE_CNR
+WHERE ESERCIZIO=2016
+AND CD_CHIAVE_PRIMARIA='BILANCIO_ENTE'
+AND CD_CHIAVE_SECONDARIA='AVANZO'
+UNION ALL
+Select 'AVA', 0 AVANZO_PREV, IM01 AVANZO_DEF, 0 FONDO_CASSA_DEF, 'Y' ISCNR
+FROM CONFIGURAZIONE_CNR
+WHERE ESERCIZIO=2016
+AND CD_CHIAVE_PRIMARIA='BILANCIO_ENTE'
+AND CD_CHIAVE_SECONDARIA='AVANZO_DEF'
+UNION ALL
+Select 'CAS', 0 AVANZO_PREV, 0 AVANZO_DEF, IM01 FONDO_CASSA_DEF, 'Y' ISCNR
+FROM CONFIGURAZIONE_CNR
+WHERE ESERCIZIO=2016
+AND CD_CHIAVE_PRIMARIA='BILANCIO_ENTE'
+AND CD_CHIAVE_SECONDARIA='FONDO_CASSA_DEF')
+GROUP BY TIPO
+ORDER BY TIPO]]>
 	</queryString>
-	<field name="CD_CHIAVE_SECONDARIA" class="java.lang.String"/>
-	<field name="IM01" class="java.math.BigDecimal"/>
-	<field name="IM02" class="java.math.BigDecimal"/>
-	<field name="VAL01" class="java.lang.String"/>
-	<field name="VAL02" class="java.lang.String"/>
-	<field name="VAL03" class="java.lang.String"/>
-	<field name="VAL04" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="AVANZO_PREV" class="java.math.BigDecimal"/>
+	<field name="AVANZO_DEF" class="java.math.BigDecimal"/>
+	<field name="FONDO_CASSA_DEF" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -53,15 +67,27 @@ Order By cd_chiave_secondaria]]>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="VERB8" x="3" y="0" width="208" height="13" uuid="3943bc60-ff4e-4027-ab1f-80937ea27391"/>
-				<box>
+				<reportElement key="textField-7" style="VER6" stretchType="RelativeToBandHeight" x="3" y="0" width="53" height="13" uuid="b3fd1c2b-2c89-46c3-8f65-400d199c85e8"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="VERB6" x="56" y="0" width="155" height="13" uuid="3943bc60-ff4e-4027-ab1f-80937ea27391"/>
+				<box rightPadding="4">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[( $F{CD_CHIAVE_SECONDARIA}.equals("AVANZO_AMMINISTRAZIONE") ? "Avanzo di amministrazione" : "Fondo iniziale di cassa" )]]></textFieldExpression>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["AVA".equals($F{TIPO}) ? "Avanzo di amministrazione" : "Fondo iniziale di cassa"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement key="textField-3" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="211" y="0" width="48" height="13" uuid="cb4a7c09-1914-489c-801a-71488a012b51"/>
@@ -72,7 +98,9 @@ Order By cd_chiave_secondaria]]>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{VAL01}==null ? "---" : $F{VAL01}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["AVA".equals($F{TIPO}) ?
+($F{AVANZO_PREV}==null ? "---" : $F{AVANZO_PREV}):
+"---"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement key="textField-4" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="259" y="0" width="48" height="13" uuid="aaff75f2-16d0-4316-8bad-b89e6788dfac"/>
@@ -83,10 +111,14 @@ Order By cd_chiave_secondaria]]>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{VAL02}==null ? "---" : $F{VAL02}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["AVA".equals($F{TIPO}) ?
+($F{AVANZO_DEF}.compareTo($F{AVANZO_PREV})>0?
+$F{AVANZO_DEF}.subtract($F{AVANZO_PREV}):
+"---"):
+"---"]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement key="staticText-3" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="307" y="0" width="48" height="13" uuid="fde007df-b302-40ca-939f-c74fbf9c94e4"/>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-4" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="307" y="0" width="48" height="13" uuid="495c0b41-d7bd-4337-95b4-3b1cb74ffac6"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -94,8 +126,12 @@ Order By cd_chiave_secondaria]]>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[---]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["AVA".equals($F{TIPO}) ?
+($F{AVANZO_DEF}.compareTo($F{AVANZO_PREV})<=0?
+$F{AVANZO_PREV}.subtract($F{AVANZO_DEF}):
+"---"):
+"---"]]></textFieldExpression>
+			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement key="textField-5" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="355" y="0" width="48" height="13" uuid="1ba87504-a06b-4ac0-8004-b46ca3217c11"/>
 				<box rightPadding="4">
@@ -105,7 +141,9 @@ Order By cd_chiave_secondaria]]>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{VAL03}==null ? "---" : $F{VAL03}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["AVA".equals($F{TIPO}) ?
+($F{AVANZO_DEF}==null ? "---" : $F{AVANZO_DEF}):
+"---"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-22" style="VER6" x="403" y="0" width="48" height="13" uuid="49f6d143-b83e-4408-b096-420cdfef009d"/>
@@ -129,8 +167,8 @@ Order By cd_chiave_secondaria]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[---]]></text>
 			</staticText>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-6" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="499" y="0" width="48" height="13" uuid="b309a2d8-8b55-427f-9075-38af27a3d7fc"/>
+			<staticText>
+				<reportElement key="staticText-23" style="VER6" x="499" y="0" width="48" height="13" uuid="02e69502-f0b7-4fe2-8fc1-34a522aa88b5"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -138,8 +176,8 @@ Order By cd_chiave_secondaria]]>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{VAL04}==null ? "---" : $F{VAL04}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[---]]></text>
+			</staticText>
 			<staticText>
 				<reportElement key="staticText-24" style="VER6" x="547" y="0" width="48" height="13" uuid="89c2e44d-a345-4518-b4b5-696187f679e2"/>
 				<box rightPadding="4">
@@ -218,7 +256,7 @@ Order By cd_chiave_secondaria]]>
 				<text><![CDATA[---]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-31" style="VER6" x="1123" y="0" width="48" height="13" uuid="afdc3ab6-e351-47d9-8888-e201b632fe46"/>
+				<reportElement key="staticText-34" style="VER6" x="883" y="0" width="48" height="13" uuid="dda7f50c-1086-4fb7-9355-152e1e28c1d8"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -229,7 +267,7 @@ Order By cd_chiave_secondaria]]>
 				<text><![CDATA[---]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-8" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="931" y="0" width="48" height="13" uuid="2df3f59f-619f-46ae-b5a2-85bf95fb03e9"/>
+				<reportElement key="textField-7" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="931" y="0" width="48" height="13" uuid="6044b037-8131-4ed2-bbb4-720489cf85ed"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -237,10 +275,12 @@ Order By cd_chiave_secondaria]]>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{IM01}==null ? "---" : $F{IM01}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["CAS".equals($F{TIPO}) ?
+($F{FONDO_CASSA_DEF}==null ? "---" : $F{FONDO_CASSA_DEF}):
+"---"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-7" style="VER6" positionType="Float" stretchType="RelativeToBandHeight" x="979" y="0" width="48" height="13" uuid="6044b037-8131-4ed2-bbb4-720489cf85ed"/>
+			<staticText>
+				<reportElement key="staticText-34" style="VER6" x="979" y="0" width="48" height="13" uuid="05028ce6-09eb-49be-a376-f6a6e3627a2c"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -248,8 +288,8 @@ Order By cd_chiave_secondaria]]>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{IM02}==null ? "---" : $F{IM02}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[---]]></text>
+			</staticText>
 			<staticText>
 				<reportElement key="staticText-33" style="VER6" x="1027" y="0" width="48" height="13" uuid="2f018c52-0124-441b-aac1-96ee0f549391"/>
 				<box rightPadding="4">
@@ -273,7 +313,7 @@ Order By cd_chiave_secondaria]]>
 				<text><![CDATA[---]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-34" style="VER6" x="883" y="0" width="48" height="13" uuid="dda7f50c-1086-4fb7-9355-152e1e28c1d8"/>
+				<reportElement key="staticText-31" style="VER6" x="1123" y="0" width="48" height="13" uuid="afdc3ab6-e351-47d9-8888-e201b632fe46"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
