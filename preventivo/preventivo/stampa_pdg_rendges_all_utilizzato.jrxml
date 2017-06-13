@@ -93,7 +93,7 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA["Fondo cassa"]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="211" y="0" width="48" height="15" uuid="c64fbdf4-29cf-477d-8c49-54845a2e84ec"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -102,8 +102,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-42" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="259" y="0" width="48" height="15" uuid="7537e398-6c3a-49c3-a55b-e8bfa65bcf89"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -112,8 +113,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-43" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="307" y="0" width="48" height="15" uuid="33eeea17-5a43-4c3b-8164-30359f64a7a1"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -122,8 +124,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-44" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="355" y="0" width="48" height="15" uuid="6fa7c6b5-dae5-4e18-b231-082fae996bb3"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -132,8 +135,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-45" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="403" y="0" width="48" height="15" uuid="bfbd9d1b-4b02-4a1d-9683-21022d81ad6c"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -142,8 +146,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-46" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="451" y="0" width="48" height="15" uuid="99164e4d-f73a-4d43-ace5-bed11c42bad6"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -152,8 +157,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-46" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="499" y="0" width="48" height="15" uuid="4ac6d3d2-4abe-43c7-a484-3da231a07bb4"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -162,8 +168,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-46" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="547" y="0" width="48" height="15" uuid="c58036f8-0417-4d50-96b9-0bb877011c38"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -172,8 +179,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-46" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="595" y="0" width="48" height="15" uuid="5aa468c9-7e51-4182-9409-c8b426c7bcde"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -182,8 +190,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="643" y="0" width="48" height="15" uuid="b1617378-fbfe-4a98-836f-bb36f4c44a99"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -192,8 +201,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="691" y="0" width="48" height="15" uuid="f7c42e6f-a1f7-46ff-b47d-e49736dcc217"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -202,8 +212,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="739" y="0" width="48" height="15" uuid="06f8a034-a795-43e0-9624-5227920fa845"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -212,8 +223,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="787" y="0" width="48" height="15" uuid="81aaeb61-d221-4e86-bb25-5607a3a4fbfa"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -222,8 +234,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="835" y="0" width="48" height="15" uuid="bfbd01ba-78b7-421e-bd2f-9249539724b7"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -232,8 +245,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="883" y="0" width="48" height="15" uuid="33599371-6572-483f-b6e7-59c37690c47b"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -242,8 +256,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="931" y="0" width="48" height="15" uuid="0da65154-393d-47f5-854c-3726eb2e13a8"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -252,8 +267,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="979" y="0" width="48" height="15" uuid="67465906-e652-47a8-9e11-0ff50665b349"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -262,8 +278,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CASSA_RIS_PAG}]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1027" y="0" width="48" height="15" uuid="c35099ea-6582-4feb-95f8-ead13c3dd936"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -272,8 +289,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1075" y="0" width="48" height="15" uuid="f01b1133-8b8c-4cef-a944-7e274016a6dc"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -282,8 +300,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1123" y="0" width="48" height="15" uuid="0b0b1a77-ff1b-49ca-89b2-139f6fba84d8"/>
 				<box topPadding="0" rightPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -292,6 +311,7 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="15">
@@ -497,7 +517,7 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CASSA_RIS_PAG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1027" y="0" width="48" height="15" uuid="e937f1e0-35f6-4e87-a4ed-af48f71392b8"/>
