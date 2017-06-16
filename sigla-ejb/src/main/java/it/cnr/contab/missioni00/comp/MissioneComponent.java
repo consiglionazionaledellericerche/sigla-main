@@ -21,6 +21,7 @@ import it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFattura
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 
@@ -38,10 +39,16 @@ import it.cnr.contab.util.Utility;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
+import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
+import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -2918,6 +2925,7 @@ private MissioneBulk ritornaRimborsoGenerato(UserContext aUC, MissioneBulk missi
 
 public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException
 {
+	Obbligazione_scadenzarioBulk obblScad = null;
 	try
 	{	
 		if (missione.getEsercizioObblGeMis() != null && missione.getEsercizioOriObblGeMis() != null && missione.getCdsObblGeMis() != null && missione.getPgObblGeMis() != null){
@@ -2947,7 +2955,7 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 					scad = ((Obbligazione_scadenzarioBulk)scadHome.findByPrimaryKey(scad));
 					ObbligazioneHome obblHome = (ObbligazioneHome)getHome( aUC, ObbligazioneBulk.class );
 					scad.setObbligazione((ObbligazioneBulk)obblHome.findByPrimaryKey(scad.getObbligazione()));
-					return scad;
+					obblScad = scad;
 				}
 			} else {
 				Obbligazione_scadenzarioHome scadenzaHome = (Obbligazione_scadenzarioHome)getHome(aUC, Obbligazione_scadenzarioBulk.class);
@@ -2959,18 +2967,69 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 					Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk)scadenzario.get(0);
 					ObbligazioneHome obblHome = (ObbligazioneHome)getHome( aUC, ObbligazioneBulk.class );
 					scad.setObbligazione((ObbligazioneBulk)obblHome.findByPrimaryKey(scad.getObbligazione()));
-					return scad;
+					obblScad = scad;
 				}
 			}
 		} else {
 			return null;
+		}
+		if (obblScad != null){
+			return gestioneScadenzaObbligazioneDaGemis(aUC, missione, obblScad);
 		}
 	} 
 	catch (Throwable e) 
 	{
 		throw handleException(missione, e);
 	}
-	return null;
+	return obblScad;
+}
+
+private Obbligazione_scadenzarioBulk gestioneScadenzaObbligazioneDaGemis(UserContext aUC, MissioneBulk missione, Obbligazione_scadenzarioBulk obblScad)
+		throws ComponentException {
+	try {
+		Obbligazione_scadenzarioBulk scadenzaNuova = null;
+		BigDecimal importoResiduo = obblScad.getImportoDisponibile().subtract(missione.getImportoDaRimborsare());
+		if (obblScad != null && importoResiduo.compareTo(BigDecimal.ZERO) > 0) {
+			return sdoppiaObbligazioneScadenzario(aUC, missione, obblScad, importoResiduo);
+		} else {
+			return obblScad;
+		}
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
+private Obbligazione_scadenzarioBulk sdoppiaObbligazioneScadenzario(UserContext aUC, MissioneBulk missione,
+		Obbligazione_scadenzarioBulk obblScad, BigDecimal importoResiduo)
+		throws ComponentException, RemoteException, PersistencyException, ValidationException {
+	Obbligazione_scadenzarioBulk scadenzaNuova;
+	ObbligazioneAbstractComponentSession sess = (ObbligazioneAbstractComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ObbligazioneAbstractComponentSession");
+	scadenzaNuova = (Obbligazione_scadenzarioBulk) sess
+			.sdoppiaScadenzaInAutomatico(
+					aUC,
+					obblScad,
+					importoResiduo);
+
+	// ricarico obbligazione e recupero i riferimenti alle scadenze
+	ObbligazioneBulk obbligazione = (ObbligazioneBulk) sess.inizializzaBulkPerModifica(aUC,scadenzaNuova.getObbligazione());
+
+	if (!obbligazione.getObbligazione_scadenzarioColl()
+			.containsByPrimaryKey(obblScad)
+			|| !obbligazione.getObbligazione_scadenzarioColl()
+			.containsByPrimaryKey(scadenzaNuova))
+		throw new ValidationException(
+				"Errore nello sdoppiamento della scadenza dell'impegno.");
+
+	obblScad = (Obbligazione_scadenzarioBulk) obbligazione
+			.getObbligazione_scadenzarioColl().get(
+					obbligazione.getObbligazione_scadenzarioColl()
+					.indexOfByPrimaryKey(obblScad));
+	scadenzaNuova = (Obbligazione_scadenzarioBulk) obbligazione
+			.getObbligazione_scadenzarioColl().get(
+					obbligazione.getObbligazione_scadenzarioColl()
+					.indexOfByPrimaryKey(scadenzaNuova));
+	scadenzaNuova.setDt_scadenza(missione.getDt_registrazione());
+	scadenzaNuova.setDs_scadenza(missione.getDs_missione());
+	return scadenzaNuova;
 }
 
 private SQLBuilder impostaFiltroQueryObbligazioniFromGemis(UserContext aUC, MissioneBulk missione) throws PersistencyException, ComponentException, ApplicationException  {
