@@ -135,6 +135,8 @@ public class MissioneResource implements MissioneLocal{
     	missioneCreated.setToBeUpdated();
     	missioneCreated.setMissioneIniziale(missioneCreated);
     	missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missioneCreated);
+    	missioneCreated.setObbligazione_scadenzario(null);
+    	missioneCreated.setObbligazione_scadenzarioClone(null);
     	return Response.status(Status.CREATED).entity(missioneCreated).build();
     }
 

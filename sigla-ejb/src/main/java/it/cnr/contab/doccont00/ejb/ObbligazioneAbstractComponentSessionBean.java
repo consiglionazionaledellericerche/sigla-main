@@ -1,8 +1,9 @@
 package it.cnr.contab.doccont00.ejb;
+import java.sql.Timestamp;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
-import it.cnr.contab.doccont00.comp.AccertamentoAbstractComponent;
 import it.cnr.contab.doccont00.comp.ObbligazioneAbstractComponent;
 @Stateless(name="CNRDOCCONT00_EJB_ObbligazioneAbstractComponentSession")
 public class ObbligazioneAbstractComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ObbligazioneAbstractComponentSession{
@@ -138,6 +139,25 @@ public void setSavePoint(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp
 	try {
 		((ObbligazioneAbstractComponent)componentObj).setSavePoint(param0);
 		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, java.math.BigDecimal param2, String nuovaDescrizione, Timestamp nuovaScadenza)  throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk result = ((ObbligazioneAbstractComponent)componentObj).sdoppiaScadenzaInAutomatico(param0,param1,param2, nuovaDescrizione, nuovaScadenza);
+		component_invocation_succes(param0,componentObj);
+		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;
