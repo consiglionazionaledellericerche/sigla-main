@@ -35,6 +35,9 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	// FL_PARTITA_GIRO CHAR(1)
 	private java.lang.Boolean fl_partita_giro;
 
+	// FL_MISSIONI CHAR(1)
+	private java.lang.Boolean fl_missioni;
+
 	// FL_VOCE_NON_SOGG_IMP_AUT CHAR(1) NOT NULL
 	private java.lang.Boolean fl_voce_non_sogg_imp_aut;
 
@@ -421,5 +424,11 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	}
 	public void setFl_azzera_residui(java.lang.Boolean fl_azzera_residui) {
 		this.fl_azzera_residui = fl_azzera_residui;
+	}
+	public java.lang.Boolean getFl_missioni() {
+		return fl_missioni;
+	}
+	public void setFl_missioni(java.lang.Boolean fl_missioni) {
+		this.fl_missioni = fl_missioni;
 	}
 }

@@ -5167,6 +5167,11 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 	 */
 	public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, BigDecimal nuovoImportoScadenzaVecchia) throws ComponentException 
 	{
+		return sdoppiaScadenzaInAutomatico(userContext, scad, nuovoImportoScadenzaVecchia, null, null);
+	}
+	
+	public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, BigDecimal nuovoImportoScadenzaVecchia, String nuovaDescrizione, Timestamp nuovaScadenza) throws ComponentException 
+	{
 		Obbligazione_scadenzarioBulk scadenzaVecchia = (Obbligazione_scadenzarioBulk)scad;
 		if (  nuovoImportoScadenzaVecchia.compareTo( scad.getIm_scadenza()) == 0  )
 			throw handleException( new ApplicationException( "Sdoppiamento in automatico non necessario!" ));			
@@ -5198,8 +5203,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 
 			Obbligazione_scadenzarioBulk scadenzaNuova = new Obbligazione_scadenzarioBulk();
 			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
-			scadenzaNuova.setDt_scadenza(scadenzaVecchia.getDt_scadenza());
-			scadenzaNuova.setDs_scadenza(scadenzaVecchia.getDs_scadenza());
+			scadenzaNuova.setDt_scadenza(nuovaScadenza!=null ? nuovaScadenza : scadenzaVecchia.getDt_scadenza());
+			scadenzaNuova.setDs_scadenza(nuovaDescrizione!=null ? nuovaDescrizione : scadenzaVecchia.getDs_scadenza());
 		
 			// Rigenero i relativi dettagli	
 			generaDettagliScadenzaObbligazione(userContext, obbligazione, scadenzaNuova, false);	
