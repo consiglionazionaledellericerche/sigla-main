@@ -166,6 +166,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private Long pgAnticipoGeMis;
 	private String gaeGeMis;
 	private Long pgMissioneFromGeMis;
+    private BigDecimal importoDaRimborsare;
 
 	// Fondo Economale
 	public final static Dictionary STATO_FONDO_ECO;
@@ -3649,5 +3650,11 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		StringBuffer nomeFile = new StringBuffer();
 		nomeFile = nomeFile.append(StrServ.lpad(this.getPg_missione().toString(),9,"0"));
 		return nomeFile.toString();
+	}
+	public BigDecimal getImportoDaRimborsare() {
+		return importoDaRimborsare;
+	}
+	public void setImportoDaRimborsare(BigDecimal importoDaRimborsare) {
+		this.importoDaRimborsare = importoDaRimborsare;
 	}
 }
