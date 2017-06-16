@@ -649,6 +649,10 @@ public void setSavePoint(it.cnr.jada.UserContext userContext)
 }
 public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImporto) throws ComponentException 
 {
+	return sdoppiaScadenzaInAutomatico(userContext, scad, nuovoImporto);
+}
+public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImporto, String nuovaDescrizione, Timestamp nuovaScadenza) throws ComponentException 
+{
 	Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)scad;
 	try
 	{
@@ -668,7 +672,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 		}	
 		else
 		{
-			return createObbligazioneComponentSession().sdoppiaScadenzaInAutomatico( userContext, scadenza, nuovoImporto);
+			return createObbligazioneComponentSession().sdoppiaScadenzaInAutomatico( userContext, scadenza, nuovoImporto, nuovaDescrizione, nuovaScadenza);
 		}	
 	}
 	catch ( Exception e )
