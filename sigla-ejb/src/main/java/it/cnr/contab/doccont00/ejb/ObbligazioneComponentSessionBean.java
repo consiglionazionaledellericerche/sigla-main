@@ -1,5 +1,6 @@
 package it.cnr.contab.doccont00.ejb;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -480,6 +481,25 @@ public it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk validaImputazioneFinan
 	pre_component_invocation(param0,componentObj);
 	try {
 		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk result = ((ObbligazioneComponent)componentObj).validaImputazioneFinanziaria(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, java.math.BigDecimal param2, String nuovaDescrizione, Timestamp nuovaScadenza)  throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException,it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk result = ((ObbligazioneComponent)componentObj).sdoppiaScadenzaInAutomatico(param0,param1,param2, nuovaDescrizione, nuovaScadenza);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
