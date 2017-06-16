@@ -1140,6 +1140,10 @@ private void controlloTrovato(UserContext aUC,
 	            throw new it.cnr.jada.comp.ApplicationException(
 	                    "Non è possibile selezionare per missioni obbligazioni su capitoli collegati a Brevetti/Trovati.");
 			}
+			if (!elementoVoce.getFl_missioni()){
+	            throw new it.cnr.jada.comp.ApplicationException(
+	                    "Non è possibile selezionare per missioni obbligazioni su capitoli non utilizzabili per le missioni.");
+			}
 		}
 		
 	} catch (PersistencyException ex) {
@@ -3003,11 +3007,18 @@ private Obbligazione_scadenzarioBulk sdoppiaObbligazioneScadenzario(UserContext 
 		throws ComponentException, RemoteException, PersistencyException, ValidationException {
 	Obbligazione_scadenzarioBulk scadenzaNuova;
 	ObbligazioneAbstractComponentSession sess = (ObbligazioneAbstractComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ObbligazioneAbstractComponentSession");
+	java.sql.Timestamp ts = getDataRegistrazione(aUC, missione);
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(ts);
+	cal.add(Calendar.DAY_OF_WEEK, 1);
+	ts = new Timestamp(cal.getTime().getTime());
 	scadenzaNuova = (Obbligazione_scadenzarioBulk) sess
 			.sdoppiaScadenzaInAutomatico(
 					aUC,
 					obblScad,
-					importoResiduo);
+					importoResiduo,
+					missione.getDs_missione(),
+					ts);
 
 	// ricarico obbligazione e recupero i riferimenti alle scadenze
 	ObbligazioneBulk obbligazione = (ObbligazioneBulk) sess.inizializzaBulkPerModifica(aUC,scadenzaNuova.getObbligazione());
@@ -3027,8 +3038,6 @@ private Obbligazione_scadenzarioBulk sdoppiaObbligazioneScadenzario(UserContext 
 			.getObbligazione_scadenzarioColl().get(
 					obbligazione.getObbligazione_scadenzarioColl()
 					.indexOfByPrimaryKey(scadenzaNuova));
-	scadenzaNuova.setDt_scadenza(missione.getDt_registrazione());
-	scadenzaNuova.setDs_scadenza(missione.getDs_missione());
 	return scadenzaNuova;
 }
 
