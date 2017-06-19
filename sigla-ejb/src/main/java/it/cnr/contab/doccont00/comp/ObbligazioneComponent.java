@@ -1799,72 +1799,74 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
 	{
 		found = false;
 		ppsd = (V_pdg_obbligazione_speBulk) lattIterator.next();
-		for ( Iterator i = scadenzario.getObbligazione_scad_voceColl().iterator(); i.hasNext(); )
-		{
-			osv = (Obbligazione_scad_voceBulk) i.next();
-			if ( osv.getCd_centro_responsabilita().equals( ppsd.getCd_centro_responsabilita()) &&
-				 osv.getCd_linea_attivita().equals( ppsd.getCd_linea_attivita()) )
+		if (scadenzario.getNuovaGae() == null || scadenzario.getNuovaGae().equals(ppsd.getCd_linea_attivita())){
+			for ( Iterator i = scadenzario.getObbligazione_scad_voceColl().iterator(); i.hasNext(); )
 			{
-					found = true;
-					break;
-			}		
-		}
-		
-		if ( !found )
-		{
-			//creo	nuovo Obbligazione_scad_voceBulk
-			osv = new Obbligazione_scad_voceBulk();
-			osv.setToBeCreated();
-			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
-			{
-				IVoceBilancioBulk articolo;
-				if ( ppsd.getCategoria_dettaglio().equals( it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk.CAT_SINGOLO) ||
-					 ppsd.getCd_centro_responsabilita_clgs()==null)
-					articolo = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita());
-				else
-					articolo = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita_clgs());
-				/*
-				 * Nella gestione 2006, il campo "articolo" potrebbe essere null se la ricerca è attuata tramite
-				 * getCd_centro_responsabilita_clgs(). In questo caso cerco di trovarla tramite 
-				 * ppsd.getCd_centro_responsabilita()
-				 */ 
-				if (articolo == null) 
-					articolo = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita());
-
-				if (articolo != null){
-					osv.setTi_appartenenza( articolo.getTi_appartenenza());
-					osv.setTi_gestione( articolo.getTi_gestione());
-					osv.setCd_voce( articolo.getCd_voce() );
-				}
+				osv = (Obbligazione_scad_voceBulk) i.next();
+				if ( osv.getCd_centro_responsabilita().equals( ppsd.getCd_centro_responsabilita()) &&
+					 osv.getCd_linea_attivita().equals( ppsd.getCd_linea_attivita()) )
+				{
+						found = true;
+						break;
+				}		
 			}
-			else
-			{
-				IVoceBilancioBulk capitolo = obbligazione.getCapitolo( ppsd.getCd_funzione() );
-				osv.setTi_appartenenza( capitolo.getTi_appartenenza());
-				osv.setTi_gestione( capitolo.getTi_gestione());
-				osv.setCd_voce( capitolo.getCd_voce() );
-			}			
-			//linea attivita'
-			CdrBulk cdr = new CdrBulk();
-			cdr.setCd_centro_responsabilita( ppsd.getCd_centro_responsabilita());
-			osv.getLinea_attivita().setCentro_responsabilita( cdr );
-			FunzioneBulk funzione = new FunzioneBulk();
-			osv.getLinea_attivita().setCd_linea_attivita( ppsd.getCd_linea_attivita());
-			osv.getLinea_attivita().setFunzione( funzione );
-			osv.getLinea_attivita().setCd_funzione( ppsd.getCd_funzione());
-			NaturaBulk natura = new NaturaBulk();
-			osv.getLinea_attivita().setNatura( natura );
-			osv.getLinea_attivita().setCd_natura( ppsd.getCd_natura());
-			osv.setCd_linea_attivita( ppsd.getCd_linea_attivita() );			
-			osv.setCd_centro_responsabilita( ppsd.getCd_centro_responsabilita());
 			
-			osv.setIm_voce( new java.math.BigDecimal(0));			
-			osv.setCd_fondo_ricerca( obbligazione.getCd_fondo_ricerca() );
-			//osv.setUser( aUC.getUser())		;
-			osv.setUser( scadenzario.getObbligazione().getUser() );
-			osv.setObbligazione_scadenzario( scadenzario );
-			((BulkList) scadenzario.getObbligazione_scad_voceColl()).add( osv );
-		}	
+			if ( !found )
+			{
+				//creo	nuovo Obbligazione_scad_voceBulk
+				osv = new Obbligazione_scad_voceBulk();
+				osv.setToBeCreated();
+				if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
+				{
+					IVoceBilancioBulk articolo;
+					if ( ppsd.getCategoria_dettaglio().equals( it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk.CAT_SINGOLO) ||
+						 ppsd.getCd_centro_responsabilita_clgs()==null)
+						articolo = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita());
+					else
+						articolo = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita_clgs());
+					/*
+					 * Nella gestione 2006, il campo "articolo" potrebbe essere null se la ricerca è attuata tramite
+					 * getCd_centro_responsabilita_clgs(). In questo caso cerco di trovarla tramite 
+					 * ppsd.getCd_centro_responsabilita()
+					 */ 
+					if (articolo == null) 
+						articolo = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita());
+
+					if (articolo != null){
+						osv.setTi_appartenenza( articolo.getTi_appartenenza());
+						osv.setTi_gestione( articolo.getTi_gestione());
+						osv.setCd_voce( articolo.getCd_voce() );
+					}
+				}
+				else
+				{
+					IVoceBilancioBulk capitolo = obbligazione.getCapitolo( ppsd.getCd_funzione() );
+					osv.setTi_appartenenza( capitolo.getTi_appartenenza());
+					osv.setTi_gestione( capitolo.getTi_gestione());
+					osv.setCd_voce( capitolo.getCd_voce() );
+				}			
+				//linea attivita'
+				CdrBulk cdr = new CdrBulk();
+				cdr.setCd_centro_responsabilita( ppsd.getCd_centro_responsabilita());
+				osv.getLinea_attivita().setCentro_responsabilita( cdr );
+				FunzioneBulk funzione = new FunzioneBulk();
+				osv.getLinea_attivita().setCd_linea_attivita( ppsd.getCd_linea_attivita());
+				osv.getLinea_attivita().setFunzione( funzione );
+				osv.getLinea_attivita().setCd_funzione( ppsd.getCd_funzione());
+				NaturaBulk natura = new NaturaBulk();
+				osv.getLinea_attivita().setNatura( natura );
+				osv.getLinea_attivita().setCd_natura( ppsd.getCd_natura());
+				osv.setCd_linea_attivita( ppsd.getCd_linea_attivita() );			
+				osv.setCd_centro_responsabilita( ppsd.getCd_centro_responsabilita());
+				
+				osv.setIm_voce( new java.math.BigDecimal(0));			
+				osv.setCd_fondo_ricerca( obbligazione.getCd_fondo_ricerca() );
+				//osv.setUser( aUC.getUser())		;
+				osv.setUser( scadenzario.getObbligazione().getUser() );
+				osv.setObbligazione_scadenzario( scadenzario );
+				((BulkList) scadenzario.getObbligazione_scad_voceColl()).add( osv );
+			}	
+		}
 	}
 }
 /** 
@@ -5167,11 +5169,15 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 	 */
 	public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, BigDecimal nuovoImportoScadenzaVecchia) throws ComponentException 
 	{
-		return sdoppiaScadenzaInAutomatico(userContext, scad, nuovoImportoScadenzaVecchia, null, null);
+		return sdoppiaScadenzaInAutomatico(userContext, scad, nuovoImportoScadenzaVecchia, null, null
+//				, null
+				);
 	}
 	
+//	public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, BigDecimal nuovoImportoScadenzaVecchia, String nuovaDescrizione, Timestamp nuovaScadenza, String nuovaGae) throws ComponentException 
 	public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, BigDecimal nuovoImportoScadenzaVecchia, String nuovaDescrizione, Timestamp nuovaScadenza) throws ComponentException 
 	{
+		String nuovaGae = null;
 		Obbligazione_scadenzarioBulk scadenzaVecchia = (Obbligazione_scadenzarioBulk)scad;
 		if (  nuovoImportoScadenzaVecchia.compareTo( scad.getIm_scadenza()) == 0  )
 			throw handleException( new ApplicationException( "Sdoppiamento in automatico non necessario!" ));			
@@ -5202,9 +5208,10 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				throw new ApplicationException("Scadenza da sdoppiare non trovata nell'impegno indicato!");	
 
 			Obbligazione_scadenzarioBulk scadenzaNuova = new Obbligazione_scadenzarioBulk();
-			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
 			scadenzaNuova.setDt_scadenza(nuovaScadenza!=null ? nuovaScadenza : scadenzaVecchia.getDt_scadenza());
 			scadenzaNuova.setDs_scadenza(nuovaDescrizione!=null ? nuovaDescrizione : scadenzaVecchia.getDs_scadenza());
+			scadenzaNuova.setNuovaGae(nuovaGae);
+			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
 		
 			// Rigenero i relativi dettagli	
 			generaDettagliScadenzaObbligazione(userContext, obbligazione, scadenzaNuova, false);	

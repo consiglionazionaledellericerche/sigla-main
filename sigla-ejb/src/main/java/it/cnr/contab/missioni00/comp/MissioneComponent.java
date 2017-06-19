@@ -2939,6 +2939,7 @@ public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC,
 				SQLBuilder sql = scadenzaHome.createSQLBuilder();
 
 				sql.addSQLClause("AND","OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA",sql.EQUALS, missione.getGaeGeMis());
+				sql.addSQLClause("AND","OBBLIGAZIONE_SCAD_VOCE.IM_VOCE",sql.GREATER_EQUALS, missione.getImportoDaRimborsare());
 
 				SQLBuilder sqlExists = impostaFiltroQueryObbligazioniFromGemis(aUC, missione);
 
@@ -2995,8 +2996,10 @@ private Obbligazione_scadenzarioBulk gestioneScadenzaObbligazioneDaGemis(UserCon
 		BigDecimal importoResiduo = obblScad.getImportoDisponibile().subtract(missione.getImportoDaRimborsare());
 		if (obblScad != null && importoResiduo.compareTo(BigDecimal.ZERO) > 0) {
 			return sdoppiaObbligazioneScadenzario(aUC, missione, obblScad, importoResiduo);
-		} else {
+		} else if (obblScad != null && importoResiduo.compareTo(BigDecimal.ZERO) == 0) {
 			return obblScad;
+		} else {
+			return null;
 		}
 	} catch (Exception e) {
 		throw handleException(e);
@@ -3046,8 +3049,9 @@ private SQLBuilder impostaFiltroQueryObbligazioniFromGemis(UserContext aUC, Miss
 	
 	filtro.setCd_unita_organizzativa(missione.getCd_unita_organizzativa());
 	filtro.setFl_data_scadenziario(false);
+	filtro.setIm_importo(missione.getImportoDaRimborsare());
 	filtro.setFl_fornitore(false);
-	filtro.setFl_importo(false);
+	filtro.setFl_importo(true);
 	filtro.setFl_nr_obbligazione(true);
 	TerzoBulk terzo = new TerzoBulk();
 	terzo.setCd_terzo(missione.getCd_terzo());

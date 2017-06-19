@@ -17,6 +17,8 @@ public class Obbligazione_scadenzarioBulk extends Obbligazione_scadenzarioBase i
 
 	protected Obbligazione_scadenzarioBulk scadenza_iniziale;
 
+	protected String nuovaGae;
+
 	public static final int STATUS_NOT_CONFIRMED = 0;
 	public static final int STATUS_CONFIRMED = 1;
 
@@ -337,5 +339,11 @@ public void validate() throws ValidationException {
 	if ( obbligazione.getFl_calcolo_automatico() != null && !obbligazione.getFl_calcolo_automatico().booleanValue())
 		for ( Iterator i = obbligazione_scad_voceColl.iterator(); i.hasNext(); )
 			((Obbligazione_scad_voceBulk) i.next()).validate();
+}
+public String getNuovaGae() {
+	return nuovaGae;
+}
+public void setNuovaGae(String nuovaGae) {
+	this.nuovaGae = nuovaGae;
 }
 }
