@@ -649,7 +649,7 @@ public void setSavePoint(it.cnr.jada.UserContext userContext)
 }
 public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImporto) throws ComponentException 
 {
-	return sdoppiaScadenzaInAutomatico(userContext, scad, nuovoImporto);
+	return sdoppiaScadenzaInAutomatico(userContext, scad, nuovoImporto, null, null);
 }
 public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImporto, String nuovaDescrizione, Timestamp nuovaScadenza) throws ComponentException 
 {
