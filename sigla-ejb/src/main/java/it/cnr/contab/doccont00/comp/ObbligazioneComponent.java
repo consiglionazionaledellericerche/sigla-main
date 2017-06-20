@@ -1804,8 +1804,9 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
 				scadenzario.getDatiFinanziariScadenzeDTO().getCdCentroResponsabilita() == null  || 
 				scadenzario.getDatiFinanziariScadenzeDTO().getCdVoce() == null  || 
 				(scadenzario.getDatiFinanziariScadenzeDTO().getCdLineaAttivita().equals(ppsd.getCd_linea_attivita()) && 
-				 scadenzario.getDatiFinanziariScadenzeDTO().getCdCentroResponsabilita().equals(ppsd.getCd_centro_responsabilita())&& 
-				 scadenzario.getDatiFinanziariScadenzeDTO().getCdVoce().equals(ppsd.getCd_elemento_voce()))){
+				 scadenzario.getDatiFinanziariScadenzeDTO().getCdCentroResponsabilita().equals(ppsd.getCd_centro_responsabilita())
+//				 && scadenzario.getDatiFinanziariScadenzeDTO().getCdVoce().equals(ppsd.getCd_elemento_voce())
+				 )){
 			for ( Iterator i = scadenzario.getObbligazione_scad_voceColl().iterator(); i.hasNext(); )
 			{
 				osv = (Obbligazione_scad_voceBulk) i.next();
@@ -5300,8 +5301,9 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 	for (Iterator n = scadenzaNuova.getObbligazione_scad_voceColl().iterator(); n.hasNext(); ) {
 		Obbligazione_scad_voceBulk osvNew = (Obbligazione_scad_voceBulk)n.next();
 		if (osvNew.getCd_centro_responsabilita().equals(osvOld.getCd_centro_responsabilita()) &&
-		    osvNew.getCd_linea_attivita().equals(osvOld.getCd_linea_attivita()) &&
-			osvNew.getCd_voce().equals(osvOld.getCd_voce()))
+		    osvNew.getCd_linea_attivita().equals(osvOld.getCd_linea_attivita()) 
+//		    && osvNew.getCd_voce().equals(osvOld.getCd_voce())
+		    )
 			osvNew.setIm_voce(osvOld.getIm_voce().subtract(newImportoOsv));
 	}
 }
