@@ -165,6 +165,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private String cdsAnticipoGeMis;
 	private Long pgAnticipoGeMis;
 	private String gaeGeMis;
+	private String cdrGeMis;
+	private String voceGeMis;
 	private Long pgMissioneFromGeMis;
     private BigDecimal importoDaRimborsare;
 
@@ -3656,5 +3658,17 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 	public void setImportoDaRimborsare(BigDecimal importoDaRimborsare) {
 		this.importoDaRimborsare = importoDaRimborsare;
+	}
+	public String getCdrGeMis() {
+		return cdrGeMis;
+	}
+	public void setCdrGeMis(String cdrGeMis) {
+		this.cdrGeMis = cdrGeMis;
+	}
+	public String getVoceGeMis() {
+		return voceGeMis;
+	}
+	public void setVoceGeMis(String voceGeMis) {
+		this.voceGeMis = voceGeMis;
 	}
 }
