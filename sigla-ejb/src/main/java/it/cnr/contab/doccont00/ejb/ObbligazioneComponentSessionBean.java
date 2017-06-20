@@ -9,6 +9,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import it.cnr.contab.doccont00.comp.ObbligazioneComponent;
+import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 @Stateless(name="CNRDOCCONT00_EJB_ObbligazioneComponentSession")
 public class ObbligazioneComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ObbligazioneComponentSession {
@@ -496,10 +497,10 @@ public it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk validaImputazioneFinan
 	}
 }
 
-public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, java.math.BigDecimal param2, String nuovaDescrizione, Timestamp nuovaScadenza)  throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException,it.cnr.jada.persistency.PersistencyException {
+public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, DatiFinanziariScadenzeDTO dati)  throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException,it.cnr.jada.persistency.PersistencyException {
 	pre_component_invocation(param0,componentObj);
 	try {
-		it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk result = ((ObbligazioneComponent)componentObj).sdoppiaScadenzaInAutomatico(param0,param1,param2, nuovaDescrizione, nuovaScadenza);
+		it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk result = ((ObbligazioneComponent)componentObj).sdoppiaScadenzaInAutomatico(param0,param1,dati);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {

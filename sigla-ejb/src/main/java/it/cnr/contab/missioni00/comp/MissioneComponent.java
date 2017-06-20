@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
+import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
@@ -3015,13 +3016,18 @@ private Obbligazione_scadenzarioBulk sdoppiaObbligazioneScadenzario(UserContext 
 	cal.setTime(ts);
 	cal.add(Calendar.DAY_OF_WEEK, 1);
 	ts = new Timestamp(cal.getTime().getTime());
+	DatiFinanziariScadenzeDTO datiScadenze = new DatiFinanziariScadenzeDTO();
+	datiScadenze.setCdCentroResponsabilita(missione.getCdrGeMis());
+	datiScadenze.setCdLineaAttivita(missione.getGaeGeMis());
+	datiScadenze.setCdVoce(missione.getVoceGeMis());
+	datiScadenze.setNuovaDescrizione(missione.getDs_missione());
+	datiScadenze.setNuovaScadenza(ts);
+	datiScadenze.setNuovoImportoScadenzaVecchia(importoResiduo);
 	scadenzaNuova = (Obbligazione_scadenzarioBulk) sess
 			.sdoppiaScadenzaInAutomatico(
 					aUC,
 					obblScad,
-					importoResiduo,
-					missione.getDs_missione(),
-					ts);
+					datiScadenze);
 
 	// ricarico obbligazione e recupero i riferimenti alle scadenze
 	ObbligazioneBulk obbligazione = (ObbligazioneBulk) sess.inizializzaBulkPerModifica(aUC,scadenzaNuova.getObbligazione());

@@ -2,6 +2,8 @@ package it.cnr.contab.doccont00.ejb;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
+import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
+
 public class TransactionalObbligazioneAbstractComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements ObbligazioneAbstractComponentSession {
 public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk param1,java.util.Map param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
@@ -368,12 +370,12 @@ public void setSavePoint(it.cnr.jada.UserContext param0) throws RemoteException,
 	}
 }
 
-public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, java.math.BigDecimal param2, String nuovaDescrizione, Timestamp nuovaScadenza)  throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, DatiFinanziariScadenzeDTO dati)  throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk)invoke("sdoppiaScadenzaInAutomatico",new Object[] {
 			param0,
 			param1,
-			param2,nuovaDescrizione, nuovaScadenza });
+			dati });
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {
