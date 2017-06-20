@@ -1,9 +1,10 @@
 package it.cnr.contab.doccont00.core;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class DatiFinanziariScadenzeDTO {
+public class DatiFinanziariScadenzeDTO implements Serializable, Cloneable{
 	BigDecimal nuovoImportoScadenzaVecchia;
 	String nuovaDescrizione;
 	Timestamp nuovaScadenza;
