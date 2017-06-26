@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
@@ -24,12 +26,22 @@ import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoHome;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
@@ -1175,5 +1187,67 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		throw handleException(  e );
 	}	
 
+}
+public void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_modulo_costiBulk moduloCosti) throws ComponentException
+{
+	try {
+	List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(moduloCosti.getPg_progetto());
+
+	List<Pdg_modulo_speseBulk> speseListDB = (List<Pdg_modulo_speseBulk>)((Pdg_modulo_costiHome)getHome(userContext,Pdg_modulo_costiBulk.class)).findPdgModuloSpeseDettagli(userContext, moduloCosti);
+	List<Pdg_modulo_speseBulk> speseList = (List<Pdg_modulo_speseBulk>)moduloCosti.getDettagliSpese();
+	
+	pianoEconomicoList.stream()
+		.filter(e->e.getFl_ctrl_disp() && (e.getEsercizio_piano().equals(0) || e.getEsercizio_piano().equals(moduloCosti.getEsercizio())))
+		.forEach(e->{
+			try {
+				Progetto_piano_economicoBulk bulk = null;
+		
+				Progetto_piano_economicoBulk bulkToFind = new Progetto_piano_economicoBulk();
+				bulkToFind.setVoce_piano_economico(e.getVoce_piano_economico());
+				bulkToFind.setPg_progetto(e.getPg_progetto());
+				bulkToFind.setEsercizio_piano(e.getEsercizio_piano());
+				try {
+					bulk = (Progetto_piano_economicoBulk) getHome( userContext,Progetto_piano_economicoBulk.class ).findAndLock(bulkToFind);
+				} catch (ObjectNotFoundException ex) {
+				}
+				
+				if (bulk!=null && bulk.getFl_ctrl_disp()) {
+					V_saldi_piano_econom_progettoBulk saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
+							cercaSaldoPianoEconomico(bulk, "S");
+					
+					BigDecimal dispResidua = saldo.getDisp_residua();
+					
+					dispResidua = dispResidua.add(
+							speseListDB.stream()
+								.filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
+								.map(Pdg_modulo_speseBulk::getTot_competenza_anno_in_corso)
+								.collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
+
+					dispResidua = dispResidua.subtract(
+							speseList.stream()
+								.filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
+								.map(Pdg_modulo_speseBulk::getTot_competenza_anno_in_corso)
+								.collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
+
+					if (dispResidua.compareTo(BigDecimal.ZERO)<0)
+						  throw new ApplicationException(
+									"Impossibile effettuare l'operazione !\n"+
+							        "Il piano economico "+e.getCd_voce_piano()+
+							        " associato al progetto "+(e.getEsercizio_piano().equals(0)?"":"per l'esercizio "+e.getEsercizio_piano())+
+							        " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(dispResidua.abs())+")");
+				}
+			}
+			catch (Exception ex )
+			{
+				throw new RuntimeException(  ex );
+			}	
+		});
+	}
+	catch 	(Exception e )
+	{
+		if (e instanceof RuntimeException)
+			throw handleException(  e.getCause() );
+		throw handleException(  e );
+	}	
 }
 }

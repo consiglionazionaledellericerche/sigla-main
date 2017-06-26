@@ -667,7 +667,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 						throw new ApplicationException("Per il "+labelProgetto+" "+pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
 									". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
 			}
-			if (impTotaleSpese.compareTo(impTotaleEntrate)!=0)
+			if (parCnrBulk.getFl_pdg_quadra_fonti_esterne() && impTotaleSpese.compareTo(impTotaleEntrate)!=0)
 				if ( cds!=null ) {
 					if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 
 						throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il "+labelProgetto+" "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");

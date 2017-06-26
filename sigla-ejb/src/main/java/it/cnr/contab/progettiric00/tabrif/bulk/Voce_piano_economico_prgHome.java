@@ -18,7 +18,6 @@ public class Voce_piano_economico_prgHome extends BulkHome {
 		super(Voce_piano_economico_prgBulk.class,conn,persistentCache);
 	}
 
-	
 	public SQLBuilder findVocePianoEconomicoPrgList( Integer pgProgetto ) throws PersistencyException 
 	{
 		PersistentHome vocePianoHome = getHomeCache().getHome(Voce_piano_economico_prgBulk.class); 

@@ -406,10 +406,10 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 					 else
 						 if(!pdg_modulo_spese.isPrevAnnoSucObb() && pdg_modulo_spese.getIm_spese_a2()==null)
 							 pdg_modulo_spese.setIm_spese_a2(BigDecimal.ZERO);
-			 }
+				 }
 			}
 		}
-		
+		Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(usercontext, bulk);
 		super.validaCreaModificaConBulk(usercontext, oggettobulk);
 		} catch (RemoteException e) {
 			throw handleException(e);
