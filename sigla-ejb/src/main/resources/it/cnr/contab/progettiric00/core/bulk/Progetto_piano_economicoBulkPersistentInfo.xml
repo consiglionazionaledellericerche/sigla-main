@@ -12,9 +12,12 @@
 			columnName="CD_VOCE_PIANO"
 			propertyName="voce_piano_economico.cd_voce_piano"
 			fetchOnly="false" />
+
 	</defaultColumnMap>
 
 	<persistentProperty
 		name="voce_piano_economico" 
 		partOfOid= "true"/>
+
+
 </SQLPersistentInfo>
