@@ -1,5 +1,6 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -628,10 +629,14 @@ public class ProgettoHome extends BulkHome {
 	}
 	
 	public java.util.Collection findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,ProgettoBulk testata) throws IntrospectionException, PersistencyException {
-		PersistentHome dettHome = getHomeCache().getHome(Progetto_piano_economicoBulk.class);
+		Progetto_piano_economicoHome dettHome = (Progetto_piano_economicoHome)getHomeCache().getHome(Progetto_piano_economicoBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,testata.getPg_progetto());
-		return dettHome.fetchAll(sql);
+		List<Progetto_piano_economicoBulk> pianoList = dettHome.fetchAll(sql);
+		List<Progetto_piano_economicoBulk> pianoListNew = new ArrayList<>();
+		for (Progetto_piano_economicoBulk progetto_piano_economicoBulk : pianoList)
+			pianoListNew.add((Progetto_piano_economicoBulk)dettHome.completeBulkRowByRow(userContext, progetto_piano_economicoBulk));
+		return pianoListNew;
 	}
 	
 	public Progetto_other_fieldBulk findProgettoOtherField(it.cnr.jada.UserContext userContext,ProgettoBulk testata) throws IntrospectionException, PersistencyException {
