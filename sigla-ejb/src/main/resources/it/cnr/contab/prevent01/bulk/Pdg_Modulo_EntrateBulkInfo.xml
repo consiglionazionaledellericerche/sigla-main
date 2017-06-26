@@ -363,6 +363,17 @@
 		nullable="false"
 		label="Area" />	
 	<fieldProperty
+		name="desctool_voce_piano_economico_prg"
+		property="voce_piano_economico.cd_voce_piano"
+		descProperty="voce_piano_economico.ds_voce_piano"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="30"
+		nullable="false"
+		label="Piano Economico" />	
+	<fieldProperty
 		name="previsione_anno_corrente"
 		property="im_entrata"
 		inputType="ROTEXT"
@@ -479,6 +490,8 @@
 		name="classificazione" />	
 	<formFieldProperty
 		name="desctool_area" />	
+	<formFieldProperty
+		name="desctool_voce_piano_economico_prg" />
 	<formFieldProperty
 		name="previsione_anno_corrente" />	
 	<formFieldProperty

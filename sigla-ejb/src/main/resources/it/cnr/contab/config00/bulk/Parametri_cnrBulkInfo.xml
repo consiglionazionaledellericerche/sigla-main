@@ -261,6 +261,11 @@
 		inputType="CHECKBOX"
 		label="PDG: Gestione Contrattazione" />		
 	<fieldProperty
+		name="fl_pdg_quadra_fonti_esterne"
+		property="fl_pdg_quadra_fonti_esterne"
+		inputType="CHECKBOX"
+		label="PDG: Quadratura Fonti Esterne" />		
+	<fieldProperty
 		name="data_attivazione_new_voce"
 		property="data_attivazione_new_voce"
 		label="Data Attivazione Nuova Voce"
@@ -365,7 +370,9 @@
 	<formFieldProperty
 		name="fl_pdg_contrattazione"/>
 	<formFieldProperty
-		name="fl_tesoreria_unica"/>				       
+		name="fl_pdg_quadra_fonti_esterne"/>
+	<formFieldProperty
+		name="fl_tesoreria_unica"/>
 	<formFieldProperty
 		name="fl_pubblica_contratto"/>				       
 	
