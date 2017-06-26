@@ -53,4 +53,24 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	public void setProgetto(ProgettoBulk progetto) {
 		this.progetto = progetto;
 	}
+
+	private V_saldi_piano_econom_progettoBulk saldoEntrata;
+	
+	private V_saldi_piano_econom_progettoBulk saldoSpesa;
+
+	public V_saldi_piano_econom_progettoBulk getSaldoEntrata() {
+		return saldoEntrata;
+	}
+	
+	public void setSaldoEntrata(V_saldi_piano_econom_progettoBulk saldoEntrata) {
+		this.saldoEntrata = saldoEntrata;
+	}
+	
+	public V_saldi_piano_econom_progettoBulk getSaldoSpesa() {
+		return saldoSpesa;
+	}
+	
+	public void setSaldoSpesa(V_saldi_piano_econom_progettoBulk saldoSpesa) {
+		this.saldoSpesa = saldoSpesa;
+	}
 }

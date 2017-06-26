@@ -46,17 +46,19 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	private SimpleDetailCRUDController crudPianoEconomico = new SimpleDetailCRUDController( "PianoEconomico", Progetto_piano_economicoBulk.class, "dettagliPianoEconomico", this){
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException
 		{
-			try {
-				((ProgettoRicercaComponentSession)createComponentSession()).validaCancellazionePianoEconomicoAssociato(
-					context.getUserContext(),
-					(ProgettoBulk)getParentModel(),
-					detail);
-			} catch (ComponentException e) {
-				throw new ValidationException(e.getMessage());
-			} catch (RemoteException e) {
-				throw new ValidationException(e.getMessage());
-			} catch (BusinessProcessException e) {
-				throw new ValidationException(e.getMessage());
+			if (!detail.isToBeCreated()) {
+				try {
+					((ProgettoRicercaComponentSession)createComponentSession()).validaCancellazionePianoEconomicoAssociato(
+						context.getUserContext(),
+						(ProgettoBulk)getParentModel(),
+						detail);
+				} catch (ComponentException e) {
+					throw new ValidationException(e.getMessage());
+				} catch (RemoteException e) {
+					throw new ValidationException(e.getMessage());
+				} catch (BusinessProcessException e) {
+					throw new ValidationException(e.getMessage());
+				}
 			}
 		}
 	};

@@ -377,7 +377,7 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="5"
+		inputSize="10"
 		maxLength="10"
 		label="Programma" />
 	<fieldProperty
@@ -397,7 +397,7 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="15"
+		inputSize="10"
 		maxLength="10"
 		label="Progetto" />
 	<fieldProperty
@@ -407,7 +407,7 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="25"
+		inputSize="15"
 		maxLength="30"
 		label="Classificazione Ufficiale" />	
 	<fieldProperty
@@ -428,10 +428,21 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="30"
+		inputSize="10"
 		maxLength="30"
 		nullable="false"
 		label="Cofog" />	
+	<fieldProperty
+		name="desctool_voce_piano_economico_prg"
+		property="voce_piano_economico.cd_voce_piano"
+		descProperty="voce_piano_economico.ds_voce_piano"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="30"
+		nullable="false"
+		label="Piano Economico" />	
 	<fieldProperty
 		name="pdgMissione"
 		property="pdgMissione"
@@ -454,8 +465,8 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="30"
-		maxLength="40"
+		inputSize="10"
+		maxLength="10"
 		nullable="false"
 		label="Missione" />				
 	<fieldProperty
@@ -603,6 +614,8 @@
 		name="desctool_cofog" />		
 	<formFieldProperty
 		name="desctool_missione" />	
+	<formFieldProperty
+		name="desctool_voce_piano_economico_prg" />
 	<formFieldProperty
 		name="label_previsione_assestata_impegno"/>		
 	<formFieldProperty

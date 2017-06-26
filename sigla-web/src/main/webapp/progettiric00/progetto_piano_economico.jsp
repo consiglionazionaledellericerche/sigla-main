@@ -14,7 +14,7 @@
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
 %>
 
-<%	controller.writeHTMLTable(pageContext,"piano_economico",true,false,true,"100%","100px"); %>
+<%	controller.writeHTMLTable(pageContext,"piano_economico",true,false,true,"100%","200px"); %>
 
 	<table class="Panel">
   	  <TR><TD>

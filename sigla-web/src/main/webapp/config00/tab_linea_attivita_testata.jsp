@@ -157,7 +157,7 @@
 			<% bp.getController().writeFormLabel(out,"voce_piano_economico2016"); %>
 		</td>
 	 	<td colspan="3">	
-			<% bp.getController().writeFormInput(out,null,"voce_piano_economico2016",false,null,null); %> 
+			<% bp.getController().writeFormInput(out,null,"voce_piano_economico2016",bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %> 
 		</td> 
 	</tr>
 	<% } %>	
