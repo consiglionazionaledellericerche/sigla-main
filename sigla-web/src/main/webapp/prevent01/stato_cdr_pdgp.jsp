@@ -39,7 +39,12 @@
 	</table>
 
 	<table border="0" cellspacing="0" cellpadding="20">
-	<td><% controller.writeFormInput( out, "stato" ); %></td>
+	<td><% 
+		if (bp.getParametriCnr().getFl_pdg_contrattazione())
+			controller.writeFormInput( out, "stato" ); 
+		else
+			controller.writeFormInput( out, "statoSenzaContrattazione" ); 
+		%>
 	<td ALIGN="CENTER"> 
 		<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"),"Cambia stato","javascript:submitForm('doCambiaStato')",bp.isCambiaStatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
 	</td>	

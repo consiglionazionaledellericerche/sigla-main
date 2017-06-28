@@ -56,6 +56,14 @@
   </businessProcess>
 
   <businessProcess
+      name="VocePianoEconomicoPrgBP" className="it.cnr.contab.progettiric00.bp.VocePianoEconomicoPrgBP">
+    <forward name="default" path="/progettiric00/voce_piano_economico_prg.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>
+
+  <businessProcess
       name="CommessaWorkpackageBP" className="it.cnr.contab.progettiric00.bp.CommessaWorkpackageBP">
     <forward name="default" path="/progettiric00/commessa_workpackage.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.core.bulk.ProgettoBulk" />

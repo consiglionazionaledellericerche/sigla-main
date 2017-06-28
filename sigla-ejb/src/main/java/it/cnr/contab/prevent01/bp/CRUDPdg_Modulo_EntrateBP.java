@@ -9,15 +9,19 @@ package it.cnr.contab.prevent01.bp;
 import java.rmi.RemoteException;
 
 import javax.ejb.EJBException;
+import javax.xml.bind.ValidationException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Parametri_livelliBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
@@ -34,6 +38,7 @@ import it.cnr.jada.comp.ComponentException;
  */
 public class CRUDPdg_Modulo_EntrateBP extends it.cnr.jada.util.action.SimpleCRUDBP{
 	private Parametri_cnrBulk parametriCnr;
+	private Parametri_enteBulk parametriEnte;
 	private Parametri_livelliBulk parametriLivelli;
 	private Progetto_sipBulk progetto;
 	private String descrizioneClassificazione;
@@ -76,7 +81,15 @@ public class CRUDPdg_Modulo_EntrateBP extends it.cnr.jada.util.action.SimpleCRUD
 		return super.isDeleteButtonEnabled() && this.getCrudDettagliEntrate().countDetails()!=0 && !isUtente_Ente();
 	}
 	
-   private CrudDettagliEntrataBP crudDettagliEntrate = new CrudDettagliEntrataBP( "dettagliCRUDController", Pdg_Modulo_EntrateBulk.class, "dettagli_entrata", this);
+   private CrudDettagliEntrataBP crudDettagliEntrate = new CrudDettagliEntrataBP( "dettagliCRUDController", Pdg_Modulo_EntrateBulk.class, "dettagli_entrata", this) {
+	   protected void validate(ActionContext actioncontext, it.cnr.jada.bulk.OggettoBulk oggettobulk) throws it.cnr.jada.bulk.ValidationException {
+		   if (getParametriEnte().getFl_prg_pianoeco() && ((Pdg_Modulo_EntrateBulk)oggettobulk).getVoce_piano_economico()==null) {
+				Progetto_sipBulk progetto = ((Pdg_Modulo_EntrateBulk )oggettobulk).getTestata().getProgetto();
+				if (progetto!=null && progetto.getFl_piano_economico())
+					throw new it.cnr.jada.bulk.ValidationException("Il progetto selezionato richiede l'indicazione della Voce del Piano Economico.");
+		   }
+	   };
+   };
 
 	protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
 		setModel(actioncontext,super.initializeModelForEdit(actioncontext,new Pdg_moduloBulk(getEsercizio(),getCdr().getCd_centro_responsabilita(),getProgetto().getPg_progetto())));
@@ -88,6 +101,8 @@ public class CRUDPdg_Modulo_EntrateBP extends it.cnr.jada.util.action.SimpleCRUD
 		
 			setParametriCnr(((PdgModuloEntrateComponentSession)createComponentSession()).parametriCnr(actioncontext.getUserContext()));
 			
+			setParametriEnte(Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext()));
+
 			setUtente_Ente(((PdgModuloEntrateComponentSession)createComponentSession()).isUtenteEnte(actioncontext.getUserContext()));
 		} catch (DetailedRuntimeException e) {
 			throw handleException(e);
@@ -216,5 +231,13 @@ public class CRUDPdg_Modulo_EntrateBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	public boolean isDeleteProgettoButtonHidden() {
 		return super.isDeleteButtonHidden() || !this.getParametriCnr().getFl_nuovo_pdg();
+	}
+	
+	public Parametri_enteBulk getParametriEnte() {
+		return parametriEnte;
+	}
+	
+	public void setParametriEnte(Parametri_enteBulk parametriEnte) {
+		this.parametriEnte = parametriEnte;
 	}
 }

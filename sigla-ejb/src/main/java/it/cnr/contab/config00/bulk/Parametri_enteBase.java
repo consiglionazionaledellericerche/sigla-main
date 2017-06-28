@@ -35,6 +35,9 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	// FL_GAE_ES CHAR(1)
 	private java.lang.Boolean fl_gae_es;
 
+	// FL_PRG_PIANOECO CHAR(1)
+	private java.lang.Boolean fl_prg_pianoeco;
+
 	private java.lang.String ldap_user;	
 
 	private java.lang.String ldap_password;	
@@ -223,5 +226,13 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	
 	public void setFl_gae_es(java.lang.Boolean fl_gae_es) {
 		this.fl_gae_es = fl_gae_es;
+	}
+	
+	public java.lang.Boolean getFl_prg_pianoeco() {
+		return fl_prg_pianoeco;
+	}
+	
+	public void setFl_prg_pianoeco(java.lang.Boolean fl_prg_pianoeco) {
+		this.fl_prg_pianoeco = fl_prg_pianoeco;
 	}
 }

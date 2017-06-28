@@ -48,4 +48,8 @@ public class Parametri_cnrHome extends BulkHome {
         Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)findByPrimaryKey(new Parametri_cnrBulk(esercizio));
         return parametriCnr!=null && parametriCnr.getFl_nuovo_pdg();
 	}	
+
+	public Parametri_cnrBulk getParametriCnr(UserContext userContext) throws PersistencyException{
+		return (Parametri_cnrBulk)findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)));
+	}	
 }
