@@ -11,7 +11,6 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.richieste.bp.CRUDRichiestaUopBP;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
-import it.cnr.contab.ordmag.richieste.comp.RichiestaUopComponent;
 import it.cnr.contab.ordmag.richieste.ejb.RichiestaUopComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
