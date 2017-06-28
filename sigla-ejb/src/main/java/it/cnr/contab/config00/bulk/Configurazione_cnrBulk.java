@@ -12,10 +12,15 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
 	public final static String SK_CODICE_DIVERSI_PGIRO = "CODICE_DIVERSI_PGIRO";
 	public final static String SK_CODICE_DIVERSI_IMPEGNI = "CODICE_DIVERSI_IMPEGNI";
+	public final static String PK_OBBLIGATORIETA_ORDINI = "OBBLIGATORIETA_ORDINI";
 
 	public final static String PK_LINEA_ATTIVITA_SPECIALE = "LINEA_ATTIVITA_SPECIALE";
 	public final static String SK_LINEA_COMUNE_VERSAMENTO_IVA = "LINEA_COMUNE_VERSAMENTO_IVA";
 	
+	public final static String SK_PROGETTO_RICHIESTA = "PROGETTO_RICHIESTA";
+	public final static String SK_GAE_RICHIESTA = "GAE_RICHIESTA";
+	public final static String SK_VOCE_RICHIESTA = "VOCE_RICHIESTA";
+
 	public final static String SK_LINEA_ATTIVITA_ENTRATA_ENTE = "LINEA_ATTIVITA_ENTRATA_ENTE";
 	public final static String SK_LINEA_ATTIVITA_SPESA_ENTE = "LINEA_ATTIVITA_SPESA_ENTE";
 
