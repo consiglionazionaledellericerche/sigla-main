@@ -21,8 +21,6 @@ import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
@@ -30,8 +28,6 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.config00.sto.bulk.CdsHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
@@ -41,7 +37,6 @@ import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
@@ -74,7 +69,6 @@ import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -129,7 +123,6 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 
 		RichiestaUopBulk richiesta= (RichiestaUopBulk) bulk;
 //			//assegna un progressivo al documento all'atto della creazione.
-		validaRichiesta(userContext, richiesta);
 		assegnaProgressivo(userContext, richiesta);
 		richiesta = (RichiestaUopBulk)super.creaConBulk(userContext, richiesta);
 		return richiesta;
@@ -151,7 +144,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         			} catch (EJBException e) {
         				throw new ComponentException(e);
         			}
-        			if (value!= null && value.equals("true")){
+        			if (value!= null && value.equals("Y")){
         				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare la voce di bilancio.");
         			}
     			}
@@ -164,7 +157,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         			} catch (EJBException e) {
         				throw new ComponentException(e);
         			}
-        			if (value!= null && value.equals("true")){
+        			if (value!= null && value.equals("Y")){
         				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare il progetto.");
         			}
     			}
@@ -178,7 +171,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         			} catch (EJBException e) {
         				throw new ComponentException(e);
         			}
-        			if (value!= null && value.equals("true")){
+        			if (value!= null && value.equals("Y")){
             			if (riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null){
             				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare il CDR.");
             			}
@@ -419,27 +412,24 @@ public SQLBuilder selectLinea_attivitaByClause (UserContext userContext,
 	return sql; 
 }	
 
-public SQLBuilder selectElemento_voceByClause (UserContext userContext, 
+public SQLBuilder selectElementoVoceByClause (UserContext userContext, 
 		RichiestaUopRigaBulk dett,
 		Elemento_voceBulk elementoVoce, 
 		CompoundFindClause clause) throws ComponentException, PersistencyException {
 	if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
 
-	SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
+	SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_ORDINI").createSQLBuilder();
 	
 	if(clause != null) sql.addClause(clause);
 
-	sql.addSQLClause("AND", "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+	sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
 
-	sql.openParenthesis("AND");
-	sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
-	sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
-	sql.closeParenthesis();
 	if (dett.getLineaAttivita() != null)
-		sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,dett.getLineaAttivita().getCd_funzione());
+		sql.addSQLClause("AND","V_ELEMENTO_VOCE_ORDINI.CD_FUNZIONE",sql.EQUALS,dett.getLineaAttivita().getCd_funzione());
 
 	if (clause != null) sql.addClause(clause);
 
+	sql.addOrderBy("fl_default desc, ordine asc");
 	return sql;
 }
 public SQLBuilder selectProgettoByClause (UserContext userContext, 
@@ -671,6 +661,14 @@ public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiest
 	assegnaNumeratoreOrd(userContext, richiesta, home);
 	UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(userContext, UnitaOperativaOrdBulk.class);
 	assegnaUnitaOperativaDest(userContext, richiesta, home, uopHome);
+}
+
+@Override
+public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+	// TODO Auto-generated method stub
+	RichiestaUopBulk richiesta= (RichiestaUopBulk)super.modificaConBulk(usercontext, oggettobulk);
+	validaRichiesta(usercontext, richiesta);
+	return richiesta;
 }
 
 }
