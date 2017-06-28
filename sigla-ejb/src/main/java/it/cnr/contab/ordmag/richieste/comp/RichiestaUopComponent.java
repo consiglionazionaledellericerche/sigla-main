@@ -20,6 +20,7 @@ import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExists
 import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
@@ -128,10 +129,68 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 
 		RichiestaUopBulk richiesta= (RichiestaUopBulk) bulk;
 //			//assegna un progressivo al documento all'atto della creazione.
-			assegnaProgressivo(userContext, richiesta);
-			richiesta = (RichiestaUopBulk)super.creaConBulk(userContext, richiesta);
+		validaRichiesta(userContext, richiesta);
+		assegnaProgressivo(userContext, richiesta);
+		richiesta = (RichiestaUopBulk)super.creaConBulk(userContext, richiesta);
 		return richiesta;
 	}
+
+	private void validaRichiesta(it.cnr.jada.UserContext userContext, RichiestaUopBulk richiesta) throws it.cnr.jada.comp.ComponentException {
+		if (richiesta.getRigheRichiestaColl() == null || richiesta.getRigheRichiestaColl().size() == 0){
+			throw new ApplicationException ("Non è possibile salvare una richiesta senza dettagli.");
+		}
+    	for (java.util.Iterator i= richiesta.getRigheRichiestaColl().iterator(); i.hasNext();) {
+    		RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk) i.next();
+    		if (riga != null){
+    			String value = null;
+    			if (riga.getElementoVoce() == null || riga.getElementoVoce().getCd_elemento_voce() == null){
+        			try {
+        				value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, richiesta.getEsercizio(), null, Configurazione_cnrBulk.PK_OBBLIGATORIETA_ORDINI, Configurazione_cnrBulk.SK_VOCE_RICHIESTA).getVal01();
+        			} catch (RemoteException e) {
+        				throw new ComponentException(e);
+        			} catch (EJBException e) {
+        				throw new ComponentException(e);
+        			}
+        			if (value!= null && value.equals("true")){
+        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare la voce di bilancio.");
+        			}
+    			}
+    			if (riga.getProgetto() == null || riga.getProgetto().getPg_progetto() == null){
+    				value = null;
+    				try {
+        				value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, richiesta.getEsercizio(), null, Configurazione_cnrBulk.PK_OBBLIGATORIETA_ORDINI, Configurazione_cnrBulk.SK_PROGETTO_RICHIESTA).getVal01();
+        			} catch (RemoteException e) {
+        				throw new ComponentException(e);
+        			} catch (EJBException e) {
+        				throw new ComponentException(e);
+        			}
+        			if (value!= null && value.equals("true")){
+        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare il progetto.");
+        			}
+    			}
+    			if (riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null || 
+    					riga.getLineaAttivita() == null || riga.getLineaAttivita().getCd_linea_attivita() == null){
+    				value = null;
+    				try {
+        				value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, richiesta.getEsercizio(), null, Configurazione_cnrBulk.PK_OBBLIGATORIETA_ORDINI, Configurazione_cnrBulk.SK_GAE_RICHIESTA).getVal01();
+        			} catch (RemoteException e) {
+        				throw new ComponentException(e);
+        			} catch (EJBException e) {
+        				throw new ComponentException(e);
+        			}
+        			if (value!= null && value.equals("true")){
+            			if (riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null){
+            				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare il CDR.");
+            			}
+            			if (riga.getLineaAttivita() == null || riga.getLineaAttivita().getCd_linea_attivita() == null){
+            				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare la GAE.");
+            			}
+        			}
+    			}
+    		}
+    	}
+	}
+	
 public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext aUC, it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 
 //	if (bulk instanceof Stampa_vpg_doc_genericoBulk)
