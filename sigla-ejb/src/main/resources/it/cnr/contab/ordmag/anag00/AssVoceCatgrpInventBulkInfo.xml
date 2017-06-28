@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		shortDescription="Associazioni Elemento Voce/Categoria-gruppo"
+		longDescription="Associazioni Elemento Voce/Categoria-gruppo">
+	<fieldProperty
+		name="esercizio"
+		property="elemento_voce.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="elemento_voce.ti_appartenenza"
+		keysProperty="ti_appartenenzaKeys"
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="elemento_voce.ti_gestione"
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Elemento voce"/>
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		label="Elemento voce"/>
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		label="Descrizione"
+		inputType="ROTEXT"
+		inputSize="80"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="categoria_gruppo"
+		property="categoria_gruppo_invent"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="true"
+		label="Categoria Gruppo"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_categoria_gruppo"
+		property="categoria_gruppo_invent.cd_categoria_gruppo"
+		label="Codice Categoria-gruppo" 
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ds_categoria_gruppo"
+		property="categoria_gruppo_invent.ds_categoria_gruppo"
+		inputType="ROTEXT"
+		inputSize="80"
+		label="Descrizione"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="flDefault"
+		property="flDefault"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Default" />
+	<fieldProperty
+		name="ordine"
+		property="ordine"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Ordine" />
+
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="find_elemento_voce" />
+	<formFieldProperty
+		name="ordine" />
+	<formFieldProperty
+		name="flDefault" />
+	<findFieldProperty
+		name="dtCancellazione" />
+
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_categoria_gruppo" />
+	<findFieldProperty
+		name="ordine" />
+	<findFieldProperty
+		name="flDefault" />
+	<findFieldProperty
+		name="dtCancellazione" />
+		
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="ordine" />
+	<columnFieldProperty
+		name="flDefault" />
+</bulkInfo>
