@@ -278,6 +278,20 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="FL_PDG_CONTRATTAZIONE"
+			propertyName="fl_pdg_contrattazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="FL_PDG_QUADRA_FONTI_ESTERNE"
+			propertyName="fl_pdg_quadra_fonti_esterne"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_tipo_rapporto" />
@@ -364,4 +378,8 @@
 		name="fl_tesoreria_unica" />
 	<persistentProperty
 		name="fl_pdg_codlast"/>
+	<persistentProperty
+		name="fl_pdg_contrattazione"/>
+	<persistentProperty
+		name="fl_pdg_quadra_fonti_esterne"/>
 </SQLPersistentInfo>

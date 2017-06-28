@@ -46,6 +46,8 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private java.sql.Timestamp data_stipula_contratti;
 	private Boolean fl_nuovo_pdg;
 	private Boolean fl_pdg_codlast;
+	private Boolean fl_pdg_contrattazione;
+	private Boolean fl_pdg_quadra_fonti_esterne;
 	private java.sql.Timestamp data_attivazione_new_voce;
 	
 	private Boolean fl_tesoreria_unica;
@@ -343,5 +345,21 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	
 	public void setFl_pdg_codlast(Boolean fl_pdg_codlast) {
 		this.fl_pdg_codlast = fl_pdg_codlast;
+	}
+	
+	public Boolean getFl_pdg_contrattazione() {
+		return fl_pdg_contrattazione;
+	}
+	
+	public void setFl_pdg_contrattazione(Boolean fl_pdg_contrattazione) {
+		this.fl_pdg_contrattazione = fl_pdg_contrattazione;
+	}
+	
+	public Boolean getFl_pdg_quadra_fonti_esterne() {
+		return fl_pdg_quadra_fonti_esterne;
+	}
+	
+	public void setFl_pdg_quadra_fonti_esterne(Boolean fl_pdg_quadra_fonti_esterne) {
+		this.fl_pdg_quadra_fonti_esterne = fl_pdg_quadra_fonti_esterne;
 	}
 }
