@@ -8,48 +8,53 @@ package it.cnr.contab.prevent01.comp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
 import java.util.Iterator;
 
 import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.CofogBulk;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaHome;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
-import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
-import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.CdsHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_speBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
 import it.cnr.contab.prevent01.bp.CRUDDettagliModuloCostiBP;
-import it.cnr.contab.prevent01.bulk.*;
+import it.cnr.contab.prevent01.bulk.Ass_pdg_missione_tipo_uoBulk;
+import it.cnr.contab.prevent01.bulk.Ass_pdg_missione_tipo_uoHome;
+import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseHome;
+import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_esercizioHome;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneHome;
+import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.CRUDComponent;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SQLUnion;
 
 /**
  * @author mspasiano
@@ -101,6 +106,11 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 				testataHome.calcolaSpeseAccentrateFontiInterneArea(usercontext,testata)));
 						
 			testata.setTot_massa_spendibile_anno_in_corso(Utility.ZERO);
+
+			testata.getPdg_modulo().getProgetto().setOtherField(
+					(Progetto_other_fieldBulk)getHome(usercontext, Progetto_other_fieldBulk.class)
+					.findByPrimaryKey(new Progetto_other_fieldBulk(testata.getPdg_modulo().getProgetto().getPg_progetto())));
+
 		}catch (IntrospectionException e) {
 			throw new ComponentException(e);
 		} catch (PersistencyException e) {
@@ -116,6 +126,11 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 			Pdg_modulo_costiHome testataHome = (Pdg_modulo_costiHome)getHome(usercontext, Pdg_modulo_costiBulk.class);
 			testata.setDettagliSpese(new it.cnr.jada.bulk.BulkList(testataHome.findPdgModuloSpeseDettagli(usercontext, testata)));
 			testata.setDettagliContrSpese(new it.cnr.jada.bulk.BulkList(testataHome.findPdgModuloContrSpeseDettagli(usercontext, testata)));
+
+			testata.getPdg_modulo().getProgetto().setOtherField(
+					(Progetto_other_fieldBulk)getHome(usercontext, Progetto_other_fieldBulk.class)
+					.findByPrimaryKey(new Progetto_other_fieldBulk(testata.getPdg_modulo().getProgetto().getPg_progetto())));
+
 			getHomeCache(usercontext).fetchAll(usercontext);
 			for(Iterator dettagli = testata.getDettagliSpese().iterator(); dettagli.hasNext();){
 				Pdg_modulo_speseBulk pdg_modulo_spese = (Pdg_modulo_speseBulk)dettagli.next();
@@ -391,13 +406,26 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 					 else
 						 if(!pdg_modulo_spese.isPrevAnnoSucObb() && pdg_modulo_spese.getIm_spese_a2()==null)
 							 pdg_modulo_spese.setIm_spese_a2(BigDecimal.ZERO);
-			 }
+				 }
 			}
 		}
-		
+		Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(usercontext, bulk);
 		super.validaCreaModificaConBulk(usercontext, oggettobulk);
 		} catch (RemoteException e) {
 			throw handleException(e);
 		}
+	}
+
+	public SQLBuilder selectVoce_piano_economicoByClause(UserContext userContext, Pdg_modulo_speseBulk dettaglio, Voce_piano_economico_prgBulk vocePiano, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		Voce_piano_economico_prgHome vocePianoHome = (Voce_piano_economico_prgHome)getHome(userContext, Voce_piano_economico_prgBulk.class);
+		Integer pgProgetto=null;
+ 		if (dettaglio!=null && dettaglio.getPg_progetto()!=null)
+ 			pgProgetto = dettaglio.getPg_progetto();
+
+		SQLBuilder sql = vocePianoHome.findVocePianoEconomicoPrgList(pgProgetto);
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql;
 	}
 }

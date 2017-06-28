@@ -16,6 +16,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.FieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -103,5 +104,4 @@ public class CrudDettagliSpeseBP extends SimpleDetailCRUDController{
 	public String getLabelIm_spese_a3(){
 		return "Totale competenza " + geModuloCosti().getAnno_successivo_successivo();
 	}
-	
 }
