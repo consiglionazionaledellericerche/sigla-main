@@ -80,7 +80,7 @@ public void initializePrimaryKeyForInsert(UserContext usercontext,OggettoBulk og
 /**
  * Effettua la ricerca di tutti i dettagli residui partendo da un dettaglio di competenza
  *
- * @param Voce_f_saldi_cdr_lineaBulk istanza del bulk del cdr/voce/linea di competenza
+ * @param V_saldi_piano_econom_progettoBulk istanza del bulk del cdr/voce/linea di competenza
  * @return una lista contenente i <<Voce_f_saldi_cdr_lineaBulk>> cdr/voce/linea residui
  */
 public java.util.List cercaDettagliResidui(Voce_f_saldi_cdr_lineaBulk saldo) throws PersistencyException, IntrospectionException

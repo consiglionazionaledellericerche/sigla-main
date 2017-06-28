@@ -88,4 +88,9 @@ public class TestataProgettiRicercaNuovoBP extends TestataProgettiRicercaBP impl
 			return getModel().getBulkInfo().getColumnFieldPropertyDictionary("filtro_ricerca_aree_short");
 		return super.getSearchResultColumns();
 	}
+	public String getLabelCd_progetto() {
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_AREA_PROGETTUALE;
+		return ProgettoBulk.LABEL_PROGETTO;
+	}
 }
