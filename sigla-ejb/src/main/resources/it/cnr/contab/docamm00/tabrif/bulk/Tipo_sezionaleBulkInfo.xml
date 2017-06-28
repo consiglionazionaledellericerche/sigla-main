@@ -184,8 +184,16 @@
 		name="ordina"
 		property="ordina"
 		inputType="TEXT"
+		inputSize="3"		
+		label="Ordinamento" />		
+	<fieldProperty
+		name="fl_split_payment"
+		property="fl_split_payment"
+		inputType="CHECKBOX"
 		enabledOnEdit="false"
-		nullable="true" />		
+		nullable="false"
+		label="Split Payment" />
+
 	<formFieldProperty
 		name="cd_tipo_sezionale" />	
 	<formFieldProperty
@@ -226,6 +234,8 @@
 		name="fl_servizi_non_residenti" />
 	<formFieldProperty
 		name="ordina" />		
+	<formFieldProperty
+		name="fl_split_payment" />
 				
 	<columnFieldProperty
 		name="cd_tipo_sezionale" />
@@ -239,6 +249,8 @@
 		name="ti_acquisti_vendite" />
 	<columnFieldProperty
 		name="ti_bene_servizio" />	
+	<columnFieldProperty
+		name="ordina" />	
 
 	<findFieldProperty
 		name="cd_tipo_sezionale" />
@@ -247,13 +259,6 @@
 	<findFieldProperty
 		name="ti_bene_servizioForSearch" />
 		
-	<columnFieldProperty
-		name="ti_istituz_commerc" />
-	<columnFieldProperty
-		name="ti_acquisti_vendite" />
-	<columnFieldProperty
-		name="ti_bene_servizio" />
-
 	<columnSet
 		name="tipi_sezionali">
 		<columnFieldProperty
