@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.OrdineAcqConsegnaBulk"
+	homeClassName="it.cnr.contab.ordmag.ordini.OrdineAcqConsegnaHome">
+	<defaultColumnMap
+		tableName="ORDINE_ACQ_CONSEGNA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="ordineAcqRiga.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="ordineAcqRiga.cd_unita_operativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="ordineAcqRiga.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE"
+			propertyName="ordineAcqRiga.cd_numeratore" />
+		<columnMapping
+			columnName="NUMERO"
+			propertyName="ordineAcqRiga.numero" />
+		<columnMapping
+			columnName="RIGA"
+			propertyName="ordineAcqRiga.riga" />
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="magazzino.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="magazzino.cd_magazzino" />
+		<columnMapping
+			columnName="CD_UOP_DEST"
+			propertyName="unitaOperativaOrd.cd_unita_operativa" />
+		<columnMapping
+			columnName="CD_CDS_OBBL"
+			propertyName="obbligazioneScadenzario.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBL"
+			propertyName="obbligazioneScadenzario.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIG_OBBL"
+			propertyName="obbligazioneScadenzario.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCAD"
+			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ordineAcqRiga"
+		partOfOid="true" />
+	<persistentProperty
+		name="magazzino" />
+	<persistentProperty
+		name="unitaOperativaOrd" />
+	<persistentProperty
+		name="obbligazioneScadenzario" />
+</SQLPersistentInfo>
