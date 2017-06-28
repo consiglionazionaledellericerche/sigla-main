@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -33,6 +33,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -2766,7 +2767,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 	}
 }
 private void creaAutofattura(UserContext userContext,Fattura_passivaBulk fattura_passiva) throws ComponentException {
-boolean autoObb=false;
+	boolean autoObb=false;
 	if (fattura_passiva != null) {
 		autoObb=verificaGenerazioneAutofattura(userContext, fattura_passiva);
 		if(autoObb)
@@ -2957,7 +2958,12 @@ public OggettoBulk creaConBulk(
 		throw handleException(_ex);
 	}
 	if (fattura_passiva.getDocumentoEleTestata() != null && fattura_passiva.getDocumentoEleTestata().getIdentificativoSdi() != null) {
-		aggiornaMetadatiDocumentale(fattura_passiva);
+		try {
+			if (Utility.createParametriEnteComponentSession().getParametriEnte(userContext).getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE))
+				aggiornaMetadatiDocumentale(fattura_passiva);
+		} catch (RemoteException | EJBException e) {
+			throw handleException(e);
+		}
 	}
 	if (messaggio != null)
 		return asMTU(fattura_passiva, messaggio);
@@ -3723,13 +3729,20 @@ public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fa
 		///??? Rospuc da chiedere
 	} else if (fatturaPassiva.getFl_san_marino_con_iva() != null && fatturaPassiva.getFl_san_marino_con_iva().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_CON_IVA","Y", "AND" } });
+		if (fatturaPassiva.getFl_split_payment() != null && fatturaPassiva.getFl_split_payment().booleanValue())
+			options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
 	} else if (fatturaPassiva.getFl_san_marino_senza_iva() != null &&  fatturaPassiva.getFl_san_marino_senza_iva().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_SENZA_IVA","Y", "AND" } });
+		if (fatturaPassiva.getFl_split_payment() != null && fatturaPassiva.getFl_split_payment().booleanValue())
+			options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
+	} else if (fatturaPassiva.getFl_split_payment() != null &&  fatturaPassiva.getFl_split_payment().booleanValue()) {
+		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
 	} else {
 		if (fatturaPassiva.getFl_intra_ue() == null &&
 			fatturaPassiva.getFl_extra_ue() == null &&
 			fatturaPassiva.getFl_san_marino_con_iva() == null &&
-			fatturaPassiva.getFl_san_marino_senza_iva() == null)
+			fatturaPassiva.getFl_san_marino_senza_iva() == null &&
+			fatturaPassiva.getFl_split_payment() == null)
 			options = new Vector();
 		else
 			options.add(new String[][] { { "TIPO_SEZIONALE.FL_ORDINARIO","Y", "AND" } });
@@ -4306,6 +4319,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 
 	
 	fattura = valorizzaInfoDocEle(userContext,fattura);
+	fattura.setDataInizioSplitPayment(getDataInizioSplitPayment(userContext));  
 	
 	return fattura;
 }
@@ -4441,6 +4455,8 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 	}
 	
 	fattura_passiva = valorizzaInfoDocEle(aUC,fattura_passiva);
+	fattura_passiva.setDataInizioSplitPayment(getDataInizioSplitPayment(aUC));
+	
 	if(fattura_passiva.isElettronica()){
 		try{
 			DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) fattura_passiva.getDocumentoEleTestata();
@@ -7170,7 +7186,7 @@ public void inserisciProgUnivoco(UserContext context,ElaboraNumUnicoFatturaPBulk
 				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
 				"CNRCTB100.insProgrUnivocoFatturaPassiva(?, ?)}",false,this.getClass());
 			cs.setInt(1, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context).intValue());
-			cs.setDate(2, new Date(lancio.getDataRegistrazioneA().getTime()));
+			cs.setDate(2, new java.sql.Date(lancio.getDataRegistrazioneA().getTime()));
 			cs.executeQuery();
 		} catch (Throwable e) {
 			throw handleException(e);
@@ -7281,6 +7297,23 @@ private Timestamp getDataInizioFatturazioneElettronica(UserContext userContext) 
 
 }
 
+private Timestamp getDataInizioSplitPayment(UserContext userContext) throws ComponentException {
+
+	try {
+
+		Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+				.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+		return sess.getDt01(userContext, 0, null,
+				Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
+
+	} catch (javax.ejb.EJBException ex) {
+		throw handleException(ex);
+	} catch (RemoteException ex) {
+		throw handleException(ex);
+	}
+
+}
+
 public Fattura_passivaBulk valorizzaInfoDocEle(UserContext userContext, Fattura_passivaBulk fp)
 		throws ComponentException {
 	try {
@@ -7298,6 +7331,7 @@ public Fattura_passivaBulk valorizzaInfoDocEle(UserContext userContext, Fattura_
 		throw handleException(e);
 	}
 }
+
 public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fatturaPassiva) throws ComponentException {
 
 	if (fatturaPassiva.getDocumentoEleTestata() == null)
@@ -7626,7 +7660,9 @@ public void aggiornaObblSuCancPerCompenso(
 public boolean verificaGenerazioneAutofattura(UserContext aUC,Fattura_passivaBulk fattura)
 		throws ComponentException {
  			Boolean obbligatorio=false;
-			if (fattura.isCommerciale() && fattura.getFornitore()!=null && fattura.getFornitore().getAnagrafico()!=null && 
+ 			if (fattura.isCommerciale() && fattura.getFl_split_payment()) {
+ 				obbligatorio=true;
+			} else if (fattura.isCommerciale() && fattura.getFornitore()!=null && fattura.getFornitore().getAnagrafico()!=null && 
 					fattura.getFornitore().getAnagrafico().getPartita_iva()!=null &&
 					fattura.getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 ){
 			    	for (Iterator i = fattura.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
@@ -7663,10 +7699,28 @@ private void setDt_termine_creazione_docamm(
 			throw handleException(e);
 		}
 	}
-public Fattura_passivaBulk eliminaLetteraPagamentoEstero(
+
+	public Fattura_passivaBulk eliminaLetteraPagamentoEstero(
 		UserContext context,
 		Fattura_passivaBulk fatturaPassiva)
 		throws ComponentException {
-	return eliminaLetteraPagamentoEstero(context, fatturaPassiva,true);
+		return eliminaLetteraPagamentoEstero(context, fatturaPassiva,true);
+	}
+	
+	public boolean isAttivoSplitPayment(UserContext aUC, Timestamp dataFattura) throws ComponentException {					   
+		Date dataInizio;
+		try {
+			dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
+		} catch (ComponentException e) {
+	    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+		} catch (RemoteException e) {
+	    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+		} catch (EJBException e) {
+	    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+		}
+		if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio)){
+			return false;
+		}
+		return true;
 	}
 }
