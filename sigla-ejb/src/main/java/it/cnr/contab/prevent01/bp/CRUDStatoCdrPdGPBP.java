@@ -12,23 +12,17 @@ import java.util.List;
 
 import javax.ejb.RemoveException;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
-import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.Selection;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -41,6 +35,7 @@ import it.cnr.jada.util.jsp.Button;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CRUDStatoCdrPdGPBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+	private Parametri_cnrBulk parametriCnr;
 
 	private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController( "Dettagli", Pdg_esercizioBulk.class, "dettagli", this, false) {
 		public boolean isFiltered()
@@ -73,6 +68,7 @@ public class CRUDStatoCdrPdGPBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		super.initialize(context);
 		setModel(context, new CdrBulk());
 		try {
+			setParametriCnr(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())));
 			cerca(context);
 		} catch(Exception e) {
 			throw handleException(e);
@@ -228,5 +224,12 @@ public class CRUDStatoCdrPdGPBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		{
 			throw handleException(throwable);
 		}
+	}
+	public Parametri_cnrBulk getParametriCnr() {
+		return parametriCnr;
+	}
+
+	public void setParametriCnr(Parametri_cnrBulk bulk) {
+			parametriCnr = bulk;
 	}
 }

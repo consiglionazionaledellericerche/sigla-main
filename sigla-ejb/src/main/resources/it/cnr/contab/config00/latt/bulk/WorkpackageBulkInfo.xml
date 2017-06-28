@@ -322,6 +322,13 @@
 		inputType="ROTEXT"
 		enabledOnEdit="true"		
 		caseSensitiveSearch="false"/>	
+
+	<fieldProperty
+		name="voce_piano_economico2016"
+		property="vocePianoEconomico2016"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />		
 	/*********************************************************/
 	
     <fieldProperty
@@ -505,6 +512,9 @@
 		name="ti_gestione"
 		command="doCambiaGestione" />
 	<formFieldProperty
+		name="ti_gestioneES"
+		command="doCambiaGestione" />
+	<formFieldProperty
 		name="find_nodo_padre" />
 	<formFieldProperty
 		name="find_nodo_progettopadre" />
@@ -552,7 +562,9 @@
 		name="cd_progetto2016"/>
 	<formFieldProperty
 		name="ds_progetto2016"/>
-							
+	<formFieldProperty
+		name="voce_piano_economico2016" />
+
 	<columnFieldProperty
 		name="cd_linea_attivita"
 		label="Cod." />

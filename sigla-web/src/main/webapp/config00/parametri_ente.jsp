@@ -96,6 +96,11 @@
 			</TD><TD>
 			<% bp.getController().writeFormInput(out,"fl_gae_es");%>
 		</TD></TR>
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_prg_pianoeco");%>
+			</TD><TD>
+			<% bp.getController().writeFormInput(out,"fl_prg_pianoeco");%>
+		</TD></TR>
 		<TABLE width="400">
 		<TR>		
 		<TD align="center" width="50%"><% bp.getController().writeFormLabel(out,"box_scadenze");%></TD>

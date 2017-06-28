@@ -1,16 +1,30 @@
 package it.cnr.contab.compensi00.comp;
 
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.config00.latt.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.jada.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.contab.compensi00.docs.bulk.Liquidazione_rate_minicarrieraBulk;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
+import it.cnr.contab.compensi00.docs.bulk.Vsx_liquidazione_rateBulk;
+import it.cnr.contab.compensi00.docs.bulk.Vsx_liquidazione_rateHome;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fHome;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 /**
  * Insert the type's description here.
@@ -362,7 +376,12 @@ public SQLBuilder selectLineaAttivitaByClause(UserContext userContext, Liquidazi
 	sql.addSQLClause("AND", "ASS_EV_FUNZ_TIPOCDS.CD_TIPO_UNITA", sql.EQUALS, bulk.getUoScrivania().getCd_tipo_unita());
 	sql.addSQLClause("AND", "ASS_EV_FUNZ_TIPOCDS.CD_CONTO", sql.EQUALS, bulk.getCdElementoVoce());
 	sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-	sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", sql.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
+
+	sql.openParenthesis(FindClause.AND);
+	sql.addSQLClause("OR", "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
+	sql.addSQLClause("OR", "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+	sql.closeParenthesis();
+	
 	sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", sql.LIKE, bulk.getUoScrivania().getCd_unita_organizzativa() + "%");
 
 	sql.addClause(clauses);
