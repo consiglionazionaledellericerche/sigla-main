@@ -2,16 +2,22 @@ package it.cnr.contab.progettiric00.comp;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
+import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
+import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.tabrif.bulk.*;
 import it.cnr.contab.progettiric00.bp.*;
@@ -21,6 +27,7 @@ import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.blob.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.Stampa_elenco_progetti_laBulk;
+import it.cnr.contab.doccont00.core.bulk.Stampa_registro_accertamentiBulk;
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -115,6 +122,14 @@ public ProgettoRicercaComponent() {
 						getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
 					}
 					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagli());
+					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomico());
+					
+					if (((ProgettoBulk)bulk).getOtherField()!=null) {
+						((ProgettoBulk)bulk).getOtherField().setPg_progetto(((ProgettoBulk)bulk).getPg_progetto());
+						((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
+						getHome(uc, Progetto_other_fieldBulk.class).insert(((ProgettoBulk)bulk).getOtherField(), uc);
+					}
+
 					allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 				}catch(Throwable throwable){
 		            throw handleException(throwable);
@@ -124,7 +139,8 @@ public ProgettoRicercaComponent() {
 		}
 
 		public void eliminaConBulk(it.cnr.jada.UserContext aUC, it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-		   try{		
+			validaEliminaConBulk(aUC, bulk);
+			try{		
 			  /*Se sto cancellando il progetto cancello anche tutti i dettagli */
 			  if (bulk instanceof ProgettoBulk){
 				  ProgettoHome progettohome = (ProgettoHome)getHome(aUC, ProgettoBulk.class,"V_PROGETTO_PADRE");
@@ -135,10 +151,16 @@ public ProgettoRicercaComponent() {
 				  boolean flNuovoPdg = Utility.createParametriCnrComponentSession().getParametriCnr(aUC,CNRUserContext.getEsercizio(aUC)).getFl_nuovo_pdg();
 				  if (!progettiFigli.isEmpty() && !flNuovoPdg)
 					  throw new it.cnr.jada.comp.ApplicationException("Esistono livelli di progetti collegati. Eliminazione non possibile.");
+
 				  List dettagliCopy = new BulkList<>();
 				  dettagliCopy.addAll(((ProgettoBulk)bulk).getDettagli());
 				  dettagliCopy.stream().forEach(e->{
 					  ((ProgettoBulk)bulk).removeFromDettagli(((ProgettoBulk)bulk).getDettagli().indexOf(e));
+				  });
+				  List dettagliPianoEconomicoCopy = new BulkList<>();
+				  dettagliPianoEconomicoCopy.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomico());
+				  dettagliPianoEconomicoCopy.stream().forEach(e->{
+					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomico(((ProgettoBulk)bulk).getDettagliPianoEconomico().indexOf(e));
 				  });
 				  for(int i = 0; ((ProgettoBulk)bulk).getDettagliFinanziatori().size() > i; i++) {
 					  ((Progetto_finanziatoreBulk) ((ProgettoBulk)bulk).getDettagliFinanziatori().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
@@ -159,8 +181,15 @@ public ProgettoRicercaComponent() {
 					  getHome(aUC, ProgettoBulk.class, "PROGETTO_SIP").delete(progettoGest, aUC);
 
 				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagli());
+				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomico());
+				  
+				  if (((ProgettoBulk)bulk).getOtherField()!=null)
+					getHome(aUC, Progetto_other_fieldBulk.class).delete(((ProgettoBulk)bulk).getOtherField(), aUC);
+
 				  allineaAbilitazioniTerzoLivello(aUC, (ProgettoBulk)bulk);
 				}
+		   }catch(ComponentException ex) {
+		   		throw ex;
 		   }catch(Throwable throwable){
 		       throw handleException(throwable);
 		   }		  
@@ -172,6 +201,8 @@ public ProgettoRicercaComponent() {
 				((ProgettoBulk)bulk).setEsercizio(CNRUserContext.getEsercizio(aUC));
 				((ProgettoBulk)bulk).setFl_utilizzabile(Boolean.TRUE);
 				((ProgettoBulk)bulk).setFl_piano_triennale(Boolean.TRUE);
+				((ProgettoBulk)bulk).setFl_piano_triennale(Boolean.TRUE);
+				((ProgettoBulk)bulk).setFl_piano_economico(Boolean.FALSE);				
 				return super.inizializzaBulkPerInserimento(aUC, bulk);
 		}
 
@@ -188,6 +219,8 @@ public ProgettoRicercaComponent() {
 						testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));                	
 						testata.setDettagliPostIt(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPostIt(testata)));
 						testata.setSpeseEsercizio(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpese(userContext,testata)));
+						testata.setDettagliPianoEconomico(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,testata)));
+						testata.setOtherField(testataHome.findProgettoOtherField(userContext, testata));
                         
 						// controllo per evitare che il progetto padre sia modificabile nel caso
 						// in cui tale progetto sia stato inserito nel piano di gestione preventivo
@@ -275,6 +308,27 @@ public ProgettoRicercaComponent() {
 				if ((ProgettoBulk)bulk.getProgettopadre() == null)
 				  ((ProgettoBulk)bulk).setLivello(new Integer(1));
 
+				if (!((ProgettoBulk)bulk).getDettagliPianoEconomico().isEmpty()) {
+					Integer minYear = 1000, maxYear = 3000;
+					if (((ProgettoBulk)bulk).getDt_inizio()!=null) {
+						GregorianCalendar calini = new GregorianCalendar();
+						calini.setTime(((ProgettoBulk)bulk).getDt_inizio());
+						minYear = calini.get(Calendar.YEAR);
+					}
+					if (((ProgettoBulk)bulk).getDt_fine()!=null || ((ProgettoBulk)bulk).getDt_proroga()!=null) {
+						GregorianCalendar calfin = new GregorianCalendar();
+						calfin.setTime(DateUtils.max(((ProgettoBulk)bulk).getDt_fine(), ((ProgettoBulk)bulk).getDt_proroga()));
+						maxYear = calfin.get(Calendar.YEAR);
+					}
+	
+					for (Iterator iterator = ((ProgettoBulk)bulk).getDettagliPianoEconomico().iterator(); iterator.hasNext();) {
+						Progetto_piano_economicoBulk pianoeco = (Progetto_piano_economicoBulk) iterator.next();
+						if (pianoeco.getEsercizio_piano()!=null && !pianoeco.getEsercizio_piano().equals(0))
+							if (pianoeco.getEsercizio_piano().compareTo(minYear)<0 || pianoeco.getEsercizio_piano().compareTo(maxYear)>0)
+								throw new it.cnr.jada.comp.ApplicationException("Attenzione: E' stato inserito nel piano economico un anno non compatibile con la durtaa del progetto!");	                	
+					}
+				}
+				
 				//se nei dettagli non è presente la UO cordinatrice viene creata
 				if( cercaUocordinatrice(bulk) ) {
 				   Progetto_uoBulk dett = new Progetto_uoBulk(
@@ -428,6 +482,16 @@ public ProgettoRicercaComponent() {
 				}
 
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagli());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomico());
+
+				if (((ProgettoBulk)bulk).getOtherField()!=null) {
+					((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
+					if (((ProgettoBulk)bulk).getOtherField().isToBeCreated())
+						getHome(uc, Progetto_other_fieldBulk.class).insert(((ProgettoBulk)bulk).getOtherField(), uc);
+					else 
+						getHome(uc, Progetto_other_fieldBulk.class).update(((ProgettoBulk)bulk).getOtherField(), uc);
+				}
+
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 		   }catch(Throwable throwable){
 		       throw handleException(throwable);
@@ -893,11 +957,30 @@ public void validaCancellazioneUoAssociata(UserContext userContext, ProgettoBulk
 			throw new ApplicationException("Impossibile cancellare la UO partecipante "+pruo.getCd_unita_organizzativa()+" in quanto\n"+
                "il livello di progetto è collegato al GAE "+((WorkpackageBulk)ris.get(0)).getCd_linea_attivita());
 		
+		BulkHome moduloHome = getHome(userContext,Pdg_moduloBulk.class);
+		SQLBuilder sqlModulo = moduloHome.createSQLBuilder();
+		
+		sqlModulo.addClause(FindClause.AND, "pg_progetto",SQLBuilder.EQUALS,pruo.getPg_progetto());
+
+		sqlModulo.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA", "STRUTTURA_MODULO");
+		sqlModulo.addSQLJoin("PDG_MODULO.ESERCIZIO", "STRUTTURA_MODULO.ESERCIZIO");
+		sqlModulo.addSQLJoin("PDG_MODULO.CD_CENTRO_RESPONSABILITA", "STRUTTURA_MODULO.CD_ROOT");
+
+		sqlModulo.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA", "STRUTTURA_PROGETTO");
+		sqlModulo.addSQLJoin("STRUTTURA_MODULO.ESERCIZIO", "STRUTTURA_PROGETTO.ESERCIZIO");
+		sqlModulo.addSQLJoin("STRUTTURA_MODULO.CD_CDS", "STRUTTURA_PROGETTO.CD_CDS");
+
+		sqlModulo.addSQLClause(FindClause.AND, "STRUTTURA_PROGETTO.CD_ROOT",SQLBuilder.EQUALS,pruo.getCd_unita_organizzativa());
+
+		List result = moduloHome.fetchAll(sqlModulo);
+		if (!result.isEmpty())
+			throw new ApplicationException("Impossibile cancellare la UO partecipante "+pruo.getCd_unita_organizzativa()+" in quanto\n"+
+               "il livello di progetto è già stato inserito nel Piano di Gestione "+((Pdg_moduloBulk)result.get(0)).getEsercizio());
+
 	} catch(Throwable e) {
 		throw handleException(e);
 	}
 }
-
 
 public OggettoBulk stampaConBulk(UserContext usercontext, Stampa_elenco_progetti_laBulk stampa) throws ComponentException {
 	if ( stampa.getflg_pdg()==null )
@@ -1077,4 +1160,67 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		progettoTerzo.setToBeCreated();
 		return progettoTerzo;
 	}
+    /**
+     * Esegue una la parte di validazione di eliminaConBulk.
+     */
+    protected void validaEliminaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException{
+    	try{
+    		Progetto_sipHome moduli_utilizzatiHome = ((Progetto_sipHome)getHome(usercontext,Progetto_sipBulk.class,"V_SIP_MODULI_VALIDI"));
+
+			SQLBuilder sqlModuli = moduli_utilizzatiHome.createSQLBuilderAll();
+			sqlModuli.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, ((ProgettoBulk)oggettobulk).getPg_progetto());
+
+			sqlModuli.openParenthesis(FindClause.AND);
+			sqlModuli.addSQLClause(FindClause.OR, "V_SIP_MODULI_VALIDI.FL_CANCELLABILE", SQLBuilder.EQUALS, "N");
+			sqlModuli.addSQLClause(FindClause.OR, "V_SIP_MODULI_VALIDI.FL_TERMINABILE", SQLBuilder.EQUALS, "N");
+			sqlModuli.closeParenthesis();
+			
+			SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sqlModuli);
+			if (brokerUtilizzati.next())
+				throw new ApplicationException("Impossibile cancellare il progetto. Risulta già essere utilizzato.");
+				
+			for (Iterator<Progetto_uoBulk> iterator = ((ProgettoBulk)oggettobulk).getDettagli().iterator(); iterator.hasNext();) {
+				validaCancellazioneUoAssociata(usercontext, (ProgettoBulk)oggettobulk, iterator.next());
+			}
+        }catch(Throwable throwable){
+            throw handleException(throwable);
+        }
+    }
+    
+    public SQLBuilder selectVoce_piano_economicoByClause(UserContext userContext, Progetto_piano_economicoBulk pianoEconomico, Voce_piano_economico_prgBulk vocePiano, CompoundFindClause clauses) throws ComponentException {
+
+    	Voce_piano_economico_prgHome home = (Voce_piano_economico_prgHome)getHome(userContext, Voce_piano_economico_prgBulk.class);
+    	SQLBuilder sql = home.createSQLBuilder();
+    	sql.addTableToHeader("UNITA_ORGANIZZATIVA");
+    	sql.addSQLJoin("VOCE_PIANO_ECONOMICO_PRG.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+
+    	sql.openParenthesis(FindClause.AND);
+    	sql.addClause(FindClause.OR, "cd_unita_organizzativa", SQLBuilder.EQUALS, pianoEconomico.getProgetto().getCd_unita_organizzativa());
+    	sql.addSQLClause(FindClause.OR, "UNITA_ORGANIZZATIVA.CD_TIPO_UNITA", SQLBuilder.EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_ENTE);
+    	sql.closeParenthesis();
+    	sql.addClause(clauses);
+    	return sql;
+
+    }
+
+    public void validaCancellazionePianoEconomicoAssociato(UserContext userContext, ProgettoBulk progetto, OggettoBulk dett) throws ComponentException{
+    	Progetto_piano_economicoBulk piano = (Progetto_piano_economicoBulk) dett;
+    	
+    	try {
+    		Ass_linea_attivita_esercizioHome home = (Ass_linea_attivita_esercizioHome)getHome(userContext,Ass_linea_attivita_esercizioBulk.class);
+    		SQLBuilder sql = home.createSQLBuilder();
+    		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piano.getPg_progetto());    		
+    		sql.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_unita_organizzativa());
+    		sql.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_voce_piano());    		
+
+    		List result = home.fetchAll(sql);
+    		if (!result.isEmpty())
+    			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto\n"+
+                   "è già stata collegata alla GAE "+((Ass_linea_attivita_esercizioBulk)result.get(0)).getCd_linea_attivita()+
+                   " del Cdr "+((Ass_linea_attivita_esercizioBulk)result.get(0)).getCd_centro_responsabilita());
+
+    	} catch(Throwable e) {
+    		throw handleException(e);
+    	}
+    }
 }

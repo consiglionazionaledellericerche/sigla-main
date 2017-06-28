@@ -81,7 +81,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			if (roots.countElements()==0){
 				context.closeBusinessProcess();
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, roots);
-				setErrorMessage(context,"Attenzione: non sono state trovati progetti disponibili");
+				setErrorMessage(context,"Attenzione: non sono stati trovati progetti disponibili");
 				return context.findDefaultForward();
 			}else {
 				context.closeBusinessProcess();

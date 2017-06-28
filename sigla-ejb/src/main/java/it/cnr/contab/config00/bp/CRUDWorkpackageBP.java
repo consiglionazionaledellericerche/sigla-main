@@ -13,6 +13,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -32,6 +33,7 @@ public class CRUDWorkpackageBP extends SimpleCRUDBP {
 	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
 	private boolean flNuovoPdg = false;
 	private boolean flTiGestioneES = false;
+	private boolean flPrgPianoeco = false;
 	
 	private Unita_organizzativaBulk uoScrivania;
 	private Integer esercizioScrivania;
@@ -122,6 +124,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 		Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
 		setFlTiGestioneES(parEnte.getFl_gae_es().booleanValue());
+		setFlPrgPianoeco(parEnte.getFl_prg_pianoeco().booleanValue());
 		aggiornaGECO(actioncontext.getUserContext());
 		super.initialize(actioncontext);
 	} catch (ComponentException e) {
@@ -183,6 +186,12 @@ public boolean isFlTiGestioneES() {
 public void setFlTiGestioneES(boolean flTiGestioneES) {
 	this.flTiGestioneES = flTiGestioneES;
 }
+public boolean isFlPrgPianoeco() {
+	return flPrgPianoeco;
+}
+public void setFlPrgPianoeco(boolean flPrgPianoeco) {
+	this.flPrgPianoeco = flPrgPianoeco;
+}
 @Override
 public String getSearchResultColumnSet() {
 	if (this.isFlNuovoPdg()) return "prg_liv2";
@@ -197,26 +206,32 @@ public OggettoBulk initializeModelForInsert(ActionContext actioncontext, Oggetto
 			((WorkpackageBulk)oggettobulk).setCentro_responsabilita(this.pdgCdrAssegnatario);
 			if (this.pdgModuloSpese!=null) {
 				Progetto_sipBulk progettoSip = this.pdgModuloSpese.getPdg_modulo_costi().getPdg_modulo().getProgetto();
-				ProgettoBulk progetto = ((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
-						new ProgettoBulk(progettoSip.getEsercizio(), progettoSip.getPg_progetto(), progettoSip.getTipo_fase())));
+				ProgettoBulk progetto = (ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new ProgettoBulk(progettoSip.getEsercizio(), progettoSip.getPg_progetto(), progettoSip.getTipo_fase()));
 				progetto.setProgettopadre((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
 						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+				progetto.setOtherField((Progetto_other_fieldBulk)createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new Progetto_other_fieldBulk(progetto.getPg_progetto())));
 				
 				((WorkpackageBulk)oggettobulk).setTi_gestione(WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
 				((WorkpackageBulk)oggettobulk).setProgetto2016(progetto);
 				((WorkpackageBulk)oggettobulk).setPdgMissione(this.pdgModuloSpese.getPdgMissione());				
 				((WorkpackageBulk)oggettobulk).setPdgProgramma((Pdg_programmaBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));			
 				((WorkpackageBulk)oggettobulk).setCofog(this.pdgModuloSpese.getCofog());			
+				((WorkpackageBulk)oggettobulk).setVocePianoEconomico2016(this.pdgModuloSpese.getVoce_piano_economico());			
 			} else if (this.pdgModuloEntrate!=null) {
 				Progetto_sipBulk progettoSip = this.pdgModuloEntrate.getTestata().getProgetto();
 				ProgettoBulk progetto = ((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
 						new ProgettoBulk(progettoSip.getEsercizio(), progettoSip.getPg_progetto(), progettoSip.getTipo_fase())));
 				progetto.setProgettopadre((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
 						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+				progetto.setOtherField((Progetto_other_fieldBulk)createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new Progetto_other_fieldBulk(progetto.getPg_progetto())));
 				
 				((WorkpackageBulk)oggettobulk).setTi_gestione(WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
 				((WorkpackageBulk)oggettobulk).setProgetto2016(progetto);
 				((WorkpackageBulk)oggettobulk).setPdgProgramma((Pdg_programmaBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));			
+				((WorkpackageBulk)oggettobulk).setVocePianoEconomico2016(this.pdgModuloEntrate.getVoce_piano_economico());			
 			}
 		}
 	} catch (ComponentException e) {

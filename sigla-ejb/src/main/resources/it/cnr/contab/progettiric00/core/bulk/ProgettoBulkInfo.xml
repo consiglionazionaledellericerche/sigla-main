@@ -661,6 +661,14 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="fase"
 		layout="HORIZONTAL" />
+	<fieldProperty
+		name="fl_piano_economico"
+		property="fl_piano_economico"
+		inputType="CHECKBOX"
+		readonlyProperty="ROFlPianoEconomico"
+		label="Attiva Piano Economico" 
+		command="doDefault"/>
+		
 
 	<form
 		name="searchtool" >
@@ -807,6 +815,9 @@
 		name="fl_gestione" />
 	<formFieldProperty
 		name="tipoFaseToSearch" />
+
+	<formFieldProperty
+		name="fl_piano_economico" />
 
 	<columnFieldProperty
 		name="livello" />
