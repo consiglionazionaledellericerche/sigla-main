@@ -42,13 +42,6 @@ public class AssVoceCatgrpInventHome extends BulkHome {
 		return sql;
 	}
 	
-	public SQLBuilder selectCodici_siopeByClause( AssVoceCatgrpInventBulk bulk, Codici_siopeHome home,it.cnr.jada.bulk.OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
-		SQLBuilder sql = home.createSQLBuilder();
-		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, "S");
-		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );	
-		sql.addClause( clause );
-		return sql;
-	}
 	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause) throws PersistencyException {
 		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
 	    sql.addClause("AND","esercizio",SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext));

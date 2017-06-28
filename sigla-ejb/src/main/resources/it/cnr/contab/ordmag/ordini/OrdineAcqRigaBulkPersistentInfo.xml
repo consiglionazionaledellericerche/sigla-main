@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.OrdineAcqRigaBulk"
+	homeClassName="it.cnr.contab.ordmag.ordini.OrdineAcqRigaHome">
+	<defaultColumnMap
+		tableName="ORDINE_ACQ_RIGA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="ordineAcq.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="ordineAcq.cd_unita_operativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="ordineAcq.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE"
+			propertyName="ordineAcq.cd_numeratore" />
+		<columnMapping
+			columnName="NUMERO"
+			propertyName="ordineAcq.numero" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="beneServizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="voceIva.cd_voce_iva" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA"
+			propertyName="unitaMisura.cd_unita_misura" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ordineAcq"
+		partOfOid="true" />
+	<persistentProperty
+		name="beneServizio" />
+	<persistentProperty
+		name="voceIva" />
+	<persistentProperty
+		name="unitaMisura" />
+</SQLPersistentInfo>
