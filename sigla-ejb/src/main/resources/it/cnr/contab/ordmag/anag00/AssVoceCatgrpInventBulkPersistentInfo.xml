@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.AssVoceCatgrpInventBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.AssVoceCatgrpInventHome">
+	<defaultColumnMap
+		tableName="ASS_VOCE_CATGRP_INVENT">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="categoria_gruppo_invent.cd_categoria_gruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="elemento_voce"
+		partOfOid="true" />
+	<persistentProperty
+		name="categoria_gruppo_invent"
+		partOfOid="true" />
+</SQLPersistentInfo>
