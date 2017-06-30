@@ -53,7 +53,7 @@
 				<% bp.getController().writeFormInput(out,"fl_soggetto_iva");%>
 				<% bp.getController().writeFormLabel(out,"fl_soggetto_iva");%>
 
-		<%if (anagrafico.isEntePubblico()) { %>
+		<%if (anagrafico.isPersonaGiuridica() && anagrafico.isItaliano()) { %>
 				<% bp.getController().writeFormInput(out,"fl_fatturazione_differita");%>
 				<% bp.getController().writeFormLabel(out,"fl_fatturazione_differita");%>
 		<%} %>
