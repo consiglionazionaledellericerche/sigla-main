@@ -5,19 +5,15 @@ import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.jada.comp.ApplicationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
-
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class CMISFileFatturaAttiva extends CMISFile implements CMISTypeName{
 	private static final long serialVersionUID = -1775673719677028944L;

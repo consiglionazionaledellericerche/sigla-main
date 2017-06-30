@@ -13,8 +13,6 @@ import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-
 public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 	public static final java.util.Dictionary tipo_variazioneForEnteKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary tipo_variazioneKeys = new it.cnr.jada.util.OrderedHashtable();

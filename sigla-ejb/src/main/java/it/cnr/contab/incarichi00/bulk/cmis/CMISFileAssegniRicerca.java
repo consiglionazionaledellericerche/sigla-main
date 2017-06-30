@@ -7,15 +7,13 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.config.StoragePropertyNames;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-
-import it.cnr.contab.spring.config.StorageObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CMISFileAssegniRicerca extends CMISFileIncarichi {
 	private static final long serialVersionUID = -1775673719677028944L;
@@ -74,49 +72,49 @@ public class CMISFileAssegniRicerca extends CMISFileIncarichi {
 		this.setDescription((String)Incarichi_archivioBulk.getTipo_archivioKeys().get(getIncaricoArchivio().getTipo_archivio()).toString()+
 					" - Assegno di Ricerca nr."+esercizio+"/"+progressivo);
 	}
-	public boolean isEqualsTo(CmisObject node){
+	public boolean isEqualsTo(StorageObject storageObject){
 		String initTesto = "Procedura "+this.getEsercizioProcedura().toString()+"/"+this.getPgProcedura().toString()+" - " +
 						   "Incarico "+this.getEsercizioIncarico().toString()+"/"+this.getPgIncarico().toString()+" - Disallineamento dato ";
 		boolean isEquals = true;
 		String valueDB=null, valueCMIS=null; 
 
 		valueDB=String.valueOf(this.getEsercizioProcedura());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			logger.debug(initTesto+" - Esercizio Procedura - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getPgProcedura());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			logger.debug(initTesto+" - Pg_procedura - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getEsercizioIncarico());
-		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti_aspect_assegni_ricerca:esercizio"));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue("sigla_contratti_aspect_assegni_ricerca:esercizio"));
 		if (!valueCMIS.equals(valueDB)) {
 			logger.debug(initTesto+" - Esercizio Incarico - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getPgIncarico());
-		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti_aspect_assegni_ricerca:progressivo"));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue("sigla_contratti_aspect_assegni_ricerca:progressivo"));
 		if (!valueCMIS.equals(valueDB)) {
 			logger.debug(initTesto+" - Pg_repertorio - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getOriginalName());
-		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti_attachment:original_name"));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue("sigla_contratti_attachment:original_name"));
 		if (!valueCMIS.equals(valueDB)) {
 			logger.debug(initTesto+" - Nome Originale File - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getTypeName());
-		valueCMIS=String.valueOf(node.getType().getId());
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			logger.debug(initTesto+" - Type documento - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;

@@ -6,17 +6,10 @@
  */
 package it.cnr.contab.config00.action;
 
-import it.cnr.contab.cmis.acl.ACLType;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoMasterBP;
 import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
-import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -32,8 +25,6 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.SimpleCRUDBP;
-
-import org.apache.chemistry.opencmis.client.api.Folder;
 /**
  * @author mspasiano
  *

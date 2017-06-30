@@ -224,7 +224,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 					logger.info("PEC SCAN for ricevi Fatture alredy started in another server.");									
 				} else {
 					try {
-						pecScan(email.getVal01(), email.getVal02(), daysBefore);						
+						pecScan(email.getVal01(), email.getVal02(), daysBefore);
 					} finally {
 						fatturaElettronicaPassivaComponentSession.unlockEmailPEC(userContext);						
 					}

@@ -1,13 +1,7 @@
 package it.cnr.contab.spring.config;
 
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Folder;
-
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 /**

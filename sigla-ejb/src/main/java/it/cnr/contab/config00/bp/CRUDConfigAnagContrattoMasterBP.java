@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.chemistry.opencmis.client.api.Folder;
-
 public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	private static final long serialVersionUID = 1L;
 

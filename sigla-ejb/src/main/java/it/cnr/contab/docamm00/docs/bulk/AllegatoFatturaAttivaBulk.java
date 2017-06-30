@@ -1,7 +1,5 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
 

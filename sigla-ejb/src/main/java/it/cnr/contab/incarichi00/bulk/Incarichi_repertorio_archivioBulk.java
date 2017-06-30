@@ -13,8 +13,6 @@ import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-
 public class Incarichi_repertorio_archivioBulk extends Incarichi_repertorio_archivioKey {
 	private Incarichi_repertorioBulk incarichi_repertorio;
 

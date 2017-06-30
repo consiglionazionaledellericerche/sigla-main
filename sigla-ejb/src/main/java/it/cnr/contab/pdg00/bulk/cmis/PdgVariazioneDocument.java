@@ -1,16 +1,12 @@
 package it.cnr.contab.pdg00.bulk.cmis;
 
 import it.cnr.contab.cmis.CMISAspect;
-import it.cnr.contab.cmis.CMISProperty;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.config.StoragePropertyNames;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
-
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
 
 public class PdgVariazioneDocument implements Serializable{
 	private final StorageObject storageObject;

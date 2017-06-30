@@ -32,7 +32,6 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-import org.apache.chemistry.opencmis.client.api.Document;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -1530,7 +1529,7 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 						throw new ApplicationException("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
 					}
 				
-					Source xmlDoc = new StreamSource(((Document)file).getContentStream().getStream());
+					Source xmlDoc = new StreamSource(SpringUtil.getBean("storeService", StoreService.class).getResource(file.getKey()));
 					HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
 					OutputStream os = response.getOutputStream();
 					response.setContentType("text/html");

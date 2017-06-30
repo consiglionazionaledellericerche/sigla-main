@@ -17,8 +17,6 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
@@ -91,9 +89,7 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
 
 	private String getFolderDocumentoAttivo(Integer esercizio, String cds, String cdUo,
 			Long pgFattura) throws DetailedException, ApplicationException {
-		StorageObject storageObject = getNodeFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
-		String folder = (String) storageObject.getPropertyValue(PropertyIds.OBJECT_ID);
-		return folder;
+		return getNodeFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura).getKey();
 	}
 
 	private StorageObject getNodeFolderDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException, ApplicationException {
@@ -140,7 +136,7 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
 			if (ids.size() == 1){
 				try{
 					return getResource(ids.get(0));
-				}catch (CmisObjectNotFoundException _ex){
+				}catch (StorageException _ex){
 				}
 			}else{
 				PDFMergerUtility ut = new PDFMergerUtility();
@@ -155,7 +151,7 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
 					throw e;
 				} catch (IOException e) {
 					throw e;
-				}catch (CmisObjectNotFoundException _ex){
+				}catch (StorageException _ex){
 				}
 			}
 		}

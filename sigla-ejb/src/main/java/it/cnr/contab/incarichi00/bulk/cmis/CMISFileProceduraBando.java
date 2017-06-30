@@ -4,17 +4,14 @@ import it.cnr.contab.cmis.CMISTypeName;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiAttachment;
+import it.cnr.contab.spring.config.StorageObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import it.cnr.contab.spring.config.StorageObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTypeName{
 	private static final long serialVersionUID = -1775673719677028944L;

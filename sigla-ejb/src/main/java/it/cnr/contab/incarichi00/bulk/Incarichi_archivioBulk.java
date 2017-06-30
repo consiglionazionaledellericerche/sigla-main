@@ -13,8 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.StringTokenizer;
-
-import org.apache.chemistry.opencmis.client.api.Document;
 public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public static final java.util.Dictionary tipo_archivioKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary statoKeys = new it.cnr.jada.util.OrderedHashtable();

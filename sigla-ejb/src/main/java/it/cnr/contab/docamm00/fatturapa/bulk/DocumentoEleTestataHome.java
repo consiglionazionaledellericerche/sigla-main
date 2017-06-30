@@ -14,6 +14,7 @@ import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.StringEncrypter;
@@ -34,7 +35,6 @@ import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.RiferimentoFatturaType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.ObjectFactory;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -182,9 +182,9 @@ public class DocumentoEleTestataHome extends BulkHome {
 	public void storeEsitoDocument(DocumentoEleTestataBulk documentoEleTestata,  ByteArrayInputStream byteArrayInputStream, String aspect) throws ApplicationException {
 		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
-		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-		metadataProperties.put(PropertyIds.NAME, documentoEleTestata.getNomeFile("EC"));
-		metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+		metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
+		metadataProperties.put(StoragePropertyNames.NAME.value(), documentoEleTestata.getNomeFile("EC"));
+		metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
 				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", aspect));
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 		try {

@@ -11,7 +11,6 @@
     <bean id="cmis.converter.defaultConverter" class="it.cnr.contab.cmis.converter.DefaultConverter"/>
     <bean id="cmis.converter.timestampToCalendarConverter" class="it.cnr.contab.cmis.converter.TimestampToCalendarConverter"/>
     <bean id="cmis.converter.longToIntegerConverter" class="it.cnr.contab.cmis.converter.LongToIntegerConverter"/>
-    <bean id="cmisBulkInfo" class="it.cnr.contab.cmis.service.CMISBulkInfo"/>
 
     <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" />
     <bean id="contrattiService" class="it.cnr.contab.incarichi00.service.ContrattiService" />

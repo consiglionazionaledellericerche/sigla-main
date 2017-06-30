@@ -30,16 +30,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.rmi.RemoteException;
-import java.sql.Timestamp;
-import java.util.*;
-import java.util.stream.Stream;
+import org.apache.commons.io.IOUtils;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
@@ -51,15 +42,15 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.client.api.ItemIterable;
-import org.apache.chemistry.opencmis.client.api.SecondaryType;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
-import org.apache.commons.io.IOUtils;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatturaBulk, DocumentoEleTestataBulk> implements FatturaPassivaElettronicaBP{
 	private static final long serialVersionUID = 1L;
@@ -274,8 +265,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
 				OutputStream os = response.getOutputStream();
 				response.setContentType("application/octetstream");
-				response.setContentLength(Long.valueOf(((Document)storageObject).getContentStreamLength()).intValue());
-				IOUtils.copy(((Document)storageObject).getContentStream().getStream(), os);
+				response.setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+				IOUtils.copy(SpringUtil.getBean("storeService", StoreService.class).getResource(storageObject.getKey()), os);
 				os.flush();
 			}
 		}
@@ -296,7 +287,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				} else {
 					throw new ApplicationException("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
 				}
-				Source xmlDoc = new StreamSource(((Document)storageObject).getContentStream().getStream());
+				Source xmlDoc = new StreamSource(SpringUtil.getBean("storeService", StoreService.class).getResource(storageObject.getKey()));
 				HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
 				OutputStream os = response.getOutputStream();
 				response.setContentType("text/html");

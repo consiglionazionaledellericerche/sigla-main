@@ -29,22 +29,16 @@ import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.upload.UploadedFile;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+
+import javax.ejb.EJBException;
+import javax.servlet.ServletException;
+import java.io.*;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-
-import javax.ejb.EJBException;
-import javax.servlet.ServletException;
-
-import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 
 /**
  * @author mspasiano
@@ -582,7 +576,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
-				}catch (CmisConstraintException e) {
+				}catch (StorageException e) {
 					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
 				}
 			}

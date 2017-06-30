@@ -2,12 +2,7 @@ package it.cnr.contab.incarichi00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
-import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
-import it.cnr.contab.compensi00.docs.bulk.MinicarrieraHome;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
+import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.config00.file.bulk.Gruppo_fileBulk;
 import it.cnr.contab.config00.file.bulk.Gruppo_fileHome;
 import it.cnr.contab.config00.file.bulk.Tipo_fileBulk;
@@ -16,19 +11,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
-import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
-import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
+import it.cnr.contab.incarichi00.bulk.*;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiAspect;
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
@@ -62,8 +45,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
 
 public class IncarichiRepertorioComponent extends CRUDComponent {
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {

@@ -12,8 +12,6 @@ import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-
 public class Incarichi_procedura_archivioBulk extends Incarichi_procedura_archivioKey{
 	private Incarichi_proceduraBulk incarichi_procedura;
 

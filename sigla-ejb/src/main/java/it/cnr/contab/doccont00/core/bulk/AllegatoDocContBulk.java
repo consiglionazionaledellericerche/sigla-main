@@ -1,7 +1,5 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
