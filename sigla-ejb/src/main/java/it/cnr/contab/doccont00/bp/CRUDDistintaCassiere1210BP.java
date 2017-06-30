@@ -254,8 +254,8 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 				documentiContabiliService.getStorageObjectByPath(
 						distintaCassiere1210Bulk.getStorePath()
 						.concat(StoreService.BACKSLASH)
-						.concat(distintaCassiere1210Bulk.getCMISFolderName())
-                        .concat(".pdf")
+						.concat("Distinta 1210 n. "
+                                + distintaCassiere1210Bulk.getPgDistinta() + ".pdf")
 				)
 		);
 		if (is != null){
