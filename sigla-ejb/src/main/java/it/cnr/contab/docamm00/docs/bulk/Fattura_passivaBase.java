@@ -113,9 +113,6 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
 	// FL_SPEDIZIONIERE CHAR(1) NOT NULL
 	private java.lang.Boolean fl_spedizioniere;
 
-	// FL_SPLIT_PAYMENT CHAR(1) NOT NULL
-	private java.lang.Boolean fl_split_payment;
-
 	// IM_TOTALE_FATTURA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_totale_fattura;
 
@@ -1073,10 +1070,5 @@ public void setPg_compenso(java.lang.Long pg_compenso) {
 	this.pg_compenso = pg_compenso;
 }
 
-public java.lang.Boolean getFl_split_payment() {
-	return fl_split_payment;
-}
-public void setFl_split_payment(java.lang.Boolean fl_split_payment) {
-	this.fl_split_payment = fl_split_payment;
-}
+
 }

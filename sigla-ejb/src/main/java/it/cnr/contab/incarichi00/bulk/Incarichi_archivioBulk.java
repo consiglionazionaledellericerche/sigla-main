@@ -5,6 +5,7 @@
 package it.cnr.contab.incarichi00.bulk;
 
 import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.persistency.Persister;
 
@@ -169,10 +170,11 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public boolean isAnnullato(){
 		return getStato()!=null && getStato().equals(STATO_ANNULLATO);
 	}
+
 	public CMISFile getCMISFile() throws IOException{
 		return null;
 	}
-	public CMISFile getCMISFile(Document node){
+	public CMISFile getCMISFile(StorageObject storageObject){
 		return null;
 	}
 	public String getDownloadUrl() {

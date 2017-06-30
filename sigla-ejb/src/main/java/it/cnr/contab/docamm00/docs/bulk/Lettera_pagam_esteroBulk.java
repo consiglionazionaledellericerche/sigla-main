@@ -1,30 +1,27 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBException;
-
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkCollections;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.CRUDBP;
+
+import javax.ejb.EJBException;
+import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
 @CMISType(name="D:doccont:document")
@@ -266,19 +263,21 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
-	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException {
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR",CMISPath.class);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCd_unita_organizzativa(), 
-				getCd_unita_organizzativa(), 
-				getCd_unita_organizzativa());
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Documenti 1210" ,null, null);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getEsercizio().toString(), null, null);		
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCMISFolderName(), 
-				null, 
-				null);
-		return cmisPath;		
+
+	public String getStorePath() {
+		return Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+				getCd_unita_organizzativa(),
+				"Documenti 1210",
+				Optional.ofNullable(getEsercizio())
+						.map(esercizio -> String.valueOf(esercizio))
+					.orElse("0"),
+				getCMISFolderName()
+		).stream().collect(
+				Collectors.joining(StoreService.BACKSLASH)
+		);
 	}
-	
+
 	public Long getPg_documento_cont() {
 		return getPg_lettera();
 	}

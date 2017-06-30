@@ -4,21 +4,12 @@ package it.cnr.contab.cmis.bulk;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.config.StoragePropertyNames;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.activation.MimetypesFileTypeMap;
-
-import org.apache.chemistry.opencmis.client.api.Document;
+import java.io.*;
 
 @CMISType(name="cmis:document")
 public class CMISFile extends OggettoBulk {
@@ -32,7 +23,7 @@ public class CMISFile extends OggettoBulk {
     private String title;
     private String author;
     
-	private Document document=null;
+	private StorageObject storageObject;
 
     public CMISFile() {
 		super();
@@ -41,7 +32,7 @@ public class CMISFile extends OggettoBulk {
 	/**
      * Constructs a CMISFile
      *
-     * @param file the File object on the server which holds the uploaded contents of the file
+     * @param bytes the File object on the server which holds the uploaded contents of the file
      * @param contentType the content type of the file declared by the browser during upload
      * @param originalName the name of the file as declared by the user&apos;s browser
      */
@@ -49,7 +40,7 @@ public class CMISFile extends OggettoBulk {
     	this.bytes = bytes;
         this.contentType = contentType;
         this.fileName = originalName;
-        this.document = null;
+        this.storageObject = null;
     }
 
     public CMISFile(InputStream inputStream, String contentType, String originalName) {
@@ -68,16 +59,16 @@ public class CMISFile extends OggettoBulk {
     	this.bytes = baos.toByteArray();
         this.contentType = contentType;
         this.fileName = originalName;
-        this.document = null;
+        this.storageObject = null;
     }
 
-    public CMISFile(Document document) {
-		this.document = document;
-        this.contentType = document.getContentStreamMimeType();
-        this.fileName = document.getName();
-        this.author = document.getProperty(SiglaCMISService.PROPERTY_AUTHOR).getValuesAsString();
-        this.description = document.getProperty(SiglaCMISService.PROPERTY_DESCRIPTION).getValuesAsString();
-        this.title = document.getProperty(SiglaCMISService.PROPERTY_TITLE).getValuesAsString();
+    public CMISFile(StorageObject storageObject) {
+		this.storageObject = storageObject;
+        this.contentType = storageObject.<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value());
+        this.fileName = storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value());
+        this.author = storageObject.<String>getPropertyValue(StoragePropertyNames.AUTHOR.value());
+        this.description = storageObject.<String>getPropertyValue(StoragePropertyNames.DESCRIPTION.value());
+        this.title = storageObject.<String>getPropertyValue(StoragePropertyNames.TITLE.value());
 	}
 	
     public CMISFile(File file, String contentType, String originalName) throws IOException{
@@ -88,12 +79,12 @@ public class CMISFile extends OggettoBulk {
 		this(new FileInputStream(file), new MimetypesFileTypeMap().getContentType(file), originalName);
     }
 
-    public Document getDocument() {
-		return document;
+    public StorageObject getStorageObject() {
+		return storageObject;
 	}
 	
-	public void setDocument(Document document) {
-		this.document = document;
+	public void setStorageObject(StorageObject storageObject) {
+		this.storageObject = storageObject;
 	}
 
 	/**
@@ -160,11 +151,11 @@ public class CMISFile extends OggettoBulk {
 		return null;
 	}
 
-	public CMISPath getCMISParentPath(SiglaCMISService cmisService) throws ApplicationException{
+	public String getCMISParentPath(){
 		return null;
 	}
 
-	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService) throws ApplicationException{
+	public String getCMISAlternativeParentPath(){
 		return null;
 	}
 }

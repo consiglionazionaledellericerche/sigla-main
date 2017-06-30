@@ -12,8 +12,8 @@ public class AllegatoFatturaAttivaBulk extends AllegatoFatturaBulk {
 		setAspectName(CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ALLEGATI_NON_INVIATI_SDI.value());
 	}
 
-	public AllegatoFatturaAttivaBulk(Document node) {
-		super(node);
+	public AllegatoFatturaAttivaBulk(String storageKey) {
+		super(storageKey);
 		setAspectName(CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ALLEGATI_NON_INVIATI_SDI.value());
 	}
 }

@@ -7,6 +7,7 @@ package it.cnr.contab.incarichi00.bulk;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProcedura;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProceduraBando;
+import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
@@ -73,11 +74,11 @@ public class Incarichi_procedura_archivioBulk extends Incarichi_procedura_archiv
 		}
 		return cmisFile;
 	}
-	public CMISFile getCMISFile(Document node) {
+	public CMISFile getCMISFile(StorageObject storageObject) {
 		if (this.isBando())
-			return new CMISFileProceduraBando(node, this);
+			return new CMISFileProceduraBando(storageObject, this);
 		else
-			return new CMISFileProcedura(node, this);
+			return new CMISFileProcedura(storageObject, this);
 	}
 
 	public String constructCMISNomeFile() {

@@ -2,21 +2,22 @@ package it.cnr.contab.cmis.bulk;
 
 import java.io.Serializable;
 
+import it.cnr.contab.spring.config.StorageObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CMISDocument implements Serializable{
-	private final Document document;
+	private final StorageObject storageObject;
 
-	public static CMISDocument construct(Document document){
-		return new CMISDocument(document);
+	public static CMISDocument construct(StorageObject storageObject){
+		return new CMISDocument(storageObject);
 	}
 	
-	public CMISDocument(Document document) {
+	public CMISDocument(StorageObject storageObject) {
 		super();
-		this.document = document;
+		this.storageObject = storageObject;
 	}
 	
-	public Document getDocument() {
-		return document;
+	public StorageObject getStorageObject() {
+		return storageObject;
 	}
 }

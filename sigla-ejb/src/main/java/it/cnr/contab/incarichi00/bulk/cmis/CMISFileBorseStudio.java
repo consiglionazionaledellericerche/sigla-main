@@ -11,6 +11,7 @@ import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import java.io.File;
 import java.io.IOException;
 
+import it.cnr.contab.spring.config.StorageObject;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.slf4j.Logger;
@@ -44,16 +45,16 @@ public class CMISFileBorseStudio extends CMISFileIncarichi {
 		super(file, originalName, incaricoRepertorioVar);
 	}
 
-	public CMISFileBorseStudio(Document node, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
-		super(node, incaricoRepertorioArchivio);
+	public CMISFileBorseStudio(StorageObject storageObject, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
+		super(storageObject, incaricoRepertorioArchivio);
 	}
 
-	public CMISFileBorseStudio(Document node, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
-		super(node, incaricoRepertorioRapp);
+	public CMISFileBorseStudio(StorageObject storageObject, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
+		super(storageObject, incaricoRepertorioRapp);
 	}
 
-	public CMISFileBorseStudio(Document node, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
-		super(node, incaricoRepertorioVar);
+	public CMISFileBorseStudio(StorageObject storageObject, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
+		super(storageObject, incaricoRepertorioVar);
 	}
 
 	@CMISPolicy(name="P:sigla_contratti_aspect:borse_studio", property=@CMISProperty(name="sigla_contratti_aspect_borse_studio:esercizio"))

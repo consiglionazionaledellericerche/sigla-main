@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.cnr</groupId>
         <artifactId>sigla</artifactId>
-        <version>4.0.67-SNAPSHOT</version>
+        <version>4.0.66-SNAPSHOT</version>
     </parent>
     <properties>
         <wildfly.deployment.filename>SIGLA.ear</wildfly.deployment.filename>
@@ -85,6 +85,12 @@
                 <version>${wildfly.plugin.version}</version>
                 <configuration>
                     <jbossHome>${project.build.directory}/wildfly-${wildfly.version}</jbossHome>
+                    <server-args>
+                        <server-arg>-Dspring.profiles.active=CMIS</server-arg>
+                    </server-args>
+                    <java-opts>
+                        <java-opt>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</java-opt>
+                    </java-opts>
                 </configuration>
             </plugin>
             <plugin>
@@ -426,6 +432,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20160810</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.11.84</version>
         </dependency>
     </dependencies>
 </project>

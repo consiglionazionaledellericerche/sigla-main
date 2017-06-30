@@ -17,8 +17,8 @@ public class AllegatoDocContBulk extends AllegatoGenericoBulk {
 		super();
 	}
 
-	public AllegatoDocContBulk(Document node) {
-		super(node);
+	public AllegatoDocContBulk(String storageKey) {
+		super(storageKey);
 	}
 
 	public String getRifModalitaPagamento() {

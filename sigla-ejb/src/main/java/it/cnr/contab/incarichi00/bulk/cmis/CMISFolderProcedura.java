@@ -4,19 +4,20 @@ import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.converter.Converter;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CMISType(name="F:sigla_contratti:procedura")
 public class CMISFolderProcedura extends OggettoBulk {
@@ -112,84 +113,92 @@ public class CMISFolderProcedura extends OggettoBulk {
 		return this.getIncaricoProcedura().getTipo_norma_perla().getComma_tipo_norma();
 	}
 
-	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService) throws ApplicationException{
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getIncaricoProcedura().getCd_unita_organizzativa(), this.getIncaricoProcedura().getUnita_organizzativa().getDs_unita_organizzativa(), this.getIncaricoProcedura().getUnita_organizzativa().getDs_unita_organizzativa());
+	public String getCMISPrincipalPath() {
+		String path = "";
 		if (this.getIncaricoProcedura().isProceduraForIncarichi())
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Incarichi di Collaborazione", "Incarichi", "Incarichi di Collaborazione");
+			path = "Incarichi di Collaborazione";
 		else if (this.getIncaricoProcedura().isProceduraForBorseStudio())
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Borse di Studio", "Borse di Studio", "Borse di Studio");
+			path = "Borse di Studio";
 		else if (this.getIncaricoProcedura().isProceduraForAssegniRicerca())
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Assegni di Ricerca", "Assegni di Ricerca", "Assegni di Ricerca");
-		return cmisPath;
+			path = "Assegni di Ricerca";
+        return Arrays.asList(
+                SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+                this.getIncaricoProcedura().getCd_unita_organizzativa(),
+                path
+        ).stream().collect(
+                Collectors.joining(StoreService.BACKSLASH)
+        );
 	}
 
-	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException{
-		CMISPath cmisPath = this.getCMISPrincipalPath(cmisService);
-		if (cmisPath!=null) {
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getEsercizio().toString(), "Esercizio "+this.getEsercizio().toString(), "Esercizio "+this.getEsercizio().toString());
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Procedura "+this.getEsercizio().toString()+Utility.lpad(this.getPg_procedura().toString(),10,'0'), "Procedura "+this.getEsercizio().toString()+"/"+this.getPg_procedura().toString(), "Procedura "+this.getEsercizio().toString()+"/"+this.getPg_procedura().toString(), this);
-			cmisService.setInheritedPermission(cmisPath, Boolean.FALSE);
-		}
-		return cmisPath;
+	public String getCMISPath(){
+		String cmisPath = this.getCMISPrincipalPath();
+        return Arrays.asList(
+                cmisPath,
+                Optional.ofNullable(getEsercizio())
+                        .map(esercizio -> String.valueOf(esercizio))
+                        .orElse("0"),
+                "Procedura "+this.getEsercizio().toString()+Utility.lpad(this.getPg_procedura().toString(),10,'0')
+        ).stream().collect(
+                Collectors.joining(StoreService.BACKSLASH)
+        );
 	}
 	
-	public boolean isEqualsTo(CmisObject node, List<String> listError){
+	public boolean isEqualsTo(StorageObject storageObject, List<String> listError){
 		String initTesto = "Procedura "+this.getEsercizio().toString()+"/"+this.getPg_procedura().toString()+" - Disallineamento dato ";
 		boolean isEquals = true;
 		String valueDB=null, valueCMIS=null; 
 
 		valueDB=String.valueOf(this.getEsercizio());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Esercizio - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getPg_procedura());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Pg_procedura - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getOggetto()).replaceAll("  ", " ").replaceAll("\r\n", "\n");
-		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti:oggetto"));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue("sigla_contratti:oggetto"));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Oggetto - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getDescrizioneProceduraAmministrativa()).replaceAll("  ", " ").replaceAll("\r\n", "\n");
-		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti:procedura_amministrativa"));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue("sigla_contratti:procedura_amministrativa"));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Procedura Amministrativa - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getTipoNormaDescrizione()).replaceAll("  ", " ").replaceAll("\r\n", "\n");
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_DESCRIZIONE.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_DESCRIZIONE.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Descrizione Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 		
 		valueDB=String.valueOf(this.getTipoNormaNumero());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_NUMERO.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_NUMERO.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Numero Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getTipoNormaArticolo());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_ARTICOLO.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_ARTICOLO.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Articolo Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getTipoNormaComma());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_COMMA.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_COMMA.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Comma Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
@@ -198,7 +207,7 @@ public class CMISFolderProcedura extends OggettoBulk {
 		valueDB=this.getTipoNormaData()==null?"":Integer.toString(this.getTipoNormaData().get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 												 Integer.toString(this.getTipoNormaData().get(GregorianCalendar.MONTH)) + "/" + 
 												 Integer.toString(this.getTipoNormaData().get(GregorianCalendar.YEAR));
-		GregorianCalendar gcCMIS = (GregorianCalendar)node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_DATA.value());
+		GregorianCalendar gcCMIS = (GregorianCalendar)storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_DATA.value());
 		valueCMIS=gcCMIS==null?"":Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				  				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
 				  				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));

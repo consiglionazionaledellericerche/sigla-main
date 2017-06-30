@@ -3,20 +3,18 @@ package it.cnr.contab.util00.bulk.cmis;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
 
 import java.io.File;
 import java.util.StringTokenizer;
 
-import org.apache.chemistry.opencmis.client.api.Document;
 @CMISType(name="cmis:document")
 public class AllegatoGenericoBulk extends OggettoBulk {
 	private static final long serialVersionUID = 1L;
-	private String nodeRef;
+	private String storageKey;
 	private File file;
 	private String contentType;
 	private String nome;
@@ -27,15 +25,13 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 		super();
 	}
 
-	public static AllegatoGenericoBulk construct(Document node){
-		return new AllegatoGenericoBulk(node);
+	public static AllegatoGenericoBulk construct(String storageKey){
+		return new AllegatoGenericoBulk(storageKey);
 	}
 	
-	public AllegatoGenericoBulk(Document node) {
+	public AllegatoGenericoBulk(String storageKey) {
 		super();
-		if (node != null){
-			this.nodeRef = node.getId();
-		}
+		this.storageKey = storageKey;
 	}
 
 	public String parseFilename(String file) {
@@ -45,29 +41,25 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 		while (fileName.hasMoreTokens()){
 			newFileName = fileName.nextToken();   	
 		}
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService",
-				SiglaCMISService.class);		
 
 		if (newFileName != null){
-			return cmisService.sanitizeFilename(newFileName);
+			return SpringUtil.getBean("storeService", StoreService.class).sanitizeFilename(newFileName);
 		}
-		return cmisService.sanitizeFilename(file);
+		return SpringUtil.getBean("storeService", StoreService.class).sanitizeFilename(file);
 	}
-	
-	public boolean isNodePresent(){
-		return nodeRef != null;
+
+    public String getStorageKey() {
+        return storageKey;
+    }
+
+    public boolean isNodePresent(){
+		return storageKey != null;
 	}
 	
 	public boolean isNodeNotPresent(){
 		return !isNodePresent();
 	}
 	
-	public Document getDocument(SiglaCMISService service) throws ApplicationException {
-		if (!isNodePresent())
-			return null;
-		return (Document)service.getNodeByNodeRef(nodeRef);
-	}
-
 	public File getFile() {
 		return file;
 	}

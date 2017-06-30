@@ -1,18 +1,15 @@
 package it.cnr.contab.incarichi00.bulk.cmis;
 
-import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.comp.ApplicationException;
+
+import java.util.List;
 
 @CMISType(name="F:sigla_contratti:assegni_ricerca")
 public class CMISFolderAssegniRicerca extends CMISFolderContrattiModel {
@@ -42,16 +39,15 @@ public class CMISFolderAssegniRicerca extends CMISFolderContrattiModel {
 		return super.getPg_repertorio();
     }
 
-	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException{
-		CMISPath cmisPath = this.getCMISParentPath(cmisService);
+	public String getCMISPath() {
+		String cmisPath = this.getCMISParentPath();
 		if (cmisPath!=null) {
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Assegno di Ricerca "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'), "Assegno di Ricerca "+this.getEsercizio().toString()+"/"+this.getPg_repertorio().toString(), "Assegno di Ricerca "+this.getEsercizio().toString()+"/"+this.getPg_repertorio().toString(), this);
-			cmisService.setInheritedPermission(cmisPath, Boolean.FALSE);
+			cmisPath = cmisPath.concat(StoreService.BACKSLASH).concat("Assegno di Ricerca "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'));
 		}
 		return cmisPath;
 	}
 	
-	public boolean isEqualsTo(CmisObject node, List<String> listError){
+	public boolean isEqualsTo(StorageObject node, List<String> listError){
 		boolean isEquals = super.isEqualsTo(node, listError);
 		String initTesto = "Procedura "+this.getEsercizio_procedura().toString()+"/"+this.getPg_procedura().toString()+" - "+
 						   "Incarico "+this.getEsercizio().toString()+"/"+this.getPg_repertorio().toString()+" - Disallineamento dato ";

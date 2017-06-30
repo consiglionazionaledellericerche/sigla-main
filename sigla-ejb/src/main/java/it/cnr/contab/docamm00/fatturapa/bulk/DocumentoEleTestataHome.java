@@ -3,48 +3,19 @@
  * Date 25/02/2015
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
-import java.rmi.RemoteException;
-import java.sql.Connection;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.ejb.EJBException;
-import javax.mail.AuthenticationFailedException;
-import javax.mail.PasswordAuthentication;
-import javax.xml.bind.JAXBElement;
-import javax.xml.transform.stream.StreamResult;
-
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.contab.util.Utility;
@@ -63,6 +34,24 @@ import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.RiferimentoFatturaType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.ObjectFactory;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.ejb.EJBException;
+import javax.mail.AuthenticationFailedException;
+import javax.mail.PasswordAuthentication;
+import javax.xml.bind.JAXBElement;
+import javax.xml.transform.stream.StreamResult;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.util.*;
 public class DocumentoEleTestataHome extends BulkHome {
 	private transient final static Logger logger = LoggerFactory.getLogger(DocumentoEleTestataHome.class);
 
@@ -191,7 +180,7 @@ public class DocumentoEleTestataHome extends BulkHome {
 	}
 
 	public void storeEsitoDocument(DocumentoEleTestataBulk documentoEleTestata,  ByteArrayInputStream byteArrayInputStream, String aspect) throws ApplicationException {
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
+		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
 		metadataProperties.put(PropertyIds.NAME, documentoEleTestata.getNomeFile("EC"));
@@ -199,11 +188,10 @@ public class DocumentoEleTestataHome extends BulkHome {
 				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", aspect));
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 		try {
-			cmisService.storeSimpleDocument(byteArrayInputStream, "text/xml", 
-					CMISPath.construct(((Folder)cmisService.getNodeByNodeRef(
-							documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef())).getPath()), 
+			storeService.storeSimpleDocument(byteArrayInputStream, "text/xml",
+					storeService.getStorageObjectBykey(documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef()).getPath(),
 					metadataProperties);
-		} catch(CmisContentAlreadyExistsException _ex) {
+		} catch(StorageException _ex) {
 		}
 	}
 

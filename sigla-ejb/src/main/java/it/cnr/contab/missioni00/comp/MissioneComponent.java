@@ -1024,10 +1024,6 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 	    if (missioneTemp.getDefferredSaldi() != null)
 		    aTempDiffSaldi=(PrimaryKeyHashMap)missioneTemp.getDefferredSaldi().clone();    
 		
-	    
-		controlloDateTappeConDateMissioni(missioneTemp);
-
-			
 		if(missioneTemp.getPg_missione() == null)
 		{
 			// Salvo missione, le spese, le tappe in modo temporaneo			
@@ -2737,8 +2733,6 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
     if (missione.getDefferredSaldi() != null)
 	    aTempDiffSaldi=(PrimaryKeyHashMap)missione.getDefferredSaldi().clone();    
 	
-	controlloDateTappeConDateMissioni(missione);
-
 	if(!missione.isSalvataggioTemporaneo())
 	{
 		// Validazione dell'eventuale obbligazione collegata alla missione
@@ -2806,22 +2800,6 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
         throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare un documento per un esercizio non aperto!");
 	
 	return missione;
-}
-private void controlloDateTappeConDateMissioni(MissioneBulk missione) throws ApplicationException {
-	if(!missione.getTappeMissioneColl().isEmpty()){
-		for (Iterator i = missione.getTappeMissioneColl().iterator(); i.hasNext();)
-		{
-			Missione_tappaBulk aTappa = (Missione_tappaBulk)i.next();
-			if (aTappa.getDt_inizio_tappa() != null && missione.getDt_inizio_missione() != null && 
-					aTappa.getDt_inizio_tappa().before(missione.getDt_inizio_missione())){
-				throw new it.cnr.jada.comp.ApplicationException("Esiste una tappa con data inizio precedente alla data di inizio della missione.");				
-			}
-			if (aTappa.getDt_fine_tappa() != null && missione.getDt_fine_missione() != null && 
-					aTappa.getDt_fine_tappa().after(missione.getDt_fine_missione())){
-				throw new it.cnr.jada.comp.ApplicationException("Esiste una tappa con data fine successiva alla data di fine della missione.");				
-			}
-		}
-	}
 }	
 
 /**

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import it.cnr.contab.spring.config.StorageObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
@@ -27,8 +28,8 @@ public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTyp
 		super(incaricoProceduraArchivio);
 	}
 
-	public CMISFileProceduraBando(Document node, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) {
-		super(node, incaricoProceduraArchivio);
+	public CMISFileProceduraBando(StorageObject storageObject, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) {
+		super(storageObject, incaricoProceduraArchivio);
 	}
 
 	public String getTypeName() {
@@ -49,9 +50,9 @@ public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTyp
 		return this.getIncaricoProceduraArchivio().getIncarichi_procedura().getDt_fine_pubblicazione();
 	}
 	
-	public boolean isEqualsTo(CmisObject node, List<String> listError){
+	public boolean isEqualsTo(StorageObject storageObject, List<String> listError){
 		String initTesto = "Procedura "+this.getEsercizioProcedura().toString()+"/"+this.getPgProcedura().toString()+" - Disallineamento dato ";
-		boolean isEquals = super.isEqualsTo(node, listError);
+		boolean isEquals = super.isEqualsTo(storageObject, listError);
 		String valueDB=null, valueCMIS=null; 
 
 		GregorianCalendar gcDB = (GregorianCalendar)GregorianCalendar.getInstance(); 
@@ -59,7 +60,7 @@ public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTyp
 		valueDB=Integer.toString(gcDB.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.YEAR));
-		GregorianCalendar gcCMIS = (GregorianCalendar)node.getPropertyValue("sigla_contratti_attachment:data_inizio");
+		GregorianCalendar gcCMIS = (GregorianCalendar)storageObject.getPropertyValue("sigla_contratti_attachment:data_inizio");
 		valueCMIS=Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));
@@ -73,7 +74,7 @@ public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTyp
 		valueDB=Integer.toString(gcDB.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.YEAR));
-		gcCMIS = (GregorianCalendar)node.getPropertyValue("sigla_contratti_attachment:data_fine");
+		gcCMIS = (GregorianCalendar)storageObject.getPropertyValue("sigla_contratti_attachment:data_fine");
 		valueCMIS=Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));

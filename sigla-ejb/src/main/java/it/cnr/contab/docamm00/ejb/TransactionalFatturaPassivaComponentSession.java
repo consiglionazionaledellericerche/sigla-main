@@ -1,7 +1,6 @@
 package it.cnr.contab.docamm00.ejb;
 import java.rmi.*;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 
@@ -1203,21 +1202,5 @@ public it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk eliminaLetteraPagame
 		}
 	}
 }
-public boolean isAttivoSplitPayment(UserContext param0, Timestamp param1) throws RemoteException,it.cnr.jada.comp.ComponentException{
-	try {
-		return ((Boolean)invoke("isAttivoSplitPayment",new Object[] {
-			param0,
-			param1})).booleanValue();
-	} catch(java.rmi.RemoteException e) {
-		throw e;
-	} catch(java.lang.reflect.InvocationTargetException e) {
-		try {
-			throw e.getTargetException();
-		} catch(it.cnr.jada.comp.ComponentException ex) {
-			throw ex;
-		} catch(Throwable ex) {
-			throw new java.rmi.RemoteException("Uncaugth exception",ex);
-		}
-	}
 }
-}
+

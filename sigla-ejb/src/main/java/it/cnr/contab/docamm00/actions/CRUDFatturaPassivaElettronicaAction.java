@@ -240,7 +240,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				for(Iterator i=bulk.getDocEleIVAColl().iterator();i.hasNext();)
 			    {
 			      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
-			      if (!bulk.isAttivoSplitPayment() && rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
+			      if (rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
 			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' o 'Split Payment', il documento deve essere rifiutato!");	
 			    	  return context.findDefaultForward();			    	  
 			      }
@@ -255,10 +255,6 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					return context.findDefaultForward();
 				}
 			}
-			if (bulk.isAttivoSplitPayment() && !bulk.isDocumentoSplitPayment()) {
-				fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment', il documento deve essere rifiutato!");	
-				return context.findDefaultForward();			    	  
-			}			
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 			message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
 			return openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCompilaFattura");				

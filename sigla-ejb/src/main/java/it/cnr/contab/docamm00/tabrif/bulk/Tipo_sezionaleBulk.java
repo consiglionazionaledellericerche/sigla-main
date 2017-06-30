@@ -145,14 +145,6 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 		Tipo_sezionaleBulk tSez = (Tipo_sezionaleBulk)super.initializeForInsert(bp, context);
 
 		setTi_bene_servizio(BENE_SERVIZIO);
-		setFl_autofattura(Boolean.FALSE);
-		setFl_extra_ue(Boolean.FALSE);
-		setFl_intra_ue(Boolean.FALSE);
-		setFl_ordinario(Boolean.FALSE);
-		setFl_san_marino_con_iva(Boolean.FALSE);
-		setFl_san_marino_senza_iva(Boolean.FALSE);
-		setFl_servizi_non_residenti(Boolean.FALSE);
-		setFl_split_payment(Boolean.FALSE);
 
 		return tSez;
 	}
@@ -233,8 +225,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 				getFl_san_marino_con_iva().equals(FALSE) &&
 				getFl_san_marino_senza_iva().equals(FALSE) &&
 				getFl_ordinario().equals(FALSE) &&
-				getFl_autofattura().equals(FALSE) &&
-				getFl_split_payment().equals(FALSE))
+				getFl_autofattura().equals(FALSE))
 			throw new ValidationException("Attenzione non è stato selezionato nessun tipo di registro");
 		/*
 	if (tipo_sezionale_vendita.sezionale_ven_liquidazione==null)

@@ -4,15 +4,16 @@ import it.cnr.contab.cmis.CMISTypeName;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.jada.comp.ApplicationException;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.slf4j.Logger;
@@ -42,22 +43,25 @@ public class CMISFileFatturaAttiva extends CMISFile implements CMISTypeName{
     	impostaDatiBaseFattura(file.getName(), fattura);
 	}
 	
-    public CMISFileFatturaAttiva(Document node) {
-		super(node);
+    public CMISFileFatturaAttiva(StorageObject storageObject) {
+		super(storageObject);
     }
-	
-	public CMISPath getCMISParentPath(SiglaCMISService cmisService) throws ApplicationException{
-    	if (getFattura_attivaBulk()!=null )
-    		return getCMISFolder(this.getFattura_attivaBulk()).getCMISPath(cmisService);
-		return null;
+	@Override
+	public String getCMISParentPath() {
+		return Optional.ofNullable(this.getFattura_attivaBulk())
+                .map(fattura_attivaBulk1 -> getCMISFolder(fattura_attivaBulk1))
+				.map(cmisFolderFatturaAttiva -> cmisFolderFatturaAttiva.getCMISPath())
+				.orElse(null);
 	}
-
-	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService) throws ApplicationException{
-		CMISPath cmisPath = getCMISFolder(this.getFattura_attivaBulk()).getCMISPrincipalPath(cmisService);
-		if (cmisPath != null)
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, (String)Fattura_attivaBulk.getTipoFatturaKeys().get(this.getFattura_attivaBulk().getTi_fattura()), (String)Fattura_attivaBulk.getTipoFatturaKeys().get(this.getFattura_attivaBulk().getTi_fattura()), (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getFattura_attivaBulk().getTi_fattura()));
-		return cmisPath;
-	}
+    @Override
+	public String getCMISAlternativeParentPath() {
+        return Optional.ofNullable(this.getFattura_attivaBulk())
+                .map(fattura_attivaBulk1 -> getCMISFolder(fattura_attivaBulk1))
+                .map(cmisFolderFatturaAttiva -> cmisFolderFatturaAttiva.getCMISPrincipalPath())
+                .map(path -> path.concat(StoreService.BACKSLASH))
+                .map(path -> path.concat((String)Fattura_attivaBulk.getTipoFatturaKeys().get(this.getFattura_attivaBulk().getTi_fattura())))
+                .orElse(null);
+    }
 
 	public CMISFolderFatturaAttiva getCMISFolder(Fattura_attivaBulk fattura) {
 		return new CMISFolderFatturaAttiva(fattura);

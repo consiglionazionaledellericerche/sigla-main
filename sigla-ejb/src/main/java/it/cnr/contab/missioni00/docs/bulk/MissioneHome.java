@@ -6,8 +6,6 @@ import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.cmis.acl.ACLType;
 import it.cnr.contab.cmis.acl.Permission;
 import it.cnr.contab.cmis.acl.SIGLAGroups;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaHome;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -17,6 +15,8 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.service.LDAPService;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -411,18 +411,12 @@ public class MissioneHome extends BulkHome implements
 											new Unita_organizzativaBulk(
 													missione
 															.getCd_unita_organizzativa())));
-					CMISPath cmisPath;
+					String cmisPath;
 					if (missione.getFl_associato_compenso())
-						cmisPath = SpringUtil
-						.getBean("cmisPathConcFormazReddito",
-								CMISPath.class);
+						cmisPath = SpringUtil.getBean(StorePath.class).getPathConcorrentiFormazioneReddito();
 					else
-						cmisPath = SpringUtil
-						.getBean("cmisPathNonConcFormazReddito",
-								CMISPath.class);
+						cmisPath = SpringUtil.getBean(StorePath.class).getPathNonConcorrentiFormazioneReddito();
 					
-					SiglaCMISService cmisService = SpringUtil.getBean("cmisService",
-							SiglaCMISService.class);
 					LDAPService ldapService = SpringUtil.getBean("ldapService",
 							LDAPService.class);
 					String[] uidMail = ldapService.getLdapUserFromMatricola(
@@ -431,9 +425,15 @@ public class MissioneHome extends BulkHome implements
 					Report report = SpringUtil.getBean("printService",
 							PrintService.class).executeReport(userContext,
 							print);
-					cmisService.storePrintDocument(missione, report, cmisPath, 
+					SpringUtil.getBean("storeService", StoreService.class).storeSimpleDocument(
+							missione,
+							report.getInputStream(),
+							report.getContentType(),
+							report.getName(),
+							cmisPath,
 							Permission.construct(uidMail[0], ACLType.Consumer),
-							Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), ACLType.Coordinator));
+							Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), ACLType.Coordinator)
+					);
 				} catch (Exception e) {
 					throw new PersistencyException(e);
 				}

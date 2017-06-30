@@ -3,10 +3,8 @@
  * Date 25/02/2015
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
-import java.math.BigDecimal;
 import java.util.Dictionary;
 import java.util.Iterator;
-import java.util.Optional;
 
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
@@ -113,7 +111,6 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private BulkList<DocumentoEleAcquistoBulk> docEleAcquistoColl = new BulkList<DocumentoEleAcquistoBulk>();
 	private BulkList<DocumentoEleDdtBulk> docEleDdtColl = new BulkList<DocumentoEleDdtBulk>();
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
-	private boolean attivoSplitPayment=false;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -612,21 +609,5 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	}
 	public void setUnitaCompetenza(Unita_organizzativaBulk unitaCompetenza) {
 		this.unitaCompetenza = unitaCompetenza;
-	}
-
-	public void setAttivoSplitPayment(boolean attivoSplitPayment) {
-		this.attivoSplitPayment = attivoSplitPayment;
-	}
-	
-	public boolean isAttivoSplitPayment() {
-		return attivoSplitPayment;
-	}
-
-	public boolean isDocumentoSplitPayment() {
-		if (isAttivoSplitPayment() && getDocEleIVAColl()!=null && !getDocEleIVAColl().isEmpty())
-			//se presente almeno una riga IVA con imposta valorizzata  esigibilita != 'S' (Split) ritorno false
-			return getDocEleIVAColl().stream().filter(e->e.getImposta()!=null && e.getImposta().compareTo(BigDecimal.ZERO)>0 && 
-													  (e.getEsigibilitaIva()==null || !e.getEsigibilitaIva().equals("S"))).count()==0;
-		return false;
-	}
+	}	
 }

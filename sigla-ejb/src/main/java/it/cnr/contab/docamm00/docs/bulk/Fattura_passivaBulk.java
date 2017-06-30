@@ -22,7 +22,6 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
@@ -31,7 +30,6 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 import java.util.Calendar;
@@ -242,8 +240,7 @@ public abstract class Fattura_passivaBulk
 	private boolean isIvaRecuperabile=true;
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
 	private java.sql.Timestamp dataInizioFatturaElettronica;
-	private java.sql.Timestamp dataInizioSplitPayment;
-
+	
 	private CompensoBulk compenso = null;
 	
 	private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
@@ -1405,7 +1402,6 @@ public OggettoBulk initialize(CRUDBP bp,it.cnr.jada.action.ActionContext context
 	setFl_merce_extra_ue(Boolean.FALSE);
 	setFl_merce_intra_ue(Boolean.FALSE);
 	setFl_liquidazione_differita(Boolean.FALSE);
-	setFl_split_payment(Boolean.FALSE);
 	return this;
 }
 /**
@@ -1425,7 +1421,6 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_san_marino_senza_iva(Boolean.FALSE);
 	setFl_congelata(Boolean.FALSE);
 	setFl_liquidazione_differita(Boolean.FALSE);
-	setFl_split_payment(Boolean.FALSE);
 	
 	return this;
 }
@@ -1446,12 +1441,6 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_san_marino_senza_iva(null);
 	setFl_fattura_compenso(null);
 	setFl_liquidazione_differita(null);
-	setFl_split_payment(null);
-	setFl_bolla_doganale(null);
-	setFl_spedizioniere(null);
-	setFl_autofattura(null);
-	setFl_merce_extra_ue(null);
-	setFl_merce_intra_ue(null);
 	
 	return this;
 }
@@ -1715,7 +1704,8 @@ public boolean isRiportataInScrivania() {
  */
 public boolean isROAutofattura() {
 
-	return isAbledToModifyTipoFattura() || isAutoFatturaNeeded() || getFl_split_payment()==null || getFl_split_payment();
+	return isAbledToModifyTipoFattura() ||
+				isAutoFatturaNeeded();
 }
 /**
  * Insert the method's description here.
@@ -1767,7 +1757,7 @@ public boolean isROFl_bolla_doganale() {
  */
  
 public boolean isROFl_extra_ue() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua()|| isElettronica() || getFl_split_payment()==null || getFl_split_payment();
+	return isAbledToModifyFlagsTipoFattura() || isPromiscua()|| isElettronica();
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1776,7 +1766,7 @@ public boolean isROFl_extra_ue() {
  */
  
 public boolean isROFl_intra_ue() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua() || isElettronica() || getFl_split_payment()==null || getFl_split_payment();
+	return isAbledToModifyFlagsTipoFattura() || isPromiscua() || isElettronica();
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1968,7 +1958,6 @@ public boolean isVoidable() {
  */
 public boolean quadraturaInDeroga() {
 	return isCommerciale() && (
-				getFl_split_payment() ||
 				((getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio() )) ||
 				(getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())) ||
 				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())||
@@ -2742,9 +2731,7 @@ public void validateDate() throws ValidationException {
 		throw new ValidationException("Data registrazione NON valida!");
 	}
 	
-	if (getFl_split_payment() && !isGestioneSplitPayment())
-		throw new ValidationException("Non è possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(this.getDataInizioSplitPayment()) + "!");
-		
+
 	if (getDt_fattura_fornitore() != null) {
 
 		java.util.Calendar dataEmissioneFattura = getDateCalendar(getDt_fattura_fornitore());
@@ -3090,23 +3077,5 @@ public void validateDate() throws ValidationException {
 	public void setDt_termine_creazione_docamm(
 			java.sql.Timestamp dt_termine_creazione_docamm) {
 		this.dt_termine_creazione_docamm = dt_termine_creazione_docamm;
-	}
-	public boolean isROFl_split_payment() {
-		return isElettronica() || 
-			   (getFl_intra_ue()!=null && getFl_intra_ue()) ||   	
-			   (getFl_extra_ue()!=null && getFl_extra_ue()) ||
-			   (getFl_autofattura()!=null && getFl_autofattura()) ||
-				isAbledToModifyFlagsTipoFattura();
-	}
-	public java.sql.Timestamp getDataInizioSplitPayment() {
-		return dataInizioSplitPayment;
-	}
-	public void setDataInizioSplitPayment(java.sql.Timestamp dataInizioSplitPayment) {
-		this.dataInizioSplitPayment = dataInizioSplitPayment;
-	}
-
-	public boolean isGestioneSplitPayment() {
-		return this.getDt_fattura_fornitore() != null && this.getDataInizioSplitPayment() != null && 
-			   !DateUtils.truncate(this.getDt_fattura_fornitore()).before(DateUtils.truncate(this.getDataInizioSplitPayment()));
 	}
 }

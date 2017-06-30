@@ -1,6 +1,9 @@
 package it.cnr.contab.docamm00.tabrif.bulk;
 
-import it.cnr.jada.persistency.Keyed;
+import it.cnr.jada.bulk.*;
+import it.cnr.jada.persistency.*;
+import it.cnr.jada.persistency.beans.*;
+import it.cnr.jada.persistency.sql.*;
 
 public class Tipo_sezionaleBase extends Tipo_sezionaleKey implements Keyed {
 	// CD_ATTIVITA_COMMERCIALE VARCHAR(10)
@@ -42,10 +45,6 @@ public class Tipo_sezionaleBase extends Tipo_sezionaleKey implements Keyed {
 	private java.lang.Boolean fl_servizi_non_residenti;
 
 	private Integer ordina;
-
-	// FL_SPLIT_PAYMENT CHAR(1) NOT NULL
-	private java.lang.Boolean fl_split_payment;
-	
 public Tipo_sezionaleBase() {
 	super();
 }
@@ -208,11 +207,5 @@ public Integer getOrdina() {
 }
 public void setOrdina(Integer ordina) {
 	this.ordina = ordina;
-}
-public java.lang.Boolean getFl_split_payment() {
-	return fl_split_payment;
-}
-public void setFl_split_payment(java.lang.Boolean fl_split_payment) {
-	this.fl_split_payment = fl_split_payment;
 }
 }

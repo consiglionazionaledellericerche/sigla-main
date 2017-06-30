@@ -1122,13 +1122,6 @@
 		enabledOnInsert="false"
 		enabledOnFreeSearch="true"
 		label="progressivo SDI"/>		
-	<fieldProperty
-		name="fl_split_payment"
-		property="fl_split_payment"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_split_payment"
-		enabledOnSearch="true"
-		label="Split Payment" />
 							
 	<findFieldProperty name="esercizio"/>
 	<findFieldProperty name="esercizio_fattura_fornitore"/>
@@ -1189,8 +1182,6 @@
 	<findFieldProperty
 		name="pg_lettera"
 		inputType="TEXT"/>	
-	<findFieldProperty
-		name="fl_split_payment" />
 			
 	<formFieldProperty
 		name="ti_bene_servizio" />
@@ -1449,9 +1440,6 @@
 	<formFieldProperty name="progr_univoco" />
 	<formFieldProperty name="identificativoSdi" />	
 	<formFieldProperty name="progressivo" />
-	<formFieldProperty 
-		name="fl_split_payment" 
-		command="doOnFlSplitPaymentChange"/>
 			
 	<columnFieldProperty 
 		name="esercizio"/>

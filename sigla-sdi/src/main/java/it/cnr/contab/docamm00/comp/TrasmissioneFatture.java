@@ -3,7 +3,6 @@ package it.cnr.contab.docamm00.comp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
@@ -12,6 +11,7 @@ import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaAttivaComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
@@ -21,7 +21,6 @@ import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.fatturapa.FileSdIType;
 import it.gov.fatturapa.sdi.messaggi.v1.*;
-import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -144,20 +143,20 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			Fattura_attivaBulk fattura, CMISDocAmmAspect aspect) throws IOException,
 			ApplicationException {
 		logger.info("Inizio Salvataggio sul Documentale");
-		DocumentiCollegatiDocAmmService cmisService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
+		DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean(DocumentiCollegatiDocAmmService.class);
 		CMISFile cmisFile = new CMISFileFatturaAttiva(data.getInputStream(), data.getContentType(), nomeFile, fattura);
 		if (cmisFile!=null) {
-			CMISPath path = cmisFile.getCMISParentPath(cmisService);
+			String path = cmisFile.getCMISParentPath();
 			try{
-				Document node = cmisService.restoreSimpleDocument(
+				StorageObject storageObject = documentiCollegatiDocAmmService.restoreSimpleDocument(
 						cmisFile,
 						cmisFile.getInputStream(),
 						cmisFile.getContentType(),
 						cmisFile.getFileName(), 
-						path);
-				cmisService.addAspect(node, aspect.value());
-				cmisService.makeVersionable(node);
-				cmisFile.setDocument(node);
+						path,
+						true);
+				documentiCollegatiDocAmmService.addAspect(storageObject, aspect.value());
+				cmisFile.setStorageObject(storageObject);
 				logger.info("Salvato file sul Documentale");
 			} catch (Exception e) {
 				if (e.getCause() instanceof CmisConstraintException)
@@ -225,7 +224,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 								Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 								if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
 									try{
-										recuperoComponentFatturaAttiva().gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
+										SpringUtil.getBean(DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
 									} catch (Exception ex) {
 										logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa della mancata consegna della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 										java.io.StringWriter sw = new java.io.StringWriter();
@@ -343,7 +342,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 								Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 								if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
 									try{
-										recuperoComponentFatturaAttiva().gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
+                                        SpringUtil.getBean(DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
 									} catch (Exception ex) {
 										logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa dello scarto della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 										java.io.StringWriter sw = new java.io.StringWriter();
@@ -440,7 +439,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 										Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 										if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
 											try{
-												recuperoComponentFatturaAttiva().gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
+                                                SpringUtil.getBean(DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
 											} catch (Exception ex) {
 												logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa della Fattura rifiutata con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 												java.io.StringWriter sw = new java.io.StringWriter();

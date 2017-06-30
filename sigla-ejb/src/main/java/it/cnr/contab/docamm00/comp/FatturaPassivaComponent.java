@@ -1,39 +1,11 @@
 package it.cnr.contab.docamm00.comp;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
 
-import javax.ejb.EJBException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
-import it.cnr.contab.anagraf00.core.bulk.BancaHome;
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoHome;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -45,143 +17,48 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
 import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
-import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
-import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
-import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
-import it.cnr.contab.docamm00.docs.bulk.AutofatturaHome;
-import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
-import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IHome;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIHome;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_ammVBulk;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoHome;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaHome;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoHome;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaHome;
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
-import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
-import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
-import it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPBulk;
-import it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPHome;
-import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.AutoFatturaComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleScontoMaggBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataHome;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTributiBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
-import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
-import it.cnr.contab.docamm00.intrastat.bulk.Condizione_consegnaBulk;
-import it.cnr.contab.docamm00.intrastat.bulk.Condizione_consegnaHome;
-import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
-import it.cnr.contab.docamm00.intrastat.bulk.Modalita_erogazioneBulk;
-import it.cnr.contab.docamm00.intrastat.bulk.Modalita_erogazioneHome;
-import it.cnr.contab.docamm00.intrastat.bulk.Modalita_incassoBulk;
-import it.cnr.contab.docamm00.intrastat.bulk.Modalita_incassoHome;
-import it.cnr.contab.docamm00.intrastat.bulk.Modalita_trasportoBulk;
-import it.cnr.contab.docamm00.intrastat.bulk.Modalita_trasportoHome;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
-import it.cnr.contab.docamm00.tabrif.bulk.CambioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.CambioHome;
-import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.SezionaleBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
+import it.cnr.contab.docamm00.fatturapa.bulk.*;
+import it.cnr.contab.docamm00.intrastat.bulk.*;
+import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoIHome;
-import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voce_aggregatoBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleIHome;
-import it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
-import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
-import it.cnr.contab.doccont00.core.bulk.SospesoHome;
-import it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cdsBulk;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaHome;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laHome;
-import it.cnr.contab.inventario00.docs.bulk.Numeratore_buono_c_sBulk;
-import it.cnr.contab.inventario00.docs.bulk.Numeratore_buono_c_sHome;
-import it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoHome;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettHome;
-import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
-import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
-import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.inventario00.docs.bulk.*;
+import it.cnr.contab.inventario01.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashMap;
-import it.cnr.jada.bulk.PrimaryKeyHashtable;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.SQLBroker;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.ejb.EJBException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.*;
 
 public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent 
 	implements IFatturaPassivaMgr, Cloneable,Serializable {
@@ -2767,7 +2644,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 	}
 }
 private void creaAutofattura(UserContext userContext,Fattura_passivaBulk fattura_passiva) throws ComponentException {
-	boolean autoObb=false;
+boolean autoObb=false;
 	if (fattura_passiva != null) {
 		autoObb=verificaGenerazioneAutofattura(userContext, fattura_passiva);
 		if(autoObb)
@@ -2958,21 +2835,15 @@ public OggettoBulk creaConBulk(
 		throw handleException(_ex);
 	}
 	if (fattura_passiva.getDocumentoEleTestata() != null && fattura_passiva.getDocumentoEleTestata().getIdentificativoSdi() != null) {
-		try {
-			if (Utility.createParametriEnteComponentSession().getParametriEnte(userContext).getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE))
-				aggiornaMetadatiDocumentale(fattura_passiva);
-		} catch (RemoteException | EJBException e) {
-			throw handleException(e);
-		}
+		aggiornaMetadatiDocumentale(fattura_passiva);
 	}
 	if (messaggio != null)
 		return asMTU(fattura_passiva, messaggio);
 	return fattura_passiva;
 }
 private void aggiornaMetadatiDocumentale(Fattura_passivaBulk fattura_passiva) throws ComponentException {
-	CMISFolderFatturaPassiva folder = new CMISFolderFatturaPassiva(fattura_passiva, fattura_passiva.getDocumentoEleTestata());	
-	SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
-	folder.updateMetadataPropertiesCMIS(cmisService);
+	CMISFolderFatturaPassiva folder = new CMISFolderFatturaPassiva(fattura_passiva, fattura_passiva.getDocumentoEleTestata());
+	folder.updateMetadataPropertiesCMIS();
 }
 private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_passiva_rigaBulk dettaglio)
 	throws ComponentException {
@@ -3729,20 +3600,13 @@ public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fa
 		///??? Rospuc da chiedere
 	} else if (fatturaPassiva.getFl_san_marino_con_iva() != null && fatturaPassiva.getFl_san_marino_con_iva().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_CON_IVA","Y", "AND" } });
-		if (fatturaPassiva.getFl_split_payment() != null && fatturaPassiva.getFl_split_payment().booleanValue())
-			options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
 	} else if (fatturaPassiva.getFl_san_marino_senza_iva() != null &&  fatturaPassiva.getFl_san_marino_senza_iva().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_SENZA_IVA","Y", "AND" } });
-		if (fatturaPassiva.getFl_split_payment() != null && fatturaPassiva.getFl_split_payment().booleanValue())
-			options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
-	} else if (fatturaPassiva.getFl_split_payment() != null &&  fatturaPassiva.getFl_split_payment().booleanValue()) {
-		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
 	} else {
 		if (fatturaPassiva.getFl_intra_ue() == null &&
 			fatturaPassiva.getFl_extra_ue() == null &&
 			fatturaPassiva.getFl_san_marino_con_iva() == null &&
-			fatturaPassiva.getFl_san_marino_senza_iva() == null &&
-			fatturaPassiva.getFl_split_payment() == null)
+			fatturaPassiva.getFl_san_marino_senza_iva() == null)
 			options = new Vector();
 		else
 			options.add(new String[][] { { "TIPO_SEZIONALE.FL_ORDINARIO","Y", "AND" } });
@@ -4319,7 +4183,6 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 
 	
 	fattura = valorizzaInfoDocEle(userContext,fattura);
-	fattura.setDataInizioSplitPayment(getDataInizioSplitPayment(userContext));  
 	
 	return fattura;
 }
@@ -4455,8 +4318,6 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 	}
 	
 	fattura_passiva = valorizzaInfoDocEle(aUC,fattura_passiva);
-	fattura_passiva.setDataInizioSplitPayment(getDataInizioSplitPayment(aUC));
-	
 	if(fattura_passiva.isElettronica()){
 		try{
 			DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) fattura_passiva.getDocumentoEleTestata();
@@ -7186,7 +7047,7 @@ public void inserisciProgUnivoco(UserContext context,ElaboraNumUnicoFatturaPBulk
 				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
 				"CNRCTB100.insProgrUnivocoFatturaPassiva(?, ?)}",false,this.getClass());
 			cs.setInt(1, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context).intValue());
-			cs.setDate(2, new java.sql.Date(lancio.getDataRegistrazioneA().getTime()));
+			cs.setDate(2, new Date(lancio.getDataRegistrazioneA().getTime()));
 			cs.executeQuery();
 		} catch (Throwable e) {
 			throw handleException(e);
@@ -7297,23 +7158,6 @@ private Timestamp getDataInizioFatturazioneElettronica(UserContext userContext) 
 
 }
 
-private Timestamp getDataInizioSplitPayment(UserContext userContext) throws ComponentException {
-
-	try {
-
-		Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
-				.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-		return sess.getDt01(userContext, 0, null,
-				Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
-
-	} catch (javax.ejb.EJBException ex) {
-		throw handleException(ex);
-	} catch (RemoteException ex) {
-		throw handleException(ex);
-	}
-
-}
-
 public Fattura_passivaBulk valorizzaInfoDocEle(UserContext userContext, Fattura_passivaBulk fp)
 		throws ComponentException {
 	try {
@@ -7331,7 +7175,6 @@ public Fattura_passivaBulk valorizzaInfoDocEle(UserContext userContext, Fattura_
 		throw handleException(e);
 	}
 }
-
 public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fatturaPassiva) throws ComponentException {
 
 	if (fatturaPassiva.getDocumentoEleTestata() == null)
@@ -7660,9 +7503,7 @@ public void aggiornaObblSuCancPerCompenso(
 public boolean verificaGenerazioneAutofattura(UserContext aUC,Fattura_passivaBulk fattura)
 		throws ComponentException {
  			Boolean obbligatorio=false;
- 			if (fattura.isCommerciale() && fattura.getFl_split_payment()) {
- 				obbligatorio=true;
-			} else if (fattura.isCommerciale() && fattura.getFornitore()!=null && fattura.getFornitore().getAnagrafico()!=null && 
+			if (fattura.isCommerciale() && fattura.getFornitore()!=null && fattura.getFornitore().getAnagrafico()!=null && 
 					fattura.getFornitore().getAnagrafico().getPartita_iva()!=null &&
 					fattura.getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 ){
 			    	for (Iterator i = fattura.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
@@ -7699,28 +7540,10 @@ private void setDt_termine_creazione_docamm(
 			throw handleException(e);
 		}
 	}
-
-	public Fattura_passivaBulk eliminaLetteraPagamentoEstero(
+public Fattura_passivaBulk eliminaLetteraPagamentoEstero(
 		UserContext context,
 		Fattura_passivaBulk fatturaPassiva)
 		throws ComponentException {
-		return eliminaLetteraPagamentoEstero(context, fatturaPassiva,true);
-	}
-	
-	public boolean isAttivoSplitPayment(UserContext aUC, Timestamp dataFattura) throws ComponentException {					   
-		Date dataInizio;
-		try {
-			dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
-		} catch (ComponentException e) {
-	    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-		} catch (RemoteException e) {
-	    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-		} catch (EJBException e) {
-	    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-		}
-		if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio)){
-			return false;
-		}
-		return true;
+	return eliminaLetteraPagamentoEstero(context, fatturaPassiva,true);
 	}
 }

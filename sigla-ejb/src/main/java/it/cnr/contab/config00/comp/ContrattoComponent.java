@@ -31,6 +31,7 @@ import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.RemoveAccent;
@@ -630,7 +631,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *    PostCondition:
 	  *      L'utente può visualizzare il totale dei documenti 
 	  *
-	  * @param aUC lo user context 
+	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
 	  */
 	public ContrattoBulk calcolaTotDocCont (UserContext userContext,ContrattoBulk contratto) throws ComponentException
@@ -766,7 +767,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *    PostCondition:
 	  *      L'utente può visualizzare il totale dei documenti 
 	  *
-	  * @param aUC lo user context 
+	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
 	  */
 	private ContrattoBulk calcolaTotDocContForPadre (UserContext userContext,ContrattoBulk contratto) throws ComponentException
@@ -954,7 +955,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *    PostCondition:
 	  *      L'utente può visualizzare il totale dei documenti 
 	  *
-	  * @param aUC lo user context 
+	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
 	  */
 	private ContrattoBulk calcolaTotDocContForAttivoPassivo (UserContext userContext,ContrattoBulk contratto) throws ComponentException
@@ -1139,7 +1140,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  * Post: Viene salvato in modo definitivo il contratto in questione e cancellato quello provvisorio
 	  *
 	  * @param	userContext	lo UserContext che ha generato la richiesta
-	  * @param	varBilancio l'OggettoBulk da salvara in modo definitivo
+	  * @param	contratto l'OggettoBulk da salvara in modo definitivo
 	  * @return	il contratto definitivo
 	  *
 	  * Metodi privati chiamati:
@@ -1175,8 +1176,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("cig").getLabel());
 			}
 			
-			Folder oldNode = contrattoService.getFolderContratto(contratto);
-			if (oldNode == null || !contrattoService.isDocumentoContrattoPresent(contratto))
+			StorageObject storageObject = contrattoService.getFolderContratto(contratto);
+			if (storageObject == null || !contrattoService.isDocumentoContrattoPresent(contratto))
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
 			boolean pubblica = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
 					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_pubblica_contratto().booleanValue();
@@ -1227,13 +1228,15 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contrattoClone.setStato(ContrattoBulk.STATO_DEFINITIVO);
 
 			ContrattoBulk contrattoDefinitivo = (ContrattoBulk)super.creaConBulk(userContext,contrattoClone);
-			if (oldNode != null){
-				contrattoService.changeProgressivoNodeRef(oldNode, contrattoDefinitivo);
-				Folder node = contrattoService.getFolderContratto(contrattoDefinitivo);
-				if (node != null){
-					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
-					contrattoService.addConsumer(node,"GROUP_CONTRATTI");
-					contrattoService.setInheritedPermission(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo), Boolean.FALSE);
+			if (storageObject != null){
+				contrattoService.changeProgressivoNodeRef(storageObject, contrattoDefinitivo);
+				StorageObject storageObject1 = contrattoService.getFolderContratto(contrattoDefinitivo);
+				if (storageObject1 != null){
+					contrattoService.addAspect(storageObject1, "P:sigla_contratti_aspect:stato_definitivo");
+					contrattoService.addConsumer(storageObject1,"GROUP_CONTRATTI");
+					contrattoService.setInheritedPermission(
+							contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo)),
+							Boolean.FALSE);
 				}
 			}
 			

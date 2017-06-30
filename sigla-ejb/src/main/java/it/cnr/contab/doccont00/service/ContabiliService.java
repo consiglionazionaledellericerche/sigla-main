@@ -1,9 +1,10 @@
 package it.cnr.contab.doccont00.service;
 
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.jada.comp.ApplicationException;
 
 import java.io.ByteArrayInputStream;
@@ -12,17 +13,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.apache.chemistry.opencmis.client.api.ItemIterable;
-import org.apache.chemistry.opencmis.client.api.QueryResult;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
-public class ContabiliService extends SiglaCMISService {
+public class ContabiliService extends StoreService {
 	private transient static final Logger logger = LoggerFactory.getLogger(ContabiliService.class);
 	
 	public List<String> getNodeRefContabile(MandatoBulk mandato) throws ApplicationException{
@@ -49,35 +47,21 @@ public class ContabiliService extends SiglaCMISService {
 				query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");				
 			}
 		}
-		try {
-			ItemIterable<QueryResult> results = search(query);
-			if (results.getTotalNumItems() == 0)
-				return null;
-			else {
-				for (QueryResult node : results) {
-					ids.add((String) node.getPropertyValueById(PropertyIds.OBJECT_ID));
-				}
-				return ids;
-			}			
-		} catch (CmisObjectNotFoundException _ex) {
-			logger.error("CmisObjectNotFoundException dopo la query: " + query , _ex);
-			return null;
-		}
+		return search(query.toString()).stream()
+				.map(StorageObject::getKey)
+				.collect(Collectors.toList());
 	}
 	public InputStream getStreamContabile(Integer esercizio, String cds, Long pgMandato, String tipo) throws Exception{
 		List<String> ids = getNodeRefContabile(esercizio, cds, pgMandato, tipo);
 		if (ids != null){
 			if (ids.size() == 1){
-				try{
-					return getResource(getNodeByNodeRef(ids.get(0)));
-				}catch (CmisObjectNotFoundException _ex){
-				}
+                return getResource(ids.get(0));
 			}else{
 				PDFMergerUtility ut = new PDFMergerUtility();
 				ut.setDestinationStream(new ByteArrayOutputStream());
 				try {
 					for (String id : ids) {
-						ut.addSource(getResource(getNodeByNodeRef(id)));
+						ut.addSource(getResource(id));
 					}
 					ut.mergeDocuments();
 					return new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
@@ -85,7 +69,6 @@ public class ContabiliService extends SiglaCMISService {
 					throw e;
 				} catch (IOException e) {
 					throw e;
-				}catch (CmisObjectNotFoundException _ex){
 				}
 			}
 		}

@@ -4,21 +4,18 @@ import it.cnr.contab.cmis.CMISTypeName;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiAttachment;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
-import it.cnr.jada.comp.ApplicationException;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StoreService;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CMISFileProcedura extends CMISFile implements CMISTypeName{
 	private static final long serialVersionUID = -1775673719677028944L;
@@ -47,11 +44,11 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
 		this.setOriginalName(originalName);
     }
 
-    public CMISFileProcedura(Document node, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) {
-		super(node);
+    public CMISFileProcedura(StorageObject storageObject, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) {
+		super(storageObject);
     	setIncaricoProceduraArchivio(incaricoProceduraArchivio);
-    	if (node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
-    		this.setOriginalName(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
+    	if (storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
+    		this.setOriginalName(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
     	else
     		this.setOriginalName(incaricoProceduraArchivio.getNome_file());
 	}
@@ -68,8 +65,8 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
     public Integer getEsercizioProcedura() {
     	if (getIncaricoProceduraArchivio()!=null)
     		return getIncaricoProceduraArchivio().getEsercizio();
-    	if (getDocument()!=null)
-    		return ((BigInteger) getDocument().getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value())).intValue();
+    	if (getStorageObject()!=null)
+    		return ((BigInteger) getStorageObject().getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value())).intValue();
     	return null;
     }
 
@@ -77,8 +74,8 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
     public Long getPgProcedura() {
     	if (getIncaricoProceduraArchivio()!=null)
     		return getIncaricoProceduraArchivio().getPg_procedura();
-    	if (getDocument()!=null)
-    		return ((BigInteger) getDocument().getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value())).longValue();
+    	if (getStorageObject()!=null)
+    		return ((BigInteger) getStorageObject().getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value())).longValue();
     	return null;
     }
 	
@@ -99,16 +96,16 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
     	return "cmis:document";
 	}
 
-	public CMISPath getCMISParentPath(SiglaCMISService cmisService) throws ApplicationException{
+	public String getCMISParentPath() {
     	if (getIncaricoProceduraArchivio()!=null && getIncaricoProceduraArchivio().getIncarichi_procedura()!=null)
-    		return getIncaricoProceduraArchivio().getIncarichi_procedura().getCMISFolder().getCMISPath(cmisService);
+    		return getIncaricoProceduraArchivio().getIncarichi_procedura().getCMISFolder().getCMISPath();
 		return null;
 	}
 
-	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService) throws ApplicationException{
-		CMISPath cmisPath = this.getIncaricoProceduraArchivio().getIncarichi_procedura().getCMISFolder().getCMISPrincipalPath(cmisService);
+	public String getCMISAlternativeParentPath() {
+		String cmisPath = this.getIncaricoProceduraArchivio().getIncarichi_procedura().getCMISFolder().getCMISPrincipalPath();
 		if (cmisPath != null)
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()), (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()), (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()));
+			cmisPath = cmisPath.concat(StoreService.BACKSLASH).concat((String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()));
 		return cmisPath;
 	}
 
@@ -128,41 +125,41 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
 		return null;
 	}
 	
-	public boolean isEqualsTo(CmisObject node, List<String> listError){
+	public boolean isEqualsTo(StorageObject storageObject, List<String> listError){
 		String initTesto = "Procedura "+this.getEsercizioProcedura().toString()+"/"+this.getPgProcedura().toString()+" - Disallineamento dato ";
 		boolean isEquals = true;
 		String valueDB=null, valueCMIS=null; 
 
 		valueDB=String.valueOf(this.getEsercizioProcedura());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Esercizio Procedura - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getPgProcedura());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Pg_procedura - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getOriginalName());
-		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti_attachment:original_name"));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue("sigla_contratti_attachment:original_name"));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Nome Originale File - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getLinkUrl());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_LINK_URL.value()));
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_LINK_URL.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Link URL - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
 		valueDB=String.valueOf(this.getTypeName());
-		valueCMIS=String.valueOf(node.getType().getId());
+		valueCMIS=String.valueOf(storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Type documento - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;

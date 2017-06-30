@@ -1,25 +1,21 @@
 package it.cnr.contab.docamm00.cmis;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Timestamp;
-
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.client.api.ItemIterable;
-import org.apache.chemistry.opencmis.client.api.QueryResult;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.dp.DigitalPreservationProperties;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.List;
 
 @CMISType(name="F:sigla_fatture:fatture_passive")
 public class CMISFolderFatturaPassiva extends OggettoBulk {
@@ -302,28 +298,30 @@ public class CMISFolderFatturaPassiva extends OggettoBulk {
 		return !getProgressivoSdi().equals(new Long ("0"));
 	}
 
-	public void updateMetadataPropertiesCMIS(SiglaCMISService cmisService) throws ApplicationException{
+	public void updateMetadataPropertiesCMIS() throws ApplicationException{
+		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		StringBuffer query = new StringBuffer("select fat.cmis:objectId, fat.sigla_fatture:progressivo_sdi from sigla_fatture:fatture_passive fat ");
 		query.append(" where fat.sigla_fatture:identificativoSdI = ").append(identificativoSdI);
-		ItemIterable<QueryResult> resultsFolder = cmisService.search(query);
-		if (resultsFolder.getTotalNumItems() == 0)
+		List<StorageObject> resultsFolder = storeService.search(query.toString());
+		if (resultsFolder.size() == 0)
 			throw new ApplicationException("Non esiste sul documentale una fattura con identificativo SDI "+identificativoSdI);
 		else {
-			Folder trasmissioneFolder = null; 
-			for (QueryResult queryResult : resultsFolder) {
-				BigInteger prog = ((BigInteger) queryResult.getPropertyValueByQueryName("fat.sigla_fatture:progressivo_sdi"));
+            StorageObject trasmissioneFolder = null;
+			for (StorageObject storageObject : resultsFolder) {
+                trasmissioneFolder = storageObject;
+				BigInteger prog = storageObject.<BigInteger>getPropertyValue("sigla_fatture:progressivo_sdi");
 				if (prog == null || prog.equals(new BigInteger("0"))){
-					trasmissioneFolder = (Folder) cmisService.getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
 					if (isProgressivoTrasmissioneZero()){
-						cmisService.updateMetadataFromBulk(trasmissioneFolder, this);
+						storeService.updateMetadataFromBulk(storageObject, this);
 						break;
 					}
 				}
 			}
 			if (isProgressivoTrasmissioneDiversoDaZero() && trasmissioneFolder != null){
-				CMISPath path = cmisService.createFolderIfNotPresent(CMISPath.construct(trasmissioneFolder.getPath()), identificativoSdI + " - "+getProgressivoSdi(), null, null, this);
-				if (path != null){
-					cmisService.setInheritedPermission(path, Boolean.FALSE);
+                String objectKey = storeService.createFolderIfNotPresent(trasmissioneFolder.getPath(),
+                        identificativoSdI + " - "+getProgressivoSdi(), null, null, this);
+				if (objectKey != null){
+                    storeService.setInheritedPermission(storeService.getStorageObjectBykey(objectKey), Boolean.FALSE);
 				}
 			}
 		}

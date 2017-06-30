@@ -8,6 +8,7 @@ import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileAssegniRicerca;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileBorseStudio;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileIncarichi;
+import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
@@ -95,15 +96,15 @@ public class Incarichi_repertorio_archivioBulk extends Incarichi_repertorio_arch
 		}
 		return cmisFile;
 	}
-	public CMISFile getCMISFile(Document node) {
+	public CMISFile getCMISFile(StorageObject storageObject) {
 		if (this.getIncarichi_repertorio()!=null && 
 			this.getIncarichi_repertorio().getIncarichi_procedura()!=null) {
 			if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForBorseStudio())
-				return new CMISFileBorseStudio(node, this);
+				return new CMISFileBorseStudio(storageObject, this);
 			else if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForAssegniRicerca())
-				return new CMISFileAssegniRicerca(node, this);
+				return new CMISFileAssegniRicerca(storageObject, this);
 		}
-		return new CMISFileIncarichi(node, this);
+		return new CMISFileIncarichi(storageObject, this);
 	}
 	public String constructCMISNomeFile() {
 		StringBuffer nomeFile = new StringBuffer();

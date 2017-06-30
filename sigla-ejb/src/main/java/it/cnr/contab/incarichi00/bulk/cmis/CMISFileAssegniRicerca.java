@@ -11,6 +11,7 @@ import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import java.io.File;
 import java.io.IOException;
 
+import it.cnr.contab.spring.config.StorageObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
@@ -44,16 +45,16 @@ public class CMISFileAssegniRicerca extends CMISFileIncarichi {
 		super(file, originalName, incaricoRepertorioVar);
 	}
 
-	public CMISFileAssegniRicerca(Document node, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
-		super(node, incaricoRepertorioArchivio);
+	public CMISFileAssegniRicerca(StorageObject storageObject, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
+		super(storageObject, incaricoRepertorioArchivio);
 	}
 
-	public CMISFileAssegniRicerca(Document node, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
-		super(node, incaricoRepertorioRapp);
+	public CMISFileAssegniRicerca(StorageObject storageObject, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
+		super(storageObject, incaricoRepertorioRapp);
 	}
 
-	public CMISFileAssegniRicerca(Document node, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
-		super(node, incaricoRepertorioVar);
+	public CMISFileAssegniRicerca(StorageObject storageObject, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
+		super(storageObject, incaricoRepertorioVar);
 	}
 
 	@CMISPolicy(name="P:sigla_contratti_aspect:assegni_ricerca", property=@CMISProperty(name="sigla_contratti_aspect_assegni_ricerca:esercizio"))

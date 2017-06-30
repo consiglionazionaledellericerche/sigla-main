@@ -1,26 +1,34 @@
 package it.cnr.contab.docamm00.service;
 
-import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
+import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.jada.DetailedException;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.client.api.ItemIterable;
-import org.apache.chemistry.opencmis.client.api.QueryResult;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.GenerazioneReportException;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
-public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
+import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class DocumentiCollegatiDocAmmService extends StoreService {
 	
 	private final static String TIPO_ALLEGATO_NON_INVIATO_SDI = "allegati_non_inviati_sdi";
 	private final static String TIPO_ALLEGATO_FATTURA_DOPO_PROTOCOLLO = "stampa_fattura_dopo_protocollo";
@@ -31,82 +39,72 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 	}
 
 	public List<String> getNodeRefDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
-		List<String> ids = new ArrayList<String>();
-		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura); 
-		ItemIterable<QueryResult> results = getDocuments(folder, TIPO_ALLEGATO_FATTURA_DOPO_PROTOCOLLO);
-		if (results.getTotalNumItems() == 0){
+		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+        List<StorageObject> results = getDocuments(folder, TIPO_ALLEGATO_FATTURA_DOPO_PROTOCOLLO);
+		if (results.size() == 0){
 			results = getDocuments(folder, TIPO_ALLEGATO_FATTURA_PRIMA_PROTOCOLLO);
-			if (results.getTotalNumItems() == 0){
+			if (results.size() == 0){
 				return null;
 			} else{
-				getIds(ids, results);
+                return results.stream()
+                        .map(StorageObject::getKey)
+                        .collect(Collectors.toList());
 			}
 		} else {
-			getIds(ids, results);
+            return results.stream()
+                    .map(StorageObject::getKey)
+                    .collect(Collectors.toList());
 		}
-		return ids;
 	}
 
 	private List<String> getNodeRefFatturaAttivaXmlFirmato(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
-		List<String> ids = new ArrayList<String>();
-		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura); 
-		ItemIterable<QueryResult> results = getDocuments(folder, FILE_FATTURA_XML_FIRMATO);
-		if (results.getTotalNumItems() == 0)
+		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+        List<StorageObject> results = getDocuments(folder, FILE_FATTURA_XML_FIRMATO);
+		if (results.size() == 0)
 			return null;
 		else {
-			for (QueryResult nodeFile : results) {
-				String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
-				ids.add(file);
-			}
+            return results.stream()
+                    .map(StorageObject::getKey)
+                    .collect(Collectors.toList());
 		}
-		return ids;
 	}
 	
 	public List<String> getNodeRefAllegatiDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
-		List<String> ids = new ArrayList<String>();
-		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura); 
-		ItemIterable<QueryResult> results = getDocuments(folder, TIPO_ALLEGATO_NON_INVIATO_SDI);
-		if (results.getTotalNumItems() == 0){
+		String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+        List<StorageObject> results = getDocuments(folder, TIPO_ALLEGATO_NON_INVIATO_SDI);
+		if (results.size() == 0){
 			return null;
-		} else{
-			getIds(ids, results);
+		} else {
+            return results.stream()
+                    .map(StorageObject::getKey)
+                    .collect(Collectors.toList());
 		}
-		return ids;
 	}
 
-	private ItemIterable<QueryResult> getDocuments(String folder, String tipoAllegato)
-			throws ApplicationException {
+	private List<StorageObject> getDocuments(String folder, String tipoAllegato) throws ApplicationException {
 		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
 		query.append(" join sigla_fatture_attachment:"+tipoAllegato+" allegati on doc.cmis:objectId = allegati.cmis:objectId");
 		query.append(" where IN_FOLDER(doc, '").append(folder).append("')");
-		ItemIterable<QueryResult> results = search(query);
+		List<StorageObject> results = search(query.toString());
 		return results;
 	}
 
 	private String getFolderDocumentoAttivo(Integer esercizio, String cds, String cdUo,
 			Long pgFattura) throws DetailedException, ApplicationException {
-		Folder node = getNodeFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
-		String folder = (String) node.getPropertyValue(PropertyIds.OBJECT_ID);
+		StorageObject storageObject = getNodeFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+		String folder = (String) storageObject.getPropertyValue(PropertyIds.OBJECT_ID);
 		return folder;
 	}
 
-	private Folder getNodeFolderDocumentoAttivo(Integer esercizio, String cds, String cdUo,
-			Long pgFattura) throws DetailedException, ApplicationException {
-		Folder node = recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
-		if (node == null){
+	private StorageObject getNodeFolderDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException, ApplicationException {
+        StorageObject storageObject = recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+		if (storageObject == null){
 			throw new ApplicationException("Non esistono documenti collegati alla fattura.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+" numero:"+pgFattura);
 		}
-		return node;
+		return storageObject;
 	}
 
-	private void getIds(List<String> ids, ItemIterable<QueryResult> results) {
-		for (QueryResult nodeFile : results) {
-			String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
-			ids.add(file);
-		}
-	}
-	
-	public Folder recuperoFolderFattura(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
+	public StorageObject recuperoFolderFattura(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException {
 		int posizionePunto = cdUo.indexOf(".");
 		StringBuffer query = new StringBuffer("select fat.cmis:objectId from sigla_fatture:fatture_attive fat join strorg:uo uo on fat.cmis:objectId = uo.cmis:objectId ");
 		query.append(" join strorg:cds cds on fat.cmis:objectId = cds.cmis:objectId ");
@@ -116,18 +114,14 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 		query.append(" and cds.strorgcds:codice = '").append(cds).append("'");
 		//		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		//		query.append(" order by doc.cmis:creationDate DESC");
-		ItemIterable<QueryResult> resultsFolder = search(query);
-		if (resultsFolder.getTotalNumItems() == 0)
+		List<StorageObject> resultsFolder = search(query.toString());
+		if (resultsFolder.size() == 0)
 			return null;
-		else if (resultsFolder.getTotalNumItems() > 1){
-			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' fatture.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+
-					" numero:"+pgFattura);
+		else if (resultsFolder.size() > 1){
+			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' fatture.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+" numero:"+pgFattura);
 		} else {
-			for (QueryResult queryResult : resultsFolder) {
-				return (Folder) getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
-			}
+		    return resultsFolder.get(0);
 		}
-		return null;
 	}
 	
 	public InputStream getStreamDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception{
@@ -145,7 +139,7 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 		if (ids != null){
 			if (ids.size() == 1){
 				try{
-					return getResource(getNodeByNodeRef(ids.get(0)));
+					return getResource(ids.get(0));
 				}catch (CmisObjectNotFoundException _ex){
 				}
 			}else{
@@ -153,7 +147,7 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 				ut.setDestinationStream(new ByteArrayOutputStream());
 				try {
 					for (String id : ids) {
-						ut.addSource(getResource(getNodeByNodeRef(id)));
+						ut.addSource(getResource(id));
 					}
 					ut.mergeDocuments();
 					return new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
@@ -180,4 +174,106 @@ public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 	public InputStream getStreamAllegatiDocumento(Fattura_attivaBulk fattura) throws Exception{
 		return getStreamAllegatiDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
 	}
+
+    private void archiviaFileCMIS(UserContext userContext, DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService,
+                                  Fattura_attivaBulk fattura, File file) throws ComponentException {
+        List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
+        List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
+        try {
+            CMISFile cmisFile = new CMISFileFatturaAttiva(file, fattura,
+                    "application/pdf","FAPP" + fattura.constructCMISNomeFile() + ".pdf");
+            String path = cmisFile.getCMISParentPath();
+            try{
+                Optional.ofNullable(documentiCollegatiDocAmmService.restoreSimpleDocument(
+                        cmisFile,
+                        cmisFile.getInputStream(),
+                        cmisFile.getContentType(),
+                        cmisFile.getFileName(),
+                        path,
+                        true
+                )).ifPresent(storageObject -> {
+                    List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+                    aspects.add(CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
+                    documentiCollegatiDocAmmService.updateProperties(
+                            Collections.singletonMap(
+                                    StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                                    aspects),
+                            storageObject);
+                    cmisFile.setStorageObject(storageObject);
+                    cmisFileCreate.add(cmisFile);
+                });
+            } catch (StorageException _ex) {
+                if (_ex.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+                    throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
+                throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + _ex.getMessage() + ")");
+            }
+        } catch (Exception e){
+            //Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
+            for (CMISFile cmisFile : cmisFileCreate)
+                documentiCollegatiDocAmmService.delete(cmisFile.getStorageObject());
+            for (CMISFile cmisFile : cmisFileAnnullati) {
+                String cmisFileName = cmisFile.getFileName();
+                String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
+                String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
+                cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
+                documentiCollegatiDocAmmService.updateProperties(cmisFile, cmisFile.getStorageObject());
+            }
+            throw new ApplicationException(e.getMessage());
+        }
+    }
+    public void gestioneAllegatiPerFatturazioneElettronica(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
+        if (fattura.isDocumentoFatturazioneElettronica()){
+            DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean(DocumentiCollegatiDocAmmService.class);
+            File file = lanciaStampaFatturaElettronica(userContext, fattura);
+            archiviaFileCMIS(userContext, documentiCollegatiDocAmmService, fattura, file);
+        }
+    }
+
+    public File lanciaStampaFatturaElettronica(
+            UserContext userContext,
+            Fattura_attivaBulk fattura) throws ComponentException {
+        try {
+            String nomeProgrammaStampa = "fattura_attiva_provvisoria.jasper";
+            String nomeFileStampaFattura = getOutputFileNameFatturazioneElettronica(nomeProgrammaStampa, fattura);
+            File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + nomeFileStampaFattura);
+            Print_spoolerBulk print = new Print_spoolerBulk();
+            print.setFlEmail(false);
+            print.setReport("/docamm/docamm/"+ nomeProgrammaStampa);
+            print.setNomeFile(nomeFileStampaFattura);
+            print.setUtcr(userContext.getUser());
+            print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+            print.addParam("esercizio",fattura.getEsercizio(), Integer.class);
+            print.addParam("cd_uo_origine",fattura.getCd_uo_origine(), String.class);
+            print.addParam("pg_fattura",fattura.getPg_fattura_attiva(), Long.class);
+            Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
+
+            FileOutputStream f = new FileOutputStream(output);
+            f.write(report.getBytes());
+            return output;
+        } catch (IOException e) {
+            throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
+        }
+    }
+
+    private String getOutputFileNameFatturazioneElettronica(String reportName, Fattura_attivaBulk fattura) {
+        String fileName = preparaFileNamePerStampa(reportName);
+        fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fattura.recuperoIdFatturaAsString() + '_' + fileName;
+        return fileName;
+    }
+    private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
+    private String preparaFileNamePerStampa(String reportName) {
+        String fileName = reportName;
+        fileName = fileName.replace('/', '_');
+        fileName = fileName.replace('\\', '_');
+        if(fileName.startsWith("_"))
+            fileName = fileName.substring(1);
+        if(fileName.endsWith(".jasper"))
+            fileName = fileName.substring(0, fileName.length() - 7);
+        fileName = fileName + ".pdf";
+        return fileName;
+    }
+
+
+
 }

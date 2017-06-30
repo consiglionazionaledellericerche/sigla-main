@@ -437,8 +437,11 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
             	//read comma separated file line by line
 				for (String[] csvLine : csvAllLine) {
             		lineNumber++;
+            		if (lineNumber==1013) {
+            			int a=1;
+            		}
             		//salto la prima riga che è l'intestazione
-            		if (lineNumber>1 && !csvLine[1].replace(" ","").equals("") && (csvLine.length==20 || csvLine.length==21)){
+            		if (lineNumber>1 && !csvLine[1].replace(" ","").equals("") && csvLine.length==20){
 	            		incaricoComunicato = new Incarichi_comunicati_fpBulk();
 	            		incaricoComunicato.setTipo_record(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
 	            		incaricoComunicato.setToBeCreated();
@@ -497,10 +500,7 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		            	else if (csvLine[11].toUpperCase().equals("CONSULENZA TECNICA"))
 		            		incaricoComunicato.setAttivita_economica("956");
 
-	               		//dal secondo semestre 2016 i file prodotti dalla FP hanno questo campo non valorizzato
-	               		//o valorizzato solo con uno spazio. Per permettere l'inserimento testo il campo
-	               		if (!csvLine[12].isEmpty() && csvLine[12].length()>1)
-	               			incaricoComunicato.setDt_inizio(new Timestamp(formatter.parse(csvLine[12]).getTime()));
+	            		incaricoComunicato.setDt_inizio(new Timestamp(formatter.parse(csvLine[12]).getTime()));
 
            				incaricoComunicato.setDt_fine(new Timestamp(formatter.parse(csvLine[13]).getTime()));
 

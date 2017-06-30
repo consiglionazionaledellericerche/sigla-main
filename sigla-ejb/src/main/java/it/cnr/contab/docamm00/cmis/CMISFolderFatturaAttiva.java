@@ -1,19 +1,21 @@
 package it.cnr.contab.docamm00.cmis;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.dp.DigitalPreservationProperties;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CMISType(name="F:sigla_fatture:fatture_attive")
 public class CMISFolderFatturaAttiva extends OggettoBulk {
@@ -290,22 +292,27 @@ public class CMISFolderFatturaAttiva extends OggettoBulk {
 		return this.getFattura_attivaBulk().getCd_uo_origine();
 	}
 
-	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService) throws ApplicationException{
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathFatture",CMISPath.class);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine());
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Fatture Attive", "Fatture Attive", "Fatture Attive");
-		return cmisPath;
+
+	public String getCMISPrincipalPath() {
+        return Arrays.asList(
+                SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+                this.getFattura_attivaBulk().getCd_uo_origine(),
+                "Fatture Attive"
+        ).stream().collect(
+                Collectors.joining(StoreService.BACKSLASH)
+        );
 	}
 
-	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException{
-		CMISPath cmisPath = this.getCMISPrincipalPath(cmisService);
-		if (cmisPath!=null) {
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getEsercizioFattura().toString(), "Esercizio "+this.getEsercizioFattura().toString(), "Esercizio "+this.getEsercizioFattura().toString());
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Fattura "+this.getEsercizioFattura().toString()+Utility.lpad(this.getPgFattura().toString(),10,'0'), "Fattura "+this.getEsercizioFattura().toString()+"/"+this.getPgFattura().toString(), "Fattura "+this.getEsercizioFattura().toString()+"/"+this.getPgFattura().toString(), this);
-			cmisService.setInheritedPermission(cmisPath, Boolean.FALSE);
-
-		}
-		return cmisPath;
+	public String getCMISPath(){
+        return Arrays.asList(
+                getCMISPrincipalPath(),
+                Optional.ofNullable(getEsercizioFattura())
+                        .map(esercizio -> String.valueOf(esercizio))
+                        .orElse("0"),
+                "Fattura " + this.getEsercizioFattura().toString() + Utility.lpad(this.getPgFattura().toString(),10,'0')
+        ).stream().collect(
+                Collectors.joining(StoreService.BACKSLASH)
+        );
 	}
 	
 	public Fattura_attivaBulk getFattura_attivaBulk() {

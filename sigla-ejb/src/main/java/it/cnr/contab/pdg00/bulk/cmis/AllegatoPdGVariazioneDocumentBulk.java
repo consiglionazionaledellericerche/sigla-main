@@ -1,20 +1,21 @@
 package it.cnr.contab.pdg00.bulk.cmis;
 
+
 import java.io.File;
 import java.util.StringTokenizer;
 
-import org.apache.chemistry.opencmis.client.api.Document;
+import it.cnr.contab.spring.config.StorageObject;
 
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.jada.bulk.OggettoBulk;
 @CMISType(name="cmis:document")
 public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 	private static final long serialVersionUID = 1L;
-	private Document node;
+	private StorageObject node;
 	private File file;
 	private String contentType;
 	private String nome;
@@ -25,11 +26,11 @@ public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 		super();
 	}
 
-	public static AllegatoPdGVariazioneDocumentBulk construct(Document node){
+	public static AllegatoPdGVariazioneDocumentBulk construct(StorageObject node){
 		return new AllegatoPdGVariazioneDocumentBulk(node);
 	}
 	
-	public AllegatoPdGVariazioneDocumentBulk(Document node) {
+	public AllegatoPdGVariazioneDocumentBulk(StorageObject node) {
 		super();
 		this.node = node;
 	}
@@ -41,13 +42,10 @@ public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 		while (fileName.hasMoreTokens()){
 			newFileName = fileName.nextToken();   	
 		}
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService",
-				SiglaCMISService.class);		
-
 		if (newFileName != null){
-			return cmisService.sanitizeFilename(newFileName);
+			return SpringUtil.getBean("storeService", StoreService.class).sanitizeFilename(newFileName);
 		}
-		return cmisService.sanitizeFilename(file);
+		return SpringUtil.getBean("storeService", StoreService.class).sanitizeFilename(file);
 	}
 	
 	public boolean isNodePresent(){
@@ -58,7 +56,7 @@ public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{
 		return !isNodePresent();
 	}
 	
-	public Document getDocument() {
+	public StorageObject getDocument() {
 		return node;
 	}
 

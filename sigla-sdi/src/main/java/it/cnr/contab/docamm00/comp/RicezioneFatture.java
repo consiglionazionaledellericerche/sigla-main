@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.activation.DataHandler;
 import javax.ejb.Stateless;
@@ -33,7 +34,9 @@ import javax.xml.soap.SOAPFault;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
-import org.apache.chemistry.opencmis.client.api.Document;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StoreService;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 import org.apache.commons.codec.binary.Base64;
@@ -47,8 +50,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.cnr.contab.cmis.CMISAspect;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
@@ -121,7 +122,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			else
 				IOUtils.copy(parametersIn.getFile().getInputStream(), bStream);
 			
-			CMISPath cmisPath = saveFattura(
+			String path = saveFattura(
 					isp7m,
 					parametersIn.getNomeFile(), 
 					parametersIn.getFile().getInputStream(), 
@@ -138,7 +139,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			
 			JAXBElement<FatturaElettronicaType> fatturaElettronicaType = (JAXBElement<FatturaElettronicaType>) 
 					jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
-			elaboraFattura(fatturaElettronicaType.getValue(), parametersIn.getIdentificativoSdI(), parametersIn.getNomeFile(), replyTo, cmisPath);		
+			elaboraFattura(fatturaElettronicaType.getValue(), parametersIn.getIdentificativoSdI(), parametersIn.getNomeFile(), replyTo, path);
 			risposta.setEsito(EsitoRicezioneType.ER_01);
 		} catch (Throwable e) {
 			LOGGER.error("Errore nel WS della ricezione delle fatture!", e);
@@ -170,7 +171,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	}
 		
 	private void saveNotifica(DataHandler data, String nomeFile, String nodeRef, CMISDocAmmAspect aspect) throws ComponentException {
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
+		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
 		metadataProperties.put(PropertyIds.NAME, nomeFile);
@@ -178,7 +179,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", aspect.value()));
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 		try{
-			cmisService.storeSimpleDocument(data.getInputStream(), data.getContentType(), nodeRef, metadataProperties);
+			storeService.storeSimpleDocument(data.getInputStream(), data.getContentType(), nodeRef, metadataProperties);
 		} catch(IOException e){
 			throw new ComponentException(e);
 		} catch(CmisContentAlreadyExistsException e){
@@ -186,21 +187,25 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		}
 	}
 
-	private CMISPath saveFattura(boolean isp7m, String name, InputStream stream, String contentTypeFile,
+	private String saveFattura(boolean isp7m, String name, InputStream stream, String contentTypeFile,
 			String nameMinusP7m, InputStream streamMinusP7m, String contentTypeFileMinusP7m,			
 			String nomeFileMedatati, InputStream streamMetadati,  String contentTypeMetadata, 
 			BigInteger identificativoSdI) throws ApplicationException {
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);		
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathFatturePassive",CMISPath.class);
+		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Calendar now = Calendar.getInstance();
-		String year = String.valueOf(now.get(Calendar.YEAR)), 
+		String year = String.valueOf(now.get(Calendar.YEAR)),
 				month = String.valueOf(now.get(Calendar.MONTH) + 1),
 				day = String.valueOf(now.get(Calendar.DAY_OF_MONTH)),
 				folderName = identificativoSdI + " - " + name.substring(0, name.indexOf("."));
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, year, year, year);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, month, month, month);		
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, day, day, day);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName, null, null, 
+		String path = Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathFatturePassive(),
+				year,
+				month,
+				day
+		).stream().collect(
+				Collectors.joining(StoreService.BACKSLASH)
+		);
+		path = storeService.createFolderIfNotPresent(path, folderName,null, null,
 				new CMISFolderFatturaPassiva(null, identificativoSdI));
 		try {
 			Map<String, Object> metadataPropertiesMinusP7M = new HashMap<String, Object>();
@@ -209,7 +214,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			metadataPropertiesMinusP7M.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
 					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:trasmissione_fattura"));
 			metadataPropertiesMinusP7M.put("sigla_commons_aspect:utente_applicativo", "SDI");
-			cmisService.storeSimpleDocument(streamMinusP7m, contentTypeFileMinusP7m, cmisPath, metadataPropertiesMinusP7M);			
+			storeService.storeSimpleDocument(streamMinusP7m, contentTypeFileMinusP7m, path, metadataPropertiesMinusP7M);
 		} catch(CmisContentAlreadyExistsException _ex){
 			LOGGER.warn("PEC File "+nameMinusP7m+" alredy store!");
 		}
@@ -220,7 +225,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
 					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
 			metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
-			cmisService.storeSimpleDocument(streamMetadati, contentTypeMetadata, cmisPath, metadataProperties);
+			storeService.storeSimpleDocument(streamMetadati, contentTypeMetadata, path, metadataProperties);
 		} catch(CmisContentAlreadyExistsException _ex){
 			LOGGER.warn("PEC File "+nomeFileMedatati+" alredy store!");
 		}
@@ -233,15 +238,15 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
 						Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma", CMISAspect.CNR_SIGNEDDOCUMENT.value()));
 				fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
-				cmisService.storeSimpleDocument(stream, contentTypeFile, cmisPath, fileProperties);
+				storeService.storeSimpleDocument(stream, contentTypeFile, path, fileProperties);
 			} catch(CmisContentAlreadyExistsException _ex){
 				LOGGER.warn("PEC File "+name+" alredy store!");
 			}				
 		}
-		return cmisPath;
+		return path;
 	}
 	
-	private void elaboraFattura(FatturaElettronicaType fatturaElettronicaType, BigInteger identificativoSdI, String nomeFile, String replyTo, CMISPath cmisPath) throws ApplicationException {
+	private void elaboraFattura(FatturaElettronicaType fatturaElettronicaType, BigInteger identificativoSdI, String nomeFile, String replyTo, String path) throws ApplicationException {
 		FatturaElettronicaPassivaComponentSession component = 
 				(FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
     	UserContext userContext = createUserContext();
@@ -264,8 +269,8 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		docTrasmissione.setCodiceUnivocoSdi(identificativoSdI.longValue());
 		docTrasmissione.setDataRicezione(EJBCommonServices.getServerTimestamp());
 		docTrasmissione.setNomeFile(nomeFile);
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
-		docTrasmissione.setCmisNodeRef(cmisService.getNodeByPath(cmisPath).getId());
+		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
+		docTrasmissione.setCmisNodeRef(storeService.getStorageObjectByPath(path).getKey());
 		if (fatturaElettronicaType.getFatturaElettronicaHeader().getSoggettoEmittente() != null)
 			docTrasmissione.setSoggettoEmittente(fatturaElettronicaType.getFatturaElettronicaHeader().getSoggettoEmittente().name());
 		if (committente != null) {
@@ -605,7 +610,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					try {
 						Map<String, Object> fileProperties = new HashMap<String, Object>();
 						fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-						fileProperties.put(PropertyIds.NAME, cmisService.sanitizeFilename(nomeAllegato));
+						fileProperties.put(PropertyIds.NAME, storeService.sanitizeFilename(nomeAllegato));
 						fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
 								Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
 						fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
@@ -615,11 +620,11 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 								bytes = Base64.decodeBase64(bytes);					
 						} catch(ArrayIndexOutOfBoundsException _ex) {			
 						}
-						Document document = SpringUtil.getBean("cmisService", SiglaCMISService.class).
+						StorageObject storageObject = SpringUtil.getBean("storeService", StoreService.class).
 								storeSimpleDocument(
 										new ByteArrayInputStream(bytes), 
-										"application/" + allegato.getFormatoAttachment(), cmisPath, fileProperties);
-						docAllegato.setCmisNodeRef(document.getId());												
+										"application/" + allegato.getFormatoAttachment(), path, fileProperties);
+						docAllegato.setCmisNodeRef(storageObject.getKey());
 					} catch(Exception  _ex) {
 						anomalie.add("Errore nel salvataggio dell'allegato sul documentale! Identificativo:"+identificativoSdI + " " + _ex.getMessage());
 						LOGGER.error("Errore nel salvataggio dell'allegato sul documentale! Identificativo:"+identificativoSdI, _ex);

@@ -4,14 +4,14 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
@@ -19,10 +19,13 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @CMISType(name="D:doccont:document")
 public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements AllegatoParentBulk, StatoTrasmissione{
 	TerzoBulk terzo = new TerzoBulk();
@@ -220,19 +223,21 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 	public String toString() {
 		return getCMISFolderName();
 	}
-	
-	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException {
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR",CMISPath.class);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCd_unita_organizzativa(), 
-				getCd_unita_organizzativa(), 
-				getCd_unita_organizzativa());
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath,getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_MAN)?"Mandati":"Reversali" ,null, null);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getEsercizio().toString(), null, null);		
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCMISFolderName(), 
-				null, 
-				null);
-		return cmisPath;		
-	}
+
+
+    public String getStorePath() {
+        return Arrays.asList(
+                SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+                getCd_unita_organizzativa(),
+                getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_MAN)?"Mandati":"Reversali",
+                Optional.ofNullable(getEsercizio())
+                        .map(esercizio -> String.valueOf(esercizio))
+                        .orElse("0"),
+                getCMISFolderName()
+        ).stream().collect(
+                Collectors.joining(StoreService.BACKSLASH)
+        );
+    }
 	
 	public String getCMISName() {
 		return (getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN) ? "Mandato n. " : "Reversale n. ") + getPg_documento_cont() + (getStato().equals(MandatoBulk.STATO_MANDATO_ANNULLATO)?" A.pdf":".pdf");
@@ -267,10 +272,10 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 			BulkList<AllegatoGenericoBulk> archivioAllegati) {
 		this.archivioAllegati = archivioAllegati;
 	}
-public String getCssClassTi_cc_bi(){
-	if(getTi_cc_bi().compareTo("B")==0)
- 		return "TableColumnRedBold";
-	else
-		return null; 
-}
+    public String getCssClassTi_cc_bi(){
+        if(getTi_cc_bi().compareTo("B")==0)
+            return "TableColumnRedBold";
+        else
+            return null;
+    }
 }

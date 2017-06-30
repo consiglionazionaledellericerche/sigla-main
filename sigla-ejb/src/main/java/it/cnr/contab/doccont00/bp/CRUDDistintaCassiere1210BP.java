@@ -1,7 +1,5 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.cmis.MimeTypes;
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
@@ -9,6 +7,7 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Apparence;
 import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
@@ -17,6 +16,9 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -24,7 +26,6 @@ import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
@@ -45,25 +46,12 @@ import it.cnr.jada.util.jsp.Button;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
-import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import com.google.gson.GsonBuilder;
 
@@ -235,7 +223,9 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		String cds = ((HttpActionContext)actioncontext).getParameter("cds");
 		Long numero_documento = Long.valueOf(((HttpActionContext)actioncontext).getParameter("numero_documento"));
 		String tipo = ((HttpActionContext)actioncontext).getParameter("tipo");
-		InputStream is = documentiContabiliService.getStreamDocumento(esercizio, cds, numero_documento, tipo);
+		InputStream is = documentiContabiliService.getStreamDocumento(
+				new V_mandato_reversaleBulk(esercizio, tipo, cds, numero_documento)
+		);
 		if (is == null) {
 			log.error("CMIS Object not found: " + esercizio + cds + numero_documento + tipo);
 			is = this.getClass().getResourceAsStream("/cmis/404.pdf");
@@ -258,9 +248,14 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 	}
 	
 	public void scaricaDistinta(ActionContext actioncontext) throws Exception {
-		DistintaCassiere1210Bulk distintaCassiere1210Bulk = (DistintaCassiere1210Bulk)getModel();		
-		InputStream is = documentiContabiliService.getStreamDocumento(distintaCassiere1210Bulk.getEsercizio(), 
-				null, distintaCassiere1210Bulk.getPgDistinta(), distintaCassiere1210Bulk.getTipo());
+		DistintaCassiere1210Bulk distintaCassiere1210Bulk = (DistintaCassiere1210Bulk)getModel();
+		InputStream is = documentiContabiliService.getResource(
+				documentiContabiliService.getStorageObjectByPath(
+						distintaCassiere1210Bulk.getStorePath()
+						.concat(StoreService.BACKSLASH)
+						.concat(distintaCassiere1210Bulk.getCMISFolderName())
+				)
+		);
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
 			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
@@ -360,7 +355,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
 			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
 			if (lettera_pagam_esteroBulk.getFl_seconda_firma_apposta() == null || !lettera_pagam_esteroBulk.getFl_seconda_firma_apposta())
-				nodes.addAll(documentiContabiliService.getNodeRefDocumento(lettera_pagam_esteroBulk, true));
+				nodes.add(documentiContabiliService.getDocumentKey(lettera_pagam_esteroBulk, true));
 		}
 		Apparence apparence = new Apparence(
 				null, 
@@ -371,7 +366,6 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 	}
 	
 	public void signDocuments(ActionContext context, FirmaOTPBulk firmaOTPBulk, List<String> nodes, Apparence apparence) throws Exception {
-		String webScriptURL = documentiContabiliService.getRepositoyURL().concat("service/sigla/firma/doccont");
 		Map<String, String> subjectDN = documentiContabiliService.getCertSubjectDN(firmaOTPBulk.getUserName(), firmaOTPBulk.getPassword());
 		if (subjectDN == null)
 			throw new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!");
@@ -389,24 +383,10 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		
 		apparence.setTesto(apparence.getTesto() + subjectDN.get("GIVENNAME") + " " + subjectDN.get("SURNAME"));
 		pdfSignApparence.setApparence(apparence);
-		String json = new GsonBuilder().create().toJson(pdfSignApparence);
-		try {		
-			UrlBuilder url = new UrlBuilder(new URIBuilder(webScriptURL).build().toString());
-			Response response = documentiContabiliService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
-			int status = response.getResponseCode();
-			if (status == HttpStatus.SC_NOT_FOUND
-					|| status == HttpStatus.SC_INTERNAL_SERVER_ERROR
-					|| status == HttpStatus.SC_UNAUTHORIZED
-					|| status == HttpStatus.SC_BAD_REQUEST) {
-				JSONTokener tokenizer = new JSONTokener(new StringReader(response.getErrorContent()));
-			    JSONObject jsonObject = new JSONObject(tokenizer);
-			    String jsonMessage = jsonObject.getString("message");
-				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
-			}
-		} catch (IOException e) {
-			throw new BusinessProcessException(e);
-		} catch (Exception e) {
-			throw new BusinessProcessException(e);
+		try {
+			documentiContabiliService.signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), "service/sigla/firma/doccont");
+		} catch (StorageException _ex) {
+			throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
 		}
 		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
 			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
@@ -422,7 +402,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		List<String> nodes = new ArrayList<String>();
 		for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
 			Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
-			nodes.addAll(documentiContabiliService.getNodeRefDocumento(lettera_pagam_esteroBulk, true));			
+			nodes.add(documentiContabiliService.getDocumentKey(lettera_pagam_esteroBulk, true));
 		}
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		Print_spoolerBulk print = new Print_spoolerBulk();
@@ -440,8 +420,13 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		Report report = SpringUtil.getBean("printService",
 				PrintService.class).executeReport(context.getUserContext(),
 				print);
-		CMISPath cmisPath = distintaCassiere1210Bulk.getCMISPath(documentiContabiliService);
-		Document node = documentiContabiliService.restoreSimpleDocument(distintaCassiere1210Bulk, report.getInputStream(), report.getContentType(), report.getName(), cmisPath);
+				StorageObject node = documentiContabiliService.restoreSimpleDocument(
+		        distintaCassiere1210Bulk,
+                report.getInputStream(),
+                report.getContentType(),
+                report.getName(),
+                distintaCassiere1210Bulk.getStorePath(),
+                false);
 		String nodo = (String) node.getPropertyValue("alfcmis:nodeRef");
 		nodes.add(nodo);
 		Apparence apparence = new Apparence(
