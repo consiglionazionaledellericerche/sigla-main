@@ -241,7 +241,12 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			    {
 			      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
 			      if (!bulk.isAttivoSplitPayment() && rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
-			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' o 'Split Payment', il documento deve essere rifiutato!");	
+			    	  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' "
+			    	  		+ "o 'Split Payment'"
+			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
+			    	  			" per documenti con data emissione antecedente al "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
+			    	  		+ ". Il documento deve essere rifiutato!");	
 			    	  return context.findDefaultForward();			    	  
 			      }
 			      if (rigaEle.getImponibileImporto()!=null) 
@@ -256,7 +261,11 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				}
 			}
 			if (bulk.isAttivoSplitPayment() && !bulk.isDocumentoSplitPayment()) {
-				fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment', il documento deve essere rifiutato!");	
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+				fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
+		    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
+		    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
+						+ ". Il documento deve essere rifiutato!");	
 				return context.findDefaultForward();			    	  
 			}			
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";

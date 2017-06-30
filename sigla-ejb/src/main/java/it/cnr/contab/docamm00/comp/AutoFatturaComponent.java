@@ -318,13 +318,14 @@ public java.util.Collection findSezionali(UserContext aUC, AutofatturaBulk autof
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_CON_IVA","Y", "AND" } });
 	else if (autofattura.getFl_san_marino_senza_iva().booleanValue())
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_SENZA_IVA","Y", "AND" } });
-	else if (autofattura.getFl_split_payment().booleanValue())
-		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
 	else
 		if(!obbIta)
 			options.add(new String[][] { { "TIPO_SEZIONALE.FL_ORDINARIO","Y", "AND" } });
 
-	options.add(autofatturaClause);
+	if (autofattura.getFl_split_payment()!=null && autofattura.getFl_split_payment().booleanValue())
+		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
+	else
+		options.add(autofatturaClause);
 
 	//********************************
 	//Il seguente if è stato richiesto da Paolo espressamente su richiesta CINECA

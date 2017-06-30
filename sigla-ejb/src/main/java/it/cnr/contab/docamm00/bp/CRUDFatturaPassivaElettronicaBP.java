@@ -49,6 +49,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -92,6 +93,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			new SimpleDetailCRUDController("RifDocEleDdtColl",DocumentoEleDdtBulk.class,"docEleDdtColl",this);
 	private Unita_organizzativaBulk uoScrivania;
 	private boolean esercizioAperto;
+	private Date dataAttivazioneSplit;
 
 	public CRUDFatturaPassivaElettronicaBP() {
 		super();
@@ -193,6 +195,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			if (integrazioneSDI != null)
 				tipoIntegrazioneSDI = TipoIntegrazioneSDI.valueOf(integrazioneSDI); 
 			setEsercizioAperto(((it.cnr.contab.config00.ejb.EsercizioComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_EsercizioComponentSession",	EsercizioComponentSession.class)).isEsercizioAperto(actioncontext.getUserContext()));
+			dataAttivazioneSplit = Utility.createConfigurazioneCnrComponentSession().getDt01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (RemoteException e) {
@@ -638,5 +641,9 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 
 	public void setEsercizioAperto(boolean esercizioAperto) {
 		this.esercizioAperto = esercizioAperto;
+	}
+	
+	public Date getDataAttivazioneSplit() {
+		return dataAttivazioneSplit;
 	}
 }
