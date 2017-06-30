@@ -2767,15 +2767,19 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 	}
 }
 private void creaAutofattura(UserContext userContext,Fattura_passivaBulk fattura_passiva) throws ComponentException {
-	boolean autoObb=false;
 	if (fattura_passiva != null) {
+		boolean autoObb=false, 
+				fatturaSplit = fattura_passiva.isCommerciale() && 
+ 				  			   fattura_passiva.getFl_split_payment()!=null && fattura_passiva.getFl_split_payment();
+
 		autoObb=verificaGenerazioneAutofattura(userContext, fattura_passiva);
 		if(autoObb)
 			fattura_passiva.setFl_autofattura(Boolean.TRUE);
 
 		if (fattura_passiva.getFl_autofattura() == null)
 			fattura_passiva.setFl_autofattura(Boolean.FALSE);
-		if (fattura_passiva.getFl_autofattura().booleanValue()) {
+
+		if (fattura_passiva.getFl_autofattura().booleanValue() || fatturaSplit) {
 			it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk uoEnte = findUOEnte(userContext, fattura_passiva.getEsercizio());
 			AutofatturaBulk autofattura = new AutofatturaBulk();
 			autofattura.setCd_cds(uoEnte.getCd_unita_padre());
@@ -2784,7 +2788,7 @@ private void creaAutofattura(UserContext userContext,Fattura_passivaBulk fattura
 			autofattura.completeFrom(fattura_passiva);
 			AutoFatturaComponentSession h = getAutofatturaComponentSession(userContext);
 			try {
-				Vector sez = h.estraeSezionali(userContext, autofattura,autoObb);
+				Vector sez = h.estraeSezionali(userContext, autofattura,autoObb||fatturaSplit);
 				if (sez == null || sez.isEmpty())
 					throw new it.cnr.jada.comp.ApplicationException("Non è stato inserito alcun sezionale valido per l'autofattura collegata al documento amministrativo " + fattura_passiva.getPg_fattura_passiva().longValue() + "!");
 				if (sez.size() != 1)
@@ -7660,17 +7664,14 @@ public void aggiornaObblSuCancPerCompenso(
 public boolean verificaGenerazioneAutofattura(UserContext aUC,Fattura_passivaBulk fattura)
 		throws ComponentException {
  			Boolean obbligatorio=false;
- 			if (fattura.isCommerciale() && fattura.getFl_split_payment()) {
- 				obbligatorio=true;
-			} else if (fattura.isCommerciale() && fattura.getFornitore()!=null && fattura.getFornitore().getAnagrafico()!=null && 
-					fattura.getFornitore().getAnagrafico().getPartita_iva()!=null &&
-					fattura.getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 ){
-			    	for (Iterator i = fattura.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
-						Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
-						if(dettaglio.getVoce_iva()!=null && dettaglio.getVoce_iva().getFl_autofattura().booleanValue())
-							obbligatorio=true;
-					}
-				
+ 			if (fattura.isCommerciale() && fattura.getFornitore()!=null && fattura.getFornitore().getAnagrafico()!=null && 
+				fattura.getFornitore().getAnagrafico().getPartita_iva()!=null &&
+				fattura.getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 ){
+			   	for (Iterator i = fattura.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
+					Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
+					if(dettaglio.getVoce_iva()!=null && dettaglio.getVoce_iva().getFl_autofattura().booleanValue())
+						obbligatorio=true;
+				}
 			}
 			
 			return obbligatorio;
