@@ -3186,6 +3186,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
 				if (fattura.isCommerciale()) {
 					fattura.setFl_autofattura(Boolean.TRUE);
+					fattura.setFl_split_payment(Boolean.FALSE);
 					//fattura.setAutoFatturaNeeded(true);
 				}
 			} else {
