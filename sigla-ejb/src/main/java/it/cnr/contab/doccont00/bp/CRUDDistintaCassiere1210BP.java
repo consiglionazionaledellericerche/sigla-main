@@ -221,10 +221,11 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 	public void scaricaDocumento(ActionContext actioncontext) throws Exception {
 		Integer esercizio = Integer.valueOf(((HttpActionContext)actioncontext).getParameter("esercizio"));
 		String cds = ((HttpActionContext)actioncontext).getParameter("cds");
+		String uo = ((HttpActionContext)actioncontext).getParameter("uo");
 		Long numero_documento = Long.valueOf(((HttpActionContext)actioncontext).getParameter("numero_documento"));
 		String tipo = ((HttpActionContext)actioncontext).getParameter("tipo");
 		InputStream is = documentiContabiliService.getStreamDocumento(
-				new V_mandato_reversaleBulk(esercizio, tipo, cds, numero_documento)
+				new Lettera_pagam_esteroBulk(cds,uo, esercizio,numero_documento)
 		);
 		if (is == null) {
 			log.error("CMIS Object not found: " + esercizio + cds + numero_documento + tipo);
@@ -254,6 +255,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 						distintaCassiere1210Bulk.getStorePath()
 						.concat(StoreService.BACKSLASH)
 						.concat(distintaCassiere1210Bulk.getCMISFolderName())
+                        .concat(".pdf")
 				)
 		);
 		if (is != null){

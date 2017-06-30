@@ -218,7 +218,7 @@ public class DocumentiContabiliService extends StoreService {
 		
 		@Override
 		public String getName() {
-			return Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()))
+			return Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()))
 					.map(String.class::cast)
 					.orElse(null);
 		}
@@ -230,7 +230,7 @@ public class DocumentiContabiliService extends StoreService {
 		
 		@Override
 		public String getContentType() {
-			return Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()))
+			return Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()))
 					.map(String.class::cast)
 					.orElse(null);
 		}
