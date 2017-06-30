@@ -767,7 +767,7 @@ public AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA( UserContext userConte
 		accert_pgiro.setCd_cds_origine( reversale.getCd_cds_origine() );
 		accert_pgiro.setCd_uo_origine( reversale.getCd_uo_origine() );
 		accert_pgiro.setDt_registrazione( reversale.getDt_emissione() );
-		accert_pgiro.setDs_accertamento( "Annotazione d'Entrata su Partita di Giro creata in automatico per Incasso IVA da Fattura Estera" );
+		accert_pgiro.setDs_accertamento( "Annotazione d'Entrata su Partita di Giro creata in automatico per Incasso IVA" );
 		accert_pgiro.setIm_accertamento( reversale.getIm_reversale() );
 		accert_pgiro.setRiportato("N");
 //		accert_pgiro.setCd_terzo( reversale.getReversale_terzo().getCd_terzo());
