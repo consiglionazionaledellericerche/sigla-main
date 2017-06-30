@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -2936,17 +2937,21 @@ public OggettoBulk creaConBulk(
 	if (fattura_passiva.getDocumentoEleTestata() != null) {
 		fattura_passiva.getDocumentoEleTestata().setStatoDocumento(StatoDocumentoEleEnum.REGISTRATO.name());
 		fattura_passiva.getDocumentoEleTestata().setToBeUpdated();
-		TipoIntegrazioneSDI tipoIntegrazioneSDI = TipoIntegrazioneSDI.PEC;
+
 		try {
-			Configurazione_cnrBulk configurazione_cnrBulk = (Configurazione_cnrBulk)getHome(userContext,Configurazione_cnrBulk.class).
-					findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(
-							Configurazione_cnrBulk.PK_INTEGRAZIONE_SDI, Configurazione_cnrBulk.SK_INTEGRAZIONE_SDI,
-							"*", CNRUserContext.getEsercizio(userContext)));
-			if (configurazione_cnrBulk != null)
-				tipoIntegrazioneSDI = TipoIntegrazioneSDI.valueOf(configurazione_cnrBulk.getVal01());
-			logger.info("Notifica di accettazione relativa al documento:" + fattura_passiva.getDocumentoEleTestata());			
-			((DocumentoEleTestataHome)getHome(userContext, DocumentoEleTestataBulk.class)).
-				notificaEsito(userContext, tipoIntegrazioneSDI, fattura_passiva.getDocumentoEleTestata());
+			if (Utility.createParametriEnteComponentSession().getParametriEnte(userContext).getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE)) {
+				TipoIntegrazioneSDI tipoIntegrazioneSDI = TipoIntegrazioneSDI.PEC;
+				Configurazione_cnrBulk configurazione_cnrBulk = (Configurazione_cnrBulk)getHome(userContext,Configurazione_cnrBulk.class).
+						findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(
+								Configurazione_cnrBulk.PK_INTEGRAZIONE_SDI, Configurazione_cnrBulk.SK_INTEGRAZIONE_SDI,
+								"*", CNRUserContext.getEsercizio(userContext)));
+				if (configurazione_cnrBulk != null)
+					tipoIntegrazioneSDI = TipoIntegrazioneSDI.valueOf(configurazione_cnrBulk.getVal01());
+	
+				logger.info("Notifica di accettazione relativa al documento:" + fattura_passiva.getDocumentoEleTestata());			
+				((DocumentoEleTestataHome)getHome(userContext, DocumentoEleTestataBulk.class)).
+					notificaEsito(userContext, tipoIntegrazioneSDI, fattura_passiva.getDocumentoEleTestata());
+			}
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		} catch (IOException e) {
@@ -3712,7 +3717,6 @@ public RemoteIterator findObbligazioniFor(
   *      Viene rilanciata un messaggio dettagliato.
  */
 //^^@@
-
 public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fatturaPassiva) 
 	throws ComponentException,it.cnr.jada.persistency.PersistencyException {
 	
@@ -3736,10 +3740,12 @@ public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fa
 	} else if (fatturaPassiva.getFl_san_marino_senza_iva() != null &&  fatturaPassiva.getFl_san_marino_senza_iva().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_SENZA_IVA","Y", "AND" } });
 	} else {
-		if (fatturaPassiva.getFl_intra_ue() == null &&
-			fatturaPassiva.getFl_extra_ue() == null &&
-			fatturaPassiva.getFl_san_marino_con_iva() == null &&
-			fatturaPassiva.getFl_san_marino_senza_iva() == null)
+		if ((fatturaPassiva.getFl_intra_ue()==null &&  
+			 fatturaPassiva.getFl_extra_ue()==null && 
+			 fatturaPassiva.getFl_san_marino_con_iva()==null && 
+			 fatturaPassiva.getFl_san_marino_senza_iva()==null) ||
+			(fatturaPassiva.isIstituzionale() && 
+			 fatturaPassiva.getFl_split_payment()!=null && fatturaPassiva.getFl_split_payment().booleanValue()))
 			options = new Vector();
 		else
 			options.add(new String[][] { { "TIPO_SEZIONALE.FL_ORDINARIO","Y", "AND" } });
@@ -3748,8 +3754,13 @@ public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fa
 	//Aggiunta per sicurezza in modo tale che se su tipo sezionale viene aggirato
 	//il controllo applicativo (Acq+Fl_autofatt) non vengano caricati sez autofatt
 	options.add(new String[][] { { "TIPO_SEZIONALE.FL_AUTOFATTURA", "N", "AND" } });
-	options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT", "N", "AND" } });
 	
+	if (!fatturaPassiva.isIstituzionale())
+		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT", "N", "AND" } });
+	else if (fatturaPassiva.getFl_split_payment()!=null && fatturaPassiva.getFl_split_payment().booleanValue())
+		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
+
+
 	options.add(new String[][] {
 		{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND" },
 		{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", fatturaPassiva.getTi_bene_servizio(), "OR" }
