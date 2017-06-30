@@ -3733,20 +3733,13 @@ public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fa
 		///??? Rospuc da chiedere
 	} else if (fatturaPassiva.getFl_san_marino_con_iva() != null && fatturaPassiva.getFl_san_marino_con_iva().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_CON_IVA","Y", "AND" } });
-		if (fatturaPassiva.getFl_split_payment() != null && fatturaPassiva.getFl_split_payment().booleanValue())
-			options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
 	} else if (fatturaPassiva.getFl_san_marino_senza_iva() != null &&  fatturaPassiva.getFl_san_marino_senza_iva().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_SENZA_IVA","Y", "AND" } });
-		if (fatturaPassiva.getFl_split_payment() != null && fatturaPassiva.getFl_split_payment().booleanValue())
-			options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
-	} else if (fatturaPassiva.getFl_split_payment() != null &&  fatturaPassiva.getFl_split_payment().booleanValue()) {
-		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT","Y", "AND" } });
 	} else {
 		if (fatturaPassiva.getFl_intra_ue() == null &&
 			fatturaPassiva.getFl_extra_ue() == null &&
 			fatturaPassiva.getFl_san_marino_con_iva() == null &&
-			fatturaPassiva.getFl_san_marino_senza_iva() == null &&
-			fatturaPassiva.getFl_split_payment() == null)
+			fatturaPassiva.getFl_san_marino_senza_iva() == null)
 			options = new Vector();
 		else
 			options.add(new String[][] { { "TIPO_SEZIONALE.FL_ORDINARIO","Y", "AND" } });
@@ -3755,6 +3748,7 @@ public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fa
 	//Aggiunta per sicurezza in modo tale che se su tipo sezionale viene aggirato
 	//il controllo applicativo (Acq+Fl_autofatt) non vengano caricati sez autofatt
 	options.add(new String[][] { { "TIPO_SEZIONALE.FL_AUTOFATTURA", "N", "AND" } });
+	options.add(new String[][] { { "TIPO_SEZIONALE.FL_SPLIT_PAYMENT", "N", "AND" } });
 	
 	options.add(new String[][] {
 		{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND" },
@@ -4918,7 +4912,12 @@ public OggettoBulk modificaConBulk(
 	fatturaPassiva = (Fattura_passivaBulk)super.modificaConBulk(aUC, fatturaPassiva);
 
 	if (fatturaPassiva.getDocumentoEleTestata() != null && fatturaPassiva.getDocumentoEleTestata().getIdentificativoSdi() != null) {
-		aggiornaMetadatiDocumentale(fatturaPassiva);
+		try {
+			if (Utility.createParametriEnteComponentSession().getParametriEnte(aUC).getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE))
+				aggiornaMetadatiDocumentale(fatturaPassiva);
+		} catch (RemoteException | EJBException e) {
+			throw handleException(e);
+		}
 	}
 	
 	aggiornaCarichiInventario(aUC, fatturaPassiva);
