@@ -22,6 +22,7 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTributiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -441,7 +442,16 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    	fatturaPassivaBulk.setFl_extra_ue(Boolean.FALSE);
 	    	fatturaPassivaBulk.setFl_san_marino_senza_iva(Boolean.FALSE);
 	    	fatturaPassivaBulk.setFl_fattura_compenso(existsTributi(documentoEleTestata));
+
 	    	fatturaPassivaBulk.setFl_split_payment(documentoEleTestata.isDocumentoSplitPayment());
+	    	if (fatturaPassivaBulk.getFl_split_payment()) {
+	    		java.util.Vector sezionali = ((FatturaPassivaComponentSession)nbp.createComponentSession()).estraeSezionali(context.getUserContext(),fatturaPassivaBulk);
+	    		fatturaPassivaBulk.setSezionali(sezionali);
+	    		if (sezionali != null && !sezionali.isEmpty())
+	    			fatturaPassivaBulk.setTipo_sezionale((Tipo_sezionaleBulk)sezionali.firstElement());
+	    		else
+	    			fatturaPassivaBulk.setTipo_sezionale(null);
+	    	}
 
 	    	//TODO eliminata su richiesta di Patrizia fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime())); 
 	    	GregorianCalendar gcDataMinima = new GregorianCalendar(), gcDataMassima = new GregorianCalendar();
