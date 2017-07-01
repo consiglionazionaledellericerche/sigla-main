@@ -496,7 +496,8 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	public String getNomeAllegato() throws ApplicationException{
 		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
-		return Optional.ofNullable(allegato.getNodeId())
+		return Optional.ofNullable(allegato)
+				.map(AllegatoContrattoDocumentBulk::getNodeId)
 				.map(key -> contrattoService.getStorageObjectBykey(key))
 				.map(storageObject -> storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()))
 				.orElse(null);

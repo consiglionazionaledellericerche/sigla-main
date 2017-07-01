@@ -138,7 +138,7 @@ public class ContrattoService extends StoreService {
 	
 	public void costruisciAlberaturaAlternativa(AllegatoContrattoDocumentBulk allegato, StorageObject source) throws ApplicationException {
 		try {
-			copyNode(source, getStorageObjectByPath(getCMISPathAlternativo(allegato)));
+			copyNode(source, getStorageObjectByPath(getCMISPathAlternativo(allegato), true));
 		} catch (StorageException _ex) {
 			logger.error("Errore in costruisciAlberaturaAlternativa per il nodo " + source.getKey(), _ex);
 		}

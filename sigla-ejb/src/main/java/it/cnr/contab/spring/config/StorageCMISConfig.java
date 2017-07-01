@@ -403,7 +403,7 @@ public class StorageCMISConfig {
                                             queryResult.getPropertyValueById(StoragePropertyNames.PATH.value())
                                     ).map(String.class::cast).orElse(null),
                                     convertPropertiesData(queryResult.getProperties()))));
-                            return Collections.EMPTY_LIST;
+                            return list;
                         })
                         .orElse(Collections.EMPTY_LIST);
             }

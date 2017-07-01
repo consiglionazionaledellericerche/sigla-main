@@ -9,6 +9,8 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
 
 import java.io.File;
+import java.math.BigInteger;
+
 public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTypeName{
 	private static final long serialVersionUID = 1L;
 	private ContrattoBulk contrattoBulk;
@@ -52,7 +54,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	
 	public AllegatoContrattoDocumentBulk(StorageObject storageObject) {
 		super();
-		contentlength = storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value());
+		contentlength = storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).longValue();
 		nodeId = storageObject.getKey();
 		name = storageObject.getPropertyValue(StoragePropertyNames.NAME.value());
 	}

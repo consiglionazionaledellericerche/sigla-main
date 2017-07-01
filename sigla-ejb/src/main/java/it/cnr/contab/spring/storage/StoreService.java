@@ -195,7 +195,15 @@ public class StoreService {
         metadataProperties.put(StoragePropertyNames.NAME.value(), name);
         metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), objectTypeName);
         metadataProperties.putAll(storeBulkInfo.getPropertyValue(oggettoBulk));
-        metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), storeBulkInfo.getAspect(oggettoBulk));
+        metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), 
+                Optional.ofNullable(metadataProperties.get(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+                    .map(o -> (List<String>)o)
+                    .map(aspects -> {
+                        aspects.addAll(storeBulkInfo.getAspect(oggettoBulk));
+                        return aspects;
+                    })
+                    .orElse(storeBulkInfo.getAspect(oggettoBulk))
+        );
         metadataProperties.putAll(storeBulkInfo.getAspectPropertyValue(oggettoBulk));
         return storageService.createDocument(inputStream, contentType, metadataProperties, parentObject, makeVersionable, permissions);
     }
@@ -224,7 +232,15 @@ public class StoreService {
             Map<String, Object> metadataProperties = new HashMap<String, Object>();
             metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), storeBulkInfo.getType(oggettoBulk));
             metadataProperties.putAll(storeBulkInfo.getPropertyValue(oggettoBulk));
-            metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), storeBulkInfo.getAspect(oggettoBulk));
+            metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                    Optional.ofNullable(metadataProperties.get(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+                            .map(o -> (List<String>)o)
+                            .map(aspects -> {
+                                aspects.addAll(storeBulkInfo.getAspect(oggettoBulk));
+                                return aspects;
+                            })
+                            .orElse(storeBulkInfo.getAspect(oggettoBulk))
+            );
             metadataProperties.putAll(storeBulkInfo.getAspectPropertyValue(oggettoBulk));
             updateProperties(metadataProperties, storageObject);
         } catch (Exception e) {

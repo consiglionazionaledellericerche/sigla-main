@@ -97,8 +97,9 @@ public class PdgVariazioniService extends StoreService {
             variazioniSigned.addAll(findVariazioniSigned(esercizio, cds, uo, variazionePdg));
         }
         return search(query.toString()).stream()
-                .map(storageObject -> storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
-                .map(BigInteger::intValue)
+                .map(storageObject -> storageObject.<List<BigInteger>>getPropertyValue(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
+                .map(list -> list.get(0))
+				.map(BigInteger::intValue)
                 .filter(numeroVariazione -> !variazioniSigned.contains(numeroVariazione))
                 .collect(Collectors.toList());
 	}	
