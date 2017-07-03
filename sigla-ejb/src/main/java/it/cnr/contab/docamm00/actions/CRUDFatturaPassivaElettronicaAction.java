@@ -260,14 +260,21 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					return context.findDefaultForward();
 				}
 			}
-			if (bulk.isAttivoSplitPayment() && !bulk.isDocumentoSplitPayment()) {
-				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-				fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
-		    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
-		    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
-						+ ". Il documento deve essere rifiutato!");	
-				return context.findDefaultForward();			    	  
-			}			
+			if (bulk.isAttivoSplitPayment()) {
+				if (!bulk.isDocumentoSplitPayment() && !Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO.equals(bulk.getTipoDocumentoSIGLA())) {
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+					fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
+			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
+			    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
+							+ ". Il documento deve essere rifiutato!");	
+					return context.findDefaultForward();
+				} else if (bulk.getDocEleTributiColl()!=null && !bulk.getDocEleTributiColl().isEmpty()) {
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+					fatturaPassivaElettronicaBP.setMessage("La registrazione di documenti Split Payment legati a compensi è al momento sospesa "
+							+ "in attesa di adeguamento alla relativa normativa!");	
+					return context.findDefaultForward();
+				}
+			}
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 			message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
 			return openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCompilaFattura");				
