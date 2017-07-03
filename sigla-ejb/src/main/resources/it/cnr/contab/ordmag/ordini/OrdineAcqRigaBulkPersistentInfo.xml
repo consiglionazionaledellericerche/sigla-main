@@ -6,16 +6,16 @@
 		tableName="ORDINE_ACQ_RIGA">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="ordineAcq.cd_cds" />
+			propertyName="ordineAcq.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_UNITA_OPERATIVA"
-			propertyName="ordineAcq.cd_unita_operativa" />
+			propertyName="ordineAcq.numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
 			columnName="ESERCIZIO"
-			propertyName="ordineAcq.esercizio" />
+			propertyName="ordineAcq.numerazioneOrd.esercizio" />
 		<columnMapping
 			columnName="CD_NUMERATORE"
-			propertyName="ordineAcq.cd_numeratore" />
+			propertyName="ordineAcq.numerazioneOrd.cdNumeratore" />
 		<columnMapping
 			columnName="NUMERO"
 			propertyName="ordineAcq.numero" />
