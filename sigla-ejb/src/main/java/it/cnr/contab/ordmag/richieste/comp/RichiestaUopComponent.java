@@ -123,6 +123,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 
 		RichiestaUopBulk richiesta= (RichiestaUopBulk) bulk;
 //			//assegna un progressivo al documento all'atto della creazione.
+		validaRichiesta(userContext, richiesta);
 		assegnaProgressivo(userContext, richiesta);
 		richiesta = (RichiestaUopBulk)super.creaConBulk(userContext, richiesta);
 		return richiesta;
@@ -135,8 +136,21 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
     	for (java.util.Iterator i= richiesta.getRigheRichiestaColl().iterator(); i.hasNext();) {
     		RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk) i.next();
     		if (riga != null){
+    			if (riga.getCdElementoVoce() != null && riga.getCdCategoriaGruppo() != null){
+    				Elemento_voceHome home = getHome(userContext, Elemento_voceBulk.class,"V_ELEMENTO_VOCE_ORDINI");
+    				SQLBuilder sql = home.createSQLBuilder();
+    				
+    				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+    				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.CD_CATEGORIA_GRUPPO_INVENT", sql.EQUALS, riga.getCdCategoriaGruppo());
+    				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.CD_ELEMENTO_VOCE", sql.EQUALS, riga.getCdElementoVoce());
+    				
+    				List list=home.fetchAll(sql);
+    				if (list == null && list.size() == 0){
+        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è stata indicata una voce di bilancio non utilizzabile per "+riga.getCdBeneServizio());
+    				}
+    			}
     			String value = null;
-    			if (riga.getElementoVoce() == null || riga.getElementoVoce().getCd_elemento_voce() == null){
+    			if (richiesta.isDefinitivaOInviata() && riga.getCdElementoVoce() == null){
         			try {
         				value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, richiesta.getEsercizio(), null, Configurazione_cnrBulk.PK_OBBLIGATORIETA_ORDINI, Configurazione_cnrBulk.SK_VOCE_RICHIESTA).getVal01();
         			} catch (RemoteException e) {
@@ -147,8 +161,8 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         			if (value!= null && value.equals("Y")){
         				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare la voce di bilancio.");
         			}
-    			}
-    			if (riga.getProgetto() == null || riga.getProgetto().getPg_progetto() == null){
+    			} 
+    			if (richiesta.isDefinitivaOInviata() && riga.getProgetto() == null || riga.getProgetto().getPg_progetto() == null){
     				value = null;
     				try {
         				value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, richiesta.getEsercizio(), null, Configurazione_cnrBulk.PK_OBBLIGATORIETA_ORDINI, Configurazione_cnrBulk.SK_PROGETTO_RICHIESTA).getVal01();
@@ -161,7 +175,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare il progetto.");
         			}
     			}
-    			if (riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null || 
+    			if (richiesta.isDefinitivaOInviata() && riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null || 
     					riga.getLineaAttivita() == null || riga.getLineaAttivita().getCd_linea_attivita() == null){
     				value = null;
     				try {
@@ -423,6 +437,7 @@ public SQLBuilder selectElementoVoceByClause (UserContext userContext,
 	if(clause != null) sql.addClause(clause);
 
 	sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+	sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.CD_CATEGORIA_GRUPPO_INVENT", sql.EQUALS, dett.getCdCategoriaGruppo());
 
 	if (dett.getLineaAttivita() != null)
 		sql.addSQLClause("AND","V_ELEMENTO_VOCE_ORDINI.CD_FUNZIONE",sql.EQUALS,dett.getLineaAttivita().getCd_funzione());
