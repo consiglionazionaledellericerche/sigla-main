@@ -5,6 +5,9 @@
   <action 
       path="/CRUDRichiestaUopAction" actionClass="it.cnr.contab.ordmag.richieste.action.CRUDRichiestaUopAction">
   </action>
+  <action 
+      path="/CRUDOrdineAcqAction" actionClass="it.cnr.contab.ordmag.ordini.action.CRUDOrdineAcqAction">
+  </action>
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/gruppomerceologico.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.GruppoMerceologicoBulk"/>
@@ -116,5 +119,11 @@
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk"/>
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_RichiestaUopComponentSession"/>
     <init-param name="defaultAction" value="CRUDApprovaRichiestaUopAction"/>
+  </businessProcess>
+  <businessProcess name="CRUDOrdineAcqBP" className="it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP">
+    <forward name="default" path="/ordmag/ordini/ordine_acq.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk"/>
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
+    <init-param name="defaultAction" value="CRUDOrdineAcqAction"/>
   </businessProcess>
 </action-mappings>

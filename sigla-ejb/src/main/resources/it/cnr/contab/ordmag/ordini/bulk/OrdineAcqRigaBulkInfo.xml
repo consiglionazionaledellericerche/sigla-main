@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Riga Ordine d'Acquisto"
+	longDescription="Riga Ordine d'Acquisto">
+	<fieldProperty
+		name="findOrdineAcq"
+		property="ordineAcq"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="OrdineAcq" />
+	<fieldProperty
+		name="cdCds"
+		property="ordineAcq.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="ordineAcq.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdUnitaOperativa" />
+	<fieldProperty
+		name="esercizio"
+		property="ordineAcq.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdNumeratore"
+		property="ordineAcq.cdNumeratore"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdNumeratore" />
+	<fieldProperty
+		name="numero"
+		property="ordineAcq.numero"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="numero" />
+	<fieldProperty
+		name="riga"
+		property="riga"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="riga" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="cdBeneServizio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdBeneServizio" />
+	<fieldProperty
+		name="dsBeneServizio"
+		property="dsBeneServizio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dsBeneServizio" />
+	<fieldProperty
+		name="notaRiga"
+		property="notaRiga"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="notaRiga" />
+	<fieldProperty
+		name="cdVoceIva"
+		property="cdVoceIva"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdVoceIva" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="stato" />
+	<fieldProperty
+		name="prezzoUnitario"
+		property="prezzoUnitario"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		nullable="false"
+		label="prezzoUnitario" />
+	<fieldProperty
+		name="quantita"
+		property="quantita"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		nullable="false"
+		label="quantita" />
+	<fieldProperty
+		name="findUnitaMisura"
+		property="unitaMisura"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UnitaMisura" />
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUnitaMisura" />
+	<fieldProperty
+		name="coefConv"
+		property="coefConv"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		nullable="false"
+		label="coefConv" />
+	<fieldProperty
+		name="sconto1"
+		property="sconto1"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="sconto1" />
+	<fieldProperty
+		name="sconto2"
+		property="sconto2"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="sconto2" />
+	<fieldProperty
+		name="sconto3"
+		property="sconto3"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="sconto3" />
+	<fieldProperty
+		name="imImponibileDivisa"
+		property="imImponibileDivisa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imImponibileDivisa" />
+	<fieldProperty
+		name="imIvaDivisa"
+		property="imIvaDivisa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imIvaDivisa" />
+	<fieldProperty
+		name="imImponibile"
+		property="imImponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imImponibile" />
+	<fieldProperty
+		name="imIva"
+		property="imIva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imIva" />
+	<fieldProperty
+		name="imTotaleRiga"
+		property="imTotaleRiga"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imTotaleRiga" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdUnitaOperativa" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdNumeratore" />
+		<formFieldProperty
+			name="numero" />
+		<formFieldProperty
+			name="riga" />
+	</form>
+	<formFieldProperty
+		name="findOrdineAcq" />
+	<formFieldProperty
+		name="riga" />
+	<formFieldProperty
+		name="dsBeneServizio" />
+	<formFieldProperty
+		name="notaRiga" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="prezzoUnitario" />
+	<formFieldProperty
+		name="quantita" />
+	<formFieldProperty
+		name="findUnitaMisura" />
+	<formFieldProperty
+		name="coefConv" />
+	<formFieldProperty
+		name="sconto1" />
+	<formFieldProperty
+		name="sconto2" />
+	<formFieldProperty
+		name="sconto3" />
+	<formFieldProperty
+		name="imImponibileDivisa" />
+	<formFieldProperty
+		name="imIvaDivisa" />
+	<formFieldProperty
+		name="imImponibile" />
+	<formFieldProperty
+		name="imIva" />
+	<formFieldProperty
+		name="imTotaleRiga" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratore" />
+	<findFieldProperty
+		name="numero" />
+	<findFieldProperty
+		name="riga" />
+	<findFieldProperty
+		name="cdBeneServizio" />
+	<findFieldProperty
+		name="dsBeneServizio" />
+	<findFieldProperty
+		name="notaRiga" />
+	<findFieldProperty
+		name="cdVoceIva" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="prezzoUnitario" />
+	<findFieldProperty
+		name="quantita" />
+	<findFieldProperty
+		name="cdUnitaMisura" />
+	<findFieldProperty
+		name="coefConv" />
+	<findFieldProperty
+		name="sconto1" />
+	<findFieldProperty
+		name="sconto2" />
+	<findFieldProperty
+		name="sconto3" />
+	<findFieldProperty
+		name="imImponibileDivisa" />
+	<findFieldProperty
+		name="imIvaDivisa" />
+	<findFieldProperty
+		name="imImponibile" />
+	<findFieldProperty
+		name="imIva" />
+	<findFieldProperty
+		name="imTotaleRiga" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOperativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratore" />
+	<columnFieldProperty
+		name="numero" />
+	<columnFieldProperty
+		name="riga" />
+	<columnFieldProperty
+		name="cdBeneServizio" />
+	<columnFieldProperty
+		name="dsBeneServizio" />
+	<columnFieldProperty
+		name="notaRiga" />
+	<columnFieldProperty
+		name="cdVoceIva" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="prezzoUnitario" />
+	<columnFieldProperty
+		name="quantita" />
+	<columnFieldProperty
+		name="cdUnitaMisura" />
+	<columnFieldProperty
+		name="coefConv" />
+	<columnFieldProperty
+		name="sconto1" />
+	<columnFieldProperty
+		name="sconto2" />
+	<columnFieldProperty
+		name="sconto3" />
+	<columnFieldProperty
+		name="imImponibileDivisa" />
+	<columnFieldProperty
+		name="imIvaDivisa" />
+	<columnFieldProperty
+		name="imImponibile" />
+	<columnFieldProperty
+		name="imIva" />
+	<columnFieldProperty
+		name="imTotaleRiga" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>
