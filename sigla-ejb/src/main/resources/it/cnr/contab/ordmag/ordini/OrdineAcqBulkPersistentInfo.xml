@@ -18,13 +18,13 @@
 			propertyName="numerazioneOrd.esercizio" />
 		<columnMapping
 			columnName="CD_NUMERATORE"
-			propertyName="numerazioneOrd.cd_numeratore" />
+			propertyName="numerazioneOrd.cdNumeratore" />
 		<columnMapping
 			columnName="CD_DIVISA"
 			propertyName="divisa.cd_divisa" />
 		<columnMapping
 			columnName="CD_MODALITA_PAG"
-			propertyName="modalita_pagamento.cd_modalita_pag" />
+			propertyName="modalitaPagamento.cd_modalita_pag" />
 		<columnMapping
 			columnName="PG_BANCA"
 			propertyName="banca.pg_banca" />
@@ -38,13 +38,13 @@
 			fetchOnly="true"/>
 		<columnMapping
 			columnName="CD_TERMINI_PAG"
-			propertyName="termini_pagamento.cd_termini_pag" />
+			propertyName="terminiPagamento.cd_termini_pag" />
 		<columnMapping
 			columnName="CD_CDS_NOTA_PREC"
 			propertyName="notaPrecodificata.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_NOTA_PRECODIFICATA"
-			propertyName="notaPrecodificata.cd_nota_precodificata" />
+			propertyName="notaPrecodificata.cdNotaPrecodificata" />
 		<columnMapping
 			columnName="ESERCIZIO_CONTRATTO"
 			propertyName="contratto.esercizio" />
@@ -56,28 +56,31 @@
 			propertyName="contratto.pg_contratto" />
 		<columnMapping
 			columnName="RESPONSABILE_PROC"
-			propertyName="responsabileProc.cd_terzo" />
+			propertyName="responsabileProcPers.cd_terzo" />
 		<columnMapping
 			columnName="FIRMATARIO"
-			propertyName="firmatario.cd_terzo" />
+			propertyName="firmatarioPers.cd_terzo" />
 		<columnMapping
 			columnName="DIRETTORE"
-			propertyName="direttore.cd_terzo" />
+			propertyName="direttorePers.cd_terzo" />
 		<columnMapping
 			columnName="CDR"
 			propertyName="terzoCdr.cd_terzo" />
 		<columnMapping
 			columnName="CD_TIPO_ORDINE"
-			propertyName="tipoOrdine.cd_tipo_ordine" />
+			propertyName="tipoOrdine.cdTipoOrdine" />
 		<columnMapping
 			columnName="CD_PROC_AMM"
-			propertyName="procedureAmministrative.cd_proc_amm" />
+			propertyName="procedureAmministrative.cd_proc_amm"
+			sqlTypeName="VARCHAR"
+			nullable="false"
+			columnSize="5" />			
 		<columnMapping
 			columnName="CD_CIG"
-			propertyName="cig.cd_cig" />
+			propertyName="cig.cdCig" />
 		<columnMapping
 			columnName="CD_CUP"
-			propertyName="cup.cd_cup" />
+			propertyName="cup.cdCup" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="notaPrecodificata"
@@ -98,13 +101,13 @@
 	<persistentProperty
 		name="terzo" />
 	<persistentProperty
-		name="firmatario" />
+		name="firmatarioPers" />
 	<persistentProperty
-		name="direttore" />
+		name="direttorePers" />
 	<persistentProperty
 		name="terzoCdr" />
 	<persistentProperty
-		name="responsabileProc" />
+		name="responsabileProcPers" />
 	<persistentProperty
 		name="tipoOrdine" />
 	<persistentProperty
