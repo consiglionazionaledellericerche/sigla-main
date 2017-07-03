@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
@@ -35,6 +36,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -1660,5 +1662,4 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 			throw handleException(e);
 		}			
 	}
-
 }

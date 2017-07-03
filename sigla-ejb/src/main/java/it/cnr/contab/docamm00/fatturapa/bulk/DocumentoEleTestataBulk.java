@@ -625,7 +625,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public boolean isDocumentoSplitPayment() {
 		if (isAttivoSplitPayment() && getDocEleIVAColl()!=null && !getDocEleIVAColl().isEmpty())
 			//se presente almeno una riga IVA con imposta valorizzata  esigibilita != 'S' (Split) ritorno false
-			return getDocEleIVAColl().stream().filter(e->e.getImposta()!=null && e.getImposta().compareTo(BigDecimal.ZERO)>0 && 
+			return getDocEleIVAColl().stream().filter(e->e.getImposta()!=null && e.getImposta().compareTo(BigDecimal.ZERO)!=0 && 
 													  (e.getEsigibilitaIva()==null || !e.getEsigibilitaIva().equals("S"))).count()==0;
 		return false;
 	}

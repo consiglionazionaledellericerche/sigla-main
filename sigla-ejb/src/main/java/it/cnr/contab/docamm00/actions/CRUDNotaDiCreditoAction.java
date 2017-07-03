@@ -1557,6 +1557,16 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 			}
 			for (java.util.Iterator i = elementsToBeAdded.iterator(); i.hasNext();) {
 				Fattura_passiva_rigaIBulk dettaglio = (Fattura_passiva_rigaIBulk)i.next();
+				if (!dettaglio.getFattura_passiva().getFl_split_payment().equals(((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment())) {
+					if (((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment())
+						bp.setMessage("Attenzione! La Nota Credito è di tipo Split Payment. Non è possibile associare Fatture di tipo non Split Payment.");
+					else
+						bp.setMessage("Attenzione! La Nota Credito non è di tipo Split Payment. Non è possibile associare Fatture di tipo Split Payment.");
+					return context.findDefaultForward();
+				}
+			}
+			for (java.util.Iterator i = elementsToBeAdded.iterator(); i.hasNext();) {
+				Fattura_passiva_rigaIBulk dettaglio = (Fattura_passiva_rigaIBulk)i.next();
 				
 				if (dettaglio.getIm_diponibile_nc() == null || 
 					dettaglio.getIm_diponibile_nc().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0) {
