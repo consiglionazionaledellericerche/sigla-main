@@ -129,7 +129,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		return richiesta;
 	}
 
-	private void validaRichiesta(it.cnr.jada.UserContext userContext, RichiestaUopBulk richiesta) throws it.cnr.jada.comp.ComponentException {
+	private void validaRichiesta(it.cnr.jada.UserContext userContext, RichiestaUopBulk richiesta) throws it.cnr.jada.comp.ComponentException{
 		if (richiesta.getRigheRichiestaColl() == null || richiesta.getRigheRichiestaColl().size() == 0){
 			throw new ApplicationException ("Non è possibile salvare una richiesta senza dettagli.");
 		}
@@ -137,15 +137,20 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
     		RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk) i.next();
     		if (riga != null){
     			if (riga.getCdElementoVoce() != null && riga.getCdCategoriaGruppo() != null){
-    				Elemento_voceHome home = getHome(userContext, Elemento_voceBulk.class,"V_ELEMENTO_VOCE_ORDINI");
+    				Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class,"V_ELEMENTO_VOCE_ORDINI");
     				SQLBuilder sql = home.createSQLBuilder();
     				
     				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
     				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.CD_CATEGORIA_GRUPPO_INVENT", sql.EQUALS, riga.getCdCategoriaGruppo());
     				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.CD_ELEMENTO_VOCE", sql.EQUALS, riga.getCdElementoVoce());
     				
-    				List list=home.fetchAll(sql);
-    				if (list == null && list.size() == 0){
+    				List list;
+					try {
+						list = home.fetchAll(sql);
+					} catch (PersistencyException e) {
+						throw new ComponentException(e);
+					}
+    				if (list == null || list.size() == 0){
         				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è stata indicata una voce di bilancio non utilizzabile per "+riga.getCdBeneServizio());
     				}
     			}
