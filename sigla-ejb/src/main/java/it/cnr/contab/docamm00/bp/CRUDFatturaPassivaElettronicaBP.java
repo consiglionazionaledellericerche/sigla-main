@@ -470,8 +470,10 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    		fatturaPassivaBulk.setIm_totale_fattura(documentoEleTestata.getImportoDocumento());
 	    		fatturaPassivaBulk.setIm_importo_totale_fattura_fornitore_euro(documentoEleTestata.getImportoDocumento());
 	    	}
+
+	    	nbp.setModel(context, fatturaPassivaBulk);
+
 	    	action.doCalcolaTotaleFatturaFornitoreInEur(context);
-	    	
 	    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());
 
 	    	fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
