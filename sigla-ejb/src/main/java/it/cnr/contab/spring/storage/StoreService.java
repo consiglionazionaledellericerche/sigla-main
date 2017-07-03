@@ -1,7 +1,5 @@
 package it.cnr.contab.spring.storage;
 
-import it.cnr.contab.cmis.acl.ACLType;
-import it.cnr.contab.cmis.acl.Permission;
 import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.spring.config.StoragePropertyNames;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -169,7 +167,7 @@ public class StoreService {
     }
 
     public StorageObject storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                        String path, Permission... permissions) throws StorageException{
+                                        String path, StorageService.Permission... permissions) throws StorageException{
         return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, path, false, permissions);
     }
 
@@ -183,12 +181,12 @@ public class StoreService {
     }
 
     public StorageObject storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                             String path, boolean makeVersionable, Permission... permissions) throws StorageException{
+                                             String path, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
         return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, path, storeBulkInfo.getType(oggettoBulk), makeVersionable, permissions);
     }
 
     public StorageObject storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                        String path, String objectTypeName, boolean makeVersionable, Permission... permissions) throws StorageException{
+                                        String path, String objectTypeName, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
         StorageObject parentObject = getStorageObjectByPath(path, true);
         Map<String, Object> metadataProperties = new HashMap<String, Object>();
         name = sanitizeFilename(name);
@@ -209,12 +207,12 @@ public class StoreService {
     }
 
     public StorageObject restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                          String path, boolean makeVersionable, Permission... permissions) throws StorageException{
+                                          String path, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
         return restoreSimpleDocument(oggettoBulk, inputStream, contentType, name, path, storeBulkInfo.getType(oggettoBulk), makeVersionable, permissions);
     }
 
     public StorageObject restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                          String path, String objectTypeName, boolean makeVersionable, Permission... permissions) throws StorageException{
+                                          String path, String objectTypeName, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
         Optional<StorageObject> optStorageObject = Optional.ofNullable(getStorageObjectByPath(path.concat(BACKSLASH).concat(sanitizeFilename(name))));
         if (optStorageObject.isPresent()) {
             return storageService.updateStream(optStorageObject.get().getKey(), inputStream, contentType);
@@ -289,29 +287,29 @@ public class StoreService {
     }
 
     public void addConsumerToEveryone(StorageObject storageObject) {
-        addAcl(storageObject, Collections.singletonMap("GROUP_EVERYONE", ACLType.Consumer));
+        addAcl(storageObject, Collections.singletonMap("GROUP_EVERYONE", StorageService.ACLType.Consumer));
     }
 
     public void removeConsumerToEveryone(StorageObject storageObject){
-        removeAcl(storageObject, Collections.singletonMap("GROUP_EVERYONE", ACLType.Consumer));
+        removeAcl(storageObject, Collections.singletonMap("GROUP_EVERYONE", StorageService.ACLType.Consumer));
     }
     // per gestire gruppi diversi es. CONTRATTI
     public void addConsumer(StorageObject storageObject, String group ) {
-        addAcl(storageObject, Collections.singletonMap(group, ACLType.Consumer));
+        addAcl(storageObject, Collections.singletonMap(group, StorageService.ACLType.Consumer));
     }
     public void removeConsumer(StorageObject storageObject, String group ) {
-        removeAcl(storageObject, Collections.singletonMap(group, ACLType.Consumer));
+        removeAcl(storageObject, Collections.singletonMap(group, StorageService.ACLType.Consumer));
     }
 
-    private void removeAcl(StorageObject storageObject, Map<String, ACLType> permission) {
+    private void removeAcl(StorageObject storageObject, Map<String, StorageService.ACLType> permission) {
         managePermission(storageObject, permission, true);
     }
 
-    private void addAcl(StorageObject storageObject, Map<String, ACLType> permission) {
+    private void addAcl(StorageObject storageObject, Map<String, StorageService.ACLType> permission) {
         managePermission(storageObject, permission, false);
     }
 
-    private void managePermission(StorageObject storageObject, Map<String, ACLType> permission, boolean remove) {
+    private void managePermission(StorageObject storageObject, Map<String, StorageService.ACLType> permission, boolean remove) {
         storageService.managePermission(storageObject, permission, remove);
     }
 
@@ -334,5 +332,4 @@ public class StoreService {
     public void createRelationship(String source, String target, String relationshipName) {
         storageService.createRelationship(source, target, relationshipName);
     }
-
 }

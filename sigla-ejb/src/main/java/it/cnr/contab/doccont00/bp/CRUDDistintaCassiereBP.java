@@ -1,7 +1,7 @@
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
-import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -1503,25 +1503,25 @@ public class CRUDDistintaCassiereBP extends
 			generaXML(context);
 			File file = new File(System.getProperty("tmp.dir.SIGLAWeb")
 					+ getFile());
-			CMISFile cmisFile = new CMISFile(file, file.getName());
-			if (cmisFile != null) {
+			StorageFile storageFile = new StorageFile(file, file.getName());
+			if (storageFile != null) {
 				// E' previsto solo l'inserimento ma non l'aggiornamento
 				try {
                     StorageObject storageObject = documentiContabiliService.storeSimpleDocument(
-                            cmisFile, cmisFile.getInputStream(), cmisFile.getContentType(),
-                            cmisFile.getFileName(), distinta.getStorePath(), false
+							storageFile, storageFile.getInputStream(), storageFile.getContentType(),
+                            storageFile.getFileName(), distinta.getStorePath(), false
                     );
-					cmisFile.setStorageObject(storageObject);
+					storageFile.setStorageObject(storageObject);
 				} catch (StorageException e) {
 					if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
 						throw new ApplicationException(
 								"File ["
-										+ cmisFile.getFileName()
+										+ storageFile.getFileName()
 										+ "] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
 					throw new ApplicationException(
 							"Errore nella registrazione del file XML sul Documentale (" + e.getMessage() + ")");
 				}
-				if (cmisFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0) {
+				if (storageFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0) {
                     Optional.ofNullable(documentiContabiliService
                             .getStorageObjectByPath(distinta
                                     .getStorePath().concat(StoreService.BACKSLASH)
@@ -1535,7 +1535,7 @@ public class CRUDDistintaCassiereBP extends
 					String nomeFileP7m = nomeFile + ".p7m";
 					String json = "{"
 							+ "\"nodeRefSource\" : \""
-							+ cmisFile.getStorageObject().<String>getPropertyValue(
+							+ storageFile.getStorageObject().<String>getPropertyValue(
 											StoragePropertyNames.ALFCMIS_NODEREF.value()) + "\","
 							+ "\"username\" : \"" + firmaOTPBulk.getUserName()
 							+ "\"," + "\"password\" : \""

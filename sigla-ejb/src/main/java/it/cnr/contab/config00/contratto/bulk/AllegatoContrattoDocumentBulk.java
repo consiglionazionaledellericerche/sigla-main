@@ -1,8 +1,8 @@
 package it.cnr.contab.config00.contratto.bulk;
 
-import it.cnr.contab.cmis.CMISTypeName;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.bulk.StorageTypeName;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.spring.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
@@ -11,7 +11,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import java.io.File;
 import java.math.BigInteger;
 
-public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTypeName{
+public class AllegatoContrattoDocumentBulk extends OggettoBulk implements StorageTypeName {
 	private static final long serialVersionUID = 1L;
 	private ContrattoBulk contrattoBulk;
 	private File file;
@@ -82,7 +82,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	public void setFile(File file) {
 		this.file = file;
 	}
-	@CMISProperty(name="sigla_contratti_attachment:original_name")
+	@StorageProperty(name="sigla_contratti_attachment:original_name")
 	public String getNome() {
 		return nome;
 	}
@@ -90,7 +90,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	@CMISPolicy(name="P:cm:titled", property=@CMISProperty(name="cm:title"))
+	@StoragePolicy(name="P:cm:titled", property=@StorageProperty(name="cm:title"))
 	public String getTitolo() {
 		return titolo;
 	}
@@ -98,7 +98,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	public void setTitolo(String titolo) {
 		this.titolo = titolo;
 	}
-	@CMISPolicy(name="P:cm:titled", property=@CMISProperty(name="cm:description"))
+	@StoragePolicy(name="P:cm:titled", property=@StorageProperty(name="cm:description"))
 	public String getDescrizione() {
 		return descrizione;
 	}
@@ -135,7 +135,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 		return getType();
 	}
 	
-	@CMISPolicy(name="P:sigla_contratti_aspect:link", property=@CMISProperty(name="sigla_contratti_aspect_link:url"))	
+	@StoragePolicy(name="P:sigla_contratti_aspect:link", property=@StorageProperty(name="sigla_contratti_aspect_link:url"))
 	public String getLink() {
 		return link;
 	}
@@ -152,7 +152,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 		return isNodePresent() && contentlength > 0;
 	}
 
-	@CMISProperty(name="cmis:name")
+	@StorageProperty(name="cmis:name")
 	public String getDocumentName() {
 		StringBuffer name = new StringBuffer();
 		if (getType().equals(CONTRATTO))

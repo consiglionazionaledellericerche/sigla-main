@@ -22,7 +22,7 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkCollections;

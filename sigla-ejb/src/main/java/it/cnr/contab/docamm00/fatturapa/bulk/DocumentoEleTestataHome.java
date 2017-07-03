@@ -10,7 +10,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
@@ -221,8 +221,8 @@ public class DocumentoEleTestataHome extends BulkHome {
             	}
             	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
             			documentoEleTestataBulk.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO)?
-            					CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
-            						CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
+            					StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
+            						StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
             	fatturaService.notificaEsito(authentication.getUserName(), authentication.getPassword(), 
             			documentoEleTestataBulk, notificaEsitoCommittente);
     		} catch(ApplicationException _ex) {
@@ -246,8 +246,8 @@ public class DocumentoEleTestataHome extends BulkHome {
         	client.getMarshaller().marshal(notificaEsito, new StreamResult(outputStreamNotificaEsito));
         	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
         			documentoEleTestataBulk.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO)?
-        					CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
-        						CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());        		
+        					StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
+        						StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
     	}
 	}	
 

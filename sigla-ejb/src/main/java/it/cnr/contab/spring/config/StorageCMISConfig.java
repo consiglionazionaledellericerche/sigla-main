@@ -1,15 +1,9 @@
 package it.cnr.contab.spring.config;
 
-import com.google.gson.GsonBuilder;
-import it.cnr.contab.cmis.MimeTypes;
-import it.cnr.contab.cmis.acl.ACLType;
-import it.cnr.contab.cmis.acl.Permission;
-import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
+import it.cnr.contab.spring.storage.MimeTypes;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.jada.action.HttpActionContext;
-import it.cnr.jada.comp.ApplicationException;
 import org.apache.chemistry.opencmis.client.api.*;
 import org.apache.chemistry.opencmis.client.bindings.CmisBindingFactory;
 import org.apache.chemistry.opencmis.client.bindings.impl.CmisBindingsHelper;
@@ -50,8 +44,6 @@ import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by mspasiano on 6/15/17.

@@ -1,9 +1,9 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
@@ -13,7 +13,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CMISType(name="D:doccont:document")
+@StorageType(name="D:doccont:document")
 public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements AllegatoParentBulk, StatoTrasmissione{
 	TerzoBulk terzo = new TerzoBulk();
 	Unita_organizzativaBulk uo = new Unita_organizzativaBulk();
@@ -98,14 +98,14 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 			return null;
 		return terzo.getCd_terzo();
 	}
-	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:codice"))
+	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorguo:codice"))
 	public java.lang.String getCd_unita_organizzativa() {
 		Unita_organizzativaBulk uo = this.getUo();
 		if (uo == null)
 			return null;
 		return uo.getCd_unita_organizzativa();
 	}
-	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:descrizione"))
+	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorguo:descrizione"))
 	public java.lang.String getDs_unita_organizzativa() {
 		Unita_organizzativaBulk uo = this.getUo();
 		if (uo == null)

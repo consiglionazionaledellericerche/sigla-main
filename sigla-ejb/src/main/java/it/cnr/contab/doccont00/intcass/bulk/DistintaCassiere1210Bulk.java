@@ -4,8 +4,8 @@
  */
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CMISType(name="D:doccont:document")
+@StorageType(name="D:doccont:document")
 public class DistintaCassiere1210Bulk extends DistintaCassiere1210Base {
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class DistintaCassiere1210Bulk extends DistintaCassiere1210Base {
 		return suffix;
 	}
 	
-	@CMISProperty(name="doccont:tipo")	
+	@StorageProperty(name="doccont:tipo")
 	public String getTipo() {
 		return "DIST1210";
 	}

@@ -5,9 +5,9 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
@@ -49,7 +49,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@CMISType(name="D:emppay:missione", parentName="D:emppay:document")
+@StorageType(name="D:emppay:missione", parentName="D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
 public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk
 {
@@ -3537,7 +3537,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa) {
 		this.unitaOrganizzativa = unitaOrganizzativa;
 	}
-	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorg:descrizione"))	
+	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorg:descrizione"))
 	public String getDsUnitaOrganizzativa(){
 		if (getUnitaOrganizzativa() == null)
 			return null;

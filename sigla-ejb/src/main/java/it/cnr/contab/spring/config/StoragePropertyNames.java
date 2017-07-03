@@ -30,6 +30,16 @@ public enum StoragePropertyNames {
     SIGLA_COMMONS_TERZO_DENOMINAZIONE("sigla_commons:terzi_pg_denominazione"),
     SIGLA_COMMONS_TERZO_PARIVA("sigla_commons:terzi_pg_pariva"),
 
+    // Relazioni
+    R_VARPIANOGEST_ALLEGATIVARBILANCIO("R:varpianogest:allegatiVarBilancio"),
+    R_CNR_SIGNEDDOCUMENT("R:cnr:signedDocumentAss"),
+
+    // Document
+    CNR_ENVELOPEDDOCUMENT("D:cnr:envelopedDocument"),
+
+    //Aspect
+    CNR_SIGNEDDOCUMENT("P:cnr:signedDocument"),
+    SYS_ARCHIVED("P:sys:archived"),
 
     NAME("cmis:name"),
     TITLE("cm:title"),
@@ -44,7 +54,6 @@ public enum StoragePropertyNames {
     CMIS_DOCUMENT("cmis:document"),
     ALFCMIS_NODEREF ("alfcmis:nodeRef"),
     CONTENT_STREAM_LENGTH ("cmis:contentStreamLength"),
-    SYS_ARCHIVED("P:sys:archived"),
     CONTENT_STREAM_MIME_TYPE ("cmis:contentStreamMimeType"),
     SECONDARY_OBJECT_TYPE_IDS("cmis:secondaryObjectTypeIds");
 

@@ -16,7 +16,7 @@ import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
-import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
+import it.cnr.contab.docamm00.storage.StorageFolderFatturaPassiva;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.AutoFatturaComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
@@ -2842,7 +2842,7 @@ public OggettoBulk creaConBulk(
 	return fattura_passiva;
 }
 private void aggiornaMetadatiDocumentale(Fattura_passivaBulk fattura_passiva) throws ComponentException {
-	CMISFolderFatturaPassiva folder = new CMISFolderFatturaPassiva(fattura_passiva, fattura_passiva.getDocumentoEleTestata());
+	StorageFolderFatturaPassiva folder = new StorageFolderFatturaPassiva(fattura_passiva, fattura_passiva.getDocumentoEleTestata());
 	folder.updateMetadataPropertiesCMIS();
 }
 private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_passiva_rigaBulk dettaglio)

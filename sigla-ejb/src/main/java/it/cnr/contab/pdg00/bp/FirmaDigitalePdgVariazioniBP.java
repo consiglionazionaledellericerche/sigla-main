@@ -1,7 +1,5 @@
 package it.cnr.contab.pdg00.bp;
 
-import it.cnr.contab.cmis.CMISAspect;
-import it.cnr.contab.cmis.CMISRelationship;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.ServizioPecBulk;
@@ -13,8 +11,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.bulk.cmis.AllegatoPdGVariazioneSignedDocument;
-import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
+import it.cnr.contab.pdg00.bulk.storage.AllegatoPdGVariazioneSignedDocument;
+import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
 import it.cnr.contab.service.SpringUtil;
@@ -234,7 +232,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			return getFocusedElement() != null
 				&& !isUploadFile()
 				&& !pdgVariazioniService.hasAspect(bulk.getPdgVariazioneDocument().getStorageObject(),
-						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+						StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 		else
 			return getFocusedElement() != null;
 	}
@@ -244,7 +242,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (!isTestSession())
 			return getFocusedElement() != null
 				&& !pdgVariazioniService.hasAspect(bulk.getPdgVariazioneDocument().getStorageObject(),
-						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+					StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 		else
 			return getFocusedElement() != null;
 	}
@@ -253,7 +251,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		ArchiviaStampaPdgVariazioneBulk bulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		if (!isTestSession())
 			return getFocusedElement() != null && pdgVariazioniService.hasAspect(bulk.getPdgVariazioneDocument().getStorageObject(),
-				CMISAspect.CNR_SIGNEDDOCUMENT.value());
+					StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 		else
 			return getFocusedElement() != null;
 	}
@@ -263,7 +261,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (!isTestSession())
 			return getFocusedElement() != null
 				&& !pdgVariazioniService.hasAspect(bulk.getPdgVariazioneDocument().getStorageObject(),
-						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+					StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 		else
 			return getFocusedElement() != null;
 	}
@@ -434,7 +432,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 	public StorageObject getNodeFileFirmato(StorageObject nodePdf) throws ApplicationException {
 		if (isTestSession())
 			return null;
-		List<StorageObject> firmati = pdgVariazioniService.getRelationshipFromTarget(nodePdf.getKey(), CMISRelationship.CNR_SIGNEDDOCUMENT.value());
+		List<StorageObject> firmati = pdgVariazioniService.getRelationshipFromTarget(nodePdf.getKey(), StoragePropertyNames.R_CNR_SIGNEDDOCUMENT.value());
 		if (firmati.size() == 1)
 			return firmati.get(0);
 		else
@@ -456,7 +454,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			}else{
 				pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
 						.getPdgVariazioneDocument().getStorageObject(),
-						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+						StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 							//rp 21/01/2014 inserisco data firma sulla variazione
 				createComponentSession().aggiornaDataFirma(context.getUserContext(),archiviaStampaPdgVariazioneBulk
 				.getPdgVariazioneDocument().getEsercizio(),archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNumeroVariazione());		
@@ -517,7 +515,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			fileDir.delete();
 			if (!fileDir.mkdir())
 				throw new BusinessProcessException(
-						"Directory già esistente, riprovare a generare la firma!");
+						"Directory giï¿½ esistente, riprovare a generare la firma!");
 
 			file = new File(fileDir, getFileName());
 			InputStream is = null;
@@ -609,7 +607,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		}
 		if (servizioPecProtocollo == null)
 			throw new ValidationException(
-					"Non è presente l'email per l'invio della posta certificata per l'ufficio del Protocollo. Impossibile procedere!");
+					"Non ï¿½ presente l'email per l'invio della posta certificata per l'ufficio del Protocollo. Impossibile procedere!");
 		// PEC derivata dalla stampa specifica
 		ServizioPecBulk servizioPec = null;
 		try {
@@ -624,7 +622,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		}
 		if (servizioPec == null)
 			throw new ValidationException(
-					"L'ufficio di competenza per l'invio della posta certificata non è definito. Impossibile procedere!");
+					"L'ufficio di competenza per l'invio della posta certificata non ï¿½ definito. Impossibile procedere!");
 		if (!parametriEnte.getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE) || isTestSession()) 
 			testMode = true;
 		else
@@ -724,7 +722,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			throw handleException(e);
 		}
 		if (uoPec == null || (uoPec.getEmailPec()==null && uoPec.getEmailPecDirettore()==null))
-			throw new ValidationException("L'indirizzo email di posta certificata per la unità organizzativa "+cdUoPec+" non è definito. Impossibile procedere!");
+			throw new ValidationException("L'indirizzo email di posta certificata per la unitï¿½ organizzativa "+cdUoPec+" non ï¿½ definito. Impossibile procedere!");
 		return uoPec;
 	}
 	
@@ -752,11 +750,11 @@ public class FirmaDigitalePdgVariazioniBP extends
 			pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk
 					.getPdgVariazioneDocument().getStorageObject();
 			pdgVariazioniService.createRelationship(pdgVariazioneDocumentNode.getKey(), node.getKey(),
-					CMISRelationship.VARPIANOGEST_ALLEGATIVARBILANCIO.value());
+					StoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
 
 			pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
 					.getPdgVariazioneDocument().getStorageObject(),
-					CMISAspect.CNR_SIGNEDDOCUMENT.value());
+					StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 		} else {
 			nomeFileTestFirmato = signFileRicevuto;
 			if (nomeFileTestFirmato!=null)
@@ -772,7 +770,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			if (!isTestSession()) {
 				pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk
 						.getPdgVariazioneDocument().getStorageObject(),
-						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+						StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 				pdgVariazioniService.delete(node);
 			}
 			throw new ApplicationException("Errore nell'invio della mail PEC al protocollo informatico. Ripetere l'operazione di firma!");
@@ -781,7 +779,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (!isTestSession()) {
 			pdgVariazioniService.createRelationship(node.getKey(),
 					pdgVariazioneDocumentNode.getKey(),
-					CMISRelationship.CNR_SIGNEDDOCUMENT.value());
+					StoragePropertyNames.R_CNR_SIGNEDDOCUMENT.value());
 		}
 
 		//rp 21/01/2014 inserisco data firma sulla variazione
@@ -823,7 +821,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			if (!isTestSession()) {
 				pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk
 						.getPdgVariazioneDocument().getStorageObject(),
-						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+						StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 				pdgVariazioniService.delete(node);
 			}
 			throw new ApplicationException("Errore nell'invio della mail PEC al protocollo informatico. Ripetere l'operazione di firma!");
@@ -883,11 +881,11 @@ public class FirmaDigitalePdgVariazioniBP extends
 					.getPdgVariazioneDocument().getStorageObject();
 			pdgVariazioniService.createRelationship(pdgVariazioneDocumentNode
 					.getKey(), node.getKey(),
-					CMISRelationship.VARPIANOGEST_ALLEGATIVARBILANCIO.value());
+					StoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
 			
 			pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
 					.getPdgVariazioneDocument().getStorageObject(),
-					CMISAspect.CNR_SIGNEDDOCUMENT.value());
+					StoragePropertyNames.R_CNR_SIGNEDDOCUMENT.value());
 		} else {
 			nomeFileTestFirmato = fileNew.getPath();
 			if (nomeFileTestFirmato!=null)
@@ -902,7 +900,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			if (!isTestSession()) {
 				pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk
 						.getPdgVariazioneDocument().getStorageObject(),
-						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+						StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 				pdgVariazioniService.delete(node);
 			}
 			throw new ApplicationException("Errore nell'invio della mail PEC al protocollo informatico. Ripetere l'operazione di firma!");
@@ -911,7 +909,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (!isTestSession()) {
 			pdgVariazioniService.createRelationship(node.getKey(),
 					pdgVariazioneDocumentNode.getKey(),
-					CMISRelationship.CNR_SIGNEDDOCUMENT.value());
+					StoragePropertyNames.R_CNR_SIGNEDDOCUMENT.value());
 		}
 
 		//rp 21/01/2014 inserisco data firma sulla variazione

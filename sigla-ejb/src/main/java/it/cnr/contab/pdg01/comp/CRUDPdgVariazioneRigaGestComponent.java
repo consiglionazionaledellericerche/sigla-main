@@ -30,7 +30,7 @@ import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
-import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
+import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;

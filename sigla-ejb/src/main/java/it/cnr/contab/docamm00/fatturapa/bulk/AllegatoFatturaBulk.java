@@ -3,8 +3,8 @@ package it.cnr.contab.docamm00.fatturapa.bulk;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
 
@@ -40,7 +40,7 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 		this.aspectName = aspectName;
 	}
 
-	@CMISProperty(name="cmis:secondaryObjectTypeIds")
+	@StorageProperty(name="cmis:secondaryObjectTypeIds")
 	public List<String> getAspect() {
 		 List<String> results = new ArrayList<String>();
 		 results.add("P:cm:titled");

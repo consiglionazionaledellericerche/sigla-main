@@ -1,11 +1,9 @@
 package it.cnr.contab.pdg00.bp;
 
-import it.cnr.contab.cmis.CMISAspect;
-import it.cnr.contab.cmis.CMISRelationship;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.bulk.cmis.AllegatoPdGVariazioneDocumentBulk;
-import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
+import it.cnr.contab.pdg00.bulk.storage.AllegatoPdGVariazioneDocumentBulk;
+import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
@@ -137,7 +135,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() == null)
 			return false;
 		return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().
-				<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(CMISAspect.CNR_SIGNEDDOCUMENT.value());
+				<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 	}
 	
 	@Override
@@ -216,9 +214,9 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 			archiviaStampaPdgVariazioneBulk.getArchivioAllegati().clear();
 			List<StorageObject> allegati = pdgVariazioniService.getRelationship(
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().getKey(),
-					CMISRelationship.VARPIANOGEST_ALLEGATIVARBILANCIO.value());
+					StoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
 			for (StorageObject storageObject : allegati) {
-				if (pdgVariazioniService.hasAspect(storageObject, CMISAspect.SYS_ARCHIVED.value()))
+				if (pdgVariazioniService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
 					continue;
 				AllegatoPdGVariazioneDocumentBulk allegato = AllegatoPdGVariazioneDocumentBulk.construct(storageObject);
 				allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
@@ -307,7 +305,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 							allegato.getContentType(),
 							allegato.getNome(), cmisPath);
 					pdgVariazioniService.createRelationship(pdgVariazioneDocumentNode.getKey(),
-							node.getKey(), CMISRelationship.VARPIANOGEST_ALLEGATIVARBILANCIO.value());
+							node.getKey(), StoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					handleException(e);

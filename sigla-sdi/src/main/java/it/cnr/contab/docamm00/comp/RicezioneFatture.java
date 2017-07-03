@@ -35,6 +35,7 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
@@ -49,9 +50,8 @@ import org.jboss.wsf.spi.annotation.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.cnr.contab.cmis.CMISAspect;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
-import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
+import it.cnr.contab.docamm00.storage.StorageFolderFatturaPassiva;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
@@ -170,7 +170,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		return bStream;			
 	}
 		
-	private void saveNotifica(DataHandler data, String nomeFile, String nodeRef, CMISDocAmmAspect aspect) throws ComponentException {
+	private void saveNotifica(DataHandler data, String nomeFile, String nodeRef, StorageDocAmmAspect aspect) throws ComponentException {
 		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
@@ -206,7 +206,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Collectors.joining(StoreService.BACKSLASH)
 		);
 		path = storeService.createFolderIfNotPresent(path, folderName,null, null,
-				new CMISFolderFatturaPassiva(null, identificativoSdI));
+				new StorageFolderFatturaPassiva(null, identificativoSdI));
 		try {
 			Map<String, Object> metadataPropertiesMinusP7M = new HashMap<String, Object>();
 			metadataPropertiesMinusP7M.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
@@ -236,7 +236,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
 				fileProperties.put(PropertyIds.NAME, name);
 				fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
-						Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma", CMISAspect.CNR_SIGNEDDOCUMENT.value()));
+						Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma", StoragePropertyNames.CNR_SIGNEDDOCUMENT.value()));
 				fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 				storeService.storeSimpleDocument(stream, contentTypeFile, path, fileProperties);
 			} catch(CmisContentAlreadyExistsException _ex){
@@ -926,7 +926,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						docsDaAggiornare = true;
 						List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
 						for (DocumentoEleTrasmissioneBulk trasm : trasms) {
-							saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
+							saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
 							break;
 						}
 					}
@@ -991,7 +991,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 								docsDaAggiornare = true;
 								List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
 								for (DocumentoEleTrasmissioneBulk trasm : trasms) {
-									saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
+									saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
 									break;
 								}
 							}

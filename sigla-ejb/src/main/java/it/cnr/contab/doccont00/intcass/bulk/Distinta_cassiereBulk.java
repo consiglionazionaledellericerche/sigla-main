@@ -1,7 +1,7 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP;
@@ -13,7 +13,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
-@CMISType(name="D:doccont:document")
+@StorageType(name="D:doccont:document")
 public class Distinta_cassiereBulk extends Distinta_cassiereBase{ 
 	private CdsBulk cds = new CdsBulk();
 	private Unita_organizzativaBulk unita_organizzativa = new Unita_organizzativaBulk();
@@ -34,7 +34,7 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase{
 	private java.math.BigDecimal totStoricoReversaliRitenuteTrasmesse = new java.math.BigDecimal(0);	
 
 
-	@CMISProperty(name="doccont:tipo")
+	@StorageProperty(name="doccont:tipo")
 	public String getCd_tipo_documento_cont() {
 	  return "DISTINTA";
 	 }

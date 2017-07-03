@@ -2,7 +2,7 @@ package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.AllegatoFatturaAttivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
@@ -1235,7 +1235,7 @@ public abstract class CRUDFatturaAttivaBP
     @Override
     protected boolean excludeChild(StorageObject storageObject) {
         if (storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).stream()
-                .anyMatch(s -> s.equalsIgnoreCase(CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ALLEGATI_NON_INVIATI_SDI.value())))
+                .anyMatch(s -> s.equalsIgnoreCase(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ALLEGATI_NON_INVIATI_SDI.value())))
             return false;
         return super.excludeChild(storageObject);
     }

@@ -1,10 +1,10 @@
 package it.cnr.contab.spring.storage;
 
-import it.cnr.contab.cmis.CMISTypeName;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperties;
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.spring.storage.bulk.StorageTypeName;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperties;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.Introspector;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by mspasiano on 6/15/17.
@@ -76,15 +74,15 @@ public class StoreBulkInfo {
     }
 
     public String getType(OggettoBulk oggettoBulk){
-        if (!(oggettoBulk instanceof CMISTypeName) && cacheObjType.containsKey(oggettoBulk.getClass()))
+        if (!(oggettoBulk instanceof StorageTypeName) && cacheObjType.containsKey(oggettoBulk.getClass()))
             return cacheObjType.get(oggettoBulk.getClass());
-        if (oggettoBulk instanceof CMISTypeName)
-            cacheObjType.put(oggettoBulk.getClass(), ((CMISTypeName)oggettoBulk).getTypeName());
+        if (oggettoBulk instanceof StorageTypeName)
+            cacheObjType.put(oggettoBulk.getClass(), ((StorageTypeName)oggettoBulk).getTypeName());
         else{
-            CMISType cmisType = oggettoBulk.getClass().getAnnotation(CMISType.class);
-            if (cmisType == null && !(oggettoBulk instanceof CMISTypeName))
+            StorageType storageType = oggettoBulk.getClass().getAnnotation(StorageType.class);
+            if (storageType == null && !(oggettoBulk instanceof StorageTypeName))
                 throw new RuntimeException("Type is missing!");
-            cacheObjType.put(oggettoBulk.getClass(), cmisType.name());
+            cacheObjType.put(oggettoBulk.getClass(), storageType.name());
         }
         return cacheObjType.get(oggettoBulk.getClass());
     }
@@ -97,14 +95,14 @@ public class StoreBulkInfo {
         for (Class<?> class1 : classHierarchy) {
             List<Field> attributi = Arrays.asList(class1.getDeclaredFields());
             for (Field field : attributi) {
-                if (field.isAnnotationPresent(CMISPolicy.class)){
-                    results.add(field.getAnnotation(CMISPolicy.class).name());
+                if (field.isAnnotationPresent(StoragePolicy.class)){
+                    results.add(field.getAnnotation(StoragePolicy.class).name());
                 }
             }
             List<Method> methods = Arrays.asList(class1.getMethods());
             for (Method method : methods) {
-                if (method.isAnnotationPresent(CMISPolicy.class)){
-                    results.add(method.getAnnotation(CMISPolicy.class).name());
+                if (method.isAnnotationPresent(StoragePolicy.class)){
+                    results.add(method.getAnnotation(StoragePolicy.class).name());
                 }
             }
         }
@@ -127,25 +125,25 @@ public class StoreBulkInfo {
         for (Class<?> class1 : classHierarchy) {
             List<Field> attributi = Arrays.asList(class1.getDeclaredFields());
             for (Field field : attributi) {
-                if (field.isAnnotationPresent(CMISProperty.class)){
-                    results.put(field.getAnnotation(CMISProperty.class).name(), new PropertyValue(field, null));
+                if (field.isAnnotationPresent(StorageProperty.class)){
+                    results.put(field.getAnnotation(StorageProperty.class).name(), new PropertyValue(field, null));
                 }
-                if (field.isAnnotationPresent(CMISProperties.class)){
-                    List<CMISProperty> properties = Arrays.asList(field.getAnnotation(CMISProperties.class).property());
-                    for (CMISProperty cmisProperty : properties) {
-                        results.put(cmisProperty.name(), new PropertyValue(field, null));
+                if (field.isAnnotationPresent(StorageProperties.class)){
+                    List<StorageProperty> properties = Arrays.asList(field.getAnnotation(StorageProperties.class).property());
+                    for (StorageProperty storageProperty : properties) {
+                        results.put(storageProperty.name(), new PropertyValue(field, null));
                     }
                 }
             }
             List<Method> methods = Arrays.asList(class1.getMethods());
             for (Method method : methods) {
-                if (method.isAnnotationPresent(CMISProperty.class)){
-                    results.put(method.getAnnotation(CMISProperty.class).name(), new PropertyValue(null, method));
+                if (method.isAnnotationPresent(StorageProperty.class)){
+                    results.put(method.getAnnotation(StorageProperty.class).name(), new PropertyValue(null, method));
                 }
-                if (method.isAnnotationPresent(CMISProperties.class)){
-                    List<CMISProperty> properties = Arrays.asList(method.getAnnotation(CMISProperties.class).property());
-                    for (CMISProperty cmisProperty : properties) {
-                        results.put(cmisProperty.name(), new PropertyValue(null, method));
+                if (method.isAnnotationPresent(StorageProperties.class)){
+                    List<StorageProperty> properties = Arrays.asList(method.getAnnotation(StorageProperties.class).property());
+                    for (StorageProperty storageProperty : properties) {
+                        results.put(storageProperty.name(), new PropertyValue(null, method));
                     }
                 }
             }
@@ -169,19 +167,19 @@ public class StoreBulkInfo {
         for (Class<?> class1 : classHierarchy) {
             List<Field> attributi = Arrays.asList(class1.getDeclaredFields());
             for (Field field : attributi) {
-                if (field.isAnnotationPresent(CMISPolicy.class)){
-                    List<CMISProperty> properties = Arrays.asList(field.getAnnotation(CMISPolicy.class).property());
-                    for (CMISProperty cmisProperty : properties) {
-                        results.put(cmisProperty.name(), new PropertyValue(field, null));
+                if (field.isAnnotationPresent(StoragePolicy.class)){
+                    List<StorageProperty> properties = Arrays.asList(field.getAnnotation(StoragePolicy.class).property());
+                    for (StorageProperty storageProperty : properties) {
+                        results.put(storageProperty.name(), new PropertyValue(field, null));
                     }
                 }
             }
             List<Method> methods = Arrays.asList(class1.getMethods());
             for (Method method : methods) {
-                if (method.isAnnotationPresent(CMISPolicy.class)){
-                    List<CMISProperty> properties = Arrays.asList(method.getAnnotation(CMISPolicy.class).property());
-                    for (CMISProperty cmisProperty : properties) {
-                        results.put(cmisProperty.name(), new PropertyValue(null, method));
+                if (method.isAnnotationPresent(StoragePolicy.class)){
+                    List<StorageProperty> properties = Arrays.asList(method.getAnnotation(StoragePolicy.class).property());
+                    for (StorageProperty storageProperty : properties) {
+                        results.put(storageProperty.name(), new PropertyValue(null, method));
                     }
                 }
             }

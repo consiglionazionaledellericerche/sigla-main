@@ -5,16 +5,12 @@ import com.amazonaws.services.s3.model.CopyObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import it.cnr.contab.cmis.acl.ACLType;
-import it.cnr.contab.cmis.acl.Permission;
-import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
 import it.cnr.contab.spring.config.S3ConfigurationProperties;
 import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.spring.storage.StorageService;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

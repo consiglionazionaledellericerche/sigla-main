@@ -4,7 +4,7 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.EsercizioComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.actions.CRUDFatturaPassivaAction;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
@@ -260,8 +260,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		for (StorageObject storageObject : files) {
 			if (storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(
 					documentoEleTestata.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO)?
-        					CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
-        						CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value())){													
+        					StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
+        						StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value())){
 				HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
 				OutputStream os = response.getOutputStream();
 				response.setContentType("application/octetstream");

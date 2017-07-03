@@ -1,8 +1,8 @@
 package it.cnr.contab.docamm00.service;
 
-import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
-import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
+import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
@@ -173,46 +173,46 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
 
     private void archiviaFileCMIS(UserContext userContext, DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService,
                                   Fattura_attivaBulk fattura, File file) throws ComponentException {
-        List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
-        List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
+        List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
+        List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
         try {
-            CMISFile cmisFile = new CMISFileFatturaAttiva(file, fattura,
+            StorageFile storageFile = new StorageFileFatturaAttiva(file, fattura,
                     "application/pdf","FAPP" + fattura.constructCMISNomeFile() + ".pdf");
-            String path = cmisFile.getCMISParentPath();
+            String path = storageFile.getStorageParentPath();
             try{
                 Optional.ofNullable(documentiCollegatiDocAmmService.restoreSimpleDocument(
-                        cmisFile,
-                        cmisFile.getInputStream(),
-                        cmisFile.getContentType(),
-                        cmisFile.getFileName(),
+						storageFile,
+                        storageFile.getInputStream(),
+                        storageFile.getContentType(),
+                        storageFile.getFileName(),
                         path,
                         true
                 )).ifPresent(storageObject -> {
                     List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-                    aspects.add(CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
+                    aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
                     documentiCollegatiDocAmmService.updateProperties(
                             Collections.singletonMap(
                                     StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
                                     aspects),
                             storageObject);
-                    cmisFile.setStorageObject(storageObject);
-                    cmisFileCreate.add(cmisFile);
+                    storageFile.setStorageObject(storageObject);
+                    storageFileCreate.add(storageFile);
                 });
             } catch (StorageException _ex) {
                 if (_ex.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
-                    throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
+                    throw new ApplicationException("CMIS - File ["+ storageFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
                 throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + _ex.getMessage() + ")");
             }
         } catch (Exception e){
             //Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-            for (CMISFile cmisFile : cmisFileCreate)
-                documentiCollegatiDocAmmService.delete(cmisFile.getStorageObject());
-            for (CMISFile cmisFile : cmisFileAnnullati) {
-                String cmisFileName = cmisFile.getFileName();
+            for (StorageFile storageFile : storageFileCreate)
+                documentiCollegatiDocAmmService.delete(storageFile.getStorageObject());
+            for (StorageFile storageFile : storageFileAnnullati) {
+                String cmisFileName = storageFile.getFileName();
                 String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
                 String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
-                cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
-                documentiCollegatiDocAmmService.updateProperties(cmisFile, cmisFile.getStorageObject());
+                storageFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
+                documentiCollegatiDocAmmService.updateProperties(storageFile, storageFile.getStorageObject());
             }
             throw new ApplicationException(e.getMessage());
         }

@@ -1,7 +1,7 @@
 package it.cnr.contab.pdg00.service;
 
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
-import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
+import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.spring.config.StoragePropertyNames;

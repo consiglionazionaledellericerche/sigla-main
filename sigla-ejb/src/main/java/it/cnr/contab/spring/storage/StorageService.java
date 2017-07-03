@@ -1,16 +1,15 @@
 package it.cnr.contab.spring.storage;
 
-import it.cnr.contab.cmis.acl.ACLType;
-import it.cnr.contab.cmis.acl.Permission;
-import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
 import it.cnr.contab.spring.config.StorageObject;
 import org.apache.http.auth.UsernamePasswordCredentials;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Created by mspasiano on 6/5/17.
@@ -18,6 +17,42 @@ import java.util.regex.Pattern;
 public interface StorageService {
 
     Pattern UUID_PATTERN = Pattern.compile("[a-f0-9]{8}-[a-f0-9]{4}-[12345][a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}");
+    public enum ACLType {
+        Consumer, Editor, Collaborator, Coordinator, Contributor, FullControl, Read, Write
+    }
+    public class Permission {
+        private String userName;
+        private ACLType role;
+
+        public static Permission construct(String userName, ACLType role){
+            return new Permission(userName, role);
+        }
+
+        protected Permission(String userName, ACLType role) {
+            super();
+            this.userName = userName;
+            this.role = role;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+        public ACLType getRole() {
+            return role;
+        }
+        public void setRole(ACLType role) {
+            this.role = role;
+        }
+
+        public static Map<String, ACLType> convert(Permission... permissions) {
+            return Stream.of(permissions)
+                    .collect(HashMap::new, (m,v)->m.put(v.getUserName(), v.getRole()), HashMap::putAll);
+        }
+
+    }
 
     /**
      * create a new object

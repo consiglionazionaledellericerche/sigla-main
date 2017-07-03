@@ -2,9 +2,9 @@ package it.cnr.contab.docamm00.comp;
 
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
-import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
+import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
@@ -119,7 +119,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 					fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
 				}
 				if (fattura != null){
-					salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_RICEVUTA_CONSEGNA);
+					salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_RICEVUTA_CONSEGNA);
 					try{
 						fattura = component.aggiornaFatturaRicevutaConsegnaInvioSDI(userContext, fattura, String.valueOf(ricevuta.getIdentificativoSdI()), ricevuta.getDataOraConsegna());
 						logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura consegnata  "+fattura.recuperoIdFatturaAsString());
@@ -140,27 +140,27 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 	}
 
 	private void salvaFileSuDocumentale(DataHandler data, String nomeFile,
-			Fattura_attivaBulk fattura, CMISDocAmmAspect aspect) throws IOException,
+			Fattura_attivaBulk fattura, StorageDocAmmAspect aspect) throws IOException,
 			ApplicationException {
 		logger.info("Inizio Salvataggio sul Documentale");
 		DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean(DocumentiCollegatiDocAmmService.class);
-		CMISFile cmisFile = new CMISFileFatturaAttiva(data.getInputStream(), data.getContentType(), nomeFile, fattura);
-		if (cmisFile!=null) {
-			String path = cmisFile.getCMISParentPath();
+		StorageFile storageFile = new StorageFileFatturaAttiva(data.getInputStream(), data.getContentType(), nomeFile, fattura);
+		if (storageFile !=null) {
+			String path = storageFile.getStorageParentPath();
 			try{
 				StorageObject storageObject = documentiCollegatiDocAmmService.restoreSimpleDocument(
-						cmisFile,
-						cmisFile.getInputStream(),
-						cmisFile.getContentType(),
-						cmisFile.getFileName(), 
+						storageFile,
+						storageFile.getInputStream(),
+						storageFile.getContentType(),
+						storageFile.getFileName(),
 						path,
 						true);
 				documentiCollegatiDocAmmService.addAspect(storageObject, aspect.value());
-				cmisFile.setStorageObject(storageObject);
+				storageFile.setStorageObject(storageObject);
 				logger.info("Salvato file sul Documentale");
 			} catch (Exception e) {
 				if (e.getCause() instanceof CmisConstraintException)
-					throw new ApplicationException("CMIS - File Ricevuta Consegna ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
+					throw new ApplicationException("CMIS - File Ricevuta Consegna ["+ storageFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
 				throw new ApplicationException("CMIS - Errore nella registrazione del file Ricevuta Consegna  sul Documentale (" + e.getMessage() + ")");
 			}
 		}
@@ -180,7 +180,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 				String nomeFileP7m = mancataConsegna.getNomeFile();
 				fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
 				if (fattura != null){
-					salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_MANCATA_CONSEGNA);
+					salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_MANCATA_CONSEGNA);
 					try{
 						fattura = component.aggiornaFatturaMancataConsegnaInvioSDI(userContext, fattura, codiceSDI, mancataConsegna.getDescrizione());
 						logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura con mancata consegna con nome file "+nomeFileP7m);
@@ -216,7 +216,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 				fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
 				if (fattura != null){
 					if ((CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) == 0) || (docComponent.isRibaltato(userContext, fattura.getCd_cds_origine(), fattura.getEsercizio()) && CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) > 0)){
-						salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_TRASMISSIONE_FATTURA);
+						salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_TRASMISSIONE_FATTURA);
 						try{
 							component.aggiornaFatturaTrasmissioneNonRecapitataSDI(userContext, fattura, codiceSDI, notifica.getNote());
 							logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura con trasmissione non recapitata con nome file "+nomeFileP7m);
@@ -333,7 +333,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 				fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
 				if (fattura != null){
 					if ((CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) == 0) || (docComponent.isRibaltato(userContext, fattura.getCd_cds_origine(), fattura.getEsercizio()) && CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) > 0)){
-						salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
+						salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
 						StringBuffer errore = estraiErrore(notifica);
 						try{
 							fattura = component.aggiornaFatturaScartoSDI(userContext, fattura, codiceSDI, errore.toString());
@@ -381,7 +381,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 					if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI)){
 						logger.info("Fatture Elettroniche: Attive: Fattura già elaborata ");
 					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI) || fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)){
-						salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
+						salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
 						try{
 							component.aggiornaFatturaDecorrenzaTerminiSDI(userContext, fattura, notifica.getDescrizione());
 							logger.info("Fatture Elettroniche: Attive: aggiornamento decorrenza termini Fattura con id SDI "+identificativoSdi);
@@ -418,7 +418,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 						logger.info("Fatture Elettroniche: Attive: Fattura già elaborata ");
 					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)){
 						if (esitoAccettato(notifica)){
-							salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO);
+							salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO);
 							try{
 								component.aggiornaFatturaEsitoAccettatoSDI(userContext, fattura);
 								logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura accettata con id SDI "+identificativoSdi);
@@ -430,7 +430,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 							}
 						} else {
 							if ((CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) == 0) || (docComponent.isRibaltato(userContext, fattura.getCd_cds_origine(), fattura.getEsercizio()) && CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) > 0)){
-								salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO);
+								salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO);
 								String rifiuto = recuperoMotivoRifiuto(notifica);
 								try{
 									fattura = component.aggiornaFatturaRifiutataDestinatarioSDI(userContext, fattura, rifiuto);

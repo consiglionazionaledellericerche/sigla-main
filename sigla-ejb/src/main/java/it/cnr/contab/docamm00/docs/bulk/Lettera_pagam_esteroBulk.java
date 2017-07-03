@@ -1,7 +1,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
@@ -10,7 +10,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
-@CMISType(name="D:doccont:document")
+@StorageType(name="D:doccont:document")
 public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implements AllegatoParentBulk, StatoTrasmissione{
 
 	private it.cnr.contab.doccont00.core.bulk.SospesoBulk sospeso = null;
@@ -281,7 +281,7 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 	public Long getPg_documento_cont() {
 		return getPg_lettera();
 	}
-	@CMISProperty(name="doccont:tipo")
+	@StorageProperty(name="doccont:tipo")
 	public String getCd_tipo_documento_cont() {
 		return "1210";
 	}

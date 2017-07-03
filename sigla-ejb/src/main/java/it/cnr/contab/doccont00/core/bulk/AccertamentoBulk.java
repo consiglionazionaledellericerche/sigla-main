@@ -4,7 +4,7 @@ import java.math.*;
 
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 
 import java.util.*;
@@ -17,9 +17,6 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.*;
 
 public class AccertamentoBulk extends AccertamentoBase implements IDocumentoContabileBulk, AllegatoParentBulk {
 	private static final long serialVersionUID = 1L;

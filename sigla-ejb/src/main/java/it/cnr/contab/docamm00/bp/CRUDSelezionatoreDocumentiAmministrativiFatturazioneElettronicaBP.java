@@ -1,11 +1,10 @@
 package it.cnr.contab.docamm00.bp;
 
 
-import it.cnr.contab.cmis.CMISAspect;
-import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
-import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
@@ -177,45 +176,45 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 				final Fattura_attivaBulk fatturaProtocollata = protocollazione(userContext, fatturaAttiva);
 				logger.info("Creato protocollazione");
 
-	    		List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
-	    		List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
+	    		List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
+	    		List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
 	    		try {
-	    			CMISFile cmisFile = new CMISFileFatturaAttiva(file, fatturaProtocollata,
+	    			StorageFile storageFile = new StorageFileFatturaAttiva(file, fatturaProtocollata,
 	    					"application/xml","FAXA" + fatturaProtocollata.constructCMISNomeFile() + ".xml");
 	    			
-	    			if (cmisFile!=null) {
+	    			if (storageFile !=null) {
 	    				//E' previsto solo l'inserimento ma non l'aggiornamento
-	    				String path = cmisFile.getCMISParentPath();
+	    				String path = storageFile.getStorageParentPath();
 	    				try{
                             Optional.ofNullable(documentiCollegatiDocAmmService.restoreSimpleDocument(
-                                    cmisFile,
-                                    cmisFile.getInputStream(),
-                                    cmisFile.getContentType(),
-                                    cmisFile.getFileName(),
+									storageFile,
+                                    storageFile.getInputStream(),
+                                    storageFile.getContentType(),
+                                    storageFile.getFileName(),
                                     path,
                                     true
                             )).ifPresent(storageObject -> {
                                 List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-                                aspects.add(CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
+                                aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
                                 documentiCollegatiDocAmmService.updateProperties(
                                         Collections.singletonMap(
                                                 StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
                                                 aspects),
                                         storageObject);
-                                cmisFile.setStorageObject(storageObject);
-                                cmisFileCreate.add(cmisFile);
+                                storageFile.setStorageObject(storageObject);
+                                storageFileCreate.add(storageFile);
                             });
 	    					logger.info("Salvato file XML sul Documentale");
 	    				} catch (StorageException _ex) {
 	    					if (_ex.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
-	    						throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
+	    						throw new ApplicationException("CMIS - File ["+ storageFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
 	    					throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + _ex.getMessage() + ")");
 	    				}
-	    				if (cmisFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0){
+	    				if (storageFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0){
 		    				String nomeFile = file.getName();
 		    				String nomeFileP7m = nomeFile+".p7m";
 		    				String json = "{" +
-		    	    				"\"nodeRefSource\" : \"" + cmisFile.getStorageObject().getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()) + "\"," +
+		    	    				"\"nodeRefSource\" : \"" + storageFile.getStorageObject().getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()) + "\"," +
 		    	    				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
 		    	    				"\"password\" : \"" + firmaOTPBulk.getPassword() + "\"," +
 		    	    				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
@@ -249,7 +248,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                                 logger.error("Errore nell'invio del file "+ ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 
                                                 List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-                                                aspects.remove(CMISAspect.CNR_SIGNEDDOCUMENT.value());
+                                                aspects.remove(StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
                                                 documentiCollegatiDocAmmService.updateProperties(
                                                         Collections.singletonMap(
                                                                 StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
@@ -274,12 +273,12 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    			/*
 	    			    Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
 	    			 */
-	    			for (CMISFile cmisFile : cmisFileAnnullati) {
-	    				String cmisFileName = cmisFile.getFileName();
+	    			for (StorageFile storageFile : storageFileAnnullati) {
+	    				String cmisFileName = storageFile.getFileName();
 	    				String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
 	    				String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
-	    				cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
-                        documentiCollegatiDocAmmService.updateProperties(cmisFile, cmisFile.getStorageObject());
+	    				storageFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
+                        documentiCollegatiDocAmmService.updateProperties(storageFile, storageFile.getStorageObject());
 	    			}
 	    			rollbackUserTransaction();
 	    			extracted(e);

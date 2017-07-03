@@ -18,7 +18,7 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;

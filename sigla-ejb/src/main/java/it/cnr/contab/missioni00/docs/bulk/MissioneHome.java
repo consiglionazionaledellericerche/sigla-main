@@ -3,9 +3,7 @@ package it.cnr.contab.missioni00.docs.bulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
-import it.cnr.contab.cmis.acl.ACLType;
-import it.cnr.contab.cmis.acl.Permission;
-import it.cnr.contab.cmis.acl.SIGLAGroups;
+import it.cnr.contab.spring.storage.acl.SIGLAGroups;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaHome;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -16,6 +14,7 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.service.LDAPService;
 import it.cnr.jada.UserContext;
@@ -431,8 +430,8 @@ public class MissioneHome extends BulkHome implements
 							report.getContentType(),
 							report.getName(),
 							cmisPath,
-							Permission.construct(uidMail[0], ACLType.Consumer),
-							Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), ACLType.Coordinator)
+							StorageService.Permission.construct(uidMail[0], StorageService.ACLType.Consumer),
+							StorageService.Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), StorageService.ACLType.Coordinator)
 					);
 				} catch (Exception e) {
 					throw new PersistencyException(e);

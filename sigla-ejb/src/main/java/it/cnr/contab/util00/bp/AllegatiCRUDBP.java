@@ -4,7 +4,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.config.StorageObject;
 import it.cnr.contab.spring.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
