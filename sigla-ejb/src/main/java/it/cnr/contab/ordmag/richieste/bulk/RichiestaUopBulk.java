@@ -329,6 +329,9 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	public Boolean isDefinitiva(){
 		return getStato() != null && getStato().equals(STATO_DEFINITIVA);
 	}
+	public Boolean isDefinitivaOInviata(){
+		return isDefinitiva() || isInviataOrdine();
+	}
 	public Boolean isInviataOrdine(){
 		return getStato() != null && getStato().equals(STATO_INVIATA_ORDINE);
 	}
