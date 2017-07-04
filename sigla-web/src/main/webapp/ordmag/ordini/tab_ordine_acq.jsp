@@ -39,7 +39,7 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 				bp.getController().writeFormField(out, "numero");
 			%>
 			<%
-				bp.getController().writeFormField(out, "dataRichiesta");
+				bp.getController().writeFormField(out, "dataOrdine");
 			%>
 			<% if (!bp.isSearching()) {
 				 bp.getController().writeFormField(out, "stato");
