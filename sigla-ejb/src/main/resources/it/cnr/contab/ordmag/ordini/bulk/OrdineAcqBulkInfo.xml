@@ -21,27 +21,35 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="Numeratore" />
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
-		property="numerazioneOrd.cdUnitaOperativa"
+		property="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUnitaOperativa" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="esercizio"
 		property="numerazioneOrd.esercizio"
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="cdNumeratore"
 		property="numerazioneOrd.cdNumeratore"
@@ -51,25 +59,52 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNumeratore" />
+		label="Numeratore" />
 	<fieldProperty
 		name="numero"
 		property="numero"
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="6"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
 		nullable="false"
-		label="numero" />
+		label="Numero" />
 	<fieldProperty
 		name="dataOrdine"
 		property="dataOrdine"
 		inputType="TEXT"
 		formatName="date_short"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Data Ordine" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dataOrdine" />
+		keysProperty="statoKeys"
+		label="Stato" />
+	<fieldProperty
+		name="statoForSearch"
+		property="stato"
+		inputSize="20"
+		maxLength="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="statoKeysForSearch"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Stato"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cdDivisa"
 		property="cdDivisa"
@@ -83,89 +118,240 @@
 		name="cambio"
 		property="cambio"
 		inputType="TEXT"
-		inputSize="15"
-		maxLength="15"
-		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"
 		nullable="false"
-		label="cambio" />
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnInsert="true"
+		readonlyProperty="ROCambio"
+		label="Cambio" />
+
+
 	<fieldProperty
-		name="cdTerzo"
-		property="cdTerzo"
+		name="fornitore"
+		property="fornitore"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFornitoreSearchTool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		completeOnSave="false"
+		label="fornitore"/>
+	<fieldProperty
+		name="crea_fornitore"
+		property="fornitore"
+		inputType="CRUDTOOL"
+		readonlyProperty="ROFornitoreSearchTool"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP" />
+	<fieldProperty
+		name="cd_fornitore"
+		property="fornitore.cd_terzo"
+		maxLength="30"
+		inputSize="6"
 		inputType="TEXT"
-		inputSize="8"
-		maxLength="8"
-		enabledOnEdit="false"
+		label="Fornitore"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
 		nullable="false"
-		label="cdTerzo" />
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
 	<fieldProperty
-		name="ragioneSociale"
-		property="ragioneSociale"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="100"
-		enabledOnEdit="false"
-		label="ragioneSociale" />
+		name="cd_precedente"
+		property="fornitore.cd_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
 	<fieldProperty
-		name="nome"
+		name="ds_fornitore"
 		property="nome"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="50"
-		enabledOnEdit="false"
-		label="nome" />
+		inputSize="15"
+		inputType="TEXT"
+		label="Descr. fornitore"
+		nullable="false"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="fornitore.denominazione_sede"
+		inputSize="100"
+		inputType="TEXT"
+		label="Denom./Sede"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="via_fiscale"
+		property="fornitore.via_sede"
+		maxLength="20"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Via/P.za"/>
+	<fieldProperty
+		name="num_civico"
+		property="fornitore.numero_civico_sede"
+		maxLength="10"
+		inputSize="5"
+		inputType="ROTEXT"
+		label="Numero"/>
+	<fieldProperty
+		name="ds_comune"
+		property="fornitore.comune_sede.ds_comune"
+		maxLength="100"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Comune"/>
+	<fieldProperty
+		name="ds_provincia"
+		property="fornitore.comune_sede.provincia.ds_provincia"
+		maxLength="100"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Provincia"/>
+	<fieldProperty
+		name="partita_iva"
+		property="partitaIva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Partita IVA"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codiceFiscale"
+		maxLength="16"
+		inputSize="16"
+		inputType="TEXT"
+		label="Cod. Fiscale"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cognome"
 		property="cognome"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
 		maxLength="50"
-		enabledOnEdit="false"
-		label="cognome" />
-	<fieldProperty
-		name="codiceFiscale"
-		property="codiceFiscale"
+		inputSize="50"
 		inputType="TEXT"
+		label="Cognome"
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		maxLength="50"
 		inputSize="20"
-		maxLength="20"
-		enabledOnEdit="false"
-		label="codiceFiscale" />
-	<fieldProperty
-		name="partitaIva"
-		property="partitaIva"
 		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		enabledOnEdit="false"
-		label="partitaIva" />
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
+		enabledOnSearch="true"
+		label="Nome"/>
 	<fieldProperty
-		name="cdTerminiPag"
-		property="cdTerminiPag"
+		name="ragione_sociale"
+		property="ragioneSociale"
+		maxLength="100"
+		inputSize="100"
 		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="cdTerminiPag" />
+		readonlyPropertyOnEdit="ROfornitore"
+		readonlyPropertyOnInsert="ROfornitore"
+		readonlyPropertyOnSearch="ROfornitore"
+		enabledOnSearch="true"
+		label="Ragione Sociale"
+		caseSensitiveSearch="false" />
 	<fieldProperty
-		name="pgBanca"
-		property="pgBanca"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
+		name="modalitaPagamento"
+		property="modalitaPagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
 		nullable="false"
-		label="pgBanca" />
+		label="Mod. pagamento" />
 	<fieldProperty
-		name="cdModalitaPag"
-		property="cdModalitaPag"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
+		name="terminiPagamento"
+		property="terminiPagamento"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		label="Term. pagamento" />
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
-		nullable="false"
-		label="cdModalitaPag" />
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="listabanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		iconClass="fa fa-search text-primary"
+		buttonClass="btn-secondary btn-title text-primary"		
+		readonlyProperty="true"
+		label="Conto/i..."
+		href="javascript:submitForm('doSearch(main.listabanche)')" />
+
 	<fieldProperty
 		name="nota"
 		property="nota"
@@ -174,14 +360,14 @@
 		rows="5"
 		maxLength="2000"
 		enabledOnEdit="false"
-		label="nota" />
+		label="Nota" />
 	<fieldProperty
 		name="findNotaPrecodificata"
 		property="notaPrecodificata"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="NotaPrecodificata" />
+		label="Nota Precodificata" />
 	<fieldProperty
 		name="cdNotaPrecodificata"
 		property="notaPrecodificata.cdNotaPrecodificata"
@@ -189,15 +375,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="cdNotaPrecodificata" />
-	<fieldProperty
-		name="cdCdsNotaPrec"
-		property="notaPrecodificata.cdCds"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		enabledOnEdit="false"
-		label="CdsNotaPrecodificata" />
+		label="Nota Precodificata" />
 	<fieldProperty
 		name="esercizioContratto"
 		property="esercizioContratto"
@@ -223,94 +401,150 @@
 		enabledOnEdit="false"
 		label="pgContratto" />
 	<fieldProperty
-		name="stato"
-		property="stato"
-		inputType="TEXT"
-		inputSize="3"
-		maxLength="3"
-		enabledOnEdit="false"
-		nullable="false"
-		label="stato" />
-	<fieldProperty
 		name="dataOrdineDef"
 		property="dataOrdineDef"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dataOrdineDef" />
-	<fieldProperty
-		name="responsabileProc"
-		property="responsabileProc"
-		inputType="TEXT"
-		inputSize="8"
-		maxLength="8"
-		enabledOnEdit="false"
-		label="responsabileProc" />
-	<fieldProperty
-		name="firmatario"
-		property="firmatario"
-		inputType="TEXT"
-		inputSize="8"
-		maxLength="8"
-		enabledOnEdit="false"
-		label="firmatario" />
-	<fieldProperty
-		name="direttore"
-		property="direttore"
-		inputType="TEXT"
-		inputSize="8"
-		maxLength="8"
-		enabledOnEdit="false"
-		label="direttore" />
-	<fieldProperty
-		name="cdr"
-		property="cdr"
-		inputType="TEXT"
-		inputSize="8"
-		maxLength="8"
-		enabledOnEdit="false"
-		label="cdr" />
+		label="Data Conferma Ordine" />
+		
+        <fieldProperty
+                name="findResponsabile"
+                property="responsabileProcPers"
+                inputType="SEARCHTOOL"
+                enabledOnSearch="true"
+                label="Responsabile procedimento/RUP" />
+        <fieldProperty
+                name="responsabileProc"
+                property="responsabileProcPers.cd_terzo"
+                readonlyProperty="ROResponsabile"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="8"
+                label="Responsabile procedimento/RUP" />
+        <fieldProperty
+                name="ds_responsabile"
+                property="ds_responsabile"
+                readonlyProperty="ROResponsabile"
+                inputSize="30"
+                enabledOnSearch="true"
+                inputType="ROTEXT" />
+        <fieldProperty
+                name="findFirmatario"
+                property="firmatarioPers"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                enabledOnSearch="true"
+               label="Firmatario" />
+        <fieldProperty
+                name="firmatario"
+                property="firmatarioPers.cd_terzo"
+                readonlyProperty="ROFirmatario"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="8"
+                label="Firmatario" />
+        <fieldProperty
+                name="ds_firmatario"
+                property="ds_firmatario"
+                readonlyProperty="ROFirmatario"
+                inputSize="30"
+                enabledOnSearch="true"
+                inputType="ROTEXT" />
+        <fieldProperty
+                name="findDirettore"
+                property="direttorePers"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                enabledOnSearch="true"
+               label="Direttore/Dirigente" />
+        <fieldProperty
+                name="figura_giuridica_interna"
+                property="terzoCdr"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                enabledOnSearch="true"
+                nullable="false"
+                label="Centro di responsabilità" />
+        <fieldProperty
+                name="cdr"
+                property="terzoCdr.cd_terzo"
+                inputType="TEXT"
+                inputSize="8"
+                maxLength="8"
+                nullable="false"
+                label="Centro di responsabilità" />
+
 	<fieldProperty
 		name="referenteEsterno"
 		property="referenteEsterno"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
+		inputSize="100"
 		maxLength="100"
-		enabledOnEdit="false"
-		label="referenteEsterno" />
+		nullable="false"
+		label="Referente Esterno" />
 	<fieldProperty
+        name="findTipoOrdine"
+        property="tipoOrdine"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        nullable="false"
+        enabledOnSearch="true"
+        label="Tipo Ordine" />
+    <fieldProperty
 		name="cdTipoOrdine"
-		property="cdTipoOrdine"
-		inputType="TEXT"
-		inputSize="5"
-		maxLength="5"
-		enabledOnEdit="false"
-		label="cdTipoOrdine" />
-	<fieldProperty
-		name="cdProcAmm"
-		property="cdProcAmm"
-		inputType="TEXT"
-		inputSize="5"
-		maxLength="5"
-		enabledOnEdit="false"
-		label="cdProcAmm" />
-	<fieldProperty
-		name="cdCig"
-		property="cdCig"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="cdCig" />
-	<fieldProperty
-		name="cdCup"
-		property="cdCup"
-		inputType="TEXT"
-		inputSize="15"
-		maxLength="15"
-		enabledOnEdit="false"
-		label="cdCup" />
+        property="tipoOrdine.cdTipoOrdine"
+        inputType="TEXT"
+        inputSize="5"
+        maxLength="5"
+        nullable="false"
+        label="Tipo Ordine" />
+        <fieldProperty
+                name="procedura_amministrativa"
+                property="procedura_amministrativa"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="false"
+                enabledOnSearch="true"
+                label="Procedura Amministrativa" />
+        <fieldProperty
+                name="cdProcAmm"
+                property="procedura_amministrativa.cd_proc_amm"
+                inputType="TEXT"
+                inputSize="5"
+                maxLength="5"
+                nullable="false"
+                label="Procedura Amministrativa" />
+        <fieldProperty
+                name="cig"
+                property="cig"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="true"
+                enabledOnSearch="true"
+                label="CIG" />
+         <fieldProperty
+                name="cdCig"
+                property="cig.cdCig"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="10"
+                label="Codice CIG" />       
+        <fieldProperty
+                name="cup"
+                property="cup"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="true"
+                enabledOnSearch="true"
+                label="CUP" />
+        <fieldProperty
+                name="cdCup"
+                property="cup.cdCup"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="15"
+                label="Codice CUP" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"

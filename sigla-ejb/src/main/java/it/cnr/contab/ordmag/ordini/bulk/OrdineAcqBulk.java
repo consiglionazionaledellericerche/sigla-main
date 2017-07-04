@@ -4,6 +4,8 @@
  */
 package it.cnr.contab.ordmag.ordini.bulk;
 import java.util.Dictionary;
+import java.util.Iterator;
+import java.util.List;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
@@ -21,10 +23,17 @@ import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
+import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqBulk extends OrdineAcqBase implements AllegatoParentBulk {
 	protected BulkList righeOrdineColl= new BulkList();
+	private java.util.Collection modalita;
+	private java.util.Collection termini;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	/**
 	 * [NOTA_PRECODIFICATA Rappresenta l'anagrafica delle note precodificate.]
@@ -64,8 +73,8 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
-	private TerzoBulk terzo =  new TerzoBulk();
 	private TerzoBulk terzoCdr =  new TerzoBulk();
+	protected TerzoBulk fornitore;	
 	private V_persona_fisicaBulk responsabileProcPers;
 	private V_persona_fisicaBulk firmatarioPers;
 	private V_persona_fisicaBulk direttorePers;
@@ -244,8 +253,8 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
-	public TerzoBulk getTerzo() {
-		return terzo;
+	public TerzoBulk getFornitore() {
+		return fornitore;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -253,8 +262,17 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
-	public void setTerzo(TerzoBulk terzo)  {
-		this.terzo=terzo;
+	public void setFornitore(TerzoBulk fornitore)  {
+		this.fornitore=fornitore;
+	}
+	public java.lang.Integer getCdTerzo() {
+		it.cnr.contab.anagraf00.core.bulk.TerzoBulk fornitore = this.getFornitore();
+		if (fornitore == null)
+			return null;
+		return fornitore.getCd_terzo();
+	}
+	public void setCdTerzo(java.lang.Integer cdTerzo) {
+		this.getFornitore().setCd_terzo(cdTerzo);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -498,37 +516,20 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [cdTerzo]
-	 **/
-	public java.lang.Integer getCdTerzo() {
-		TerzoBulk terzo = this.getTerzo();
-		if (terzo == null)
-			return null;
-		return getTerzo().getCd_terzo();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [cdTerzo]
-	 **/
-	public void setCdTerzo(java.lang.Integer cdTerzo)  {
-		this.getTerzo().setCd_terzo(cdTerzo);
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [responsabileProc]
 	 **/
 	public java.lang.Integer getResponsabileProc() {
-		TerzoBulk terzo = this.getTerzo();
+		V_persona_fisicaBulk terzo = this.getResponsabileProcPers();
 		if (terzo == null)
 			return null;
-		return getTerzo().getCd_terzo();
+		return terzo.getCd_terzo();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [responsabileProc]
 	 **/
 	public void setResponsabileProc(java.lang.Integer responsabileProc)  {
-		this.getTerzo().setCd_terzo(responsabileProc);
+		this.getResponsabileProcPers().setCd_terzo(responsabileProc);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -545,41 +546,41 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	 * Setta il valore di: [firmatario]
 	 **/
 	public void setFirmatario(java.lang.Integer firmatario)  {
-		this.getTerzo().setCd_terzo(firmatario);
+		this.getFirmatarioPers().setCd_terzo(firmatario);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [direttore]
 	 **/
 	public java.lang.Integer getDirettore() {
-		TerzoBulk terzo = this.getTerzo();
+		V_persona_fisicaBulk terzo = this.getDirettorePers();
 		if (terzo == null)
 			return null;
-		return getTerzo().getCd_terzo();
+		return terzo.getCd_terzo();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [direttore]
 	 **/
 	public void setDirettore(java.lang.Integer direttore)  {
-		this.getTerzo().setCd_terzo(direttore);
+		this.getDirettorePers().setCd_terzo(direttore);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdr]
 	 **/
 	public java.lang.Integer getCdr() {
-		TerzoBulk terzo = this.getTerzo();
+		TerzoBulk terzo = this.getTerzoCdr();
 		if (terzo == null)
 			return null;
-		return getTerzo().getCd_terzo();
+		return getTerzoCdr().getCd_terzo();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdr]
 	 **/
 	public void setCdr(java.lang.Integer cdr)  {
-		this.getTerzo().setCd_terzo(cdr);
+		this.getTerzoCdr().setCd_terzo(cdr);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -772,4 +773,131 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public Boolean isDefinitivo(){
 		return getStato() != null && getStato().equals(STATO_DEFINITIVO);
 	}
+	public Dictionary getStatoKeys() {
+		return STATO;
+	}
+	public Dictionary getStatoKeysForSearch() {
+
+		OrderedHashtable d = (OrderedHashtable)getStatoKeys();
+		if (d == null) return null;
+		OrderedHashtable clone = (OrderedHashtable)d.clone();
+		return clone;
+	}
+	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
+	{
+		setStato(STATO_INSERITO);
+		java.sql.Timestamp dataReg = null;
+		try {
+			dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+		} catch (javax.ejb.EJBException e) {
+			throw new it.cnr.jada.DetailedRuntimeException(e);
+		}
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_padre());
+		setDataOrdine(dataReg);
+		
+		//	La data di registrazione la inizializzo sulla Component
+
+		return this;
+	}
+	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		impostaCds(context);
+		return super.initialize(bp,context);
+	}
+	public OggettoBulk initializeForSearch(CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		super.initializeForSearch(bp,context);
+		impostaCds(context);
+		return this;
+	}
+	private void impostaCds(it.cnr.jada.action.ActionContext context) {
+		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+	}
+	public OrdineAcqRigaBulk removeFromRigheOrdineColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (OrdineAcqRigaBulk)righeOrdineColl.remove(index);
+	}
+	public int addToRigheOrdineColl( OrdineAcqRigaBulk nuovoRigo ) 
+	{
+
+
+//		nuovoRigo.setTi_associato_manrev(nuovoRigo.NON_ASSOCIATO_A_MANDATO);
+//		nuovoRigo.setTerzo(new TerzoBulk());
+//		if (getTi_entrate_spese()==ENTRATE){
+//			nuovoRigo.setTerzo_uo_cds(getTerzo_uo_cds());		
+//		}
+		nuovoRigo.setOrdineAcq(this);
+
+//		try {
+//			java.sql.Timestamp ts = it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();
+//			nuovoRigo.setDt_da_competenza_coge((getDt_da_competenza_coge() == null)?ts : getDt_da_competenza_coge());
+//			nuovoRigo.setDt_a_competenza_coge((getDt_a_competenza_coge() == null)?ts : getDt_a_competenza_coge());
+//		} catch (javax.ejb.EJBException e) {
+//			throw new it.cnr.jada.DetailedRuntimeException(e);
+//		}	
+		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
+		int max = 0;
+		for (Iterator i = righeOrdineColl.iterator(); i.hasNext();) {
+			int prog = ((OrdineAcqRigaBulk)i.next()).getRiga();
+			if (prog > max) max = prog;
+		}
+		nuovoRigo.setRiga(new Integer(max+1));
+		righeOrdineColl.add(nuovoRigo);
+		return righeOrdineColl.size()-1;
+	}
+	public BulkCollection[] getBulkLists() {
+
+		// Metti solo le liste di oggetti che devono essere resi persistenti
+
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				righeOrdineColl
+		};
+	}
+	public List getChildren() {
+		return getRigheOrdineColl();
+	}
+	public boolean isROFornitoreSearchTool() {
+		return false;
+	}
+	public boolean isROfornitore() {
+		
+		return getFornitore() == null ||
+				getFornitore().getCrudStatus() == OggettoBulk.NORMAL;
+	}
+	public java.util.Collection getModalita() {
+		return modalita;
+	}
+	public void setModalita(java.util.Collection modalita) {
+		this.modalita = modalita;
+	}
+	public java.util.Collection getTermini() {
+		return termini;
+	}
+	public void setTermini(java.util.Collection termini) {
+		this.termini = termini;
+	}
+	public java.lang.String getDs_responsabile() {
+		if ( responsabileProcPers != null && responsabileProcPers.getAnagrafico() != null &&
+				responsabileProcPers.getAnagrafico().getCognome()!=null )
+			return responsabileProcPers.getAnagrafico().getCognome() + " " + responsabileProcPers.getAnagrafico().getNome();
+		return "";	
+
+	}
+	/**
+	 * Restituisce il valore della proprietà 'ds_firmatario'
+	 *
+	 * @return Il valore della proprietà 'ds_responsabile'
+	 */
+	public java.lang.String getDs_firmatario() {
+		if ( getFirmatarioPers() != null && getFirmatarioPers().getAnagrafico() != null &&
+		     getFirmatarioPers().getAnagrafico().getCognome()!=null )
+			return getFirmatarioPers().getAnagrafico().getCognome() + " " + getFirmatarioPers().getAnagrafico().getNome();
+		return "";	
+	}	
+	public boolean isROResponsabile() {
+		return responsabileProcPers == null || responsabileProcPers.getCrudStatus() == NORMAL;
+	}
+	public boolean isROFirmatario() {
+		return getFirmatarioPers() == null || getFirmatarioPers().getCrudStatus() == NORMAL;
+	}	
+		
 }
