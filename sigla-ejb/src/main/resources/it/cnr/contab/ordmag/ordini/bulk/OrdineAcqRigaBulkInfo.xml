@@ -71,44 +71,112 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="riga" />
-	<fieldProperty
-		name="cdBeneServizio"
-		property="cdBeneServizio"
-		inputType="TEXT"
-		inputSize="15"
-		maxLength="15"
-		enabledOnEdit="false"
-		nullable="false"
-		label="cdBeneServizio" />
-	<fieldProperty
-		name="dsBeneServizio"
-		property="dsBeneServizio"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="300"
-		enabledOnEdit="false"
-		nullable="false"
-		label="dsBeneServizio" />
+		label="Riga" />
 	<fieldProperty
 		name="notaRiga"
 		property="notaRiga"
 		inputType="TEXTAREA"
-		cols="60"
+		cols="100"
 		rows="5"
 		maxLength="2000"
-		enabledOnEdit="false"
-		label="notaRiga" />
+		enabledOnEdit="true"
+		label="Note" />
 	<fieldProperty
-		name="cdVoceIva"
-		property="cdVoceIva"
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Stato" />
+	<fieldProperty
+		name="findUnitaMisura"
+		property="unitaMisura"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità di Misura" />
+	<fieldProperty
+		name="findBeneServizio"
+		property="beneServizio"
+		inputType="SEARCHTOOL"
+        formName="searchtool"
+		enabledOnSearch="true"
+        enabledOnEdit="true" 
+		label="Bene/Servizio"/>	
+	<fieldProperty
+		name="cdBeneServizio"
+		property="beneServizio.cd_bene_servizio"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RObeneservizio"
+		label="Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsBeneServizio"
+		property="beneServizio.ds_bene_servizio"
+		maxLength="300"
+		inputSize="40"
+		inputType="ROTEXT"
+		label="Descr. Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cdUnitaMisuraMinima"
+		property="beneServizio.unitaMisura.cdUnitaMisura"
+		maxLength="30"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Unità Misura Minima"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="unitaMisura.cdUnitaMisura"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
+		label="Unità di Misura" />
+	<fieldProperty
+		name="coefConv"
+		property="coefConv"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="true"
+		label="Coefficiente di Conversione" />
+	<fieldProperty
+		name="voce_iva"
+		property="voce_iva"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cdVoceIva"
+		property="voce_iva.cd_voce_iva"
+		readonlyProperty="ROvoceiva"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
 		nullable="false"
-		label="cdVoceIva" />
+		label="I.V.A."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_voce_iva"
+		property="voce_iva.ds_voce_iva"
+		inputSize="30"
+		inputType="ROTEXT"
+		label=""
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="percentuale_voce_iva"
+		property="voce_iva.percentuale"
+		maxLength="6"
+		inputSize="6"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		label="%" />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -126,41 +194,18 @@
 		maxLength="20"
 		enabledOnEdit="false"
 		nullable="false"
-		label="prezzoUnitario" />
+		formatName="it.cnr.contab.util.Importo6CifreFormat"
+		label="Prezzo Unitario" />
 	<fieldProperty
 		name="quantita"
 		property="quantita"
 		inputType="TEXT"
-		inputSize="17"
-		maxLength="17"
-		enabledOnEdit="false"
-		nullable="false"
-		label="quantita" />
-	<fieldProperty
-		name="findUnitaMisura"
-		property="unitaMisura"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="UnitaMisura" />
-	<fieldProperty
-		name="cdUnitaMisura"
-		property="unitaMisura.cdUnitaMisura"
-		inputType="TEXT"
 		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
 		nullable="false"
-		label="cdUnitaMisura" />
-	<fieldProperty
-		name="coefConv"
-		property="coefConv"
-		inputType="TEXT"
-		inputSize="12"
-		maxLength="12"
-		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="true"
 		nullable="false"
-		label="coefConv" />
+		label="Quantità" />
 	<fieldProperty
 		name="sconto1"
 		property="sconto1"
@@ -169,7 +214,7 @@
 		inputSize="5"
 		maxLength="5"
 		enabledOnEdit="false"
-		label="sconto1" />
+		label="Sconto 1" />
 	<fieldProperty
 		name="sconto2"
 		property="sconto2"
@@ -178,7 +223,7 @@
 		inputSize="5"
 		maxLength="5"
 		enabledOnEdit="false"
-		label="sconto2" />
+		label="Sconto 2" />
 	<fieldProperty
 		name="sconto3"
 		property="sconto3"
@@ -187,47 +232,47 @@
 		inputSize="5"
 		maxLength="5"
 		enabledOnEdit="false"
-		label="sconto3" />
+		label="Sconto 3" />
 	<fieldProperty
 		name="imImponibileDivisa"
 		property="imImponibileDivisa"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imImponibileDivisa" />
+		label="Imponibile Divisa" />
 	<fieldProperty
 		name="imIvaDivisa"
 		property="imIvaDivisa"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imIvaDivisa" />
+		label="Iva Divisa" />
 	<fieldProperty
 		name="imImponibile"
 		property="imImponibile"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imImponibile" />
+		label="Imponibile" />
 	<fieldProperty
 		name="imIva"
 		property="imIva"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imIva" />
+		label="Iva" />
 	<fieldProperty
 		name="imTotaleRiga"
 		property="imTotaleRiga"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imTotaleRiga" />
+		label="Totale Riga" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
