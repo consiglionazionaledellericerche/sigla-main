@@ -95,8 +95,9 @@
 		property="quantitaRichiesta"
 		nullable="false"
 		inputType="TEXT"
-		inputSize="17"
-		maxLength="17"
+		inputSize="10"
+		nullable="false"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
 		label="Quantità Richiesta" />
 	<fieldProperty
