@@ -128,7 +128,7 @@
 
 
 	<fieldProperty
-		name="fornitore"
+		name="findFornitore"
 		property="fornitore"
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROFornitoreSearchTool"
@@ -377,30 +377,6 @@
 		enabledOnEdit="false"
 		label="Nota Precodificata" />
 	<fieldProperty
-		name="esercizioContratto"
-		property="esercizioContratto"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		label="esercizioContratto" />
-	<fieldProperty
-		name="statoContratto"
-		property="statoContratto"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		enabledOnEdit="false"
-		label="statoContratto" />
-	<fieldProperty
-		name="pgContratto"
-		property="pgContratto"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="pgContratto" />
-	<fieldProperty
 		name="dataOrdineDef"
 		property="dataOrdineDef"
 		inputType="TEXT"
@@ -546,6 +522,42 @@
                 maxLength="15"
                 label="Codice CUP" />
 	<fieldProperty
+		name="find_contratto"
+		property="contratto"
+		inputType="SEARCHTOOL"
+		label="Contratto"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="esercizioContratto"	
+		property="contratto.esercizio"
+		label="Esercizio contratto"
+		inputType="TEXT"
+		readonlyProperty="ROContratto"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="pgContratto"
+		property="contratto.pg_contratto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyProperty="ROContratto"
+		label="Progressivo contratto"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="oggettoContratto"
+		property="contratto.oggetto"
+		maxLength="500"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Oggetto contratto"
+		enabledOnSearch="true" 
+		/>		
+	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
@@ -564,13 +576,27 @@
 			name="numero" />
 	</form>
 	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
 		name="findNumerazioneOrd" />
+	<formFieldProperty
+		name="esercizio" />
 	<formFieldProperty
 		name="numero" />
 	<formFieldProperty
 		name="dataOrdine" />
 	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="dataOrdineDef" />
+	<formFieldProperty
+		name="nota" />
+	<formFieldProperty
+		name="findNotaPrecodificata" />
+	<formFieldProperty
 		name="cambio" />
+	<formFieldProperty
+		name="findFornitore" />
 	<formFieldProperty
 		name="ragioneSociale" />
 	<formFieldProperty
@@ -582,17 +608,56 @@
 	<formFieldProperty
 		name="partitaIva" />
 	<formFieldProperty
-		name="nota" />
+		name="contoA" />
 	<formFieldProperty
-		name="findNotaPrecodificata" />
+		name="contoB" />
 	<formFieldProperty
-		name="stato" />
+		name="contoP" />
 	<formFieldProperty
-		name="dataOrdineDef" />
+		name="contoQ" />
+	<formFieldProperty
+		name="contoN" />
+	<formFieldProperty
+		name="via_fiscale" />
+	<formFieldProperty
+		name="denominazione_sede" />
+	<formFieldProperty
+		name="num_civico" />
+	<formFieldProperty
+		name="ds_comune" />
+	<formFieldProperty
+		name="ds_provincia" />
+	<formFieldProperty
+		name="listabanche" 
+		label="Conto/i..." />
+	<formFieldProperty
+		name="find_contratto"/>
+	<formFieldProperty
+		name="esercizio_contratto"/>		
+	<formFieldProperty
+		name="pg_contratto"/>
+	<formFieldProperty
+		name="oggetto_contratto"/>		
 	<formFieldProperty
 		name="referenteEsterno" />
 	<formFieldProperty
 		name="dtCancellazione" />
+     <formFieldProperty
+        name="procedura_amministrativa"/>
+     <formFieldProperty
+        name="cig"/>
+     <formFieldProperty
+        name="cup"/>
+     <formFieldProperty
+        name="findTipoOrdine"/>
+     <formFieldProperty
+        name="figura_giuridica_interna"/>
+     <formFieldProperty
+        name="findDirettore"/>
+     <formFieldProperty
+        name="findFirmatario"/>
+     <formFieldProperty
+        name="findResponsabile"/>
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty

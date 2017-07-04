@@ -81,7 +81,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="consegna" />
+		label="Consegna" />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -121,42 +121,42 @@
 		name="imImponibileDivisa"
 		property="imImponibileDivisa"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imImponibileDivisa" />
+		label="Imponibile Divisa" />
 	<fieldProperty
 		name="imIvaDivisa"
 		property="imIvaDivisa"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imIvaDivisa" />
+		label="Iva Divisa" />
 	<fieldProperty
 		name="imImponibile"
 		property="imImponibile"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imImponibile" />
+		label="Imponibile" />
 	<fieldProperty
 		name="imIva"
 		property="imIva"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imIva" />
+		label="Iva" />
 	<fieldProperty
 		name="imTotaleConsegna"
 		property="imTotaleConsegna"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="imTotaleConsegna" />
+		label="Totale Consegna" />
 	<fieldProperty
 		name="findMagazzino"
 		property="magazzino"
@@ -204,12 +204,12 @@
 		enabledOnEdit="false"
 		label="Luogo di Consegna" />
 	<fieldProperty
-		name="findUnitaOperativaOrd"
+		name="findUnitaOperativaOrdDest"
 		property="unitaOperativaOrd"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUopDest"
 		property="unitaOperativaOrd.cdUnitaOperativa"
@@ -217,7 +217,17 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdUopDest" />
+		nullable="true"
+		label="Unità Operativa Destinataria" />
+	<fieldProperty
+		name="dsUnitaOperativa"
+		property="unitaOperativaOrd.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="true"
+		label="dsUnitaOperativaDest" />
 	<fieldProperty
 		name="cdCdsObbl"
 		property="cdCdsObbl"
