@@ -26,6 +26,9 @@
 			columnName="CD_MODALITA_PAG"
 			propertyName="modalitaPagamento.cd_modalita_pag" />
 		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="fornitore.cd_terzo" />
+		<columnMapping
 			columnName="PG_BANCA"
 			propertyName="banca.pg_banca" />
 		<columnMapping
@@ -99,7 +102,7 @@
 	<persistentProperty
 		name="contratto" />
 	<persistentProperty
-		name="terzo" />
+		name="fornitore" />
 	<persistentProperty
 		name="firmatarioPers" />
 	<persistentProperty
