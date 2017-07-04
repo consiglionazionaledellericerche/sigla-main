@@ -7,6 +7,8 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
+    public final static String STATO_INSERITA= "INS";
+    public final static String STATO_ANNULLATA= "ANN";
 	/**
 	 * [ORDINE_ACQ Testata Ordine d'Acquisto]
 	 **/
