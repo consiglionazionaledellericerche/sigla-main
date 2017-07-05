@@ -2,15 +2,16 @@ package it.cnr.contab.docamm00.comp;
 
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
-import it.cnr.contab.spring.storage.bulk.StorageFile;
-import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaAttivaComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
+import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.spring.storage.config.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.WSUserContext;
@@ -21,7 +22,6 @@ import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.fatturapa.FileSdIType;
 import it.gov.fatturapa.sdi.messaggi.v1.*;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.wsf.spi.annotation.WebContext;
@@ -158,8 +158,8 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 				documentiCollegatiDocAmmService.addAspect(storageObject, aspect.value());
 				storageFile.setStorageObject(storageObject);
 				logger.info("Salvato file sul Documentale");
-			} catch (Exception e) {
-				if (e.getCause() instanceof CmisConstraintException)
+			} catch (StorageException e) {
+				if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
 					throw new ApplicationException("CMIS - File Ricevuta Consegna ["+ storageFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
 				throw new ApplicationException("CMIS - Errore nella registrazione del file Ricevuta Consegna  sul Documentale (" + e.getMessage() + ")");
 			}

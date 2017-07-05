@@ -34,13 +34,12 @@ import javax.xml.soap.SOAPFault;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.config.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -174,16 +173,16 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	private void saveNotifica(DataHandler data, String nomeFile, String nodeRef, StorageDocAmmAspect aspect) throws ComponentException {
 		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
-		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-		metadataProperties.put(PropertyIds.NAME, nomeFile);
-		metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+		metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
+		metadataProperties.put(StoragePropertyNames.NAME.value(), nomeFile);
+		metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
 				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", aspect.value()));
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 		try{
 			storeService.storeSimpleDocument(data.getInputStream(), data.getContentType(), nodeRef, metadataProperties);
 		} catch(IOException e){
 			throw new ComponentException(e);
-		} catch(CmisContentAlreadyExistsException e){
+		} catch(StorageException e){
 			LOGGER.warn("PEC File "+nomeFile+" alredy store!");
 		}
 	}
