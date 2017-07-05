@@ -221,7 +221,7 @@ public class StorageCMISConfig {
 
             @Override
             public StorageObject createDocument(InputStream inputStream, String contentType, Map<String, Object> metadataProperties,
-                                                StorageObject parentObject, boolean makeVersionable, Permission... permissions) {
+                                                StorageObject parentObject, String path, boolean makeVersionable, Permission... permissions) {
                 return Optional.ofNullable(siglaSession.createObjectId(parentObject.getKey()))
                         .map(objectId -> {
                                 try {
