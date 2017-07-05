@@ -1,6 +1,6 @@
 package it.cnr.contab.spring.storage.bulk;
 
-import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StorageObject;
 
 import java.io.Serializable;
 

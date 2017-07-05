@@ -11,7 +11,7 @@ import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaAttivaComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;

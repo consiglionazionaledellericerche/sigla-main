@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -29,8 +30,8 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
@@ -41,6 +42,7 @@ import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
 import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.SignP7M;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -1435,7 +1437,7 @@ public class CRUDDistintaCassiereBP extends
 			// spostato nel salva definitivo anche in questo caso
 			StorageObject distintaStorageObject = Optional.ofNullable(distinta.getPg_distinta_def())
                     .map(paDistintaDef -> documentiContabiliService.getStorageObjectByPath(
-                            distinta.getStorePath().concat(StoreService.BACKSLASH).concat(distinta.getCMISName())
+                            distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName())
                     )).orElse(inviaDistinta(context, distinta));
 			List<String> nodes = Arrays.asList((String)distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
 			List<V_mandato_reversaleBulk> dettagliRev = ((DistintaCassiereComponentSession) createComponentSession())
@@ -1469,7 +1471,7 @@ public class CRUDDistintaCassiereBP extends
 					80);
 			pdfSignApparence.setApparence(apparence);
 			try {
-				documentiContabiliService.signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), "service/sigla/firma/doccont");
+				documentiContabiliService.signDocuments(pdfSignApparence, "service/sigla/firma/doccont");
 			} catch (StorageException _ex) {
 				throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
 			}
@@ -1524,7 +1526,7 @@ public class CRUDDistintaCassiereBP extends
 				if (storageFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0) {
                     Optional.ofNullable(documentiContabiliService
                             .getStorageObjectByPath(distinta
-                                    .getStorePath().concat(StoreService.BACKSLASH)
+                                    .getStorePath().concat(StorageService.SUFFIX)
                                     .concat(String.valueOf(distinta.getEsercizio()))
                                     .concat("-").concat(distinta.getCd_unita_organizzativa())
                                     .concat("-").concat(String.valueOf(distinta.getPg_distinta_def()))
@@ -1533,17 +1535,15 @@ public class CRUDDistintaCassiereBP extends
 
 					String nomeFile = file.getName();
 					String nomeFileP7m = nomeFile + ".p7m";
-					String json = "{"
-							+ "\"nodeRefSource\" : \""
-							+ storageFile.getStorageObject().<String>getPropertyValue(
-											StoragePropertyNames.ALFCMIS_NODEREF.value()) + "\","
-							+ "\"username\" : \"" + firmaOTPBulk.getUserName()
-							+ "\"," + "\"password\" : \""
-							+ firmaOTPBulk.getPassword() + "\","
-							+ "\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
-							+ "}";
+					SignP7M signP7M = new SignP7M(
+							storageFile.getStorageObject().<String>getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()),
+							firmaOTPBulk.getUserName(),
+							firmaOTPBulk.getPassword(),
+							firmaOTPBulk.getOtp(),
+							nomeFileP7m
+					);
                     try {
-                        Optional.ofNullable(documentiContabiliService.signDocuments(json, "service/sigla/firma/p7m"))
+                        Optional.ofNullable(documentiContabiliService.signDocuments(signP7M, "service/sigla/firma/p7m"))
                             .ifPresent(key -> {
                                 File fileSigned = new File(
                                         System.getProperty("tmp.dir.SIGLAWeb")
@@ -1596,7 +1596,7 @@ public class CRUDDistintaCassiereBP extends
 				.ifPresent(tesoreriaUnica -> {
 					Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(
 							distinta.getStorePath()
-							.concat(StoreService.BACKSLASH)
+							.concat(StorageService.SUFFIX)
 							.concat(String.valueOf(distinta.getEsercizio()))
 							.concat("-")
 							.concat(distinta.getCd_unita_organizzativa())
@@ -1628,7 +1628,7 @@ public class CRUDDistintaCassiereBP extends
 			String path;
 			if (isFlusso()) {
 				path = distinta.getStorePath()
-						.concat(StoreService.BACKSLASH)
+						.concat(StorageService.SUFFIX)
 						.concat(String.valueOf(distinta.getEsercizio()))
 						.concat("-")
 						.concat(distinta.getCd_unita_organizzativa())
@@ -1638,7 +1638,7 @@ public class CRUDDistintaCassiereBP extends
 						.concat("-I.xslt.p7m");
 			} else {
 				path = distinta.getStorePath()
-						.concat(StoreService.BACKSLASH)
+						.concat(StorageService.SUFFIX)
 						.concat("Distinta n. ")
 						.concat(String.valueOf(distinta
 								.getPg_distinta_def())).concat(".pdf");
@@ -1675,7 +1675,7 @@ public class CRUDDistintaCassiereBP extends
 			if (firmata) {
 				if (isFlusso()) {
 					path = distinta.getStorePath()
-							.concat(StoreService.BACKSLASH)
+							.concat(StorageService.SUFFIX)
 							.concat(String.valueOf(distinta
 									.getEsercizio()))
 							.concat("-")
@@ -1685,14 +1685,14 @@ public class CRUDDistintaCassiereBP extends
 							.concat("-I.xslt.p7m");
 				} else {
 					path = distinta.getStorePath()
-							.concat(StoreService.BACKSLASH)
+							.concat(StorageService.SUFFIX)
 							.concat("Distinta n. ")
 							.concat(String.valueOf(distinta.getPg_distinta_def()))
 							.concat(".pdf");
 				}
 			} else {
 				path = distinta.getStorePath()
-						.concat(StoreService.BACKSLASH)
+						.concat(StorageService.SUFFIX)
 						.concat(String.valueOf(distinta
 								.getEsercizio()))
 						.concat("-")

@@ -1,7 +1,7 @@
 package it.cnr.contab.pdg00.bulk.storage;
 
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 
 import java.io.Serializable;
 import java.math.BigInteger;

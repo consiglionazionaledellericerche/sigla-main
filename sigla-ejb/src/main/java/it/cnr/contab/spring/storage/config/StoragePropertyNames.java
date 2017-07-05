@@ -1,4 +1,4 @@
-package it.cnr.contab.spring.config;
+package it.cnr.contab.spring.storage.config;
 
 /**
  * Created by mspasiano on 6/15/17.

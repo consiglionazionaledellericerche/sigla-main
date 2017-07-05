@@ -4,6 +4,7 @@
  */
 package it.cnr.contab.doccont00.intcass.bulk;
 
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.service.SpringUtil;
@@ -53,7 +54,7 @@ public class DistintaCassiere1210Bulk extends DistintaCassiere1210Base {
 						.orElse("0"),
 				getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StoreService.BACKSLASH)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 

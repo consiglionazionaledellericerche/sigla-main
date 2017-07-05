@@ -22,8 +22,9 @@ import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -1223,7 +1224,7 @@ public abstract class CRUDFatturaAttivaBP
                         .orElse("0"),
                 "Fattura " + allegatoParentBulk.getEsercizio().toString() + Utility.lpad(allegatoParentBulk.getPg_fattura_attiva().toString(), 10, '0')
         ).stream().collect(
-                Collectors.joining(StoreService.BACKSLASH)
+                Collectors.joining(StorageService.SUFFIX)
         );
     }
 

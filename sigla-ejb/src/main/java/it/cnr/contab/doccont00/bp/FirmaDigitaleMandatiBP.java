@@ -367,7 +367,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						ut.setDestinationStream(out);
                         ut.addSource(SpringUtil.getBean(DocumentiContabiliService.class).getResource(
 						                SpringUtil.getBean(DocumentiContabiliService.class).getStorageObjectByPath(
-                                            statoTrasmissione.getStorePath().concat(StoreService.BACKSLASH).concat(statoTrasmissione.getCMISName())
+                                            statoTrasmissione.getStorePath().concat(StorageService.SUFFIX).concat(statoTrasmissione.getCMISName())
                                         ).getKey(), true));
 						for (String documentId : childs) {
 							ut.addSource(SpringUtil.getBean(DocumentiContabiliService.class).getResource(documentId));

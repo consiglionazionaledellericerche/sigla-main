@@ -8,6 +8,7 @@ public enum MimeTypes
     JAVASCRIPT ("text/javascript"),
     XML ("text/xml"),
     PDF ("application/pdf"),
+    P7M ("application/pkcs7-mime"),
     ATOM ("application/atom+xml"),
     ATOMFEED ("application/atom+xml;type=feed"),
     ATOMENTRY ("application/atom+xml;type=entry"),

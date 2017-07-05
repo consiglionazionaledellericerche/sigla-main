@@ -1,5 +1,6 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.spring.storage.bulk.StorageTypeName;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
@@ -8,8 +9,8 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.storage.StorageContrattiAttachment;
 import it.cnr.contab.incarichi00.storage.StorageContrattiProperty;
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StoreService;
 
 import java.io.File;
@@ -105,7 +106,7 @@ public class StorageFileProcedura extends StorageFile implements StorageTypeName
 	public String getStorageAlternativeParentPath() {
 		String cmisPath = this.getIncaricoProceduraArchivio().getIncarichi_procedura().getCMISFolder().getCMISPrincipalPath();
 		if (cmisPath != null)
-			cmisPath = cmisPath.concat(StoreService.BACKSLASH).concat((String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()));
+			cmisPath = cmisPath.concat(StorageService.SUFFIX).concat((String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()));
 		return cmisPath;
 	}
 

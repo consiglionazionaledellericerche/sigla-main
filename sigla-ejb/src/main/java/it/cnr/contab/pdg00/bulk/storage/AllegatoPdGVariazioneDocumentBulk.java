@@ -4,7 +4,7 @@ package it.cnr.contab.pdg00.bulk.storage;
 import java.io.File;
 import java.util.StringTokenizer;
 
-import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StorageObject;
 
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;

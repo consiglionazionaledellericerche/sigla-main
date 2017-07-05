@@ -7,7 +7,6 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Apparence;
 import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
-import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
@@ -16,7 +15,8 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.config.StorageObject;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
@@ -253,7 +253,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		InputStream is = documentiContabiliService.getResource(
 				documentiContabiliService.getStorageObjectByPath(
 						distintaCassiere1210Bulk.getStorePath()
-						.concat(StoreService.BACKSLASH)
+						.concat(StorageService.SUFFIX)
 						.concat("Distinta 1210 n. "
                                 + distintaCassiere1210Bulk.getPgDistinta() + ".pdf")
 				)
@@ -386,7 +386,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		apparence.setTesto(apparence.getTesto() + subjectDN.get("GIVENNAME") + " " + subjectDN.get("SURNAME"));
 		pdfSignApparence.setApparence(apparence);
 		try {
-			documentiContabiliService.signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), "service/sigla/firma/doccont");
+			documentiContabiliService.signDocuments(pdfSignApparence, "service/sigla/firma/doccont");
 		} catch (StorageException _ex) {
 			throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
 		}

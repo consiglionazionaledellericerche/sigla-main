@@ -365,7 +365,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 		pdfSignApparence.setApparence(apparence);
 
 		try {
-			SpringUtil.getBean(DocumentiContabiliService.class).signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), "service/sigla/firma/doccont");
+			SpringUtil.getBean(DocumentiContabiliService.class).signDocuments(pdfSignApparence, "service/sigla/firma/doccont");
 		} catch (StorageException _ex) {
 			throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
 		}

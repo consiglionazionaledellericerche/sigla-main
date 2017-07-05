@@ -1,16 +1,14 @@
 package it.cnr.contab.doccont00.service;
 
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
-import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.firma.arss.ArubaSignServiceClient;
 import it.cnr.jada.util.mail.SimplePECMail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -20,12 +18,9 @@ import java.util.stream.Collectors;
 
 import javax.activation.DataSource;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
-import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.util.PDFMergerUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,7 +83,7 @@ public class DocumentiContabiliService extends StoreService {
 	}
 
 	public String getDocumentKey(StatoTrasmissione bulk, boolean fullNodeRef) {
-		return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(StoreService.BACKSLASH).concat(bulk.getCMISName())))
+		return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(StorageService.SUFFIX).concat(bulk.getCMISName())))
 				.map(storageObject ->
                         fullNodeRef ? Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()))
                             .map(String.class::cast)
@@ -97,7 +92,7 @@ public class DocumentiContabiliService extends StoreService {
 	}
 
 	public InputStream getStreamDocumento(StatoTrasmissione bulk) throws ApplicationException{
-        return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(StoreService.BACKSLASH).concat(bulk.getCMISName())))
+        return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(StorageService.SUFFIX).concat(bulk.getCMISName())))
                 .map(StorageObject::getKey)
                 .map(key -> getResource(key))
                 .orElse(null);

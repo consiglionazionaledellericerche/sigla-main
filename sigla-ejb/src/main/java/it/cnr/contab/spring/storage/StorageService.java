@@ -1,6 +1,6 @@
 package it.cnr.contab.spring.storage;
 
-import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StorageObject;
 import org.apache.http.auth.UsernamePasswordCredentials;
 
 import java.io.InputStream;
@@ -15,8 +15,12 @@ import java.util.stream.Stream;
  * Created by mspasiano on 6/5/17.
  */
 public interface StorageService {
-
+    public static final String SUFFIX = "/";
     Pattern UUID_PATTERN = Pattern.compile("[a-f0-9]{8}-[a-f0-9]{4}-[12345][a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}");
+    public enum StoreType {
+        CMIS, S3, AZURE
+    }
+
     public enum ACLType {
         Consumer, Editor, Collaborator, Coordinator, Contributor, FullControl, Read, Write
     }
@@ -53,16 +57,6 @@ public interface StorageService {
         }
 
     }
-
-    /**
-     * create a new object
-     *
-     * @param inputStream object input stream
-     * @param metadata metadata
-     * @return a void CompletableFuture
-     */
-    CompletableFuture<Void> createAsync(InputStream inputStream, String name, Map<String, String> metadata);
-
     /**
      * create a new folder
      * @param path
@@ -78,11 +72,12 @@ public interface StorageService {
      * @param contentType
      * @param metadataProperties
      * @param parentObject
+     * @param path
      * @param makeVersionable
      * @param permissions
      * @return StorageObject
      */
-    StorageObject createDocument(InputStream inputStream, String contentType, Map<String, Object> metadataProperties, StorageObject parentObject, boolean makeVersionable, Permission... permissions);
+    StorageObject createDocument(InputStream inputStream, String contentType, Map<String, Object> metadataProperties, StorageObject parentObject, String path, boolean makeVersionable, Permission... permissions);
     /**
      * properties of store object
      * @param storageObject
@@ -128,14 +123,6 @@ public interface StorageService {
      * @return a CompletableFuture wrapping true if object exists
      */
     CompletableFuture<Boolean> deleteAsync(String id);
-
-    /**
-     * delete an existing object
-     *
-     * @param name file identifier
-     * @return a CompletableFuture wrapping true if object exists
-     */
-    CompletableFuture<Boolean> scheduledDeleteAsync(String name);
 
     /**
      *
@@ -224,6 +211,8 @@ public interface StorageService {
      * @param relationshipName
      */
     void createRelationship(String source, String target, String relationshipName);
+
+    StoreType getStoreType();
     /**
      * Inizialize service
      */

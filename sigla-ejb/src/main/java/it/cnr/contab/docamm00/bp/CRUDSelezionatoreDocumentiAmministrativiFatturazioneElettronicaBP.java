@@ -12,10 +12,11 @@ import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.SignP7M;
 import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.DetailedRuntimeException;
@@ -213,14 +214,15 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    				if (storageFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0){
 		    				String nomeFile = file.getName();
 		    				String nomeFileP7m = nomeFile+".p7m";
-		    				String json = "{" +
-		    	    				"\"nodeRefSource\" : \"" + storageFile.getStorageObject().getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()) + "\"," +
-		    	    				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
-		    	    				"\"password\" : \"" + firmaOTPBulk.getPassword() + "\"," +
-		    	    				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
-		    	    				+ "}";
+							SignP7M signP7M = new SignP7M(
+									storageFile.getStorageObject().getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()),
+									firmaOTPBulk.getUserName(),
+									firmaOTPBulk.getPassword(),
+									firmaOTPBulk.getOtp(),
+									nomeFileP7m
+							);
 		    	    		try {
-		    	    		    Optional.ofNullable(documentiCollegatiDocAmmService.signDocuments(json, "service/sigla/firma/fatture"))
+		    	    		    Optional.ofNullable(documentiCollegatiDocAmmService.signDocuments(signP7M, "service/sigla/firma/fatture"))
                                         .map(key -> documentiCollegatiDocAmmService.getStorageObjectBykey(key))
                                         .ifPresent(storageObject -> {
                                             InputStream streamSigned = documentiCollegatiDocAmmService.getResource(storageObject);

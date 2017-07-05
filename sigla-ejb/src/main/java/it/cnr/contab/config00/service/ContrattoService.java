@@ -4,8 +4,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StoreService;
@@ -46,7 +47,7 @@ public class ContrattoService extends StoreService {
 						.orElse("0"),
 				contrattoBulk.getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StoreService.BACKSLASH)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}	
 	
@@ -96,12 +97,12 @@ public class ContrattoService extends StoreService {
 		if (children != null){
 			for (StorageObject child : children) {
 				AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-				allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-				allegato.setNome(child.getPropertyValue("sigla_contratti_attachment:original_name"));
-				allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-				allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
-				allegato.setType(child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
-				allegato.setLink(child.getPropertyValue("sigla_contratti_aspect_link:url"));
+				allegato.setContentType(child.<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+				allegato.setNome(child.<String>getPropertyValue("sigla_contratti_attachment:original_name"));
+				allegato.setDescrizione(child.<String>getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+				allegato.setTitolo(child.<String>getPropertyValue(StoragePropertyNames.TITLE.value()));
+				allegato.setType(child.<String>getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
+				allegato.setLink(child.<String>getPropertyValue("sigla_contratti_aspect_link:url"));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 				result.add(allegato);
 			}
@@ -117,7 +118,7 @@ public class ContrattoService extends StoreService {
                 (String)allegato.getContrattoBulk().getTi_natura_contabileKeys().get(allegato.getContrattoBulk().getNatura_contabile()),
                 (String)allegato.getTi_allegatoKeys().get(allegato.getType())
         ).stream().collect(
-                Collectors.joining(StoreService.BACKSLASH)
+                Collectors.joining(StorageService.SUFFIX)
         );
 	}
 	
@@ -131,7 +132,7 @@ public class ContrattoService extends StoreService {
                         .orElse("0"),
                 allegato.getContrattoBulk().getCMISFolderName()
         ).stream().collect(
-                Collectors.joining(StoreService.BACKSLASH)
+                Collectors.joining(StorageService.SUFFIX)
         );
 
 	}	
@@ -149,8 +150,8 @@ public class ContrattoService extends StoreService {
 		List<StorageObject> children = getChildren(oldStorageObject.getKey());
 		for (StorageObject child : children) {
 			AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-			allegato.setNome(child.getPropertyValue("sigla_contratti_attachment:original_name"));
-			allegato.setType(child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
+			allegato.setNome(child.<String>getPropertyValue("sigla_contratti_attachment:original_name"));
+			allegato.setType(child.<String>getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
 			allegato.setContrattoBulk(contratto);
 			updateProperties(allegato, child);
 			if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))

@@ -1,5 +1,6 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
@@ -7,7 +8,7 @@ import it.cnr.contab.spring.storage.converter.Converter;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.storage.StorageContrattiProperty;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StorageObject;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
@@ -126,7 +127,7 @@ public class StorageFolderProcedura extends OggettoBulk {
                 this.getIncaricoProcedura().getCd_unita_organizzativa(),
                 path
         ).stream().collect(
-                Collectors.joining(StoreService.BACKSLASH)
+                Collectors.joining(StorageService.SUFFIX)
         );
 	}
 
@@ -139,7 +140,7 @@ public class StorageFolderProcedura extends OggettoBulk {
                         .orElse("0"),
                 "Procedura "+this.getEsercizio().toString()+Utility.lpad(this.getPg_procedura().toString(),10,'0')
         ).stream().collect(
-                Collectors.joining(StoreService.BACKSLASH)
+                Collectors.joining(StorageService.SUFFIX)
         );
 	}
 	

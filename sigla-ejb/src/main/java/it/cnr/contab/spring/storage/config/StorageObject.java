@@ -1,5 +1,6 @@
-package it.cnr.contab.spring.config;
+package it.cnr.contab.spring.storage.config;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 
@@ -7,16 +8,16 @@ import java.util.Optional;
 /**
  * Created by mspasiano on 6/12/17.
  */
-public class StorageObject {
+public class StorageObject{
     private String key;
     private String path;
-    private Map<String, Object> metadata;
+    private  Map<String, ?> metadata;
 
     private StorageObject() {
         // No constructor without Object type
     }
 
-    public StorageObject(String key, String path, Map<String, Object> metadata) {
+    public StorageObject(String key, String path, Map<String, ?> metadata) {
         this.key = key;
         this.path = path;
         this.metadata = metadata;

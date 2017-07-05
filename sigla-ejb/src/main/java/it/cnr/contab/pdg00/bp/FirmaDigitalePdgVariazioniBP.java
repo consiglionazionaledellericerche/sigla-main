@@ -16,12 +16,14 @@ import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.SignP7M;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.action.ActionContext;
@@ -793,14 +795,16 @@ public class FirmaDigitalePdgVariazioniBP extends
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		StorageObject pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject();
 		StorageObject node;
-		String json = "{" +
-				"\"nodeRefSource\" : \"" + pdgVariazioneDocumentNode.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()) + "\"," +
-				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
-				"\"password\" : \"" + firmaOTPBulk.getPassword() + "\"," +
-				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
-				+ "}";
+		String nomeFileP7m = pdgVariazioneDocumentNode.getPropertyValue(StoragePropertyNames.NAME.value()) +".p7m";
+		SignP7M signP7M = new SignP7M(
+				pdgVariazioneDocumentNode.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()),
+				firmaOTPBulk.getUserName(),
+				firmaOTPBulk.getPassword(),
+				firmaOTPBulk.getOtp(),
+				nomeFileP7m
+		);
         try {
-            node = Optional.ofNullable(pdgVariazioniService.signDocuments(json, "service/sigla/firma/variazioni"))
+            node = Optional.ofNullable(pdgVariazioniService.signDocuments(signP7M, "service/sigla/firma/variazioni"))
                 .map(s -> pdgVariazioniService.getStorageObjectBykey(s))
                 .orElse(null);
         } catch (StorageException _ex) {
@@ -934,7 +938,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 						+ lpad(archiviaStampaPdgVariazioneBulk
 						.getPg_variazione_pdg(), 5, '0')
 		).stream().collect(
-				Collectors.joining(StoreService.BACKSLASH)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 

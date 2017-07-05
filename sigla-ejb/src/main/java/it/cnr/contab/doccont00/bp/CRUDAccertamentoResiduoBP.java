@@ -11,6 +11,7 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
@@ -401,7 +402,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 						.orElse("0"),
 				allegatoParentBulk.getCd_uo_origine() + "-" + allegatoParentBulk.getEsercizio_originale() + allegatoParentBulk.getPg_accertamento()
 		).stream().collect(
-				Collectors.joining(StoreService.BACKSLASH)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 

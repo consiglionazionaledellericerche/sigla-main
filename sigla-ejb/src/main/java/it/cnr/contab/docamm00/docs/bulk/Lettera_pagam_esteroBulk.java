@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
@@ -274,7 +275,7 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 					.orElse("0"),
 				getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StoreService.BACKSLASH)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 

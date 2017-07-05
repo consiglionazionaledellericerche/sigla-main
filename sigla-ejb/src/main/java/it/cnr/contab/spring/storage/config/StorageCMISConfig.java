@@ -1,4 +1,4 @@
-package it.cnr.contab.spring.config;
+package it.cnr.contab.spring.storage.config;
 
 import it.cnr.contab.spring.storage.MimeTypes;
 import it.cnr.contab.spring.storage.StorageException;
@@ -181,11 +181,6 @@ public class StorageCMISConfig {
                     throw new StorageException(StorageException.Type.GENERIC, "Add Auto Version. Exception: "+ resp.getErrorContent());
             }
 
-            @Override
-            public CompletableFuture<Void> createAsync(InputStream inputStream, String name, Map<String, String> metadata) {
-                return null;
-            }
-
             private Map<String, Object> convertProperties(List<Property<?>> properties) {
                 return properties.stream()
                         .collect(HashMap::new, (m,v)->m.put(v.getId(), v.getValue()), HashMap::putAll);
@@ -206,7 +201,7 @@ public class StorageCMISConfig {
                             .map(document1 -> document1.<String>getPropertyValue(PropertyIds.PARENT_ID))
                             .map(parentId -> siglaSession.getObject(parentId))
                             .map(Folder.class::cast)
-                            .map(folder -> folder.getPath().concat(StoreService.BACKSLASH).concat(cmisObject.getName()))
+                            .map(folder -> folder.getPath().concat(StorageService.SUFFIX).concat(cmisObject.getName()))
                             .orElse(null);
                 }
             }
@@ -214,7 +209,7 @@ public class StorageCMISConfig {
             @Override
             public StorageObject createFolder(String path, String name, Map<String, Object> metadata) {
                 return Optional.ofNullable(siglaSession.getObjectByPath(
-                        Optional.of(path).filter(s -> s.length() > 0).orElse(StoreService.BACKSLASH)
+                        Optional.of(path).filter(s -> s.length() > 0).orElse(StorageService.SUFFIX)
                 ))
                 .map(Folder.class::cast)
                 .map(folder -> siglaSession.createFolder(metadata, folder))
@@ -325,11 +320,6 @@ public class StorageCMISConfig {
                             }
                             return exists;
                         });
-            }
-
-            @Override
-            public CompletableFuture<Boolean> scheduledDeleteAsync(String name) {
-                return null;
             }
 
             @Override
@@ -547,6 +537,11 @@ public class StorageCMISConfig {
                 properties.put(PropertyIds.SOURCE_ID, source);
                 properties.put(PropertyIds.TARGET_ID, target);
                 siglaSession.createRelationship(properties);
+            }
+
+            @Override
+            public StoreType getStoreType() {
+                return StoreType.CMIS;
             }
         };
         storageService.init();

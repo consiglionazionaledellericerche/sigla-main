@@ -22,7 +22,7 @@
 
 	<context:component-scan base-package="it.cnr.contab.spring" />
 
-    <import resource="classpath*:it/cnr/contab/cmis/service/cmis-service-context.xml"/>
+    <import resource="classpath*:it/cnr/contab/storage/service/storage-service-context.xml"/>
     <import resource="classpath*:it/cnr/contab/service/sdi-client-service-context.xml"/>
 
 	<jee:jndi-lookup id="offlineReportComponent"

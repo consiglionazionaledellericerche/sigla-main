@@ -34,8 +34,9 @@ import javax.xml.soap.SOAPFault;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
@@ -203,7 +204,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				month,
 				day
 		).stream().collect(
-				Collectors.joining(StoreService.BACKSLASH)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 		path = storeService.createFolderIfNotPresent(path, folderName,null, null,
 				new StorageFolderFatturaPassiva(null, identificativoSdI));

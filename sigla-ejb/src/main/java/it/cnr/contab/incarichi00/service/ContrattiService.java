@@ -1,6 +1,6 @@
 package it.cnr.contab.incarichi00.service;
 
-import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StorageObject;
 import it.cnr.contab.spring.storage.StoreService;
 
 import it.cnr.contab.spring.storage.bulk.StorageDocument;

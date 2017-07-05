@@ -1,29 +1,42 @@
 package it.cnr.contab.spring.storage;
 
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import com.google.gson.GsonBuilder;
+import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.contab.util.SignP7M;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.firma.arss.ArubaSignServiceClient;
+import it.cnr.jada.firma.arss.ArubaSignServiceException;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Created by mspasiano on 6/12/17.
  */
 @Service
 public class StoreService {
-    public static final String BACKSLASH = "/";
     @Autowired
     private StorageService storageService;
     @Autowired
     private StoreBulkInfo storeBulkInfo;
+    @Autowired
+    private ArubaSignServiceClient arubaSignServiceClient;
+    @Value("${sign.document.png.url}")
+    private String signDocumentURL;
 
     public String sanitizeFilename(String name) {
         name = name.trim();
@@ -53,7 +66,7 @@ public class StoreService {
         return Optional.ofNullable(storageService.getObjectByPath(path))
                 .orElseGet(() -> {
                     if (!create) return null;
-                    Arrays.asList(path.split(BACKSLASH)).stream()
+                    Arrays.asList(path.split(StorageService.SUFFIX)).stream()
                             .filter(x -> x.length() > 0)
                             .forEach(x -> {
                                 createFolderIfNotPresent(
@@ -107,16 +120,14 @@ public class StoreService {
         try{
             final String folderPath = Optional.ofNullable(path)
                     .filter(s -> s.length() > 0)
-                    .orElse(BACKSLASH);
-            StorageObject parentObject = getStorageObjectByPath(folderPath, true);
+                    .orElse(StorageService.SUFFIX);
             final String name = sanitizeFolderName(folderName);
             metadataProperties.put(StoragePropertyNames.NAME.value(), name);
-            aspectsToAdd.add(StoragePropertyNames.ASPECT_TITLED.value());
-            if (title != null)
+            if (title != null || description != null) {
+                aspectsToAdd.add(StoragePropertyNames.ASPECT_TITLED.value());
                 metadataProperties.put(StoragePropertyNames.TITLE.value(), title);
-            if (description != null)
                 metadataProperties.put(StoragePropertyNames.DESCRIPTION.value(), description);
-
+            }
             if (oggettoBulk != null) {
                 metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), storeBulkInfo.getType(oggettoBulk));
                 metadataProperties.putAll(storeBulkInfo.getPropertyValue(oggettoBulk));
@@ -125,8 +136,12 @@ public class StoreService {
             } else {
                 metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), StoragePropertyNames.CMIS_FOLDER.value());
             }
-            metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspectsToAdd);
-            return Optional.ofNullable(storageService.getObjectByPath(path.concat(BACKSLASH).concat(name)))
+            Optional.ofNullable(aspectsToAdd)
+                    .filter(list -> !list.isEmpty())
+                    .ifPresent(list -> {
+                        metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), list);
+                    });
+            return Optional.ofNullable(storageService.getObjectByPath(path.concat(StorageService.SUFFIX).concat(name)))
                     .map(storageObject -> {
                         if (oggettoBulk!=null){
                             List<String> aspects = (List<String>) storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
@@ -177,7 +192,7 @@ public class StoreService {
     }
 
     public StorageObject storeSimpleDocument(InputStream inputStream, String contentType, Map<String, Object> metadataProperties, StorageObject parentObject) throws StorageException{
-        return storageService.createDocument(inputStream, contentType, metadataProperties, parentObject, false);
+        return storageService.createDocument(inputStream, contentType, metadataProperties, parentObject, parentObject.getPath(), false);
     }
 
     public StorageObject storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
@@ -203,7 +218,7 @@ public class StoreService {
                     .orElse(storeBulkInfo.getAspect(oggettoBulk))
         );
         metadataProperties.putAll(storeBulkInfo.getAspectPropertyValue(oggettoBulk));
-        return storageService.createDocument(inputStream, contentType, metadataProperties, parentObject, makeVersionable, permissions);
+        return storageService.createDocument(inputStream, contentType, metadataProperties, parentObject, path, makeVersionable, permissions);
     }
 
     public StorageObject restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
@@ -213,7 +228,7 @@ public class StoreService {
 
     public StorageObject restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
                                           String path, String objectTypeName, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
-        Optional<StorageObject> optStorageObject = Optional.ofNullable(getStorageObjectByPath(path.concat(BACKSLASH).concat(sanitizeFilename(name))));
+        Optional<StorageObject> optStorageObject = Optional.ofNullable(getStorageObjectByPath(path.concat(StorageService.SUFFIX).concat(sanitizeFilename(name))));
         if (optStorageObject.isPresent()) {
             return storageService.updateStream(optStorageObject.get().getKey(), inputStream, contentType);
         } else {
@@ -258,7 +273,92 @@ public class StoreService {
         return storageService.zipContent(keys);
     }
 
-    public String signDocuments(String json, String url) throws StorageException{
+    public String signDocuments(PdfSignApparence pdfSignApparence, String url) throws StorageException{
+        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS)) {
+            return signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), url);
+        } else {
+            List<byte[]> bytes = Optional.ofNullable(pdfSignApparence)
+                    .map(pdfSignApparence1 -> pdfSignApparence1.getNodes())
+                    .map(list ->
+                            list.stream()
+                                    .map(s -> storageService.getInputStream(s))
+                                    .map(inputStream -> {
+                                        try {
+                                            return IOUtils.toByteArray(inputStream);
+                                        } catch (IOException e) {
+                                           throw new StorageException(StorageException.Type.GENERIC, e);
+                                        }
+                                    })
+                                    .collect(Collectors.toList()))
+                    .orElse(Collections.emptyList());
+            try {
+                it.cnr.jada.firma.arss.stub.PdfSignApparence apparence = new it.cnr.jada.firma.arss.stub.PdfSignApparence();
+                apparence.setImage(signDocumentURL);
+                apparence.setLeftx(pdfSignApparence.getApparence().getLeftx());
+                apparence.setLefty(pdfSignApparence.getApparence().getLefty());
+                apparence.setLocation(pdfSignApparence.getApparence().getLocation());
+                apparence.setPage(pdfSignApparence.getApparence().getPage());
+                apparence.setReason(pdfSignApparence.getApparence().getReason());
+                apparence.setRightx(pdfSignApparence.getApparence().getRightx());
+                apparence.setRighty(pdfSignApparence.getApparence().getRighty());
+                apparence.setTesto(pdfSignApparence.getApparence().getTesto());
+
+                List<byte[]> bytesSigned = arubaSignServiceClient.pdfsignatureV2Multiple(
+                        pdfSignApparence.getUsername(),
+                        pdfSignApparence.getPassword(),
+                        pdfSignApparence.getOtp(),
+                        bytes,
+                        apparence
+                );
+                for (int i = 0; i < pdfSignApparence.getNodes().size(); i++) {
+                    storageService.updateStream(
+                            pdfSignApparence.getNodes().get(i),
+                            new ByteArrayInputStream(bytesSigned.get(i)),
+                            MimeTypes.PDF.mimetype()
+                    );
+                }
+
+            } catch (ArubaSignServiceException e) {
+                throw new StorageException(StorageException.Type.GENERIC, e);
+            }
+            return null;
+        }
+    }
+
+    public String signDocuments(SignP7M signP7M, String url) throws StorageException{
+        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS)) {
+            return signDocuments(new GsonBuilder().create().toJson(signP7M), url);
+        } else {
+            StorageObject storageObject = storageService.getObject(signP7M.getNodeRefSource());
+            try {
+                final byte[] bytes = arubaSignServiceClient.pkcs7SignV2(
+                        signP7M.getUsername(),
+                        signP7M.getPassword(),
+                        signP7M.getOtp(),
+                        IOUtils.toByteArray(storageService.getInputStream(signP7M.getNodeRefSource())));
+                Map<String, Object> metadataProperties = new HashMap<>();
+                metadataProperties.put(StoragePropertyNames.NAME.value(), signP7M.getNomeFile());
+                metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(),StoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
+
+                return storeSimpleDocument(
+                        new ByteArrayInputStream(bytes),
+                        MimeTypes.P7M.mimetype(),
+                        storageObject.getPath().substring(0, storageObject.getPath().lastIndexOf(StorageService.SUFFIX) + 1),
+                        metadataProperties).getKey();
+            } catch (ArubaSignServiceException|IOException e) {
+                throw new StorageException(StorageException.Type.GENERIC, e);
+            } finally {
+                List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+                aspects.add("P:cnr:signedDocument");
+                updateProperties(Collections.singletonMap(
+                        StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                        aspects
+                ), storageObject);
+            }
+        }
+    }
+
+    private String signDocuments(String json, String url) throws StorageException{
         return storageService.signDocuments(json, url);
     }
 

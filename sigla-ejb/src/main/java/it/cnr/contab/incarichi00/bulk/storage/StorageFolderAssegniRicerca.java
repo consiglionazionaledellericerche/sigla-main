@@ -1,11 +1,12 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.storage.StorageContrattiProperty;
-import it.cnr.contab.spring.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StorageObject;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
 
@@ -42,7 +43,7 @@ public class StorageFolderAssegniRicerca extends StorageFolderContrattiModel {
 	public String getCMISPath() {
 		String cmisPath = this.getCMISParentPath();
 		if (cmisPath!=null) {
-			cmisPath = cmisPath.concat(StoreService.BACKSLASH).concat("Assegno di Ricerca "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'));
+			cmisPath = cmisPath.concat(StorageService.SUFFIX).concat("Assegno di Ricerca "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'));
 		}
 		return cmisPath;
 	}

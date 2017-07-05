@@ -10,8 +10,9 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.config.StorageObject;
-import it.cnr.contab.spring.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
@@ -219,10 +220,10 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				if (pdgVariazioniService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
 					continue;
 				AllegatoPdGVariazioneDocumentBulk allegato = AllegatoPdGVariazioneDocumentBulk.construct(storageObject);
-				allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-				allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
-				allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-				allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
+				allegato.setContentType(storageObject.<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+				allegato.setNome(storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()));
+				allegato.setDescrizione(storageObject.<String>getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+				allegato.setTitolo(storageObject.<String>getPropertyValue(StoragePropertyNames.TITLE.value()));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 				archiviaStampaPdgVariazioneBulk.addToArchivioAllegati(allegato);
 			}
@@ -278,7 +279,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
 						" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
 		).stream().collect(
-				Collectors.joining(StoreService.BACKSLASH)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 	
@@ -347,14 +348,14 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		if (archiviaStampaPdgVariazioneBulk != null &&
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() != null &&
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject() != null)
-			return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().getPropertyValue(StoragePropertyNames.NAME.value());
+			return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().<String>getPropertyValue(StoragePropertyNames.NAME.value());
 		return null;
 	}
 	
 	public String getNomeAllegato(){
 		AllegatoPdGVariazioneDocumentBulk allegato = (AllegatoPdGVariazioneDocumentBulk)getCrudArchivioAllegati().getModel();
 		if (allegato != null && allegato.getDocument() != null)
-			return allegato.getDocument().getPropertyValue(StoragePropertyNames.NAME.value());
+			return allegato.getDocument().<String>getPropertyValue(StoragePropertyNames.NAME.value());
 		return null;
 	}
 	
@@ -362,7 +363,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		AllegatoPdGVariazioneDocumentBulk allegato = (AllegatoPdGVariazioneDocumentBulk)getCrudArchivioAllegati().getModel();
 		InputStream is = pdgVariazioniService.getResource(allegato.getDocument());
 		((HttpActionContext)actioncontext).getResponse().setContentLength(allegato.getDocument().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
-		((HttpActionContext)actioncontext).getResponse().setContentType(allegato.getDocument().getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+		((HttpActionContext)actioncontext).getResponse().setContentType(allegato.getDocument().<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
@@ -381,7 +382,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		((HttpActionContext)actioncontext).getResponse().setContentLength(
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
 		((HttpActionContext)actioncontext).getResponse().setContentType(
-				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];

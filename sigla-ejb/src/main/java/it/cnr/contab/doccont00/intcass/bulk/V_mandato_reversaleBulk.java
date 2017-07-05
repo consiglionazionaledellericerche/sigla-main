@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.spring.storage.StorageService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
@@ -235,7 +236,7 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
                         .orElse("0"),
                 getCMISFolderName()
         ).stream().collect(
-                Collectors.joining(StoreService.BACKSLASH)
+                Collectors.joining(StorageService.SUFFIX)
         );
     }
 	
