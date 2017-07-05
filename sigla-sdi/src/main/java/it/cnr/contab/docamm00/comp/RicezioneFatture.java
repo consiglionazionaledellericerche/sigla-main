@@ -209,37 +209,37 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				new StorageFolderFatturaPassiva(null, identificativoSdI));
 		try {
 			Map<String, Object> metadataPropertiesMinusP7M = new HashMap<String, Object>();
-			metadataPropertiesMinusP7M.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-			metadataPropertiesMinusP7M.put(PropertyIds.NAME, nameMinusP7m);
-			metadataPropertiesMinusP7M.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+			metadataPropertiesMinusP7M.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
+			metadataPropertiesMinusP7M.put(StoragePropertyNames.NAME.value(), nameMinusP7m);
+			metadataPropertiesMinusP7M.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
 					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:trasmissione_fattura"));
 			metadataPropertiesMinusP7M.put("sigla_commons_aspect:utente_applicativo", "SDI");
 			storeService.storeSimpleDocument(streamMinusP7m, contentTypeFileMinusP7m, path, metadataPropertiesMinusP7M);
-		} catch(CmisContentAlreadyExistsException _ex){
+		} catch(StorageException _ex){
 			LOGGER.warn("PEC File "+nameMinusP7m+" alredy store!");
 		}
 		try {
 			Map<String, Object> metadataProperties = new HashMap<String, Object>();
-			metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-			metadataProperties.put(PropertyIds.NAME, nomeFileMedatati);
-			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+			metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
+			metadataProperties.put(StoragePropertyNames.NAME.value(), nomeFileMedatati);
+			metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
 					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
 			metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 			storeService.storeSimpleDocument(streamMetadati, contentTypeMetadata, path, metadataProperties);
-		} catch(CmisContentAlreadyExistsException _ex){
+		} catch(StorageException _ex){
 			LOGGER.warn("PEC File "+nomeFileMedatati+" alredy store!");
 		}
 		
 		if (isp7m) {
 			try {
 				Map<String, Object> fileProperties = new HashMap<String, Object>();
-				fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-				fileProperties.put(PropertyIds.NAME, name);
-				fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+				fileProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
+				fileProperties.put(StoragePropertyNames.NAME.value(), name);
+				fileProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
 						Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma", StoragePropertyNames.CNR_SIGNEDDOCUMENT.value()));
 				fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 				storeService.storeSimpleDocument(stream, contentTypeFile, path, fileProperties);
-			} catch(CmisContentAlreadyExistsException _ex){
+			} catch(StorageException _ex){
 				LOGGER.warn("PEC File "+name+" alredy store!");
 			}				
 		}
@@ -609,9 +609,9 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					docAllegato.setDescrizioneAttachment(allegato.getDescrizioneAttachment());
 					try {
 						Map<String, Object> fileProperties = new HashMap<String, Object>();
-						fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-						fileProperties.put(PropertyIds.NAME, storeService.sanitizeFilename(nomeAllegato));
-						fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+						fileProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
+						fileProperties.put(StoragePropertyNames.NAME.value(), storeService.sanitizeFilename(nomeAllegato));
+						fileProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
 								Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
 						fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 						byte[] bytes = allegato.getAttachment();
