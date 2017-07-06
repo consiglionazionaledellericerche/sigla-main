@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.spring.storage.StorageService;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StorageException;
@@ -47,7 +47,7 @@ public class ContrattoService extends StoreService {
 						.orElse("0"),
 				contrattoBulk.getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(SiglaStorageService.SUFFIX)
 		);
 	}	
 	
@@ -118,7 +118,7 @@ public class ContrattoService extends StoreService {
                 (String)allegato.getContrattoBulk().getTi_natura_contabileKeys().get(allegato.getContrattoBulk().getNatura_contabile()),
                 (String)allegato.getTi_allegatoKeys().get(allegato.getType())
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(SiglaStorageService.SUFFIX)
         );
 	}
 	
@@ -132,7 +132,7 @@ public class ContrattoService extends StoreService {
                         .orElse("0"),
                 allegato.getContrattoBulk().getCMISFolderName()
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(SiglaStorageService.SUFFIX)
         );
 
 	}	

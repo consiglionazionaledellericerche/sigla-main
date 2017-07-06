@@ -3,8 +3,8 @@ package it.cnr.contab.pdg00.service;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageService;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
@@ -48,7 +48,7 @@ public class PdgVariazioniService extends StoreService {
                         + " CdR proponente "
                         + archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita() + ".pdf"
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(SiglaStorageService.SUFFIX)
 		);
 	}
 	

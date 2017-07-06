@@ -16,12 +16,11 @@ import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageService;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.SignP7M;
 import it.cnr.contab.util.Utility;
@@ -938,7 +937,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 						+ lpad(archiviaStampaPdgVariazioneBulk
 						.getPg_variazione_pdg(), 5, '0')
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(SiglaStorageService.SUFFIX)
 		);
 	}
 

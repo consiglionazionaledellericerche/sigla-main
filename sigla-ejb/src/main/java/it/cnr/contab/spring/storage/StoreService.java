@@ -2,7 +2,6 @@ package it.cnr.contab.spring.storage;
 
 import com.google.gson.GsonBuilder;
 import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
-import it.cnr.contab.spring.storage.config.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.SignP7M;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 @Service
 public class StoreService {
     @Autowired
-    private StorageService storageService;
+    private SiglaStorageService siglaStorageService;
     @Autowired
     private StoreBulkInfo storeBulkInfo;
     @Autowired
@@ -64,10 +63,10 @@ public class StoreService {
     }
 
     public StorageObject getStorageObjectByPath(String path, boolean create) {
-        return Optional.ofNullable(storageService.getObjectByPath(path))
+        return Optional.ofNullable(siglaStorageService.getObjectByPath(path))
                 .orElseGet(() -> {
                     if (!create) return null;
-                    final List<String> names = Arrays.asList(path.split(StorageService.SUFFIX));
+                    final List<String> names = Arrays.asList(path.split(SiglaStorageService.SUFFIX));
                     AtomicInteger atomicInteger = new AtomicInteger(0);
                     names.stream()
                             .filter(name -> name.length() > 0)
@@ -76,17 +75,17 @@ public class StoreService {
                                 createFolderIfNotPresent(
                                     Optional.ofNullable(names.stream()
                                         .limit(atomicInteger.longValue())
-                                        .reduce((a,b) -> a + StorageService.SUFFIX + b)
+                                        .reduce((a,b) -> a + SiglaStorageService.SUFFIX + b)
                                         .get())
                                         .filter(s -> s.length() > 0)
-                                        .orElse(StorageService.SUFFIX)
+                                        .orElse(SiglaStorageService.SUFFIX)
                                 ,name, null, null);
                             });
                     if (create) {
-                        return Optional.ofNullable(storageService.getObjectByPath(path))
+                        return Optional.ofNullable(siglaStorageService.getObjectByPath(path))
                                 .orElse(new StorageObject(path, path, Collections.emptyMap()));
                     }
-                    return storageService.getObjectByPath(path);
+                    return siglaStorageService.getObjectByPath(path);
                 });
     }
 
@@ -95,11 +94,11 @@ public class StoreService {
     }
 
     public StorageObject getStorageObjectBykey(String key) {
-        return storageService.getObject(key);
+        return siglaStorageService.getObject(key);
     }
 
     public StorageObject getStorageObjectBykey(String key, UsernamePasswordCredentials customCredentials) {
-        return storageService.getObject(key, customCredentials);
+        return siglaStorageService.getObject(key, customCredentials);
     }
 
     public String createFolderIfNotPresent(String path, String folderName, String title, String description) {
@@ -121,7 +120,7 @@ public class StoreService {
             metadataProperties.putAll(storeBulkInfo.getAspectPropertyValue(oggettoBulk));
             aspects.addAll(aspectsToAdd);
             metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects);
-            storageService.updateProperties(storageObject,metadataProperties);
+            siglaStorageService.updateProperties(storageObject,metadataProperties);
         }
         return storageObject.getPath();
     }
@@ -132,7 +131,7 @@ public class StoreService {
         try{
             final String folderPath = Optional.ofNullable(path)
                     .filter(s -> s.length() > 0)
-                    .filter(s -> !s.equals(StorageService.SUFFIX))
+                    .filter(s -> !s.equals(SiglaStorageService.SUFFIX))
                     .orElse("");
             final String name = sanitizeFolderName(folderName);
             metadataProperties.put(StoragePropertyNames.NAME.value(), name);
@@ -154,17 +153,17 @@ public class StoreService {
                     .ifPresent(list -> {
                         metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), list);
                     });
-            return Optional.ofNullable(storageService.getObjectByPath(folderPath.concat(StorageService.SUFFIX).concat(name)))
+            return Optional.ofNullable(siglaStorageService.getObjectByPath(folderPath.concat(SiglaStorageService.SUFFIX).concat(name)))
                     .map(storageObject -> {
                         if (oggettoBulk!=null){
                             List<String> aspects = (List<String>) storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
                             aspects.addAll(aspectsToAdd);
                             metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects);
-                            storageService.updateProperties(storageObject, metadataProperties);
+                            siglaStorageService.updateProperties(storageObject, metadataProperties);
                         }
                         return storageObject.getPath();
                     })
-                    .orElseGet(() -> storageService.createFolder(folderPath, name, metadataProperties).getPath());
+                    .orElseGet(() -> siglaStorageService.createFolder(folderPath, name, metadataProperties).getPath());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -175,7 +174,7 @@ public class StoreService {
     }
 
     public CompletableFuture<Boolean> delete(String key){
-        return storageService.deleteAsync(key);
+        return siglaStorageService.deleteAsync(key);
     }
 
     public InputStream getResource(StorageObject storageObject){
@@ -183,19 +182,19 @@ public class StoreService {
     }
 
     public InputStream getResource(String key){
-        return storageService.getInputStream(key);
+        return siglaStorageService.getInputStream(key);
     }
 
     public InputStream getResource(String key, String versionId) {
-        return storageService.getInputStream(key, versionId);
+        return siglaStorageService.getInputStream(key, versionId);
     }
 
     public InputStream getResource(String key, Boolean majorVersion) {
-        return storageService.getInputStream(key, majorVersion);
+        return siglaStorageService.getInputStream(key, majorVersion);
     }
 
     public StorageObject storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                        String path, StorageService.Permission... permissions) throws StorageException{
+                                        String path, SiglaStorageService.Permission... permissions) throws StorageException{
         return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, path, false, permissions);
     }
 
@@ -205,16 +204,16 @@ public class StoreService {
     }
 
     public StorageObject storeSimpleDocument(InputStream inputStream, String contentType, Map<String, Object> metadataProperties, StorageObject parentObject) throws StorageException{
-        return storageService.createDocument(inputStream, contentType, metadataProperties, parentObject, parentObject.getPath(), false);
+        return siglaStorageService.createDocument(inputStream, contentType, metadataProperties, parentObject, parentObject.getPath(), false);
     }
 
     public StorageObject storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                             String path, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
+                                             String path, boolean makeVersionable, SiglaStorageService.Permission... permissions) throws StorageException{
         return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, path, storeBulkInfo.getType(oggettoBulk), makeVersionable, permissions);
     }
 
     public StorageObject storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                        String path, String objectTypeName, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
+                                        String path, String objectTypeName, boolean makeVersionable, SiglaStorageService.Permission... permissions) throws StorageException{
         StorageObject parentObject = getStorageObjectByPath(path, true);
         Map<String, Object> metadataProperties = new HashMap<String, Object>();
         name = sanitizeFilename(name);
@@ -231,26 +230,26 @@ public class StoreService {
                     .orElse(storeBulkInfo.getAspect(oggettoBulk))
         );
         metadataProperties.putAll(storeBulkInfo.getAspectPropertyValue(oggettoBulk));
-        return storageService.createDocument(inputStream, contentType, metadataProperties, parentObject, path, makeVersionable, permissions);
+        return siglaStorageService.createDocument(inputStream, contentType, metadataProperties, parentObject, path, makeVersionable, permissions);
     }
 
     public StorageObject restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                          String path, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
+                                          String path, boolean makeVersionable, SiglaStorageService.Permission... permissions) throws StorageException{
         return restoreSimpleDocument(oggettoBulk, inputStream, contentType, name, path, storeBulkInfo.getType(oggettoBulk), makeVersionable, permissions);
     }
 
     public StorageObject restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
-                                          String path, String objectTypeName, boolean makeVersionable, StorageService.Permission... permissions) throws StorageException{
-        Optional<StorageObject> optStorageObject = Optional.ofNullable(getStorageObjectByPath(path.concat(StorageService.SUFFIX).concat(sanitizeFilename(name))));
+                                          String path, String objectTypeName, boolean makeVersionable, SiglaStorageService.Permission... permissions) throws StorageException{
+        Optional<StorageObject> optStorageObject = Optional.ofNullable(getStorageObjectByPath(path.concat(SiglaStorageService.SUFFIX).concat(sanitizeFilename(name))));
         if (optStorageObject.isPresent()) {
-            return storageService.updateStream(optStorageObject.get().getKey(), inputStream, contentType);
+            return siglaStorageService.updateStream(optStorageObject.get().getKey(), inputStream, contentType);
         } else {
             return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, path, objectTypeName, makeVersionable, permissions);
         }
     }
 
     public void updateProperties(Map<String, Object> metadataProperties, StorageObject storageObject) throws StorageException{
-        storageService.updateProperties(storageObject, metadataProperties);
+        siglaStorageService.updateProperties(storageObject, metadataProperties);
     }
 
     public void updateProperties(OggettoBulk oggettoBulk, StorageObject storageObject) throws StorageException{
@@ -275,26 +274,26 @@ public class StoreService {
     }
 
     public List<StorageObject> getChildren(String key) {
-        return storageService.getChildren(key);
+        return siglaStorageService.getChildren(key);
     }
 
     public List<StorageObject> search(String query) {
-        return storageService.search(query);
+        return siglaStorageService.search(query);
     }
 
     public InputStream zipContent(List<String> keys) {
-        return storageService.zipContent(keys);
+        return siglaStorageService.zipContent(keys);
     }
 
     public String signDocuments(PdfSignApparence pdfSignApparence, String url) throws StorageException{
-        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS)) {
+        if (siglaStorageService.getStoreType().equals(SiglaStorageService.StoreType.CMIS)) {
             return signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), url);
         } else {
             List<byte[]> bytes = Optional.ofNullable(pdfSignApparence)
                     .map(pdfSignApparence1 -> pdfSignApparence1.getNodes())
                     .map(list ->
                             list.stream()
-                                    .map(s -> storageService.getInputStream(s))
+                                    .map(s -> siglaStorageService.getInputStream(s))
                                     .map(inputStream -> {
                                         try {
                                             return IOUtils.toByteArray(inputStream);
@@ -324,7 +323,7 @@ public class StoreService {
                         apparence
                 );
                 for (int i = 0; i < pdfSignApparence.getNodes().size(); i++) {
-                    storageService.updateStream(
+                    siglaStorageService.updateStream(
                             pdfSignApparence.getNodes().get(i),
                             new ByteArrayInputStream(bytesSigned.get(i)),
                             MimeTypes.PDF.mimetype()
@@ -339,16 +338,16 @@ public class StoreService {
     }
 
     public String signDocuments(SignP7M signP7M, String url) throws StorageException{
-        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS)) {
+        if (siglaStorageService.getStoreType().equals(SiglaStorageService.StoreType.CMIS)) {
             return signDocuments(new GsonBuilder().create().toJson(signP7M), url);
         } else {
-            StorageObject storageObject = storageService.getObject(signP7M.getNodeRefSource());
+            StorageObject storageObject = siglaStorageService.getObject(signP7M.getNodeRefSource());
             try {
                 final byte[] bytes = arubaSignServiceClient.pkcs7SignV2(
                         signP7M.getUsername(),
                         signP7M.getPassword(),
                         signP7M.getOtp(),
-                        IOUtils.toByteArray(storageService.getInputStream(signP7M.getNodeRefSource())));
+                        IOUtils.toByteArray(siglaStorageService.getInputStream(signP7M.getNodeRefSource())));
                 Map<String, Object> metadataProperties = new HashMap<>();
                 metadataProperties.put(StoragePropertyNames.NAME.value(), signP7M.getNomeFile());
                 metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(),StoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
@@ -356,7 +355,7 @@ public class StoreService {
                 return storeSimpleDocument(
                         new ByteArrayInputStream(bytes),
                         MimeTypes.P7M.mimetype(),
-                        storageObject.getPath().substring(0, storageObject.getPath().lastIndexOf(StorageService.SUFFIX) + 1),
+                        storageObject.getPath().substring(0, storageObject.getPath().lastIndexOf(SiglaStorageService.SUFFIX) + 1),
                         metadataProperties).getKey();
             } catch (ArubaSignServiceException|IOException e) {
                 throw new StorageException(StorageException.Type.GENERIC, e);
@@ -372,11 +371,11 @@ public class StoreService {
     }
 
     private String signDocuments(String json, String url) throws StorageException{
-        return storageService.signDocuments(json, url);
+        return siglaStorageService.signDocuments(json, url);
     }
 
     public StorageObject updateStream(String key, InputStream inputStream, String contentType) throws StorageException{
-        return storageService.updateStream(key, inputStream, contentType);
+        return siglaStorageService.updateStream(key, inputStream, contentType);
     }
 
     public boolean hasAspect(StorageObject storageObject, String aspect) {
@@ -396,42 +395,42 @@ public class StoreService {
     }
 
     public void copyNode(StorageObject source, StorageObject target) {
-        storageService.copyNode(source, target);
+        siglaStorageService.copyNode(source, target);
     }
 
     public void addConsumerToEveryone(StorageObject storageObject) {
-        addAcl(storageObject, Collections.singletonMap("GROUP_EVERYONE", StorageService.ACLType.Consumer));
+        addAcl(storageObject, Collections.singletonMap("GROUP_EVERYONE", SiglaStorageService.ACLType.Consumer));
     }
 
     public void removeConsumerToEveryone(StorageObject storageObject){
-        removeAcl(storageObject, Collections.singletonMap("GROUP_EVERYONE", StorageService.ACLType.Consumer));
+        removeAcl(storageObject, Collections.singletonMap("GROUP_EVERYONE", SiglaStorageService.ACLType.Consumer));
     }
     // per gestire gruppi diversi es. CONTRATTI
     public void addConsumer(StorageObject storageObject, String group ) {
-        addAcl(storageObject, Collections.singletonMap(group, StorageService.ACLType.Consumer));
+        addAcl(storageObject, Collections.singletonMap(group, SiglaStorageService.ACLType.Consumer));
     }
     public void removeConsumer(StorageObject storageObject, String group ) {
-        removeAcl(storageObject, Collections.singletonMap(group, StorageService.ACLType.Consumer));
+        removeAcl(storageObject, Collections.singletonMap(group, SiglaStorageService.ACLType.Consumer));
     }
 
-    private void removeAcl(StorageObject storageObject, Map<String, StorageService.ACLType> permission) {
+    private void removeAcl(StorageObject storageObject, Map<String, SiglaStorageService.ACLType> permission) {
         managePermission(storageObject, permission, true);
     }
 
-    private void addAcl(StorageObject storageObject, Map<String, StorageService.ACLType> permission) {
+    private void addAcl(StorageObject storageObject, Map<String, SiglaStorageService.ACLType> permission) {
         managePermission(storageObject, permission, false);
     }
 
-    private void managePermission(StorageObject storageObject, Map<String, StorageService.ACLType> permission, boolean remove) {
-        storageService.managePermission(storageObject, permission, remove);
+    private void managePermission(StorageObject storageObject, Map<String, SiglaStorageService.ACLType> permission, boolean remove) {
+        siglaStorageService.managePermission(storageObject, permission, remove);
     }
 
     public void setInheritedPermission(StorageObject storageObject, Boolean inherited) {
-        storageService.setInheritedPermission(storageObject, inherited);
+        siglaStorageService.setInheritedPermission(storageObject, inherited);
     }
 
     public List<StorageObject> getRelationship(String key, String relationshipName, boolean fromTarget) {
-        return storageService.getRelationship(key, relationshipName, fromTarget);
+        return siglaStorageService.getRelationship(key, relationshipName, fromTarget);
     }
 
     public List<StorageObject> getRelationship(String sourceNodeRef, String relationshipName) throws ApplicationException {
@@ -443,6 +442,6 @@ public class StoreService {
     }
 
     public void createRelationship(String source, String target, String relationshipName) {
-        storageService.createRelationship(source, target, relationshipName);
+        siglaStorageService.createRelationship(source, target, relationshipName);
     }
 }

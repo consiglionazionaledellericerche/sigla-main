@@ -1,6 +1,5 @@
 package it.cnr.contab.spring.storage;
 
-import it.cnr.contab.spring.storage.config.StorageObject;
 import org.apache.http.auth.UsernamePasswordCredentials;
 
 import java.io.InputStream;
@@ -14,17 +13,21 @@ import java.util.stream.Stream;
 /**
  * Created by mspasiano on 6/5/17.
  */
-public interface StorageService {
-    public static final String SUFFIX = "/";
+public interface SiglaStorageService {
+
+
+    String SUFFIX = "/";
     Pattern UUID_PATTERN = Pattern.compile("[a-f0-9]{8}-[a-f0-9]{4}-[12345][a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}");
-    public enum StoreType {
+
+     enum StoreType {
         CMIS, S3, AZURE
     }
 
-    public enum ACLType {
+    enum ACLType {
         Consumer, Editor, Collaborator, Coordinator, Contributor, FullControl, Read, Write
     }
-    public class Permission {
+
+    class Permission {
         private String userName;
         private ACLType role;
 

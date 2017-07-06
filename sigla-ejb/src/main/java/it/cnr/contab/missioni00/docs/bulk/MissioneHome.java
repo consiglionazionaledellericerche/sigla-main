@@ -14,7 +14,7 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.service.LDAPService;
 import it.cnr.jada.UserContext;
@@ -430,8 +430,8 @@ public class MissioneHome extends BulkHome implements
 							report.getContentType(),
 							report.getName(),
 							cmisPath,
-							StorageService.Permission.construct(uidMail[0], StorageService.ACLType.Consumer),
-							StorageService.Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), StorageService.ACLType.Coordinator)
+							SiglaStorageService.Permission.construct(uidMail[0], SiglaStorageService.ACLType.Consumer),
+							SiglaStorageService.Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), SiglaStorageService.ACLType.Coordinator)
 					);
 				} catch (Exception e) {
 					throw new PersistencyException(e);

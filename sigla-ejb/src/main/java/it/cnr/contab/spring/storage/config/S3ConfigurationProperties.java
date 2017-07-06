@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.util.Map;
+
 /**
  * Created by mspasiano on 6/5/17.
  */
@@ -21,6 +23,9 @@ public class S3ConfigurationProperties {
     private String bucketName;
     @Value("${cnr.aws.deleteAfter}")
     private Integer deleteAfter;
+
+    @Value("#{${cnr.aws.metadataKeys}}")
+    private Map<String, String> metadataKeys;
 
     public String getAuthUrl() {
         return authUrl;
@@ -60,5 +65,13 @@ public class S3ConfigurationProperties {
 
     public void setDeleteAfter(Integer deleteAfter) {
         this.deleteAfter = deleteAfter;
+    }
+
+    public Map<String, String> getMetadataKeys() {
+        return metadataKeys;
+    }
+
+    public void setMetadataKeys(Map<String, String> metadataKeys) {
+        this.metadataKeys = metadataKeys;
     }
 }

@@ -1,7 +1,7 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
@@ -12,7 +12,6 @@ import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
@@ -236,7 +235,7 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
                         .orElse("0"),
                 getCMISFolderName()
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(SiglaStorageService.SUFFIX)
         );
     }
 	

@@ -10,11 +10,10 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageService;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.action.ActionContext;
@@ -279,7 +278,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
 						" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(SiglaStorageService.SUFFIX)
 		);
 	}
 	
