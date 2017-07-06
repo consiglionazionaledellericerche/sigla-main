@@ -90,10 +90,9 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public final static Dictionary STATO;
 	static{
 		STATO = new it.cnr.jada.util.OrderedHashtable();
-		STATO.put(STATO_INSERITO,"Inserita");
-		STATO.put(STATO_ANNULLATO,"Annullata");
-		STATO.put(STATO_DEFINITIVO,"Definitiva");
-		STATO.put(STATO_INVIATO_ORDINE,"Inviata in Ordine");
+		STATO.put(STATO_INSERITO,"Inserito");
+		STATO.put(STATO_ANNULLATO,"Annullato");
+		STATO.put(STATO_DEFINITIVO,"Definitivo");
 	}
 
 	/**
