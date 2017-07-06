@@ -3,10 +3,13 @@
  * Date 28/06/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
+import java.util.Dictionary;
+
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.jada.util.OrderedHashtable;
 public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	/**
 	 * [ORDINE_ACQ_RIGA Riga Ordine d'Acquisto]
@@ -39,6 +42,18 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ORDINE_ACQ_CONSEGNA
 	 **/
+
+	public final static String TIPO_CONSEGNA_MAGAZZINO = "MAG";
+	public final static String TIPO_CONSEGNA_TRANSITO = "TRA";
+	public final static String TIPO_CONSEGNA_FUORI_MAGAZZINO = "FMA";
+
+	public final static Dictionary TIPO_CONSEGNA;
+	static{
+		TIPO_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_TRANSITO,"Transito");
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_MAGAZZINO,"Magazzino");
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_FUORI_MAGAZZINO,"Fuori Magazzino");
+	}
 	public OrdineAcqConsegnaBulk() {
 		super();
 	}
@@ -387,5 +402,15 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	}
 	public void setLuogoConsegnaMag(LuogoConsegnaMagBulk luogoConsegnaMag) {
 		this.luogoConsegnaMag = luogoConsegnaMag;
+	}
+	public Dictionary getTipoConsegnaKeys() {
+		return TIPO_CONSEGNA;
+	}
+	public Dictionary getTipoConsegnaKeysForSearch() {
+
+		OrderedHashtable d = (OrderedHashtable)getTipoConsegnaKeys();
+		if (d == null) return null;
+		OrderedHashtable clone = (OrderedHashtable)d.clone();
+		return clone;
 	}
 }
