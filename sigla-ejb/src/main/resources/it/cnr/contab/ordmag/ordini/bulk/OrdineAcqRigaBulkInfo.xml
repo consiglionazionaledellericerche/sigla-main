@@ -204,7 +204,6 @@
 		nullable="false"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
-		nullable="false"
 		label="Quantità" />
 	<fieldProperty
 		name="sconto1"
