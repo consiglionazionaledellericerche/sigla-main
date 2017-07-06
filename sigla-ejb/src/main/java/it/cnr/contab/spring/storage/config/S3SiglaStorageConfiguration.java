@@ -20,17 +20,17 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @Profile("S3")
-public class S3Configuration {
+public class S3SiglaStorageConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(S3Configuration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(S3SiglaStorageConfiguration.class);
 
     @Bean
-    AWSCredentials basicAWSCredentials(S3ConfigurationProperties s3ConfigurationProperties) {
-        return new BasicAWSCredentials(s3ConfigurationProperties.getAccessKey(), s3ConfigurationProperties.getSecretKey());
+    AWSCredentials basicAWSCredentials(S3SiglaStorageConfigurationProperties s3SiglaStorageConfigurationProperties) {
+        return new BasicAWSCredentials(s3SiglaStorageConfigurationProperties.getAccessKey(), s3SiglaStorageConfigurationProperties.getSecretKey());
     }
 
     @Bean
-    AmazonS3 amazonS3(AWSCredentials awsCredentials, S3ConfigurationProperties s3ConfigurationProperties) {
+    AmazonS3 amazonS3(AWSCredentials awsCredentials, S3SiglaStorageConfigurationProperties s3SiglaStorageConfigurationProperties) {
 
         ClientConfiguration clientConfig = new ClientConfiguration();
         clientConfig.setProtocol(Protocol.HTTP);
@@ -40,7 +40,7 @@ public class S3Configuration {
         clientConfig.setSignerOverride("S3SignerType");
 
         AwsClientBuilder.EndpointConfiguration endpoint =
-                new AwsClientBuilder.EndpointConfiguration(s3ConfigurationProperties.getAuthUrl(), "???");
+                new AwsClientBuilder.EndpointConfiguration(s3SiglaStorageConfigurationProperties.getAuthUrl(), "???");
 
         return AmazonS3ClientBuilder
                 .standard()
@@ -52,18 +52,18 @@ public class S3Configuration {
     }
 
     @Bean
-    Bucket Bucket(AmazonS3 amazonS3, S3ConfigurationProperties s3ConfigurationProperties) {
-        boolean doesBucketExist = amazonS3.doesBucketExist(s3ConfigurationProperties.getBucketName());
+    Bucket Bucket(AmazonS3 amazonS3, S3SiglaStorageConfigurationProperties s3SiglaStorageConfigurationProperties) {
+        boolean doesBucketExist = amazonS3.doesBucketExist(s3SiglaStorageConfigurationProperties.getBucketName());
 
         if(doesBucketExist) {
             return amazonS3
                     .listBuckets()
                     .stream()
-                    .filter(bucket -> bucket.getName().equals(s3ConfigurationProperties.getBucketName()))
+                    .filter(bucket -> bucket.getName().equals(s3SiglaStorageConfigurationProperties.getBucketName()))
                     .findFirst()
                     .get();
         } else {
-            return amazonS3.createBucket(s3ConfigurationProperties.getBucketName());
+            return amazonS3.createBucket(s3SiglaStorageConfigurationProperties.getBucketName());
         }
 
     }

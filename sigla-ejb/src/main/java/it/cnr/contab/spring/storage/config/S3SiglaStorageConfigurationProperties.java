@@ -11,7 +11,7 @@ import java.util.Map;
  */
 @Configuration
 @Profile("S3")
-public class S3ConfigurationProperties {
+public class S3SiglaStorageConfigurationProperties {
 
     @Value("${cnr.aws.authUrl}")
     private String authUrl;

@@ -50,9 +50,9 @@ import java.util.concurrent.CompletableFuture;
  */
 @Configuration
 @Profile("CMIS")
-public class CMISConfiguration {
+public class CMISSiglaStorageConfiguration {
 
-    private static final Logger logger = LoggerFactory.getLogger(CMISConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(CMISSiglaStorageConfiguration.class);
 
     @Value("${org.apache.chemistry.opencmis.binding.atompub.url}")
     private String ATOMPUB_URL;

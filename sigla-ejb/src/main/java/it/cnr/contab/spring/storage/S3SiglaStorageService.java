@@ -2,7 +2,7 @@ package it.cnr.contab.spring.storage;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import it.cnr.contab.spring.storage.config.S3ConfigurationProperties;
+import it.cnr.contab.spring.storage.config.S3SiglaStorageConfigurationProperties;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
@@ -30,17 +30,17 @@ public class S3SiglaStorageService implements SiglaStorageService {
     private static final Logger LOGGER = LoggerFactory.getLogger(S3SiglaStorageService.class);
 
     private AmazonS3 amazonS3;
-    private S3ConfigurationProperties s3ConfigurationProperties;
+    private S3SiglaStorageConfigurationProperties s3SiglaStorageConfigurationProperties;
 
 
-    public S3SiglaStorageService(S3ConfigurationProperties s3ConfigurationProperties, AmazonS3 amazonS3) {
-        this.s3ConfigurationProperties = s3ConfigurationProperties;
+    public S3SiglaStorageService(S3SiglaStorageConfigurationProperties s3SiglaStorageConfigurationProperties, AmazonS3 amazonS3) {
+        this.s3SiglaStorageConfigurationProperties = s3SiglaStorageConfigurationProperties;
         this.amazonS3 = amazonS3;
     }
 
     private void setUserMetadata(ObjectMetadata objectMetadata, Map<String, Object> metadata) {
 
-        Map<String, String> metadataKeys = s3ConfigurationProperties.getMetadataKeys();
+        Map<String, String> metadataKeys = s3SiglaStorageConfigurationProperties.getMetadataKeys();
 
         metadata
                 .keySet()
@@ -76,7 +76,7 @@ public class S3SiglaStorageService implements SiglaStorageService {
                         .filter(aLong -> aLong > 0)
                         .map(aLong -> StoragePropertyNames.CMIS_DOCUMENT.value())
                         .orElse(StoragePropertyNames.CMIS_FOLDER.value()));
-        s3ConfigurationProperties.getMetadataKeys().entrySet().stream()
+        s3SiglaStorageConfigurationProperties.getMetadataKeys().entrySet().stream()
                 .forEach(entry ->  {
                     final String userMetaDataOf = objectMetadata.getUserMetaDataOf(entry.getValue());
                     if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
@@ -112,7 +112,7 @@ public class S3SiglaStorageService implements SiglaStorageService {
                     objectMetadata.setContentLength(0);
                     InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
                     PutObjectResult putObjectResult = amazonS3.putObject(
-                            s3ConfigurationProperties.getBucketName(),
+                            s3SiglaStorageConfigurationProperties.getBucketName(),
                             key,
                             emptyContent,
                             objectMetadata);
@@ -136,7 +136,7 @@ public class S3SiglaStorageService implements SiglaStorageService {
         setUserMetadata(objectMetadata, metadataProperties);
         try {
             objectMetadata.setContentLength(Long.valueOf(inputStream.available()).longValue());
-            PutObjectResult putObjectResult = amazonS3.putObject(s3ConfigurationProperties.getBucketName(),
+            PutObjectResult putObjectResult = amazonS3.putObject(s3SiglaStorageConfigurationProperties.getBucketName(),
                     key, inputStream, objectMetadata);
 
             return new StorageObject(key, key, getUserMetadata(key, putObjectResult.getMetadata()));
@@ -149,18 +149,18 @@ public class S3SiglaStorageService implements SiglaStorageService {
     public void updateProperties(StorageObject storageObject, Map<String, Object> metadataProperties) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         setUserMetadata(objectMetadata, metadataProperties);
-        S3Object s3Object = amazonS3.getObject(s3ConfigurationProperties.getBucketName(), storageObject.getKey());
-        amazonS3.putObject(s3ConfigurationProperties.getBucketName(), s3Object.getKey(), s3Object.getObjectContent(), objectMetadata);
+        S3Object s3Object = amazonS3.getObject(s3SiglaStorageConfigurationProperties.getBucketName(), storageObject.getKey());
+        amazonS3.putObject(s3SiglaStorageConfigurationProperties.getBucketName(), s3Object.getKey(), s3Object.getObjectContent(), objectMetadata);
     }
 
     @Override
     public StorageObject updateStream(String key, InputStream inputStream, String contentType) {
         try {
             final byte[] bytes = IOUtils.toByteArray(inputStream);
-            ObjectMetadata objectMetadata = amazonS3.getObject(s3ConfigurationProperties.getBucketName(), key).getObjectMetadata().clone();
+            ObjectMetadata objectMetadata = amazonS3.getObject(s3SiglaStorageConfigurationProperties.getBucketName(), key).getObjectMetadata().clone();
             objectMetadata.setContentType(contentType);
             objectMetadata.setContentLength(Long.valueOf(bytes.length));
-            PutObjectResult putObjectResult = amazonS3.putObject(s3ConfigurationProperties.getBucketName(),
+            PutObjectResult putObjectResult = amazonS3.putObject(s3SiglaStorageConfigurationProperties.getBucketName(),
                     key, new ByteArrayInputStream(bytes), objectMetadata);
             return new StorageObject(key, key,  getUserMetadata(key, putObjectResult.getMetadata()));
         } catch (IOException e) {
@@ -170,7 +170,7 @@ public class S3SiglaStorageService implements SiglaStorageService {
 
     @Override
     public InputStream getInputStream(String name) {
-        return amazonS3.getObject(s3ConfigurationProperties.getBucketName(), name).getObjectContent();
+        return amazonS3.getObject(s3SiglaStorageConfigurationProperties.getBucketName(), name).getObjectContent();
     }
 
     @Override
@@ -187,17 +187,17 @@ public class S3SiglaStorageService implements SiglaStorageService {
     public CompletableFuture<Boolean> deleteAsync(String id) {
         return CompletableFuture
                 .supplyAsync(() -> {
-                    boolean exists = amazonS3.doesObjectExist(s3ConfigurationProperties.getBucketName(), id);
+                    boolean exists = amazonS3.doesObjectExist(s3SiglaStorageConfigurationProperties.getBucketName(), id);
                     if (exists) {
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(new Date());
-                        calendar.add(Calendar.SECOND, s3ConfigurationProperties.getDeleteAfter());
+                        calendar.add(Calendar.SECOND, s3SiglaStorageConfigurationProperties.getDeleteAfter());
 
                         ObjectMetadata objectMetadata = new ObjectMetadata();
                         objectMetadata.setExpirationTime(calendar.getTime());
 
-                        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(s3ConfigurationProperties.getBucketName(),
-                                id, s3ConfigurationProperties.getBucketName(), id)
+                        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(s3SiglaStorageConfigurationProperties.getBucketName(),
+                                id, s3SiglaStorageConfigurationProperties.getBucketName(), id)
                                 .withNewObjectMetadata(objectMetadata);
 
                         amazonS3.copyObject(copyObjectRequest);
@@ -215,7 +215,7 @@ public class S3SiglaStorageService implements SiglaStorageService {
                     .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
                     .map(s -> s.substring(1))
                     .orElse(key);
-            S3Object s3Object = amazonS3.getObject(s3ConfigurationProperties.getBucketName(), key);
+            S3Object s3Object = amazonS3.getObject(s3SiglaStorageConfigurationProperties.getBucketName(), key);
             return new StorageObject(s3Object.getKey(), s3Object.getKey(), getUserMetadata(s3Object.getKey(), s3Object.getObjectMetadata()));
         } catch (AmazonS3Exception _ex) {
             if (_ex.getStatusCode() == HttpStatus.SC_NOT_FOUND)
@@ -237,7 +237,7 @@ public class S3SiglaStorageService implements SiglaStorageService {
     @Override
     public List<StorageObject> getChildren(String key) {
         return amazonS3
-                .listObjects(s3ConfigurationProperties.getBucketName(), key)
+                .listObjects(s3SiglaStorageConfigurationProperties.getBucketName(), key)
                 .getObjectSummaries()
                 .stream()
                 .filter(s3ObjectSummary -> !s3ObjectSummary.getKey().equals(key))
@@ -270,9 +270,9 @@ public class S3SiglaStorageService implements SiglaStorageService {
                 .map(s -> s.substring(1))
                 .orElse(target.getPath())
                 .concat(source.getKey().substring(source.getKey().lastIndexOf(SUFFIX)));
-        amazonS3.copyObject(s3ConfigurationProperties.getBucketName(),
+        amazonS3.copyObject(s3SiglaStorageConfigurationProperties.getBucketName(),
                 source.getKey(),
-                s3ConfigurationProperties.getBucketName(),
+                s3SiglaStorageConfigurationProperties.getBucketName(),
                 targetPath);
     }
 
