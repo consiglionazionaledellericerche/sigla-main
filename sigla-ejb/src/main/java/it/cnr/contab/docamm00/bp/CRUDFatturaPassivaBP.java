@@ -1662,4 +1662,16 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 			throw handleException(e);
 		}			
 	}
+	
+	//variabile inizializzata in fase di caricamento Nota da fattura elettronica 
+	//utilizzata per ritornare sulla fattura elettronica 
+	public boolean fromFatturaElettronica = Boolean.FALSE;
+
+	public void setFromFatturaElettronica(boolean fromFatturaElettronica) {
+		this.fromFatturaElettronica = fromFatturaElettronica;
+	}
+	
+	public boolean isFromFatturaElettronica() {
+		return fromFatturaElettronica;
+	}
 }
