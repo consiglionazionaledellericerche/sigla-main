@@ -106,36 +106,49 @@
 		label="Stato"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="findDivisa"
+		property="divisa"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		label="Valuta"		
+		/>		
+	<fieldProperty
 		name="cdDivisa"
-		property="cdDivisa"
+		property="divisa.cd_divisa"
+		label="Valuta"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		inputType="TEXT"
-		inputSize="10"
 		maxLength="10"
-		enabledOnEdit="false"
+		inputSize="10"
 		nullable="false"
-		label="cdDivisa" />
+		/>
+	<fieldProperty
+		name="dsDivisa"
+		property="divisa.ds_divisa"
+		label=""
+		inputSize="20"
+		inputType="ROTEXT" 
+		/>
 	<fieldProperty
 		name="cambio"
 		property="cambio"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"
-		nullable="false"
-		enabledOnEdit="true"
-		enabledOnSearch="false"
-		enabledOnInsert="true"
-		readonlyProperty="ROCambio"
-		label="Cambio" />
+		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"				
+		label="Cambio"
+		nullable="false"		
+		/>
 
 
 	<fieldProperty
 		name="findFornitore"
 		property="fornitore"
+		formName="searchtool"
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROFornitoreSearchTool"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
-		label="fornitore"/>
+		label="Fornitore"/>
 	<fieldProperty
 		name="crea_fornitore"
 		property="fornitore"
@@ -219,7 +232,7 @@
 		inputType="ROTEXT"
 		label="Provincia"/>
 	<fieldProperty
-		name="partita_iva"
+		name="partitaIva"
 		property="partitaIva"
 		maxLength="20"
 		inputSize="20"
@@ -231,7 +244,7 @@
 		enabledOnSearch="true"
 		caseSensitiveSearch="false" />
 	<fieldProperty
-		name="codice_fiscale"
+		name="codiceFiscale"
 		property="codiceFiscale"
 		maxLength="16"
 		inputSize="16"
@@ -266,7 +279,7 @@
 		enabledOnSearch="true"
 		label="Nome"/>
 	<fieldProperty
-		name="ragione_sociale"
+		name="ragioneSociale"
 		property="ragioneSociale"
 		maxLength="100"
 		inputSize="100"
@@ -348,7 +361,6 @@
 		img="img/find16.gif"
 		iconClass="fa fa-search text-primary"
 		buttonClass="btn-secondary btn-title text-primary"		
-		readonlyProperty="true"
 		label="Conto/i..."
 		href="javascript:submitForm('doSearch(main.listabanche)')" />
 
@@ -356,8 +368,8 @@
 		name="nota"
 		property="nota"
 		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		cols="160"
+		rows="3"
 		maxLength="2000"
 		enabledOnEdit="false"
 		label="Nota" />
@@ -388,6 +400,7 @@
                 name="findResponsabile"
                 property="responsabileProcPers"
                 inputType="SEARCHTOOL"
+                formName="searchtool"
                 enabledOnSearch="true"
                 label="Responsabile procedimento/RUP" />
         <fieldProperty
@@ -455,9 +468,9 @@
 		name="referenteEsterno"
 		property="referenteEsterno"
 		inputType="TEXT"
-		inputSize="100"
+		inputSize="131"
 		maxLength="100"
-		nullable="false"
+		nullable="true"
 		label="Referente Esterno" />
 	<fieldProperty
         name="findTipoOrdine"
@@ -477,7 +490,7 @@
         label="Tipo Ordine" />
         <fieldProperty
                 name="procedura_amministrativa"
-                property="procedura_amministrativa"
+                property="procedureAmministrative"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
                 nullable="false"
@@ -485,7 +498,7 @@
                 label="Procedura Amministrativa" />
         <fieldProperty
                 name="cdProcAmm"
-                property="procedura_amministrativa.cd_proc_amm"
+                property="procedureAmministrative.cd_proc_amm"
                 inputType="TEXT"
                 inputSize="5"
                 maxLength="5"
@@ -496,7 +509,6 @@
                 property="cig"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
-                nullable="true"
                 enabledOnSearch="true"
                 label="CIG" />
          <fieldProperty
@@ -511,7 +523,6 @@
                 property="cup"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
-                nullable="true"
                 enabledOnSearch="true"
                 label="CUP" />
         <fieldProperty
@@ -525,6 +536,7 @@
 		name="find_contratto"
 		property="contratto"
 		inputType="SEARCHTOOL"
+        formName="searchtool"
 		label="Contratto"
 		enabledOnSearch="true" 
 		/>
@@ -594,6 +606,8 @@
 	<formFieldProperty
 		name="findNotaPrecodificata" />
 	<formFieldProperty
+		name="findDivisa" />
+	<formFieldProperty
 		name="cambio" />
 	<formFieldProperty
 		name="findFornitore" />
@@ -658,6 +672,26 @@
         name="findFirmatario"/>
      <formFieldProperty
         name="findResponsabile"/>
+	<formFieldProperty
+		name="cd_fornitore" />
+	<formFieldProperty
+		name="cd_precedente" />
+	<formFieldProperty
+		name="ds_fornitore" />
+
+	<formFieldProperty
+		name="contoA" />
+	<formFieldProperty
+		name="contoB" />
+	<formFieldProperty
+		name="contoP" />
+	<formFieldProperty
+		name="contoQ" />
+	<formFieldProperty
+		name="contoN" />
+	<formFieldProperty
+		name="denominazione_sede" />
+
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty

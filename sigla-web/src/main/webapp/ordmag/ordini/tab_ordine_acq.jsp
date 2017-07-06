@@ -12,7 +12,10 @@
 OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 %>
 
-<div class="Group">
+<fieldset class="fieldset">
+<table class="Panel">
+<tr><td colspan=4>
+ <div class="Group card"><table>      
 	<table>
 		<tr>
 			<%
@@ -49,14 +52,86 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 		</tr>
 	</table>
     <table>
-      <tr>      	
-			<td>
-				<% bp.getController().writeFormLabel(out,"dsRichiesta");%>
-			</td>      	
-			<td colspan="4">
-				<% bp.getController().writeFormInput(out,"dsRichiesta");%>
-			</td>
-      </tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "findTipoOrdine");
+			%>
+		</tr>
+	</table>
+	<table>
+	<tr>	
+	<td>
+		<%
+			bp.getController().writeFormField(out, "findDivisa");
+		%>
+	</td>
+	<td>
+		<% 	bp.getController().writeFormLabel( out, "cambio");
+			bp.getController().writeFormInput( out, "default", "cambio", false, null, null); 				
+		%>					
+	</td>	
+	</tr>
+	</table>
+	      </table>
+      </div>
+      </td></tr>
+<table>
+<tr><td colspan=4>
+<div class="Group card">
+	  <table>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "find_contratto");
+			%>
+		</tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "findResponsabile");
+			%>
+		</tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "findFirmatario");
+			%>
+		</tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "findDirettore");
+			%>
+		</tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "figura_giuridica_interna");
+			%>
+		</tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "procedura_amministrativa");
+			%>
+		</tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "cig");
+			%>
+		</tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "cup");
+			%>
+		</tr>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "referenteEsterno");
+			%>
+		</tr>
+	      </table>
+      </div>
+      </td></tr>
+	      </table>
+<table>
+<tr><td colspan=4>
+<div class="Group card">
+    <table>
       <tr>      	
 			<td>
 				<% bp.getController().writeFormLabel(out,"nota");%>
@@ -69,8 +144,12 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
     <table>
 		<tr>
 			<%
-			bp.getController().writeFormField(out, "findUnitaOperativaOrdDest");
+			bp.getController().writeFormField(out, "findNotaPrecodificata");
 			%>
 		</tr>
 	</table>
-</div>
+      </div>
+      </td></tr>
+	      </table>
+</table>
+</fieldset>
