@@ -82,6 +82,10 @@ public class StoreService {
                                         .orElse(StorageService.SUFFIX)
                                 ,name, null, null);
                             });
+                    if (create) {
+                        return Optional.ofNullable(storageService.getObjectByPath(path))
+                                .orElse(new StorageObject(path, path, Collections.emptyMap()));
+                    }
                     return storageService.getObjectByPath(path);
                 });
     }

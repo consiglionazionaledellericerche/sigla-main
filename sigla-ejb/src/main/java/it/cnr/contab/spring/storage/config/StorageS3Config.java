@@ -276,11 +276,15 @@ public class StorageS3Config {
 
             @Override
             public void copyNode(StorageObject source, StorageObject target) {
+                String targetPath = Optional.ofNullable(target.getPath())
+                        .filter(s -> s.startsWith(SUFFIX))
+                        .map(s -> s.substring(1))
+                        .orElse(target.getPath())
+                        .concat(source.getKey().substring(source.getKey().lastIndexOf(SUFFIX)));
                 amazonS3.copyObject(s3ConfigurationProperties.getBucketName(),
                         source.getKey(),
                         s3ConfigurationProperties.getBucketName(),
-                        target.getKey()
-                                .concat(source.getKey().substring(source.getKey().lastIndexOf(SUFFIX))));
+                        targetPath);
             }
 
             @Override
