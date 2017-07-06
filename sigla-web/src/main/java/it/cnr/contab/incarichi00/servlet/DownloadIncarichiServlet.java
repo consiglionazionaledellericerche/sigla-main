@@ -2,20 +2,19 @@ package it.cnr.contab.incarichi00.servlet;
 
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.action.HttpActionContext;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigInteger;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigInteger;
+import java.util.Optional;
 
 public class DownloadIncarichiServlet extends HttpServlet {
 	public DownloadIncarichiServlet() {

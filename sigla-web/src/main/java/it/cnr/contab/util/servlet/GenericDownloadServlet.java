@@ -1,28 +1,26 @@
 package it.cnr.contab.util.servlet;
 
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.config.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
-
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 
 /**
  * Servlet implementation class GenericDownload

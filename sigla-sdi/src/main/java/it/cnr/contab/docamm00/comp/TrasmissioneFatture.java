@@ -12,7 +12,7 @@ import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.bulk.StorageFile;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
