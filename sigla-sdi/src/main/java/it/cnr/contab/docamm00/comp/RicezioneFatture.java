@@ -7,13 +7,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.activation.DataHandler;
@@ -205,7 +199,14 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		).stream().collect(
 				Collectors.joining(StorageService.SUFFIX)
 		);
-		path = storeService.createFolderIfNotPresent(path, folderName,null, null,
+		final StorageObject storageObjectByPath = storeService.getStorageObjectByPath(path, true);
+		path = storeService.createFolderIfNotPresent(
+                Optional.ofNullable(storageObjectByPath)
+                        .map(StorageObject::getPath)
+                        .orElse(path),
+                folderName,
+                null,
+                null,
 				new StorageFolderFatturaPassiva(null, identificativoSdI));
 		try {
 			Map<String, Object> metadataPropertiesMinusP7M = new HashMap<String, Object>();

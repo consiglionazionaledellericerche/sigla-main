@@ -208,15 +208,18 @@ public class StorageCMISConfig {
 
             @Override
             public StorageObject createFolder(String path, String name, Map<String, Object> metadata) {
-                return Optional.ofNullable(siglaSession.getObjectByPath(
-                        Optional.of(path).filter(s -> s.length() > 0).orElse(StorageService.SUFFIX)
-                ))
-                .map(Folder.class::cast)
-                .map(folder -> siglaSession.createFolder(metadata, folder))
-                .map(objectId -> siglaSession.getObject(objectId))
-                .map(Folder.class::cast)
-                .map(folder -> new StorageObject(folder.getId(), folder.getPath(), convertProperties(folder.getProperties())))
-                .orElseThrow(() -> new StorageException(StorageException.Type.INVALID_ARGUMENTS, "You must specify path for create folder"));
+                CmisObject objectByPath = null;
+                try {
+                    objectByPath = siglaSession.getObjectByPath(
+                            Optional.of(path).filter(s -> s.length() > 0).orElse(StorageService.SUFFIX));
+                } catch (CmisObjectNotFoundException _ex) {}
+                return Optional.ofNullable(objectByPath)
+                    .map(Folder.class::cast)
+                    .map(folder -> siglaSession.createFolder(metadata, folder))
+                    .map(objectId -> siglaSession.getObject(objectId))
+                    .map(Folder.class::cast)
+                    .map(folder -> new StorageObject(folder.getId(), folder.getPath(), convertProperties(folder.getProperties())))
+                    .orElseThrow(() -> new StorageException(StorageException.Type.INVALID_ARGUMENTS, "You must specify path for create folder"));
             }
 
             @Override

@@ -104,6 +104,7 @@ public class StorageS3Config {
             @Override
             public StorageObject createFolder(String path, String name, Map<String, Object> metadata) {
                 final String key = Optional.ofNullable(path)
+                        .filter(s -> s.length() > 0)
                         .filter(s -> !s.equals(SUFFIX))
                         .map(s -> s.substring(1))
                         .map(s -> s.concat(SUFFIX).concat(name))

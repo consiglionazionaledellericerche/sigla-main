@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -66,13 +67,20 @@ public class StoreService {
         return Optional.ofNullable(storageService.getObjectByPath(path))
                 .orElseGet(() -> {
                     if (!create) return null;
-                    Arrays.asList(path.split(StorageService.SUFFIX)).stream()
-                            .filter(x -> x.length() > 0)
-                            .forEach(x -> {
+                    final List<String> names = Arrays.asList(path.split(StorageService.SUFFIX));
+                    AtomicInteger atomicInteger = new AtomicInteger(0);
+                    names.stream()
+                            .filter(name -> name.length() > 0)
+                            .forEach(name -> {
+                                atomicInteger.getAndIncrement();
                                 createFolderIfNotPresent(
-                                        path.substring(0, Math.max(path.indexOf(x) -1, 0)),
-                                        x, null, null
-                                );
+                                    Optional.ofNullable(names.stream()
+                                        .limit(atomicInteger.longValue())
+                                        .reduce((a,b) -> a + StorageService.SUFFIX + b)
+                                        .get())
+                                        .filter(s -> s.length() > 0)
+                                        .orElse(StorageService.SUFFIX)
+                                ,name, null, null);
                             });
                     return storageService.getObjectByPath(path);
                 });
@@ -120,7 +128,8 @@ public class StoreService {
         try{
             final String folderPath = Optional.ofNullable(path)
                     .filter(s -> s.length() > 0)
-                    .orElse(StorageService.SUFFIX);
+                    .filter(s -> !s.equals(StorageService.SUFFIX))
+                    .orElse("");
             final String name = sanitizeFolderName(folderName);
             metadataProperties.put(StoragePropertyNames.NAME.value(), name);
             if (title != null || description != null) {
@@ -141,7 +150,7 @@ public class StoreService {
                     .ifPresent(list -> {
                         metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), list);
                     });
-            return Optional.ofNullable(storageService.getObjectByPath(path.concat(StorageService.SUFFIX).concat(name)))
+            return Optional.ofNullable(storageService.getObjectByPath(folderPath.concat(StorageService.SUFFIX).concat(name)))
                     .map(storageObject -> {
                         if (oggettoBulk!=null){
                             List<String> aspects = (List<String>) storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
