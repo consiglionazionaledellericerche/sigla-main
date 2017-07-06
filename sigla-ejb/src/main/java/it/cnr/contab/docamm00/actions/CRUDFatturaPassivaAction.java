@@ -818,7 +818,7 @@ public Forward basicDoAssociaDettagli(ActionContext context)
  * testata della fattura.
  * Richiama a sua volta il metodo cercaCambio dalla component.
  */
-private void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fattura_passivaBulk fattura)
+protected void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fattura_passivaBulk fattura)
 	throws it.cnr.jada.comp.ComponentException {
 
 	try {
@@ -2087,6 +2087,8 @@ public Forward doChiusuraNotaDiCredito(ActionContext context) {
 
 	try {
 		it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess();
+		if (bp instanceof CRUDFatturaPassivaBP && ((CRUDFatturaPassivaBP)bp).isFromFatturaElettronica())
+			return this.doCloseForm(context);
 		bp.edit(context, bp.getModel());
 		return context.findDefaultForward();
 	} catch (BusinessProcessException e) {
