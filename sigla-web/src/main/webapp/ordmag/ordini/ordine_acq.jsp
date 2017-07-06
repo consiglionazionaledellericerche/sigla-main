@@ -34,6 +34,7 @@ function doStampaOrdine() {
 					"tab",
 					new String[][] {
 					{ "tabOrdineAcq","Ordine d'Acquisto","/ordmag/ordini/tab_ordine_acq.jsp" },
+					{ "tabOrdineFornitore","Fornitore","/ordmag/ordini/tab_ordine_fornitore.jsp" },
 					{ "tabOrdineAcqDettaglio","Dettaglio","/ordmag/ordini/tab_ordine_acq_dettagli.jsp" },
 					{ "tabAllegati","Allegati","/ordmag/ordini/tab_ordine_acq_allegati.jsp" }},
 					bp.getTab("tab"),
