@@ -90,16 +90,32 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="stato" />
+		label="Stato" />
+	<fieldProperty
+		name="tipoConsegnaForSearch"
+		property="tipoConsegna"
+		inputSize="20"
+		maxLength="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="tipoConsegnaKeysForSearch"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Tipo Consegna"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="tipoConsegna"
 		property="tipoConsegna"
 		inputType="TEXT"
-		inputSize="3"
-		maxLength="3"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
 		nullable="false"
-		label="tipoConsegna" />
+		keysProperty="tipoConsegnaKeys"
+		label="Tipo Consegna" />
 	<fieldProperty
 		name="dtPrevConsegna"
 		property="dtPrevConsegna"
@@ -107,16 +123,17 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dtPrevConsegna" />
+		label="Data Prev. Consegna" />
 	<fieldProperty
 		name="quantita"
 		property="quantita"
 		inputType="TEXT"
-		inputSize="17"
-		maxLength="17"
-		enabledOnEdit="false"
+		inputSize="10"
 		nullable="false"
-		label="quantita" />
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Quantità" />
 	<fieldProperty
 		name="imImponibileDivisa"
 		property="imImponibileDivisa"
@@ -188,6 +205,14 @@
 		enabledOnEdit="false"
 		label="Magazzino" />
 	<fieldProperty
+		name="dsMagazzino"
+		property="magazzino.dsMagazzino"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Magazzino" />
+	<fieldProperty
 		name="cdCdsLuogo"
 		property="luogoConsegnaMag.cdCds"
 		inputType="TEXT"
@@ -218,7 +243,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="true"
-		label="Unità Operativa Destinataria" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="dsUnitaOperativa"
 		property="unitaOperativaOrd.dsUnitaOperativa"
