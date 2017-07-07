@@ -5,6 +5,7 @@
 package it.cnr.contab.ordmag.ordini.bulk;
 import java.util.Dictionary;
 
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
@@ -43,16 +44,12 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	 * Table name: ORDINE_ACQ_CONSEGNA
 	 **/
 
-	public final static String TIPO_CONSEGNA_MAGAZZINO = "MAG";
-	public final static String TIPO_CONSEGNA_TRANSITO = "TRA";
-	public final static String TIPO_CONSEGNA_FUORI_MAGAZZINO = "FMA";
-
 	public final static Dictionary TIPO_CONSEGNA;
 	static{
 		TIPO_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
-		TIPO_CONSEGNA.put(TIPO_CONSEGNA_TRANSITO,"Transito");
-		TIPO_CONSEGNA.put(TIPO_CONSEGNA_MAGAZZINO,"Magazzino");
-		TIPO_CONSEGNA.put(TIPO_CONSEGNA_FUORI_MAGAZZINO,"Fuori Magazzino");
+		TIPO_CONSEGNA.put(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO,"Transito");
+		TIPO_CONSEGNA.put(Bene_servizioBulk.TIPO_CONSEGNA_MAGAZZINO,"Magazzino");
+		TIPO_CONSEGNA.put(Bene_servizioBulk.TIPO_CONSEGNA_FUORI_MAGAZZINO,"Fuori Magazzino");
 	}
 	public OrdineAcqConsegnaBulk() {
 		super();

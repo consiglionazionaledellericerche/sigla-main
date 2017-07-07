@@ -67,6 +67,9 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 				riga.setUnitaMisura(bene.getUnitaMisura());
 				riga.setCoefConv(BigDecimal.ONE);
 			}
+			if (bene.getTipoGestione() != null){
+				riga.setDspTipoConsegna(bene.getTipoGestione());
+			}
 		}
 //		try{
 //			if (riga.getUnitaMisura()!=null && riga.getUnitaMisura().getCdUnitaMisura()!=null && riga.getBeneServizio() != null && riga.getBeneServizio().getUnitaMisura() != null && riga.getUnitaMisura().getCdUnitaMisura().equals(riga.getBeneServizio().getUnitaMisura().getCdUnitaMisura())) {
