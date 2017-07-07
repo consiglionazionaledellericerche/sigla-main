@@ -16,6 +16,10 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	protected final static java.lang.Boolean TRUE= java.lang.Boolean.TRUE;
 	protected final static java.lang.Boolean FALSE= java.lang.Boolean.FALSE;
 
+	public final static String TIPO_CONSEGNA_MAGAZZINO = "MAG";
+	public final static String TIPO_CONSEGNA_TRANSITO = "TRA";
+	public final static String TIPO_CONSEGNA_FUORI_MAGAZZINO = "FMA";
+
 	public final static String BENE_SERVIZIO = "*";
 	public final static String SERVIZIO = "S";
 	public final static String BENE = "B";
