@@ -40,7 +40,7 @@ public class OrdineAcqHome extends BulkHome {
 
 		return sql;
 	}
-
+	
 	public void addConditionAbilUtenteUop(UserContext userContext, SQLBuilder sql) {
 		sql.addTableToHeader("ABIL_UTENTE_UOP_OPER");
 		sql.openParenthesis("AND");
