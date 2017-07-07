@@ -1,7 +1,7 @@
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
-import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -30,10 +30,9 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -81,8 +80,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.io.IOUtils;
-
-import com.google.gson.GsonBuilder;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Distinta
@@ -1437,7 +1434,7 @@ public class CRUDDistintaCassiereBP extends
 			// spostato nel salva definitivo anche in questo caso
 			StorageObject distintaStorageObject = Optional.ofNullable(distinta.getPg_distinta_def())
                     .map(paDistintaDef -> documentiContabiliService.getStorageObjectByPath(
-                            distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName())
+                            distinta.getStorePath().concat(SiglaStorageService.SUFFIX).concat(distinta.getCMISName())
                     )).orElse(inviaDistinta(context, distinta));
 			List<String> nodes = Arrays.asList((String)distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
 			List<V_mandato_reversaleBulk> dettagliRev = ((DistintaCassiereComponentSession) createComponentSession())
@@ -1526,7 +1523,7 @@ public class CRUDDistintaCassiereBP extends
 				if (storageFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0) {
                     Optional.ofNullable(documentiContabiliService
                             .getStorageObjectByPath(distinta
-                                    .getStorePath().concat(StorageService.SUFFIX)
+                                    .getStorePath().concat(SiglaStorageService.SUFFIX)
                                     .concat(String.valueOf(distinta.getEsercizio()))
                                     .concat("-").concat(distinta.getCd_unita_organizzativa())
                                     .concat("-").concat(String.valueOf(distinta.getPg_distinta_def()))
@@ -1596,7 +1593,7 @@ public class CRUDDistintaCassiereBP extends
 				.ifPresent(tesoreriaUnica -> {
 					Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(
 							distinta.getStorePath()
-							.concat(StorageService.SUFFIX)
+							.concat(SiglaStorageService.SUFFIX)
 							.concat(String.valueOf(distinta.getEsercizio()))
 							.concat("-")
 							.concat(distinta.getCd_unita_organizzativa())
@@ -1628,7 +1625,7 @@ public class CRUDDistintaCassiereBP extends
 			String path;
 			if (isFlusso()) {
 				path = distinta.getStorePath()
-						.concat(StorageService.SUFFIX)
+						.concat(SiglaStorageService.SUFFIX)
 						.concat(String.valueOf(distinta.getEsercizio()))
 						.concat("-")
 						.concat(distinta.getCd_unita_organizzativa())
@@ -1638,7 +1635,7 @@ public class CRUDDistintaCassiereBP extends
 						.concat("-I.xslt.p7m");
 			} else {
 				path = distinta.getStorePath()
-						.concat(StorageService.SUFFIX)
+						.concat(SiglaStorageService.SUFFIX)
 						.concat("Distinta n. ")
 						.concat(String.valueOf(distinta
 								.getPg_distinta_def())).concat(".pdf");
@@ -1675,7 +1672,7 @@ public class CRUDDistintaCassiereBP extends
 			if (firmata) {
 				if (isFlusso()) {
 					path = distinta.getStorePath()
-							.concat(StorageService.SUFFIX)
+							.concat(SiglaStorageService.SUFFIX)
 							.concat(String.valueOf(distinta
 									.getEsercizio()))
 							.concat("-")
@@ -1685,14 +1682,14 @@ public class CRUDDistintaCassiereBP extends
 							.concat("-I.xslt.p7m");
 				} else {
 					path = distinta.getStorePath()
-							.concat(StorageService.SUFFIX)
+							.concat(SiglaStorageService.SUFFIX)
 							.concat("Distinta n. ")
 							.concat(String.valueOf(distinta.getPg_distinta_def()))
 							.concat(".pdf");
 				}
 			} else {
 				path = distinta.getStorePath()
-						.concat(StorageService.SUFFIX)
+						.concat(SiglaStorageService.SUFFIX)
 						.concat(String.valueOf(distinta
 								.getEsercizio()))
 						.concat("-")

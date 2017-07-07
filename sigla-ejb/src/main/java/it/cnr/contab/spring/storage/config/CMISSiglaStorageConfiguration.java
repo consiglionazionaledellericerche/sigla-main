@@ -2,8 +2,8 @@ package it.cnr.contab.spring.storage.config;
 
 import it.cnr.contab.spring.storage.MimeTypes;
 import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StorageService;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
 import org.apache.chemistry.opencmis.client.api.*;
 import org.apache.chemistry.opencmis.client.bindings.CmisBindingFactory;
 import org.apache.chemistry.opencmis.client.bindings.impl.CmisBindingsHelper;
@@ -50,9 +50,9 @@ import java.util.concurrent.CompletableFuture;
  */
 @Configuration
 @Profile("CMIS")
-public class StorageCMISConfig {
+public class CMISSiglaStorageConfiguration {
 
-    private static final Logger logger = LoggerFactory.getLogger(StorageCMISConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(CMISSiglaStorageConfiguration.class);
 
     @Value("${org.apache.chemistry.opencmis.binding.atompub.url}")
     private String ATOMPUB_URL;
@@ -74,8 +74,8 @@ public class StorageCMISConfig {
     private String adminPassword;
 
     @Bean
-    public StorageService storageService() {
-        StorageService storageService =  new StorageService() {
+    public SiglaStorageService storageService() {
+        SiglaStorageService siglaStorageService =  new SiglaStorageService() {
             private Session siglaSession;
             private BindingSession siglaBindingSession;
             private static final String ZIP_CONTENT = "service/zipper/zipContent";
@@ -201,7 +201,7 @@ public class StorageCMISConfig {
                             .map(document1 -> document1.<String>getPropertyValue(PropertyIds.PARENT_ID))
                             .map(parentId -> siglaSession.getObject(parentId))
                             .map(Folder.class::cast)
-                            .map(folder -> folder.getPath().concat(StorageService.SUFFIX).concat(cmisObject.getName()))
+                            .map(folder -> folder.getPath().concat(SiglaStorageService.SUFFIX).concat(cmisObject.getName()))
                             .orElse(null);
                 }
             }
@@ -211,7 +211,7 @@ public class StorageCMISConfig {
                 CmisObject objectByPath = null;
                 try {
                     objectByPath = siglaSession.getObjectByPath(
-                            Optional.of(path).filter(s -> s.length() > 0).orElse(StorageService.SUFFIX));
+                            Optional.of(path).filter(s -> s.length() > 0).orElse(SiglaStorageService.SUFFIX));
                 } catch (CmisObjectNotFoundException _ex) {}
                 return Optional.ofNullable(objectByPath)
                     .map(Folder.class::cast)
@@ -559,7 +559,7 @@ public class StorageCMISConfig {
                 return StoreType.CMIS;
             }
         };
-        storageService.init();
-        return storageService;
+        siglaStorageService.init();
+        return siglaStorageService;
     }
 }

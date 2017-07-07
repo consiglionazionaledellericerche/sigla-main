@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 
-import it.cnr.contab.spring.storage.StorageService;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.StoreService;
 
@@ -321,7 +321,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
                 "CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
                         " Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(SiglaStorageService.SUFFIX)
         );
 	}
 	

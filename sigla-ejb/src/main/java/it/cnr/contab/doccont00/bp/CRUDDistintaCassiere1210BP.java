@@ -15,10 +15,9 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageService;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -52,8 +51,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-
-import com.google.gson.GsonBuilder;
 
 public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 	private static final long serialVersionUID = 1L;
@@ -253,7 +250,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		InputStream is = documentiContabiliService.getResource(
 				documentiContabiliService.getStorageObjectByPath(
 						distintaCassiere1210Bulk.getStorePath()
-						.concat(StorageService.SUFFIX)
+						.concat(SiglaStorageService.SUFFIX)
 						.concat("Distinta 1210 n. "
                                 + distintaCassiere1210Bulk.getPgDistinta() + ".pdf")
 				)

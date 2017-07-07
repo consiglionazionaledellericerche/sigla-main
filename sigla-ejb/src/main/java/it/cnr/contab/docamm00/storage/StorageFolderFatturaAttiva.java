@@ -1,6 +1,6 @@
 package it.cnr.contab.docamm00.storage;
 
-import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
@@ -8,7 +8,6 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.dp.DigitalPreservationProperties;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
 
@@ -300,7 +299,7 @@ public class StorageFolderFatturaAttiva extends OggettoBulk {
                 this.getFattura_attivaBulk().getCd_uo_origine(),
                 "Fatture Attive"
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(SiglaStorageService.SUFFIX)
         );
 	}
 
@@ -312,7 +311,7 @@ public class StorageFolderFatturaAttiva extends OggettoBulk {
                         .orElse("0"),
                 "Fattura " + this.getEsercizioFattura().toString() + Utility.lpad(this.getPgFattura().toString(),10,'0')
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(SiglaStorageService.SUFFIX)
         );
 	}
 	

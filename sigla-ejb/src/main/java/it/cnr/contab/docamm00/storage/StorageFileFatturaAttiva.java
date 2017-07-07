@@ -1,13 +1,12 @@
 package it.cnr.contab.docamm00.storage;
 
-import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.bulk.StorageTypeName;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.spring.storage.config.StorageObject;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.spring.storage.StorageObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +54,7 @@ public class StorageFileFatturaAttiva extends StorageFile implements StorageType
         return Optional.ofNullable(this.getFattura_attivaBulk())
                 .map(fattura_attivaBulk1 -> getCMISFolder(fattura_attivaBulk1))
                 .map(storageFolderFatturaAttiva -> storageFolderFatturaAttiva.getCMISPrincipalPath())
-                .map(path -> path.concat(StorageService.SUFFIX))
+                .map(path -> path.concat(SiglaStorageService.SUFFIX))
                 .map(path -> path.concat((String)Fattura_attivaBulk.getTipoFatturaKeys().get(this.getFattura_attivaBulk().getTi_fattura())))
                 .orElse(null);
     }

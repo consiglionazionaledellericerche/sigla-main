@@ -9,8 +9,7 @@ import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.StorageService;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
@@ -470,7 +469,7 @@ public static AccertamentoAbstractComponentSession setSafePoint (
                         .orElse("0"),
                 String.valueOf(allegatoParentBulk.getPg_accertamento())
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(SiglaStorageService.SUFFIX)
         );
     }
 

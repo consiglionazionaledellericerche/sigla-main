@@ -1,7 +1,7 @@
 package it.cnr.contab.util00.bp;
 
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.config.StorageObject;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;

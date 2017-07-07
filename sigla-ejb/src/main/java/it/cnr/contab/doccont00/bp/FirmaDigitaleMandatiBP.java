@@ -15,7 +15,7 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -367,7 +367,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						ut.setDestinationStream(out);
                         ut.addSource(SpringUtil.getBean(DocumentiContabiliService.class).getResource(
 						                SpringUtil.getBean(DocumentiContabiliService.class).getStorageObjectByPath(
-                                            statoTrasmissione.getStorePath().concat(StorageService.SUFFIX).concat(statoTrasmissione.getCMISName())
+                                            statoTrasmissione.getStorePath().concat(SiglaStorageService.SUFFIX).concat(statoTrasmissione.getCMISName())
                                         ).getKey(), true));
 						for (String documentId : childs) {
 							ut.addSource(SpringUtil.getBean(DocumentiContabiliService.class).getResource(documentId));
