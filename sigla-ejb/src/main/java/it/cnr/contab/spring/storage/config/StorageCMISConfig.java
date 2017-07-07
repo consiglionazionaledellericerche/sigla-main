@@ -258,7 +258,13 @@ public class StorageCMISConfig {
             @Override
             public void updateProperties(StorageObject storageObject, Map<String, Object> metadataProperties) {
                 Optional.ofNullable(siglaSession.getObject(storageObject.getKey()))
-                        .map(cmisObject -> cmisObject.updateProperties(metadataProperties));
+                        .map(cmisObject -> {
+                            Optional.ofNullable(metadataProperties.get(StoragePropertyNames.NAME.value()))
+                                    .ifPresent(name -> {
+                                        cmisObject.updateProperties(Collections.singletonMap(StoragePropertyNames.NAME.value(), name), true);
+                                    });
+                            return cmisObject.updateProperties(metadataProperties);
+                        });
             }
 
             @Override
@@ -380,14 +386,16 @@ public class StorageCMISConfig {
                         .map(statement -> siglaSession.query(statement, false))
                         .map(queryResults -> {
                             List<StorageObject> list = new ArrayList<StorageObject>();
-                            queryResults.forEach(queryResult -> list.add(new StorageObject(
-                                    Optional.ofNullable(
-                                            queryResult.getPropertyValueById(StoragePropertyNames.ID.value())
-                                    ).map(String.class::cast).orElse(null),
-                                    Optional.ofNullable(
-                                            queryResult.getPropertyValueById(StoragePropertyNames.PATH.value())
-                                    ).map(String.class::cast).orElse(null),
-                                    convertPropertiesData(queryResult.getProperties()))));
+                            if (queryResults.getTotalNumItems() > 0) {
+                                queryResults.forEach(queryResult -> list.add(new StorageObject(
+                                        Optional.ofNullable(
+                                                queryResult.getPropertyValueById(StoragePropertyNames.ID.value())
+                                        ).map(String.class::cast).orElse(null),
+                                        Optional.ofNullable(
+                                                queryResult.getPropertyValueById(StoragePropertyNames.PATH.value())
+                                        ).map(String.class::cast).orElse(null),
+                                        convertPropertiesData(queryResult.getProperties()))));
+                            }
                             return list;
                         })
                         .orElse(Collections.EMPTY_LIST);
@@ -456,7 +464,11 @@ public class StorageCMISConfig {
                         .map(storageObject -> siglaSession.getObject(storageObject.getKey()))
                         .map(Document.class::cast)
                         .ifPresent(document -> {
-                           document.addToFolder((Folder)siglaSession.getObject(target.getKey()), true);
+                            try {
+                                document.addToFolder((Folder) siglaSession.getObject(target.getKey()), true);
+                            } catch (CmisRuntimeException _ex) {
+                                logger.warn(_ex.getMessage(), _ex);
+                            }
                         });
             }
 

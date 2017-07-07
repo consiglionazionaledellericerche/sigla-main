@@ -384,13 +384,17 @@ public class StoreService {
     }
 
     public void addAspect(StorageObject storageObject, String aspect) {
-        List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+        List<String> aspects =
+                Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+                    .orElse(new ArrayList<String>());
         aspects.add(aspect);
         updateProperties(Collections.singletonMap(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects), storageObject);
     }
 
     public void removeAspect(StorageObject storageObject, String aspect) {
-        List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+        List<String> aspects =
+                Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+                        .orElse(new ArrayList<String>());
         aspects.remove(aspect);
         updateProperties(Collections.singletonMap(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects), storageObject);
     }

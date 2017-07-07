@@ -2,6 +2,7 @@ package it.cnr.contab.config00.service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.spring.storage.StorageService;
@@ -36,17 +37,26 @@ public class ContrattoService extends StoreService {
 					return null;
 				});
 	}
-	
-	public String getCMISPathFolderContratto(ContrattoBulk contrattoBulk) {
+
+	private List<String> getBasePath(ContrattoBulk contrattoBulk) {
 		return Arrays.asList(
 				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
 				Optional.ofNullable(contrattoBulk.getUnita_organizzativa()).map(Unita_organizzativaBulk::getCd_unita_organizzativa).orElse(""),
 				"Contratti",
 				Optional.ofNullable(contrattoBulk.getEsercizio())
 						.map(esercizio -> String.valueOf(esercizio))
-						.orElse("0"),
-				contrattoBulk.getCMISFolderName()
-		).stream().collect(
+						.orElse("0")
+		);
+	}
+
+	public String getCMISPath(ContrattoBulk contrattoBulk) {
+		return getBasePath(contrattoBulk).stream().collect(
+				Collectors.joining(StorageService.SUFFIX)
+		);
+	}
+
+	public String getCMISPathFolderContratto(ContrattoBulk contrattoBulk) {
+		return Stream.concat(getBasePath(contrattoBulk).stream(), Stream.of(contrattoBulk.getCMISFolderName())).collect(
 				Collectors.joining(StorageService.SUFFIX)
 		);
 	}	

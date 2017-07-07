@@ -521,6 +521,17 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	}
 	
 	private void archiviaAllegati(ActionContext actioncontext, ContrattoBulk contratto) throws BusinessProcessException, ApplicationException{
+		Optional.ofNullable(contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contratto)))
+				.orElseGet(() -> {
+					StorageObject parentStorageObject = contrattoService.getStorageObjectByPath(
+							contrattoService.getCMISPath(contratto), true
+					);
+					return contrattoService.getStorageObjectBykey(
+							contrattoService.createFolderIfNotPresent(parentStorageObject.getPath(),
+								contratto.getCMISFolderName(), null, null,
+								contratto
+					));
+				});
 		try {
 			crudArchivioAllegati.validate(actioncontext);
 		} catch (ValidationException e1) {
