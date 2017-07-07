@@ -5,9 +5,24 @@
 package it.cnr.contab.ordmag.ordini.bulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
-    public final static String STATO_INSERITA= "INS";
+	private java.lang.String dspTipoConsegna;
+
+	private java.sql.Timestamp dspDtPrevConsegna;
+
+	private java.math.BigDecimal dspQuantita;
+
+	private LuogoConsegnaMagBulk dspLuogoConsegna;
+
+	private MagazzinoBulk dspMagazzino;
+
+	private UnitaOperativaOrdBulk dspUopDest;
+	
+	public final static String STATO_INSERITA= "INS";
     public final static String STATO_ANNULLATA= "ANN";
 	/**
 	 * [ORDINE_ACQ Testata Ordine d'Acquisto]
@@ -237,5 +252,41 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	 **/
 	public void setCdUnitaMisura(java.lang.String cdUnitaMisura)  {
 		this.getUnitaMisura().setCdUnitaMisura(cdUnitaMisura);
+	}
+	public java.lang.String getDspTipoConsegna() {
+		return dspTipoConsegna;
+	}
+	public void setDspTipoConsegna(java.lang.String dspTipoConsegna) {
+		this.dspTipoConsegna = dspTipoConsegna;
+	}
+	public java.sql.Timestamp getDspDtPrevConsegna() {
+		return dspDtPrevConsegna;
+	}
+	public void setDspDtPrevConsegna(java.sql.Timestamp dspDtPrevConsegna) {
+		this.dspDtPrevConsegna = dspDtPrevConsegna;
+	}
+	public java.math.BigDecimal getDspQuantita() {
+		return dspQuantita;
+	}
+	public void setDspQuantita(java.math.BigDecimal dspQuantita) {
+		this.dspQuantita = dspQuantita;
+	}
+	public LuogoConsegnaMagBulk getDspLuogoConsegna() {
+		return dspLuogoConsegna;
+	}
+	public void setDspLuogoConsegna(LuogoConsegnaMagBulk dspLuogoConsegna) {
+		this.dspLuogoConsegna = dspLuogoConsegna;
+	}
+	public MagazzinoBulk getDspMagazzino() {
+		return dspMagazzino;
+	}
+	public void setDspMagazzino(MagazzinoBulk dspMagazzino) {
+		this.dspMagazzino = dspMagazzino;
+	}
+	public UnitaOperativaOrdBulk getDspUopDest() {
+		return dspUopDest;
+	}
+	public void setDspUopDest(UnitaOperativaOrdBulk dspUopDest) {
+		this.dspUopDest = dspUopDest;
 	}
 }

@@ -27,6 +27,9 @@ public class Bene_servizioBase extends Bene_servizioKey implements Keyed {
 	// UNITA_MISURA VARCHAR(10) NOT NULL
 	private java.lang.String unita_misura;
 	
+	// TIPO_GESTIONE VARCHAR(3) NOT NULL
+	private java.lang.String tipoGestione;
+	
 	private java.lang.String cdTipoArticolo;
 	
 	private java.lang.String cdGruppoMerceologico;
@@ -171,5 +174,11 @@ public java.lang.String getCdGruppoMerceologico() {
 }
 public void setCdGruppoMerceologico(java.lang.String cdGruppoMerceologico) {
 	this.cdGruppoMerceologico = cdGruppoMerceologico;
+}
+public java.lang.String getTipoGestione() {
+	return tipoGestione;
+}
+public void setTipoGestione(java.lang.String tipoGestione) {
+	this.tipoGestione = tipoGestione;
 }
 }
