@@ -1,6 +1,7 @@
 package it.cnr.contab.docamm00.storage;
 
 import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
@@ -304,15 +305,17 @@ public class StorageFolderFatturaAttiva extends OggettoBulk {
 	}
 
 	public String getCMISPath(){
-        return Arrays.asList(
-                getCMISPrincipalPath(),
-                Optional.ofNullable(getEsercizioFattura())
-                        .map(esercizio -> String.valueOf(esercizio))
-                        .orElse("0"),
-                "Fattura " + this.getEsercizioFattura().toString() + Utility.lpad(this.getPgFattura().toString(),10,'0')
-        ).stream().collect(
-                Collectors.joining(SiglaStorageService.SUFFIX)
-        );
+		final String folderName = "Fattura " + this.getEsercizioFattura().toString() +
+				Utility.lpad(this.getPgFattura().toString(),10,'0');
+		return SpringUtil.getBean(StoreService.class)
+				.createFolderIfNotPresent(
+						getCMISPrincipalPath().concat(SiglaStorageService.SUFFIX).concat(
+								Optional.ofNullable(getEsercizioFattura())
+										.map(esercizio -> String.valueOf(esercizio))
+										.orElse("0")
+						),
+						folderName,
+						null, null, this);
 	}
 	
 	public Fattura_attivaBulk getFattura_attivaBulk() {

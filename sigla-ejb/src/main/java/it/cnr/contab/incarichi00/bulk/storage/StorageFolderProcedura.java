@@ -1,6 +1,7 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
 import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
@@ -131,16 +132,11 @@ public class StorageFolderProcedura extends OggettoBulk {
 	}
 
 	public String getCMISPath(){
-		String cmisPath = this.getCMISPrincipalPath();
-        return Arrays.asList(
-                cmisPath,
-                Optional.ofNullable(getEsercizio())
-                        .map(esercizio -> String.valueOf(esercizio))
-                        .orElse("0"),
-                "Procedura "+this.getEsercizio().toString()+Utility.lpad(this.getPg_procedura().toString(),10,'0')
-        ).stream().collect(
-                Collectors.joining(SiglaStorageService.SUFFIX)
-        );
+		return SpringUtil.getBean(StoreService.class)
+				.createFolderIfNotPresent(
+						getCMISPrincipalPath(),
+						"Procedura "+this.getEsercizio().toString()+Utility.lpad(this.getPg_procedura().toString(),10,'0'),
+						null, null, this);
 	}
 	
 	public boolean isEqualsTo(StorageObject storageObject, List<String> listError){

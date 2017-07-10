@@ -1,6 +1,8 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
@@ -10,6 +12,7 @@ import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.util.Utility;
 
 import java.util.List;
+import java.util.Optional;
 
 @StorageType(name="F:sigla_contratti:assegni_ricerca")
 public class StorageFolderAssegniRicerca extends StorageFolderContrattiModel {
@@ -40,11 +43,11 @@ public class StorageFolderAssegniRicerca extends StorageFolderContrattiModel {
     }
 
 	public String getCMISPath() {
-		String cmisPath = this.getCMISParentPath();
-		if (cmisPath!=null) {
-			cmisPath = cmisPath.concat(SiglaStorageService.SUFFIX).concat("Assegno di Ricerca "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'));
-		}
-		return cmisPath;
+		return SpringUtil.getBean(StoreService.class)
+				.createFolderIfNotPresent(
+						getCMISParentPath(),
+						"Assegno di Ricerca "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'),
+						null, null, this);
 	}
 	
 	public boolean isEqualsTo(StorageObject node, List<String> listError){
