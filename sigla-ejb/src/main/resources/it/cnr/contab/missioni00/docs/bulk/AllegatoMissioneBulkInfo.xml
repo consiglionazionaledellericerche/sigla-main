@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="aspectName"
+		property="aspectName"
+		inputType="SELECT"
+		keysProperty="aspectNamesKeys"
+		inputSize="40"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Tipologia" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Nome del File" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		inputSize="2000"
+		maxLength="2000"
+		cols="80"
+		rows="3"
+		readonlyProperty="allegatoEsistente"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="titolo"
+		property="titolo"
+		inputType="TEXTAREA"
+		inputSize="2000"
+		maxLength="2000"
+		cols="80"
+		rows="3"
+		caseSensitiveSearch="false"
+		label="Titolo" />
+	<fieldProperty
+		name="file"
+		property="file"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		readonlyProperty="allegatoEsistente"
+		nullable="false"
+		label="File" />
+	<fieldProperty
+		name="attivaFile"
+		property="nome"
+		inputType="BUTTON"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnView="true"
+		readonlyProperty="nodeNotPresent"
+		img="img/import24.gif"
+		href="javascript:doScaricaAllegato()"
+		label="Apri File" />
+		
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="aspectName" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="titolo" />
+	<formFieldProperty
+		name="file" />
+	<formFieldProperty
+		name="attivaFile" />
+		
+		
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="aspectName" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="titolo" />
+
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="titolo" />
+
+	<columnSet
+		name="allegatiMissione" >
+		<columnFieldProperty
+			name="aspectName" />
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+	</columnSet>
+	<form
+		name="allegatiMissione" >
+		<formFieldProperty
+			name="aspectName" />
+		<formFieldProperty
+			name="nome" />
+		<formFieldProperty
+			name="descrizione" />
+		<formFieldProperty
+			name="file" />
+		<formFieldProperty
+			name="attivaFile" />
+	</form>
+
+</bulkInfo>

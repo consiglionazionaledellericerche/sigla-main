@@ -142,6 +142,10 @@
 	  <td><% bp.getController().writeFormLabel( out, "fl_trovato"); %></td>
 	  <td><% bp.getController().writeFormInput( out, "fl_trovato"); %></td>
 	</tr>	
+	<tr>
+	  <td><% bp.getController().writeFormLabel( out, "fl_missioni"); %></td>
+	  <td><% bp.getController().writeFormInput( out, "fl_missioni"); %></td>
+	</tr>	
 	</table>		
 	<% if (!bp.isFlNuovoPdg()) ((EV_cds_spese_capitoloBulk) bp.getModel()).writeTable( out, ((EV_cds_spese_capitoloBulk) bp.getModel()).getAssociazioni() ); %>
 
