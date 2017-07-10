@@ -6,6 +6,8 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import java.sql.*;
 
 import java.util.*;
+
+import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -649,6 +651,12 @@ public void setSavePoint(it.cnr.jada.UserContext userContext)
 }
 public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImporto) throws ComponentException 
 {
+	DatiFinanziariScadenzeDTO dati = new DatiFinanziariScadenzeDTO();
+	dati.setNuovoImportoScadenzaVecchia(nuovoImporto);
+	return sdoppiaScadenzaInAutomatico(userContext, scad, dati);
+}
+public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	DatiFinanziariScadenzeDTO dati) throws ComponentException 
+{
 	Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)scad;
 	try
 	{
@@ -668,7 +676,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 		}	
 		else
 		{
-			return createObbligazioneComponentSession().sdoppiaScadenzaInAutomatico( userContext, scadenza, nuovoImporto);
+			return createObbligazioneComponentSession().sdoppiaScadenzaInAutomatico( userContext, scadenza, dati);
 		}	
 	}
 	catch ( Exception e )

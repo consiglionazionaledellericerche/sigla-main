@@ -136,6 +136,16 @@
 		enabledOnFreeSearch="false" 
 		/>
 	<fieldProperty
+		name="fl_missioni"
+		property="fl_missioni"
+		label="Utilizzabile per Missioni"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" 
+		/>
+	<fieldProperty
 		name="find_capoconto_fin"
 		property="capoconto_fin"
 		inputType="SEARCHTOOL"
@@ -397,6 +407,9 @@
 		name="fl_partita_giro"
 		/>
 	<columnFieldProperty
+		name="fl_missioni"
+		/>
+	<columnFieldProperty
 		name="cd_capoconto_fin"
 		/>
 	<columnFieldProperty
@@ -534,6 +547,9 @@
     />
    <formFieldProperty
 		name="fl_partita_giro"
+    />
+   <formFieldProperty
+		name="fl_missioni"
     />
    <formFieldProperty
 		name="find_capoconto_fin"
