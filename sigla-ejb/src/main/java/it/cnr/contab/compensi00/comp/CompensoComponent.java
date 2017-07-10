@@ -82,6 +82,7 @@ import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.ejb.NumerazioneTempDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
@@ -2058,6 +2059,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			filtro.setTiIstituzionaleCommerciale(compenso.getTi_istituz_commerc());
 
 			filtro.setFlBonus(compenso.isDaBonus());
+			filtro.setFlSplitPayment(compenso.getFl_split_payment()); 
 			if (filtro.getCdTipoRapporto() != null
 					&& filtro.getCdTipoRapporto().equals("DIP")) {
 				try {
@@ -3082,6 +3084,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		compenso.setDt_scadenza(fp.getDt_scadenza());
 
 		compenso.setFl_documento_ele(fp.isElettronica());
+		compenso.setFl_split_payment(fp.getFl_split_payment());
 		compenso.setTi_istituz_commerc(fp.getTi_istituz_commerc());
 		if(compenso.isElettronica())
 		try {
@@ -3308,6 +3311,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					.getTi_istituz_commerc());
 
 			filtro.setFlBonus(compenso.isDaBonus());
+			filtro.setFlSplitPayment(compenso.getFl_split_payment()); 
 			if (filtro.getCdTipoRapporto() != null
 					&& filtro.getCdTipoRapporto().equals("DIP")) {
 				try {
@@ -3653,6 +3657,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			filtro.setTiIstituzionaleCommerciale(compenso
 					.getTi_istituz_commerc());
 			filtro.setFlBonus(compenso.isDaBonus());
+			filtro.setFlSplitPayment(compenso.getFl_split_payment()); 
 			if (filtro.getCdTipoRapporto() != null
 					&& filtro.getCdTipoRapporto().equals("DIP")) {
 				try {
@@ -4104,10 +4109,20 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			CompensoBulk compenso = (CompensoBulk) home.findByPrimaryKey(bulk);
 			getHomeCache(userContext).fetchAll(userContext);
 
-			if (compenso !=null && compenso.getIm_totale_compenso()!=null && bulk.getFatturaPassiva() != null && bulk.getFatturaPassiva().getIm_totale_fattura()!=null &&
-					compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_fattura())!=0 && !compenso.isSenzaCalcoli())
-					throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_fattura());
+			if ((compenso !=null && compenso.getIm_totale_compenso()!=null && 
+				 bulk.getFatturaPassiva() != null && bulk.getFatturaPassiva().getIm_totale_fattura()!=null &&
+				 compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_fattura())!=0 && 
+				 (!compenso.getFl_split_payment().booleanValue() ||(compenso.getFl_split_payment().booleanValue() &&  
+						   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.ISTITUZIONALE)==0 )) 
+				 && !compenso.isSenzaCalcoli()))
+				throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_fattura());
 			
+			if (compenso !=null && compenso.getIm_totale_compenso()!=null && bulk.getFatturaPassiva() != null  &&
+					   compenso.getFl_split_payment().booleanValue() &&  
+					   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.COMMERCIALE)==0  &&
+					   bulk.getFatturaPassiva().getIm_totale_imponibile()!=null &&
+					   compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_imponibile())!=0 && !compenso.isSenzaCalcoli())
+						throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_imponibile());
 			compenso.setPgCompensoPerClone(pgTmp);
 			
 			compenso = valorizzaInfoDocEle(userContext,compenso);
@@ -4982,11 +4997,20 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw new it.cnr.jada.comp.ApplicationException(
 					"E' necessario eseguire il calcolo prima di continuare");
 		// controllo omesso sull'esegui calcolo per  !compenso.isSenzaCalcoli() da fare al riporta 
-		if (compenso !=null && compenso.getIm_totale_compenso()!=null && compenso.getFatturaPassiva() != null && compenso.getFatturaPassiva().getIm_totale_fattura()!=null &&
-				compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_fattura())!=0)
+			if ((compenso !=null && compenso.getIm_totale_compenso()!=null && 
+				compenso.getFatturaPassiva() != null && compenso.getFatturaPassiva().getIm_totale_fattura()!=null &&
+				 compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_fattura())!=0 && 
+				 (!compenso.getFl_split_payment().booleanValue() ||(compenso.getFl_split_payment().booleanValue() &&  
+						   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.ISTITUZIONALE)==0 ))))
 				throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ compenso.getFatturaPassiva().getIm_totale_fattura());
-		
-
+			
+			if (compenso !=null && compenso.getIm_totale_compenso()!=null && compenso.getFatturaPassiva() != null  &&
+					   compenso.getFl_split_payment().booleanValue() &&  
+					   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.COMMERCIALE)==0  &&
+							   compenso.getFatturaPassiva().getIm_totale_imponibile()!=null &&
+					   compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_imponibile())!=0)
+						throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ compenso.getFatturaPassiva().getIm_totale_imponibile());
+			
 		validaObbligazione(userContext, compenso.getObbligazioneScadenzario(),
 				compenso);
 
