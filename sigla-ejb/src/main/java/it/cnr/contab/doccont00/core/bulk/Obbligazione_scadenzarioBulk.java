@@ -6,6 +6,7 @@ import java.util.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.jada.bulk.*;
 @JsonInclude(value=Include.NON_NULL)
 public class Obbligazione_scadenzarioBulk extends Obbligazione_scadenzarioBase implements Cloneable, IScadenzaDocumentoContabileBulk {
@@ -25,6 +26,7 @@ public class Obbligazione_scadenzarioBulk extends Obbligazione_scadenzarioBase i
 	private Integer esercizio_mandato;
 	private java.lang.Long pg_mandato;
 
+	private DatiFinanziariScadenzeDTO datiFinanziariScadenzeDTO;
 	private Integer esercizio_doc_passivo;
 	private java.lang.Long pg_doc_passivo;
 	private String cd_tipo_documento_amm;
@@ -337,5 +339,11 @@ public void validate() throws ValidationException {
 	if ( obbligazione.getFl_calcolo_automatico() != null && !obbligazione.getFl_calcolo_automatico().booleanValue())
 		for ( Iterator i = obbligazione_scad_voceColl.iterator(); i.hasNext(); )
 			((Obbligazione_scad_voceBulk) i.next()).validate();
+}
+public DatiFinanziariScadenzeDTO getDatiFinanziariScadenzeDTO() {
+	return datiFinanziariScadenzeDTO;
+}
+public void setDatiFinanziariScadenzeDTO(DatiFinanziariScadenzeDTO datiFinanziariScadenzeDTO) {
+	this.datiFinanziariScadenzeDTO = datiFinanziariScadenzeDTO;
 }
 }

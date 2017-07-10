@@ -31,6 +31,8 @@ import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
+import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
+import it.cnr.contab.missioni00.docs.bulk.RimborsoHome;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
@@ -166,7 +168,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					Boolean ammissibileConRimborso = null;
 
 					while(e1.hasMoreElements() ){
-						FindClause findClause = (FindClause) e.nextElement();
+						FindClause findClause = (FindClause) e1.nextElement();
 						if (findClause instanceof SimpleFindClause){
 							SimpleFindClause clause = (SimpleFindClause)findClause;
 							int operator = clause.getOperator();
@@ -223,7 +225,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					String tipoAuto = null;
 
 					while(e1.hasMoreElements() ){
-						FindClause findClause = (FindClause) e.nextElement();
+						FindClause findClause = (FindClause) e1.nextElement();
 						if (findClause instanceof SimpleFindClause){
 							SimpleFindClause clause = (SimpleFindClause)findClause;
 							int operator = clause.getOperator();
@@ -274,7 +276,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					Long inquadramento = null;
 
 					while(e1.hasMoreElements() ){
-						FindClause findClause = (FindClause) e.nextElement();
+						FindClause findClause = (FindClause) e1.nextElement();
 						if (findClause instanceof SimpleFindClause){
 							SimpleFindClause clause = (SimpleFindClause)findClause;
 							int operator = clause.getOperator();
@@ -354,6 +356,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
     			CompoundFindClause newClauses = new CompoundFindClause();
     			Enumeration e = compoundfindclause.getClauses();
     			SQLBuilder sqlExists = null;
+    			SQLBuilder sqlNotExists = null;
 				while(e.hasMoreElements() ){
 					FindClause findClause = (FindClause) e.nextElement();
 					if (findClause instanceof SimpleFindClause){
@@ -364,18 +367,38 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 							trovataCondizioneSoloAnticipi = true;
 							Mandato_rigaHome home = (Mandato_rigaHome) getHome(userContext, Mandato_rigaBulk.class);
 							sqlExists = home.createSQLBuilder();
+							sqlExists.addTableToHeader("ANTICIPO");
 							sqlExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
 							sqlExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
 							sqlExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
+							sqlExists.addSQLJoin("ANTICIPO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
+							sqlExists.addSQLJoin("ANTICIPO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
+							sqlExists.addSQLJoin("ANTICIPO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
+							sqlExists.addSQLJoin("ANTICIPO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM");
 							sqlExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
+							sqlExists.addSQLClause("AND","ANTICIPO.FL_ASSOCIATO_MISSIONE",SQLBuilder.EQUALS, "N" );
+
+
+							RimborsoHome homeRimborso = (RimborsoHome) getHome(userContext, RimborsoBulk.class);
+							sqlNotExists = homeRimborso.createSQLBuilder();
+							sqlNotExists.addTableToHeader("MANDATO_RIGA");
+							sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
+							sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
+							sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
+							sqlNotExists.addSQLJoin("RIMBORSO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
+							sqlNotExists.addSQLJoin("RIMBORSO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
+							sqlNotExists.addSQLJoin("RIMBORSO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
+							sqlNotExists.addSQLJoin("RIMBORSO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM");
+							sqlNotExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
 						} else {
 							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
 						}
 					}
-					if (trovataCondizioneSoloAnticipi){
-						sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
-						sql.addSQLExistsClause("AND", sqlExists);
-					}
+				}
+				if (trovataCondizioneSoloAnticipi){
+					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
+					sql.addSQLExistsClause("AND", sqlExists);
+					sql.addSQLNotExistsClause("AND", sqlNotExists);
 				}
 			}
 			if ( !isUoEnte(userContext)){
