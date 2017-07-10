@@ -301,7 +301,17 @@
 		enabledOnEdit = "false"
 		enabledOnSearch = "false"
 		enabledOnFreeSearch = "true"
-		label="Documento elettronico" />		
+		label="Documento elettronico" />	
+	<fieldProperty
+		name="fl_split_payment"
+		property="fl_split_payment"
+		inputType="CHECKBOX"
+		nullable="true"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Split payment" />			
 /****************** TERZO ********************/
 	<fieldProperty
 		name="find_terzo"
@@ -1609,7 +1619,8 @@
 	<formFieldProperty name="esercizio_fattura_fornitore" />
 	<formFieldProperty name="dt_fattura_fornitore" />
 	<formFieldProperty name="fl_generata_fattura" />
-	<formFieldProperty name="fl_documento_ele" />	
+	<formFieldProperty name="fl_documento_ele" />
+	<formFieldProperty name="fl_split_payment" />		
 	<formFieldProperty name="pgDocContPrincipale" />
 	<formFieldProperty name="dsDocContPrincipale" />
 	<formFieldProperty name="fl_diaria" />
@@ -1761,6 +1772,7 @@
 	<findFieldProperty name="dt_fattura_fornitore" />
 	<findFieldProperty name="fl_generata_fattura" />
 	<findFieldProperty name="fl_documento_ele" />
+	<findFieldProperty name="fl_split_payment" />
 	<findFieldProperty name="fl_diaria" />
 	<findFieldProperty name="fl_compenso_stipendi" />
 	<findFieldProperty name="fl_compenso_conguaglio" />
