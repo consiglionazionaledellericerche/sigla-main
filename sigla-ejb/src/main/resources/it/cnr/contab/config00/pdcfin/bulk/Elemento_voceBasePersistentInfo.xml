@@ -229,6 +229,13 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"/>
+		<columnMapping
+			columnName="FL_MISSIONI"
+			propertyName="fl_missioni"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -305,4 +312,6 @@
 		name="fl_azzera_residui" />		
 	<persistentProperty
 		name="fl_trovato" />
+	<persistentProperty
+		name="fl_missioni" />
 </SQLPersistentInfo>
