@@ -8,7 +8,6 @@ import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
 
 import java.util.*;
 
@@ -104,7 +103,7 @@ public class MissioniCMISService extends StoreService {
 		String name = missione.constructCMISNomeFile();
 		String folderName = name;
 		folderName = sanitizeFolderName(folderName);
-		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "F:missioni_sigla:main");
+		metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "F:missioni_sigla:main");
 		metadataProperties.put(StoragePropertyNames.DESCRIPTION.value(), folderName);
 		metadataProperties.put(StoragePropertyNames.NAME.value(), folderName);
 		metadataProperties.put(StoragePropertyNames.TITLE.value(), folderName);

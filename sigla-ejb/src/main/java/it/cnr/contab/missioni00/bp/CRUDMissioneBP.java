@@ -22,6 +22,7 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
@@ -40,7 +41,6 @@ import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.upload.UploadedFile;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 
 import javax.servlet.ServletException;
 import java.io.*;
@@ -2332,7 +2332,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 						allegato.setCrudStatus(OggettoBulk.NORMAL);
 					} catch (FileNotFoundException e) {
 						throw handleException(e);
-					} catch(CmisContentAlreadyExistsException _ex) {
+					} catch(StorageException _ex) {
 						throw new ApplicationException("Il file " + allegato.getNome() +" già esiste!");
 					}
 				}else if (allegato.isToBeUpdated()) {
