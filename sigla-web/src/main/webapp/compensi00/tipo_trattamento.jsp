@@ -103,13 +103,15 @@
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_agevolazioni_rientro_lav");%></td>
 	<td><% bp.getController().writeFormInput(out,"fl_solo_inail_ente");%></td>
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_solo_inail_ente");%></td>
-  </tr>
-  <tr>	
+  </tr> 
+  <tr>	 
 	<td><% bp.getController().writeFormInput(out,"fl_visibile_a_tutti");%></td>
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_visibile_a_tutti");%></td>
 	<td><% bp.getController().writeFormInput(out,"fl_pignorato_obbl");%></td>
-	<td align="left"><% bp.getController().writeFormLabel(out,"fl_pignorato_obbl");%></td>
-  </tr>  	  
+	<td align="left"><% bp.getController().writeFormLabel(out,"fl_pignorato_obbl");%></td> 
+	<td><% bp.getController().writeFormInput(out,"fl_split_payment");%></td>
+	<td align="left"><% bp.getController().writeFormLabel(out,"fl_split_payment");%></td>
+  </tr>  	   
 </table>
 
 <table class="Group" style="width:100%">
