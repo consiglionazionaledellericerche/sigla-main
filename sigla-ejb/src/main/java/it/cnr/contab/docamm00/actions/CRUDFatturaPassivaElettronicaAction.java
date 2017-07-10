@@ -11,12 +11,7 @@ import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
-import it.cnr.jada.action.HttpActionContext;
-import it.cnr.jada.action.MessageToUser;
+import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -26,14 +21,12 @@ import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.SelezionatoreListaAction;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
 
+import javax.ejb.RemoveException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
-
-import javax.ejb.RemoveException;
 
 public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	private static final long serialVersionUID = 1L;
@@ -240,22 +233,22 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				return context.findDefaultForward();
 			} else if (!bulk.getDocEleIVAColl().isEmpty()){
 				for(Iterator i=bulk.getDocEleIVAColl().iterator();i.hasNext();)
-			    {
-			      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
-			      if (!bulk.isAttivoSplitPayment() && rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
-			    	  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' "
-			    	  		+ "o 'Split Payment'"
-			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
-			    	  			" per documenti con data emissione antecedente al "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
-			    	  		+ ". Il documento deve essere rifiutato!");	
-			    	  return context.findDefaultForward();			    	  
-			      }
-			      if (rigaEle.getImponibileImporto()!=null) 
-			    	  tot_riepilogo=tot_riepilogo.add(rigaEle.getImponibileImporto());
-			      if (rigaEle.getImposta()!=null)
-			    	  tot_riepilogo=tot_riepilogo.add(rigaEle.getImposta());
-			      
+				{
+					DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
+					if (!bulk.isAttivoSplitPayment() && rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
+						java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+						fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilit IVA non deve essere di tipo 'Differita' "
+								+ "o 'Split Payment'"
+								+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
+								" per documenti con data emissione antecedente al "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
+								+ ". Il documento deve essere rifiutato!");
+						return context.findDefaultForward();
+					}
+					if (rigaEle.getImponibileImporto()!=null)
+						tot_riepilogo=tot_riepilogo.add(rigaEle.getImponibileImporto());
+					if (rigaEle.getImposta()!=null)
+						tot_riepilogo=tot_riepilogo.add(rigaEle.getImposta());
+
 				}
 				if(bulk.getImportoDocumento().compareTo(BigDecimal.ZERO)==0 && bulk.getImportoDocumento() .compareTo(tot_riepilogo)!=0) {
 					fatturaPassivaElettronicaBP.setMessage("Prima di procedere verificare il totale del documento!");
@@ -265,31 +258,32 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			if (bulk.isAttivoSplitPayment()) {
 				if (!bulk.isDocumentoSplitPayment() && !Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO.equals(bulk.getTipoDocumentoSIGLA())) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-					fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
-			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
-			    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
-							+ ". Il documento deve essere rifiutato!");	
+					fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilit IVA deve essere di tipo 'Split Payment'"
+							+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
+							" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
+							+ ". Il documento deve essere rifiutato!");
 					return context.findDefaultForward();
 				}
-//				else if ((bulk.getDocEleTributiColl()!=null && !bulk.getDocEleTributiColl().isEmpty()) 
-//						||(bulk.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 
+//				else if ((bulk.getDocEleTributiColl()!=null && !bulk.getDocEleTributiColl().isEmpty())
+//						||(bulk.getDocumentoEleTrasmissione().getRegimefiscale()!= null &&
 //						(bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
 //								bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name()))))
 //						{
-//						fatturaPassivaElettronicaBP.setMessage("La registrazione di documenti Split Payment legati a compensi è al momento sospesa "
-//								+ "in attesa di adeguamento alla relativa normativa!");	
-//						return context.findDefaultForward(); 
+//						fatturaPassivaElettronicaBP.setMessage("La registrazione di documenti Split Payment legati a compensi  al momento sospesa "
+//								+ "in attesa di adeguamento alla relativa normativa!");
+//						return context.findDefaultForward();
 //				}
 			}
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 			message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
-			return openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCompilaFattura");				
+			return openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCompilaFattura");
 		} catch (Exception e) {
 			return handleException(context,e);
 		}
 	}
-	
-    public Forward doBringBackCompilaFattura(ActionContext context) throws RemoteException {
+
+
+	public Forward doBringBackCompilaFattura(ActionContext context) throws RemoteException {
         try{
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			fatturaPassivaElettronicaBP.edit(context, (OggettoBulk) fatturaPassivaElettronicaBP.createComponentSession().findByPrimaryKey(context.getUserContext(), fatturaPassivaElettronicaBP.getModel()));
