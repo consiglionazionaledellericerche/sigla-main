@@ -161,13 +161,7 @@ public class StoreService {
 
     public String createFolderIfNotPresent(String path, String name, Map<String, Object> metadataProperties) {
         return Optional.ofNullable(siglaStorageService.getObjectByPath(path.concat(SiglaStorageService.SUFFIX).concat(name)))
-                .map(storageObject -> {
-                    List<String> aspects = (List<String>) storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-                    aspects.addAll((Collection<? extends String>) metadataProperties.get(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()));
-                    metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects);
-                    siglaStorageService.updateProperties(storageObject, metadataProperties);
-                    return storageObject.getPath();
-                })
+                .map(StorageObject::getPath)
                 .orElseGet(() -> siglaStorageService.createFolder(path, name, metadataProperties).getPath());
     }
 
