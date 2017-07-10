@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="missioni_sigla_attachment:missioni_sigla_attachmentModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+	<description>Sigla Dynamic Model</description>
+	<author>gianfranco.gasparro</author>
+	<version>1.0</version>
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/missioni/sigla/attachment/cmis" prefix="missioni_sigla_attachment" />
+	</namespaces>
+	<types>
+		<type name="missioni_sigla_attachment:document">
+			<title>Allegati alla Missione SIGLA</title>
+			<description>Allegati alla Missione SIGLA</description>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="missioni_sigla_attachment:original_name">
+					<title>Nome Originale del File</title>
+					<description>Nome Originale del File</description>
+					<type>d:text</type>
+				</property>
+				<property name="missioni_sigla_attachment:id_sigla">
+					<title>Id Collegato</title>
+					<description>Id Collegato</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+	</types>
+	<aspects>
+		<aspect name="missioni_sigla_attachment:allegati">
+			<title>Allegati alla Missione SIGLA</title>
+			<description>Allegati alla Missione SIGLA</description>
+		</aspect>
+		<aspect name="missioni_sigla_attachment:scontrini">
+			<title>Scontrini collegati alla Missione SIGLA</title>
+			<description>Scontrini collegati alla Missione SIGLA</description>
+		</aspect>
+	</aspects>
+</model>

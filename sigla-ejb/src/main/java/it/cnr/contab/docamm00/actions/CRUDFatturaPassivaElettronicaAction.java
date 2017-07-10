@@ -345,6 +345,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					Fattura_passivaBulk fatturaPassivaBulk = ((FatturaElettronicaPassivaComponentSession)fatturaPassivaElettronicaBP.createComponentSession()).
 						cercaFatturaPassivaForNota(context.getUserContext(), bulk);
 					nbp.edit(context, fatturaPassivaBulk); 
+					nbp.setFromFatturaElettronica(Boolean.TRUE);
 					CRUDFatturaPassivaBP notaBp = null;
 					if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO))
 						notaBp = (CRUDFatturaPassivaBP)action.doGeneraNotaDiCredito(context);
