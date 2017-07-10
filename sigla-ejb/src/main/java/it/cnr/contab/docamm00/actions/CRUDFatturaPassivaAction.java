@@ -818,7 +818,7 @@ public Forward basicDoAssociaDettagli(ActionContext context)
  * testata della fattura.
  * Richiama a sua volta il metodo cercaCambio dalla component.
  */
-private void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fattura_passivaBulk fattura)
+protected void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fattura_passivaBulk fattura)
 	throws it.cnr.jada.comp.ComponentException {
 
 	try {
@@ -2087,6 +2087,8 @@ public Forward doChiusuraNotaDiCredito(ActionContext context) {
 
 	try {
 		it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess();
+		if (bp instanceof CRUDFatturaPassivaBP && ((CRUDFatturaPassivaBP)bp).isFromFatturaElettronica())
+			return this.doCloseForm(context);
 		bp.edit(context, bp.getModel());
 		return context.findDefaultForward();
 	} catch (BusinessProcessException e) {
@@ -3176,6 +3178,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
 				if (fattura.isCommerciale()) {
 					fattura.setFl_autofattura(Boolean.TRUE);
+					fattura.setFl_split_payment(Boolean.FALSE);
 					//fattura.setAutoFatturaNeeded(true);
 				}
 			} else {

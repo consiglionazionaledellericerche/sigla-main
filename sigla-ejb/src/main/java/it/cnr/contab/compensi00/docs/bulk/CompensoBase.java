@@ -387,6 +387,8 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	
 	private java.lang.Boolean fl_documento_ele;
 	
+	private java.lang.Boolean fl_split_payment;
+	
 public CompensoBase() {
 	super();
 }
@@ -1817,5 +1819,11 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	}
 	public void setFl_documento_ele(java.lang.Boolean fl_documento_ele) {
 		this.fl_documento_ele = fl_documento_ele;
+	}
+	public java.lang.Boolean getFl_split_payment() {
+		return fl_split_payment;
+	}
+	public void setFl_split_payment(java.lang.Boolean fl_split_payment) {
+		this.fl_split_payment = fl_split_payment;
 	}
 }

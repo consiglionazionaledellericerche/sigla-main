@@ -1,38 +1,5 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
-import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
-import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.annotation.StorageType;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
-import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
-import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
-import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
-import it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneBulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkCollections;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashMap;
-import it.cnr.jada.bulk.PrimaryKeyHashtable;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.util.OrderedHashtable;
-import it.cnr.jada.util.action.CRUDBP;
-
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Collections;
@@ -49,15 +16,52 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@StorageType(name="D:emppay:missione", parentName="D:emppay:document")
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.cmis.annotation.CMISPolicy;
+import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
+import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
+import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkCollections;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashMap;
+import it.cnr.jada.bulk.PrimaryKeyHashtable;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.jada.util.StrServ;
+import it.cnr.jada.util.action.CRUDBP;
+
+@CMISType(name="D:emppay:missione", parentName="D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
-public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk
+public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk,AllegatoParentBulk
 {
 	// Testata Missione
 	private boolean salvataggioTemporaneo = false;	// indica che sto eseguendo un salvataggio temporaneo
 	private int annoSolare;
 	private int esercizioScrivania;	
 	private java.util.Vector collectionGiorni;
+	public final static Dictionary DA_GEMIS_DA_COMPLETARE;
 	private java.util.List collectionGiorniSpese;
 	private java.util.List collectionGiorniSpeseSelezionati;		
 	protected Tipo_missioneBulk tipo_missione;
@@ -80,6 +84,11 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		ti_salvataggioKeys.put("D", "Definitiva");
 		ti_salvataggioKeys.put("P", "Provvisoria");
 		ti_salvataggioKeys.put("T", "");				
+
+		DA_GEMIS_DA_COMPLETARE = new it.cnr.jada.util.OrderedHashtable();
+		DA_GEMIS_DA_COMPLETARE.put(new Boolean(false), "N");
+		DA_GEMIS_DA_COMPLETARE.put(new Boolean(true), "Y");
+
 	}	
 
 	// Tappe
@@ -152,7 +161,14 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private Integer esercizioOriObblGeMis;
 	private String cdsObblGeMis;
 	private Long pgObblGeMis;
+	private Integer esercizioAnticipoGeMis;
+	private String cdsAnticipoGeMis;
+	private Long pgAnticipoGeMis;
 	private String gaeGeMis;
+	private String cdrGeMis;
+	private String voceGeMis;
+	private Long pgMissioneFromGeMis;
+    private BigDecimal importoDaRimborsare;
 
 	// Fondo Economale
 	public final static Dictionary STATO_FONDO_ECO;
@@ -182,6 +198,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	// Stati documento riportato
 	public final static Dictionary STATI_RIPORTO;
 
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	public final static Dictionary STATO_LIQUIDAZIONE;
 	static
 	{
@@ -3537,7 +3554,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa) {
 		this.unitaOrganizzativa = unitaOrganizzativa;
 	}
-	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorg:descrizione"))
+	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorg:descrizione"))	
 	public String getDsUnitaOrganizzativa(){
 		if (getUnitaOrganizzativa() == null)
 			return null;
@@ -3582,5 +3599,76 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 	public void setGaeGeMis(String gaeGeMis) {
 		this.gaeGeMis = gaeGeMis;
+	}
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	public boolean isMissioneFromGemis()
+	{
+		if(getIdRimborsoMissione() != null)
+			return true;
+
+		return false;
+	}
+	public Integer getEsercizioAnticipoGeMis() {
+		return esercizioAnticipoGeMis;
+	}
+	public void setEsercizioAnticipoGeMis(Integer esercizioAnticipoGeMis) {
+		this.esercizioAnticipoGeMis = esercizioAnticipoGeMis;
+	}
+	public String getCdsAnticipoGeMis() {
+		return cdsAnticipoGeMis;
+	}
+	public void setCdsAnticipoGeMis(String cdsAnticipoGeMis) {
+		this.cdsAnticipoGeMis = cdsAnticipoGeMis;
+	}
+	public Long getPgAnticipoGeMis() {
+		return pgAnticipoGeMis;
+	}
+	public void setPgAnticipoGeMis(Long pgAnticipoGeMis) {
+		this.pgAnticipoGeMis = pgAnticipoGeMis;
+	}
+	public java.util.Dictionary getDaRimborsoDaCompletareKeys() {
+		return DA_GEMIS_DA_COMPLETARE;
+	}
+	public Long getPgMissioneFromGeMis() {
+		return pgMissioneFromGeMis;
+	}
+	public void setPgMissioneFromGeMis(Long pgMissioneFromGeMis) {
+		this.pgMissioneFromGeMis = pgMissioneFromGeMis;
+	}
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(StrServ.lpad(this.getPg_missione().toString(),9,"0"));
+		return nomeFile.toString();
+	}
+	public BigDecimal getImportoDaRimborsare() {
+		return importoDaRimborsare;
+	}
+	public void setImportoDaRimborsare(BigDecimal importoDaRimborsare) {
+		this.importoDaRimborsare = importoDaRimborsare;
+	}
+	public String getCdrGeMis() {
+		return cdrGeMis;
+	}
+	public void setCdrGeMis(String cdrGeMis) {
+		this.cdrGeMis = cdrGeMis;
+	}
+	public String getVoceGeMis() {
+		return voceGeMis;
+	}
+	public void setVoceGeMis(String voceGeMis) {
+		this.voceGeMis = voceGeMis;
 	}
 }

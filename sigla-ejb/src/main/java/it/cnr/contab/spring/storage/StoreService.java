@@ -153,20 +153,22 @@ public class StoreService {
                     .ifPresent(list -> {
                         metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), list);
                     });
-            return Optional.ofNullable(siglaStorageService.getObjectByPath(folderPath.concat(SiglaStorageService.SUFFIX).concat(name)))
-                    .map(storageObject -> {
-                        if (oggettoBulk!=null){
-                            List<String> aspects = (List<String>) storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-                            aspects.addAll(aspectsToAdd);
-                            metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects);
-                            siglaStorageService.updateProperties(storageObject, metadataProperties);
-                        }
-                        return storageObject.getPath();
-                    })
-                    .orElseGet(() -> siglaStorageService.createFolder(folderPath, name, metadataProperties).getPath());
+            return createFolderIfNotPresent(folderPath, name, metadataProperties);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String createFolderIfNotPresent(String path, String name, Map<String, Object> metadataProperties) {
+        return Optional.ofNullable(siglaStorageService.getObjectByPath(path.concat(SiglaStorageService.SUFFIX).concat(name)))
+                .map(storageObject -> {
+                    List<String> aspects = (List<String>) storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+                    aspects.addAll((Collection<? extends String>) metadataProperties.get(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()));
+                    metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects);
+                    siglaStorageService.updateProperties(storageObject, metadataProperties);
+                    return storageObject.getPath();
+                })
+                .orElseGet(() -> siglaStorageService.createFolder(path, name, metadataProperties).getPath());
     }
 
     public CompletableFuture<Boolean> delete(StorageObject storageObject){

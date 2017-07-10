@@ -53,7 +53,12 @@ public void completeFrom(Fattura_passivaBulk fatturaPassiva) {
 	setFl_san_marino_con_iva(fatturaPassiva.getFl_san_marino_con_iva());
 	setFl_san_marino_senza_iva(fatturaPassiva.getFl_san_marino_senza_iva());
 	setTi_bene_servizio(fattura_passiva.getTi_bene_servizio());
-	setFl_autofattura(Boolean.TRUE);
+
+	if (fatturaPassiva.getFl_split_payment())
+		setFl_autofattura(fatturaPassiva.getFl_autofattura());
+	else
+		setFl_autofattura(Boolean.TRUE);
+	
 	setAutofatturaNeeded(
 		fatturaPassiva.isCommerciale() &&
 		((getFl_intra_ue() != null && Boolean.TRUE.equals(getFl_intra_ue())) ||

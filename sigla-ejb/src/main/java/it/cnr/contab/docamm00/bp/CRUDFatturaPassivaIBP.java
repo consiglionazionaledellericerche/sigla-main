@@ -402,7 +402,7 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 		try {
 
 			Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
-
+			fp.aggiornaImportiTotali();
 			FatturaPassivaComponentSession sess = (FatturaPassivaComponentSession)createComponentSession();
 			sess.validaFatturaPerCompenso(context.getUserContext(), fp);
 

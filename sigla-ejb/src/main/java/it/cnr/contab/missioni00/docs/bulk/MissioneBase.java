@@ -168,6 +168,24 @@ public class MissioneBase extends MissioneKey implements Keyed {
 
 	private java.lang.String stato_liquidazione;
 	
+	// ID_RIMBORSO_MISSIONE DECIMAL(16,0)
+    private Long idRimborsoMissione;
+
+	// ID_FLUSSO VARCHAR(100)
+    private String idFlusso;
+
+    // ID_FLUSSO_ORDINE_MISSIONE VARCHAR(100)
+    private String idFlussoOrdineMissione;
+
+    // ID_FOLDER_RIMBORSO_MISSIONE VARCHAR(100)
+    private String idFolderRimborsoMissione;
+
+    // ID_FOLDER_ORDINE_MISSIONE VARCHAR(100)
+    private String idFolderOrdineMissione;
+	
+	// TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
+	private java.lang.Boolean daRimborsoDaCompletare;
+
 public MissioneBase() {
 	super();
 }
@@ -797,5 +815,41 @@ public java.lang.String getStato_liquidazione() {
 }
 public void setStato_liquidazione(java.lang.String stato_liquidazione) {
 	this.stato_liquidazione = stato_liquidazione;
+}
+public Long getIdRimborsoMissione() {
+	return idRimborsoMissione;
+}
+public void setIdRimborsoMissione(Long idRimborsoMissione) {
+	this.idRimborsoMissione = idRimborsoMissione;
+}
+public String getIdFlusso() {
+	return idFlusso;
+}
+public void setIdFlusso(String idFlusso) {
+	this.idFlusso = idFlusso;
+}
+public String getIdFlussoOrdineMissione() {
+	return idFlussoOrdineMissione;
+}
+public void setIdFlussoOrdineMissione(String idFlussoOrdineMissione) {
+	this.idFlussoOrdineMissione = idFlussoOrdineMissione;
+}
+public String getIdFolderRimborsoMissione() {
+	return idFolderRimborsoMissione;
+}
+public void setIdFolderRimborsoMissione(String idFolderRimborsoMissione) {
+	this.idFolderRimborsoMissione = idFolderRimborsoMissione;
+}
+public String getIdFolderOrdineMissione() {
+	return idFolderOrdineMissione;
+}
+public void setIdFolderOrdineMissione(String idFolderOrdineMissione) {
+	this.idFolderOrdineMissione = idFolderOrdineMissione;
+}
+public java.lang.Boolean getDaRimborsoDaCompletare() {
+	return daRimborsoDaCompletare;
+}
+public void setDaRimborsoDaCompletare(java.lang.Boolean daRimborsoDaCompletare) {
+	this.daRimborsoDaCompletare = daRimborsoDaCompletare;
 }
 }

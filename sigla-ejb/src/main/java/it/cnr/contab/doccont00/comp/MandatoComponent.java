@@ -3606,12 +3606,13 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 			if (bulk instanceof MandatoBulk) {
 				((MandatoBulk) bulk).setDt_emissione(DateServices
 						.getDt_valida(aUC));
-				((MandatoBulk) bulk)
-				.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(
-						aUC, (MandatoBulk) bulk));
-				((MandatoBulk) bulk)
-				.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(
-						aUC, (MandatoBulk) bulk));
+//Eliminato in quanto sono campi valorizzati ma non utilizzati
+//				((MandatoBulk) bulk)
+//				.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(
+//						aUC, (MandatoBulk) bulk));
+//				((MandatoBulk) bulk)
+//				.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(
+//						aUC, (MandatoBulk) bulk));
 				// accreditamento
 				if (bulk instanceof MandatoAccreditamentoWizardBulk) {
 					MandatoAccreditamentoWizardBulk mandato = (MandatoAccreditamentoWizardBulk) bulk;
@@ -3706,10 +3707,11 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 		MandatoBulk mandato = (MandatoBulk) super.inizializzaBulkPerModifica(
 				aUC, bulk);
 		try {
-			mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(aUC,
-					mandato));
-			mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(aUC,
-					mandato));
+			//Eliminato in quanto sono campi valorizzati ma non utilizzati
+//			mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(aUC,
+//					mandato));
+//			mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(aUC,
+//					mandato));
 
 			// carico i mandati riga
 			mandato.setMandato_rigaColl(new BulkList(((MandatoHome) getHome(
@@ -3914,10 +3916,11 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 					mandato.setCd_uo_origine(((CNRUserContext) aUC)
 							.getCd_unita_organizzativa());
 
-				mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(
-						aUC, mandato));
-				mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(
-						aUC, mandato));
+				//Eliminato in quanto sono campi valorizzati ma non utilizzati
+//				mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(
+//						aUC, mandato));
+//				mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(
+//						aUC, mandato));
 
 				if (mandato instanceof MandatoAccreditamentoBulk
 						// || MandatoBulk.TIPO_REGOLARIZZAZIONE.equals( ((MandatoBulk)
@@ -3988,10 +3991,11 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 					mandato.setCd_uo_origine(((CNRUserContext) aUC)
 							.getCd_unita_organizzativa());
 
-				mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(
-						aUC, mandato));
-				mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(
-						aUC, mandato));
+				//Eliminato in quanto sono campi valorizzati ma non utilizzati
+//				mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(
+//						aUC, mandato));
+//				mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(
+//						aUC, mandato));
 
 				/*
 				 * if ( mandato instanceof MandatoAccreditamentoBulk ||

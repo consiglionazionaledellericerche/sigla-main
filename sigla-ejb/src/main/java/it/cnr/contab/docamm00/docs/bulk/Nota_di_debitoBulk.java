@@ -65,6 +65,7 @@ public void copyFrom(
 	//	Aggiunta gestione dell'es di scrivania per il controllo sullo stato riportato/Anno di competenza
 	setEsercizioInScrivania(fattura_passiva.getEsercizioInScrivania());
 	setDataInizioFatturaElettronica(fattura_passiva.getDataInizioFatturaElettronica());
+	setDataInizioSplitPayment(fattura_passiva.getDataInizioSplitPayment());
 	
 	try {
 		java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();

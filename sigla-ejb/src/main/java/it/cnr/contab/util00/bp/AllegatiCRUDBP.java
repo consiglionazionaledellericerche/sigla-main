@@ -1,10 +1,27 @@
 package it.cnr.contab.util00.bp;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletException;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
+
+import it.cnr.contab.cmis.CMISAspect;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
-import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -15,23 +32,11 @@ import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.ServletException;
-
 public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends AllegatoParentBulk> extends SimpleCRUDBP {
 	private static final long serialVersionUID = 1L;
-	protected StoreService storeService;
+	protected SiglaCMISService cmisService;
 	private CRUDArchivioAllegati<T> crudArchivioAllegati = new CRUDArchivioAllegati<T>(getAllegatoClass(), this) {
+		
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			addChildDetail(oggettobulk);
 			return super.addDetail(oggettobulk);
@@ -44,13 +49,34 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		public boolean isGrowable() {
 			return isChildGrowable(super.isGrowable());
 		};
+
+		public OggettoBulk removeDetail(int i) {
+			if (!getModel().isNew()){	
+				List list = getDetails();
+				AllegatoGenericoBulk all =(AllegatoGenericoBulk)list.get(i);
+				if (isPossibileCancellazione(all)) {
+					return super.removeDetail(i);
+				} else {
+					return null;
+				}
+			}
+			return super.removeDetail(i);
+		}
 	};
 			
-	protected abstract String getStorePath(K allegatoParentBulk, boolean create) throws BusinessProcessException;
+	protected abstract CMISPath getCMISPath(K allegatoParentBulk, boolean create) throws BusinessProcessException;
 	protected abstract Class<T> getAllegatoClass();
 	
 	public AllegatiCRUDBP() {
 		super();
+	}
+	
+	protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato){
+		return true;
+	}
+
+	protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato){
+		return true;
 	}
 
 	public AllegatiCRUDBP(String s) {
@@ -73,11 +99,11 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 
 	protected void addChildDetail(OggettoBulk oggettobulk) {		
 	}
-
 	@Override
 	protected void initialize(ActionContext actioncontext)
 			throws BusinessProcessException {
-		storeService = SpringUtil.getBean("storeService", StoreService.class);
+		cmisService = SpringUtil.getBean("cmisService",
+				SiglaCMISService.class);		
 		super.initialize(actioncontext);
 	}
 
@@ -90,23 +116,18 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	}
 	
 	public String getNomeAllegato() throws ApplicationException{
-		return Optional.ofNullable((AllegatoGenericoBulk)getCrudArchivioAllegati().getModel())
-				.map(AllegatoGenericoBulk::getStorageKey)
-				.map(storageKey -> storeService.getStorageObjectBykey(storageKey).getPropertyValue(StoragePropertyNames.NAME.value()))
-				.map(String.class::cast)
-				.orElse(null);
+		AllegatoGenericoBulk allegato = (AllegatoGenericoBulk)getCrudArchivioAllegati().getModel();
+		if (allegato != null && allegato.getDocument(cmisService) != null)
+			return allegato.getDocument(cmisService).getName();
+		return null;
 	}
 
 	public void scaricaAllegatoGenerico(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		AllegatoGenericoBulk allegato = (T)crudArchivioAllegati.getModel();
-        StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
-        InputStream is = storeService.getResource(allegato.getStorageKey());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(
-		        (storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
-        );
-		((HttpActionContext)actioncontext).getResponse().setContentType(
-		        (String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
-        );
+		Document document = allegato.getDocument(cmisService);
+		InputStream is = cmisService.getResource(document);
+		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(document.getContentStreamLength()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(document.getContentStreamMimeType());
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
@@ -121,30 +142,26 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk)oggettobulk;
 		try {
-			String path = getStorePath((K) oggettobulk, false);
+			CMISPath path = getCMISPath((K) oggettobulk, false);
 			if (path == null)
 				return oggettobulk;
-			for (StorageObject storageObject : storeService.getChildren(storeService.getStorageObjectByPath(path).getKey())) {
-                if (Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
-                        .map(List.class::cast)
-                        .map(list -> list.stream().anyMatch(o -> o.equals(StoragePropertyNames.SYS_ARCHIVED.value())))
-                        .get())
+			Folder parent = (Folder) cmisService.getNodeByPath(path);
+			for (CmisObject cmisObject : parent.getChildren()) {
+				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
 					continue;
-				if (excludeChild(storageObject))
+				if (excludeChild(cmisObject))
 					continue;
-                if (Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()))
-                        .map(String.class::cast)
-                        .filter(s -> s.equals(StoragePropertyNames.CMIS_FOLDER.value()))
-                        .isPresent())
-                    continue;
-                T allegato = (T) Introspector.newInstance(getAllegatoClass(), storageObject.getKey());
-                allegato.setContentType( (String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-                allegato.setNome( (String) storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
-                allegato.setDescrizione((String)storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-                allegato.setTitolo((String)storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                completeAllegato(allegato);
-                allegato.setCrudStatus(OggettoBulk.NORMAL);
-                allegatoParentBulk.addToArchivioAllegati(allegato);
+				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+					Document document = (Document) cmisObject;
+					T allegato = (T) Introspector.newInstance(getAllegatoClass(), document);
+					allegato.setContentType(document.getContentStreamMimeType());
+					allegato.setNome(cmisObject.getName());
+					allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+					allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+					completeAllegato(allegato);
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+					allegatoParentBulk.addToArchivioAllegati(allegato);					
+				}
 			}
 		} catch (ApplicationException e) {
 			throw handleException(e);
@@ -169,14 +186,14 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	protected void completeAllegato(T allegato)  throws ApplicationException {
 	}
 	
-	protected boolean excludeChild(StorageObject storageObject) {
+	protected boolean excludeChild(CmisObject cmisObject) {
 		return false;
 	}
 	@Override
 	public void update(ActionContext actioncontext)
 			throws BusinessProcessException {
 		try {
-			archiviaAllegati(actioncontext);
+			archiviaAllegati(actioncontext, null);
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
@@ -187,7 +204,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	public void create(ActionContext actioncontext)
 			throws BusinessProcessException {
 		try {
-			archiviaAllegati(actioncontext);
+			archiviaAllegati(actioncontext, null);
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
@@ -198,9 +215,13 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	public void delete(ActionContext actioncontext)
 			throws BusinessProcessException {
 		AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk)getModel();
-        for (AllegatoGenericoBulk allegato : allegatoParentBulk.getArchivioAllegati()) {
-            storeService.delete(allegato.getStorageKey());
-        }
+		try {
+			for (AllegatoGenericoBulk allegato : allegatoParentBulk.getArchivioAllegati()) {
+				cmisService.deleteNode(allegato.getDocument(cmisService));
+			}
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
 		super.delete(actioncontext);
 	}
 	
@@ -209,39 +230,43 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected void archiviaAllegati(ActionContext actioncontext) throws BusinessProcessException, ApplicationException{
+	protected void archiviaAllegati(ActionContext actioncontext, Document document) throws BusinessProcessException, ApplicationException{
 		AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk)getModel();
 		for (AllegatoGenericoBulk allegato : allegatoParentBulk.getArchivioAllegati()) {
 			if (allegato.isToBeCreated()){
 				try {
-					storeService.storeSimpleDocument(allegato,
+					Document node = cmisService.storeSimpleDocument(allegato, 
 							new FileInputStream(allegato.getFile()),
 							allegato.getContentType(),
-							allegato.getNome(),
-                            getStorePath((K) allegatoParentBulk,
-                                    true));
+							allegato.getNome(), getCMISPath((K) allegatoParentBulk, true));
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
+				} catch(CmisContentAlreadyExistsException _ex) {
+					throw new ApplicationException("Il file " + allegato.getNome() +" già esiste!");
 				}
 			}else if (allegato.isToBeUpdated()) {
-				try {
-					if (allegato.getFile() != null) {
-                        storeService.updateStream(allegato.getStorageKey(),
-                                new FileInputStream(allegato.getFile()),
-                                allegato.getContentType());
-                    }
-                    storeService.updateProperties(allegato, storeService.getStorageObjectBykey(allegato.getStorageKey()));
-					allegato.setCrudStatus(OggettoBulk.NORMAL);
-				} catch (FileNotFoundException e) {
-					throw handleException(e);
+				if (isPossibileModifica(allegato)) {
+					try {
+						if (allegato.getFile() != null)
+							cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
+									new FileInputStream(allegato.getFile()),
+									allegato.getContentType());
+						cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
+						allegato.setCrudStatus(OggettoBulk.NORMAL);
+					} catch (FileNotFoundException e) {
+						throw handleException(e);
+					}
 				}
 			}
 		}
+		gestioneCancellazioneAllegati(allegatoParentBulk);
+	}
+	protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {
 		for (Iterator<AllegatoGenericoBulk> iterator = allegatoParentBulk.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
 			AllegatoGenericoBulk allegato = iterator.next();
 			if (allegato.isToBeDeleted()){
-                storeService.delete(allegato.getStorageKey());
+				cmisService.deleteNode(allegato.getDocument(cmisService));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 			}
 		}
