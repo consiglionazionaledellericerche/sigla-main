@@ -27,6 +27,8 @@ public class Filtro_trattamentoBulk extends it.cnr.jada.bulk.OggettoBulk {
     private java.lang.Boolean flTipoPrestazioneObbl;
 	private java.lang.Boolean flAgevolazioniRientroLav;    
 	private java.lang.Boolean flSoloInailEnte;
+	private java.lang.Boolean flSplitPayment;
+
 
 /**
  * Filtro_trattamentiBulk constructor comment.
@@ -262,5 +264,11 @@ public void setTipoAnagrafico(java.lang.String newTipoAnagrafico) {
 	}
 	public void setFlSoloInailEnte(java.lang.Boolean flSoloInailEnte) {
 		this.flSoloInailEnte = flSoloInailEnte;
+	}
+	public java.lang.Boolean getFlSplitPayment() {
+		return flSplitPayment;
+	}
+	public void setFlSplitPayment(java.lang.Boolean flSplitPayment) {
+		this.flSplitPayment = flSplitPayment;
 	}	
 }
