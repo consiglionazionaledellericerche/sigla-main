@@ -792,6 +792,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SPLIT_PAYMENT"
+			propertyName="fl_split_payment"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 					
 	</defaultColumnMap>
 	<persistentProperty
@@ -1064,4 +1071,6 @@
 		name="pg_trovato" />
 	<persistentProperty
 		name="fl_documento_ele" />		
+	<persistentProperty
+		name="fl_split_payment" />			
 </SQLPersistentInfo>

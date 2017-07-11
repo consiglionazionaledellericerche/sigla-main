@@ -1,5 +1,22 @@
 package it.cnr.contab.util00.bp;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletException;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
+
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
@@ -15,26 +32,11 @@ import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-
-import javax.servlet.ServletException;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
-
 public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends AllegatoParentBulk> extends SimpleCRUDBP {
 	private static final long serialVersionUID = 1L;
 	protected SiglaCMISService cmisService;
 	private CRUDArchivioAllegati<T> crudArchivioAllegati = new CRUDArchivioAllegati<T>(getAllegatoClass(), this) {
+		
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			addChildDetail(oggettobulk);
 			return super.addDetail(oggettobulk);
@@ -47,6 +49,19 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		public boolean isGrowable() {
 			return isChildGrowable(super.isGrowable());
 		};
+
+		public OggettoBulk removeDetail(int i) {
+			if (!getModel().isNew()){	
+				List list = getDetails();
+				AllegatoGenericoBulk all =(AllegatoGenericoBulk)list.get(i);
+				if (isPossibileCancellazione(all)) {
+					return super.removeDetail(i);
+				} else {
+					return null;
+				}
+			}
+			return super.removeDetail(i);
+		}
 	};
 			
 	protected abstract CMISPath getCMISPath(K allegatoParentBulk, boolean create) throws BusinessProcessException;
@@ -54,6 +69,14 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	
 	public AllegatiCRUDBP() {
 		super();
+	}
+	
+	protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato){
+		return true;
+	}
+
+	protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato){
+		return true;
 	}
 
 	public AllegatiCRUDBP(String s) {
@@ -223,18 +246,23 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 					throw new ApplicationException("Il file " + allegato.getNome() +" già esiste!");
 				}
 			}else if (allegato.isToBeUpdated()) {
-				try {
-					if (allegato.getFile() != null)
-						cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
-								new FileInputStream(allegato.getFile()),
-								allegato.getContentType());
-					cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
-					allegato.setCrudStatus(OggettoBulk.NORMAL);
-				} catch (FileNotFoundException e) {
-					throw handleException(e);
+				if (isPossibileModifica(allegato)) {
+					try {
+						if (allegato.getFile() != null)
+							cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
+									new FileInputStream(allegato.getFile()),
+									allegato.getContentType());
+						cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
+						allegato.setCrudStatus(OggettoBulk.NORMAL);
+					} catch (FileNotFoundException e) {
+						throw handleException(e);
+					}
 				}
 			}
 		}
+		gestioneCancellazioneAllegati(allegatoParentBulk);
+	}
+	protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {
 		for (Iterator<AllegatoGenericoBulk> iterator = allegatoParentBulk.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
 			AllegatoGenericoBulk allegato = iterator.next();
 			if (allegato.isToBeDeleted()){

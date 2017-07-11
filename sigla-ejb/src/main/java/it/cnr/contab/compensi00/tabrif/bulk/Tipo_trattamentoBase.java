@@ -78,6 +78,8 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	// FL_SOLO_INAIL_ENTE CHAR(1) NOT NULL
 	private java.lang.Boolean fl_solo_inail_ente;
 	
+	private java.lang.Boolean fl_split_payment;
+	
 public Tipo_trattamentoBase() {
 	super();
 }
@@ -308,5 +310,11 @@ public java.lang.Boolean getFl_solo_inail_ente() {
 }
 public void setFl_solo_inail_ente(java.lang.Boolean fl_solo_inail_ente) {
 	this.fl_solo_inail_ente = fl_solo_inail_ente;
+}
+public java.lang.Boolean getFl_split_payment() {
+	return fl_split_payment;
+}
+public void setFl_split_payment(java.lang.Boolean fl_split_payment) {
+	this.fl_split_payment = fl_split_payment;
 }
 }
