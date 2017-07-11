@@ -42,7 +42,7 @@ public class StorageFolderBorseStudio extends StorageFolderContrattiModel {
     }
 	
 	public String getCMISPath() {
-		return SpringUtil.getBean(StoreService.class)
+		return SpringUtil.getBean("storeService", StoreService.class)
 				.createFolderIfNotPresent(
 						getCMISParentPath(),
 						"Borsa di Studio "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'),

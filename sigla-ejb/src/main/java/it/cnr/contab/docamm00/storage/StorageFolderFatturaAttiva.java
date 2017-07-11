@@ -296,7 +296,7 @@ public class StorageFolderFatturaAttiva extends OggettoBulk {
 
 	public String getCMISPrincipalPath() {
         return Arrays.asList(
-                SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+                SpringUtil.getBean("storeService", StorePath.class).getPathComunicazioniDal(),
                 this.getFattura_attivaBulk().getCd_uo_origine(),
                 "Fatture Attive"
         ).stream().collect(
@@ -307,7 +307,7 @@ public class StorageFolderFatturaAttiva extends OggettoBulk {
 	public String getCMISPath(){
 		final String folderName = "Fattura " + this.getEsercizioFattura().toString() +
 				Utility.lpad(this.getPgFattura().toString(),10,'0');
-		return SpringUtil.getBean(StoreService.class)
+		return SpringUtil.getBean("storeService", StoreService.class)
 				.createFolderIfNotPresent(
 						getCMISPrincipalPath().concat(SiglaStorageService.SUFFIX).concat(
 								Optional.ofNullable(getEsercizioFattura())
