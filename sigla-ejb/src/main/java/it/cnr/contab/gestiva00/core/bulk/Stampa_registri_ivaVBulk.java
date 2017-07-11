@@ -30,6 +30,7 @@ public abstract class Stampa_registri_ivaVBulk extends it.cnr.jada.bulk.OggettoB
     public final static String SEZIONALI_SAN_MARINO_SENZA_IVA = "S";
     public final static String SEZIONALI_BENI_INTRA_UE = "I";
     public final static String SEZIONALI_SERVIZI_NON_RESIDENTI = "X";
+    public final static String SEZIONALI_SPLIT_PAYMENT = "P";    
     public final static java.util.Dictionary TIPI_SEZIONALE_KEYS;
     public static java.util.Dictionary MESI;
     public static java.util.Dictionary MESI_INT;
@@ -82,6 +83,7 @@ public abstract class Stampa_registri_ivaVBulk extends it.cnr.jada.bulk.OggettoB
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_SAN_MARINO_SENZA_IVA, "Sezionali per San. Marino senza Iva");
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_BENI_INTRA_UE, "Sezionali Beni non residenti");
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_SERVIZI_NON_RESIDENTI, "Sezionali Servizi non residenti");
+        TIPI_SEZIONALE_KEYS.put(SEZIONALI_SPLIT_PAYMENT, "Sezionali Split Payment");
 	}
     static {
     	initializeHashes();
