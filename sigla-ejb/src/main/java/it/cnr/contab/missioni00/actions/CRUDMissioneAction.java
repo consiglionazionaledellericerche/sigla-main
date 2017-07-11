@@ -1,26 +1,45 @@
 package it.cnr.contab.missioni00.actions;
 
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
+import java.util.GregorianCalendar;
+
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.missioni00.ejb.*;
-import it.cnr.contab.missioni00.docs.bulk.*;
-import it.cnr.contab.missioni00.tabrif.bulk.*;
-import it.cnr.contab.missioni00.bp.CRUDMissioneBP;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
-import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
-import it.cnr.contab.compensi00.bp.CRUDMinicarrieraBP;
-import it.cnr.contab.compensi00.docs.bulk.*;
-
-import java.util.GregorianCalendar;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.missioni00.bp.CRUDMissioneBP;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk;
+import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.ActionPerformingError;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.action.MessageToUser;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashMap;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.BulkBP;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
@@ -1160,41 +1179,6 @@ public Forward doConfermaTipoRapportoChange(ActionContext context,OptionBP optio
 			missione.setTipo_rapporto((Tipo_rapportoBulk)option.getAttribute( "oldTipoRapporto" ));
 
 		return context.findDefaultForward();
-	}
-	catch(Throwable ex)
-	{
-		return handleException(context, ex);
-	}		
-}
-/**
-  *	A fronte del salvataggio di una missione provvisoria viene chiesto all'utente se salvarla in modo definitivo o meno.
-  * Il metodo gestisce la risposta dell'utente.
-  * NO : verifico che ci sia il compenso o l'obbligazione e salvo la missione con stato definitivo
-  * SI : salvo la missione come provvisoria
-  */
-
-public Forward doConfermaTipoSalvataggio(ActionContext context,OptionBP option)
-{
-	try
-	{
-		MissioneBulk missione = (MissioneBulk)option.getAttribute( "missione" );
-
-		// Salvataggio PROVVISORIO della missione		
-		if(option.getOption() == OptionBP.YES_BUTTON) 
-			missione.setMissioneProvvisoria();
-			
-		// Salvataggio DEFINITIVO della missione		
-		if(option.getOption() == OptionBP.NO_BUTTON)
-		{
-			//	Se sono nel caso di obbligatorieta' dell'obbligazione ma questa non e' stata
-			//	associata alla missione dall'utente blocco il salvataggio
-			if(missione.isObbligazioneObbligatoria() && !missione.isMissioneConObbligazione())
-				throw new it.cnr.jada.comp.ApplicationException("Associare una scadenza di impegno alla missione !");
-				
-			missione.setMissioneDefinitiva();
-		}	
-			
-		return doOnSalvataggio(context, missione);					
 	}
 	catch(Throwable ex)
 	{
@@ -2582,6 +2566,24 @@ public Forward doOnTipoAnagraficoChange(ActionContext context)
 		return handleException(context, t);
 	}
 }
+public OptionBP openConfirm(ActionContext actioncontext, String message, int type, String action) throws BusinessProcessException{
+	OptionBP optionbp = createOptionBP(actioncontext, message, FormBP.QUESTION_MESSAGE, type, action);
+    return (OptionBP)actioncontext.addBusinessProcess(optionbp);
+}
+public OptionBP createOptionBP(ActionContext actioncontext, String message, int icon, int type, String action){
+    try{
+    	OptionBP optionbp = (OptionBP)actioncontext.createBusinessProcess("OptionBP");
+        optionbp.setMessage(icon, message);
+        optionbp.setType(type);
+        HookForward hookforward = actioncontext.addHookForward("option", this, "doOption");
+        hookforward.addParameter("bp", optionbp);
+        if(action != null)
+            hookforward.addParameter("action", action);
+        return optionbp;
+    }catch(BusinessProcessException businessprocessexception){
+        throw new ActionPerformingError(businessprocessexception);
+    }
+}
 /**
   * Il metodo gestisce la selezione del Tipo Rapporto.
   * La modifica è consentita se l'evetuale compenso associato e' modificabile (es. non pagato)
@@ -2976,16 +2978,10 @@ public Forward doSalva(ActionContext context) throws java.rmi.RemoteException
 		
 		MissioneBulk missione = (MissioneBulk)bp.getModel();
 		
+		if(missione.isObbligazioneObbligatoria() && !missione.isMissioneConObbligazione())
+			throw new it.cnr.jada.comp.ApplicationException("Associare una scadenza di impegno alla missione !");
 		if(!missione.isMissioneDefinitiva())
 		{
-			//	La missione e' in fase di creazione o in stato provvisorio
-			if(missione.isCompensoObbligatorio() || (missione.isObbligazioneObbligatoria() && !missione.isMissioneConObbligazione()))
-			{
-				//	La missione richiede un compenso o una obbligazione che non e' stata agganciata alla missione
-				OptionBP option = openConfirm(context,"Premere SI per salvataggio provvisorio, NO per salvataggio definitivo!",OptionBP.CONFIRM_YES_NO,"doConfermaTipoSalvataggio");
-				option.addAttribute("missione", missione);				
-				return option;							
-			}
 		   	//	- La missione e' in stato provvisorio ma l'utente ha finalmente agganciato l'obbligazione
 			//	  che risulta essere obbligatoria --> la missione diventa definitiva
 		   	//	- La missione non prevede ne' compenso ne' obbligazione quindi procedo direttamente con 
@@ -3002,6 +2998,36 @@ public Forward doSalva(ActionContext context) throws java.rmi.RemoteException
 		return handleException(context, t);
 	}	
 }
+
+public Forward doSalvaProvvisorio(ActionContext context) throws java.rmi.RemoteException
+{
+	CRUDMissioneBP bp = (CRUDMissioneBP)getBusinessProcess(context);
+	
+	try 
+	{
+		fillModel(context);
+		
+		MissioneBulk missione = (MissioneBulk)bp.getModel();
+		
+		if(!missione.isMissioneDefinitiva())
+		{
+			//	La missione e' in fase di creazione o in stato provvisorio
+			if(missione.isCompensoObbligatorio() || (missione.isObbligazioneObbligatoria() && !missione.isMissioneConObbligazione())){
+				missione.setMissioneProvvisoria();
+			} else {
+				throw new it.cnr.jada.comp.ApplicationException("Non è possibile salvare una missione in provvisorio quando non sono obbligatori il compenso e l'obbligazione");
+			}
+		} else {
+			throw new it.cnr.jada.comp.ApplicationException("Non è possibile salvare una missione in provvisorio quando è già definitiva");
+		}
+	   	return doOnSalvataggio(context, missione);		   
+	}
+	catch (Throwable t) 
+	{
+		return handleException(context, t);
+	}	
+}
+
 /**
   * Il metodo salva la missione e la ricarica in modifica
   */
@@ -3163,6 +3189,9 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 			if(!pageName.equals("tabAnagrafico"))
 				missione.validaTabAnagrafico();			
 		}	
+        if ("tabAllegati".equalsIgnoreCase(bp.getTab(tabName))) {
+			fillModel( context );
+		}
 		// Da tab Anagrafico	
 		if(bp.isEditable() && !bp.isSearching() && bp.getTab( tabName ).equalsIgnoreCase("tabAnagrafico") &&
 		   !pageName.equals("tabTestata"))
@@ -3349,5 +3378,6 @@ public Forward doSelezionaStatoLiquidazione(ActionContext context){
 	{
 		return handleException(context,e);
 	} 
- }
+}
+
 }
