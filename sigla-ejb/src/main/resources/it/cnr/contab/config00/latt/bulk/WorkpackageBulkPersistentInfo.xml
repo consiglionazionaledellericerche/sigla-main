@@ -75,6 +75,23 @@
 			nullable="true" />									
 	</columnMap>		  		
 	<columnMap 
+		name="V_LINEA_ATTIVITA_VALIDA_SENZA_PADRE"
+		tableName="V_LINEA_ATTIVITA_VALIDA"
+		extends="default">
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="progetto.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />									
+	</columnMap>		  		
+	<columnMap 
 		name="V_LINEA_ATT_NOT_IN_PDG"
 		tableName="V_LINEA_ATT_NOT_IN_PDG"
 		extends="default" >

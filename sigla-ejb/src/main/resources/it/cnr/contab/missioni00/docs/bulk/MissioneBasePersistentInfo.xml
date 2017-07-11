@@ -333,6 +333,12 @@
 			columnSize="10"
 			nullable="false" />
 		<columnMapping
+			columnName="STATO_LIQUIDAZIONE"
+			propertyName="stato_liquidazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
 			columnName="IM_RIMBORSO"
 			propertyName="im_rimborso"
 			sqlTypeName="DECIMAL"
@@ -340,10 +346,36 @@
 			columnScale="2"
 			nullable="false" />			
 		<columnMapping
-			columnName="STATO_LIQUIDAZIONE"
-			propertyName="stato_liquidazione"
+			columnName="ID_RIMBORSO_MISSIONE"
+			propertyName="idRimborsoMissione"
+			sqlTypeName="DECIMAL"
+			columnSize="16" />
+		<columnMapping
+			columnName="ID_FLUSSO"
+			propertyName="idFlusso"
 			sqlTypeName="VARCHAR"
-			columnSize="10"/>	
+			columnSize="100"/>	
+		<columnMapping
+			columnName="ID_FLUSSO_ORDINE_MISSIONE"
+			propertyName="idFlussoOrdineMissione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>	
+		<columnMapping
+			columnName="ID_FOLDER_ORDINE_MISSIONE"
+			propertyName="idFolderOrdineMissione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>	
+		<columnMapping
+			columnName="ID_FOLDER_RIMBORSO_MISSIONE"
+			propertyName="idFolderRimborsoMissione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>	
+		<columnMapping
+			columnName="DA_RIMBORSO_DA_COMPLETARE"
+			propertyName="daRimborsoDaCompletare"
+			sqlTypeName="CHAR"
+			columnSize="1" 
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -355,6 +387,8 @@
 		name="pg_obbligazione" />
 	<persistentProperty
 		name="ti_provvisorio_definitivo" />
+	<persistentProperty
+		name="daRimborsoDaCompletare" />
 	<persistentProperty
 		name="stato_coge" />
 	<persistentProperty
@@ -461,4 +495,14 @@
 		name="im_rimborso" />		
 	<persistentProperty
 		name="stato_liquidazione" />	
+	<persistentProperty
+		name="idRimborsoMissione" />
+	<persistentProperty
+		name="idFlusso" />
+	<persistentProperty
+		name="idFlussoOrdineMissione" />
+	<persistentProperty
+		name="idFolderOrdineMissione" />
+	<persistentProperty
+		name="idFolderRimborsoMissione" />
 </SQLPersistentInfo>
