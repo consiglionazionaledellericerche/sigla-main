@@ -323,7 +323,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 	        }else{
 	            compoundfindclause = CompoundFindClause.and(compoundfindclause, oggettobulk.buildFindClauses(Boolean.FALSE));
 	        }
-	        sql =  getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").selectByClause(userContext, compoundfindclause);
+	        sql =  getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA_SENZA_PADRE").selectByClause(userContext, compoundfindclause);
 			
 			if(!isUtenteEnte(userContext)){ 
 				WorkpackageHome home = (WorkpackageHome) getHome(userContext, oggettobulk);
@@ -333,7 +333,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 				if (cdrUtente.getLivello().compareTo(CdrHome.CDR_PRIMO_LIVELLO)==0)
 				{
 					sql.addTableToHeader("V_CDR_VALIDO");
-					sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+					sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA_SENZA_PADRE.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
 					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 					sql.openParenthesis("AND");
 					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
@@ -341,7 +341,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 					sql.closeParenthesis();
 				}else{
 					sql.addTableToHeader("V_CDR_VALIDO");
-					sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+					sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA_SENZA_PADRE.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
 					sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 					sql.openParenthesis("AND");
 					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
