@@ -144,15 +144,15 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:/jdbc/CIR" pool-name="OracleDSSIGLAPool" enabled="true" use-java-context="true" statistics-enabled="true">
-                    <connection-url>jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAT</connection-url>
+                    <connection-url>jdbc:oracle:thin:@193.205.227.21:1521:sigla</connection-url>
                     <driver>ojdbc</driver>
                     <pool>
                         <min-pool-size>3</min-pool-size>
                         <max-pool-size>10</max-pool-size>
                     </pool>
                     <security>
-                        <user-name>PCIR009</user-name>
-                        <password>dbtest</password>
+                        <user-name>SIGLA</user-name>
+                        <password>SIGLA</password>
                     </security>
                     <validation>
                         <exception-sorter class-name="org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter"/>
