@@ -208,12 +208,7 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public StorageObject createFolder(String path, String name, Map<String, Object> metadata) {
-                CmisObject objectByPath = null;
-                try {
-                    objectByPath = siglaSession.getObjectByPath(
-                            Optional.of(path).filter(s -> s.length() > 0).orElse(SiglaStorageService.SUFFIX));
-                } catch (CmisObjectNotFoundException _ex) {}
-                return Optional.ofNullable(objectByPath)
+                return Optional.ofNullable(siglaSession.getObjectByPath(path))
                     .map(Folder.class::cast)
                     .map(folder -> siglaSession.createFolder(metadata, folder))
                     .map(objectId -> siglaSession.getObject(objectId))

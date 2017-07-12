@@ -129,10 +129,7 @@ public class StoreService {
         Map<String, Object> metadataProperties = new HashMap<String, Object>();
         List<String> aspectsToAdd = new ArrayList<String>();
         try{
-            final String folderPath = Optional.ofNullable(path)
-                    .filter(s -> s.length() > 0)
-                    .filter(s -> !s.equals(SiglaStorageService.SUFFIX))
-                    .orElse("");
+            final StorageObject parentObject = getStorageObjectByPath(path, true);
             final String name = sanitizeFolderName(folderName);
             metadataProperties.put(StoragePropertyNames.NAME.value(), name);
             if (title != null || description != null) {
@@ -153,14 +150,16 @@ public class StoreService {
                     .ifPresent(list -> {
                         metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), list);
                     });
-            return createFolderIfNotPresent(folderPath, name, metadataProperties);
+            return createFolderIfNotPresent(parentObject.getPath(), name, metadataProperties);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public String createFolderIfNotPresent(String path, String name, Map<String, Object> metadataProperties) {
-        return Optional.ofNullable(siglaStorageService.getObjectByPath(path.concat(SiglaStorageService.SUFFIX).concat(name)))
+        return Optional.ofNullable(siglaStorageService.getObjectByPath(
+                path.concat(path.equals(SiglaStorageService.SUFFIX)? "" : SiglaStorageService.SUFFIX).concat(name)
+        ))
                 .map(StorageObject::getPath)
                 .orElseGet(() -> siglaStorageService.createFolder(path, name, metadataProperties).getPath());
     }
