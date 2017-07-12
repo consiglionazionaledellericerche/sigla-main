@@ -579,7 +579,9 @@ public java.util.Collection selectTipi_sezionaliByClause(
 			sql.closeParenthesis();
 			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, Tipo_sezionaleBulk.ISTITUZIONALE);
 			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_BENE_SERVIZIO",sql.EQUALS,Bene_servizioBulk.SERVIZIO);
-			
+		} else if (stampaBulk.SEZIONALI_SPLIT_PAYMENT.equalsIgnoreCase(stampaBulk.getTipoSezionaleFlag())) {
+			sql.addSQLClause("AND", "TIPO_SEZIONALE.FL_SPLIT_PAYMENT", sql.EQUALS, "Y");
+			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, Tipo_sezionaleBulk.ISTITUZIONALE);
 		}
 	}
 
