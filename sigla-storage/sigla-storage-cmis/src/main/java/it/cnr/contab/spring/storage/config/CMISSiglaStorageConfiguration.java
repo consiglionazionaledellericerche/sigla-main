@@ -1,8 +1,8 @@
 package it.cnr.contab.spring.storage.config;
 
 import it.cnr.contab.spring.storage.MimeTypes;
-import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageObject;
 import org.apache.chemistry.opencmis.client.api.*;
 import org.apache.chemistry.opencmis.client.bindings.CmisBindingFactory;
@@ -232,7 +232,7 @@ public class CMISSiglaStorageConfiguration {
                                                     contentType,
                                                     inputStream),
                                             VersioningState.MAJOR);
-                                } catch (CmisConstraintException|CmisNameConstraintViolationException _ex) {
+                                } catch (CmisConstraintException |CmisNameConstraintViolationException _ex) {
                                     throw new StorageException(StorageException.Type.CONSTRAINT_VIOLATED, _ex.getMessage(), _ex);
                                 } catch (CmisBaseException _ex) {
                                     throw new StorageException(StorageException.Type.GENERIC, _ex.getMessage(), _ex);
