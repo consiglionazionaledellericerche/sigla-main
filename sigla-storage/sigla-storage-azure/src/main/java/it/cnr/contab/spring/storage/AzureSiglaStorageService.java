@@ -1,91 +1,31 @@
 package it.cnr.contab.spring.storage;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
-import it.cnr.contab.spring.storage.config.AzureSiglaStorageConfigurationProperties;
+import com.microsoft.azure.storage.blob.CloudBlobContainer;
+import com.microsoft.azure.storage.blob.CloudBlockBlob;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpStatus;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * Created by francesco on 06/07/17.
  */
-@Service
-@Profile("Azure")
 public class AzureSiglaStorageService implements SiglaStorageService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AzureSiglaStorageService.class);
 
-    private AzureSiglaStorageConfigurationProperties azureSiglaStorageConfigurationProperties;
+    private CloudBlobContainer cloudBlobContainer;
 
-    public AzureSiglaStorageService(AzureSiglaStorageConfigurationProperties azureSiglaStorageConfigurationProperties) {
-        this.azureSiglaStorageConfigurationProperties = azureSiglaStorageConfigurationProperties;
+    public AzureSiglaStorageService(CloudBlobContainer cloudBlobContainer) {
+        this.cloudBlobContainer = cloudBlobContainer;
     }
 
-    private void setUserMetadata(ObjectMetadata objectMetadata, Map<String, Object> metadata) {
-
-        Map<String, String> metadataKeys = azureSiglaStorageConfigurationProperties.getMetadataKeys();
-
-        metadata
-                .keySet()
-                .stream()
-                .forEach(key -> {
-                    if (metadataKeys.containsKey(key)) {
-                        if (metadataKeys.get(key) != null) {
-                            if (key.equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
-                                objectMetadata.addUserMetadata(metadataKeys.get(key),
-                                        String.join(",", (List<String>)metadata.get(key)));
-                            } else {
-                                objectMetadata.addUserMetadata(metadataKeys.get(key), String.valueOf(metadata.get(key)));
-                            }
-                        }
-                    }
-                });
-    }
-
-    private Map<String, ?> getUserMetadata(String key, ObjectMetadata objectMetadata) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put(StoragePropertyNames.CONTENT_STREAM_LENGTH.value(), BigInteger.valueOf(objectMetadata.getContentLength()));
-        result.put(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value(), objectMetadata.getContentType());
-        result.put(StoragePropertyNames.ALFCMIS_NODEREF.value(), key);
-        result.put(StoragePropertyNames.ID.value(), key);
-        result.put(StoragePropertyNames.NAME.value(),
-                Optional.ofNullable(key.lastIndexOf(SUFFIX))
-                        .filter(index -> index > -1)
-                        .map(index -> key.substring(index) +1)
-                        .orElse(key)
-        );
-        result.put(StoragePropertyNames.BASE_TYPE_ID.value(),
-                Optional.of(objectMetadata.getContentLength())
-                        .filter(aLong -> aLong > 0)
-                        .map(aLong -> StoragePropertyNames.CMIS_DOCUMENT.value())
-                        .orElse(StoragePropertyNames.CMIS_FOLDER.value()));
-        azureSiglaStorageConfigurationProperties.getMetadataKeys().entrySet().stream()
-                .forEach(entry ->  {
-                    final String userMetaDataOf = objectMetadata.getUserMetaDataOf(entry.getValue());
-                    if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
-                        result.put(entry.getKey(), Optional.ofNullable(userMetaDataOf)
-                                .map(s -> Arrays.asList(s.split(","))).orElse(Collections.emptyList()));
-                    } else {
-                        result.put(entry.getKey(), userMetaDataOf);
-                    }
-                });
-
-        return result;
-    }
 
     @Override
     public StorageObject createFolder(String path, String name, Map<String, Object> metadata) {
@@ -101,20 +41,24 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                 .ifPresent(o -> {
                     metadata.remove(StoragePropertyNames.OBJECT_TYPE_ID.value());
                 });
-        return Optional.ofNullable(metadata)
-                .filter(stringObjectMap -> !stringObjectMap.isEmpty())
-                .map(stringObjectMap -> {
-                    ObjectMetadata objectMetadata = new ObjectMetadata();
-                    setUserMetadata(objectMetadata, stringObjectMap);
-                    objectMetadata.setContentLength(0);
-                    InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
-                    PutObjectResult putObjectResult = amazonS3.putObject(
-                            azureSiglaStorageConfigurationProperties.getBucketName(),
-                            key,
-                            emptyContent,
-                            objectMetadata);
-                    return new StorageObject(key, key, putObjectResult.getMetadata().getUserMetadata());
-                }).orElse(new StorageObject(key, key, Collections.emptyMap()));
+
+
+        throw new RuntimeException("no create folder");
+
+//        return Optional.ofNullable(metadata)
+//                .filter(stringObjectMap -> !stringObjectMap.isEmpty())
+//                .map(stringObjectMap -> {
+//                    ObjectMetadata objectMetadata = new ObjectMetadata();
+//                    setUserMetadata(objectMetadata, stringObjectMap);
+//                    objectMetadata.setContentLength(0);
+//                    InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
+//                    PutObjectResult putObjectResult = amazonS3.putObject(
+//                            azureSiglaStorageConfigurationProperties.getBucketName(),
+//                            key,
+//                            emptyContent,
+//                            objectMetadata);
+//                    return new StorageObject(key, key, putObjectResult.getMetadata().getUserMetadata());
+//                }).orElse(new StorageObject(key, key, Collections.emptyMap()));
     }
 
     @Override
@@ -129,45 +73,83 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                         return path;
                 });
         String key = parentPath.concat(SUFFIX).concat((String) metadataProperties.get(StoragePropertyNames.NAME.value()));
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        setUserMetadata(objectMetadata, metadataProperties);
-        try {
-            objectMetadata.setContentLength(Long.valueOf(inputStream.available()).longValue());
-            PutObjectResult putObjectResult = amazonS3.putObject(azureSiglaStorageConfigurationProperties.getBucketName(),
-                    key, inputStream, objectMetadata);
 
-            return new StorageObject(key, key, getUserMetadata(key, putObjectResult.getMetadata()));
-        } catch (IOException e) {
+        try {
+            CloudBlockBlob blockBlobReference = cloudBlobContainer
+                    .getBlockBlobReference(key);
+
+            blockBlobReference
+                    .upload(inputStream, -1);
+
+            HashMap<String, String> metadata = new HashMap<>();
+
+
+            metadataProperties.entrySet()
+                    .forEach(item -> metadata.put(item.getKey().replaceAll(":", "X"), item.getValue().toString()));
+            blockBlobReference.setMetadata(metadata);
+            blockBlobReference.uploadMetadata();
+
+            return new StorageObject(key, key, blockBlobReference.getMetadata());
+
+        } catch (URISyntaxException | IOException | com.microsoft.azure.storage.StorageException e) {
             throw new StorageException(StorageException.Type.GENERIC, e);
         }
+
+
+//        setUserMetadata(objectMetadata, metadataProperties);
+//        try {
+//            objectMetadata.setContentLength(Long.valueOf(inputStream.available()).longValue());
+//            PutObjectResult putObjectResult = amazonS3.putObject(azureSiglaStorageConfigurationProperties.getBucketName(),
+//                    key, inputStream, objectMetadata);
+//
+//            return new StorageObject(key, key, getUserMetadata(key, putObjectResult.getMetadata()));
+//        } catch (IOException e) {
+//            throw new StorageException(StorageException.Type.GENERIC, e);
+//        }
     }
 
     @Override
     public void updateProperties(StorageObject storageObject, Map<String, Object> metadataProperties) {
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        setUserMetadata(objectMetadata, metadataProperties);
-        S3Object s3Object = amazonS3.getObject(azureSiglaStorageConfigurationProperties.getBucketName(), storageObject.getKey());
-        amazonS3.putObject(azureSiglaStorageConfigurationProperties.getBucketName(), s3Object.getKey(), s3Object.getObjectContent(), objectMetadata);
+
+        throw new RuntimeException("no update properties");
+
+
+//        ObjectMetadata objectMetadata = new ObjectMetadata();
+//        setUserMetadata(objectMetadata, metadataProperties);
+//        S3Object s3Object = amazonS3.getObject(azureSiglaStorageConfigurationProperties.getBucketName(), storageObject.getKey());
+//        amazonS3.putObject(azureSiglaStorageConfigurationProperties.getBucketName(), s3Object.getKey(), s3Object.getObjectContent(), objectMetadata);
     }
 
     @Override
     public StorageObject updateStream(String key, InputStream inputStream, String contentType) {
-        try {
-            final byte[] bytes = IOUtils.toByteArray(inputStream);
-            ObjectMetadata objectMetadata = amazonS3.getObject(azureSiglaStorageConfigurationProperties.getBucketName(), key).getObjectMetadata().clone();
-            objectMetadata.setContentType(contentType);
-            objectMetadata.setContentLength(Long.valueOf(bytes.length));
-            PutObjectResult putObjectResult = amazonS3.putObject(azureSiglaStorageConfigurationProperties.getBucketName(),
-                    key, new ByteArrayInputStream(bytes), objectMetadata);
-            return new StorageObject(key, key,  getUserMetadata(key, putObjectResult.getMetadata()));
-        } catch (IOException e) {
-            throw new StorageException(StorageException.Type.GENERIC, e);
-        }
+
+        throw new RuntimeException("no upload stream");
+
+
+//        try {
+//            final byte[] bytes = IOUtils.toByteArray(inputStream);
+//            ObjectMetadata objectMetadata = amazonS3.getObject(azureSiglaStorageConfigurationProperties.getBucketName(), key).getObjectMetadata().clone();
+//            objectMetadata.setContentType(contentType);
+//            objectMetadata.setContentLength(Long.valueOf(bytes.length));
+//            PutObjectResult putObjectResult = amazonS3.putObject(azureSiglaStorageConfigurationProperties.getBucketName(),
+//                    key, new ByteArrayInputStream(bytes), objectMetadata);
+//            return new StorageObject(key, key,  getUserMetadata(key, putObjectResult.getMetadata()));
+//        } catch (IOException e) {
+//            throw new StorageException(StorageException.Type.GENERIC, e);
+//        }
     }
 
     @Override
     public InputStream getInputStream(String name) {
-        return amazonS3.getObject(azureSiglaStorageConfigurationProperties.getBucketName(), name).getObjectContent();
+
+        try {
+            return cloudBlobContainer
+                    .getBlobReferenceFromServer(name)
+                    .openInputStream();
+        } catch (URISyntaxException | com.microsoft.azure.storage.StorageException e) {
+            throw new StorageException(StorageException.Type.GENERIC, e);
+        }
+
     }
 
     @Override
@@ -182,41 +164,53 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
     @Override
     public CompletableFuture<Boolean> deleteAsync(String id) {
-        return CompletableFuture
-                .supplyAsync(() -> {
-                    boolean exists = amazonS3.doesObjectExist(azureSiglaStorageConfigurationProperties.getBucketName(), id);
-                    if (exists) {
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(new Date());
-                        calendar.add(Calendar.SECOND, azureSiglaStorageConfigurationProperties.getDeleteAfter());
 
-                        ObjectMetadata objectMetadata = new ObjectMetadata();
-                        objectMetadata.setExpirationTime(calendar.getTime());
+        throw new RuntimeException("no delete async");
 
-                        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(azureSiglaStorageConfigurationProperties.getBucketName(),
-                                id, azureSiglaStorageConfigurationProperties.getBucketName(), id)
-                                .withNewObjectMetadata(objectMetadata);
-
-                        amazonS3.copyObject(copyObjectRequest);
-                    }  else {
-                        LOGGER.warn("item {} does not exist", id);
-                    }
-                    return exists;
-                });
+//        return CompletableFuture
+//                .supplyAsync(() -> {
+//                    boolean exists = amazonS3.doesObjectExist(azureSiglaStorageConfigurationProperties.getBucketName(), id);
+//                    if (exists) {
+//                        Calendar calendar = Calendar.getInstance();
+//                        calendar.setTime(new Date());
+//                        calendar.add(Calendar.SECOND, azureSiglaStorageConfigurationProperties.getDeleteAfter());
+//
+//                        ObjectMetadata objectMetadata = new ObjectMetadata();
+//                        objectMetadata.setExpirationTime(calendar.getTime());
+//
+//                        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(azureSiglaStorageConfigurationProperties.getBucketName(),
+//                                id, azureSiglaStorageConfigurationProperties.getBucketName(), id)
+//                                .withNewObjectMetadata(objectMetadata);
+//
+//                        amazonS3.copyObject(copyObjectRequest);
+//                    }  else {
+//                        LOGGER.warn("item {} does not exist", id);
+//                    }
+//                    return exists;
+//                });
     }
 
     @Override
     public StorageObject getObject(String key) {
+
         try {
             key = Optional.ofNullable(key)
                     .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
                     .map(s -> s.substring(1))
                     .orElse(key);
-            S3Object s3Object = amazonS3.getObject(azureSiglaStorageConfigurationProperties.getBucketName(), key);
-            return new StorageObject(s3Object.getKey(), s3Object.getKey(), getUserMetadata(s3Object.getKey(), s3Object.getObjectMetadata()));
-        } catch (AmazonS3Exception _ex) {
-            if (_ex.getStatusCode() == HttpStatus.SC_NOT_FOUND)
-                return null;
+
+            CloudBlockBlob blobReference = cloudBlobContainer
+                    .getBlockBlobReference(key);
+
+
+            HashMap<String, String> metadata = blobReference
+                    .getMetadata();
+            return new StorageObject(key, key, metadata);
+
+
+//            S3Object s3Object = amazonS3.getObject(azureSiglaStorageConfigurationProperties.getBucketName(), key);
+//            return new StorageObject(s3Object.getKey(), s3Object.getKey(), getUserMetadata(s3Object.getKey(), s3Object.getObjectMetadata()));
+        } catch (com.microsoft.azure.storage.StorageException | URISyntaxException _ex) {
             throw new StorageException(StorageException.Type.GENERIC, _ex);
         }
     }
@@ -233,13 +227,14 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
     @Override
     public List<StorageObject> getChildren(String key) {
-        return amazonS3
-                .listObjects(azureSiglaStorageConfigurationProperties.getBucketName(), key)
-                .getObjectSummaries()
-                .stream()
-                .filter(s3ObjectSummary -> !s3ObjectSummary.getKey().equals(key))
-                .map(s3Object -> getObject(s3Object.getKey()))
-                .collect(Collectors.toList());
+        throw new RuntimeException("no get children");
+//        return amazonS3
+//                .listObjects(azureSiglaStorageConfigurationProperties.getBucketName(), key)
+//                .getObjectSummaries()
+//                .stream()
+//                .filter(s3ObjectSummary -> !s3ObjectSummary.getKey().equals(key))
+//                .map(s3Object -> getObject(s3Object.getKey()))
+//                .collect(Collectors.toList());
     }
 
     @Override
@@ -267,10 +262,13 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                 .map(s -> s.substring(1))
                 .orElse(target.getPath())
                 .concat(source.getKey().substring(source.getKey().lastIndexOf(SUFFIX)));
-        amazonS3.copyObject(azureSiglaStorageConfigurationProperties.getBucketName(),
-                source.getKey(),
-                azureSiglaStorageConfigurationProperties.getBucketName(),
-                targetPath);
+
+        throw new RuntimeException("no copy node");
+
+//        amazonS3.copyObject(azureSiglaStorageConfigurationProperties.getBucketName(),
+//                source.getKey(),
+//                azureSiglaStorageConfigurationProperties.getBucketName(),
+//                targetPath);
     }
 
     @Override
