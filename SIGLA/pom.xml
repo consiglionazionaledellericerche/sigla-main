@@ -394,9 +394,9 @@
             <version>20160810</version>
         </dependency>
         <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-            <version>1.11.84</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sigla-storage-cmis</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
