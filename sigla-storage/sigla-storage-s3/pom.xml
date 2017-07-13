@@ -9,7 +9,6 @@
   	</parent>
 
 	<properties>
-		<opencmis.version>1.0.0</opencmis.version>
 	</properties>
 
 	<dependencies>
