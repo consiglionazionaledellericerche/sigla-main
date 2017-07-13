@@ -1,5 +1,6 @@
 package it.cnr.contab.spring.storage;
 
+import com.microsoft.azure.storage.blob.CloudBlob;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
 import com.microsoft.azure.storage.blob.CloudBlockBlob;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
@@ -193,26 +194,29 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     @Override
     public StorageObject getObject(String key) {
 
-        try {
             key = Optional.ofNullable(key)
                     .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
                     .map(s -> s.substring(1))
                     .orElse(key);
 
-            CloudBlockBlob blobReference = cloudBlobContainer
-                    .getBlockBlobReference(key);
+            try {
+                CloudBlob blobReference = cloudBlobContainer
+                        .getBlobReferenceFromServer(key);
+                HashMap<String, String> metadata = blobReference
+                        .getMetadata();
+                return new StorageObject(key, key, metadata);
+            } catch (URISyntaxException | com.microsoft.azure.storage.StorageException e) {
 
+                if (e instanceof com.microsoft.azure.storage.StorageException) {
+                    if (((com.microsoft.azure.storage.StorageException) e).getHttpStatusCode() == 404) {
+                        LOGGER.error("item " + key + " does not exist", e);
+                        return null;
+                    }
+                }
 
-            HashMap<String, String> metadata = blobReference
-                    .getMetadata();
-            return new StorageObject(key, key, metadata);
+                throw new StorageException(StorageException.Type.GENERIC, e);
+            }
 
-
-//            S3Object s3Object = amazonS3.getObject(azureSiglaStorageConfigurationProperties.getBucketName(), key);
-//            return new StorageObject(s3Object.getKey(), s3Object.getKey(), getUserMetadata(s3Object.getKey(), s3Object.getObjectMetadata()));
-        } catch (com.microsoft.azure.storage.StorageException | URISyntaxException _ex) {
-            throw new StorageException(StorageException.Type.GENERIC, _ex);
-        }
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.StorageCredentials;
 import com.microsoft.azure.storage.StorageException;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
-import it.cnr.contab.spring.storage.AzureRuntimeException;
 import it.cnr.contab.spring.storage.AzureSiglaStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +41,8 @@ public class AzureSiglaStorageConfiguration {
             container.createIfNotExists();
             return container;
         } catch (InvalidKeyException | StorageException | URISyntaxException e) {
-            throw new AzureRuntimeException("cannot get reference to blob container " + containerName, e);
+            String msg = "cannot get reference to blob container " + containerName;
+            throw new it.cnr.contab.spring.storage.StorageException(it.cnr.contab.spring.storage.StorageException.Type.GENERIC, new RuntimeException(msg, e));
         }
     }
 
