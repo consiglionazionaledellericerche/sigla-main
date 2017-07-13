@@ -11,8 +11,7 @@
 	<modules>
 		<module>sigla-storage-commons</module>
 		<module>sigla-storage-cmis</module>
-		<!--<module>sigla-storage-azure</module>
-		<module>sigla-storage-s3</module>-->
+		<module>sigla-storage-s3</module>
 	</modules>
 
 </project>
