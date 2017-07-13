@@ -8,6 +8,7 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -44,22 +45,21 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                 });
 
 
-        throw new RuntimeException("no create folder");
+        return Optional.ofNullable(metadata)
+                .filter(stringObjectMap -> !stringObjectMap.isEmpty())
+                .map(stringObjectMap -> {
 
-//        return Optional.ofNullable(metadata)
-//                .filter(stringObjectMap -> !stringObjectMap.isEmpty())
-//                .map(stringObjectMap -> {
-//                    ObjectMetadata objectMetadata = new ObjectMetadata();
-//                    setUserMetadata(objectMetadata, stringObjectMap);
-//                    objectMetadata.setContentLength(0);
-//                    InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
-//                    PutObjectResult putObjectResult = amazonS3.putObject(
-//                            azureSiglaStorageConfigurationProperties.getBucketName(),
-//                            key,
-//                            emptyContent,
-//                            objectMetadata);
-//                    return new StorageObject(key, key, putObjectResult.getMetadata().getUserMetadata());
-//                }).orElse(new StorageObject(key, key, Collections.emptyMap()));
+                    try {
+                        HashMap<String, String> map = cloudBlobContainer
+                                .getBlockBlobReference(key)
+                                .getMetadata();
+
+                        return new StorageObject(key, key, map);
+                    } catch (URISyntaxException | com.microsoft.azure.storage.StorageException e) {
+                        throw new StorageException(StorageException.Type.GENERIC, e);
+                    }
+
+                }).orElse(new StorageObject(key, key, Collections.emptyMap()));
     }
 
     @Override
