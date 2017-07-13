@@ -15,7 +15,6 @@
 			<artifactId>jada</artifactId>
 			<version>${jada.version}</version>
 			<type>ejb</type>
-			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<artifactId>mail</artifactId>
