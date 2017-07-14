@@ -156,7 +156,6 @@ public class ContrattoService extends StoreService {
 	}
 
     public void changeProgressivoNodeRef(StorageObject oldStorageObject, ContrattoBulk contratto) throws ApplicationException {
-		updateProperties(contratto, oldStorageObject);
 		List<StorageObject> children = getChildren(oldStorageObject.getKey());
 		for (StorageObject child : children) {
 			AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
@@ -166,6 +165,7 @@ public class ContrattoService extends StoreService {
 			updateProperties(allegato, child);
 			if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
 				costruisciAlberaturaAlternativa(allegato, child);
-		}		
+		}
+		updateProperties(contratto, oldStorageObject);
 	}
 }

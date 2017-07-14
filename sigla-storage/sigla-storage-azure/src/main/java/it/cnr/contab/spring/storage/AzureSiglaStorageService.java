@@ -7,6 +7,7 @@ import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Created by francesco on 06/07/17.
  */
+@Profile("AZURE")
 public class AzureSiglaStorageService implements SiglaStorageService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AzureSiglaStorageService.class);

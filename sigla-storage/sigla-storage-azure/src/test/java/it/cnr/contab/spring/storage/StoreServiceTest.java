@@ -48,7 +48,7 @@ public class StoreServiceTest {
     @Test
     public void testCreateFolderIfNotPresent() {
         storeService
-                .createFolderIfNotPresent("my-path", "my-name", "my-title", "my-description");
+                .createFolderIfNotPresent("/my-path", "my-name", "my-title", "my-description");
         assertTrue(false);
     }
 }
