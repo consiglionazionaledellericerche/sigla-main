@@ -69,6 +69,12 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                                         StorageObject parentObject, String path, boolean makeVersionable, Permission... permissions) {
         String parentPath = Optional.ofNullable(parentObject)
                 .map(storageObject -> storageObject.getPath())
+                .map(s -> {
+                    if (s.indexOf(SUFFIX) == 0)
+                        return s.substring(1);
+                    else
+                        return s;
+                })
                 .orElseGet(() -> {
                     if (path.indexOf(SUFFIX) == 0)
                         return path.substring(1);
@@ -143,11 +149,17 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     }
 
     @Override
-    public InputStream getInputStream(String name) {
+    public InputStream getInputStream(String key) {
 
         try {
             return cloudBlobContainer
-                    .getBlobReferenceFromServer(name)
+                    .getBlobReferenceFromServer( Optional.ofNullable(key)
+                            .map(s -> {
+                                if (s.indexOf(SUFFIX) == 0)
+                                    return s.substring(1);
+                                else
+                                    return s;
+                            }).orElseThrow(() -> new StorageException(StorageException.Type.NOT_FOUND, "Key is null")))
                     .openInputStream();
         } catch (URISyntaxException | com.microsoft.azure.storage.StorageException e) {
             throw new StorageException(StorageException.Type.GENERIC, e);
@@ -166,31 +178,24 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     }
 
     @Override
-    public CompletableFuture<Boolean> deleteAsync(String id) {
-
-        throw new RuntimeException("no delete async");
-
-//        return CompletableFuture
-//                .supplyAsync(() -> {
-//                    boolean exists = amazonS3.doesObjectExist(azureSiglaStorageConfigurationProperties.getBucketName(), id);
-//                    if (exists) {
-//                        Calendar calendar = Calendar.getInstance();
-//                        calendar.setTime(new Date());
-//                        calendar.add(Calendar.SECOND, azureSiglaStorageConfigurationProperties.getDeleteAfter());
-//
-//                        ObjectMetadata objectMetadata = new ObjectMetadata();
-//                        objectMetadata.setExpirationTime(calendar.getTime());
-//
-//                        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(azureSiglaStorageConfigurationProperties.getBucketName(),
-//                                id, azureSiglaStorageConfigurationProperties.getBucketName(), id)
-//                                .withNewObjectMetadata(objectMetadata);
-//
-//                        amazonS3.copyObject(copyObjectRequest);
-//                    }  else {
-//                        LOGGER.warn("item {} does not exist", id);
-//                    }
-//                    return exists;
-//                });
+    public Boolean delete(String key) {
+        key = Optional.ofNullable(key)
+                .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
+                .map(s -> s.substring(1))
+                .orElse(key);
+        try {
+            CloudBlob blobReference = cloudBlobContainer.getBlobReferenceFromServer(key);
+            blobReference.delete();
+        } catch (URISyntaxException | com.microsoft.azure.storage.StorageException e) {
+            if (e instanceof com.microsoft.azure.storage.StorageException) {
+                if (((com.microsoft.azure.storage.StorageException) e).getHttpStatusCode() == 404) {
+                    LOGGER.error("item " + key + " does not exist", e);
+                    return false;
+                }
+            }
+            throw new StorageException(StorageException.Type.GENERIC, e);
+        }
+        return true;
     }
 
     @Override
@@ -300,7 +305,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
     @Override
     public StoreType getStoreType() {
-        return StoreType.S3;
+        return StoreType.AZURE;
     }
 
     @Override

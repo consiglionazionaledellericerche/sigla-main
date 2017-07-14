@@ -125,6 +125,12 @@ public class S3SiglaStorageService implements SiglaStorageService {
                                         StorageObject parentObject, String path, boolean makeVersionable, Permission... permissions) {
         String parentPath = Optional.ofNullable(parentObject)
                 .map(storageObject -> storageObject.getPath())
+                .map(s -> {
+                    if (s.indexOf(SUFFIX) == 0)
+                        return s.substring(1);
+                    else
+                        return s;
+                })
                 .orElseGet(() -> {
                     if (path.indexOf(SUFFIX) == 0)
                         return path.substring(1);
@@ -169,8 +175,16 @@ public class S3SiglaStorageService implements SiglaStorageService {
     }
 
     @Override
-    public InputStream getInputStream(String name) {
-        return amazonS3.getObject(s3SiglaStorageConfigurationProperties.getBucketName(), name).getObjectContent();
+    public InputStream getInputStream(String key) {
+        return amazonS3.getObject(s3SiglaStorageConfigurationProperties.getBucketName(),
+                Optional.ofNullable(key)
+                    .map(s -> {
+                        if (s.indexOf(SUFFIX) == 0)
+                            return s.substring(1);
+                        else
+                            return s;
+                    }).orElseThrow(() -> new StorageException(StorageException.Type.NOT_FOUND, "Key is null"))
+        ).getObjectContent();
     }
 
     @Override
@@ -184,28 +198,18 @@ public class S3SiglaStorageService implements SiglaStorageService {
     }
 
     @Override
-    public CompletableFuture<Boolean> deleteAsync(String id) {
-        return CompletableFuture
-                .supplyAsync(() -> {
-                    boolean exists = amazonS3.doesObjectExist(s3SiglaStorageConfigurationProperties.getBucketName(), id);
-                    if (exists) {
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(new Date());
-                        calendar.add(Calendar.SECOND, s3SiglaStorageConfigurationProperties.getDeleteAfter());
-
-                        ObjectMetadata objectMetadata = new ObjectMetadata();
-                        objectMetadata.setExpirationTime(calendar.getTime());
-
-                        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(s3SiglaStorageConfigurationProperties.getBucketName(),
-                                id, s3SiglaStorageConfigurationProperties.getBucketName(), id)
-                                .withNewObjectMetadata(objectMetadata);
-
-                        amazonS3.copyObject(copyObjectRequest);
-                    }  else {
-                        LOGGER.warn("item {} does not exist", id);
-                    }
-                    return exists;
-                });
+    public Boolean delete(String key) {
+        key = Optional.ofNullable(key)
+                .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
+                .map(s -> s.substring(1))
+                .orElse(key);
+        boolean exists = amazonS3.doesObjectExist(s3SiglaStorageConfigurationProperties.getBucketName(), key);
+        if (exists) {
+            amazonS3.deleteObject(s3SiglaStorageConfigurationProperties.getBucketName(), key);
+        }  else {
+            LOGGER.warn("item {} does not exist", key);
+        }
+        return exists;
     }
 
     @Override

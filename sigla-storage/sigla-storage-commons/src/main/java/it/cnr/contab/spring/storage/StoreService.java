@@ -164,12 +164,12 @@ public class StoreService {
                 .orElseGet(() -> siglaStorageService.createFolder(path, name, metadataProperties).getPath());
     }
 
-    public CompletableFuture<Boolean> delete(StorageObject storageObject){
+    public Boolean delete(StorageObject storageObject){
         return delete(storageObject.getKey());
     }
 
-    public CompletableFuture<Boolean> delete(String key){
-        return siglaStorageService.deleteAsync(key);
+    public Boolean delete(String key){
+        return siglaStorageService.delete(key);
     }
 
     public InputStream getResource(StorageObject storageObject){

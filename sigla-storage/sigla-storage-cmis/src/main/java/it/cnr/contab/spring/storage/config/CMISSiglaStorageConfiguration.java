@@ -4,6 +4,7 @@ import it.cnr.contab.spring.storage.MimeTypes;
 import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.jada.persistency.ObjectNotFoundException;
 import org.apache.chemistry.opencmis.client.api.*;
 import org.apache.chemistry.opencmis.client.bindings.CmisBindingFactory;
 import org.apache.chemistry.opencmis.client.bindings.impl.CmisBindingsHelper;
@@ -308,24 +309,25 @@ public class CMISSiglaStorageConfiguration {
                         .orElseThrow(() -> new StorageException(StorageException.Type.INVALID_ARGUMENTS, "You must specify key for get input stream"));
             }
             @Override
-            public CompletableFuture<Boolean> deleteAsync(String id) {
-                return CompletableFuture
-                        .supplyAsync(() -> {
-                            Optional<CmisObject> cmisObject = Optional.ofNullable(siglaSession.getObject(id));
-                            boolean exists = cmisObject.isPresent();
-                            if (exists) {
-                                if (cmisObject.get().getBaseTypeId().equals(StoragePropertyNames.CMIS_FOLDER.value())){
-                                    ((Folder)cmisObject.get()).deleteTree(true, UnfileObject.DELETE, false);
-                                } else {
-                                    ((Document)cmisObject.get()).delete();
-                                }
-                            }  else {
-                                logger.warn("item {} does not exist", id);
-                            }
-                            return exists;
-                        });
+            public Boolean delete(String id) {
+                try {
+                    Optional<CmisObject> cmisObject = Optional.ofNullable(siglaSession.getObject(id));
+                    boolean exists = cmisObject.isPresent();
+                    if (exists) {
+                        if (cmisObject.get().getBaseTypeId().equals(StoragePropertyNames.CMIS_FOLDER.value())){
+                            ((Folder)cmisObject.get()).deleteTree(true, UnfileObject.DELETE, false);
+                        } else {
+                            ((Document)cmisObject.get()).delete();
+                        }
+                    }  else {
+                        logger.warn("item {} does not exist", id);
+                    }
+                    return exists;
+                } catch(CmisObjectNotFoundException _ex) {
+                    logger.warn("item {} does not exist", id);
+                    return false;
+                }
             }
-
             @Override
             public StorageObject getObject(String id) {
                 try {

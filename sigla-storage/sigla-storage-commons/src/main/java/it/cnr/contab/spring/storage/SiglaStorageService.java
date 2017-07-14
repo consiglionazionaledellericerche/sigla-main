@@ -125,7 +125,7 @@ public interface SiglaStorageService {
      * @param id object id
      * @return a CompletableFuture wrapping true if object exists
      */
-    CompletableFuture<Boolean> deleteAsync(String id);
+    Boolean delete(String id);
 
     /**
      *

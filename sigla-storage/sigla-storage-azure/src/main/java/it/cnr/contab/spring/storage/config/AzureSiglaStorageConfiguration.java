@@ -18,7 +18,7 @@ import java.security.InvalidKeyException;
  * Created by mspasiano on 6/5/17.
  */
 @Configuration
-@Profile("Azure")
+@Profile("AZURE")
 public class AzureSiglaStorageConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AzureSiglaStorageConfiguration.class);

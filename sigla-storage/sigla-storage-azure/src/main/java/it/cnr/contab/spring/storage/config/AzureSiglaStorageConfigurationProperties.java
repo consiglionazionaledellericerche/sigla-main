@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
  * Created by mspasiano on 6/5/17.
  */
 @Configuration
-@Profile("Azure")
+@Profile("AZURE")
 public class AzureSiglaStorageConfigurationProperties {
 
     @Value("${cnr.azure.connectionString}")

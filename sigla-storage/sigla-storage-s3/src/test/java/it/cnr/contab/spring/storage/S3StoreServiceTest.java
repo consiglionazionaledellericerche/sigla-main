@@ -2,6 +2,8 @@ package it.cnr.contab.spring.storage;
 
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -23,9 +26,9 @@ import static org.junit.Assert.assertTrue;
  */
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration("/sigla-storage-azure-test-context.xml")
-@ActiveProfiles("Azure")
-public class StoreServiceTest {
+@ContextConfiguration("/sigla-storage-s3-test-context.xml")
+@ActiveProfiles("S3")
+public class S3StoreServiceTest {
 
     public static final String TEXT = "hello worlds";
 
@@ -33,22 +36,32 @@ public class StoreServiceTest {
     private StoreService storeService;
 
     @Test
-    public void testStoreSimpleDocuments() throws IOException {
+    public void testStore() throws IOException {
         InputStream is = IOUtils.toInputStream(TEXT, Charset.defaultCharset());
         Map<String, Object> map = new HashMap();
         map.put(StoragePropertyNames.NAME.value(), "ciaone");
         map.put("email", "francesco@uliana.it");
-//        map.put("titolo", "ÉCOLE POLYTECHNIQUE FÉDÉRALE DE LAUSANNE EPFL");
-//        map.put("name", "Raffaella Carrà");
+//        map.put("titolo", "ï¿½COLE POLYTECHNIQUE Fï¿½Dï¿½RALE DE LAUSANNE EPFL");
+//        map.put("name", "Raffaella Carrï¿½");
         StorageObject document = storeService.storeSimpleDocument(is, "text/plain", "/foo", map);
         InputStream iss = storeService.getResource("foo/ciaone");
         assertEquals(TEXT, IOUtils.toString(iss, Charset.defaultCharset()));
+
+        final String folderPath = storeService.createFolderIfNotPresent(
+                "/my-path",
+                "my-name",
+                "my-title",
+                "my-description");
+        assertNotNull(folderPath);
     }
 
     @Test
-    public void testCreateFolderIfNotPresent() {
-        storeService
-                .createFolderIfNotPresent("/my-path", "my-name", "my-title", "my-description");
-        assertTrue(false);
+    public void testGetAndDelete() throws IOException {
+        InputStream is = storeService.getResource("/foo/ciaone");
+        assertEquals(TEXT, IOUtils.toString(is, Charset.defaultCharset()));
+
+        storeService.delete(storeService.getStorageObjectBykey("/foo/ciaone"));
+        storeService.delete(storeService.getStorageObjectBykey("/my-path/my-name"));
     }
+
 }
