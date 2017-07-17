@@ -26,31 +26,34 @@ public class AzureSiglaStorageConfiguration {
 
 
     @Bean
-    public CloudBlobContainer cloudBlobContainer(AzureSiglaStorageConfigurationProperties azureSiglaStorageConfigurationProperties) {
+    public CloudStorageAccount cloudBlobContainer(AzureSiglaStorageConfigurationProperties azureSiglaStorageConfigurationProperties) {
 
         String connectionString = azureSiglaStorageConfigurationProperties.getConnectionString();
         LOGGER.info("connectionString = {}", connectionString);
-
-        String containerName = azureSiglaStorageConfigurationProperties.getContainerName();
-        LOGGER.info("container = {}", containerName);
-
         try {
             StorageCredentials credentials = StorageCredentials
                     .tryParseCredentials(connectionString);
-            CloudStorageAccount account = new CloudStorageAccount(credentials);
-            CloudBlobContainer container = account.createCloudBlobClient().getContainerReference(containerName);
-            container.createIfNotExists();
-            return container;
+            return new CloudStorageAccount(credentials);
         } catch (InvalidKeyException | StorageException | URISyntaxException e) {
-            String msg = "cannot get reference to blob container " + containerName;
+            String msg = "cannot get reference to blob container ";
             throw new it.cnr.contab.spring.storage.StorageException(it.cnr.contab.spring.storage.StorageException.Type.GENERIC, new RuntimeException(msg, e));
         }
     }
 
 
     @Bean
-    public AzureSiglaStorageService azureBlobStorageService(CloudBlobContainer cloudBlobContainer, AzureSiglaStorageConfigurationProperties azureSiglaStorageConfigurationProperties) {
-        return new AzureSiglaStorageService(cloudBlobContainer, azureSiglaStorageConfigurationProperties);
+    public AzureSiglaStorageService azureBlobStorageService(CloudStorageAccount cloudStorageAccount,
+                                                            AzureSiglaStorageConfigurationProperties azureSiglaStorageConfigurationProperties) {
+        String containerName = azureSiglaStorageConfigurationProperties.getContainerName();
+        LOGGER.info("container = {}", containerName);
+        try {
+            CloudBlobContainer container = cloudStorageAccount.createCloudBlobClient().getContainerReference(containerName);
+            container.createIfNotExists();
+            return new AzureSiglaStorageService(container, azureSiglaStorageConfigurationProperties);
+        } catch (StorageException | URISyntaxException e) {
+            String msg = "cannot get reference to blob container " + containerName;
+            throw new it.cnr.contab.spring.storage.StorageException(it.cnr.contab.spring.storage.StorageException.Type.GENERIC, new RuntimeException(msg, e));
+        }
     }
 
 

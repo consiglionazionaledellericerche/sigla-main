@@ -1,5 +1,6 @@
 package it.cnr.contab.spring.storage;
 
+import com.microsoft.azure.storage.analytics.StorageService;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -32,19 +33,25 @@ import static org.junit.Assert.assertTrue;
 public class AzureStoreServiceTest {
 
     public static final String TEXT = "hello worlds";
-    public static final String FOO_CIAONE = "/foo/ciaone";
+
+    public static final String FOO = SiglaStorageService.SUFFIX + "foo spazio";
+    public static final String CIAONE = "ciaone";
+    public static final String FOO_CIAONE = FOO + SiglaStorageService.SUFFIX + CIAONE;
+
     public static final String P_CM_TITLED = "P:cm:titled";
     public static final String TEST_PDF = "test.pdf";
-    public static final String FOO = "/foo";
 
     @Autowired
     private StoreService storeService;
 
     @Test
     public void testStore() throws IOException {
+        final StorageObject storageObjectByPath = storeService.getStorageObjectByPath(FOO);
+
+
         InputStream is = IOUtils.toInputStream(TEXT, Charset.defaultCharset());
         Map<String, Object> map = new HashMap();
-        map.put(StoragePropertyNames.NAME.value(), "ciaone");
+        map.put(StoragePropertyNames.NAME.value(), CIAONE);
         map.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), Arrays.asList(P_CM_TITLED));
         map.put(StoragePropertyNames.TITLE.value(), "Raffaella Carra");
         StorageObject document = storeService.storeSimpleDocument(is, "text/plain", FOO, map);
@@ -81,7 +88,7 @@ public class AzureStoreServiceTest {
                 .findFirst()
                 .get().getKey());
 
-        storeService.delete(storeService.getStorageObjectBykey("/foo/ciaone"));
+        storeService.delete(storeService.getStorageObjectBykey(FOO_CIAONE));
         storeService.delete(storeService.getStorageObjectBykey("/my-path/my-name/test.pdf"));
     }
 

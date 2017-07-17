@@ -1,9 +1,7 @@
 package it.cnr.contab.spring.storage;
 
-import com.microsoft.azure.storage.blob.CloudAppendBlob;
-import com.microsoft.azure.storage.blob.CloudBlob;
-import com.microsoft.azure.storage.blob.CloudBlobContainer;
-import com.microsoft.azure.storage.blob.CloudBlockBlob;
+import com.microsoft.azure.storage.blob.*;
+import com.microsoft.azure.storage.file.CloudFileClient;
 import it.cnr.contab.spring.storage.config.AzureSiglaStorageConfigurationProperties;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -139,15 +137,14 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                     else
                         return path;
                 });
-        String key = parentPath.concat(SUFFIX).concat((String) metadataProperties.get(StoragePropertyNames.NAME.value()));
 
+        String key = parentPath.concat(SUFFIX).concat((String) metadataProperties.get(StoragePropertyNames.NAME.value()));
         try {
             CloudBlockBlob blockBlobReference = cloudBlobContainer
                     .getBlockBlobReference(key);
 
             blockBlobReference
                     .upload(inputStream, -1);
-
 
             blockBlobReference.setMetadata(putUserMetadata(metadataProperties));
             blockBlobReference.uploadMetadata();
@@ -164,10 +161,22 @@ public class AzureSiglaStorageService implements SiglaStorageService {
         try {
             CloudBlockBlob blockBlobReference = cloudBlobContainer
                     .getBlockBlobReference(storageObject.getKey());
-
-            blockBlobReference.setMetadata(putUserMetadata(metadataProperties));
-            blockBlobReference.uploadMetadata();
-
+            if (blockBlobReference.exists()) {
+                blockBlobReference.setMetadata(putUserMetadata(metadataProperties));
+                blockBlobReference.uploadMetadata();
+                Optional.ofNullable(metadataProperties.get(StoragePropertyNames.NAME.value()))
+                        .map(String.class::cast)
+                        .filter(s -> !s.equals(blockBlobReference.getName()))
+                        .ifPresent(s -> {
+                            /*
+                            amazonS3.copyObject(s3SiglaStorageConfigurationProperties.getBucketName(),
+                                    s3Object.getKey(),
+                                    s3SiglaStorageConfigurationProperties.getBucketName(),
+                                    s3Object.getKey().substring(s3Object.getKey().lastIndexOf(SUFFIX) + 1).concat(s));
+                            amazonS3.deleteObject(s3SiglaStorageConfigurationProperties.getBucketName(),s3Object.getKey());
+                            */
+                        });
+            }
         } catch (URISyntaxException | com.microsoft.azure.storage.StorageException e) {
             throw new StorageException(StorageException.Type.GENERIC, e);
         }
@@ -190,7 +199,6 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
     @Override
     public InputStream getInputStream(String key) {
-
         try {
             return cloudBlobContainer
                     .getBlobReferenceFromServer( Optional.ofNullable(key)
@@ -240,16 +248,28 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
     @Override
     public StorageObject getObject(String key) {
-
             key = Optional.ofNullable(key)
                     .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
                     .map(s -> s.substring(1))
                     .orElse(key);
-
             try {
+                final Optional<StorageObject> storageObjectDirectory = cloudBlobContainer.listBlobsSegmented(key).getResults().stream()
+                        .filter(CloudBlobDirectory.class::isInstance)
+                        .findFirst()
+                        .map(CloudBlobDirectory.class::cast)
+                        .map(cloudBlobDirectory -> {
+                            String name =  cloudBlobDirectory.getPrefix();
+                            name = name.substring(0, name.length() -1);
+                            return new StorageObject(
+                                    name,
+                                    name,
+                                    Collections.emptyMap());
+                        });
+                if (storageObjectDirectory.isPresent())
+                    return storageObjectDirectory.get();
+
                 CloudBlob blobReference = cloudBlobContainer
                         .getBlobReferenceFromServer(key);
-
                 return new StorageObject(key, key, getUserMetadata(blobReference));
             } catch (URISyntaxException | com.microsoft.azure.storage.StorageException e) {
                 if (e instanceof com.microsoft.azure.storage.StorageException) {
@@ -283,10 +303,16 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                     .stream()
                     .filter(CloudBlockBlob.class::isInstance)
                     .map(CloudBlockBlob.class::cast)
-                    .map(cloudBlockBlob -> new StorageObject(
-                            cloudBlockBlob.getName(),
-                            cloudBlockBlob.getName(),
-                            getUserMetadata(cloudBlockBlob)))
+                    .map(cloudBlockBlob -> {
+                        try {
+                            return new StorageObject(
+                                    cloudBlockBlob.getName(),
+                                    cloudBlockBlob.getName(),
+                                    getUserMetadata(cloudBlobContainer.getBlobReferenceFromServer(cloudBlockBlob.getName())));
+                        } catch (URISyntaxException|com.microsoft.azure.storage.StorageException e) {
+                            throw new StorageException(StorageException.Type.GENERIC, e);
+                        }
+                    })
                     .collect(Collectors.toList());
 
         } catch (com.microsoft.azure.storage.StorageException e) {
@@ -314,18 +340,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
     @Override
     public void copyNode(StorageObject source, StorageObject target) {
-        String targetPath = Optional.ofNullable(target.getPath())
-                .filter(s -> s.startsWith(SUFFIX))
-                .map(s -> s.substring(1))
-                .orElse(target.getPath())
-                .concat(source.getKey().substring(source.getKey().lastIndexOf(SUFFIX)));
-
-        throw new RuntimeException("no copy node");
-
-//        amazonS3.copyObject(azureSiglaStorageConfigurationProperties.getBucketName(),
-//                source.getKey(),
-//                azureSiglaStorageConfigurationProperties.getBucketName(),
-//                targetPath);
+        LOGGER.warn("AZURE -> Not yet implemented -> copyNode");
     }
 
     @Override

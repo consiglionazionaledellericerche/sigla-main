@@ -156,7 +156,17 @@ public class S3SiglaStorageService implements SiglaStorageService {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         setUserMetadata(objectMetadata, metadataProperties);
         S3Object s3Object = amazonS3.getObject(s3SiglaStorageConfigurationProperties.getBucketName(), storageObject.getKey());
-        amazonS3.putObject(s3SiglaStorageConfigurationProperties.getBucketName(), s3Object.getKey(), s3Object.getObjectContent(), objectMetadata);
+        final PutObjectResult putObjectResult = amazonS3.putObject(s3SiglaStorageConfigurationProperties.getBucketName(), s3Object.getKey(), s3Object.getObjectContent(), objectMetadata);
+        Optional.ofNullable(metadataProperties.get(StoragePropertyNames.NAME.value()))
+                .map(String.class::cast)
+                .filter(s -> !s.equals(s3Object.getKey().substring(s3Object.getKey().lastIndexOf(SUFFIX))))
+                .ifPresent(s -> {
+                    amazonS3.copyObject(s3SiglaStorageConfigurationProperties.getBucketName(),
+                    s3Object.getKey(),
+                    s3SiglaStorageConfigurationProperties.getBucketName(),
+                    s3Object.getKey().substring(s3Object.getKey().lastIndexOf(SUFFIX) + 1).concat(s));
+                    amazonS3.deleteObject(s3SiglaStorageConfigurationProperties.getBucketName(),s3Object.getKey());
+                });
     }
 
     @Override
