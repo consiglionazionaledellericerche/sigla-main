@@ -24,7 +24,7 @@ public class S3SiglaStorageConfigurationProperties {
     @Value("${cnr.aws.deleteAfter}")
     private Integer deleteAfter;
 
-    @Value("#{${cnr.aws.metadataKeys}}")
+    @Value("#{${store.metadataKeys}}")
     private Map<String, String> metadataKeys;
 
     public String getAuthUrl() {

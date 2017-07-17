@@ -4,6 +4,7 @@ import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.StorageCredentials;
 import com.microsoft.azure.storage.StorageException;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
+import com.microsoft.azure.storage.file.CloudFileDirectory;
 import it.cnr.contab.spring.storage.AzureSiglaStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +49,8 @@ public class AzureSiglaStorageConfiguration {
 
 
     @Bean
-    public AzureSiglaStorageService azureBlobStorageService(CloudBlobContainer cloudBlobContainer) {
-        return new AzureSiglaStorageService(cloudBlobContainer);
+    public AzureSiglaStorageService azureBlobStorageService(CloudBlobContainer cloudBlobContainer, AzureSiglaStorageConfigurationProperties azureSiglaStorageConfigurationProperties) {
+        return new AzureSiglaStorageService(cloudBlobContainer, azureSiglaStorageConfigurationProperties);
     }
 
 

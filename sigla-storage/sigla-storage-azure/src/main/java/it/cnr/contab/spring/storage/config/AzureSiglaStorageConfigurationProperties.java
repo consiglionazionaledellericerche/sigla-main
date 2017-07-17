@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.util.Map;
+
 /**
  * Created by mspasiano on 6/5/17.
  */
@@ -16,6 +18,10 @@ public class AzureSiglaStorageConfigurationProperties {
 
     @Value("${cnr.azure.containerName}")
     private String containerName;
+
+    @Value("#{${store.metadataKeys}}")
+    private Map<String, String> metadataKeys;
+
 
     public String getContainerName() {
         return containerName;
@@ -33,7 +39,11 @@ public class AzureSiglaStorageConfigurationProperties {
         this.connectionString = connectionString;
     }
 
+    public Map<String, String> getMetadataKeys() {
+        return metadataKeys;
+    }
 
-
-
+    public void setMetadataKeys(Map<String, String> metadataKeys) {
+        this.metadataKeys = metadataKeys;
+    }
 }
