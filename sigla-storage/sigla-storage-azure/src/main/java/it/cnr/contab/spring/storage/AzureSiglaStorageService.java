@@ -39,15 +39,17 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                 .entrySet()
                 .stream()
                 .collect(HashMap::new, (m,entry)-> {
-                    if (metadataKeys.containsKey(entry.getKey())) {
-                        if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
-                            m.put(metadataKeys.get(entry.getKey()),
-                                    String.join(",", (List<String>)entry.getValue()));
-                        } else {
+                    Optional.ofNullable(entry.getValue())
+                            .ifPresent(entryValue -> {
+                                if (metadataKeys.containsKey(entry.getKey())) {
+                                    if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
+                                        m.put(metadataKeys.get(entry.getKey()),
+                                                String.join(",", (List<String>)entryValue));
+                                    } else {
                             m.put(metadataKeys.get(entry.getKey()), sanitize(String.valueOf(entry.getValue())));
-                        }
-                    }
-
+                                    }
+                                }
+                            });
                 }, HashMap::putAll);
 
     }
@@ -152,6 +154,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
             blockBlobReference
                     .upload(inputStream, -1);
+            blockBlobReference.getProperties().setContentType(contentType);
 
             blockBlobReference.setMetadata(putUserMetadata(metadataProperties));
             blockBlobReference.uploadMetadata();
