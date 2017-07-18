@@ -148,6 +148,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
             blockBlobReference
                     .upload(inputStream, -1);
+            blockBlobReference.getProperties().setContentType(contentType);
 
             blockBlobReference.setMetadata(putUserMetadata(metadataProperties));
             blockBlobReference.uploadMetadata();
