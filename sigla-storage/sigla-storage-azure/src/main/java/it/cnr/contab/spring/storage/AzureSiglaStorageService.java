@@ -107,8 +107,8 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                         final CloudAppendBlob blockBlobReference = cloudBlobContainer
                                 .getAppendBlobReference(key);
                         blockBlobReference.setMetadata(putUserMetadata(metadata));
-                        //blockBlobReference.createOrReplace(); TODO non crea un folder ma un file vuoto
-                        //blockBlobReference.uploadMetadata();
+                        blockBlobReference.createOrReplace(); //TODO non crea un folder ma un file vuoto
+                        blockBlobReference.uploadMetadata();
                         HashMap<String, String> map = cloudBlobContainer
                                 .getBlockBlobReference(key)
                                 .getMetadata();

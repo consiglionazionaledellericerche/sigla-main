@@ -46,9 +46,6 @@ public class AzureStoreServiceTest {
 
     @Test
     public void testStore() throws IOException {
-        final StorageObject storageObjectByPath = storeService.getStorageObjectByPath(FOO);
-
-
         InputStream is = IOUtils.toInputStream(TEXT, Charset.defaultCharset());
         Map<String, Object> map = new HashMap();
         map.put(StoragePropertyNames.NAME.value(), CIAONE);
@@ -89,6 +86,7 @@ public class AzureStoreServiceTest {
                 .get().getKey());
 
         storeService.delete(storeService.getStorageObjectBykey(FOO_CIAONE));
+        storeService.delete(storeService.getStorageObjectBykey("/my-path/my-name"));
         storeService.delete(storeService.getStorageObjectBykey("/my-path/my-name/test.pdf"));
     }
 
