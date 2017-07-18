@@ -38,16 +38,18 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                 .entrySet()
                 .stream()
                 .collect(HashMap::new, (m,entry)-> {
-                    if (metadataKeys.containsKey(entry.getKey())) {
-                        if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
-                            m.put(metadataKeys.get(entry.getKey()),
-                                    String.join(",", (List<String>)entry.getValue()));
-                        } else {
-                            String value = ASCIIFoldingFilter.foldToASCII(String.valueOf(entry.getValue()));
-                            m.put(metadataKeys.get(entry.getKey()), value);
-                        }
-                    }
-
+                    Optional.ofNullable(entry.getValue())
+                            .ifPresent(entryValue -> {
+                                if (metadataKeys.containsKey(entry.getKey())) {
+                                    if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
+                                        m.put(metadataKeys.get(entry.getKey()),
+                                                String.join(",", (List<String>)entryValue));
+                                    } else {
+                                        String value = ASCIIFoldingFilter.foldToASCII(String.valueOf(entryValue));
+                                        m.put(metadataKeys.get(entry.getKey()), value);
+                                    }
+                                }
+                            });
                 }, HashMap::putAll);
 
     }
