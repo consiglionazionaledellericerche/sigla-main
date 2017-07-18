@@ -4381,6 +4381,7 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
  				throw new it.cnr.jada.comp.ApplicationException("I campi contratto e incarico non possono essere contemporaneamente nulli in assenza di una gara in corso di espletamento. Importo dell'Impegno superiore al limite stabilito!");		
 	}
 	verificaGestioneTrovato(aUC, obbligazione, elemento_voce);
+	verificaGestioneMissioni(aUC, obbligazione, elemento_voce);
 }
 private void verificaGestioneTrovato(UserContext aUC,
 		ObbligazioneBulk obbligazione, Elemento_voceBulk elemento_voce)
@@ -4392,6 +4393,20 @@ private void verificaGestioneTrovato(UserContext aUC,
 				controlliGestioneTrovatoAttiva(aUC, obbligazione);
 			} else if (elemento_voce.isInibitaIndicazioneTrovato()){
 				controlliGestioneTrovatoNonAttiva(aUC, obbligazione);
+			}
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
+//	}
+}
+private void verificaGestioneMissioni(UserContext aUC,
+		ObbligazioneBulk obbligazione, Elemento_voceBulk elemento_voce)
+				throws ComponentException {
+	if (obbligazione.getPg_obbligazione() != null){
+		try {
+			if (!elemento_voce.getFl_missioni() && esistonoMissioniCollegate(aUC, obbligazione)){
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata non ha attiva la gestione delle missioni ma esistono missioni collegate all'obbligazione.");		
 			}
 		} catch(Throwable e) {
 			throw handleException(e);
@@ -4444,6 +4459,27 @@ private SQLBuilder preparaCondizionePerTrovato(UserContext aUC,
 	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.PG_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE");
 	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.PG_OBBLIGAZIONE_SCADENZARIO", "OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO");
 	return sql;
+}
+
+private Boolean esistonoMissioniCollegate(UserContext aUC,
+		ObbligazioneBulk obbligazione) throws ComponentException, SQLException {
+	PersistentHome osHome = getHomeCache(aUC).getHome(Obbligazione_scadenzarioBulk.class);
+	SQLBuilder sql = osHome.createSQLBuilder();
+	sql.addClause(FindClause.AND,"cd_cds",sql.EQUALS, obbligazione.getCds().getCd_unita_organizzativa());
+	sql.addClause(FindClause.AND,"esercizio",sql.EQUALS, obbligazione.getEsercizio());
+	sql.addClause(FindClause.AND,"esercizio_originale",sql.EQUALS, obbligazione.getEsercizio_originale());
+	sql.addClause(FindClause.AND,"pg_obbligazione",sql.EQUALS, obbligazione.getPg_obbligazione());
+	sql.addTableToHeader("MISSIONE");
+	sql.addSQLClause(FindClause.AND,"MISSIONE.ESERCIZIO",SQLBuilder.EQUALS, obbligazione.getEsercizio());
+	sql.addSQLJoin( "MISSIONE.CD_CDS_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.CD_CDS");
+	sql.addSQLJoin( "MISSIONE.ESERCIZIO_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.ESERCIZIO");
+	sql.addSQLJoin( "MISSIONE.ESERCIZIO_ORI_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE");
+	sql.addSQLJoin( "MISSIONE.PG_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE");
+	sql.addSQLJoin( "MISSIONE.PG_OBBLIGAZIONE_SCADENZARIO", "OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO");
+	if (sql.executeCountQuery(getConnection(aUC)) > 0){
+		return true;
+	}
+	return false;
 }
 
 public void verificaCoperturaContratto (UserContext aUC,ObbligazioneBulk obbligazione, int flag) throws ComponentException
@@ -5752,7 +5788,7 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 					} catch (ApplicationException e) {
 						throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''impegno e quella di ribaltamento! " + e.getMessage());
 					}
-
+					verificaGestioneMissioni(userContext, obbligazione, obbligazione.getElemento_voce_next());
 					if (!obbligazione.getElemento_voce().getFl_inv_beni_patr().equals(obbligazione.getElemento_voce_next().getFl_inv_beni_patr()))
 						throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''impegno e quella di ribaltamento " +
 									"nella gestione dell''inventario. Modificare la voce di ribaltamento!");
