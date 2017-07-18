@@ -109,9 +109,9 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                     try {
                         final CloudAppendBlob blockBlobReference = cloudBlobContainer
                                 .getAppendBlobReference(key);
-                        blockBlobReference.setMetadata(putUserMetadata(metadata));
-                        blockBlobReference.createOrReplace(); //TODO non crea un folder ma un file vuoto
-                        blockBlobReference.uploadMetadata();
+                        //blockBlobReference.setMetadata(putUserMetadata(metadata));
+                        //blockBlobReference.createOrReplace(); //TODO non crea un folder ma un file vuoto
+                        //blockBlobReference.uploadMetadata();
                         HashMap<String, String> map = cloudBlobContainer
                                 .getBlockBlobReference(key)
                                 .getMetadata();
@@ -149,7 +149,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
             blockBlobReference
                     .upload(inputStream, -1);
             blockBlobReference.getProperties().setContentType(contentType);
-
+            blockBlobReference.uploadProperties();
             blockBlobReference.setMetadata(putUserMetadata(metadataProperties));
             blockBlobReference.uploadMetadata();
 
@@ -292,8 +292,15 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     }
 
     @Override
-    public StorageObject getObjectByPath(String path) {
-        return getObject(path);
+    public StorageObject getObjectByPath(String path, boolean isFolder) {
+        return Optional.ofNullable(getObject(path))
+                .orElseGet(() -> {
+                    String key = Optional.ofNullable(path)
+                            .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
+                            .map(s -> s.substring(1))
+                            .orElse(path);
+                    return new StorageObject(key, key, Collections.emptyMap());
+                });
     }
 
     @Override

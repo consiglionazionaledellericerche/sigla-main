@@ -145,7 +145,7 @@ public interface SiglaStorageService {
      * @param path
      * @return
      */
-    StorageObject getObjectByPath(String path);
+    StorageObject getObjectByPath(String path, boolean isFolder);
 
     /**
      * retrieve all children

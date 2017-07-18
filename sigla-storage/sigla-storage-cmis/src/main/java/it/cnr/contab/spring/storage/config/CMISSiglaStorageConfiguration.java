@@ -351,7 +351,7 @@ public class CMISSiglaStorageConfiguration {
             }
 
             @Override
-            public StorageObject getObjectByPath(String path) {
+            public StorageObject getObjectByPath(String path, boolean isFolder) {
                 try {
                     return Optional.ofNullable(siglaSession.getObjectByPath(path))
                             .map(cmisObject -> new StorageObject(cmisObject.getId(), getPath(cmisObject), convertProperties(cmisObject.getProperties())))
@@ -401,7 +401,7 @@ public class CMISSiglaStorageConfiguration {
             @Override
             public InputStream zipContent(List<String> keys) {
                 UrlBuilder url = new UrlBuilder(baseURL.concat(ZIP_CONTENT));
-                url.addParameter("destination", getObjectByPath("/User Homes/sigla").getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
+                url.addParameter("destination", getObjectByPath("/User Homes/sigla", true).getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
                 url.addParameter("filename", "Documenti contabili.zip");
                 url.addParameter("noaccent", true);
                 url.addParameter("getParent", true);

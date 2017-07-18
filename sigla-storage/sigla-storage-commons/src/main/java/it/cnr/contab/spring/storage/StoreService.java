@@ -62,8 +62,8 @@ public class StoreService {
         }
     }
 
-    public StorageObject getStorageObjectByPath(String path, boolean create) {
-        return Optional.ofNullable(siglaStorageService.getObjectByPath(path))
+    public StorageObject getStorageObjectByPath(String path, boolean isFolder, boolean create) {
+        return Optional.ofNullable(siglaStorageService.getObjectByPath(path, isFolder))
                 .orElseGet(() -> {
                     if (!create) return null;
                     final List<String> names = Arrays.asList(path.split(SiglaStorageService.SUFFIX));
@@ -73,20 +73,24 @@ public class StoreService {
                             .forEach(name -> {
                                 atomicInteger.getAndIncrement();
                                 createFolderIfNotPresent(
-                                    Optional.ofNullable(names.stream()
-                                        .limit(atomicInteger.longValue())
-                                        .reduce((a,b) -> a + SiglaStorageService.SUFFIX + b)
-                                        .get())
-                                        .filter(s -> s.length() > 0)
-                                        .orElse(SiglaStorageService.SUFFIX)
-                                ,name, null, null);
+                                        Optional.ofNullable(names.stream()
+                                                .limit(atomicInteger.longValue())
+                                                .reduce((a,b) -> a + SiglaStorageService.SUFFIX + b)
+                                                .get())
+                                                .filter(s -> s.length() > 0)
+                                                .orElse(SiglaStorageService.SUFFIX)
+                                        ,name, null, null);
                             });
                     if (create) {
-                        return Optional.ofNullable(siglaStorageService.getObjectByPath(path))
+                        return Optional.ofNullable(siglaStorageService.getObjectByPath(path, true))
                                 .orElse(new StorageObject(path, path, Collections.emptyMap()));
                     }
-                    return siglaStorageService.getObjectByPath(path);
+                    return siglaStorageService.getObjectByPath(path, true);
                 });
+    }
+
+    public StorageObject getStorageObjectByPath(String path, boolean create) {
+        return getStorageObjectByPath(path, false, create);
     }
 
     public StorageObject getStorageObjectByPath(String path) {
@@ -129,7 +133,7 @@ public class StoreService {
         Map<String, Object> metadataProperties = new HashMap<String, Object>();
         List<String> aspectsToAdd = new ArrayList<String>();
         try{
-            final StorageObject parentObject = getStorageObjectByPath(path, true);
+            final StorageObject parentObject = getStorageObjectByPath(path, true, true);
             final String name = sanitizeFolderName(folderName);
             metadataProperties.put(StoragePropertyNames.NAME.value(), name);
             if (title != null || description != null) {
@@ -158,7 +162,7 @@ public class StoreService {
 
     public String createFolderIfNotPresent(String path, String name, Map<String, Object> metadataProperties) {
         return Optional.ofNullable(siglaStorageService.getObjectByPath(
-                path.concat(path.equals(SiglaStorageService.SUFFIX)? "" : SiglaStorageService.SUFFIX).concat(name)
+                path.concat(path.equals(SiglaStorageService.SUFFIX)? "" : SiglaStorageService.SUFFIX).concat(name), true
         ))
                 .map(StorageObject::getPath)
                 .orElseGet(() -> siglaStorageService.createFolder(path, name, metadataProperties).getPath());
@@ -194,7 +198,7 @@ public class StoreService {
     }
 
     public StorageObject storeSimpleDocument(InputStream inputStream, String contentType, String path, Map<String, Object> metadataProperties) throws StorageException{
-        StorageObject parentObject = getStorageObjectByPath(path, true);
+        StorageObject parentObject = getStorageObjectByPath(path, true, true);
         return storeSimpleDocument(inputStream, contentType, metadataProperties, parentObject);
     }
 
@@ -209,7 +213,7 @@ public class StoreService {
 
     public StorageObject storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name,
                                         String path, String objectTypeName, boolean makeVersionable, SiglaStorageService.Permission... permissions) throws StorageException{
-        StorageObject parentObject = getStorageObjectByPath(path, true);
+        StorageObject parentObject = getStorageObjectByPath(path, true, true);
         Map<String, Object> metadataProperties = new HashMap<String, Object>();
         name = sanitizeFilename(name);
         metadataProperties.put(StoragePropertyNames.NAME.value(), name);

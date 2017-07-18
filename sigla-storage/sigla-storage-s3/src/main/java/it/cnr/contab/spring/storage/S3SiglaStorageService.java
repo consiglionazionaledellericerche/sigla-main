@@ -244,7 +244,7 @@ public class S3SiglaStorageService implements SiglaStorageService {
     }
 
     @Override
-    public StorageObject getObjectByPath(String path) {
+    public StorageObject getObjectByPath(String path, boolean isFolder) {
         return getObject(path);
     }
 
