@@ -46,7 +46,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                                         m.put(metadataKeys.get(entry.getKey()),
                                                 String.join(",", (List<String>)entryValue));
                                     } else {
-                            m.put(metadataKeys.get(entry.getKey()), sanitize(String.valueOf(entry.getValue())));
+                                        m.put(metadataKeys.get(entry.getKey()), sanitize(String.valueOf(entry.getValue())));
                                     }
                                 }
                             });
