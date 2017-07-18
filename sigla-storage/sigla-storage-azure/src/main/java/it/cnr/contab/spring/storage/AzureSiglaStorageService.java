@@ -1,9 +1,9 @@
 package it.cnr.contab.spring.storage;
 
 import com.microsoft.azure.storage.blob.*;
-import com.microsoft.azure.storage.file.CloudFileClient;
 import it.cnr.contab.spring.storage.config.AzureSiglaStorageConfigurationProperties;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.contab.util.ASCIIFoldingFilter;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,8 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                             m.put(metadataKeys.get(entry.getKey()),
                                     String.join(",", (List<String>)entry.getValue()));
                         } else {
-                            m.put(metadataKeys.get(entry.getKey()), String.valueOf(entry.getValue()));
+                            String value = ASCIIFoldingFilter.foldToASCII(String.valueOf(entry.getValue()));
+                            m.put(metadataKeys.get(entry.getKey()), value);
                         }
                     }
 
