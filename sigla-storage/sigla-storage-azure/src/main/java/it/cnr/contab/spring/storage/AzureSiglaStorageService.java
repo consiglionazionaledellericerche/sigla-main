@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -45,14 +46,19 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                                         m.put(metadataKeys.get(entry.getKey()),
                                                 String.join(",", (List<String>)entryValue));
                                     } else {
-                                        String value = ASCIIFoldingFilter.foldToASCII(String.valueOf(entryValue));
-                                        m.put(metadataKeys.get(entry.getKey()), value);
+                            m.put(metadataKeys.get(entry.getKey()), sanitize(String.valueOf(entry.getValue())));
                                     }
                                 }
                             });
                 }, HashMap::putAll);
 
     }
+
+    private static String sanitize(String value) {
+        String s = ASCIIFoldingFilter.foldToASCII(value);
+        return Pattern.compile("[^a-zA-Z0-9\\s-]+").matcher(s).replaceAll(" ");
+    }
+
 
     private Map<String, Object> getUserMetadata(CloudBlob blockBlobReference) {
         Map<String, Object> result = new HashMap<String, Object>();
