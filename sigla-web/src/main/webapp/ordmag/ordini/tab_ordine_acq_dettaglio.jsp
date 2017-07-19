@@ -18,19 +18,9 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 		<tr>
 			<%
 				bp.getRighe().writeFormField(out, "findBeneServizio");
-			    bp.getRighe().writeFormField(out, "unitaMisuraMinima");
+			    bp.getRighe().writeFormField(out, "cdUnitaMisuraMinima");
 			%>
 		</tr>
-	</table>
-	<table>
-      <tr>      	
-			<td>
-				<% bp.getRighe().writeFormLabel(out,"notaRiga");%>
-			</td>      	
-			<td colspan="4">
-				<% bp.getRighe().writeFormInput(out,"notaRiga");%>
-			</td>
-      </tr>
 	</table>
 	<table>
 		<tr>
@@ -47,15 +37,53 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			    	}
 			    %>
 			</td>
-				<%bp.getRighe().writeFormField(out, "quantitaRichiesta"); %>
+				<%bp.getRighe().writeFormField(out, "quantita"); %>
 		</tr>
 	</table>
 	<table>
 		<tr>
 			<%
-				bp.getRighe().writeFormField(out, "findElementoVoce");
+				bp.getRighe().writeFormField(out, "cd_voce_iva");
 			%>
+			<td>
+				<%
+					bp.getRighe().writeFormInput(out, "ds_voce_iva");
+				%>
+			</td>
+			<%
+				bp.getRighe().writeFormField(out, "percentuale_voce_iva");
+			%>
+			<td>
+				<%
+					bp.getRighe().writeFormInput(out, null, "voce_iva", false, null, "");
+				%>
+			</td>
+
+			<td>
+				<%
+					bp.getRighe().writeFormField(out, "prezzoUnitario");
+				%>
+			</td>      	
+			<td>
+				<% bp.getRighe().writeFormField(out,"sconto1");%>
+			</td>      	
+			<td>
+				<% bp.getRighe().writeFormField(out,"sconto2");%>
+			</td>      	
+			<td>
+				<% bp.getRighe().writeFormField(out,"sconto3");%>
+			</td>      	
 		</tr>
+	</table>
+	<table>
+      <tr>      	
+			<td>
+				<% bp.getRighe().writeFormLabel(out,"notaRiga");%>
+			</td>      	
+			<td colspan="4">
+				<% bp.getRighe().writeFormInput(out,"notaRiga");%>
+			</td>
+      </tr>
 	</table>
 	<table>
 		<tr>
@@ -82,6 +110,23 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 		<tr>
 			<%
 				bp.getRighe().writeFormField(out, "findLineaAttivita");
+			%>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<%
+				bp.getRighe().writeFormField(out, "tipoConsegna");
+			    bp.getRighe().writeFormField(out, "findMagazzino");
+			    bp.getRighe().writeFormField(out, "findLuogoConsegnaMag");
+			%>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<%
+				bp.getRighe().writeFormField(out, "dtPrevConsegna");
+			    bp.getRighe().writeFormField(out, "findUnitaOperativaOrdDest");
 			%>
 		</tr>
 	</table>

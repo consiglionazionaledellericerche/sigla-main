@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
@@ -587,6 +589,8 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 		throws ComponentException {
 	OrdineAcqBulk ordine = (OrdineAcqBulk)oggettobulk;
 	try {
+		ordine.setDivisa(getEuro(usercontext));
+		ordine.setCambio(BigDecimal.ONE);
 		OrdineAcqHome home = (OrdineAcqHome) getHomeCache(usercontext).getHome(OrdineAcqBulk.class);
 		ordine.setCdCds( ((CNRUserContext) usercontext).getCd_cds());
 		if (ordine.getCdUnitaOperativa() == null){
@@ -670,6 +674,34 @@ public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettob
 	OrdineAcqBulk ordine= (OrdineAcqBulk)super.modificaConBulk(usercontext, oggettobulk);
 	validaOrdine(usercontext, ordine);
 	return ordine;
+}
+
+private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
+
+	String cd_euro = null;
+	try {
+		cd_euro = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(userContext, new Integer(0), "*", "CD_DIVISA", "EURO");
+		if (cd_euro == null)
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire una fattura, immettere tale valore.");
+	} catch (javax.ejb.EJBException e) {
+		handleException(e);
+	} catch (java.rmi.RemoteException e) {
+		handleException(e);
+	}
+
+	DivisaBulk valuta = null;
+	
+	try {
+		java.util.List divise = getHome(userContext, DivisaBulk.class).find(new it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk(cd_euro));
+		if (divise == null || divise.isEmpty())
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire una fattura, immettere tale valore.");
+		valuta = (DivisaBulk)divise.get(0);
+		if (valuta == null)
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire una fattura, immettere tale valore.");
+	} catch (it.cnr.jada.persistency.PersistencyException e) {
+		handleException(e);
+	}
+	return valuta;
 }
 
 }
