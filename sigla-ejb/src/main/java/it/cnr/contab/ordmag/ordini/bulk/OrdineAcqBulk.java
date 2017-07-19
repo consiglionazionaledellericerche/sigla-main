@@ -898,5 +898,4 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public boolean isROFirmatario() {
 		return getFirmatarioPers() == null || getFirmatarioPers().getCrudStatus() == NORMAL;
 	}	
-		
 }

@@ -3,13 +3,10 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 /**
  * Riga del documento generico passivo
@@ -22,7 +19,7 @@ public OrdineAcqRigaCRUDController(String name, Class modelClass, String listPro
 
 public boolean isGrowable() {
 	
-	RichiestaUopBulk doc = (RichiestaUopBulk)getParentModel();
+	OrdineAcqBulk doc = (OrdineAcqBulk)getParentModel();
 	return	super.isGrowable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() 
 //		&&	!doc.STATO_PAGATO.equalsIgnoreCase(doc.getStato_cofi()) && 
 //		(!doc.isDoc1210Associato() || (doc.getLettera_pagamento_estero()!=null && doc.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)==0))
@@ -31,7 +28,7 @@ public boolean isGrowable() {
 
 public boolean isShrinkable() {
 	
-	RichiestaUopBulk doc = (RichiestaUopBulk)getParentModel();
+	OrdineAcqBulk doc = (OrdineAcqBulk)getParentModel();
 	return	super.isShrinkable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() 
 //			&&
 //			!doc.STATO_PAGATO.equalsIgnoreCase(doc.getStato_cofi()) &&
@@ -99,10 +96,10 @@ public void writeHTMLToolbar(
 	public void writeFormInput(JspWriter jspwriter, String s, String s1,
 			boolean flag, String s2, String s3) throws IOException {
 	
-	RichiestaUopBulk doc=null;
+	OrdineAcqBulk doc=null;
 	if(((it.cnr.jada.util.action.CRUDBP)getParentController()) instanceof CRUDOrdineAcqBP ){
 	if(((it.cnr.jada.util.action.CRUDBP)getParentController()).getModel()!=null)
-		doc = (RichiestaUopBulk)((it.cnr.jada.util.action.CRUDBP)getParentController()).getModel();
+		doc = (OrdineAcqBulk)((it.cnr.jada.util.action.CRUDBP)getParentController()).getModel();
 //		if (doc!=null &&
 //			doc.isRiportataInScrivania()&&
 //			!doc.isPagata()&& 
