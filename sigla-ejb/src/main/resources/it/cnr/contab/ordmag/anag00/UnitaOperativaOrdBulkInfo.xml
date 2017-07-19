@@ -25,6 +25,14 @@
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
+		name="dsUnitaOperativaRid"
+		property="dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
 		name="cdUnitaOrganizzativa"
 		property="cdUnitaOrganizzativa"
 		inputType="TEXT"
@@ -42,7 +50,7 @@
 		<formFieldProperty
 			name="cdUnitaOperativa" />
 		<formFieldProperty
-			name="dsUnitaOperativa" />
+			name="dsUnitaOperativaRid" />
 	</form>
 	<formFieldProperty
 		name="cdUnitaOperativa" />
