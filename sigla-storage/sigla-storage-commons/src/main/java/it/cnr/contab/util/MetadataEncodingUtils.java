@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 public class MetadataEncodingUtils {
 
     private static final Logger LOGGER = org.slf4j.LoggerFactory.getLogger(MetadataEncodingUtils.class);
-    public static final String UTF_8 = "UTF-8";
+    private static final String UTF_8 = "UTF-8";
+    private static final String PREFIX = "CNR_";
 
 
     /**
@@ -76,7 +77,7 @@ public class MetadataEncodingUtils {
                 .getEncoder()
                 .encodeToString(bytes)
                 .replaceAll("=+$", "");
-        String b64encodedKey = String.format("CNR_%s", suffix);
+        String b64encodedKey = String.format("%s%s", PREFIX, suffix);
         LOGGER.info("key {} encoded to {}", input, b64encodedKey);
         return b64encodedKey;
 
@@ -130,4 +131,27 @@ public class MetadataEncodingUtils {
         return base64EncodedValues;
 
     }
+
+
+    /**
+     *
+     * Decode a metadata key
+     *
+     * @param input metadata key such as CNR_${base64(key)}
+     * @return decoded metadata key
+     */
+    public static String decodeKey(String input) {
+        Assert.isTrue(input.startsWith(PREFIX));
+        String suffix = input.replaceFirst(PREFIX, "");
+        try {
+            String output = new String(Base64.getDecoder().decode(suffix), UTF_8);
+            LOGGER.info("{} decoded to {}", input, output);
+            return output;
+        } catch (UnsupportedEncodingException e) {
+            throw new StorageException(StorageException.Type.GENERIC, "cannot decode " + input, e);
+        }
+
+
+    }
+
 }
