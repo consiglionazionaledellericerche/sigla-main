@@ -71,13 +71,13 @@
 			propertyName="pgBanca"
 			sqlTypeName="DECIMAL"
 			columnSize="10"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="CD_MODALITA_PAG"
 			propertyName="cdModalitaPag"
 			sqlTypeName="VARCHAR"
 			columnSize="10"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="NOTA"
 			propertyName="nota"

@@ -3,12 +3,28 @@
  * Date 28/06/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Dictionary;
+
+import javax.ejb.EJBException;
+
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
 	private java.lang.String dspTipoConsegna;
 
@@ -288,5 +304,39 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	public void setDspUopDest(UnitaOperativaOrdBulk dspUopDest) {
 		this.dspUopDest = dspUopDest;
+	}
+	public Boolean isROCoefConv(){
+		if (getUnitaMisura() != null && getUnitaMisura().getCdUnitaMisura() != null && 
+				getBeneServizio() != null && getBeneServizio().getUnitaMisura() != null && getBeneServizio().getCdUnitaMisura() != null && 
+				!getUnitaMisura().getCdUnitaMisura().equals(getBeneServizio().getCdUnitaMisura())){
+			return false;
+		}
+		return true;
+	}
+	public Dictionary getTipoConsegnaKeys() {
+		return OrdineAcqConsegnaBulk.TIPO_CONSEGNA;
+	}
+	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
+	{
+		setStato(STATO_INSERITA);
+		BigDecimal value = null;
+		try {
+			value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context.getUserContext(), 0, "*", Configurazione_cnrBulk.PK_PARAMETRI_ORDINI, Configurazione_cnrBulk.SK_GG_DT_PREV_CONSEGNA).getIm01();
+		} catch (RemoteException e) {
+		} catch (Exception e) {
+		}
+		if (value!= null){
+			java.sql.Timestamp oggi = null;
+			try {
+				oggi = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+			} catch (javax.ejb.EJBException e) {
+				throw new it.cnr.jada.DetailedRuntimeException(e);
+			}
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(oggi);
+			cal.add(Calendar.DAY_OF_WEEK, value.intValue());
+			setDspDtPrevConsegna(DateUtils.truncate(new Timestamp(cal.getTime().getTime()))); 
+		}
+		return this;
 	}
 }

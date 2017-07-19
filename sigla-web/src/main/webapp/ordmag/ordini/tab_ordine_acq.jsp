@@ -51,13 +51,6 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 			   } %>
 		</tr>
 	</table>
-    <table>
-		<tr>
-			<%
-			bp.getController().writeFormField(out, "findTipoOrdine");
-			%>
-		</tr>
-	</table>
 	<table>
 	<tr>	
 	<td>
@@ -71,6 +64,13 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 		%>					
 	</td>	
 	</tr>
+	</table>
+    <table>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "findTipoOrdine");
+			%>
+		</tr>
 	</table>
 	      </table>
       </div>
