@@ -36,6 +36,14 @@
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
+		name="dsMagazzinoRid"
+		property="dsMagazzino"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
 		name="findUnitaOperativaOrd"
 		property="unitaOperativaOrd"
 		inputType="searchtool"
@@ -330,9 +338,11 @@
 	<form
 		name="searchtool">
 		<formFieldProperty
+		    inputSize="3"
 			name="cdMagazzino" />
 		<formFieldProperty
-			name="dsMagazzino" />
+		    inputSize="30"
+			name="dsMagazzinoRid" />
 	</form>
 	<formFieldProperty
 		name="cdMagazzino" />
