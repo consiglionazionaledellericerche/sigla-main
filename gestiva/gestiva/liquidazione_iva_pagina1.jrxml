@@ -55,7 +55,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
   AND LIQUIDAZIONE_IVA.DT_FINE = $P{dataFine}
   AND UO.CD_UNITA_ORGANIZZATIVA =  LIQUIDAZIONE_IVA.CD_UNITA_ORGANIZZATIVA]]>
 	</queryString>
-	<field name="PAGINA" class="java.lang.Integer"/>
+	<field name="PAGINA" class="java.math.BigDecimal"/>
 	<field name="CD_CDS" class="java.lang.String"/>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
