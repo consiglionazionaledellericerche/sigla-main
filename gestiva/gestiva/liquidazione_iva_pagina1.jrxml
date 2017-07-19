@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="507"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -23,22 +23,22 @@
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cd_cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["054"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["084"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cd_unita_organizzativa" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["054.001"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["084.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("2006")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("2017")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ti_liquidazione" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dataInizio" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("2006/02/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("2017/06/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dataFine" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("2006/02/28")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("2017/06/30")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
@@ -120,7 +120,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 	<variable name="INTESTAZIONE" class="java.lang.String"/>
 	<variable name="DESCRIZIONE1" class="java.lang.String"/>
 	<variable name="PERIODO" class="java.lang.String"/>
-	<variable name="PAGINA" class="java.lang.Integer">
+	<variable name="PAGINA" class="java.lang.Integer" resetType="None">
 		<variableExpression><![CDATA[new Integer(1)]]></variableExpression>
 	</variable>
 	<group name="PAGINA" isStartNewPage="true">
@@ -1040,7 +1040,9 @@ art. 17 DPR.633/1972 (+)
 					<textElement textAlignment="Left" markup="styled">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA["(di cui Split Payment: "+new DecimalFormat("#0.00").format($F{IVA_ACQ_SPLIT_PAYMENT})+")"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["(di cui Split Payment: "+
+new DecimalFormat("#0.00").format(
+    $F{IVA_ACQ_SPLIT_PAYMENT}!=null?$F{IVA_ACQ_SPLIT_PAYMENT}:BigDecimal.ZERO)+")"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
