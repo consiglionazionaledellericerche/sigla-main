@@ -1592,7 +1592,7 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 					}
 				}
 			} else if (contaNoSplit>0) {
-				if (((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()) {
+				if (((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()==null || ((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()) {
 					((Nota_di_creditoBulk)bp.getModel()).setFl_split_payment(Boolean.FALSE);
 					basicDoOnIstituzionaleCommercialeChange(context, ((Fattura_passivaBulk)bp.getModel()));
 				}
