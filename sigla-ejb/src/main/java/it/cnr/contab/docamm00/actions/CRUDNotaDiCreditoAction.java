@@ -1564,8 +1564,9 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 			List<Fattura_passiva_rigaBulk> allDetail = new ArrayList<Fattura_passiva_rigaBulk>();
 			allDetail.addAll(elementsToBeAdded);
 			allDetail.addAll(((Nota_di_creditoBulk)bp.getModel()).getFattura_passiva_dettColl());
-			boolean isOriginalNotaSplit = ((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment() ||
-							((Nota_di_creditoBulk)bp.getModel()).getDocumentoEleTestata().isDocumentoSplitPayment();
+			boolean isOriginalNotaSplit =false;
+			if(((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment() !=null)
+				isOriginalNotaSplit = ((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment() ||((Nota_di_creditoBulk)bp.getModel()).getDocumentoEleTestata().isDocumentoSplitPayment();
 
 			long contaSplit=allDetail.stream()
 						.filter(e->{
