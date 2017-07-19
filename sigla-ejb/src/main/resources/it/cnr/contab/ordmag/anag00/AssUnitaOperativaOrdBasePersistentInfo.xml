@@ -41,25 +41,9 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
-		<columnMapping
-			columnName="ORDINE"
-			propertyName="ordine"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
-		<columnMapping
-			columnName="FL_DEFAULT"
-			propertyName="flDefault"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dtCancellazione" />
-	<persistentProperty
-		name="ordine" />
-	<persistentProperty
-		name="flDefault" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty
