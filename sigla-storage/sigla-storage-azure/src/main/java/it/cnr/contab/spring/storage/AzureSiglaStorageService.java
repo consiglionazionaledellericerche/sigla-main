@@ -43,14 +43,8 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                                 String b64EncodedKey = MetadataEncodingUtils.encodeKey(entry.getKey());
 
                                 if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
-
-                                    String base64EncodedValues = ((List<String>) entryValue)
-                                            .stream()
-                                            .map(MetadataEncodingUtils::encodeValue)
-                                            .collect(Collectors.joining(","));
-
-                                    LOGGER.info("{} encoded to {}", entryValue, base64EncodedValues);
-
+                                    String base64EncodedValues = MetadataEncodingUtils
+                                            .encodeValues((List<String>) entryValue);
                                     m.put(b64EncodedKey, base64EncodedValues);
                                 } else {
                                     String base64EncodedValue = String.valueOf(entry.getValue());

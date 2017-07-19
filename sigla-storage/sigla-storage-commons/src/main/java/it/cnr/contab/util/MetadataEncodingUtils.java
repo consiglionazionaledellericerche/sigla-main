@@ -99,6 +99,23 @@ public class MetadataEncodingUtils {
     }
 
 
+    /**
+     *
+     * Encode a list of metadata values
+     *
+     * @param entryValue list of metadata values
+     * @return an encoded string such as ${md5(e1)}|${b64(e1)},${md5(e2)}|${b64(e2)},${md5(e3)}|${b64(e3)}
+     */
+    public static String encodeValues(List<String> entryValue) {
 
+        String base64EncodedValues = entryValue
+                .stream()
+                .map(MetadataEncodingUtils::encodeValue)
+                .collect(Collectors.joining(","));
 
+        LOGGER.info("{} encoded to {}", entryValue, base64EncodedValues);
+
+        return base64EncodedValues;
+
+    }
 }
