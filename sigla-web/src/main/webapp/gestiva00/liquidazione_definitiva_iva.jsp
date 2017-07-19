@@ -39,10 +39,12 @@
 				<td>
 					<% bp.getController().writeFormInput(out,null,"tipoSezionaleFlag",false,null,"onChange=\"submitForm('doOnTipoChange')\"");%>
 				</td>
-				<% if (liquidazione.isLiquidazione_commerciale()) { %>
-				   <td><% bp.getController().writeFormLabel(out,"tipoImpegnoFlag");%></td>
-				   <td><% bp.getController().writeFormInput(out,null,"tipoImpegnoFlag",false,null,"");%></td>
-				<% } %>
+				<% if (bp.isAggiornaIvaDaVersareEnable()) { %>
+						<td><% bp.getController().writeFormLabel(out,"debitoLastLiquidazioneProvvisoria"); %> </td>
+						<td><% bp.getController().writeFormInput(out,"debitoLastLiquidazioneProvvisoria"); %> 
+							<button class="Button" title="Aggiorna Iva da versare" onclick="submitForm('doAggiornaIvaDaVersare')"><img align="middle" class="Button" src="img/refresh16.gif"/></button>
+						</td>
+				 <% } %>
 			</tr>     	
 			<% if (!richiamaChiusuraMode) { %>
 				<tr>
@@ -87,10 +89,7 @@
 			<%JSPUtils.tabbed(
 					pageContext,
 					"tab",
-					new String[][] {
-					{ "tabEsigDetr","Esigibilità/Detraibilità","/gestiva00/tab_esigdetr.jsp" },
-					{ "tabImporti","Importi aggiuntivi","/gestiva00/tab_importi.jsp" },
-					{ "tabAltro","Altro","/gestiva00/tab_altro.jsp" }},
+					bp.getTabs(),
 					bp.getTab("tab"),
 					"center",
 					"100%",
