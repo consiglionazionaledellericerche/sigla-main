@@ -1,16 +1,22 @@
 package it.cnr.contab.docamm00.actions;
 
+import java.rmi.RemoteException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
-import it.cnr.contab.compensi00.bp.CRUDMinicarrieraBP;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
-import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
-import it.cnr.contab.compensi00.ejb.MinicarrieraComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
@@ -61,7 +67,6 @@ import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -79,17 +84,6 @@ import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
-import javax.ejb.EJBException;
 
 public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction {	
 public CRUDFatturaPassivaAction() {

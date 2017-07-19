@@ -1,4 +1,3 @@
-<%@page import="it.cnr.contab.ordmag.ordini.OrdineAcqRigaBulk"%>
 <%@ page 
 	import = "it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
