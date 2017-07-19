@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="507"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -55,7 +55,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
   AND LIQUIDAZIONE_IVA.DT_FINE = $P{dataFine}
   AND UO.CD_UNITA_ORGANIZZATIVA =  LIQUIDAZIONE_IVA.CD_UNITA_ORGANIZZATIVA]]>
 	</queryString>
-	<field name="PAGINA" class="java.math.BigDecimal"/>
+	<field name="PAGINA" class="java.lang.Integer"/>
 	<field name="CD_CDS" class="java.lang.String"/>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
