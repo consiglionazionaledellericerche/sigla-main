@@ -24,6 +24,10 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	public final static String SERVIZIO = "S";
 	public final static String BENE = "B";
 
+	public final static String MANUTENZIONE = "S";
+	public final static String MANUTENZIONE_INCREMENTATIVA = "I";
+	public final static String MANUTENZIONE_NON_INCREMENTATIVA = "N";
+
 	public final static String STATO_VALIDO = "Y";
 	public final static String STATO_NON_ORDINABILE = "O";
 	public final static String STATO_NON_VALIDO = "N";
@@ -44,6 +48,28 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 		BENI_SERVIZI.put(BENE,"Bene");
 		BENI_SERVIZI.put(SERVIZIO,"Servizio");
 		//		BENI_SERVIZI.put(BENE_SERVIZIO,"Entrambi");
+	}
+
+	public final static Dictionary TIPO_CONSEGNA;
+	static{
+		TIPO_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_TRANSITO,"Transito");
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_MAGAZZINO,"Magazzino");
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_FUORI_MAGAZZINO,"Fuori Magazzino");
+	}
+
+	public final static Dictionary TIPO_SERVIZIO;
+	static{
+		TIPO_SERVIZIO = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_SERVIZIO.put(SERVIZIO,"Servizio");
+		TIPO_SERVIZIO.put(MANUTENZIONE,"Manutenzione");
+	}
+
+	public final static Dictionary TIPO_MANUTENZIONE;
+	static{
+		TIPO_MANUTENZIONE = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_MANUTENZIONE.put(MANUTENZIONE_NON_INCREMENTATIVA,"Non Incrementativa");
+		TIPO_MANUTENZIONE.put(MANUTENZIONE_INCREMENTATIVA,"Incrementativa");
 	}
 
 	protected GruppoMerceologicoBulk gruppoMerceologico;
@@ -98,6 +124,18 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	public Dictionary getTi_bene_servizioKeys() {
 
 		return BENI_SERVIZI;
+	}
+	public Dictionary getTipoServizioKeys() {
+
+		return TIPO_SERVIZIO;
+	}
+	public Dictionary getTipoManutenzioneKeys() {
+
+		return TIPO_MANUTENZIONE;
+	}
+	public Dictionary getTipoConsegnaKeys() {
+
+		return TIPO_CONSEGNA;
 	}
 	/**
 	 * Insert the method's description here.
