@@ -39,9 +39,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                 .collect(HashMap::new, (m,entry)-> {
                     Optional.ofNullable(entry.getValue())
                             .ifPresent(entryValue -> {
-
                                 String b64EncodedKey = MetadataEncodingUtils.encodeKey(entry.getKey());
-
                                 if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
                                     String base64EncodedValues = MetadataEncodingUtils
                                             .encodeValues((List<String>) entryValue);
@@ -52,10 +50,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                                 }
                             });
                 }, HashMap::putAll);
-
     }
-
-
 
     private Map<String, Object> getUserMetadata(CloudBlob blockBlobReference) {
         Map<String, Object> result = new HashMap<String, Object>();
@@ -75,22 +70,14 @@ public class AzureSiglaStorageService implements SiglaStorageService {
                         .map(aLong -> StoragePropertyNames.CMIS_DOCUMENT.value())
                         .orElse(StoragePropertyNames.CMIS_FOLDER.value()));
 
-        azureSiglaStorageConfigurationProperties.getMetadataKeys().entrySet().stream()
-                .forEach(entry ->  {
-
-                    String key = entry.getKey();
-                    String b64EncodedKey = MetadataEncodingUtils.encodeKey(key);
-
-                    String value = blockBlobReference.getMetadata().get(b64EncodedKey);
-                    Optional.ofNullable(value)
-                            .ifPresent(userMetaData -> {
-                                if (key.equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
-                                    result.put(key, MetadataEncodingUtils.decodeValues(userMetaData));
-                                } else {
-                                    result.put(key, MetadataEncodingUtils.decodeValue(userMetaData));
-                                }
-                            });
-                });
+        blockBlobReference.getMetadata().forEach((b64EncodedKey, b64EncodedValue) -> {
+            String key = MetadataEncodingUtils.decodeKey(b64EncodedKey);
+            if (key.equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
+                result.put(key, MetadataEncodingUtils.decodeValues(b64EncodedValue));
+            } else {
+                result.put(key, MetadataEncodingUtils.decodeValue(b64EncodedValue));
+            }
+        });
         return result;
     }
 
@@ -303,11 +290,15 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     public StorageObject getObjectByPath(String path, boolean isFolder) {
         return Optional.ofNullable(getObject(path))
                 .orElseGet(() -> {
-                    String key = Optional.ofNullable(path)
-                            .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
-                            .map(s -> s.substring(1))
-                            .orElse(path);
-                    return new StorageObject(key, key, Collections.emptyMap());
+                    if (isFolder) {
+                        String key = Optional.ofNullable(path)
+                                .filter(s -> !s.equals(SUFFIX) && s.startsWith(SUFFIX))
+                                .map(s -> s.substring(1))
+                                .orElse(path);
+                        return new StorageObject(key, key, Collections.emptyMap());
+                    } else {
+                        return null;
+                    }
                 });
     }
 

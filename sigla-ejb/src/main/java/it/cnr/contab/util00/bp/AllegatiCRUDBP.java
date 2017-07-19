@@ -143,10 +143,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 			if (path == null)
 				return oggettobulk;
 			for (StorageObject storageObject : storeService.getChildren(storeService.getStorageObjectByPath(path).getKey())) {
-                if (Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
-                        .map(List.class::cast)
-                        .map(list -> list.stream().anyMatch(o -> o.equals(StoragePropertyNames.SYS_ARCHIVED.value())))
-                        .get())
+				if (storeService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
 					continue;
 				if (excludeChild(storageObject))
 					continue;
