@@ -1715,7 +1715,7 @@ public boolean isRiportataInScrivania() {
  */
 public boolean isROAutofattura() {
 
-	return isAbledToModifyTipoFattura() || isAutoFatturaNeeded() || getFl_split_payment()==null || getFl_split_payment();
+	return isAbledToModifyTipoFattura() || isAutoFatturaNeeded() ||( getFl_split_payment()!=null && getFl_split_payment());
 }
 /**
  * Insert the method's description here.
@@ -1968,7 +1968,7 @@ public boolean isVoidable() {
  */
 public boolean quadraturaInDeroga() {
 	return isCommerciale() && (
-				getFl_split_payment() ||
+				(getFl_split_payment()!=null && getFl_split_payment()) ||
 				((getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio() )) ||
 				(getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())) ||
 				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())||
@@ -2742,7 +2742,7 @@ public void validateDate() throws ValidationException {
 		throw new ValidationException("Data registrazione NON valida!");
 	}
 	
-	if (getFl_split_payment() && !isGestioneSplitPayment())
+	if (getFl_split_payment()!=null && getFl_split_payment() && !isGestioneSplitPayment())
 		throw new ValidationException("Non è possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(this.getDataInizioSplitPayment()) + "!");
 		
 	if (getDt_fattura_fornitore() != null) {
