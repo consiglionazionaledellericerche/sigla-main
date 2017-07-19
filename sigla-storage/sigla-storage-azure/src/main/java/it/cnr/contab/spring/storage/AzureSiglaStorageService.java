@@ -3,18 +3,19 @@ package it.cnr.contab.spring.storage;
 import com.microsoft.azure.storage.blob.*;
 import it.cnr.contab.spring.storage.config.AzureSiglaStorageConfigurationProperties;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
-import it.cnr.contab.util.ASCIIFoldingFilter;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -34,30 +35,62 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     }
 
     private HashMap<String, String> putUserMetadata(Map<String, Object> metadata) {
-        Map<String, String> metadataKeys = azureSiglaStorageConfigurationProperties.getMetadataKeys();
         return metadata
                 .entrySet()
                 .stream()
                 .collect(HashMap::new, (m,entry)-> {
                     Optional.ofNullable(entry.getValue())
                             .ifPresent(entryValue -> {
-                                if (metadataKeys.containsKey(entry.getKey())) {
-                                    if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
-                                        m.put(metadataKeys.get(entry.getKey()),
-                                                String.join(",", (List<String>)entryValue));
-                                    } else {
-                                        m.put(metadataKeys.get(entry.getKey()), sanitize(String.valueOf(entry.getValue())));
-                                    }
+
+                                String b64EncodedKey = encodeKey(entry.getKey());
+
+                                if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
+
+                                    String base64EncodedValues = ((List<String>) entryValue)
+                                            .stream()
+                                            .map(AzureSiglaStorageService::encodeValue)
+                                            .collect(Collectors.joining(","));
+
+                                    LOGGER.info("{} encoded to {}", entryValue, base64EncodedValues);
+
+                                    m.put(b64EncodedKey, base64EncodedValues);
+                                } else {
+                                    String base64EncodedValue = String.valueOf(entry.getValue());
+                                    m.put(b64EncodedKey, encodeValue(base64EncodedValue));
                                 }
                             });
                 }, HashMap::putAll);
 
     }
 
-    private static String sanitize(String value) {
-        String s = ASCIIFoldingFilter.foldToASCII(value);
-        return Pattern.compile("[^a-zA-Z0-9\\s-]+").matcher(s).replaceAll(" ");
+    private static String encodeKey(String input) {
+        String suffix = Base64
+                .getEncoder()
+                .encodeToString(input.getBytes())
+                .replaceAll("=+$", "");
+        String b64encodedKey = String.format("CNR_%s", suffix);
+        LOGGER.info("key {} encoded to {}", input, b64encodedKey);
+        return b64encodedKey;
+
     }
+
+    private static String encodeValue(String value) {
+        byte[] bytes = value.getBytes();
+        String md5digest = DigestUtils
+                .md5Hex(bytes)
+                .toUpperCase();
+        String b64encoded = Base64
+                .getEncoder()
+                .encodeToString(bytes)
+                .replaceAll("=+$", "");
+
+        LOGGER.info("value {} having md5 {} has been encoded to {}", value, md5digest, b64encoded);
+        String output = String.format("%s|%s", md5digest, b64encoded);
+        LOGGER.info("value {} encoded to {}", value, output);
+        return output;
+    }
+
+
 
 
     private Map<String, Object> getUserMetadata(CloudBlob blockBlobReference) {
@@ -80,19 +113,49 @@ public class AzureSiglaStorageService implements SiglaStorageService {
 
         azureSiglaStorageConfigurationProperties.getMetadataKeys().entrySet().stream()
                 .forEach(entry ->  {
-                    Optional.ofNullable(blockBlobReference.getMetadata().get(entry.getValue()))
+
+                    String key = entry.getKey();
+                    String b64EncodedKey = encodeKey(key);
+
+                    String value = blockBlobReference.getMetadata().get(b64EncodedKey);
+                    Optional.ofNullable(value)
                             .ifPresent(userMetaData -> {
-                                if (entry.getKey().equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
-                                    result.put(entry.getKey(), Optional.ofNullable(userMetaData)
-                                            .map(s -> Arrays.asList(s.split(","))).orElse(Collections.emptyList()));
+                                if (key.equals(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())) {
+                                    result.put(key, decodeValues(userMetaData));
                                 } else {
-                                    result.put(entry.getKey(), userMetaData);
+                                    result.put(key, decodeValue(userMetaData));
                                 }
                             });
                 });
         return result;
-
     }
+
+    private static String decodeValue(String input) {
+        String [] a = input.split("\\|");
+        Assert.isTrue(2 == a.length, "invalid metadata: " + input);
+        byte[] decoded = Base64.getDecoder().decode(a[1]);
+        try {
+            String decodedValue = new String(decoded, "UTF-8");
+            LOGGER.info("{} decoded to {}", input, decodedValue);
+            Assert.isTrue(a[0].equals(DigestUtils.md5Hex(decodedValue).toUpperCase()), "integrity issue with input "+ input);
+            return decodedValue;
+        } catch (UnsupportedEncodingException e) {
+            throw new StorageException(StorageException.Type.GENERIC, "cannot decode " + input, e);
+        }
+    }
+
+    private static List<String> decodeValues(String input) {
+
+        return Optional.ofNullable(input)
+                .map(s -> Arrays
+                        .stream(s.split(","))
+                        .map(AzureSiglaStorageService::decodeValue)
+                        .collect(Collectors.toList())
+                )
+                .orElse(Collections.emptyList());
+    }
+
+
     @Override
     public StorageObject createFolder(String path, String name, Map<String, Object> metadata) {
         final String key = Optional.ofNullable(path)
