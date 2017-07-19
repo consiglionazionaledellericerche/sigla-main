@@ -1,9 +1,21 @@
 package it.cnr.contab.gestiva00.comp;
+import java.rmi.RemoteException;
 import java.sql.*;
+import java.util.List;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.gestiva00.core.bulk.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
+import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
@@ -715,5 +727,25 @@ public it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_annualeVBulk
 	bulk.setRistampabile(true);
 	
 	return bulk;
+}
+public SQLBuilder selectLinea_di_attivitaByClause (UserContext userContext,Liquidazione_iva_ripart_finBulk ripartizione, WorkpackageBulk linea_di_attivita, CompoundFindClause clause) throws ComponentException, PersistencyException{	
+	SQLBuilder sql = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
+	sql.addClause( clause );
+	sql.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+	sql.addSQLClause(FindClause.AND, "TI_GESTIONE", SQLBuilder.EQUALS, CostantiTi_gestione.TI_GESTIONE_SPESE);		
+	sql.addSQLClause(FindClause.AND, "CD_CENTRO_RESPONSABILITA", SQLBuilder.LIKE, ripartizione.getCd_unita_organizzativa()+"%");
+	sql.addTableToHeader("NATURA");
+	sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
+	sql.addSQLClause(FindClause.AND,"NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);			
+	 // Obbligatorio cofog sulle GAE
+	try{
+		if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+			sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+	} catch (RemoteException e) {
+		throw new ComponentException(e);
+	} catch (EJBException e) {
+		throw new ComponentException(e);
+	}
+	return sql;
 }
 }

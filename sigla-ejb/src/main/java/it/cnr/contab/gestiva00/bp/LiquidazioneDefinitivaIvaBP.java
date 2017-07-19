@@ -1,17 +1,32 @@
 package it.cnr.contab.gestiva00.bp;
-import it.cnr.contab.gestiva00.ejb.*;
-import it.cnr.contab.gestiva00.core.bulk.*;
+import java.math.BigDecimal;
+import java.util.TreeMap;
+import java.util.stream.Stream;
+
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_ripart_finBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_variazioniBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 public class LiquidazioneDefinitivaIvaBP extends LiquidazioneIvaBP {
-
-	private int status = SEARCH;
 	private final SimpleDetailCRUDController dettaglio_prospetti = new SimpleDetailCRUDController("prospetti_stampati", Liquidazione_ivaBulk.class,"prospetti_stampati",this);
-
+	private final SimpleDetailCRUDController ripartizione_finanziaria = new SimpleDetailCRUDController("Ripartizione finanziaria", Liquidazione_iva_ripart_finBulk.class,"ripartizione_finanziaria",this){
+		public void validate(ActionContext context,OggettoBulk model) throws ValidationException {
+			Liquidazione_iva_ripart_finBulk bulk = (Liquidazione_iva_ripart_finBulk)model;
+			if (bulk.getEsercizio_variazione()==null)
+				throw new ValidationException("Il campo Esercizio Variazione è obbligatorio.");
+			if (bulk.getIm_variazione()==null || bulk.getIm_variazione().compareTo(BigDecimal.ZERO)<=0)
+				throw new ValidationException("Il campo Importo deve essere valorizzato e di segno positivo.");
+		}
+	};
+	private final SimpleDetailCRUDController variazioni_associate = new SimpleDetailCRUDController("Variazioni associate", Liquidazione_iva_variazioniBulk.class,"variazioni_associate",this);
+	
 public LiquidazioneDefinitivaIvaBP() {
 	this("");
 }
@@ -65,12 +80,13 @@ public Liquidazione_definitiva_ivaVBulk createNewBulk(ActionContext context) thr
 
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 
-	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[3];
+	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[4];
 	int i = 0;
 
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.ristampa");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.reset");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.saveRipartFin");
 	
 	return toolbar;
 }
@@ -125,4 +141,76 @@ public void resetForSearch(it.cnr.jada.action.ActionContext context) throws it.c
 public void resetTabs() {
     setTab("tab", "tabEsigDetr");
 }
+public SimpleDetailCRUDController getRipartizione_finanziaria() {
+	return ripartizione_finanziaria;
+}
+public SimpleDetailCRUDController getVariazioni_associate() {
+	return variazioni_associate;
+}
+
+public String[][] getTabs() {
+	TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
+	int i=0;
+
+	hash.put(i++, new String[]{"tabEsigDetr", "Esigibilità/Detraibilità","/gestiva00/tab_esigdetr.jsp" });
+	hash.put(i++, new String[]{ "tabImporti", "Importi aggiuntivi", "/gestiva00/tab_importi.jsp" });
+	hash.put(i++, new String[]{ "tabAltro", "Altro", "/gestiva00/tab_altro.jsp" });
+	
+	if (isTabRipartizioneFinanziariaVisible())
+		hash.put(i++, new String[]{ "tabRipartFin", "Ripart.Finanziaria", "/gestiva00/tab_ripart_finanziaria.jsp" });
+
+	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+	if (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && model.isRegistroStampato(model.getMese())) 
+		hash.put(i++, new String[]{ "tabVariazioniAss", "Variazioni Associate", "/gestiva00/tab_variazioni_associate.jsp" });
+
+	String[][] tabs = new String[i][3];
+	for (int j = 0; j < i; j++) {
+		tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
+	}
+	return tabs;		
+}
+
+public void inizializzaMese(ActionContext context) throws BusinessProcessException {
+	try {
+		Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+		this.setModel(context, Utility.createLiquidIvaInterfComponentSession().inizializzaMese(context.getUserContext(), model));
+		Stream<Liquidazione_iva_ripart_finBulk> list = ((Liquidazione_definitiva_ivaVBulk)this.getModel()).getRipartizione_finanziaria().stream().map(Liquidazione_iva_ripart_finBulk.class::cast);
+		list.forEach(e->e.caricaAnniList(context));
+		if (!isTabRipartizioneFinanziariaVisible() && ("tabRipartFin".equals(getTab("tab")) || "tabVariazioniAss".equals(getTab("tab"))))
+			resetTabs();
+	} catch(Exception e) {
+		throw handleException(e);
+	}
+}
+
+public boolean isSaveRipartFinButtonHidden() {
+	return !isTabRipartizioneFinanziariaVisible();
+}
+
+public void saveRipartizioneFinanziaria(ActionContext context) throws BusinessProcessException {
+	try {
+		Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+		Utility.createLiquidIvaInterfComponentSession().saveRipartizioneFinanziaria(context.getUserContext(), model);
+		this.setMessage("Salvataggio effettuato.");
+	} catch(Exception e) {
+		throw handleException(e);
+	}
+}
+
+public boolean isTabRipartizioneFinanziariaEnable() {
+	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && !model.isRegistroStampato(model.getMese()));
+}
+
+public boolean isAggiornaIvaDaVersareEnable() {
+	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && 
+			model.getNextMeseForLiquidazioneDefinitiva().equals(model.getMese()));
+}
+
+public boolean isTabRipartizioneFinanziariaVisible() {
+	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null);
+}
+
 }

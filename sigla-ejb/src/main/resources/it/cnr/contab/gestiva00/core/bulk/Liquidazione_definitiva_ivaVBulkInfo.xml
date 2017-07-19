@@ -241,8 +241,12 @@
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		label="Da pagina"/>
-	
-
+	<fieldProperty
+		name="debitoLastLiquidazioneProvvisoria"
+		property="debitoLastLiquidazioneProvvisoria"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva da versare" />
 
 	<!-- ************************ FORM FIELD PROPERTY ******************** -->
 
@@ -266,6 +270,7 @@
 	<formFieldProperty name="tipoSezionaleFlag" />
 	<formFieldProperty name="tipoImpegnoFlag" />	
 	<formFieldProperty name="pageNumber" />
+	<formFieldProperty name="debitoLastLiquidazioneProvvisoria" />
 	
 	<!-- ************************ FIND FIELD PROPERTY ******************** -->
 

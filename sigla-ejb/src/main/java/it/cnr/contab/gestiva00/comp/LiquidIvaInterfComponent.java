@@ -5,22 +5,30 @@ package it.cnr.contab.gestiva00.comp;
  * @author: CNRADM
  */
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.Enumeration;
-
+import java.util.List;
 
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquid_iva_interfBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquid_iva_interfHome;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_ripart_finBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_ripart_finHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Persistent;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 /**
  * @author rpagano
@@ -80,4 +88,58 @@ public class LiquidIvaInterfComponent extends CRUDComponent {
 	   return sql;
 	}
 
+	public Liquidazione_definitiva_ivaVBulk inizializzaMese(UserContext aUC,Liquidazione_definitiva_ivaVBulk bulk) throws ComponentException{
+		try	{
+			if (bulk!=null) { 
+				bulk.setRipartizione_finanziaria( new BulkList());
+				bulk.setLiquidazioniProvvisorie( new BulkList());
+				bulk.setVariazioni_associate( new BulkList());
+	
+				if (bulk.getMese()!=null) {
+					Liquidazione_ivaHome home= (Liquidazione_ivaHome) getHome(aUC, Liquidazione_ivaBulk.class);
+					bulk.setRipartizione_finanziaria( new BulkList( home.findRipartizioneFinanziariaList( bulk ) ));
+					if (!bulk.isRegistroStampato(bulk.getMese())) {
+						bulk.setLiquidazioniProvvisorie( new BulkList( home.findLiquidazioniProvvisorieList( bulk ) ));
+					} else {
+						bulk.setVariazioni_associate( new BulkList( home.findVariazioniAssociateList( bulk ) ));
+					}
+					getHomeCache(aUC).fetchAll(aUC);
+				}
+			}
+			return bulk;
+		}
+		catch( Exception e )
+		{
+			throw handleException( e );
+		}		
+	}
+	
+	public void saveRipartizioneFinanziaria(UserContext aUC,Liquidazione_definitiva_ivaVBulk bulk) throws ComponentException{
+		try	{
+			if (bulk!=null && bulk.getRipartizione_finanziaria()!=null) {
+				Liquidazione_ivaHome home= (Liquidazione_ivaHome) getHome(aUC, Liquidazione_ivaBulk.class);
+				Liquidazione_iva_ripart_finHome homeRipart= (Liquidazione_iva_ripart_finHome) getHome(aUC, Liquidazione_iva_ripart_finBulk.class);
+
+				//cancello prima tutta la vecchia ripartizione
+				List listDB = home.findRipartizioneFinanziariaList( bulk );
+				for (Object object : listDB) {
+					((OggettoBulk)object).setToBeDeleted();
+					deleteBulk(aUC, (OggettoBulk)object);
+				}
+
+				//poi reinserisco
+				long pg_dettaglio = 1;
+				for (Object object : bulk.getRipartizione_finanziaria()) {
+					((Liquidazione_iva_ripart_finBulk)object).setPg_dettaglio(pg_dettaglio++);
+					((OggettoBulk)object).setUser(CNRUserContext.getUser(aUC));
+					((OggettoBulk)object).setToBeCreated();
+					homeRipart.insert((Persistent)object, aUC);
+				}
+			}
+		}
+		catch( Exception e )
+		{
+			throw handleException( e );
+		}		
+	}
 }
