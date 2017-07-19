@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class MetadataEncodingUtils {
 
     private static final Logger LOGGER = org.slf4j.LoggerFactory.getLogger(MetadataEncodingUtils.class);
+    public static final String UTF_8 = "UTF-8";
 
 
     /**
@@ -29,7 +30,7 @@ public class MetadataEncodingUtils {
         Assert.isTrue(2 == a.length, "invalid metadata: " + input);
         byte[] decoded = Base64.getDecoder().decode(a[1]);
         try {
-            String decodedValue = new String(decoded, "UTF-8");
+            String decodedValue = new String(decoded, UTF_8);
             LOGGER.info("{} decoded to {}", input, decodedValue);
             Assert.isTrue(a[0].equals(DigestUtils.md5Hex(decodedValue).toUpperCase()), "integrity issue with input "+ input);
             return decodedValue;
@@ -65,9 +66,15 @@ public class MetadataEncodingUtils {
      * @return encoded metadata key (CNR_${base64(key)})
      */
     public static String encodeKey(String input) {
+        byte[] bytes;
+        try {
+            bytes = input.getBytes(UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            throw new StorageException(StorageException.Type.GENERIC, "cannot encode key " + input, e);
+        }
         String suffix = Base64
                 .getEncoder()
-                .encodeToString(input.getBytes())
+                .encodeToString(bytes)
                 .replaceAll("=+$", "");
         String b64encodedKey = String.format("CNR_%s", suffix);
         LOGGER.info("key {} encoded to {}", input, b64encodedKey);
@@ -83,7 +90,12 @@ public class MetadataEncodingUtils {
      * @return encoded metadata (i.e. ${md5(value)}|${b64(value)})
      */
     public static String encodeValue(String value) {
-        byte[] bytes = value.getBytes();
+        byte[] bytes;
+        try {
+            bytes = value.getBytes(UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            throw new StorageException(StorageException.Type.GENERIC, "cannot encode value " + value, e);
+        }
         String md5digest = DigestUtils
                 .md5Hex(bytes)
                 .toUpperCase();
