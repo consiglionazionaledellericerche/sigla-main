@@ -1,9 +1,6 @@
 package it.cnr.contab.docamm00.tabrif.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class Bene_servizioBase extends Bene_servizioKey implements Keyed {
 	// CD_CATEGORIA_GRUPPO VARCHAR(10)
@@ -43,6 +40,17 @@ public class Bene_servizioBase extends Bene_servizioKey implements Keyed {
 	private java.lang.Boolean fl_autofattura;
 
 	private java.lang.Boolean fl_bollo;
+
+	private java.lang.Boolean flScadenza;
+	
+	private java.lang.Boolean scontiApplicInvent;
+
+	private java.lang.String tipoServizio;
+
+	private java.lang.String tipoManutenzione;
+
+	private java.lang.String note;
+
 public Bene_servizioBase() {
 	super();
 }
@@ -180,5 +188,35 @@ public java.lang.String getTipoGestione() {
 }
 public void setTipoGestione(java.lang.String tipoGestione) {
 	this.tipoGestione = tipoGestione;
+}
+public java.lang.Boolean getFlScadenza() {
+	return flScadenza;
+}
+public void setFlScadenza(java.lang.Boolean flScadenza) {
+	this.flScadenza = flScadenza;
+}
+public java.lang.Boolean getScontiApplicInvent() {
+	return scontiApplicInvent;
+}
+public void setScontiApplicInvent(java.lang.Boolean scontiApplicInvent) {
+	this.scontiApplicInvent = scontiApplicInvent;
+}
+public java.lang.String getTipoServizio() {
+	return tipoServizio;
+}
+public void setTipoServizio(java.lang.String tipoServizio) {
+	this.tipoServizio = tipoServizio;
+}
+public java.lang.String getTipoManutenzione() {
+	return tipoManutenzione;
+}
+public void setTipoManutenzione(java.lang.String tipoManutenzione) {
+	this.tipoManutenzione = tipoManutenzione;
+}
+public java.lang.String getNote() {
+	return note;
+}
+public void setNote(java.lang.String note) {
+	this.note = note;
 }
 }

@@ -76,8 +76,8 @@
 		name="notaRiga"
 		property="notaRiga"
 		inputType="TEXTAREA"
-		cols="100"
-		rows="5"
+		cols="200"
+		rows="2"
 		maxLength="2000"
 		enabledOnEdit="true"
 		label="Note" />
@@ -126,7 +126,7 @@
 		name="cdUnitaMisuraMinima"
 		property="beneServizio.unitaMisura.cdUnitaMisura"
 		maxLength="30"
-		inputSize="6"
+		inputSize="3"
 		inputType="ROTEXT"
 		label="Unità Misura Minima"
 		caseSensitiveSearch="false" />
@@ -134,7 +134,7 @@
 		name="cdUnitaMisura"
 		property="unitaMisura.cdUnitaMisura"
 		inputType="TEXT"
-		inputSize="10"
+		inputSize="3"
 		maxLength="10"
 		enabledOnEdit="false"
 		label="Unità di Misura" />
@@ -142,20 +142,20 @@
 		name="coefConv"
 		property="coefConv"
 		inputType="TEXT"
-		inputSize="12"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		inputSize="3"
 		maxLength="12"
 		enabledOnEdit="true"
 		label="Coefficiente di Conversione" />
 	<fieldProperty
 		name="voce_iva"
-		property="voce_iva"
+		property="voceIva"
 		inputType="SEARCHTOOL" 		
 		enabledOnSearch="false"
         enabledOnEdit="true" />	
 	<fieldProperty
-		name="cdVoceIva"
-		property="voce_iva.cd_voce_iva"
-		readonlyProperty="ROvoceiva"
+		name="cd_voce_iva"
+		property="voceIva.cd_voce_iva"
 		maxLength="30"
 		inputSize="6"
 		inputType="TEXT"
@@ -164,14 +164,14 @@
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="ds_voce_iva"
-		property="voce_iva.ds_voce_iva"
+		property="voceIva.ds_voce_iva"
 		inputSize="30"
 		inputType="ROTEXT"
 		label=""
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="percentuale_voce_iva"
-		property="voce_iva.percentuale"
+		property="voceIva.percentuale"
 		maxLength="6"
 		inputSize="6"
 		inputType="ROTEXT"
@@ -192,7 +192,7 @@
 		inputType="TEXT"
 		inputSize="20"
 		maxLength="20"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		nullable="false"
 		formatName="it.cnr.contab.util.Importo6CifreFormat"
 		label="Prezzo Unitario" />
@@ -212,8 +212,8 @@
 		formatName="it.cnr.contab.util.PercentFormat"
 		inputSize="5"
 		maxLength="5"
-		enabledOnEdit="false"
-		label="Sconto 1" />
+		enabledOnEdit="true"
+		label="% Sconto 1" />
 	<fieldProperty
 		name="sconto2"
 		property="sconto2"
@@ -221,8 +221,8 @@
 		formatName="it.cnr.contab.util.PercentFormat"
 		inputSize="5"
 		maxLength="5"
-		enabledOnEdit="false"
-		label="Sconto 2" />
+		enabledOnEdit="true"
+		label="% Sconto 2" />
 	<fieldProperty
 		name="sconto3"
 		property="sconto3"
@@ -230,8 +230,8 @@
 		formatName="it.cnr.contab.util.PercentFormat"
 		inputSize="5"
 		maxLength="5"
-		enabledOnEdit="false"
-		label="Sconto 3" />
+		enabledOnEdit="true"
+		label="% Sconto 3" />
 	<fieldProperty
 		name="imImponibileDivisa"
 		property="imImponibileDivisa"
@@ -279,6 +279,82 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<fieldProperty
+		name="tipoConsegna"
+		property="dspTipoConsegna"
+		inputType="SELECT"
+		keysProperty="tipoConsegnaKeys"
+		inputSize="20"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Tipo Consegna" />
+	<fieldProperty
+		name="dtPrevConsegna"
+		property="dspDtPrevConsegna"
+		inputType="TEXT"
+		formatName="date_short"
+		inputSize="10"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Data Prev. Consegna" />
+	<fieldProperty
+		name="findLuogoConsegnaMag"
+		property="dspLuogoConsegna"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Luogo di Consegna" />
+	<fieldProperty
+		name="findMagazzino"
+		property="dspMagazzino"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="findUnitaOperativaOrdDest"
+		property="dspUopDest"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa Ricevente" />
+	<fieldProperty
+		name="dspUopDestinazione"
+		property="dspUopDest.cdUnitaOperativa"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		nullable="true"
+		label="Unità Operativa"
+		caseSensitiveSearch="false" />
+	<columnSet
+		name="righeSet">
+		<columnFieldProperty
+			name="riga" />
+		<columnFieldProperty
+			name="cdBeneServizio" />
+		<columnFieldProperty
+			name="dsBeneServizio" />
+		<columnFieldProperty
+			name="cd_voce_iva" />
+		<columnFieldProperty
+			inputSize="40"
+			name="notaRiga" />
+		<columnFieldProperty
+			name="cdUnitaMisuraMinima"/>
+		<columnFieldProperty
+			name="cdUnitaMisura"/>
+		<columnFieldProperty
+			name="coefConv"/>
+		<columnFieldProperty
+			name="quantita"/>
+		<columnFieldProperty
+			name="prezzoUnitario"/>
+		<columnFieldProperty
+			name="dspUopDestinazione"/>
+	</columnSet>
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -299,6 +375,10 @@
 	<formFieldProperty
 		name="riga" />
 	<formFieldProperty
+		name="findBeneServizio" />
+	<formFieldProperty
+		name="cdUnitaMisuraMinima" />
+	<formFieldProperty
 		name="dsBeneServizio" />
 	<formFieldProperty
 		name="notaRiga" />
@@ -312,6 +392,14 @@
 		name="findUnitaMisura" />
 	<formFieldProperty
 		name="coefConv" />
+	<formFieldProperty
+		name="voce_iva" />
+	<formFieldProperty
+		name="cd_voce_iva" />
+	<formFieldProperty
+		name="ds_voce_iva" />
+	<formFieldProperty
+		name="percentuale_voce_iva" />
 	<formFieldProperty
 		name="sconto1" />
 	<formFieldProperty
@@ -328,6 +416,18 @@
 		name="imIva" />
 	<formFieldProperty
 		name="imTotaleRiga" />
+	<formFieldProperty
+		name="tipoConsegna" />
+	<formFieldProperty
+		name="dtPrevConsegna" />
+	<formFieldProperty
+		name="dspQuantita" />
+	<formFieldProperty
+		name="findLuogoConsegnaMag" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="findUnitaOperativaOrdDest" />
 	<formFieldProperty
 		name="dtCancellazione" />
 	<findFieldProperty
@@ -349,7 +449,7 @@
 	<findFieldProperty
 		name="notaRiga" />
 	<findFieldProperty
-		name="cdVoceIva" />
+		name="cd_voce_iva" />
 	<findFieldProperty
 		name="stato" />
 	<findFieldProperty
@@ -397,7 +497,7 @@
 	<columnFieldProperty
 		name="notaRiga" />
 	<columnFieldProperty
-		name="cdVoceIva" />
+		name="cd_voce_iva" />
 	<columnFieldProperty
 		name="stato" />
 	<columnFieldProperty

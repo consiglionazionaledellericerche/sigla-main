@@ -76,7 +76,7 @@
 			columnName="CD_PROC_AMM"
 			propertyName="procedureAmministrative.cd_proc_amm"
 			sqlTypeName="VARCHAR"
-			nullable="false"
+			nullable="true"
 			columnSize="5" />			
 		<columnMapping
 			columnName="CD_CIG"
