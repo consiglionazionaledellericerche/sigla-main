@@ -142,7 +142,7 @@
 	<fieldProperty
 		name="findFornitore"
 		property="fornitore"
-		formName="searchtool"
+		formName="searchtool_lungo"
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROFornitoreSearchTool"
 		enabledOnSearch="true"
@@ -172,7 +172,7 @@
 		name="cd_precedente"
 		property="fornitore.cd_precedente"
 		maxLength="20"
-		inputSize="6"
+		inputSize="16"
 		inputType="TEXT"
 		label="Codice precedente"
 		readonlyPropertyOnEdit="ROfornitore"
@@ -207,7 +207,7 @@
 		name="via_fiscale"
 		property="fornitore.via_sede"
 		maxLength="20"
-		inputSize="10"
+		inputSize="30"
 		inputType="ROTEXT"
 		label="Via/P.za"/>
 	<fieldProperty
@@ -221,7 +221,7 @@
 		name="ds_comune"
 		property="fornitore.comune_sede.ds_comune"
 		maxLength="100"
-		inputSize="20"
+		inputSize="40"
 		inputType="ROTEXT"
 		label="Comune"/>
 	<fieldProperty
@@ -247,7 +247,7 @@
 		name="codiceFiscale"
 		property="codiceFiscale"
 		maxLength="16"
-		inputSize="16"
+		inputSize="20"
 		inputType="TEXT"
 		label="Cod. Fiscale"
 		readonlyPropertyOnEdit="ROfornitore"

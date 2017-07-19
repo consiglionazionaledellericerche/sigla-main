@@ -5,7 +5,16 @@ import java.rmi.RemoteException;
 
 import javax.persistence.PersistenceException;
 
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
+import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP;
@@ -54,6 +63,21 @@ public Forward doBringBackSearchFindUnitaMisura(ActionContext context,
 		return handleException(context,e);
 	}
 }
+public Forward doBlankSearchFindBeneServizio(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+        riga.setBeneServizio(new Bene_servizioBulk());
+        riga.setUnitaMisura(null);
+        riga.setCoefConv(null);
+        riga.setDspTipoConsegna(null);
+        riga.setVoceIva(null);
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
 public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 		OrdineAcqRigaBulk riga,
 		Bene_servizioBulk bene) 
@@ -70,19 +94,35 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 			if (bene.getTipoGestione() != null){
 				riga.setDspTipoConsegna(bene.getTipoGestione());
 			}
+			if (bene.getVoce_iva() != null){
+				riga.setVoceIva(bene.getVoce_iva());
+			}
 		}
-//		try{
-//			if (riga.getUnitaMisura()!=null && riga.getUnitaMisura().getCdUnitaMisura()!=null && riga.getBeneServizio() != null && riga.getBeneServizio().getUnitaMisura() != null && riga.getUnitaMisura().getCdUnitaMisura().equals(riga.getBeneServizio().getUnitaMisura().getCdUnitaMisura())) {
-//				riga.setCoefConv(BigDecimal.ONE);
-//			} else {
-//				riga.setCoefConv(null);
-//			}
-//			return context.findDefaultForward();
-//
-//		} catch(Exception e) {
-//			return handleException(context,e);
-//		}
 		return context.findDefaultForward();
+}
+public Forward doBringBackSearchFindMagazzino(ActionContext context,
+		OrdineAcqRigaBulk riga,
+		MagazzinoBulk magazzino) 
+		throws java.rmi.RemoteException {
+
+		riga.setDspMagazzino(magazzino);
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		if (magazzino != null){
+			riga.setDspLuogoConsegna(magazzino.getLuogoConsegnaMag());
+		}
+		return context.findDefaultForward();
+}
+public Forward doBlankSearchFindMagazzino(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+        riga.setDspMagazzino(new MagazzinoBulk());
+        riga.setDspLuogoConsegna(new LuogoConsegnaMagBulk());
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
 }
 public Forward doBringBackSearchFindUnitaOperativaOrd(ActionContext context,
 		OrdineAcqBulk ordine,
@@ -218,4 +258,48 @@ protected void postSalvataggio(ActionContext context) throws BusinessProcessExce
     CRUDOrdineAcqBP bp= (CRUDOrdineAcqBP) getBusinessProcess(context);
 	bp.gestionePostSalvataggio(context);
 }
+public Forward doBringBackSearchFindFornitore(ActionContext context,
+		OrdineAcqBulk ordine,
+		TerzoBulk fornitoreTrovato) 
+		throws java.rmi.RemoteException {
+			
+		try{
+			ordine.setFornitore(fornitoreTrovato);
+			ordine.setNome(fornitoreTrovato.getAnagrafico().getNome());
+			ordine.setCognome(fornitoreTrovato.getAnagrafico().getCognome());
+			ordine.setRagioneSociale(fornitoreTrovato.getAnagrafico().getRagione_sociale());
+			ordine.setCodiceFiscale(fornitoreTrovato.getAnagrafico().getCodice_fiscale());
+			ordine.setPartitaIva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+		return context.findDefaultForward();
+
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
+public Forward doFreeSearchFindFornitore(ActionContext context) {
+	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+	TerzoBulk tb = new TerzoBulk();
+	tb.setAnagrafico(new AnagraficoBulk());
+	return freeSearch(context,bp.getFormField("fornitore"),tb);
+}
+public Forward doBlankSearchFindFornitore(ActionContext context,
+		OrdineAcqBulk ordine) 
+		throws java.rmi.RemoteException {
+			
+		try{
+			TerzoBulk tb = new TerzoBulk();
+			tb.setAnagrafico(new AnagraficoBulk());
+			ordine.setFornitore(tb);
+			ordine.setNome(null);
+			ordine.setCognome(null);
+			ordine.setRagioneSociale(null);
+			ordine.setCodiceFiscale(null);
+			ordine.setPartitaIva(null);
+				
+			return context.findDefaultForward();
+
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
 }
