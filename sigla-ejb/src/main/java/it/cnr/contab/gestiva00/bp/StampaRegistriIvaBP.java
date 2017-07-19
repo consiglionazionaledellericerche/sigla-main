@@ -14,6 +14,7 @@ public class StampaRegistriIvaBP extends BulkBP {
     private int status= INSERT;
 
 	private final SimpleDetailCRUDController registri_stampati = new SimpleDetailCRUDController("Registri stampati", Report_statoBulk.class,"registri_stampati",this);
+	
 public StampaRegistriIvaBP() {
 	super();
 }
