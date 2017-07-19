@@ -44,7 +44,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT 1 PAGINA,LIQUIDAZIONE_IVA.*,UO.DS_UNITA_ORGANIZZATIVA DS_UNITA_ORGANIZZATIVA
+		<![CDATA[SELECT LIQUIDAZIONE_IVA.*,UO.DS_UNITA_ORGANIZZATIVA DS_UNITA_ORGANIZZATIVA
 FROM LIQUIDAZIONE_IVA, UNITA_ORGANIZZATIVA UO
 WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
   AND LIQUIDAZIONE_IVA.CD_CDS = $P{cd_cds}
@@ -55,7 +55,6 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
   AND LIQUIDAZIONE_IVA.DT_FINE = $P{dataFine}
   AND UO.CD_UNITA_ORGANIZZATIVA =  LIQUIDAZIONE_IVA.CD_UNITA_ORGANIZZATIVA]]>
 	</queryString>
-	<field name="PAGINA" class="java.lang.Integer"/>
 	<field name="CD_CDS" class="java.lang.String"/>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
@@ -121,8 +120,11 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 	<variable name="INTESTAZIONE" class="java.lang.String"/>
 	<variable name="DESCRIZIONE1" class="java.lang.String"/>
 	<variable name="PERIODO" class="java.lang.String"/>
+	<variable name="PAGINA" class="java.lang.Integer">
+		<variableExpression><![CDATA[new Integer(1)]]></variableExpression>
+	</variable>
 	<group name="PAGINA" isStartNewPage="true">
-		<groupExpression><![CDATA[$F{PAGINA}]]></groupExpression>
+		<groupExpression><![CDATA[$V{PAGINA}]]></groupExpression>
 		<groupHeader>
 			<band height="70" splitType="Stretch">
 				<textField isBlankWhenNull="true">
@@ -144,7 +146,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</textField>
 				<staticText>
 					<reportElement key="staticText-2" style="TNR12BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="48" width="26" height="18" isRemoveLineWhenBlank="true" uuid="53dbc118-e35b-48d5-9834-1affebfc9fee">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -284,17 +286,17 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 			<band height="141" splitType="Stretch">
 				<line>
 					<reportElement key="line-9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="3" y="29" width="496" height="1" isRemoveLineWhenBlank="true" uuid="1fd65dc6-4719-45e9-a336-4b79db73fac8">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
 					<reportElement key="line-10" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="3" y="71" width="496" height="1" isRemoveLineWhenBlank="true" uuid="fe2e5623-8bdb-4b4b-841c-32518c1beb3c">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
 					<reportElement key="staticText-29" style="TNR12BI" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="9" width="275" height="15" isRemoveLineWhenBlank="true" uuid="a0d7bd84-3522-4e3a-b2d9-b09506ab7aab">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -309,7 +311,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-30" style="TNR12BI" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="34" width="275" height="33" isRemoveLineWhenBlank="true" uuid="2db45b1a-27f4-4595-b9e0-a99c486dced5">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -324,7 +326,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-31" style="TNR12BI" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="75" width="275" height="32" isRemoveLineWhenBlank="true" uuid="a4ca4483-68e6-4a0e-8722-fb12fb5cb375">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -339,7 +341,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</staticText>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="285" y="75" width="100" height="18" isRemoveLineWhenBlank="true" uuid="866304da-3283-41e3-b1ae-7bc248cdd085">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -354,7 +356,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="285" y="34" width="100" height="18" isRemoveLineWhenBlank="true" uuid="bc82e7ea-087e-451f-bd59-09a3115d4243">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1))
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1))
             && $F{VAR_IMP_PER_PREC}.compareTo(new BigDecimal(0)) <= 0)]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -370,7 +372,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="392" y="34" width="104" height="18" isRemoveLineWhenBlank="true" uuid="2bfdaccd-be94-4653-b632-65237d4943c8">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1))
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1))
             && $F{VAR_IMP_PER_PREC}.compareTo(new BigDecimal(0)) > 0)]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -386,12 +388,12 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</textField>
 				<line>
 					<reportElement key="line-25" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="282" y="0" width="1" height="140" isRemoveLineWhenBlank="true" uuid="8276ff13-4a5f-46c0-a39d-07f9446ec1e0">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
 					<reportElement key="line-26" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="2" y="0" width="1" height="140" isRemoveLineWhenBlank="true" uuid="f7db0a1c-29f3-4fe4-9f31-af6c3b41c6fe">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
@@ -399,22 +401,22 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</line>
 				<line>
 					<reportElement key="line-28" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="2" y="140" width="496" height="1" isRemoveLineWhenBlank="true" uuid="29505cfa-fbca-4049-87b8-01585272717f">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
 					<reportElement key="line-34" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="388" y="0" width="1" height="140" isRemoveLineWhenBlank="true" uuid="6587de78-14dc-46da-9367-e0a2fc763837">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
 					<reportElement key="line-10" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="113" width="496" height="1" isRemoveLineWhenBlank="true" uuid="7a12ecef-a7db-4d18-be20-e53e532fb791">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
 					<reportElement key="staticText-31" style="TNR12BI" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="119" width="275" height="18" isRemoveLineWhenBlank="true" uuid="8fd4b937-bab0-4162-8fa1-6f66a0d519a9">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)))]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -429,7 +431,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</staticText>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="284" y="119" width="100" height="18" isRemoveLineWhenBlank="true" uuid="7e9a612b-c456-4e5a-b110-19d14268d5a1">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1))
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1))
             && $F{IVA_LIQ_ESTERNA}.compareTo(new BigDecimal(0)) <= 0)]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -445,7 +447,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="391" y="119" width="104" height="18" isRemoveLineWhenBlank="true" uuid="90760e50-aa28-404b-8038-a41d88ddee2b">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1))
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1))
             && $F{IVA_LIQ_ESTERNA}.compareTo(new BigDecimal(0)) > 0)]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -540,7 +542,7 @@ WHERE LIQUIDAZIONE_IVA.ESERCIZIO = $P{esercizio}
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-8" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="101" width="26" height="18" isRemoveLineWhenBlank="true" uuid="8f1fb3bf-37c0-42af-a358-e7fa39078694">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -673,7 +675,7 @@ art. 17 DPR.633/1972 (+)
 				<printWhenExpression><![CDATA[new Boolean($F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 				<staticText>
 					<reportElement key="staticText-15" style="TNR12BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="6" width="26" height="18" isRemoveLineWhenBlank="true" uuid="8dc19cb4-3ef0-4073-a2e0-89866c2bd2f3">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -689,7 +691,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-16" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="31" y="41" width="248" height="17" isRemoveLineWhenBlank="true" uuid="3ae65c87-442d-465b-804c-97e10bcb9cc4">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -705,7 +707,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-17" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="41" width="26" height="18" isRemoveLineWhenBlank="true" uuid="7ba20965-34d5-441b-a010-e31077b88cbe">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -721,7 +723,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-18" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="67" width="26" height="18" isRemoveLineWhenBlank="true" uuid="324ca74b-c238-482c-9059-608291cddbac">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -737,7 +739,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-19" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="31" y="67" width="248" height="16" isRemoveLineWhenBlank="true" uuid="a5c342d6-0928-4ea1-acf3-2e0638f36aa4">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -753,7 +755,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-20" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="31" y="89" width="248" height="32" isRemoveLineWhenBlank="true" uuid="c72cfbcc-f76b-4c1c-8a92-851f251a8c1f">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -770,7 +772,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-21" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="89" width="26" height="18" isRemoveLineWhenBlank="true" uuid="5eaa898e-ad66-4f1a-bc92-bf34b2c095ab">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -786,7 +788,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-22" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="123" width="26" height="18" isRemoveLineWhenBlank="true" uuid="e0cbf723-6ad1-46b9-a696-e10e297c7bb9">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -802,7 +804,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-23" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="31" y="123" width="248" height="35" isRemoveLineWhenBlank="true" uuid="6d7455b9-6048-4061-b4cc-5bd798a62dae">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -819,7 +821,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-24" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="162" width="275" height="17" isRemoveLineWhenBlank="true" uuid="0145b4a3-a9d1-4d66-93f8-390a46d42b71">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -835,7 +837,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField-4" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="392" y="6" width="104" height="18" isRemoveLineWhenBlank="true" uuid="e6972a78-cdbd-435a-b889-2b0e897b8c78">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -851,7 +853,7 @@ art. 17 DPR.633/1972 (+)
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="392" y="41" width="104" height="23" isRemoveLineWhenBlank="true" uuid="69d10f89-6dc4-497f-978e-6629b57896cd">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -867,7 +869,7 @@ art. 17 DPR.633/1972 (+)
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="392" y="67" width="104" height="23" isRemoveLineWhenBlank="true" uuid="90789f79-249d-4180-b5f8-df98553ddbf6">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -883,7 +885,7 @@ art. 17 DPR.633/1972 (+)
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="392" y="92" width="104" height="23" isRemoveLineWhenBlank="true" uuid="370d3b9d-8e6c-4759-bdf7-dd7218026787">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -899,7 +901,7 @@ art. 17 DPR.633/1972 (+)
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="392" y="123" width="104" height="23" isRemoveLineWhenBlank="true" uuid="42f6d647-1e7b-488d-b883-2eedf334eeb9">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -915,7 +917,7 @@ art. 17 DPR.633/1972 (+)
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="392" y="162" width="104" height="23" isRemoveLineWhenBlank="true" uuid="de2455ec-bc66-49b7-b411-09f528bf6d43">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -931,7 +933,7 @@ art. 17 DPR.633/1972 (+)
 				</textField>
 				<staticText>
 					<reportElement key="staticText-26" style="TNR12BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="31" y="6" width="248" height="16" isRemoveLineWhenBlank="true" uuid="3c2bc5f9-8b07-4db4-9513-66429823eb99">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -947,7 +949,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-27" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="184" width="275" height="19" isRemoveLineWhenBlank="true" uuid="b2f3d94d-b4a8-45b0-863c-015504a07b9b">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -963,7 +965,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<textField pattern="###0" isBlankWhenNull="false">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="91" y="184" width="18" height="18" isRemoveLineWhenBlank="true" uuid="517a314c-6ffb-4f9c-a8b7-9e6b8771f6ee">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -995,7 +997,7 @@ art. 17 DPR.633/1972 (+)
 				</staticText>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField" style="TNR12" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="392" y="209" width="104" height="18" isRemoveLineWhenBlank="true" uuid="f319c49a-0e12-4434-9a4d-c2887e13575c">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -1026,7 +1028,7 @@ art. 17 DPR.633/1972 (+)
 				</line>
 				<textField pattern="" isBlankWhenNull="true">
 					<reportElement key="textField-4" style="TNR10BI" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="54" y="24" width="225" height="14" isRemoveLineWhenBlank="true" uuid="e4bca4d7-182f-4214-8f60-b979208d251b">
-						<printWhenExpression><![CDATA[new Boolean($F{PAGINA}.equals(new Integer(1)) &&
+						<printWhenExpression><![CDATA[new Boolean($V{PAGINA}.equals(new Integer(1)) &&
             $F{TIPO_LIQUIDAZIONE}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
