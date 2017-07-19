@@ -183,14 +183,14 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
-		label="Es. Contratto" />
+		label="Es. Contratto/Incarico" />
 	<fieldProperty
 		name="pg_contratto"
 		property="pg_contratto"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		label="Numero Contratto" />	
+		label="Numero Contratto/Incarico" />	
 	<fieldProperty
 		name="data_pagamento"
 		property="data_pagamento"
