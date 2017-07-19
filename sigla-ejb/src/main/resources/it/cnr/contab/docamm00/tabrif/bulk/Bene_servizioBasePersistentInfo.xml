@@ -22,16 +22,54 @@
 			propertyName="cdTipoArticolo"
 			sqlTypeName="VARCHAR"
 			columnSize="3"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="CD_GRUPPO_MERCEOLOGICO"
 			propertyName="cdGruppoMerceologico"
 			sqlTypeName="VARCHAR"
 			columnSize="10"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="FL_GESTIONE_INVENTARIO"
 			propertyName="fl_gestione_inventario"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SCADENZA"
+			propertyName="flScadenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TIPO_SERVIZIO"
+			propertyName="tipoServizio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_MANUTENZIONE"
+			propertyName="tipoManutenzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_GESTIONE"
+			propertyName="tipoGestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTI_APPLIC_INVENT"
+			propertyName="scontiApplicInvent"
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
@@ -164,4 +202,16 @@
 		name="fl_autofattura" />			
 	<persistentProperty
 		name="fl_bollo" />			
+	<persistentProperty
+		name="flScadenza"/>
+	<persistentProperty
+		name="tipoServizio"/>
+	<persistentProperty
+		name="tipoManutenzione"/>
+	<persistentProperty
+		name="tipoGestione"/>
+	<persistentProperty
+		name="note"/>
+	<persistentProperty
+		name="scontiApplicInvent"/>
 </SQLPersistentInfo>
