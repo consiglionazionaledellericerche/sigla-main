@@ -16,16 +16,30 @@ import java.util.UUID;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
+import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
+import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
+import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagHome;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdHome;
 import it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk;
@@ -36,6 +50,7 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.AllegatoOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
@@ -52,6 +67,7 @@ import it.cnr.jada.comp.GenerazioneReportException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -218,6 +234,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
 		throws ComponentException {
 	OrdineAcqBulk ordine = (OrdineAcqBulk)super.inizializzaBulkPerModifica(usercontext, oggettobulk);
 
+	ordine.setIsAbilitatoTuttiMagazzini(isAbilitatoTuttiMagazzini(usercontext, ordine));
 	
 	it.cnr.jada.bulk.BulkHome home= getHome(usercontext, OrdineAcqRigaBulk.class);
     it.cnr.jada.persistency.sql.SQLBuilder sql= home.createSQLBuilder();
@@ -467,6 +484,80 @@ public SQLBuilder selectBeneServizioByClause(UserContext userContext, OrdineAcqR
 	return sql;
 }
 
+public SQLBuilder selectDspMagazzinoByClause(UserContext userContext, OrdineAcqRigaBulk riga, 
+		MagazzinoHome magHome, MagazzinoBulk mag, 
+		CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+	SQLBuilder sql = recuperoMagazziniAbilitati(userContext, riga.getOrdineAcq(), magHome, compoundfindclause);
+	
+	return sql;
+}
+
+public SQLBuilder selectMagazzinoByClause(UserContext userContext, OrdineAcqConsegnaBulk cons, 
+		MagazzinoHome magHome, MagazzinoBulk mag, 
+		CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+	SQLBuilder sql = recuperoMagazziniAbilitati(userContext, cons.getOrdineAcqRiga().getOrdineAcq(), magHome, compoundfindclause);
+	
+	return sql;
+}
+
+private SQLBuilder recuperoMagazziniAbilitati(UserContext userContext, OrdineAcqBulk ord,
+		MagazzinoHome magHome, CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException {
+	SQLBuilder sql = magHome.selectByClause(userContext, compoundfindclause);
+	if (!isAbilitatoTuttiMagazzini(userContext, ord)){
+		sql.addTableToHeader("ABIL_UTENTE_UOP_OPER_MAG", "B");		
+		sql.addSQLJoin("MAGAZZINO.CD_CDS", "B.CD_CDS");
+		sql.addSQLJoin("MAGAZZINO.CD_MAGAZZINO", "B.CD_MAGAZZINO");
+		sql.addSQLClause("AND", "B.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
+		sql.addSQLClause("AND", "B.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, ord.getCdUnitaOperativa());
+		sql.addSQLClause("AND", "B.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
+	}
+	return sql;
+}
+
+public SQLBuilder selectVoceIvaByClause(UserContext userContext, OrdineAcqRigaBulk riga, 
+		Voce_ivaHome voceIvaHome, Voce_ivaBulk voceIva, 
+		CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+	SQLBuilder sql = voceIvaHome.selectByClause(userContext, compoundfindclause);
+	if (riga.getBeneServizio() == null){
+		throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare il Codice Iva! E' necessario prima selezionare il bene/servizio.");
+	}
+	Bene_servizioBulk bene = riga.getBeneServizio();
+	if (bene.getVoce_iva() == null || bene.getVoce_iva().getCd_voce_iva() == null){
+		Bene_servizioHome beneHome = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+		try {
+			bene = (Bene_servizioBulk)beneHome.findByPrimaryKey(userContext, bene);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	}
+	
+	sql.addSQLClause("AND", "CD_VOCE_IVA", SQLBuilder.EQUALS, bene.getCd_voce_iva());
+	
+	return sql;
+}
+
+public SQLBuilder selectLuogoConsegnaMagByClause(UserContext userContext, OrdineAcqConsegnaBulk cons, 
+		LuogoConsegnaMagHome luogoHome, LuogoConsegnaMagBulk luogo, 
+		CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+	SQLBuilder sql = luogoHome.selectByClause(userContext, compoundfindclause);
+	if (cons.getMagazzino() == null){
+		throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare il Codice Iva! E' necessario prima selezionare il bene/servizio.");
+	}
+	MagazzinoBulk mag = cons.getMagazzino();
+	if (mag.getLuogoConsegnaMag() == null || mag.getLuogoConsegnaMag().getCdLuogoConsegna() == null){
+		MagazzinoHome magHome = (MagazzinoHome)getHome(userContext, MagazzinoBulk.class);
+		try {
+			mag = (MagazzinoBulk)magHome.findByPrimaryKey(userContext, mag);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	}
+	
+	sql.addSQLClause("AND", "CD_LUOGO_CONSEGNA", SQLBuilder.EQUALS, mag.getCdLuogoConsegna());
+	
+	return sql;
+}
+
 public void gestioneStampaOrdine(UserContext userContext,
 		OrdineAcqBulk ordine) throws RemoteException,ComponentException {
 	OrdineAcqCMISService ordineCMISService = SpringUtil.getBean("ordineAcqCMISService",OrdineAcqCMISService.class);	
@@ -599,6 +690,8 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 			List listUop=uopHome.fetchAll(sql);
 			if (listUop != null && listUop.size() == 1){
 				ordine.setUnitaOperativaOrd((UnitaOperativaOrdBulk)listUop.get(0));
+				
+				ordine.setIsAbilitatoTuttiMagazzini(isAbilitatoTuttiMagazzini(usercontext, ordine));
 //				assegnaUnitaOperativaDest(usercontext, ordine, home, uopHome);
 			}
 		}
@@ -620,6 +713,14 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 //	}
 //}
 //
+private Boolean isAbilitatoTuttiMagazzini(UserContext userContext, OrdineAcqBulk ordine) throws ComponentException {
+	
+	AbilUtenteUopOperBulk abil = recuperoAbilUtenteUo(userContext, ordine, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
+	if (abil != null && abil.getTuttiMagazzini().equals("S")){
+		return true;
+	}
+	return false;
+}
 private void assegnaNumeratoreOrd(UserContext usercontext, OrdineAcqBulk ordine, OrdineAcqHome home)
 		throws PersistencyException, ComponentException {
 	if (ordine.getCdNumeratore() == null && ordine.getCdUnitaOperativa() != null){
@@ -646,13 +747,7 @@ public Boolean isUtenteAbilitatoValidazioneOrdine(UserContext usercontext, Ordin
 
 private Boolean isUtenteAbilitato(UserContext usercontext, OrdineAcqBulk ordine, String tipoOperazione) throws ComponentException {
 	if (ordine.getCdUnitaOperativa() != null){
-		AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(usercontext, AbilUtenteUopOperBulk.class);
-		AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(usercontext.getUser(), ordine.getCdUnitaOperativa(), tipoOperazione);
-		try {
-			abil = (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(usercontext, abil);
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		}
+		AbilUtenteUopOperBulk abil = recuperoAbilUtenteUo(usercontext, ordine, tipoOperazione);
 		if (abil != null){
 			return true;
 		}
@@ -661,6 +756,18 @@ private Boolean isUtenteAbilitato(UserContext usercontext, OrdineAcqBulk ordine,
 	return true;
 }
 
+private AbilUtenteUopOperBulk recuperoAbilUtenteUo(UserContext userContext, OrdineAcqBulk ordine, String tipoOperazione) throws ComponentException {
+	if (ordine.getCdUnitaOperativa() != null){
+		AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(userContext, AbilUtenteUopOperBulk.class);
+		AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(userContext.getUser(), ordine.getCdUnitaOperativa(), tipoOperazione);
+		try {
+			return (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(userContext, abil);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	}
+	return null;
+}
 public void completaOrdine(UserContext userContext, OrdineAcqBulk ordine) throws PersistencyException, ComponentException{
 	OrdineAcqHome home = (OrdineAcqHome) getHomeCache(userContext).getHome(OrdineAcqBulk.class);
 	assegnaNumeratoreOrd(userContext, ordine, home);
@@ -704,4 +811,70 @@ private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 	return valuta;
 }
 
+/**
+ * Pre:  Ricerca CIG
+ * Post: Il CIG può essere collegato ad un contratto solo se vengono rispettate le seguenti regole:				
+		CD_TERZO_RUP del CIG è il medesimo del contratto che si sta inserendo quindi : 
+		CIG. CD_TERZO_RUP = CONTRATTO. CD_TERZO_RESP
+		Il CIG non deve risultare associato ad altri contratti.
+ */
+public SQLBuilder selectCigByClause (UserContext userContext, OrdineAcqBulk ordine, CigBulk cig, CompoundFindClause clause)	throws ComponentException, PersistencyException
+{
+	if (clause == null) 
+	  clause = cig.buildFindClauses(null);
+	SQLBuilder sql = getHome(userContext, cig).createSQLBuilder();
+	if(ordine.getResponsabileProcPers() == null || ordine.getResponsabileProcPers().getCd_terzo() == null)
+	   throw new ApplicationException("Per effettuare la ricerca valorizzare il campo Responsabile!");  
+	sql.addSQLClause(FindClause.AND, "CD_TERZO_RUP", SQLBuilder.EQUALS, ordine.getResponsabileProcPers().getCd_terzo());
+	sql.addClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, Boolean.TRUE);
+	if (clause != null) 
+	  sql.addClause(clause);
+	return sql;
+}
+
+/**
+ * Pre:  Ricerca Figura giuridica interna
+ * Post: Limitazione ai terzi di tipo Unità Organizzativa
+ */
+public SQLBuilder selectTerzoCdrByClause (UserContext userContext, OggettoBulk bulk, TerzoBulk terzo,CompoundFindClause clause)	throws ComponentException, PersistencyException
+{
+	if (clause == null) 
+	  clause = terzo.buildFindClauses(null);
+	SQLBuilder sql = getHome(userContext, terzo).createSQLBuilder();
+	sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.ISNOTNULL, null);
+	// Se uo 999.000 in scrivania: visualizza tutti i progetti
+	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+	  sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+	}		
+	if (clause != null) 
+	  sql.addClause(clause);
+	return sql;
+}	
+public SQLBuilder selectFornitoreByClause(UserContext userContext,  OggettoBulk bulk, TerzoBulk terzo, CompoundFindClause clauses) throws ComponentException {
+	
+	TerzoHome home = (TerzoHome)getHome(userContext, TerzoBulk.class, "V_TERZO_CF_PI");
+	SQLBuilder sql = home.createSQLBuilder();
+	sql.addSQLClause("AND","DT_FINE_RAPPORTO",sql.ISNULL,null);
+	sql.addClause(clauses); 
+	return sql;
+}
+/**
+ * Pre:  Ricerca Tipo Provvedimento
+ * Post: Limitazione ai tipi non annullati
+ */
+public SQLBuilder selectProcedureAmministrativeByClause (UserContext userContext, OggettoBulk bulk, Procedure_amministrativeBulk procedura_amministrativa,CompoundFindClause clause)	throws ComponentException, PersistencyException
+{
+	if (clause == null) 
+	  clause = procedura_amministrativa.buildFindClauses(null);
+	SQLBuilder sql = getHome(userContext, procedura_amministrativa).createSQLBuilder();
+	sql.openParenthesis("AND");
+	sql.addClause("OR", "ti_proc_amm", SQLBuilder.EQUALS, Procedure_amministrativeBulk.TIPO_FORNITURA_SERVIZI);
+	sql.addClause("OR", "ti_proc_amm", SQLBuilder.EQUALS, Procedure_amministrativeBulk.TIPO_GENERICA);
+	sql.closeParenthesis();
+	sql.addClause("AND", "fl_cancellato", SQLBuilder.EQUALS, Boolean.FALSE);
+	if (clause != null) 
+	  sql.addClause(clause);
+	return sql;
+}	
 }
