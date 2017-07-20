@@ -35,6 +35,7 @@ public class OrdineAcqBulk extends OrdineAcqBase implements AllegatoParentBulk {
 	private java.util.Collection modalita;
 	private java.util.Collection termini;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+	private Boolean isAbilitatoTuttiMagazzini = false;
 	/**
 	 * [NOTA_PRECODIFICATA Rappresenta l'anagrafica delle note precodificate.]
 	 **/
@@ -897,5 +898,11 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	public boolean isROFirmatario() {
 		return getFirmatarioPers() == null || getFirmatarioPers().getCrudStatus() == NORMAL;
+	}
+	public Boolean getIsAbilitatoTuttiMagazzini() {
+		return isAbilitatoTuttiMagazzini;
+	}
+	public void setIsAbilitatoTuttiMagazzini(Boolean isAbilitatoTuttiMagazzini) {
+		this.isAbilitatoTuttiMagazzini = isAbilitatoTuttiMagazzini;
 	}	
 }
