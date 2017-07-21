@@ -17,6 +17,7 @@ import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_ripart_finBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_ripart_finHome;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_ivaVBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -114,6 +115,27 @@ public class LiquidIvaInterfComponent extends CRUDComponent {
 		}		
 	}
 	
+	public Liquidazione_massa_ivaVBulk inizializzaMese(UserContext aUC,Liquidazione_massa_ivaVBulk bulk) throws ComponentException{
+		try	{
+			if (bulk!=null) { 
+				bulk.setLiquidazioniProvvisorie( new BulkList());
+				bulk.setLiquidazioniDefinitive( new BulkList());
+	
+				if (bulk.getMese()!=null) {
+					Liquidazione_ivaHome home= (Liquidazione_ivaHome) getHome(aUC, Liquidazione_ivaBulk.class);
+					bulk.setLiquidazioniProvvisorie( new BulkList( home.findLiquidazioniMassiveProvvisorieList( bulk ) ));
+					bulk.setLiquidazioniDefinitive( new BulkList( home.findLiquidazioniMassiveDefinitiveList( bulk ) ));
+					getHomeCache(aUC).fetchAll(aUC);
+				}
+			}
+			return bulk;
+		}
+		catch( Exception e )
+		{
+			throw handleException( e );
+		}		
+	}
+
 	public void saveRipartizioneFinanziaria(UserContext aUC,Liquidazione_definitiva_ivaVBulk bulk) throws ComponentException{
 		try	{
 			if (bulk!=null && bulk.getRipartizione_finanziaria()!=null) {
