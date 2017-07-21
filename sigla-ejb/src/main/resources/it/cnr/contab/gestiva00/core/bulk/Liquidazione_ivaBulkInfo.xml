@@ -664,6 +664,8 @@
 		<columnFieldProperty name="annotazioni"/>
 		<columnFieldProperty name="dacr"/>
 		<columnFieldProperty name="tipo_liquidazione"/>
+		<columnFieldProperty name="iva_da_versare"
+							 label="Debito/Credito"/>
 	</columnSet>	
 
 	<columnSet name="liquidazione_massiva">
