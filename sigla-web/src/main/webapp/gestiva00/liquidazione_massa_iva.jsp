@@ -46,8 +46,6 @@
 				<td>
 					<% bp.getController().writeFormInput(out,null,"mese",false,null,"onChange=\"submitForm('doOnMeseChange')\"");%>
 				</td>
- 			    <td><% bp.getController().writeFormLabel(out,"tipoImpegnoFlag");%></td>
-				<td><% bp.getController().writeFormInput(out,null,"tipoImpegnoFlag",false,null,"");%></td>
 			</tr>
 			<tr>
 				<td>
@@ -64,6 +62,18 @@
 				</td>
 			</tr>
 		</table>
+		<% if (bp.isLiquidazioneMassivaProvvisoriaVisible()) { %>
+			<table>
+			<%JSPUtils.tabbed(
+					pageContext,
+					"tab",
+					bp.getTabs(),
+					bp.getTab("tab"),
+					"center",
+					"100%",
+					null );%>
+			</table>
+		<% } %>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>

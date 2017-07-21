@@ -305,7 +305,7 @@ public String getNextMeseForLiquidazioneDefinitiva() {
 			.map(x->{
 				Calendar cal = new GregorianCalendar();
 				cal.setTime(x.getDt_inizio());
-				return (String)this.getInt_mesi().get(cal.get(Calendar.MONTH)+1);
+				return (String)this.getInt_mesi().get(cal.get(Calendar.MONTH)+2);
 			}).get();
 }
 }
