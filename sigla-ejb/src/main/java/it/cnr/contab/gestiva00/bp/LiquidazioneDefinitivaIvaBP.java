@@ -158,9 +158,7 @@ public String[][] getTabs() {
 	
 	if (isTabRipartizioneFinanziariaVisible())
 		hash.put(i++, new String[]{ "tabRipartFin", "Ripart.Finanziaria", "/gestiva00/tab_ripart_finanziaria.jsp" });
-
-	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
-	if (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && model.isRegistroStampato(model.getMese())) 
+	if (isTabVariazioneAssociateVisible()) 
 		hash.put(i++, new String[]{ "tabVariazioniAss", "Variazioni Associate", "/gestiva00/tab_variazioni_associate.jsp" });
 
 	String[][] tabs = new String[i][3];
@@ -210,7 +208,11 @@ public boolean isAggiornaIvaDaVersareEnable() {
 
 public boolean isTabRipartizioneFinanziariaVisible() {
 	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
-	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null);
+	return !this.isUoEnte() && model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null;
 }
 
+public boolean isTabVariazioneAssociateVisible() {
+	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+	return !this.isUoEnte() && model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && model.isRegistroStampato(model.getMese()); 
+}
 }
