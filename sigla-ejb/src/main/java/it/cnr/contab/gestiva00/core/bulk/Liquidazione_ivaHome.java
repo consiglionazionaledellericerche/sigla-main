@@ -1,4 +1,8 @@
 package it.cnr.contab.gestiva00.core.bulk;
+import java.math.BigDecimal;
+
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -45,6 +49,58 @@ public java.util.List<Liquidazione_ivaBulk> findLiquidazioniProvvisorieList( Liq
 	sql.addClause(FindClause.AND,"dt_inizio",SQLBuilder.EQUALS, bulk.getData_da());
 	sql.addClause(FindClause.AND,"dt_fine",SQLBuilder.EQUALS, bulk.getData_a());
 	sql.addOrderBy("report_id");
+
+	return home.fetchAll(sql);
+}
+
+public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveProvvisorieList( Liquidazione_ivaVBulk bulk ) throws IntrospectionException,PersistencyException 
+{
+	PersistentHome home= getHomeCache().getHome(Liquidazione_ivaBulk.class);
+    SQLBuilder sql= home.createSQLBuilder();
+
+	sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, bulk.getEsercizio());
+	sql.addClause(FindClause.AND,"stato",SQLBuilder.EQUALS, Liquidazione_ivaVBulk.PROVVISORIO);
+	sql.addClause(FindClause.AND,"tipo_liquidazione",SQLBuilder.EQUALS, bulk.getTipoSezionaleFlag());
+	sql.addClause(FindClause.AND,"dt_inizio",SQLBuilder.EQUALS, bulk.getData_da());
+	sql.addClause(FindClause.AND,"dt_fine",SQLBuilder.EQUALS, bulk.getData_a());
+	sql.addClause(FindClause.AND,"report_id",SQLBuilder.EQUALS, Liquidazione_massa_provvisoria_ivaVBulk.REPORTID);
+	sql.addClause(FindClause.AND,"iva_da_versare",SQLBuilder.LESS, BigDecimal.ZERO);
+	
+	SQLBuilder sqlNotExists = home.createSQLBuilder();
+	sqlNotExists.resetColumns();
+	sqlNotExists.addColumn("1");
+	sqlNotExists.setFromClause(null);
+	sqlNotExists.addTableToHeader("LIQUIDAZIONE_IVA", "LIQPRD");
+
+	sqlNotExists.addSQLClause(FindClause.AND,"LIQPRD.ESERCIZIO",SQLBuilder.EQUALS, bulk.getEsercizio());
+	sqlNotExists.addSQLClause(FindClause.AND,"LIQPRD.STATO",SQLBuilder.EQUALS, Liquidazione_ivaVBulk.DEFINITIVO);
+	sqlNotExists.addSQLClause(FindClause.AND,"LIQPRD.TIPO_LIQUIDAZIONE",SQLBuilder.EQUALS, bulk.getTipoSezionaleFlag());
+	sqlNotExists.addSQLClause(FindClause.AND,"LIQPRD.DT_INIZIO",SQLBuilder.EQUALS, bulk.getData_da());
+	sqlNotExists.addSQLClause(FindClause.AND,"LIQPRD.DT_FINE",SQLBuilder.EQUALS, bulk.getData_a());
+	sqlNotExists.addSQLClause(FindClause.AND,"LIQPRD.REPORT_ID",SQLBuilder.EQUALS, BigDecimal.ZERO);
+	sqlNotExists.addSQLJoin("LIQUIDAZIONE_IVA.CD_UNITA_ORGANIZZATIVA", "LIQPRD.CD_UNITA_ORGANIZZATIVA");
+
+	sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
+
+	sql.addOrderBy("cd_unita_organizzativa");
+
+	return home.fetchAll(sql);
+}
+
+public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveDefinitiveList( Liquidazione_ivaVBulk bulk ) throws IntrospectionException,PersistencyException 
+{
+	PersistentHome home= getHomeCache().getHome(Liquidazione_ivaBulk.class);
+
+    SQLBuilder sql= home.createSQLBuilder();
+
+	sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, bulk.getEsercizio());
+	sql.addClause(FindClause.AND,"stato",SQLBuilder.EQUALS, Liquidazione_ivaVBulk.DEFINITIVO);
+	sql.addClause(FindClause.AND,"tipo_liquidazione",SQLBuilder.EQUALS, bulk.getTipoSezionaleFlag());
+	sql.addClause(FindClause.AND,"dt_inizio",SQLBuilder.EQUALS, bulk.getData_da());
+	sql.addClause(FindClause.AND,"dt_fine",SQLBuilder.EQUALS, bulk.getData_a());
+	sql.addClause(FindClause.AND,"report_id",SQLBuilder.EQUALS, BigDecimal.ZERO);
+	
+	sql.addOrderBy("cd_unita_organizzativa");
 
 	return home.fetchAll(sql);
 }
