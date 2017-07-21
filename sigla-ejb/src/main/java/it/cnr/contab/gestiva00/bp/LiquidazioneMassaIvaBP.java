@@ -23,8 +23,12 @@ public LiquidazioneMassaIvaBP(String function) {
 	super(function+"Tr");
 }
 public Liquidazione_massa_ivaVBulk aggiornaProspetti(ActionContext context,Liquidazione_massa_ivaVBulk bulk) throws BusinessProcessException {
-
-	return bulk;
+	try {
+		bulk.setProspetti_stampati(createComponentSession().selectProspetti_stampatiByClause(context.getUserContext(),bulk,new Liquidazione_ivaBulk(),null));
+		return bulk;
+	} catch(Exception e) {
+		throw handleException(e);
+	}
 }
 public Stampa_registri_ivaVBulk aggiornaRegistriStampati(
 	ActionContext context,
@@ -93,17 +97,30 @@ public void resetForSearch(it.cnr.jada.action.ActionContext context) throws it.c
 		throw new it.cnr.jada.action.BusinessProcessException(e);
 	}
 }
-public boolean isLiquidazioneMassivaProvvisoriaVisible() {
-	Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
-	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null);
-//	&&model.getNextMeseForLiquidazioneDefinitiva().equals(model.getMese()));
+public boolean isTabLiquidazioniVisible() {
+	return isTabLiquidazioniProvvisorieVisible() || isTabLiquidazioniDefinitiveVisible();
 }
+
+public boolean isTabLiquidazioniProvvisorieVisible() {
+	Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
+	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null	&&
+			model.getNextMeseForLiquidazioneDefinitiva().equals(model.getMese()));
+}
+
+public boolean isTabLiquidazioniDefinitiveVisible() {
+	Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
+	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null	&&
+			model.getLiquidazioniDefinitive()!=null && !model.getLiquidazioniDefinitive().isEmpty());
+}
+
 public String[][] getTabs() {
 	TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
 	int i=0;
 
-	hash.put(i++, new String[]{ "tabUoLiqProvvisorie", "Provvisorie", "/gestiva00/tab_uo_liqprv.jsp" });
-	hash.put(i++, new String[]{"tabUoLiqDefinitive", "Definitive","/gestiva00/tab_uo_liqdef.jsp" });
+	if (isTabLiquidazioniProvvisorieVisible())
+		hash.put(i++, new String[]{ "tabUoLiqProvvisorie", "Provvisorie", "/gestiva00/tab_uo_liqprv.jsp" });
+	if (isTabLiquidazioniDefinitiveVisible())
+		hash.put(i++, new String[]{"tabUoLiqDefinitive", "Definitive","/gestiva00/tab_uo_liqdef.jsp" });
 	
 	String[][] tabs = new String[i][3];
 	for (int j = 0; j < i; j++) {
@@ -120,8 +137,12 @@ public SimpleDetailCRUDController getUoLiquidazioniDefinitive() {
 public void inizializzaMese(ActionContext context) throws BusinessProcessException {
 	try {
 		Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
+		this.aggiornaProspetti(context,model);
 		this.setModel(context, Utility.createLiquidIvaInterfComponentSession().inizializzaMese(context.getUserContext(), model));
-		setTab("tab", "tabUoLiqProvvisorie");
+		if (isTabLiquidazioniProvvisorieVisible())
+			setTab("tab", "tabUoLiqProvvisorie");
+		else if (isTabLiquidazioniDefinitiveVisible())
+			setTab("tab", "tabUoLiqDefinitive");
 	} catch(Exception e) {
 		throw handleException(e);
 	}	

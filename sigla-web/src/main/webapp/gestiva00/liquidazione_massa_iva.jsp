@@ -62,7 +62,7 @@
 				</td>
 			</tr>
 		</table>
-		<% if (bp.isLiquidazioneMassivaProvvisoriaVisible()) { %>
+		<% if (bp.isTabLiquidazioniVisible()) { %>
 			<table>
 			<%JSPUtils.tabbed(
 					pageContext,
