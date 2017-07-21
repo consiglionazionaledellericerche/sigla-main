@@ -855,7 +855,8 @@ public SQLBuilder selectFornitoreByClause(UserContext userContext,  OggettoBulk 
 	
 	TerzoHome home = (TerzoHome)getHome(userContext, TerzoBulk.class, "V_TERZO_CF_PI");
 	SQLBuilder sql = home.createSQLBuilder();
-	sql.addSQLClause("AND","DT_FINE_RAPPORTO",sql.ISNULL,null);
+	sql.addSQLClause("AND","DT_FINE_RAPPORTO",SQLBuilder.ISNULL,null);
+	sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA", SQLBuilder.ISNULL, null);
 	sql.addClause(clauses); 
 	return sql;
 }
