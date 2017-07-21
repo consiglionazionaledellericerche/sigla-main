@@ -34,7 +34,7 @@ protected Forward basicDoCerca(
 		throws Throwable {
 		LiquidazioneDefinitivaIvaBP bp= (LiquidazioneDefinitivaIvaBP) context.getBusinessProcess();
 		Liquidazione_definitiva_ivaVBulk bulk = (Liquidazione_definitiva_ivaVBulk)bp.getModel();
-		if (bulk.getTipoSezionaleFlag().equals(bulk.SEZIONALI_COMMERCIALI))
+		if (!bp.isUoEnte() && bulk.getTipoSezionaleFlag().equals(bulk.SEZIONALI_COMMERCIALI))
 		{
 			bp.saveRipartizioneFinanziaria(context);
 
