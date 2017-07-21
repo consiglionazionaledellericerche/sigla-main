@@ -86,8 +86,7 @@
 			propertyName="cup.cdCup" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="notaPrecodificata"
-		partOfOid="true" />
+		name="notaPrecodificata"/>
 	<persistentProperty
 		name="numerazioneOrd"
 		partOfOid="true" />

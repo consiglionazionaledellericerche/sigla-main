@@ -264,12 +264,14 @@ public Forward doBringBackSearchFindFornitore(ActionContext context,
 		throws java.rmi.RemoteException {
 			
 		try{
-			ordine.setFornitore(fornitoreTrovato);
-			ordine.setNome(fornitoreTrovato.getAnagrafico().getNome());
-			ordine.setCognome(fornitoreTrovato.getAnagrafico().getCognome());
-			ordine.setRagioneSociale(fornitoreTrovato.getAnagrafico().getRagione_sociale());
-			ordine.setCodiceFiscale(fornitoreTrovato.getAnagrafico().getCodice_fiscale());
-			ordine.setPartitaIva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+			if (fornitoreTrovato != null){
+				ordine.setFornitore(fornitoreTrovato);
+				ordine.setNome(fornitoreTrovato.getAnagrafico().getNome());
+				ordine.setCognome(fornitoreTrovato.getAnagrafico().getCognome());
+				ordine.setRagioneSociale(fornitoreTrovato.getAnagrafico().getRagione_sociale());
+				ordine.setCodiceFiscale(fornitoreTrovato.getAnagrafico().getCodice_fiscale());
+				ordine.setPartitaIva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+			}
 		return context.findDefaultForward();
 
 		} catch(Exception e) {
