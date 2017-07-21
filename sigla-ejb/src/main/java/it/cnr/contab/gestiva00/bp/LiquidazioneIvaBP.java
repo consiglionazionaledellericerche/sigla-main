@@ -1,11 +1,8 @@
 package it.cnr.contab.gestiva00.bp;
-import it.cnr.contab.gestiva00.ejb.*;
-import it.cnr.contab.gestiva00.core.bulk.*;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.util.action.CompoundPropertyController;
 
 
 public class LiquidazioneIvaBP extends StampaRegistriIvaBP {
@@ -47,5 +44,7 @@ public boolean isLiquidato() {
  */
 public void setLiquidato(boolean newLiquidato) {
 	liquidato = newLiquidato;
+}
+public void inizializzaMese(ActionContext context) throws BusinessProcessException {
 }
 }

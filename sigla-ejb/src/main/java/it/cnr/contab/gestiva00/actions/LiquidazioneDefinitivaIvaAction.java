@@ -229,7 +229,7 @@ protected it.cnr.jada.action.Forward setDataDaA(
 public it.cnr.jada.action.Forward doOnMeseChange(ActionContext context) {
 	super.doOnMeseChange(context);
 
-	LiquidazioneDefinitivaIvaBP bp= (LiquidazioneDefinitivaIvaBP) context.getBusinessProcess();
+	LiquidazioneIvaBP bp= (LiquidazioneIvaBP) context.getBusinessProcess();
     try {
         bp.fillModel(context);
 		bp.inizializzaMese(context);
@@ -293,21 +293,11 @@ private MTUWrapper makeLiquidazioneProvvisoria(ActionContext context) throws Thr
 	Stampa_registri_ivaVBulk model = (Stampa_registri_ivaVBulk)bp.getModel();
 	
 	Liquidazione_provvisoria_ivaVBulk modelProvv = new Liquidazione_provvisoria_ivaVBulk();
-	modelProvv.setCd_cds(model.getCd_cds());
-	modelProvv.setCd_unita_organizzativa(model.getCd_unita_organizzativa());
-	modelProvv.setEsercizio(model.getEsercizio());
+	modelProvv.initializeForSearch(bp, context);
 	modelProvv.setData_da(model.getData_da());
 	modelProvv.setData_a(model.getData_a());
 	modelProvv.setMese(model.getMese());
-	modelProvv.setTipoSezionaleFlag(model.getTipoSezionaleFlag());
-	modelProvv.setTipo_sezionale(model.getTipo_sezionale());
-	modelProvv.setPageNumber(1);
-	modelProvv.setTipo_stampa(Stampa_registri_ivaVBulk.TIPO_STAMPA_LIQUIDAZIONE);
-	modelProvv.setTipo_report(Stampa_registri_ivaVBulk.PROVVISORIO);
-	modelProvv.resetLiquidazioneIva();
-	
-	if (bp.isBulkPrintable())
-		((IPrintable)modelProvv).setId_report(null);
+	modelProvv.setUser(model.getUser());
 	modelProvv.setRistampa(false);
 		   	
 	return manageStampa(context, modelProvv);
