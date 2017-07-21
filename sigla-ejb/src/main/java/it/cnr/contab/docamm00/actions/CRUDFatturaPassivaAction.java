@@ -5195,4 +5195,21 @@ public Forward doDisassociaLettera(ActionContext context) {
 		return handleException(context,e);
 	}
 }
+public Forward doOnFlSplitPaymentChange(ActionContext context) {
+	try {
+		fillModel( context );		
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+		
+		if (fattura.getFl_split_payment()!=null &&  fattura.getFl_split_payment() && !fattura.isGestioneSplitPayment() && fattura.getDt_fattura_fornitore() != null) {
+			fattura.setFl_split_payment(Boolean.FALSE);
+			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+			throw new ValidationException("Non è possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(fattura.getDataInizioSplitPayment()) + "!");
+		}
+		basicDoOnIstituzionaleCommercialeChange(context, fattura);
+		return context.findDefaultForward();
+	} catch (Throwable t) {
+		return handleException(context, t);
+	}
+}
 }

@@ -28,7 +28,7 @@ import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;

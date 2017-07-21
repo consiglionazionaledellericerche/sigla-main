@@ -17,7 +17,7 @@ import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
@@ -1695,7 +1695,7 @@ public abstract class Fattura_passivaBulk
 	 */
 	public boolean isROAutofattura() {
 
-		return isAbledToModifyTipoFattura() || isAutoFatturaNeeded() || getFl_split_payment()==null || getFl_split_payment();
+		return isAbledToModifyTipoFattura() || isAutoFatturaNeeded() ||( getFl_split_payment()!=null && getFl_split_payment());
 	}
 	/**
 	 * Insert the method's description here.
@@ -1948,7 +1948,7 @@ public abstract class Fattura_passivaBulk
 	 */
 	public boolean quadraturaInDeroga() {
 		return isCommerciale() && (
-				getFl_split_payment() ||
+				(getFl_split_payment()!=null && getFl_split_payment()) ||
 						((getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio() )) ||
 								(getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())) ||
 						(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())||
@@ -2722,7 +2722,7 @@ public abstract class Fattura_passivaBulk
 			throw new ValidationException("Data registrazione NON valida!");
 		}
 
-		if (getFl_split_payment() && !isGestioneSplitPayment())
+		if (getFl_split_payment()!=null && getFl_split_payment() && !isGestioneSplitPayment())
 			throw new ValidationException("Non  possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(this.getDataInizioSplitPayment()) + "!");
 
 		if (getDt_fattura_fornitore() != null) {

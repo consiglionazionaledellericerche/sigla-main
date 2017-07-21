@@ -26,7 +26,7 @@ import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.OrderedHashtable;

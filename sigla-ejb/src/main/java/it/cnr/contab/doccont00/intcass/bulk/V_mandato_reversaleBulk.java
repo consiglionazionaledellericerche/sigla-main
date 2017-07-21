@@ -14,7 +14,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
@@ -240,7 +240,11 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
     }
 	
 	public String getCMISName() {
-		return (getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN) ? "Mandato n. " : "Reversale n. ") + getPg_documento_cont() + (getStato().equals(MandatoBulk.STATO_MANDATO_ANNULLATO)?" A.pdf":".pdf");
+		return (getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN) ? "Mandato n. " : "Reversale n. ") + getPg_documento_cont() +
+				(Optional.ofNullable(getStato())
+						.filter(stato -> stato.equals(MandatoBulk.STATO_MANDATO_ANNULLATO))
+						.map(s -> " A.pdf")
+						.orElse(".pdf"));
 	}
 
 	public String getReportName() {

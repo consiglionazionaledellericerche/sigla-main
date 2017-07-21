@@ -1,4 +1,4 @@
-package it.cnr.contab.util00.cmis.bulk;
+package it.cnr.contab.util00.bulk.storage;
 
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.BulkList;

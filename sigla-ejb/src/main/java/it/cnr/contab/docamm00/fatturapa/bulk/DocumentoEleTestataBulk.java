@@ -10,7 +10,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;

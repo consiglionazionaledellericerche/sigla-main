@@ -1,6 +1,6 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 
 public interface StatoTrasmissione extends AllegatoParentBulk{
 	public static String ALL = "ALL";

@@ -11,7 +11,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ComponentException;

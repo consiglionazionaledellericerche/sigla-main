@@ -5,7 +5,7 @@ import java.math.*;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 
 import java.util.*;
 
