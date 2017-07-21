@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registro_iva_vendite" pageWidth="842" pageHeight="595" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registro_iva_vendite" pageWidth="842" pageHeight="595" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="a3732221-ebc8-4a4a-88c8-721c3ef70da3">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="124"/>
+	<property name="ireport.x" value="131"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -70,13 +70,15 @@ Order By GRUPPO ASC,
 	<field name="PROVVISORIO_DEFINITIVO" class="java.lang.String"/>
 	<field name="ACQUISTO_VENDITA" class="java.lang.String"/>
 	<field name="DESCRIZIONE_GRUPPO" class="java.lang.String"/>
+	<field name="IVA_ESIGIBILE" class="java.math.BigDecimal"/>
+	<field name="FL_SPLIT_PAYMENT" class="java.lang.String"/>
 	<group name="GRUPPO">
 		<groupExpression><![CDATA[$F{GRUPPO}]]></groupExpression>
 		<groupHeader>
 			<band height="57" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C")||$F{GRUPPO}.equals("A"))]]></printWhenExpression>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-4" style="TNR10" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="1" width="780" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="textField-4" style="TNR10" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="1" width="780" height="13" isRemoveLineWhenBlank="true" uuid="d8ee6ab2-64c4-4fd0-943e-8690663e95e9">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("A"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -85,16 +87,15 @@ Order By GRUPPO ASC,
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UO}+ " "+$F{CD_CDS_ORIGINE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_UO}+ " "+$F{CD_CDS_ORIGINE}]]></textFieldExpression>
 				</textField>
 				<rectangle>
-					<reportElement key="rectangle-1" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="17" width="562" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="rectangle-1" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="17" width="562" height="17" isRemoveLineWhenBlank="true" uuid="e488ee5c-3d99-4cdd-b349-2d2cf00653d8">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("A"))]]></printWhenExpression>
 					</reportElement>
 				</rectangle>
 				<staticText>
-					<reportElement key="staticText-1" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="3" y="19" width="152" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-1" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="3" y="19" width="152" height="13" isRemoveLineWhenBlank="true" uuid="f84abd5c-e455-4381-ba3a-2f8c233de9f4">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("A"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -107,17 +108,17 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Fattura]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-1" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="157" y="17" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-1" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="157" y="17" width="1" height="17" isRemoveLineWhenBlank="true" uuid="08c8c78e-0686-4f79-87e5-2da97b704c83">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("A"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement key="line-2" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="297" y="17" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-2" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="297" y="17" width="1" height="17" isRemoveLineWhenBlank="true" uuid="459d624f-7627-4813-84d8-e2646a8549e7">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("A"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-2" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="299" y="19" width="53" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-2" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="299" y="19" width="53" height="13" isRemoveLineWhenBlank="true" uuid="f72fe6f6-7907-49dd-aeb4-96574cc7aeb8">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("A"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -130,12 +131,12 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Codice]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-3" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="354" y="17" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-3" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="354" y="17" width="1" height="17" isRemoveLineWhenBlank="true" uuid="723ee3c7-bfa7-4f74-ba7a-1d171d24fa75">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("A"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-3" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="356" y="19" width="204" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-3" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="356" y="19" width="204" height="13" isRemoveLineWhenBlank="true" uuid="c0b92c95-275d-457f-92d4-f22805b89d66">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("A"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -148,12 +149,12 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Descrizione]]></text>
 				</staticText>
 				<rectangle>
-					<reportElement key="rectangle-2" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="38" width="780" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="rectangle-2" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="38" width="780" height="17" isRemoveLineWhenBlank="true" uuid="474576fc-9a52-405d-9de3-8fa63e463879">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 				</rectangle>
 				<staticText>
-					<reportElement key="staticText-4" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="40" width="41" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-4" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="40" width="41" height="13" isRemoveLineWhenBlank="true" uuid="1bcdedfd-0cf8-4a58-b353-30a4d8b9ccc9">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -166,17 +167,17 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Codice]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-4" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="43" y="38" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-4" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="43" y="38" width="1" height="17" isRemoveLineWhenBlank="true" uuid="ee5f21d9-de68-4ec3-80ba-840f9ba9186a">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement key="line-5" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="340" y="38" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-5" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="340" y="38" width="1" height="17" isRemoveLineWhenBlank="true" uuid="826b7886-9faa-4427-a06b-48ffc96ef1b8">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-6" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="44" y="40" width="294" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-6" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="44" y="40" width="294" height="13" isRemoveLineWhenBlank="true" uuid="688b4711-81d7-4ca9-ad23-3db23d4a84d2">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -189,22 +190,22 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Descrizione]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-6" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="454" y="38" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-6" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="454" y="38" width="1" height="17" isRemoveLineWhenBlank="true" uuid="6fc216df-bd8f-4f52-8a55-4d56e9c81427">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement key="line-7" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="552" y="38" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-7" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="552" y="38" width="1" height="17" isRemoveLineWhenBlank="true" uuid="023cff15-8325-4a5d-be51-a46fde49628a">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement key="line-8" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="651" y="38" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-8" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="651" y="38" width="1" height="17" isRemoveLineWhenBlank="true" uuid="42da7f15-43ee-41af-a844-8f29a287815d">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-7" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="343" y="40" width="110" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-7" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="343" y="40" width="110" height="13" isRemoveLineWhenBlank="true" uuid="36f5b2b9-0536-4529-b625-2b7ca64dd954">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -217,7 +218,7 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Imponibile]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-8" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="455" y="40" width="96" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-8" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="455" y="40" width="96" height="13" isRemoveLineWhenBlank="true" uuid="24e12d12-adf0-4ff4-8a5a-9e83dde57b31">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -230,7 +231,7 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Iva]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-9" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="553" y="40" width="97" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-9" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="553" y="40" width="97" height="13" isRemoveLineWhenBlank="true" uuid="e4bbbe74-0a08-4103-9153-52726ba8bfde">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -243,7 +244,7 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Di cui indetraibile]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-10" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="652" y="40" width="127" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-10" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="652" y="40" width="127" height="13" isRemoveLineWhenBlank="true" uuid="faacee07-33f6-439e-b1bc-1f5d7fe9d072">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -276,7 +277,7 @@ Order By GRUPPO ASC,
 			<band height="39" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B")&& $F{SOTTOGRUPPO}.equals("D"))]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-11" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="9" width="41" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-11" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="9" width="41" height="28" isRemoveLineWhenBlank="true" uuid="46735d44-66d4-40d4-86fe-95ef0ecd63af"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -287,13 +288,13 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Data Registr.]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="43" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="43" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="af051847-1bab-4dd8-8fec-e18640849d1e"/>
 				</line>
 				<line>
-					<reportElement key="line-10" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-10" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="a77974b6-3d8d-46a4-980d-891b13c574a3"/>
 				</line>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-5" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="44" y="9" width="55" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-5" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="44" y="9" width="55" height="28" isRemoveLineWhenBlank="true" uuid="a2bce89f-2f1c-4a9e-a3f9-be4685a1a6a1"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -301,12 +302,12 @@ Order By GRUPPO ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Top"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{PROVVISORIO_DEFINITIVO}.equals("D")?
+					<textFieldExpression><![CDATA[$F{PROVVISORIO_DEFINITIVO}.equals("D")?
 "Protocollo IVA":
 "Numero progressivo"]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-17" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="101" y="9" width="39" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-17" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="101" y="9" width="39" height="28" isRemoveLineWhenBlank="true" uuid="4de53523-5ec8-4327-a763-284306737f9d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -317,10 +318,10 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Data Emissione]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-14" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-14" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="b54b749f-b57e-4c0d-bcc8-b9fcffa10070"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-18" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="142" y="9" width="58" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-18" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="142" y="9" width="58" height="28" isRemoveLineWhenBlank="true" uuid="76803a96-7d1b-40a1-8c38-85b1fc48208d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -331,10 +332,10 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Numero fattura]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-15" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="201" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-15" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="201" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="0fb38a7c-8361-4180-a00c-1cba12b501a0"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-19" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="202" y="9" width="18" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-19" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="202" y="9" width="18" height="28" isRemoveLineWhenBlank="true" uuid="b256f5a2-100c-4bf9-ae79-c6ee11bd15e3"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -345,10 +346,10 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Tipo]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-16" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="221" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-16" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="221" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="cdf4366e-9e1e-438b-9432-cc30f797bbf8"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-20" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="222" y="9" width="40" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-20" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="222" y="9" width="40" height="28" isRemoveLineWhenBlank="true" uuid="eef6f62a-4fcc-41f1-8cab-6dd88f432801"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -359,10 +360,10 @@ Order By GRUPPO ASC,
 					<text><![CDATA[Codice cliente]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-17" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="263" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-17" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="263" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="ecde887f-115b-4215-8efb-a1de33fba330"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-21" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="264" y="9" width="104" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-21" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="264" y="9" width="104" height="28" isRemoveLineWhenBlank="true" uuid="6cec6df4-3c7e-4976-82e5-5b15234d92d8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -374,10 +375,10 @@ Order By GRUPPO ASC,
 Denominazione / Descrizione]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-18" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="369" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-18" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="369" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="f234f5ad-c024-428b-92ad-b07f15995e59"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-22" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="370" y="9" width="64" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-22" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="370" y="9" width="64" height="28" isRemoveLineWhenBlank="true" uuid="8c571f7b-7aad-4644-bd51-5cd893a0c352"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -389,13 +390,13 @@ Denominazione / Descrizione]]></text>
 Euro]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-19" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="435" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-19" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="435" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="e90f82af-1253-47a2-8251-75e5b9b01c0d"/>
 				</line>
 				<line>
-					<reportElement key="line-20" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="501" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-20" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="501" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="df93d882-29d5-4d57-9c47-949f104e0750"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-24" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="502" y="9" width="64" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-24" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="502" y="9" width="64" height="28" isRemoveLineWhenBlank="true" uuid="4e608b01-4aac-469c-8951-a068209d154c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -406,10 +407,10 @@ Euro]]></text>
 					<text><![CDATA[TotaleEuro]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-21" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="567" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-21" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="567" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="42b83e7d-8dd0-4183-8607-e7027999bd7b"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-29" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="436" y="9" width="64" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-29" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="436" y="9" width="64" height="28" isRemoveLineWhenBlank="true" uuid="324b09cb-10a0-4333-9213-512a7b0ed5b3"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -420,10 +421,10 @@ Euro]]></text>
 					<text><![CDATA[IVA]]></text>
 				</staticText>
 				<rectangle>
-					<reportElement key="rectangle-5" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="9" width="780" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="rectangle-5" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="9" width="780" height="30" isRemoveLineWhenBlank="true" uuid="f806babd-3ee4-4800-bfa5-9fed923cda05"/>
 				</rectangle>
 				<staticText>
-					<reportElement key="staticText-38" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="568" y="9" width="32" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-38" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="568" y="9" width="32" height="28" isRemoveLineWhenBlank="true" uuid="577396b6-8cff-4414-9205-465629272530"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -435,10 +436,10 @@ Euro]]></text>
 IVA]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-77" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="600" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-77" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="600" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="1cbfbdf9-ca72-4a4e-8b03-71e3cdd675fa"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-39" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="601" y="9" width="23" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-39" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="601" y="9" width="23" height="28" isRemoveLineWhenBlank="true" uuid="5604e0a1-8502-4af0-a591-e748d470b08d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -454,10 +455,10 @@ Bolla
 dog]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-78" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="624" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-78" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="624" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="c64b7717-071d-4862-9ec8-d579099e44cb"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-40" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="624" y="9" width="27" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-40" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="624" y="9" width="27" height="28" isRemoveLineWhenBlank="true" uuid="b3b65a42-9961-4ac4-842e-32fb98de6721"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -468,10 +469,10 @@ dog]]></text>
 					<text><![CDATA[Valuta]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-79" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="652" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-79" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="652" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="d2bc7323-5674-467a-98e3-0bbf6a385a13"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-41" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="652" y="9" width="49" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-41" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="652" y="9" width="49" height="28" isRemoveLineWhenBlank="true" uuid="0cc5e1ec-3fdc-4040-87da-d8c142cc3a0d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -482,10 +483,10 @@ dog]]></text>
 					<text><![CDATA[Importo valuta]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-80" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="701" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-80" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="701" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="4a5c1a92-e62f-4e81-9603-469df8be6dc6"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-42" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="703" y="9" width="35" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-42" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="703" y="9" width="35" height="30" isRemoveLineWhenBlank="true" uuid="d3ddf1cb-e422-4a3c-80f9-fb4770f51f44"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -497,10 +498,10 @@ dog]]></text>
 Split Payment]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-81" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="737" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-81" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="737" y="9" width="1" height="30" isRemoveLineWhenBlank="true" uuid="5607f599-0459-4a72-8f2a-8a365a485ff7"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-43" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="740" y="10" width="35" height="27" isRemoveLineWhenBlank="true"/>
+					<reportElement key="staticText-43" style="TNR8BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="740" y="10" width="35" height="27" isRemoveLineWhenBlank="true" uuid="50f5f613-e298-4383-9888-89a2684a6bae"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -522,12 +523,12 @@ Split Payment]]></text>
 			<band height="23" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 				<rectangle>
-					<reportElement key="rectangle-4" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="6" width="680" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="rectangle-4" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="6" width="680" height="17" isRemoveLineWhenBlank="true" uuid="4f8f418d-5fde-43a4-a5ed-4984905973f1">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 				</rectangle>
 				<staticText>
-					<reportElement key="staticText-30" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="101" y="8" width="39" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-30" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="101" y="8" width="39" height="13" isRemoveLineWhenBlank="true" uuid="1d07f77b-2598-4607-af5d-541e89536e33">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -540,17 +541,17 @@ Split Payment]]></text>
 					<text><![CDATA[Codice]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-26" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="6" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-26" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="6" width="1" height="17" isRemoveLineWhenBlank="true" uuid="952ee3e6-bf38-4188-ab1c-af743d2d9535">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement key="line-27" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="469" y="6" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-27" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="469" y="6" width="1" height="17" isRemoveLineWhenBlank="true" uuid="fa5ea9fd-22dc-409a-875a-808faf725b31">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-31" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="143" y="8" width="323" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-31" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="143" y="8" width="323" height="13" isRemoveLineWhenBlank="true" uuid="0bddf476-ea5a-4633-bfc4-5d051ee7e8f5">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -563,17 +564,17 @@ Split Payment]]></text>
 					<text><![CDATA[Descrizione]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-28" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="575" y="6" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-28" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="575" y="6" width="1" height="17" isRemoveLineWhenBlank="true" uuid="522e9672-a1da-4468-a195-47e7d9d24736">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement key="line-30" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="671" y="6" width="1" height="17" isRemoveLineWhenBlank="true">
+					<reportElement key="line-30" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="671" y="6" width="1" height="17" isRemoveLineWhenBlank="true" uuid="ae6f03bb-97ab-4485-91f8-8286fdc5dfbf">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-32" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="471" y="8" width="102" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-32" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="471" y="8" width="102" height="13" isRemoveLineWhenBlank="true" uuid="b853d7b1-7852-4c15-b5bc-e08e11b71be0">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -586,7 +587,7 @@ Split Payment]]></text>
 					<text><![CDATA[Imponibile]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-33" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="577" y="8" width="92" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-33" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="577" y="8" width="92" height="13" isRemoveLineWhenBlank="true" uuid="3b476833-6d70-4965-a440-5bd996be24f0">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -599,7 +600,7 @@ Split Payment]]></text>
 					<text><![CDATA[Iva]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-35" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="673" y="8" width="106" height="13" isRemoveLineWhenBlank="true">
+					<reportElement key="staticText-35" style="TNR10BOLD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="673" y="8" width="106" height="13" isRemoveLineWhenBlank="true" uuid="43f6c754-3661-4238-8a11-c96b27023b0a">
 						<printWhenExpression><![CDATA[new Boolean($F{SOTTOGRUPPO}.equals("R"))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -624,53 +625,51 @@ Split Payment]]></text>
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && !(!$F{GRUPPO}.equals("A")||
               !$F{TIPOLOGIA_RIGA}.equals("D")))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-64" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="86" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-64" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="86" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="524bda34-4f55-4e86-8209-7dfac7fa80ef"/>
 				</line>
 				<line>
-					<reportElement key="line-65" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-65" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="bcb8e65e-b2f5-4a5e-b195-ca010054a05b"/>
 				</line>
 				<line>
-					<reportElement key="line-68" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-68" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="576" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="3c55f747-b600-48d0-b88a-5c9cf77bf2ff"/>
 				</line>
 				<line>
-					<reportElement key="line-69" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-69" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="1ef0e527-bf7f-48e9-ac40-995cd5c4abd3"/>
 				</line>
 				<line>
-					<reportElement key="line-70" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-70" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="01d74f3e-d645-48bf-a940-a60da9934dd7"/>
 				</line>
 				<line>
-					<reportElement key="line-71" positionType="Float" mode="Transparent" x="0" y="16" width="780" height="1" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-71" positionType="Float" mode="Transparent" x="0" y="16" width="780" height="1" isRemoveLineWhenBlank="true" uuid="d1a963e1-0258-4485-9be9-c794569ce07f"/>
 				</line>
 				<line>
-					<reportElement key="line-75" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="310" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-75" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="310" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="945f7203-2c99-4937-b5dc-484a744af8fc"/>
 				</line>
 				<line>
-					<reportElement key="line-76" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="388" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-76" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="388" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="150f40b2-b6da-42b9-b9c8-4015f7349309"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-36" style="TNR8" x="1" y="2" width="83" height="12"/>
+					<reportElement key="staticText-36" style="TNR8" x="1" y="2" width="83" height="12" uuid="27dcaae4-152a-4b44-a3eb-36f024757452"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[da Codice CdS]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-37" style="TNR8" x="88" y="2" width="51" height="12"/>
+					<reportElement key="staticText-37" style="TNR8" x="88" y="2" width="51" height="12" uuid="f89df2a7-fc39-47e5-be3c-ba0024570ccf"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[a Esercizio]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-32" style="TNR8BOLD" x="143" y="2" width="164" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-32" style="TNR8BOLD" x="143" y="2" width="164" height="12" isRemoveLineWhenBlank="true" uuid="396a81c7-3813-4fac-9005-22f6ed2ce00b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -680,10 +679,10 @@ Split Payment]]></text>
 					<textElement textAlignment="Left">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_TIPO_SEZIONALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_TIPO_SEZIONALE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-33" style="TNR8" x="312" y="2" width="74" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-33" style="TNR8" x="312" y="2" width="74" height="12" isRemoveLineWhenBlank="true" uuid="9bb600e7-0aa4-4734-8ece-fd8e9b594d2b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -693,10 +692,10 @@ Split Payment]]></text>
 					<textElement textAlignment="Left">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{NUMERO_PROGRESSIVO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{NUMERO_PROGRESSIVO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-34" style="TNR8" x="390" y="2" width="184" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-34" style="TNR8" x="390" y="2" width="184" height="12" isRemoveLineWhenBlank="true" uuid="35d37d53-c103-4e6e-a2d0-e1e4c3f1a332"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -706,7 +705,7 @@ Split Payment]]></text>
 					<textElement textAlignment="Left">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{NUMERO_FATTURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{NUMERO_FATTURA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -721,46 +720,46 @@ Split Payment]]></text>
 				<printWhenExpression><![CDATA[new Boolean(!(!$F{GRUPPO}.equals("B")||
               $F{SOTTOGRUPPO}.equals("R")))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-39" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="43" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-39" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="43" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="b528eced-afbb-4f48-a694-161e6b30da66"/>
 				</line>
 				<line>
-					<reportElement key="line-40" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-40" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="b2f73ddf-a350-4141-bfc2-d289e9fd8b36"/>
 				</line>
 				<line>
-					<reportElement key="line-41" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="435" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-41" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="435" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="18ece8df-bc89-47ba-84a8-d4bc6542b034"/>
 				</line>
 				<line>
-					<reportElement key="line-42" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="501" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-42" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="501" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="cea7a8f9-2f57-4031-b468-38bcc5d42a06"/>
 				</line>
 				<line>
-					<reportElement key="line-43" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="567" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-43" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="567" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="2d2360aa-65a4-4c10-a10e-557360a5cb9d"/>
 				</line>
 				<line>
-					<reportElement key="line-44" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-44" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="9430f675-ea5b-4adc-b202-d5e9bc6b540b"/>
 				</line>
 				<line>
-					<reportElement key="line-45" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-45" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="6177e1dd-e77c-4e0b-823b-715061bfb61b"/>
 				</line>
 				<line>
-					<reportElement key="line-46" positionType="Float" mode="Transparent" x="0" y="16" width="780" height="1" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-46" positionType="Float" mode="Transparent" x="0" y="16" width="780" height="1" isRemoveLineWhenBlank="true" uuid="6ecd1166-90ad-4f1f-b7a5-0fdd6be34f30"/>
 				</line>
 				<line>
-					<reportElement key="line-47" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-47" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="f3b612e0-931a-40d9-a04b-17ed687bfd10"/>
 				</line>
 				<line>
-					<reportElement key="line-48" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="201" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-48" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="201" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="ccac20f6-2f31-4277-897c-0d8ad32886b5"/>
 				</line>
 				<line>
-					<reportElement key="line-49" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="221" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-49" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="221" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="abbc767f-819d-4492-a275-896025e8df25"/>
 				</line>
 				<line>
-					<reportElement key="line-50" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="263" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-50" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="263" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="5fc658ea-e14d-4a05-9be4-211077e60748"/>
 				</line>
 				<line>
-					<reportElement key="line-51" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="369" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-51" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="369" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="56bdfef5-8d63-4644-b74b-372b6c5639df"/>
 				</line>
 				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement key="textField-18" style="TNR8" x="2" y="2" width="39" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-18" style="TNR8" x="2" y="2" width="39" height="12" isRemoveLineWhenBlank="true" uuid="28577a97-f947-4914-9308-6e89026ce39d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -770,10 +769,10 @@ Split Payment]]></text>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DATA_REGISTRAZIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DATA_REGISTRAZIONE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-19" style="TNR8" x="45" y="2" width="53" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-19" style="TNR8" x="45" y="2" width="53" height="12" isRemoveLineWhenBlank="true" uuid="3855c245-831a-4cda-8833-ff2ab1c78808"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -783,12 +782,12 @@ Split Payment]]></text>
 					<textElement textAlignment="Right">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PROVVISORIO_DEFINITIVO}.equals("P")?
+					<textFieldExpression><![CDATA[$F{PROVVISORIO_DEFINITIVO}.equals("P")?
 $F{NUMERO_PROGRESSIVO}:
 $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement key="textField-20" style="TNR8" x="101" y="2" width="39" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-20" style="TNR8" x="101" y="2" width="39" height="12" isRemoveLineWhenBlank="true" uuid="ea443f53-468b-4827-9054-dcf1f5b5d761"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -798,10 +797,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DATA_EMISSIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DATA_EMISSIONE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-21" style="TNR8" x="143" y="2" width="56" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-21" style="TNR8" x="143" y="2" width="56" height="12" isRemoveLineWhenBlank="true" uuid="902c6077-9228-471f-ae53-3d9cc5249171"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -811,10 +810,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{NUMERO_FATTURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{NUMERO_FATTURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-22" style="TNR8" x="203" y="2" width="16" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-22" style="TNR8" x="203" y="2" width="16" height="12" isRemoveLineWhenBlank="true" uuid="f3c1aec0-ec61-49dc-98fa-d24666a457b0"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -824,10 +823,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{TI_FATTURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TI_FATTURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-23" style="TNR8" x="223" y="2" width="38" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-23" style="TNR8" x="223" y="2" width="38" height="12" isRemoveLineWhenBlank="true" uuid="247ad624-0b26-40e6-90b4-c7ae69969a0d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -837,10 +836,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Right">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CODICE_ANAGRAFICO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CODICE_ANAGRAFICO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-24" style="TNR8" x="265" y="2" width="103" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-24" style="TNR8" x="265" y="2" width="103" height="12" isRemoveLineWhenBlank="true" uuid="a5e6ad00-ef30-496d-9507-4ab958e9c804"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -850,10 +849,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Left">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{RAGIONE_SOCIALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{RAGIONE_SOCIALE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-25" style="TNR8" x="371" y="2" width="62" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-25" style="TNR8" x="371" y="2" width="62" height="12" isRemoveLineWhenBlank="true" uuid="59a49e17-6adc-4c4e-86f1-503d2f50f7fa"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -863,10 +862,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Right">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-26" style="TNR8" x="437" y="2" width="62" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-26" style="TNR8" x="437" y="2" width="62" height="12" isRemoveLineWhenBlank="true" uuid="91c766b5-97ae-48ed-ad7e-c01a09bf55f2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -876,10 +875,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Right">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-27" style="TNR8" x="503" y="2" width="62" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-27" style="TNR8" x="503" y="2" width="62" height="12" isRemoveLineWhenBlank="true" uuid="c903cb06-8f0c-46f2-9ca0-c53291f79721"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -889,25 +888,25 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Right">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TOTALE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-82" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-82" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="24f40f8a-9890-4283-b1e5-a3574b7c3e37"/>
 				</line>
 				<line>
-					<reportElement key="line-83" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="600" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-83" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="600" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="b1f0072a-7036-4b89-8e39-4800f8ff88d9"/>
 				</line>
 				<line>
-					<reportElement key="line-84" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="624" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-84" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="624" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="e84f0462-7901-4478-b916-a7159248141d"/>
 				</line>
 				<line>
-					<reportElement key="line-85" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="652" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-85" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="652" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="96e13ae9-cf2d-4ea2-b1ac-8f238ab6a033"/>
 				</line>
 				<line>
-					<reportElement key="line-86" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="701" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-86" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="701" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="7627961f-957c-4af0-875e-d4a4bf939a56"/>
 				</line>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-35" style="TNR8" x="568" y="2" width="32" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-35" style="TNR8" x="568" y="2" width="32" height="12" isRemoveLineWhenBlank="true" uuid="1501b10d-b845-4e48-8a72-0bd2d3760bed"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -917,10 +916,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Left">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CODICE_IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CODICE_IVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="TNR8" x="602" y="2" width="21" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-36" style="TNR8" x="602" y="2" width="21" height="12" isRemoveLineWhenBlank="true" uuid="13e1b141-f61a-4427-aabe-f6a37db69f53"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -930,10 +929,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{INTRA_UE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{INTRA_UE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-37" style="TNR8" x="625" y="2" width="27" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-37" style="TNR8" x="625" y="2" width="27" height="12" isRemoveLineWhenBlank="true" uuid="60f314f8-32ca-4551-8361-36dacb0770b6"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -943,10 +942,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CODICE_VALUTA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CODICE_VALUTA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-38" style="TNR8" x="653" y="2" width="47" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-38" style="TNR8" x="653" y="2" width="47" height="12" isRemoveLineWhenBlank="true" uuid="f0874fa6-d18e-444a-862e-e4e63530c606"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -956,10 +955,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Right">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPORTO_VALUTA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IMPORTO_VALUTA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-39" style="TNR8" x="706" y="2" width="22" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-39" style="TNR8" x="706" y="2" width="22" height="12" isRemoveLineWhenBlank="true" uuid="40173348-4043-42bc-b988-2f00ef94e13d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -969,13 +968,13 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{ESIGIBILITA_DIFF}.compareTo("N")==0?"No":"Si")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["N".equals($F{ESIGIBILITA_DIFF})&&"N".equals($F{FL_SPLIT_PAYMENT})?"No":"Si"]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-87" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="737" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-87" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="737" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="3a661ed2-c091-40fb-810a-3e1a808c1f2d"/>
 				</line>
 				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement key="textField-40" style="TNR8" x="740" y="2" width="38" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-40" style="TNR8" x="740" y="2" width="38" height="12" isRemoveLineWhenBlank="true" uuid="af281377-c904-44a0-86e2-2a7cd874b3d2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -985,7 +984,7 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DATA_ESIGIBILITA_DIFF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DATA_ESIGIBILITA_DIFF}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -1001,39 +1000,38 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
               $F{SOTTOGRUPPO}.equals("D") ||
               $F{SOTTOGRUPPO}.equals("B")))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-31" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-31" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="f12cfe3f-2e71-4b39-842c-baf1dd9ccf90"/>
 				</line>
 				<line>
-					<reportElement key="line-32" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="469" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-32" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="469" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="8601908b-270d-4037-aff6-494fec9abbb2"/>
 				</line>
 				<line>
-					<reportElement key="line-34" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="575" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-34" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="575" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="34109525-7de1-423b-9024-8dbd2b1cd88c"/>
 				</line>
 				<line>
-					<reportElement key="line-35" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="671" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-35" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="671" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="0c040e9b-11ee-454a-a017-7d2a5eb7e2ad"/>
 				</line>
 				<line>
-					<reportElement key="line-36" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-36" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="7e182415-c047-4c3d-8ccf-7411a61a6237"/>
 				</line>
 				<line>
-					<reportElement key="line-37" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-37" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="4f7a7bda-9356-4faf-b8c1-06d55f4919c0"/>
 				</line>
 				<line>
-					<reportElement key="line-38" positionType="Float" x="100" y="16" width="680" height="1"/>
+					<reportElement key="line-38" positionType="Float" x="100" y="16" width="680" height="1" uuid="25785c56-d5db-4f72-ad8c-e6309bba94e4"/>
 				</line>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-6" style="TNR8" x="101" y="2" width="39" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-6" style="TNR8" x="101" y="2" width="39" height="12" isRemoveLineWhenBlank="true" uuid="334054ab-82aa-496e-ba09-61c1d7583279"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CDS_ORIGINE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_CDS_ORIGINE}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-8" style="TNR8" x="143" y="2" width="323" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-8" style="TNR8" x="143" y="2" width="323" height="12" isRemoveLineWhenBlank="true" uuid="9e6ad7c5-05d7-4c27-9628-f1314564e01d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1041,10 +1039,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UO_ORIGINE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_UO_ORIGINE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-10" style="TNR8" x="470" y="2" width="103" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-10" style="TNR8" x="470" y="2" width="103" height="12" isRemoveLineWhenBlank="true" uuid="852e6ed2-3e21-4cfb-8350-cec4bdbd9df8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1052,10 +1050,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-12" style="TNR8" x="577" y="2" width="92" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-12" style="TNR8" x="577" y="2" width="92" height="12" isRemoveLineWhenBlank="true" uuid="36dbe40a-b5df-4f04-9ae0-d9b3a50eedcc"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1063,10 +1061,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-16" style="TNR8" x="675" y="2" width="102" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-16" style="TNR8" x="675" y="2" width="102" height="12" isRemoveLineWhenBlank="true" uuid="81343f8b-ef09-47f1-9f24-c0a3ba58b777"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1074,7 +1072,7 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TOTALE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -1088,39 +1086,38 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 			<band height="17" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{GRUPPO}.equals("C"))]]></printWhenExpression>
 				<line>
-					<reportElement key="line-56" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-56" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="141" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="7241c9b9-af96-4546-9eb3-018cf5fc4ad1"/>
 				</line>
 				<line>
-					<reportElement key="line-57" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="469" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-57" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="469" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="4853e7e9-612c-49bb-a141-dd5c6691ab29"/>
 				</line>
 				<line>
-					<reportElement key="line-59" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="575" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-59" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="575" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="c2b7f310-83f0-4eb2-973e-6ac3b1818da4"/>
 				</line>
 				<line>
-					<reportElement key="line-60" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="671" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-60" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="671" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="7ea88611-91bb-42a2-b661-6cb5ba02ccb5"/>
 				</line>
 				<line>
-					<reportElement key="line-61" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-61" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="6d828c25-a1eb-4f08-83b4-3839055a1d93"/>
 				</line>
 				<line>
-					<reportElement key="line-62" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-62" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="779" y="0" width="1" height="17" isRemoveLineWhenBlank="true" uuid="6152f18c-6a13-4439-9b50-9d712fccf44e"/>
 				</line>
 				<line>
-					<reportElement key="line-63" positionType="Float" x="100" y="16" width="680" height="1"/>
+					<reportElement key="line-63" positionType="Float" x="100" y="16" width="680" height="1" uuid="fd170fca-aec0-4fcd-81a9-6e2ded0d56a7"/>
 				</line>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-7" style="TNR8" x="101" y="2" width="39" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-7" style="TNR8" x="101" y="2" width="39" height="12" isRemoveLineWhenBlank="true" uuid="8823425b-393a-45b3-9f16-81124f63a49f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CDS_ORIGINE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_CDS_ORIGINE}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-9" style="TNR8" x="143" y="2" width="323" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-9" style="TNR8" x="143" y="2" width="323" height="12" isRemoveLineWhenBlank="true" uuid="5a913817-8f51-486c-af1f-ecb8f49a9ae2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1128,10 +1125,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UO_ORIGINE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_UO_ORIGINE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-11" style="TNR8" x="470" y="2" width="103" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-11" style="TNR8" x="470" y="2" width="103" height="12" isRemoveLineWhenBlank="true" uuid="64ed684a-6562-4d85-8360-3411946ffb10"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1139,10 +1136,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-13" style="TNR8" x="577" y="2" width="92" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-13" style="TNR8" x="577" y="2" width="92" height="12" isRemoveLineWhenBlank="true" uuid="6ae485ec-52be-408b-b3d5-0372fdfdc956"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1150,10 +1147,10 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-17" style="TNR8" x="675" y="2" width="102" height="12" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-17" style="TNR8" x="675" y="2" width="102" height="12" isRemoveLineWhenBlank="true" uuid="675175b0-4442-488e-805f-c8a6db1e3278"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1161,7 +1158,7 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TOTALE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -1178,7 +1175,7 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 	<pageHeader>
 		<band height="73" splitType="Stretch">
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10BOLD" mode="Transparent" x="746" y="1" width="34" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField" style="TNR10BOLD" mode="Transparent" x="746" y="1" width="34" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="2b2e4184-e1db-4d55-9126-3b581603941a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1188,24 +1185,23 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 				<textElement>
 					<font size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + new Integer($V{PAGE_NUMBER}.intValue()+($P{aPagIniziale}.intValue() -1))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + new Integer($V{PAGE_NUMBER}.intValue()+($P{aPagIniziale}.intValue() -1))]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField-1" style="TNR10BOLD" x="0" y="1" width="585" height="13"/>
+				<reportElement key="textField-1" style="TNR10BOLD" x="0" y="1" width="585" height="13" uuid="8b13e806-04a8-46da-b24c-bf7f5f0e9a9f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{RAGIONE_SOCIALE_ENTE}!= null && $F{PARTITA_IVA_ENTE}!= null ?
+				<textFieldExpression><![CDATA[($F{RAGIONE_SOCIALE_ENTE}!= null && $F{PARTITA_IVA_ENTE}!= null ?
 	$F{RAGIONE_SOCIALE_ENTE}+ " " + $F{PARTITA_IVA_ENTE}:
   $F{RAGIONE_SOCIALE_ENTE}!= null ? $F{RAGIONE_SOCIALE_ENTE}:
   $F{PARTITA_IVA_ENTE}!= null ? $F{PARTITA_IVA_ENTE}:null)]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" style="TNR10BOLD" x="600" y="1" width="146" height="13"/>
+				<reportElement key="textField-2" style="TNR10BOLD" x="600" y="1" width="146" height="13" uuid="4e94493e-3f7a-47be-af69-7b8eac797169"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1213,36 +1209,34 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{ESERCIZIO_RIF}!= null ?
+				<textFieldExpression><![CDATA[($F{ESERCIZIO_RIF}!= null ?
 	$F{ESERCIZIO_RIF}+"/Pagina "+
         new Integer($V{PAGE_NUMBER}.intValue()+($P{aPagIniziale}.intValue() -1)) + " di ":
 	"Pagina "+
         new Integer($V{PAGE_NUMBER}.intValue()+($P{aPagIniziale}.intValue() -1)) + " di ")]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="0" y="19" width="132" height="13"/>
+				<reportElement key="textField" style="TNR10" x="0" y="19" width="132" height="13" uuid="d80da515-34fa-4a44-9629-c80331d1608b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="134" y="19" width="647" height="13"/>
+				<reportElement key="textField" style="TNR10" x="134" y="19" width="647" height="13" uuid="814f00f7-1a2e-4881-8488-eb5b894b05ca"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CDS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CD_CDS}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField-3" style="TNR10BOLD" x="0" y="43" width="780" height="25"/>
+				<reportElement key="textField-3" style="TNR10BOLD" x="0" y="43" width="780" height="25" uuid="b505be1b-e383-4d2e-8d12-fe3992df044f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1250,7 +1244,7 @@ $F{PROTOCOLLO_IVA_GENERALE}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{CD_UO}==null?$F{CD_CDS_ORIGINE}:($F{CD_CDS_ORIGINE}==null?$F{CD_UO}:$F{CD_UO}+$F{CD_CDS_ORIGINE}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{CD_UO}==null?$F{CD_CDS_ORIGINE}:($F{CD_CDS_ORIGINE}==null?$F{CD_UO}:$F{CD_UO}+$F{CD_CDS_ORIGINE}))]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
