@@ -319,6 +319,11 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
 	{
 		setStato(STATO_INSERITA);
+		setImImponibile(BigDecimal.ZERO);
+		setImImponibileDivisa(BigDecimal.ZERO);
+		setImIva(BigDecimal.ZERO);
+		setImIvaDivisa(BigDecimal.ZERO);
+		setImTotaleRiga(BigDecimal.ZERO);
 		BigDecimal value = null;
 		try {
 			value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context.getUserContext(), 0, "*", Configurazione_cnrBulk.PK_PARAMETRI_ORDINI, Configurazione_cnrBulk.SK_GG_DT_PREV_CONSEGNA).getIm01();
