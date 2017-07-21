@@ -665,4 +665,11 @@
 		<columnFieldProperty name="dacr"/>
 		<columnFieldProperty name="tipo_liquidazione"/>
 	</columnSet>	
+
+	<columnSet name="liquidazione_massiva">
+		<columnFieldProperty name="cd_unita_organizzativa"/>
+		<columnFieldProperty name="dt_inizio"/>
+		<columnFieldProperty name="dt_fine"/>
+		<columnFieldProperty name="iva_da_versare"/>
+	</columnSet>	
 </bulkInfo>

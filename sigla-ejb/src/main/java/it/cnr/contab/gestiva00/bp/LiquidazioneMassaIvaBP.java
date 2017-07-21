@@ -1,17 +1,22 @@
 package it.cnr.contab.gestiva00.bp;
 
-import it.cnr.contab.gestiva00.ejb.*;
-import it.cnr.contab.gestiva00.core.bulk.*;
+import java.util.TreeMap;
+
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 public class LiquidazioneMassaIvaBP extends LiquidazioneIvaBP {
 
 	private int status = SEARCH;
-public LiquidazioneMassaIvaBP() {
+	private final SimpleDetailCRUDController UoLiquidazioniProvvisorie = new SimpleDetailCRUDController("Uo con Liquidazioni Provvisorie", Liquidazione_ivaBulk.class,"liquidazioniProvvisorie",this);
+	private final SimpleDetailCRUDController UoLiquidazioniDefinitive = new SimpleDetailCRUDController("Uo con Liquidazioni Definitive", Liquidazione_ivaBulk.class,"liquidazioniDefinitive",this);
+
+	public LiquidazioneMassaIvaBP() {
 	this("");
 }
 public LiquidazioneMassaIvaBP(String function) {
@@ -57,7 +62,7 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 
 	super.init(config,context);
 	setStatus(SEARCH);
-	//resetTabs();
+	setTab("tab", "tabUoLiqProvvisorie");
 	resetForSearch(context);
 }
 public boolean isBulkPrintable() {
@@ -87,5 +92,38 @@ public void resetForSearch(it.cnr.jada.action.ActionContext context) throws it.c
 	} catch(Throwable e) {
 		throw new it.cnr.jada.action.BusinessProcessException(e);
 	}
+}
+public boolean isLiquidazioneMassivaProvvisoriaVisible() {
+	Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
+	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null);
+//	&&model.getNextMeseForLiquidazioneDefinitiva().equals(model.getMese()));
+}
+public String[][] getTabs() {
+	TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
+	int i=0;
+
+	hash.put(i++, new String[]{ "tabUoLiqProvvisorie", "Provvisorie", "/gestiva00/tab_uo_liqprv.jsp" });
+	hash.put(i++, new String[]{"tabUoLiqDefinitive", "Definitive","/gestiva00/tab_uo_liqdef.jsp" });
+	
+	String[][] tabs = new String[i][3];
+	for (int j = 0; j < i; j++) {
+		tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
+	}
+	return tabs;		
+}
+public SimpleDetailCRUDController getUoLiquidazioniProvvisorie() {
+	return UoLiquidazioniProvvisorie;
+}
+public SimpleDetailCRUDController getUoLiquidazioniDefinitive() {
+	return UoLiquidazioniDefinitive;
+}
+public void inizializzaMese(ActionContext context) throws BusinessProcessException {
+	try {
+		Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
+		this.setModel(context, Utility.createLiquidIvaInterfComponentSession().inizializzaMese(context.getUserContext(), model));
+		setTab("tab", "tabUoLiqProvvisorie");
+	} catch(Exception e) {
+		throw handleException(e);
+	}	
 }
 }
