@@ -6,13 +6,6 @@
 	shortDescription="Riga Ordine d'Acquisto"
 	longDescription="Riga Ordine d'Acquisto">
 	<fieldProperty
-		name="findOrdineAcq"
-		property="ordineAcq"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="OrdineAcq" />
-	<fieldProperty
 		name="cdCds"
 		property="ordineAcq.cdCds"
 		inputType="TEXT"
