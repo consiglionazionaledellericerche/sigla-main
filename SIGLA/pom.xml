@@ -393,15 +393,15 @@
             <artifactId>json</artifactId>
             <version>20160810</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sigla-storage-cmis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sigla-storage-azure</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
-    <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>sigla-storage-cmis</artifactId>
-        <version>${project.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>sigla-storage-azure</artifactId>
-        <version>${project.version}</version>
-    </dependency>
 </project>
