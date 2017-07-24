@@ -5,7 +5,10 @@ package it.cnr.contab.gestiva00.comp;
  * @author: CNRADM
  */
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -95,16 +98,35 @@ public class LiquidIvaInterfComponent extends CRUDComponent {
 				bulk.setRipartizione_finanziaria( new BulkList());
 				bulk.setLiquidazioniProvvisorie( new BulkList());
 				bulk.setVariazioni_associate( new BulkList());
+				bulk.setMandato_righe_associate( new BulkList());
 	
 				if (bulk.getMese()!=null) {
-					Liquidazione_ivaHome home= (Liquidazione_ivaHome) getHome(aUC, Liquidazione_ivaBulk.class);
-					bulk.setRipartizione_finanziaria( new BulkList( home.findRipartizioneFinanziariaList( bulk ) ));
-					if (!bulk.isRegistroStampato(bulk.getMese())) {
-						bulk.setLiquidazioniProvvisorie( new BulkList( home.findLiquidazioniProvvisorieList( bulk ) ));
+					Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(aUC, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(aUC))));
+					boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
+
+					if (isUoEnte) {
+						Liquidazione_ivaHome home= (Liquidazione_ivaHome) getHome(aUC, Liquidazione_ivaBulk.class);
+						if (bulk.getProspetti_stampati()!=null) {
+							for (Iterator iterator = bulk.getProspetti_stampati().iterator(); iterator.hasNext();) {
+								Liquidazione_ivaBulk liq = (Liquidazione_ivaBulk) iterator.next();
+								Calendar cal = new GregorianCalendar();
+								cal.setTime(liq.getDt_inizio());
+								if (bulk.getMesi_int().get(bulk.getMese()).equals(cal.get(Calendar.MONTH)+1)) {
+									bulk.setMandato_righe_associate( new BulkList( home.findMandatoRigheAssociateList(liq) ));
+									break;
+								}								
+							}
+						}
 					} else {
-						bulk.setVariazioni_associate( new BulkList( home.findVariazioniAssociateList( bulk ) ));
+						Liquidazione_ivaHome home= (Liquidazione_ivaHome) getHome(aUC, Liquidazione_ivaBulk.class);
+						bulk.setRipartizione_finanziaria( new BulkList( home.findRipartizioneFinanziariaList( bulk ) ));
+						if (!bulk.isRegistroStampato(bulk.getMese())) {
+							bulk.setLiquidazioniProvvisorie( new BulkList( home.findLiquidazioniProvvisorieList( bulk ) ));
+						} else {
+							bulk.setVariazioni_associate( new BulkList( home.findVariazioniAssociateList( bulk ) ));
+						}
+						getHomeCache(aUC).fetchAll(aUC);
 					}
-					getHomeCache(aUC).fetchAll(aUC);
 				}
 			}
 			return bulk;

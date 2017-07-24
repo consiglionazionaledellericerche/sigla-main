@@ -3,6 +3,7 @@ import java.math.BigDecimal;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_ripart_finBulk;
@@ -26,6 +27,7 @@ public class LiquidazioneDefinitivaIvaBP extends LiquidazioneIvaBP {
 		}
 	};
 	private final SimpleDetailCRUDController variazioni_associate = new SimpleDetailCRUDController("Variazioni associate", Liquidazione_iva_variazioniBulk.class,"variazioni_associate",this);
+	private final SimpleDetailCRUDController mandato_righe_associate = new SimpleDetailCRUDController("Mandato Righe associate", Mandato_rigaIBulk.class,"mandato_righe_associate",this);
 	
 public LiquidazioneDefinitivaIvaBP() {
 	this("");
@@ -147,6 +149,9 @@ public SimpleDetailCRUDController getRipartizione_finanziaria() {
 public SimpleDetailCRUDController getVariazioni_associate() {
 	return variazioni_associate;
 }
+public SimpleDetailCRUDController getMandato_righe_associate() {
+	return mandato_righe_associate;
+}
 
 public String[][] getTabs() {
 	TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
@@ -160,7 +165,9 @@ public String[][] getTabs() {
 		hash.put(i++, new String[]{ "tabRipartFin", "Ripart.Finanziaria", "/gestiva00/tab_ripart_finanziaria.jsp" });
 	if (isTabVariazioneAssociateVisible()) 
 		hash.put(i++, new String[]{ "tabVariazioniAss", "Variazioni Associate", "/gestiva00/tab_variazioni_associate.jsp" });
-
+	if (isTabMandatoRigheAssociateVisible())
+		hash.put(i++, new String[]{ "tabMandatoRigheAss", "Mandati Associati", "/gestiva00/tab_mandato_righe_associate.jsp" });
+	
 	String[][] tabs = new String[i][3];
 	for (int j = 0; j < i; j++) {
 		tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
@@ -174,7 +181,8 @@ public void inizializzaMese(ActionContext context) throws BusinessProcessExcepti
 		this.setModel(context, Utility.createLiquidIvaInterfComponentSession().inizializzaMese(context.getUserContext(), model));
 		Stream<Liquidazione_iva_ripart_finBulk> list = ((Liquidazione_definitiva_ivaVBulk)this.getModel()).getRipartizione_finanziaria().stream().map(Liquidazione_iva_ripart_finBulk.class::cast);
 		list.forEach(e->e.caricaAnniList(context));
-		if (!isTabRipartizioneFinanziariaVisible() && ("tabRipartFin".equals(getTab("tab")) || "tabVariazioniAss".equals(getTab("tab"))))
+		if ((!isTabRipartizioneFinanziariaVisible() && ("tabRipartFin".equals(getTab("tab")) || "tabVariazioniAss".equals(getTab("tab")))) ||
+			 (!isTabMandatoRigheAssociateVisible() && "tabMandatoRigheAss".equals(getTab("tab"))))
 			resetTabs();
 	} catch(Exception e) {
 		throw handleException(e);
@@ -214,5 +222,10 @@ public boolean isTabRipartizioneFinanziariaVisible() {
 public boolean isTabVariazioneAssociateVisible() {
 	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
 	return !this.isUoEnte() && model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && model.isRegistroStampato(model.getMese()); 
+}
+
+public boolean isTabMandatoRigheAssociateVisible() {
+	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+	return this.isUoEnte() && model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && model.isRegistroStampato(model.getMese()); 
 }
 }
