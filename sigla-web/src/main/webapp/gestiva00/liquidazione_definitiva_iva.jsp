@@ -54,6 +54,12 @@
 					<td>
 						<% bp.getController().writeFormInput(out,null,"mese",false,null,"onChange=\"submitForm('doOnMeseChange')\"");%>
 					</td>
+					<% if (bp.isAggiornaIvaDaVersareEnable() && liquidazione!=null && liquidazione.getDataAggiornamentoLastLiquidazioneProvvisoria()!=null) { %>
+						<td colspan="2">
+							<% bp.getController().writeFormLabel(out,"dataAggiornamentoLastLiquidazioneProvvisoria"); %> 
+							<% bp.getController().writeFormInput(out,"dataAggiornamentoLastLiquidazioneProvvisoria"); %> 
+						</td>
+					 <% } %>
 				</tr>
 				<tr>
 					<td>
