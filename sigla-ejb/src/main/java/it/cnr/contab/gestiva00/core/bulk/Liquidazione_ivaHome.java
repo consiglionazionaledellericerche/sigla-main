@@ -1,8 +1,7 @@
 package it.cnr.contab.gestiva00.core.bulk;
 import java.math.BigDecimal;
 
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -118,6 +117,22 @@ public java.util.List<Liquidazione_ivaBulk> findVariazioniAssociateList( Liquida
 	sql.addClause(FindClause.AND,"tipo_liquidazione",SQLBuilder.EQUALS, bulk.getTipoSezionaleFlag());
 	sql.addClause(FindClause.AND,"dt_inizio",SQLBuilder.EQUALS, bulk.getData_da());
 	sql.addClause(FindClause.AND,"dt_fine",SQLBuilder.EQUALS, bulk.getData_a());
+
+	return home.fetchAll(sql);
+}
+public java.util.List findMandatoRigheAssociateList( Liquidazione_ivaBulk bulk ) throws IntrospectionException,PersistencyException 
+{
+
+	PersistentHome home= getHomeCache().getHome(Mandato_rigaIBulk.class);
+
+    SQLBuilder sql= home.createSQLBuilder();
+
+	sql.addClause(FindClause.AND,"cd_tipo_documento_amm",SQLBuilder.EQUALS, bulk.getCd_tipo_documento());
+	sql.addClause(FindClause.AND,"cd_cds_doc_amm",SQLBuilder.EQUALS, bulk.getCd_cds_doc_amm());
+	sql.addClause(FindClause.AND,"cd_uo_doc_amm",SQLBuilder.EQUALS, bulk.getCd_uo_doc_amm());
+	sql.addClause(FindClause.AND,"esercizio_doc_amm",SQLBuilder.EQUALS, bulk.getEsercizio_doc_amm());
+	sql.addClause(FindClause.AND,"pg_doc_amm",SQLBuilder.EQUALS, bulk.getPg_doc_amm());
+	sql.addOrderBy("esercizio_ori_obbligazione");
 
 	return home.fetchAll(sql);
 }

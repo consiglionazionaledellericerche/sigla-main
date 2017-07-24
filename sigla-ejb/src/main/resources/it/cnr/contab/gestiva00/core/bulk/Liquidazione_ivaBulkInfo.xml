@@ -335,7 +335,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label="Interessi dovuti su liquidazioni trimestrali" />
 	<fieldProperty
 		name="esercizio_doc_amm"
