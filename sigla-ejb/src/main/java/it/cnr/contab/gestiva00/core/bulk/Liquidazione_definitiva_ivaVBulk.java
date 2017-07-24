@@ -1,5 +1,6 @@
 package it.cnr.contab.gestiva00.core.bulk;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
@@ -9,7 +10,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -24,6 +24,7 @@ public class Liquidazione_definitiva_ivaVBulk extends Liquidazione_ivaVBulk {
 	private java.util.Collection prospetti_stampati;
 	private BulkList ripartizione_finanziaria;
 	private BulkList variazioni_associate;
+	private BulkList mandato_righe_associate;
 	private boolean Liquidazione_commerciale = false;
 	private java.util.Collection liquidazioniProvvisorie; 
 /**
@@ -225,6 +226,13 @@ public void setVariazioni_associate(BulkList variazioni_associate) {
 	this.variazioni_associate = variazioni_associate;
 }
 
+public BulkList getMandato_righe_associate() {
+	return mandato_righe_associate;
+}
+
+public void setMandato_righe_associate(BulkList mandato_righe_associate) {
+	this.mandato_righe_associate = mandato_righe_associate;
+}
 public int addToRipartizione_finanziaria(Liquidazione_iva_ripart_finBulk dett) {
 	dett.setCd_cds( this.getCd_cds() );
 	dett.setEsercizio( this.getEsercizio() );
@@ -241,25 +249,8 @@ public Liquidazione_iva_ripart_finBulk removeFromRipartizione_finanziaria(int in
 	return dett;
 }
 
-public int addToVariazioni_associate(Liquidazione_iva_variazioniBulk dett) {
-	dett.setCd_cds( this.getCd_cds() );
-	dett.setEsercizio( this.getEsercizio() );
-	dett.setCd_unita_organizzativa( this.getCd_unita_organizzativa() );
-	dett.setTipo_liquidazione( this.getTipoSezionaleFlag() );
-	dett.setDt_inizio( this.getData_da());
-	dett.setDt_fine(this.getData_a());
-	variazioni_associate.add(dett);
-	return variazioni_associate.size()-1;
-}
-
-public Liquidazione_iva_variazioniBulk removeFromVariazioni_associate(int index) {
-	Liquidazione_iva_variazioniBulk dett = (Liquidazione_iva_variazioniBulk)variazioni_associate.remove(index);
-	return dett;
-}
-
-
 public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-	return new it.cnr.jada.bulk.BulkCollection[] {ripartizione_finanziaria, variazioni_associate};
+	return new it.cnr.jada.bulk.BulkCollection[] {ripartizione_finanziaria};
 }
 
 public boolean isRegistroStampato(String mese) { 
@@ -291,6 +282,12 @@ public BigDecimal getDebitoLastLiquidazioneProvvisoria() {
 	if (last!=null && last.getIva_da_versare()!=null && last.getIva_da_versare().compareTo(BigDecimal.ZERO)<0)
 		return last.getIva_da_versare().abs();
 	return BigDecimal.ZERO;
+}
+public Timestamp getDataAggiornamentoLastLiquidazioneProvvisoria() {
+	Liquidazione_ivaBulk last = getLastLiquidazioneProvvisoria();
+	if (last!=null)
+		return last.getDacr();
+	return null;
 }
 public BigDecimal getTotaleRipartizioneFinanziaria() {
 	Stream<Liquidazione_iva_ripart_finBulk> lis = getRipartizione_finanziaria().stream().map(Liquidazione_iva_ripart_finBulk.class::cast);

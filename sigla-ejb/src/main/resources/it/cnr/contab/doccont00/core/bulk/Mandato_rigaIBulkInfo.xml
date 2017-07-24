@@ -107,4 +107,49 @@
 		<columnFieldProperty
 			name="banca_cab"/>
 	</columnSet>
+
+	<columnSet
+		name="liquidazione_definitiva">
+		<columnFieldProperty
+			name="cd_cds"
+			headerLabel="MANDATO"
+			label="Cds"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="esercizio"
+			headerLabel="MANDATO"
+			label="Esercizio"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="pg_mandato"
+			headerLabel="MANDATO"
+			label="Numero"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="esercizio_ori_obbligazione"
+			columnStyle="padding-left:20px"
+			headerLabel="IMPEGNO"
+			label="Esercizio"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="pg_obbligazione"
+			columnStyle="padding-left:20px"
+			headerLabel="IMPEGNO"
+			label="Numero"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="cd_uo_doc_amm"
+			headerLabel="DOCUMENTO"
+			label="Uo"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="pg_doc_amm"
+			headerLabel="DOCUMENTO"
+			label="Numero"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="im_mandato_riga"
+			inputType="ROTEXT"
+			columnStyle="text-align: right"/>
+	</columnSet>
 </bulkInfo>
