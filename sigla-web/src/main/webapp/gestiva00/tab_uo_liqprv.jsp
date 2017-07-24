@@ -3,9 +3,12 @@
 		it.cnr.jada.action.*,
 		java.util.*,
 		it.cnr.jada.util.action.*,
-		it.cnr.contab.gestiva00.bp.*"
+		it.cnr.contab.gestiva00.bp.*,
+		it.cnr.contab.gestiva00.core.bulk.*"
 %>
-<% LiquidazioneMassaIvaBP bp = (LiquidazioneMassaIvaBP)BusinessProcess.getBusinessProcess(request);%>
+<% LiquidazioneMassaIvaBP bp = (LiquidazioneMassaIvaBP)BusinessProcess.getBusinessProcess(request);
+   Liquidazione_definitiva_ivaVBulk liquidazione = (Liquidazione_definitiva_ivaVBulk)bp.getModel();
+%>
 
 	<div class="Group" style="width:100%">
 		<table width="100%">
@@ -20,6 +23,12 @@
 								true,
 								bp.getParentRoot().isBootstrap()); %>
 				</td>
+				<% if (liquidazione!=null && liquidazione.getDataAggiornamentoLastLiquidazioneProvvisoria()!=null) { %>
+					<td colspan="2">
+						<% bp.getController().writeFormLabel(out,"dataAggiornamentoLastLiquidazioneProvvisoria"); %> 
+						<% bp.getController().writeFormInput(out,"dataAggiornamentoLastLiquidazioneProvvisoria"); %> 
+					</td>
+				 <% } %>
 			</tr>
 		</table>
 	</div>
