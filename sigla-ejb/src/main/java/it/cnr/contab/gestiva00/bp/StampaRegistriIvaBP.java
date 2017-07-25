@@ -1,19 +1,29 @@
 package it.cnr.contab.gestiva00.bp;
 
-import it.cnr.contab.gestiva00.ejb.*;
-import it.cnr.contab.gestiva00.core.bulk.*;
+import java.rmi.RemoteException;
+
+import javax.ejb.EJBException;
+
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.gestiva00.core.bulk.IPrintable;
+import it.cnr.contab.gestiva00.core.bulk.Report_statoBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.contab.gestiva00.ejb.StampaRegistriIvaComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
 import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class StampaRegistriIvaBP extends BulkBP {
     private int status= INSERT;
+	private Unita_organizzativaBulk uoSrivania;
 
 	private final SimpleDetailCRUDController registri_stampati = new SimpleDetailCRUDController("Registri stampati", Report_statoBulk.class,"registri_stampati",this);
+	
 public StampaRegistriIvaBP() {
 	super();
 }
@@ -202,5 +212,19 @@ public void setDirty(boolean newDirty) {
  */
 public void setStatus(int newStatus) {
 	status = newStatus;
+}
+public Unita_organizzativaBulk getUoSrivania() {
+	return uoSrivania;
+}
+private void setUoSrivania(Unita_organizzativaBulk uoSrivania) {
+	this.uoSrivania = uoSrivania;
+}
+@Override
+protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+	super.init(config, actioncontext);
+	setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
+}
+public boolean isUoEnte(){
+	return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0);
 }
 }
