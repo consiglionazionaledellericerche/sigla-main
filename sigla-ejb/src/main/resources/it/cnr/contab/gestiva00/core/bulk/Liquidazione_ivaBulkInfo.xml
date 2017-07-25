@@ -335,7 +335,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label="Interessi dovuti su liquidazioni trimestrali" />
 	<fieldProperty
 		name="esercizio_doc_amm"
@@ -664,5 +664,14 @@
 		<columnFieldProperty name="annotazioni"/>
 		<columnFieldProperty name="dacr"/>
 		<columnFieldProperty name="tipo_liquidazione"/>
+		<columnFieldProperty name="iva_da_versare"
+							 label="Debito/Credito"/>
+	</columnSet>	
+
+	<columnSet name="liquidazione_massiva">
+		<columnFieldProperty name="cd_unita_organizzativa"/>
+		<columnFieldProperty name="dt_inizio"/>
+		<columnFieldProperty name="dt_fine"/>
+		<columnFieldProperty name="iva_da_versare"/>
 	</columnSet>	
 </bulkInfo>
