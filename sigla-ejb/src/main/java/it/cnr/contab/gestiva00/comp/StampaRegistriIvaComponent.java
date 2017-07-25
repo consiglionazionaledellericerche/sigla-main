@@ -1,14 +1,54 @@
 package it.cnr.contab.gestiva00.comp;
-import java.sql.*;
-import it.cnr.contab.gestiva00.core.bulk.*;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.jada.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
+import java.rmi.RemoteException;
+import java.sql.Date;
+import java.sql.SQLException;
+
+import javax.ejb.EJBException;
+
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
+import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleHome;
+import it.cnr.contab.gestiva00.core.bulk.Codici_iva_fatture_acquistiVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Codici_iva_fatture_emesseVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Gestione_registri_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.IPrintable;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_annualeVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_annualeVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_ripart_finBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_provvisoria_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Quadri_va_veVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Quadri_va_vfVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Report_statoBulk;
+import it.cnr.contab.gestiva00.core.bulk.Report_statoHome;
+import it.cnr.contab.gestiva00.core.bulk.Riepilogativi_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeBulk;
+import it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeHome;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.MTUStuff;
+import it.cnr.jada.bulk.MTUWrapper;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.RicercaComponent;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.ApplicationWarningPersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SQLExceptionHandler;
 
 /**
  * Insert the type's description here.
@@ -92,9 +132,15 @@ private void callRiepilogoLiquidazioneIVA(
 public MTUWrapper callStampeIva(it.cnr.jada.UserContext userContext, Stampa_registri_ivaVBulk stampaBulk) throws it.cnr.jada.comp.ComponentException {
 
     //ricavo il progressivo unico pg_stampa
-    java.math.BigDecimal pg_Stampa= getSequence(userContext);
-	if (stampaBulk instanceof IPrintable)
-		((IPrintable)stampaBulk).setId_report(pg_Stampa);
+    java.math.BigDecimal pg_Stampa = null;
+	if (stampaBulk instanceof IPrintable) {
+		if (stampaBulk instanceof Liquidazione_massa_provvisoria_ivaVBulk)
+		    pg_Stampa = ((IPrintable)stampaBulk).getId_report();
+		else {
+		    pg_Stampa = getSequence(userContext);
+			((IPrintable)stampaBulk).setId_report(pg_Stampa);
+		}
+	}
     
     MTUStuff message= new MTUStuff("");
 
@@ -715,5 +761,25 @@ public it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_annualeVBulk
 	bulk.setRistampabile(true);
 	
 	return bulk;
+}
+public SQLBuilder selectLinea_di_attivitaByClause (UserContext userContext,Liquidazione_iva_ripart_finBulk ripartizione, WorkpackageBulk linea_di_attivita, CompoundFindClause clause) throws ComponentException, PersistencyException{	
+	SQLBuilder sql = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
+	sql.addClause( clause );
+	sql.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+	sql.addSQLClause(FindClause.AND, "TI_GESTIONE", SQLBuilder.EQUALS, CostantiTi_gestione.TI_GESTIONE_SPESE);		
+	sql.addSQLClause(FindClause.AND, "CD_CENTRO_RESPONSABILITA", SQLBuilder.LIKE, ripartizione.getCd_unita_organizzativa()+"%");
+	sql.addTableToHeader("NATURA");
+	sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
+	sql.addSQLClause(FindClause.AND,"NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);			
+	 // Obbligatorio cofog sulle GAE
+	try{
+		if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+			sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+	} catch (RemoteException e) {
+		throw new ComponentException(e);
+	} catch (EJBException e) {
+		throw new ComponentException(e);
+	}
+	return sql;
 }
 }

@@ -130,5 +130,4 @@ public OggettoBulk initializeForSearch(
 public boolean isPageNumberRequired() {
 	return false;
 }
-
 }

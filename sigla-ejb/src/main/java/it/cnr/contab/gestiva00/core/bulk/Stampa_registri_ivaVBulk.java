@@ -59,6 +59,7 @@ public abstract class Stampa_registri_ivaVBulk extends it.cnr.jada.bulk.OggettoB
 	public static final String TIPO_STAMPA_RIEPILOGATIVI_CENTRO="RIEPILOGATIVI_CENTRO";
 	public static final String TIPO_STAMPA_LIQUIDAZIONE="LIQUIDAZIONE";
 	public static final String TIPO_STAMPA_LIQUIDAZIONE_MASSA = "LIQUIDAZIONE_MASSA";
+	public static final String TIPO_STAMPA_LIQUIDAZIONE_MASSA_PRV = "LIQUIDAZIONE_MASSA_PRV";
 	public static final String TIPO_STAMPA_RIEPILOGATIVI_IVA_DIFFERITA="DIFFERITA";
 
 	public static final String GENNAIO= "Gennaio";
@@ -337,7 +338,8 @@ protected static void initializeHashes() {
 public boolean isLiquidazione() {
 	return getTipo_stampa() != null && 
 			(getTipo_stampa().equals(TIPO_STAMPA_LIQUIDAZIONE) || 
-			 getTipo_stampa().equals(TIPO_STAMPA_LIQUIDAZIONE_MASSA));
+			 getTipo_stampa().equals(TIPO_STAMPA_LIQUIDAZIONE_MASSA) ||
+			 getTipo_stampa().equals(TIPO_STAMPA_LIQUIDAZIONE_MASSA_PRV));
 }
 /**
  * Insert the method's description here.
