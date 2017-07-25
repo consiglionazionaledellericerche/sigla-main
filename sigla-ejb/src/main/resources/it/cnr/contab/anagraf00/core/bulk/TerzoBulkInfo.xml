@@ -77,6 +77,8 @@
 		property="cd_precedente"
 		readonlyPropertyOnEdit="dipendente"
 		label="Codice precedente"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		inputType="TEXT" />
 	<fieldProperty
 		name="cd_unita_organizzativa"
