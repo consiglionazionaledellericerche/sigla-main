@@ -267,6 +267,30 @@
 			propertyName="cd_tipo_documento"
 			sqlTypeName="VARCHAR"
 			columnSize="10" />
+		<columnMapping
+			columnName="IVA_VEND_DIFF_ES_PREC_ESIG"
+			propertyName="iva_vend_diff_es_prec_esig"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_ACQ_DIFF_ES_PREC_ESIG"
+			propertyName="iva_acq_diff_es_prec_esig"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_VEN_SPLIT_PAYMENT"
+			propertyName="iva_ven_split_payment"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_ACQ_SPLIT_PAYMENT"
+			propertyName="iva_acq_split_payment"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="iva_credito" />
@@ -360,4 +384,12 @@
 		name="pg_doc_amm" />
 	<persistentProperty
 		name="cd_tipo_documento" />
+	<persistentProperty
+		name="iva_vend_diff_es_prec_esig" />
+	<persistentProperty
+		name="iva_acq_diff_es_prec_esig" />
+	<persistentProperty
+		name="iva_ven_split_payment" />
+	<persistentProperty
+		name="iva_acq_split_payment" />
 </SQLPersistentInfo>
