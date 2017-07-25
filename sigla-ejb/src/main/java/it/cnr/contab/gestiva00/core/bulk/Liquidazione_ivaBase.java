@@ -128,7 +128,14 @@ public class Liquidazione_ivaBase extends Liquidazione_ivaKey implements Keyed {
 	
 	private java.math.BigDecimal iva_liq_esterna;
 	
+	private java.math.BigDecimal iva_vend_diff_es_prec_esig;
 
+	private java.math.BigDecimal iva_acq_diff_es_prec_esig;
+	
+	private java.math.BigDecimal iva_ven_split_payment;
+	
+	private java.math.BigDecimal iva_acq_split_payment;
+	
 public Liquidazione_ivaBase() {
 	super();
 }
@@ -623,5 +630,37 @@ public java.math.BigDecimal getIva_liq_esterna() {
 }
 public void setIva_liq_esterna(java.math.BigDecimal iva_liq_esterna) {
 	this.iva_liq_esterna = iva_liq_esterna;
+}
+
+public java.math.BigDecimal getIva_vend_diff_es_prec_esig() {
+	return iva_vend_diff_es_prec_esig;
+}
+
+public void setIva_vend_diff_es_prec_esig(java.math.BigDecimal iva_vend_diff_es_prec_esig) {
+	this.iva_vend_diff_es_prec_esig = iva_vend_diff_es_prec_esig;
+}
+
+public java.math.BigDecimal getIva_acq_diff_es_prec_esig() {
+	return iva_acq_diff_es_prec_esig;
+}
+
+public void setIva_acq_diff_es_prec_esig(java.math.BigDecimal iva_acq_diff_es_prec_esig) {
+	this.iva_acq_diff_es_prec_esig = iva_acq_diff_es_prec_esig;
+}
+
+public java.math.BigDecimal getIva_ven_split_payment() {
+	return iva_ven_split_payment;
+}
+
+public void setIva_ven_split_payment(java.math.BigDecimal iva_ven_split_payment) {
+	this.iva_ven_split_payment = iva_ven_split_payment;
+}
+
+public java.math.BigDecimal getIva_acq_split_payment() {
+	return iva_acq_split_payment;
+}
+
+public void setIva_acq_split_payment(java.math.BigDecimal iva_acq_split_payment) {
+	this.iva_acq_split_payment = iva_acq_split_payment;
 }
 }
