@@ -1,25 +1,34 @@
 package it.cnr.contab.gestiva00.bp;
 
-import it.cnr.contab.gestiva00.ejb.*;
-import it.cnr.contab.gestiva00.core.bulk.*;
+import java.util.TreeMap;
+
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 public class LiquidazioneMassaIvaBP extends LiquidazioneIvaBP {
 
 	private int status = SEARCH;
-public LiquidazioneMassaIvaBP() {
+	private final SimpleDetailCRUDController UoLiquidazioniProvvisorie = new SimpleDetailCRUDController("Uo con Liquidazioni Provvisorie", Liquidazione_ivaBulk.class,"liquidazioniProvvisorie",this);
+	private final SimpleDetailCRUDController UoLiquidazioniDefinitive = new SimpleDetailCRUDController("Uo con Liquidazioni Definitive", Liquidazione_ivaBulk.class,"liquidazioniDefinitive",this);
+
+	public LiquidazioneMassaIvaBP() {
 	this("");
 }
 public LiquidazioneMassaIvaBP(String function) {
 	super(function+"Tr");
 }
 public Liquidazione_massa_ivaVBulk aggiornaProspetti(ActionContext context,Liquidazione_massa_ivaVBulk bulk) throws BusinessProcessException {
-
-	return bulk;
+	try {
+		bulk.setProspetti_stampati(createComponentSession().selectProspetti_stampatiByClause(context.getUserContext(),bulk,new Liquidazione_ivaBulk(),null));
+		return bulk;
+	} catch(Exception e) {
+		throw handleException(e);
+	}
 }
 public Stampa_registri_ivaVBulk aggiornaRegistriStampati(
 	ActionContext context,
@@ -57,7 +66,7 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 
 	super.init(config,context);
 	setStatus(SEARCH);
-	//resetTabs();
+	setTab("tab", "tabUoLiqProvvisorie");
 	resetForSearch(context);
 }
 public boolean isBulkPrintable() {
@@ -87,5 +96,55 @@ public void resetForSearch(it.cnr.jada.action.ActionContext context) throws it.c
 	} catch(Throwable e) {
 		throw new it.cnr.jada.action.BusinessProcessException(e);
 	}
+}
+public boolean isTabLiquidazioniVisible() {
+	return isTabLiquidazioniProvvisorieVisible() || isTabLiquidazioniDefinitiveVisible();
+}
+
+public boolean isTabLiquidazioniProvvisorieVisible() {
+	Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
+	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null	&&
+			model.getNextMeseForLiquidazioneDefinitiva().equals(model.getMese()));
+}
+
+public boolean isTabLiquidazioniDefinitiveVisible() {
+	Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
+	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null	&&
+			model.getLiquidazioniDefinitive()!=null && !model.getLiquidazioniDefinitive().isEmpty());
+}
+
+public String[][] getTabs() {
+	TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
+	int i=0;
+
+	if (isTabLiquidazioniProvvisorieVisible())
+		hash.put(i++, new String[]{ "tabUoLiqProvvisorie", "Provvisorie", "/gestiva00/tab_uo_liqprv.jsp" });
+	if (isTabLiquidazioniDefinitiveVisible())
+		hash.put(i++, new String[]{"tabUoLiqDefinitive", "Definitive","/gestiva00/tab_uo_liqdef.jsp" });
+	
+	String[][] tabs = new String[i][3];
+	for (int j = 0; j < i; j++) {
+		tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
+	}
+	return tabs;		
+}
+public SimpleDetailCRUDController getUoLiquidazioniProvvisorie() {
+	return UoLiquidazioniProvvisorie;
+}
+public SimpleDetailCRUDController getUoLiquidazioniDefinitive() {
+	return UoLiquidazioniDefinitive;
+}
+public void inizializzaMese(ActionContext context) throws BusinessProcessException {
+	try {
+		Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
+		this.aggiornaProspetti(context,model);
+		this.setModel(context, Utility.createLiquidIvaInterfComponentSession().inizializzaMese(context.getUserContext(), model));
+		if (isTabLiquidazioniProvvisorieVisible())
+			setTab("tab", "tabUoLiqProvvisorie");
+		else if (isTabLiquidazioniDefinitiveVisible())
+			setTab("tab", "tabUoLiqDefinitive");
+	} catch(Exception e) {
+		throw handleException(e);
+	}	
 }
 }
