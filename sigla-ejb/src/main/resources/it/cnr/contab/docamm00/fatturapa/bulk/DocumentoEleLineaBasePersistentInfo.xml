@@ -9,7 +9,7 @@
 			columnName="CD_BENE_SERVIZIO"
 			propertyName="cdBeneServizio"
 			sqlTypeName="VARCHAR"
-			columnSize="10"
+			columnSize="15"
 			nullable="true" />	    
 	    <columnMapping
 			columnName="TIPO_CESSIONE"
