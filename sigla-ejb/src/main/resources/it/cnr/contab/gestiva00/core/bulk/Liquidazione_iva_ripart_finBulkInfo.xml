@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio_variazione"
+		property="esercizio_variazione"
+		optionsProperty="anniList"
+		inputType="SELECT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Esercizio Variazione" />
+	<fieldProperty
+		name="cd_cdr"
+		property="linea_di_attivita.cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice CDR" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="linea_di_attivita.cd_linea_attivita"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		inputSize="10"
+		maxLength="10"
+		label="Codice G.A.E." />
+    <fieldProperty
+        name="linea_di_attivita"
+        property="linea_di_attivita"
+        inputType="SEARCHTOOL"
+        formName="searchtool_x_var_stanz_res"
+        enabledOnSearch="true"
+        label="G.A.E." />
+	<fieldProperty
+		name="im_variazione"
+		property="im_variazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		label="Importo" />
+
+	<formFieldProperty
+		name="esercizio_variazione" />
+	<formFieldProperty
+		name="cd_cdr" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="linea_di_attivita" />
+	<formFieldProperty
+		name="im_variazione" />
+
+	<columnFieldProperty
+		name="esercizio_variazione" />
+	<columnFieldProperty
+		name="cd_cdr" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="im_variazione" />
+</bulkInfo>

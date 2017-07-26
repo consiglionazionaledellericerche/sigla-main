@@ -116,13 +116,20 @@
 			propertyName="ordina"
 			sqlTypeName="DECIMAL"
 			columnSize="3" />	
-	<columnMapping
+		<columnMapping
 			columnName="FL_SERVIZI_NON_RESIDENTI"
 			propertyName="fl_servizi_non_residenti"
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SPLIT_PAYMENT"
+			propertyName="fl_split_payment"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="ds_tipo_sezionale" />
@@ -162,4 +169,6 @@
 		name="fl_servizi_non_residenti" />
 	<persistentProperty
 		name="ordina" />		
+	<persistentProperty
+		name="fl_split_payment" />
 </SQLPersistentInfo>

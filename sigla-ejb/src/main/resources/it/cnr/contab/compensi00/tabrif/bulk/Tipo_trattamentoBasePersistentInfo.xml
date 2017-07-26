@@ -197,6 +197,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />					
+		<columnMapping
+			columnName="FL_SPLIT_PAYMENT"
+			propertyName="fl_split_payment"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />					
 
 	</defaultColumnMap>
 	<persistentProperty
@@ -253,8 +260,10 @@
 		name="fl_pignorato_obbl" />
 	<persistentProperty
 		name="fl_tipo_prestazione_obbl" />
-<persistentProperty
+	<persistentProperty
 		name="fl_agevolazioni_rientro_lav" />		
-<persistentProperty
+	<persistentProperty
 		name="fl_solo_inail_ente" />		
+	<persistentProperty
+		name="fl_split_payment" />	
 </SQLPersistentInfo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcep.cla.bulk.Classificazione_voci_epBulk"
+	homeClassName="it.cnr.contab.config00.pdcep.cla.bulk.Classificazione_voci_epHome">
+	<defaultColumnMap
+		tableName="CLASSIFICAZIONE_VOCI_EP">
+		<columnMapping
+			columnName="ID_CLASS_PADRE"
+			propertyName="classificazione_voci_ep.id_classificazione" />
+		</defaultColumnMap>
+
+	<persistentProperty name="classificazione_voci_ep"/>
+	
+	<columnMap 
+		name="V_CLASSIFICAZIONE_VOCI_EP"
+		tableName="V_CLASSIFICAZIONE_VOCI_EP"
+		extends="default" >
+	
+	</columnMap>	
+</SQLPersistentInfo>

@@ -226,6 +226,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	private java.util.Collection tipiPrestazioneCompenso;
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
 	private boolean userAbilitatoSenzaCalcolo = false;
+	
 	public CompensoBulk() {
 		super();
 	}
@@ -754,7 +755,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 			else
 				importoObbligazione = importoObbligazione.add(getIm_netto_percipiente().negate());
 		}
-
+			
 		return importoObbligazione;
 	}
 
@@ -2066,6 +2067,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		setFl_generata_fattura(Boolean.FALSE);
 		setFl_liquidazione_differita(Boolean.FALSE);
 		setFl_documento_ele(Boolean.FALSE);
+		setFl_split_payment(Boolean.FALSE);
 	}
 
 	private void resetImporti() {

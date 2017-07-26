@@ -1494,7 +1494,7 @@ public ReversaleBulk creaReversaleDiIncassoIVA (UserContext userContext, Mandato
 		reversale.setCd_uo_origine(mandato.getCd_unita_organizzativa());
 		reversale.setTi_reversale( reversale.TIPO_INCASSO);
 		reversale.setTi_competenza_residuo( mandato.getTi_competenza_residuo());
-		reversale.setDs_reversale( "REVERSALE DI INCASSO IVA DA FATTURA ESTERA");
+		reversale.setDs_reversale( "REVERSALE IVA");
 		reversale.setStato( reversale.STATO_REVERSALE_EMESSO);
 		reversale.setIm_reversale( importo );
 		reversale.setIm_incassato( new BigDecimal(0));

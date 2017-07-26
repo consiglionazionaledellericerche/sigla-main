@@ -23,12 +23,18 @@
 			propertyName="riapre_a_conto.esercizio"
 			fetchOnly="true"
 			/>
-
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="v_classificazione_voci_ep.id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7" />
 	</defaultColumnMap>
 	
 	<persistentProperty
 		name="voce_ep_padre" />
 	<persistentProperty
 		name="riapre_a_conto" />
+	<persistentProperty
+		name="v_classificazione_voci_ep" />			
 
 </SQLPersistentInfo>
