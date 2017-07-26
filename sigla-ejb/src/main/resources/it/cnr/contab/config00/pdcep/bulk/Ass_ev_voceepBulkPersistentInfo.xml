@@ -28,7 +28,16 @@
 			columnName="ESERCIZIO"
 			propertyName="voce_ep.esercizio"
 			fetchOnly="true"
-			/> 
+			/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce_ep_contr.esercizio"
+			fetchOnly="true"
+			/>	
+		<columnMapping
+			columnName="CD_VOCE_EP_CONTR"
+			propertyName="voce_ep_contr.cd_voce_ep"
+			/>	 
 	</defaultColumnMap>
 	
 	<persistentProperty
@@ -37,4 +46,6 @@
 	<persistentProperty
 		name="voce_ep" 
 		partOfOid="true"/>
+	<persistentProperty
+		name="voce_ep_contr"/>	
 </SQLPersistentInfo>

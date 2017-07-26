@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcep.cla.bulk.Parametri_livelli_epBulk"
+	homeClassName="it.cnr.contab.config00.pdcep.cla.bulk.Parametri_livelli_epHome">
+	<defaultColumnMap
+		tableName="PARAMETRI_LIVELLI_EP">
+	</defaultColumnMap>
+</SQLPersistentInfo>

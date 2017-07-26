@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="missioni_dettaglio_sigla:missioni_dettaglio_sigla_model" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>Missioni SIGLA extension Content Model - Missioni Dettaglio SIGLA</description>
+	<author>Gianfranco Gasparro</author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/missioni/dettaglio/sigla/cmis" prefix="missioni_dettaglio_sigla" />
+	</namespaces>
+
+	<types>
+		<type name="missioni_dettaglio_sigla:main">
+			<title>Dati Dettaglio Missione SIGLA</title>
+			<description>Dati Dettaglio Rimborso Missione</description>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="missioni_dettaglio_sigla:riga">
+					<title>Numero riga dettaglio Missione</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</type>
+	</types>
+</model>
