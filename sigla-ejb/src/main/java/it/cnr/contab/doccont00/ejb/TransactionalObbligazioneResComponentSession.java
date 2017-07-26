@@ -1,6 +1,8 @@
 package it.cnr.contab.doccont00.ejb;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
+import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 
 public class TransactionalObbligazioneResComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements ObbligazioneResComponentSession {
@@ -715,6 +717,27 @@ public it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk validaImputazioneFinan
 		}
 	}
 }
+
+
+public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, DatiFinanziariScadenzeDTO dati)  throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk)invoke("sdoppiaScadenzaInAutomatico",new Object[] {
+			param0,
+			param1,
+			dati});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+
 public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, java.math.BigDecimal param2)  throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk)invoke("sdoppiaScadenzaInAutomatico",new Object[] {

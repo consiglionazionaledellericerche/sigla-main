@@ -7,8 +7,8 @@
 		property="cd_proprio_voce_ep"
 		label="Codice proprio"
 		inputType="TEXT"
-		maxLength="5"
-		inputSize="6"
+		maxLength="10"
+		inputSize="10"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
@@ -42,7 +42,7 @@
 		property="ds_voce_ep"
 		label="Nome conto"
 		inputType="TEXT"
-		maxLength="100"
+		maxLength="200"
 		inputSize="50"
 		enabledOnSearch="true"
 		/>
@@ -180,6 +180,35 @@
 		inputType="ROTEXT"
 		enabledOnSearch="true"
 		/>
+	<fieldProperty
+		name="id_classificazione"
+		property="v_classificazione_voci_ep.id_classificazione"
+		maxLength="7"
+		inputSize="7"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false" 
+		label="Identificativo Classificazione Ufficiale" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="v_classificazione_voci_ep.cd_classificazione"
+		maxLength="34"
+		inputSize="34"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Codice Classificazione Ufficiale" />
+	<fieldProperty
+		name="find_classificazione_voci_ep"
+		property="v_classificazione_voci_ep"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		columnSet="searchtool"
+		freeSearchSet="searchtool"
+		enabledOnSearch="true"
+		label="Classificazione Ufficiale" />			
 
 	<columnFieldProperty
 		name="esercizio"
@@ -270,6 +299,12 @@
 	<formFieldProperty
 		name="ti_voce_ep"
 		/>
+	 <formFieldProperty
+		name="id_classificazione" />
+   	<formFieldProperty
+		name="cd_classificazione" />
+   	<formFieldProperty
+		name="find_classificazione_voci_ep" />	
 
 	<findFieldProperty
 		name="cd_proprio_voce_ep"

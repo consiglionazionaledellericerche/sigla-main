@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
@@ -35,6 +36,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -47,6 +49,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -103,7 +108,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	private boolean carryingThrough = false;
 	private boolean ribaltato;
 	private boolean isDetailDoubling = false;
-
+	
 	/**
 	 * CRUDAnagraficaBP constructor comment.
 	 */
@@ -1648,5 +1653,25 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 			}
 		}
 		super.completeAllegato(allegato);
-	}	
+	}
+	
+	public boolean isRequiredSplitPayment(ActionContext actioncontext, Timestamp dt_registrazione) throws BusinessProcessException {
+		try {
+			return Utility.createFatturaPassivaComponentSession().isAttivoSplitPayment(actioncontext.getUserContext(), dt_registrazione);
+		} catch (Exception e) {
+			throw handleException(e);
+		}			
+	}
+	
+	//variabile inizializzata in fase di caricamento Nota da fattura elettronica 
+	//utilizzata per ritornare sulla fattura elettronica 
+	public boolean fromFatturaElettronica = Boolean.FALSE;
+
+	public void setFromFatturaElettronica(boolean fromFatturaElettronica) {
+		this.fromFatturaElettronica = fromFatturaElettronica;
+	}
+	
+	public boolean isFromFatturaElettronica() {
+		return fromFatturaElettronica;
+	}
 }

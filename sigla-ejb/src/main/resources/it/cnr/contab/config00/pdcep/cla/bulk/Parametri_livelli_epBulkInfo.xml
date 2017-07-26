@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Parametri Livelli"
+          longDescription="Parametri Livelli E/P">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Esercizio di riferimento" />
+	<fieldProperty
+		name="livelli_eco"
+		property="livelli_eco"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Numero di livelli economica" />
+	<fieldProperty
+		name="lung_livello1e"
+		property="lung_livello1e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza primo livello economica (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello1e"
+		property="ds_livello1e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione primo livello economica" />
+	<fieldProperty
+		name="lung_livello2e"
+		property="lung_livello2e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza secondo livello economica (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello2e"
+		property="ds_livello2e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione secondo livello economica" />
+	<fieldProperty
+		name="lung_livello3e"
+		property="lung_livello3e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza terzo livello economica (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello3e"
+		property="ds_livello3e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione terzo livello economica" />
+	<fieldProperty
+		name="lung_livello4e"
+		property="lung_livello4e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza quarto livello economica (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello4e"
+		property="ds_livello4e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione quarto livello economica" />
+	<fieldProperty
+		name="lung_livello5e"
+		property="lung_livello5e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza quinto livello economica (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello5e"
+		property="ds_livello5e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione quinto livello economica" />
+	<fieldProperty
+		name="lung_livello6e"
+		property="lung_livello6e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza sesto livello economica (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello6e"
+		property="ds_livello6e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione sesto livello economica" />
+	<fieldProperty
+		name="lung_livello7e"
+		property="lung_livello7e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza settimo livello economica (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello7e"
+		property="ds_livello7e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione settimo livello economica" />
+	<fieldProperty
+		name="lung_livello8e"
+		property="lung_livello8e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza ottavo livello economica (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello8e"
+		property="ds_livello8e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione ottavo livello economica" />	
+	<fieldProperty
+		name="livelli_pat"
+		property="livelli_pat"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Numero di livelli patrimoniale" />
+	<fieldProperty
+		name="lung_livello1p"
+		property="lung_livello1p"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza primo livello patrimoniale (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello1p"
+		property="ds_livello1p"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione primo livello patrimoniale" />
+	<fieldProperty
+		name="lung_livello2p"
+		property="lung_livello2p"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza secondo livello patrimoniale (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello2p"
+		property="ds_livello2p"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione secondo livello patrimoniale" />
+	<fieldProperty
+		name="lung_livello3p"
+		property="lung_livello3p"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza terzo livello patrimoniale (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello3p"
+		property="ds_livello3p"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione terzo livello patrimoniale" />
+	<fieldProperty
+		name="lung_livello4p"
+		property="lung_livello4p"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza quarto livello patrimoniale (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello4p"
+		property="ds_livello4p"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione quarto livello patrimoniale" />
+	<fieldProperty
+		name="lung_livello5p"
+		property="lung_livello5p"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza quinto livello patrimoniale (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello5p"
+		property="ds_livello5p"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione quinto livello patrimoniale" />
+	<fieldProperty
+		name="lung_livello6p"
+		property="lung_livello6p"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza sesto livello patrimoniale (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello6p"
+		property="ds_livello6p"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione sesto livello patrimoniale" />
+	<fieldProperty
+		name="lung_livello7p"
+		property="lung_livello7p"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza settimo livello patrimoniale (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello7p"
+		property="ds_livello7p"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione settimo livello patrimoniale" />
+	<fieldProperty
+		name="lung_livello8p"
+		property="lung_livello8p"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza ottavo livello patrimoniale (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello8p"
+		property="ds_livello8p"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione ottavo livello patrimoniale" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="livelli_eco" 
+		command="doCambiaLivelliEconomica" />
+	<formFieldProperty
+		name="lung_livello1e" />
+	<formFieldProperty
+		name="ds_livello1e" />
+	<formFieldProperty
+		name="lung_livello2e" />
+	<formFieldProperty
+		name="ds_livello2e" />
+	<formFieldProperty
+		name="lung_livello3e" />
+	<formFieldProperty
+		name="ds_livello3e" />
+	<formFieldProperty
+		name="lung_livello4e" />
+	<formFieldProperty
+		name="ds_livello4e" />
+	<formFieldProperty
+		name="lung_livello5e" />
+	<formFieldProperty
+		name="ds_livello5e" />
+	<formFieldProperty
+		name="lung_livello6e" />
+	<formFieldProperty
+		name="ds_livello6e" />
+	<formFieldProperty
+		name="lung_livello7e" />
+	<formFieldProperty
+		name="ds_livello7e" />
+	<formFieldProperty
+		name="lung_livello8e" />
+	<formFieldProperty
+		name="ds_livello8e" />
+		
+	<formFieldProperty
+		name="livelli_pat" 
+		command="doCambiaLivelliPatrimoniale" />
+	<formFieldProperty
+		name="lung_livello1p" />
+	<formFieldProperty
+		name="ds_livello1p" />
+	<formFieldProperty
+		name="lung_livello2p" />
+	<formFieldProperty
+		name="ds_livello2p" />
+	<formFieldProperty
+		name="lung_livello3p" />
+	<formFieldProperty
+		name="ds_livello3p" />
+	<formFieldProperty
+		name="lung_livello4p" />
+	<formFieldProperty
+		name="ds_livello4p" />
+	<formFieldProperty
+		name="lung_livello5p" />
+	<formFieldProperty
+		name="ds_livello5p" />
+	<formFieldProperty
+		name="lung_livello6p" />
+	<formFieldProperty
+		name="ds_livello6p" />
+	<formFieldProperty
+		name="lung_livello7p" />
+	<formFieldProperty
+		name="ds_livello7p" />
+	<formFieldProperty
+		name="lung_livello8p" />
+	<formFieldProperty
+		name="ds_livello8p" />
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="livelli_eco" />
+	<findFieldProperty
+		name="lung_livello1e" />
+	<findFieldProperty
+		name="ds_livello1e" />
+	<findFieldProperty
+		name="lung_livello2e" />
+	<findFieldProperty
+		name="ds_livello2e" />
+	<findFieldProperty
+		name="lung_livello3e" />
+	<findFieldProperty
+		name="ds_livello3e" />
+	<findFieldProperty
+		name="lung_livello4e" />
+	<findFieldProperty
+		name="ds_livello4e" />
+	<findFieldProperty
+		name="lung_livello5e" />
+	<findFieldProperty
+		name="ds_livello5e" />
+	<findFieldProperty
+		name="lung_livello6e" />
+	<findFieldProperty
+		name="ds_livello6e" />
+	<findFieldProperty
+		name="lung_livello7e" />
+	<findFieldProperty
+		name="ds_livello7e" />
+	<findFieldProperty
+		name="lung_livello8e" />
+	<findFieldProperty
+		name="ds_livello8e" />
+		
+	<findFieldProperty
+		name="livelli_pat" />
+	<findFieldProperty
+		name="lung_livello1p" />
+	<findFieldProperty
+		name="ds_livello1p" />
+	<findFieldProperty
+		name="lung_livello2p" />
+	<findFieldProperty
+		name="ds_livello2p" />
+	<findFieldProperty
+		name="lung_livello3p" />
+	<findFieldProperty
+		name="ds_livello3p" />
+	<findFieldProperty
+		name="lung_livello4p" />
+	<findFieldProperty
+		name="ds_livello4p" />
+	<findFieldProperty
+		name="lung_livello5p" />
+	<findFieldProperty
+		name="ds_livello5p" />
+	<findFieldProperty
+		name="lung_livello6p" />
+	<findFieldProperty
+		name="ds_livello6p" />
+	<findFieldProperty
+		name="lung_livello7p" />
+	<findFieldProperty
+		name="ds_livello7p" />
+	<findFieldProperty
+		name="lung_livello8p" />
+	<findFieldProperty
+		name="ds_livello78p" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="livelli_eco" />
+	<columnFieldProperty
+		name="lung_livello1e" />
+	<columnFieldProperty
+		name="ds_livello1e" />
+	<columnFieldProperty
+		name="lung_livello2e" />
+	<columnFieldProperty
+		name="ds_livello2e" />
+	<columnFieldProperty
+		name="lung_livello3e" />
+	<columnFieldProperty
+		name="ds_livello3e" />
+	<columnFieldProperty
+		name="lung_livello4e" />
+	<columnFieldProperty
+		name="ds_livello4e" />
+	<columnFieldProperty
+		name="lung_livello5e" />
+	<columnFieldProperty
+		name="ds_livello5e" />
+	<columnFieldProperty
+		name="lung_livello6e" />
+	<columnFieldProperty
+		name="ds_livello6e" />
+	<columnFieldProperty
+		name="lung_livello7e" />
+	<columnFieldProperty
+		name="ds_livello7e" />
+	<columnFieldProperty
+		name="lung_livello8e" />
+	<columnFieldProperty
+		name="ds_livello8e" />
+	<columnFieldProperty
+		name="livelli_pat" />
+	<columnFieldProperty
+		name="lung_livello1p" />
+	<columnFieldProperty
+		name="ds_livello1p" />
+	<columnFieldProperty
+		name="lung_livello2p" />
+	<columnFieldProperty
+		name="ds_livello2p" />
+	<columnFieldProperty
+		name="lung_livello3p" />
+	<columnFieldProperty
+		name="ds_livello3p" />
+	<columnFieldProperty
+		name="lung_livello4p" />
+	<columnFieldProperty
+		name="ds_livello4p" />
+	<columnFieldProperty
+		name="lung_livello5p" />
+	<columnFieldProperty
+		name="ds_livello5p" />
+	<columnFieldProperty
+		name="lung_livello6p" />
+	<columnFieldProperty
+		name="ds_livello6p" />
+	<columnFieldProperty
+		name="lung_livello7p" />
+	<columnFieldProperty
+		name="ds_livello7p" />
+	<columnFieldProperty
+		name="lung_livello8p" />
+	<columnFieldProperty
+		name="ds_livello8p" />	
+</bulkInfo>

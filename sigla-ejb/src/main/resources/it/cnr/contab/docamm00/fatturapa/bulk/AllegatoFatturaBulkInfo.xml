@@ -56,10 +56,21 @@
 			name="attivaFile" />	    	    
 	</form>	
 	
-	<columnSet name="default">
+	<columnSet name="decorrenzaTermini">
 		<columnFieldProperty
 			name="aspectName"
 			keysProperty="aspectNamesDecorrenzaTerminiKeys" />
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="titolo" />    	    
+	</columnSet>	
+	
+	<columnSet name="default">
+		<columnFieldProperty
+			name="aspectName"/>
 		<columnFieldProperty
 			name="nome" />
 		<columnFieldProperty

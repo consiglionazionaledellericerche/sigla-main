@@ -50,5 +50,58 @@ public class LiquidIvaInterfComponentSessionBean extends it.cnr.jada.ejb.CRUDCom
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
 		}
-	}	
+	}
+	public it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk inizializzaMese(it.cnr.jada.UserContext param0,it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk result = ((LiquidIvaInterfComponent)componentObj).inizializzaMese(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public void saveRipartizioneFinanziaria(it.cnr.jada.UserContext param0,it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((LiquidIvaInterfComponent)componentObj).saveRipartizioneFinanziaria(param0,param1);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_ivaVBulk inizializzaMese(it.cnr.jada.UserContext param0,it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_ivaVBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_ivaVBulk result = ((LiquidIvaInterfComponent)componentObj).inizializzaMese(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 }
