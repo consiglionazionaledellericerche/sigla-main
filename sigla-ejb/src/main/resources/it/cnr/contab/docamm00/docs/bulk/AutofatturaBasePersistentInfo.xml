@@ -147,6 +147,13 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_SPLIT_PAYMENT"
+			propertyName="fl_split_payment"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="protocollo_iva" />
@@ -194,4 +201,6 @@
 		name="dt_registrazione" />
 	<persistentProperty
 		name="cd_uo_ft_passiva" />
+	<persistentProperty
+		name="fl_split_payment" />
 </SQLPersistentInfo>
