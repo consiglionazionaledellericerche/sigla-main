@@ -2,6 +2,7 @@ package it.cnr.contab.anagraf00.core.bulk;
 
 import java.lang.String;
 import java.util.Dictionary;
+import java.util.Optional;
 
 
 import it.cnr.contab.anagraf00.tabter.bulk.*;
@@ -462,6 +463,11 @@ public int getTi_entita_persona_struttura() {
 			return NazioneBulk.EXTRA_CEE;
 	}
 
+	public boolean isItaliano() {
+		return Optional.ofNullable(getTi_italiano_estero())
+				.map(s -> s.equals(NazioneBulk.ITALIA))
+				.orElse(false);
+	}
 	/**
 	 * Restituisce il <code>Dictionary</code> per la gestione dei tipi italiano/estero.
 	 *

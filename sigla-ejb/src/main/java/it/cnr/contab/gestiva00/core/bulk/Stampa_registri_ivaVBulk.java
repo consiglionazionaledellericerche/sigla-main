@@ -30,6 +30,7 @@ public abstract class Stampa_registri_ivaVBulk extends it.cnr.jada.bulk.OggettoB
     public final static String SEZIONALI_SAN_MARINO_SENZA_IVA = "S";
     public final static String SEZIONALI_BENI_INTRA_UE = "I";
     public final static String SEZIONALI_SERVIZI_NON_RESIDENTI = "X";
+    public final static String SEZIONALI_SPLIT_PAYMENT = "P";    
     public final static java.util.Dictionary TIPI_SEZIONALE_KEYS;
     public static java.util.Dictionary MESI;
     public static java.util.Dictionary MESI_INT;
@@ -58,6 +59,7 @@ public abstract class Stampa_registri_ivaVBulk extends it.cnr.jada.bulk.OggettoB
 	public static final String TIPO_STAMPA_RIEPILOGATIVI_CENTRO="RIEPILOGATIVI_CENTRO";
 	public static final String TIPO_STAMPA_LIQUIDAZIONE="LIQUIDAZIONE";
 	public static final String TIPO_STAMPA_LIQUIDAZIONE_MASSA = "LIQUIDAZIONE_MASSA";
+	public static final String TIPO_STAMPA_LIQUIDAZIONE_MASSA_PRV = "LIQUIDAZIONE_MASSA_PRV";
 	public static final String TIPO_STAMPA_RIEPILOGATIVI_IVA_DIFFERITA="DIFFERITA";
 
 	public static final String GENNAIO= "Gennaio";
@@ -82,6 +84,7 @@ public abstract class Stampa_registri_ivaVBulk extends it.cnr.jada.bulk.OggettoB
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_SAN_MARINO_SENZA_IVA, "Sezionali per San. Marino senza Iva");
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_BENI_INTRA_UE, "Sezionali Beni non residenti");
         TIPI_SEZIONALE_KEYS.put(SEZIONALI_SERVIZI_NON_RESIDENTI, "Sezionali Servizi non residenti");
+        TIPI_SEZIONALE_KEYS.put(SEZIONALI_SPLIT_PAYMENT, "Sezionali Split Payment");
 	}
     static {
     	initializeHashes();
@@ -335,7 +338,8 @@ protected static void initializeHashes() {
 public boolean isLiquidazione() {
 	return getTipo_stampa() != null && 
 			(getTipo_stampa().equals(TIPO_STAMPA_LIQUIDAZIONE) || 
-			 getTipo_stampa().equals(TIPO_STAMPA_LIQUIDAZIONE_MASSA));
+			 getTipo_stampa().equals(TIPO_STAMPA_LIQUIDAZIONE_MASSA) ||
+			 getTipo_stampa().equals(TIPO_STAMPA_LIQUIDAZIONE_MASSA_PRV));
 }
 /**
  * Insert the method's description here.

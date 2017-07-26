@@ -5,7 +5,11 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_diariaBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.StrServ;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -39,6 +43,8 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	/**** Gestione edita, conferma, annulla dettaglio di spesa ***/	
 	public static final int STATUS_NOT_CONFIRMED = 0;
 	public static final int STATUS_CONFIRMED = 1;
+	private String allegatiDocumentale;
+	private BulkList<AllegatoMissioneDettaglioSpesaBulk> dettaglioSpesaAllegati = new BulkList<AllegatoMissioneDettaglioSpesaBulk>();
 	private int status = STATUS_NOT_CONFIRMED;
 	protected Missione_dettaglioBulk spesaIniziale;
 	/***************************************************************/
@@ -156,6 +162,7 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	public MissioneBulk getMissione() {
 		return missione;
 	}
+
 	@Override
 	public java.lang.Long getPg_missione() 
 	{
@@ -342,6 +349,13 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 
 		return false;
 	}
+	public boolean isMissioneFromGemis()
+	{
+		if(getMissione() != null && getMissione().isMissioneFromGemis() )
+			return true;
+
+		return false;
+	}
 	public boolean isROTipo_auto() 
 	{
 		return tipo_auto == null || tipo_auto.getCrudStatus() == NORMAL; 
@@ -474,13 +488,17 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 		// di default (EURO) mentre l'importo e' calcolato (km*indennita')	
 		if(!isRimborsoKm())
 		{
-			if((getIm_spesa_divisa() == null) || (getIm_spesa_divisa().compareTo(new java.math.BigDecimal(0)) < 1))
-				throw new ValidationException( "L'importo delle spesa deve essere > 0!" );
+			if((getIm_spesa_divisa() == null)  || (getIm_spesa_divisa().compareTo(new java.math.BigDecimal(0)) < 1 && !isDettaglioMissioneFromGemis()))
+				throw new ValidationException( "L'importo della spesa deve essere > 0!" );
 
+			if (getIm_spesa_divisa().compareTo(new java.math.BigDecimal(0)) < 0){
+				throw new ValidationException( "L'importo della spesa non può essere negativo" );
+			}
+			
 			if(getCd_divisa_spesa() == null)
 				throw new ValidationException( "Selezionare la valuta!" );
 
-			if((getCambio_spesa() == null) || (getCambio_spesa().compareTo(new java.math.BigDecimal(0)) < 1))		
+			if((getCambio_spesa() == null) || (getCambio_spesa().compareTo(new java.math.BigDecimal(0)) < 1))
 				throw new ValidationException( "Il cambio deve essere > 0 !" );			
 		}
 
@@ -508,5 +526,58 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 
 		if((isRimborsoKm()) && ((getChilometri() == null) || (getChilometri().compareTo(new java.math.BigDecimal(0)) < 0)))		
 			throw new ValidationException( "il numero di Km deve essere > 0!" );		
+	}
+	/**
+	 * Il metodo ritorna il valore dell'attributo 'dettaglioSpesaAllegati'
+	 */
+	public it.cnr.jada.bulk.BulkList<AllegatoMissioneDettaglioSpesaBulk> getDettaglioSpesaAllegati() {
+		return dettaglioSpesaAllegati;
+	}
+	/**
+	 * Il metodo imposta il valore dell'attributo 'dettaglioSpesaAllegati'
+	 */
+	public void setDettaglioSpesaAllegati(it.cnr.jada.bulk.BulkList<AllegatoMissioneDettaglioSpesaBulk> newDettaglioSpesaAllegati) {
+		dettaglioSpesaAllegati = newDettaglioSpesaAllegati;
+	}
+	public String getAllegatiDocumentale() {
+		return allegatiDocumentale;
+	}
+	public void setAllegatiDocumentale(String allegatiDocumentale) {
+		this.allegatiDocumentale = allegatiDocumentale;
+	}
+	/**
+	 * Restituisce un array di <code>BulkCollection</code> contenenti oggetti
+	 * bulk da rendere persistenti insieme al ricevente.
+	 * L'implementazione standard restituisce <code>null</code>.
+	 * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
+	 */ 
+	public BulkCollection[] getBulkLists() {
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				dettaglioSpesaAllegati };
+	}
+	/**
+	 * Il metodo rimuove dalla collection dei dettagli di spesa un solo dettaglio
+	 */
+	public AllegatoMissioneDettaglioSpesaBulk removeFromDettaglioSpesaAllegati(int index) 
+	{
+		AllegatoMissioneDettaglioSpesaBulk allegato = (AllegatoMissioneDettaglioSpesaBulk)dettaglioSpesaAllegati.remove(index);
+		allegato.setToBeDeleted();
+
+		return allegato;
+	}
+	public int addToDettaglioSpesaAllegati(AllegatoMissioneDettaglioSpesaBulk allegato) {
+		dettaglioSpesaAllegati.add(allegato);
+		return dettaglioSpesaAllegati.size()-1;		
+	}
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(StrServ.lpad(this.getPg_riga().toString(),4,"0"));
+		return nomeFile.toString();
+	}
+	public Boolean isDettaglioMissioneFromGemis(){
+		if (getIdFolderDettagliGemis() != null){
+			return true;
+		}
+		return false;
 	}
 }

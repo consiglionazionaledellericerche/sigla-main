@@ -1,8 +1,12 @@
 package it.cnr.contab.docamm00.actions;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.Vector;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
@@ -1555,6 +1559,45 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 						elementsToDischarged.add(dettaglio);
 				}
 			}
+			
+			//Test per gestire il collegamento NotaFattura Split
+			List<Fattura_passiva_rigaBulk> allDetail = new ArrayList<Fattura_passiva_rigaBulk>();
+			allDetail.addAll(elementsToBeAdded);
+			allDetail.addAll(((Nota_di_creditoBulk)bp.getModel()).getFattura_passiva_dettColl());
+			boolean isOriginalNotaSplit =false;
+			if(((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment() !=null)
+				isOriginalNotaSplit = ((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment() ||((Nota_di_creditoBulk)bp.getModel()).getDocumentoEleTestata().isDocumentoSplitPayment();
+
+			long contaSplit=allDetail.stream()
+						.filter(e->{
+							return Optional.ofNullable(((Fattura_passiva_rigaBulk)e).getFattura_passiva().getFl_split_payment())
+									.map(i->i.booleanValue())
+									.orElse(Boolean.FALSE);
+						})
+						.count(); 
+			long contaNoSplit=allDetail.size()-contaSplit; 
+
+			if (contaSplit>0 && contaNoSplit>0) {
+				bp.setMessage("Attenzione! Non è possibile associare alla Nota Credito dettagli di fattura Split Payment e dettagli di fattura non Split Payment.");
+				return context.findDefaultForward();
+			} else if (contaSplit>0) {
+				if (!((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()) {
+					//se la nota originariamente era split la rimetto tale
+					if (isOriginalNotaSplit) {					
+						((Nota_di_creditoBulk)bp.getModel()).setFl_split_payment(Boolean.TRUE);
+						basicDoOnIstituzionaleCommercialeChange(context, ((Fattura_passivaBulk)bp.getModel()));
+					} else {
+						bp.setMessage("Attenzione! La Nota Credito non è di tipo Split Payment. Non è possibile associare Fatture di tipo Split Payment.");
+						return context.findDefaultForward();
+					}
+				}
+			} else if (contaNoSplit>0) {
+				if (((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()==null || ((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()) {
+					((Nota_di_creditoBulk)bp.getModel()).setFl_split_payment(Boolean.FALSE);
+					basicDoOnIstituzionaleCommercialeChange(context, ((Fattura_passivaBulk)bp.getModel()));
+				}
+			}
+				
 			for (java.util.Iterator i = elementsToBeAdded.iterator(); i.hasNext();) {
 				Fattura_passiva_rigaIBulk dettaglio = (Fattura_passiva_rigaIBulk)i.next();
 				
