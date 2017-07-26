@@ -147,8 +147,8 @@
                     <connection-url>jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF</connection-url>
                     <driver>ojdbc</driver>
                     <pool>
-                        <min-pool-size>3</min-pool-size>
-                        <max-pool-size>5</max-pool-size>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>20</max-pool-size>
                     </pool>
                     <security>
                         <user-name>PCIR009</user-name>
