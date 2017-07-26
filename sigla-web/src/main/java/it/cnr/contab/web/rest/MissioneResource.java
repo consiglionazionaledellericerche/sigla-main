@@ -110,7 +110,9 @@ public class MissioneResource implements MissioneLocal{
 	    	Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
 				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
 		}
+
 		missioneBulk.setObbligazione_scadenzario(Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk)).orElse(null));
+		missioneBulk.setAnticipo(Optional.ofNullable(missioneComponentSession.recuperoAnticipoDaGemis(userContext, missioneBulk)).orElse(null));
 		final MissioneBulk missione = (MissioneBulk) missioneComponentSession.inizializzaBulkPerInserimento(
     			userContext, 
     			missioneBulk);
@@ -133,6 +135,8 @@ public class MissioneResource implements MissioneLocal{
     	missioneCreated.setToBeUpdated();
     	missioneCreated.setMissioneIniziale(missioneCreated);
     	missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missioneCreated);
+    	missioneCreated.setObbligazione_scadenzario(null);
+    	missioneCreated.setObbligazione_scadenzarioClone(null);
     	return Response.status(Status.CREATED).entity(missioneCreated).build();
     }
 

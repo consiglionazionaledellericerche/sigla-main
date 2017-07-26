@@ -169,4 +169,42 @@ public it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_annualeVBulk tabCodIva
 		}
 	}
 }
+public it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk inizializzaMese(it.cnr.jada.UserContext param0,it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException {
+	try {
+		return (it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk)invoke("inizializzaMese",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(it.cnr.jada.persistency.PersistencyException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public void saveRipartizioneFinanziaria(it.cnr.jada.UserContext param0,it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException {
+	try {
+		invoke("saveRipartizioneFinanziaria",new Object[] {
+				param0,
+				param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(it.cnr.jada.persistency.PersistencyException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }

@@ -244,8 +244,12 @@ private void aggiornaAccertamentiSuCancellazione(
                     for (Iterator r= documento.getDocumento_generico_dettColl().iterator(); r.hasNext();) {
                         Documento_generico_rigaBulk riga= (Documento_generico_rigaBulk) r.next();
                         if (riga.getAccertamento_scadenziario().equalsByPrimaryKey(scadenza))
-                            importoAssociatoAllaScadenza=
+                        	if(riga.getIm_imponibile().compareTo(riga.getIm_riga_iniziale())!=0)
+                        		importoAssociatoAllaScadenza=
                                 importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_imponibile().subtract(riga.getIm_riga_iniziale())).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+                        	else
+                        		importoAssociatoAllaScadenza=
+                                importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_riga_iniziale()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                     }
                     scadenza.setIm_associato_doc_amm((scadenza.getIm_associato_doc_amm().subtract(importoAssociatoAllaScadenza)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 					updateImportoAssociatoDocAmm(userContext, scadenza);
@@ -571,9 +575,13 @@ private void aggiornaObbligazioniSuCancellazione(
                         for (Iterator r= documento.getDocumento_generico_dettColl().iterator(); r.hasNext();) {
                             Documento_generico_rigaBulk riga= (Documento_generico_rigaBulk) r.next();
                             if (riga.getObbligazione_scadenziario().equalsByPrimaryKey(scadenza))
-                            	 importoAssociatoAllaScadenza=
-                                 importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_imponibile().subtract(riga.getIm_riga_iniziale())).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
-                     }
+                            	if(riga.getIm_imponibile().compareTo(riga.getIm_riga_iniziale())!=0)
+                            		importoAssociatoAllaScadenza=
+                                    importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_imponibile().subtract(riga.getIm_riga_iniziale())).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+                            	else
+                            		importoAssociatoAllaScadenza=
+                                    importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_riga_iniziale()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+                        }
                        
                         scadenza.setIm_associato_doc_amm((scadenza.getIm_associato_doc_amm().subtract(importoAssociatoAllaScadenza)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                     }
@@ -4375,10 +4383,10 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectLettera_pagamento_estero_sos
 		sql.addSQLClause("OR", "IM_SOSPESO", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 		sql.addSQLClause("AND", "IM_SOSPESO", sql.ISNOTNULL, null);
 		sql.closeParenthesis();
-		
+		 
 		
 		sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
-		sql.addClause("AND", "esercizio", sql.EQUALS, documento.getEsercizio());
+		sql.addClause("AND", "esercizio", sql.EQUALS, documento.getLettera_pagamento_estero().getEsercizio());
 		sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, sospeso.TIPO_SPESA);
 		sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.TI_SOSPESO);
 	
