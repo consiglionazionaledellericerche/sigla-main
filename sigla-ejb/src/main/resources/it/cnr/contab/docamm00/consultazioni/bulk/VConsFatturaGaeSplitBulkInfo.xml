@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Fatture Passive comm. Split Payment"
+    longDescription="Fatture Passive comm. Split Payment">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO" />
+	<fieldProperty
+		name="pgFatturaPassiva"
+		property="pgFatturaPassiva"
+		inputType="TEXT"
+		maxLength="10"
+		label="Nr fattura" />
+	<fieldProperty
+		name="progressivoRiga"
+		property="progressivoRiga"
+		inputType="TEXT"
+		maxLength="10"
+		label="Pg riga" />		
+	<fieldProperty
+		name="tiFattura"
+		property="tiFattura"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipo" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="cdBeneServizio"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Bene/ Servizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		keysProperty="meseKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="mese" />
+	<fieldProperty
+		name="imImponibile"
+		property="imImponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Imponibile" />	
+	<fieldProperty
+		name="imIva"
+		property="imIva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Iva" />	
+	<fieldProperty
+		name="imVoce"
+		property="imVoce"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Imp. Voce" />
+		<fieldProperty
+		name="imQuota"
+		property="imQuota"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Quota Iva pro rata non detraibile" />					
+	<fieldProperty
+		name="dsRigaFattura"
+		property="dsRigaFattura"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="desc. Riga Fattura" />
+	<fieldProperty
+		name="esercizioObbligazione"
+		property="esercizioObbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Imp." />
+	<fieldProperty
+		name="esercizioOriObbligazione"
+		property="esercizioOriObbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio ori Imp." />
+		
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Terzo" />	
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Voce" />	
+	<fieldProperty
+		name="cdCentroResponsabilita"
+		property="cdCentroResponsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr" />	
+	<fieldProperty
+		name="cdLineaAttivita"
+		property="cdLineaAttivita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Gae" />
+	<fieldProperty
+		name="cdVoceIva"
+		property="cdVoceIva"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Voce Iva" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Impegno" />		
+	<fieldProperty
+		name="pgObbligazioneScadenzario"
+		property="pgObbligazioneScadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Impegno Scad." />			
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="pgFatturaPassiva" />
+	<formFieldProperty
+		name="progressivoRiga" />		
+	<formFieldProperty
+		name="cdBeneServizio" />
+	<formFieldProperty
+		name="cdElementoVoce" />
+	<formFieldProperty
+		name="tiFattura" />	
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="cdVoceIva" />
+	<formFieldProperty
+		name="cdLineaAttivita" />
+	<formFieldProperty
+		name="cdCentroResponsabilita" />
+	<formFieldProperty
+		name="esercizioObbligazione" />
+	<formFieldProperty
+		name="esercizioOriObbligazione" />
+	<formFieldProperty
+		name="pgObbligazione" />
+	<formFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<formFieldProperty
+		name="imImponibile" />	
+	<formFieldProperty
+		name="imIva" />
+	<formFieldProperty
+		name="imVoce" />
+	<formFieldProperty
+		name="imQuota" />	
+	<formFieldProperty
+		name="dsRigaFattura" />
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="pgFatturaPassiva" />
+	<findFieldProperty
+		name="progressivoRiga" />		
+	<findFieldProperty
+		name="cdBeneServizio" />
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="tiFattura" />	
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="cdVoceIva" />
+	<findFieldProperty
+		name="cdLineaAttivita" />
+	<findFieldProperty
+		name="cdCentroResponsabilita" />
+	<findFieldProperty
+		name="esercizioObbligazione" />
+	<findFieldProperty
+		name="esercizioOriObbligazione" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<findFieldProperty
+		name="imImponibile" />	
+	<findFieldProperty
+		name="imIva" />
+	<findFieldProperty
+		name="imVoce" />
+	<findFieldProperty
+		name="dsRigaFattura" />
+	
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="mese" />	
+	<columnFieldProperty
+		name="pgFatturaPassiva" />
+	<columnFieldProperty
+		name="tiFattura" />	
+	<columnFieldProperty
+		name="cdTerzo" />		
+	<columnFieldProperty
+		name="progressivoRiga" />		
+	<columnFieldProperty
+		name="cdBeneServizio" />
+	<columnFieldProperty
+		name="dsRigaFattura" />		
+	<columnFieldProperty
+		name="cdVoceIva" />
+	<columnFieldProperty
+		name="imImponibile" />	
+	<columnFieldProperty
+		name="imIva" />
+	<columnFieldProperty
+		name="esercizioObbligazione" />
+	<columnFieldProperty
+		name="esercizioOriObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazione" />
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<columnFieldProperty
+		name="cdCentroResponsabilita" />		
+	<columnFieldProperty
+		name="cdLineaAttivita" />
+	<columnFieldProperty
+		name="imVoce" />
+	<columnFieldProperty
+		name="imQuota" />	
+
+</bulkInfo>
