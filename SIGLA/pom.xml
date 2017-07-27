@@ -85,8 +85,9 @@
                 <version>${wildfly.plugin.version}</version>
                 <configuration>
                     <jbossHome>${project.build.directory}/wildfly-${wildfly.version}</jbossHome>
+                    <port>10090</port>
                     <server-args>
-                        <server-arg>-Dspring.profiles.active=AZURE</server-arg>
+                        <server-arg>-Dspring.profiles.active=CMIS</server-arg>
                     </server-args>
                     <java-opts>
                         <java-opt>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</java-opt>

@@ -8,6 +8,9 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.FormController;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 
+import javax.servlet.jsp.JspWriter;
+import java.io.IOException;
+
 public class CRUDAggiungiPreferitiBP extends SimpleCRUDBP {
 	private String bpName;
 	private Character funzione;
@@ -52,4 +55,12 @@ public class CRUDAggiungiPreferitiBP extends SimpleCRUDBP {
 		super.save(actioncontext);
 		actioncontext.closeBusinessProcess();
 	}
+
+    @Override
+    public void writeForm(JspWriter jspwriter) throws IOException {
+        this.getBulkInfo().writeForm(jspwriter, this.getModel(), this.getParentRoot().isBootstrap()? "bootstrap": "default",
+                (String)null, (String)null,
+                this.getInputPrefix(), this.getStatus(), this.isInputReadonly(),
+                this.getFieldValidationMap(), this.getParentRoot().isBootstrap());
+    }
 }

@@ -488,6 +488,11 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 				null,
 				null,
 				null);
+			userContext.getAttributes().put("bootstrap",
+					Optional.ofNullable(context.getUserContext().getAttributes().get("bootstrap"))
+						.map(Boolean.class::cast)
+						.orElse(Boolean.FALSE)
+			);
 	
 			// Testo se l'utente può entrare con l'anno in corso.
 			try {

@@ -316,8 +316,8 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	 * @return Il Forward alla pagina di risposta
 	 */
 	public Forward doSelezionaMenu(ActionContext context,String cd_nodo) {
+        it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
 		try {
-			it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
 			if (isCurrentBPDirty(context)) {
 				it.cnr.jada.util.action.OptionBP optionbp = openContinuePrompt(context,"doConfermaSelezioneMenu");
 				optionbp.addAttribute("cd_nodo", cd_nodo);
@@ -329,6 +329,11 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			if (nodo == null) return context.findDefaultForward();
 			return startNodo(context,bp,nodo);
 		} catch(Throwable e) {
+		    if (bp.getParentRoot().isBootstrap()) {
+		        bp.setErrorMessage(e.getMessage());
+                ((HttpActionContext)context).getRequest()
+                        .setAttribute(it.cnr.jada.action.BusinessProcess.class.getName(), bp);
+            }
 			return handleException(context,e);
 		}
 	}

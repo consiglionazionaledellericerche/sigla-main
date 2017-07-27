@@ -16,9 +16,13 @@ import it.cnr.jada.bulk.annotation.TypeProperty;
 @SuppressWarnings("unchecked")
 @BulkInfoAnnotation(shortDescription="Preferiti", 
 		longDescription="Preferiti",
-		form={@FormAnnotation(value = {
+		form = {
+			@FormAnnotation(value = {
 				@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty), 
-				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.FormFieldProperty)})},
+				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.FormFieldProperty)}),
+			@FormAnnotation(name= "bootstrap", value = {
+					@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty)})
+		},
 		columnSet=@ColumnSetAnnotation(value={
 				@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.ColumnFieldProperty),
 				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.ColumnFieldProperty)}),
@@ -60,4 +64,5 @@ public class PreferitiBulk extends PreferitiBase {
 	public static Dictionary getIconeKeys() {
 		return iconeKeys;
 	}
+
 }
