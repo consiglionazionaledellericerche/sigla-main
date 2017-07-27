@@ -1,7 +1,6 @@
 package it.cnr.contab.gestiva00.actions;
 
 import java.sql.Timestamp;
-
 import it.cnr.contab.gestiva00.bp.LiquidazioneDefinitivaIvaBP;
 import it.cnr.contab.gestiva00.bp.LiquidazioneIvaBP;
 import it.cnr.contab.gestiva00.core.bulk.IPrintable;
@@ -13,6 +12,9 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.MTUWrapper;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.action.ConsultazioniBP;
 
 /**
  * Liquidazione iva
@@ -302,4 +304,39 @@ private MTUWrapper makeLiquidazioneProvvisoria(ActionContext context) throws Thr
 		   	
 	return manageStampa(context, modelProvv);
 }
+public Forward doConsultaDettagliFatturaComSplit(ActionContext context) {
+	try {
+		fillModel(context);
+		LiquidazioneDefinitivaIvaBP bp = (LiquidazioneDefinitivaIvaBP)context.getBusinessProcess();
+
+		Liquidazione_definitiva_ivaVBulk bulk = (Liquidazione_definitiva_ivaVBulk)bp.getModel();
+
+		if (bulk==null) {
+			bp.setMessage("Nessun dettaglio selezionato");
+			return context.findDefaultForward();
+		}
+		if(bulk.getData_a()==null){
+			bp.setMessage("Selezionare il mese");
+			return context.findDefaultForward();	
+		}
+		java.util.Calendar cal = java.util.GregorianCalendar.getInstance();
+		cal.setTime(new java.util.Date(bulk.getData_a().getTime()));
+		Integer meseNum = new Integer(cal.get(java.util.Calendar.MONTH)+1);
+		Integer esercizioNum = new Integer(cal.get(java.util.Calendar.YEAR));
+		CompoundFindClause clause = new CompoundFindClause();
+		clause.addClause("AND","esercizio",SQLBuilder.EQUALS,esercizioNum);
+		clause.addClause("AND","cdCds",SQLBuilder.EQUALS,bulk.getCd_cds());
+		clause.addClause("AND","mese",SQLBuilder.EQUALS,meseNum);
+		ConsultazioniBP ricercaLiberaBP = (ConsultazioniBP)context.createBusinessProcess("ConsFatturaGaeSplitBP");
+		
+		ricercaLiberaBP.addToBaseclause(clause);
+		ricercaLiberaBP.openIterator(context);
+		
+		context.addHookForward("close",this,"doDefault");
+		return context.addBusinessProcess(ricercaLiberaBP);
+	}catch(Throwable ex){
+		return handleException(context, ex);
+	}
+}
+
 }
