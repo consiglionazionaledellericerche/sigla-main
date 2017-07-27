@@ -82,13 +82,14 @@ public Liquidazione_definitiva_ivaVBulk createNewBulk(ActionContext context) thr
 
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 
-	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[4];
+	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[5];
 	int i = 0;
 
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.ristampa");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.reset");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.saveRipartFin");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.consultazionedettaglio");
 	
 	return toolbar;
 }
@@ -227,5 +228,9 @@ public boolean isTabVariazioneAssociateVisible() {
 public boolean isTabMandatoRigheAssociateVisible() {
 	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
 	return this.isUoEnte() && model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && model.isRegistroStampato(model.getMese()); 
+}
+public boolean isConsultaDettFattureButtonHidden(){
+	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
+	return !(model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null );
 }
 }
