@@ -320,4 +320,15 @@
 	<init-param name="componentSessionName" value="CNRDOCAMM00_EJB_FatturaPassivaComponentSession" />
 	<init-param name="defaultAction" value="ElaboraNumUnicoFatturaPAction" />
   </businessProcess>
+   <action 
+      path="/ConsFatturaGaeSplitAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <businessProcess
+      name="ConsFatturaGaeSplitBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+    	<forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.consultazioni.bulk.VConsFatturaGaeSplitBulk"/>
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+	    <init-param name="defaultAction" value="ConsFatturaGaeSplitAction" />
+  </businessProcess>
+
 </action-mappings>
