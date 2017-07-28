@@ -903,8 +903,10 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 				List lista = home.fetchAll(sql);
 				if ((scds.getCdr()!=null && !scds.getCdr().equalsByPrimaryKey(findCdrEnte(userContext))) || scds.getCdr()==null)
 					if (lista.size()>=1)
-						if (scds.getCdr()==null || scds.getCdr().getCd_centro_responsabilita()==null || lista.contains(scds.getCdr()))
-							scds.setCdr((CdrBulk)lista.get(0));
+						if (scds.getCdr()==null || scds.getCdr().getCd_centro_responsabilita()==null || lista.contains(scds.getCdr())){
+							if (!lista.contains(scds.getCdr()))
+								scds.setCdr((CdrBulk)lista.get(0));
+						}
 						else
 							if (scds.getCdr()!=null && !scds.getCdr().getUnita_padre().equalsByPrimaryKey(scds.getUo()))
 								scds.setCdr(null);

@@ -295,6 +295,16 @@
 		nullable="false"
 		readonlyProperty="ROImportiDiaria"								
 		/>	
+	<fieldProperty
+		name="allegatiDocumentale"
+		property="allegatiDocumentale"
+		inputType="BUTTON"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnView="true"
+		img="img/import24.gif"
+		href="javascript:doVisualizzaGiustificativiCollegati()"
+		label="Visualizza Giustificativi Allegati" />
 		
 	/* Dettaglio spesa */	
 	<formFieldProperty name="dt_inizio_tappa" />
@@ -306,6 +316,7 @@
 	<formFieldProperty name="localita_spostamento" />	
 	<formFieldProperty name="id_giustificativo" />
 	<formFieldProperty name="ds_giustificativo" />	
+	<formFieldProperty name="allegatiDocumentale" />	
 	<formFieldProperty name="ds_no_giustificativo" />
 	<formFieldProperty name="im_spesa_euro" />	
 	<formFieldProperty name="im_spesa_max" />

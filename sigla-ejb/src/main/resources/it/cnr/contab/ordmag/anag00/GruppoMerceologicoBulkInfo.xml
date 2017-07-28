@@ -34,6 +34,8 @@
 		name="searchtool">
 		<formFieldProperty
 			name="cdGruppoMerceologico" />
+		<formFieldProperty
+			name="dsGruppoMerceologico" />
 	</form>
 	<formFieldProperty
 		name="cdGruppoMerceologico" />
