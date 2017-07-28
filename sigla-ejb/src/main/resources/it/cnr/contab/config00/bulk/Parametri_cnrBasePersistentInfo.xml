@@ -272,6 +272,18 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
 		<columnMapping
+			columnName="LIVELLO_ECO"
+			propertyName="livello_eco"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO_PAT"
+			propertyName="livello_pat"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
 			columnName="FL_PDG_CODLAST"
 			propertyName="fl_pdg_codlast"
 			sqlTypeName="CHAR"
@@ -382,4 +394,9 @@
 		name="fl_pdg_contrattazione"/>
 	<persistentProperty
 		name="fl_pdg_quadra_fonti_esterne"/>
+	<persistentProperty
+		name="livello_eco" />
+	<persistentProperty
+		name="livello_pat" />
+		
 </SQLPersistentInfo>

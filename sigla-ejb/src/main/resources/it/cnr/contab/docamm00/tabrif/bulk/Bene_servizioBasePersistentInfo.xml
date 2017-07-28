@@ -59,7 +59,7 @@
 			columnName="TIPO_GESTIONE"
 			propertyName="tipoGestione"
 			sqlTypeName="CHAR"
-			columnSize="1"
+			columnSize="3"
 			nullable="false" />
 		<columnMapping
 			columnName="NOTE"

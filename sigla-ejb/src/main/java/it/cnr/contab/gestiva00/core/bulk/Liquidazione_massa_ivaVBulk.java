@@ -1,11 +1,18 @@
 package it.cnr.contab.gestiva00.core.bulk;
 
+import java.math.BigDecimal;
+import java.util.Collection;
+
+import it.cnr.jada.bulk.BulkList;
+
 /**
  * Insert the type's description here.
  * Creation date: (2/24/2003 10:54:31 AM)
  * @author: Roberto Peli
  */
 public class Liquidazione_massa_ivaVBulk extends Liquidazione_definitiva_ivaVBulk {
+	private BulkList liquidazioniDefinitive;
+
 /**
  * Liquidazione_massa_ivaVBulk constructor comment.
  */
@@ -27,5 +34,11 @@ public boolean isDBManagementRequired() {
 }
 public boolean isRistampabile() {
 	return false;
+}
+public BulkList getLiquidazioniDefinitive() {
+	return liquidazioniDefinitive;
+}
+public void setLiquidazioniDefinitive(BulkList liquidazioniDefinitive) {
+	this.liquidazioniDefinitive = liquidazioniDefinitive;
 }
 }
