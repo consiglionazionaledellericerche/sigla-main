@@ -7,14 +7,10 @@ import javax.persistence.PersistenceException;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP;
@@ -63,6 +59,25 @@ public Forward doBringBackSearchFindUnitaMisura(ActionContext context,
 		return handleException(context,e);
 	}
 }
+public Forward doBringBackSearchFindNumerazioneOrd(ActionContext context,
+		OrdineAcqBulk ordine,
+		NumerazioneOrdBulk num) 
+		throws java.rmi.RemoteException {
+
+		ordine.setNumerazioneOrd(num);
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+			
+		try{
+			if (num!=null) {
+				ordine.setPercProrata(num.getPercProrata());
+			}
+			return context.findDefaultForward();
+
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
+
 public Forward doBlankSearchFindBeneServizio(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
 
     try {
