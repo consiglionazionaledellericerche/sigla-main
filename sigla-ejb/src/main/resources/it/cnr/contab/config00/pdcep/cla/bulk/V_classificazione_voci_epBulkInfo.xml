@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+          longDescription="Classificazione Voci E/P">
+
+	<fieldProperty
+		name="cd_livello_last"
+		property="cd_livello_last"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Ultimo Livello" />
+
+	<fieldProperty
+		name="cd_classificazione"
+		property="cd_classificazione"
+		inputType="TEXT"
+		inputSize="35"
+		maxLength="35"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Codice Classificazione" />
+
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Descrizione" />
+
+	<fieldProperty
+		name="nr_livello"
+		property="nr_livello"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Numero Livello" />
+
+	<formFieldProperty
+		name="cd_livello_last" />
+	<formFieldProperty
+		name="cd_classificazione" />
+	<formFieldProperty
+		name="ds_classificazione" />
+	<formFieldProperty
+		name="nr_livello" />
+
+	<findFieldProperty
+		name="cd_livello_last" />
+	<findFieldProperty
+		name="cd_classificazione" />
+	<findFieldProperty
+		name="ds_classificazione" />
+	<findFieldProperty
+		name="nr_livello" />
+
+	<columnFieldProperty
+		name="cd_classificazione" />
+	<columnFieldProperty
+		name="ds_classificazione" />
+	<columnFieldProperty
+		name="nr_livello" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_classificazione"
+		    inputSize="20" />
+		<formFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</form>
+
+	<form
+		name="searchtool_codlast" >
+		<formFieldProperty
+			name="cd_livello_last"
+		    inputSize="5" 
+		    enabledOnSearch="true" />
+		<formFieldProperty
+			name="ds_classificazione" 
+			inputType="ROTEXT"
+		    inputSize="40" 
+			enabledOnSearch="false" />
+	</form>
+	
+	<columnSet
+        name="searchtool">
+		<columnFieldProperty
+		    inputSize="20"
+			name="cd_classificazione" />
+		<columnFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</columnSet>        	
+
+	<columnSet
+        name="searchtool_codlast">
+		<columnFieldProperty
+		    inputSize="5"
+			name="cd_livello_last"
+			label="Voce" />
+		<columnFieldProperty
+		    inputSize="20"
+			name="cd_classificazione" />
+		<columnFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</columnSet> 
+	
+	<freeSearchSet name="searchtool">
+		<findFieldProperty
+		    inputSize="20"
+			name="cd_classificazione" />
+		<findFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</freeSearchSet>
+	
+	<freeSearchSet name="searchtool_codlast">
+		<findFieldProperty
+			name="cd_livello_last"
+		    inputSize="5" />
+		<findFieldProperty
+		    inputSize="20"
+			name="cd_classificazione" />
+		<findFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</freeSearchSet>
+
+	<form
+		name="searchtool_1" >
+		<formFieldProperty
+			name="cd_livello1"
+		    inputSize="4" 
+		    label="Liv 1"/>
+		<formFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="20" />
+	</form>
+	
+	<columnSet
+        name="searchtool_1">
+		<columnFieldProperty
+		    inputSize="20"
+			name="cd_livello1" 
+			label="Liv 1"/>
+		<columnFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</columnSet>        	
+
+	<freeSearchSet name="searchtool_1">
+		<findFieldProperty
+		    inputSize="20"
+			name="cd_livello1" 
+			label="Liv 1"/>
+		<findFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</freeSearchSet>
+	
+</bulkInfo>

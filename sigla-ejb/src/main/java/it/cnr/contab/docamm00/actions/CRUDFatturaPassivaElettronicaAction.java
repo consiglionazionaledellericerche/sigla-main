@@ -26,11 +26,13 @@ import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.SelezionatoreListaAction;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
+
 import javax.ejb.RemoveException;
 
 public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
@@ -240,8 +242,13 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				for(Iterator i=bulk.getDocEleIVAColl().iterator();i.hasNext();)
 			    {
 			      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
-			      if (rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
-			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' o 'Split Payment', il documento deve essere rifiutato!");	
+			      if (!bulk.isAttivoSplitPayment() && rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
+			    	  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' "
+			    	  		+ "o 'Split Payment'"
+			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
+			    	  			" per documenti con data emissione antecedente al "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
+			    	  		+ ". Il documento deve essere rifiutato!");	
 			    	  return context.findDefaultForward();			    	  
 			      }
 			      if (rigaEle.getImponibileImporto()!=null) 
@@ -254,6 +261,25 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					fatturaPassivaElettronicaBP.setMessage("Prima di procedere verificare il totale del documento!");
 					return context.findDefaultForward();
 				}
+			}
+			if (bulk.isAttivoSplitPayment()) {
+				if (!bulk.isDocumentoSplitPayment() && !Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO.equals(bulk.getTipoDocumentoSIGLA())) {
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+					fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
+			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
+			    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
+							+ ". Il documento deve essere rifiutato!");	
+					return context.findDefaultForward();
+				}
+//				else if ((bulk.getDocEleTributiColl()!=null && !bulk.getDocEleTributiColl().isEmpty()) 
+//						||(bulk.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 
+//						(bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
+//								bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name()))))
+//						{
+//						fatturaPassivaElettronicaBP.setMessage("La registrazione di documenti Split Payment legati a compensi è al momento sospesa "
+//								+ "in attesa di adeguamento alla relativa normativa!");	
+//						return context.findDefaultForward(); 
+//				}
 			}
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 			message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
@@ -319,6 +345,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					Fattura_passivaBulk fatturaPassivaBulk = ((FatturaElettronicaPassivaComponentSession)fatturaPassivaElettronicaBP.createComponentSession()).
 						cercaFatturaPassivaForNota(context.getUserContext(), bulk);
 					nbp.edit(context, fatturaPassivaBulk); 
+					nbp.setFromFatturaElettronica(Boolean.TRUE);
 					CRUDFatturaPassivaBP notaBp = null;
 					if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO))
 						notaBp = (CRUDFatturaPassivaBP)action.doGeneraNotaDiCredito(context);

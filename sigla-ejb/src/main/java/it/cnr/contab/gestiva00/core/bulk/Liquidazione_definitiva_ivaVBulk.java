@@ -1,11 +1,18 @@
 package it.cnr.contab.gestiva00.core.bulk;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.GregorianCalendar;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.*;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 /**
  * Insert the type's description here.
@@ -15,8 +22,11 @@ import it.cnr.jada.util.*;
 public class Liquidazione_definitiva_ivaVBulk extends Liquidazione_ivaVBulk {
   
 	private java.util.Collection prospetti_stampati;
+	private BulkList ripartizione_finanziaria;
+	private BulkList variazioni_associate;
+	private BulkList mandato_righe_associate;
 	private boolean Liquidazione_commerciale = false;
-	
+	private java.util.Collection liquidazioniProvvisorie; 
 /**
  * Filtro_ricerca_obbligazioniVBulk constructor comment.
  */
@@ -198,5 +208,101 @@ public boolean isLiquidazione_commerciale() {
 
 public void setLiquidazione_commerciale(boolean liquidazione_commerciale) {
 	Liquidazione_commerciale = liquidazione_commerciale;
+}
+
+public BulkList getRipartizione_finanziaria() {
+	return ripartizione_finanziaria;
+}
+
+public void setRipartizione_finanziaria(BulkList ripartizione_finanziaria) {
+	this.ripartizione_finanziaria = ripartizione_finanziaria;
+}
+
+public BulkList getVariazioni_associate() {
+	return variazioni_associate;
+}
+
+public void setVariazioni_associate(BulkList variazioni_associate) {
+	this.variazioni_associate = variazioni_associate;
+}
+
+public BulkList getMandato_righe_associate() {
+	return mandato_righe_associate;
+}
+
+public void setMandato_righe_associate(BulkList mandato_righe_associate) {
+	this.mandato_righe_associate = mandato_righe_associate;
+}
+public int addToRipartizione_finanziaria(Liquidazione_iva_ripart_finBulk dett) {
+	dett.setCd_cds( this.getCd_cds() );
+	dett.setEsercizio( this.getEsercizio() );
+	dett.setCd_unita_organizzativa( this.getCd_unita_organizzativa() );
+	dett.setTipo_liquidazione( this.getTipoSezionaleFlag() );
+	dett.setDt_inizio( this.getData_da());
+	dett.setDt_fine(this.getData_a());
+	ripartizione_finanziaria.add(dett);
+	return ripartizione_finanziaria.size()-1;
+}
+
+public Liquidazione_iva_ripart_finBulk removeFromRipartizione_finanziaria(int index) {
+	Liquidazione_iva_ripart_finBulk dett = (Liquidazione_iva_ripart_finBulk)ripartizione_finanziaria.remove(index);
+	return dett;
+}
+
+public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
+	return new it.cnr.jada.bulk.BulkCollection[] {ripartizione_finanziaria};
+}
+
+public boolean isRegistroStampato(String mese) { 
+	return Optional.ofNullable(this.getProspetti_stampati())
+			.map(e->
+				e.stream().filter(x->{
+					Calendar cal = new GregorianCalendar();
+					cal.setTime(((Liquidazione_ivaBulk)x).getDt_inizio());
+					return cal.get(Calendar.MONTH)==(Integer)this.getMesi_int().get(mese)-1;
+				})
+				.findFirst()
+				.isPresent()
+			)
+			.orElse(Boolean.FALSE);
+}
+public java.util.Collection getLiquidazioniProvvisorie() {
+	return liquidazioniProvvisorie;
+}
+public void setLiquidazioniProvvisorie(java.util.Collection liquidazioniProvvisorie) {
+	this.liquidazioniProvvisorie = liquidazioniProvvisorie;
+}
+public Liquidazione_ivaBulk getLastLiquidazioneProvvisoria() {
+	if (this.getLiquidazioniProvvisorie()!=null && !this.getLiquidazioniProvvisorie().isEmpty())
+		return (Liquidazione_ivaBulk)Collections.max(this.getLiquidazioniProvvisorie(), Comparator.comparingLong(i -> ((Liquidazione_ivaBulk)i).getReport_id()));
+	return null;
+}
+public BigDecimal getDebitoLastLiquidazioneProvvisoria() {
+	Liquidazione_ivaBulk last = getLastLiquidazioneProvvisoria();
+	if (last!=null && last.getIva_da_versare()!=null && last.getIva_da_versare().compareTo(BigDecimal.ZERO)<0)
+		return last.getIva_da_versare().abs();
+	return BigDecimal.ZERO;
+}
+public Timestamp getDataAggiornamentoLastLiquidazioneProvvisoria() {
+	Liquidazione_ivaBulk last = getLastLiquidazioneProvvisoria();
+	if (last!=null)
+		return last.getDacr();
+	return null;
+}
+public BigDecimal getTotaleRipartizioneFinanziaria() {
+	Stream<Liquidazione_iva_ripart_finBulk> lis = getRipartizione_finanziaria().stream().map(Liquidazione_iva_ripart_finBulk.class::cast);
+	return lis.map(Liquidazione_iva_ripart_finBulk::getIm_variazione).reduce(BigDecimal.ZERO, BigDecimal::add);
+}
+public String getNextMeseForLiquidazioneDefinitiva() { 
+	Stream<Liquidazione_ivaBulk> lis = 
+			Optional.ofNullable(this.getProspetti_stampati())
+				.map(e->e.stream().map(Liquidazione_ivaBulk.class::cast))
+				.orElse(Stream.of(Stampa_registri_ivaVBulk.DICEMBRE));
+	return lis.max((e1,e2)->e1.getDt_inizio().compareTo(e2.getDt_inizio()))
+			.map(x->{
+				Calendar cal = new GregorianCalendar();
+				cal.setTime(x.getDt_inizio());
+				return (String)this.getInt_mesi().get(cal.get(Calendar.MONTH)+2);
+			}).get();
 }
 }

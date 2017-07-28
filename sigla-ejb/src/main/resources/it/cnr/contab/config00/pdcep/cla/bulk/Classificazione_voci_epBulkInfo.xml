@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="id_classificazione"
+		property="id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Identificativo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="Gestione ECO/PAT" />
+	<fieldProperty
+		name="cd_livello1"
+		property="cd_livello1"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Primo Livello" />
+	<fieldProperty
+		name="cd_livello2"
+		property="cd_livello2"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Secondo Livello" />
+	<fieldProperty
+		name="cd_livello3"
+		property="cd_livello3"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Terzo Livello" />
+	<fieldProperty
+		name="cd_livello4"
+		property="cd_livello4"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Quarto Livello" />
+	<fieldProperty
+		name="cd_livello5"
+		property="cd_livello5"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Quinto Livello" />
+	<fieldProperty
+		name="cd_livello6"
+		property="cd_livello6"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		label="Sesto Livello" />
+	<fieldProperty
+		name="cd_livello7"
+		property="cd_livello7"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		label="Settimo Livello" />
+	<fieldProperty
+		name="cd_livello8"
+		property="cd_livello8"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		label="Ottavo Livello" />	
+	<fieldProperty
+		name="id_class_padre"
+		property="classificazione_voci_ep.id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Identificativo Padre" />
+	<fieldProperty
+		name="ds_classificazione_vis"
+		property="ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre1"
+		property="classificazione_voci_ep.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre2"
+		property="classificazione_voci_ep.classificazione_voci_ep.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre3"
+		property="classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre4"
+		property="classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre5"
+		property="classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre6"
+		property="classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre7"
+		property="classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.classificazione_voci_ep.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+		
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="fl_mastrino"
+		property="fl_mastrino"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Mastrino" 
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		nullable="false" />
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="cd_livello1" />
+	<formFieldProperty
+		name="cd_livello2" />
+	<formFieldProperty
+		name="cd_livello3" />
+	<formFieldProperty
+		name="cd_livello4" />
+	<formFieldProperty
+		name="cd_livello5" />
+	<formFieldProperty
+		name="cd_livello6" />
+	<formFieldProperty
+		name="cd_livello7" />
+	<formFieldProperty
+		name="cd_livello8" />
+	<formFieldProperty
+		name="ds_classificazione" />
+	<formFieldProperty
+		name="id_class_padre" />
+	<formFieldProperty
+		name="ds_classificazione_vis" />
+	<formFieldProperty
+		name="ds_class_padre_pre1" />
+	<formFieldProperty
+		name="ds_class_padre_pre2" />
+	<formFieldProperty
+		name="ds_class_padre_pre3" />
+	<formFieldProperty
+		name="ds_class_padre_pre4" />
+	<formFieldProperty
+		name="ds_class_padre_pre5" />
+	<formFieldProperty
+		name="ds_class_padre_pre6" />
+	<formFieldProperty
+		name="ds_class_padre_pre7" />
+	<formFieldProperty
+		name="fl_mastrino" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_livello1" />
+	<findFieldProperty
+		name="cd_livello1" />
+	<findFieldProperty
+		name="cd_livello2" />
+	<findFieldProperty
+		name="cd_livello3" />
+	<findFieldProperty
+		name="cd_livello4" />
+	<findFieldProperty
+		name="cd_livello5" />
+	<findFieldProperty
+		name="cd_livello6" />
+	<findFieldProperty
+		name="cd_livello7" />
+	<findFieldProperty
+		name="cd_livello8" />	
+	<findFieldProperty
+		name="ds_classificazione" />
+	
+	<columnFieldProperty
+		name="cd_livello1" />
+	<columnFieldProperty
+		name="cd_livello2" />
+	<columnFieldProperty
+		name="cd_livello3" />
+	<columnFieldProperty
+		name="cd_livello4" />
+	<columnFieldProperty
+		name="cd_livello5" />
+	<columnFieldProperty
+		name="cd_livello6" />
+	<columnFieldProperty
+		name="cd_livello7" />
+	<columnFieldProperty
+		name="cd_livello8" />
+	<columnFieldProperty
+		name="ds_classificazione" />
+	
+</bulkInfo>

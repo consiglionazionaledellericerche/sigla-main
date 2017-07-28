@@ -37,6 +37,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -53,6 +54,7 @@ import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteTyp
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -77,6 +79,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			OggettoBulk oggettobulk) throws ComponentException {
 		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) super.inizializzaBulkPerModifica(usercontext, oggettobulk);
 		try {
+			documentoEleTestata.setAttivoSplitPayment(Utility.createFatturaPassivaComponentSession().isAttivoSplitPayment(usercontext, documentoEleTestata.getDataDocumento()));
 			documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
 					getHome(usercontext, DocumentoEleLineaBulk.class).find(new DocumentoEleLineaBulk(documentoEleTestata))));
 			documentoEleTestata.setDocEleIVAColl(new BulkList<DocumentoEleIvaBulk>(
@@ -92,7 +95,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			documentoEleTestata.setDocEleDdtColl(new BulkList<DocumentoEleDdtBulk>(
 					getHome(usercontext, DocumentoEleDdtBulk.class).find(new DocumentoEleDdtBulk(documentoEleTestata))));
 			getHomeCache(usercontext).fetchAll(usercontext);
-		} catch (PersistencyException e) {
+		} catch (RemoteException | PersistencyException e) {
 			throw handleException(e);
 		}
 		return documentoEleTestata;

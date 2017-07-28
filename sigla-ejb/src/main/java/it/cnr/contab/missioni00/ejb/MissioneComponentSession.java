@@ -9,6 +9,7 @@ import javax.ejb.Remote;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -63,4 +64,5 @@ public DivisaBulk recuperoDivisa(UserContext userContext, Long nazione, String g
 public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
 public DivisaBulk getDivisaDefault(UserContext userContext) throws ComponentException,java.rmi.RemoteException, it.cnr.jada.persistency.PersistencyException;
 public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
+public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 }

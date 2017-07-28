@@ -147,5 +147,10 @@
 	  <td><% bp.getController().writeFormInput( out, "fl_trovato"); %></td>
 	</tr>	
 
+	<tr>
+	  <td><% bp.getController().writeFormLabel( out, "fl_missioni"); %></td>
+	  <td><% bp.getController().writeFormInput( out, "fl_missioni"); %></td>
+	</tr>	
+
 <%	bp.closeFormWindow(pageContext); %>
 </body>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcep.cla.bulk.V_classificazione_voci_epBulk"
+	homeClassName="it.cnr.contab.config00.pdcep.cla.bulk.V_classificazione_voci_epHome">
+
+	<defaultColumnMap
+		tableName="V_CLASSIFICAZIONE_VOCI_EP">
+		<columnMapping
+			columnName="CD_LIVELLO_LAST"
+			propertyName="cd_livello_last"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_LIVELLO"
+			propertyName="nr_livello"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty name="cd_livello_last"/>
+	<persistentProperty name="cd_classificazione"/>
+	<persistentProperty name="nr_livello"/>
+</SQLPersistentInfo>
