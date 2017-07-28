@@ -12,6 +12,13 @@ import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.jada.util.OrderedHashtable;
 public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
+	public final static String STATO_INSERITA = "INS";
+	public final static String STATO_EVASA = "EVA";
+	public final static String STATO_ANNULLATA = "ANN";
+
+	public final static String STATO_FATT_NON_ASSOCIATA = "INS";
+	public final static String STATO_FATT_ASSOCIATA_PARZIALMENTE = "ASP";
+	public final static String STATO_FATT_ASSOCIATA_TOTALMENTE = "ASS";
 	/**
 	 * [ORDINE_ACQ_RIGA Riga Ordine d'Acquisto]
 	 **/
@@ -50,6 +57,20 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 		TIPO_CONSEGNA.put(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO,"Transito");
 		TIPO_CONSEGNA.put(Bene_servizioBulk.TIPO_CONSEGNA_MAGAZZINO,"Magazzino");
 		TIPO_CONSEGNA.put(Bene_servizioBulk.TIPO_CONSEGNA_FUORI_MAGAZZINO,"Fuori Magazzino");
+	}
+	public final static Dictionary STATO;
+	static{
+		STATO = new it.cnr.jada.util.OrderedHashtable();
+		STATO.put(STATO_INSERITA,"Inserita");
+		STATO.put(STATO_EVASA,"Evasa");
+		STATO.put(STATO_ANNULLATA,"Annullata");
+	}
+	public final static Dictionary STATO_FATT;
+	static{
+		STATO_FATT = new it.cnr.jada.util.OrderedHashtable();
+		STATO_FATT.put(STATO_FATT_NON_ASSOCIATA,"Non Associata");
+		STATO_FATT.put(STATO_FATT_ASSOCIATA_PARZIALMENTE,"Associata Parzialmente");
+		STATO_FATT.put(STATO_FATT_ASSOCIATA_TOTALMENTE,"Associata Totalmente");
 	}
 	public OrdineAcqConsegnaBulk() {
 		super();
@@ -402,6 +423,12 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	}
 	public Dictionary getTipoConsegnaKeys() {
 		return TIPO_CONSEGNA;
+	}
+	public Dictionary getStatoKeys() {
+		return STATO;
+	}
+	public Dictionary getStatoFattKeys() {
+		return STATO_FATT;
 	}
 	public Dictionary getTipoConsegnaKeysForSearch() {
 
