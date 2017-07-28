@@ -123,6 +123,15 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="Data Cancellazione" />
+	<fieldProperty
+		name="percProrata"
+		property="percProrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="true"
+		label="% Prorata" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -148,6 +157,8 @@
 		name="dataProgressivo" />
 	<formFieldProperty
 		name="dtCancellazione" />
+	<formFieldProperty
+		name="percProrata" />
 	<findFieldProperty
 		name="cdUnitaOperativa" />
 	<findFieldProperty
@@ -180,6 +191,8 @@
 		name="dataProgressivo" />
 	<columnFieldProperty
 		name="cdTipoSezionale" />
+	<columnFieldProperty
+		name="percProrata" />
 	<columnFieldProperty
 		name="dsTipoSezionale" />
 	<columnFieldProperty

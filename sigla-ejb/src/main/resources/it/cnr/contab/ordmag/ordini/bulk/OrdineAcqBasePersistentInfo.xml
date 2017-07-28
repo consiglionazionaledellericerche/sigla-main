@@ -181,6 +181,19 @@
 			columnSize="15"
 			nullable="true" />
 		<columnMapping
+			columnName="TI_ISTITUZ_COMMERC"
+			propertyName="ti_istituz_commerc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="PERC_PRORATA"
+			propertyName="percProrata"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
 			sqlTypeName="TIMESTAMP"
@@ -275,6 +288,10 @@
 		name="cdCig" />
 	<persistentProperty
 		name="cdCup" />
+	<persistentProperty
+		name="percProrata" />
+	<persistentProperty
+		name="ti_istituz_commerc" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty

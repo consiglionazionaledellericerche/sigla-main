@@ -48,6 +48,7 @@
 		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Esercizio" />
 	<fieldProperty
@@ -69,6 +70,7 @@
 		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Numero" />
 	<fieldProperty
@@ -79,6 +81,7 @@
 		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Data Ordine" />
 	<fieldProperty
 		name="stato"
@@ -137,8 +140,32 @@
 		label="Cambio"
 		nullable="false"		
 		/>
-
-
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		readonlyProperty="notAbledToModifyTipoIstCom"
+		label="Tipo"
+		nullable="false"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeys" />
+	<fieldProperty
+		name="ti_istituz_commercSearch"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeysForSearch" />
+	<fieldProperty
+		name="percProrata"
+		property="percProrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="true"
+		label="% Prorata" />
 	<fieldProperty
 		name="findFornitore"
 		property="fornitore"
@@ -594,6 +621,10 @@
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
+		name="ti_istituz_commerc" />
+	<formFieldProperty
+		name="ti_istituz_commercSearch" />
+	<formFieldProperty
 		name="numero" />
 	<formFieldProperty
 		name="dataOrdine" />
@@ -678,7 +709,8 @@
 		name="cd_precedente" />
 	<formFieldProperty
 		name="ds_fornitore" />
-
+	<formFieldProperty
+		name="percProrata" />
 	<formFieldProperty
 		name="contoA" />
 	<formFieldProperty
@@ -760,6 +792,11 @@
 		name="cdCup" />
 	<findFieldProperty
 		name="dtCancellazione" />
+	<findFieldProperty name="ti_istituz_commercSearch" />
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
+	<columnFieldProperty
+		name="percProrata" />
 	<columnFieldProperty
 		name="cdCds" />
 	<columnFieldProperty
