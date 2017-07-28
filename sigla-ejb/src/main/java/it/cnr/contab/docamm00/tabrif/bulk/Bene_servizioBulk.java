@@ -24,6 +24,7 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	public final static String SERVIZIO = "S";
 	public final static String BENE = "B";
 
+	public final static String TIPO_SERVIZIO_MANUTENZIONE = "M";
 	public final static String MANUTENZIONE = "S";
 	public final static String MANUTENZIONE_INCREMENTATIVA = "I";
 	public final static String MANUTENZIONE_NON_INCREMENTATIVA = "N";
@@ -61,8 +62,8 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	public final static Dictionary TIPO_SERVIZIO;
 	static{
 		TIPO_SERVIZIO = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_SERVIZIO.put(TIPO_SERVIZIO_MANUTENZIONE,"Manutenzione");
 		TIPO_SERVIZIO.put(SERVIZIO,"Servizio");
-		TIPO_SERVIZIO.put(MANUTENZIONE,"Manutenzione");
 	}
 
 	public final static Dictionary TIPO_MANUTENZIONE;
@@ -125,6 +126,10 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 
 		return BENI_SERVIZI;
 	}
+	public Dictionary getStatoKeys() {
+
+		return statoKeys;
+	}
 	public Dictionary getTipoServizioKeys() {
 
 		return TIPO_SERVIZIO;
@@ -133,7 +138,7 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 
 		return TIPO_MANUTENZIONE;
 	}
-	public Dictionary getTipoConsegnaKeys() {
+	public Dictionary getTipoGestioneKeys() {
 
 		return TIPO_CONSEGNA;
 	}
@@ -161,6 +166,25 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 		//for (java.util.Iterator i = childrenController.values().iterator();i.hasNext();)	
 		//this.get
 
+			setFl_gestione_magazzino(null);
+			setFl_gestione_inventario(null);
+			setFl_obb_intrastat_acq(TRUE);	
+			setFl_obb_intrastat_ven(TRUE);	
+			setFl_valido(null);
+			setFl_autofattura(null);	
+			setFl_bollo(null);	
+		return super.initialize(bp,context);
+	}
+	/**
+	 * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
+	 * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
+	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e può contenere
+	 * inizializzazioni comuni ai 4 stati del <code>FormController</code>
+	 */
+	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+
+		Bene_servizioBulk bulk = (Bene_servizioBulk)super.initializeForInsert(bp,context);
+
 		if (getFl_gestione_magazzino()==null)
 			setFl_gestione_magazzino(FALSE);
 		if (getFl_gestione_inventario()==null)
@@ -176,19 +200,7 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 		if (getFl_bollo()==null)
 			setFl_bollo(FALSE);	
 
-		return super.initialize(bp,context);
-	}
-	/**
-	 * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
-	 * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
-	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e può contenere
-	 * inizializzazioni comuni ai 4 stati del <code>FormController</code>
-	 */
-	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
-
-		Bene_servizioBulk bulk = (Bene_servizioBulk)super.initializeForInsert(bp,context);
-
-		setTi_bene_servizio(SERVIZIO);
+		setTi_bene_servizio(BENE);
 
 		return bulk;
 	}

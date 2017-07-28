@@ -234,7 +234,15 @@
 		enabledOnSearch="false"
 		enabledOnEdit="true"
 		enabledOnInsert="true" />	
-		
+	<fieldProperty
+		name="fl_split_payment"
+		property="fl_split_payment"
+		inputType="CHECKBOX"
+		label="Split payment"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />	
+			
 	<formFieldProperty
 		name="cd_trattamento"
 		command="doCaricaIntervalli" />
@@ -264,8 +272,8 @@
 	<formFieldProperty name="fl_tipo_prestazione_obbl" />
 	<formFieldProperty name="fl_agevolazioni_rientro_lav" />	
 	<formFieldProperty name="fl_solo_inail_ente" />	
+	<formFieldProperty name="fl_split_payment" />	
 	
-
 	<columnFieldProperty name="cd_trattamento" />
 	<columnFieldProperty name="ds_ti_trattamento" />
 	<columnFieldProperty name="dt_inizio_validita" />
@@ -291,7 +299,8 @@
 	<columnFieldProperty name="fl_tipo_prestazione_obbl" />		
 	<columnFieldProperty name="fl_agevolazioni_rientro_lav" />					
 	<columnFieldProperty name="fl_solo_inail_ente" />					
-
+	<columnFieldProperty name="fl_split_payment" />
+	
 	<columnSet name="cd_ds_trattamento">
 		<columnFieldProperty name="cd_trattamento" />
 		<columnFieldProperty name="ds_ti_trattamento" />
@@ -323,6 +332,7 @@
 	<findFieldProperty name="fl_pignorato_obbl" />	
 	<findFieldProperty name="fl_tipo_prestazione_obbl" />	
 	<findFieldProperty name="fl_agevolazioni_rientro_lav" />	
-	<findFieldProperty name="fl_solo_inail_ente" />	
+	<findFieldProperty name="fl_solo_inail_ente" />
+	<findFieldProperty name="fl_split_payment" />	
 		
 </bulkInfo>
