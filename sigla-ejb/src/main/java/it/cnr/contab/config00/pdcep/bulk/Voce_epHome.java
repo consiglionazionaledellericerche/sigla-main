@@ -21,7 +21,10 @@ public class Voce_epHome extends BulkHome {
 	public static String SEZIONE_DARE = "D";
 	public static String SEZIONE_AVERE = "A";
 	public static String SEZIONE_BIFASE = "B";
-	
+
+	public static String ECONOMICA = "ECO";
+	public static String PATRIMONIALE = "PAT";
+
 	private static it.cnr.jada.util.OrderedHashtable gruppiKeys;
 protected Voce_epHome(Class clazz,java.sql.Connection connection) {
 	super(clazz,connection);

@@ -812,7 +812,7 @@ public Forward basicDoAssociaDettagli(ActionContext context)
  * testata della fattura.
  * Richiama a sua volta il metodo cercaCambio dalla component.
  */
-private void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fattura_passivaBulk fattura)
+protected void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fattura_passivaBulk fattura)
 	throws it.cnr.jada.comp.ComponentException {
 
 	try {
@@ -2081,6 +2081,8 @@ public Forward doChiusuraNotaDiCredito(ActionContext context) {
 
 	try {
 		it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess();
+		if (bp instanceof CRUDFatturaPassivaBP && ((CRUDFatturaPassivaBP)bp).isFromFatturaElettronica())
+			return this.doCloseForm(context);
 		bp.edit(context, bp.getModel());
 		return context.findDefaultForward();
 	} catch (BusinessProcessException e) {
@@ -3078,6 +3080,16 @@ public Forward doOnFlSanMarinoConIVAChange(ActionContext context) {
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
+			if (fattura.isGestione_doc_ele() && 
+				(fattura.getDt_fattura_fornitore() != null &&!(fattura.getDt_fattura_fornitore().compareTo(fattura.getDataInizioFatturaElettronica())<0) )&&
+				!fattura.isElettronica() &&
+				!fattura.isEstera() &&
+				!fattura.isSanMarinoSenzaIVA()&&
+				!fattura.isSanMarinoConIVA()&&
+				!fattura.isBollaDoganale()){
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+					throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+			}
 			if (Boolean.TRUE.equals(fattura.getFl_san_marino_con_iva())) {
 				fattura.setFl_intra_ue(Boolean.FALSE);
 				fattura.setFl_extra_ue(Boolean.FALSE);
@@ -3170,6 +3182,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
 				if (fattura.isCommerciale()) {
 					fattura.setFl_autofattura(Boolean.TRUE);
+					fattura.setFl_split_payment(Boolean.FALSE);
 					//fattura.setAutoFatturaNeeded(true);
 				}
 			} else {
@@ -5184,6 +5197,23 @@ public Forward doDisassociaLettera(ActionContext context) {
 		return context.findDefaultForward();
 	} catch(Throwable e) {
 		return handleException(context,e);
+	}
+}
+public Forward doOnFlSplitPaymentChange(ActionContext context) {
+	try {
+		fillModel( context );		
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+		
+		if (fattura.getFl_split_payment()!=null &&  fattura.getFl_split_payment() && !fattura.isGestioneSplitPayment() && fattura.getDt_fattura_fornitore() != null) {
+			fattura.setFl_split_payment(Boolean.FALSE);
+			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+			throw new ValidationException("Non è possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(fattura.getDataInizioSplitPayment()) + "!");
+		}
+		basicDoOnIstituzionaleCommercialeChange(context, fattura);
+		return context.findDefaultForward();
+	} catch (Throwable t) {
+		return handleException(context, t);
 	}
 }
 }

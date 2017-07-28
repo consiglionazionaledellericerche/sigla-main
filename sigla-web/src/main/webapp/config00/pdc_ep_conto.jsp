@@ -8,6 +8,7 @@
 		import="it.cnr.jada.util.jsp.*,
 	        it.cnr.jada.action.*,
 	        java.util.*, 
+	        it.cnr.contab.config00.bp.*,
 	        it.cnr.jada.util.action.*"
 %>
 
@@ -22,10 +23,11 @@
 <title>Gestione Piano dei Conti Econ./Patr. - Conto</title>
 <body class="Form">
 
-<% CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);
+<% CRUDContoBP bp = (CRUDContoBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
 
 	<table class="Panel">
+	<% if (!bp.isFlNuovoPdg()){%>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
 	<td><% bp.getController().writeFormInputByStatus( out, "esercizio"); %></td>
@@ -43,6 +45,7 @@
 	<td><% bp.getController().writeFormLabel( out, "ds_gruppo"); %></td>	
 	<td><% bp.getController().writeFormInput( out, "ds_gruppo"); %></td>
 	</tr>
+	<% }%>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_proprio_voce_ep"); %></td>	
 	<td><% bp.getController().writeFormInputByStatus( out, "cd_proprio_voce_ep"); %></td>
@@ -51,10 +54,23 @@
 	<td><% bp.getController().writeFormLabel( out, "ds_voce_ep"); %></td>	
 	<td><% bp.getController().writeFormInput( out, "ds_voce_ep"); %></td>
 	</tr>
+	<% if (!bp.isFlNuovoPdg()){%>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "natura_voce"); %></td>
 	<td><% bp.getController().writeFormInput( out, "natura_voce"); %></td>
 	</tr>
+	<% }else {%>
+	<tr>
+	  <td><% bp.getController().writeFormLabel(out,"find_classificazione_voci_ep");%></td>
+	  <td> 
+	   <TABLE cellspacing="0"> 
+	   <tr> 
+	      <td><% bp.getController().writeFormInput(out,"find_classificazione_voci_ep");%></td> 
+	  </tr>
+	  </TABLE> 
+	  </td> 	  
+	</tr>			
+	<% }%> 
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "riepiloga_a"); %></td>
 	<td><% bp.getController().writeFormInput( out, "riepiloga_a"); %></td>

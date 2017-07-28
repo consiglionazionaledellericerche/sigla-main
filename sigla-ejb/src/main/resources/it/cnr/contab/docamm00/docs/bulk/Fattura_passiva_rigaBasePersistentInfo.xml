@@ -151,7 +151,7 @@
 			columnName="CD_BENE_SERVIZIO"
 			propertyName="cd_bene_servizio"
 			sqlTypeName="VARCHAR"
-			columnSize="10"
+			columnSize="15"
 			nullable="false" />
 		<columnMapping
 			columnName="DUVA"

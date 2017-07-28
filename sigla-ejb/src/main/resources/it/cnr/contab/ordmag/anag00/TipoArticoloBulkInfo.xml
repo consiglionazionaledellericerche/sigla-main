@@ -34,6 +34,8 @@
 		name="searchtool">
 		<formFieldProperty
 			name="cdTipoArticolo" />
+		<formFieldProperty
+			name="dsTipoArticolo" />
 	</form>
 	<formFieldProperty
 		name="cdTipoArticolo" />
