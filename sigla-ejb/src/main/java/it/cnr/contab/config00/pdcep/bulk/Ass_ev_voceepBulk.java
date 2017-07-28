@@ -18,7 +18,7 @@ public class Ass_ev_voceepBulk extends Ass_ev_voceepBase {
 
 	protected Elemento_voceBulk elemento_voce = new Elemento_voceBulk();
 	protected ContoBulk voce_ep = new ContoBulk();
-
+	protected ContoBulk voce_ep_contr = new ContoBulk();
 public Ass_ev_voceepBulk() {
 	super();
 }
@@ -137,5 +137,20 @@ public void validate() throws ValidationException
 		throw new ValidationException( "Il campo ESERCIZIO è obbligatorio." );
 	if ( getEsercizio().toString().length() != 4 )
 		throw new ValidationException( "Il campo ESERCIZIO deve essere di quattro cifre. " );		
+}
+public ContoBulk getVoce_ep_contr() {
+	return voce_ep_contr;
+}
+public void setVoce_ep_contr(ContoBulk voce_ep_contr) {
+	this.voce_ep_contr = voce_ep_contr;
+}
+public java.lang.String getCd_voce_ep_contr() {
+	it.cnr.contab.config00.pdcep.bulk.ContoBulk voce_ep_contr = this.getVoce_ep();
+	if (voce_ep_contr == null)
+		return null;
+	return voce_ep_contr.getCd_voce_ep();
+}
+public void setCd_voce_ep_contr(java.lang.String cd_voce_ep) {
+	this.getVoce_ep_contr().setCd_voce_ep(cd_voce_ep);
 }
 }

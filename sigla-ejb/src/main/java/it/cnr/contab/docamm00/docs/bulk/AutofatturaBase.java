@@ -60,6 +60,9 @@ public class AutofatturaBase extends AutofatturaKey implements Keyed {
 	// TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
 	private java.lang.String ti_istituz_commerc;
 
+	// FL_SPLIT_PAYMENT CHAR(1) NOT NULL
+	private java.lang.Boolean fl_split_payment;
+
 public AutofatturaBase() {
 	super();
 }
@@ -281,5 +284,12 @@ public void setTi_fattura(java.lang.String ti_fattura) {
  */
 public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	this.ti_istituz_commerc = ti_istituz_commerc;
+}
+
+public java.lang.Boolean getFl_split_payment() {
+	return fl_split_payment;
+}
+public void setFl_split_payment(java.lang.Boolean fl_split_payment) {
+	this.fl_split_payment = fl_split_payment;
 }
 }

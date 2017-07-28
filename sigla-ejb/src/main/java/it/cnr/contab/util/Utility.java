@@ -6,30 +6,6 @@
  */
 package it.cnr.contab.util;
 
-import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
-import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
-import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
-import it.cnr.contab.config00.ejb.Parametri_cdsComponentSession;
-import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
-import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
-import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
-import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
-import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
-import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
-import it.cnr.contab.incarichi00.ejb.IncarichiProceduraComponentSession;
-import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
-import it.cnr.contab.incarichi00.ejb.RepertorioLimitiComponentSession;
-import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
-import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
-import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
-import it.cnr.contab.progettiric00.ejb.geco.ProgettoGecoComponentSession;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.ejb.AdminSession;
-import it.cnr.jada.persistency.sql.SQLPersistentInfo;
-import it.cnr.jada.util.ejb.EJBCommonServices;
-
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Set;
@@ -42,6 +18,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AssignableTypeFilter;
+
+import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
+import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.ejb.Parametri_cdsComponentSession;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
+import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
+import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
+import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
+import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
+import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
+import it.cnr.contab.gestiva00.ejb.LiquidIvaInterfComponentSession;
+import it.cnr.contab.incarichi00.ejb.IncarichiProceduraComponentSession;
+import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
+import it.cnr.contab.incarichi00.ejb.RepertorioLimitiComponentSession;
+import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
+import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
+import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
+import it.cnr.contab.progettiric00.ejb.geco.ProgettoGecoComponentSession;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.ejb.AdminSession;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
  * @author mspasiano
@@ -335,11 +336,16 @@ public final class Utility {
 	public static FatturaAttivaSingolaComponentSession createFatturaAttivaSingolaComponentSession()throws EJBException, RemoteException {
 		return (FatturaAttivaSingolaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession", FatturaAttivaSingolaComponentSession.class);		
 	}
+	public static FatturaPassivaComponentSession createFatturaPassivaComponentSession()throws EJBException, RemoteException {
+		return (FatturaPassivaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class);		
+	}
 	/**
 	 * Crea la Local ReversaleComponentSession da usare per effettuare operazioni
 	 */
 	public static DistintaCassiereComponentSession createDistintaCassiereComponentSession() throws javax.ejb.EJBException{
 		return (DistintaCassiereComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_DistintaCassiereComponentSession", DistintaCassiereComponentSession.class);
 	}	
-	
+	public static LiquidIvaInterfComponentSession createLiquidIvaInterfComponentSession() throws javax.ejb.EJBException{
+		return (LiquidIvaInterfComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRGESTIVA00_EJB_LiquidIvaInterfComponentSession", LiquidIvaInterfComponentSession.class);
+	}	
 }

@@ -1,16 +1,26 @@
 package it.cnr.contab.config00.comp;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Lunghezza_chiaviComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.*;
+
 import java.util.List;
 import java.io.Serializable;
 
 import it.cnr.contab.config00.pdcep.bulk.*;
+import it.cnr.contab.config00.pdcep.cla.bulk.V_classificazione_voci_epBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.ejb.*;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
@@ -251,40 +261,46 @@ public OggettoBulk creaConBulk (UserContext userContext,OggettoBulk bulk) throws
 			ContoBulk contoBulk = (ContoBulk) voce_epBulk;							
 			try
 			{
-
+				Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)); 
+				
+				
 				ContoHome contoHome = (ContoHome) getHomeCache(userContext).getHome(contoBulk.getClass());
+				if (!parCnr.getFl_nuovo_pdg().booleanValue()){
 
-
-				if (contoBulk.getCd_proprio_voce_ep() == null || contoBulk.getCd_proprio_voce_ep().equals("") )
-				{
-					String codice = contoHome.creaNuovoCodiceConto( contoBulk.getEsercizio(), contoBulk.getVoce_ep_padre().getCd_voce_ep());
-					contoBulk.setCd_proprio_voce_ep( getLunghezza_chiavi().formatContoKey( userContext,codice, contoBulk.getEsercizio() ) );
+					if (contoBulk.getCd_proprio_voce_ep() == null || contoBulk.getCd_proprio_voce_ep().equals("") )
+					{
+						String codice = contoHome.creaNuovoCodiceConto( contoBulk.getEsercizio(), contoBulk.getVoce_ep_padre().getCd_voce_ep());
+						contoBulk.setCd_proprio_voce_ep( getLunghezza_chiavi().formatContoKey( userContext,codice, contoBulk.getEsercizio() ) );
+					}
+					else
+						contoBulk.setCd_proprio_voce_ep( getLunghezza_chiavi().formatContoKey( userContext,contoBulk.getCd_proprio_voce_ep(), contoBulk.getEsercizio() ));
+	
+					contoBulk.setCd_voce_ep(contoBulk.getVoce_ep_padre().getCd_voce_ep().concat(".").concat(contoBulk.getCd_proprio_voce_ep()));
+	
+					if ( 
+					       (contoBulk.getRiapre_a_conto() != null && contoBulk.getRiapre_a_conto().getCd_voce_ep() == null )
+		                && (contoBulk.getRiepiloga_a() != null && contoBulk.getRiepiloga_a().equals("SPA"))
+					)				
+					{				
+						contoBulk.getRiapre_a_conto().setCd_voce_ep(contoBulk.getCd_voce_ep());
+						contoBulk.getRiapre_a_conto().setDs_voce_ep( contoBulk.getDs_voce_ep());
+					}	
+					
+					if ( !contoBulk.isFl_gruppoNaturaNonCongruiConfermati() && !contoBulk.getDs_gruppo().equals("X") &&
+						 !contoBulk.getDs_gruppo().equals((String)contoBulk.getAssociazioni_natura_gruppo().get(contoBulk.getNatura_voce())))
+					{
+						throw new GruppoNaturaNonCongrui();
+					}	
+					
+					contoBulk.setLivello(new Integer(3));
+					contoBulk.setFl_mastrino(new Boolean ( true ));
+					((CapocontoHome)getHomeCache(userContext).getHome( CapocontoBulk.class )).lock( contoBulk.getVoce_ep_padre() );
 				}
-				else
-					contoBulk.setCd_proprio_voce_ep( getLunghezza_chiavi().formatContoKey( userContext,contoBulk.getCd_proprio_voce_ep(), contoBulk.getEsercizio() ));
-
-				contoBulk.setCd_voce_ep(contoBulk.getVoce_ep_padre().getCd_voce_ep().concat(".").concat(contoBulk.getCd_proprio_voce_ep()));
-
-				if ( 
-				       (contoBulk.getRiapre_a_conto() != null && contoBulk.getRiapre_a_conto().getCd_voce_ep() == null )
-	                && (contoBulk.getRiepiloga_a() != null && contoBulk.getRiepiloga_a().equals("SPA"))
-				)				
-				{				
-					contoBulk.getRiapre_a_conto().setCd_voce_ep(contoBulk.getCd_voce_ep());
-					contoBulk.getRiapre_a_conto().setDs_voce_ep( contoBulk.getDs_voce_ep());
-				}	
-				
-				if ( !contoBulk.isFl_gruppoNaturaNonCongruiConfermati() && !contoBulk.getDs_gruppo().equals("X") &&
-					 !contoBulk.getDs_gruppo().equals((String)contoBulk.getAssociazioni_natura_gruppo().get(contoBulk.getNatura_voce())))
-				{
-					throw new GruppoNaturaNonCongrui();
-				}	
-				
-				contoBulk.setLivello(new Integer(3));
-				contoBulk.setFl_mastrino(new Boolean ( true ));
-
-				((CapocontoHome)getHomeCache(userContext).getHome( CapocontoBulk.class )).lock( contoBulk.getVoce_ep_padre() );
-
+				else{
+					contoBulk.setCd_voce_ep(contoBulk.getCd_proprio_voce_ep());
+					contoBulk.setLivello(new Integer(1));
+					contoBulk.setFl_mastrino(new Boolean ( true ));
+				}			
 				insertBulk( userContext, contoBulk);
 				return contoBulk;
 			}
@@ -428,12 +444,13 @@ public OggettoBulk modificaConBulk (UserContext userContext,OggettoBulk bulk) th
 				contoBulk.getRiapre_a_conto().setCd_voce_ep(contoBulk.getCd_voce_ep());
 				contoBulk.getRiapre_a_conto().setDs_voce_ep( contoBulk.getDs_voce_ep());
 			}
-			
-			if ( !contoBulk.isFl_gruppoNaturaNonCongruiConfermati() && !contoBulk.getDs_gruppo().equals("X") &&
+			if(contoBulk.getDs_gruppo()!=null){
+				if ( !contoBulk.isFl_gruppoNaturaNonCongruiConfermati() && !contoBulk.getDs_gruppo().equals("X") &&
 				 !contoBulk.getDs_gruppo().equals((String)contoBulk.getAssociazioni_natura_gruppo().get(contoBulk.getNatura_voce())))
-			{
-				throw new GruppoNaturaNonCongrui();
-			}	
+				{
+					throw new GruppoNaturaNonCongrui();
+				}
+			}
 		}			
 		makeBulkPersistent( userContext,bulk );
 		return bulk;
@@ -468,5 +485,24 @@ public OggettoBulk modificaConBulk (UserContext userContext,OggettoBulk bulk) th
 		{
 			throw handleException( e );
 		}			
-}
+	}
+	public SQLBuilder selectV_classificazione_voci_epByClause(UserContext userContext,
+			 ContoBulk conto,
+			 V_classificazione_voci_epBulk classificazioneVoci,
+			 CompoundFindClause clause) throws ComponentException, PersistencyException 
+	{
+		SQLBuilder sql = getHome(userContext, classificazioneVoci).createSQLBuilder();
+		if (conto!=null && conto.getRiepiloga_a()!=null)
+			if(conto.getRiepiloga_a().equals("SPA"))
+				sql.addClause("AND", "tipo", sql.EQUALS,"PAT");
+			else
+				sql.addClause("AND", "tipo", sql.EQUALS,"ECO");
+		sql.addClause(clause);
+		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+		
+		sql.addClause("AND", "fl_mastrino", sql.EQUALS, Boolean.TRUE);
+		if (clause != null) 
+		sql.addClause(clause);
+		return sql;
+	}
 }

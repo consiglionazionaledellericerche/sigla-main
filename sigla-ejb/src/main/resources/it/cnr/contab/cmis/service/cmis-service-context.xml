@@ -61,6 +61,9 @@
     <bean id="cmisPathComunicazioniAlCNR" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
         <property name="path" value="/Comunicazioni al CNR"/>
     </bean>    
+    <bean id="cmisPathMissioni" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+        <property name="path" value="/Comunicazioni al CNR/Missioni"/>
+    </bean>    
     <bean id="cmisPathComunicazioniDalCNR" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
         <property name="path" value="/Comunicazioni dal CNR"/>
     </bean>    
@@ -78,6 +81,7 @@
         <property name="pecMailToBancaItaliaF23F24" value="${pec.mail.to.banca.italia.f23.f24}"/>        
     </bean>
     <bean id="documentiCollegatiDocAmmService" class="it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService" parent="cmisService"/>
+    <bean id="missioniCMISService" class="it.cnr.contab.missioni00.service.MissioniCMISService" parent="cmisService"/>
     <bean id="richiesteCMISService" class="it.cnr.contab.ordmag.richieste.service.RichiesteCMISService" parent="cmisService"/>
     <bean id="ordineAcqCMISService" class="it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService" parent="cmisService"/>
 </beans>

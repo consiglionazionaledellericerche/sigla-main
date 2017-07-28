@@ -58,10 +58,23 @@ public SQLBuilder selectVoce_epByClause( Ass_cap_spesa_Cds_conto_econom_costoBul
 	sql.addClause("AND", "ti_voce_ep", SQLBuilder.EQUALS, home.TIPO_CONTO );		
 	sql.addClause("AND", "ti_sezione", SQLBuilder.NOT_EQUALS, home.SEZIONE_AVERE );
 	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
-	SimpleFindClause s1 = new SimpleFindClause("AND", "natura_voce",  SQLBuilder.EQUALS, "EPC" );
+	/*SimpleFindClause s1 = new SimpleFindClause("AND", "natura_voce",  SQLBuilder.EQUALS, "EPC" );
 	SimpleFindClause s2 = new SimpleFindClause("OR", "natura_voce", SQLBuilder.EQUALS, "EEC" );
 	CompoundFindClause c = new CompoundFindClause(s1, s2);
-	sql.addClause( c );
+	sql.addClause( c );*/
+	sql.addClause( clause );
+	return sql;
+	
+}
+public SQLBuilder selectVoce_ep_contrByClause( Ass_cap_spesa_Cds_conto_econom_costoBulk bulk, ContoHome home,it.cnr.jada.bulk.OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException, IntrospectionException {
+	SQLBuilder sql = home.createSQLBuilder();
+	sql.addClause("AND", "ti_voce_ep", SQLBuilder.EQUALS, home.TIPO_CONTO );		
+	sql.addClause("AND", "ti_sezione", SQLBuilder.NOT_EQUALS, home.SEZIONE_DARE );
+	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
+	/*SimpleFindClause s1 = new SimpleFindClause("AND", "natura_voce",  SQLBuilder.EQUALS, "EPC" );
+	SimpleFindClause s2 = new SimpleFindClause("OR", "natura_voce", SQLBuilder.EQUALS, "EEC" );
+	CompoundFindClause c = new CompoundFindClause(s1, s2);
+	sql.addClause( c );*/
 	sql.addClause( clause );
 	return sql;
 	
