@@ -126,6 +126,19 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="ARR_ALI_IVA"
+			propertyName="arrAliIva"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_FATT"
+			propertyName="statoFatt"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
 			sqlTypeName="TIMESTAMP"
@@ -200,6 +213,10 @@
 		name="pgObbligazione" />
 	<persistentProperty
 		name="pgObbligazioneScad" />
+	<persistentProperty
+		name="statoFatt" />
+	<persistentProperty
+		name="arrAliIva" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty

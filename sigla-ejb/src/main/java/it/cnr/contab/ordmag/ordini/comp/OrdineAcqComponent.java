@@ -221,12 +221,7 @@ public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext aUC, i
 public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk)
 		throws ComponentException {
 	OggettoBulk oggetto = super.inizializzaBulkPerInserimento(usercontext, oggettobulk);
-	return inizializzaBulk(usercontext, oggetto);
-}
-
-private OggettoBulk inizializzaBulk(UserContext usercontext, OggettoBulk oggetto) throws ComponentException {
-	oggetto = inizializzaOrdine(usercontext, oggetto);
-	return oggetto;
+	return inizializzaOrdine(usercontext, oggetto, true);
 }
 
 @Override
@@ -295,7 +290,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     	throw handleException(e);
     }
         
-	return inizializzaBulk(usercontext, (OggettoBulk)ordine);
+	return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
 }
 
 @Override
@@ -321,14 +316,14 @@ public OggettoBulk inizializzaBulkPerRicerca(UserContext usercontext, OggettoBul
 //		{
 //			throw handleException(bulk, e);
 //		}
-	return inizializzaBulk(usercontext, oggettobulk);
+	return inizializzaOrdine(usercontext, oggettobulk, false);
 }
 
 @Override
 public OggettoBulk inizializzaBulkPerRicercaLibera(UserContext usercontext, OggettoBulk oggettobulk)
 		throws ComponentException {
 	OggettoBulk oggetto = super.inizializzaBulkPerRicercaLibera(usercontext, oggettobulk);
-	return inizializzaOrdine(usercontext, oggetto);
+	return inizializzaOrdine(usercontext, oggetto, false);
 }
 //public SQLBuilder selectCentroResponsabilitaByClause(
 //		UserContext userContext, RichiestaUopRigaBulk pdg, CdrBulk cdr,
@@ -676,12 +671,14 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	return sql;
 }
 
-private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk oggettobulk)
+private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk oggettobulk, Boolean daInserimento)
 		throws ComponentException {
 	OrdineAcqBulk ordine = (OrdineAcqBulk)oggettobulk;
 	try {
-		ordine.setDivisa(getEuro(usercontext));
-		ordine.setCambio(BigDecimal.ONE);
+		if (daInserimento){
+			ordine.setDivisa(getEuro(usercontext));
+			ordine.setCambio(BigDecimal.ONE);
+		}
 		OrdineAcqHome home = (OrdineAcqHome) getHomeCache(usercontext).getHome(OrdineAcqBulk.class);
 		ordine.setCdCds( ((CNRUserContext) usercontext).getCd_cds());
 		if (ordine.getCdUnitaOperativa() == null){
@@ -733,6 +730,7 @@ private void assegnaNumeratoreOrd(UserContext usercontext, OrdineAcqBulk ordine,
 			List listNum=numerazioneHome.fetchAll(sql);
 			if (listNum != null && listNum.size() == 1){
 				ordine.setNumerazioneOrd((NumerazioneOrdBulk)listNum.get(0));
+				ordine.setPercProrata(((NumerazioneOrdBulk)listNum.get(0)).getPercProrata());
 			}
 //			}
 	}

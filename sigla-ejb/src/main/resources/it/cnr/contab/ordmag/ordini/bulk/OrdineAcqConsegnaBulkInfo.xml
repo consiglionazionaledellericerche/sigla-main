@@ -90,7 +90,18 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
+		keysProperty="statoKeys"
 		label="Stato" />
+	<fieldProperty
+		name="statoFatt"
+		property="statoFatt"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		keysProperty="statoFattKeys"
+		label="Associata a Fattura" />
 	<fieldProperty
 		name="tipoConsegnaForSearch"
 		property="tipoConsegna"
@@ -323,6 +334,8 @@
 		name="consegna" />
 	<formFieldProperty
 		name="stato" />
+	<formFieldProperty
+		name="statoFatt" />
 	<formFieldProperty
 		name="tipoConsegna" />
 	<formFieldProperty
