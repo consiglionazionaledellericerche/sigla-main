@@ -9,9 +9,9 @@ import java.util.List;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
-import it.cnr.contab.anagraf00.core.bulk.Termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
@@ -68,7 +68,7 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 	/**
 	 * [TERMINI_PAGAMENTO Descrive i termini di pagamento previsti per un dato terzo.]
 	 **/
-	private Termini_pagamentoBulk terminiPagamento =  new Termini_pagamentoBulk();
+	private Rif_termini_pagamentoBulk terminiPagamento =  new Rif_termini_pagamentoBulk();
 	/**
 	 * [TERZO Tabella contenente le entità anagrafiche di secondo livello (terzi). Ogni entità anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
@@ -85,15 +85,24 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public final static String STATO_DEFINITIVO = "DEF";
 	public final static String STATO_INVIATO_ORDINE = "INV";
 	
+	public final static String COMMERCIALE = "C";
+	public final static String ISTITUZIONALE = "I";
+	public final static String PROMISCUA = "P";
+
 	private Boolean isUtenteAbilitatoInserimentoOrdine = true;
 	private Boolean isForApprovazione = false;
 		
 	public final static Dictionary STATO;
+	public final static Dictionary TIPO;
 	static{
 		STATO = new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INSERITO,"Inserito");
 		STATO.put(STATO_ANNULLATO,"Annullato");
 		STATO.put(STATO_DEFINITIVO,"Definitivo");
+
+		TIPO = new it.cnr.jada.util.OrderedHashtable();
+		TIPO.put(COMMERCIALE,"Commerciale");
+		TIPO.put(ISTITUZIONALE,"Istituzionale");
 	}
 
 	/**
@@ -237,14 +246,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Descrive i termini di pagamento previsti per un dato terzo.]
 	 **/
-	public Termini_pagamentoBulk getTerminiPagamento() {
+	public Rif_termini_pagamentoBulk getTerminiPagamento() {
 		return terminiPagamento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [Descrive i termini di pagamento previsti per un dato terzo.]
 	 **/
-	public void setTerminiPagamento(Termini_pagamentoBulk terminiPagamento)  {
+	public void setTerminiPagamento(Rif_termini_pagamentoBulk terminiPagamento)  {
 		this.terminiPagamento=terminiPagamento;
 	}
 	/**
@@ -502,7 +511,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	 * Restituisce il valore di: [cdTerminiPag]
 	 **/
 	public java.lang.String getCdTerminiPag() {
-		Termini_pagamentoBulk terminiPagamento = this.getTerminiPagamento();
+		Rif_termini_pagamentoBulk terminiPagamento = this.getTerminiPagamento();
 		if (terminiPagamento == null)
 			return null;
 		return getTerminiPagamento().getCd_termini_pag();
@@ -905,4 +914,20 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public void setIsAbilitatoTuttiMagazzini(Boolean isAbilitatoTuttiMagazzini) {
 		this.isAbilitatoTuttiMagazzini = isAbilitatoTuttiMagazzini;
 	}	
+	public Dictionary getTi_istituz_commercKeys() {
+		OrderedHashtable d = (OrderedHashtable)getTi_istituz_commercKeysForSearch();
+		if (d == null) return null;
+        	OrderedHashtable clone = (OrderedHashtable)d.clone();
+        	if (!isNotAbledToModifyTipoIstCom()) 
+        		clone.remove(PROMISCUA);
+		return clone;
+			
+	}
+	
+	public Dictionary getTi_istituz_commercKeysForSearch() {
+		return TIPO;
+	}
+	public boolean isNotAbledToModifyTipoIstCom(){
+		return (true); 
+	}
 }
