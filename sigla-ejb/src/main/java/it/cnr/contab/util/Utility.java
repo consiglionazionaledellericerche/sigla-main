@@ -7,6 +7,7 @@
 package it.cnr.contab.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.rmi.RemoteException;
 import java.util.Set;
 
@@ -56,7 +57,7 @@ public final class Utility {
 	public static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	public static String TIPO_GESTIONE_SPESA = "S";
 	public static String TIPO_GESTIONE_ENTRATA = "E";
-
+	public static final BigDecimal CENTO = new BigDecimal(100);
 	/**
 	 * Restituisce true se i due oggetti sono uguali o sono entrambi null
 	 * false altrimenti
@@ -84,10 +85,13 @@ public final class Utility {
 		return false;
 	}
 
-	public static BigDecimal nvl(BigDecimal imp){
+	public static BigDecimal nvl(BigDecimal imp, BigDecimal otherImp){
 		if (imp != null)
 			return imp;
-		return ZERO;  
+		return otherImp;  
+	}
+	public static BigDecimal nvl(BigDecimal imp){
+		return nvl(imp, ZERO);  
 	}
 	/**
 	 * Restituisce una Stringa ottenuta sostituendo
@@ -132,6 +136,61 @@ public final class Utility {
 		builder.append(s);
 		return builder.toString();
 	}	
+
+	public static BigDecimal round2Decimali(BigDecimal importo) {
+		return round(importo,2);
+	}
+
+	public static BigDecimal roundIntero(BigDecimal importo) {
+		return round(importo,0);
+	}
+
+	public static BigDecimal round(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.HALF_UP);
+	}
+
+	public static BigDecimal trunc(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.DOWN);
+	}
+	
+	public static BigDecimal ceil(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.UP);
+	}
+
+
+	public static BigDecimal trunc2Decimali(BigDecimal importo) {
+		return trunc(nvl(importo),2);
+	}
+
+	public static BigDecimal truncIntero(BigDecimal importo) {
+		return trunc(nvl(importo),0);
+	}
+
+	/**
+	 * Metodo che effetua una divisione, il cui risultato viene fornito con 2
+	 * cifre decimali ed arrotondamento per difetto o per eccesso
+	 * 
+	 * @param dividendo
+	 *            Dividendo
+	 * @param divisore
+	 *            Divisore
+	 * @return il risultato della divisione
+	 */
+	
+	public static BigDecimal divide(BigDecimal dividendo, BigDecimal divisore) {
+		return dividendo.divide(divisore,2,RoundingMode.HALF_UP);
+	}
+	
+	public static BigDecimal divide(BigDecimal dividendo, Integer divisore) {
+		return dividendo.divide(new BigDecimal(divisore),2,RoundingMode.HALF_UP);
+	}
+	
+	public static BigDecimal divide(BigDecimal dividendo, BigDecimal divisore, Integer arrotondamento) {
+		return dividendo.divide(divisore,arrotondamento,RoundingMode.HALF_UP);
+	}
 
 	public static String NumberToText(int n) {
 		// metodo wrapper

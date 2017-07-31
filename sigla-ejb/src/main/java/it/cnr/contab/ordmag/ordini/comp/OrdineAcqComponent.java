@@ -53,12 +53,14 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -876,4 +878,44 @@ public SQLBuilder selectProcedureAmministrativeByClause (UserContext userContext
 	  sql.addClause(clause);
 	return sql;
 }	
+public void calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametri) throws ApplicationException{
+	BigDecimal prezzo = Utility.nvl(parametri.getPrezzoRet(), parametri.getPrezzo());
+	BigDecimal cambio = Utility.nvl(parametri.getCambioRet(), parametri.getCambio());
+	if (parametri.getDivisa() == null || parametri.getDivisaRisultato() == null || 
+			parametri.getDivisa().getCd_divisa() == null || parametri.getDivisaRisultato().getCd_divisa() == null){
+		throw new it.cnr.jada.comp.ApplicationException("E' necessario indicare le divise.");
+	}
+	if (!parametri.getDivisa().getCd_divisa().equals(parametri.getDivisaRisultato().getCd_divisa())){
+		if (parametri.getDivisaRisultato().getFl_calcola_con_diviso().booleanValue())
+			prezzo = Utility.divide(prezzo, cambio);
+		else
+			prezzo= prezzo.multiply(cambio).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+
+	}
+	BigDecimal sconto1 = Utility.nvl(Utility.nvl(parametri.getSconto1Ret(), parametri.getSconto1()));
+	BigDecimal sconto2 = Utility.nvl(Utility.nvl(parametri.getSconto2Ret(), parametri.getSconto2()));
+	BigDecimal sconto3 = Utility.nvl(Utility.nvl(parametri.getSconto3Ret(), parametri.getSconto3()));
+	BigDecimal prezzoScontato = prezzo.
+									multiply(BigDecimal.ONE.subtract(sconto1.divide(Utility.CENTO))).
+									multiply(BigDecimal.ONE.subtract(sconto2.divide(Utility.CENTO))).
+									multiply(BigDecimal.ONE.subtract(sconto3.divide(Utility.CENTO)));
+	BigDecimal imponibile = prezzoScontato.multiply(parametri.getQtaOrd());
+	Voce_ivaBulk voceIva = null;
+	if (parametri.getVoceIvaRet() != null && parametri.getVoceIvaRet().getPercentuale() != null){
+		voceIva = parametri.getVoceIvaRet();
+	} else {
+		voceIva = parametri.getVoceIva();
+	}
+	BigDecimal importoIva = Utility.round2Decimali((Utility.divide(prezzoScontato, Utility.CENTO)).multiply(voceIva.getPercentuale())); 
+	BigDecimal ivaNonDetraibile = Utility.round2Decimali(importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita()))));
+	BigDecimal ivaPerCalcoloProrata = importoIva.subtract(ivaNonDetraibile);
+	BigDecimal ivaDetraibile = Utility.round2Decimali(ivaPerCalcoloProrata.multiply(Utility.nvl(parametri.getPercProrata())));
+	ivaNonDetraibile = ivaNonDetraibile.add((ivaPerCalcoloProrata.subtract(ivaDetraibile)));
+	
+	if (ivaDetraibile.compareTo(BigDecimal.ZERO) == 0 || ivaNonDetraibile.compareTo(BigDecimal.ZERO) > 0){
+		ivaNonDetraibile = ivaNonDetraibile.add(parametri.getArrAliIva());
+	}else {
+		ivaDetraibile = ivaDetraibile.add(parametri.getArrAliIva());
+	}
+}
 }
