@@ -326,6 +326,7 @@ public Forward doConsultaDettagliFatturaComSplit(ActionContext context) {
 		CompoundFindClause clause = new CompoundFindClause();
 		clause.addClause("AND","esercizio",SQLBuilder.EQUALS,esercizioNum);
 		clause.addClause("AND","cdCds",SQLBuilder.EQUALS,bulk.getCd_cds());
+		clause.addClause("AND","cdUnitaOrganizzativa",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa()); 
 		clause.addClause("AND","mese",SQLBuilder.EQUALS,meseNum);
 		ConsultazioniBP ricercaLiberaBP = (ConsultazioniBP)context.createBusinessProcess("ConsFatturaGaeSplitBP");
 		
