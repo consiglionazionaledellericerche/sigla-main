@@ -31,7 +31,9 @@ public class VConsFatturaGaeSplitHome extends BulkHome {
 	    PersistentHome uoEnteHome = getHomeCache().getHome(Unita_organizzativa_enteBulk.class);
 		List result = uoEnteHome.fetchAll( uoEnteHome.createSQLBuilder() );
 		String uoEnte = ((Unita_organizzativaBulk) result.get(0)).getCd_unita_organizzativa();
-	 	
+		Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(usercontext)));
+		if(!uoScrivania.isUoCds())
+			  sql.addClause("AND","cdUnitaOrganizzativa",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(usercontext));
 	    if(CNRUserContext.getCd_unita_organizzativa(usercontext).compareTo(uoEnte)!=0)
 	    	sql.addClause("AND","cdCds",SQLBuilder.EQUALS, CNRUserContext.getCd_cds(usercontext));
 		return sql;
