@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,9 +23,7 @@ import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
@@ -33,9 +32,9 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
-import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
+import it.cnr.contab.ordmag.anag00.BeneServizioTipoGestBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagHome;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
@@ -137,6 +136,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
     	for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
     		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
     		if (riga != null){
+    			gestioneSalvataggioRigaConsegnaSingola(riga);
 //    			if (riga.getCdElementoVoce() != null && riga.getCdCategoriaGruppo() != null){
 //    				Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class,"V_ELEMENTO_VOCE_ORDINI");
 //    				SQLBuilder sql = home.createSQLBuilder();
@@ -203,6 +203,51 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
     		}
     	}
 	}
+
+	private void gestioneSalvataggioRigaConsegnaSingola(OrdineAcqRigaBulk riga) throws ApplicationException {
+		if ((riga.isToBeCreated() && riga.getRigheConsegnaColl() == null || riga.getRigheConsegnaColl().isEmpty()) ||
+				(riga.getRigheConsegnaColl() != null && riga.getRigheConsegnaColl().size() == 1 && riga.getConsegneModificate())){
+			if (riga.getDspQuantita() == null){
+				throw new ApplicationException ("E' necessario indicare la quantità.");
+			}
+			if (riga.getDspDtPrevConsegna() == null){
+				throw new ApplicationException ("E' necessario indicare la data di prevista consegna.");
+			}
+			if (riga.getDspTipoConsegna() == null){
+				throw new ApplicationException ("E' necessario indicare il tipo di consegna.");
+			} else {
+				if ((!riga.getDspTipoConsegna().equals(Bene_servizioBulk.TIPO_CONSEGNA_MAGAZZINO)) && (riga.getDspUopDest() == null || riga.getDspUopDest().getCdUnitaOperativa() == null)){
+					throw new ApplicationException ("E' necessario indicare l'unità operativa per i tipi consegna in 'Transito' o 'Fuori Magazzino'.");
+				}
+				
+			}
+			if (riga.getDspMagazzino() == null || riga.getDspMagazzino().getCdMagazzino() == null){
+				throw new ApplicationException ("E' necessario indicare il magazzino.");
+			}
+			if (riga.getDspLuogoConsegna() == null || riga.getDspLuogoConsegna().getCdLuogoConsegna() == null){
+				throw new ApplicationException ("E' necessario indicare il luogo di consegna.");
+			}
+			OrdineAcqConsegnaBulk consegna = null;
+			if (riga.isToBeCreated()){
+				consegna = new OrdineAcqConsegnaBulk();
+				consegna.setOrdineAcqRiga(riga);
+				consegna.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
+				consegna.setRiga(1);
+				consegna.setToBeCreated();
+			} else {
+				consegna = (OrdineAcqConsegnaBulk)riga.getRigheConsegnaColl().get(0);
+				riga.getRigheConsegnaColl().remove(consegna);
+				consegna.setToBeUpdated();
+			}
+			consegna.setLuogoConsegnaMag(riga.getDspLuogoConsegna());
+			consegna.setMagazzino(riga.getDspMagazzino());
+			consegna.setDtPrevConsegna(riga.getDspDtPrevConsegna());
+			consegna.setQuantita(riga.getDspQuantita());
+			consegna.setTipoConsegna(riga.getDspTipoConsegna());
+			consegna.setUnitaOperativaOrd(riga.getDspUopDest());
+			riga.getRigheConsegnaColl().add(consegna);
+		}
+	}
 	
 public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext aUC, it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 
@@ -233,34 +278,64 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
 
 	ordine.setIsAbilitatoTuttiMagazzini(isAbilitatoTuttiMagazzini(usercontext, ordine));
 	
-	it.cnr.jada.bulk.BulkHome home= getHome(usercontext, OrdineAcqRigaBulk.class);
-    it.cnr.jada.persistency.sql.SQLBuilder sql= home.createSQLBuilder();
+	it.cnr.jada.bulk.BulkHome homeRiga= getHome(usercontext, OrdineAcqRigaBulk.class);
+    it.cnr.jada.persistency.sql.SQLBuilder sql= homeRiga.createSQLBuilder();
     sql.addClause("AND", "numero", sql.EQUALS, ordine.getNumero());
     sql.addClause("AND", "cdCds", sql.EQUALS, ordine.getCdCds());
     sql.addClause("AND", "cdUnitaOperativa", sql.EQUALS, ordine.getCdUnitaOperativa());
     sql.addClause("AND", "esercizio", sql.EQUALS, ordine.getEsercizio());
     sql.addClause("AND", "cdNumeratore", sql.EQUALS, ordine.getCdNumeratore());
     try {
-    	ordine.setRigheOrdineColl(new it.cnr.jada.bulk.BulkList(home.fetchAll(sql)));
+    	ordine.setRigheOrdineColl(new it.cnr.jada.bulk.BulkList(homeRiga.fetchAll(sql)));
 
     	for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
     		OggettoBulk rigabulk= (OggettoBulk) i.next();
     		OrdineAcqRigaBulk riga= (OrdineAcqRigaBulk) rigabulk;
     		if (riga.getBeneServizio() != null){
-    			Bene_servizioHome Home = (Bene_servizioHome)getHome(usercontext, Bene_servizioBulk.class);
-    			Bene_servizioBulk bene = (Bene_servizioBulk)Home.findByPrimaryKey(new Bene_servizioBulk(riga.getCdBeneServizio()));
+    			Bene_servizioHome home = (Bene_servizioHome)getHome(usercontext, Bene_servizioBulk.class);
+    			Bene_servizioBulk bene = (Bene_servizioBulk)home.findByPrimaryKey(new Bene_servizioBulk(riga.getCdBeneServizio()));
     			riga.setBeneServizio(bene);
     		}
     		if (riga.getUnitaMisura() != null){
-    			UnitaMisuraHome Home = (UnitaMisuraHome)getHome(usercontext, UnitaMisuraBulk.class);
-    			UnitaMisuraBulk um = (UnitaMisuraBulk)Home.findByPrimaryKey(new UnitaMisuraBulk(riga.getCdUnitaMisura()));
+    			UnitaMisuraHome home = (UnitaMisuraHome)getHome(usercontext, UnitaMisuraBulk.class);
+    			UnitaMisuraBulk um = (UnitaMisuraBulk)home.findByPrimaryKey(new UnitaMisuraBulk(riga.getCdUnitaMisura()));
     			riga.setUnitaMisura(um);
     		}
-//    		if (riga.getElementoVoce() != null){
-//    			Elemento_voceHome Home = (Elemento_voceHome)getHome(usercontext, Elemento_voceBulk.class);
-//    			Elemento_voceBulk elem_voce = (Elemento_voceBulk)Home.findByPrimaryKey(new Elemento_voceBulk(riga.getCdElementoVoce(), riga.getEsercizioVoce(), riga.getTiAppartenenza(), riga.getTiGestione()));
-//    			riga.setElementoVoce(elem_voce);
-//    		}
+    		if (riga.getVoceIva() != null){
+    			Voce_ivaHome home = (Voce_ivaHome)getHome(usercontext, Voce_ivaBulk.class);
+    			Voce_ivaBulk voce = (Voce_ivaBulk)home.findByPrimaryKey(new Voce_ivaBulk(riga.getCdVoceIva()));
+    			riga.setVoceIva(voce);
+    		}
+    		it.cnr.jada.bulk.BulkHome homeConsegna= getHome(usercontext, OrdineAcqConsegnaBulk.class);
+    	    it.cnr.jada.persistency.sql.SQLBuilder sqlConsegna= homeConsegna.createSQLBuilder();
+    	    sqlConsegna.addClause("AND", "numero", sql.EQUALS, ordine.getNumero());
+    	    sqlConsegna.addClause("AND", "cdCds", sql.EQUALS, ordine.getCdCds());
+    	    sqlConsegna.addClause("AND", "cdUnitaOperativa", sql.EQUALS, ordine.getCdUnitaOperativa());
+    	    sqlConsegna.addClause("AND", "esercizio", sql.EQUALS, ordine.getEsercizio());
+    	    sqlConsegna.addClause("AND", "cdNumeratore", sql.EQUALS, ordine.getCdNumeratore());
+    	    sqlConsegna.addClause("AND", "riga", sql.EQUALS, riga.getRiga());
+        	riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(homeConsegna.fetchAll(sqlConsegna)));
+        	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
+        		OggettoBulk consbulk= (OggettoBulk) c.next();
+        		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
+        		if (cons.getLuogoConsegnaMag() != null){
+        			LuogoConsegnaMagHome home = (LuogoConsegnaMagHome)getHome(usercontext, LuogoConsegnaMagBulk.class);
+        			LuogoConsegnaMagBulk luogo = (LuogoConsegnaMagBulk)home.findByPrimaryKey(new LuogoConsegnaMagBulk(cons.getCdCdsLuogo(), cons.getCdLuogoConsegna()));
+        			cons.setLuogoConsegnaMag(luogo);
+        		}
+        		if (cons.getMagazzino() != null){
+        			MagazzinoHome home = (MagazzinoHome)getHome(usercontext, MagazzinoBulk.class);
+        			MagazzinoBulk mag = (MagazzinoBulk)home.findByPrimaryKey(new MagazzinoBulk(cons.getCdCdsMag(), cons.getCdMagazzino()));
+        			riga.setUnitaMisura(um);
+        		}
+        		if (riga.getVoceIva() != null){
+        			Voce_ivaHome home = (Voce_ivaHome)getHome(usercontext, Voce_ivaBulk.class);
+        			Voce_ivaBulk voce = (Voce_ivaBulk)home.findByPrimaryKey(new Voce_ivaBulk(riga.getCdVoceIva()));
+        			riga.setVoceIva(voce);
+        		}
+        		if (riga.getRigheConsegnaColl().size() == 1){
+        		}
+        	}
 //    		if (riga.getCentroResponsabilita() != null){
 //    			CdrHome Home = (CdrHome)getHome(usercontext, CdrBulk.class);
 //    			CdrBulk cdr = (CdrBulk)Home.findByPrimaryKey(new CdrBulk(riga.getCdCentroResponsabilita()));
