@@ -8,6 +8,8 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Dictionary;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.ejb.EJBException;
 
@@ -20,12 +22,15 @@ import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
+	protected BulkList righeConsegnaColl= new BulkList();
 	private java.lang.String dspTipoConsegna;
 
 	private java.sql.Timestamp dspDtPrevConsegna;
@@ -38,6 +43,7 @@ public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
 
 	private UnitaOperativaOrdBulk dspUopDest;
 	
+	private Boolean consegneModificate = false;
 	public final static String STATO_INSERITA= "INS";
     public final static String STATO_ANNULLATA= "ANN";
 	/**
@@ -343,5 +349,61 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 			setDspDtPrevConsegna(DateUtils.truncate(new Timestamp(cal.getTime().getTime()))); 
 		}
 		return this;
+	}
+	public BulkList getRigheConsegnaColl() {
+		return righeConsegnaColl;
+	}
+	public void setRigheConsegnaColl(BulkList righeConsegnaColl) {
+		this.righeConsegnaColl = righeConsegnaColl;
+	}
+	public OrdineAcqConsegnaBulk removeFromRigheConsegnaColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (OrdineAcqConsegnaBulk)righeConsegnaColl.remove(index);
+	}
+	public int addToRigheConsegnaColl( OrdineAcqConsegnaBulk nuovoRigo ) 
+	{
+
+
+//		nuovoRigo.setTi_associato_manrev(nuovoRigo.NON_ASSOCIATO_A_MANDATO);
+//		nuovoRigo.setTerzo(new TerzoBulk());
+//		if (getTi_entrate_spese()==ENTRATE){
+//			nuovoRigo.setTerzo_uo_cds(getTerzo_uo_cds());		
+//		}
+		nuovoRigo.setOrdineAcqRiga(this);
+
+//		try {
+//			java.sql.Timestamp ts = it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();
+//			nuovoRigo.setDt_da_competenza_coge((getDt_da_competenza_coge() == null)?ts : getDt_da_competenza_coge());
+//			nuovoRigo.setDt_a_competenza_coge((getDt_a_competenza_coge() == null)?ts : getDt_a_competenza_coge());
+//		} catch (javax.ejb.EJBException e) {
+//			throw new it.cnr.jada.DetailedRuntimeException(e);
+//		}	
+		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
+		int max = 0;
+		for (Iterator i = righeConsegnaColl.iterator(); i.hasNext();) {
+			int prog = ((OrdineAcqConsegnaBulk)i.next()).getRiga();
+			if (prog > max) max = prog;
+		}
+		nuovoRigo.setRiga(new Integer(max+1));
+		righeConsegnaColl.add(nuovoRigo);
+		return righeConsegnaColl.size()-1;
+	}
+	public BulkCollection[] getBulkLists() {
+
+		// Metti solo le liste di oggetti che devono essere resi persistenti
+
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				righeConsegnaColl
+		};
+	}
+	public List getChildren() {
+		return getRigheConsegnaColl();
+	}
+	public Boolean getConsegneModificate() {
+		return consegneModificate;
+	}
+	public void setConsegneModificate(Boolean consegneModificate) {
+		this.consegneModificate = consegneModificate;
 	}
 }
