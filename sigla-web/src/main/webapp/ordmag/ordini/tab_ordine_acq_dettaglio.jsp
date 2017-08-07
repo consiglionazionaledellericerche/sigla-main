@@ -37,7 +37,7 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			    	}
 			    %>
 			</td>
-				<%bp.getRighe().writeFormField(out, "quantita"); %>
+				<%bp.getRighe().writeFormField(out, "dspQuantita"); %>
 		</tr>
 	</table>
 	<table>

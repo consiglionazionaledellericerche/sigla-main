@@ -132,6 +132,14 @@
 		maxLength="5"
 		enabledOnEdit="true"
 		label="% Prorata" />
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo"
+		nullable="false"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeys" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -151,6 +159,8 @@
 		name="findTipoOperazioneOrd" />
 	<formFieldProperty
 		name="findTipoSezionale" />
+	<formFieldProperty
+		name="ti_istituz_commerc" />
 	<formFieldProperty
 		name="corrente" />
 	<formFieldProperty
@@ -185,6 +195,8 @@
 		name="cdTipoOperazione" />
 	<columnFieldProperty
 		name="dsTipoOperazione" />
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
 	<columnFieldProperty
 		name="corrente" />
 	<columnFieldProperty
