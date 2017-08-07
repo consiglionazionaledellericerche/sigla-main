@@ -69,6 +69,7 @@ public Forward doBringBackSearchFindNumerazioneOrd(ActionContext context,
 			
 		try{
 			if (num!=null) {
+				ordine.setTi_istituz_commerc(num.getTi_istituz_commerc());
 				ordine.setPercProrata(num.getPercProrata());
 			}
 			return context.findDefaultForward();
@@ -102,6 +103,7 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 		((CRUDBP)context.getBusinessProcess()).setDirty(true);
 		if (bene != null){
 			riga.setDsBeneServizio(bene.getDs_bene_servizio());
+			riga.setCdBeneServizio(bene.getCd_bene_servizio());
 			if (bene.getUnitaMisura() != null){
 				riga.setUnitaMisura(bene.getUnitaMisura());
 				riga.setCoefConv(BigDecimal.ONE);

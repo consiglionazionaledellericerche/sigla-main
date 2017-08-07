@@ -32,6 +32,8 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
 import it.cnr.contab.ordmag.anag00.BeneServizioTipoGestBulk;
@@ -52,6 +54,8 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineHome;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
@@ -207,6 +211,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	private void gestioneSalvataggioRigaConsegnaSingola(OrdineAcqRigaBulk riga) throws ApplicationException {
 		if ((riga.isToBeCreated() && riga.getRigheConsegnaColl() == null || riga.getRigheConsegnaColl().isEmpty()) ||
 				(riga.getRigheConsegnaColl() != null && riga.getRigheConsegnaColl().size() == 1 && riga.getConsegneModificate())){
+			riga.setQuantita(riga.getDspQuantita());
 			if (riga.getDspQuantita() == null){
 				throw new ApplicationException ("E' necessario indicare la quantità.");
 			}
@@ -326,41 +331,27 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
         		if (cons.getMagazzino() != null){
         			MagazzinoHome home = (MagazzinoHome)getHome(usercontext, MagazzinoBulk.class);
         			MagazzinoBulk mag = (MagazzinoBulk)home.findByPrimaryKey(new MagazzinoBulk(cons.getCdCdsMag(), cons.getCdMagazzino()));
-        			riga.setUnitaMisura(um);
+        			cons.setMagazzino(mag);
         		}
-        		if (riga.getVoceIva() != null){
-        			Voce_ivaHome home = (Voce_ivaHome)getHome(usercontext, Voce_ivaBulk.class);
-        			Voce_ivaBulk voce = (Voce_ivaBulk)home.findByPrimaryKey(new Voce_ivaBulk(riga.getCdVoceIva()));
-        			riga.setVoceIva(voce);
+        		if (cons.getObbligazioneScadenzario() != null){
+        			Obbligazione_scadenzarioHome home = (Obbligazione_scadenzarioHome)getHome(usercontext, Obbligazione_scadenzarioBulk.class);
+        			Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk)home.findByPrimaryKey(new Obbligazione_scadenzarioBulk(cons.getCdCdsObbl(), cons.getEsercizioObbl(), cons.getEsercizioOrigObbl(), cons.getPgObbligazione(), cons.getPgObbligazioneScad()));
+        			cons.setObbligazioneScadenzario(scad);
+        		}
+        		if (cons.getUnitaOperativaOrd() != null){
+        			UnitaOperativaOrdHome home = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
+        			UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)home.findByPrimaryKey(new UnitaOperativaOrdBulk(cons.getCdUnitaOperativa()));
+        			cons.setUnitaOperativaOrd(uop);
         		}
         		if (riga.getRigheConsegnaColl().size() == 1){
+        			riga.setDspDtPrevConsegna(cons.getDtPrevConsegna());
+        			riga.setDspLuogoConsegna(cons.getLuogoConsegnaMag());
+        			riga.setDspMagazzino(cons.getMagazzino());
+        			riga.setDspQuantita(cons.getQuantita());
+        			riga.setDspTipoConsegna(cons.getTipoConsegna());
+        			riga.setDspUopDest(cons.getUnitaOperativaOrd());
         		}
         	}
-//    		if (riga.getCentroResponsabilita() != null){
-//    			CdrHome Home = (CdrHome)getHome(usercontext, CdrBulk.class);
-//    			CdrBulk cdr = (CdrBulk)Home.findByPrimaryKey(new CdrBulk(riga.getCdCentroResponsabilita()));
-//    			riga.setCentroResponsabilita(cdr);
-//    		}
-//    		if (riga.getLineaAttivita() != null){
-//    			WorkpackageHome Home = (WorkpackageHome)getHome(usercontext, WorkpackageBulk.class);
-//    			WorkpackageBulk wp = (WorkpackageBulk)Home.findByPrimaryKey(new WorkpackageBulk(riga.getCdCentroResponsabilita(), riga.getCdLineaAttivita()));
-//    			riga.setLineaAttivita(wp);
-//    		}
-//    		if (riga.getProgetto() != null){
-//    			ProgettoHome Home = (ProgettoHome)getHome(usercontext, ProgettoBulk.class);
-//    			ProgettoGestBulk prog = (ProgettoGestBulk)Home.findByPrimaryKey(new ProgettoGestBulk(riga.getPgProgetto()));
-//    			riga.setpro(prog);
-//    		}
-//    		if (riga.getObbligazione() != null){
-//    			ObbligazioneHome Home = (ObbligazioneHome)getHome(usercontext, ObbligazioneBulk.class);
-//    			ObbligazioneBulk obbl = (ObbligazioneBulk)Home.findByPrimaryKey(new ObbligazioneBulk(riga.getCdCdsObbl(), riga.getEsercizioObbl(), riga.getEsercizioOrigObbl(), riga.getPgObbligazione()));
-//    			riga.setObbligazione(obbl);
-//    		}
-//    		if (riga.getCategoriaGruppoInvent() != null){
-//    			Categoria_gruppo_inventHome Home = (Categoria_gruppo_inventHome)getHome(usercontext, Categoria_gruppo_inventBulk.class);
-//    			Categoria_gruppo_inventBulk cat = (Categoria_gruppo_inventBulk)Home.findByPrimaryKey(new Categoria_gruppo_inventBulk(riga.getCdCategoriaGruppo()));
-//    			riga.setCategoriaGruppoInvent(cat);
-//    		}
     	}
 
     } catch (PersistencyException e) {
@@ -630,6 +621,13 @@ public SQLBuilder selectLuogoConsegnaMagByClause(UserContext userContext, Ordine
 	return sql;
 }
 
+public SQLBuilder selectTipoOrdineByClause(UserContext userContext, OrdineAcqBulk ord, 
+		TipoOrdineHome tipoHome, TipoOrdineBulk tipo, 
+		CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+	SQLBuilder sql = tipoHome.selectByClause(userContext, compoundfindclause);
+	return sql;
+}
+
 public void gestioneStampaOrdine(UserContext userContext,
 		OrdineAcqBulk ordine) throws RemoteException,ComponentException {
 	OrdineAcqCMISService ordineCMISService = SpringUtil.getBean("ordineAcqCMISService",OrdineAcqCMISService.class);	
@@ -808,6 +806,7 @@ private void assegnaNumeratoreOrd(UserContext usercontext, OrdineAcqBulk ordine,
 			if (listNum != null && listNum.size() == 1){
 				ordine.setNumerazioneOrd((NumerazioneOrdBulk)listNum.get(0));
 				ordine.setPercProrata(((NumerazioneOrdBulk)listNum.get(0)).getPercProrata());
+				ordine.setTi_istituz_commerc(((NumerazioneOrdBulk)listNum.get(0)).getTi_istituz_commerc());
 			}
 //			}
 	}

@@ -164,8 +164,8 @@
 		formatName="it.cnr.contab.util.PercentFormat"
 		inputSize="5"
 		maxLength="5"
-		enabledOnEdit="true"
-		label="% Prorata" />
+		enabledOnEdit="false"
+		label="Prorata" />
 	<fieldProperty
 		name="findFornitore"
 		property="fornitore"

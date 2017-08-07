@@ -190,8 +190,8 @@
 		formatName="it.cnr.contab.util.Importo6CifreFormat"
 		label="Prezzo Unitario" />
 	<fieldProperty
-		name="quantita"
-		property="quantita"
+		name="dspQuantita"
+		property="dspQuantita"
 		inputType="TEXT"
 		inputSize="10"
 		nullable="false"
@@ -342,7 +342,7 @@
 		<columnFieldProperty
 			name="coefConv"/>
 		<columnFieldProperty
-			name="quantita"/>
+			name="dspQuantita"/>
 		<columnFieldProperty
 			name="prezzoUnitario"/>
 		<columnFieldProperty
@@ -380,7 +380,7 @@
 	<formFieldProperty
 		name="prezzoUnitario" />
 	<formFieldProperty
-		name="quantita" />
+		name="dspQuantita" />
 	<formFieldProperty
 		name="findUnitaMisura" />
 	<formFieldProperty
@@ -414,8 +414,6 @@
 	<formFieldProperty
 		name="dtPrevConsegna" />
 	<formFieldProperty
-		name="dspQuantita" />
-	<formFieldProperty
 		name="findLuogoConsegnaMag" />
 	<formFieldProperty
 		name="findMagazzino" />
@@ -447,8 +445,6 @@
 		name="stato" />
 	<findFieldProperty
 		name="prezzoUnitario" />
-	<findFieldProperty
-		name="quantita" />
 	<findFieldProperty
 		name="cdUnitaMisura" />
 	<findFieldProperty
@@ -496,7 +492,7 @@
 	<columnFieldProperty
 		name="prezzoUnitario" />
 	<columnFieldProperty
-		name="quantita" />
+		name="dspQuantita" />
 	<columnFieldProperty
 		name="cdUnitaMisura" />
 	<columnFieldProperty

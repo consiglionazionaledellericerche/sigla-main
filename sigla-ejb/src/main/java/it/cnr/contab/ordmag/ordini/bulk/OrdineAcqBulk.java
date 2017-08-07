@@ -85,24 +85,15 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public final static String STATO_DEFINITIVO = "DEF";
 	public final static String STATO_INVIATO_ORDINE = "INV";
 	
-	public final static String COMMERCIALE = "C";
-	public final static String ISTITUZIONALE = "I";
-	public final static String PROMISCUA = "P";
-
 	private Boolean isUtenteAbilitatoInserimentoOrdine = true;
 	private Boolean isForApprovazione = false;
 		
 	public final static Dictionary STATO;
-	public final static Dictionary TIPO;
 	static{
 		STATO = new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INSERITO,"Inserito");
 		STATO.put(STATO_ANNULLATO,"Annullato");
 		STATO.put(STATO_DEFINITIVO,"Definitivo");
-
-		TIPO = new it.cnr.jada.util.OrderedHashtable();
-		TIPO.put(COMMERCIALE,"Commerciale");
-		TIPO.put(ISTITUZIONALE,"Istituzionale");
 	}
 
 	/**
@@ -919,13 +910,13 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		if (d == null) return null;
         	OrderedHashtable clone = (OrderedHashtable)d.clone();
         	if (!isNotAbledToModifyTipoIstCom()) 
-        		clone.remove(PROMISCUA);
+        		clone.remove(NumerazioneOrdBulk.PROMISCUA);
 		return clone;
 			
 	}
 	
 	public Dictionary getTi_istituz_commercKeysForSearch() {
-		return TIPO;
+		return NumerazioneOrdBulk.TIPO;
 	}
 	public boolean isNotAbledToModifyTipoIstCom(){
 		return (true); 
