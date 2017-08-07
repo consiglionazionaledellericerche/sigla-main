@@ -3,6 +3,8 @@
  * Date 26/04/2017
  */
 package it.cnr.contab.ordmag.anag00;
+import java.util.Dictionary;
+
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 public class NumerazioneOrdBulk extends NumerazioneOrdBase {
@@ -14,6 +16,17 @@ public class NumerazioneOrdBulk extends NumerazioneOrdBase {
 	 * [TIPO_OPERAZIONE_ORD Rappresenta l'anagrafica dei tipi operazione degli ordini.]
 	 **/
 	private TipoOperazioneOrdBulk tipoOperazioneOrd =  new TipoOperazioneOrdBulk();
+	public final static String COMMERCIALE = "C";
+	public final static String ISTITUZIONALE = "I";
+	public final static String PROMISCUA = "P";
+
+	public final static Dictionary TIPO;
+	static{
+		TIPO = new it.cnr.jada.util.OrderedHashtable();
+		TIPO.put(COMMERCIALE,"Commerciale");
+		TIPO.put(ISTITUZIONALE,"Istituzionale");
+	}
+
 	/**
 	 * [TIPO_SEZIONALE Definisce l'elenco delle tipologie di sezionali in uso. Rappresenta, idealmente, il suffisso di numerazione di ogni fattura (attiva/passiva) ai fini della protocollazione IVA.
 E' stata aggiunta la possibilità di una differenziazione in base all'attività commerciale svolta rilevante per le sole tipologie commerciali.
@@ -203,5 +216,8 @@ L'unico caso in cui si può verificare l'ipotesi che diversi sezionali (per attiv
 	 **/
 	public void setCdTipoSezionale(java.lang.String cdTipoSezionale)  {
 		this.getTipoSezionale().setCd_tipo_sezionale(cdTipoSezionale);
+	}
+	public Dictionary getTi_istituz_commercKeys() {
+		return NumerazioneOrdBulk.TIPO;
 	}
 }
