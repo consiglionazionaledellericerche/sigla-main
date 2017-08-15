@@ -1,12 +1,6 @@
 package it.cnr.contab.ordmag.ordini.bp;
-import java.io.IOException;
-
-import javax.servlet.jsp.JspWriter;
-
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.action.HttpActionContext;
 
 /**
  * Riga del documento generico passivo
@@ -19,55 +13,68 @@ public OrdineAcqRigaCRUDController(String name, Class modelClass, String listPro
 
 public boolean isGrowable() {
 	
-	OrdineAcqBulk doc = (OrdineAcqBulk)getParentModel();
-	return	super.isGrowable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() 
-//		&&	!doc.STATO_PAGATO.equalsIgnoreCase(doc.getStato_cofi()) && 
-//		(!doc.isDoc1210Associato() || (doc.getLettera_pagamento_estero()!=null && doc.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)==0))
-				;
+	OrdineAcqBulk ordine = (OrdineAcqBulk)getParentModel();
+	return	super.isGrowable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() &&
+			!ordine.isAnnullato();
 }
-
+/**
+ * Insert the method's description here.
+ * Creation date: (12/11/2001 4:23:46 PM)
+ * @return boolean
+ */
+/**
+ * Restituisce true se è possibile aggiungere nuovi elementi
+ */
 public boolean isShrinkable() {
-	
-	OrdineAcqBulk doc = (OrdineAcqBulk)getParentModel();
-	return	super.isShrinkable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() 
-//			&&
-//			!doc.STATO_PAGATO.equalsIgnoreCase(doc.getStato_cofi()) &&
-//			(!doc.isDoc1210Associato() || (doc.getLettera_pagamento_estero()!=null && doc.getLettera_pagamento_estero().getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO)==0))
-			;
+	OrdineAcqBulk ordine = (OrdineAcqBulk)getParentModel();
+	return	super.isShrinkable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() &&
+			!ordine.isAnnullato();
+			//Tolto come da richiesta 423
+			//&&
+			//fatturaP.getProtocollo_iva() == null &&
+			//fatturaP.getProtocollo_iva_generale() == null;
 }
-
-public void validate(ActionContext context,OggettoBulk model) throws ValidationException {
-//	if (context.getCurrentCommand().equals("doContabilizzaObbligazioni"))
-//		return;
+/**
+ * Insert the method's description here.
+ * Creation date: (12/11/2001 4:23:46 PM)
+ * @param newInventoriedChildDeleted boolean
+ */
+//public void validate(ActionContext context,OggettoBulk model) throws ValidationException {
 //	try {
-//		if ((Documento_generico_rigaBulk)model!=null && (((Documento_generico_rigaBulk)model).getTerzo()==null || ((Documento_generico_rigaBulk)model).getTerzo().getAnagrafico()==null))
-//			throw new ValidationException("Il campo anagrafica e' obbligatorio");
-//		if ((Documento_generico_rigaBulk)model!=null && ((Documento_generico_rigaBulk)model).getDs_riga()==null)
-//			throw new ValidationException("Inserire una descrizione");
-//		if ((Documento_generico_rigaBulk)model!=null && (((Documento_generico_rigaBulk)model).getIm_riga()==null || ((Documento_generico_rigaBulk)model).getIm_riga().compareTo(new java.math.BigDecimal(0))==0))
-//			throw new ValidationException("Inserire un importo positivo");
-//		if ((Documento_generico_rigaBulk)model!=null && ((Documento_generico_rigaBulk)model).getBanca()==null)
-//			throw new ValidationException("Inserire dei riferimenti bancari corretti");
-//		((DocumentoGenericoComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession())).validaRiga(context.getUserContext(), (Documento_generico_rigaBulk)model);
-//	} catch (ValidationException e) {
-//		throw e;
+//		((FatturaPassivaComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession())).validaRiga(context.getUserContext(), (Fattura_passiva_rigaBulk)model);
 //	} catch (it.cnr.jada.comp.ApplicationException e) {
 //		throw new ValidationException(e.getMessage());
 //	} catch (Throwable e) {
 //		throw new it.cnr.jada.DetailedRuntimeException(e);
 //	}
-}
-
-public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
+//}
+//public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
 //	try {
-//		Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk)detail;
-//		if (riga.getTi_associato_manrev() != null && riga.ASSOCIATO_A_MANDATO.equalsIgnoreCase(riga.getTi_associato_manrev()))
+//		Fattura_passiva_rigaBulk fpr = (Fattura_passiva_rigaBulk)detail;
+//		if (fpr.getTi_associato_manrev() != null && fpr.ASSOCIATO_A_MANDATO.equalsIgnoreCase(fpr.getTi_associato_manrev()))
 //			throw new ValidationException("Impossibile eliminare il dettaglio \"" + 
-//											((riga.getDs_riga() != null) ?
-//												riga.getDs_riga() :
-//												String.valueOf(riga.getProgressivo_riga().longValue())) + 
+//											((fpr.getDs_riga_fattura() != null) ?
+//												fpr.getDs_riga_fattura() :
+//												String.valueOf(fpr.getProgressivo_riga().longValue())) + 
 //											"\" perchè associato a mandato.");
-//		((DocumentoGenericoComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession())).eliminaRiga(context.getUserContext(), (Documento_generico_rigaBulk)detail);
+//		FatturaPassivaComponentSession comp = ((FatturaPassivaComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession()));
+//		comp.eliminaRiga(context.getUserContext(), fpr);
+//
+//		if (!fpr.isPagata() && !fpr.isToBeCreated()) {
+//			try {
+//				List result = comp.findManRevRigaCollegati(context.getUserContext(), fpr);
+//				if (result!=null && !result.isEmpty())
+//					throw new ValidationException("Impossibile eliminare il dettaglio \"" + 
+//							((fpr.getDs_riga_fattura() != null) ?
+//								fpr.getDs_riga_fattura() :
+//								String.valueOf(fpr.getProgressivo_riga().longValue())) + 
+//							"\" perchè associato a mandato annullato.");
+//			} catch (PersistencyException e) {
+//				throw new ComponentException(e);
+//			} catch (IntrospectionException e) {
+//				throw new ComponentException(e);
+//			}
+//		}
 //	} catch (it.cnr.jada.comp.ApplicationException e) {
 //		throw new ValidationException(e.getMessage());
 //	} catch (ValidationException e) {
@@ -75,8 +82,7 @@ public void validateForDelete(ActionContext context, OggettoBulk detail) throws 
 //	} catch (Throwable e) {
 //		throw new it.cnr.jada.DetailedRuntimeException(e);
 //	}
-}
-
+//}
 public void writeHTMLToolbar(
 		javax.servlet.jsp.PageContext context,
 		boolean reset,
@@ -84,40 +90,22 @@ public void writeHTMLToolbar(
 		boolean delete) throws java.io.IOException, javax.servlet.ServletException {
 
 		super.writeHTMLToolbar(context, reset, find, delete);
-
-//		String command = "javascript:submitForm('doRicercaObbligazione')";
-//		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-//			context,
-//			"img/history16.gif",
-//			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDRichiestaUopBP)getParentController()).isSearching())? command : null,
-//			true,"Contabilizza");
-}
-@Override
-	public void writeFormInput(JspWriter jspwriter, String s, String s1,
-			boolean flag, String s2, String s3) throws IOException {
+		boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+		String command = null;
+		if (getParentController() != null)
+			command = "javascript:submitForm('doRicercaObbligazione')";
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getParentController();
+		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+			context,
+			isFromBootstrap ? "fa fa-fw fa-bolt" : "img/history16.gif",
+			!(isInputReadonly() || getDetails().isEmpty() || bp.isSearching())? command : null,
+			true,
+			"Crea/Associa Impegni",
+			"btn-sm btn-outline-primary btn-title",
+			isFromBootstrap);
+		
+			boolean enabled = (!(isInputReadonly() || getDetails().isEmpty() || bp.isSearching() || bp.isViewing()) ||
+	                            bp.isManualModify()); 
 	
-	OrdineAcqBulk doc=null;
-	if(((it.cnr.jada.util.action.CRUDBP)getParentController()) instanceof CRUDOrdineAcqBP ){
-	if(((it.cnr.jada.util.action.CRUDBP)getParentController()).getModel()!=null)
-		doc = (OrdineAcqBulk)((it.cnr.jada.util.action.CRUDBP)getParentController()).getModel();
-//		if (doc!=null &&
-//			doc.isRiportataInScrivania()&&
-//			!doc.isPagata()&& 
-//			isInputReadonly()&& 
-//			s1.equals("modalita_pagamento")){ 
-//				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnModalitaPagamentoChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
-//		}else
-//			if (doc!=null &&
-//			doc.isRiportataInScrivania()&&
-//			!doc.isPagata()&& 
-//			isInputReadonly()&& 
-//			s1.equals("listabanche")){ 
-//				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag,
-//						s2,"" ,
-//						getInputPrefix(), getStatus(), getFieldValidationMap());
-//			}
-//		else
-			super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
-	}
-	}
+}
 }

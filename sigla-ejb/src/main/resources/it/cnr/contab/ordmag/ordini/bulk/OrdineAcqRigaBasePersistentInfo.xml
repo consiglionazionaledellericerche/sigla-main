@@ -112,6 +112,20 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
+			columnName="IM_IVA_D"
+			propertyName="imIvaD"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_ND"
+			propertyName="imIvaNd"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
 			columnName="IM_TOTALE_RIGA"
 			propertyName="imTotaleRiga"
 			sqlTypeName="DECIMAL"
@@ -187,6 +201,10 @@
 		name="imImponibile" />
 	<persistentProperty
 		name="imIva" />
+	<persistentProperty
+		name="imIvaD" />
+	<persistentProperty
+		name="imIvaNd" />
 	<persistentProperty
 		name="imTotaleRiga" />
 	<persistentProperty
