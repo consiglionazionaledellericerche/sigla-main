@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.Vector;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.cmis.MimeTypes;
@@ -27,16 +29,36 @@ import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
+import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
+import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
-import it.cnr.contab.ordmag.anag00.BeneServizioTipoGestBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagHome;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
@@ -56,6 +78,7 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineHome;
+import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
@@ -65,7 +88,9 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
@@ -75,6 +100,8 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class OrdineAcqComponent
 	extends it.cnr.jada.comp.CRUDComponent
@@ -128,11 +155,86 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		OrdineAcqBulk ordine= (OrdineAcqBulk) bulk;
 //			//assegna un progressivo al documento all'atto della creazione.
 		validaOrdine(userContext, ordine);
+		calcolaImportoOrdine(userContext, ordine);
+		aggiornaObbligazioni(userContext,ordine,status);
 		assegnaProgressivo(userContext, ordine);
 		ordine = (OrdineAcqBulk)super.creaConBulk(userContext, ordine);
 		return ordine;
 	}
 
+	private void calcolaImportoOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException{
+		ParametriCalcoloImportoOrdine parametriTestata = new ParametriCalcoloImportoOrdine();
+		parametriTestata.setCambio(ordine.getCambio());
+		parametriTestata.setDivisa(ordine.getDivisa());
+		parametriTestata.setDivisaRisultato(getEuro(userContext));
+		parametriTestata.setPercProrata(ordine.getPercProrata());
+		ordine.setImImponibile(BigDecimal.ZERO);
+		ordine.setImIva(BigDecimal.ZERO);
+		ordine.setImIvaD(BigDecimal.ZERO);
+		ordine.setImTotaleOrdine(BigDecimal.ZERO);
+    	for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
+    		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
+    		if (riga != null){
+    			ParametriCalcoloImportoOrdine parametriRiga = (ParametriCalcoloImportoOrdine)parametriTestata.clone();
+    			parametriRiga.setCoefacq(riga.getCoefConv());
+    			parametriRiga.setPrezzo(riga.getPrezzoUnitario());
+    			parametriRiga.setSconto1(riga.getSconto1());
+    			parametriRiga.setSconto2(riga.getSconto2());
+    			parametriRiga.setSconto3(riga.getSconto3());
+    			parametriRiga.setVoceIva(riga.getVoceIva());
+    			riga.setImImponibile(BigDecimal.ZERO);
+    			riga.setImImponibileDivisa(BigDecimal.ZERO);
+    			riga.setImIva(BigDecimal.ZERO);
+    			riga.setImIvaDivisa(BigDecimal.ZERO);
+    			riga.setImIvaD(BigDecimal.ZERO);
+    			riga.setImIvaNd(BigDecimal.ZERO);
+    			riga.setImTotaleRiga(BigDecimal.ZERO);
+            	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
+            		OggettoBulk consbulk= (OggettoBulk) c.next();
+            		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
+        			ParametriCalcoloImportoOrdine parametriCons = (ParametriCalcoloImportoOrdine)parametriRiga.clone();
+        			parametriCons.setQtaOrd(cons.getQuantita());
+        			parametriCons.setArrAliIva(cons.getArrAliIva());
+        			ImportoOrdine importo = calcoloImportoOrdine(parametriCons);
+        			cons.setImImponibile(importo.getImponibile());
+        			cons.setImImponibileDivisa(importo.getImponibile());
+        			cons.setImIva(importo.getImportoIva());
+        			cons.setImIvaDivisa(importo.getImportoIva());
+        			cons.setImIvaD(importo.getImportoIvaDetraibile());
+        			cons.setImIvaNd(importo.getImportoIvaInd());
+        			cons.setImTotaleConsegna(importo.getTotale());
+        			cons.setToBeUpdated();
+        			riga.setImImponibile(riga.getImImponibile().add(cons.getImImponibile()));
+        			riga.setImImponibileDivisa(riga.getImImponibileDivisa().add(cons.getImImponibileDivisa()));
+        			riga.setImIva(riga.getImIva().add(cons.getImIva()));
+        			riga.setImIvaDivisa(riga.getImIvaDivisa().add(cons.getImIvaDivisa()));
+        			riga.setImIvaD(riga.getImIvaD().add(cons.getImIvaD()));
+        			riga.setImIvaNd(riga.getImIvaNd().add(cons.getImIvaNd()));
+        			riga.setImTotaleRiga(riga.getImTotaleRiga().add(cons.getImTotaleConsegna()));
+        			riga.setToBeUpdated();
+            	}
+    		}
+		}
+		impostaTotaliOrdine(ordine);
+	}
+
+	public void impostaTotaliOrdine(OrdineAcqBulk ordine) {
+		for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
+			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
+			if (riga != null){
+				for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
+					OggettoBulk consbulk= (OggettoBulk) c.next();
+					OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
+					ordine.setImImponibile(Utility.nvl(ordine.getImImponibile()).add(cons.getImImponibile()));
+					ordine.setImIva(Utility.nvl(ordine.getImIva()).add(cons.getImIva()));
+					ordine.setImIvaD(Utility.nvl(ordine.getImIvaD()).add(cons.getImIvaD()));
+					ordine.setImTotaleOrdine(Utility.nvl(ordine.getImTotaleOrdine()).add(cons.getImTotaleConsegna()));
+				}
+			}
+		}
+	}
+	
+	
 	private void validaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException{
 		if (ordine.getRigheOrdineColl() == null || ordine.getRigheOrdineColl().size() == 0){
 			throw new ApplicationException ("Non è possibile salvare un ordine senza dettagli.");
@@ -141,6 +243,11 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
     		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
     		if (riga != null){
     			gestioneSalvataggioRigaConsegnaSingola(riga);
+            	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
+            		OggettoBulk consbulk= (OggettoBulk) c.next();
+            		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
+            		cons.setObbligazioneScadenzario(riga.getDspObbligazioneScadenzario());
+            	}
 //    			if (riga.getCdElementoVoce() != null && riga.getCdCategoriaGruppo() != null){
 //    				Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class,"V_ELEMENTO_VOCE_ORDINI");
 //    				SQLBuilder sql = home.createSQLBuilder();
@@ -237,13 +344,24 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 				consegna = new OrdineAcqConsegnaBulk();
 				consegna.setOrdineAcqRiga(riga);
 				consegna.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
-				consegna.setRiga(1);
+				consegna.setRiga(riga.getRiga());
+				consegna.setConsegna(1);
 				consegna.setToBeCreated();
 			} else {
 				consegna = (OrdineAcqConsegnaBulk)riga.getRigheConsegnaColl().get(0);
 				riga.getRigheConsegnaColl().remove(consegna);
 				consegna.setToBeUpdated();
 			}
+			consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+			consegna.setStatoFatt(OrdineAcqConsegnaBulk.STATO_FATT_NON_ASSOCIATA);
+			consegna.setImImponibile(riga.getImImponibile());
+			consegna.setImImponibileDivisa(riga.getImImponibileDivisa());
+			consegna.setImIva(riga.getImIva());
+			consegna.setImIvaDivisa(riga.getImIvaDivisa());
+			consegna.setImTotaleConsegna(riga.getImTotaleRiga());
+			consegna.setImIvaD(riga.getImIvaD());
+			consegna.setImIvaNd(riga.getImIvaNd());
+
 			consegna.setLuogoConsegnaMag(riga.getDspLuogoConsegna());
 			consegna.setMagazzino(riga.getDspMagazzino());
 			consegna.setDtPrevConsegna(riga.getDspDtPrevConsegna());
@@ -337,6 +455,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
         			Obbligazione_scadenzarioHome home = (Obbligazione_scadenzarioHome)getHome(usercontext, Obbligazione_scadenzarioBulk.class);
         			Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk)home.findByPrimaryKey(new Obbligazione_scadenzarioBulk(cons.getCdCdsObbl(), cons.getEsercizioObbl(), cons.getEsercizioOrigObbl(), cons.getPgObbligazione(), cons.getPgObbligazioneScad()));
         			cons.setObbligazioneScadenzario(scad);
+        			riga.setDspObbligazioneScadenzario(scad);
         		}
         		if (cons.getUnitaOperativaOrd() != null){
         			UnitaOperativaOrdHome home = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
@@ -358,7 +477,9 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     	throw handleException(e);
     }
         
-	return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
+    impostaTotaliOrdine(ordine);
+    rebuildObbligazioni(usercontext, ordine);
+    return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
 }
 
 @Override
@@ -806,7 +927,7 @@ private void assegnaNumeratoreOrd(UserContext usercontext, OrdineAcqBulk ordine,
 			if (listNum != null && listNum.size() == 1){
 				ordine.setNumerazioneOrd((NumerazioneOrdBulk)listNum.get(0));
 				ordine.setPercProrata(((NumerazioneOrdBulk)listNum.get(0)).getPercProrata());
-				ordine.setTi_istituz_commerc(((NumerazioneOrdBulk)listNum.get(0)).getTi_istituz_commerc());
+				ordine.setTiAttivita(((NumerazioneOrdBulk)listNum.get(0)).getTi_istituz_commerc());
 			}
 //			}
 	}
@@ -849,12 +970,19 @@ public void completaOrdine(UserContext userContext, OrdineAcqBulk ordine) throws
 //	assegnaUnitaOperativaDest(userContext, ordine, home, uopHome);
 }
 
+public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status)
+		throws it.cnr.jada.comp.ComponentException {
+	OrdineAcqBulk ordine= (OrdineAcqBulk)bulk;
+	validaOrdine(userContext, ordine);
+	calcolaImportoOrdine(userContext, ordine);
+	aggiornaObbligazioni(userContext,ordine,status);
+	return (OrdineAcqBulk)super.modificaConBulk(userContext, bulk);
+}
+
+
 @Override
 public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
-	// TODO Auto-generated method stub
-	OrdineAcqBulk ordine= (OrdineAcqBulk)super.modificaConBulk(usercontext, oggettobulk);
-	validaOrdine(usercontext, ordine);
-	return ordine;
+	return modificaConBulk(usercontext, oggettobulk, null);
 }
 
 private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
@@ -863,7 +991,7 @@ private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 	try {
 		cd_euro = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(userContext, new Integer(0), "*", "CD_DIVISA", "EURO");
 		if (cd_euro == null)
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire una fattura, immettere tale valore.");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
 	} catch (javax.ejb.EJBException e) {
 		handleException(e);
 	} catch (java.rmi.RemoteException e) {
@@ -875,10 +1003,10 @@ private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 	try {
 		java.util.List divise = getHome(userContext, DivisaBulk.class).find(new it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk(cd_euro));
 		if (divise == null || divise.isEmpty())
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire una fattura, immettere tale valore.");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
 		valuta = (DivisaBulk)divise.get(0);
 		if (valuta == null)
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire una fattura, immettere tale valore.");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
 		handleException(e);
 	}
@@ -952,7 +1080,7 @@ public SQLBuilder selectProcedureAmministrativeByClause (UserContext userContext
 	  sql.addClause(clause);
 	return sql;
 }	
-public void calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametri) throws ApplicationException{
+public ImportoOrdine calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametri) throws ApplicationException{
 	BigDecimal prezzo = Utility.nvl(parametri.getPrezzoRet(), parametri.getPrezzo());
 	BigDecimal cambio = Utility.nvl(parametri.getCambioRet(), parametri.getCambio());
 	if (parametri.getDivisa() == null || parametri.getDivisaRisultato() == null || 
@@ -980,16 +1108,411 @@ public void calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametri) throws
 	} else {
 		voceIva = parametri.getVoceIva();
 	}
-	BigDecimal importoIva = Utility.round2Decimali((Utility.divide(prezzoScontato, Utility.CENTO)).multiply(voceIva.getPercentuale())); 
+	BigDecimal importoIva = Utility.round2Decimali((Utility.divide(imponibile, Utility.CENTO)).multiply(voceIva.getPercentuale())); 
 	BigDecimal ivaNonDetraibile = Utility.round2Decimali(importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita()))));
 	BigDecimal ivaPerCalcoloProrata = importoIva.subtract(ivaNonDetraibile);
 	BigDecimal ivaDetraibile = Utility.round2Decimali(ivaPerCalcoloProrata.multiply(Utility.nvl(parametri.getPercProrata())));
 	ivaNonDetraibile = ivaNonDetraibile.add((ivaPerCalcoloProrata.subtract(ivaDetraibile)));
 	
 	if (ivaDetraibile.compareTo(BigDecimal.ZERO) == 0 || ivaNonDetraibile.compareTo(BigDecimal.ZERO) > 0){
-		ivaNonDetraibile = ivaNonDetraibile.add(parametri.getArrAliIva());
+		ivaNonDetraibile = ivaNonDetraibile.add(Utility.nvl(parametri.getArrAliIva()));
 	}else {
-		ivaDetraibile = ivaDetraibile.add(parametri.getArrAliIva());
+		ivaDetraibile = ivaDetraibile.add(Utility.nvl(parametri.getArrAliIva()));
+	}
+	importoIva = importoIva.add(ivaDetraibile);
+	ImportoOrdine importoOrdine = new ImportoOrdine();
+	importoOrdine.setImponibile(Utility.round2Decimali(imponibile));
+	importoOrdine.setImportoIva(Utility.round2Decimali(importoIva));
+	importoOrdine.setImportoIvaInd(Utility.round2Decimali(ivaNonDetraibile));
+	importoOrdine.setImportoIvaDetraibile(Utility.round2Decimali(ivaDetraibile));
+	importoOrdine.setArrAliIva(BigDecimal.ZERO);
+	return importoOrdine;
+}
+public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbligazioniVBulk filtro)
+		throws ComponentException {
+
+		Obbligazione_scadenzarioHome home = (Obbligazione_scadenzarioHome)getHome(context, Obbligazione_scadenzarioBulk.class);
+		it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
+		sql.setDistinctClause(true);
+		sql.addTableToHeader("OBBLIGAZIONE");
+		sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.CD_CDS","OBBLIGAZIONE.CD_CDS");
+		sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO","OBBLIGAZIONE.ESERCIZIO");
+		sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE","OBBLIGAZIONE.ESERCIZIO_ORIGINALE");
+		sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE","OBBLIGAZIONE.PG_OBBLIGAZIONE");
+
+		sql.addTableToHeader("ELEMENTO_VOCE");
+		sql.addSQLJoin("OBBLIGAZIONE.CD_ELEMENTO_VOCE","ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
+		sql.addSQLJoin("OBBLIGAZIONE.TI_APPARTENENZA","ELEMENTO_VOCE.TI_APPARTENENZA");
+		sql.addSQLJoin("OBBLIGAZIONE.TI_GESTIONE","ELEMENTO_VOCE.TI_GESTIONE");
+		sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
+
+		sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+		sql.addSQLClause("AND","OBBLIGAZIONE.RIPORTATO", sql.EQUALS, "N");
+		sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
+		sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
+		sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
+		sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
+		sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
+		sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
+		sql.addSQLClause("AND","OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS, filtro.getCd_unita_organizzativa());
+
+		if (filtro.getElemento_voce() != null) {
+			sql.addSQLClause("AND","OBBLIGAZIONE.CD_ELEMENTO_VOCE",sql.STARTSWITH, filtro.getElemento_voce().getCd_elemento_voce());
+			sql.addSQLClause("AND","OBBLIGAZIONE.TI_APPARTENENZA",sql.EQUALS, filtro.getElemento_voce().getTi_appartenenza());
+			sql.addSQLClause("AND","OBBLIGAZIONE.TI_GESTIONE",sql.EQUALS, filtro.getElemento_voce().getTi_gestione());
+			sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO",sql.EQUALS, filtro.getElemento_voce().getEsercizio());
+		}
+		
+		sql.addSQLClause("AND","OBBLIGAZIONE.FL_PGIRO",sql.EQUALS, "N");
+
+		if (!filtro.getFl_fornitore().booleanValue()) {
+			sql.addTableToHeader("TERZO");
+			sql.addTableToHeader("ANAGRAFICO");
+			sql.addSQLJoin("OBBLIGAZIONE.CD_TERZO", "TERZO.CD_TERZO");
+			sql.addSQLJoin("TERZO.CD_ANAG", "ANAGRAFICO.CD_ANAG");
+			sql.addSQLClause("AND","(OBBLIGAZIONE.CD_TERZO = ? OR ANAGRAFICO.TI_ENTITA = ?)");
+			sql.addParameter(filtro.getFornitore().getCd_terzo(),java.sql.Types.INTEGER,0);
+			sql.addParameter(AnagraficoBulk.DIVERSI,java.sql.Types.VARCHAR,0);
+		} else {
+			sql.addSQLClause("AND","OBBLIGAZIONE.CD_TERZO",sql.EQUALS, filtro.getFornitore().getCd_terzo());
+		}
+		
+		if (filtro.getFl_data_scadenziario().booleanValue() && filtro.getData_scadenziario() != null)
+			sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA",sql.EQUALS, filtro.getData_scadenziario());
+		if (filtro.getFl_importo().booleanValue() && filtro.getIm_importo() != null)
+			sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA",sql.GREATER_EQUALS, filtro.getIm_importo());
+
+		//filtro su Tipo obbligazione
+		if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getTipo_obbligazione() != null) {
+			if (ObbligazioneBulk.TIPO_COMPETENZA.equals(filtro.getTipo_obbligazione()))
+				sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB);
+			else if (ObbligazioneBulk.TIPO_RESIDUO_PROPRIO.equals(filtro.getTipo_obbligazione()))
+				sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB_RES);
+			else if (ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO.equals(filtro.getTipo_obbligazione()))
+				sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA);
+		}
+
+		//filtro su Anno Residuo obbligazione
+		if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getEsercizio_ori_obbligazione() != null)
+			sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO_ORIGINALE",sql.EQUALS, filtro.getEsercizio_ori_obbligazione());
+
+		//filtro su Numero obbligazione
+		if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getNr_obbligazione() != null)
+			sql.addSQLClause("AND","OBBLIGAZIONE.PG_OBBLIGAZIONE",sql.EQUALS, filtro.getNr_obbligazione());
+
+		return iterator(
+			context,
+			sql,
+			Obbligazione_scadenzarioBulk.class,
+			"default");
+	} 
+public OrdineAcqBulk contabilizzaDettagliSelezionati(
+		UserContext context,
+		OrdineAcqBulk ordine,
+		java.util.Collection dettagliSelezionati,
+		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneSelezionata)
+		throws ComponentException {
+
+		if (obbligazioneSelezionata != null && dettagliSelezionati != null) {
+			if (!dettagliSelezionati.isEmpty()) {
+				for (java.util.Iterator i = dettagliSelezionati.iterator(); i.hasNext();) {
+					OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)i.next();
+
+	                validaScadenze(ordine, obbligazioneSelezionata);
+	                
+	                riga.setDspObbligazioneScadenzario(obbligazioneSelezionata);
+					riga.setToBeUpdated();
+					ordine.addToOrdineObbligazioniHash(obbligazioneSelezionata, riga);
+				}
+				ordine.addToOrdineAss_totaliMap(obbligazioneSelezionata, calcolaTotalePer(
+											(Vector)ordine.getOrdineObbligazioniHash().get(obbligazioneSelezionata),
+											false));
+			} else {
+				ordine.addToOrdineObbligazioniHash(obbligazioneSelezionata, null);
+			}
+			try {
+				ObbligazioneAbstractComponentSession session = (ObbligazioneAbstractComponentSession)EJBCommonServices.createEJB(
+																"CNRDOCCONT00_EJB_ObbligazioneAbstractComponentSession",
+																ObbligazioneAbstractComponentSession.class);
+				session.lockScadenza(context, obbligazioneSelezionata);
+			} catch (Throwable t) {
+				throw handleException(ordine, t);
+			}
+		}
+		return ordine;
+	}
+
+private java.math.BigDecimal calcolaTotalePer(
+		java.util.List selectedModels,
+		boolean escludiIVA)
+		throws it.cnr.jada.comp.ApplicationException {
+
+		java.math.BigDecimal importo = new java.math.BigDecimal(0);
+		//RP 20/03/2015 
+		boolean escludiIVAInt=false;
+		boolean escludiIVAOld=escludiIVA;	
+		if (selectedModels != null) {
+			for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
+				escludiIVA=escludiIVAOld;	
+				OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)i.next();
+				importo = importo.add(
+					(escludiIVA	) ?
+						riga.getImImponibile() :
+						riga.getImTotaleRiga());
+			}
+		}
+
+		importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+		return importo;
+	}
+
+private void validaScadenze(OrdineAcqBulk ordine, Obbligazione_scadenzarioBulk newScad) throws ComponentException{
+	Iterator it;
+	
+	Vector scadCanc = ordine.getDocumentiContabiliCancellati();
+	if (scadCanc != null) {
+		it = scadCanc.iterator();
+	 
+		while(it.hasNext()) {
+			Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) it.next();
+			if(scad.getObbligazione() instanceof ObbligazioneResBulk){
+				if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione()) && ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica()!=null
+					&& ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica().getPg_modifica()!=null) {
+					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poichè é stata effettuata una modifica in questo ordine!");									
+				}
+			}
+		}
+	}
+		
+    ObbligazioniTable obbligazioniHash= ordine.getObbligazioniHash();
+    if (obbligazioniHash != null && !obbligazioniHash.isEmpty()) {
+
+    	for (java.util.Enumeration e= obbligazioniHash.keys(); e.hasMoreElements();) {
+    		Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) e.nextElement();
+    		if(scad.getObbligazione() instanceof ObbligazioneResBulk){
+    			if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione()) && ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica()!=null
+					&& ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica().getPg_modifica()!=null) {
+    				throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poichè è stata effettuata una modifica in questo ordine!");									
+    			}
+    		}
+    	}
+    }
+}
+private void aggiornaObbligazioni(
+		UserContext userContext,
+		OrdineAcqBulk ordine,
+		OptionRequestParameter status)
+		throws ComponentException {
+
+		if (ordine != null) {
+			ObbligazioniTable obbligazioniHash = ordine.getOrdineObbligazioniHash();
+			if (obbligazioniHash != null && !obbligazioniHash.isEmpty()) {
+				Obbligazione_scadenzarioHome home = (Obbligazione_scadenzarioHome)getHome(userContext, Obbligazione_scadenzarioBulk.class);
+
+				//Aggiorna i saldi per le obbligazioni NON temporanee
+				for (java.util.Enumeration e = getDocumentiContabiliNonTemporanei(userContext, ((ObbligazioniTable)obbligazioniHash.clone()).keys()).keys(); e.hasMoreElements();)
+					aggiornaSaldi(
+						userContext, 
+						ordine, 
+						(IDocumentoContabileBulk)e.nextElement(),
+						status);
+					
+				PrimaryKeyHashtable obblTemporanee = getDocumentiContabiliTemporanei(userContext, ((ObbligazioniTable)obbligazioniHash.clone()).keys());
+				for (java.util.Enumeration e = obblTemporanee.keys(); e.hasMoreElements();) {
+					ObbligazioneBulk obblT = (ObbligazioneBulk)e.nextElement();
+
+					//Aggiorna i saldi per le obbligazioni temporanee
+					//DEVE ESSERE FATTO PRIMA DELL'AGGIORNAMENTO A DEFINITIVA
+					aggiornaSaldi(userContext, ordine, obblT, status);
+					
+					aggiornaObbligazioniTemporanee(userContext, obblT);
+					obblTemporanee = new it.cnr.jada.bulk.PrimaryKeyHashtable(obblTemporanee);
+					for (Iterator i = ((Vector)obblTemporanee.get(obblT)).iterator(); i.hasNext();) 
+						((ObbligazioneBulk)i.next()).setPg_obbligazione(obblT.getPg_obbligazione());
+				}
+				ObbligazioniTable newObbligazioniHash = new ObbligazioniTable(obbligazioniHash);
+
+				ordine.setOrdineObbligazioniHash(newObbligazioniHash);
+				for (java.util.Enumeration e = ((ObbligazioniTable)newObbligazioniHash.clone()).keys(); e.hasMoreElements();) {
+					Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)e.nextElement();
+					java.math.BigDecimal im_ass = null;
+					im_ass = calcolaTotaleObbligazione(userContext, scadenza, ordine);
+						
+					scadenza.setIm_associato_doc_amm(im_ass);
+					updateImportoAssociatoDocAmm(userContext, scadenza);
+				}
+			}
+		}
+	}
+private it.cnr.jada.bulk.PrimaryKeyHashtable getDocumentiContabiliNonTemporanei(
+		UserContext userContext, 
+		java.util.Enumeration scadenze) throws ComponentException {
+
+		it.cnr.jada.bulk.PrimaryKeyHashtable documentiContabiliNonTemporanei = new it.cnr.jada.bulk.PrimaryKeyHashtable();
+		if (scadenze != null)
+			while (scadenze.hasMoreElements()) {
+				IScadenzaDocumentoContabileBulk scadenza = (IScadenzaDocumentoContabileBulk)scadenze.nextElement();
+				if (!scadenza.getFather().isTemporaneo()) {
+					if (!documentiContabiliNonTemporanei.containsKey(scadenza.getFather())) {
+						Vector allInstances = new java.util.Vector();
+						allInstances.addElement(scadenza.getFather());
+						documentiContabiliNonTemporanei.put(scadenza.getFather(), allInstances);
+					} else {
+						((Vector)documentiContabiliNonTemporanei.get(scadenza.getFather())).add(scadenza.getFather());
+					}
+				}
+			}
+		return documentiContabiliNonTemporanei;
+	}
+private it.cnr.jada.bulk.PrimaryKeyHashtable getDocumentiContabiliTemporanei(UserContext userContext, java.util.Enumeration scadenze) throws ComponentException {
+
+	it.cnr.jada.bulk.PrimaryKeyHashtable documentiContabiliTemporanei = new it.cnr.jada.bulk.PrimaryKeyHashtable();
+	if (scadenze != null)
+		while (scadenze.hasMoreElements()) {
+			IScadenzaDocumentoContabileBulk scadenza = (IScadenzaDocumentoContabileBulk)scadenze.nextElement();
+			if (scadenza.getFather().isTemporaneo()) {
+				if (!documentiContabiliTemporanei.containsKey(scadenza.getFather())) {
+					Vector allInstances = new java.util.Vector();
+					allInstances.addElement(scadenza.getFather());
+					documentiContabiliTemporanei.put(scadenza.getFather(), allInstances);
+				} else {
+					((Vector)documentiContabiliTemporanei.get(scadenza.getFather())).add(scadenza.getFather());
+				}
+			}
+		}
+	return documentiContabiliTemporanei;
+}
+private void aggiornaSaldi(
+		it.cnr.jada.UserContext uc,
+		OrdineAcqBulk ordine,
+		IDocumentoContabileBulk docCont,
+		OptionRequestParameter status) 
+	 	throws ComponentException{
+
+		try {
+			if (docCont != null && ordine != null && ordine.getDefferredSaldi() != null) {
+				IDocumentoContabileBulk key = ordine.getDefferredSaldoFor(docCont);
+				if (key != null) {
+					java.util.Map values = (java.util.Map)ordine.getDefferredSaldi().get(key);
+					//QUI chiamare component del documento contabile interessato
+					String jndiName = null;
+					Class clazz = null;
+					DocumentoContabileComponentSession session = null;
+					if (docCont instanceof ObbligazioneBulk) {
+						jndiName = "CNRDOCCONT00_EJB_ObbligazioneAbstractComponentSession";
+						clazz = ObbligazioneAbstractComponentSession.class;
+						session = 
+							(ObbligazioneAbstractComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB(
+							jndiName,clazz);
+					}
+					if (session != null) {
+						session.aggiornaSaldiInDifferita(uc, key, values, status);
+						//NON Differibile: si rischia di riprocessare i saldi impropriamente
+						ordine.getDefferredSaldi().remove(key);
+					}
+				}
+			}
+		} catch (javax.ejb.EJBException e) {
+			throw handleException(ordine, e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(ordine, e);
+		}
+	}
+
+private void aggiornaObbligazioniTemporanee(UserContext userContext,ObbligazioneBulk obbligazioneTemporanea) throws ComponentException {
+
+	try {
+		Numerazione_doc_contHome numHome = (Numerazione_doc_contHome) getHomeCache(userContext).getHome(Numerazione_doc_contBulk.class);
+		Long pg = null;
+		pg = numHome.getNextPg(userContext,
+						obbligazioneTemporanea.getEsercizio(), 
+						obbligazioneTemporanea.getCd_cds(), 
+						obbligazioneTemporanea.getCd_tipo_documento_cont(), 
+						obbligazioneTemporanea.getUser());
+		ObbligazioneHome home = (ObbligazioneHome)getHome(userContext, obbligazioneTemporanea);
+		home.confirmObbligazioneTemporanea(userContext, obbligazioneTemporanea, pg);
+	} catch (it.cnr.jada.persistency.PersistencyException e) {
+		throw handleException(obbligazioneTemporanea, e);
+	} catch (it.cnr.jada.persistency.IntrospectionException e) {
+		throw handleException(obbligazioneTemporanea, e);
+	}	
+}
+
+private java.math.BigDecimal calcolaTotaleObbligazione(
+		it.cnr.jada.UserContext userContext,
+		Obbligazione_scadenzarioBulk scadenza,
+		OrdineAcqBulk ordine)
+				throws it.cnr.jada.comp.ComponentException {
+
+	ObbligazioniTable obbligazioniHash = ordine.getOrdineObbligazioniHash();
+	Vector dettagli = (Vector)obbligazioniHash.get(scadenza);
+	java.math.BigDecimal impTotaleDettagli = calcolaTotalePer(dettagli, false);
+	return impTotaleDettagli;
+}
+public IScadenzaDocumentoContabileBulk updateImportoAssociatoDocAmm(
+		it.cnr.jada.UserContext userContext, 
+		IScadenzaDocumentoContabileBulk scadenza)
+		throws it.cnr.jada.comp.ComponentException {
+
+		try {
+			((IScadenzaDocumentoContabileHome)getHome(userContext, scadenza.getClass())).aggiornaImportoAssociatoADocAmm(userContext,scadenza);
+		} catch (it.cnr.jada.persistency.PersistencyException exc) {
+			throw handleException((OggettoBulk)scadenza, exc);
+		} catch (it.cnr.jada.bulk.BusyResourceException exc) {
+			throw handleException((OggettoBulk)scadenza, exc);
+		} catch (it.cnr.jada.bulk.OutdatedResourceException exc) {
+			throw handleException((OggettoBulk)scadenza, exc);
+		}
+
+		return scadenza;
+	}
+private void rebuildObbligazioni(UserContext aUC, OrdineAcqBulk ordine) throws ComponentException {
+
+	if (ordine == null) return;
+	
+	BulkList righe = ordine.getRigheOrdineColl();
+	if (righe != null) {
+
+		for (Iterator i = righe.iterator(); i.hasNext(); ) {
+			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)i.next();
+			Obbligazione_scadenzarioBulk scadenza = riga.getDspObbligazioneScadenzario();
+			
+			if (riga.getDspObbligazioneScadenzario() != null) {
+				if (ordine.getOrdineObbligazioniHash() == null ||
+					ordine.getOrdineObbligazioniHash().getKey(scadenza) == null) {
+					scadenza = caricaScadenzaObbligazionePer(aUC, scadenza);
+				}
+				ordine.addToOrdineObbligazioniHash(scadenza, riga);
+			}
+		}
+	}
+	try {
+		getHomeCache(aUC).fetchAll(aUC);
+	} catch (it.cnr.jada.persistency.PersistencyException e) {
+		throw handleException(ordine, e);
 	}
 }
+private Obbligazione_scadenzarioBulk caricaScadenzaObbligazionePer(
+		UserContext context,
+		Obbligazione_scadenzarioBulk scadenza)
+		throws ComponentException {
+
+		if (scadenza != null) {
+			try {
+				it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession h = (it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession)
+																			it.cnr.jada.util.ejb.EJBCommonServices.createEJB(
+																						"CNRDOCCONT00_EJB_ObbligazioneAbstractComponentSession",
+																						it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession.class);
+				ObbligazioneBulk obbligazione = (ObbligazioneBulk)h.inizializzaBulkPerModifica(context, scadenza.getObbligazione());
+				BulkList scadenze = obbligazione.getObbligazione_scadenzarioColl();
+				scadenza = (Obbligazione_scadenzarioBulk)scadenze.get(scadenze.indexOfByPrimaryKey(scadenza));
+			} catch (java.rmi.RemoteException e) {
+				throw handleException(scadenza, e);
+			} catch (javax.ejb.EJBException e) {
+				throw handleException(scadenza, e);
+			}
+			return scadenza;
+		}
+		return null;
+	}
 }

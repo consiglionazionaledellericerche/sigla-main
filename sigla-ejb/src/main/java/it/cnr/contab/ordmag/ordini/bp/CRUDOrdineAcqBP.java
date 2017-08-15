@@ -3,27 +3,30 @@ package it.cnr.contab.ordmag.ordini.bp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.servlet.ServletException;
 
-import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.SecondaryType;
-import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 
-import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.ObbligazioniCRUDController;
+import it.cnr.contab.docamm00.bp.VoidableBP;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
-import it.cnr.contab.ordmag.richieste.service.RichiesteCMISService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
@@ -33,22 +36,25 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 /**
  * Gestisce le catene di elementi correlate con il documento in uso.
  */
 public class CRUDOrdineAcqBP 
-extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk>  {
+extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumentoAmministrativoBP, VoidableBP, IDefferedUpdateSaldiBP  {
 
+	private final SimpleDetailCRUDController dettaglioObbligazioneController;
+	private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;
+	private boolean carryingThrough = false;
+	protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager = null;
+	private boolean isDeleting = false;
 	public boolean isInputReadonly() 
 	{
 		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
 		if(ordine == null)
 			return super.isInputReadonly();
-		return 	super.isInputReadonly() || !ordine.isInserito() ;
+		return 	super.isInputReadonly() || !ordine.isStatoInserito() ;
 	}
 
 	private final SimpleDetailCRUDController righe= new OrdineAcqRigaCRUDController("Righe", OrdineAcqRigaBulk.class, "righeOrdineColl", this){
@@ -69,7 +75,19 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk>  {
 
 	};
 
-//	private final SimpleDetailCRUDController dettaglioAllegatiController = new SimpleDetailCRUDController("AllegatiDettaglio", AllegatoRichiestaDettaglioBulk.class,"dettaglioAllegati",righe)
+	private final SimpleDetailCRUDController consegne = new SimpleDetailCRUDController("Consegne",OrdineAcqConsegnaBulk.class,"righeConsegnaColl",righe);
+
+	private final ObbligazioniCRUDController obbligazioniController = new ObbligazioniCRUDController(
+			"Obbligazioni",
+			it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk.class,
+			"ordineObbligazioniHash", this);
+
+	public final it.cnr.jada.util.action.SimpleDetailCRUDController getConsegne() {
+		return consegne;
+	}
+	
+	
+	//	private final SimpleDetailCRUDController dettaglioAllegatiController = new SimpleDetailCRUDController("AllegatiDettaglio", AllegatoRichiestaDettaglioBulk.class,"dettaglioAllegati",righe)
 //	{
 //		@Override
 //		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
@@ -110,21 +128,103 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk>  {
 //
 
 	private OrdineAcqCMISService ordineAcqCMISService;
+
 	public CRUDOrdineAcqBP() {
-		super();
-		setTab();
+		this(OrdineAcqRigaBulk.class);
 	}
 	protected void setTab() {
 		setTab("tab","tabOrdineAcq");
 		setTab("tabOrdineAcqDettaglio","tabOrdineDettaglio");
 	}
-	public CRUDOrdineAcqBP(String function) throws BusinessProcessException{
-		super(function+"Tr");
+
+	public CRUDOrdineAcqBP(Class dettObbligazioniControllerClass) {
+		super("Tr");
 
 		setTab();
+		dettaglioObbligazioneController = new SimpleDetailCRUDController(
+				"DettaglioObbligazioni", dettObbligazioniControllerClass,
+				"ordineObbligazioniHash", obbligazioniController) {
+
+			public java.util.List getDetails() {
+
+				OrdineAcqBulk ordine = (OrdineAcqBulk) CRUDOrdineAcqBP.this
+						.getModel();
+				java.util.Vector lista = new java.util.Vector();
+				if (ordine != null) {
+					java.util.Hashtable h = ordine
+							.getOrdineObbligazioniHash();
+					if (h != null && getParentModel() != null)
+						lista = (java.util.Vector) h.get(getParentModel());
+				}
+				return lista;
+			}
+
+			public boolean isGrowable() {
+
+				return super.isGrowable()
+						&& !((it.cnr.jada.util.action.CRUDBP) getParentController()
+								.getParentController()).isSearching();
+			}
+
+			public boolean isShrinkable() {
+
+				return super.isShrinkable()
+						&& !((it.cnr.jada.util.action.CRUDBP) getParentController()
+								.getParentController()).isSearching();
+			}
+		};
 
 	}
 
+	/**
+	 * CRUDAnagraficaBP constructor comment.
+	 * 
+	 * @param function
+	 *            java.lang.String
+	 */
+	public CRUDOrdineAcqBP(String function)
+			throws BusinessProcessException {
+		super(function + "Tr");
+
+		setTab();
+		dettaglioObbligazioneController = new SimpleDetailCRUDController(
+				"DettaglioObbligazioni", OrdineAcqRigaBulk.class,
+				"ordineObbligazioniHash", obbligazioniController) {
+
+			public java.util.List getDetails() {
+
+				OrdineAcqBulk ordine = (OrdineAcqBulk) CRUDOrdineAcqBP.this
+						.getModel();
+				java.util.Vector lista = new java.util.Vector();
+				if (ordine != null) {
+					java.util.Hashtable h = ordine
+							.getOrdineObbligazioniHash();
+					if (h != null && getParentModel() != null)
+						lista = (java.util.Vector) h.get(getParentModel());
+				}
+				return lista;
+			}
+
+			public boolean isGrowable() {
+
+				return super.isGrowable()
+						&& !((it.cnr.jada.util.action.CRUDBP) getParentController()
+								.getParentController()).isSearching();
+			}
+
+			public boolean isShrinkable() {
+
+				return super.isShrinkable()
+						&& !((it.cnr.jada.util.action.CRUDBP) getParentController()
+								.getParentController()).isSearching();
+			}
+		};
+
+	}
+
+	
+	
+	
 	public void create(it.cnr.jada.action.ActionContext context)
 			throws	it.cnr.jada.action.BusinessProcessException {
 
@@ -274,45 +374,45 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk>  {
 			throws BusinessProcessException {
 
 		OrdineAcqBulk allegatoParentBulk = (OrdineAcqBulk)oggettobulk;
-		try {
-			ItemIterable<CmisObject> files = ordineAcqCMISService.getFilesOrdine(allegatoParentBulk);
-			if (files != null){
-				for (CmisObject cmisObject : files) {
-					if (ordineAcqCMISService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
-						continue;
-					if (ordineAcqCMISService.hasAspect(cmisObject, RichiesteCMISService.ASPECT_STAMPA_RICHIESTA_ORDINI))
-						continue;
-					if (excludeChild(cmisObject))
-						continue;
-
-//					ordineAcqCMISService.recuperoAllegatiDettaglioRichiesta(allegatoParentBulk, cmisObject);
-
-					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
-						Document document = (Document) cmisObject;
-						AllegatoRichiestaBulk allegato = (AllegatoRichiestaBulk) Introspector.newInstance(getAllegatoClass(), document);
-						allegato.setContentType(document.getContentStreamMimeType());
-						allegato.setNome(cmisObject.getName());
-						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-						completeAllegato(allegato);
-						allegato.setCrudStatus(OggettoBulk.NORMAL);
-						allegatoParentBulk.addToArchivioAllegati(allegato);					
-					}
-				}
-			}
-		} catch (ApplicationException e) {
-			throw handleException(e);
-		} catch (ComponentException e) {
-			throw handleException(e);
-		} catch (NoSuchMethodException e) {
-			throw handleException(e);
-		} catch (IllegalAccessException e) {
-			throw handleException(e);
-		} catch (InstantiationException e) {
-			throw handleException(e);
-		} catch (InvocationTargetException e) {
-			throw handleException(e); 
-		}
+//		try {
+//			ItemIterable<CmisObject> files = ordineAcqCMISService.getFilesOrdine(allegatoParentBulk);
+//			if (files != null){
+//				for (CmisObject cmisObject : files) {
+//					if (ordineAcqCMISService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
+//						continue;
+//					if (ordineAcqCMISService.hasAspect(cmisObject, RichiesteCMISService.ASPECT_STAMPA_RICHIESTA_ORDINI))
+//						continue;
+//					if (excludeChild(cmisObject))
+//						continue;
+//
+////					ordineAcqCMISService.recuperoAllegatiDettaglioRichiesta(allegatoParentBulk, cmisObject);
+//
+//					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+//						Document document = (Document) cmisObject;
+//						AllegatoRichiestaBulk allegato = (AllegatoRichiestaBulk) Introspector.newInstance(getAllegatoClass(), document);
+//						allegato.setContentType(document.getContentStreamMimeType());
+//						allegato.setNome(cmisObject.getName());
+//						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+//						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+//						completeAllegato(allegato);
+//						allegato.setCrudStatus(OggettoBulk.NORMAL);
+//						allegatoParentBulk.addToArchivioAllegati(allegato);					
+//					}
+//				}
+//			}
+//		} catch (ApplicationException e) {
+//			throw handleException(e);
+//		} catch (ComponentException e) {
+//			throw handleException(e);
+//		} catch (NoSuchMethodException e) {
+//			throw handleException(e);
+//		} catch (IllegalAccessException e) {
+//			throw handleException(e);
+//		} catch (InstantiationException e) {
+//			throw handleException(e);
+//		} catch (InvocationTargetException e) {
+//			throw handleException(e); 
+//		}
 		return oggettobulk;	
 	}
 	@Override
@@ -402,7 +502,7 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk>  {
 
 		try {
 			OrdineAcqBulk ordine = (OrdineAcqBulk)getModel(); 
-			((OrdineAcqComponentSession)createComponentSession()).gestioneStampaOrdine(context.getUserContext(), ordine);
+//			((OrdineAcqComponentSession)createComponentSession()).gestioneStampaOrdine(context.getUserContext(), ordine);
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -448,5 +548,147 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk>  {
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.stampa");
 
 		return toolbar;
+	}
+	public boolean areBottoniObbligazioneAbilitati()
+	{
+		OrdineAcqBulk ordine = (OrdineAcqBulk) getModel();
+
+		return 	ordine != null && 
+				!isSearching() && 
+				!isViewing() ;
+	}
+	public boolean isBottoneObbligazioneAggiornaManualeAbilitato()
+	{
+		OrdineAcqBulk ordine = (OrdineAcqBulk) getModel();
+
+		return(	ordine != null && !isSearching() && 
+				!isViewing() );
+	}
+	public IDefferUpdateSaldi getDefferedUpdateSaldiBulk() {
+
+		if (isDeleting() && getParent() != null)
+			return getDefferedUpdateSaldiParentBP()
+					.getDefferedUpdateSaldiBulk();
+		return (IDefferUpdateSaldi) getDocumentoAmministrativoCorrente();
+	}
+
+	public IDefferedUpdateSaldiBP getDefferedUpdateSaldiParentBP() {
+
+		if (isDeleting() && getParent() != null)
+			return ((IDefferedUpdateSaldiBP) getParent())
+					.getDefferedUpdateSaldiParentBP();
+		return this;
+	}
+
+	public it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk getDeleteManager() {
+
+		if (deleteManager == null)
+			deleteManager = new it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk();
+		else
+			deleteManager.reset();
+		return deleteManager;
+	}
+
+	@Override
+	public boolean isModelVoided() {
+		return !isSearching() && getModel() != null
+				&& ((Voidable) getModel()).isAnnullato();
+	}
+	public it.cnr.jada.util.RemoteIterator findObbligazioni(
+			it.cnr.jada.UserContext userContext,
+			it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk filtro)
+			throws it.cnr.jada.action.BusinessProcessException {
+
+		try {
+
+			return ((OrdineAcqComponentSession)createComponentSession()).cercaObbligazioni(userContext, filtro);
+
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			throw handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
+	public it.cnr.jada.util.RemoteIterator findObbligazioniAttributes(
+			it.cnr.jada.action.ActionContext actionContext,
+			it.cnr.jada.persistency.sql.CompoundFindClause clauses,
+			it.cnr.jada.bulk.OggettoBulk bulk,
+			it.cnr.jada.bulk.OggettoBulk context, java.lang.String property)
+			throws it.cnr.jada.action.BusinessProcessException {
+
+		try {
+
+			return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(
+					actionContext, ((OrdineAcqComponentSession)createComponentSession()).cerca(actionContext.getUserContext(),
+							clauses, bulk, context, property));
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			throw handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(e);
+		}
+	}
+	@Override
+	public Accertamento_scadenzarioBulk getAccertamento_scadenziario_corrente() {
+		return null;
+	}
+	@Override
+	public IDocumentoAmministrativoBulk getBringBackDocAmm() {
+		return getDocumentoAmministrativoCorrente();
+	}
+
+	@Override
+	public IDocumentoAmministrativoBulk getDocumentoAmministrativoCorrente() {
+		return (IDocumentoAmministrativoBulk) getModel();
+	}
+
+	@Override
+	public Obbligazione_scadenzarioBulk getObbligazione_scadenziario_corrente() {
+		if (getObbligazioniController() == null)
+			return null;
+		return (Obbligazione_scadenzarioBulk) getObbligazioniController()
+				.getModel();
+	}
+	@Override
+	public boolean isAutoGenerated() {
+		return false;
+	}
+	@Override
+	public boolean isDeleting() {
+		return isDeleting;
+	}
+	@Override
+	public boolean isManualModify() {
+		return true;
+	}
+	@Override
+	public void setIsDeleting(boolean newIsDeleting) {
+		isDeleting = newIsDeleting;
+	}
+	@Override
+	public void validaObbligazionePerDocAmm(ActionContext actionContext, OggettoBulk bulk)
+			throws BusinessProcessException {
+		return;
+	}
+	public ObbligazioniCRUDController getObbligazioniController() {
+		return obbligazioniController;
+	}
+	public void setDeleteManager(it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager) {
+		this.deleteManager = deleteManager;
+	}
+	public it.cnr.contab.doccont00.core.bulk.OptionRequestParameter getUserConfirm() {
+		return userConfirm;
+	}
+	public void setUserConfirm(it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm) {
+		this.userConfirm = userConfirm;
+	}
+	public boolean isCarryingThrough() {
+		return carryingThrough;
+	}
+	public void setCarryingThrough(boolean carryingThrough) {
+		this.carryingThrough = carryingThrough;
+	}
+	public SimpleDetailCRUDController getDettaglioObbligazioneController() {
+		return dettaglioObbligazioneController;
 	}
 }

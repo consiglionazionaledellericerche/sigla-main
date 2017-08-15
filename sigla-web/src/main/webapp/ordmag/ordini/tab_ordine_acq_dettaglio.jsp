@@ -130,4 +130,15 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			%>
 		</tr>
 	</table>
+	<table>
+		<tr>
+			<%
+				bp.getRighe().writeFormField(out, "imImponibile");
+			    bp.getRighe().writeFormField(out, "imIva");
+			    bp.getRighe().writeFormField(out, "imIvaD");
+			    bp.getRighe().writeFormField(out, "imTotaleRiga");
+			%>
+		</tr>
+	</table>
+
 </div>

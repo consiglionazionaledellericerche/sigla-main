@@ -29,6 +29,12 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 //    IM_IVA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imIva;
  
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imIvaD;
+
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imIvaNd;
+
 //    IM_TOTALE_CONSEGNA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imTotaleConsegna;
  
@@ -356,5 +362,17 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 	}
 	public void setStatoFatt(java.lang.String statoFatt) {
 		this.statoFatt = statoFatt;
+	}
+	public java.math.BigDecimal getImIvaD() {
+		return imIvaD;
+	}
+	public void setImIvaD(java.math.BigDecimal imIvaD) {
+		this.imIvaD = imIvaD;
+	}
+	public java.math.BigDecimal getImIvaNd() {
+		return imIvaNd;
+	}
+	public void setImIvaNd(java.math.BigDecimal imIvaNd) {
+		this.imIvaNd = imIvaNd;
 	}
 }
