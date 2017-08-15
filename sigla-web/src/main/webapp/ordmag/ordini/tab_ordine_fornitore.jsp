@@ -132,43 +132,5 @@
 	      	<% bp.getController().writeFormInput(out,null,"termini_pagamento",roOnAutoGen,null,"");%>	
       	</td>   
       </tr>
-      <tr>
-     	<td>
- 	     	<% bp.getController().writeFormLabel(out,"modalita_pagamento");%>
-      	</td>      	
-     	<td>
-	      	<% bp.getController().writeFormInput(out,null,"modalita_pagamento",roOnAutoGen,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%>	
-      	</td>   
-		<td>
-			<% 	if (ordine.getBanca() != null) {
-					bp.getController().writeFormInput(out, null, "listabanche", roOnAutoGen, null, "");
-				} %>
-   		</td>
-      </tr>
-		<tr>
-		  	<td colspan="2">
-		<%	if (ordine.getBanca() != null) {
-				if (Rif_modalita_pagamentoBulk.BANCARIO.equalsIgnoreCase(ordine.getBanca().getTi_pagamento())) {
-			 	     	bp.getController().writeFormInput(out,"contoB");
-				} else if (Rif_modalita_pagamentoBulk.POSTALE.equalsIgnoreCase(ordine.getBanca().getTi_pagamento())) {
-			 	     	bp.getController().writeFormInput(out,"contoP");
-				} else if (Rif_modalita_pagamentoBulk.QUIETANZA.equalsIgnoreCase(ordine.getBanca().getTi_pagamento())) {
-			 	     	bp.getController().writeFormInput(out,"contoQ");
-				} else if (Rif_modalita_pagamentoBulk.ALTRO.equalsIgnoreCase(ordine.getBanca().getTi_pagamento())) { 
-			 	     	bp.getController().writeFormInput(out,"contoA");
-				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(ordine.getBanca().getTi_pagamento())) { 
-		 	     	bp.getController().writeFormInput(out,"contoN");
-				}
-			} else if (ordine.getModalitaPagamento() != null && (fornitore != null && fornitore.getCrudStatus() != fornitore.UNDEFINED)) { %>
-				<span class="FormLabel" style="color:red">
-					Nessun riferimento trovato per la modalità di pagamento selezionata!
-				</span>
-		<%	} else if(ordine.getModalitaPagamento() == null && ordine.getModalita()!= null && ordine.getModalita().size() == 0 && (fornitore != null && fornitore.getCrudStatus() != fornitore.UNDEFINED)){ %>
-				<span class="FormLabel" style="color:red">
-				Attenzione! Nessuna modalità di pagamento trovata!
-			</span>
-		 <% } %>
-			<td>
-		<tr>
     </table>
    </div>

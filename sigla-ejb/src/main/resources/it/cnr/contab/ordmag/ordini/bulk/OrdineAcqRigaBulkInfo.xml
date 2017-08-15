@@ -258,6 +258,14 @@
 		nullable="false"
 		label="Iva" />
 	<fieldProperty
+		name="imIvaD"
+		property="imIvaD"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Iva Detraibile" />
+	<fieldProperty
 		name="imTotaleRiga"
 		property="imTotaleRiga"
 		inputType="TEXT"
@@ -322,6 +330,70 @@
 		nullable="true"
 		label="Unità Operativa"
 		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="dspObbligazioneScadenzario.esercizio_originale"
+		inputType="TEXT"
+		inputSize="10"
+		label="Es. Impegno"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		/>				
+	<fieldProperty
+		name="pg_obbligazione"
+		property="dspObbligazioneScadenzario.pg_obbligazione"
+		inputType="TEXT"
+		label="N. Impegno"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		/>				
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="dspObbligazioneScadenzario.pg_obbligazione_scadenzario"
+		label="N. scadenza"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"										
+		/>
+	<fieldProperty
+		name="ds_scadenza_obbligazione"
+		property="dspObbligazioneScadenzario.ds_scadenza"
+		label="Descrizione"
+		inputSize="20"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="dt_scadenza"
+		property="dspObbligazioneScadenzario.dt_scadenza"
+		inputType="ROTEXT"
+		formatName="date_short"				
+		label="Data"
+		/>
+	<fieldProperty
+		name="im_scadenza"
+		property="dspObbligazioneScadenzario.im_scadenza"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"				
+		label="Importo"
+		/>								
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="dspObbligazioneScadenzario.esercizio"
+		inputType="TEXT"
+		label="Esercizio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"										
+		/>		
 	<columnSet
 		name="righeSet">
 		<columnFieldProperty
@@ -345,6 +417,8 @@
 			name="dspQuantita"/>
 		<columnFieldProperty
 			name="prezzoUnitario"/>
+		<columnFieldProperty
+			name="imTotaleRiga"/>
 		<columnFieldProperty
 			name="dspUopDestinazione"/>
 	</columnSet>
@@ -408,6 +482,8 @@
 	<formFieldProperty
 		name="imIva" />
 	<formFieldProperty
+		name="imIvaD" />
+	<formFieldProperty
 		name="imTotaleRiga" />
 	<formFieldProperty
 		name="tipoConsegna" />
@@ -419,6 +495,13 @@
 		name="findMagazzino" />
 	<formFieldProperty
 		name="findUnitaOperativaOrdDest" />
+	<formFieldProperty name="pg_obbligazione_scadenzario" />
+	<formFieldProperty name="ds_scadenza_obbligazione" />
+	<formFieldProperty name="dt_scadenza" />
+	<formFieldProperty name="im_scadenza" />	
+	<formFieldProperty name="esercizio_ori_obbligazione" />	
+	<formFieldProperty name="pg_obbligazione" />	
+	<formFieldProperty name="esercizio_obbligazione" />
 	<formFieldProperty
 		name="dtCancellazione" />
 	<findFieldProperty
@@ -463,6 +546,8 @@
 		name="imImponibile" />
 	<findFieldProperty
 		name="imIva" />
+	<findFieldProperty
+		name="imIvaD" />
 	<findFieldProperty
 		name="imTotaleRiga" />
 	<findFieldProperty

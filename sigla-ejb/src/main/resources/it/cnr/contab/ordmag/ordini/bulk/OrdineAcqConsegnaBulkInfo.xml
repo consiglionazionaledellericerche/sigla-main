@@ -140,7 +140,6 @@
 		property="quantita"
 		inputType="TEXT"
 		inputSize="10"
-		nullable="false"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
 		nullable="false"
@@ -177,6 +176,14 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="Iva" />
+	<fieldProperty
+		name="imIvaD"
+		property="imIvaD"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Iva Detraibile" />
 	<fieldProperty
 		name="imTotaleConsegna"
 		property="imTotaleConsegna"
@@ -328,6 +335,27 @@
 		<formFieldProperty
 			name="consegna" />
 	</form>
+	<columnSet
+		name="consegneSet">
+		<columnFieldProperty
+			name="consegna" />
+		<columnFieldProperty
+			name="quantita"/>
+		<columnFieldProperty
+			name="tipoConsegna" />
+		<columnFieldProperty
+			name="cdMagazzino"/>
+		<columnFieldProperty
+			name="cdUopDest"/>
+		<columnFieldProperty
+			name="dtPrevConsegna" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="statoFatt" />
+		<columnFieldProperty
+			name="imTotaleConsegna" />
+	</columnSet>
 	<formFieldProperty
 		name="findOrdineAcqRiga" />
 	<formFieldProperty
@@ -351,13 +379,15 @@
 	<formFieldProperty
 		name="imIva" />
 	<formFieldProperty
+		name="imIvaD" />
+	<formFieldProperty
 		name="imTotaleConsegna" />
 	<formFieldProperty
 		name="findMagazzino" />
 	<formFieldProperty
 		name="findLuogoConsegnaMag" />
 	<formFieldProperty
-		name="findUnitaOperativaOrd" />
+		name="findUnitaOperativaOrdDest" />
 	<formFieldProperty
 		name="dtCancellazione" />
 	<findFieldProperty
@@ -390,6 +420,8 @@
 		name="imImponibile" />
 	<findFieldProperty
 		name="imIva" />
+	<findFieldProperty
+		name="imIvaD" />
 	<findFieldProperty
 		name="imTotaleConsegna" />
 	<findFieldProperty

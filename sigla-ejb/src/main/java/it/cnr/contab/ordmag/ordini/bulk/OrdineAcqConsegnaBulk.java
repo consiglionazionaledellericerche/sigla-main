@@ -3,6 +3,7 @@
  * Date 28/06/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
+import java.math.BigDecimal;
 import java.util.Dictionary;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
@@ -10,7 +11,10 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	public final static String STATO_INSERITA = "INS";
 	public final static String STATO_EVASA = "EVA";
@@ -436,5 +440,16 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 		if (d == null) return null;
 		OrderedHashtable clone = (OrderedHashtable)d.clone();
 		return clone;
+	}
+	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
+	{
+		setStato(STATO_INSERITA);
+		setStato(STATO_FATT_NON_ASSOCIATA);
+		setImImponibile(BigDecimal.ZERO);
+		setImImponibileDivisa(BigDecimal.ZERO);
+		setImIva(BigDecimal.ZERO);
+		setImIvaDivisa(BigDecimal.ZERO);
+		setImTotaleConsegna(BigDecimal.ZERO);
+		return this;
 	}
 }
