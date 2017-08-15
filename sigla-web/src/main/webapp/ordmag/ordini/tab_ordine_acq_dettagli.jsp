@@ -10,17 +10,19 @@
 
 <% CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request);
     OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
-	bp.getRighe().writeHTMLTable(pageContext,"righeSet",true,false,true,"100%","200px"); %>
+	bp.getRighe().writeHTMLTable(pageContext,"righeSet",true,false,true,"100%","140px"); %>
 <tr><td colspan=10>
 	      <%
 	      	String[][] pages = null;
 	      	if(riga != null && riga.getNumero() != null){
 	      		pages = new String[][] {
 					{ "tabOrdineDettaglio","Dettaglio Riga","/ordmag/ordini/tab_ordine_acq_dettaglio.jsp" },
+					{ "tabOrdineConsegna","Consegna","/ordmag/ordini/tab_ordine_acq_consegna.jsp" },
 					{ "tabOrdineDettaglioAllegati","Allegati","/ordmag/ordini/tab_ordine_acq_dettaglio_allegati.jsp" } };
 	      	} else {
 	      		pages = new String[][] {
-	      			{ "tabOrdineDettaglio","Dettaglio Riga","/ordmag/ordini/tab_ordine_acq_dettaglio.jsp" } };
+	      			{ "tabOrdineDettaglio","Dettaglio Riga","/ordmag/ordini/tab_ordine_acq_dettaglio.jsp" },
+					{ "tabOrdineConsegna","Consegna","/ordmag/ordini/tab_ordine_acq_consegna.jsp" } };
 	      	}
 	      	JSPUtils.tabbed(pageContext, "tabOrdineAcqDettaglio",
 	      			pages,

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 
-public class ParametriCalcoloImportoOrdine {
+public class ParametriCalcoloImportoOrdine implements Cloneable{
 	private static final long serialVersionUID = 672612150974377581L;
 	
 	BigDecimal percProrata;
@@ -15,7 +15,6 @@ public class ParametriCalcoloImportoOrdine {
 	Voce_ivaBulk voceIva;
     DivisaBulk divisa;
     DivisaBulk divisaRisultato;
-    String attivita;
     BigDecimal cambio;
     BigDecimal sconto1;
     BigDecimal sconto2;
@@ -28,15 +27,6 @@ public class ParametriCalcoloImportoOrdine {
     BigDecimal cambioRet; 
     BigDecimal arrAliIva;
 
-    BigDecimal pImponibile;
-	BigDecimal pImportoIva;
-	BigDecimal pImportoIvaInd;
-	BigDecimal pImportoSpese;
-	BigDecimal pIvaSpese;
-	BigDecimal pIvaSpeseInd;
-	BigDecimal pTotale;
-	BigDecimal pArrAliIva;
-	
 	public Voce_ivaBulk getVoceIva() {
 		return voceIva;
 	}
@@ -151,70 +141,6 @@ public class ParametriCalcoloImportoOrdine {
 		this.arrAliIva = arrAliIva;
 	}
 
-	public BigDecimal getPImponibile() {
-		return pImponibile;
-	}
-
-	public void setPImponibile(BigDecimal imponibile) {
-		pImponibile = imponibile;
-	}
-
-	public BigDecimal getPImportoIva() {
-		return pImportoIva;
-	}
-
-	public void setPImportoIva(BigDecimal importoIva) {
-		pImportoIva = importoIva;
-	}
-
-	public BigDecimal getPImportoIvaInd() {
-		return pImportoIvaInd;
-	}
-
-	public void setPImportoIvaInd(BigDecimal importoIvaInd) {
-		pImportoIvaInd = importoIvaInd;
-	}
-
-	public BigDecimal getPImportoSpese() {
-		return pImportoSpese;
-	}
-
-	public void setPImportoSpese(BigDecimal importoSpese) {
-		pImportoSpese = importoSpese;
-	}
-
-	public BigDecimal getPIvaSpese() {
-		return pIvaSpese;
-	}
-
-	public void setPIvaSpese(BigDecimal ivaSpese) {
-		pIvaSpese = ivaSpese;
-	}
-
-	public BigDecimal getPIvaSpeseInd() {
-		return pIvaSpeseInd;
-	}
-
-	public void setPIvaSpeseInd(BigDecimal ivaSpeseInd) {
-		pIvaSpeseInd = ivaSpeseInd;
-	}
-
-	public BigDecimal getPTotale() {
-		return pTotale;
-	}
-
-	public void setPTotale(BigDecimal totale) {
-		pTotale = totale;
-	}
-
-	public BigDecimal getPArrAliIva() {
-		return pArrAliIva;
-	}
-
-	public void setPArrAliIva(BigDecimal arrAliIva) {
-		pArrAliIva = arrAliIva;
-	}
-
 	public Voce_ivaBulk getVoceIvaRet() {
 		return voceIvaRet;
 	}
@@ -231,14 +157,6 @@ public class ParametriCalcoloImportoOrdine {
 		this.percProrata = percProrata;
 	}
 
-	public String getAttivita() {
-		return attivita;
-	}
-
-	public void setAttivita(String attivita) {
-		this.attivita = attivita;
-	}
-
 	public DivisaBulk getDivisaRisultato() {
 		return divisaRisultato;
 	}
@@ -253,5 +171,13 @@ public class ParametriCalcoloImportoOrdine {
 
 	public void setDivisa(DivisaBulk divisa) {
 		this.divisa = divisa;
+	}
+
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new it.cnr.jada.DetailedRuntimeException(e);
+		}
 	}
 }
