@@ -3,9 +3,13 @@
  * Date 28/06/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
@@ -16,7 +20,18 @@ import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
+import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.ordmag.anag00.NotaPrecodificataBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
@@ -25,17 +40,26 @@ import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkCollections;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
-public class OrdineAcqBulk extends OrdineAcqBase implements AllegatoParentBulk {
+public class OrdineAcqBulk extends OrdineAcqBase 
+implements	IDocumentoAmministrativoBulk, 
+			Voidable,
+			IDefferUpdateSaldi,
+			AllegatoParentBulk {
 	protected BulkList righeOrdineColl= new BulkList();
-	private java.util.Collection modalita;
+//	private java.util.Collection modalita;
 	private java.util.Collection termini;
+	private ObbligazioniTable ordineObbligazioniHash = null;
+	private Map ordineAss_totaliMap = null;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private Boolean isAbilitatoTuttiMagazzini = false;
+	private java.math.BigDecimal importoTotalePerObbligazione = new java.math.BigDecimal(0);
 	/**
 	 * [NOTA_PRECODIFICATA Rappresenta l'anagrafica delle note precodificate.]
 	 **/
@@ -85,6 +109,11 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public final static String STATO_DEFINITIVO = "DEF";
 	public final static String STATO_INVIATO_ORDINE = "INV";
 	
+	private java.math.BigDecimal imImponibile;
+	private java.math.BigDecimal imIva;
+	private java.math.BigDecimal imIvaD;
+	private java.math.BigDecimal imTotaleOrdine;
+
 	private Boolean isUtenteAbilitatoInserimentoOrdine = true;
 	private Boolean isForApprovazione = false;
 		
@@ -434,10 +463,14 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	 * Restituisce il valore di: [cdUnitaOperativa]
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
-		UnitaOperativaOrdBulk unitaOperativaOrd = this.getUnitaOperativaOrd();
-		if (unitaOperativaOrd == null)
-			return null;
-		return getUnitaOperativaOrd().getCdUnitaOperativa();
+		UnitaOperativaOrdBulk uop = this.getUnitaOperativaOrd();
+		if (uop == null){
+			NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
+			if (numerazioneOrd == null)
+				return null;
+			return getNumerazioneOrd().getCdUnitaOperativa();
+		}
+		return this.getUnitaOperativaOrd().getCdUnitaOperativa();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -445,6 +478,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	 **/
 	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
 		this.getUnitaOperativaOrd().setCdUnitaOperativa(cdUnitaOperativa);
+		this.getNumerazioneOrd().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -764,13 +798,13 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public String recuperoIdOrdineAsString(){
 		return StrServ.replace(getCdCds(), ".", "")+getEsercizio()+StrServ.replace(getCdUnitaOperativa(), ".", "")+StrServ.replace(getCdNumeratore(), ".", "")+StrServ.lpad(getNumero().toString(), 5);
 	}
-	public Boolean isInserito(){
+	public Boolean isStatoInserito(){
 		return getStato() != null && getStato().equals(STATO_INSERITO);
 	}
-	public Boolean isAnnullato(){
+	public Boolean isStatoAnnullato(){
 		return getStato() != null && getStato().equals(STATO_ANNULLATO);
 	}
-	public Boolean isDefinitivo(){
+	public Boolean isStatoDefinitivo(){
 		return getStato() != null && getStato().equals(STATO_DEFINITIVO);
 	}
 	public Dictionary getStatoKeys() {
@@ -814,8 +848,34 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public OrdineAcqRigaBulk removeFromRigheOrdineColl(int index) 
 	{
 		// Gestisce la selezione del bottone cancella repertorio
+		OrdineAcqRigaBulk element = (OrdineAcqRigaBulk)righeOrdineColl.get(index);
+		addToDettagliCancellati(element);
+		if (element != null && element.getDspObbligazioneScadenzario() != null)
+			removeFromOrdineObbligazioniHash(element);
 		return (OrdineAcqRigaBulk)righeOrdineColl.remove(index);
 	}
+	public void addToDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
+
+		if (dettaglio != null && ((OggettoBulk)dettaglio).getCrudStatus() == OggettoBulk.NORMAL) {
+			getDettagliCancellati().addElement(dettaglio);
+			addToDocumentiContabiliCancellati(dettaglio.getScadenzaDocumentoContabile());
+		}
+	}
+
+	public void removeFromOrdineObbligazioniHash(
+			OrdineAcqRigaBulk riga) {
+
+			Vector righeAssociate = (Vector)ordineObbligazioniHash.get(riga.getDspObbligazioneScadenzario());
+			if (righeAssociate != null) {
+				righeAssociate.remove(riga);
+				if (righeAssociate.isEmpty()) {
+					ordineObbligazioniHash.remove(riga.getDspObbligazioneScadenzario());
+					addToDocumentiContabiliCancellati(riga.getDspObbligazioneScadenzario());
+				}
+			} else 
+				addToDocumentiContabiliCancellati(riga.getDspObbligazioneScadenzario());
+		}
+
 	public int addToRigheOrdineColl( OrdineAcqRigaBulk nuovoRigo ) 
 	{
 
@@ -863,12 +923,12 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		return getFornitore() == null ||
 				getFornitore().getCrudStatus() == OggettoBulk.NORMAL;
 	}
-	public java.util.Collection getModalita() {
-		return modalita;
-	}
-	public void setModalita(java.util.Collection modalita) {
-		this.modalita = modalita;
-	}
+//	public java.util.Collection getModalita() {
+//		return modalita;
+//	}
+//	public void setModalita(java.util.Collection modalita) {
+//		this.modalita = modalita;
+//	}
 	public java.util.Collection getTermini() {
 		return termini;
 	}
@@ -905,8 +965,8 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public void setIsAbilitatoTuttiMagazzini(Boolean isAbilitatoTuttiMagazzini) {
 		this.isAbilitatoTuttiMagazzini = isAbilitatoTuttiMagazzini;
 	}	
-	public Dictionary getTi_istituz_commercKeys() {
-		OrderedHashtable d = (OrderedHashtable)getTi_istituz_commercKeysForSearch();
+	public Dictionary getTiAttivitaKeys() {
+		OrderedHashtable d = (OrderedHashtable)getTiAttivitaKeysForSearch();
 		if (d == null) return null;
         	OrderedHashtable clone = (OrderedHashtable)d.clone();
         	if (!isNotAbledToModifyTipoIstCom()) 
@@ -915,10 +975,267 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 			
 	}
 	
-	public Dictionary getTi_istituz_commercKeysForSearch() {
+	public Dictionary getTiAttivitaKeysForSearch() {
 		return NumerazioneOrdBulk.TIPO;
 	}
 	public boolean isNotAbledToModifyTipoIstCom(){
 		return (true); 
 	}
+	@Override
+	public void addToDefferredSaldi(IDocumentoContabileBulk docCont, Map values) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public PrimaryKeyHashMap getDefferredSaldi() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public IDocumentoContabileBulk getDefferredSaldoFor(IDocumentoContabileBulk docCont) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void removeFromDefferredSaldi(IDocumentoContabileBulk docCont) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void resetDefferredSaldi() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Timestamp getDt_cancellazione() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean isAnnullato() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isVoidable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void setAnnullato(Timestamp date) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setDt_cancellazione(Timestamp date) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void addToDocumentiContabiliCancellati(IScadenzaDocumentoContabileBulk dettaglio) {
+
+		if (dettaglio != null && ((OggettoBulk)dettaglio).getCrudStatus() == OggettoBulk.NORMAL &&
+			!BulkCollections.containsByPrimaryKey(getDocumentiContabiliCancellati(), (OggettoBulk)dettaglio))
+				getDocumentiContabiliCancellati().addElement(dettaglio);
+	}
+
+	@Override
+	public AccertamentiTable getAccertamentiHash() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getCd_cds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getCd_tipo_doc_amm() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getCd_uo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Class getChildClass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Vector getDettagliCancellati() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Vector getDocumentiContabiliCancellati() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Class getDocumentoAmministrativoClassForDelete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Class getDocumentoContabileClassForDelete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public BigDecimal getImportoSignForDelete(BigDecimal importo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getManagerName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getManagerOptions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public ObbligazioniTable getObbligazioniHash() {
+		return getOrdineObbligazioniHash();
+	}
+	@Override
+	public Long getPg_doc_amm() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getRiportata() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getRiportataInScrivania() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean isDeleting() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isEditable() {
+		return true;
+	}
+	@Override
+	public boolean isRiportata() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isRiportataInScrivania() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public int removeFromDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int removeFromDocumentiContabiliCancellati(IScadenzaDocumentoContabileBulk dettaglio) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public void setDettagliCancellati(Vector newDettagliCancellati) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setDocumentiContabiliCancellati(Vector newDocumentiContabiliCancellati) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setIsDeleting(boolean deletingStatus) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void addToOrdineAss_totaliMap(
+			Obbligazione_scadenzarioBulk obbligazione, java.math.BigDecimal totale) {
+
+			if (ordineAss_totaliMap == null)
+				ordineAss_totaliMap = new PrimaryKeyHashMap();
+			ordineAss_totaliMap.put(obbligazione, totale);
+		}
+
+	public void addToOrdineObbligazioniHash(
+			Obbligazione_scadenzarioBulk obbligazione,
+			OrdineAcqRigaBulk riga) {
+
+			if (ordineObbligazioniHash == null)
+				ordineObbligazioniHash = new ObbligazioniTable();
+			Vector righeAssociate = (Vector)ordineObbligazioniHash.get(obbligazione);
+			if (righeAssociate == null) {
+				righeAssociate = new Vector();
+				//fattura_passiva_obbligazioniHash.put(obbligazione, righeAssociate);
+				addToOrdineAss_totaliMap(obbligazione, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+			}
+			if (riga != null && !righeAssociate.contains(riga)) {
+				righeAssociate.add(riga);
+				//Sono costretto alla rimozione della scadenza per evitare disallineamenti sul pg_ver_rec.
+				//e quindi errori del tipo RisorsaNonPiuValida in fase di salvataggio
+				if (ordineObbligazioniHash.containsKey(obbligazione))
+					ordineObbligazioniHash.remove(obbligazione);
+				//fattura_passiva_obbligazioniHash.put(obbligazione, righeAssociate);
+			}
+			ordineObbligazioniHash.put(obbligazione, righeAssociate);
+
+			if (getDocumentiContabiliCancellati() != null && 
+				BulkCollections.containsByPrimaryKey(getDocumentiContabiliCancellati(), obbligazione))
+				removeFromDocumentiContabiliCancellati(obbligazione);
+		}
+	public ObbligazioniTable getOrdineObbligazioniHash() {
+		return ordineObbligazioniHash;
+	}
+	public void setOrdineObbligazioniHash(ObbligazioniTable ordineObbligazioniHash) {
+		this.ordineObbligazioniHash = ordineObbligazioniHash;
+	}
+	public Map getOrdineAss_totaliMap() {
+		return ordineAss_totaliMap;
+	}
+	public void setOrdineAss_totaliMap(Map ordineAss_totaliMap) {
+		this.ordineAss_totaliMap = ordineAss_totaliMap;
+	}
+	public java.math.BigDecimal getImportoTotalePerObbligazione() {
+		return importoTotalePerObbligazione;
+	}
+	public void setImportoTotalePerObbligazione(java.math.BigDecimal importoTotalePerObbligazione) {
+		this.importoTotalePerObbligazione = importoTotalePerObbligazione;
+	}
+	public java.math.BigDecimal getImImponibile() {
+		return imImponibile;
+	}
+	public void setImImponibile(java.math.BigDecimal imImponibile) {
+		this.imImponibile = imImponibile;
+	}
+	public java.math.BigDecimal getImIva() {
+		return imIva;
+	}
+	public void setImIva(java.math.BigDecimal imIva) {
+		this.imIva = imIva;
+	}
+	public java.math.BigDecimal getImIvaD() {
+		return imIvaD;
+	}
+	public void setImIvaD(java.math.BigDecimal imIvaD) {
+		this.imIvaD = imIvaD;
+	}
+	public java.math.BigDecimal getImTotaleOrdine() {
+		return imTotaleOrdine;
+	}
+	public void setImTotaleOrdine(java.math.BigDecimal imTotaleOrdine) {
+		this.imTotaleOrdine = imTotaleOrdine;
+	}
+
 }

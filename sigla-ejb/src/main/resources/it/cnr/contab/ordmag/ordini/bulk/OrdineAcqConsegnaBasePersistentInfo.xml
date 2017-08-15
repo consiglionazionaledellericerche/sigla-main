@@ -84,6 +84,20 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="IM_IVA_D"
+			propertyName="imIvaD"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_ND"
+			propertyName="imIvaNd"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
 			columnName="CD_LUOGO_CONSEGNA"
 			propertyName="cdLuogoConsegna"
 			sqlTypeName="VARCHAR"
@@ -215,6 +229,10 @@
 		name="pgObbligazioneScad" />
 	<persistentProperty
 		name="statoFatt" />
+	<persistentProperty
+		name="imIvaD" />
+	<persistentProperty
+		name="imIvaNd" />
 	<persistentProperty
 		name="arrAliIva" />
 	<persistentProperty

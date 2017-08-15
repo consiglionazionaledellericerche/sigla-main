@@ -14,8 +14,14 @@ import java.util.List;
 import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
@@ -29,7 +35,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
-public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
+public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAmministrativoRigaBulk, Voidable {
 	protected BulkList righeConsegnaColl= new BulkList();
 	private java.lang.String dspTipoConsegna;
 
@@ -38,6 +44,8 @@ public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
 	private java.math.BigDecimal dspQuantita;
 
 	private LuogoConsegnaMagBulk dspLuogoConsegna;
+
+	private Obbligazione_scadenzarioBulk dspObbligazioneScadenzario;
 
 	private MagazzinoBulk dspMagazzino;
 
@@ -328,6 +336,8 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		setImImponibile(BigDecimal.ZERO);
 		setImImponibileDivisa(BigDecimal.ZERO);
 		setImIva(BigDecimal.ZERO);
+		setImIvaD(BigDecimal.ZERO);
+		setImIvaNd(BigDecimal.ZERO);
 		setImIvaDivisa(BigDecimal.ZERO);
 		setImTotaleRiga(BigDecimal.ZERO);
 		BigDecimal value = null;
@@ -405,5 +415,90 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	public void setConsegneModificate(Boolean consegneModificate) {
 		this.consegneModificate = consegneModificate;
+	}
+	public Obbligazione_scadenzarioBulk getDspObbligazioneScadenzario() {
+		return dspObbligazioneScadenzario;
+	}
+	public void setDspObbligazioneScadenzario(Obbligazione_scadenzarioBulk dspObbligazioneScadenzario) {
+		this.dspObbligazioneScadenzario = dspObbligazioneScadenzario;
+	}
+	@Override
+	public Timestamp getDt_cancellazione() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean isAnnullato() {
+		return STATO_ANNULLATA.equalsIgnoreCase(getStato());
+	}
+	@Override
+	public boolean isVoidable() {
+		return isConsegnaEvasa();
+	}
+	public boolean isConsegnaEvasa() {
+		for (Iterator i = righeConsegnaColl.iterator(); i.hasNext();) {
+			String stato = ((OrdineAcqConsegnaBulk)i.next()).getStato();
+			if (stato != null && stato.equals(OrdineAcqConsegnaBulk.STATO_EVASA)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+	@Override
+	public void setAnnullato(Timestamp date) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setDt_cancellazione(Timestamp date) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public IDocumentoAmministrativoRigaBulk getAssociatedDetail() {
+		return null;
+	}
+	@Override
+	public IDocumentoAmministrativoBulk getFather() {
+		return getOrdineAcq();
+	}
+	@Override
+	public BigDecimal getIm_diponibile_nc() {
+		return null;
+	}
+	@Override
+	public BigDecimal getIm_imponibile() {
+		return getImImponibile();
+	}
+
+	@Override
+	public BigDecimal getIm_iva() {
+		return getImIva();
+	}
+	@Override
+	public IDocumentoAmministrativoRigaBulk getOriginalDetail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public IScadenzaDocumentoContabileBulk getScadenzaDocumentoContabile() {
+		return (IScadenzaDocumentoContabileBulk)getDspObbligazioneScadenzario();
+	}
+	@Override
+	public Voce_ivaBulk getVoce_iva() {
+		return getVoceIva();
+	}
+	@Override
+	public boolean isDirectlyLinkedToDC() {
+		return false;
+	}
+	@Override
+	public boolean isRiportata() {
+		return false;
+	}
+	@Override
+	public void setIm_diponibile_nc(BigDecimal im_diponibile_nc) {
+		
 	}
 }

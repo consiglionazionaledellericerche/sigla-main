@@ -141,22 +141,22 @@
 		nullable="false"		
 		/>
 	<fieldProperty
-		name="ti_istituz_commerc"
-		property="ti_istituz_commerc"
+		name="tiAttivita"
+		property="tiAttivita"
 		inputType="SELECT"
 		readonlyProperty="notAbledToModifyTipoIstCom"
 		label="Tipo"
 		nullable="false"
 		enabledOnSearch="true"
-		keysProperty="ti_istituz_commercKeys" />
+		keysProperty="tiAttivitaKeys" />
 	<fieldProperty
-		name="ti_istituz_commercSearch"
-		property="ti_istituz_commerc"
+		name="tiAttivitaSearch"
+		property="tiAttivita"
 		inputType="SELECT"
 		label="Tipo"
 		nullable="true"
 		enabledOnSearch="true"
-		keysProperty="ti_istituz_commercKeysForSearch" />
+		keysProperty="tiAttivitaKeysForSearch" />
 	<fieldProperty
 		name="percProrata"
 		property="percProrata"
@@ -317,7 +317,7 @@
 		enabledOnSearch="true"
 		label="Ragione Sociale"
 		caseSensitiveSearch="false" />
-	<fieldProperty
+<!--	<fieldProperty
 		name="modalitaPagamento"
 		property="modalitaPagamento"
 		printProperty="cd_ds_modalita_pagamento"
@@ -326,7 +326,7 @@
 		inputSize="30"
 		inputType="SELECT"
 		nullable="false"
-		label="Mod. pagamento" />
+		label="Mod. pagamento" /> -->
 	<fieldProperty
 		name="terminiPagamento"
 		property="terminiPagamento"
@@ -597,6 +597,42 @@
 		enabledOnSearch="true" 
 		/>		
 	<fieldProperty
+		name="imImponibile"
+		property="imImponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Imponibile" />
+	<fieldProperty
+		name="imIva"
+		property="imIva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Iva" />
+	<fieldProperty
+		name="imIvaD"
+		property="imIvaD"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Iva Detraibile" />
+	<fieldProperty
+		name="imTotaleOrdine"
+		property="imTotaleOrdine"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Totale Consegna" />
+	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
@@ -621,9 +657,9 @@
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
-		name="ti_istituz_commerc" />
+		name="tiAttivita" />
 	<formFieldProperty
-		name="ti_istituz_commercSearch" />
+		name="tiAttivitaSearch" />
 	<formFieldProperty
 		name="numero" />
 	<formFieldProperty
@@ -723,6 +759,14 @@
 		name="contoN" />
 	<formFieldProperty
 		name="denominazione_sede" />
+	<formFieldProperty
+		name="imImponibile" />
+	<formFieldProperty
+		name="imIva" />
+	<formFieldProperty
+		name="imIvaD" />
+	<formFieldProperty
+		name="imTotaleOrdine" />
 
 	<findFieldProperty
 		name="cdCds" />
@@ -792,9 +836,9 @@
 		name="cdCup" />
 	<findFieldProperty
 		name="dtCancellazione" />
-	<findFieldProperty name="ti_istituz_commercSearch" />
+	<findFieldProperty name="tiAttivitaSearch" />
 	<columnFieldProperty
-		name="ti_istituz_commerc" />
+		name="tiAttivita" />
 	<columnFieldProperty
 		name="percProrata" />
 	<columnFieldProperty

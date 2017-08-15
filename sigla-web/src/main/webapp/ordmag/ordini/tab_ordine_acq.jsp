@@ -75,6 +75,16 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 			%>
 		</tr>
 	</table>
+    <table>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "imImponibile");
+			bp.getController().writeFormField(out, "imIva");
+			bp.getController().writeFormField(out, "imIvaD");
+			bp.getController().writeFormField(out, "imTotaleOrdine");
+			%>
+		</tr>
+	</table>
 	      </table>
       </div>
       </td></tr>

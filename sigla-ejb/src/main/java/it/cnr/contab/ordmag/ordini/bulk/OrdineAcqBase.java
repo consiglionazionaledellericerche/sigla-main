@@ -96,7 +96,7 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 	private java.math.BigDecimal percProrata;
 
 // TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
-	private java.lang.String ti_istituz_commerc;
+	private java.lang.String tiAttivita;
 
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
@@ -529,10 +529,10 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 	public void setPercProrata(java.math.BigDecimal percProrata) {
 		this.percProrata = percProrata;
 	}
-	public java.lang.String getTi_istituz_commerc() {
-		return ti_istituz_commerc;
+	public java.lang.String getTiAttivita() {
+		return tiAttivita;
 	}
-	public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
-		this.ti_istituz_commerc = ti_istituz_commerc;
+	public void setTiAttivita(java.lang.String tiAttivita) {
+		this.tiAttivita = tiAttivita;
 	}
 }
