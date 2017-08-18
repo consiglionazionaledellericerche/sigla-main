@@ -21,7 +21,9 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
@@ -56,6 +58,9 @@ implements	IDocumentoAmministrativoBulk,
 //	private java.util.Collection modalita;
 	private java.util.Collection termini;
 	private ObbligazioniTable ordineObbligazioniHash = null;
+	private PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
+	private java.util.Vector dettagliCancellati = new Vector();
+	private java.util.Vector documentiContabiliCancellati = new Vector();
 	private Map ordineAss_totaliMap = null;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private Boolean isAbilitatoTuttiMagazzini = false;
@@ -862,8 +867,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		}
 	}
 
-	public void removeFromOrdineObbligazioniHash(
-			OrdineAcqRigaBulk riga) {
+	public void removeFromOrdineObbligazioniHash(OrdineAcqRigaBulk riga) {
 
 			Vector righeAssociate = (Vector)ordineObbligazioniHash.get(riga.getDspObbligazioneScadenzario());
 			if (righeAssociate != null) {
@@ -983,28 +987,42 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	@Override
 	public void addToDefferredSaldi(IDocumentoContabileBulk docCont, Map values) {
-		// TODO Auto-generated method stub
-		
+		if (docCont != null) {
+			if (deferredSaldi == null)
+				deferredSaldi = new PrimaryKeyHashMap();
+			if (!deferredSaldi.containsKey(docCont))
+				deferredSaldi.put(docCont, values);
+			else {
+				Map firstValues = (Map)deferredSaldi.get(docCont);
+				deferredSaldi.remove(docCont);
+				deferredSaldi.put(docCont, firstValues);
+			}
+		}
 	}
 	@Override
 	public PrimaryKeyHashMap getDefferredSaldi() {
-		// TODO Auto-generated method stub
-		return null;
+		return deferredSaldi;
 	}
 	@Override
 	public IDocumentoContabileBulk getDefferredSaldoFor(IDocumentoContabileBulk docCont) {
-		// TODO Auto-generated method stub
-		return null;
+		if (docCont != null && deferredSaldi != null)
+			for (Iterator i = deferredSaldi.keySet().iterator(); i.hasNext();) {
+				IDocumentoContabileBulk key = (IDocumentoContabileBulk)i.next();
+				if (((OggettoBulk)docCont).equalsByPrimaryKey((OggettoBulk)key))
+					return key;
+			}
+		return null;	
 	}
 	@Override
 	public void removeFromDefferredSaldi(IDocumentoContabileBulk docCont) {
-		// TODO Auto-generated method stub
-		
+		if (docCont != null && deferredSaldi != null &&
+				deferredSaldi.containsKey(docCont))
+					deferredSaldi.remove(docCont);
 	}
 	@Override
 	public void resetDefferredSaldi() {
-		// TODO Auto-generated method stub
 		
+		deferredSaldi = null;	
 	}
 	@Override
 	public Timestamp getDt_cancellazione() {
@@ -1060,18 +1078,15 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	@Override
 	public Class getChildClass() {
-		// TODO Auto-generated method stub
-		return null;
+		return OrdineAcqRigaBulk.class;
 	}
 	@Override
 	public Vector getDettagliCancellati() {
-		// TODO Auto-generated method stub
-		return null;
+		return dettagliCancellati;
 	}
 	@Override
 	public Vector getDocumentiContabiliCancellati() {
-		// TODO Auto-generated method stub
-		return null;
+		return documentiContabiliCancellati;
 	}
 	@Override
 	public Class getDocumentoAmministrativoClassForDelete() {
@@ -1080,8 +1095,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	@Override
 	public Class getDocumentoContabileClassForDelete() {
-		// TODO Auto-generated method stub
-		return null;
+		return OrdineAcqBulk.class;
 	}
 	@Override
 	public BigDecimal getImportoSignForDelete(BigDecimal importo) {
@@ -1138,22 +1152,24 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	@Override
 	public int removeFromDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (BulkCollections.containsByPrimaryKey(getDettagliCancellati(), (OggettoBulk)dettaglio))
+			getDettagliCancellati().remove(BulkCollections.indexOfByPrimaryKey(getDettagliCancellati(), (OggettoBulk)dettaglio));
+		return dettagliCancellati.size()-1;
 	}
 	@Override
 	public int removeFromDocumentiContabiliCancellati(IScadenzaDocumentoContabileBulk dettaglio) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (BulkCollections.containsByPrimaryKey(getDocumentiContabiliCancellati(), (OggettoBulk)dettaglio))
+			getDocumentiContabiliCancellati().remove(BulkCollections.indexOfByPrimaryKey(getDocumentiContabiliCancellati(),(OggettoBulk)dettaglio));
+		return documentiContabiliCancellati.size()-1;
 	}
 	@Override
 	public void setDettagliCancellati(Vector newDettagliCancellati) {
-		// TODO Auto-generated method stub
+		dettagliCancellati = newDettagliCancellati;
 		
 	}
 	@Override
 	public void setDocumentiContabiliCancellati(Vector newDocumentiContabiliCancellati) {
-		// TODO Auto-generated method stub
+		documentiContabiliCancellati = newDocumentiContabiliCancellati;
 		
 	}
 	@Override

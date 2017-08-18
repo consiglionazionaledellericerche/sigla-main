@@ -6,13 +6,6 @@
 	shortDescription="Consegna Ordine d'Acquisto"
 	longDescription="Consegna Ordine d'Acquisto">
 	<fieldProperty
-		name="findOrdineAcqRiga"
-		property="ordineAcqRiga"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="OrdineAcqRiga" />
-	<fieldProperty
 		name="cdCds"
 		property="ordineAcqRiga.cdCds"
 		inputType="TEXT"
@@ -119,27 +112,28 @@
 	<fieldProperty
 		name="tipoConsegna"
 		property="tipoConsegna"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		nullable="false"
+		inputType="SELECT"
 		keysProperty="tipoConsegnaKeys"
+		inputSize="20"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
 		label="Tipo Consegna" />
 	<fieldProperty
 		name="dtPrevConsegna"
 		property="dtPrevConsegna"
 		inputType="TEXT"
+		inputSize="10"
 		formatName="date_short"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		nullable="false"
 		label="Data Prev. Consegna" />
 	<fieldProperty
 		name="quantita"
 		property="quantita"
 		inputType="TEXT"
-		inputSize="10"
+		inputSize="8"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
 		nullable="false"
@@ -196,7 +190,7 @@
 		name="findMagazzino"
 		property="magazzino"
 		inputType="searchtool"
-		formName="searchtool"
+		formName="searchtool_esteso"
 		enabledOnSearch="true"
 		label="Magazzino" />
 	<fieldProperty
@@ -226,7 +220,7 @@
 		name="dsMagazzino"
 		property="magazzino.dsMagazzino"
 		inputType="TEXT"
-		inputSize="30"
+		inputSize="50"
 		maxLength="30"
 		enabledOnEdit="false"
 		label="Magazzino" />
@@ -346,6 +340,8 @@
 		<columnFieldProperty
 			name="cdMagazzino"/>
 		<columnFieldProperty
+			name="cdluogoConsegna"/>
+		<columnFieldProperty
 			name="cdUopDest"/>
 		<columnFieldProperty
 			name="dtPrevConsegna" />
@@ -365,11 +361,14 @@
 	<formFieldProperty
 		name="statoFatt" />
 	<formFieldProperty
-		name="tipoConsegna" />
+		name="tipoConsegna"   
+		command="doOnTipoConsegnaChange" />
 	<formFieldProperty
-		name="dtPrevConsegna" />
+		name="dtPrevConsegna"    
+		command="doOnDtPrevConsegnaChange"/>
 	<formFieldProperty
-		name="quantita" />
+		name="quantita"   
+		command="doOnQuantitaChange"/>
 	<formFieldProperty
 		name="imImponibileDivisa" />
 	<formFieldProperty
@@ -427,7 +426,7 @@
 	<findFieldProperty
 		name="cdMagazzino" />
 	<findFieldProperty
-		name="cdLuogoConsegna" />
+		name="cdluogoConsegna" />
 	<findFieldProperty
 		name="cdUopDest" />
 	<findFieldProperty
@@ -477,7 +476,7 @@
 	<columnFieldProperty
 		name="cdMagazzino" />
 	<columnFieldProperty
-		name="cdLuogoConsegna" />
+		name="cdluogoConsegna" />
 	<columnFieldProperty
 		name="cdUopDest" />
 	<columnFieldProperty

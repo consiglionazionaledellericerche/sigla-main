@@ -34,6 +34,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
@@ -156,13 +157,19 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 //			//assegna un progressivo al documento all'atto della creazione.
 		validaOrdine(userContext, ordine);
 		calcolaImportoOrdine(userContext, ordine);
+
+	    manageDocumentiContabiliCancellati(userContext, ordine, status);
+
 		aggiornaObbligazioni(userContext,ordine,status);
 		assegnaProgressivo(userContext, ordine);
 		ordine = (OrdineAcqBulk)super.creaConBulk(userContext, ordine);
 		return ordine;
 	}
 
-	private void calcolaImportoOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException{
+	public OrdineAcqBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException{
+		if (ordine.getCambio() == null || ordine.getDivisa() == null || ordine.getDivisa().getCd_divisa() == null ){
+			throw new it.cnr.jada.comp.ApplicationException("Campi di testata ordine necessari per il calcolo dell'importo non valorizzati.");
+		}
 		ParametriCalcoloImportoOrdine parametriTestata = new ParametriCalcoloImportoOrdine();
 		parametriTestata.setCambio(ordine.getCambio());
 		parametriTestata.setDivisa(ordine.getDivisa());
@@ -174,48 +181,63 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		ordine.setImTotaleOrdine(BigDecimal.ZERO);
     	for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
     		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
-    		if (riga != null){
-    			ParametriCalcoloImportoOrdine parametriRiga = (ParametriCalcoloImportoOrdine)parametriTestata.clone();
-    			parametriRiga.setCoefacq(riga.getCoefConv());
-    			parametriRiga.setPrezzo(riga.getPrezzoUnitario());
-    			parametriRiga.setSconto1(riga.getSconto1());
-    			parametriRiga.setSconto2(riga.getSconto2());
-    			parametriRiga.setSconto3(riga.getSconto3());
-    			parametriRiga.setVoceIva(riga.getVoceIva());
-    			riga.setImImponibile(BigDecimal.ZERO);
-    			riga.setImImponibileDivisa(BigDecimal.ZERO);
-    			riga.setImIva(BigDecimal.ZERO);
-    			riga.setImIvaDivisa(BigDecimal.ZERO);
-    			riga.setImIvaD(BigDecimal.ZERO);
-    			riga.setImIvaNd(BigDecimal.ZERO);
-    			riga.setImTotaleRiga(BigDecimal.ZERO);
-            	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
-            		OggettoBulk consbulk= (OggettoBulk) c.next();
-            		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-        			ParametriCalcoloImportoOrdine parametriCons = (ParametriCalcoloImportoOrdine)parametriRiga.clone();
-        			parametriCons.setQtaOrd(cons.getQuantita());
-        			parametriCons.setArrAliIva(cons.getArrAliIva());
-        			ImportoOrdine importo = calcoloImportoOrdine(parametriCons);
-        			cons.setImImponibile(importo.getImponibile());
-        			cons.setImImponibileDivisa(importo.getImponibile());
-        			cons.setImIva(importo.getImportoIva());
-        			cons.setImIvaDivisa(importo.getImportoIva());
-        			cons.setImIvaD(importo.getImportoIvaDetraibile());
-        			cons.setImIvaNd(importo.getImportoIvaInd());
-        			cons.setImTotaleConsegna(importo.getTotale());
-        			cons.setToBeUpdated();
-        			riga.setImImponibile(riga.getImImponibile().add(cons.getImImponibile()));
-        			riga.setImImponibileDivisa(riga.getImImponibileDivisa().add(cons.getImImponibileDivisa()));
-        			riga.setImIva(riga.getImIva().add(cons.getImIva()));
-        			riga.setImIvaDivisa(riga.getImIvaDivisa().add(cons.getImIvaDivisa()));
-        			riga.setImIvaD(riga.getImIvaD().add(cons.getImIvaD()));
-        			riga.setImIvaNd(riga.getImIvaNd().add(cons.getImIvaNd()));
-        			riga.setImTotaleRiga(riga.getImTotaleRiga().add(cons.getImTotaleConsegna()));
-        			riga.setToBeUpdated();
-            	}
+    		if (riga == null){
+    			throw new it.cnr.jada.comp.ApplicationException("Dettaglio vuoto.");
     		}
-		}
+    		if (riga.getCoefConv() == null || riga.getPrezzoUnitario() == null || riga.getVoceIva() == null || riga.getVoceIva().getCd_voce_iva() == null ){
+    			throw new it.cnr.jada.comp.ApplicationException("Campi di dettaglio ordine necessari per il calcolo dell'importo non valorizzati.");
+    		}
+    		ParametriCalcoloImportoOrdine parametriRiga = (ParametriCalcoloImportoOrdine)parametriTestata.clone();
+    		parametriRiga.setCoefacq(riga.getCoefConv());
+    		parametriRiga.setPrezzo(riga.getPrezzoUnitario());
+    		parametriRiga.setSconto1(riga.getSconto1());
+    		parametriRiga.setSconto2(riga.getSconto2());
+    		parametriRiga.setSconto3(riga.getSconto3());
+    		parametriRiga.setVoceIva(riga.getVoceIva());
+    		riga.setImImponibile(BigDecimal.ZERO);
+    		riga.setImImponibileDivisa(BigDecimal.ZERO);
+    		riga.setImIva(BigDecimal.ZERO);
+    		riga.setImIvaDivisa(BigDecimal.ZERO);
+    		riga.setImIvaD(BigDecimal.ZERO);
+    		riga.setImIvaNd(BigDecimal.ZERO);
+    		riga.setImTotaleRiga(BigDecimal.ZERO);
+    		if (riga.getRigheConsegnaColl() == null || riga.getRigheConsegnaColl().isEmpty()){
+        		if (riga.getDspQuantita() != null){
+            		gestioneSalvataggioRigaConsegnaSingola(riga);
+        		} else {
+        			throw new it.cnr.jada.comp.ApplicationException("Campi di dettaglio ordine necessari per il calcolo dell'importo non valorizzati.");
+        		}
+    		}
+    		for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
+    			OggettoBulk consbulk= (OggettoBulk) c.next();
+    			OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
+    			ParametriCalcoloImportoOrdine parametriCons = (ParametriCalcoloImportoOrdine)parametriRiga.clone();
+        		if (cons.getQuantita() == null ){
+        			throw new it.cnr.jada.comp.ApplicationException("Campi di consegna ordine necessari per il calcolo dell'importo non valorizzati.");
+        		}
+    			parametriCons.setQtaOrd(cons.getQuantita());
+    			parametriCons.setArrAliIva(cons.getArrAliIva());
+    			ImportoOrdine importo = calcoloImportoOrdine(parametriCons);
+    			cons.setImImponibile(importo.getImponibile());
+    			cons.setImImponibileDivisa(importo.getImponibile());
+    			cons.setImIva(importo.getImportoIva());
+    			cons.setImIvaDivisa(importo.getImportoIva());
+    			cons.setImIvaD(importo.getImportoIvaDetraibile());
+    			cons.setImIvaNd(importo.getImportoIvaInd());
+    			cons.setImTotaleConsegna(importo.getTotale());
+    			cons.setToBeUpdated();
+    			riga.setImImponibile(riga.getImImponibile().add(cons.getImImponibile()));
+    			riga.setImImponibileDivisa(riga.getImImponibileDivisa().add(cons.getImImponibileDivisa()));
+    			riga.setImIva(riga.getImIva().add(cons.getImIva()));
+    			riga.setImIvaDivisa(riga.getImIvaDivisa().add(cons.getImIvaDivisa()));
+    			riga.setImIvaD(riga.getImIvaD().add(cons.getImIvaD()));
+    			riga.setImIvaNd(riga.getImIvaNd().add(cons.getImIvaNd()));
+    			riga.setImTotaleRiga(riga.getImTotaleRiga().add(cons.getImTotaleConsegna()));
+    			riga.setToBeUpdated();
+    		}
+    	}
 		impostaTotaliOrdine(ordine);
+		return ordine;
 	}
 
 	public void impostaTotaliOrdine(OrdineAcqBulk ordine) {
@@ -317,7 +339,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 
 	private void gestioneSalvataggioRigaConsegnaSingola(OrdineAcqRigaBulk riga) throws ApplicationException {
 		if ((riga.isToBeCreated() && riga.getRigheConsegnaColl() == null || riga.getRigheConsegnaColl().isEmpty()) ||
-				(riga.getRigheConsegnaColl() != null && riga.getRigheConsegnaColl().size() == 1 && riga.getConsegneModificate())){
+				(riga.getRigheConsegnaColl() != null && riga.getRigheConsegnaColl().size() == 1)){
 			riga.setQuantita(riga.getDspQuantita());
 			if (riga.getDspQuantita() == null){
 				throw new ApplicationException ("E' necessario indicare la quantità.");
@@ -343,7 +365,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 			if (riga.isToBeCreated()){
 				consegna = new OrdineAcqConsegnaBulk();
 				consegna.setOrdineAcqRiga(riga);
-				consegna.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
+				consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
 				consegna.setRiga(riga.getRiga());
 				consegna.setConsegna(1);
 				consegna.setToBeCreated();
@@ -408,6 +430,13 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     sql.addClause("AND", "cdUnitaOperativa", sql.EQUALS, ordine.getCdUnitaOperativa());
     sql.addClause("AND", "esercizio", sql.EQUALS, ordine.getEsercizio());
     sql.addClause("AND", "cdNumeratore", sql.EQUALS, ordine.getCdNumeratore());
+	sql.addOrderBy("cd_cds");
+	sql.addOrderBy("cd_unita_operativa");
+	sql.addOrderBy("esercizio");
+	sql.addOrderBy("cd_numeratore");
+	sql.addOrderBy("numero");
+	sql.addOrderBy("riga");
+
     try {
     	ordine.setRigheOrdineColl(new it.cnr.jada.bulk.BulkList(homeRiga.fetchAll(sql)));
 
@@ -437,6 +466,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     	    sqlConsegna.addClause("AND", "esercizio", sql.EQUALS, ordine.getEsercizio());
     	    sqlConsegna.addClause("AND", "cdNumeratore", sql.EQUALS, ordine.getCdNumeratore());
     	    sqlConsegna.addClause("AND", "riga", sql.EQUALS, riga.getRiga());
+    		sqlConsegna.addOrderBy("consegna");
         	riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(homeConsegna.fetchAll(sqlConsegna)));
         	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
         		OggettoBulk consbulk= (OggettoBulk) c.next();
@@ -864,6 +894,11 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	sqlExists.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
 
 	sql.addSQLExistsClause("AND", sqlExists);
+	sql.addOrderBy("cd_cds");
+	sql.addOrderBy("cd_unita_operativa");
+	sql.addOrderBy("esercizio");
+	sql.addOrderBy("cd_numeratore");
+	sql.addOrderBy("numero");
 	return sql;
 }
 
@@ -975,6 +1010,7 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext user
 	OrdineAcqBulk ordine= (OrdineAcqBulk)bulk;
 	validaOrdine(userContext, ordine);
 	calcolaImportoOrdine(userContext, ordine);
+    manageDeletedElements(userContext, ordine, status);
 	aggiornaObbligazioni(userContext,ordine,status);
 	return (OrdineAcqBulk)super.modificaConBulk(userContext, bulk);
 }
@@ -1514,5 +1550,105 @@ private Obbligazione_scadenzarioBulk caricaScadenzaObbligazionePer(
 			return scadenza;
 		}
 		return null;
+	}
+private void manageDocumentiContabiliCancellati(
+		UserContext userContext, 
+		OrdineAcqBulk ordine,
+		OptionRequestParameter status)
+		throws ComponentException {
+
+		if (ordine != null) {
+			if (ordine.getDocumentiContabiliCancellati() != null &&
+				!ordine.getDocumentiContabiliCancellati().isEmpty()) {
+
+					PrimaryKeyHashtable scadenzeConfermateTemporanee = getDocumentiContabiliTemporanei(
+																			userContext,
+																			ordine.getOrdineObbligazioniHash().keys());
+					Vector scadenzeConfermate = new Vector();
+					java.util.Enumeration e = scadenzeConfermateTemporanee.keys();
+					while (e.hasMoreElements()) {
+						OggettoBulk obj = (OggettoBulk)e.nextElement();
+						if (obj instanceof ObbligazioneBulk)
+							scadenzeConfermate.add(obj);
+					}
+					aggiornaObbligazioniSuCancellazione(
+						userContext,
+						ordine,
+						ordine.getDocumentiContabiliCancellati().elements(),
+						scadenzeConfermate,
+						status);
+			}
+		}
+	}
+private void aggiornaObbligazioniSuCancellazione(
+		UserContext userContext,
+		OrdineAcqBulk ordine,
+		java.util.Enumeration scadenzeDaCancellare,
+		java.util.Collection scadenzeConfermate,
+		OptionRequestParameter status)
+		throws ComponentException {
+
+		if (scadenzeDaCancellare != null) {
+
+			it.cnr.jada.bulk.PrimaryKeyHashtable obblTemporanee = new it.cnr.jada.bulk.PrimaryKeyHashtable();
+			for (java.util.Enumeration e = scadenzeDaCancellare; e.hasMoreElements();) {
+				OggettoBulk oggettoBulk = (OggettoBulk)e.nextElement();
+				if (oggettoBulk instanceof Obbligazione_scadenzarioBulk) {
+					Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)oggettoBulk;
+					if (scadenza.getObbligazione().isTemporaneo()) {
+						if (!obblTemporanee.containsKey(scadenza.getObbligazione())) {
+							Vector allInstances = new java.util.Vector();
+							allInstances.addElement(scadenza);
+							obblTemporanee.put(scadenza.getObbligazione(), allInstances);
+						} else {
+							((Vector)obblTemporanee.get(scadenza.getObbligazione())).add(scadenza);
+						}
+					} else if (!ordine.isToBeCreated() && OggettoBulk.NORMAL == scadenza.getCrudStatus()) {
+						PrimaryKeyHashtable obbligs = getDocumentiContabiliNonTemporanei(userContext, ordine.getObbligazioniHash().keys());
+						if (!obbligs.containsKey(scadenza.getObbligazione()))
+							aggiornaSaldi(
+								userContext, 
+								ordine, 
+								scadenza.getObbligazione(),
+								status);
+						scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+						updateImportoAssociatoDocAmm(userContext, scadenza);
+					}
+	            	/**
+	            	 * Devo aggiornare i Saldi per quelle scadenze modificate e riportate
+	            	 * ma poi scollegate dal documento 
+	            	 * Marco Spasiano 05/05/2006
+	            	 */
+	                aggiornaSaldi(userContext, ordine, scadenza.getObbligazione(), status);
+				}
+			}
+			for (java.util.Enumeration e = obblTemporanee.keys(); e.hasMoreElements();) {
+				ObbligazioneBulk obblT = (ObbligazioneBulk)e.nextElement();
+
+				//Aggiorna i saldi per le obbligazioni temporanee
+				//DEVE ESSERE FATTO PRIMA DELL'AGGIORNAMENTO A DEFINITIVA
+				PrimaryKeyHashtable obbligs = getDocumentiContabiliTemporanei(userContext, ordine.getObbligazioniHash().keys());
+				if (!obbligs.containsKey(obblT))
+					aggiornaSaldi(
+							userContext, 
+							ordine, 
+							obblT,
+							status);
+
+				if (scadenzeConfermate == null || !it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(scadenzeConfermate, obblT))
+					aggiornaObbligazioniTemporanee(userContext, obblT);
+			}
+		}
+	}
+private OrdineAcqBulk manageDeletedElements(
+		UserContext userContext, 
+		OrdineAcqBulk ordine,
+		OptionRequestParameter status)
+		throws ComponentException {
+
+		if (ordine != null) {
+			manageDocumentiContabiliCancellati(userContext, ordine, status);
+		}
+		return ordine;
 	}
 }

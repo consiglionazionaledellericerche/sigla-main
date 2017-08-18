@@ -73,9 +73,27 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 			return super.removeDetail(i);
 		}
 
+		@Override
+		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+			int index = super.addDetail(oggettobulk);
+//			OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
+//			getConsegne().addDetail(consegna);
+//			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)oggettobulk;
+//			riga.getRigheConsegnaColl().add(consegna);
+			return index;
+		}
+
 	};
 
-	private final SimpleDetailCRUDController consegne = new SimpleDetailCRUDController("Consegne",OrdineAcqConsegnaBulk.class,"righeConsegnaColl",righe);
+	private final SimpleDetailCRUDController consegne = new SimpleDetailCRUDController("Consegne",OrdineAcqConsegnaBulk.class,"righeConsegnaColl",righe){
+
+		@Override
+		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+			int index = super.addDetail(oggettobulk);
+			return index;
+		}
+		
+	};
 
 	private final ObbligazioniCRUDController obbligazioniController = new ObbligazioniCRUDController(
 			"Obbligazioni",

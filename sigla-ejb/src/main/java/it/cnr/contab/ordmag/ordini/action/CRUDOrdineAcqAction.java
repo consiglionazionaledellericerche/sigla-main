@@ -9,9 +9,8 @@ import javax.persistence.PersistenceException;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
@@ -31,14 +30,13 @@ import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
-import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -145,18 +143,201 @@ public Forward doBringBackSearchFindMagazzino(ActionContext context,
 		throws java.rmi.RemoteException {
 
 		riga.setDspMagazzino(magazzino);
+		gestioneConsegnaNonPresente(riga);
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setMagazzino(riga.getDspMagazzino());
+			consegna.setToBeUpdated();
+		}
 		((CRUDBP)context.getBusinessProcess()).setDirty(true);
 		if (magazzino != null){
 			riga.setDspLuogoConsegna(magazzino.getLuogoConsegnaMag());
+			for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+				OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+				consegna.setLuogoConsegnaMag(riga.getDspLuogoConsegna());
+				consegna.setToBeUpdated();
+			}
 		}
 		return context.findDefaultForward();
 }
+
+public Forward doBringBackSearchFindMagazzino(ActionContext context,
+		OrdineAcqConsegnaBulk cons,
+		MagazzinoBulk magazzino) 
+		throws java.rmi.RemoteException {
+
+		cons.setMagazzino(magazzino);
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			riga.setDspMagazzino(cons.getMagazzino());
+		}
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		if (magazzino != null){
+			cons.setLuogoConsegnaMag(magazzino.getLuogoConsegnaMag());
+			if (riga.getRigheConsegnaColl().size() == 1){
+				riga.setDspLuogoConsegna(cons.getLuogoConsegnaMag());
+			}
+		}
+		return context.findDefaultForward();
+}
+
 public Forward doBlankSearchFindMagazzino(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
 
     try {
         //imposta i valori di default per il tariffario
         riga.setDspMagazzino(new MagazzinoBulk());
         riga.setDspLuogoConsegna(new LuogoConsegnaMagBulk());
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setMagazzino(riga.getDspMagazzino());
+			consegna.setLuogoConsegnaMag(riga.getDspLuogoConsegna());
+			consegna.setToBeUpdated();
+		}
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBlankSearchFindMagazzino(ActionContext context, OrdineAcqConsegnaBulk cons) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+    	cons.setMagazzino(new MagazzinoBulk());
+    	cons.setLuogoConsegnaMag(new LuogoConsegnaMagBulk());
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			riga.setDspMagazzino(cons.getMagazzino());
+			riga.setDspLuogoConsegna(cons.getLuogoConsegnaMag());
+		}
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBringBackSearchFindUnitaOperativaOrdDest(ActionContext context,
+		OrdineAcqRigaBulk riga,
+		UnitaOperativaOrdBulk uop) 
+		throws java.rmi.RemoteException {
+
+		riga.setDspUopDest(uop);
+		gestioneConsegnaNonPresente(riga);
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setUnitaOperativaOrd(riga.getDspUopDest());
+			consegna.setToBeUpdated();
+		}
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		return context.findDefaultForward();
+}
+
+public Forward doBringBackSearchFindUnitaOperativaOrdDest(ActionContext context,
+		OrdineAcqConsegnaBulk cons,
+		UnitaOperativaOrdBulk uop) 
+		throws java.rmi.RemoteException {
+
+		cons.setUnitaOperativaOrd(uop);
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			riga.setDspUopDest(cons.getUnitaOperativaOrd());
+		}
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		return context.findDefaultForward();
+}
+
+public Forward doBlankSearchFindUnitaOperativaOrdDest(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+        riga.setDspUopDest(new UnitaOperativaOrdBulk());
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setUnitaOperativaOrd(riga.getDspUopDest());
+			consegna.setToBeUpdated();
+		}
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBlankSearchFindUnitaOperativaOrdDest(ActionContext context, OrdineAcqConsegnaBulk cons) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+    	cons.setUnitaOperativaOrd(new UnitaOperativaOrdBulk());
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			riga.setDspUopDest(cons.getUnitaOperativaOrd());
+		}
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBringBackSearchFindLuogoConsegnaMag(ActionContext context,
+		OrdineAcqRigaBulk riga,
+		LuogoConsegnaMagBulk luogo) 
+		throws java.rmi.RemoteException {
+
+		riga.setDspLuogoConsegna(luogo);
+		gestioneConsegnaNonPresente(riga);
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setLuogoConsegnaMag(riga.getDspLuogoConsegna());
+			consegna.setToBeUpdated();
+		}
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		return context.findDefaultForward();
+}
+
+public Forward doBringBackSearchFindLuogoConsegnaMag(ActionContext context,
+		OrdineAcqConsegnaBulk cons,
+		LuogoConsegnaMagBulk luogo) 
+		throws java.rmi.RemoteException {
+
+		cons.setLuogoConsegnaMag(luogo);
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			riga.setDspLuogoConsegna(cons.getLuogoConsegnaMag());
+		}
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		return context.findDefaultForward();
+}
+
+public Forward doBlankSearchFindLuogoConsegnaMag(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+        riga.setDspLuogoConsegna(new LuogoConsegnaMagBulk());
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setLuogoConsegnaMag(riga.getDspLuogoConsegna());
+			consegna.setToBeUpdated();
+		}
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBlankSearchFindLuogoConsegnaMag(ActionContext context, OrdineAcqConsegnaBulk cons) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+    	cons.setLuogoConsegnaMag(new LuogoConsegnaMagBulk());
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			riga.setDspLuogoConsegna(cons.getLuogoConsegnaMag());
+		}
         return context.findDefaultForward();
 
     } catch (Exception e) {
@@ -757,7 +938,7 @@ public Forward doCalcolaTotalePerObbligazione(ActionContext context, Obbligazion
 			}
 		} else
 			ordine.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
-	return context.findDefaultForward();	
+	return context.findDefaultForward();
 }
 public Forward doContabilizza(ActionContext context) {
 
@@ -1117,18 +1298,6 @@ public Forward doRemoveFromCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionCon
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
  */
-public Forward doSelectObbligazioni(ActionContext context) {
-
-	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
-	try {
-		bp.getObbligazioniController().setSelection(context);
-	} catch (Throwable e) {
-		return handleException(context, e);
-	}
-
-	doCalcolaTotalePerObbligazione(context, (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel());
-	return context.findDefaultForward();	
-}
 /**
  * Viene richiamato nel momento in cui si seleziona una valuta dal combo Valuta nella 
  * testata della fattura.
@@ -1270,15 +1439,193 @@ public Forward doOnImportoChange(ActionContext context) {
 	try{	
 		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
 		fillModel(context);
-		OggettoBulk oggetto = (OggettoBulk)bp.getModel();
-		if (oggetto instanceof OrdineAcqRigaBulk){
-			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)oggetto;
-//			riga.
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+
+		calcolaTotaleOrdine(context, ordine);
+		
+		return context.findDefaultForward();
+
+	} catch(Throwable e) {
+		return handleException(context, e);
+	}
+}
+private void calcolaTotaleOrdine(ActionContext context, OrdineAcqBulk ordine)
+		throws BusinessProcessException, RemoteException, PersistencyException {
+	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+	OrdineAcqComponentSession h = (OrdineAcqComponentSession)bp.createComponentSession();
+	try {
+		OrdineAcqBulk ordineAggiornato = h.calcolaImportoOrdine(context.getUserContext(), ordine);
+		ordine.setImImponibile(ordine.getImImponibile());
+		ordine.setImIva(ordine.getImIva());
+		ordine.setImIvaD(ordine.getImIvaD());
+		ordine.setImTotaleOrdine(ordine.getImTotaleOrdine());
+		for (java.util.Iterator i = ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
+			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)i.next();
+			for (java.util.Iterator k = ordineAggiornato.getRigheOrdineColl().iterator(); k.hasNext();) {
+				OrdineAcqRigaBulk rigaAggiornata = (OrdineAcqRigaBulk)k.next();
+				if (riga.equalsByPrimaryKey(rigaAggiornata)){
+					riga.setImImponibile(rigaAggiornata.getImImponibile());
+					riga.setImImponibileDivisa(rigaAggiornata.getImImponibileDivisa());
+					riga.setImIva(rigaAggiornata.getImIva());
+					riga.setImIvaD(rigaAggiornata.getImIvaD());
+					riga.setImIvaDivisa(rigaAggiornata.getImIvaDivisa());
+					riga.setImIvaNd(rigaAggiornata.getImIvaNd());
+					riga.setImTotaleRiga(rigaAggiornata.getImTotaleRiga());
+					for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+						OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+						for (java.util.Iterator x = rigaAggiornata.getRigheConsegnaColl().iterator(); x.hasNext();) {
+							OrdineAcqConsegnaBulk consegnaAggiornata = (OrdineAcqConsegnaBulk)x.next();
+							if (consegna.equalsByPrimaryKey(consegnaAggiornata)){
+								consegna.setImImponibile(consegnaAggiornata.getImImponibile());
+								consegna.setImImponibileDivisa(consegnaAggiornata.getImImponibileDivisa());
+								consegna.setImIva(consegnaAggiornata.getImIva());
+								consegna.setImIvaD(consegnaAggiornata.getImIvaD());
+								consegna.setImIvaDivisa(consegnaAggiornata.getImIvaDivisa());
+								consegna.setImIvaNd(consegnaAggiornata.getImIvaNd());
+								consegna.setImTotaleConsegna(consegnaAggiornata.getImTotaleConsegna());
+								break;
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+		aggiornaObbligazioni(context);
+	} catch (ComponentException e) {
+	}
+}
+public Forward doOnDspQuantitaChange(ActionContext context) {
+
+	try{	
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+		fillModel(context);
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		gestioneConsegnaNonPresente(riga);
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setQuantita(riga.getDspQuantita());
+			consegna.setToBeUpdated();
+		}
+		calcolaTotaleOrdine(context, ordine);
+		return context.findDefaultForward();
+
+	} catch(Throwable e) {
+		return handleException(context, e);
+	}
+}
+private OrdineAcqRigaBulk gestioneConsegnaNonPresente(OrdineAcqRigaBulk riga) {
+	if (riga.getRigheConsegnaColl() == null || riga.getRigheConsegnaColl().isEmpty()){
+		OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
+		consegna.inizializzaConsegnaNuovaRiga();
+		consegna.setRiga(riga.getRiga());
+		consegna.setTipoConsegna(riga.getDspTipoConsegna());
+		riga.addToRigheConsegnaColl(consegna);
+	}
+	return riga;
+}
+public Forward doOnDspTipoConsegnaChange(ActionContext context) {
+
+	try{	
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+		fillModel(context);
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		gestioneConsegnaNonPresente(riga);
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setTipoConsegna(riga.getDspTipoConsegna());
+			consegna.setToBeUpdated();
 		}
 		return context.findDefaultForward();
 
 	} catch(Throwable e) {
 		return handleException(context, e);
 	}
+}
+public Forward doOnDspDtPrevConsegnaChange(ActionContext context) {
+
+	try{	
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+		fillModel(context);
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		gestioneConsegnaNonPresente(riga);
+		for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext();) {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)j.next();
+			consegna.setDtPrevConsegna(riga.getDspDtPrevConsegna());
+			consegna.setToBeUpdated();
+		}
+		return context.findDefaultForward();
+
+	} catch(Throwable e) {
+		return handleException(context, e);
+	}
+}
+public Forward doOnQuantitaChange(ActionContext context) {
+
+	try{	
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+		fillModel(context);
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bp.getConsegne().getModel();
+			riga.setDspQuantita(cons.getQuantita());
+			riga.setToBeUpdated();
+		}
+		calcolaTotaleOrdine(context, ordine);
+		return context.findDefaultForward();
+
+	} catch(Throwable e) {
+		return handleException(context, e);
+	}
+}
+public Forward doOnTipoConsegnaChange(ActionContext context) {
+
+	try{	
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+		fillModel(context);
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bp.getConsegne().getModel();
+			riga.setDspTipoConsegna(cons.getTipoConsegna());
+			riga.setToBeUpdated();
+		}
+		return context.findDefaultForward();
+
+	} catch(Throwable e) {
+		return handleException(context, e);
+	}
+}
+public Forward doOnDtPrevConsegnaChange(ActionContext context) {
+
+	try{	
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+		fillModel(context);
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+		if (riga.getRigheConsegnaColl().size() == 1){
+			OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bp.getConsegne().getModel();
+			riga.setDspDtPrevConsegna(cons.getDtPrevConsegna());
+			riga.setToBeUpdated();
+		}
+		return context.findDefaultForward();
+
+	} catch(Throwable e) {
+		return handleException(context, e);
+	}
+}
+public Forward aggiornaObbligazioni(ActionContext context) {
+
+	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+	try {
+		bp.getObbligazioniController().setSelection(context);
+	} catch (Throwable e) {
+		return handleException(context, e);
+	}
+
+	doCalcolaTotalePerObbligazione(context, (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel());
+	return context.findDefaultForward();	
 }
 }
