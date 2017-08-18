@@ -128,4 +128,22 @@ public OrdineAcqBulk contabilizzaDettagliSelezionati(it.cnr.jada.UserContext par
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+public OrdineAcqBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws RemoteException,ComponentException, PersistencyException{
+	pre_component_invocation(userContext,componentObj);
+	try {
+		OrdineAcqBulk result = ((OrdineAcqComponent)componentObj).calcolaImportoOrdine(userContext, ordine);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
 }

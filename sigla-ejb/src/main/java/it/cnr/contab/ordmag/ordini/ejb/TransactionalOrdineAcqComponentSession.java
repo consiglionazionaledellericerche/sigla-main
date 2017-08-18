@@ -111,4 +111,21 @@ public OrdineAcqBulk contabilizzaDettagliSelezionati(it.cnr.jada.UserContext par
 		}
 	}
 }
+public OrdineAcqBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws RemoteException,ComponentException, PersistencyException{
+	try {
+		return (OrdineAcqBulk)invoke("calcolaImportoOrdine",new Object[] {
+			userContext,
+			ordine });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }

@@ -392,10 +392,10 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
 		int max = 0;
 		for (Iterator i = righeConsegnaColl.iterator(); i.hasNext();) {
-			int prog = ((OrdineAcqConsegnaBulk)i.next()).getRiga();
+			int prog = ((OrdineAcqConsegnaBulk)i.next()).getConsegna();
 			if (prog > max) max = prog;
 		}
-		nuovoRigo.setRiga(new Integer(max+1));
+		nuovoRigo.setConsegna(new Integer(max+1));
 		righeConsegnaColl.add(nuovoRigo);
 		return righeConsegnaColl.size()-1;
 	}
