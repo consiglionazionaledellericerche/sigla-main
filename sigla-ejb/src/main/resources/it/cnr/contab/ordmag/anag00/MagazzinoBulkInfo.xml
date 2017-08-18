@@ -344,6 +344,15 @@
 		    inputSize="30"
 			name="dsMagazzinoRid" />
 	</form>
+	<form
+		name="searchtool_esteso">
+		<formFieldProperty
+		    inputSize="3"
+			name="cdMagazzino" />
+		<formFieldProperty
+		    inputSize="50"
+			name="dsMagazzino" />
+	</form>
 	<formFieldProperty
 		name="cdMagazzino" />
 	<formFieldProperty

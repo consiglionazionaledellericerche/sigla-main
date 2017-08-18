@@ -367,7 +367,7 @@
 		name="ds_scadenza_obbligazione"
 		property="dspObbligazioneScadenzario.ds_scadenza"
 		label="Descrizione"
-		inputSize="20"
+		inputSize="40"
 		inputType="ROTEXT" 
 		/>
 	<fieldProperty
@@ -452,9 +452,11 @@
 	<formFieldProperty
 		name="stato" />
 	<formFieldProperty
-		name="prezzoUnitario" />
+		name="prezzoUnitario"  
+		command="doOnImportoChange"/>
 	<formFieldProperty
-		name="dspQuantita" />
+		name="dspQuantita"  
+		command="doOnDspQuantitaChange"/>
 	<formFieldProperty
 		name="findUnitaMisura" />
 	<formFieldProperty
@@ -468,11 +470,14 @@
 	<formFieldProperty
 		name="percentuale_voce_iva" />
 	<formFieldProperty
-		name="sconto1" />
+		name="sconto1"  
+		command="doOnImportoChange" />
 	<formFieldProperty
-		name="sconto2" />
+		name="sconto2"   
+		command="doOnImportoChange"/>
 	<formFieldProperty
-		name="sconto3" />
+		name="sconto3"  
+		command="doOnImportoChange" />
 	<formFieldProperty
 		name="imImponibileDivisa" />
 	<formFieldProperty
@@ -486,9 +491,11 @@
 	<formFieldProperty
 		name="imTotaleRiga" />
 	<formFieldProperty
-		name="tipoConsegna" />
+		name="tipoConsegna"   
+		command="doOnDspTipoConsegnaChange"/>
 	<formFieldProperty
-		name="dtPrevConsegna" />
+		name="dtPrevConsegna"   
+		command="doOnDspDtPrevConsegnaChange"/>
 	<formFieldProperty
 		name="findLuogoConsegnaMag" />
 	<formFieldProperty

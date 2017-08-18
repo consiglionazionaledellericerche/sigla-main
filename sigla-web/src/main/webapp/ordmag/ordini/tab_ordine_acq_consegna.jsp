@@ -22,9 +22,6 @@
 				bp.getConsegne().writeFormField(out, "quantita");
 			    bp.getConsegne().writeFormField(out, "tipoConsegna");
 				bp.getConsegne().writeFormField(out, "dtPrevConsegna");
-				if (cons != null && !cons.getTipoConsegna().equals("MAG")){
-				    bp.getConsegne().writeFormField(out, "findUnitaOperativaOrdDest");
-		    	}
 			%>
 		</tr>
 	</table>
@@ -33,6 +30,15 @@
 			<%
 		    bp.getConsegne().writeFormField(out, "findMagazzino");
 		    bp.getConsegne().writeFormField(out, "findLuogoConsegnaMag");
+			%>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<%
+			if (cons != null && cons.getTipoConsegna() != null && !cons.getTipoConsegna().equals("MAG")) {
+				bp.getConsegne().writeFormField(out, "findUnitaOperativaOrdDest");
+			}
 			%>
 		</tr>
 	</table>

@@ -444,12 +444,21 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
 	{
 		setStato(STATO_INSERITA);
-		setStato(STATO_FATT_NON_ASSOCIATA);
+		setStatoFatt(STATO_FATT_NON_ASSOCIATA);
 		setImImponibile(BigDecimal.ZERO);
 		setImImponibileDivisa(BigDecimal.ZERO);
 		setImIva(BigDecimal.ZERO);
 		setImIvaDivisa(BigDecimal.ZERO);
 		setImTotaleConsegna(BigDecimal.ZERO);
 		return this;
+	}
+	public OggettoBulk inizializzaConsegnaNuovaRiga(){
+		OrdineAcqConsegnaBulk consegna = this;
+		consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+		consegna.setConsegna(1);
+		consegna.setToBeCreated();
+		consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+		consegna.setStatoFatt(OrdineAcqConsegnaBulk.STATO_FATT_NON_ASSOCIATA);
+		return consegna;
 	}
 }
