@@ -52,6 +52,15 @@
 		<formFieldProperty
 			name="dsUnitaOperativaRid" />
 	</form>
+	<form
+		name="searchtool_ridotto">
+		<formFieldProperty
+			name="cdUnitaOperativa" 
+			inputSize="12"/>
+		<formFieldProperty
+			name="dsUnitaOperativaRid" 
+			inputSize="35"/>
+	</form>
 	<formFieldProperty
 		name="cdUnitaOperativa" />
 	<formFieldProperty
