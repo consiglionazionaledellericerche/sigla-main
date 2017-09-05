@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio_variazione_comp"
+		property="esercizio_variazione_comp"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="true"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Esercizio Variazione Competenza" />
+	<fieldProperty
+		name="pg_variazione_comp"
+		property="pg_variazione_comp"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Numero Variazione Competenza" />
+	<fieldProperty
+		name="esercizio_variazione_res"
+		property="esercizio_variazione_res"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="true"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Esercizio Variazione Residuo" />
+	<fieldProperty
+		name="pg_variazione_res"
+		property="pg_variazione_res"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Numero Variazione Residuo" />
+
+	<formFieldProperty
+		name="esercizio_variazione_comp" />
+	<formFieldProperty
+		name="pg_variazione_comp" />
+	<formFieldProperty
+		name="esercizio_variazione_res" />
+	<formFieldProperty
+		name="pg_variazione_res" />
+
+	<columnFieldProperty
+		name="pg_variazione_comp" />
+	<columnFieldProperty
+		name="pg_variazione_res" />
+</bulkInfo>

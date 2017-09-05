@@ -84,7 +84,7 @@
 		maxLength="20"
 		inputSize="20"
 		inputType="ROTEXT"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label="Iva esigibile nel periodo"/>
 
 	<fieldProperty
@@ -93,7 +93,7 @@
 		maxLength="20"
 		inputSize="20"
 		inputType="ROTEXT"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label="Iva che si detrae nel periodo"/>
 
 	<fieldProperty
@@ -106,7 +106,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 
 	<fieldProperty
@@ -119,7 +119,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 
 	<fieldProperty
@@ -132,7 +132,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 
 	<fieldProperty
@@ -145,7 +145,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 	
 	<fieldProperty
@@ -158,7 +158,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 	
 	<fieldProperty
@@ -171,7 +171,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 	
 	
@@ -186,7 +186,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 
 	<fieldProperty
@@ -199,7 +199,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 
 	<fieldProperty
@@ -212,7 +212,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 
 	<fieldProperty
@@ -225,7 +225,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label=""/>
 	<fieldProperty
 		name="pageNumber"
@@ -241,8 +241,20 @@
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		label="Da pagina"/>
-	
-
+	<fieldProperty
+		name="debitoLastLiquidazioneProvvisoria"
+		property="debitoLastLiquidazioneProvvisoria"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva da versare" />
+	<fieldProperty
+		name="dataAggiornamentoLastLiquidazioneProvvisoria"
+		property="dataAggiornamentoLastLiquidazioneProvvisoria"
+		labelStyle="color: #5093d8;font-style: italic;"
+		style="color: #5093d8;border-style: outset;border-width : 0px; font-weight: bold; font-style: italic;"
+		inputType="TEXT"
+		formatName="timestamp"
+		label="Iva da versare aggiornata al" />
 
 	<!-- ************************ FORM FIELD PROPERTY ******************** -->
 
@@ -266,6 +278,8 @@
 	<formFieldProperty name="tipoSezionaleFlag" />
 	<formFieldProperty name="tipoImpegnoFlag" />	
 	<formFieldProperty name="pageNumber" />
+	<formFieldProperty name="debitoLastLiquidazioneProvvisoria" />
+	<formFieldProperty name="dataAggiornamentoLastLiquidazioneProvvisoria" />
 	
 	<!-- ************************ FIND FIELD PROPERTY ******************** -->
 

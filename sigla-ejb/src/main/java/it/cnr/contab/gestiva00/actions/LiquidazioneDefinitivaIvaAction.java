@@ -1,16 +1,20 @@
 package it.cnr.contab.gestiva00.actions;
 
-import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
-import it.cnr.contab.gestiva00.ejb.*;
-import java.util.*;
-import it.cnr.contab.gestiva00.core.bulk.*;
-import it.cnr.contab.gestiva00.bp.*;
-import it.cnr.contab.reports.bp.OfflineReportPrintBP;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.MTUWrapper;
-import it.cnr.jada.util.action.BulkBP;
-
 import java.sql.Timestamp;
+import it.cnr.contab.gestiva00.bp.LiquidazioneDefinitivaIvaBP;
+import it.cnr.contab.gestiva00.bp.LiquidazioneIvaBP;
+import it.cnr.contab.gestiva00.core.bulk.IPrintable;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_provvisoria_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.bulk.MTUWrapper;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.action.ConsultazioniBP;
 
 /**
  * Liquidazione iva
@@ -30,22 +34,31 @@ public LiquidazioneDefinitivaIvaAction() {
 protected Forward basicDoCerca(
 		ActionContext context)
 		throws Throwable {
-		LiquidazioneIvaBP bp= (LiquidazioneIvaBP) context.getBusinessProcess();
+		LiquidazioneDefinitivaIvaBP bp= (LiquidazioneDefinitivaIvaBP) context.getBusinessProcess();
 		Liquidazione_definitiva_ivaVBulk bulk = (Liquidazione_definitiva_ivaVBulk)bp.getModel();
-		String message=null;
-		if (bulk.getTipoSezionaleFlag().equals(bulk.SEZIONALI_COMMERCIALI))
+		if (!bp.isUoEnte() && bulk.getTipoSezionaleFlag().equals(bulk.SEZIONALI_COMMERCIALI))
 		{
-			 if (bulk.getTipoImpegnoFlag().equals(bulk.IMPEGNI_RESIDUO))
-			 {
-				 message = "Si è scelto di generare movimentazioni a Residuo."
-						+ "Si desidera continuare?";
-			 }
-			 else
-			 {
-				 message = "Si è scelto di generare movimentazioni a Competenza."
-						+ "Si desidera continuare?";
-			 }
-	         return openConfirm(context,message,it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaCerca");
+			bp.saveRipartizioneFinanziaria(context);
+
+			String message=null;
+			MTUWrapper wrapper = makeLiquidazioneProvvisoria(context);
+			Liquidazione_ivaBulk newLiquidazione = (Liquidazione_ivaBulk)((Liquidazione_provvisoria_ivaVBulk)wrapper.getBulk()).getLiquidazione_iva();
+			Liquidazione_ivaBulk oldLiquidazione = bulk.getLastLiquidazioneProvvisoria();
+			
+			if (oldLiquidazione==null || newLiquidazione.getIva_da_versare().compareTo(oldLiquidazione.getIva_da_versare())!=0) {
+				if (bulk.getTotaleRipartizioneFinanziaria().compareTo(newLiquidazione.getIva_da_versare())!=0) {
+					bp.commitUserTransaction();
+					bp.inizializzaMese(context);
+					message = "Attenzione! L'importo da versare è stato aggiornato e non corrisponde al totale ripartito per esercizio! Saranno create variazioni temporanee da completare successivamente! Si desidera continuare?";
+				}
+			} else {
+				bp.rollbackUserTransaction();
+				if (bulk.getTotaleRipartizioneFinanziaria().compareTo(oldLiquidazione.getIva_da_versare())!=0)
+					message = "Attenzione! L'importo da versare non corrisponde al totale ripartito per esercizio! Saranno create variazioni temporanee da completare successivamente! Si desidera continuare?";
+			}
+
+			 if (message!=null)
+				 return openConfirm(context,message,it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaCerca");
 		}  
 		return basicDoCercaConfermato(context);
 }
@@ -133,6 +146,7 @@ public Forward doOnTipoChange(ActionContext context) {
 												//null));
 
 		bp.aggiornaProspetti(context, liquidazione);
+
 		aggiornaRegistriStampati(context);
 		if (liquidazione.getTipoSezionaleFlag().equals(liquidazione.SEZIONALI_COMMERCIALI))
 		{
@@ -145,6 +159,7 @@ public Forward doOnTipoChange(ActionContext context) {
 			liquidazione.setTipoImpegnoFlag(null);
 		}
 
+		bp.inizializzaMese(context);
 		
         return context.findDefaultForward();
     } catch (Throwable t) {
@@ -213,4 +228,116 @@ protected it.cnr.jada.action.Forward setDataDaA(
     return context.findDefaultForward();
 
 }
+public it.cnr.jada.action.Forward doOnMeseChange(ActionContext context) {
+	super.doOnMeseChange(context);
+
+	LiquidazioneIvaBP bp= (LiquidazioneIvaBP) context.getBusinessProcess();
+    try {
+        bp.fillModel(context);
+		bp.inizializzaMese(context);
+    } catch (Exception e) {
+		return handleException(context, e);
+    }
+	return context.findDefaultForward();
+}
+public it.cnr.jada.action.Forward doSaveRipartizioneFinanziaria(ActionContext context) {
+    LiquidazioneDefinitivaIvaBP bp= (LiquidazioneDefinitivaIvaBP) context.getBusinessProcess();
+    try {
+        bp.fillModel(context);
+		bp.saveRipartizioneFinanziaria(context);
+    } catch (Exception e) {
+		return handleException(context, e);
+    }
+	return context.findDefaultForward();
+}
+public it.cnr.jada.action.Forward doAggiornaIvaDaVersare(ActionContext context) {
+    try {
+        fillModel(context);
+        return openConfirm(context,"Desideri effettuare l'aggiornamento dell'iva da versare?",it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaAggiornaIvaDaVersare");
+    } catch (Throwable e) {
+        return handleException(context, e);
+    }
+}
+public Forward doConfermaAggiornaIvaDaVersare(ActionContext context,int option) {
+	try {
+		if (option == it.cnr.jada.util.action.OptionBP.YES_BUTTON) {
+			LiquidazioneDefinitivaIvaBP bp= (LiquidazioneDefinitivaIvaBP) context.getBusinessProcess();
+			Liquidazione_definitiva_ivaVBulk bulk = (Liquidazione_definitiva_ivaVBulk)bp.getModel();
+
+			MTUWrapper wrapper = makeLiquidazioneProvvisoria(context);
+
+			Liquidazione_ivaBulk newLiquidazione = (Liquidazione_ivaBulk)((Liquidazione_provvisoria_ivaVBulk)wrapper.getBulk()).getLiquidazione_iva();
+			Liquidazione_ivaBulk oldLiquidazione = bulk.getLastLiquidazioneProvvisoria();
+
+			if (oldLiquidazione!=null && newLiquidazione.equalsByImporti(oldLiquidazione)) {
+				bp.rollbackUserTransaction();
+				bp.setMessage("Aggiornamento effettuato. Nessun cambiamento rilevato!");
+			} else {
+				bp.commitUserTransaction();
+				bp.inizializzaMese(context);
+				bp.setMessage("Aggiornamento Iva da Versare effettuata in modo corretto");
+			}
+
+			return context.findDefaultForward();
+		}
+	} catch (Throwable t) {
+		return handleException(context, t);
+	}
+	return context.findDefaultForward();
+}
+
+private MTUWrapper makeLiquidazioneProvvisoria(ActionContext context) throws Throwable{
+	LiquidazioneDefinitivaIvaBP bp= (LiquidazioneDefinitivaIvaBP) context.getBusinessProcess();
+	
+	if (bp.isLiquidato())
+		throw new it.cnr.jada.comp.ApplicationException("Premere su 'reset dati' prima di proseguire");
+	
+	Stampa_registri_ivaVBulk model = (Stampa_registri_ivaVBulk)bp.getModel();
+	
+	Liquidazione_provvisoria_ivaVBulk modelProvv = new Liquidazione_provvisoria_ivaVBulk();
+	modelProvv.initializeForSearch(bp, context);
+	modelProvv.setData_da(model.getData_da());
+	modelProvv.setData_a(model.getData_a());
+	modelProvv.setMese(model.getMese());
+	modelProvv.setUser(model.getUser());
+	modelProvv.setRistampa(false);
+		   	
+	return manageStampa(context, modelProvv);
+}
+public Forward doConsultaDettagliFatturaComSplit(ActionContext context) {
+	try {
+		fillModel(context);
+		LiquidazioneDefinitivaIvaBP bp = (LiquidazioneDefinitivaIvaBP)context.getBusinessProcess();
+
+		Liquidazione_definitiva_ivaVBulk bulk = (Liquidazione_definitiva_ivaVBulk)bp.getModel();
+
+		if (bulk==null) {
+			bp.setMessage("Nessun dettaglio selezionato");
+			return context.findDefaultForward();
+		}
+		if(bulk.getData_a()==null){
+			bp.setMessage("Selezionare il mese");
+			return context.findDefaultForward();	
+		}
+		java.util.Calendar cal = java.util.GregorianCalendar.getInstance();
+		cal.setTime(new java.util.Date(bulk.getData_a().getTime()));
+		Integer meseNum = new Integer(cal.get(java.util.Calendar.MONTH)+1);
+		Integer esercizioNum = new Integer(cal.get(java.util.Calendar.YEAR));
+		CompoundFindClause clause = new CompoundFindClause();
+		clause.addClause("AND","esercizio",SQLBuilder.EQUALS,esercizioNum);
+		clause.addClause("AND","cdCds",SQLBuilder.EQUALS,bulk.getCd_cds());
+		clause.addClause("AND","cdUnitaOrganizzativa",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa()); 
+		clause.addClause("AND","mese",SQLBuilder.EQUALS,meseNum);
+		ConsultazioniBP ricercaLiberaBP = (ConsultazioniBP)context.createBusinessProcess("ConsFatturaGaeSplitBP");
+		
+		ricercaLiberaBP.addToBaseclause(clause);
+		ricercaLiberaBP.openIterator(context);
+		
+		context.addHookForward("close",this,"doDefault");
+		return context.addBusinessProcess(ricercaLiberaBP);
+	}catch(Throwable ex){
+		return handleException(context, ex);
+	}
+}
+
 }
