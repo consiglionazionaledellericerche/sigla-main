@@ -227,7 +227,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 		}
 	}
 	
-	private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
+    private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
 		boolean utentiMultipliFound=false;
 		CNRUserInfo ui = null;
 		try {
@@ -236,112 +236,59 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			LoginBP bp = (LoginBP)context.getBusinessProcessRoot(true);
 	
 			ui = bp.getUserInfo();
-	
-			try {
-				bp.fillModel(context);
-				context.setUserInfo(ui);
-				
-				if (ui.getDescrizioneSessione() != null)
-					context.setTracingSessionDescription(ui.getDescrizioneSessione());
-				if (ui.getDescrizioneSessione() == null && context.isRequestTracingUser())
-					return context.findForward("traced_login");
-	
-				UtenteBulk utente = new UtenteBulk();
-				utente.setCd_utente(ui.getUserid());
-				utente.setPasswordInChiaro(ui.getPassword()!=null?ui.getPassword().toUpperCase():null);
-				if (ui.getLdap_userid()!=null) {
-					utente.setCd_utente_uid(ui.getLdap_userid());
-					utente.setLdap_password(ui.getLdap_password());
-				}
-				else
-					utente.setLdap_password(ui.getPassword());
-	
-				utente.setUtente_multiplo(ui.getUtente_multiplo());	
-				ui.setUtente(utente);
-	
-				try {
-					utente = getComponentSession().validaUtente(context.getUserContext(),utente,faseValidazione);
-				} catch (UtenteLdapNuovoException e) {
-					return context.findForward("login_ldap");
-				} catch (UtenteMultiploException e) {
-					try {
-						utentiMultipliFound=true;
-						bp.utentiMultipli(context.getUserContext(), utente);
-						return context.findForward("login_multiplo");
-					} catch (Exception e2) {
-						ui.setPassword(null);
-						throw e2;
-					}
-				}
-				
-				if (utente == null) {
-					setErrorMessage(context,"Nome utente o password sbagliati.");
-					return context.findDefaultForward();
-				}
-	
-				String hostname="";
-				try {
-					InetAddress addr = InetAddress.getLocalHost();
-					//byte[] ipAddr = addr.getAddress();
-					hostname = addr.getHostName();
-				} catch (UnknownHostException e) {
-				}
-				
-				ApplicationServerBulk server = new ApplicationServerBulk();
-				server.setHostname(hostname.toLowerCase());
-	
-				server = getComponentSession().validaServerLogin(context.getUserContext(),server);
-				
-				ui.setUserid(utente.getCd_utente());
-				if (utente.isAutenticazioneLdap())
-					ui.setLdap_userid(utente.getCd_utente_uid());
-				
-				ui.setUtente(utente);
-	
-		        StringBuffer infoUser = new StringBuffer();
-		        infoUser.append("LogIn User:"+ui.getUtente().getCd_utente());
-		        if (ui.getUtente().getCd_utente_uid()!=null)
-		        	infoUser.append(" LogIn Ldap User:"+ui.getUtente().getCd_utente_uid());
-		        infoUser.append(" RemoteHost:"+((HttpActionContext)context).getRequest().getRemoteAddr());
-				try {
-					ApplicationServerBulk serverSession = new ApplicationServerBulk();
-					serverSession.setHostname(hostname.toLowerCase());
-					if (context.getSessionId().indexOf(".") == -1)
-						serverSession.setSession_id("N");
-					else
-						serverSession.setSession_id(context.getSessionId().substring(context.getSessionId().indexOf(".")));
-					serverSession = (ApplicationServerBulk)createCRUDComponentSession().findByPrimaryKey(context.getUserContext(), serverSession);
-					if (serverSession != null){
-						SessionTraceBulk sessionTrace = (SessionTraceBulk)createCRUDComponentSession().inizializzaBulkPerModifica(context.getUserContext(), new SessionTraceBulk(context.getSessionId()));
-						sessionTrace.setServer_url("http://" + serverSession.getIp_address()+ ":"+serverSession.getHttp_port()+JSPUtils.getAppRoot(((HttpActionContext)context).getRequest())+"expire?sessionID="+context.getSessionId());
-						sessionTrace.setUtente(utente);
-						sessionTrace.setToBeUpdated();
-						createCRUDComponentSession().modificaConBulk(context.getUserContext(), sessionTrace);
-						if (ui.getUtente().getCd_utente_uid()!=null){
-							List<SessionTraceBulk> sessioni = getComponentSession().sessionList(context.getUserContext(),utente.getCd_utente() );
-							for (Iterator<SessionTraceBulk> iterator = sessioni.iterator(); iterator.hasNext();) {
-								SessionTraceBulk sessione = iterator.next();
-								URL url = new URL(sessione.getServer_url());
-								url.openConnection().getContent();
-							}
-						}
-					}
-				} catch (Exception e) {
-				}
-		    	log.warn(infoUser.toString());
-	
-				if (utente.getDt_ultima_var_password() == null && !utente.isAutenticatoLdap())
-					return context.findForward("primo_login");
-	
-				return null;
-			} finally {
-				if (!utentiMultipliFound)
-					ui.setPassword(null);
-			}
-			
-		} catch(it.cnr.contab.utente00.nav.comp.LoginBloccatoException e) {
-			setErrorMessage(context,"Il Login su questo server è stato temporaneamente bloccato.");
-			return context.findDefaultForward();
+            bp.fillModel(context);
+            context.setUserInfo(ui);
+
+            if (ui.getDescrizioneSessione() != null)
+                context.setTracingSessionDescription(ui.getDescrizioneSessione());
+            if (ui.getDescrizioneSessione() == null && context.isRequestTracingUser())
+                return context.findForward("traced_login");
+
+            UtenteBulk utente = new UtenteBulk();
+            utente.setCd_utente(Optional.ofNullable(ui.getLdap_userid()).orElse(ui.getUserid()));
+            utente.setPasswordInChiaro(ui.getPassword()!=null?ui.getPassword().toUpperCase():null);
+            if (ui.getLdap_userid()!=null) {
+                utente.setCd_utente_uid(ui.getLdap_userid());
+                utente.setLdap_password(Optional.ofNullable(ui.getLdap_password()).orElse(ui.getPassword()));
+            } else {
+                utente.setLdap_password(ui.getPassword());
+            }
+            utente.setUtente_multiplo(ui.getUtente_multiplo());
+            ui.setUtente(utente);
+
+            try {
+                utente = getComponentSession().validaUtente(context.getUserContext(),utente,faseValidazione);
+            } catch (UtenteLdapNuovoException e) {
+                return context.findForward("login_ldap");
+            } catch (UtenteMultiploException e) {
+                try {
+                    utentiMultipliFound=true;
+                    bp.utentiMultipli(context.getUserContext(), utente);
+                    return context.findForward("login_multiplo");
+                } catch (Exception e2) {
+                    ui.setPassword(null);
+                    throw e2;
+                }
+            }
+
+            if (utente == null) {
+                setErrorMessage(context,"Nome utente o password sbagliati.");
+                return context.findDefaultForward();
+            }
+            ui.setUserid(utente.getCd_utente());
+            if (utente.isAutenticazioneLdap())
+                ui.setLdap_userid(utente.getCd_utente_uid());
+            ui.setUtente(utente);
+
+            StringBuffer infoUser = new StringBuffer();
+            infoUser.append("LogIn User:"+ui.getUtente().getCd_utente());
+            if (ui.getUtente().getCd_utente_uid()!=null)
+                infoUser.append(" LogIn Ldap User:"+ui.getUtente().getCd_utente_uid());
+            infoUser.append(" RemoteHost:"+((HttpActionContext)context).getRequest().getRemoteAddr());
+            log.warn(infoUser.toString());
+            if (utente.getDt_ultima_var_password() == null && !utente.isAutenticatoLdap())
+                return context.findForward("primo_login");
+            return null;
 		} catch(it.cnr.contab.utente00.nav.comp.PasswordScadutaException e) {
 			setErrorMessage(context,"Password scaduta da più di sei mesi.");
 			// se l'utente è di tipo LDAP
