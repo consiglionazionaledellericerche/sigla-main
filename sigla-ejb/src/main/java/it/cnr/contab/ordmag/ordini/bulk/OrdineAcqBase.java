@@ -92,6 +92,12 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 //    CD_CUP VARCHAR(15)
 	private java.lang.String cdCup;
  
+//  SCONTO1 DECIMAL(5,2)
+	private java.math.BigDecimal percProrata;
+
+// TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
+	private java.lang.String tiAttivita;
+
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
  
@@ -516,5 +522,17 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 	}
 	public void setCdCdsNotaPrec(java.lang.String cdCdsNotaPrec) {
 		this.cdCdsNotaPrec = cdCdsNotaPrec;
+	}
+	public java.math.BigDecimal getPercProrata() {
+		return percProrata;
+	}
+	public void setPercProrata(java.math.BigDecimal percProrata) {
+		this.percProrata = percProrata;
+	}
+	public java.lang.String getTiAttivita() {
+		return tiAttivita;
+	}
+	public void setTiAttivita(java.lang.String tiAttivita) {
+		this.tiAttivita = tiAttivita;
 	}
 }
