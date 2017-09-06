@@ -178,6 +178,9 @@ public class AnagraficoBase extends AnagraficoKey implements Keyed {
 	// DT_FINE_DIARIA_MISS_EST TIMESTAMP
 	private java.sql.Timestamp dt_fine_diaria_miss_est;
 	
+	// FL_PIVA_VERIFICATA CHAR(1)
+	private java.lang.String flPivaVerificata;
+	
 public AnagraficoBase() {
 	super();
 }
@@ -784,5 +787,14 @@ public java.sql.Timestamp getDt_fine_diaria_miss_est() {
 }
 public void setDt_fine_diaria_miss_est(java.sql.Timestamp dt_fine_diaria_miss_est) {
 	this.dt_fine_diaria_miss_est = dt_fine_diaria_miss_est;
+}
+public java.lang.String getFlPivaVerificata() {
+	return flPivaVerificata;
+}
+public void setFlPivaVerificata(java.lang.String flPivaVerificata) {
+	this.flPivaVerificata = flPivaVerificata;
+}
+public Boolean isPartitaIvaVerificata(){
+	return getFlPivaVerificata() != null && getFlPivaVerificata().equals("Y"); 
 }
 }
