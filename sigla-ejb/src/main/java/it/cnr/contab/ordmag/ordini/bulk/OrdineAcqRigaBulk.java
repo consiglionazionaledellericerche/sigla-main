@@ -8,24 +8,35 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Dictionary;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
-public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
+public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAmministrativoRigaBulk, Voidable {
+	protected BulkList righeConsegnaColl= new BulkList();
 	private java.lang.String dspTipoConsegna;
 
 	private java.sql.Timestamp dspDtPrevConsegna;
@@ -34,10 +45,13 @@ public class OrdineAcqRigaBulk extends OrdineAcqRigaBase {
 
 	private LuogoConsegnaMagBulk dspLuogoConsegna;
 
+	private Obbligazione_scadenzarioBulk dspObbligazioneScadenzario;
+
 	private MagazzinoBulk dspMagazzino;
 
 	private UnitaOperativaOrdBulk dspUopDest;
 	
+	private Boolean consegneModificate = false;
 	public final static String STATO_INSERITA= "INS";
     public final static String STATO_ANNULLATA= "ANN";
 	/**
@@ -322,6 +336,8 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		setImImponibile(BigDecimal.ZERO);
 		setImImponibileDivisa(BigDecimal.ZERO);
 		setImIva(BigDecimal.ZERO);
+		setImIvaD(BigDecimal.ZERO);
+		setImIvaNd(BigDecimal.ZERO);
 		setImIvaDivisa(BigDecimal.ZERO);
 		setImTotaleRiga(BigDecimal.ZERO);
 		BigDecimal value = null;
@@ -343,5 +359,146 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 			setDspDtPrevConsegna(DateUtils.truncate(new Timestamp(cal.getTime().getTime()))); 
 		}
 		return this;
+	}
+	public BulkList getRigheConsegnaColl() {
+		return righeConsegnaColl;
+	}
+	public void setRigheConsegnaColl(BulkList righeConsegnaColl) {
+		this.righeConsegnaColl = righeConsegnaColl;
+	}
+	public OrdineAcqConsegnaBulk removeFromRigheConsegnaColl(int index) 
+	{
+		// Gestisce la selezione del bottone cancella repertorio
+		return (OrdineAcqConsegnaBulk)righeConsegnaColl.remove(index);
+	}
+	public int addToRigheConsegnaColl( OrdineAcqConsegnaBulk nuovoRigo ) 
+	{
+
+
+//		nuovoRigo.setTi_associato_manrev(nuovoRigo.NON_ASSOCIATO_A_MANDATO);
+//		nuovoRigo.setTerzo(new TerzoBulk());
+//		if (getTi_entrate_spese()==ENTRATE){
+//			nuovoRigo.setTerzo_uo_cds(getTerzo_uo_cds());		
+//		}
+		nuovoRigo.setOrdineAcqRiga(this);
+
+//		try {
+//			java.sql.Timestamp ts = it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();
+//			nuovoRigo.setDt_da_competenza_coge((getDt_da_competenza_coge() == null)?ts : getDt_da_competenza_coge());
+//			nuovoRigo.setDt_a_competenza_coge((getDt_a_competenza_coge() == null)?ts : getDt_a_competenza_coge());
+//		} catch (javax.ejb.EJBException e) {
+//			throw new it.cnr.jada.DetailedRuntimeException(e);
+//		}	
+		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
+		int max = 0;
+		for (Iterator i = righeConsegnaColl.iterator(); i.hasNext();) {
+			int prog = ((OrdineAcqConsegnaBulk)i.next()).getConsegna();
+			if (prog > max) max = prog;
+		}
+		nuovoRigo.setConsegna(new Integer(max+1));
+		righeConsegnaColl.add(nuovoRigo);
+		return righeConsegnaColl.size()-1;
+	}
+	public BulkCollection[] getBulkLists() {
+
+		// Metti solo le liste di oggetti che devono essere resi persistenti
+
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				righeConsegnaColl
+		};
+	}
+	public List getChildren() {
+		return getRigheConsegnaColl();
+	}
+	public Boolean getConsegneModificate() {
+		return consegneModificate;
+	}
+	public void setConsegneModificate(Boolean consegneModificate) {
+		this.consegneModificate = consegneModificate;
+	}
+	public Obbligazione_scadenzarioBulk getDspObbligazioneScadenzario() {
+		return dspObbligazioneScadenzario;
+	}
+	public void setDspObbligazioneScadenzario(Obbligazione_scadenzarioBulk dspObbligazioneScadenzario) {
+		this.dspObbligazioneScadenzario = dspObbligazioneScadenzario;
+	}
+	@Override
+	public Timestamp getDt_cancellazione() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean isAnnullato() {
+		return STATO_ANNULLATA.equalsIgnoreCase(getStato());
+	}
+	@Override
+	public boolean isVoidable() {
+		return isConsegnaEvasa();
+	}
+	public boolean isConsegnaEvasa() {
+		for (Iterator i = righeConsegnaColl.iterator(); i.hasNext();) {
+			String stato = ((OrdineAcqConsegnaBulk)i.next()).getStato();
+			if (stato != null && stato.equals(OrdineAcqConsegnaBulk.STATO_EVASA)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+	@Override
+	public void setAnnullato(Timestamp date) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setDt_cancellazione(Timestamp date) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public IDocumentoAmministrativoRigaBulk getAssociatedDetail() {
+		return null;
+	}
+	@Override
+	public IDocumentoAmministrativoBulk getFather() {
+		return getOrdineAcq();
+	}
+	@Override
+	public BigDecimal getIm_diponibile_nc() {
+		return null;
+	}
+	@Override
+	public BigDecimal getIm_imponibile() {
+		return getImImponibile();
+	}
+
+	@Override
+	public BigDecimal getIm_iva() {
+		return getImIva();
+	}
+	@Override
+	public IDocumentoAmministrativoRigaBulk getOriginalDetail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public IScadenzaDocumentoContabileBulk getScadenzaDocumentoContabile() {
+		return (IScadenzaDocumentoContabileBulk)getDspObbligazioneScadenzario();
+	}
+	@Override
+	public Voce_ivaBulk getVoce_iva() {
+		return getVoceIva();
+	}
+	@Override
+	public boolean isDirectlyLinkedToDC() {
+		return false;
+	}
+	@Override
+	public boolean isRiportata() {
+		return false;
+	}
+	@Override
+	public void setIm_diponibile_nc(BigDecimal im_diponibile_nc) {
+		
 	}
 }

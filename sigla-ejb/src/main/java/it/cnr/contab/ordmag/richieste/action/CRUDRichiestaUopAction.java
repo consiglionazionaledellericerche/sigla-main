@@ -62,6 +62,7 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 		riga.setBeneServizio(bene);
 		((CRUDBP)context.getBusinessProcess()).setDirty(true);
 		if (bene != null){
+			riga.setCdBeneServizio(bene.getCd_bene_servizio());
 			riga.setDsBeneServizio(bene.getDs_bene_servizio());
 			if (bene.getUnitaMisura() != null){
 				riga.setUnitaMisura(bene.getUnitaMisura());

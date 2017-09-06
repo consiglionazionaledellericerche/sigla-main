@@ -84,6 +84,20 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="IM_IVA_D"
+			propertyName="imIvaD"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_ND"
+			propertyName="imIvaNd"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
 			columnName="CD_LUOGO_CONSEGNA"
 			propertyName="cdLuogoConsegna"
 			sqlTypeName="VARCHAR"
@@ -125,6 +139,19 @@
 			sqlTypeName="DECIMAL"
 			columnSize="10"
 			nullable="true" />
+		<columnMapping
+			columnName="ARR_ALI_IVA"
+			propertyName="arrAliIva"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_FATT"
+			propertyName="statoFatt"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
 		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
@@ -200,6 +227,14 @@
 		name="pgObbligazione" />
 	<persistentProperty
 		name="pgObbligazioneScad" />
+	<persistentProperty
+		name="statoFatt" />
+	<persistentProperty
+		name="imIvaD" />
+	<persistentProperty
+		name="imIvaNd" />
+	<persistentProperty
+		name="arrAliIva" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty

@@ -81,7 +81,7 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="TEXT"
-		label="cd_unita_organizzativa" />
+		label="Uo" />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -95,7 +95,7 @@
 		property="iva_da_versare"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Importo da versare nel periodo" />
+		label="Importo del periodo Debito(-)/Credito(+)" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -665,7 +665,7 @@
 		<columnFieldProperty name="dacr"/>
 		<columnFieldProperty name="tipo_liquidazione"/>
 		<columnFieldProperty name="iva_da_versare"
-							 label="Debito/Credito"/>
+							 label="Debito(-)/Credito(+)"/>
 	</columnSet>	
 
 	<columnSet name="liquidazione_massiva">

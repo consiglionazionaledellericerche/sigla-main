@@ -53,6 +53,12 @@ public class OrdineAcqRigaBase extends OrdineAcqRigaKey implements Keyed {
 //    IM_IVA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imIva;
  
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imIvaD;
+
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imIvaNd;
+
 //    IM_TOTALE_RIGA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imTotaleRiga;
  
@@ -320,5 +326,17 @@ public class OrdineAcqRigaBase extends OrdineAcqRigaKey implements Keyed {
 	 **/
 	public void setDtCancellazione(java.sql.Timestamp dtCancellazione)  {
 		this.dtCancellazione=dtCancellazione;
+	}
+	public java.math.BigDecimal getImIvaD() {
+		return imIvaD;
+	}
+	public void setImIvaD(java.math.BigDecimal imIvaD) {
+		this.imIvaD = imIvaD;
+	}
+	public java.math.BigDecimal getImIvaNd() {
+		return imIvaNd;
+	}
+	public void setImIvaNd(java.math.BigDecimal imIvaNd) {
+		this.imIvaNd = imIvaNd;
 	}
 }

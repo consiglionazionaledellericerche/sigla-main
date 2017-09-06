@@ -48,6 +48,7 @@
 		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Esercizio" />
 	<fieldProperty
@@ -69,6 +70,7 @@
 		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Numero" />
 	<fieldProperty
@@ -79,6 +81,7 @@
 		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Data Ordine" />
 	<fieldProperty
 		name="stato"
@@ -137,8 +140,32 @@
 		label="Cambio"
 		nullable="false"		
 		/>
-
-
+	<fieldProperty
+		name="tiAttivita"
+		property="tiAttivita"
+		inputType="SELECT"
+		readonlyProperty="notAbledToModifyTipoIstCom"
+		label="Tipo"
+		nullable="false"
+		enabledOnSearch="true"
+		keysProperty="tiAttivitaKeys" />
+	<fieldProperty
+		name="tiAttivitaSearch"
+		property="tiAttivita"
+		inputType="SELECT"
+		label="Tipo"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="tiAttivitaKeysForSearch" />
+	<fieldProperty
+		name="percProrata"
+		property="percProrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="Prorata" />
 	<fieldProperty
 		name="findFornitore"
 		property="fornitore"
@@ -290,7 +317,7 @@
 		enabledOnSearch="true"
 		label="Ragione Sociale"
 		caseSensitiveSearch="false" />
-	<fieldProperty
+<!--	<fieldProperty
 		name="modalitaPagamento"
 		property="modalitaPagamento"
 		printProperty="cd_ds_modalita_pagamento"
@@ -299,7 +326,7 @@
 		inputSize="30"
 		inputType="SELECT"
 		nullable="false"
-		label="Mod. pagamento" />
+		label="Mod. pagamento" /> -->
 	<fieldProperty
 		name="terminiPagamento"
 		property="terminiPagamento"
@@ -570,6 +597,42 @@
 		enabledOnSearch="true" 
 		/>		
 	<fieldProperty
+		name="imImponibile"
+		property="imImponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Imponibile" />
+	<fieldProperty
+		name="imIva"
+		property="imIva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Iva" />
+	<fieldProperty
+		name="imIvaD"
+		property="imIvaD"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Iva Detraibile" />
+	<fieldProperty
+		name="imTotaleOrdine"
+		property="imTotaleOrdine"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Totale Consegna" />
+	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
@@ -593,6 +656,10 @@
 		name="findNumerazioneOrd" />
 	<formFieldProperty
 		name="esercizio" />
+	<formFieldProperty
+		name="tiAttivita" />
+	<formFieldProperty
+		name="tiAttivitaSearch" />
 	<formFieldProperty
 		name="numero" />
 	<formFieldProperty
@@ -678,7 +745,8 @@
 		name="cd_precedente" />
 	<formFieldProperty
 		name="ds_fornitore" />
-
+	<formFieldProperty
+		name="percProrata" />
 	<formFieldProperty
 		name="contoA" />
 	<formFieldProperty
@@ -691,6 +759,14 @@
 		name="contoN" />
 	<formFieldProperty
 		name="denominazione_sede" />
+	<formFieldProperty
+		name="imImponibile" />
+	<formFieldProperty
+		name="imIva" />
+	<formFieldProperty
+		name="imIvaD" />
+	<formFieldProperty
+		name="imTotaleOrdine" />
 
 	<findFieldProperty
 		name="cdCds" />
@@ -760,6 +836,11 @@
 		name="cdCup" />
 	<findFieldProperty
 		name="dtCancellazione" />
+	<findFieldProperty name="tiAttivitaSearch" />
+	<columnFieldProperty
+		name="tiAttivita" />
+	<columnFieldProperty
+		name="percProrata" />
 	<columnFieldProperty
 		name="cdCds" />
 	<columnFieldProperty
