@@ -341,6 +341,12 @@
 			propertyName="dt_fine_diaria_miss_est"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
+		<columnMapping
+			columnName="FL_PIVA_VERIFICATA"
+			propertyName="flPivaVerificata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
 				
 	</defaultColumnMap>
 	<persistentProperty
@@ -466,5 +472,7 @@
 	<persistentProperty
 		name="dt_inizio_diaria_miss_est" />
 	<persistentProperty
-		name="dt_fine_diaria_miss_est" />		
+		name="dt_fine_diaria_miss_est" />
+	<persistentProperty
+		name="flPivaVerificata" />
 </SQLPersistentInfo>
