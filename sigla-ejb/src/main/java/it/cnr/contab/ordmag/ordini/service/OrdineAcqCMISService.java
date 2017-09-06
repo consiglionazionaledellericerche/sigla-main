@@ -27,27 +27,27 @@ import it.cnr.jada.comp.ComponentException;
 public class OrdineAcqCMISService extends SiglaCMISService {
 	
 	public static final String ASPECT_STAMPA_ORDINI = "P:ordini_acq_attachment:stampa";
-	public static final String ASPECT_RICHIESTA_ORDINI_DETTAGLIO = "P:ordini_richieste_attachment:allegati_dettaglio";
+	public static final String ASPECT_ORDINI_DETTAGLIO = "P:ordini_acq_attachment:allegati_dettaglio";
 	public static final String ASPECT_ALLEGATI_ORDINI = "P:ordini_acq_attachment:allegati";
-	public static final String CMIS_RICHIESTA_ORDINI_ANNO = "ordini_richieste:anno";
-	public static final String CMIS_RICHIESTA_ORDINI_NUMERO = "ordini_richieste:numero";
-	public static final String CMIS_RICHIESTA_ORDINI_OGGETTO = "ordini_richieste:oggetto";
-	public static final String CMIS_RICHIESTA_ORDINI_DETTAGLIO_RIGA = "ordini_richieste_dettaglio:riga";
-	public static final String CMIS_RICHIESTA_ORDINI_UOP = "ordini_richieste:cd_unita_operativa";
-	public static final String CMIS_RICHIESTA_ORDINI_NUMERATORE = "ordini_richieste:cd_numeratore";
+	public static final String CMIS_ORDINI_ACQ_ANNO = "ordini_acq:anno";
+	public static final String CMIS_ORDINI_ACQ_NUMERO = "ordini_acq:numero";
+	public static final String CMIS_ORDINI_ACQ_OGGETTO = "ordini_acq:oggetto";
+	public static final String CMIS_ORDINI_ACQ_DETTAGLIO_RIGA = "ordini_acq_dettaglio:riga";
+	public static final String CMIS_ORDINI_ACQ_UOP = "ordini_acq:cd_unita_operativa";
+	public static final String CMIS_ORDINI_ACQ_NUMERATORE = "ordini_acq:cd_numeratore";
 
 	
 	
 	public ItemIterable<CmisObject> getFilesOrdine(OrdineAcqBulk ordine) throws ComponentException{
-			Folder folderRichiesta;
+			Folder folderOrdine;
 			try {
-				folderRichiesta = recuperoFolderOrdineSigla(ordine);
+				folderOrdine = recuperoFolderOrdineSigla(ordine);
 			} catch (DetailedException e) {
 				throw new ComponentException(e);
 			}
 			
-			if (folderRichiesta != null){
-		        ItemIterable<CmisObject> children = folderRichiesta.getChildren();
+			if (folderOrdine != null){
+		        ItemIterable<CmisObject> children = folderOrdine.getChildren();
 		        return children;
 			}
 		return null;
@@ -93,10 +93,10 @@ public class OrdineAcqCMISService extends SiglaCMISService {
 		metadataProperties.put(OrdineAcqCMISService.PROPERTY_DESCRIPTION, folderName);
 		metadataProperties.put(PropertyIds.NAME, folderName);
 		metadataProperties.put(OrdineAcqCMISService.PROPERTY_TITLE, folderName);
-		metadataProperties.put(OrdineAcqCMISService.CMIS_RICHIESTA_ORDINI_NUMERATORE, ordine.getCdNumeratore());
-		metadataProperties.put(OrdineAcqCMISService.CMIS_RICHIESTA_ORDINI_ANNO, ordine.getEsercizio());
-		metadataProperties.put(OrdineAcqCMISService.CMIS_RICHIESTA_ORDINI_NUMERO, ordine.getNumero());
-		metadataProperties.put(OrdineAcqCMISService.CMIS_RICHIESTA_ORDINI_UOP, ordine.getCdUnitaOperativa());
+		metadataProperties.put(OrdineAcqCMISService.CMIS_ORDINI_ACQ_NUMERATORE, ordine.getCdNumeratore());
+		metadataProperties.put(OrdineAcqCMISService.CMIS_ORDINI_ACQ_ANNO, ordine.getEsercizio());
+		metadataProperties.put(OrdineAcqCMISService.CMIS_ORDINI_ACQ_NUMERO, ordine.getNumero());
+		metadataProperties.put(OrdineAcqCMISService.CMIS_ORDINI_ACQ_UOP, ordine.getCdUnitaOperativa());
 
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", ordine.getUtuv());
 		List<String> aspectsToAdd = new ArrayList<String>();

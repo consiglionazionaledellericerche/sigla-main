@@ -20,6 +20,10 @@ public class NumerazioneOrdBase extends NumerazioneOrdKey implements Keyed {
 //    CD_TIPO_SEZIONALE VARCHAR(10)
 	private java.lang.String cdTipoSezionale;
  
+	private java.math.BigDecimal percProrata;
+
+	private java.lang.String ti_istituz_commerc;
+
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
  
@@ -116,5 +120,17 @@ public class NumerazioneOrdBase extends NumerazioneOrdKey implements Keyed {
 	 **/
 	public void setDtCancellazione(java.sql.Timestamp dtCancellazione)  {
 		this.dtCancellazione=dtCancellazione;
+	}
+	public java.math.BigDecimal getPercProrata() {
+		return percProrata;
+	}
+	public void setPercProrata(java.math.BigDecimal percProrata) {
+		this.percProrata = percProrata;
+	}
+	public java.lang.String getTi_istituz_commerc() {
+		return ti_istituz_commerc;
+	}
+	public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
+		this.ti_istituz_commerc = ti_istituz_commerc;
 	}
 }

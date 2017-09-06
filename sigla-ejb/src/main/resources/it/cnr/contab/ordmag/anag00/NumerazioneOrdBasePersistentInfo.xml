@@ -36,6 +36,19 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="PERC_PRORATA"
+			propertyName="percProrata"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_ISTITUZ_COMMERC"
+			propertyName="ti_istituz_commerc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
 			sqlTypeName="TIMESTAMP"
@@ -82,6 +95,10 @@
 		name="dataProgressivo" />
 	<persistentProperty
 		name="cdTipoSezionale" />
+	<persistentProperty
+		name="percProrata" />
+	<persistentProperty
+		name="ti_istituz_commerc" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty

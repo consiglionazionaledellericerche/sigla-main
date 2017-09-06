@@ -37,11 +37,6 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			    	}
 			    %>
 			</td>
-				<%bp.getRighe().writeFormField(out, "quantita"); %>
-		</tr>
-	</table>
-	<table>
-		<tr>
 			<%
 				bp.getRighe().writeFormField(out, "cd_voce_iva");
 			%>
@@ -58,7 +53,21 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 					bp.getRighe().writeFormInput(out, null, "voce_iva", false, null, "");
 				%>
 			</td>
+		</tr>
+	</table>
+	<table>
+		<tr>
 
+			<td>
+				<%
+					bp.getRighe().writeFormLabel(out, "dspQuantita");
+				%>
+			</td>
+			<td>
+				<%
+					bp.getRighe().writeFormInput(out, null, "dspQuantita", false, null, "");
+				%>
+			</td>
 			<td>
 				<%
 					bp.getRighe().writeFormField(out, "prezzoUnitario");
@@ -130,4 +139,26 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			%>
 		</tr>
 	</table>
+	<table>
+		<tr>
+			<%
+				bp.getRighe().writeFormField(out, "esercizio_ori_obbligazione");
+				bp.getRighe().writeFormField(out, "pg_obbligazione");
+				bp.getRighe().writeFormField(out, "pg_obbligazione_scadenzario");
+				bp.getRighe().writeFormField(out, "dt_scadenza");
+				bp.getRighe().writeFormField(out, "ds_scadenza_obbligazione");
+			%>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<%
+				bp.getRighe().writeFormField(out, "imImponibile");
+			    bp.getRighe().writeFormField(out, "imIva");
+			    bp.getRighe().writeFormField(out, "imIvaD");
+			    bp.getRighe().writeFormField(out, "imTotaleRiga");
+			%>
+		</tr>
+	</table>
+
 </div>
