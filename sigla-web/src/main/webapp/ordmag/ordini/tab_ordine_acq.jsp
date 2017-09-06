@@ -44,6 +44,9 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 			<%
 				bp.getController().writeFormField(out, "dataOrdine");
 			%>
+			<%
+				bp.getController().writeFormField(out, "percProrata");
+			%>
 			<% if (!bp.isSearching()) {
 				 bp.getController().writeFormField(out, "stato");
 			   } else {
@@ -69,6 +72,16 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 		<tr>
 			<%
 			bp.getController().writeFormField(out, "findTipoOrdine");
+			%>
+		</tr>
+	</table>
+    <table>
+		<tr>
+			<%
+			bp.getController().writeFormField(out, "imImponibile");
+			bp.getController().writeFormField(out, "imIva");
+			bp.getController().writeFormField(out, "imIvaD");
+			bp.getController().writeFormField(out, "imTotaleOrdine");
 			%>
 		</tr>
 	</table>

@@ -6,13 +6,6 @@
 	shortDescription="Consegna Ordine d'Acquisto"
 	longDescription="Consegna Ordine d'Acquisto">
 	<fieldProperty
-		name="findOrdineAcqRiga"
-		property="ordineAcqRiga"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="OrdineAcqRiga" />
-	<fieldProperty
 		name="cdCds"
 		property="ordineAcqRiga.cdCds"
 		inputType="TEXT"
@@ -90,7 +83,18 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
+		keysProperty="statoKeys"
 		label="Stato" />
+	<fieldProperty
+		name="statoFatt"
+		property="statoFatt"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		keysProperty="statoFattKeys"
+		label="Associata a Fattura" />
 	<fieldProperty
 		name="tipoConsegnaForSearch"
 		property="tipoConsegna"
@@ -108,28 +112,28 @@
 	<fieldProperty
 		name="tipoConsegna"
 		property="tipoConsegna"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		nullable="false"
+		inputType="SELECT"
 		keysProperty="tipoConsegnaKeys"
+		inputSize="20"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
 		label="Tipo Consegna" />
 	<fieldProperty
 		name="dtPrevConsegna"
 		property="dtPrevConsegna"
 		inputType="TEXT"
+		inputSize="10"
 		formatName="date_short"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		nullable="false"
 		label="Data Prev. Consegna" />
 	<fieldProperty
 		name="quantita"
 		property="quantita"
 		inputType="TEXT"
-		inputSize="10"
-		nullable="false"
+		inputSize="8"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
 		nullable="false"
@@ -167,6 +171,14 @@
 		nullable="false"
 		label="Iva" />
 	<fieldProperty
+		name="imIvaD"
+		property="imIvaD"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Iva Detraibile" />
+	<fieldProperty
 		name="imTotaleConsegna"
 		property="imTotaleConsegna"
 		inputType="TEXT"
@@ -178,7 +190,7 @@
 		name="findMagazzino"
 		property="magazzino"
 		inputType="searchtool"
-		formName="searchtool"
+		formName="searchtool_esteso"
 		enabledOnSearch="true"
 		label="Magazzino" />
 	<fieldProperty
@@ -208,7 +220,7 @@
 		name="dsMagazzino"
 		property="magazzino.dsMagazzino"
 		inputType="TEXT"
-		inputSize="30"
+		inputSize="50"
 		maxLength="30"
 		enabledOnEdit="false"
 		label="Magazzino" />
@@ -317,6 +329,29 @@
 		<formFieldProperty
 			name="consegna" />
 	</form>
+	<columnSet
+		name="consegneSet">
+		<columnFieldProperty
+			name="consegna" />
+		<columnFieldProperty
+			name="quantita"/>
+		<columnFieldProperty
+			name="tipoConsegna" />
+		<columnFieldProperty
+			name="cdMagazzino"/>
+		<columnFieldProperty
+			name="cdluogoConsegna"/>
+		<columnFieldProperty
+			name="cdUopDest"/>
+		<columnFieldProperty
+			name="dtPrevConsegna" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="statoFatt" />
+		<columnFieldProperty
+			name="imTotaleConsegna" />
+	</columnSet>
 	<formFieldProperty
 		name="findOrdineAcqRiga" />
 	<formFieldProperty
@@ -324,11 +359,16 @@
 	<formFieldProperty
 		name="stato" />
 	<formFieldProperty
-		name="tipoConsegna" />
+		name="statoFatt" />
 	<formFieldProperty
-		name="dtPrevConsegna" />
+		name="tipoConsegna"   
+		command="doOnTipoConsegnaChange" />
 	<formFieldProperty
-		name="quantita" />
+		name="dtPrevConsegna"    
+		command="doOnDtPrevConsegnaChange"/>
+	<formFieldProperty
+		name="quantita"   
+		command="doOnQuantitaChange"/>
 	<formFieldProperty
 		name="imImponibileDivisa" />
 	<formFieldProperty
@@ -338,13 +378,15 @@
 	<formFieldProperty
 		name="imIva" />
 	<formFieldProperty
+		name="imIvaD" />
+	<formFieldProperty
 		name="imTotaleConsegna" />
 	<formFieldProperty
 		name="findMagazzino" />
 	<formFieldProperty
 		name="findLuogoConsegnaMag" />
 	<formFieldProperty
-		name="findUnitaOperativaOrd" />
+		name="findUnitaOperativaOrdDest" />
 	<formFieldProperty
 		name="dtCancellazione" />
 	<findFieldProperty
@@ -378,11 +420,13 @@
 	<findFieldProperty
 		name="imIva" />
 	<findFieldProperty
+		name="imIvaD" />
+	<findFieldProperty
 		name="imTotaleConsegna" />
 	<findFieldProperty
 		name="cdMagazzino" />
 	<findFieldProperty
-		name="cdLuogoConsegna" />
+		name="cdluogoConsegna" />
 	<findFieldProperty
 		name="cdUopDest" />
 	<findFieldProperty
@@ -432,7 +476,7 @@
 	<columnFieldProperty
 		name="cdMagazzino" />
 	<columnFieldProperty
-		name="cdLuogoConsegna" />
+		name="cdluogoConsegna" />
 	<columnFieldProperty
 		name="cdUopDest" />
 	<columnFieldProperty

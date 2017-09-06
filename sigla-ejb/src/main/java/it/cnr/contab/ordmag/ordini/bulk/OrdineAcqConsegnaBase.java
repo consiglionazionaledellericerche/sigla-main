@@ -29,6 +29,12 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 //    IM_IVA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imIva;
  
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imIvaD;
+
+//  IM_IVA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imIvaNd;
+
 //    IM_TOTALE_CONSEGNA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imTotaleConsegna;
  
@@ -62,6 +68,12 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 //    PG_OBBLIGAZIONE_SCAD DECIMAL(10,0)
 	private java.lang.Long pgObbligazioneScad;
  
+//  ARR_ALI_IVA DECIMAL(5,2) NOT NULL
+	private java.math.BigDecimal arrAliIva;
+
+//  STATO_FATT VARCHAR(3) NOT NULL
+	private java.lang.String statoFatt;
+
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
  
@@ -338,5 +350,29 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 	}
 	public void setCdLuogoConsegna(java.lang.String cdLuogoConsegna) {
 		this.cdLuogoConsegna = cdLuogoConsegna;
+	}
+	public java.math.BigDecimal getArrAliIva() {
+		return arrAliIva;
+	}
+	public void setArrAliIva(java.math.BigDecimal arrAliIva) {
+		this.arrAliIva = arrAliIva;
+	}
+	public java.lang.String getStatoFatt() {
+		return statoFatt;
+	}
+	public void setStatoFatt(java.lang.String statoFatt) {
+		this.statoFatt = statoFatt;
+	}
+	public java.math.BigDecimal getImIvaD() {
+		return imIvaD;
+	}
+	public void setImIvaD(java.math.BigDecimal imIvaD) {
+		this.imIvaD = imIvaD;
+	}
+	public java.math.BigDecimal getImIvaNd() {
+		return imIvaNd;
+	}
+	public void setImIvaNd(java.math.BigDecimal imIvaNd) {
+		this.imIvaNd = imIvaNd;
 	}
 }

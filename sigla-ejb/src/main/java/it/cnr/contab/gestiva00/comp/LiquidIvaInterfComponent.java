@@ -25,6 +25,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -174,10 +175,16 @@ public class LiquidIvaInterfComponent extends CRUDComponent {
 				//poi reinserisco
 				long pg_dettaglio = 1;
 				for (Object object : bulk.getRipartizione_finanziaria()) {
-					((Liquidazione_iva_ripart_finBulk)object).setPg_dettaglio(pg_dettaglio++);
-					((OggettoBulk)object).setUser(CNRUserContext.getUser(aUC));
-					((OggettoBulk)object).setToBeCreated();
-					homeRipart.insert((Persistent)object, aUC);
+					if(((Liquidazione_iva_ripart_finBulk)object).getEsercizio_variazione()==null)
+						throw new ApplicationException("Indicare l'esercizio della variazione");
+					else if(((Liquidazione_iva_ripart_finBulk)object).getIm_variazione()==null)
+						throw new ApplicationException("Indicare l'importo della variazione");
+					else{
+						((Liquidazione_iva_ripart_finBulk)object).setPg_dettaglio(pg_dettaglio++);
+						((OggettoBulk)object).setUser(CNRUserContext.getUser(aUC));
+						((OggettoBulk)object).setToBeCreated();
+						homeRipart.insert((Persistent)object, aUC);
+					}
 				}
 			}
 		}
