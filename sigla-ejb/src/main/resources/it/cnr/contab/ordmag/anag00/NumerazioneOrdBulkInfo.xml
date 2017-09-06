@@ -123,6 +123,23 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="Data Cancellazione" />
+	<fieldProperty
+		name="percProrata"
+		property="percProrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="true"
+		label="% Prorata" />
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo"
+		nullable="false"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeys" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -143,11 +160,15 @@
 	<formFieldProperty
 		name="findTipoSezionale" />
 	<formFieldProperty
+		name="ti_istituz_commerc" />
+	<formFieldProperty
 		name="corrente" />
 	<formFieldProperty
 		name="dataProgressivo" />
 	<formFieldProperty
 		name="dtCancellazione" />
+	<formFieldProperty
+		name="percProrata" />
 	<findFieldProperty
 		name="cdUnitaOperativa" />
 	<findFieldProperty
@@ -175,11 +196,15 @@
 	<columnFieldProperty
 		name="dsTipoOperazione" />
 	<columnFieldProperty
+		name="ti_istituz_commerc" />
+	<columnFieldProperty
 		name="corrente" />
 	<columnFieldProperty
 		name="dataProgressivo" />
 	<columnFieldProperty
 		name="cdTipoSezionale" />
+	<columnFieldProperty
+		name="percProrata" />
 	<columnFieldProperty
 		name="dsTipoSezionale" />
 	<columnFieldProperty

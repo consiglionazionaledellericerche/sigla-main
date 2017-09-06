@@ -35,7 +35,8 @@
 		<formFieldProperty
 			name="cdUnitaMisura" />
 		<formFieldProperty
-			name="dsUnitaMisura" />
+			name="dsUnitaMisura" 
+			inputSize="20" />
 	</form>
 	<formFieldProperty
 		name="cdUnitaMisura" />

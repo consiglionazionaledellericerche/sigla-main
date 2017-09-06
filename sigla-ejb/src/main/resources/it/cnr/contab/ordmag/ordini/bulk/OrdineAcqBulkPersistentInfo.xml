@@ -24,7 +24,7 @@
 			propertyName="divisa.cd_divisa" />
 		<columnMapping
 			columnName="CD_MODALITA_PAG"
-			propertyName="modalitaPagamento.cd_modalita_pag" />
+			propertyName="modalitaPagamento.rif_modalita_pagamento.cd_modalita_pag" />
 		<columnMapping
 			columnName="CD_TERZO"
 			propertyName="fornitore.cd_terzo" />
@@ -88,8 +88,13 @@
 	<persistentProperty
 		name="notaPrecodificata"/>
 	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
 		name="numerazioneOrd"
 		partOfOid="true" />
+	<persistentProperty
+		name="unitaOperativaOrd" />
 	<persistentProperty
 		name="divisa" />
 	<persistentProperty
