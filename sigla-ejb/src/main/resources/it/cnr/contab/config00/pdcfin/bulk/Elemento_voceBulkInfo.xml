@@ -148,11 +148,11 @@
 		name="fl_missioni"
 		property="fl_missioni"
 		label="Utilizzabile per Missioni"
-		enabledOnEdit="false"
-		enabledOnInsert="false"				
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
 		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" 
 		/>
 	<fieldProperty
 		name="find_capoconto_fin"
