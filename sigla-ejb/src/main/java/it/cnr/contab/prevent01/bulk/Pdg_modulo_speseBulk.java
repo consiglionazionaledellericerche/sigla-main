@@ -143,7 +143,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 		return super.initializeForInsert(crudbp, actioncontext);
 	}	
 	private void inizializzaImporti(){
-		setIm_spese_a2(null);
+		setIm_spese_a2(Utility.ZERO);
 		setIm_spese_a3(Utility.ZERO);
 		setIm_spese_gest_accentrata_est(Utility.ZERO);
 		setIm_spese_gest_accentrata_int(Utility.ZERO);
