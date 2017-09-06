@@ -307,6 +307,13 @@
 		nullable="false"
 		columnSet="prg_liv2"
 		label="Programma" />
+	<fieldProperty
+		name="crea_linea_attivita"
+		property="linea_attivita"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
+		readonlyProperty="ROLinea_attivita"
+		enabledOnSearch="true"/>
 		
 	<formFieldProperty
 		name="esercizio" />
@@ -375,6 +382,8 @@
 		name="searchtool_progetto_liv2" />
 	<formFieldProperty
 		name="searchtool_area" />
+	<formFieldProperty
+		name="crea_linea_attivita" />
 
 	<findFieldProperty
 		name="esercizio" />

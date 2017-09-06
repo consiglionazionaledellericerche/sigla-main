@@ -8,6 +8,7 @@
 	boolean isMapNotEditable = false;
 	if (!bp.isFlNuovoPdg())
 		isMapNotEditable = bp.isUoArea();
+	boolean isProgettoDisable = bp.isFieldProgettoDisable();
 %>
 <table class="Panel">
 	<tr>
@@ -38,9 +39,9 @@
 			<% bp.getController().writeFormLabel(out,"cd_progetto2016");%>
 		  </td>
 		   <td colspan="3">	
-			<% bp.getController().writeFormInput(out,null,"cd_progetto2016",bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %>
-			<% bp.getController().writeFormInput(out,null,"ds_progetto2016",bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %>
-			<% bp.getController().writeFormInput(out,null,"find_nodo_padre_2016",bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %>
+			<% bp.getController().writeFormInput(out,null,"cd_progetto2016",isProgettoDisable,null,null); %>
+			<% bp.getController().writeFormInput(out,null,"ds_progetto2016",isProgettoDisable,null,null); %>
+			<% bp.getController().writeFormInput(out,null,"find_nodo_padre_2016",isProgettoDisable,null,null); %>
 		  </td>
 		</tr>
 	<% } %>
@@ -49,7 +50,9 @@
 		<% bp.getController().writeFormLabel(out,"centro_responsabilita"); %>
 	</td>
 	 <td colspan="3">	
-		<% bp.getController().writeFormInput(out,null,"centro_responsabilita",isMapNotEditable||bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate(),null,null); %> 
+		<% bp.getController().writeFormInput(out,null,"centro_responsabilita",
+				isMapNotEditable||bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate()||
+				bp.isMapFromVariazioneGestioneSpese()||bp.isMapFromVariazioneGestioneEntrate(),null,null); %> 
 	 </td>
 	</tr>
 	
@@ -76,9 +79,15 @@
 		</td>
 		<td>
 		<% if (bp.isFlTiGestioneES()) 
-				bp.getController().writeFormInput(out,null,"ti_gestioneES",false,null,"onclick=\"submitForm('doCambiaGestione')\"");
+				bp.getController().writeFormInput(out,null,"ti_gestioneES",
+						bp.isSearching()&&(bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate()||
+						bp.isMapFromVariazioneGestioneSpese()||bp.isMapFromVariazioneGestioneEntrate()),
+						null,"onclick=\"submitForm('doCambiaGestione')\"");
 		   else
-				bp.getController().writeFormInput(out,null,"ti_gestione",false,null,"onclick=\"submitForm('doCambiaGestione')\""); 
+				bp.getController().writeFormInput(out,null,"ti_gestione",
+						bp.isSearching()&&(bp.isMapFromPianoGestioneSpese()||bp.isMapFromPianoGestioneEntrate()||
+						bp.isMapFromVariazioneGestioneSpese()||bp.isMapFromVariazioneGestioneEntrate()),
+						null,"onclick=\"submitForm('doCambiaGestione')\""); 
 		%>
 		</td>
 	</tr>
