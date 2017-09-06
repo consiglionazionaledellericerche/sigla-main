@@ -954,6 +954,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	public void setFl_piano_economico(Boolean fl_piano_economico) {
 		if (getOtherField()==null) {
 			Progetto_other_fieldBulk bulk = new Progetto_other_fieldBulk(this.getPg_progetto());
+			bulk.setFl_piano_economico(Boolean.FALSE);
 			bulk.setToBeCreated();
 			setOtherField(bulk); 
 		}

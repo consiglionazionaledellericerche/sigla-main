@@ -2,10 +2,13 @@ package it.cnr.contab.doccont00.comp;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
@@ -23,6 +26,9 @@ import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
@@ -1249,5 +1255,74 @@ public void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_modulo_
 			throw handleException(  e.getCause() );
 		throw handleException(  e );
 	}	
+}
+public String getMessaggioSfondamentoPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException{
+	return getMessaggioSfondamentoPianoEconomico(userContext, pdgVariazione, false);
+}
+public void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException
+{
+	String message = getMessaggioSfondamentoPianoEconomico(userContext, pdgVariazione, true);
+	if (message!=null && message.length()>0)
+		throw new ApplicationException(
+				"Impossibile effettuare l'operazione !\n"+message);
+}
+private String getMessaggioSfondamentoPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione, boolean locked) throws ComponentException{
+	   String messaggio = "";
+	   try {
+		   Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
+
+		   for (java.util.Iterator dett = detHome.findDettagliVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
+				Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
+
+				WorkpackageBulk linea_attivita = (WorkpackageBulk)((it.cnr.contab.config00.ejb.Linea_attivitaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB(
+						"CNRCONFIG00_EJB_Linea_attivitaComponentSession", it.cnr.contab.config00.ejb.Linea_attivitaComponentSession.class)
+				).inizializzaBulkPerModifica(userContext, rigaVar.getLinea_attivita());
+
+				List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(linea_attivita.getProgetto2016().getPg_progetto());
+				for (Progetto_piano_economicoBulk e : pianoEconomicoList) {
+					if (e.getFl_ctrl_disp() && e.getCd_voce_piano().equals(linea_attivita.getVocePianoEconomico2016().getCd_voce_piano()) &&
+						(e.getEsercizio_piano().equals(0) || e.getEsercizio_piano().equals(rigaVar.getEsercizio()))) {
+						try {
+							if (locked) {
+								Progetto_piano_economicoBulk bulkToFind = new Progetto_piano_economicoBulk();
+								bulkToFind.setVoce_piano_economico(e.getVoce_piano_economico());
+								bulkToFind.setPg_progetto(e.getPg_progetto());
+								bulkToFind.setEsercizio_piano(e.getEsercizio_piano());
+								try {
+									bulkToFind = (Progetto_piano_economicoBulk) getHome( userContext,Progetto_piano_economicoBulk.class ).findAndLock(bulkToFind);
+								} catch (ObjectNotFoundException ex) {
+								}
+							}							
+
+							V_saldi_piano_econom_progettoBulk saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
+									cercaSaldoPianoEconomico(e, "S");
+								
+							BigDecimal dispResidua = saldo.getDisp_residua().subtract(rigaVar.getIm_variazione());
+							if (dispResidua.compareTo(BigDecimal.ZERO)<0) {
+								if (messaggio!=null && messaggio.length()>0) 
+									messaggio = messaggio+ "\n";
+								messaggio = messaggio +  
+									     "La disponibilità del piano economico "+e.getCd_voce_piano()+
+				 				         " associato al progetto"+(e.getEsercizio_piano().equals(0)?"":" per l'esercizio "+e.getEsercizio_piano())+
+									     " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() + 
+									     " non è sufficiente a coprire la variazione che risulta di " + 
+									     new it.cnr.contab.util.EuroFormat().format(rigaVar.getIm_variazione()) + ".\n";
+							}
+						}
+						catch (Exception ex )
+						{
+							throw new RuntimeException(  ex );
+						}	
+					}	
+				}
+		   } 
+		}catch (PersistencyException e) {
+			   throw new ComponentException(e);
+		}catch (RemoteException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
+		return messaggio;
 }
 }
