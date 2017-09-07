@@ -4,7 +4,7 @@
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="97"/>
+	<property name="ireport.x" value="41"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -560,7 +560,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 					<font isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{IVA_SPLIT_PAYMENT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
