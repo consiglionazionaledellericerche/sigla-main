@@ -1,30 +1,29 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoHome;
-import it.cnr.contab.doccont00.core.bulk.Mandato_terzoBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
-import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
-import it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrBulk;
-import it.cnr.contab.doccont00.core.bulk.Sospeso_det_uscBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
+import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
+import it.cnr.contab.missioni00.docs.bulk.RimborsoHome;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 
-public class V_mandato_reversaleHome extends BulkHome {
+public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRestHome {
 	private DocumentiContabiliService documentiContabiliService;
 
 	public V_mandato_reversaleHome(java.sql.Connection conn) {
@@ -281,5 +280,76 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 			}
 		}
 		return persistent;
+	}
+
+	@Override
+	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+		if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+			Boolean trovataCondizioneSoloAnticipi = false;
+			CompoundFindClause newClauses = new CompoundFindClause();
+			Enumeration e = compoundfindclause.getClauses();
+			SQLBuilder sqlExists = null;
+			SQLBuilder sqlNotExists = null;
+			while(e.hasMoreElements() ){
+				FindClause findClause = (FindClause) e.nextElement();
+				if (findClause instanceof SimpleFindClause){
+					SimpleFindClause clause = (SimpleFindClause)findClause;
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("soloAnticipi") &&
+							operator == SQLBuilder.EQUALS){
+						trovataCondizioneSoloAnticipi = true;
+						Mandato_rigaHome home = (Mandato_rigaHome) getHomeCache().getHome(Mandato_rigaBulk.class);
+						sqlExists = home.createSQLBuilder();
+						sqlExists.addTableToHeader("ANTICIPO");
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
+						sqlExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
+						sqlExists.addSQLJoin("ANTICIPO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
+						sqlExists.addSQLJoin("ANTICIPO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
+						sqlExists.addSQLJoin("ANTICIPO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
+						sqlExists.addSQLJoin("ANTICIPO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM");
+						sqlExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
+						sqlExists.addSQLClause("AND","ANTICIPO.FL_ASSOCIATO_MISSIONE",SQLBuilder.EQUALS, "N" );
+
+
+						RimborsoHome homeRimborso = (RimborsoHome) getHomeCache().getHome(RimborsoBulk.class);
+						sqlNotExists = homeRimborso.createSQLBuilder();
+						sqlNotExists.addTableToHeader("MANDATO_RIGA");
+						sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
+						sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS", "MANDATO_RIGA.CD_CDS");
+						sqlNotExists.addSQLJoin("V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT", "MANDATO_RIGA.PG_MANDATO");
+						sqlNotExists.addSQLJoin("RIMBORSO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
+						sqlNotExists.addSQLJoin("RIMBORSO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
+						sqlNotExists.addSQLJoin("RIMBORSO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
+						sqlNotExists.addSQLJoin("RIMBORSO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM");
+						sqlNotExists.addSQLClause("AND","MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM",SQLBuilder.EQUALS, "ANTICIPO" );
+					} else {
+						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					}
+				}
+			}
+			if (trovataCondizioneSoloAnticipi){
+				sql = selectByClause(userContext, newClauses);
+				sql.addSQLExistsClause("AND", sqlExists);
+				sql.addSQLNotExistsClause("AND", sqlNotExists);
+			}
+		}
+		if ( !isUoEnte(userContext)){
+			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+			sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
+		}
+	}
+	private Boolean isUoEnte(UserContext userContext) throws PersistencyException, ComponentException{
+		Unita_organizzativa_enteBulk uoEnte = getUoEnte(userContext);
+		if ( ((CNRUserContext)userContext).getCd_unita_organizzativa().equals ( uoEnte.getCd_unita_organizzativa() )){
+			return true;
+		}
+		return false;
+	}
+
+	private Unita_organizzativa_enteBulk getUoEnte(UserContext userContext)
+			throws PersistencyException, ComponentException {
+		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHomeCache().getHome(Unita_organizzativa_enteBulk.class ).findAll().get(0);
+		return uoEnte;
 	}
 }
