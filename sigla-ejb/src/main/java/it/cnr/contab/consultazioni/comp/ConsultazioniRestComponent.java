@@ -43,6 +43,7 @@ import it.cnr.contab.pdg01.consultazioni.bulk.VConsVarCompResBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoGestUoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
@@ -451,41 +452,8 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
 				sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 			}
-		} else if (oggettobulk instanceof ProgettoGestBulk){
+		} else if (oggettobulk instanceof ProgettoGestUoBulk){
 
-			if (compoundfindclause != null && compoundfindclause.getClauses() != null){
-				Boolean trovataCondizioneUo = false;
-    			CompoundFindClause newClauses = new CompoundFindClause();
-    			Enumeration e = compoundfindclause.getClauses();
-    			SQLBuilder sqlExists = null;
-				while(e.hasMoreElements() ){
-					FindClause findClause = (FindClause) e.nextElement();
-					if (findClause instanceof SimpleFindClause){
-						SimpleFindClause clause = (SimpleFindClause)findClause;
-						int operator = clause.getOperator();
-						if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_unita_organizzativa") && 
-								operator == 8192){
-							trovataCondizioneUo = true;
-							ProgettoHome progettoHome = (ProgettoHome) getHome(userContext, ProgettoBulk.class);
-							sqlExists = progettoHome.createSQLBuilder();
-							sqlExists.addTableToHeader("V_ABIL_PROGETTI");
-							sqlExists.addSQLJoin("PROGETTO.ESERCIZIO", "PROGETTO_GEST.ESERCIZIO");
-							sqlExists.addSQLJoin("PROGETTO.TIPO_FASE", "PROGETTO_GEST.TIPO_FASE");
-							sqlExists.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETTO_GEST.PG_PROGETTO");
-							sqlExists.addSQLJoin("PROGETTO_GEST.ESERCIZIO", "V_ABIL_PROGETTI.ESERCIZIO_COMMESSA");
-							sqlExists.addSQLJoin("PROGETTO_GEST.TIPO_FASE", "V_ABIL_PROGETTI.TIPO_FASE_COMMESSA");
-							sqlExists.addSQLJoin("PROGETTO_GEST.PG_PROGETTO", "V_ABIL_PROGETTI.PG_COMMESSA");
-							sqlExists.addSQLClause("AND","V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, clause.getValue());
-						} else {
-							newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
-						}
-					}
-				}
-				if (trovataCondizioneUo){
-					sql =  getHome(userContext, oggettobulk).selectByClause(userContext, newClauses);
-					sql.addSQLExistsClause("AND", sqlExists);
-				}
-			}
 			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
 			if ( !isUoEnte(userContext)){
 				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
