@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.cnr</groupId>
         <artifactId>sigla</artifactId>
-        <version>4.0.77-SNAPSHOT</version>
+        <version>4.0.79-SNAPSHOT</version>
     </parent>
     <properties>
         <wildfly.deployment.filename>SIGLA.ear</wildfly.deployment.filename>
@@ -85,6 +85,12 @@
                 <version>${wildfly.plugin.version}</version>
                 <configuration>
                     <jbossHome>${project.build.directory}/wildfly-${wildfly.version}</jbossHome>
+                    <server-args>
+                        <server-arg>-Dspring.profiles.active=CMIS</server-arg>
+                    </server-args>
+                    <java-opts>
+                        <java-opt>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</java-opt>
+                    </java-opts>
                 </configuration>
             </plugin>
             <plugin>
