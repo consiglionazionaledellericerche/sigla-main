@@ -30,6 +30,7 @@ import it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiBulk
 import it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiHome;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk;
+import it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiSpesaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
@@ -50,6 +51,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -491,6 +493,27 @@ public class ConsultazioniRestComponent extends CRUDComponent {
 			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
 			if ( !isUoEnte(userContext)){
 				sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+			}
+		}else if (oggettobulk instanceof VSitGaeResiduiSpesaBulk){
+			CdrBulk cdrUtente = cdrFromUserContext(userContext);
+			if ( !cdrUtente.isCdrILiv() ){
+				sql.addSQLClause("AND", "CDS",sql.EQUALS,CNRUserContext.getCd_cdr(userContext));
+				sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+			} else {
+				sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+				sql.addSQLClause("AND", "CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+				sql.openParenthesis("AND");
+				sql.addSQLClause("OR", "CD_CENTRO_RESPONSABILITA",sql.EQUALS,CNRUserContext.getCd_cdr(userContext));
+				CdrHome cdrHome = (CdrHome) getHome(userContext, CdrBulk.class);
+				try {
+					for (java.util.Iterator j = cdrHome.findCdrAfferenti(cdrUtente).iterator(); j.hasNext();) {
+                        CdrBulk cdrAfferenti = (CdrBulk) j.next();
+                        sql.addSQLClause("OR","CD_CENTRO_RESPONSABILITA", sql.EQUALS, cdrAfferenti.getCd_centro_responsabilita());
+                    }
+				} catch (IntrospectionException e) {
+					throw handleException(e);
+				}
+				sql.closeParenthesis();
 			}
 		}
 		
