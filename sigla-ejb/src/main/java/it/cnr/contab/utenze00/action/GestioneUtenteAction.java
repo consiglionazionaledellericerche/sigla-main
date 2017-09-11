@@ -34,7 +34,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 		}
 	}
 	/**
-	 * Gestisce la richiesta di espansione di un nodo del men˘ applicativo
+	 * Gestisce la richiesta di espansione di un nodo del men√π applicativo
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @param cd_nodo codice del nodo da aprire	
@@ -57,7 +57,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			bp.espandiNodo(nodo);
 			return context.findForward("menu_tree");
 		}catch(NullPointerException e){
-			setMessage(context, 0, "Selezionare l'Unit‡ Organizzativa");
+			setMessage(context, 0, "Selezionare l'Unit√† Organizzativa");
 			return context.findDefaultForward();
 		}catch(Throwable e) {
 			return handleException(context,e);
@@ -119,7 +119,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
 			if (ui.getUnita_organizzativa()==null) {
 				SelezionatoreListaBP bp = (SelezionatoreListaBP)context.getBusinessProcess();
-				bp.setErrorMessage("Selezionare l'Unit‡ organizzativa");
+				bp.setErrorMessage("Selezionare l'Unit√† organizzativa");
 				return context.findDefaultForward();
 			}
 			UtenteBulk utente = ui.getUtente();
@@ -287,7 +287,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 				CNRUserContext.getCd_cds(context.getUserContext()),
 				CNRUserContext.getCd_cdr(context.getUserContext()));
 	
-			// Se il nuovo esercizio Ë bloccato ripristino l'esercizio corrente
+			// Se il nuovo esercizio √® bloccato ripristino l'esercizio corrente
 			// e informo l'utente.
 			try {			
 				LoginAction.getComponentSession().registerUser(userContext,context.getApplicationId());
@@ -312,12 +312,12 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	 * Gestisce le azioni di controllo e validazione della richiesta di apertura dall'albero main di una certa funzione applicativa
 	 *
 	 * @param context	L'ActionContext della richiesta
-	 * @param cd_nodo codice del nodo su cui Ë stata effettuata la richiesta
+	 * @param cd_nodo codice del nodo su cui √® stata effettuata la richiesta
 	 * @return Il Forward alla pagina di risposta
 	 */
 	public Forward doSelezionaMenu(ActionContext context,String cd_nodo) {
+		it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
 		try {
-			it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
 			if (isCurrentBPDirty(context)) {
 				it.cnr.jada.util.action.OptionBP optionbp = openContinuePrompt(context,"doConfermaSelezioneMenu");
 				optionbp.addAttribute("cd_nodo", cd_nodo);
@@ -329,6 +329,11 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			if (nodo == null) return context.findDefaultForward();
 			return startNodo(context,bp,nodo);
 		} catch(Throwable e) {
+		     if (bp.getParentRoot().isBootstrap()) {
+		        bp.setErrorMessage(e.getMessage());
+                ((HttpActionContext)context).getRequest()
+                        .setAttribute(it.cnr.jada.action.BusinessProcess.class.getName(), bp);
+            }
 			return handleException(context,e);
 		}
 	}
@@ -340,7 +345,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	
 	/**
 	 * Gestisce l'azione di costruzione della gerarchia applicativa (albero main) in funzione delle abilitazioni (accessi)
-	 * e unit‡ organizzativa di scrivania selezionata dall'utente
+	 * e unit√† organizzativa di scrivania selezionata dall'utente
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
@@ -372,11 +377,11 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'componentSession'
+	 * Restituisce il valore della propriet√† 'componentSession'
 	 *
-	 * @return Il valore della propriet‡ 'componentSession'
-	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ë possibile effettuare l'operazione
-	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+	 * @return Il valore della propriet√† 'componentSession'
+	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non √® possibile effettuare l'operazione
+	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
 	 */
 	public static GestioneLoginComponentSession getComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class);
