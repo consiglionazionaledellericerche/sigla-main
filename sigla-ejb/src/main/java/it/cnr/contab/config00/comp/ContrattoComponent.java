@@ -9,20 +9,8 @@ package it.cnr.contab.config00.comp;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsHome;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
-import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
-import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
+import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
@@ -31,6 +19,7 @@ import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.RemoveAccent;
@@ -44,23 +33,16 @@ import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.Query;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
+import javax.ejb.EJBException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.StringTokenizer;
-
-import javax.ejb.EJBException;
-
-import org.apache.chemistry.opencmis.client.api.Folder;
 /**
  * @author mspasiano
  *
@@ -630,7 +612,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *    PostCondition:
 	  *      L'utente può visualizzare il totale dei documenti 
 	  *
-	  * @param aUC lo user context 
+	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
 	  */
 	public ContrattoBulk calcolaTotDocCont (UserContext userContext,ContrattoBulk contratto) throws ComponentException
@@ -766,7 +748,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *    PostCondition:
 	  *      L'utente può visualizzare il totale dei documenti 
 	  *
-	  * @param aUC lo user context 
+	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
 	  */
 	private ContrattoBulk calcolaTotDocContForPadre (UserContext userContext,ContrattoBulk contratto) throws ComponentException
@@ -954,7 +936,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *    PostCondition:
 	  *      L'utente può visualizzare il totale dei documenti 
 	  *
-	  * @param aUC lo user context 
+	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
 	  */
 	private ContrattoBulk calcolaTotDocContForAttivoPassivo (UserContext userContext,ContrattoBulk contratto) throws ComponentException
@@ -1139,7 +1121,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  * Post: Viene salvato in modo definitivo il contratto in questione e cancellato quello provvisorio
 	  *
 	  * @param	userContext	lo UserContext che ha generato la richiesta
-	  * @param	varBilancio l'OggettoBulk da salvara in modo definitivo
+	  * @param	contratto l'OggettoBulk da salvara in modo definitivo
 	  * @return	il contratto definitivo
 	  *
 	  * Metodi privati chiamati:
@@ -1175,8 +1157,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("cig").getLabel());
 			}
 			
-			Folder oldNode = contrattoService.getFolderContratto(contratto);
-			if (oldNode == null || !contrattoService.isDocumentoContrattoPresent(contratto))
+			StorageObject storageObject = contrattoService.getFolderContratto(contratto);
+			if (storageObject == null || !contrattoService.isDocumentoContrattoPresent(contratto))
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
 			boolean pubblica = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
 					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_pubblica_contratto().booleanValue();
@@ -1227,13 +1209,15 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contrattoClone.setStato(ContrattoBulk.STATO_DEFINITIVO);
 
 			ContrattoBulk contrattoDefinitivo = (ContrattoBulk)super.creaConBulk(userContext,contrattoClone);
-			if (oldNode != null){
-				contrattoService.changeProgressivoNodeRef(oldNode, contrattoDefinitivo);
-				Folder node = contrattoService.getFolderContratto(contrattoDefinitivo);
-				if (node != null){
-					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
-					contrattoService.addConsumer(node,"GROUP_CONTRATTI");
-					contrattoService.setInheritedPermission(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo), Boolean.FALSE);
+			if (storageObject != null){
+				contrattoService.changeProgressivoNodeRef(storageObject, contrattoDefinitivo);
+				StorageObject storageObject1 = contrattoService.getFolderContratto(contrattoDefinitivo);
+				if (storageObject1 != null){
+					contrattoService.addAspect(storageObject1, "P:sigla_contratti_aspect:stato_definitivo");
+					contrattoService.addConsumer(storageObject1,"GROUP_CONTRATTI");
+					contrattoService.setInheritedPermission(
+							contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo)),
+							Boolean.FALSE);
 				}
 			}
 			

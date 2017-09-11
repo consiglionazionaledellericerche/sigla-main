@@ -3086,16 +3086,6 @@ public Forward doOnFlSanMarinoConIVAChange(ActionContext context) {
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
-			if (fattura.isGestione_doc_ele() && 
-				(fattura.getDt_fattura_fornitore() != null &&!(fattura.getDt_fattura_fornitore().compareTo(fattura.getDataInizioFatturaElettronica())<0) )&&
-				!fattura.isElettronica() &&
-				!fattura.isEstera() &&
-				!fattura.isSanMarinoSenzaIVA()&&
-				!fattura.isSanMarinoConIVA()&&
-				!fattura.isBollaDoganale()){
-				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-					throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
-			}
 			if (Boolean.TRUE.equals(fattura.getFl_san_marino_con_iva())) {
 				fattura.setFl_intra_ue(Boolean.FALSE);
 				fattura.setFl_extra_ue(Boolean.FALSE);

@@ -25,7 +25,7 @@
 		   columnName="CMS_NODE_REF"
 		   propertyName="cms_node_ref"
 		   sqlTypeName="VARCHAR"
-		   columnSize="100"
+		   columnSize="500"
 		   nullable="true" />		   
 		<columnMapping
 			columnName="TIPO_ARCHIVIO"

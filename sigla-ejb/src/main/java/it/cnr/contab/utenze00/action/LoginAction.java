@@ -37,7 +37,7 @@ import it.cnr.jada.util.jsp.JSPUtils;
 public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	private static final Logger log = LoggerFactory.getLogger(LoginAction.class);
 	public static final java.text.Format FORMATO_TIMESTAMP = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	
+
 	/**
 	 * LoginAction constructor comment.
 	 */
@@ -49,7 +49,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
-	 * @throws ParseException	
+	 * @throws ParseException
 	 */
 	public Forward doAssegnaPassword(ActionContext context) throws java.text.ParseException {
 		try {
@@ -81,7 +81,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
-	 * @throws ParseException	
+	 * @throws ParseException
 	 */
 	public Forward doCambiaPassword(ActionContext context) throws java.text.ParseException {
 		try {
@@ -92,7 +92,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 				// se l'utente è di tipo LDAP
 				if (ui.getUtente().isAutenticatoLdap())
 					forward = context.findForward("cambio_password_ldap");
-				// se l'utente è di tipo SIGLA
+					// se l'utente è di tipo SIGLA
 				else
 					forward = context.findForward("cambio_password");
 			}
@@ -112,18 +112,18 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 					if (bpc instanceof SelezionaCdsBP) {
 						bp.closeAllChildren();
 						CNRUserInfo userInfo = (CNRUserInfo)context.getUserInfo();
-						if (userInfo.getUnita_organizzativa() == null && 
-							!userInfo.getUtente().isUtenteAmministratore() &&
-							!userInfo.getUtente().isSuperutente())
+						if (userInfo.getUnita_organizzativa() == null &&
+								!userInfo.getUtente().isUtenteAmministratore() &&
+								!userInfo.getUtente().isSuperutente())
 							bp.cercaCds(context);
 						break;
 					}
 					else {
 						bp.closeAllChildren();
 						CNRUserInfo userInfo = (CNRUserInfo)context.getUserInfo();
-						if (userInfo.getUnita_organizzativa() == null && 
-							!userInfo.getUtente().isUtenteAmministratore() &&
-							!userInfo.getUtente().isSuperutente())
+						if (userInfo.getUnita_organizzativa() == null &&
+								!userInfo.getUtente().isUtenteAmministratore() &&
+								!userInfo.getUtente().isSuperutente())
 							bp.cercaUnitaOrganizzative(context);
 						break;
 					}
@@ -150,7 +150,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
-	 * @throws ParseException	
+	 * @throws ParseException
 	 */
 	public Forward doEntra(ActionContext context) throws java.text.ParseException {
 		try {
@@ -178,7 +178,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 * L'utente è stato riconosciuto come un nuovo utente per autenticazione con LDAP
 	 * e quindi è stata richiesta la sua user id e la sua password LDAP, in modo da
 	 * potere associare utente SIGLA con utente LDAP
-	 * 
+	 *
 	 * @param context
 	 * @return
 	 * @throws java.text.ParseException
@@ -196,7 +196,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	/**
 	 * L'utente sta tentando di entrare senza autenticazione LDAP
 	 * nonostante per lui sia obbligatorio, verifichiamo che ciò sia ancora possibile
-	 * 
+	 *
 	 * @param context
 	 * @return
 	 * @throws java.text.ParseException
@@ -211,90 +211,90 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			return handleException(context,e);
 		}
 	}
-	
+
 	private void fillContextFromRequest(ActionContext context) {
 		HttpActionContext httpActionContext = (HttpActionContext)context;
 		if (Optional.ofNullable(httpActionContext.getParameter("context.esercizio")).isPresent()) {
-			doSelezionaContesto(context, 
+			doSelezionaContesto(context,
 					Optional.ofNullable(httpActionContext.getParameter("context.esercizio"))
-						.map(x -> Integer.valueOf(x)).orElse(null), 
+							.map(x -> Integer.valueOf(x)).orElse(null),
 					Optional.ofNullable(httpActionContext.getParameter("context.cds"))
-						.map(x -> x).orElse(null), 
+							.map(x -> x).orElse(null),
 					Optional.ofNullable(httpActionContext.getParameter("context.uo"))
-						.map(x -> x).orElse(null), 
+							.map(x -> x).orElse(null),
 					Optional.ofNullable(httpActionContext.getParameter("context.cdr"))
-						.map(x -> x).orElse(null));			
+							.map(x -> x).orElse(null));
 		}
 	}
-	
-    private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
+
+	private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
 		boolean utentiMultipliFound=false;
 		CNRUserInfo ui = null;
 		try {
 			if (context.getUserContext() == null)
 				context.setUserContext(new CNRUserContext("LOGIN",context.getSessionId(),null,null,null,null));
 			LoginBP bp = (LoginBP)context.getBusinessProcessRoot(true);
-	
+
 			ui = bp.getUserInfo();
-            bp.fillModel(context);
-            context.setUserInfo(ui);
+			bp.fillModel(context);
+			context.setUserInfo(ui);
 
-            if (ui.getDescrizioneSessione() != null)
-                context.setTracingSessionDescription(ui.getDescrizioneSessione());
-            if (ui.getDescrizioneSessione() == null && context.isRequestTracingUser())
-                return context.findForward("traced_login");
+			if (ui.getDescrizioneSessione() != null)
+				context.setTracingSessionDescription(ui.getDescrizioneSessione());
+			if (ui.getDescrizioneSessione() == null && context.isRequestTracingUser())
+				return context.findForward("traced_login");
 
-            UtenteBulk utente = new UtenteBulk();
-            utente.setCd_utente(Optional.ofNullable(ui.getLdap_userid()).orElse(ui.getUserid()));
-            utente.setPasswordInChiaro(ui.getPassword()!=null?ui.getPassword().toUpperCase():null);
-            if (ui.getLdap_userid()!=null) {
-                utente.setCd_utente_uid(ui.getLdap_userid());
-                utente.setLdap_password(Optional.ofNullable(ui.getLdap_password()).orElse(ui.getPassword()));
-            } else {
-                utente.setLdap_password(ui.getPassword());
-            }
-            utente.setUtente_multiplo(ui.getUtente_multiplo());
-            ui.setUtente(utente);
+			UtenteBulk utente = new UtenteBulk();
+			utente.setCd_utente(Optional.ofNullable(ui.getLdap_userid()).orElse(ui.getUserid()));
+			utente.setPasswordInChiaro(ui.getPassword()!=null?ui.getPassword().toUpperCase():null);
+			if (ui.getLdap_userid()!=null) {
+				utente.setCd_utente_uid(ui.getLdap_userid());
+				utente.setLdap_password(Optional.ofNullable(ui.getLdap_password()).orElse(ui.getPassword()));
+			} else {
+				utente.setLdap_password(ui.getPassword());
+			}
+			utente.setUtente_multiplo(ui.getUtente_multiplo());
+			ui.setUtente(utente);
 
-            try {
-                utente = getComponentSession().validaUtente(context.getUserContext(),utente,faseValidazione);
-            } catch (UtenteLdapNuovoException e) {
-                return context.findForward("login_ldap");
-            } catch (UtenteMultiploException e) {
-                try {
-                    utentiMultipliFound=true;
-                    bp.utentiMultipli(context.getUserContext(), utente);
-                    return context.findForward("login_multiplo");
-                } catch (Exception e2) {
-                    ui.setPassword(null);
-                    throw e2;
-                }
-            }
+			try {
+				utente = getComponentSession().validaUtente(context.getUserContext(),utente,faseValidazione);
+			} catch (UtenteLdapNuovoException e) {
+				return context.findForward("login_ldap");
+			} catch (UtenteMultiploException e) {
+				try {
+					utentiMultipliFound=true;
+					bp.utentiMultipli(context.getUserContext(), utente);
+					return context.findForward("login_multiplo");
+				} catch (Exception e2) {
+					ui.setPassword(null);
+					throw e2;
+				}
+			}
 
-            if (utente == null) {
-                setErrorMessage(context,"Nome utente o password sbagliati.");
-                return context.findDefaultForward();
-            }
-            ui.setUserid(utente.getCd_utente());
-            if (utente.isAutenticazioneLdap())
-                ui.setLdap_userid(utente.getCd_utente_uid());
-            ui.setUtente(utente);
+			if (utente == null) {
+				setErrorMessage(context,"Nome utente o password sbagliati.");
+				return context.findDefaultForward();
+			}
+			ui.setUserid(utente.getCd_utente());
+			if (utente.isAutenticazioneLdap())
+				ui.setLdap_userid(utente.getCd_utente_uid());
+			ui.setUtente(utente);
 
-            StringBuffer infoUser = new StringBuffer();
-            infoUser.append("LogIn User:"+ui.getUtente().getCd_utente());
-            if (ui.getUtente().getCd_utente_uid()!=null)
-                infoUser.append(" LogIn Ldap User:"+ui.getUtente().getCd_utente_uid());
-            infoUser.append(" RemoteHost:"+((HttpActionContext)context).getRequest().getRemoteAddr());
-            log.warn(infoUser.toString());
-            if (utente.getDt_ultima_var_password() == null && !utente.isAutenticatoLdap())
-                return context.findForward("primo_login");
-            return null;
+			StringBuffer infoUser = new StringBuffer();
+			infoUser.append("LogIn User:"+ui.getUtente().getCd_utente());
+			if (ui.getUtente().getCd_utente_uid()!=null)
+				infoUser.append(" LogIn Ldap User:"+ui.getUtente().getCd_utente_uid());
+			infoUser.append(" RemoteHost:"+((HttpActionContext)context).getRequest().getRemoteAddr());
+			log.warn(infoUser.toString());
+			if (utente.getDt_ultima_var_password() == null && !utente.isAutenticatoLdap())
+				return context.findForward("primo_login");
+			return null;
 		} catch(it.cnr.contab.utente00.nav.comp.PasswordScadutaException e) {
 			setErrorMessage(context,"Password scaduta da più di sei mesi.");
 			// se l'utente è di tipo LDAP
 			if (ui.getUtente().isAutenticatoLdap())
 				return context.findForward("password_scaduta_ldap");
-			// se l'utente è di tipo SIGLA
+				// se l'utente è di tipo SIGLA
 			else
 				return context.findForward("password_scaduta");
 		} catch(it.cnr.contab.utente00.nav.comp.PasswordLdapScadutaException e) {
@@ -372,7 +372,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	}
 	private void initializeLdap(ActionContext context) {
 		CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
-	
+
 		// cancelliamo l'utente e la password ldap
 		if (ui != null) {
 			ui.setLdap_userid(null);
@@ -382,7 +382,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	private Forward initializeWorkspace(ActionContext context) throws java.text.ParseException,javax.ejb.EJBException,java.rmi.RemoteException,it.cnr.jada.comp.ComponentException,BusinessProcessException {
 		CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
 		LoginBP loginBP = (LoginBP)context.getBusinessProcess();
-		
+
 		UtenteBulk utente = ui.getUtente();
 		context.setUserContext(new CNRUserContext(
 				loginBP.getUserInfo().getUtente().getCd_utente(),
@@ -398,7 +398,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			setErrorMessage(context,"L'utente non ha accessi all'applicazione.");
 			return context.findDefaultForward();
 		}
-	
+
 		Integer esercizio = esercizi.length == 0 ? null : esercizi[esercizi.length-1];
 		for (int i = 0;i < esercizi.length;i++)
 			if (esercizi[i].intValue() == annoInCorso) {
@@ -412,34 +412,34 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	     * @autor Marco Spasiano 29/11/2004
 	     */
 		Parametri_cnrBulk paramBulk = ((Parametri_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession")).getParametriCnr(context.getUserContext(),esercizio);
-        if (paramBulk == null){
+		if (paramBulk == null){
 			context.closeBusinessProcess();
 			setErrorMessage(context,"Parametri CNR non presenti per l'anno: "+esercizio);
-			return context.findDefaultForward();        	
-        }
-		ui.setCd_tipo_rapporto(paramBulk.getCd_tipo_rapporto());		
+			return context.findDefaultForward();
+		}
+		ui.setCd_tipo_rapporto(paramBulk.getCd_tipo_rapporto());
 		fillContextFromRequest(context);
-		 
+
 		GestioneUtenteBP bp = (GestioneUtenteBP)context.createBusinessProcess("GestioneUtenteBP");
 		context.addBusinessProcess(bp);
 		bp.setUserInfo(ui);
 		Parametri_enteBulk parametriEnte = ((Parametri_enteComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_enteComponentSession")).getParametriEnte(context.getUserContext());
 		ui.setLogo(parametriEnte.checkLogo());
 		ui.setTipo_db(parametriEnte.getTipo_db());
-		
+
 		if (utente.isSuperutente() || utente.isUtenteAmministratore()) {
 			CNRUserContext userContext = new CNRUserContext(
-				utente.getCd_utente(),
-				context.getSessionId(),
-				esercizio,
-				null,
-				null,
-				null);
-	        userContext.getAttributes().put("bootstrap",
-                Optional.ofNullable(context.getUserContext().getAttributes().get("bootstrap"))
-                    .map(Boolean.class::cast)
-                    .orElse(Boolean.FALSE)
-            );
+					utente.getCd_utente(),
+					context.getSessionId(),
+					esercizio,
+					null,
+					null,
+					null);
+			userContext.getAttributes().put("bootstrap",
+					Optional.ofNullable(context.getUserContext().getAttributes().get("bootstrap"))
+							.map(Boolean.class::cast)
+							.orElse(Boolean.FALSE)
+			);
 			// Testo se l'utente può entrare con l'anno in corso.
 			try {
 				getComponentSession().registerUser(userContext,context.getApplicationId());
@@ -448,15 +448,15 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			} catch(it.cnr.jada.comp.ApplicationException e) {
 				// Se l'anno in corso è lockato cerco il primo esercizio disponibile.
 				esercizio = null;
-				for (int i = 0;i < esercizi.length;i++) 
+				for (int i = 0;i < esercizi.length;i++)
 					try {
 						userContext = new CNRUserContext(
-							utente.getCd_utente(),
-							context.getSessionId(),
-							esercizi[i],
-							null,
-							null,
-							null);
+								utente.getCd_utente(),
+								context.getSessionId(),
+								esercizi[i],
+								null,
+								null,
+								null);
 						getComponentSession().registerUser(userContext,context.getApplicationId());
 						esercizio = esercizi[i];
 						break;
@@ -471,7 +471,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 				//	Remmato Marco Spasiano 28/02/2006 per problema di sessioni attive
 				//UnregisterUser.registerUnregisterUser((HttpActionContext)context);
 			}
-			
+
 			context.setUserContext(userContext);
 			bp.setRadiceAlbero_main(context, getComponentSession().generaAlberoPerUtente(context.getUserContext(),utente,null,null,(short)0));
 			return context.findForward("desktop");
@@ -482,7 +482,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			bp.cercaUnitaOrganizzative(context);
 		return context.findForward("desktop");
 	}
-	
+
 	/**
 	 * Gestisce l'azione di selezione di un contesto
 	 *
@@ -491,16 +491,16 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 */
 	public Forward doSelezionaContesto(ActionContext context, Integer esercizio, String cds, String uo, String cdr) {
 		try {
-			LoginBP bp = (LoginBP)context.getBusinessProcess();			
+			LoginBP bp = (LoginBP)context.getBusinessProcess();
 			CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
 			ui.setEsercizio(esercizio);
 			CNRUserContext userContext = new CNRUserContext(
-				ui.getUtente().getCd_utente(),
-				context.getSessionId(),
-				ui.getEsercizio(),
-				Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
-				Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cds(context.getUserContext())),
-				Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
+					ui.getUtente().getCd_utente(),
+					context.getSessionId(),
+					ui.getEsercizio(),
+					Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
+					Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cds(context.getUserContext())),
+					Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
 			if (Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
 				ui.setUnita_organizzativa((Unita_organizzativaBulk) Utility.createUnita_organizzativaComponentSession()
 						.findByPrimaryKey(userContext, new Unita_organizzativaBulk(uo)));

@@ -195,13 +195,6 @@
 	     	<td>
 	   		<% bp.getController().writeFormInput(out,null,"fl_spedizioniere",fatturaPassiva.getFl_merce_intra_ue(),null,"");%>
 	   		</td>
-			<td width="100">&nbsp;</td>
-	      	<td>
-	      		<% bp.getController().writeFormLabel(out,"fl_split_payment");%>
-	      	</td>      	
-	     	<td>
-	     		<% bp.getController().writeFormInput(out,"fl_split_payment");%>
-	     	</td>
 	      </tr>
 	      <tr>     	
 	      	<td>

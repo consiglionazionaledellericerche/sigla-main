@@ -1,16 +1,14 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-
-import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.missioni00.service.MissioniCMISService;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 	private static final long serialVersionUID = 1L;
@@ -39,8 +37,8 @@ public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 		setAspectName(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA);
 	}
 
-	public AllegatoMissioneBulk(Document node) {
-		super(node);
+	public AllegatoMissioneBulk(StorageObject storageObject) {
+		super(storageObject.getKey());
 		setAspectName(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA);
 	}
 	
@@ -50,7 +48,7 @@ public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 	public void setAspectName(String aspectName) {
 		this.aspectName = aspectName;
 	}
-	@CMISProperty(name=PropertyIds.SECONDARY_OBJECT_TYPE_IDS)
+	@StorageProperty(name="cmis:secondaryObjectTypeIds")
 	public List<String> getAspect() {
 		 List<String> results = new ArrayList<String>();
 		 results.add("P:cm:titled");

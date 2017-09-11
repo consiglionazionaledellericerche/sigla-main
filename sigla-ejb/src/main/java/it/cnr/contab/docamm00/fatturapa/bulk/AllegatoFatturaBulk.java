@@ -3,11 +3,8 @@ package it.cnr.contab.docamm00.fatturapa.bulk;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
 
@@ -32,8 +29,8 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 		super();
 	}
 
-	public AllegatoFatturaBulk(Document node) {
-		super(node);
+	public AllegatoFatturaBulk(String storageKey) {
+		super(storageKey);
 	}
 	
 	public String getAspectName() {
@@ -42,7 +39,8 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 	public void setAspectName(String aspectName) {
 		this.aspectName = aspectName;
 	}
-	@CMISProperty(name=PropertyIds.SECONDARY_OBJECT_TYPE_IDS)
+
+	@StorageProperty(name="cmis:secondaryObjectTypeIds")
 	public List<String> getAspect() {
 		 List<String> results = new ArrayList<String>();
 		 results.add("P:cm:titled");

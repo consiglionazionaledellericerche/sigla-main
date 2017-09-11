@@ -1,20 +1,18 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
 
 public class Distinta_cassiereKey extends OggettoBulk implements KeyedPersistent {
 	// CD_CDS VARCHAR(30) NOT NULL (PK)
-	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:codice"))
+	@StoragePolicy(name="P:strorg:cds", property=@StorageProperty(name="strorgcds:codice"))
 	private java.lang.String cd_cds;
-	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:codice"))
+	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorguo:codice"))
 	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL (PK)
 	private java.lang.String cd_unita_organizzativa;
-	@CMISProperty(name="doccont:esercizioDoc")	
+	@StorageProperty(name="doccont:esercizioDoc")
 	// ESERCIZIO DECIMAL(4,0) NOT NULL (PK)
 	private Integer esercizio;
 	

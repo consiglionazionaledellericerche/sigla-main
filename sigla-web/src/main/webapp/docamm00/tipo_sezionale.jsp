@@ -45,9 +45,6 @@
 												"ti_bene_servizioForSearch" :
 												"ti_bene_servizio")); %>
 			</td>
-		    <tr>
-				<% bp.getController().writeFormField(out,"ordina");%>							
-		    </tr>
 		   </tr>
 		</table>
 		<table class="Panel" border="0" cellspacing="0" cellpadding="2">
@@ -67,8 +64,6 @@
 					<% bp.getController().writeFormLabel( out, "fl_intra_ue"); %></td>
 				<td><% bp.getController().writeFormInput( out, "fl_extra_ue"); %>
 					<% bp.getController().writeFormLabel( out, "fl_extra_ue"); %></td>
-				<td><% bp.getController().writeFormInput( out, "fl_split_payment"); %>
-					<% bp.getController().writeFormLabel( out, "fl_split_payment"); %></td>
 			</tr>		
 			<tr>
 				<td><% bp.getController().writeFormInput( out, "fl_san_marino_con_iva"); %>

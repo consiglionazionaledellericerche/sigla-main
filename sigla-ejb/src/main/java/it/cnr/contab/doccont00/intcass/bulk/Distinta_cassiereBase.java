@@ -1,11 +1,7 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed {
 
 	// DT_EMISSIONE TIMESTAMP
@@ -32,7 +28,7 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 	// IM_REV_INI_RIT DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_rev_ini_rit;
 
- @CMISProperty(name="doccont:numDoc")
+ @StorageProperty(name="doccont:numDoc")
 	// PG_DISTINTA_DEF DECIMAL(10,0)
 	private java.lang.Long pg_distinta_def;
 	

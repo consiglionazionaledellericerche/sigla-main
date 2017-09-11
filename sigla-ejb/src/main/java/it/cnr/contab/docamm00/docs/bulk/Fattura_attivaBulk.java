@@ -25,8 +25,8 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkCollections;
 import it.cnr.jada.bulk.BulkList;
@@ -2068,17 +2068,17 @@ AllegatoParentBulk {
 	public void setCollegamentoDocumentale(String collegamentoDocumentale) {
 		this.collegamentoDocumentale = collegamentoDocumentale;
 	}
-	//public CMISFileFatturaAttiva getCMISFile(String typeName) throws IOException{
-	//	CMISFileFatturaAttiva cmisFile = null;
+	//public StorageFileFatturaAttiva getCMISFile(String typeName) throws IOException{
+	//	StorageFileFatturaAttiva cmisFile = null;
 	//	this.setTypeNameForCMIS(typeName);
 	//	if (this.getFile()==null)
-	//		cmisFile = new CMISFileFatturaAttiva(this);
+	//		cmisFile = new StorageFileFatturaAttiva(this);
 	//	else 
-	//		cmisFile = new CMISFileFatturaAttiva(this.getFile(), this.getNomeFile(), this);
+	//		cmisFile = new StorageFileFatturaAttiva(this.getFile(), this.getNomeFile(), this);
 	//	return cmisFile;
 	//}
-	//public CMISFile getCMISFile(Node node) {
-	//	return new CMISFileFatturaAttiva(node, this);
+	//public StorageFile getCMISFile(Node node) {
+	//	return new StorageFileFatturaAttiva(node, this);
 	//}
 
 	public String constructCMISNomeFile() {

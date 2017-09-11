@@ -7,6 +7,7 @@ import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.core.bulk.Sospeso_det_uscBulk;
 import it.cnr.contab.doccont00.core.bulk.V_ass_doc_contabiliBulk;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
@@ -26,6 +27,7 @@ import java.io.OutputStream;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Mandato
@@ -84,15 +86,9 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 
 		super.basicEdit(context, bulk, doInitializeForEdit);
 		MandatoBulk mandato = (MandatoBulk)getModel();
-		try {
-			List<String> nodeRefs = documentiContabiliService.getNodeRefDocumento(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato(), Numerazione_doc_contBulk.TIPO_MAN);
-			if (nodeRefs != null && nodeRefs.size() == 1)
-				this.nodeRefDocumento = nodeRefs.get(0);
-			else
-				this.nodeRefDocumento = null;
-		} catch (ApplicationException e) {
-			throw new BusinessProcessException(e);
-		}
+			Optional.ofNullable(documentiContabiliService.getDocumentKey(
+					new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato())
+			)).ifPresent(s -> this.nodeRefDocumento = s);
 		if (getStatus()!=VIEW){
 			if ( mandato != null && !mandato.getCd_uo_origine().equals( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa( context ).getCd_unita_organizzativa()))
 			{
@@ -387,7 +383,9 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 
 	public void scaricaMandato(ActionContext actioncontext) throws Exception {
 		MandatoBulk mandato = (MandatoBulk)getModel();
-		InputStream is = documentiContabiliService.getStreamDocumento(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato(), Numerazione_doc_contBulk.TIPO_MAN);
+		InputStream is = documentiContabiliService.getStreamDocumento(
+				new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato())
+		);
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
 			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();

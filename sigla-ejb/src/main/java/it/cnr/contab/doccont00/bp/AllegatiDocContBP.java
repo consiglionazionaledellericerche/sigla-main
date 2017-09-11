@@ -2,20 +2,19 @@ package it.cnr.contab.doccont00.bp;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.doccont00.core.bulk.AllegatoDocContBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.OrderedHashtable;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Property;
 
 public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, StatoTrasmissione> {
 	private static final long serialVersionUID = 1L;
@@ -45,10 +44,10 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 		return true;
 	}
 	@Override
-	protected boolean excludeChild(CmisObject cmisObject) {
-		if (cmisObject.getType().getId().equalsIgnoreCase("D:doccont:document"))
+	protected boolean excludeChild(StorageObject storageObject) {
+		if (storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals("D:doccont:document"))
 			return true;
-		return super.excludeChild(cmisObject);
+		return super.excludeChild(storageObject);
 	}
 
 	public void setAllegatiFormName(String allegatiFormName) {
@@ -96,9 +95,10 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 	@Override
 	protected void completeAllegato(AllegatoDocContBulk allegato) throws ApplicationException  {
 		super.completeAllegato(allegato);
-		Property<?> property = allegato.getDocument(cmisService).getProperty("doccont:rif_modalita_pagamento");
-		if (property != null && property.getValue() != null)
-			allegato.setRifModalitaPagamento(property.getValueAsString());
+		Optional.ofNullable(storeService.getStorageObjectBykey(allegato.getStorageKey()))
+				.map(storageObject -> storageObject.getPropertyValue("doccont:rif_modalita_pagamento"))
+				.map(String.class::cast)
+				.ifPresent(s -> allegato.setRifModalitaPagamento(s));
 	}
 	
 	@Override
@@ -119,20 +119,15 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 	public void update(ActionContext actioncontext)
 			throws BusinessProcessException {
 		try {
-			archiviaAllegati(actioncontext, null);
+			archiviaAllegati(actioncontext);
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
 	}
-	
+
 	@Override
-	protected CMISPath getCMISPath(StatoTrasmissione allegatoParentBulk,
-			boolean create) throws BusinessProcessException {
-		try {
-			return allegatoParentBulk.getCMISPath(cmisService);
-		} catch (ApplicationException e) {
-			throw handleException(e);
-		}
+	protected String getStorePath(StatoTrasmissione allegatoParentBulk, boolean create) throws BusinessProcessException {
+		return allegatoParentBulk.getStorePath();
 	}
 
 	@Override

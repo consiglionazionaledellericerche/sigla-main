@@ -13,6 +13,7 @@
   	</parent>
 	<modules>
 		<module>sigla-ws-client</module>
+		<module>sigla-storage</module>
 		<module>sigla-ejb</module>
 		<module>sigla-sdi</module>
 		<module>sigla-ws</module>
@@ -22,7 +23,7 @@
 	<properties>
     <sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
-		<opencmis.version>1.0.0</opencmis.version>
+
 		<spring.version>4.3.3.RELEASE</spring.version>
 		<jada.version>5.0.4</jada.version>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
@@ -53,6 +54,7 @@
 						<wtpapplicationxml>true</wtpapplicationxml>
 						<wtpversion>2.0</wtpversion>
 						<manifest>
+
 							${basedir}/src/main/resources/META-INF/MANIFEST.MF
 						</manifest>
 					</configuration>

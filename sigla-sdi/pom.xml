@@ -219,6 +219,12 @@
 			<artifactId>bcmail-jdk15on</artifactId>
  			<version>1.52</version>
  			<scope>provided</scope>
- 		</dependency> 		
+ 		</dependency>
+		 <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

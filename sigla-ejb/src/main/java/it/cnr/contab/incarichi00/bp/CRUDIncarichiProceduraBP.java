@@ -27,6 +27,8 @@ import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -50,6 +52,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +62,7 @@ import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 
-import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -2272,20 +2275,14 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
     }
     
 	public void scaricaFile(ActionContext actioncontext, String cmsNodeRef) throws IOException, ServletException, ApplicationException {
-		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
-		Document node = (Document) contrattiService.getNodeByNodeRef(cmsNodeRef);
-		InputStream is = contrattiService.getResource(node);
-		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());		
-		((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentStreamMimeType());
+		ContrattiService contrattiService = SpringUtil.getBean(ContrattiService.class);
+		StorageObject storageObject = contrattiService.getStorageObjectBykey(cmsNodeRef);
+		InputStream is = contrattiService.getResource(storageObject);
+		((HttpActionContext)actioncontext).getResponse().setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
-		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
-		int buflength;
-		while ((buflength = is.read(buffer)) > 0) {
-			os.write(buffer,0,buflength);
-		}
-		is.close();
-		os.flush();
+		IOUtils.copyLarge(is, os);
 	}
 	
 	public void mergeWithCMIS(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 

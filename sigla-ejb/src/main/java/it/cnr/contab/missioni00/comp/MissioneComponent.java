@@ -1,60 +1,65 @@
 package it.cnr.contab.missioni00.comp;
 
+import it.cnr.contab.anagraf00.core.bulk.*;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
+import it.cnr.contab.compensi00.tabrif.bulk.Filtro_trattamentoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.sto.bulk.*;
-
-import java.io.Serializable;
-import java.rmi.RemoteException;
-import java.sql.Timestamp;
-
-import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.anagraf00.tabter.bulk.*;
-import it.cnr.contab.missioni00.docs.bulk.*;
-import it.cnr.contab.missioni00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.compensi00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
-
-import java.util.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.contab.util.RemoveAccent;
-import it.cnr.contab.util.Utility;
+import it.cnr.contab.docamm00.tabrif.bulk.CambioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.CambioHome;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
+import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
+import it.cnr.contab.missioni00.docs.bulk.*;
+import it.cnr.contab.missioni00.tabrif.bulk.*;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.*;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.CRUDComponent;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.*;
 
 public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cloneable, Serializable, IPrintMgr {
 	private transient final static Logger logger = LoggerFactory.getLogger(MissioneComponent.class);
@@ -1041,9 +1046,9 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 	    // Salvo temporaneamente l'hash map dei saldi
 	    PrimaryKeyHashMap aTempDiffSaldi=new PrimaryKeyHashMap();
 	    if (missioneTemp.getDefferredSaldi() != null)
-		    aTempDiffSaldi=(PrimaryKeyHashMap)missioneTemp.getDefferredSaldi().clone();    
-		
-		impostaDatiRimborsoDaCompletare(missioneTemp);		controlloDateTappeConDateMissioni(missioneTemp);
+		    aTempDiffSaldi=(PrimaryKeyHashMap)missioneTemp.getDefferredSaldi().clone();
+		impostaDatiRimborsoDaCompletare(missioneTemp);
+		controlloDateTappeConDateMissioni(missioneTemp);
 
 		if(missioneTemp.getPg_missione() == null)
 		{
@@ -2775,8 +2780,6 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
     if (missione.getDefferredSaldi() != null)
 	    aTempDiffSaldi=(PrimaryKeyHashMap)missione.getDefferredSaldi().clone();    
 	
-	controlloDateTappeConDateMissioni(missione);
-
 	if(!missione.isSalvataggioTemporaneo())
 	{
 		// Validazione dell'eventuale obbligazione collegata alla missione
@@ -2847,24 +2850,24 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
 	
 	return missione;
 }
-private void controlloDateTappeConDateMissioni(MissioneBulk missione) throws ApplicationException {
-	if(!missione.getTappeMissioneColl().isEmpty()){
-		for (Iterator i = missione.getTappeMissioneColl().iterator(); i.hasNext();)
-		{
-			Missione_tappaBulk aTappa = (Missione_tappaBulk)i.next();
-			if (aTappa.getDt_inizio_tappa() != null && missione.getDt_inizio_missione() != null && 
-					aTappa.getDt_inizio_tappa().before(missione.getDt_inizio_missione())){
-				throw new it.cnr.jada.comp.ApplicationException("Esiste una tappa con data inizio precedente alla data di inizio della missione.");				
-			}
-			if (aTappa.getDt_fine_tappa() != null && missione.getDt_fine_missione() != null && 
-					aTappa.getDt_fine_tappa().after(missione.getDt_fine_missione())){
-				throw new it.cnr.jada.comp.ApplicationException("Esiste una tappa con data fine successiva alla data di fine della missione.");				
+	private void controlloDateTappeConDateMissioni(MissioneBulk missione) throws ApplicationException {
+		if(!missione.getTappeMissioneColl().isEmpty()){
+			for (Iterator i = missione.getTappeMissioneColl().iterator(); i.hasNext();)
+			{
+				Missione_tappaBulk aTappa = (Missione_tappaBulk)i.next();
+				if (aTappa.getDt_inizio_tappa() != null && missione.getDt_inizio_missione() != null &&
+						aTappa.getDt_inizio_tappa().before(missione.getDt_inizio_missione())){
+					throw new it.cnr.jada.comp.ApplicationException("Esiste una tappa con data inizio precedente alla data di inizio della missione.");
+				}
+				if (aTappa.getDt_fine_tappa() != null && missione.getDt_fine_missione() != null &&
+						aTappa.getDt_fine_tappa().after(missione.getDt_fine_missione())){
+					throw new it.cnr.jada.comp.ApplicationException("Esiste una tappa con data fine successiva alla data di fine della missione.");
+				}
 			}
 		}
 	}
-}	
 
-/**
+	/**
  * Carica diaria
  *
  * Pre-post-conditions:

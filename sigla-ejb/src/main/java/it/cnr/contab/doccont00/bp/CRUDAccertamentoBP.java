@@ -1,25 +1,18 @@
 package it.cnr.contab.doccont00.bp;
 
 
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.bp.*;
-
-import java.util.*;
-
-import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
-import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.pdcfin.bulk.*;
+import it.cnr.contab.config00.pdcfin.bulk.Ass_ev_evBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.docamm00.bp.*;
+import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
+import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.MessageToUser;
@@ -27,10 +20,11 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Accertamento
@@ -189,7 +183,7 @@ public void confermaScadenza(it.cnr.jada.action.ActionContext context) throws it
  * Metodo per modificare l'accertamento.
  * @param context Il contesto dell'azione
  * @param bulk L'oggetto bulk in uso
- * @param true/false TRUE = l'oggetto bulk in uso è stato inizializzato per la modifica
+ * @param initializeForEdit/false TRUE = l'oggetto bulk in uso è stato inizializzato per la modifica
  *					 FALSE = l'oggetto bulk in uso non è stato inizializzato per la modifica
  */
 public void edit(it.cnr.jada.action.ActionContext context, it.cnr.jada.bulk.OggettoBulk bulk, boolean initializeForEdit) throws it.cnr.jada.action.BusinessProcessException 
@@ -237,9 +231,7 @@ public void save(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.ac
  *
  * @param context	L'ActionContext della richiesta
  * @throws BusinessProcessException	
- * @throws ComponentException	
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
- * @throws ApplicationException	
+ * @throws ApplicationException
  */
 public void eliminaLogicamenteAccertamento(it.cnr.jada.action.ActionContext context ) throws it.cnr.jada.action.BusinessProcessException, it.cnr.jada.comp.ComponentException, java.rmi.RemoteException, it.cnr.jada.comp.ApplicationException
 {
@@ -902,7 +894,6 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 			Parametri_cnrBulk parCnrNewAnno = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())+1); 
 			setEnableVoceNext(parCnrNewAnno!=null);
 		}
-		cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
 	}
     catch(Throwable throwable)
     {

@@ -6,21 +6,15 @@
  */
 package it.cnr.contab.config00.action;
 
-import it.cnr.contab.cmis.acl.ACLType;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoMasterBP;
 import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
-import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -31,8 +25,6 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.SimpleCRUDBP;
-
-import org.apache.chemistry.opencmis.client.api.Folder;
 /**
  * @author mspasiano
  *
@@ -167,7 +159,7 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 					if(contratto.isDs_organo_ann_non_definitoVisible() && contratto.getDs_organo_ann_non_definito() == null)
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("ds_organo_ann_non_definito").getLabel());
 				}
-				Folder folder = contrattoService.getFolderContratto((ContrattoBulk) bp.getModel());
+				StorageObject folder = contrattoService.getFolderContratto((ContrattoBulk) bp.getModel());
 				bp.delete(context);
 				if(bp.getModel() instanceof ContrattoBulk && ((ContrattoBulk)bp.getModel()).isDefinitivo()){
 					bp.edit(context,((ContrattoComponentSession)bp.createComponentSession()).cercaContrattoCessato(context.getUserContext(), bp.getModel()));
@@ -177,9 +169,7 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 					contrattoService.updateProperties((ContrattoBulk) bp.getModel(), folder);
 					contrattoService.changeProgressivoNodeRef(folder, (ContrattoBulk) bp.getModel());
 					contrattoService.addAspect(folder, "P:sigla_contratti_aspect:stato_annullato");
-					if (contrattoService.getACL(folder, "GROUP_EVERYONE", ACLType.Consumer.name()) != null) {
-						contrattoService.removeConsumerToEveryone(folder);						
-					}
+					contrattoService.removeConsumerToEveryone(folder);
 					bp.setModel(context,bp.initializeModelForEdit(context, bp.getModel()));
 				}
 				
@@ -341,7 +331,7 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 	/**
 	 * Gestisce la validazione di nuovo atto creato
 		 * @param context <code>ActionContext</code> in uso.
-		 * @param contrato Oggetto di tipo <code>ContrattoBulk</code> 
+		 * @param contratto Oggetto di tipo <code>ContrattoBulk</code>
 		 * @param atto Oggetto di tipo <code>Tipo_atto_amministrativoBulk</code> che rappresenta il nuovo atto creato
 		 *
 		 * @return <code>Forward</code>
@@ -373,8 +363,8 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 	/**
 	 * Gestisce la validazione di nuovo atto creato
 		 * @param context <code>ActionContext</code> in uso.
-		 * @param contrato Oggetto di tipo <code>ContrattoBulk</code> 
-		 * @param atto Oggetto di tipo <code>OrganoBulk</code> che rappresenta il nuovo organo creato
+		 * @param contratto Oggetto di tipo <code>ContrattoBulk</code>
+		 * @param organo Oggetto di tipo <code>OrganoBulk</code> che rappresenta il nuovo organo creato
 		 *
 		 * @return <code>Forward</code>
 	 */
@@ -405,8 +395,8 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 	/**
 	 * Gestisce la validazione di nuovo atto creato
 		 * @param context <code>ActionContext</code> in uso.
-		 * @param contrato Oggetto di tipo <code>ContrattoBulk</code> 
-		 * @param atto Oggetto di tipo <code>Tipo_contrattoBulk</code> che rappresenta il nuovo tipo contratto creato
+		 * @param contratto Oggetto di tipo <code>ContrattoBulk</code>
+		 * @param tipo_contratto Oggetto di tipo <code>Tipo_contrattoBulk</code> che rappresenta il nuovo tipo contratto creato
 		 *
 		 * @return <code>Forward</code>
 	 */
@@ -433,8 +423,8 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 	/**
 	 * Gestisce la validazione di nuovo atto creato
 		 * @param context <code>ActionContext</code> in uso.
-		 * @param contrato Oggetto di tipo <code>ContrattoBulk</code> 
-		 * @param atto Oggetto di tipo <code>Procedure_amministrativeBulk</code> che rappresenta la nuova Procedura amministrativa creata
+		 * @param contratto Oggetto di tipo <code>ContrattoBulk</code>
+		 * @param procedura_amministrativa Oggetto di tipo <code>Procedure_amministrativeBulk</code> che rappresenta la nuova Procedura amministrativa creata
 		 *
 		 * @return <code>Forward</code>
 	 */

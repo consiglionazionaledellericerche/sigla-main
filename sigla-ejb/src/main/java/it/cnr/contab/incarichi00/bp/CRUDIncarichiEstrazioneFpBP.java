@@ -837,14 +837,11 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		//verifico variazione
 		if (incaricoComunicatoFP.getAnno_riferimento().compareTo(Integer.valueOf(2010))==1 || 
 			(incaricoComunicatoFP.getAnno_riferimento().compareTo(Integer.valueOf(2010))==0 && incaricoComunicatoFP.getSemestre_riferimento().equals(Incarichi_archivio_xml_fpBulk.SECONDO_SEMESTRE))) {
-			/*eliminato perchè nel file di ritorno PERLA non restituisce il valore con la conseguenza che ricreando i file
-			 * di modifica li reimposta tutti
 			if (incaricoComunicatoFP.getAttivita_economica()!="74" &&
 				!Utility.equalsNull(incaricoComunicatoFP.getAttivita_economica(), elementNuovoConsulentePerla.getIncarico().getAttivitaEconomica())) {
 				elementModificaConsulentePerla.getIncarico().setAttivitaEconomica(elementNuovoConsulentePerla.getIncarico().getAttivitaEconomica());
 				isModificato=true;
 			}
-			*/
 			/*eliminato per problemi legati ai caratteri accentati
 			if (!Utility.equalsNull(incaricoComunicatoFP.getDescrizione_incarico(), elementNuovoConsulentePerla.getIncarico().getDescrizioneIncarico())) {
 				elementModificaConsulentePerla.getIncarico().setDescrizioneIncarico(elementNuovoConsulentePerla.getIncarico().getDescrizioneIncarico());
