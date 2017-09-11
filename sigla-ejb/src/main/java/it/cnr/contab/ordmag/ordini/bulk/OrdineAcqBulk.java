@@ -110,6 +110,8 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	private V_persona_fisicaBulk direttorePers;
 
 	public final static String STATO_ANNULLATO = "ANN";
+	public final static String STATO_IN_APPROVAZIONE = "APP";
+	public final static String STATO_ALLA_FIRMA = "INV";
 	public final static String STATO_INSERITO = "INS";
 	public final static String STATO_DEFINITIVO = "DEF";
 	public final static String STATO_INVIATO_ORDINE = "INV";
@@ -120,12 +122,14 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	private java.math.BigDecimal imTotaleOrdine;
 
 	private Boolean isUtenteAbilitatoInserimentoOrdine = true;
-	private Boolean isForApprovazione = false;
+	private Boolean isForFirma = false;
 		
 	public final static Dictionary STATO;
 	static{
 		STATO = new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INSERITO,"Inserito");
+		STATO.put(STATO_IN_APPROVAZIONE,"In Approvazione");
+		STATO.put(STATO_ALLA_FIRMA,"Alla firma");
 		STATO.put(STATO_ANNULLATO,"Annullato");
 		STATO.put(STATO_DEFINITIVO,"Definitivo");
 	}
@@ -770,11 +774,11 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public void setIsUtenteAbilitatoInserimentoOrdine(Boolean isUtenteAbilitatoInserimentoOrdine) {
 		this.isUtenteAbilitatoInserimentoOrdine = isUtenteAbilitatoInserimentoOrdine;
 	}
-	public Boolean getIsForApprovazione() {
-		return isForApprovazione;
+	public Boolean getIsForFirma() {
+		return isForFirma;
 	}
-	public void setIsForApprovazione(Boolean isForApprovazione) {
-		this.isForApprovazione = isForApprovazione;
+	public void setIsForFirma(Boolean isForFirma) {
+		this.isForFirma = isForFirma;
 	}
 	public BulkList getRigheOrdineColl() {
 		return righeOrdineColl;
@@ -811,6 +815,12 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	public Boolean isStatoDefinitivo(){
 		return getStato() != null && getStato().equals(STATO_DEFINITIVO);
+	}
+	public Boolean isStatoAllaFirma(){
+		return getStato() != null && getStato().equals(STATO_ALLA_FIRMA);
+	}
+	public Boolean isStatoInApprovazione(){
+		return getStato() != null && getStato().equals(STATO_IN_APPROVAZIONE);
 	}
 	public Dictionary getStatoKeys() {
 		return STATO;
