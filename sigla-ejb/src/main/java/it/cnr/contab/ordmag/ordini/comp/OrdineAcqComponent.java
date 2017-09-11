@@ -29,14 +29,7 @@ import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
@@ -44,7 +37,6 @@ import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
@@ -56,7 +48,6 @@ import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
@@ -335,12 +326,14 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 //    			}
     		}
     	}
-	}
+    	controllaQuadraturaObbligazioni(userContext, ordine);
+    }
 
 	private void gestioneSalvataggioRigaConsegnaSingola(OrdineAcqRigaBulk riga) throws ApplicationException {
-		if ((riga.isToBeCreated() && riga.getRigheConsegnaColl() == null || riga.getRigheConsegnaColl().isEmpty()) ||
-				(riga.getRigheConsegnaColl() != null && riga.getRigheConsegnaColl().size() == 1)){
-			riga.setQuantita(riga.getDspQuantita());
+		if ((riga.isToBeCreated() && riga.getRigheConsegnaColl() == null || riga.getRigheConsegnaColl().isEmpty()) 
+//				||
+//				(riga.getRigheConsegnaColl() != null && riga.getRigheConsegnaColl().size() == 1)
+				){
 			if (riga.getDspQuantita() == null){
 				throw new ApplicationException ("E' necessario indicare la quantità.");
 			}
@@ -882,12 +875,15 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	SQLBuilder sqlExists = null;
 	sqlExists = abilHome.createSQLBuilder();
 	sqlExists.addSQLJoin("ORDINE_ACQ.CD_UNITA_OPERATIVA", "ABIL_UTENTE_UOP_OPER.CD_UNITA_OPERATIVA");
-	if (!ordineAcqBulk.getIsForApprovazione()){
-		sqlExists.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
-	} else {
-		sqlExists.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_ORDINE_1);
+	if (!ordineAcqBulk.getIsForFirma()){
 		sqlExists.openParenthesis("AND");
-		sqlExists.addSQLClause("AND", "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_DEFINITIVO);
+		sqlExists.addSQLClause("OR", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
+		sqlExists.addSQLClause("OR", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_APPROVAZIONE_ORDINE);
+		sqlExists.closeParenthesis();
+	} else {
+		sqlExists.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_FIRMA_ORDINE);
+		sqlExists.openParenthesis("AND");
+		sqlExists.addSQLClause("OR", "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_DEFINITIVO);
 		sqlExists.addSQLClause("OR", "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_INVIATO_ORDINE);
 		sqlExists.closeParenthesis();
 	}
@@ -972,7 +968,7 @@ public Boolean isUtenteAbilitatoOrdine(UserContext usercontext, OrdineAcqBulk or
 }
 
 public Boolean isUtenteAbilitatoValidazioneOrdine(UserContext usercontext, OrdineAcqBulk ordine) throws ComponentException, PersistencyException{
-	return isUtenteAbilitato(usercontext, ordine, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_ORDINE_1);
+	return isUtenteAbilitato(usercontext, ordine, TipoOperazioneOrdBulk.OPERAZIONE_APPROVAZIONE_ORDINE);
 }
 
 private Boolean isUtenteAbilitato(UserContext usercontext, OrdineAcqBulk ordine, String tipoOperazione) throws ComponentException {
@@ -1650,5 +1646,38 @@ private OrdineAcqBulk manageDeletedElements(
 			manageDocumentiContabiliCancellati(userContext, ordine, status);
 		}
 		return ordine;
+	}
+public void controllaQuadraturaObbligazioni(UserContext aUC,OrdineAcqBulk ordine)
+		throws ComponentException {
+
+		if (ordine != null ) {
+			ObbligazioniTable obbligazioniHash = ordine.getOrdineObbligazioniHash();
+			if (obbligazioniHash != null) {
+				for (java.util.Enumeration e = obbligazioniHash.keys(); e.hasMoreElements();) {
+					Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)e.nextElement();
+					java.math.BigDecimal totale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+					java.math.BigDecimal delta = null;
+					totale = calcolaTotaleObbligazione(aUC, scadenza, ordine);
+					delta = scadenza.getIm_scadenza().subtract(totale);
+					if (delta.compareTo(new java.math.BigDecimal(0)) > 0) {
+						StringBuffer sb = new StringBuffer();
+						sb.append("Attenzione: La scadenza ");
+						sb.append(scadenza.getDs_scadenza());
+						sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
+						sb.append(" è stata coperta solo per ");
+						sb.append(totale.doubleValue() + " EUR!");
+						throw new it.cnr.jada.comp.ApplicationException(sb.toString());
+					} else if (delta.compareTo(new java.math.BigDecimal(0)) < 0) {
+						StringBuffer sb = new StringBuffer();
+						sb.append("Attenzione: La scadenza ");
+						sb.append(scadenza.getDs_scadenza());
+						sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
+						sb.append(" è scoperta per ");
+						sb.append(delta.abs().doubleValue() + " EUR!");
+						throw new it.cnr.jada.comp.ApplicationException(sb.toString());
+					}					
+				}
+			}
+		}
 	}
 }
