@@ -3,6 +3,7 @@ package it.cnr.contab.utenze00.action;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.rmi.RemoteException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 import javax.ejb.EJBException;
 
+import it.cnr.jada.comp.ComponentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -501,13 +503,18 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 					Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
 					Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cds(context.getUserContext())),
 					Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
+
 			if (Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
 				ui.setUnita_organizzativa((Unita_organizzativaBulk) Utility.createUnita_organizzativaComponentSession()
 						.findByPrimaryKey(userContext, new Unita_organizzativaBulk(uo)));
+			} else {
+				ui.setUnita_organizzativa(null);
 			}
 			if (Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
 				ui.setCdr((CdrBulk) Utility.createCdrComponentSession()
 						.findByPrimaryKey(userContext, new CdrBulk(cdr)));
+			} else {
+				ui.setCdr(null);
 			}
 			userContext.getAttributes().put("bootstrap", true);
 			bp.setBootstrap(true);
