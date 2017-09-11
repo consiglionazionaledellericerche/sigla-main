@@ -140,7 +140,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk)oggettobulk;
 		try {
 			String path = getStorePath((K) oggettobulk, false);
-			if (path == null)
+			if (path == null || storeService.getStorageObjectByPath(path) == null)
 				return oggettobulk;
 			for (StorageObject storageObject : storeService.getChildren(storeService.getStorageObjectByPath(path).getKey())) {
 				if (storeService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
