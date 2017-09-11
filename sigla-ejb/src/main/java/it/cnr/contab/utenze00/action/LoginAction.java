@@ -89,10 +89,10 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			if (forward == null) {
 				LoginBP bp = (LoginBP)context.getBusinessProcessRoot(true);
 				CNRUserInfo ui = bp.getUserInfo();
-				// se l'utente è di tipo LDAP
+				// se l'utente Ã¨ di tipo LDAP
 				if (ui.getUtente().isAutenticatoLdap())
 					forward = context.findForward("cambio_password_ldap");
-				// se l'utente è di tipo SIGLA
+				// se l'utente Ã¨ di tipo SIGLA
 				else
 					forward = context.findForward("cambio_password");
 			}
@@ -175,8 +175,8 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 		}
 	}
 	/**
-	 * L'utente è stato riconosciuto come un nuovo utente per autenticazione con LDAP
-	 * e quindi è stata richiesta la sua user id e la sua password LDAP, in modo da
+	 * L'utente Ã¨ stato riconosciuto come un nuovo utente per autenticazione con LDAP
+	 * e quindi Ã¨ stata richiesta la sua user id e la sua password LDAP, in modo da
 	 * potere associare utente SIGLA con utente LDAP
 	 * 
 	 * @param context
@@ -195,7 +195,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	}
 	/**
 	 * L'utente sta tentando di entrare senza autenticazione LDAP
-	 * nonostante per lui sia obbligatorio, verifichiamo che ciò sia ancora possibile
+	 * nonostante per lui sia obbligatorio, verifichiamo che ciÃ² sia ancora possibile
 	 * 
 	 * @param context
 	 * @return
@@ -227,7 +227,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 		}
 	}
 	
-	private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
+    private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
 		boolean utentiMultipliFound=false;
 		CNRUserInfo ui = null;
 		try {
@@ -236,131 +236,78 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			LoginBP bp = (LoginBP)context.getBusinessProcessRoot(true);
 	
 			ui = bp.getUserInfo();
-	
-			try {
-				bp.fillModel(context);
-				context.setUserInfo(ui);
-				
-				if (ui.getDescrizioneSessione() != null)
-					context.setTracingSessionDescription(ui.getDescrizioneSessione());
-				if (ui.getDescrizioneSessione() == null && context.isRequestTracingUser())
-					return context.findForward("traced_login");
-	
-				UtenteBulk utente = new UtenteBulk();
-				utente.setCd_utente(ui.getUserid());
-				utente.setPasswordInChiaro(ui.getPassword()!=null?ui.getPassword().toUpperCase():null);
-				if (ui.getLdap_userid()!=null) {
-					utente.setCd_utente_uid(ui.getLdap_userid());
-					utente.setLdap_password(ui.getLdap_password());
-				}
-				else
-					utente.setLdap_password(ui.getPassword());
-	
-				utente.setUtente_multiplo(ui.getUtente_multiplo());	
-				ui.setUtente(utente);
-	
-				try {
-					utente = getComponentSession().validaUtente(context.getUserContext(),utente,faseValidazione);
-				} catch (UtenteLdapNuovoException e) {
-					return context.findForward("login_ldap");
-				} catch (UtenteMultiploException e) {
-					try {
-						utentiMultipliFound=true;
-						bp.utentiMultipli(context.getUserContext(), utente);
-						return context.findForward("login_multiplo");
-					} catch (Exception e2) {
-						ui.setPassword(null);
-						throw e2;
-					}
-				}
-				
-				if (utente == null) {
-					setErrorMessage(context,"Nome utente o password sbagliati.");
-					return context.findDefaultForward();
-				}
-	
-				String hostname="";
-				try {
-					InetAddress addr = InetAddress.getLocalHost();
-					//byte[] ipAddr = addr.getAddress();
-					hostname = addr.getHostName();
-				} catch (UnknownHostException e) {
-				}
-				
-				ApplicationServerBulk server = new ApplicationServerBulk();
-				server.setHostname(hostname.toLowerCase());
-	
-				server = getComponentSession().validaServerLogin(context.getUserContext(),server);
-				
-				ui.setUserid(utente.getCd_utente());
-				if (utente.isAutenticazioneLdap())
-					ui.setLdap_userid(utente.getCd_utente_uid());
-				
-				ui.setUtente(utente);
-	
-		        StringBuffer infoUser = new StringBuffer();
-		        infoUser.append("LogIn User:"+ui.getUtente().getCd_utente());
-		        if (ui.getUtente().getCd_utente_uid()!=null)
-		        	infoUser.append(" LogIn Ldap User:"+ui.getUtente().getCd_utente_uid());
-		        infoUser.append(" RemoteHost:"+((HttpActionContext)context).getRequest().getRemoteAddr());
-				try {
-					ApplicationServerBulk serverSession = new ApplicationServerBulk();
-					serverSession.setHostname(hostname.toLowerCase());
-					if (context.getSessionId().indexOf(".") == -1)
-						serverSession.setSession_id("N");
-					else
-						serverSession.setSession_id(context.getSessionId().substring(context.getSessionId().indexOf(".")));
-					serverSession = (ApplicationServerBulk)createCRUDComponentSession().findByPrimaryKey(context.getUserContext(), serverSession);
-					if (serverSession != null){
-						SessionTraceBulk sessionTrace = (SessionTraceBulk)createCRUDComponentSession().inizializzaBulkPerModifica(context.getUserContext(), new SessionTraceBulk(context.getSessionId()));
-						sessionTrace.setServer_url("http://" + serverSession.getIp_address()+ ":"+serverSession.getHttp_port()+JSPUtils.getAppRoot(((HttpActionContext)context).getRequest())+"expire?sessionID="+context.getSessionId());
-						sessionTrace.setUtente(utente);
-						sessionTrace.setToBeUpdated();
-						createCRUDComponentSession().modificaConBulk(context.getUserContext(), sessionTrace);
-						if (ui.getUtente().getCd_utente_uid()!=null){
-							List<SessionTraceBulk> sessioni = getComponentSession().sessionList(context.getUserContext(),utente.getCd_utente() );
-							for (Iterator<SessionTraceBulk> iterator = sessioni.iterator(); iterator.hasNext();) {
-								SessionTraceBulk sessione = iterator.next();
-								URL url = new URL(sessione.getServer_url());
-								url.openConnection().getContent();
-							}
-						}
-					}
-				} catch (Exception e) {
-				}
-		    	log.warn(infoUser.toString());
-	
-				if (utente.getDt_ultima_var_password() == null && !utente.isAutenticatoLdap())
-					return context.findForward("primo_login");
-	
-				return null;
-			} finally {
-				if (!utentiMultipliFound)
-					ui.setPassword(null);
-			}
-			
-		} catch(it.cnr.contab.utente00.nav.comp.LoginBloccatoException e) {
-			setErrorMessage(context,"Il Login su questo server è stato temporaneamente bloccato.");
-			return context.findDefaultForward();
+            bp.fillModel(context);
+            context.setUserInfo(ui);
+
+            if (ui.getDescrizioneSessione() != null)
+                context.setTracingSessionDescription(ui.getDescrizioneSessione());
+            if (ui.getDescrizioneSessione() == null && context.isRequestTracingUser())
+                return context.findForward("traced_login");
+
+            UtenteBulk utente = new UtenteBulk();
+            utente.setCd_utente(Optional.ofNullable(ui.getLdap_userid()).orElse(ui.getUserid()));
+            utente.setPasswordInChiaro(ui.getPassword()!=null?ui.getPassword().toUpperCase():null);
+            if (ui.getLdap_userid()!=null) {
+                utente.setCd_utente_uid(ui.getLdap_userid());
+                utente.setLdap_password(Optional.ofNullable(ui.getLdap_password()).orElse(ui.getPassword()));
+            } else {
+                utente.setLdap_password(ui.getPassword());
+            }
+            utente.setUtente_multiplo(ui.getUtente_multiplo());
+            ui.setUtente(utente);
+
+            try {
+                utente = getComponentSession().validaUtente(context.getUserContext(),utente,faseValidazione);
+            } catch (UtenteLdapNuovoException e) {
+                return context.findForward("login_ldap");
+            } catch (UtenteMultiploException e) {
+                try {
+                    utentiMultipliFound=true;
+                    bp.utentiMultipli(context.getUserContext(), utente);
+                    return context.findForward("login_multiplo");
+                } catch (Exception e2) {
+                    ui.setPassword(null);
+                    throw e2;
+                }
+            }
+
+            if (utente == null) {
+                setErrorMessage(context,"Nome utente o password sbagliati.");
+                return context.findDefaultForward();
+            }
+            ui.setUserid(utente.getCd_utente());
+            if (utente.isAutenticazioneLdap())
+                ui.setLdap_userid(utente.getCd_utente_uid());
+            ui.setUtente(utente);
+
+            StringBuffer infoUser = new StringBuffer();
+            infoUser.append("LogIn User:"+ui.getUtente().getCd_utente());
+            if (ui.getUtente().getCd_utente_uid()!=null)
+                infoUser.append(" LogIn Ldap User:"+ui.getUtente().getCd_utente_uid());
+            infoUser.append(" RemoteHost:"+((HttpActionContext)context).getRequest().getRemoteAddr());
+            log.warn(infoUser.toString());
+            if (utente.getDt_ultima_var_password() == null && !utente.isAutenticatoLdap())
+                return context.findForward("primo_login");
+            return null;
 		} catch(it.cnr.contab.utente00.nav.comp.PasswordScadutaException e) {
-			setErrorMessage(context,"Password scaduta da più di sei mesi.");
-			// se l'utente è di tipo LDAP
+			setErrorMessage(context,"Password scaduta da piÃ¹ di sei mesi.");
+			// se l'utente Ã¨ di tipo LDAP
 			if (ui.getUtente().isAutenticatoLdap())
 				return context.findForward("password_scaduta_ldap");
-			// se l'utente è di tipo SIGLA
+			// se l'utente Ã¨ di tipo SIGLA
 			else
 				return context.findForward("password_scaduta");
 		} catch(it.cnr.contab.utente00.nav.comp.PasswordLdapScadutaException e) {
-			setErrorMessage(context,"Password scaduta da più di tre mesi.");
+			setErrorMessage(context,"Password scaduta da piÃ¹ di tre mesi.");
 			return context.findForward("password_scaduta_ldap");
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteNonValidoException e) {
-			setErrorMessage(context,"Utente non più valido o con data di validità scaduta. Contattare l'amministratore utenti di SIGLA");
+			setErrorMessage(context,"Utente non piÃ¹ valido o con data di validitÃ  scaduta. Contattare l'amministratore utenti di SIGLA");
 			return context.findDefaultForward();
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteInDisusoException e) {
-			setErrorMessage(context,"Utente non utilizzato da più di sei mesi.");
+			setErrorMessage(context,"Utente non utilizzato da piÃ¹ di sei mesi.");
 			return context.findDefaultForward();
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteLdapException e) {
-			setErrorMessage(context,"Utente non più valido. Utilizzare l'utente di accesso ufficiale di tipo \"nome.cognome\"");
+			setErrorMessage(context,"Utente non piÃ¹ valido. Utilizzare l'utente di accesso ufficiale di tipo \"nome.cognome\"");
 			return context.findDefaultForward();
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteLdapNonUtenteSiglaException e) {
 			setErrorMessage(context,"Utente valido ma che non possiede nessun profilo/abilitazione in SIGLA. Contattare l'amministratore delle utenze Sigla dell'Istituto.");
@@ -414,11 +361,11 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 		}
 	}
 	/**
-	 * Restituisce il valore della proprietà 'componentSession'
+	 * Restituisce il valore della proprietÃ  'componentSession'
 	 *
-	 * @return Il valore della proprietà 'componentSession'
-	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non è possibile effettuare l'operazione
-	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+	 * @return Il valore della proprietÃ  'componentSession'
+	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ã¨ possibile effettuare l'operazione
+	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
 	 */
 	public static GestioneLoginComponentSession getComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class);
@@ -488,14 +435,18 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 				null,
 				null,
 				null);
-	
-			// Testo se l'utente può entrare con l'anno in corso.
+	        userContext.getAttributes().put("bootstrap",
+                Optional.ofNullable(context.getUserContext().getAttributes().get("bootstrap"))
+                    .map(Boolean.class::cast)
+                    .orElse(Boolean.FALSE)
+            );
+			// Testo se l'utente puÃ² entrare con l'anno in corso.
 			try {
 				getComponentSession().registerUser(userContext,context.getApplicationId());
 				//	Remmato Marco Spasiano 28/02/2006 per problema di sessioni attive
 				//UnregisterUser.registerUnregisterUser((HttpActionContext)context);
 			} catch(it.cnr.jada.comp.ApplicationException e) {
-				// Se l'anno in corso è lockato cerco il primo esercizio disponibile.
+				// Se l'anno in corso Ã¨ lockato cerco il primo esercizio disponibile.
 				esercizio = null;
 				for (int i = 0;i < esercizi.length;i++) 
 					try {
