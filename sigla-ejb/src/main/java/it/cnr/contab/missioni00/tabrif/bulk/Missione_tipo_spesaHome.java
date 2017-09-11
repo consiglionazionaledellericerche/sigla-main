@@ -148,7 +148,7 @@ public class Missione_tipo_spesaHome extends BulkHome implements ConsultazioniRe
 	}
 
 	@Override
-	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		if (compoundfindclause != null && compoundfindclause.getClauses() != null){
 			CompoundFindClause newClauses = new CompoundFindClause();
 			Enumeration e = compoundfindclause.getClauses();
@@ -204,6 +204,7 @@ public class Missione_tipo_spesaHome extends BulkHome implements ConsultazioniRe
 				}
 			}
 		}
+		return sql;
 	}
 
 	private Boolean isCondizioneTipiSpesaMissione(Enumeration e) {
