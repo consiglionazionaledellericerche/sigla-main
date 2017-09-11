@@ -6,6 +6,16 @@
  */
 package it.cnr.contab.pdg01.comp;
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
+
+import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -31,7 +41,6 @@ import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneHome;
-import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
@@ -44,7 +53,6 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -60,16 +68,6 @@ import it.cnr.jada.util.Config;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Iterator;
-
-import javax.ejb.EJBException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 
 public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent {
 	private static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
@@ -292,15 +290,19 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	}
 
 	public Pdg_variazioneBulk approva(UserContext userContext, Pdg_variazioneBulk varPdg) throws ComponentException{
-		varPdg.setStato(Pdg_variazioneBulk.STATO_APPROVATA);
-		varPdg.setDt_approvazione(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
-		varPdg.setToBeUpdated();
-		varPdg = (Pdg_variazioneBulk)super.modificaConBulk(userContext, varPdg);
-
-		gestioneVistoDipartimenti(userContext, varPdg);
-		
-		Pdg_variazioneHome testataHome = (Pdg_variazioneHome)getHome(userContext, Pdg_variazioneBulk.class);
 		try {
+			//Verifichiamo che il piano economico sia quadrato 
+			Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(userContext, varPdg);
+
+			varPdg.setStato(Pdg_variazioneBulk.STATO_APPROVATA);
+			varPdg.setDt_approvazione(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
+			varPdg.setToBeUpdated();
+			varPdg = (Pdg_variazioneBulk)super.modificaConBulk(userContext, varPdg);
+	
+			gestioneVistoDipartimenti(userContext, varPdg);
+			
+			Pdg_variazioneHome testataHome = (Pdg_variazioneHome)getHome(userContext, Pdg_variazioneBulk.class);
+
 			ribaltaCostiPdGArea(userContext,varPdg);
 
 			/*
@@ -324,11 +326,13 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 					}
 				}
 			}
+
 			for (Iterator righe = testataHome.findDettagliVariazioneGestionale(varPdg).iterator();righe.hasNext();){
 				Pdg_variazione_riga_gestBulk varRiga = (Pdg_variazione_riga_gestBulk)righe.next();
 				if (!varRiga.isDettaglioScaricato())
 					aggiornaSaldiCdrLinea(userContext,varRiga);
 			}
+
 			generaVariazioneBilancio(userContext, varPdg);
 			if (!varPdg.isVariazioneInternaIstituto()){
 				String soggetto = "E' stata approvata la Variazione al Pdg n° "+varPdg.getPg_variazione_pdg();
@@ -337,6 +341,10 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		} catch (IntrospectionException e) {
 			throw new ComponentException(e);
 		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
 			throw new ComponentException(e);
 		}
 		return varPdg;
@@ -1055,14 +1063,17 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 																    rigaVar.getTi_gestione(),
 																    rigaVar.getCd_elemento_voce()));
 	
-				if (assestato==null || assestato.getAssestato_finale().compareTo(Utility.ZERO) == -1)
-					messaggio = ((messaggio==null)?"Attenzione!":(messaggio + "<BR>")) + 
-					     "Al momento la disponibilità del CdR "+rigaVar.getCd_cdr_assegnatario()+
+				if (assestato==null || assestato.getAssestato_finale().compareTo(Utility.ZERO) == -1) {
+					if (messaggio!=null && messaggio.length()>0) 
+						messaggio = messaggio+ "<BR>";
+					messaggio = messaggio +  
+					     "La disponibilità del CdR "+rigaVar.getCd_cdr_assegnatario()+
 					     " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() + 
 					     " non è sufficiente a coprire<BR>la variazione che risulta di " + 
-					     new it.cnr.contab.util.EuroFormat().format(rigaVar.getIm_variazione()) + ".";
-	
+					     new it.cnr.contab.util.EuroFormat().format(rigaVar.getIm_variazione()) + ".<BR>";
+				}
 			}
+
 			/*
 			 * Se è una variazione di tipo "Movimentazione da Fondi" effettuo la verifica che il Fondo prescelto
 			 * abbia una disponibilità sufficiente a coprire la variazione  
@@ -1082,12 +1093,22 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 										    pdgVariazione.getTi_gestione(),
 										    pdgVariazione.getCd_elemento_voce()));
 
-				if (assestato==null || assestato.getAssestato_finale().subtract(totVariazioneSpe).compareTo(Utility.ZERO) == -1)
-					messaggio = ((messaggio==null)?"Attenzione!":(messaggio + "<BR>")) + 
-					     "Al momento la Voce del Fondo " + pdgVariazione.getCd_elemento_voce() +
+				if (assestato==null || assestato.getAssestato_finale().subtract(totVariazioneSpe).compareTo(Utility.ZERO) == -1) {
+					if (messaggio!=null && messaggio.length()>0) 
+						messaggio = messaggio+ "<BR>";
+					messaggio = messaggio +  
+					     "La Voce del Fondo " + pdgVariazione.getCd_elemento_voce() +
 					     " del CdR "+pdgVariazione.getCd_centro_responsabilita() +
 					     " non è sufficiente a coprire la variazione che risulta di " + 
-					     new it.cnr.contab.util.EuroFormat().format(totVariazioneSpe) + ".";
+					     new it.cnr.contab.util.EuroFormat().format(totVariazioneSpe) + ".<BR>";
+				}
+			}
+			
+			String messaggioPianoEco = Utility.createSaldoComponentSession().getMessaggioSfondamentoPianoEconomico(userContext, pdgVariazione);
+			if (messaggioPianoEco!=null && messaggioPianoEco.length()>0) {
+				if (messaggio!=null) 
+					messaggio = messaggio+ "<BR>";
+				messaggio = messaggio + messaggioPianoEco.replace("\n", "<BR>");
 			}
 	   } catch (PersistencyException e) {
 		   throw new ComponentException(e);
@@ -1096,8 +1117,9 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	   } catch (EJBException e) {
 		   throw new ComponentException(e);
 	   }
+   
 	   if (!messaggio.equals(""))
-		   throw handleException( new OptionRequestException(nomeAction, messaggio+"<BR>Vuoi continuare ?"));
+		   throw handleException( new OptionRequestException(nomeAction, "Attenzione!<BR>"+messaggio+"<BR>Vuoi continuare per il momento?"));
 	}
 	
 	private void controllaQuadraturaImportiAree(UserContext userContext, Pdg_variazioneBulk pdgVar) throws ComponentException {

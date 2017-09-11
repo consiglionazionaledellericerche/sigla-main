@@ -397,12 +397,18 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    	if (this.isFlPrgPianoEconomico() && ((ProgettoBulk)this.getModel()).getFl_piano_economico()) {
 		    	return new String[][] {
 		               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
+		               { "tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" } ,
+		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
+		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
 		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-		               { "tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" }};
+		               { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
 	    	} else {
 		    	return new String[][] {
-	               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
-	               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
+		               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
+		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
+		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
+		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
+		               { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
 	    	}
 	    } else {
 	  	   return new String[][] {

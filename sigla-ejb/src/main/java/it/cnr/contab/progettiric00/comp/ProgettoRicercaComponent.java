@@ -80,6 +80,9 @@ public ProgettoRicercaComponent() {
 				sq_progetto = getSequence(uc);
 				((ProgettoBulk)bulk).setPg_progetto(sq_progetto);
 				((Progetto_uoBulk) ((ProgettoBulk)bulk).getDettagli().get(0)).setPg_progetto(new Integer(sq_progetto.intValue()));
+				for(int i = 0; ((ProgettoBulk)bulk).getDettagliPianoEconomico().size() > i; i++) {
+				  ((Progetto_piano_economicoBulk) ((ProgettoBulk)bulk).getDettagliPianoEconomico().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
+				}	
 				for(int i = 0; ((ProgettoBulk)bulk).getDettagliFinanziatori().size() > i; i++) {
 				  ((Progetto_finanziatoreBulk) ((ProgettoBulk)bulk).getDettagliFinanziatori().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
 				}	
@@ -123,6 +126,9 @@ public ProgettoRicercaComponent() {
 					}
 					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagli());
 					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomico());
+					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
+					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
+					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPostIt());
 					
 					if (((ProgettoBulk)bulk).getOtherField()!=null) {
 						((ProgettoBulk)bulk).getOtherField().setPg_progetto(((ProgettoBulk)bulk).getPg_progetto());
@@ -483,6 +489,9 @@ public ProgettoRicercaComponent() {
 
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagli());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomico());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPostIt());
 
 				if (((ProgettoBulk)bulk).getOtherField()!=null) {
 					((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
@@ -1199,6 +1208,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	sql.addSQLClause(FindClause.OR, "UNITA_ORGANIZZATIVA.CD_TIPO_UNITA", SQLBuilder.EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_ENTE);
     	sql.closeParenthesis();
     	sql.addClause(clauses);
+    	sql.addOrderBy("cd_voce_piano");
     	return sql;
 
     }
