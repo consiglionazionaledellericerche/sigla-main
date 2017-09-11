@@ -43,13 +43,6 @@
 			columnScale="6"
 			nullable="false" />
 		<columnMapping
-			columnName="QUANTITA"
-			propertyName="quantita"
-			sqlTypeName="DECIMAL"
-			columnSize="17"
-			columnScale="5"
-			nullable="false" />
-		<columnMapping
 			columnName="CD_UNITA_MISURA"
 			propertyName="cdUnitaMisura"
 			sqlTypeName="VARCHAR"
@@ -181,8 +174,6 @@
 		name="stato" />
 	<persistentProperty
 		name="prezzoUnitario" />
-	<persistentProperty
-		name="quantita" />
 	<persistentProperty
 		name="cdUnitaMisura" />
 	<persistentProperty
