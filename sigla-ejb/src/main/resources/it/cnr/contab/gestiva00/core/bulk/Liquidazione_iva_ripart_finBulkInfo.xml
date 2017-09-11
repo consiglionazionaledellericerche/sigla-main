@@ -39,7 +39,7 @@
 		name="im_variazione"
 		property="im_variazione"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		nullable="false"
 		label="Importo" />
 

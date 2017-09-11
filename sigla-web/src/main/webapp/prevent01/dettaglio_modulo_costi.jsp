@@ -41,8 +41,13 @@
 				<td><% bp.getController().writeFormInput( out, "cd_progetto_liv1"); %></td>
 				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_progetto_liv2"); %></td>	
 				<td><% bp.getController().writeFormInput( out, "cd_progetto_liv2"); %></td>
-				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_dipartimento_liv2"); %></td>	
-				<td><% bp.getController().writeFormInput( out, "cd_dipartimento_liv2"); %></td>
+				<% if (bp.getParametriEnte().isEnteCNR()) { %>
+					<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_dipartimento_liv2"); %></td>	
+					<td><% bp.getController().writeFormInput( out, "cd_dipartimento_liv2"); %></td>
+				<% } else { %>
+					<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_programma_liv2"); %></td>	
+					<td><% bp.getController().writeFormInput( out, "cd_programma_liv2"); %></td>
+				<% } %>
 			<% } else { %>
 				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_modulo"); %></td>	
 				<td><% bp.getController().writeFormInput( out, "cd_modulo"); %></td>
