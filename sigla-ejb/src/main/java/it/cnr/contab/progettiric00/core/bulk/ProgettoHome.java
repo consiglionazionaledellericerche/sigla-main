@@ -632,6 +632,7 @@ public class ProgettoHome extends BulkHome {
 		Progetto_piano_economicoHome dettHome = (Progetto_piano_economicoHome)getHomeCache().getHome(Progetto_piano_economicoBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,testata.getPg_progetto());
+		sql.addOrderBy("esercizio_piano, cd_voce_piano");
 		List<Progetto_piano_economicoBulk> pianoList = dettHome.fetchAll(sql);
 		List<Progetto_piano_economicoBulk> pianoListNew = new ArrayList<>();
 		for (Progetto_piano_economicoBulk progetto_piano_economicoBulk : pianoList)

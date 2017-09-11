@@ -4403,15 +4403,15 @@ private void verificaGestioneTrovato(UserContext aUC,
 private void verificaGestioneMissioni(UserContext aUC,
 		ObbligazioneBulk obbligazione, Elemento_voceBulk elemento_voce)
 				throws ComponentException {
-	if (obbligazione.getPg_obbligazione() != null){
-		try {
-			if (!elemento_voce.getFl_missioni() && esistonoMissioniCollegate(aUC, obbligazione)){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata non ha attiva la gestione delle missioni ma esistono missioni collegate all'obbligazione.");		
-			}
-		} catch(Throwable e) {
-			throw handleException(e);
-		}
-	}
+//	if (obbligazione.getPg_obbligazione() != null){
+//		try {
+//			if (!elemento_voce.getFl_missioni() && esistonoMissioniCollegate(aUC, obbligazione)){
+//				throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata non ha attiva la gestione delle missioni ma esistono missioni collegate all'obbligazione.");		
+//			}
+//		} catch(Throwable e) {
+//			throw handleException(e);
+//		}
+//	}
 //	}
 }
 private void controlliGestioneTrovatoNonAttiva(UserContext aUC,
