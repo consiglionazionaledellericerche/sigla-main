@@ -8,6 +8,12 @@
   <action 
       path="/CRUDOrdineAcqAction" actionClass="it.cnr.contab.ordmag.ordini.action.CRUDOrdineAcqAction">
   </action>
+  <action 
+      path="/CRUDFirmaOrdineAcqAction" actionClass="it.cnr.contab.ordmag.ordini.action.CRUDFirmaOrdineAcqAction">
+  </action>
+  <action 
+      path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.richieste.action.ListaRichiestePerOrdiniAction">
+  </action>
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/gruppomerceologico.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.GruppoMerceologicoBulk"/>
@@ -125,5 +131,18 @@
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk"/>
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
     <init-param name="defaultAction" value="CRUDOrdineAcqAction"/>
+  </businessProcess>
+  <businessProcess
+      name="GenerazioneOrdineDaRichiesteBP" className="it.cnr.contab.ordmag.richieste.bp.GenerazioneOrdineDaRichiesteBP">
+    <forward name="default" path="/ordmag/ordini/ordine_da_richieste.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk" />
+		<init-param name="componentSessionName" value="CNRORDMAG00_EJB_GenerazioneOrdiniDaRichiesteComponentSession" />
+		<init-param name="defaultAction" value="GenerazioneOrdineDaRichiesteAction" />
+  </businessProcess>
+  <businessProcess name="CRUDFirmaOrdineAcqBP" className="it.cnr.contab.ordmag.ordini.bp.CRUDFirmaOrdineAcqBP">
+    <forward name="default" path="/ordmag/ordini/ordine_acq.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.richieste.bulk.OrdineAcqBulk"/>
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
+    <init-param name="defaultAction" value="CRUDFirmaOrdineAcqAction"/>
   </businessProcess>
 </action-mappings>
