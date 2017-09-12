@@ -1,9 +1,6 @@
 package it.cnr.contab.docamm00.bp;
 
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
@@ -19,6 +16,7 @@ import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBase;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
@@ -27,34 +25,34 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -64,15 +62,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.client.api.ItemIterable;
-import org.apache.chemistry.opencmis.client.api.QueryResult;
-import org.apache.chemistry.opencmis.client.api.SecondaryType;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
 /**
  * Gestisce le catene di elementi correlate con la fattura passiva in uso.
@@ -803,7 +792,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	 * @param context
 	 *            <code>ActionContext</code>
 	 *
-	 * @see resetTabs
+	 *
 	 */
 
 	public void reset(ActionContext context) throws BusinessProcessException {
@@ -825,7 +814,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	 * @param context
 	 *            <code>ActionContext</code>
 	 *
-	 * @see resetTabs
+	 *
 	 */
 
 	public void resetForSearch(ActionContext context)
@@ -838,8 +827,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	/**
 	 * Imposta come attivi i tab di default.
 	 *
-	 * @param context
-	 *            <code>ActionContext</code>
+	 * <code>ActionContext</code>
 	 */
 
 	public void resetTabs() {
@@ -970,7 +958,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 	 * Insert the method's description here. Creation date: (06/06/2003
 	 * 15.53.41)
 	 * 
-	 * @param newIsAnnoDiCompetenza
+	 * @param newAnnoDiCompetenza
 	 *            boolean
 	 */
 	public void setAnnoDiCompetenza(boolean newAnnoDiCompetenza) {
@@ -1069,7 +1057,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 			throws it.cnr.jada.action.BusinessProcessException {
 
 		try {
-			archiviaAllegati(context, null);			
+			archiviaAllegati(context);
 			getModel().setToBeUpdated();
 			setModel(context,
 					((FatturaPassivaComponentSession) createComponentSession())
@@ -1514,12 +1502,12 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 	}
 	
 	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);	
+		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		DocumentoEleAllegatiBulk allegato = (DocumentoEleAllegatiBulk)getCrudDocEleAllegatiColl().getModel();
-		Document document = (Document) cmisService.getNodeByNodeRef(allegato.getCmisNodeRef());
-		InputStream is = cmisService.getResource(document);
-		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(document.getContentStreamLength()).intValue());
-		((HttpActionContext)actioncontext).getResponse().setContentType(document.getContentStreamMimeType());
+		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getCmisNodeRef());
+		InputStream is = storeService.getResource(storageObject);
+		((HttpActionContext)actioncontext).getResponse().setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
@@ -1532,28 +1520,27 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 	}
 	
 	public void scaricaFatturaHtml(ActionContext actioncontext) throws IOException, ServletException, TransformerException, ApplicationException {
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
 		Fattura_passivaBulk fattura_passivaBulk = (Fattura_passivaBulk) getModel();
     	StringBuffer query = new StringBuffer("select cmis:objectId from sigla_fatture:fatture_passive");
     	query.append(" where sigla_fatture:identificativoSdI = ");
     	query.append(fattura_passivaBulk.getDocumentoEleTestata().getIdentificativoSdi());
-    	ItemIterable<QueryResult> results = cmisService.search(query);
-    	for (QueryResult queryResult : results) {
-			Folder fatturaFolder = (Folder) cmisService.getNodeByNodeRef((String)queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
-			ItemIterable<CmisObject> files = fatturaFolder.getChildren();
-			for (CmisObject cmisObject : files) {
-				if (cmisObject.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains("P:sigla_fatture_attachment:trasmissione_fattura")){													
-					TransformerFactory tFactory = TransformerFactory.newInstance();							
+		List<StorageObject> results = SpringUtil.getBean("storeService", StoreService.class).search(query.toString());
+		for (StorageObject storageObject : results) {
+			List<StorageObject> files = SpringUtil.getBean("storeService", StoreService.class).getChildren(storageObject.getKey());
+			for (StorageObject file : files) {
+				if (file.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains("P:sigla_fatture_attachment:trasmissione_fattura")){
+					TransformerFactory tFactory = TransformerFactory.newInstance();
 					Source xslDoc = null;
 					if (fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("FPA12")){
+
 						xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
 					} else if (fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("SDI11")){
 						xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
 					} else {
 						throw new ApplicationException("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
 					}
-				
-					Source xmlDoc = new StreamSource(((Document)cmisObject).getContentStream().getStream());
+
+					Source xmlDoc = new StreamSource(SpringUtil.getBean("storeService", StoreService.class).getResource(file.getKey()));
 					HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
 					OutputStream os = response.getOutputStream();
 					response.setContentType("text/html");
@@ -1613,19 +1600,19 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 	}
 	
 	@Override
-	protected CMISPath getCMISPath(Fattura_passivaBulk fattura_passivaBulk, boolean create) {
-		if (fattura_passivaBulk != null && fattura_passivaBulk.getDocumentoEleTestata() != null && fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione() != null && 
-				fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCmisNodeRef() != null) {
-			try {
-				return CMISPath.construct(
-						((Folder)SpringUtil.getBean("cmisService", SiglaCMISService.class).getNodeByNodeRef(fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCmisNodeRef())).getPath()
-				);
-			} catch (ApplicationException|CmisObjectNotFoundException e) {
-				return null;
-			}
-		}
-		return null;
+	protected String getStorePath(Fattura_passivaBulk fattura_passivaBulk, boolean create) throws BusinessProcessException {
+		return Optional.ofNullable(fattura_passivaBulk)
+				.map(Fattura_passivaBulk::getDocumentoEleTestata)
+				.map(DocumentoEleTestataBulk::getDocumentoEleTrasmissione)
+				.map(DocumentoEleTrasmissioneBase::getCmisNodeRef)
+				.map(s -> {
+					return Optional.ofNullable(SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(s))
+							.map(StorageObject::getPath)
+							.orElse(null);
+				})
+				.orElse(null);
 	}
+
 
 	@Override
 	protected Class<AllegatoFatturaBulk> getAllegatoClass() {
@@ -1633,25 +1620,32 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 	}	
 	
 	@Override
-	protected boolean excludeChild(CmisObject cmisObject) {		
-		for (Object obj : crudDocEleAllegatiColl.getDetails()) {
-			DocumentoEleAllegatiBulk documentoEleAllegatiBulk = (DocumentoEleAllegatiBulk)obj;
-			if (documentoEleAllegatiBulk.getCmisNodeRef().equalsIgnoreCase(cmisObject.getId()))
-				return true;
-		}
-		if (cmisObject.getType().getId().equalsIgnoreCase("D:sigla_fatture_attachment:document"))
+	protected boolean excludeChild(StorageObject storageObject) {
+		if (Stream.of(crudDocEleAllegatiColl.getDetails().stream().toArray())
+				.filter(DocumentoEleAllegatiBulk.class::isInstance)
+				.map(DocumentoEleAllegatiBulk.class::cast)
+				.map(DocumentoEleAllegatiBulk::getCmisNodeRef)
+				.anyMatch(s -> s.equals(storageObject.getKey()))){
 			return true;
-		return super.excludeChild(cmisObject);
+		}
+		if (storageObject.<String>getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value())
+				.equalsIgnoreCase("D:sigla_fatture_attachment:document"))
+			return true;
+		return super.excludeChild(storageObject);
 	}
-	
+
+
 	@Override
 	protected void completeAllegato(AllegatoFatturaBulk allegato) throws ApplicationException {
-		for (SecondaryType secondaryType : allegato.getDocument(cmisService).getSecondaryTypes()) {
-			if (AllegatoFatturaBulk.aspectNamesKeys.get(secondaryType.getId()) != null){
-				allegato.setAspectName(secondaryType.getId());
-				break;
-			}
-		}
+		Optional.ofNullable(SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(allegato.getStorageKey()))
+				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+				.map(strings -> strings.stream())
+				.ifPresent(stringStream -> {
+					stringStream
+							.filter(s -> AllegatoFatturaBulk.aspectNamesKeys.get(s) != null)
+							.findFirst()
+							.ifPresent(s -> allegato.setAspectName(s));
+				});
 		super.completeAllegato(allegato);
 	}
 	

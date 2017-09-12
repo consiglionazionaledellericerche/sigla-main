@@ -1,10 +1,11 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -27,27 +28,25 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
-import org.apache.pdfbox.pdmodel.interactive.form.PDAppearance;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckbox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDVariableText;
 /**
- * 
+ *
  * @author mspasiano
  * @date 30-11-2015
- * 
+ *
  *
  */
 public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 	private static final long serialVersionUID = 1L;
-	
+
 	public FirmaDigitaleDOC1210BP() {
 		super();
 	}
@@ -69,7 +68,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 						((CNRUserContext) actioncontext.getUserContext()).getCd_cds());
 				if (!uoScrivania.isUoCds())
 					compoundfindclause.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS,
-						((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa());				
+							((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa());
 			}
 			setBaseclause(compoundfindclause);
 			Lettera_pagam_esteroBulk lettera = (Lettera_pagam_esteroBulk) getModel();
@@ -88,17 +87,22 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 					statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont());
 			lettera = (Lettera_pagam_esteroBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), lettera);
 			if (!statoTrasmissione.getStato_trasmissione().equals(lettera.getStato_trasmissione()))
-				throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");			
+				throw new ApplicationException("Risorsa non pi? valida, eseguire nuovamente la ricerca!");
 			lettera.setStato_trasmissione(stato);
 			if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 				lettera.setDt_firma(EJBCommonServices.getServerTimestamp());
 			else
-				lettera.setDt_firma(null);					
+				lettera.setDt_firma(null);
 			lettera.setToBeUpdated();
 			getComponentSession().modificaConBulk(actioncontext.getUserContext(), lettera);
-		}		
+		}
 	}
-	
+
+	@Override
+	public StatoTrasmissione getStatoTrasmissione(ActionContext actioncontext, Integer esercizio, String tipo, String cds, String uo, Long numero_documento) {
+		return new Lettera_pagam_esteroBulk(cds,uo, esercizio,numero_documento);
+	}
+
 	private void valorizzaField(PDAcroForm pdAcroForm, String fieldName, String fieldValue, boolean autosize) throws IOException {
 		PDField field = pdAcroForm.getField(fieldName);
 		if (field != null && fieldValue != null) {
@@ -110,24 +114,23 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 			} else {
 				field.getWidget().getDictionary().setItem( COSName.V, new COSString(fieldValue));
 				if (autosize) {
-				    field.getWidget().getDictionary().setString(COSName.DA, "/F2 0 Tf 0 g");
+					field.getWidget().getDictionary().setString(COSName.DA, "/F2 0 Tf 0 g");
 					PDAppearanceCustom appearance = new PDAppearanceCustom( pdAcroForm, (PDVariableText)field , "/F2 0 Tf 0 g");
-				    appearance.setAppearanceValue(fieldValue);					
+					appearance.setAppearanceValue(fieldValue);
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	@SuppressWarnings({ "unused", "unchecked" })
 	public void predisponiPerLaFirma(ActionContext actioncontext) throws BusinessProcessException{
 		try {
 			List<Lettera_pagam_esteroBulk> selectedElements = getSelectedElements(actioncontext);
 			if (selectedElements == null || selectedElements.isEmpty())
-					throw new ApplicationException("Selezionare almeno un elemento!");
+				throw new ApplicationException("Selezionare almeno un elemento!");
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			for (Lettera_pagam_esteroBulk lettera : selectedElements) {
-				CMISPath cmisPath = lettera.getCMISPath(cmisService);
 				PDDocument document = PDDocument.load(this.getClass().getResourceAsStream("1210.pdf"));
 				PDDocumentCatalog pdCatalog = document.getDocumentCatalog();
 				PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
@@ -148,18 +151,22 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 				valorizzaField(pdAcroForm, "CONTO_PROVVISORIO_"+lettera.getAmmontare_debito(), lettera.getConto_debito(), false);
 				valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false);
 				valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_ESTERE_"+lettera.getCommissioni_spese_estere(), "X", false);
-								
-				
+
+
 				for (Object obj : pdAcroForm.getFields()) {
 					PDField field = (PDField)obj;
 					field.setReadonly(true);
-				}				
-				ByteArrayOutputStream output = new ByteArrayOutputStream();				
+				}
+				ByteArrayOutputStream output = new ByteArrayOutputStream();
 				document.save(output);
 				document.close();
-				Document node = cmisService.restoreSimpleDocument(lettera, new ByteArrayInputStream(output.toByteArray()),"application/pdf", 
-						lettera.getCMISFolderName() + ".pdf", cmisPath);
-				cmisService.makeVersionable(node);
+				SpringUtil.getBean("storeService", StoreService.class).restoreSimpleDocument(
+						lettera,
+						new ByteArrayInputStream(output.toByteArray()),
+						"application/pdf",
+						lettera.getCMISFolderName() + ".pdf",
+						lettera.getStorePath(),
+						true);
 				aggiornaStato(actioncontext, MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO, lettera);
 			}
 			setMessage("Predisposizione effettuata correttamente.");
