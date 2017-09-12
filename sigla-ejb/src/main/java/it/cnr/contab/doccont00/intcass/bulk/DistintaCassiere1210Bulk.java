@@ -4,14 +4,18 @@
  */
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
-@CMISType(name="D:doccont:document")
+
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@StorageType(name="D:doccont:document")
 public class DistintaCassiere1210Bulk extends DistintaCassiere1210Base {
 	private static final long serialVersionUID = 1L;
 
@@ -34,23 +38,27 @@ public class DistintaCassiere1210Bulk extends DistintaCassiere1210Base {
 		suffix = suffix.concat(String.valueOf(getPgDistinta()));
 		return suffix;
 	}
-	
-	@CMISProperty(name="doccont:tipo")	
+
+	@StorageProperty(name="doccont:tipo")
 	public String getTipo() {
 		return "DIST1210";
 	}
-	
-	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException {
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR",CMISPath.class);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Distinte 1210" ,null, null);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getEsercizio().toString(), null, null);		
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, getCMISFolderName(), 
-				null, 
-				null);
-		return cmisPath;		
+
+	public String getStorePath() {
+		return Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+				"Distinte 1210",
+				Optional.ofNullable(getEsercizio())
+						.map(esercizio -> String.valueOf(esercizio))
+						.orElse("0"),
+				getCMISFolderName()
+		).stream().collect(
+				Collectors.joining(SiglaStorageService.SUFFIX)
+		);
 	}
+
 	public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
-		
+
 		setEsercizio( it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context) );
 		return this;
 	}

@@ -3,16 +3,16 @@
  * Date 24/12/2015
  */
 package it.cnr.contab.doccont00.intcass.bulk;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.Keyed;
 public class DistintaCassiere1210Base extends DistintaCassiere1210Key implements Keyed {
-//    DT_EMISSIONE TIMESTAMP(7)
-	@CMISProperty(name="doccont:datDoc")
+	//    DT_EMISSIONE TIMESTAMP(7)
+	@StorageProperty(name="doccont:datDoc")
 	private java.sql.Timestamp dtEmissione;
- 
-//    DT_INVIO TIMESTAMP(7)
+
+	//    DT_INVIO TIMESTAMP(7)
 	private java.sql.Timestamp dtInvio;
- 
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: DISTINTA_CASSIERE_1210
