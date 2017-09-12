@@ -149,7 +149,7 @@ public class Missione_tipo_pastoHome extends BulkHome implements ConsultazioniRe
 	}
 
 	@Override
-	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		if (compoundfindclause != null && compoundfindclause.getClauses() != null) {
 			CompoundFindClause newClauses = new CompoundFindClause();
 			Enumeration e = compoundfindclause.getClauses();
@@ -199,6 +199,7 @@ public class Missione_tipo_pastoHome extends BulkHome implements ConsultazioniRe
 				}
 			}
 		}
+		return sql;
 	}
 	private MissioneComponentSession missioneComponent() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (MissioneComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession");

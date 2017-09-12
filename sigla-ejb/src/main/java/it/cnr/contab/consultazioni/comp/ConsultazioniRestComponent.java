@@ -27,7 +27,7 @@ public class ConsultazioniRestComponent extends CRUDComponent {
                 .filter(ConsultazioniRestHome.class::isInstance)
                 .map(ConsultazioniRestHome.class::cast);
         if (consultazioniRestHome.isPresent()) {
-            consultazioniRestHome.get().restSelect(userContext, sql, compoundfindclause, oggettobulk);
+            sql = consultazioniRestHome.get().restSelect(userContext, sql, compoundfindclause, oggettobulk);
         }
 		return sql;
 	}

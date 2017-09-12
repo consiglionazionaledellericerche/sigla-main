@@ -166,7 +166,7 @@ public WorkpackageHome(java.sql.Connection conn) {
 	}
 
 	@Override
-	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		if(compoundfindclause == null){
 			if(oggettobulk != null)
 				compoundfindclause = oggettobulk.buildFindClauses(null);
@@ -199,6 +199,7 @@ public WorkpackageHome(java.sql.Connection conn) {
 			}
 			((SQLBuilder)sql).addSQLExistsClause(FindClause.AND, sqlExists);
 		}
+		return sql;
 	}
 	private boolean isCdrEnte(UserContext userContext,CdrBulk cdr) throws ComponentException {
 		try {

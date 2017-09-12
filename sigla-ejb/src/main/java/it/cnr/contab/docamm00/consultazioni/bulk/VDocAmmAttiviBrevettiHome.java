@@ -29,7 +29,7 @@ public class VDocAmmAttiviBrevettiHome extends BulkHome implements Consultazioni
 	}
 
 	@Override
-	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		if (compoundfindclause != null && compoundfindclause.getClauses() != null){
 			Boolean trovataCondizioneTrovato = false;
 			CompoundFindClause newClauses = new CompoundFindClause();
@@ -65,6 +65,7 @@ public class VDocAmmAttiviBrevettiHome extends BulkHome implements Consultazioni
 			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
 			sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
 		}
+		return sql;
 	}
 
 	private Boolean isUoEnte(UserContext userContext) throws PersistencyException, ComponentException{
