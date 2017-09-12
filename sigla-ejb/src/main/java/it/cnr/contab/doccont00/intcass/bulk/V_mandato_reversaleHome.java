@@ -246,8 +246,8 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 		sql.addSQLJoin( "SOSPESO_DET_USC.TI_SOSPESO_RISCONTRO", "SOSPESO.TI_SOSPESO_RISCONTRO");
 		
 		return home.fetchAll( sql);
-	}	
-	
+	}
+
 	@Override
 	public Persistent completeBulkRowByRow(UserContext userContext, Persistent persistent) throws PersistencyException {
 		persistent =  super.completeBulkRowByRow(userContext, persistent);
@@ -256,15 +256,15 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 			if (!bulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)){
 				if (((CNRUserContext)userContext).isFromBootstrap()) {
 					bulk.setDocumento("<a class='btn btn-link' onclick='"+
-							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\");' "+
-							"title='Visualizza Documento Contabile'><i class='fa fa-fw fa-2x fa-file-pdf-o text-danger' aria-hidden='true'></i></a>");															
-				} else {				
+							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\",\""+bulk.getCd_unita_organizzativa()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\");' "+
+							"title='Visualizza Documento Contabile'><i class='fa fa-fw fa-2x fa-file-pdf-o text-danger' aria-hidden='true'></i></a>");
+				} else {
 					bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
-						"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
-						"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");			
+							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\",\""+bulk.getCd_unita_organizzativa()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
+							"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
+							"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
 				}
-			}		
+			}
 			if (bulk.isReversaleTrasferimento()){
 				SQLBuilder sql  = getHomeCache().getHome(Distinta_cassiere_detBulk.class).createSQLBuilder();
 				sql.addClause( "AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
@@ -272,7 +272,7 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 				sql.addClause( "AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, bulk.getCd_unita_organizzativa() );
 				sql.addClause( "AND", "pg_reversale", SQLBuilder.EQUALS, bulk.getPg_documento_cont() );
 				sql.addOrderBy("PG_DISTINTA DESC");
-	
+
 				java.util.List list = getHomeCache().getHome(Distinta_cassiere_detBulk.class).fetchAll(sql);
 				if (!list.isEmpty())
 					bulk.setPg_distinta(((Distinta_cassiere_detBulk)list.get(0)).getPg_distinta());

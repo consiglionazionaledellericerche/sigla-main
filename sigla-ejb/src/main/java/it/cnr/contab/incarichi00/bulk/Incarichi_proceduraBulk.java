@@ -11,7 +11,7 @@ import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderProcedura;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFolderProcedura;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivita_fpBulk;
@@ -1253,8 +1253,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		this.incarichi_parametriLink = incarichi_parametriLink;
 	}
 
-	public CMISFolderProcedura getCMISFolder() {
-		return new CMISFolderProcedura(this);
+	public StorageFolderProcedura getCMISFolder() {
+		return new StorageFolderProcedura(this);
 	}
 	
 	public boolean isEqualsFieldParameter() {

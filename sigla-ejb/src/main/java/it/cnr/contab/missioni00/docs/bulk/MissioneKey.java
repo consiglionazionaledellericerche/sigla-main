@@ -1,26 +1,24 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
 
 public class MissioneKey extends OggettoBulk implements KeyedPersistent {
 	// CD_CDS VARCHAR(30) NOT NULL (PK)
 	private java.lang.String cd_cds;
 
 	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL (PK)
-	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorg:codice"))
+	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorg:codice"))
 	private java.lang.String cd_unita_organizzativa;
 
 	// PG_MISSIONE DECIMAL(10,0) NOT NULL (PK)
-	@CMISProperty(name="emppay:numDoc",converterBeanName="cmis.converter.longToIntegerConverter")
+	@StorageProperty(name="emppay:numDoc",converterBeanName="cmis.converter.longToIntegerConverter")
 	private java.lang.Long pg_missione;
 
 	// ESERCIZIO DECIMAL(4,0) NOT NULL (PK)
-	@CMISProperty(name="emppay:esercizioDoc")
+	@StorageProperty(name="emppay:esercizioDoc")
 	private java.lang.Integer esercizio;
 
 public MissioneKey() {
