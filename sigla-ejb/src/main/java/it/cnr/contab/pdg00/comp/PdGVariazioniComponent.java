@@ -1,6 +1,5 @@
 package it.cnr.contab.pdg00.comp;
 
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
@@ -113,7 +112,6 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	private static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	private static final long serialVersionUID = -3132138853583406225L;
 	private PdgVariazioniService pdgVariazioniService;
-	private SiglaCMISService cmisService;
 
 	public PdGVariazioniComponent() {
 		/* Default constructor */
@@ -326,8 +324,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	{
 		Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) oggettobulk;
 		if(pdg.getStatoDocumentale()!=null && pdg.getStatoDocumentale().compareTo(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED)==0){
-			pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",PdgVariazioniService.class);
-			cmisService = SpringUtil.getBean("cmisService",SiglaCMISService.class);		
+			pdgVariazioniService = SpringUtil.getBean(PdgVariazioniService.class);
 			Print_spoolerBulk print = new Print_spoolerBulk();
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
 			print.setFlEmail(false);
@@ -344,8 +341,8 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					ArchiviaStampaPdgVariazioneBulk stampapdg=new ArchiviaStampaPdgVariazioneBulk();
 					stampapdg.setPdg_variazioneForPrint(pdg);
 					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
-					cmisService.updateContent(stampapdg.getPdgVariazioneDocument().getDocument().getId(), report.getInputStream(), report.getContentType());
-					cmisService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getDocument());
+					pdgVariazioniService.updateStream(stampapdg.getPdgVariazioneDocument().getStorageObject().getKey(), report.getInputStream(), report.getContentType());
+					pdgVariazioniService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getStorageObject());
 			} catch (IOException e) {
 				throw new ComponentException(e);
 			} catch (DetailedException e) {

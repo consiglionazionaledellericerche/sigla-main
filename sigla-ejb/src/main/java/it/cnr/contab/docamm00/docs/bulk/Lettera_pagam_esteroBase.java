@@ -1,6 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.Keyed;
 
 public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements Keyed {
@@ -11,14 +11,14 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
 	private java.lang.String cd_sospeso;
 
 	// DT_REGISTRAZIONE TIMESTAMP NOT NULL
-	@CMISProperty(name="doccont:datDoc")
+	@StorageProperty(name="doccont:datDoc")
 	private java.sql.Timestamp dt_registrazione;
 
 	// IM_COMMISSIONI DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_commissioni;
 
 	// IM_PAGAMENTO DECIMAL(15,2) NOT NULL
-	@CMISProperty(name="doccont:importo")
+	@StorageProperty(name="doccont:importo")
 	private java.math.BigDecimal im_pagamento;
 
 	// TI_ENTRATA_SPESA CHAR(1)
@@ -28,7 +28,7 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
 	private java.lang.String ti_sospeso_riscontro;
 
 	// STATO_TRASMISSIONE CHAR(1)
-	@CMISProperty(name="doccont:stato_trasmissione")
+	@StorageProperty(name="doccont:stato_trasmissione")
 	private java.lang.String stato_trasmissione;
 	
 	// DT_FIRMA TIMESTAMP
