@@ -47,7 +47,7 @@ public class VConsVarCompResHome extends BulkHome implements ConsultazioniRestHo
 	}
 
 	@Override
-	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		if (compoundfindclause != null && compoundfindclause.getClauses() != null){
 			Boolean trovataCondizioneCdrPersonale = false;
 			CompoundFindClause newClauses = new CompoundFindClause();
@@ -76,5 +76,6 @@ public class VConsVarCompResHome extends BulkHome implements ConsultazioniRestHo
 				sql.addSQLClause("AND", "CDR_ASSEGN", sql.EQUALS, sqlCDR);
 			}
 		}
+		return sql;
 	}
 }

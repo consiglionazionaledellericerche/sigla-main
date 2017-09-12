@@ -20,7 +20,7 @@ public class InquadramentoHome extends BulkHome implements ConsultazioniRestHome
 	}
 
 	@Override
-    public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+    public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		final Stream<SimpleFindClause> clauses = Optional.ofNullable(compoundfindclause)
 				.map(compoundFindClause -> compoundFindClause.getClauses())
 				.map(enumeration -> Collections.list(enumeration).stream())
@@ -34,5 +34,6 @@ public class InquadramentoHome extends BulkHome implements ConsultazioniRestHome
 				clause.getOperator() == SQLBuilder.EQUALS)
 				.findAny().isPresent())
 			throw new ComponentException("Non e' possibile richiamare il servizio REST degli inquadramenti senza la condizione del codice anagrafico.");
+		return sql;
 	}
 }
