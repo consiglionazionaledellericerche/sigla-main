@@ -1,12 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jee="http://www.springframework.org/schema/jee"
-	   xmlns:task="http://www.springframework.org/schema/task"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:jee="http://www.springframework.org/schema/jee"
+		xmlns:task="http://www.springframework.org/schema/task"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 						http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
-
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -17,32 +19,35 @@
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 	</bean>
-    <import resource="classpath*:it/cnr/contab/cmis/service/cmis-service-context.xml"/>
-    <import resource="classpath*:it/cnr/contab/service/sdi-client-service-context.xml"/>
+
+	<context:component-scan base-package="it.cnr.contab.spring" />
+
+	<import resource="classpath*:it/cnr/contab/storage/service/storage-service-context.xml"/>
+	<import resource="classpath*:it/cnr/contab/service/sdi-client-service-context.xml"/>
 
 	<jee:jndi-lookup id="offlineReportComponent"
-   			jndi-name="java:global/SIGLA/sigla-ejb/BREPORTS_EJB_OfflineReportComponentSession"
-   			resource-ref="false">
-   	</jee:jndi-lookup>
+					 jndi-name="java:global/SIGLA/sigla-ejb/BREPORTS_EJB_OfflineReportComponentSession"
+					 resource-ref="false">
+	</jee:jndi-lookup>
 	<jee:jndi-lookup id="gestioneLoginComponent"
-   			jndi-name="java:global/SIGLA/sigla-ejb/CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession"
-   			resource-ref="false">
-   	</jee:jndi-lookup>
+					 jndi-name="java:global/SIGLA/sigla-ejb/CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession"
+					 resource-ref="false">
+	</jee:jndi-lookup>
 	<jee:jndi-lookup id="ricezioneFattureService"
-   			jndi-name="java:global/SIGLA/sigla-sdi/RicezioneFatture!it.cnr.contab.docamm00.ejb.RicezioneFatturePA"
-   			resource-ref="false"/>
+					 jndi-name="java:global/SIGLA/sigla-sdi/RicezioneFatture!it.cnr.contab.docamm00.ejb.RicezioneFatturePA"
+					 resource-ref="false"/>
 	<jee:jndi-lookup id="trasmissioneFattureService"
-   			jndi-name="java:global/SIGLA/sigla-sdi/TrasmissioneFatture!it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA"
-   			resource-ref="false"/>
+					 jndi-name="java:global/SIGLA/sigla-sdi/TrasmissioneFatture!it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA"
+					 resource-ref="false"/>
 	<jee:jndi-lookup id="fatturaElettronicaPassivaComponentSession"
-   			jndi-name="java:global/SIGLA/sigla-ejb/CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"
-   			resource-ref="false"/>
+					 jndi-name="java:global/SIGLA/sigla-ejb/CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"
+					 resource-ref="false"/>
 	<jee:jndi-lookup id="ricercaDocContComponentSession"
-   			jndi-name="java:global/SIGLA/sigla-ejb/CNRCHIUSURA00_EJB_RicercaDocContComponentSession"
-   			resource-ref="false"/>
+					 jndi-name="java:global/SIGLA/sigla-ejb/CNRCHIUSURA00_EJB_RicercaDocContComponentSession"
+					 resource-ref="false"/>
 	<jee:jndi-lookup id="docAmmFatturazioneElettronicaComponentSession"
-   			jndi-name="java:global/SIGLA/sigla-ejb/CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession"
-   			resource-ref="false"/>
+					 jndi-name="java:global/SIGLA/sigla-ejb/CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession"
+					 resource-ref="false"/>
 	<bean id="trovatoProperties" class="it.cnr.contab.docamm00.client.TrovatoProperties">
 		<property name="trovatoTargetEndpoint" value="${TrovatoTargetEndpoint}" />
 		<property name="trovatoSiglaRestClientUser" value="${TrovatoSiglaRestClientUser}" />
@@ -56,13 +61,13 @@
 	<bean id="gson" class="com.google.gson.Gson"/>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
-    	<property name="offlineReportComponent" ref="offlineReportComponent"/>
-    	<property name="gson" ref="gson"/>
-    </bean>
+		<property name="offlineReportComponent" ref="offlineReportComponent"/>
+		<property name="gson" ref="gson"/>
+	</bean>
 
-    <bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService">
-    	<property name="gestioneLoginComponent" ref="gestioneLoginComponent"/>
-    </bean>
+	<bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService">
+		<property name="gestioneLoginComponent" ref="gestioneLoginComponent"/>
+	</bean>
 
 
 	<bean id="fatturaPassivaElettronicaService" class="it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService">
@@ -96,44 +101,41 @@
 		<property name="pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm" value="${pec.sdi.subject.fatturaPassiva.notifica.scartoEsito.term}"/>
 
 		<property name="pecMailConf">
-		    <props>
-		      <prop key="mail.imap.host">${pec.mail.imap.host}</prop>
-		      <prop key="mail.imap.auth">${pec.mail.imap.auth}</prop>
-		      <prop key="mail.imap.ssl.enable">${pec.mail.imap.ssl.enable}</prop>
-		      <prop key="mail.imap.port">${pec.mail.imap.port}</prop>
-		      <prop key="mail.imap.socketFactory.class">${pec.mail.imap.socketFactory.class}</prop>
-		      <prop key="mail.imap.connectiontimeout">${pec.mail.imap.connectiontimeout}</prop>
-		      <prop key="mail.imap.timeout">${pec.mail.imap.timeout}</prop>
-		    </props>
-		  </property>
+			<props>
+				<prop key="mail.imap.host">${pec.mail.imap.host}</prop>
+				<prop key="mail.imap.auth">${pec.mail.imap.auth}</prop>
+				<prop key="mail.imap.ssl.enable">${pec.mail.imap.ssl.enable}</prop>
+				<prop key="mail.imap.port">${pec.mail.imap.port}</prop>
+				<prop key="mail.imap.socketFactory.class">${pec.mail.imap.socketFactory.class}</prop>
+				<prop key="mail.imap.connectiontimeout">${pec.mail.imap.connectiontimeout}</prop>
+				<prop key="mail.imap.timeout">${pec.mail.imap.timeout}</prop>
+			</props>
+		</property>
 	</bean>
 
 	<bean name="props-aruba" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-	    <property name="properties">
-	        <value>
-	            arubaRemoteSignService.certId=${arubaRemoteSignService.certId}
-	            arubaRemoteSignService.typeOtpAuth=${arubaRemoteSignService.typeOtpAuth}
-	            arubaRemoteSignService.url=${arubaRemoteSignService.url}
-	        </value>
-	    </property>
+		<property name="properties">
+			<value>
+				arubaRemoteSignService.certId=${arubaRemoteSignService.certId}
+				arubaRemoteSignService.typeOtpAuth=${arubaRemoteSignService.typeOtpAuth}
+				arubaRemoteSignService.url=${arubaRemoteSignService.url}
+			</value>
+		</property>
 	</bean>
 	<bean id="arubaSignServiceClient" class="it.cnr.jada.firma.arss.ArubaSignServiceClient">
-	  <property name="props" ref="props-aruba"></property>
+		<property name="props" ref="props-aruba"></property>
 	</bean>
 
 
-  <!-- scheduler -->
-  <task:scheduled-tasks scheduler="siglaScheduler">
-    <task:scheduled ref="fatturaPassivaElettronicaService" method="allineaNotificheExecute" cron="${allinea.notifiche.cron.expression}" />
-    <task:scheduled ref="fatturaPassivaElettronicaService" method="execute" cron="${pec.cron.expression}" />
-  </task:scheduled-tasks>
+	<!-- scheduler -->
+	<task:scheduled-tasks scheduler="siglaScheduler">
+		<task:scheduled ref="fatturaPassivaElettronicaService" method="allineaNotificheExecute" cron="${allinea.notifiche.cron.expression}" />
+		<task:scheduled ref="fatturaPassivaElettronicaService" method="execute" cron="${pec.cron.expression}" />
+	</task:scheduled-tasks>
 
-  <task:scheduler id="siglaScheduler"  pool-size="10"/>
+	<task:scheduler id="siglaScheduler"  pool-size="10"/>
 
-  <task:executor id="siglaTaskExecutor" pool-size="5"/>
-  <task:annotation-driven  executor="siglaTaskExecutor" scheduler="siglaScheduler"/>
-  <!-- / scheduler -->
-
-
-
+	<task:executor id="siglaTaskExecutor" pool-size="5"/>
+	<task:annotation-driven  executor="siglaTaskExecutor" scheduler="siglaScheduler"/>
+	<!-- / scheduler -->
 </beans>
