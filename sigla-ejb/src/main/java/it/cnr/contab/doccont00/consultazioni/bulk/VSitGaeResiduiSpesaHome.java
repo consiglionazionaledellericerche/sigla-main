@@ -33,7 +33,7 @@ public class VSitGaeResiduiSpesaHome extends RestServicesHome implements Consult
 	}
 
 	@Override
-	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		CdrBulk cdrUtente = cdrFromUserContext(userContext);
 		if ( !cdrUtente.isCdrILiv() ){
 			sql.addSQLClause("AND", "CDS",sql.EQUALS, CNRUserContext.getCd_cdr(userContext));
@@ -54,6 +54,7 @@ public class VSitGaeResiduiSpesaHome extends RestServicesHome implements Consult
 			}
 			sql.closeParenthesis();
 		}
+		return sql;
 	}
 
 
