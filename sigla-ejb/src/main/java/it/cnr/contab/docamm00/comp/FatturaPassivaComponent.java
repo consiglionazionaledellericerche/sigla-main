@@ -18,6 +18,7 @@ import java.util.Vector;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.docamm00.storage.StorageFolderFatturaPassiva;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,6 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
@@ -45,7 +45,6 @@ import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
-import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
 import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
 import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
@@ -2979,9 +2978,8 @@ public OggettoBulk creaConBulk(
 	return fattura_passiva;
 }
 private void aggiornaMetadatiDocumentale(Fattura_passivaBulk fattura_passiva) throws ComponentException {
-	CMISFolderFatturaPassiva folder = new CMISFolderFatturaPassiva(fattura_passiva, fattura_passiva.getDocumentoEleTestata());	
-	SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
-	folder.updateMetadataPropertiesCMIS(cmisService);
+	StorageFolderFatturaPassiva folder = new StorageFolderFatturaPassiva(fattura_passiva, fattura_passiva.getDocumentoEleTestata());
+	folder.updateMetadataPropertiesCMIS();
 }
 private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_passiva_rigaBulk dettaglio)
 	throws ComponentException {
@@ -5784,7 +5782,7 @@ public Nota_di_creditoBulk setContoEnteIn(
  * Pre:  Una richiesta di impostare un savepoint e' stata generata 
  * Post: Un savepoint e' stato impostato in modo che le modifiche apportate al doc. amministrativo vengono consolidate
  *
- * @param	uc	lo UserContext che ha generato la richiesta
+ * @param	userContext	lo UserContext che ha generato la richiesta
  */	
 public void setSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
