@@ -149,7 +149,7 @@ public class Missione_rimborso_kmHome extends BulkHome implements ConsultazioniR
 	}
 
 	@Override
-	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		if (compoundfindclause != null && compoundfindclause.getClauses() != null){
 			CompoundFindClause newClauses = new CompoundFindClause();
 			Enumeration e = compoundfindclause.getClauses();
@@ -199,6 +199,7 @@ public class Missione_rimborso_kmHome extends BulkHome implements ConsultazioniR
 				}
 			}
 		}
+		return sql;
 	}
 
 	private Boolean isCondizioneRimborsoKmMissione(Enumeration e) {

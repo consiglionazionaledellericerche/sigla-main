@@ -333,7 +333,7 @@ public class ProgettoGestHome extends BulkHome implements ConsultazioniRestHome 
 	}
 
 	@Override
-	public void restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
 		if (compoundfindclause != null && compoundfindclause.getClauses() != null){
 			Boolean trovataCondizioneUo = false;
 			CompoundFindClause newClauses = new CompoundFindClause();
@@ -372,7 +372,7 @@ public class ProgettoGestHome extends BulkHome implements ConsultazioniRestHome 
 		if ( !isUoEnte(userContext)){
 			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
 		}
-
+		return sql;
 	}
 
 	private Boolean isUoEnte(UserContext userContext) throws PersistencyException, ComponentException{
