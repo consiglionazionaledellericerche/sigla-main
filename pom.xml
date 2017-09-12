@@ -63,6 +63,6 @@
   <scm>
     <connection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</connection>
     <developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</developerConnection>
-    <tag>sigla-4.0.79</tag>
+    <tag>HEAD</tag>
   </scm>
 </project>
