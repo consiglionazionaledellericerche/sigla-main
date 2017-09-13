@@ -2850,7 +2850,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 					}
 				}
 			} else if (prop.equals("F:missioni_dettaglio_sigla:main")){
-				String rigaString = storageObject.getPropertyValue("missioni_dettaglio_sigla:riga");
+				BigInteger riga = storageObject.getPropertyValue("missioni_dettaglio_sigla:riga");
 				List<StorageObject> children = missioniCMISService.getChildren(storageObject.getKey());
 				if (children != null){
 					for (StorageObject doc : children) {
@@ -2865,7 +2865,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 							for ( java.util.Iterator i = allegatoParentBulk.getSpeseMissioneColl().iterator(); i.hasNext(); )
 							{
 								Missione_dettaglioBulk spesa = (Missione_dettaglioBulk) i.next();
-								if (spesa.getPg_riga().compareTo(new Long(rigaString)) == 0){
+								if (spesa.getPg_riga().compareTo(riga.longValue()) == 0){
 									spesa.addToDettaglioSpesaAllegati(allegato);
 								}
 							}
