@@ -34,22 +34,15 @@ import it.cnr.jada.util.jsp.Button;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.pdfbox.util.PDFMergerUtility;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import com.google.gson.GsonBuilder;
+import org.apache.http.HttpStatus;
+import org.apache.pdfbox.util.PDFMergerUtility;
 
 public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	private static final long serialVersionUID = 1L;
