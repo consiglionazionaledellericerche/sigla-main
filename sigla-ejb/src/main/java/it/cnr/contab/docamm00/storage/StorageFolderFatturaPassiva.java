@@ -308,11 +308,11 @@ public class StorageFolderFatturaPassiva extends OggettoBulk {
 		else {
             StorageObject trasmissioneFolder = null;
 			for (StorageObject storageObject : resultsFolder) {
-                trasmissioneFolder = storageObject;
-				BigInteger prog = storageObject.<BigInteger>getPropertyValue("sigla_fatture:progressivo_sdi");
+                trasmissioneFolder = storeService.getStorageObjectBykey(storageObject.getKey());
+				BigInteger prog = trasmissioneFolder.<BigInteger>getPropertyValue("sigla_fatture:progressivo_sdi");
 				if (prog == null || prog.equals(new BigInteger("0"))){
 					if (isProgressivoTrasmissioneZero()){
-						storeService.updateMetadataFromBulk(storageObject, this);
+						storeService.updateMetadataFromBulk(trasmissioneFolder, this);
 						break;
 					}
 				}
