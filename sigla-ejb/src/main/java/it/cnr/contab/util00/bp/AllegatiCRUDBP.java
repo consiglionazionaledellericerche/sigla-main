@@ -253,10 +253,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {
                         throw handleException(e);
-                    }
+                    }writeForm
                 }
             }
-        }
+        }writeForm
         gestioneCancellazioneAllegati(allegatoParentBulk);
     }
     protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {
