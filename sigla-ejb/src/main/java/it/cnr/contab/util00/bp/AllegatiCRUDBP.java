@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-
 public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends AllegatoParentBulk> extends SimpleCRUDBP {
     private static final long serialVersionUID = 1L;
     protected StoreService storeService;
@@ -253,10 +252,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {
                         throw handleException(e);
-                    }writeForm
+                    }
                 }
             }
-        }writeForm
+        }
         gestioneCancellazioneAllegati(allegatoParentBulk);
     }
     protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {
