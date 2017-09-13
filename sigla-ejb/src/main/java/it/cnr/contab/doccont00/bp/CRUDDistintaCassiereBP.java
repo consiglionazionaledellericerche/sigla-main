@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -12,12 +13,6 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
-import it.cnr.contab.doccont00.intcass.bulk.Apparence;
-import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
-import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
-import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
-import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk;
-import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.intcass.xmlbnl.FlussoOrdinativi;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
 import it.cnr.contab.doccont00.intcass.xmlbnl.ObjectFactory;
