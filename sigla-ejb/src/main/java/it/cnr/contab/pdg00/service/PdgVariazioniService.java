@@ -67,8 +67,9 @@ public class PdgVariazioniService extends StoreService {
 		if (variazionePdg != null)
 			query.append(" and var.").append(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()).append(" = ").append(variazionePdg);
         return search(query.toString()).stream()
-                .map(storageObject -> storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
-                .map(BigInteger::intValue)
+                .map(storageObject -> storageObject.<List<BigInteger>>getPropertyValue(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
+				.map(list -> list.get(0))
+				.map(BigInteger::intValue)
                 .collect(Collectors.toList());
 	}	
 
