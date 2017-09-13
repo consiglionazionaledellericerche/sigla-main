@@ -82,12 +82,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 import javax.ejb.EJBException;
 
@@ -955,10 +950,13 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
 			escludiIVA=escludiIVAOld;
 			Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)i.next();
+			boolean autofattura = Optional.ofNullable(rigaSelected)
+					.map(fattura_passiva_rigaBulk -> Optional.ofNullable(fattura_passiva_rigaBulk.getVoce_iva()).orElse(new Voce_ivaBulk()))
+					.map(voce_ivaBulk -> voce_ivaBulk.getFl_autofattura()).orElse(false);
 			//RP 20/03/2015
-			if (!escludiIVA && rigaSelected.getVoce_iva().getFl_autofattura())
+			if (!escludiIVA && autofattura)
 				escludiIVAInt=true;
-			else if (!escludiIVA && !rigaSelected.getVoce_iva().getFl_autofattura())
+			else if (!escludiIVA && !autofattura)
 				escludiIVAInt=false;
 			if(escludiIVAInt)
 				escludiIVA=escludiIVAInt;
