@@ -164,7 +164,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		return bStream;			
 	}
 		
-	private void saveNotifica(DataHandler data, String nomeFile, String nodeRef, StorageDocAmmAspect aspect) throws ComponentException {
+	private void saveNotifica(final DataHandler data, String nomeFile, String nodeRef, StorageDocAmmAspect aspect) throws ComponentException {
 		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
@@ -173,9 +173,18 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", aspect.value()));
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 		try{
-			storeService.storeSimpleDocument(data.getInputStream(), data.getContentType(), nodeRef, metadataProperties);
-		} catch(IOException e){
-			throw new ComponentException(e);
+			Optional.ofNullable(storeService.getStorageObjectBykey(nodeRef))
+					.ifPresent(storageObject -> {
+						try {
+							storeService.storeSimpleDocument(
+									data.getInputStream(),
+									data.getContentType(),
+									storageObject.getPath(),
+									metadataProperties);
+						} catch (IOException e) {
+							throw new StorageException(StorageException.Type.GENERIC,e);
+						}
+					});
 		} catch(StorageException e){
 			LOGGER.warn("PEC File "+nomeFile+" alredy store!");
 		}
