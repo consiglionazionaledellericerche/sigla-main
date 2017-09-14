@@ -166,7 +166,7 @@ public interface SiglaStorageService {
      * @param keys
      * @return
      */
-    InputStream zipContent(List<String> keys);
+    InputStream zipContent(List<String> keys, String name);
 
     /**
      * Sign documents
