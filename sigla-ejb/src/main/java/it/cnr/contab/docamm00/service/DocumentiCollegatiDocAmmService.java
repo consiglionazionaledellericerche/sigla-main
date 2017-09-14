@@ -219,7 +219,7 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
 	}
 	public void gestioneAllegatiPerFatturazioneElettronica(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
 		if (fattura.isDocumentoFatturazioneElettronica()){
-			DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean(DocumentiCollegatiDocAmmService.class);
+			DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService",DocumentiCollegatiDocAmmService.class);
 			File file = lanciaStampaFatturaElettronica(userContext, fattura);
 			archiviaFileCMIS(userContext, documentiCollegatiDocAmmService, fattura, file);
 		}
