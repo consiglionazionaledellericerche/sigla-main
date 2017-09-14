@@ -179,7 +179,7 @@ public void create(it.cnr.jada.action.ActionContext context)
 			Fattura_attivaBulk fattura = (Fattura_attivaBulk) getModel();
 			int crudStatus = fattura.getCrudStatus();
 			if (fattura.isDocumentoFatturazioneElettronica()) {
-				SpringUtil.getBean(DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(
+				SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(
 						context.getUserContext(),
 						fattura
 				);

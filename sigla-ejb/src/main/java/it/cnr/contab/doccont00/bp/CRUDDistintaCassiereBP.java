@@ -1390,8 +1390,8 @@ public class CRUDDistintaCassiereBP extends
 					PrintService.class).executeReport(context.getUserContext(),
 					print);
 
-			return documentiContabiliService.storeSimpleDocument(
-					distinta, report.getInputStream(), report.getContentType(), report.getName(), distinta.getStorePath()
+			return documentiContabiliService.restoreSimpleDocument(
+					distinta, report.getInputStream(), report.getContentType(), report.getName(), distinta.getStorePath(), false
 			);
 		} catch (java.rmi.RemoteException e) {
 			throw handleException(e);
