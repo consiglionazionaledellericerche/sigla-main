@@ -29,6 +29,10 @@ import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIHome;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
@@ -87,10 +91,12 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
 import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -882,10 +888,11 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		sqlExists.closeParenthesis();
 	} else {
 		sqlExists.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_FIRMA_ORDINE);
-		sqlExists.openParenthesis("AND");
-		sqlExists.addSQLClause("OR", "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_DEFINITIVO);
-		sqlExists.addSQLClause("OR", "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_INVIATO_ORDINE);
-		sqlExists.closeParenthesis();
+		sql.openParenthesis("AND");
+		sql.addSQLClause("OR", "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_ALLA_FIRMA);
+		sql.addSQLClause("OR", "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_DEFINITIVO);
+		sql.addSQLClause("OR", "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_INVIATO_ORDINE);
+		sql.closeParenthesis();
 	}
 	sqlExists.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
 
@@ -1005,12 +1012,55 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext user
 		throws it.cnr.jada.comp.ComponentException {
 	OrdineAcqBulk ordine= (OrdineAcqBulk)bulk;
 	validaOrdine(userContext, ordine);
+	controlliCambioStato(userContext,ordine);
 	calcolaImportoOrdine(userContext, ordine);
     manageDeletedElements(userContext, ordine, status);
 	aggiornaObbligazioni(userContext,ordine,status);
 	return (OrdineAcqBulk)super.modificaConBulk(userContext, bulk);
 }
 
+private void controlliCambioStato(UserContext usercontext, OrdineAcqBulk ordine) throws ComponentException{
+	OrdineAcqBulk ordineDB;
+	try {
+		ordineDB = (OrdineAcqBulk)getTempHome(usercontext, OrdineAcqBulk.class).findByPrimaryKey(
+				new OrdineAcqBulk(
+						ordine.getCd_cds(),
+						ordine.getCdUnitaOperativa(),
+						ordine.getEsercizio(),
+						ordine.getCdNumeratore(),
+						ordine.getNumero()
+		                ));
+		if (ordineDB != null && !ordineDB.getStato().equals(ordine.getStato())){
+			if (ordineDB.isOrdineInserito()){
+				if (!ordine.isOrdineInviatoApprovazione()){
+					throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da 'in approvazione'");
+				}
+			} else if (ordineDB.isOrdineDefinitivo()){
+				if (!ordine.isOrdineInviatoFornitore()){
+					throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da inviato al fornitore");
+				}
+			} else if (ordineDB.isOrdineAllaFirma()){
+				if (!(ordine.isStatoDefinitivo() || ordine.isStatoInApprovazione())){
+					throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da definito o in approvazione");
+				}
+			} else if (ordineDB.isOrdineInviatoApprovazione()){
+				AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome) getHomeCache(usercontext).getHome(AbilUtenteUopOperBulk.class);
+				if (!abilHome.isUtenteAbilitato(usercontext, TipoOperazioneOrdBulk.OPERAZIONE_APPROVAZIONE_ORDINE, ordine.getCdUnitaOperativa())){
+					throw new it.cnr.jada.comp.ApplicationException("Utente non abilitato ad operare su ordini in approvazione");
+				}
+				if (!(ordine.isStatoAllaFirma() || ordine.isStatoInserito())){
+					throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da inserito o alla firma");
+				}
+			} else if (ordineDB.isOrdineInviatoFornitore()){
+				throw new it.cnr.jada.comp.ApplicationException("Non è possibile cambiare lo stato di un ordine inviato al fornitore");
+			}
+		}
+	} catch (PersistencyException e) {
+		throw new ComponentException(e);
+	} catch (IntrospectionException e) {
+		throw new ComponentException(e);
+	}
+}
 
 @Override
 public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
