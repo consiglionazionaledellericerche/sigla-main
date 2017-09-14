@@ -54,7 +54,7 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
 		if(ordine == null)
 			return super.isInputReadonly();
-		return 	super.isInputReadonly() || !ordine.isStatoInserito() ;
+		return 	super.isInputReadonly() || (ordine.getStato() != null && !ordine.isStatoInserito() && !ordine.isStatoInApprovazione()) ;
 	}
 
 	private final SimpleDetailCRUDController righe= new OrdineAcqRigaCRUDController("Righe", OrdineAcqRigaBulk.class, "righeOrdineColl", this){
@@ -541,20 +541,20 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 			os.flush();
 		}
 	}
-	public boolean isStampaRichiestaButtonHidden() {
+	public boolean isStampaOrdineButtonHidden() {
 
-		RichiestaUopBulk richiesta = (RichiestaUopBulk)getModel();
-		return (richiesta == null || richiesta.getNumero() == null);
+		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
+		return (ordine == null || ordine.getNumero() == null);
 	}
 
 	public boolean isSalvaDefinitivoButtonHidden() {
 
-		RichiestaUopBulk richiesta = (RichiestaUopBulk)getModel();
-		return (richiesta == null || richiesta.getNumero() == null || !richiesta.isInserita());
+		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
+		return (ordine == null || ordine.getNumero() == null || !ordine.isStatoAllaFirma());
 	}
 
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[8];
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[7];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.search");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.startSearch");
@@ -562,7 +562,6 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.new");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.save");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.delete");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.salvaDefinitivo");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.stampa");
 
 		return toolbar;

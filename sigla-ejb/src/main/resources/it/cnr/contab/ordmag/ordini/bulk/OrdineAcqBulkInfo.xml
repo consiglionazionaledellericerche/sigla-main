@@ -14,13 +14,13 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdCds" />
+		label="Cds" />
 	<fieldProperty
 		name="findNumerazioneOrd"
 		property="numerazioneOrd"
 		inputType="searchtool"
 		formName="searchtool"
-		enabledOnSearch="true"
+		enabledOnSearch="false"
 		label="Numeratore" />
 	<fieldProperty
 		name="findUnitaOperativaOrd"
@@ -58,7 +58,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
 		nullable="false"
 		label="Numeratore" />
 	<fieldProperty
@@ -91,6 +91,8 @@
 		maxLength="20"
 		enabledOnInsert="false"
 		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
 		nullable="false"
 		keysProperty="statoKeys"
 		label="Stato" />
@@ -102,10 +104,22 @@
 		inputType="SELECT"
 		nullable="true"
 		keysProperty="statoKeysForSearch"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="statoForUpdate"
+		property="stato"
+		inputSize="20"
+		maxLength="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="statoKeysForUpdate"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
 		label="Stato"
 		caseSensitiveSearch="false" />
 	<fieldProperty
@@ -172,7 +186,7 @@
 		formName="searchtool_lungo"
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROFornitoreSearchTool"
-		enabledOnSearch="true"
+		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
 		label="Fornitore"/>
@@ -428,7 +442,9 @@
                 property="responsabileProcPers"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
-                enabledOnSearch="true"
+                enabledOnSearch="false"
+				enabledOnInsert="false"
+				enabledOnEdit="false"
                 label="Responsabile procedimento/RUP" />
         <fieldProperty
                 name="responsabileProc"
@@ -450,7 +466,9 @@
                 property="firmatarioPers"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
-                enabledOnSearch="true"
+                enabledOnSearch="false"
+                enabledOnEdit="false"
+				enabledOnInsert="false"
                label="Firmatario" />
         <fieldProperty
                 name="firmatario"
@@ -472,14 +490,26 @@
                 property="direttorePers"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
-                enabledOnSearch="true"
+                enabledOnSearch="false"
+                enabledOnEdit="false"
+				enabledOnInsert="false"
                label="Direttore/Dirigente" />
+        <fieldProperty
+                name="direttore"
+                property="direttorePers.cd_terzo"
+                readonlyProperty="ROFirmatario"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="8"
+                label="Direttore" />
         <fieldProperty
                 name="figura_giuridica_interna"
                 property="terzoCdr"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
-                enabledOnSearch="true"
+                enabledOnSearch="false"
+                enabledOnEdit="false"
+				enabledOnInsert="false"
                 nullable="false"
                 label="Centro di responsabilità" />
         <fieldProperty
@@ -505,7 +535,7 @@
         inputType="SEARCHTOOL"
         formName="searchtool"
         nullable="false"
-        enabledOnSearch="true"
+        enabledOnSearch="false"
         label="Tipo Ordine" />
     <fieldProperty
 		name="cdTipoOrdine"
@@ -521,7 +551,9 @@
                 inputType="SEARCHTOOL"
                 formName="searchtool"
                 nullable="false"
-                enabledOnSearch="true"
+                enabledOnEdit="false"
+				enabledOnInsert="false"
+                enabledOnSearch="false"
                 label="Procedura Amministrativa" />
         <fieldProperty
                 name="cdProcAmm"
@@ -536,7 +568,9 @@
                 property="cig"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
-                enabledOnSearch="true"
+                enabledOnEdit="false"
+				enabledOnInsert="false"
+                enabledOnSearch="false"
                 label="CIG" />
          <fieldProperty
                 name="cdCig"
@@ -550,7 +584,9 @@
                 property="cup"
                 inputType="SEARCHTOOL"
                 formName="searchtool"
-                enabledOnSearch="true"
+                enabledOnEdit	="false"
+				enabledOnInsert="false"
+                enabledOnSearch="false"
                 label="CUP" />
         <fieldProperty
                 name="cdCup"
@@ -666,6 +702,10 @@
 		name="dataOrdine" />
 	<formFieldProperty
 		name="stato" />
+	<formFieldProperty
+		name="statoForSearch" />
+	<formFieldProperty
+		name="statoForUpdate" />
 	<formFieldProperty
 		name="dataOrdineDef" />
 	<formFieldProperty
@@ -785,7 +825,7 @@
 	<findFieldProperty
 		name="cambio" />
 	<findFieldProperty
-		name="cdTerzo" />
+		name="cd_fornitore" />
 	<findFieldProperty
 		name="ragioneSociale" />
 	<findFieldProperty
@@ -797,23 +837,17 @@
 	<findFieldProperty
 		name="partitaIva" />
 	<findFieldProperty
-		name="cdTerminiPag" />
-	<findFieldProperty
-		name="pgBanca" />
-	<findFieldProperty
-		name="cdModalitaPag" />
-	<findFieldProperty
 		name="nota" />
 	<findFieldProperty
 		name="cdNotaPrecodificata" />
 	<findFieldProperty
 		name="esercizioContratto" />
 	<findFieldProperty
-		name="statoContratto" />
-	<findFieldProperty
 		name="pgContratto" />
 	<findFieldProperty
 		name="stato" />
+	<findFieldProperty
+		name="statoForSearch" />
 	<findFieldProperty
 		name="dataOrdineDef" />
 	<findFieldProperty
@@ -828,15 +862,13 @@
 		name="referenteEsterno" />
 	<findFieldProperty
 		name="cdTipoOrdine" />
+	<findFieldProperty name="tiAttivitaSearch" />
 	<findFieldProperty
 		name="cdProcAmm" />
 	<findFieldProperty
 		name="cdCig" />
 	<findFieldProperty
 		name="cdCup" />
-	<findFieldProperty
-		name="dtCancellazione" />
-	<findFieldProperty name="tiAttivitaSearch" />
 	<columnFieldProperty
 		name="tiAttivita" />
 	<columnFieldProperty
@@ -858,7 +890,7 @@
 	<columnFieldProperty
 		name="cambio" />
 	<columnFieldProperty
-		name="cdTerzo" />
+		name="cd_fornitore" />
 	<columnFieldProperty
 		name="ragioneSociale" />
 	<columnFieldProperty
@@ -870,23 +902,15 @@
 	<columnFieldProperty
 		name="partitaIva" />
 	<columnFieldProperty
-		name="cdTerminiPag" />
-	<columnFieldProperty
-		name="pgBanca" />
-	<columnFieldProperty
-		name="cdModalitaPag" />
-	<columnFieldProperty
 		name="nota" />
 	<columnFieldProperty
 		name="cdNotaPrecodificata" />
 	<columnFieldProperty
 		name="esercizioContratto" />
 	<columnFieldProperty
-		name="statoContratto" />
-	<columnFieldProperty
 		name="pgContratto" />
 	<columnFieldProperty
-		name="stato" />
+		name="statoForSearch" />
 	<columnFieldProperty
 		name="dataOrdineDef" />
 	<columnFieldProperty
@@ -907,6 +931,4 @@
 		name="cdCig" />
 	<columnFieldProperty
 		name="cdCup" />
-	<columnFieldProperty
-		name="dtCancellazione" />
 </bulkInfo>
