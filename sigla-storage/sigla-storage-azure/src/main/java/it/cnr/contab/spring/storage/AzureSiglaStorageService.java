@@ -337,7 +337,7 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     }
 
     @Override
-    public InputStream zipContent(List<String> keys) {
+    public InputStream zipContent(List<String> keys, String name) {
         LOGGER.warn("AZURE -> Not yet implemented");
         return null;
     }
