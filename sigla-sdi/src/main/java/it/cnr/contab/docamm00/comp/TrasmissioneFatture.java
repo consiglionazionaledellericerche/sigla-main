@@ -143,7 +143,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			Fattura_attivaBulk fattura, StorageDocAmmAspect aspect) throws IOException,
 			ApplicationException {
 		logger.info("Inizio Salvataggio sul Documentale");
-		DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean(DocumentiCollegatiDocAmmService.class);
+		DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
 		StorageFile storageFile = new StorageFileFatturaAttiva(data.getInputStream(), data.getContentType(), nomeFile, fattura);
 		if (storageFile !=null) {
 			String path = storageFile.getStorageParentPath();
@@ -224,7 +224,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 								Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 								if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
 									try{
-										SpringUtil.getBean(DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
+										SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
 									} catch (Exception ex) {
 										logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa della mancata consegna della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 										java.io.StringWriter sw = new java.io.StringWriter();
@@ -342,7 +342,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 								Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 								if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
 									try{
-                                        SpringUtil.getBean(DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
+                                        SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
 									} catch (Exception ex) {
 										logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa dello scarto della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 										java.io.StringWriter sw = new java.io.StringWriter();
@@ -439,7 +439,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 										Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 										if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
 											try{
-                                                SpringUtil.getBean(DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
+                                                SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
 											} catch (Exception ex) {
 												logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa della Fattura rifiutata con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 												java.io.StringWriter sw = new java.io.StringWriter();
