@@ -9,6 +9,7 @@ import javax.persistence.PersistenceException;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
@@ -111,6 +112,44 @@ public Forward doBringBackSearchFindNumerazioneOrd(ActionContext context,
 		}
 	}
 
+public Forward doBlankSearchFind_contratto(ActionContext context, OrdineAcqBulk ordine) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+        ordine.setContratto(new ContrattoBulk());
+		ordine.setResponsabileProcPers(null);
+		ordine.setCup(null);
+		ordine.setCig(null);
+		ordine.setDirettorePers(null);
+		ordine.setFirmatarioPers(null);
+		ordine.setProcedureAmministrative(null);
+		ordine.setTerzoCdr(null);
+		ordine.setReferenteEsterno(null);
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBringBackSearchFind_contratto(ActionContext context,
+		OrdineAcqBulk ordine,
+		ContrattoBulk contratto) 
+		throws java.rmi.RemoteException {
+
+		ordine.setContratto(contratto);
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		if (contratto != null){
+			ordine.setResponsabileProcPers(contratto.getResponsabile());
+			ordine.setCup(contratto.getCup());
+			ordine.setCig(contratto.getCig());
+			ordine.setDirettorePers(contratto.getDirettore());
+			ordine.setFirmatarioPers(contratto.getFirmatario());
+			ordine.setProcedureAmministrative(contratto.getProcedura_amministrativa());
+			ordine.setTerzoCdr(contratto.getFigura_giuridica_interna());
+			ordine.setReferenteEsterno(contratto.getResp_esterno());
+		}
+		return context.findDefaultForward();
+}
 public Forward doBlankSearchFindBeneServizio(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
 
     try {
