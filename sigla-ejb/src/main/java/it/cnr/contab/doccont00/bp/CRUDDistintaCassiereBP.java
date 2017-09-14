@@ -1431,7 +1431,8 @@ public class CRUDDistintaCassiereBP extends
 					.map(paDistintaDef -> documentiContabiliService.getStorageObjectByPath(
 							distinta.getStorePath().concat(SiglaStorageService.SUFFIX).concat(distinta.getCMISName())
 					)).orElse(inviaDistinta(context, distinta));
-			List<String> nodes = Arrays.asList((String)distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
+			List<String> nodes = new ArrayList<String>();
+			nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
 			List<V_mandato_reversaleBulk> dettagliRev = ((DistintaCassiereComponentSession) createComponentSession())
 					.dettagliDistinta(
 							context.getUserContext(),
