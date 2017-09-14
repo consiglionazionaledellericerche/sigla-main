@@ -280,7 +280,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			for (StatoTrasmissione cons : selectelElements) {
 				nodes.add(SpringUtil.getBean(DocumentiContabiliService.class).getDocumentKey(cons, true));
 			}
-			InputStream is = SpringUtil.getBean(DocumentiContabiliService.class).zipContent(nodes);
+			InputStream is = SpringUtil.getBean(DocumentiContabiliService.class).zipContent(nodes, "Documenti contabili");
 			if (is != null){
 				((HttpActionContext)actioncontext).getResponse().setContentType("application/zip");
 				OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();

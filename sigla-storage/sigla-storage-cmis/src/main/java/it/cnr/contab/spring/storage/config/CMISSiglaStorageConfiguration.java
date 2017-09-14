@@ -399,10 +399,10 @@ public class CMISSiglaStorageConfiguration {
             }
 
             @Override
-            public InputStream zipContent(List<String> keys) {
+            public InputStream zipContent(List<String> keys, String name) {
                 UrlBuilder url = new UrlBuilder(baseURL.concat(ZIP_CONTENT));
                 url.addParameter("destination", getObjectByPath("/User Homes/sigla", true).getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
-                url.addParameter("filename", "Documenti contabili.zip");
+                url.addParameter("filename", name);
                 url.addParameter("noaccent", true);
                 url.addParameter("getParent", true);
                 url.addParameter("download", false);
@@ -420,7 +420,10 @@ public class CMISSiglaStorageConfiguration {
                 }
                 try {
                     JSONObject  jsonObject = new JSONObject(IOUtils.toString(resZipContent.getStream()));
-                    return getInputStream(jsonObject.getString("nodeRef"));
+                    String nodeRef = jsonObject.getString("nodeRef");
+                    final InputStream inputStream = getInputStream(nodeRef);
+                    delete(nodeRef);
+                    return inputStream;
                 } catch (IOException e) {
                     throw new StorageException(StorageException.Type.GENERIC, e);
                 }
