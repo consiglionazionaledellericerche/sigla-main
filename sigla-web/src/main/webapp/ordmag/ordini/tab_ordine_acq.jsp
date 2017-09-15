@@ -95,13 +95,19 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 <div class="Group card">
 	  <table>
 		<tr>
-			<%
-			bp.getController().writeFormField(out, "find_contratto");
-			%>
+				    <td><% bp.getController().writeFormLabel( out, "find_contratto"); %></td>
+					<td>
+					    <% bp.getController().writeFormInput( out, "esercizioContratto"); %>
+						<% bp.getController().writeFormInput( out, "pgContratto"); %>
+						<% bp.getController().writeFormInput( out, "oggettoContratto"); %>
+						<% bp.getController().writeFormInput( out, "find_contratto"); %>
+						<% bp.getController().writeFormInput( out, "visualizza_contratto"); %>
+					</td>				 
+
 		</tr>
 		<tr>
 			<%
-			bp.getController().writeFormField(out, "findResponsabile");
+			bp.getController().writeFormField(out, "figura_giuridica_interna");
 			%>
 		</tr>
 		<tr>
@@ -111,22 +117,22 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 		</tr>
 		<tr>
 			<%
+			bp.getController().writeFormField(out, "findResponsabile");
+			%>
+		</tr>
+		<tr>
+			<%
 			bp.getController().writeFormField(out, "findDirettore");
 			%>
 		</tr>
 		<tr>
 			<%
-			bp.getController().writeFormField(out, "figura_giuridica_interna");
+			bp.getController().writeFormField(out, "cig");
 			%>
 		</tr>
 		<tr>
 			<%
 			bp.getController().writeFormField(out, "procedura_amministrativa");
-			%>
-		</tr>
-		<tr>
-			<%
-			bp.getController().writeFormField(out, "cig");
 			%>
 		</tr>
 		<tr>

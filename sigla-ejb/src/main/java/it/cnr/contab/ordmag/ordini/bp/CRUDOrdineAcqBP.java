@@ -20,6 +20,7 @@ import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.ejb.OrdineComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
@@ -55,6 +56,22 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 		if(ordine == null)
 			return super.isInputReadonly();
 		return 	super.isInputReadonly() || (ordine.getStato() != null && !ordine.isStatoInserito() && !ordine.isStatoInApprovazione()) ;
+	}
+
+	public OrdineAcqBulk creaOrdineDaRichieste(ActionContext context, List<RichiestaUopBulk> lista) throws BusinessProcessException{
+
+
+		try {
+			OrdineAcqBulk ordine = null;
+			OrdineAcqComponentSession comp = (OrdineAcqComponentSession)createComponentSession();
+			
+			setModel(context, ordine);
+			
+			return ordine;
+		}catch(Throwable ex){
+			throw handleException(ex);
+		}
+
 	}
 
 	private final SimpleDetailCRUDController righe= new OrdineAcqRigaCRUDController("Righe", OrdineAcqRigaBulk.class, "righeOrdineColl", this){

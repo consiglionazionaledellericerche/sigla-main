@@ -1,6 +1,12 @@
 package it.cnr.contab.ordmag.richieste.bp;
 
+import java.util.List;
+
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.ejb.OrdineComponentSession;
+import it.cnr.contab.doccont00.ordine.bulk.OrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
@@ -146,24 +152,15 @@ public it.cnr.jada.util.jsp.Button[] createToolbar()
 	}
 	else
 	{
-		if ( isObbligazioniDefinitive() )
-			toolbar = new Button[3];
-		else
 			toolbar = new Button[7];
 			int i = 0;
 			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.freeSearch");
-		//	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.new");
 			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.edit");
-		if ( !isObbligazioniDefinitive())
-		{
 			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.confirm");
 			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.delete");
 			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.selectAll");
 			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.deselectAll");
 			
-		}		
-	//	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.bringBack");
-	//	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.print");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.emetteOrdine");
 		
 	}
@@ -325,14 +322,6 @@ public boolean isEditButtonEnabled() {
 public boolean isEmettiOrdineButtonEnabled() {
 	return getSelection().getFocus() != -1;
 
-}
-/**
- * Ritorna TRUE se l'obbligazione e' definitiva
- *		   FALSE se l'obbligazione è provvisoria.
- */
-public boolean isObbligazioniDefinitive()
-{
-	return (statoObbligazione.equals( ObbligazioneBulk.STATO_OBB_DEFINITIVO));
 }
 /**
  * @param context <code>ActionContext</code> in uso.

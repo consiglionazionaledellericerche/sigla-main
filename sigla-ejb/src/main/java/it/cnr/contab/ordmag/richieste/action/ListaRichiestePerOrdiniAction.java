@@ -1,14 +1,20 @@
 package it.cnr.contab.ordmag.richieste.action;
 
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.doccont00.ordine.bulk.OrdineBulk;
+import java.util.List;
+
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
+import it.cnr.contab.doccont00.bp.CRUDOrdineBP;
+import it.cnr.contab.doccont00.bp.ListaObbligazioniBP;
+import it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.richieste.bp.GenerazioneOrdineDaRichiesteBP;
-import it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.util.action.*;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.action.AbstractSelezionatoreBP;
+import it.cnr.jada.util.action.RicercaLiberaBP;
 /**
  * Azione che gestisce le richieste relative alla Gestione Documenti Contabili
  * (Lista di Obbligazioni)
@@ -86,21 +92,18 @@ public Forward doEmettiOrdine(ActionContext context) {
 
 	try {
 
-		ListaObbligazioniBP loBP = (ListaObbligazioniBP)context.getBusinessProcess();
-		ObbligazioneBulk obblig = (ObbligazioneBulk)loBP.getFocusedElement(context);
-		CRUDOrdineBP bp;
+		GenerazioneOrdineDaRichiesteBP goBP = (GenerazioneOrdineDaRichiesteBP)context.getBusinessProcess();
+		List<RichiestaUopBulk> lista = goBP.getSelectedElements(context);
+		CRUDOrdineAcqBP bp;
 
-		if (obblig==null)
-			setErrorMessage(context, "Selezionare una Obbligazione");
+		if (lista==null || lista.size() == 0)
+			setErrorMessage(context, "Selezionare almeno una Richiesta");
 		else{
-			if (!loBP.isEditable())
-				bp = (CRUDOrdineBP)context.createBusinessProcess("CRUDOrdineBP",new Object[] { "V" });
-			else
-				bp = (CRUDOrdineBP)context.createBusinessProcess("CRUDOrdineBP",new Object[] { "M" });
+			bp = (CRUDOrdineAcqBP)context.createBusinessProcess("CRUDOrdineAcqBP",new Object[] { "M" });
 
-			OrdineBulk ordine = bp.generaOrdinePer(context,obblig);
+			OrdineAcqBulk ordine = bp.creaOrdineDaRichieste(context,lista);
 			if(ordine == null){
-				setErrorMessage(context, "L'impegno selezionato non ha associato nessun ordine");
+				setErrorMessage(context, "Ordine non creato");
 				return context.findDefaultForward();
 			}
 			return context.addBusinessProcess(bp);
