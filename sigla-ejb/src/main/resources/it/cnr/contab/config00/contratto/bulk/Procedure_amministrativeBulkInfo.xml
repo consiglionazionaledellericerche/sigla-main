@@ -108,6 +108,15 @@
 		inputSize="30"
 		 />           
 	</form>
+    <form name="searchtool_large">
+	  <formFieldProperty
+		name="cd_proc_amm" />	
+	  <formFieldProperty
+		name="ds_proc_amm"
+		inputType="TEXT"
+		inputSize="70"
+		 />           
+	</form>
 	
 	<formFieldProperty
 		name="cd_proc_amm" />
