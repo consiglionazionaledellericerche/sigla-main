@@ -412,7 +412,7 @@
 		cols="160"
 		rows="3"
 		maxLength="2000"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		label="Nota" />
 	<fieldProperty
 		name="findNotaPrecodificata"
@@ -441,7 +441,7 @@
                 name="findResponsabile"
                 property="responsabileProcPers"
                 inputType="SEARCHTOOL"
-                formName="searchtool"
+                formName="searchtool_large"
                 enabledOnSearch="false"
 				enabledOnInsert="false"
 				enabledOnEdit="false"
@@ -465,7 +465,7 @@
                 name="findFirmatario"
                 property="firmatarioPers"
                 inputType="SEARCHTOOL"
-                formName="searchtool"
+                formName="searchtool_large"
                 enabledOnSearch="false"
                 enabledOnEdit="false"
 				enabledOnInsert="false"
@@ -489,7 +489,7 @@
                 name="findDirettore"
                 property="direttorePers"
                 inputType="SEARCHTOOL"
-                formName="searchtool"
+                formName="searchtool_large"
                 enabledOnSearch="false"
                 enabledOnEdit="false"
 				enabledOnInsert="false"
@@ -506,7 +506,7 @@
                 name="figura_giuridica_interna"
                 property="terzoCdr"
                 inputType="SEARCHTOOL"
-                formName="searchtool"
+                formName="searchtool_large"
                 enabledOnSearch="false"
                 enabledOnEdit="false"
 				enabledOnInsert="false"
@@ -549,7 +549,7 @@
                 name="procedura_amministrativa"
                 property="procedureAmministrative"
                 inputType="SEARCHTOOL"
-                formName="searchtool"
+                formName="searchtool_large"
                 nullable="false"
                 enabledOnEdit="false"
 				enabledOnInsert="false"
@@ -567,7 +567,7 @@
                 name="cig"
                 property="cig"
                 inputType="SEARCHTOOL"
-                formName="searchtool"
+                formName="searchtool_large"
                 enabledOnEdit="false"
 				enabledOnInsert="false"
                 enabledOnSearch="false"
@@ -583,7 +583,7 @@
                 name="cup"
                 property="cup"
                 inputType="SEARCHTOOL"
-                formName="searchtool"
+                formName="searchtool_large"
                 enabledOnEdit	="false"
 				enabledOnInsert="false"
                 enabledOnSearch="false"
@@ -599,7 +599,6 @@
 		name="find_contratto"
 		property="contratto"
 		inputType="SEARCHTOOL"
-        formName="searchtool"
 		label="Contratto"
 		enabledOnSearch="true" 
 		/>
@@ -608,7 +607,6 @@
 		property="contratto.esercizio"
 		label="Esercizio contratto"
 		inputType="TEXT"
-		readonlyProperty="ROContratto"
 		maxLength="4"
 		inputSize="4"
 		enabledOnSearch="true" 
@@ -619,7 +617,6 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
-		readonlyProperty="ROContratto"
 		label="Progressivo contratto"
 		enabledOnSearch="true" 
 		/>
@@ -631,6 +628,14 @@
 		inputType="ROTEXT"
 		label="Oggetto contratto"
 		enabledOnSearch="true" 
+		/>		
+	<fieldProperty
+		name="visualizza_contratto"
+		property="contratto"
+		inputType="BUTTON"
+		img="img/export16.gif"
+		label="Visualizza Contratto"
+		href="javascript:submitForm('doVisualizzaContratto()')"
 		/>		
 	<fieldProperty
 		name="imImponibile"
@@ -754,11 +759,11 @@
 	<formFieldProperty
 		name="find_contratto"/>
 	<formFieldProperty
-		name="esercizio_contratto"/>		
+		name="esercizioContratto"/>		
 	<formFieldProperty
-		name="pg_contratto"/>
+		name="pgContratto"/>
 	<formFieldProperty
-		name="oggetto_contratto"/>		
+		name="oggettoContratto"/>		
 	<formFieldProperty
 		name="referenteEsterno" />
 	<formFieldProperty
@@ -807,6 +812,9 @@
 		name="imIvaD" />
 	<formFieldProperty
 		name="imTotaleOrdine" />
+	<formFieldProperty
+		name="visualizza_contratto"
+		/>
 
 	<findFieldProperty
 		name="cdCds" />
