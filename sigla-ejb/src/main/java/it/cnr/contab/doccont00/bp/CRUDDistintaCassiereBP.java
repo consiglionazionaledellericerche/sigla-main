@@ -1456,6 +1456,7 @@ public class CRUDDistintaCassiereBP extends
 							it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
 			dettagliMan.stream()
 					.map(v_mandato_reversaleBulk -> documentiContabiliService.getDocumentKey(v_mandato_reversaleBulk, true))
+                    .filter(s -> s != null)
 					.forEach(s -> nodes.add(s));
 
 			PdfSignApparence pdfSignApparence = new PdfSignApparence();
