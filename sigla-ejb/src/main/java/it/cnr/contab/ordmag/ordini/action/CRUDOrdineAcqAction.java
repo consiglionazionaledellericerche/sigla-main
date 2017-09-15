@@ -9,20 +9,33 @@ import javax.persistence.PersistenceException;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
+import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
+import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
+import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
@@ -99,6 +112,44 @@ public Forward doBringBackSearchFindNumerazioneOrd(ActionContext context,
 		}
 	}
 
+public Forward doBlankSearchFind_contratto(ActionContext context, OrdineAcqBulk ordine) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+        ordine.setContratto(new ContrattoBulk());
+		ordine.setResponsabileProcPers(null);
+		ordine.setCup(null);
+		ordine.setCig(null);
+		ordine.setDirettorePers(null);
+		ordine.setFirmatarioPers(null);
+		ordine.setProcedureAmministrative(null);
+		ordine.setTerzoCdr(null);
+		ordine.setReferenteEsterno(null);
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBringBackSearchFind_contratto(ActionContext context,
+		OrdineAcqBulk ordine,
+		ContrattoBulk contratto) 
+		throws java.rmi.RemoteException {
+
+		ordine.setContratto(contratto);
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		if (contratto != null){
+			ordine.setResponsabileProcPers(contratto.getResponsabile());
+			ordine.setCup(contratto.getCup());
+			ordine.setCig(contratto.getCig());
+			ordine.setDirettorePers(contratto.getDirettore());
+			ordine.setFirmatarioPers(contratto.getFirmatario());
+			ordine.setProcedureAmministrative(contratto.getProcedura_amministrativa());
+			ordine.setTerzoCdr(contratto.getFigura_giuridica_interna());
+			ordine.setReferenteEsterno(contratto.getResp_esterno());
+		}
+		return context.findDefaultForward();
+}
 public Forward doBlankSearchFindBeneServizio(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
 
     try {
@@ -404,13 +455,13 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 			fillModel( context );
 		}
 		if ("tabOrdineObbligazioni".equalsIgnoreCase(bp.getTab(tabName))) {
-//			try {
+			try {
 				fillModel( context );
-//				if (!bp.isSearching())
-//					controllaQuadraturaObbligazioni(context, ordine);
-//			} catch (it.cnr.jada.comp.ApplicationException e) {
-//				bp.setErrorMessage(e.getMessage());
-//			}
+				if (!bp.isSearching())
+					controllaQuadraturaObbligazioni(context, ordine);
+			} catch (it.cnr.jada.comp.ApplicationException e) {
+				bp.setErrorMessage(e.getMessage());
+			}
 		}
 		return super.doTab( context, tabName, pageName );		
 	}
@@ -419,6 +470,24 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 		return handleException(context,e);
 	}	
 }
+
+private void controllaQuadraturaObbligazioni(ActionContext context, OrdineAcqBulk ordine) 
+		throws it.cnr.jada.comp.ComponentException {
+
+	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+		
+		try {
+			OrdineAcqComponentSession h = (OrdineAcqComponentSession)bp.createComponentSession();
+			h.controllaQuadraturaObbligazioni(context.getUserContext(), ordine);
+		} catch (PersistencyException e) {
+			bp.handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			bp.handleException(e);
+		} catch (BusinessProcessException e) {
+			bp.handleException(e);
+		}
+	}
+
 @Override
 public Forward doSalva(ActionContext actioncontext) throws RemoteException {
 	try
@@ -1014,60 +1083,56 @@ public Forward doContabilizza(ActionContext context) {
  * @param prefix	
  * @return Il Forward alla pagina di risposta
  */
-//public Forward doModificaScadenzaInAutomatico(ActionContext context, String prefix) {
-//
-//	try {
-//		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
-//		fillModel(context);
-//		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
-//
-//		Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel();
-//
-//		if (scadenza == null)
-//			throw new it.cnr.jada.comp.ApplicationException("Selezionare l'impegno da modificare in automatico!");
-//		java.util.Vector righeAssociate = (java.util.Vector)fatturaPassiva.getFattura_passiva_obbligazioniHash().get(scadenza);
-//		if (righeAssociate == null || righeAssociate.isEmpty())
-//			throw new it.cnr.jada.comp.ApplicationException("Associare dei dettagli prima di aggiornare in automatico la scadenza impegno!");
-//		if (bp.isDeleting() &&
-//			!bp.isViewing() &&
-//			!it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).equals(scadenza.getEsercizio()))
-//			throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata appartiene all'esercizio " + scadenza.getEsercizio().intValue() + "! Operazione annullata.");
-//
-//		ObbligazioneAbstractComponentSession h = CRUDVirtualObbligazioneBP.getVirtualComponentSession(context, true);
-//
-//		try {
-//			scadenza = (Obbligazione_scadenzarioBulk)h.modificaScadenzaInAutomatico(
-//														context.getUserContext(), 
-//														scadenza, 
-//														getImportoPerAggiornamentoScadenzaInAutomatico(
-//																				context,
-//																				scadenza,
-//																				ordine,
-//																				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)),
-//														false);
-//			bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk().addToDefferredSaldi(
-//										scadenza.getObbligazione(), 
-//										scadenza.getObbligazione().getSaldiInfo());
-//		} catch (it.cnr.jada.comp.ComponentException e) {
-//			if (e.getDetail() instanceof it.cnr.contab.doccont00.comp.CheckDisponibilitaCassaFailed)
-//				throw new it.cnr.jada.comp.ApplicationException(e.getDetail().getMessage());
-//			if (e.getDetail() instanceof it.cnr.contab.doccont00.comp.SfondamentoPdGException)
-//				throw new it.cnr.jada.comp.ApplicationException(e.getDetail().getMessage());
-//			throw e;
-//		}
-//		
-//		Forward fwd = basicDoBringBackOpenObbligazioniWindow(context, scadenza);
-//
-//		bp.getObbligazioniController().getSelection().clear();
-//		bp.getObbligazioniController().setModelIndex(context, -1);
-//		bp.getObbligazioniController().setModelIndex(context,it.cnr.jada.bulk.BulkCollections.indexOfByPrimaryKey(bp.getObbligazioniController().getDetails(), scadenza));
-//		bp.setDirty(true);
-//	
-//		return fwd;
-//	} catch(Exception e) {
-//		return handleException(context,e);
-//	}
-//}
+public Forward doModificaScadenzaInAutomatico(ActionContext context, String prefix) {
+
+	try {
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		fillModel(context);
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+
+		Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel();
+
+		if (scadenza == null)
+			throw new it.cnr.jada.comp.ApplicationException("Selezionare l'impegno da modificare in automatico!");
+		java.util.Vector righeAssociate = (java.util.Vector)ordine.getOrdineObbligazioniHash().get(scadenza);
+		if (righeAssociate == null || righeAssociate.isEmpty())
+			throw new it.cnr.jada.comp.ApplicationException("Associare dei dettagli prima di aggiornare in automatico la scadenza impegno!");
+		if (bp.isDeleting() &&
+			!bp.isViewing() &&
+			!it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).equals(scadenza.getEsercizio()))
+			throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata appartiene all'esercizio " + scadenza.getEsercizio().intValue() + "! Operazione annullata.");
+
+		ObbligazioneAbstractComponentSession h = CRUDVirtualObbligazioneBP.getVirtualComponentSession(context, true);
+
+		try {
+			scadenza = (Obbligazione_scadenzarioBulk)h.modificaScadenzaInAutomatico(
+														context.getUserContext(), 
+														scadenza, 
+														ordine.getImportoTotalePerObbligazione(),
+														false);
+			bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk().addToDefferredSaldi(
+										scadenza.getObbligazione(), 
+										scadenza.getObbligazione().getSaldiInfo());
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			if (e.getDetail() instanceof it.cnr.contab.doccont00.comp.CheckDisponibilitaCassaFailed)
+				throw new it.cnr.jada.comp.ApplicationException(e.getDetail().getMessage());
+			if (e.getDetail() instanceof it.cnr.contab.doccont00.comp.SfondamentoPdGException)
+				throw new it.cnr.jada.comp.ApplicationException(e.getDetail().getMessage());
+			throw e;
+		}
+		
+		Forward fwd = basicDoBringBackOpenObbligazioniWindow(context, scadenza);
+
+		bp.getObbligazioniController().getSelection().clear();
+		bp.getObbligazioniController().setModelIndex(context, -1);
+		bp.getObbligazioniController().setModelIndex(context,it.cnr.jada.bulk.BulkCollections.indexOfByPrimaryKey(bp.getObbligazioniController().getDetails(), scadenza));
+		bp.setDirty(true);
+	
+		return fwd;
+	} catch(Exception e) {
+		return handleException(context,e);
+	}
+}
 /**
  * Gestisce la variazione manuale del valore del cambio e ricalcola tutti i totali
  */
@@ -1178,11 +1243,6 @@ public Forward doOpenObbligazioniWindow(ActionContext context) {
 			viewMode = !docAmmBP.getDocumentoAmministrativoCorrente().isEditable();
 			viewMode = !((CRUDOrdineAcqBP)docAmmBP).isManualModify();
 		}
-		
-		//Fattura_passivaBulk fat_pas = (Fattura_passivaBulk)bp.getModel();
-		//if ( fat_pas.getEsercizio().intValue() != fat_pas.getEsercizioInScrivania().intValue()){
-			//viewMode = true;
-		//}
 		
 		String status = viewMode ?"V":"M";
 		it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP nbp = it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP.getBusinessProcessFor(context, scadenza.getObbligazione(), status + "RSWTh");
@@ -1411,10 +1471,6 @@ private void scollegaDettagliDaObbligazione(ActionContext context, java.util.Lis
 	throws it.cnr.jada.comp.ComponentException {
 
 	if (models != null) {
-//		try {
-//			if (!((CRUDFatturaPassivaBP)getBusinessProcess(context)).isDeleting() &&
-//				hasRangeDetailWithDocAmmAssociated(context, models))
-//				throw new it.cnr.jada.comp.ApplicationException("Uno o più dettagli hanno storni o addebiti collegati! Impossibile scollegare.");
 
 			for (java.util.Iterator i = models.iterator(); i.hasNext();) {
 				OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)i.next();
@@ -1521,6 +1577,7 @@ private OrdineAcqRigaBulk gestioneConsegnaNonPresente(OrdineAcqRigaBulk riga) {
 		consegna.inizializzaConsegnaNuovaRiga();
 		consegna.setRiga(riga.getRiga());
 		consegna.setTipoConsegna(riga.getDspTipoConsegna());
+		consegna.setDtPrevConsegna(riga.getDspDtPrevConsegna());
 		riga.addToRigheConsegnaColl(consegna);
 	}
 	return riga;
@@ -1627,5 +1684,30 @@ public Forward aggiornaObbligazioni(ActionContext context) {
 
 	doCalcolaTotalePerObbligazione(context, (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel());
 	return context.findDefaultForward();	
+}
+
+public Forward doRemoveFromCRUDMain_Righe(ActionContext context) {
+
+	try {
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+		bp.getRighe().remove(context);
+		calcolaTotaleOrdine(context, ordine);
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doRemoveFromCRUDMain_Righe_Consegne(ActionContext context) {
+
+	try {
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+		bp.getConsegne().remove(context);
+		calcolaTotaleOrdine(context, ordine);
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
 }
 }

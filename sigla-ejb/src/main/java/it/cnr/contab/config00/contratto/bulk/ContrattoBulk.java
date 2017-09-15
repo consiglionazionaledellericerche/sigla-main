@@ -80,6 +80,8 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	@Transient
 	private BulkList<AllegatoContrattoDocumentBulk> archivioAllegati = new BulkList();
 	
+	private java.math.BigDecimal tot_ordini;
+
 	private java.math.BigDecimal tot_doc_cont_spe;
 	private java.math.BigDecimal tot_doc_cont_etr;
 
@@ -835,6 +837,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	public void setCup(CupBulk cup) {
 		this.cup = cup;
+	}
+	public java.math.BigDecimal getTot_ordini() {
+		return tot_ordini;
+	}
+	public void setTot_ordini(java.math.BigDecimal tot_ordini) {
+		this.tot_ordini = tot_ordini;
 	}
 	
 }
