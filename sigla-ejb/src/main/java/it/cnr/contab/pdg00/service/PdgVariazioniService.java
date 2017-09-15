@@ -29,7 +29,7 @@ public class PdgVariazioniService extends StoreService {
 					query.append(" and ").append(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()).append(" = ").append(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg());
 					List<StorageObject> storageObjects = super.search(query.toString());
 					if (!storageObjects.isEmpty())
-						return storageObjects.get(0);
+						return getStorageObjectBykey(storageObjects.get(0).getKey());
 					return null;
 				})));
 	}
