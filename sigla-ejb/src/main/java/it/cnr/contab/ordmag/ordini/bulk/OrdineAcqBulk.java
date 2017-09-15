@@ -110,9 +110,11 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	private V_persona_fisicaBulk direttorePers;
 
 	public final static String STATO_ANNULLATO = "ANN";
+	public final static String STATO_IN_APPROVAZIONE = "APP";
+	public final static String STATO_ALLA_FIRMA = "INV";
 	public final static String STATO_INSERITO = "INS";
 	public final static String STATO_DEFINITIVO = "DEF";
-	public final static String STATO_INVIATO_ORDINE = "INV";
+	public final static String STATO_INVIATO_ORDINE = "INF";
 	
 	private java.math.BigDecimal imImponibile;
 	private java.math.BigDecimal imIva;
@@ -120,12 +122,14 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	private java.math.BigDecimal imTotaleOrdine;
 
 	private Boolean isUtenteAbilitatoInserimentoOrdine = true;
-	private Boolean isForApprovazione = false;
+	private Boolean isForFirma = false;
 		
 	public final static Dictionary STATO;
 	static{
 		STATO = new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INSERITO,"Inserito");
+		STATO.put(STATO_IN_APPROVAZIONE,"In Approvazione");
+		STATO.put(STATO_ALLA_FIRMA,"Alla firma");
 		STATO.put(STATO_ANNULLATO,"Annullato");
 		STATO.put(STATO_DEFINITIVO,"Definitivo");
 	}
@@ -770,11 +774,11 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public void setIsUtenteAbilitatoInserimentoOrdine(Boolean isUtenteAbilitatoInserimentoOrdine) {
 		this.isUtenteAbilitatoInserimentoOrdine = isUtenteAbilitatoInserimentoOrdine;
 	}
-	public Boolean getIsForApprovazione() {
-		return isForApprovazione;
+	public Boolean getIsForFirma() {
+		return isForFirma;
 	}
-	public void setIsForApprovazione(Boolean isForApprovazione) {
-		this.isForApprovazione = isForApprovazione;
+	public void setIsForFirma(Boolean isForFirma) {
+		this.isForFirma = isForFirma;
 	}
 	public BulkList getRigheOrdineColl() {
 		return righeOrdineColl;
@@ -812,6 +816,12 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public Boolean isStatoDefinitivo(){
 		return getStato() != null && getStato().equals(STATO_DEFINITIVO);
 	}
+	public Boolean isStatoAllaFirma(){
+		return getStato() != null && getStato().equals(STATO_ALLA_FIRMA);
+	}
+	public Boolean isStatoInApprovazione(){
+		return getStato() != null && getStato().equals(STATO_IN_APPROVAZIONE);
+	}
 	public Dictionary getStatoKeys() {
 		return STATO;
 	}
@@ -821,6 +831,25 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		if (d == null) return null;
 		OrderedHashtable clone = (OrderedHashtable)d.clone();
 		return clone;
+	}
+	public Dictionary getStatoKeysForUpdate() {
+
+		Dictionary stato = new it.cnr.jada.util.OrderedHashtable();
+		if (isStatoInserito()){
+			stato.put(STATO_INSERITO,"Inserito");
+			stato.put(STATO_IN_APPROVAZIONE,"In Approvazione");
+		} else if (isStatoInApprovazione()){
+			stato.put(STATO_INSERITO,"Inserito");
+			stato.put(STATO_IN_APPROVAZIONE,"In Approvazione");
+			stato.put(STATO_ALLA_FIRMA,"Alla firma");
+		} else {
+			stato.put(STATO_INSERITO,"Inserito");
+			stato.put(STATO_IN_APPROVAZIONE,"In Approvazione");
+			stato.put(STATO_ALLA_FIRMA,"Alla firma");
+			stato.put(STATO_ANNULLATO,"Annullato");
+			stato.put(STATO_DEFINITIVO,"Definitivo");
+		}
+		return stato;
 	}
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
 	{
@@ -1253,5 +1282,19 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public void setImTotaleOrdine(java.math.BigDecimal imTotaleOrdine) {
 		this.imTotaleOrdine = imTotaleOrdine;
 	}
-
+	public Boolean isOrdineInserito(){
+		return getStato()!= null && getStato().equals(STATO_INSERITO);
+	}
+	public Boolean isOrdineDefinitivo(){
+		return getStato()!= null && getStato().equals(STATO_DEFINITIVO);
+	}
+	public Boolean isOrdineInviatoApprovazione(){
+		return getStato()!= null && getStato().equals(STATO_IN_APPROVAZIONE);
+	}
+	public Boolean isOrdineAllaFirma(){
+		return getStato()!= null && getStato().equals(STATO_ALLA_FIRMA);
+	}
+	public Boolean isOrdineInviatoFornitore(){
+		return getStato()!= null && getStato().equals(STATO_INVIATO_ORDINE);
+	}
 }
