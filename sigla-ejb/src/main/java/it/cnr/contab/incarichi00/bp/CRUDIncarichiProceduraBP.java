@@ -54,11 +54,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 import javax.servlet.ServletException;
 
@@ -1539,8 +1535,10 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 	public boolean isDeleteButtonEnabled() {
 		Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk) getModel();
 		return super.isDeleteButtonEnabled() &&
-				procedura.getFaseProcesso()!=null &&
-				procedura.getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_PUBBLICAZIONE)==-1;
+				Optional.ofNullable(procedura)
+					.map(incarichi_proceduraBulk -> Optional.ofNullable(incarichi_proceduraBulk.getFaseProcesso()).orElse(-1))
+					.map(faseProcesso -> faseProcesso.compareTo(Incarichi_proceduraBulk.FASE_PUBBLICAZIONE)==-1)
+					.orElse(false);
 	}
 	public boolean isDeleteButtonHidden() {
 		return super.isDeleteButtonHidden() || isCreaERiportaNuovoIncarico();
