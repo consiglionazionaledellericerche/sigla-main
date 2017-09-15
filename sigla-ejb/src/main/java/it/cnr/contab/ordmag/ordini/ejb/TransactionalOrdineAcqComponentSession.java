@@ -24,6 +24,25 @@ public void gestioneStampaOrdine(UserContext userContext, OrdineAcqBulk ordine) 
 		}
 	}
 }
+
+	public void controllaQuadraturaObbligazioni(UserContext userContext,OrdineAcqBulk ordine) throws RemoteException,ComponentException, PersistencyException{
+		try {
+			invoke("controllaQuadraturaObbligazioni",new Object[] {
+					userContext,
+					ordine });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
 public void completaOrdine(UserContext userContext, OrdineAcqBulk ordine) throws RemoteException,ComponentException, PersistencyException{
 	try {
 		invoke("completaOrdine",new Object[] {

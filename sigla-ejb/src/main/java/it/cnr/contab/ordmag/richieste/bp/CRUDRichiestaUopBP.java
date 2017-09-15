@@ -56,7 +56,7 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, RichiestaUopBulk>  {
 		RichiestaUopBulk richiesta = (RichiestaUopBulk)getModel();
 		if(richiesta == null)
 			return super.isInputReadonly();
-		return 	super.isInputReadonly() || !richiesta.isInserita() ;
+		return 	super.isInputReadonly() || (richiesta.getStato() != null && !richiesta.isInserita());
 	}
 
 	private final SimpleDetailCRUDController righe= new RichiestaUopRigaCRUDController("Righe", RichiestaUopRigaBulk.class, "righeRichiestaColl", this){
