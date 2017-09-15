@@ -20,23 +20,23 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
-public class RichiestaUopRigaBulk extends RichiestaUopRigaBase {
+public class VRichiestaPerOrdiniBulk extends RichiestaUopRigaBase {
     public final static String STATO_INSERITO= "INS";
-    public final static String STATO_TRASFORMATA_ORDINE= "TRA";
     public final static String STATO_ANNULLATO= "ANN";
 	/**
 	 * [RICHIESTA_UOP Testata Richieste]
 	 **/
-	private RichiestaUopBulk richiestaUop =  new RichiestaUopBulk();
+	private java.math.BigDecimal quantitaAutorizzata;
+
+	private java.lang.String notaUopDest;
+
 	/**
 	 * [BENE_SERVIZIO Rappresenta la classificazione di beni e servizi il cui dettaglio è esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
-	private BulkList<AllegatoRichiestaDettaglioBulk> dettaglioAllegati = new BulkList<AllegatoRichiestaDettaglioBulk>();
 	private Bene_servizioBulk beneServizio =  new Bene_servizioBulk();
 	private Bene_servizioBulk beneServizioDef =  new Bene_servizioBulk();
-	private String allegatiDocumentale;
 	/**
 	 * [CATEGORIA_GRUPPO_INVENT Definisce le categorie ed i relativi gruppi di beni associabili ad un record della tabella BENE_SERVIZIO. Tale gestione si applica
 
@@ -98,30 +98,15 @@ Capitolo definito dall"utente collegato a Categoria
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: RICHIESTA_UOP_RIGA
 	 **/
-	public RichiestaUopRigaBulk() {
+	public VRichiestaPerOrdiniBulk() {
 		super();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: RICHIESTA_UOP_RIGA
 	 **/
-	public RichiestaUopRigaBulk(java.lang.String cdCds, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdNumeratore, java.lang.Integer numero, java.lang.Integer riga) {
+	public VRichiestaPerOrdiniBulk(java.lang.String cdCds, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdNumeratore, java.lang.Integer numero, java.lang.Integer riga) {
 		super(cdCds, cdUnitaOperativa, esercizio, cdNumeratore, numero, riga);
-		setRichiestaUop( new RichiestaUopBulk(cdCds,cdUnitaOperativa,esercizio,cdNumeratore,numero) );
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Testata Richieste]
-	 **/
-	public RichiestaUopBulk getRichiestaUop() {
-		return richiestaUop;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Testata Richieste]
-	 **/
-	public void setRichiestaUop(RichiestaUopBulk richiestaUop)  {
-		this.richiestaUop=richiestaUop;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -280,91 +265,6 @@ Capitolo definito dall"utente collegato a Categoria
 	 **/
 	public void setElementoVoce(Elemento_voceBulk elementoVoce)  {
 		this.elementoVoce=elementoVoce;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [cdCds]
-	 **/
-	public java.lang.String getCdCds() {
-		RichiestaUopBulk richiestaUop = this.getRichiestaUop();
-		if (richiestaUop == null)
-			return null;
-		return getRichiestaUop().getCdCds();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [cdCds]
-	 **/
-	public void setCdCds(java.lang.String cdCds)  {
-		this.getRichiestaUop().setCdCds(cdCds);
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [cdUnitaOperativa]
-	 **/
-	public java.lang.String getCdUnitaOperativa() {
-		RichiestaUopBulk richiestaUop = this.getRichiestaUop();
-		if (richiestaUop == null)
-			return null;
-		return getRichiestaUop().getCdUnitaOperativa();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [cdUnitaOperativa]
-	 **/
-	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
-		this.getRichiestaUop().setCdUnitaOperativa(cdUnitaOperativa);
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [esercizio]
-	 **/
-	public java.lang.Integer getEsercizio() {
-		RichiestaUopBulk richiestaUop = this.getRichiestaUop();
-		if (richiestaUop == null)
-			return null;
-		return getRichiestaUop().getEsercizio();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [esercizio]
-	 **/
-	public void setEsercizio(java.lang.Integer esercizio)  {
-		this.getRichiestaUop().setEsercizio(esercizio);
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [cdNumeratore]
-	 **/
-	public java.lang.String getCdNumeratore() {
-		RichiestaUopBulk richiestaUop = this.getRichiestaUop();
-		if (richiestaUop == null)
-			return null;
-		return getRichiestaUop().getCdNumeratore();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [cdNumeratore]
-	 **/
-	public void setCdNumeratore(java.lang.String cdNumeratore)  {
-		this.getRichiestaUop().setCdNumeratore(cdNumeratore);
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [numero]
-	 **/
-	public java.lang.Integer getNumero() {
-		RichiestaUopBulk richiestaUop = this.getRichiestaUop();
-		if (richiestaUop == null)
-			return null;
-		return getRichiestaUop().getNumero();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [numero]
-	 **/
-	public void setNumero(java.lang.Integer numero)  {
-		this.getRichiestaUop().setNumero(numero);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -640,63 +540,32 @@ Capitolo definito dall"utente collegato a Categoria
 	public void setProgetto(ProgettoBulk progetto) {
 		this.progetto = progetto;
 	}
-	public Boolean isROCoefConv(){
-		if (getUnitaMisura() != null && getUnitaMisura().getCdUnitaMisura() != null && 
-				getBeneServizio() != null && getBeneServizio().getUnitaMisura() != null && getBeneServizio().getCdUnitaMisura() != null && 
-				!getUnitaMisura().getCdUnitaMisura().equals(getBeneServizio().getCdUnitaMisura())){
-			return false;
-		}
-		return true;
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [quantitaAutorizzata]
+	 **/
+	public java.math.BigDecimal getQuantitaAutorizzata() {
+		return quantitaAutorizzata;
 	}
 	/**
-	 * Il metodo inzializza la missione da modificare
-	 */
-	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
-	{
-		setStato(STATO_INSERITO);
-		//	La data di registrazione la inizializzo sulla Component
-
-		return this;
-	}
-	public String getAllegatiDocumentale() {
-		return allegatiDocumentale;
-	}
-	public void setAllegatiDocumentale(String allegatiDocumentale) {
-		this.allegatiDocumentale = allegatiDocumentale;
-	}
-	public BulkList<AllegatoRichiestaDettaglioBulk> getDettaglioAllegati() {
-		return dettaglioAllegati;
-	}
-	public void setDettaglioAllegati(BulkList<AllegatoRichiestaDettaglioBulk> dettaglioAllegati) {
-		this.dettaglioAllegati = dettaglioAllegati;
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [quantitaAutorizzata]
+	 **/
+	public void setQuantitaAutorizzata(java.math.BigDecimal quantitaAutorizzata)  {
+		this.quantitaAutorizzata=quantitaAutorizzata;
 	}
 	/**
-	 * Restituisce un array di <code>BulkCollection</code> contenenti oggetti
-	 * bulk da rendere persistenti insieme al ricevente.
-	 * L'implementazione standard restituisce <code>null</code>.
-	 * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
-	 */ 
-	public BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] { 
-				dettaglioAllegati };
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [notaUopDest]
+	 **/
+	public java.lang.String getNotaUopDest() {
+		return notaUopDest;
 	}
 	/**
-	 * Il metodo rimuove dalla collection dei dettagli di spesa un solo dettaglio
-	 */
-	public AllegatoRichiestaDettaglioBulk removeFromDettaglioAllegati(int index) 
-	{
-		AllegatoRichiestaDettaglioBulk allegato = (AllegatoRichiestaDettaglioBulk)dettaglioAllegati.remove(index);
-		allegato.setToBeDeleted();
-
-		return allegato;
-	}
-	public int addToDettaglioAllegati(AllegatoRichiestaDettaglioBulk allegato) {
-		dettaglioAllegati.add(allegato);
-		return dettaglioAllegati.size()-1;		
-	}
-	public String constructCMISNomeFile() {
-		StringBuffer nomeFile = new StringBuffer();
-		nomeFile = nomeFile.append(StrServ.lpad(this.getRiga().toString(),5,"0"));
-		return nomeFile.toString();
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [notaUopDest]
+	 **/
+	public void setNotaUopDest(java.lang.String notaUopDest)  {
+		this.notaUopDest=notaUopDest;
 	}
 }

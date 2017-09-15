@@ -47,10 +47,12 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 			<%
 				bp.getController().writeFormField(out, "percProrata");
 			%>
-			<% if (!bp.isSearching()) {
+			<% if (bp.isInserting()) {
 				 bp.getController().writeFormField(out, "stato");
+			   } else if (bp.isSearching()) {
+			     bp.getController().writeFormField(out, "statoForSearch");
 			   } else {
-			     bp.getController().writeFormField(out, "statoKeysForSearch");
+			     bp.getController().writeFormField(out, "statoForUpdate");
 			   } %>
 		</tr>
 	</table>
