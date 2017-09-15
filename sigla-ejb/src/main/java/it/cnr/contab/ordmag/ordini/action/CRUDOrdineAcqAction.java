@@ -9,14 +9,18 @@ import javax.persistence.PersistenceException;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
+import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
 import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
@@ -29,6 +33,7 @@ import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
+import it.cnr.contab.doccont00.bp.CRUDAccertamentoModificaBP;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
@@ -1709,5 +1714,35 @@ public Forward doRemoveFromCRUDMain_Righe_Consegne(ActionContext context) {
 	} catch(Throwable e) {
 		return handleException(context,e);
 	}
+}
+public Forward doVisualizzaContratto(ActionContext context) {
+
+	try	{
+		fillModel(context);
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+				
+		if (ordine == null || ordine.getContratto() == null || ordine.getContratto().getPg_contratto() == null)
+			throw new it.cnr.jada.comp.ApplicationException("Non esiste alcun Contratto da visualizzare!");
+
+		context.addHookForward("bringback",this,"doBringBackVisualizzaContratto");
+
+		CRUDConfigAnagContrattoBP contrattoBP = (CRUDConfigAnagContrattoBP)context.createBusinessProcess(
+											"CRUDConfigAnagContrattoBP",
+											new Object[] { "V" ,  ordine.getContratto(), "V" });
+
+		try {
+			contrattoBP.setEditable(false);
+		} catch (Throwable t) {
+			throw t;
+		}
+			
+		return context.addBusinessProcess(contrattoBP);
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doBringBackVisualizzaContratto(ActionContext context) {
+		return context.findDefaultForward();
 }
 }

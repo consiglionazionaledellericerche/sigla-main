@@ -284,6 +284,14 @@
 			inputSize="50" />
 	</form>
 	<form
+		name="searchtool_large" >
+		<formFieldProperty
+			name="cd_terzo" />
+		<formFieldProperty
+			name="denominazione_sede"
+			inputSize="60" />
+	</form>
+	<form
 		name="fondoEconSearchtool" >
 		<formFieldProperty
 			name="cd_terzo"
