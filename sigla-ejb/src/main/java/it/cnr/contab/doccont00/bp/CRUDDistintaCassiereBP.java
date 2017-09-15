@@ -45,10 +45,12 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.RemoteDetailCRUDController;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
 
@@ -1323,6 +1325,10 @@ public class CRUDDistintaCassiereBP extends
 			return false;
 	}
 
+    protected CRUDComponentSession getComponentSession() {
+        return (CRUDComponentSession) EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
+    }
+
 	public void scaricaDocumento(ActionContext actioncontext) throws Exception {
 		Integer esercizio = Integer.valueOf(((HttpActionContext) actioncontext)
 				.getParameter("esercizio"));
@@ -1332,8 +1338,8 @@ public class CRUDDistintaCassiereBP extends
 						.getParameter("numero_documento"));
 		String tipo = ((HttpActionContext) actioncontext).getParameter("tipo");
 		InputStream is = documentiContabiliService.getStreamDocumento(
-				new V_mandato_reversaleBulk(esercizio, tipo, cds, numero_documento)
-		);
+                (StatoTrasmissione) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), new V_mandato_reversaleBulk(esercizio, tipo, cds, numero_documento))
+        );
 		if (is != null) {
 			((HttpActionContext) actioncontext).getResponse().setContentType(
 					"application/pdf");
@@ -1440,6 +1446,7 @@ public class CRUDDistintaCassiereBP extends
 							it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
 			dettagliRev.stream()
 					.map(v_mandato_reversaleBulk -> documentiContabiliService.getDocumentKey(v_mandato_reversaleBulk, true))
+                    .filter(s -> s != null)
 					.forEach(s -> nodes.add(s));
 
 			List<V_mandato_reversaleBulk> dettagliMan = ((DistintaCassiereComponentSession) createComponentSession())
@@ -1479,15 +1486,15 @@ public class CRUDDistintaCassiereBP extends
 						documentiContabiliService.inviaDistintaPEC(nodes,
 								this.isSepa(), null);
 				}
-				distinta.setDt_invio_pec(DateServices.getDt_valida(context
+                Distinta_cassiereBulk distintaFirmata = (Distinta_cassiereBulk) createComponentSession().findByPrimaryKey(context.getUserContext(), distinta);
+                distintaFirmata.setDt_invio_pec(DateServices.getDt_valida(context
 						.getUserContext()));
-				distinta.setUser(((CNRUserContext) context.getUserContext())
+                distintaFirmata.setUser(((CNRUserContext) context.getUserContext())
 						.getUser());
-				distinta.setToBeUpdated();
-				createComponentSession().modificaConBulk(context.getUserContext(), distinta);
+                distintaFirmata.setToBeUpdated();
+                setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distintaFirmata));
 				commitUserTransaction();
 				setMessage("Invio effettuato correttamente.");
-
 			} catch (IOException e) {
 				throw new BusinessProcessException(e);
 			} catch (Exception e) {
