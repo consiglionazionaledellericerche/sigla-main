@@ -13,6 +13,7 @@ import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
@@ -460,5 +461,25 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 		consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
 		consegna.setStatoFatt(OrdineAcqConsegnaBulk.STATO_FATT_NON_ASSOCIATA);
 		return consegna;
+	}
+	
+	public Boolean isConsegnaMagazzino(){
+		return getTipoConsegna() != null && getTipoConsegna().equals(Bene_servizioBulk.TIPO_CONSEGNA_MAGAZZINO);
+	}
+	@Override
+	public void validate() throws ValidationException {
+		super.validate();
+		if (!isConsegnaMagazzino()){
+			if (getCdUopDest() == null){
+				throw new ValidationException("E' necessario indicare l'unità operativa di destinazione.");
+			}
+		} else {
+			if (getCdUopDest() != null){
+				throw new ValidationException("Per una consegna a magazzino non è possibile selezionare l'unità operativa di destinazione.");
+			}
+		}
+		if (getDtPrevConsegna() != null && getDtPrevConsegna().before(getOrdineAcqRiga().getOrdineAcq().getDataOrdine())){
+			throw new ValidationException("La data di prevista consegna non può essere precedente alla data dell'ordine.");
+		}
 	}
 }

@@ -37,6 +37,10 @@ import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneRes_impropriaBulk;
+import it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
@@ -51,6 +55,7 @@ import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopHome;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
+import it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk;
 import it.cnr.contab.ordmag.richieste.service.RichiesteCMISService;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
@@ -691,4 +696,31 @@ public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettob
 	return richiesta;
 }
 
+public RichiestaUopRigaBulk selezionaRichiestaPerOrdine (UserContext aUC,VRichiestaPerOrdiniBulk richiesta) throws ComponentException
+{
+	try
+	{
+
+		RichiestaUopRigaBulk richiestaRiga = (RichiestaUopRigaBulk) getHome( aUC, RichiestaUopRigaBulk.class).findByPrimaryKey( new RichiestaUopRigaBulk( richiesta.getCdCds(), richiesta.getCdUnitaOperativa(), richiesta.getEsercizio(), richiesta.getCdNumeratore(), richiesta.getNumero(), richiesta.getRiga() ));
+
+		if ( richiestaRiga == null )
+			throw new ApplicationException( "Richiesta non esistente" );
+
+		lockBulk( aUC, richiestaRiga );
+		if ( richiestaRiga.getStato().equals(RichiestaUopRigaBulk.STATO_ANNULLATO))
+			throw new ApplicationException("La richiesta è stata annullata.");
+		if ( richiestaRiga.getStato().equals(RichiestaUopRigaBulk.STATO_TRASFORMATA_ORDINE))
+			throw new ApplicationException("La richiesta è già stata trasformata in ordine.");
+		if ( !richiestaRiga.getRichiestaUop().getStato().equals(RichiestaUopBulk.STATO_INVIATA_ORDINE))
+			throw new ApplicationException("La richiesta non è stata inviata in ordine");
+		richiestaRiga.setStato(RichiestaUopRigaBulk.STATO_TRASFORMATA_ORDINE);
+		richiestaRiga.setUser( aUC.getUser());
+		updateBulk( aUC, richiestaRiga );
+		return richiestaRiga;
+	}
+	catch ( Exception e )
+	{
+		throw handleException( richiesta, e )	;
+	}
+}
 }

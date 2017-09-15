@@ -23,9 +23,6 @@ public class OrdineAcqRigaBase extends OrdineAcqRigaKey implements Keyed {
 //    PREZZO_UNITARIO DECIMAL(20,6) NOT NULL
 	private java.math.BigDecimal prezzoUnitario;
  
-//    QUANTITA DECIMAL(17,5) NOT NULL
-	private java.math.BigDecimal quantita;
- 
 //    CD_UNITA_MISURA VARCHAR(10) NOT NULL
 	private java.lang.String cdUnitaMisura;
  
@@ -158,20 +155,6 @@ public class OrdineAcqRigaBase extends OrdineAcqRigaKey implements Keyed {
 	 **/
 	public void setPrezzoUnitario(java.math.BigDecimal prezzoUnitario)  {
 		this.prezzoUnitario=prezzoUnitario;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [quantita]
-	 **/
-	public java.math.BigDecimal getQuantita() {
-		return quantita;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [quantita]
-	 **/
-	public void setQuantita(java.math.BigDecimal quantita)  {
-		this.quantita=quantita;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
