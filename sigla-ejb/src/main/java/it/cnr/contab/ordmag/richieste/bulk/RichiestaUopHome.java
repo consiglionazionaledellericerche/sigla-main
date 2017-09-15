@@ -32,7 +32,7 @@ public class RichiestaUopHome extends BulkHome {
 		sql.addTableToHeader("ABIL_UTENTE_UOP_OPER");
 		sql.addSQLJoin("UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", "ABIL_UTENTE_UOP_OPER.CD_UNITA_OPERATIVA");
 		if (richiestaBulk.getIsForApprovazione()){
-			sql.addSQLClause("OR", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_RICHIESTA);
+			sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_RICHIESTA);
 		} else {
 			sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
 		}
@@ -50,7 +50,7 @@ public class RichiestaUopHome extends BulkHome {
 		sql.openParenthesis("OR");
 		sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_VALIDAZIONE_RICHIESTA);
 		sql.openParenthesis("AND");
-		sql.addSQLClause("AND", "RICHIESTA_UOP.STATO", SQLBuilder.EQUALS, RichiestaUopBulk.STATO_DEFINITIVA);
+		sql.addSQLClause("OR", "RICHIESTA_UOP.STATO", SQLBuilder.EQUALS, RichiestaUopBulk.STATO_DEFINITIVA);
 		sql.addSQLClause("OR", "RICHIESTA_UOP.STATO", SQLBuilder.EQUALS, RichiestaUopBulk.STATO_INVIATA_ORDINE);
 		sql.closeParenthesis();
 		sql.closeParenthesis();
