@@ -44,6 +44,15 @@
 			name="descrizione"
 			inputType="TEXT" />	
 	</form>
+	<form
+		name="searchtool_large">
+		<formFieldProperty
+			name="cdCup" />
+		<formFieldProperty
+			name="descrizione"
+			inputType="TEXT"
+	        inputSize="70"  />	
+	</form>
 	<formFieldProperty
 		name="cdCup" />
 	<formFieldProperty

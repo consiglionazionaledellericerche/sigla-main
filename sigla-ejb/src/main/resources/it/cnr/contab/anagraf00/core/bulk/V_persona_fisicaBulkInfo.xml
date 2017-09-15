@@ -13,6 +13,15 @@
                inputSize="30"
                enabledOnSearch="true" />
     </form>
+    <form name="searchtool_large">
+         <formFieldProperty
+               name="cd_terzo"
+               enabledOnSearch="true"/>
+         <formFieldProperty
+               name="denominazione_sede"
+               inputSize="60"
+               enabledOnSearch="true" />
+    </form>
 
 	<columnFieldProperty
 		name="cd_anag" />
