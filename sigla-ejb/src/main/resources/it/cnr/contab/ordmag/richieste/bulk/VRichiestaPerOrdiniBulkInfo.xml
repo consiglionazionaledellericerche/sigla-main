@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdUnitaOperativa" />
+		label="Unità Operativa" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -34,7 +34,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="esercizio" />
+		label="Anno" />
 	<fieldProperty
 		name="cdNumeratore"
 		property="cdNumeratore"
@@ -44,7 +44,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNumeratore" />
+		label="Codice" />
 	<fieldProperty
 		name="numero"
 		property="numero"
@@ -54,7 +54,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="numero" />
+		label="Numero" />
 	<fieldProperty
 		name="riga"
 		property="riga"
@@ -148,7 +148,7 @@
 		inputSize="17"
 		maxLength="17"
 		enabledOnEdit="false"
-		label="quantitaAutorizzata" />
+		label="Quantità Autorizzata" />
 	<fieldProperty
 		name="notaUopDest"
 		property="notaUopDest"
@@ -157,7 +157,7 @@
 		rows="5"
 		maxLength="2000"
 		enabledOnEdit="false"
-		label="Nota Uop Destinazione" />
+		label="Nota X Uo Ordine" />
 	<fieldProperty
 		name="cdCdsObbl"
 		property="cdCdsObbl"
@@ -204,7 +204,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Linea Attivita" />
+		label="Linea Attività" />
 	<fieldProperty
 		name="cdElementoVoce"
 		property="cdElementoVoce"
@@ -389,8 +389,6 @@
 	<findFieldProperty
 		name="dtCancellazione" />
 	<columnFieldProperty
-		name="cdCds" />
-	<columnFieldProperty
 		name="cdUnitaOperativa" />
 	<columnFieldProperty
 		name="esercizio" />
@@ -407,44 +405,22 @@
 	<columnFieldProperty
 		name="notaRiga" />
 	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
 		name="cdCategoriaGruppo" />
-	<columnFieldProperty
-		name="quantitaRichiesta" />
 	<columnFieldProperty
 		name="cdUnitaMisura" />
 	<columnFieldProperty
 		name="coefConv" />
 	<columnFieldProperty
-		name="cdBeneServizioDef" />
-	<columnFieldProperty name="allegatiDocumentale" />	
+		name="quantitaRichiesta" />
 	<columnFieldProperty
 		name="quantitaAutorizzata" />
-	<columnFieldProperty
-		name="notaUopDest" />
-	<columnFieldProperty
-		name="cdCdsObbl" />
-	<columnFieldProperty
-		name="esercizioObbl" />
-	<columnFieldProperty
-		name="esercizioOrigObbl" />
-	<columnFieldProperty
-		name="pgObbligazione" />
 	<columnFieldProperty
 		name="cdCentroResponsabilita" />
 	<columnFieldProperty
 		name="cdLineaAttivita" />
 	<columnFieldProperty
-		name="esercizioVoce" />
-	<columnFieldProperty
-		name="tiAppartenenza" />
-	<columnFieldProperty
-		name="tiGestione" />
-	<columnFieldProperty
 		name="cdElementoVoce" />
 	<columnFieldProperty
 		name="pgProgetto" />
-	<columnFieldProperty
-		name="dtCancellazione" />
+	<columnFieldProperty name="allegatiDocumentale" />	
 </bulkInfo>
