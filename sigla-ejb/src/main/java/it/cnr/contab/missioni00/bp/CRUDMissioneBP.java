@@ -2775,7 +2775,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 					allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
 					allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
 					allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-					completeAllegato(allegato);
+                    allegato.setAspectName(AllegatoMissioneBulk.FLUSSO_RIMBORSO);
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 					allegatoParentBulk.addToArchivioAllegati(allegato);
 				}
@@ -2788,7 +2788,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 					allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
 					allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
 					allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-					completeAllegato(allegato);
+                    allegato.setAspectName(AllegatoMissioneBulk.FLUSSO_ORDINE);
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 					allegatoParentBulk.addToArchivioAllegati(allegato);
 				}
@@ -2882,7 +2882,8 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
 				.map(list -> list.stream().filter(
 						o -> AllegatoMissioneBulk.aspectNamesKeys.get(o) != null
-				).findFirst().get()).orElse(null));
+				    ).findAny().orElse(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA)
+                ).orElse(null));
 		super.completeAllegato(allegato);
 	}
 
