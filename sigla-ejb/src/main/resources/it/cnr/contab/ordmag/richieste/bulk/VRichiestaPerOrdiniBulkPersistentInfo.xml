@@ -4,4 +4,5 @@
 	homeClassName="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniHome">
 	<defaultColumnMap
 		tableName="V_RICHIESTA_PER_ORDINI">
+	</defaultColumnMap>
 </SQLPersistentInfo>
