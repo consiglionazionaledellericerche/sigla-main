@@ -75,7 +75,7 @@ public class MissioniCMISService extends StoreService {
 		else if (resultsFolder.size() > 1){
 			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' Riepiloghi Flusso.  ID Flusso:"+ idFlusso);
 		} else {
-			return resultsFolder.get(0);
+			return getStorageObjectBykey(resultsFolder.get(0).getKey());
 		}
 	}
 
