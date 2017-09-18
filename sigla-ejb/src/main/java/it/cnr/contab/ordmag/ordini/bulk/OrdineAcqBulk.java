@@ -862,8 +862,6 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		}
 		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_padre());
 		setDataOrdine(dataReg);
-		
-		//	La data di registrazione la inizializzo sulla Component
 
 		return this;
 	}
