@@ -10,7 +10,8 @@
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.ordmag.anag00.*,
-		it.cnr.contab.ordmag.richieste.*"
+		it.cnr.contab.ordmag.richieste.*,
+		it.cnr.contab.ordmag.richieste.bp.GenerazioneOrdineDaRichiesteBP"
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -22,13 +23,9 @@
 </head>
 <script language="javascript" src="scripts/css.js"></script>
 
-<% ListaObbligazioniBP bp = (ListaObbligazioniBP)BusinessProcess.getBusinessProcess(request); %>
+<% GenerazioneOrdineDaRichiesteBP bp = (GenerazioneOrdineDaRichiesteBP)BusinessProcess.getBusinessProcess(request); %>
 
-<% if (bp.isObbligazioniDefinitive()) { %>
-	<title>Gestione Impegni Definitivi</title>
-<% } else {%>
-	<title>Gestione Impegni Provvisori</title>
-<% } %>
+	<title>Generazione Ordine da Richieste</title>
 
 <body class="Form">
 
@@ -37,7 +34,7 @@
 
 	<table class="Panel">
 		<tr><td>
-		<% bp.writeHTMLTable(pageContext,"100%",null); %>
+		<% bp.writeHTMLTable(pageContext,"100%","200px"); %>
 		</td></tr>
 		<tr><td>
 		<% bp.writeHTMLNavigator(out); %>
