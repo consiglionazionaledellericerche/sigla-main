@@ -2827,7 +2827,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 		if (storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()).equals(StoragePropertyNames.CMIS_FOLDER.value())) {
 			String prop = storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value());
 			if (prop.equals("F:missioni_rimborso_dettaglio:main")){
-				String rigaString = storageObject.getPropertyValue("missioni_rimborso_dettaglio:riga");
+				BigInteger rigaString = storageObject.getPropertyValue("missioni_rimborso_dettaglio:riga");
 				List<StorageObject> children = missioniCMISService.getChildren(storageObject.getKey());
 				if (children != null){
 					for (StorageObject doc : children) {
@@ -2842,7 +2842,7 @@ public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, O
 							for ( java.util.Iterator i = allegatoParentBulk.getSpeseMissioneColl().iterator(); i.hasNext(); )
 							{
 								Missione_dettaglioBulk spesa = (Missione_dettaglioBulk) i.next();
-								if (spesa.getPg_riga().compareTo(new Long(rigaString)) == 0){
+								if (spesa.getPg_riga().compareTo(rigaString.longValue()) == 0){
 									spesa.addToDettaglioSpesaAllegati(allegato);
 								}
 							}
