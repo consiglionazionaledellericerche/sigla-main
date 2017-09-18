@@ -296,7 +296,7 @@ public class StorageFolderFatturaAttiva extends OggettoBulk {
 
 	public String getCMISPrincipalPath() {
         return Arrays.asList(
-                SpringUtil.getBean("storeService", StorePath.class).getPathComunicazioniDal(),
+                SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
                 this.getFattura_attivaBulk().getCd_uo_origine(),
                 "Fatture Attive"
         ).stream().collect(
