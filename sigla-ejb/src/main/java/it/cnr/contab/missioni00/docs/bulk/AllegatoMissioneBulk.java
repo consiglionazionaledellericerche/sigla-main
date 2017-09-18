@@ -15,6 +15,9 @@ public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 	public static final String FLUSSO_ORDINE = "FLUSSO_ORDINE";
 	public static final String FLUSSO_RIMBORSO = "FLUSSO_RIMBORSO";
 
+	public static final String FLUSSO_ORDINE_LABEL = "Flusso Ordine di Missione";
+	public static final String FLUSSO_RIMBORSO_LABEL = "Flusso Rimborso Missione";
+
 	public static OrderedHashtable aspectNamesKeys = new OrderedHashtable();
 
 	static {
@@ -26,8 +29,8 @@ public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:scontrini","Giustificativo");
 		aspectNamesKeys.put("P:missioni_ordine_attachment:ordine","Ordine Di Missione");
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:rimborso","Rimborso Missione");
-		aspectNamesKeys.put(FLUSSO_ORDINE,"Flusso Ordine di Missione");
-		aspectNamesKeys.put(FLUSSO_RIMBORSO,"Flusso Rimborso Missione");
+		aspectNamesKeys.put(FLUSSO_ORDINE,FLUSSO_ORDINE_LABEL);
+		aspectNamesKeys.put(FLUSSO_RIMBORSO,FLUSSO_RIMBORSO_LABEL);
 		aspectNamesKeys.put(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA,"Allegati vari alla Missione SIGLA");
 	}
 	private String aspectName;
