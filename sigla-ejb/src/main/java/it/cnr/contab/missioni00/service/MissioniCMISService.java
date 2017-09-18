@@ -66,7 +66,7 @@ public class MissioniCMISService extends StoreService {
 	}
 
 	public StorageObject recuperoFlows(String idFlusso) throws DetailedException{
-		StringBuffer query = new StringBuffer("SELECT alfcmis:nodeRef,cmis:name from wfcnr:parametriFlusso ");
+		StringBuffer query = new StringBuffer("SELECT alfcmis:nodeRef, cmis:name, cmis:objectId from wfcnr:parametriFlusso ");
 		query.append(" where wfcnr:wfInstanceId = '").append(idFlusso).append("'");
 		query.append(" and wfcnr:tipologiaDocSpecifica = 'Riepilogo Flusso'");
 		List<StorageObject> resultsFolder = search(query.toString());
