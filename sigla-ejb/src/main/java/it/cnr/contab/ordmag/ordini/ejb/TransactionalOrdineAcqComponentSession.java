@@ -1,7 +1,9 @@
 package it.cnr.contab.ordmag.ordini.ejb;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -133,8 +135,26 @@ public OrdineAcqBulk contabilizzaDettagliSelezionati(it.cnr.jada.UserContext par
 public OrdineAcqBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws RemoteException,ComponentException, PersistencyException{
 	try {
 		return (OrdineAcqBulk)invoke("calcolaImportoOrdine",new Object[] {
-			userContext,
-			ordine });
+				userContext,
+				ordine });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public OrdineAcqBulk creaOrdineDaRichieste(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine, List<RichiestaUopBulk> lista) throws RemoteException,ComponentException, PersistencyException{
+	try {
+		return (OrdineAcqBulk)invoke("creaOrdineDaRichieste",new Object[] {
+				userContext,
+				ordine,
+				lista});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {

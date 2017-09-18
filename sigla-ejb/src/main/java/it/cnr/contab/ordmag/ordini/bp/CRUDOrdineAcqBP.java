@@ -21,6 +21,7 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.ejb.OrdineComponentSession;
+import it.cnr.contab.doccont00.ordine.bulk.OrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
@@ -59,10 +60,8 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 	}
 
 	public OrdineAcqBulk creaOrdineDaRichieste(ActionContext context, List<RichiestaUopBulk> lista) throws BusinessProcessException{
-
-
 		try {
-			OrdineAcqBulk ordine = null;
+			OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
 			OrdineAcqComponentSession comp = (OrdineAcqComponentSession)createComponentSession();
 			
 			setModel(context, ordine);
