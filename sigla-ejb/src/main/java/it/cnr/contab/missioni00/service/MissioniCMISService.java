@@ -94,7 +94,7 @@ public class MissioniCMISService extends StoreService {
 			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' Missioni.  Anno:"+ missione.getEsercizio()+ " cds:" +missione.getCd_cds() +" uo:"+missione.getCd_unita_organizzativa()+
 					" numero:"+missione.getPg_missione());
 		} else {
-			return resultsFolder.get(0);
+			return getStorageObjectBykey(resultsFolder.get(0).getKey());
 		}
 	}
 
