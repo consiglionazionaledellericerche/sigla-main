@@ -27,6 +27,7 @@ import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
@@ -332,6 +333,9 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
 	{
+		return inizializzaPerInserimento(context.getUserContext());
+	}
+	public OggettoBulk inizializzaPerInserimento(UserContext userContext) {
 		setStato(STATO_INSERITA);
 		setImImponibile(BigDecimal.ZERO);
 		setImImponibileDivisa(BigDecimal.ZERO);
@@ -342,7 +346,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		setImTotaleRiga(BigDecimal.ZERO);
 		BigDecimal value = null;
 		try {
-			value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context.getUserContext(), 0, "*", Configurazione_cnrBulk.PK_PARAMETRI_ORDINI, Configurazione_cnrBulk.SK_GG_DT_PREV_CONSEGNA).getIm01();
+			value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, 0, "*", Configurazione_cnrBulk.PK_PARAMETRI_ORDINI, Configurazione_cnrBulk.SK_GG_DT_PREV_CONSEGNA).getIm01();
 		} catch (RemoteException e) {
 		} catch (Exception e) {
 		}

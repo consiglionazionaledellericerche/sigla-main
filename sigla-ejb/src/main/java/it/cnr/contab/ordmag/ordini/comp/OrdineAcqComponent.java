@@ -77,6 +77,8 @@ import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineHome;
 import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
@@ -443,8 +445,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     		OggettoBulk rigabulk= (OggettoBulk) i.next();
     		OrdineAcqRigaBulk riga= (OrdineAcqRigaBulk) rigabulk;
     		if (riga.getBeneServizio() != null){
-    			Bene_servizioHome home = (Bene_servizioHome)getHome(usercontext, Bene_servizioBulk.class);
-    			Bene_servizioBulk bene = (Bene_servizioBulk)home.findByPrimaryKey(new Bene_servizioBulk(riga.getCdBeneServizio()));
+    			Bene_servizioBulk bene = recuperoBeneServizio(usercontext, riga.getCdBeneServizio());
     			riga.setBeneServizio(bene);
     		}
     		if (riga.getUnitaMisura() != null){
@@ -910,8 +911,7 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 	OrdineAcqBulk ordine = (OrdineAcqBulk)oggettobulk;
 	try {
 		if (daInserimento){
-			ordine.setDivisa(getEuro(usercontext));
-			ordine.setCambio(BigDecimal.ONE);
+			impostaDatiDivisaCambioDefault(usercontext, ordine);
 		}
 		OrdineAcqHome home = (OrdineAcqHome) getHomeCache(usercontext).getHome(OrdineAcqBulk.class);
 		ordine.setCdCds( ((CNRUserContext) usercontext).getCd_cds());
@@ -931,6 +931,11 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 		throw new ComponentException(e);
 	}
 	return ordine;
+}
+
+private void impostaDatiDivisaCambioDefault(UserContext usercontext, OrdineAcqBulk ordine) throws ComponentException {
+	ordine.setDivisa(getEuro(usercontext));
+	ordine.setCambio(BigDecimal.ONE);
 }
 
 //private void assegnaUnitaOperativaDest(UserContext usercontext, OrdineAcqBulk ordine, OrdineAcqHome home,
@@ -1730,4 +1735,51 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,OrdineAcqBulk ordine
 			}
 		}
 	}
+
+public OrdineAcqBulk creaOrdineDaRichieste(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine, List<RichiestaUopBulk> lista) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	for (RichiestaUopBulk richiesta : lista){
+		for (Object riga : richiesta.getRigheRichiestaColl()){
+			RichiestaUopRigaBulk rigaRichiesta = (RichiestaUopRigaBulk)riga;
+			creaRigaOrdine(userContext,ordine, rigaRichiesta);
+		}
+	}
+	return ordine;
+}
+private void creaRigaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine, RichiestaUopRigaBulk rigaRichiesta) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	boolean trovataRiga = false;
+	for (Object riga : ordine.getRigheOrdineColl()){
+		OrdineAcqRigaBulk rigaOrdine = (OrdineAcqRigaBulk)riga;
+//		if (rigaOrdine.get)
+	}
+	if (!trovataRiga){
+		OrdineAcqRigaBulk rigaOrdine = new OrdineAcqRigaBulk();
+		rigaOrdine = (OrdineAcqRigaBulk)rigaOrdine.inizializzaPerInserimento(userContext);
+		rigaOrdine.setBeneServizio(rigaRichiesta.getBeneServizio());
+		rigaOrdine.setDsBeneServizio(rigaRichiesta.getDsBeneServizio());
+		rigaOrdine.setCdBeneServizio(rigaRichiesta.getCdBeneServizio());
+		Bene_servizioBulk bene;
+		try {
+			bene = recuperoBeneServizio(userContext, rigaRichiesta.getCdBeneServizio());
+			if (bene != null){
+				rigaOrdine.setVoceIva(bene.getVoce_iva());
+			}
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		rigaOrdine.setUnitaMisura(rigaRichiesta.getUnitaMisura());
+		rigaOrdine.setCoefConv(rigaRichiesta.getCoefConv());
+		rigaOrdine.setNotaRiga(rigaRichiesta.getNotaRiga());
+		rigaOrdine.setDspTipoConsegna(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO);
+		rigaOrdine.setDspUopDest(rigaRichiesta.getRichiestaUop().getUnitaOperativaOrd());
+		OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
+		ordine.addToRigheOrdineColl(rigaOrdine);
+	}
+}
+
+private Bene_servizioBulk recuperoBeneServizio(it.cnr.jada.UserContext userContext, String cdBeneServizio)
+		throws ComponentException, PersistencyException {
+	Bene_servizioHome home = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+	Bene_servizioBulk bene = (Bene_servizioBulk)home.findByPrimaryKey(new Bene_servizioBulk(cdBeneServizio));
+	return bene;
+}
 }
