@@ -1,7 +1,5 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.cmis.MimeTypes;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
@@ -11,6 +9,7 @@ import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -35,36 +34,19 @@ import it.cnr.jada.util.jsp.Button;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.bindings.impl.CmisBindingsHelper;
-import org.apache.chemistry.opencmis.client.bindings.spi.http.Output;
-import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
-import org.apache.chemistry.opencmis.commons.SessionParameter;
-import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.pdfbox.util.PDFMergerUtility;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import com.google.gson.GsonBuilder;
 
 public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	private static final long serialVersionUID = 1L;
-	protected SiglaCMISService cmisService;
-	protected DocumentiContabiliService documentiContabiliService;
 	private UtenteFirmaDettaglioBulk firmatario;
-	private static final String ZIP_CONTENT = "service/zipper/zipContent";
 	protected String controlloCodiceFiscale;
 	private static final Log log = Log.getInstance(AbstractFirmaDigitaleDocContBP.class);
 	
@@ -144,8 +126,6 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			OggettoBulk model = (OggettoBulk)getBulkInfo().getBulkClass().newInstance();
 			((StatoTrasmissione)model).setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
 			setModel(actioncontext, model);
-			cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);	
-			documentiContabiliService = SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class);	
 			super.init(config, actioncontext);
 			setColumnSet(actioncontext, MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
 
@@ -277,8 +257,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			PDFMergerUtility ut = new PDFMergerUtility();
 			ut.setDestinationStream(new ByteArrayOutputStream());
 			for (StatoTrasmissione cons : selectelElements) {
-				InputStream isToAdd = documentiContabiliService.getStreamDocumento(
-						cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_documento_cont(), cons.getCd_tipo_documento_cont());
+				InputStream isToAdd = SpringUtil.getBean(DocumentiContabiliService.class).getStreamDocumento(cons);
 				if (isToAdd != null)
 					ut.addSource(isToAdd);
 			}
@@ -299,30 +278,9 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 		} else {
 			List<String> nodes = new ArrayList<String>();
 			for (StatoTrasmissione cons : selectelElements) {
-				nodes.addAll(documentiContabiliService.getNodeRefDocumento(cons, true));
-			}						
-	        UrlBuilder url = new UrlBuilder(cmisService
-	                .getBaseURL().concat(ZIP_CONTENT));
-	        url.addParameter("destination", cmisService.getNodeByPath("/User Homes/sigla").getPropertyValue("alfcmis:nodeRef"));
-	        url.addParameter("filename", "Documenti contabili.zip");
-	        url.addParameter("noaccent", true);
-	        url.addParameter("getParent", true);
-	        url.addParameter("download", false);
-	        final JSONObject json = new JSONObject();
-	        json.put("nodes", nodes);	                       
-	        cmisService.getSiglaBindingSession().put(SessionParameter.READ_TIMEOUT, -1);
-			Response resZipContent = CmisBindingsHelper.getHttpInvoker(cmisService.getSiglaBindingSession()).invokePOST(url, MimeTypes.JSON.mimetype(),
-					new Output() {
-						public void write(OutputStream out) throws Exception {
-	            			out.write(json.toString().getBytes());
-	            		}
-	        		}, cmisService.getSiglaBindingSession());		
-	        if (resZipContent.getResponseCode() != HttpStatus.SC_OK) {
-				((HttpActionContext)actioncontext).getResponse().setStatus(HttpStatus.SC_NO_CONTENT);
-				return;
-	        }
-	        JSONObject jsonObject = new JSONObject(IOUtils.toString(resZipContent.getStream()));
-			InputStream is = ((Document)cmisService.getNodeByNodeRef(jsonObject.getString("nodeRef"))).getContentStream().getStream();
+				nodes.add(SpringUtil.getBean(DocumentiContabiliService.class).getDocumentKey(cons, true));
+			}
+			InputStream is = SpringUtil.getBean(DocumentiContabiliService.class).zipContent(nodes, "Documenti contabili");
 			if (is != null){
 				((HttpActionContext)actioncontext).getResponse().setContentType("application/zip");
 				OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
@@ -334,15 +292,21 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 				}
 				is.close();
 				os.flush();
-			}			
+			}
 		}
-	}	
+	}
+
+    public abstract StatoTrasmissione getStatoTrasmissione(ActionContext actioncontext, Integer esercizio,
+                                                           String tipo, String cds, String uo, Long numero_documento) throws BusinessProcessException;
 	public void scaricaDocumento(ActionContext actioncontext) throws Exception {
 		Integer esercizio = Integer.valueOf(((HttpActionContext)actioncontext).getParameter("esercizio"));
 		String cds = ((HttpActionContext)actioncontext).getParameter("cds");
+		String uo = ((HttpActionContext)actioncontext).getParameter("uo");
 		Long numero_documento = Long.valueOf(((HttpActionContext)actioncontext).getParameter("numero_documento"));
 		String tipo = ((HttpActionContext)actioncontext).getParameter("tipo");
-		InputStream is = documentiContabiliService.getStreamDocumento(esercizio, cds, numero_documento, tipo);
+		InputStream is = SpringUtil.getBean(DocumentiContabiliService.class).getStreamDocumento(
+				getStatoTrasmissione(actioncontext, esercizio, tipo, cds, uo, numero_documento)
+		);
 		if (is == null) {
 			log.error("CMIS Object not found: " + esercizio + cds + numero_documento + tipo);
 			is = this.getClass().getResourceAsStream("/cmis/404.pdf");
@@ -368,58 +332,45 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 		addSomethingToSelectedElements(actioncontext, selectelElements);
 		executeSign(actioncontext, selectelElements, firmaOTPBulk);
 	}
-	
-	protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception{
-		String webScriptURL = documentiContabiliService.getRepositoyURL().concat("service/sigla/firma/doccont");
-		Map<String, String> subjectDN = documentiContabiliService.getCertSubjectDN(firmaOTPBulk.getUserName(), firmaOTPBulk.getPassword());
-		if (subjectDN == null)
-			throw new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!");
-		String codiceFiscale = subjectDN.get("SERIALNUMBER").substring(3);
-		UtenteBulk utente = ((CNRUserInfo)actioncontext.getUserInfo()).getUtente();
-		if (controlloCodiceFiscale != null && controlloCodiceFiscale.equalsIgnoreCase("Y") && utente.getCodiceFiscaleLDAP() != null && !codiceFiscale.equalsIgnoreCase(utente.getCodiceFiscaleLDAP())) {
-			throw new ApplicationException("Il codice fiscale \"" + codiceFiscale + "\" presente sul certicato di Firma, " +
-					"è diverso da quello dell'utente collegato \"" + utente.getCodiceFiscaleLDAP() +"\"!");
-		}
-		List<String> nodes = new ArrayList<String>();
-		for (StatoTrasmissione bulk : selectelElements) {
-			nodes.addAll(documentiContabiliService.getNodeRefDocumento(bulk, true));
-		}		
-		PdfSignApparence pdfSignApparence = new PdfSignApparence();
-		pdfSignApparence.setNodes(nodes);
-		pdfSignApparence.setUsername(firmaOTPBulk.getUserName());
-		pdfSignApparence.setPassword(firmaOTPBulk.getPassword());
-		pdfSignApparence.setOtp(firmaOTPBulk.getOtp());
-		
-		Apparence apparence = new Apparence(
-				null, 
-				"Rome", "Firma documento contabile",
-				getTitoloFirma() + "\n" + getTitolo() + 
-						subjectDN.get("GIVENNAME") + " " + subjectDN.get("SURNAME"), 
-				0, 40, 1, 300, 80);
-		pdfSignApparence.setApparence(apparence);
-		String json = new GsonBuilder().create().toJson(pdfSignApparence);
-		try {		
-			UrlBuilder url = new UrlBuilder(new URIBuilder(webScriptURL).build().toString());
-			Response response = documentiContabiliService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
-			int status = response.getResponseCode();
-			if (status == HttpStatus.SC_NOT_FOUND
-					|| status == HttpStatus.SC_INTERNAL_SERVER_ERROR
-					|| status == HttpStatus.SC_UNAUTHORIZED
-					|| status == HttpStatus.SC_BAD_REQUEST) {
-				JSONTokener tokenizer = new JSONTokener(new StringReader(response.getErrorContent()));
-			    JSONObject jsonObject = new JSONObject(tokenizer);
-			    String jsonMessage = jsonObject.getString("message");
-				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
-			} else {
-				aggiornaStato(actioncontext, MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA, selectelElements.toArray(new StatoTrasmissione[selectelElements.size()]));
-			}
-			setMessage("Firma effettuata correttamente.");
-		}  catch (IOException e) {
-			throw new BusinessProcessException(e);
-		} catch (Exception e) {
-			throw new BusinessProcessException(e);
-		} 		
-	}
+
+    protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception{
+        Map<String, String> subjectDN = SpringUtil.getBean(DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(), firmaOTPBulk.getPassword());
+        if (subjectDN == null)
+            throw new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!");
+        String codiceFiscale = subjectDN.get("SERIALNUMBER").substring(3);
+        UtenteBulk utente = ((CNRUserInfo)actioncontext.getUserInfo()).getUtente();
+        if (controlloCodiceFiscale != null && controlloCodiceFiscale.equalsIgnoreCase("Y") && utente.getCodiceFiscaleLDAP() != null && !codiceFiscale.equalsIgnoreCase(utente.getCodiceFiscaleLDAP())) {
+            throw new ApplicationException("Il codice fiscale \"" + codiceFiscale + "\" presente sul certicato di Firma, " +
+                    "è diverso da quello dell'utente collegato \"" + utente.getCodiceFiscaleLDAP() +"\"!");
+        }
+        List<String> nodes = new ArrayList<String>();
+        for (StatoTrasmissione bulk : selectelElements) {
+            nodes.add(SpringUtil.getBean(DocumentiContabiliService.class).getDocumentKey(bulk, true));
+        }
+        PdfSignApparence pdfSignApparence = new PdfSignApparence();
+        pdfSignApparence.setNodes(nodes);
+        pdfSignApparence.setUsername(firmaOTPBulk.getUserName());
+        pdfSignApparence.setPassword(firmaOTPBulk.getPassword());
+        pdfSignApparence.setOtp(firmaOTPBulk.getOtp());
+
+        Apparence apparence = new Apparence(
+                null,
+                "Rome", "Firma documento contabile",
+                getTitoloFirma() + "\n" + getTitolo() +
+                        subjectDN.get("GIVENNAME") + " " + subjectDN.get("SURNAME"),
+                0, 40, 1, 300, 80);
+        pdfSignApparence.setApparence(apparence);
+
+        try {
+            SpringUtil.getBean(DocumentiContabiliService.class).signDocuments(pdfSignApparence, "service/sigla/firma/doccont");
+        } catch (StorageException _ex) {
+            throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
+        }
+
+        aggiornaStato(actioncontext, MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA,
+                selectelElements.toArray(new StatoTrasmissione[selectelElements.size()]));
+        setMessage("Firma effettuata correttamente.");
+    }
 	
 	protected void addSomethingToSelectedElements(ActionContext actioncontext, List<StatoTrasmissione> selectelElements) throws BusinessProcessException{		
 	}
