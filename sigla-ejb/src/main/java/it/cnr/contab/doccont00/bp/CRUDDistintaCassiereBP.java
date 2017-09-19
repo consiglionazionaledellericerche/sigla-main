@@ -1431,7 +1431,7 @@ public class CRUDDistintaCassiereBP extends
 					+ utente.getCodiceFiscaleLDAP() + "\"!");
 		}
 		if (!this.isFlusso()) {
-			final Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
+			Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
 			// spostato nel salva definitivo anche in questo caso
 			StorageObject distintaStorageObject = Optional.ofNullable(distinta.getPg_distinta_def())
 					.map(paDistintaDef -> documentiContabiliService.getStorageObjectByPath(
@@ -1487,13 +1487,12 @@ public class CRUDDistintaCassiereBP extends
 						documentiContabiliService.inviaDistintaPEC(nodes,
 								this.isSepa(), null);
 				}
-                Distinta_cassiereBulk distintaFirmata = (Distinta_cassiereBulk) createComponentSession().findByPrimaryKey(context.getUserContext(), distinta);
-                distintaFirmata.setDt_invio_pec(DateServices.getDt_valida(context
+                distinta.setDt_invio_pec(DateServices.getDt_valida(context
 						.getUserContext()));
-                distintaFirmata.setUser(((CNRUserContext) context.getUserContext())
+                distinta.setUser(((CNRUserContext) context.getUserContext())
 						.getUser());
-                distintaFirmata.setToBeUpdated();
-                setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distintaFirmata));
+                distinta.setToBeUpdated();
+                setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
 				commitUserTransaction();
 				setMessage("Invio effettuato correttamente.");
 			} catch (IOException e) {
