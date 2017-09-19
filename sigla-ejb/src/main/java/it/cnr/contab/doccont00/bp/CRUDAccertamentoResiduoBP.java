@@ -1,7 +1,7 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
@@ -10,6 +10,8 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -26,10 +28,12 @@ import it.cnr.jada.util.jsp.Button;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Accertamento Residuo.
  */
@@ -386,32 +390,22 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 	}
 	
 	@Override
-	protected CMISPath getCMISPath(AccertamentoBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
-		try {
-			CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR", CMISPath.class);
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getUnita_organizzativa().getCd_unita_organizzativa(), 
-					allegatoParentBulk.getUnita_organizzativa().getDs_unita_organizzativa(), 
-					allegatoParentBulk.getUnita_organizzativa().getDs_unita_organizzativa());
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Riaccertamento dei residui","Riaccertamento dei residui","Riaccertamento dei residui");				
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, String.valueOf(allegatoParentBulk.getEsercizio()),
-					String.valueOf(allegatoParentBulk.getEsercizio()),String.valueOf(allegatoParentBulk.getEsercizio()));
-			String folderName = allegatoParentBulk.getCd_uo_origine() + "-" + allegatoParentBulk.getEsercizio_originale() + allegatoParentBulk.getPg_accertamento();
-			if (create) {
-				cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
-						allegatoParentBulk.getDs_accertamento(), allegatoParentBulk.getDs_accertamento());			
-			} else {
-				try {
-					cmisPath = cmisPath.appendToPath(folderName);
-					cmisService.getNodeByPath(cmisPath);
-				} catch (CmisObjectNotFoundException _ex) {
-					return null;
-				}
-			}
-			return cmisPath;
-		} catch (ApplicationException e) {
-			throw new BusinessProcessException(e);
-		}
+	protected String getStorePath(AccertamentoBulk allegatoParentBulk, boolean create) throws BusinessProcessException {
+		return Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+				Optional.ofNullable(allegatoParentBulk.getUnita_organizzativa())
+						.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+						.orElse(""),
+				"Riaccertamento dei residui",
+				Optional.ofNullable(allegatoParentBulk.getEsercizio())
+						.map(esercizio -> String.valueOf(esercizio))
+						.orElse("0"),
+				allegatoParentBulk.getCd_uo_origine() + "-" + allegatoParentBulk.getEsercizio_originale() + allegatoParentBulk.getPg_accertamento()
+		).stream().collect(
+				Collectors.joining(SiglaStorageService.SUFFIX)
+		);
 	}
+
 	public String [][] getTabs() {
 		TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
 		int i=0;

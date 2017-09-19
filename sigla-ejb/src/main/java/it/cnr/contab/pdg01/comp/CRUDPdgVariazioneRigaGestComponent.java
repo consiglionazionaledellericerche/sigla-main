@@ -3,16 +3,16 @@ package it.cnr.contab.pdg01.comp;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 
-import org.apache.chemistry.opencmis.client.api.Document;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.StoreService;
 
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
@@ -31,7 +31,7 @@ import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
-import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
+import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
@@ -71,7 +71,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	/**
 	  * CRUDPdgVariazioneRigaGestComponent constructor comment.
 	  */
-	private SiglaCMISService cmisService;
 	public CRUDPdgVariazioneRigaGestComponent() {
 		super();
 	}
@@ -143,7 +142,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * 	 In caso affermativo viene generata una ApplicationException per segnalare all'utente 
 	 *       l'impossibilità di effettuare la variazione di Bilancio.
 	 *
-	 * @param	usercontext	lo UserContext che ha generato la richiesta
+	 * @param	userContext	lo UserContext che ha generato la richiesta
 	 * @param	oggettobulk il Pdg_variazioneBulk che deve essere modificato
 	 * @return	il Pdg_variazioneBulk risultante dopo l'operazione di modifica.
 	 */	
@@ -276,7 +275,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	private void createDocumentForVariazioneLiquidazioneIVA(UserContext userContext, Pdg_variazioneBulk variazione)
 			throws ComponentException {
 		try {
-			cmisService = SpringUtil.getBean("cmisService",SiglaCMISService.class);		
 			ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = new ArchiviaStampaPdgVariazioneBulk();
 			archiviaStampaPdgVariazioneBulk.setPdg_variazioneForPrint(variazione);
 			archiviaStampaPdgVariazioneBulk.setCentro_responsabilita(variazione.getCentro_responsabilita());
@@ -297,8 +295,13 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 			Report report = SpringUtil.getBean("printService",
 					PrintService.class).executeReport(userContext,
 					print);
-			CMISPath cmisPath = getCMISPath(archiviaStampaPdgVariazioneBulk);
-			Document node = cmisService.storePrintDocument(archiviaStampaPdgVariazioneBulk, report, cmisPath);
+			String cmisPath = getCMISPath(archiviaStampaPdgVariazioneBulk);
+			StorageObject node = SpringUtil.getBean("storeService", StoreService.class).storeSimpleDocument(
+			        archiviaStampaPdgVariazioneBulk,
+                    report.getInputStream(),
+                    report.getContentType(),
+                    report.getName(),
+                    cmisPath);
 			archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(PdgVariazioneDocument.construct(node));
 		} catch (ComponentException e) {
 			throw handleException(e);
@@ -308,20 +311,18 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		
 	}
 
-	private CMISPath getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws ApplicationException{
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathVariazioniAlPianoDiGestione",CMISPath.class);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, archiviaStampaPdgVariazioneBulk.getEsercizio().toString(), 
-				"Esercizio :"+archiviaStampaPdgVariazioneBulk.getEsercizio().toString(), 
-				"Esercizio :"+archiviaStampaPdgVariazioneBulk.getEsercizio().toString());
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, archiviaStampaPdgVariazioneBulk.getCd_cds()+" - "+archiviaStampaPdgVariazioneBulk.getDs_cds(), 
-				archiviaStampaPdgVariazioneBulk.getDs_cds(), 
-				archiviaStampaPdgVariazioneBulk.getDs_cds());
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, 
-				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
-				" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0'), 
-				null, 
-				null);
-		return cmisPath;
+	private String getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws ApplicationException{
+        return Arrays.asList(
+                SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione(),
+                Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getEsercizio())
+                        .map(esercizio -> String.valueOf(esercizio))
+                        .orElse("0"),
+                archiviaStampaPdgVariazioneBulk.getCd_cds()+" - "+archiviaStampaPdgVariazioneBulk.getDs_cds(),
+                "CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
+                        " Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
+        ).stream().collect(
+                Collectors.joining(SiglaStorageService.SUFFIX)
+        );
 	}
 	
 	public CRUDComponentSession createComponentSessionVariazioneGestionale() throws javax.ejb.EJBException {
@@ -341,7 +342,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * 		 - siano Linee utilizzabile nella Gestione spese (TI_GESTIONE='S')
 	 * 		 
 	 * @param userContext lo userContext che ha generato la richiesta
-	 * @param clauses clausole di ricerca gia' specificate dall'utente
+	 * @param clause clausole di ricerca gia' specificate dall'utente
 	 * @return il SQLBuilder con la clausola aggiuntiva sul gestore
 	 * @throws RemoteException 
 	 */
