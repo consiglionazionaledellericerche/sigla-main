@@ -345,8 +345,7 @@
 			columnName="FL_PIVA_VERIFICATA"
 			propertyName="flPivaVerificata"
 			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
+			columnSize="1" />
 				
 	</defaultColumnMap>
 	<persistentProperty

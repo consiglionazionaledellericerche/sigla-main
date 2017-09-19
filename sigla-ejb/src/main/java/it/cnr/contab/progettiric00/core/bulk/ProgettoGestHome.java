@@ -1,6 +1,7 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.sql.Connection;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.blob.bulk.*;
+import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
 import it.cnr.contab.progettiric00.geco.bulk.*;
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.util.Utility;
@@ -28,7 +30,7 @@ import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
-public class ProgettoGestHome extends BulkHome {
+public class ProgettoGestHome extends BulkHome implements ConsultazioniRestHome {
 	public ProgettoGestHome(java.sql.Connection conn) {
 		super(ProgettoGestBulk.class,conn);
 	}
@@ -328,5 +330,62 @@ public class ProgettoGestHome extends BulkHome {
 	} 
 	@Override
 	public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
+	}
+
+	@Override
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+		if (compoundfindclause != null && compoundfindclause.getClauses() != null){
+			Boolean trovataCondizioneUo = false;
+			CompoundFindClause newClauses = new CompoundFindClause();
+			Enumeration e = compoundfindclause.getClauses();
+			SQLBuilder sqlExists = null;
+			while(e.hasMoreElements() ){
+				FindClause findClause = (FindClause) e.nextElement();
+				if (findClause instanceof SimpleFindClause){
+					SimpleFindClause clause = (SimpleFindClause)findClause;
+					int operator = clause.getOperator();
+					if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_unita_organizzativa") &&
+							operator == SQLBuilder.EQUALS){
+						trovataCondizioneUo = true;
+						ProgettoHome progettoHome = (ProgettoHome) getHomeCache().getHome(ProgettoBulk.class);
+						sqlExists = progettoHome.createSQLBuilder();
+						sqlExists.addTableToHeader("V_ABIL_PROGETTI");
+						sqlExists.addSQLJoin("PROGETTO.ESERCIZIO", "PROGETTO_GEST.ESERCIZIO");
+						sqlExists.addSQLJoin("PROGETTO.TIPO_FASE", "PROGETTO_GEST.TIPO_FASE");
+						sqlExists.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETTO_GEST.PG_PROGETTO");
+						sqlExists.addSQLJoin("PROGETTO_GEST.ESERCIZIO", "V_ABIL_PROGETTI.ESERCIZIO_COMMESSA");
+						sqlExists.addSQLJoin("PROGETTO_GEST.TIPO_FASE", "V_ABIL_PROGETTI.TIPO_FASE_COMMESSA");
+						sqlExists.addSQLJoin("PROGETTO_GEST.PG_PROGETTO", "V_ABIL_PROGETTI.PG_COMMESSA");
+						sqlExists.addSQLClause("AND","V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, clause.getValue());
+					} else {
+						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
+					}
+				}
+			}
+			if (trovataCondizioneUo){
+				sql = selectByClause(userContext, newClauses);
+				sql.addSQLExistsClause("AND", sqlExists);
+			}
+		}
+
+		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+		if ( !isUoEnte(userContext)){
+			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext));
+		}
+		return sql;
+	}
+
+	private Boolean isUoEnte(UserContext userContext) throws PersistencyException, ComponentException{
+		Unita_organizzativa_enteBulk uoEnte = getUoEnte(userContext);
+		if ( ((CNRUserContext)userContext).getCd_unita_organizzativa().equals ( uoEnte.getCd_unita_organizzativa() )){
+			return true;
+		}
+		return false;
+	}
+
+	private Unita_organizzativa_enteBulk getUoEnte(UserContext userContext)
+			throws PersistencyException, ComponentException {
+		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHomeCache().getHome(Unita_organizzativa_enteBulk.class ).findAll().get(0);
+		return uoEnte;
 	}
 }
