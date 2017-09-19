@@ -1,24 +1,22 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.util.OrderedHashtable;
 
 public class AllegatoDocContBulk extends AllegatoGenericoBulk {
 	private static final long serialVersionUID = 1L;
 	private OrderedHashtable rifModalitaPagamentoKeys = new OrderedHashtable();
-	@CMISPolicy(name="P:doccont:rif_modalita_pagamentoAspect", property=@CMISProperty(name="doccont:rif_modalita_pagamento"))
+	@StoragePolicy(name="P:doccont:rif_modalita_pagamentoAspect", property=@StorageProperty(name="doccont:rif_modalita_pagamento"))
 	private String rifModalitaPagamento;
-		
+
 	public AllegatoDocContBulk() {
 		super();
 	}
 
-	public AllegatoDocContBulk(Document node) {
-		super(node);
+	public AllegatoDocContBulk(String storageKey) {
+		super(storageKey);
 	}
 
 	public String getRifModalitaPagamento() {
@@ -36,5 +34,5 @@ public class AllegatoDocContBulk extends AllegatoGenericoBulk {
 	public void setRifModalitaPagamentoKeys(
 			OrderedHashtable rifModalitaPagamentoKeys) {
 		this.rifModalitaPagamentoKeys = rifModalitaPagamentoKeys;
-	}	
+	}
 }
