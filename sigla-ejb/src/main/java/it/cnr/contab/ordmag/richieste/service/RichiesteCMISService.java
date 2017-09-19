@@ -7,20 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.client.api.ItemIterable;
-import org.apache.chemistry.opencmis.client.api.Property;
-import org.apache.chemistry.opencmis.client.api.QueryResult;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
-
-import it.cnr.contab.cmis.CMISAspect;
-import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.cmis.service.SiglaCMISService;
-import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaDettaglioBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
@@ -32,7 +20,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.Introspector;
 
-public class RichiesteCMISService extends SiglaCMISService {
+public class RichiesteCMISService extends StoreService {
 	
 	public static final String ASPECT_STAMPA_RICHIESTA_ORDINI = "P:ordini_richieste_attachment:stampa";
 	public static final String ASPECT_RICHIESTA_ORDINI_DETTAGLIO = "P:ordini_richieste_attachment:allegati_dettaglio";
@@ -114,6 +102,7 @@ public class RichiesteCMISService extends SiglaCMISService {
 		cmisPath = createFolderIfNotPresent(cmisPath, metadataProperties, aspectsToAdd, folderName);
 		return cmisPath;
 	}
+
 	public CMISPath createFolderDettaglioIfNotPresent(CMISPath cmisPath, RichiestaUopRigaBulk dettaglio) throws ApplicationException{
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		String name = dettaglio.constructCMISNomeFile();
@@ -167,6 +156,7 @@ public class RichiesteCMISService extends SiglaCMISService {
 			} 
 		}
 	}
+
 	public CMISPath getCMISPath(RichiestaUopBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
 		try {
 			CMISPath cmisPath = null;

@@ -4,15 +4,14 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
-import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFileAssegniRicerca;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFileBorseStudio;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFileIncarichi;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFileBorseStudio;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFileAssegniRicerca;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFileIncarichi;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
-
-import org.apache.chemistry.opencmis.client.api.Document;
 
 public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 	public static final java.util.Dictionary tipo_variazioneForEnteKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -185,39 +184,39 @@ public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 			return null;
 		return this.getIncarichi_repertorio().getPg_procedura();
 	}
-	public CMISFile getCMISFile() throws IOException{
-		CMISFile cmisFile=null;
+	public StorageFile getCMISFile() throws IOException{
+		StorageFile storageFile =null;
 		if (this.getIncarichi_repertorio()!=null && 
 			this.getIncarichi_repertorio().getIncarichi_procedura()!=null) {
 			if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForBorseStudio()) {
 				if (this.getFile()==null)
-					cmisFile = new CMISFileBorseStudio(this);
+					storageFile = new StorageFileBorseStudio(this);
 				else
-					cmisFile = new CMISFileBorseStudio(this.getFile(), this.getNome_file(), this);
+					storageFile = new StorageFileBorseStudio(this.getFile(), this.getNome_file(), this);
 			} else if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForAssegniRicerca()) {
 				if (this.getFile()==null)
-					cmisFile = new CMISFileAssegniRicerca(this);
+					storageFile = new StorageFileAssegniRicerca(this);
 				else
-					cmisFile = new CMISFileAssegniRicerca(this.getFile(), this.getNome_file(), this);
+					storageFile = new StorageFileAssegniRicerca(this.getFile(), this.getNome_file(), this);
 			}
 		}
-		if (cmisFile==null) {
+		if (storageFile ==null) {
 			if (this.getFile()==null)
-				cmisFile = new CMISFileIncarichi(this);
+				storageFile = new StorageFileIncarichi(this);
 			else
-				cmisFile = new CMISFileIncarichi(this.getFile(), this.getNome_file(), this);
+				storageFile = new StorageFileIncarichi(this.getFile(), this.getNome_file(), this);
 		}
-		return cmisFile;
+		return storageFile;
 	}
-	public CMISFile getCMISFile(Document node) {
+	public StorageFile getCMISFile(StorageObject storageObject) {
 		if (this.getIncarichi_repertorio()!=null && 
 			this.getIncarichi_repertorio().getIncarichi_procedura()!=null) {
 			if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForBorseStudio())
-				return new CMISFileBorseStudio(node, this);
+				return new StorageFileBorseStudio(storageObject, this);
 			else if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForAssegniRicerca())
-				return new CMISFileAssegniRicerca(node, this);
+				return new StorageFileAssegniRicerca(storageObject, this);
 		}
-		return new CMISFileIncarichi(node, this);
+		return new StorageFileIncarichi(storageObject, this);
 	}
 	public String constructCMISNomeFile() {
 		StringBuffer nomeFile = new StringBuffer();
