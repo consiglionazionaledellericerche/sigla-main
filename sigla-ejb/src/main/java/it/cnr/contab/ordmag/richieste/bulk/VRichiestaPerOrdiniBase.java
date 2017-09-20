@@ -4,7 +4,7 @@
  */
 package it.cnr.contab.ordmag.richieste.bulk;
 import it.cnr.jada.persistency.Keyed;
-public class VRichiestaPerOrdiniRigaBase extends RichiestaUopRigaKey implements Keyed {
+public class VRichiestaPerOrdiniBase extends RichiestaUopRigaKey implements Keyed {
 //    CD_BENE_SERVIZIO VARCHAR(15)
 	private java.lang.String cdBeneServizio;
  
@@ -26,6 +26,9 @@ public class VRichiestaPerOrdiniRigaBase extends RichiestaUopRigaKey implements 
 //    CD_UNITA_MISURA VARCHAR(10)
 	private java.lang.String cdUnitaMisura;
  
+//  CD_UNITA_MISURA VARCHAR(10)
+	private java.lang.String cdUnitaMisuraMinima;
+
 //    COEF_CONV DECIMAL(12,5)
 	private java.math.BigDecimal coefConv;
  
@@ -85,10 +88,10 @@ public class VRichiestaPerOrdiniRigaBase extends RichiestaUopRigaKey implements 
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: RICHIESTA_UOP_RIGA
 	 **/
-	public VRichiestaPerOrdiniRigaBase() {
+	public VRichiestaPerOrdiniBase() {
 		super();
 	}
-	public VRichiestaPerOrdiniRigaBase(java.lang.String cdCds, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdNumeratore, java.lang.Integer numero, java.lang.Integer riga) {
+	public VRichiestaPerOrdiniBase(java.lang.String cdCds, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdNumeratore, java.lang.Integer numero, java.lang.Integer riga) {
 		super(cdCds, cdUnitaOperativa, esercizio, cdNumeratore, numero, riga);
 	}
 	/**
@@ -400,5 +403,11 @@ public class VRichiestaPerOrdiniRigaBase extends RichiestaUopRigaKey implements 
 	}
 	public void setDataInvio(java.sql.Timestamp dataInvio) {
 		this.dataInvio = dataInvio;
+	}
+	public java.lang.String getCdUnitaMisuraMinima() {
+		return cdUnitaMisuraMinima;
+	}
+	public void setCdUnitaMisuraMinima(java.lang.String cdUnitaMisuraMinima) {
+		this.cdUnitaMisuraMinima = cdUnitaMisuraMinima;
 	}
 }
