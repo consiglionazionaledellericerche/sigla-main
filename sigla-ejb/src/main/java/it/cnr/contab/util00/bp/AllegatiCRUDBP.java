@@ -155,10 +155,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         .isPresent())
                     continue;
                 T allegato = (T) Introspector.newInstance(getAllegatoClass(), storageObject.getKey());
-                allegato.setContentType( (String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-                allegato.setNome( (String) storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
-                allegato.setDescrizione((String)storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-                allegato.setTitolo((String)storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
+                allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+                allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
+                allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+                allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
                 completeAllegato(allegato);
                 allegato.setCrudStatus(OggettoBulk.NORMAL);
                 allegatoParentBulk.addToArchivioAllegati(allegato);
