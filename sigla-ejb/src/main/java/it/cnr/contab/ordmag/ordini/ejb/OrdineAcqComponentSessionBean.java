@@ -63,23 +63,6 @@ public Boolean isUtenteAbilitatoValidazioneOrdine(UserContext usercontext, Ordin
 		throw uncaughtError(usercontext,componentObj,e);
 	}
 }
-public void gestioneStampaOrdine(UserContext userContext, OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, RemoteException {
-	pre_component_invocation(userContext,componentObj);
-	try {
-		((OrdineAcqComponent)componentObj).gestioneStampaOrdine(userContext, ordine);
-		component_invocation_succes(userContext,componentObj);
-	} catch(it.cnr.jada.comp.NoRollbackException e) {
-		component_invocation_succes(userContext,componentObj);
-		throw e;
-	} catch(it.cnr.jada.comp.ComponentException e) {
-		component_invocation_failure(userContext,componentObj);
-		throw e;
-	} catch(RuntimeException e) {
-		throw uncaughtRuntimeException(userContext,componentObj,e);
-	} catch(Error e) {
-		throw uncaughtError(userContext,componentObj,e);
-	}
-}
 
 public void controllaQuadraturaObbligazioni(UserContext userContext,OrdineAcqBulk ordine) throws PersistencyException,ComponentException, javax.ejb.EJBException, RemoteException {
 	pre_component_invocation(userContext,componentObj);
