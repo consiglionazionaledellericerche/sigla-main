@@ -133,7 +133,7 @@
     <init-param name="defaultAction" value="CRUDOrdineAcqAction"/>
   </businessProcess>
   <businessProcess
-      name="GenerazioneOrdineDaRichiesteBP" className="it.cnr.contab.ordmag.richieste.bp.GenerazioneOrdineDaRichiesteBP">
+      name="GenerazioneOrdineDaRichiesteBP" className="it.cnr.contab.ordmag.ordini.bp.GenerazioneOrdineDaRichiesteBP">
     <forward name="default" path="/ordmag/ordini/ordine_da_richieste.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk" />
 		<init-param name="componentSessionName" value="CNRORDMAG00_EJB_GenerazioneOrdiniDaRichiesteComponentSession" />
