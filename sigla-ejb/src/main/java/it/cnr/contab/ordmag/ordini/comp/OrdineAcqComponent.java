@@ -20,6 +20,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
@@ -60,6 +61,7 @@ import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.AllegatoOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
@@ -818,7 +820,7 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 			UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
 			SQLBuilder sql = home.selectUnitaOperativaOrdByClause(usercontext, ordine, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
 			List listUop=uopHome.fetchAll(sql);
-			if (listUop != null && listUop.size() == 1){
+			if (listUop != null && (listUop.size() == 1 || isPresenteUnaUop(listUop))){
 				ordine.setUnitaOperativaOrd((UnitaOperativaOrdBulk)listUop.get(0));
 				
 				ordine.setIsAbilitatoTuttiMagazzini(isAbilitatoTuttiMagazzini(usercontext, ordine));
@@ -830,6 +832,21 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 		throw new ComponentException(e);
 	}
 	return ordine;
+}
+
+private Boolean isPresenteUnaUop(List listUop) throws ComponentException {
+	UnitaOperativaOrdKey key = null;
+	for (Object oggettoBulk : listUop){
+		UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)oggettoBulk;
+		if (key ==null){
+			key = (UnitaOperativaOrdKey)uop.getKey();
+		} else {
+			if (!key.equals((UnitaOperativaOrdKey)uop.getKey())){
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 private void impostaDatiDivisaCambioDefault(UserContext usercontext, OrdineAcqBulk ordine) throws ComponentException {
@@ -1147,6 +1164,20 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 			sql.addSQLClause("AND","OBBLIGAZIONE.TI_APPARTENENZA",sql.EQUALS, filtro.getElemento_voce().getTi_appartenenza());
 			sql.addSQLClause("AND","OBBLIGAZIONE.TI_GESTIONE",sql.EQUALS, filtro.getElemento_voce().getTi_gestione());
 			sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO",sql.EQUALS, filtro.getElemento_voce().getEsercizio());
+		}
+		
+		if (filtro.getListaVociSelezionabili() != null && !filtro.getListaVociSelezionabili().isEmpty()) {
+			sql.openParenthesis("AND");
+			for (Elemento_voceBulk voce : filtro.getListaVociSelezionabili()){
+				sql.openParenthesis("OR");
+				sql.addSQLClause("AND","OBBLIGAZIONE.CD_ELEMENTO_VOCE",sql.EQUALS, voce.getCd_elemento_voce());
+				sql.addSQLClause("AND","OBBLIGAZIONE.TI_APPARTENENZA",sql.EQUALS, voce.getTi_appartenenza());
+				sql.addSQLClause("AND","OBBLIGAZIONE.TI_GESTIONE",sql.EQUALS, voce.getTi_gestione());
+				sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO",sql.EQUALS, voce.getEsercizio());
+				sql.closeParenthesis();
+				
+			}
+			sql.closeParenthesis();
 		}
 		
 		sql.addSQLClause("AND","OBBLIGAZIONE.FL_PGIRO",sql.EQUALS, "N");
