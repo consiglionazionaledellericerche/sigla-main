@@ -7,72 +7,56 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
 public class TransactionalRichiestaUopComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements RichiestaUopComponentSession {
-public void gestioneStampaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,it.cnr.jada.comp.ComponentException{
-	try {
-		invoke("gestioneStampaRichiesta",new Object[] {
-			userContext,
-			richiesta });
-	} catch(java.rmi.RemoteException e) {
-		throw e;
-	} catch(java.lang.reflect.InvocationTargetException e) {
+
+	public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException{
 		try {
-			throw e.getTargetException();
-		} catch(it.cnr.jada.comp.ComponentException ex) {
-			throw ex;
-		} catch(Throwable ex) {
-			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			invoke("completaRichiesta",new Object[] {
+				userContext,
+				richiesta });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
 		}
 	}
-}
-public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException{
-	try {
-		invoke("completaRichiesta",new Object[] {
-			userContext,
-			richiesta });
-	} catch(java.rmi.RemoteException e) {
-		throw e;
-	} catch(java.lang.reflect.InvocationTargetException e) {
+	public Boolean isUtenteAbilitatoRichiesta(UserContext usercontext, RichiestaUopBulk richiesta) throws ComponentException, PersistencyException,javax.ejb.EJBException, RemoteException{
 		try {
-			throw e.getTargetException();
-		} catch(it.cnr.jada.comp.ComponentException ex) {
-			throw ex;
-		} catch(Throwable ex) {
-			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			return (Boolean)invoke("isUtenteAbilitatoRichiesta",new Object[] {
+					usercontext,
+				richiesta });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
 		}
 	}
-}
-public Boolean isUtenteAbilitatoRichiesta(UserContext usercontext, RichiestaUopBulk richiesta) throws ComponentException, PersistencyException,javax.ejb.EJBException, RemoteException{
-	try {
-		return (Boolean)invoke("isUtenteAbilitatoRichiesta",new Object[] {
-				usercontext,
-			richiesta });
-	} catch(java.rmi.RemoteException e) {
-		throw e;
-	} catch(java.lang.reflect.InvocationTargetException e) {
+	public Boolean isUtenteAbilitatoValidazioneRichiesta(UserContext usercontext, RichiestaUopBulk richiesta) throws ComponentException, PersistencyException,javax.ejb.EJBException, RemoteException{
 		try {
-			throw e.getTargetException();
-		} catch(it.cnr.jada.comp.ComponentException ex) {
-			throw ex;
-		} catch(Throwable ex) {
-			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			return (Boolean)invoke("isUtenteAbilitatoValidazioneRichiesta",new Object[] {
+					usercontext,
+				richiesta });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
 		}
 	}
-}
-public Boolean isUtenteAbilitatoValidazioneRichiesta(UserContext usercontext, RichiestaUopBulk richiesta) throws ComponentException, PersistencyException,javax.ejb.EJBException, RemoteException{
-	try {
-		return (Boolean)invoke("isUtenteAbilitatoValidazioneRichiesta",new Object[] {
-				usercontext,
-			richiesta });
-	} catch(java.rmi.RemoteException e) {
-		throw e;
-	} catch(java.lang.reflect.InvocationTargetException e) {
-		try {
-			throw e.getTargetException();
-		} catch(it.cnr.jada.comp.ComponentException ex) {
-			throw ex;
-		} catch(Throwable ex) {
-			throw new java.rmi.RemoteException("Uncaugth exception",ex);
-		}
-	}
-}
 }
