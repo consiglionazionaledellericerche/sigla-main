@@ -609,11 +609,11 @@ public Forward doRicercaObbligazione(ActionContext context) {
 
 			controllaSelezionePerContabilizzazione(context, models.iterator());
 			try{
-			controllaSelezionePerTitoloCapitoloLista(context, models.iterator());
+			List lista = recuperoListaCapitoli(context, models.iterator());
+			forward = basicDoRicercaObbligazione(context, ordine, models, lista);
 			} catch(ApplicationException e) {
 				throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
 			}		
-			forward = basicDoRicercaObbligazione(context, ordine, models);
 		}
 		return forward;
 	} catch(Throwable e) {
@@ -631,7 +631,7 @@ protected void controllaSelezionePerContabilizzazione(ActionContext context, jav
 			}
 		}
 	}
-protected java.util.List controllaSelezionePerTitoloCapitoloLista(ActionContext context, java.util.Iterator selectedModels)
+protected java.util.List recuperoListaCapitoli(ActionContext context, java.util.Iterator selectedModels)
 		throws ComponentException, PersistencyException, IntrospectionException, RemoteException, BusinessProcessException {
 	
 		if (selectedModels != null) {
@@ -645,29 +645,39 @@ protected java.util.List controllaSelezionePerTitoloCapitoloLista(ActionContext 
 				Bene_servizioBulk beneServizio = rigaSelected.getBeneServizio();
 				if (beneServizio == null)
 					throw new it.cnr.jada.comp.ApplicationException("Valorizzare il bene/servizio per il dettaglio " + ((rigaSelected.getRiga() == null) ? "" : "\"" + rigaSelected.getRiga() + "\"") + "! Operazione interrotta.");
-					if (beneServizio.getCategoria_gruppo() == null)
-						throw new it.cnr.jada.comp.ApplicationException("Il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non ha definito alcuna categoria di appartenenza! Operazione interrotta.");
-					else
-						if (categorieGruppo.isEmpty())
-							categorieGruppo.add(beneServizio.getCategoria_gruppo());
-						else 
-							for (java.util.Iterator i = ((java.util.Vector)categorieGruppo.clone()).iterator(); i.hasNext();) {
-								Categoria_gruppo_inventBulk cat = (Categoria_gruppo_inventBulk)i.next();
-									if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(categorieGruppo, beneServizio.getCategoria_gruppo()))
-										categorieGruppo.add(beneServizio.getCategoria_gruppo());
-							}
-				
-				CategoriaGruppoInventComponentSession h= (CategoriaGruppoInventComponentSession)
-							context.getBusinessProcess().createComponentSession(
-										"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
-										CategoriaGruppoInventComponentSession.class);
-					titoliCapitoli = h.findAssVoceFList(context.getUserContext(), beneServizio.getCategoria_gruppo());
-					if (titoliCapitoli == null)
-						throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non è stato attribuito ad alcuna categoria gruppo per l'inventario!");
+				if (beneServizio.getCategoria_gruppo() == null)
+					throw new it.cnr.jada.comp.ApplicationException("Il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non ha definito alcuna categoria di appartenenza! Operazione interrotta.");
+				else
+					if (categorieGruppo.isEmpty())
+						categorieGruppo.add(beneServizio.getCategoria_gruppo());
+					else 
+						for (java.util.Iterator i = ((java.util.Vector)categorieGruppo.clone()).iterator(); i.hasNext();) {
+							Categoria_gruppo_inventBulk cat = (Categoria_gruppo_inventBulk)i.next();
+							if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(categorieGruppo, beneServizio.getCategoria_gruppo()))
+								categorieGruppo.add(beneServizio.getCategoria_gruppo());
+						}
+
+			}
+			CategoriaGruppoInventComponentSession h= (CategoriaGruppoInventComponentSession)
+					context.getBusinessProcess().createComponentSession(
+								"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
+								CategoriaGruppoInventComponentSession.class);
+			for (java.util.Iterator i = ((java.util.Vector)categorieGruppo.clone()).iterator(); i.hasNext();) {
+				Categoria_gruppo_inventBulk cat = (Categoria_gruppo_inventBulk)i.next();
+				java.util.List titoliCapitoliCatGrp = h.findAssVoceFList(context.getUserContext(), cat);
+				if (titoliCapitoliCatGrp == null)
+					throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + cat.getCd_categoria_gruppo() + "\" non è stato attribuita l'associazione al capitolo di spesa");
+				if (titoliCapitoli.isEmpty())
+					titoliCapitoli.addAll(titoliCapitoliCatGrp);
+				else 
+					for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); i.hasNext();) {
+						Elemento_voceBulk voce = (Elemento_voceBulk)k.next();
+						if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(titoliCapitoli, voce))
+							titoliCapitoli.add(voce);
+					}
 			}
 			
-			if (categorieGruppo.size() != 1)
-					throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli inventariabili con stesso titolo capitolo!");
+			
 			if (titoliCapitoli !=null && !titoliCapitoli.isEmpty())
 				return titoliCapitoli;		
 		}
@@ -699,7 +709,8 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(
 private Forward basicDoRicercaObbligazione(
 		ActionContext context, 
 		OrdineAcqBulk ordine,
-		java.util.List models) {
+		java.util.List models,
+		java.util.List listaCapitoli) {
 
 		try {
 			
@@ -707,19 +718,12 @@ private Forward basicDoRicercaObbligazione(
 			filtro.setFornitore(ordine.getFornitore());
 			filtro.setDs_obbligazione("Ordine");
 			filtro.setIm_importo(calcolaTotaleSelezionati(models, false));
+			filtro.setListaVociSelezionabili(listaCapitoli);
 			filtro.setCd_unita_organizzativa(ordine.getUnitaOperativaOrd().getUnitaOrganizzativa().getCd_unita_organizzativa());
 			if (filtro.getData_scadenziario() == null)
 				filtro.setFl_data_scadenziario(Boolean.FALSE);		
 			if (models == null || models.isEmpty())
 				filtro.setFl_importo(Boolean.FALSE);
-			else {
-				OrdineAcqRigaBulk firstRow = (OrdineAcqRigaBulk)models.get(0);
-				
-			//	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
-		    //SOSPESO PER ESERCIZIO 2015
-				Elemento_voceBulk ev = getElementoVoce(context, firstRow.getBeneServizio().getCategoria_gruppo());
-				filtro.setElemento_voce(ev);
-			}
 
 			BulkBP robp = (BulkBP)context.getUserInfo().createBusinessProcess(context,"RicercaObbligazioniBP", new Object[] { "MRSWTh" });
 			robp.setModel(context,filtro);
@@ -730,30 +734,7 @@ private Forward basicDoRicercaObbligazione(
 			return handleException(context,e);
 		}
 	}
-private Elemento_voceBulk getElementoVoce(ActionContext context, Categoria_gruppo_inventBulk cgi)
-		throws it.cnr.jada.comp.ApplicationException {
 
-//		if (cgi == null)
-			return null;
-			
-//		try {
-//			if (cgi.getVoce_f() == null ||
-//				cgi.getVoce_f().getCd_elemento_voce() == null) {
-//				CategoriaGruppoInventComponentSession h = (CategoriaGruppoInventComponentSession)
-//								context.getBusinessProcess().createComponentSession(
-//											"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
-//											CategoriaGruppoInventComponentSession.class);
-//				cgi = (Categoria_gruppo_inventBulk)h.inizializzaBulkPerModifica(context.getUserContext(), cgi);
-//			}
-//			if (cgi.getVoce_f() == null ||
-//				cgi.getVoce_f().getCd_elemento_voce() == null)
-//				return null;
-//				
-//			return cgi.getVoce_f();
-//		} catch (Throwable e) {
-//			throw new it.cnr.jada.comp.ApplicationException("Errore nel caricamento del titolo/capitolo per il gruppo inventario \"" + cgi.getDs_categoria_gruppo() + "\"!");
-//		}
-	}
 protected Forward basicDoBringBackOpenObbligazioniWindow(
 		ActionContext context, 
 		Obbligazione_scadenzarioBulk newObblig) {
@@ -769,7 +750,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
    	SOSPESO PER ESERCIZIO 2015	*/
 			java.util.List dettagliDaContabilizzare = (java.util.List)ordine.getObbligazioniHash().get(newObblig);
 			if (dettagliDaContabilizzare != null && !dettagliDaContabilizzare.isEmpty()) {
-				List titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
+				List titoloCapitoloValidolist = recuperoListaCapitoli(context, dettagliDaContabilizzare.iterator());
 				Elemento_voceBulk titoloCapitoloObbligazione = newObblig.getObbligazione().getElemento_voce();
 				//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
 				Boolean compatibile=null;
@@ -840,7 +821,7 @@ private void basicDoContabilizza(
 			try {
 			List titoloCapitoloValidolist;
 			if(dettagliDaContabilizzare!=null && !dettagliDaContabilizzare.isEmpty()){
-				titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
+				titoloCapitoloValidolist = recuperoListaCapitoli(context, selectedModels.iterator());
 				
 			//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
 			Boolean compatibile=null;
@@ -900,7 +881,8 @@ public Forward doAddToCRUDMain_Obbligazioni(ActionContext context) {
 
 		if (ordine.getFornitore() == null || ordine.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
 			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario selezionare un fornitore!");
-		return basicDoRicercaObbligazione(context, ordine, null);
+		recuperoListaCapitoli(context, ordine.getRigheOrdineColl().iterator());
+		return basicDoRicercaObbligazione(context, ordine, null, null);
 	} catch(Throwable e) {
 		return handleException(context,e);
 	}

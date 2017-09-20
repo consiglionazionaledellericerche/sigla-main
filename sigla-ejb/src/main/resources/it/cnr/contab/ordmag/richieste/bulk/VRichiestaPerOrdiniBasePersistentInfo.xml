@@ -49,6 +49,12 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="CD_UNITA_MISURA_MINIMA"
+			propertyName="cdUnitaMisuraMinima"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
 			columnName="COEF_CONV"
 			propertyName="coefConv"
 			sqlTypeName="DECIMAL"
@@ -178,6 +184,8 @@
 		name="quantitaRichiesta" />
 	<persistentProperty
 		name="cdUnitaMisura" />
+	<persistentProperty
+		name="cdUnitaMisuraMinima" />
 	<persistentProperty
 		name="coefConv" />
 	<persistentProperty
