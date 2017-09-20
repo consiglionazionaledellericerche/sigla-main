@@ -97,7 +97,7 @@
 		inputType="TEXT"
 		inputSize="10"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		label="Quantità Richiesta" />
 <!--  	<fieldProperty
 		name="findBeneServizio"
@@ -114,6 +114,7 @@
 		inputSize="20"
 		inputType="TEXT"
 		nullable="false"
+		readonlyProperty="RObeneservizio"
 		label="Bene/Servizio"
 		caseSensitiveSearch="false" />
 	<fieldProperty
@@ -133,20 +134,12 @@
 		enabledOnEdit="false"
 		label="Unità di Misura" />
 	<fieldProperty
-		name="cdUnitaMisuraMinima"
-		property="cdUnitaMisuraMinima"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="Unità di Misura Minima" />
-	<fieldProperty
 		name="coefConv"
 		property="coefConv"
 		inputType="TEXT"
 		inputSize="12"
 		maxLength="12"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		label="Coefficiente di Conversione" />
 	<fieldProperty
 		name="quantitaAutorizzata"
@@ -220,25 +213,7 @@
 		maxLength="20"
 		inputSize="20"
 		enabledOnSearch="true"
-		nullable="true"
-		/>
-	<fieldProperty
-		name="dsLineaAttivita"
-		property="dsLineaAttivita"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="300"
-		enabledOnEdit="false"
-		label="Descrizione Linea Attività" />
-	<fieldProperty
-		name="dsElementoVoce"
-		property="dsElementoVoce"
-		label="Descrizione Voce"
-		inputType="TEXT"
-		maxLength="300"
-		inputSize="30"
-		enabledOnSearch="false"
-		nullable="true"
+		nullable="false"
 		/>
 	<fieldProperty
 		name="pgProgetto"
@@ -318,36 +293,43 @@
 		<formFieldProperty
 			name="riga" />
 	</form>
-	<formFieldProperty name="cdUnitaOperativa" />
-	<formFieldProperty name="esercizio" />
-	<formFieldProperty name="cdNumeratore" />
-	<formFieldProperty name="numero" />
-	<formFieldProperty name="riga" />
-	<formFieldProperty name="cdBeneServizio" />
-	<formFieldProperty name="dsBeneServizio" />
-	<formFieldProperty name="notaRiga" />
-	<formFieldProperty name="stato" />
-	<formFieldProperty name="quantitaRichiesta" />
-	<formFieldProperty name="cdUnitaMisuraMinima" />
-	<formFieldProperty name="cdUnitaMisura" />
-	<formFieldProperty name="cdElementoVoce" />
-	<formFieldProperty name="dsElementoVoce" />
-	<formFieldProperty name="allegatiDocumentale" />
-	<formFieldProperty name="cdLineaAttivita" />
-	<formFieldProperty name="dsLineaAttivita" />
-	<formFieldProperty name="findObbligazione" />
-	<formFieldProperty name="findLineaAttivita" />
-	<formFieldProperty name="findCentroResponsabilita" />
-	<formFieldProperty name="findUnitaMisura" />
-	<formFieldProperty name="findBeneServizio" />
-	<formFieldProperty name="coefConv" />
-	<formFieldProperty name="quantitaAutorizzata" />
-	<formFieldProperty name="notaUopDest" />
-	<formFieldProperty name="pgProgetto" />
-	<formFieldProperty name="dsProgetto" />
-	<formFieldProperty name="cdProgetto" />
-	<formFieldProperty name="cdCategoriaGruppo" />
-	<formFieldProperty name="dsCategoriaGruppo" />
+	<formFieldProperty
+		name="riga" />
+	<formFieldProperty
+		name="dsBeneServizio" />
+	<formFieldProperty
+		name="notaRiga" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="quantitaRichiesta" />
+	<formFieldProperty
+		name="cdUnitaMisuraMinima" />
+	<formFieldProperty
+		name="findElementoVoce" />
+	<formFieldProperty
+		name="findProgetto" />
+	<formFieldProperty name="allegatiDocumentale" />	
+	<formFieldProperty
+		name="findObbligazione" />
+	<formFieldProperty
+		name="findLineaAttivita" />
+	<formFieldProperty
+		name="findCentroResponsabilita" />
+	<formFieldProperty
+		name="findUnitaMisura" />
+	<formFieldProperty
+		name="findBeneServizio" />
+	<formFieldProperty
+		name="coefConv" />
+	<formFieldProperty
+		name="quantitaAutorizzata" />
+	<formFieldProperty
+		name="notaUopDest" />
+	<formFieldProperty
+		name="pgProgetto" />
+	<formFieldProperty
+		name="dtCancellazione" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
@@ -430,6 +412,8 @@
 		name="coefConv" />
 	<columnFieldProperty
 		name="quantitaRichiesta" />
+	<columnFieldProperty
+		name="quantitaAutorizzata" />
 	<columnFieldProperty
 		name="cdCentroResponsabilita" />
 	<columnFieldProperty
