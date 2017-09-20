@@ -1,4 +1,4 @@
-package it.cnr.contab.ordmag.richieste.bp;
+package it.cnr.contab.ordmag.ordini.bp;
 
 import java.util.List;
 
