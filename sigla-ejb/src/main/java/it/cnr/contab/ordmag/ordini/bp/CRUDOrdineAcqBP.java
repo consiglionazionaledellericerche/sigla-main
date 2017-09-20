@@ -3,14 +3,12 @@ package it.cnr.contab.ordmag.ordini.bp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.SecondaryType;
-
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.ObbligazioniCRUDController;
 import it.cnr.contab.docamm00.bp.VoidableBP;
@@ -20,8 +18,6 @@ import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.ejb.OrdineComponentSession;
-import it.cnr.contab.doccont00.ordine.bulk.OrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
@@ -29,10 +25,13 @@ import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.contab.ordmag.richieste.service.RichiesteCMISService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
@@ -43,8 +42,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 /**
  * Gestisce le catene di elementi correlate con il documento in uso.
  */
-public class CRUDOrdineAcqBP 
-extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumentoAmministrativoBP, VoidableBP, IDefferedUpdateSaldiBP  {
+public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumentoAmministrativoBP, VoidableBP, IDefferedUpdateSaldiBP  {
 
 	private final SimpleDetailCRUDController dettaglioObbligazioneController;
 	private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;
@@ -78,24 +76,12 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 		public OggettoBulk removeDetail(int i) {
 			List list = getDetails();
 			OrdineAcqRigaBulk dettaglio =(OrdineAcqRigaBulk)list.get(i);
-//			BulkList<AllegatoRichiestaDettaglioBulk> listaDettagliAllegati = dettaglio.getDettaglioAllegati();
-//			if (listaDettagliAllegati != null && !listaDettagliAllegati.isEmpty()){
-//				int k;
-//				for ( k = 0; k < listaDettagliAllegati.size(); k++ ){
-//					AllegatoRichiestaDettaglioBulk all = listaDettagliAllegati.get(k);
-//					all.setToBeDeleted();
-//				}
-//			}
 			return super.removeDetail(i);
 		}
 
 		@Override
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			int index = super.addDetail(oggettobulk);
-//			OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
-//			getConsegne().addDetail(consegna);
-//			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)oggettobulk;
-//			riga.getRigheConsegnaColl().add(consegna);
 			return index;
 		}
 
@@ -120,47 +106,6 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 		return consegne;
 	}
 	
-	
-	//	private final SimpleDetailCRUDController dettaglioAllegatiController = new SimpleDetailCRUDController("AllegatiDettaglio", AllegatoRichiestaDettaglioBulk.class,"dettaglioAllegati",righe)
-//	{
-//		@Override
-//		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
-//			AllegatoRichiestaDettaglioBulk allegato = (AllegatoRichiestaDettaglioBulk)oggettobulk;
-//			UploadedFile file = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter("main.Righe.AllegatiDettaglio.file");
-//			if (!(file == null || file.getName().equals(""))) {
-//				allegato.setFile(file.getFile());
-//				allegato.setContentType(file.getContentType());
-//				allegato.setNome(allegato.parseFilename(file.getName()));
-//				allegato.setAspectName(RichiesteCMISService.ASPECT_RICHIESTA_ORDINI_DETTAGLIO);
-//				allegato.setToBeUpdated();
-//				getParentController().setDirty(true);
-//			}
-//			oggettobulk.validate();		
-//			super.validate(actioncontext, oggettobulk);
-//		}
-//		@Override
-//		public OggettoBulk removeDetail(int i) {
-//			if (!getModel().isNew()){	
-//				List list = getDetails();
-//				AllegatoRichiestaDettaglioBulk all =(AllegatoRichiestaDettaglioBulk)list.get(i);
-//				if (isPossibileCancellazioneDettaglioAllegato(all)) {
-//					return super.removeDetail(i);
-//				} else {
-//					return null;
-//				}
-//			}
-//			return super.removeDetail(i);
-//		}
-//		@Override
-//		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
-//			int add = super.addDetail(oggettobulk);
-//			AllegatoRichiestaDettaglioBulk all =(AllegatoRichiestaDettaglioBulk)oggettobulk;
-//			all.setIsDetailAdded(true);
-//			return add;
-//		}
-//	};	
-//
-
 	private OrdineAcqCMISService ordineAcqCMISService;
 
 	public CRUDOrdineAcqBP() {
@@ -291,103 +236,17 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 					((OrdineAcqComponentSession)createComponentSession()).modificaConBulk(
 							context.getUserContext(),
 							getModel()));
-			archiviaAllegati(context, null);
-//			archiviaAllegatiDettaglio();
+			archiviaAllegati(context);
 		} catch(Exception e) {
 			throw handleException(e);
 		}
 	}
-//	private void archiviaAllegatiDettaglio() throws ApplicationException, BusinessProcessException {
-//		RichiestaUopBulk richiesta = (RichiestaUopBulk)getModel();
-//		for (Object oggetto : richiesta.getRigheRichiestaColl()) {
-//			RichiestaUopRigaBulk dettaglio = (RichiestaUopRigaBulk)oggetto;
-//			for (AllegatoRichiestaDettaglioBulk allegato : dettaglio.getDettaglioAllegati()) {
-//				if (allegato.isToBeCreated()){
-//					try {
-//						Document node = cmisService.storeSimpleDocument(allegato, 
-//								new FileInputStream(allegato.getFile()),
-//								allegato.getContentType(),
-//								allegato.getNome(), getCMISPathDettaglio(dettaglio, true));
-//						allegato.setCrudStatus(OggettoBulk.NORMAL);
-//					} catch (FileNotFoundException e) {
-//						throw handleException(e);
-//					} catch(CmisContentAlreadyExistsException _ex) {
-//						throw new ApplicationException("Il file " + allegato.getNome() +" già esiste!");
-//					}
-//				}else if (allegato.isToBeUpdated()) {
-//					try {
-//						if (allegato.getFile() != null)
-//							//							if (!isDocumentoDettaglioProvenienteDaGemis(allegato)){
-//							cmisService.updateContent(allegato.getDocument(cmisService).getId(), 
-//									new FileInputStream(allegato.getFile()),
-//									allegato.getContentType());
-//						cmisService.updateProperties(allegato, allegato.getDocument(cmisService));
-//						allegato.setCrudStatus(OggettoBulk.NORMAL);
-//						//							} else {
-//						//								throw new ApplicationException("Aggiornamento non possibile! Documento proveniente dalla procedura Missioni");
-//						//							}
-//					} catch (FileNotFoundException e) {
-//						throw handleException(e);
-//					}
-//				}
-//			}
-//			for (Iterator<AllegatoRichiestaDettaglioBulk> iterator = dettaglio.getDettaglioAllegati().deleteIterator(); iterator.hasNext();) {
-//				AllegatoRichiestaDettaglioBulk allegato = iterator.next();
-//				if (allegato.isToBeDeleted()){
-//					cmisService.deleteNode(allegato.getDocument(cmisService));
-//					allegato.setCrudStatus(OggettoBulk.NORMAL);
-//				}
-//			}
-//		}
-//
-//		for (Iterator<RichiestaUopRigaBulk> iterator = richiesta.getRigheRichiestaColl().deleteIterator(); iterator.hasNext();) {
-//			RichiestaUopRigaBulk dettaglio = iterator.next();
-//			Folder folder = null;
-//			for (Iterator<AllegatoRichiestaDettaglioBulk> iteratorAll = dettaglio.getDettaglioAllegati().iterator(); iteratorAll.hasNext();) {
-//				AllegatoRichiestaDettaglioBulk allegato = iteratorAll.next();
-//				if (allegato.isToBeDeleted()){
-//					Document doc = allegato.getDocument(cmisService);
-//					List<Folder> list = doc.getParents();
-//					for (Iterator<Folder> iteratorFolder = list.iterator(); iteratorFolder.hasNext();) {
-//						folder = iteratorFolder.next();
-//					}
-//					cmisService.deleteNode(doc);
-//					allegato.setCrudStatus(OggettoBulk.NORMAL);
-//				}
-//			}
-//			if (folder != null){
-//				cmisService.deleteNode(folder);
-//			}
-//		}
-//	}
+
 	@Override
-	protected CMISPath getCMISPath(OrdineAcqBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
-		return ordineAcqCMISService.getCMISPath(allegatoParentBulk, create);
+	protected String getStorePath(OrdineAcqBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
+		return ordineAcqCMISService.getStorePath(allegatoParentBulk);
 	}
 
-//	protected CMISPath getCMISPathDettaglio(OrdineAcqRigaBulk dettaglioBulk, boolean create) throws BusinessProcessException{
-//		try {
-//			CMISPath cmisPath = null;
-//			cmisPath = SpringUtil.getBean("cmisPathRichieste",CMISPath.class);
-//
-//			if (create) {
-//				cmisPath = ordineAcqCMISService.createFolderIfNotPresent(cmisPath, dettaglioBulk.getCdUnitaOperativa(), dettaglioBulk.getCdUnitaOperativa(), dettaglioBulk.getCdUnitaOperativa());
-//				cmisPath = ordineAcqCMISService.createFolderIfNotPresent(cmisPath, dettaglioBulk.getCdNumeratore(), dettaglioBulk.getCdNumeratore(), dettaglioBulk.getCdNumeratore());
-//				cmisPath = ordineAcqCMISService.createFolderIfNotPresent(cmisPath, "Anno "+dettaglioBulk.getEsercizio().toString(), "Anno "+dettaglioBulk.getEsercizio().toString(), "Anno "+dettaglioBulk.getEsercizio().toString());
-//				cmisPath = ordineAcqCMISService.createFolderRichiestaIfNotPresent(cmisPath, dettaglioBulk.getOrdineAcq());
-//				cmisPath = ordineAcqCMISService.createFolderDettaglioIfNotPresent(cmisPath, dettaglioBulk);
-//			} else {
-//				try {
-//					ordineAcqCMISService.getNodeByPath(cmisPath);
-//				} catch (CmisObjectNotFoundException _ex) {
-//					return null;
-//				}
-//			}			
-//			return cmisPath;
-//		} catch (ComponentException e) {
-//			throw new BusinessProcessException(e);
-//		}
-//	}
 	@Override
 	protected Class<AllegatoRichiestaBulk> getAllegatoClass() {
 		return AllegatoRichiestaBulk.class;
@@ -408,55 +267,21 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 			throws BusinessProcessException {
 
 		OrdineAcqBulk allegatoParentBulk = (OrdineAcqBulk)oggettobulk;
-//		try {
-//			ItemIterable<CmisObject> files = ordineAcqCMISService.getFilesOrdine(allegatoParentBulk);
-//			if (files != null){
-//				for (CmisObject cmisObject : files) {
-//					if (ordineAcqCMISService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
-//						continue;
-//					if (ordineAcqCMISService.hasAspect(cmisObject, RichiesteCMISService.ASPECT_STAMPA_RICHIESTA_ORDINI))
-//						continue;
-//					if (excludeChild(cmisObject))
-//						continue;
-//
-////					ordineAcqCMISService.recuperoAllegatiDettaglioRichiesta(allegatoParentBulk, cmisObject);
-//
-//					if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
-//						Document document = (Document) cmisObject;
-//						AllegatoRichiestaBulk allegato = (AllegatoRichiestaBulk) Introspector.newInstance(getAllegatoClass(), document);
-//						allegato.setContentType(document.getContentStreamMimeType());
-//						allegato.setNome(cmisObject.getName());
-//						allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-//						allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-//						completeAllegato(allegato);
-//						allegato.setCrudStatus(OggettoBulk.NORMAL);
-//						allegatoParentBulk.addToArchivioAllegati(allegato);					
-//					}
-//				}
-//			}
-//		} catch (ApplicationException e) {
-//			throw handleException(e);
-//		} catch (ComponentException e) {
-//			throw handleException(e);
-//		} catch (NoSuchMethodException e) {
-//			throw handleException(e);
-//		} catch (IllegalAccessException e) {
-//			throw handleException(e);
-//		} catch (InstantiationException e) {
-//			throw handleException(e);
-//		} catch (InvocationTargetException e) {
-//			throw handleException(e); 
-//		}
+
 		return oggettobulk;	
 	}
 	@Override
 	protected void completeAllegato(AllegatoRichiestaBulk allegato) throws ApplicationException {
-		for (SecondaryType secondaryType : allegato.getDocument(ordineAcqCMISService).getSecondaryTypes()) {
-			if (AllegatoRichiestaBulk.aspectNamesKeys.get(secondaryType.getId()) != null){
-				allegato.setAspectName(secondaryType.getId());
-				break;
-			}
-		}
+		Optional.ofNullable(allegato)
+				.map(allegatoRichiestaBulk -> allegatoRichiestaBulk.getStorageKey())
+				.map(storageKey -> ordineAcqCMISService.getStorageObjectBykey(storageKey))
+				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+				.filter(strings -> !strings.isEmpty())
+				.ifPresent(strings -> {
+					allegato.setAspectName(strings.stream()
+							.filter(s -> AllegatoRichiestaBulk.aspectNamesKeys.get(s) != null)
+							.findAny().orElse(RichiesteCMISService.ASPECT_ALLEGATI_RICHIESTA_ORDINI));
+				});
 		super.completeAllegato(allegato);
 	}
 
@@ -467,10 +292,10 @@ extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumen
 	}
 	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		AllegatoRichiestaBulk allegato = (AllegatoRichiestaBulk)getCrudArchivioAllegati().getModel();
-		Document node = allegato.getDocument(ordineAcqCMISService);
-		InputStream is = ordineAcqCMISService.getResource(node);
-		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());
-		((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentStreamMimeType());
+		StorageObject storageObject = ordineAcqCMISService.getStorageObjectBykey(allegato.getStorageKey());
+		InputStream is = ordineAcqCMISService.getResource(storageObject.getKey());
+		((HttpActionContext)actioncontext).getResponse().setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];

@@ -3,14 +3,11 @@ package it.cnr.contab.ordmag.richieste.bulk;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
-
-@CMISType(name="cmis:document")
+@StorageType(name="cmis:document")
 public class AllegatoRichiestaDettaglioBulk extends AllegatoGenericoBulk {
 	private static final long serialVersionUID = 1L;
 
@@ -24,12 +21,12 @@ public class AllegatoRichiestaDettaglioBulk extends AllegatoGenericoBulk {
 		super();
 	}
 
-	public AllegatoRichiestaDettaglioBulk(Document node) {
-		super(node);
-		setNodeRefDettaglio(node.getId());
+	public AllegatoRichiestaDettaglioBulk(String storageKey) {
+		super(storageKey);
+		setNodeRefDettaglio(storageKey);
 	}
 	 
-	@CMISProperty(name=PropertyIds.SECONDARY_OBJECT_TYPE_IDS)
+	@StorageProperty(name= "cmis:secondaryObjectTypeIds")
 	public List<String> getAspect() {
 		 List<String> results = new ArrayList<String>();
 		 results.add("P:cm:titled");
