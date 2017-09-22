@@ -194,6 +194,34 @@
 			columnSize="1"
 			nullable="false" />
 		<columnMapping
+			columnName="IM_IMPONIBILE"
+			propertyName="imImponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="imIva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_D"
+			propertyName="imIvaD"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_ORDINE"
+			propertyName="imTotaleOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
 			sqlTypeName="TIMESTAMP"
@@ -292,6 +320,14 @@
 		name="percProrata" />
 	<persistentProperty
 		name="tiAttivita" />
+	<persistentProperty
+		name="imImponibile" />
+	<persistentProperty
+		name="imIva" />
+	<persistentProperty
+		name="imIvaD" />
+	<persistentProperty
+		name="imTotaleOrdine" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty
