@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Evasione ordine, con indicazione dei dati della bolla di consegna."
+	longDescription="Evasione ordine, con indicazione dei dati della bolla di consegna.">
+	<fieldProperty
+		name="findNumerazioneMag"
+		property="numerazioneMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="NumerazioneMag" />
+	<fieldProperty
+		name="cdCds"
+		property="numerazioneMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="numerazioneMag.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdMagazzino" />
+	<fieldProperty
+		name="esercizio"
+		property="numerazioneMag.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdNumeratoreMag"
+		property="numerazioneMag.cdNumeratoreMag"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdNumeratoreMag" />
+	<fieldProperty
+		name="numero"
+		property="numero"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="numero" />
+	<fieldProperty
+		name="dataBolla"
+		property="dataBolla"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dataBolla" />
+	<fieldProperty
+		name="numeroBolla"
+		property="numeroBolla"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="numeroBolla" />
+	<fieldProperty
+		name="dataConsegna"
+		property="dataConsegna"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dataConsegna" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="stato" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdNumeratoreMag" />
+		<formFieldProperty
+			name="numero" />
+	</form>
+	<formFieldProperty
+		name="findNumerazioneMag" />
+	<formFieldProperty
+		name="numero" />
+	<formFieldProperty
+		name="dataBolla" />
+	<formFieldProperty
+		name="numeroBolla" />
+	<formFieldProperty
+		name="dataConsegna" />
+	<formFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratoreMag" />
+	<findFieldProperty
+		name="numero" />
+	<findFieldProperty
+		name="dataBolla" />
+	<findFieldProperty
+		name="numeroBolla" />
+	<findFieldProperty
+		name="dataConsegna" />
+	<findFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratoreMag" />
+	<columnFieldProperty
+		name="numero" />
+	<columnFieldProperty
+		name="dataBolla" />
+	<columnFieldProperty
+		name="numeroBolla" />
+	<columnFieldProperty
+		name="dataConsegna" />
+	<columnFieldProperty
+		name="stato" />
+</bulkInfo>
