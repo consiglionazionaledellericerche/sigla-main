@@ -78,11 +78,15 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	
 	public final static String PK_INTEGRAZIONE_SDI = "INTEGRAZIONE_SDI";
 	public final static String SK_INTEGRAZIONE_SDI = "MODALITA";
-	
+
+    public final static String SK_GESTIONE_ORDINI = "GESTIONE";
+    public final static String PK_ORDINI = "ORDINI";
+
 	public Configurazione_cnrBulk() {
 	super();
 }
-public Configurazione_cnrBulk(java.lang.String cd_chiave_primaria,java.lang.String cd_chiave_secondaria,java.lang.String cd_unita_funzionale,java.lang.Integer esercizio) {
-	super(cd_chiave_primaria,cd_chiave_secondaria,cd_unita_funzionale,esercizio);
-}
+
+    public Configurazione_cnrBulk(java.lang.String cd_chiave_primaria,java.lang.String cd_chiave_secondaria,java.lang.String cd_unita_funzionale,java.lang.Integer esercizio) {
+		super(cd_chiave_primaria,cd_chiave_secondaria,cd_unita_funzionale,esercizio);
+	}
 }
