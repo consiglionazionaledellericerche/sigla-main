@@ -137,7 +137,10 @@ public Forward doBringBackSearchFind_contratto(ActionContext context,
 			ordine.setProcedureAmministrative(contratto.getProcedura_amministrativa());
 			ordine.setTerzoCdr(contratto.getFigura_giuridica_interna());
 			ordine.setReferenteEsterno(contratto.getResp_esterno());
-		}
+			if(ordine.getFornitore() == null ||(ordine.getFornitore() != null && ordine.getFornitore().getCd_terzo()==null))
+				ordine.setFornitore(contratto.getFigura_giuridica_esterna());
+				doBringBackSearchFindFornitore(context, ordine, contratto.getFigura_giuridica_esterna());
+			}
 		return context.findDefaultForward();
 }
 public Forward doBlankSearchFindBeneServizio(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
@@ -587,7 +590,10 @@ public Forward doBlankSearchFindFornitore(ActionContext context,
 			ordine.setRagioneSociale(null);
 			ordine.setCodiceFiscale(null);
 			ordine.setPartitaIva(null);
-				
+			if (ordine.getContratto() != null && ordine.getContratto().getPg_contratto() != null){
+				ordine.setContratto(new ContrattoBulk());
+				doBlankSearchFind_contratto(context, ordine);
+			}
 			return context.findDefaultForward();
 
 		} catch(Exception e) {
@@ -724,6 +730,7 @@ private Forward basicDoRicercaObbligazione(
 			filtro.setDs_obbligazione("Ordine");
 			filtro.setIm_importo(calcolaTotaleSelezionati(models, false));
 			filtro.setListaVociSelezionabili(listaCapitoli);
+			filtro.setContratto(ordine.getContratto());
 			filtro.setCd_unita_organizzativa(ordine.getUnitaOperativaOrd().getUnitaOrganizzativa().getCd_unita_organizzativa());
 			if (filtro.getData_scadenziario() == null)
 				filtro.setFl_data_scadenziario(Boolean.FALSE);		
@@ -832,7 +839,7 @@ private void basicDoContabilizza(
 			Boolean compatibile=null;
 			if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
 				for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
-					Categoria_gruppo_voceBulk bulk=(Categoria_gruppo_voceBulk)i.next();
+					Elemento_voceBulk bulk=(Elemento_voceBulk)i.next();
 					if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
 						compatibile=new Boolean(true);
 					else
