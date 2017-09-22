@@ -224,6 +224,15 @@
 	     	<td>
 	   			<% bp.getController().writeFormInput(out,null,"fl_bolla_doganale",fatturaPassiva.getFl_merce_intra_ue(),null,"");%>
 			</td>
+			<% if (bp.isAttivoOrdini()) { %>
+			    <td width="100">&nbsp;</td>
+                <td>
+                    <% bp.getController().writeFormLabel(out,"flDaOrdini");%>
+                </td>
+                <td>
+                    <% bp.getController().writeFormInput(out,"flDaOrdini");%>
+                </td>
+            <% } %>
 	      </tr>
 	     <% } %>
       <tr>     	
