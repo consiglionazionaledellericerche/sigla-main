@@ -2,6 +2,7 @@ package it.cnr.contab.ordmag.ordini.action;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -635,7 +636,7 @@ protected java.util.List recuperoListaCapitoli(ActionContext context, java.util.
 		throws ComponentException, PersistencyException, IntrospectionException, RemoteException, BusinessProcessException {
 	
 		if (selectedModels != null) {
-			java.util.List titoliCapitoli=null;
+			java.util.List titoliCapitoli=new ArrayList<>();
 			java.util.Vector categorieGruppo = new java.util.Vector();
 			int count = 0;
 			
@@ -667,13 +668,17 @@ protected java.util.List recuperoListaCapitoli(ActionContext context, java.util.
 				java.util.List titoliCapitoliCatGrp = h.findAssVoceFList(context.getUserContext(), cat);
 				if (titoliCapitoliCatGrp == null)
 					throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + cat.getCd_categoria_gruppo() + "\" non è stato attribuita l'associazione al capitolo di spesa");
-				if (titoliCapitoli.isEmpty())
-					titoliCapitoli.addAll(titoliCapitoliCatGrp);
+				if (titoliCapitoli.isEmpty()){
+					for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); k.hasNext();) {
+						Categoria_gruppo_voceBulk assVoce = (Categoria_gruppo_voceBulk)k.next();
+						titoliCapitoli.add(assVoce.getElemento_voce());
+					}
+				}
 				else 
-					for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); i.hasNext();) {
-						Elemento_voceBulk voce = (Elemento_voceBulk)k.next();
-						if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(titoliCapitoli, voce))
-							titoliCapitoli.add(voce);
+					for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); k.hasNext();) {
+						Categoria_gruppo_voceBulk assVoce = (Categoria_gruppo_voceBulk)k.next();
+						if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(titoliCapitoli, assVoce.getElemento_voce()))
+							titoliCapitoli.add(assVoce.getElemento_voce());
 					}
 			}
 			
