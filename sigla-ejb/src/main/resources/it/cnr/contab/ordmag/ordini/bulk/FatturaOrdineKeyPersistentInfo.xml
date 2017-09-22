@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineKey">
+	<defaultColumnMap
+		tableName="FATTURA_ORDINE">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_FATTURA_PASSIVA"
+			propertyName="pgFatturaPassiva"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA"
+			propertyName="progressivoRiga"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_ORDINE"
+			propertyName="cdCdsOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="cdUnitaOperativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORDINE"
+			propertyName="esercizioOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_NUMERATORE"
+			propertyName="cdNumeratore"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="NUMERO"
+			propertyName="numero"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="RIGA"
+			propertyName="riga"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CONSEGNA"
+			propertyName="consegna"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCds"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgFatturaPassiva"
+		partOfOid="true" />
+	<persistentProperty
+		name="progressivoRiga"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdCdsOrdine"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdUnitaOperativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizioOrdine"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdNumeratore"
+		partOfOid="true" />
+	<persistentProperty
+		name="numero"
+		partOfOid="true" />
+	<persistentProperty
+		name="riga"
+		partOfOid="true" />
+	<persistentProperty
+		name="consegna"
+		partOfOid="true" />
+</SQLPersistentInfo>
