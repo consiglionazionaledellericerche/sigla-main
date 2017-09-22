@@ -794,7 +794,4 @@ public java.lang.String getFlPivaVerificata() {
 public void setFlPivaVerificata(java.lang.String flPivaVerificata) {
 	this.flPivaVerificata = flPivaVerificata;
 }
-public Boolean isPartitaIvaVerificata(){
-	return getFlPivaVerificata() != null && getFlPivaVerificata().equals("Y"); 
-}
 }

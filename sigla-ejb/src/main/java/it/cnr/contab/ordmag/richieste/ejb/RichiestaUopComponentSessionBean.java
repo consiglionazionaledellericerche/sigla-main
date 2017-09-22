@@ -60,23 +60,6 @@ public Boolean isUtenteAbilitatoValidazioneRichiesta(UserContext usercontext, Ri
 		throw uncaughtError(usercontext,componentObj,e);
 	}
 }
-public void gestioneStampaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, RemoteException {
-	pre_component_invocation(userContext,componentObj);
-	try {
-		((RichiestaUopComponent)componentObj).gestioneStampaRichiesta(userContext, richiesta);
-		component_invocation_succes(userContext,componentObj);
-	} catch(it.cnr.jada.comp.NoRollbackException e) {
-		component_invocation_succes(userContext,componentObj);
-		throw e;
-	} catch(it.cnr.jada.comp.ComponentException e) {
-		component_invocation_failure(userContext,componentObj);
-		throw e;
-	} catch(RuntimeException e) {
-		throw uncaughtRuntimeException(userContext,componentObj,e);
-	} catch(Error e) {
-		throw uncaughtError(userContext,componentObj,e);
-	}
-}
 public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException,ComponentException, javax.ejb.EJBException, RemoteException {
 	pre_component_invocation(userContext,componentObj);
 	try {

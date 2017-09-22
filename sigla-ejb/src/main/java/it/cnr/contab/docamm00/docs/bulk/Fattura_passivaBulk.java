@@ -22,9 +22,8 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkCollections;
 import it.cnr.jada.bulk.BulkList;
@@ -49,7 +48,7 @@ public abstract class Fattura_passivaBulk
 	implements	IDocumentoAmministrativoBulk, 
 				Voidable,
 				IDefferUpdateSaldi,
-				AllegatoParentBulk{
+		AllegatoParentBulk{
 
 	protected Tipo_sezionaleBulk tipo_sezionale;
 	protected DivisaBulk valuta;
@@ -607,7 +606,7 @@ public BancaBulk getBanca() {
 	 *
 	 * @return java.util.Collection
 	 *
-	 * @see setBanche
+	 *
 	 */
 
 	public java.util.Collection getBanche() {
@@ -737,7 +736,7 @@ public static Calendar getDateCalendar(java.sql.Timestamp date) {
 /**
  * Insert the method's description here.
  * Creation date: (5/15/2002 10:50:29 AM)
- * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
+ *
  */
 public it.cnr.jada.bulk.PrimaryKeyHashMap getDefferredSaldi() {
 	return deferredSaldi;
@@ -962,7 +961,7 @@ public Lettera_pagam_esteroBulk getLettera_pagamento_estero() {
 	 *
 	 * @return java.util.Collection
 	 *
-	 * @see setModalita
+	 *
 	 */
 
 	public java.util.Collection getModalita() {
@@ -1262,7 +1261,7 @@ public String getSupplierNationType() {
 	 *
 	 * @return java.util.Collection
 	 *
-	 * @see setTermini
+	 *
 	 */
 
 	public java.util.Collection getTermini() {
@@ -1347,7 +1346,7 @@ public DivisaBulk getValuta() {
 	 *
 	 * @return java.util.Collection
 	 *
-	 * @see setValute
+	 *
 	 */
 
 	public java.util.Collection getValute() {
@@ -2093,7 +2092,7 @@ public void removeFromFattura_passiva_obbligazioniHash(
 /**
  * Insert the method's description here.
  * Creation date: (5/15/2002 10:50:29 AM)
- * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
+ *
  */
 public void resetDefferredSaldi() {
 	
@@ -2164,9 +2163,9 @@ public void setBanca(BancaBulk newBanca) {
 	/**
 	 * Imposta la <code>Collection</code> contenente l'elenco di banche
 	 * relativi al terzo selezionato
-	 * @param newValute <code>java.util.Collection</code>
+	 * @param newBanche <code>java.util.Collection</code>
 	 *
-	 * @see getBanche
+	 *
 	 */
 
 	public void setBanche(java.util.Collection newBanche) {
@@ -2269,7 +2268,7 @@ public void setEsercizioInScrivania(java.lang.Integer newEsercizioInScrivania) {
 /**
  * Insert the method's description here.
  * Creation date: (1/7/2002 2:15:19 PM)
- * @param newFattura_passiva_ass_obbl_totaliHash it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
+ * @param newFattura_passiva_ass_totaliMap it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
  */
 public void setFattura_passiva_ass_totaliMap(Map newFattura_passiva_ass_totaliMap) {
 	fattura_passiva_ass_totaliMap = newFattura_passiva_ass_totaliMap;
@@ -2277,9 +2276,9 @@ public void setFattura_passiva_ass_totaliMap(Map newFattura_passiva_ass_totaliMa
 	/**
 	 * Imposta la <code>Collection</code> contenente l'elenco di modalita di pagamento
 	 * relativi al terzo selezionato
-	 * @param newValute <code>java.util.Collection</code>
+	 * @param newConsuntivo <code>java.util.Collection</code>
 	 *
-	 * @see getModalita
+	 *
 	 */
 
 	public void setFattura_passiva_consuntivoColl(Collection newConsuntivo) {
@@ -2394,9 +2393,9 @@ public void setLettera_pagamento_estero(Lettera_pagam_esteroBulk newLetteraPagam
 	/**
 	 * Imposta la <code>Collection</code> contenente l'elenco di modalita di pagamento
 	 * relativi al terzo selezionato
-	 * @param newValute <code>java.util.Collection</code>
+	 * @param newModalita <code>java.util.Collection</code>
 	 *
-	 * @see getModalita
+	 *
 	 */
 
 	public void setModalita(java.util.Collection newModalita) {
@@ -2573,9 +2572,9 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 	/**
 	 * Imposta la <code>Collection</code> contenente l'elenco dei termini di pagamento
 	 * relativi al terzo selezionato
-	 * @param newValute <code>java.util.Collection</code>
+	 * @param newTermini <code>java.util.Collection</code>
 	 *
-	 * @see getTermini
+	 *
 	 */
 
 	public void setTermini(java.util.Collection newTermini) {
@@ -2609,7 +2608,7 @@ public void setValuta(DivisaBulk newValuta) {
 	 *
 	 * @param newValute <code>java.util.Collection</code>
 	 *
-	 * @see getValute
+	 *
 	 */
 
 	public void setValute(java.util.Collection newValute) {

@@ -4,7 +4,8 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
-import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.persistency.Persister;
 
@@ -12,8 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.StringTokenizer;
-
-import org.apache.chemistry.opencmis.client.api.Document;
 public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public static final java.util.Dictionary tipo_archivioKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary statoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -169,10 +168,11 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public boolean isAnnullato(){
 		return getStato()!=null && getStato().equals(STATO_ANNULLATO);
 	}
-	public CMISFile getCMISFile() throws IOException{
+
+	public StorageFile getCMISFile() throws IOException{
 		return null;
 	}
-	public CMISFile getCMISFile(Document node){
+	public StorageFile getCMISFile(StorageObject storageObject){
 		return null;
 	}
 	public String getDownloadUrl() {

@@ -1,9 +1,7 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.AllegatoFatturaAttivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
@@ -17,12 +15,17 @@ import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
@@ -42,17 +45,19 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
 /**
  * <!-- @TODO: da completare -->
  */
 
 public abstract class CRUDFatturaAttivaBP
-	extends AllegatiCRUDBP<AllegatoFatturaAttivaBulk, Fattura_attivaBulk> 
+	extends AllegatiCRUDBP<AllegatoFatturaAttivaBulk, Fattura_attivaBulk>
 	implements	IDocumentoAmministrativoBP, 
 				IGenericSearchDocAmmBP,
 				IDefferedUpdateSaldiBP,
@@ -154,7 +159,7 @@ public void create(it.cnr.jada.action.ActionContext context)
 	throws	it.cnr.jada.action.BusinessProcessException {
 		
 	try {
-		archiviaAllegati(context, null);
+		archiviaAllegati(context);
 		getModel().setToBeCreated();
 		setModel(
 				context,
@@ -168,22 +173,18 @@ public void create(it.cnr.jada.action.ActionContext context)
 		setUserConfirm(null);
 	}
 }
-public void gestioneAllegatiFatturazioneElettronica(it.cnr.jada.action.ActionContext context)
-		throws	it.cnr.jada.action.BusinessProcessException {
-			
+	public void gestioneAllegatiFatturazioneElettronica(it.cnr.jada.action.ActionContext context)
+			throws it.cnr.jada.action.BusinessProcessException {
 		try {
-			Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel(); 
+			Fattura_attivaBulk fattura = (Fattura_attivaBulk) getModel();
 			int crudStatus = fattura.getCrudStatus();
-			if (fattura.isDocumentoFatturazioneElettronica()){
-//				setModel(
-//						context,
-						((FatturaAttivaSingolaComponentSession)createComponentSession()).gestioneAllegatiPerFatturazioneElettronica(
-																					context.getUserContext(),
-																					fattura
-//																					)
-																					);
+			if (fattura.isDocumentoFatturazioneElettronica()) {
+				SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(
+						context.getUserContext(),
+						fattura
+				);
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw handleException(e);
 		} finally {
 			setUserConfirm(null);
@@ -785,7 +786,7 @@ public void update(ActionContext context)
 	throws it.cnr.jada.action.BusinessProcessException {
 		
 	try {
-		archiviaAllegati(context, null);
+		archiviaAllegati(context);
 		getModel().setToBeUpdated();
 		setModel(
 				context,
@@ -1141,41 +1142,31 @@ public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws 
 		}
 	}
 	@Override
-	protected CMISPath getCMISPath(Fattura_attivaBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
-		try {
-			CMISPath cmisPath = SpringUtil.getBean("cmisPathFatture",CMISPath.class);
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getCd_uo_origine(), allegatoParentBulk.getCd_uo_origine(), allegatoParentBulk.getCd_uo_origine());
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Fatture Attive", "Fatture Attive", "Fatture Attive");
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getEsercizio().toString(), "Esercizio "+allegatoParentBulk.getEsercizio().toString(), "Esercizio "+allegatoParentBulk.getEsercizio().toString());
-
-			String folderName = "Fattura "+allegatoParentBulk.getEsercizio().toString()+Utility.lpad(allegatoParentBulk.getPg_fattura_attiva().toString(),10,'0');
-			if (create) {
-				cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
-						folderName, folderName);			
-			} else {
-				try {
-					cmisPath = cmisPath.appendToPath(folderName);
-					cmisService.getNodeByPath(cmisPath);
-				} catch (CmisObjectNotFoundException _ex) {
-					return null;
-				}
-			}			
-			return cmisPath;
-		} catch (ApplicationException e) {
-			throw new BusinessProcessException(e);
-		}
+	protected String getStorePath(Fattura_attivaBulk allegatoParentBulk, boolean create) throws BusinessProcessException {
+		return Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+				allegatoParentBulk.getCd_uo_origine(),
+				"Fatture Attive",
+				Optional.ofNullable(allegatoParentBulk.getEsercizio())
+						.map(esercizio -> String.valueOf(esercizio))
+						.orElse("0"),
+				"Fattura " + allegatoParentBulk.getEsercizio().toString() + Utility.lpad(allegatoParentBulk.getPg_fattura_attiva().toString(), 10, '0')
+		).stream().collect(
+				Collectors.joining(SiglaStorageService.SUFFIX)
+		);
 	}
+
 	@Override
 	protected Class<AllegatoFatturaAttivaBulk> getAllegatoClass() {
 		return AllegatoFatturaAttivaBulk.class;
 	}
+
 	@Override
-	protected boolean excludeChild(CmisObject cmisObject) {
-		super.excludeChild(cmisObject);
-		if (cmisService.hasAspect(cmisObject, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ALLEGATI_NON_INVIATI_SDI.value())){
+	protected boolean excludeChild(StorageObject storageObject) {
+		if (storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).stream()
+				.anyMatch(s -> s.equalsIgnoreCase(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ALLEGATI_NON_INVIATI_SDI.value())))
 			return false;
-		}
-		return true;
+		return super.excludeChild(storageObject);
 	}
 	@Override
 	public String getAllegatiFormName() {
