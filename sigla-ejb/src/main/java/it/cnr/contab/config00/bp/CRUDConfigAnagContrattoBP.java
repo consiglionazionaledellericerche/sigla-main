@@ -447,7 +447,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				ContrattoService.class);		
 		super.initialize(actioncontext);
 		try {
-			if (getTipoAccesso().equals("V")) {
+			if (getTipoAccesso() != null && getTipoAccesso().equals("V")) {
 				ContrattoBulk contratto = getContratto();
 				setModel(actioncontext, contratto);
 				cerca(actioncontext);
