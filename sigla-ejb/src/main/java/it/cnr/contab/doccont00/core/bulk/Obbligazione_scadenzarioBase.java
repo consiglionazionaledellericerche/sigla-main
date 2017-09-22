@@ -21,6 +21,10 @@ public class Obbligazione_scadenzarioBase extends Obbligazione_scadenzarioKey im
 	// IM_SCADENZA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_scadenza;
 
+	// FL_ASSOCIATA_ORDINE CHAR(1) NOT NULL
+	private java.lang.Boolean flAssociataOrdine;
+
+
 public Obbligazione_scadenzarioBase() {
 	super();
 }
@@ -86,5 +90,11 @@ public void setIm_associato_doc_contabile(java.math.BigDecimal im_associato_doc_
  */
 public void setIm_scadenza(java.math.BigDecimal im_scadenza) {
 	this.im_scadenza = im_scadenza;
+}
+public java.lang.Boolean getFlAssociataOrdine() {
+	return flAssociataOrdine;
+}
+public void setFlAssociataOrdine(java.lang.Boolean flAssociataOrdine) {
+	this.flAssociataOrdine = flAssociataOrdine;
 }
 }
