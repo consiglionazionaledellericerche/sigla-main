@@ -972,4 +972,7 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 	public void setNotGestoreIstat(boolean notGestoreIstat) {
 		this.notGestoreIstat = notGestoreIstat;
 	}
+	public Boolean isPartitaIvaVerificata(){
+		return getFlPivaVerificata() != null && getFlPivaVerificata().equals("Y"); 
+	}
 }

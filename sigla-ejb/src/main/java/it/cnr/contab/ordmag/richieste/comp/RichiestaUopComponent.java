@@ -14,12 +14,6 @@ import java.util.UUID;
 
 import javax.ejb.EJBException;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
-
-import it.cnr.contab.cmis.MimeTypes;
-import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -37,10 +31,6 @@ import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneRes_impropriaBulk;
-import it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
@@ -489,50 +479,6 @@ public SQLBuilder selectBeneServizioByClause(UserContext userContext, RichiestaU
 	return sql;
 }
 
-public void gestioneStampaRichiesta(UserContext userContext,
-		RichiestaUopBulk richiesta) throws RemoteException,ComponentException {
-	RichiesteCMISService richiesteCMISService = SpringUtil.getBean("richiesteCMISService",RichiesteCMISService.class);	
-	File file = lanciaStampaRichiesta(userContext, richiesta);
-	archiviaFileCMIS(userContext, richiesteCMISService, richiesta, file);
-}
-
-public File lanciaStampaRichiesta(
-		UserContext userContext,
-		RichiestaUopBulk richiesta) throws ComponentException {
-	try {
-		String nomeProgrammaStampa = "richiesta_ordine_uop.jasper";
-		String nomeFileStampaFattura = getOutputFileNameRichiesta(nomeProgrammaStampa, richiesta);
-	  	File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + nomeFileStampaFattura);
-	  	Print_spoolerBulk print = new Print_spoolerBulk(); 
-		print.setFlEmail(false);
-		print.setReport("/ordmag/richiesta/"+ nomeProgrammaStampa);
-		print.setNomeFile(nomeFileStampaFattura);
-		print.setUtcr(userContext.getUser());
-		print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-		print.addParam("esercizio",richiesta.getEsercizio(), Integer.class);
-		print.addParam("cds",richiesta.getCdCds(), String.class);
-		print.addParam("cd_unita_operativa",richiesta.getCdUnitaOperativa(), String.class);
-		print.addParam("cd_numeratore",richiesta.getCdNumeratore(), String.class);
-		print.addParam("numero",new Long(richiesta.getNumero()), Long.class);
-		Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
-		
-		FileOutputStream f = new FileOutputStream(output);   
-		f.write(report.getBytes());    
-		return output;
-	} catch (IOException e) {
-		throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
-	}
-}
-
-private String getOutputFileNameRichiesta(String reportName, RichiestaUopBulk richiesta)
-
-{
-	String fileName = preparaFileNamePerStampa(reportName);
-	fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + richiesta.recuperoIdRichiestaAsString() + '_' + fileName;
-	return fileName;
-}
-private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
-
 private String preparaFileNamePerStampa(String reportName) {
 	String fileName = reportName;
 	fileName = fileName.replace('/', '_');
@@ -543,45 +489,6 @@ private String preparaFileNamePerStampa(String reportName) {
 		fileName = fileName.substring(0, fileName.length() - 7);
 	fileName = fileName + ".pdf";
 	return fileName;
-}
-
-private Document archiviaFileCMIS(UserContext userContext, RichiesteCMISService cmisService, RichiestaUopBulk richiesta, File file) throws ComponentException{
-	List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
-	List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
-	try {
-		CMISPath cmisPath = cmisService.getCMISPath(richiesta, true);		
-		AllegatoRichiestaBulk allegato = new AllegatoRichiestaBulk();
-		allegato.setFile(file);
-		allegato.setTitolo("Stampa Richiesta");
-		allegato.setNome("Stampa Richiesta");
-		allegato.setDescrizione("Stampa Richiesta");
-		allegato.setContentType(MimeTypes.PDF.mimetype());
-		FileInputStream is = new FileInputStream(allegato.getFile());
-		try {
-			Document node = cmisService.restoreSimpleDocument(allegato, 
-					new FileInputStream(allegato.getFile()),
-					allegato.getContentType(),
-					allegato.getNome(), cmisPath);
-			allegato.setCrudStatus(OggettoBulk.NORMAL);
-			cmisService.addAspect(node, RichiesteCMISService.ASPECT_STAMPA_RICHIESTA_ORDINI);
-			return node;
-		} catch(CmisContentAlreadyExistsException _ex) {
-			return cmisService.restoreSimpleDocument(allegato, is, allegato.getContentType(), allegato.getNome(), cmisPath);
-		}
-	} catch (Exception e){
-		//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-		for (CMISFile cmisFile : cmisFileCreate)
-			cmisService.deleteNode(cmisFile.getDocument());
-		for (CMISFile cmisFile : cmisFileAnnullati) {
-			String cmisFileName = cmisFile.getFileName();
-			String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
-			String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
-			cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
-			cmisService.updateProperties(cmisFile, cmisFile.getDocument());
-			cmisService.removeAspect(cmisFile.getDocument());
-		}
-		throw new ApplicationException(e.getMessage());
-	}
 }
 
 protected Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 

@@ -38,8 +38,8 @@ import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.ordmag.anag00.NotaPrecodificataBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkCollections;
@@ -53,7 +53,7 @@ public class OrdineAcqBulk extends OrdineAcqBase
 implements	IDocumentoAmministrativoBulk, 
 			Voidable,
 			IDefferUpdateSaldi,
-			AllegatoParentBulk {
+		AllegatoParentBulk {
 	protected BulkList righeOrdineColl= new BulkList();
 //	private java.util.Collection modalita;
 	private java.util.Collection termini;
