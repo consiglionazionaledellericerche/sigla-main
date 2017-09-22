@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBase"
+	keyClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineKey"
+	homeClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineHome">
+	<defaultColumnMap
+		tableName="FATTURA_ORDINE">
+		<columnMapping
+			columnName="CD_VOCE_IVA_RETT"
+			propertyName="cdVoceIvaRett"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PREZZO_UNITARIO_RETT"
+			propertyName="prezzoUnitarioRett"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO1_RETT"
+			propertyName="sconto1Rett"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO2_RETT"
+			propertyName="sconto2Rett"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO3_RETT"
+			propertyName="sconto3Rett"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_IMPONIBILE_DIVISA"
+			propertyName="imImponibileDivisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_DIVISA"
+			propertyName="imIvaDivisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IMPONIBILE"
+			propertyName="imImponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="imIva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_D"
+			propertyName="imIvaD"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_ND"
+			propertyName="imIvaNd"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_CONSEGNA"
+			propertyName="imTotaleConsegna"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_ASS"
+			propertyName="statoAss"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdVoceIvaRett" />
+	<persistentProperty
+		name="prezzoUnitarioRett" />
+	<persistentProperty
+		name="sconto1Rett" />
+	<persistentProperty
+		name="sconto2Rett" />
+	<persistentProperty
+		name="sconto3Rett" />
+	<persistentProperty
+		name="imImponibileDivisa" />
+	<persistentProperty
+		name="imIvaDivisa" />
+	<persistentProperty
+		name="imImponibile" />
+	<persistentProperty
+		name="imIva" />
+	<persistentProperty
+		name="imIvaD" />
+	<persistentProperty
+		name="imIvaNd" />
+	<persistentProperty
+		name="imTotaleConsegna" />
+	<persistentProperty
+		name="statoAss" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>
