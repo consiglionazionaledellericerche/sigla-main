@@ -64,6 +64,8 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 	private Collection lineeAttivitaSelezionateColl = Collections.EMPTY_LIST;
 	private BulkList nuoveLineeAttivitaColl = new BulkList();
 	private boolean enableVoceNext = false;
+	private List<Elemento_voceBulk> listaVociSelezionabili = null;
+
 
 	public final static String STATO_OBB_PROVVISORIO 	= "P";
 	public final static String STATO_OBB_DEFINITIVO 	= "D";
@@ -155,6 +157,7 @@ public int addToObbligazione_scadenzarioColl( Obbligazione_scadenzarioBulk os )
 	os.setObbligazione(this);
 	os.setIm_associato_doc_amm( new java.math.BigDecimal(0));
 	os.setIm_associato_doc_contabile( new java.math.BigDecimal(0));
+	os.setFlAssociataOrdine(false);
 	os.setIm_scadenza( new java.math.BigDecimal(0));
 	if ( os.getPg_obbligazione_scadenzario() == null )
 		os.setPg_obbligazione_scadenzario( getNextPgScadenza());
@@ -1691,6 +1694,7 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		nuova.setCdrSelezionatiColl( getCdrSelezionatiColl());
 		nuova.setLineeAttivitaColl( getLineeAttivitaColl());
 		nuova.setLineeAttivitaSelezionateColl( getLineeAttivitaSelezionateColl());
+		nuova.setListaVociSelezionabili(getListaVociSelezionabili());
 		nuova.setNuoveLineeAttivitaColl(getNuoveLineeAttivitaColl());
 		nuova.setCd_tipo_documento_cont( getCd_tipo_documento_cont());
 		nuova.setFl_pgiro(getFl_pgiro());
@@ -1936,5 +1940,11 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	}
 	public void setEnableVoceNext(boolean enableVoceNext) {
 		this.enableVoceNext = enableVoceNext;
+	}
+	public List<Elemento_voceBulk> getListaVociSelezionabili() {
+		return listaVociSelezionabili;
+	}
+	public void setListaVociSelezionabili(List<Elemento_voceBulk> listaVociSelezionabili) {
+		this.listaVociSelezionabili = listaVociSelezionabili;
 	}
 }
