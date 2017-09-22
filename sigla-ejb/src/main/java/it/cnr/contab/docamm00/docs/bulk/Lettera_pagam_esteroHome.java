@@ -42,17 +42,17 @@ public class Lettera_pagam_esteroHome extends BulkHome {
 		if (persistent instanceof Lettera_pagam_esteroBulk){
 			Lettera_pagam_esteroBulk bulk = (Lettera_pagam_esteroBulk)persistent;
 			if (!bulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)){
-					if (((CNRUserContext)userContext).isFromBootstrap()) {
-						bulk.setDocumento("<a class='btn btn-link' onclick='"+
-								"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\");' "+
-								"title='Visualizza Documento Contabile'><i class='fa fa-fw fa-2x fa-file-pdf-o text-danger' aria-hidden='true'></i></a>");															
-					} else {
-						bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-								"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
-								"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
-								"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");									
-					}
-			}		
+				if (((CNRUserContext)userContext).isFromBootstrap()) {
+					bulk.setDocumento("<a class='btn btn-link' onclick='"+
+							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\",\""+bulk.getCd_unita_organizzativa()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\");' "+
+							"title='Visualizza Documento Contabile'><i class='fa fa-fw fa-2x fa-file-pdf-o text-danger' aria-hidden='true'></i></a>");
+				} else {
+					bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
+							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\",\""+bulk.getCd_unita_organizzativa()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
+							"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
+							"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
+				}
+			}
 		}
 		return persistent;
 	}
