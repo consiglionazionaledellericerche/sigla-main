@@ -38,6 +38,7 @@ import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
