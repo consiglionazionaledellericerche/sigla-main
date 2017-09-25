@@ -373,7 +373,9 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	public OrdineAcqConsegnaBulk removeFromRigheConsegnaColl(int index) 
 	{
 		// Gestisce la selezione del bottone cancella repertorio
-		return (OrdineAcqConsegnaBulk)righeConsegnaColl.remove(index);
+		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)righeConsegnaColl.remove(index);
+		consegna.setToBeDeleted();
+		return consegna;
 	}
 	public int addToRigheConsegnaColl( OrdineAcqConsegnaBulk nuovoRigo ) 
 	{
