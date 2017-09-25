@@ -672,7 +672,7 @@
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		nullable="false"
-		label="Totale Consegna" />
+		label="Totale Ordine" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
@@ -878,12 +878,6 @@
 	<findFieldProperty
 		name="cdCup" />
 	<columnFieldProperty
-		name="tiAttivita" />
-	<columnFieldProperty
-		name="percProrata" />
-	<columnFieldProperty
-		name="cdCds" />
-	<columnFieldProperty
 		name="cdUnitaOperativa" />
 	<columnFieldProperty
 		name="esercizio" />
@@ -910,9 +904,11 @@
 	<columnFieldProperty
 		name="partitaIva" />
 	<columnFieldProperty
-		name="nota" />
+		name="tiAttivita" />
 	<columnFieldProperty
-		name="cdNotaPrecodificata" />
+		name="percProrata" />
+	<columnFieldProperty
+		name="nota" />
 	<columnFieldProperty
 		name="esercizioContratto" />
 	<columnFieldProperty
@@ -922,21 +918,13 @@
 	<columnFieldProperty
 		name="dataOrdineDef" />
 	<columnFieldProperty
-		name="responsabileProc" />
-	<columnFieldProperty
-		name="firmatario" />
-	<columnFieldProperty
-		name="direttore" />
-	<columnFieldProperty
-		name="cdr" />
-	<columnFieldProperty
 		name="referenteEsterno" />
 	<columnFieldProperty
 		name="cdTipoOrdine" />
 	<columnFieldProperty
-		name="cdProcAmm" />
-	<columnFieldProperty
 		name="cdCig" />
 	<columnFieldProperty
 		name="cdCup" />
+	<columnFieldProperty
+		name="imTotaleOrdine" />
 </bulkInfo>

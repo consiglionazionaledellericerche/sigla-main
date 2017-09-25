@@ -21,6 +21,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaHome;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
@@ -36,6 +37,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
@@ -72,10 +74,21 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	}
 
 	private final SimpleDetailCRUDController righe= new OrdineAcqRigaCRUDController("Righe", OrdineAcqRigaBulk.class, "righeOrdineColl", this){
+		public void validateForDelete(ActionContext context, OggettoBulk oggetto) throws ValidationException 
+		{
+			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)oggetto;
+			if (riga.getDspObbligazioneScadenzario() != null && riga.getDspObbligazioneScadenzario().getPg_obbligazione() != null){
+				throw new ValidationException( "Impossibile cancellare una riga associata ad impegni");
+			}
+		}
+
 		@Override
 		public OggettoBulk removeDetail(int i) {
 			List list = getDetails();
 			OrdineAcqRigaBulk dettaglio =(OrdineAcqRigaBulk)list.get(i);
+			for (int k=0;k<dettaglio.getRigheConsegnaColl().size();k++) {
+				dettaglio.removeFromRigheConsegnaColl(k);
+			}
 			return super.removeDetail(i);
 		}
 
@@ -549,4 +562,23 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	public SimpleDetailCRUDController getDettaglioObbligazioneController() {
 		return dettaglioObbligazioneController;
 	}
+	public void delete(ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		int crudStatus = getModel().getCrudStatus();
+		try 
+		{
+			OrdineAcqBulk ordine = (OrdineAcqBulk) getModel();
+			if ( !ordine.isStatoInserito()){
+				throw new BusinessProcessException( "Non è possibile cancellare un ordine in stato diverso da inserito");
+			} else {
+				ordine = ((OrdineAcqComponentSession)createComponentSession()).cancellaOrdine(context.getUserContext(),(OrdineAcqBulk)getModel());
+				setModel( context, ordine );
+				setMessage("Cancellazione effettuata");			
+			}
+		} catch(Exception e) {
+			getModel().setCrudStatus(crudStatus);
+			throw handleException(e);
+		}
+	}
+
 }
