@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_sintetica_x_progetto_riepilogo" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="2.049040366095212"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="152"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["020.003.000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PG_PROGLIV2" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Integer.valueOf(18577)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CD_PROGLIV1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DS_PROGLIV1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CD_PROGLIV2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DS_PROGLIV2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_PIANO_ECO" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Stampa Piano Economico Progetto (true/false)]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT nvl(sum(decode(ti_gestione, 'E', NVL(STANZIAMENTO_DEC, 0), 0)),0) stanziamento_etr,
+       nvl(sum(decode(ti_gestione, 'E', NVL(VARIAZIONI_DEC, 0), 0)),0) variazioni_etr,
+       nvl(sum(decode(ti_gestione, 'E', NVL(TOT_IMPACC, 0), 0)),0) accertamenti,
+       nvl(sum(decode(ti_gestione, 'E', NVL(TOT_MANREV, 0), 0)),0) riscossioni,
+       nvl(sum(decode(ti_gestione, 'E', NVL(TOT_NUMMOV, 0), 0)),0) nummov_etr,
+       nvl(sum(decode(ti_gestione, 'S', NVL(STANZIAMENTO_ACC, 0), 0)),0) stanziamento_acc_spe,
+       nvl(sum(decode(ti_gestione, 'S', NVL(VARIAZIONI_ACC, 0), 0)),0) variazioni_acc_spe,
+       nvl(sum(decode(ti_gestione, 'S', NVL(STANZIAMENTO_DEC, 0), 0)),0) stanziamento_spe,
+       nvl(sum(decode(ti_gestione, 'S', NVL(VARIAZIONI_DEC, 0), 0)),0) variazioni_spe,
+       nvl(sum(decode(ti_gestione, 'S', NVL(TOT_IMPACC, 0), 0)),0) impegni,
+       nvl(sum(decode(ti_gestione, 'S', NVL(TOT_MANREV, 0), 0)),0) pagamenti,
+       nvl(sum(decode(ti_gestione, 'S', NVL(TOT_NUMMOV, 0), 0)),0) nummov_spe
+FROM TMP_STAMPA_SITUAZIONE_PROGETTI
+where esercizio = $P{P_ESERCIZIO}
+and   CD_CENTRO_RESPONSABILITA = $P{P_CENTRO_RESPONSABILITA}
+and   PG_PROGETTO = $P{P_PG_PROGLIV2}
+AND   TIPO_RECORD = 'PRINC']]>
+	</queryString>
+	<field name="STANZIAMENTO_ETR" class="java.math.BigDecimal"/>
+	<field name="VARIAZIONI_ETR" class="java.math.BigDecimal"/>
+	<field name="ACCERTAMENTI" class="java.math.BigDecimal"/>
+	<field name="RISCOSSIONI" class="java.math.BigDecimal"/>
+	<field name="NUMMOV_ETR" class="java.math.BigDecimal"/>
+	<field name="STANZIAMENTO_ACC_SPE" class="java.math.BigDecimal"/>
+	<field name="VARIAZIONI_ACC_SPE" class="java.math.BigDecimal"/>
+	<field name="STANZIAMENTO_SPE" class="java.math.BigDecimal"/>
+	<field name="VARIAZIONI_SPE" class="java.math.BigDecimal"/>
+	<field name="IMPEGNI" class="java.math.BigDecimal"/>
+	<field name="PAGAMENTI" class="java.math.BigDecimal"/>
+	<field name="NUMMOV_SPE" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="134">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="3" y="3" width="842" height="15" uuid="5a627b98-6c9c-43a9-9728-811bf0d0aefc"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROSPETTO RIEPILOGATIVO PROGETTO "+$P{P_CD_PROGLIV2}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="4" y="21" width="828" height="110" uuid="87d0b5f6-0c29-40f3-bf08-7fd29c13690f"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="163" y="77" width="65" height="30" uuid="d75b7398-1065-4b75-95d3-19489caf53b7"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Assestato"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="228" y="77" width="65" height="30" uuid="b2dfef32-0bea-4792-af1f-4acd3bede26c"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Accertato"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="293" y="77" width="65" height="30" uuid="70e8e947-b9a8-4f38-9103-155d8277b040"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Riscosso"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-5" style="VERB8" x="10" y="25" width="810" height="15" uuid="b76b75fb-0213-4480-b5d3-b6bcd2eed62a"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Area Progettuale: "+$P{P_CD_PROGLIV1}+" - "+$P{P_DS_PROGLIV1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-5" style="VERB8" x="10" y="40" width="810" height="15" uuid="6b34fb36-e604-4565-98d5-a71012730bac"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Progetto: "+$P{P_CD_PROGLIV2}+" - "+$P{P_DS_PROGLIV2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="163" y="62" width="195" height="15" uuid="2229e5ad-0188-45b1-ae82-0be37ce7b57b"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["ENTRATA"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="163" y="107" width="65" height="16" uuid="cd8ff332-da48-4bc3-af39-8fd875c54127"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{STANZIAMENTO_ETR}.add( $F{VARIAZIONI_ETR})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-65" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="228" y="107" width="65" height="16" uuid="d7d99d48-6eef-444f-bade-b3996b5cf7af"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ACCERTAMENTI}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-66" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="293" y="107" width="65" height="16" uuid="f8e0cc88-d8fa-448a-aa08-1463bb3a8975"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RISCOSSIONI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="466" y="62" width="260" height="15" uuid="32618154-c000-436a-9910-31656928cecd">
+					<printWhenExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals( true )]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["SPESA"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="531" y="62" width="195" height="15" uuid="2b72f06e-1392-4cc8-9412-1ce3de5156c4">
+					<printWhenExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals( false )]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["SPESA"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-65" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="596" y="107" width="65" height="15" uuid="59e2599f-795d-4476-a786-b53ce9bbacbd"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{IMPEGNI}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="107" width="65" height="15" uuid="334ac308-3043-436a-8b95-d98b65022167"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{STANZIAMENTO_SPE}.add( $F{VARIAZIONI_SPE})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-66" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="661" y="107" width="65" height="15" uuid="58439fad-a1cf-4b0a-b98a-4cd8ccfc926f"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PAGAMENTI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="531" y="77" width="195" height="15" uuid="1ee083fe-fa3d-40a2-ac65-ed18328b33e4"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Decentrate"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="466" y="107" width="65" height="15" uuid="7b727a71-91d7-433e-a8e4-edaa32a92c63">
+					<printWhenExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals( true )]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{STANZIAMENTO_ACC_SPE}.add( $F{VARIAZIONI_ACC_SPE})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="596" y="92" width="65" height="15" uuid="90193634-f818-4731-8d3d-05d7d3a0f724"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Impegnato"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="661" y="92" width="65" height="15" uuid="5f75d507-0a88-4614-bd85-1571736080c4"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Pagato"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="531" y="92" width="65" height="15" uuid="94d9ac4a-64ae-4ff1-a1b6-17ca3ede1405"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Assestato"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="466" y="92" width="65" height="15" uuid="5a8ac728-a0bc-4bff-bdbe-9ebd342e31df">
+					<printWhenExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals( true )]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Assestato"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="466" y="77" width="65" height="15" uuid="1481454e-15c9-433b-820d-706d1e324c2f">
+					<printWhenExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals( true )]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Accentrate"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="48">
+			<printWhenExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals(Boolean.TRUE)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="3" y="3" width="842" height="15" uuid="ba4011c6-a4a7-46a4-9fbc-0df92910924f"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROSPETTO RIEPILOGATIVO PIANO ECONOMICO"]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="4" y="20" width="828" height="24" uuid="2ccf4e35-663a-4886-9f5e-8f53d62c670a"/>
+			</rectangle>
+			<subreport>
+				<reportElement x="10" y="24" width="398" height="10" isRemoveLineWhenBlank="true" uuid="fea75847-6f71-4433-8b6e-8211242335d7"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO">
+					<subreportParameterExpression><![CDATA["E"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO_PIANO">
+					<subreportParameterExpression><![CDATA[new Integer(0)]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_CD_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_riepilogo_piano_detail.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="416" y="24" width="404" height="10" isRemoveLineWhenBlank="true" uuid="be5b4dd5-449a-44fe-a7b8-14e4053a8bd6"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO">
+					<subreportParameterExpression><![CDATA["S"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO_PIANO">
+					<subreportParameterExpression><![CDATA[new Integer(0)]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_CD_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_riepilogo_piano_detail.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<printWhenExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals(Boolean.TRUE)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="4" y="3" width="842" height="15" uuid="66a4a0a4-571c-4352-a199-6295bc37bec4"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROSPETTO PIANO ECONOMICO ESERCIZIO "+$P{P_ESERCIZIO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="5" y="20" width="828" height="24" uuid="7be6c850-7331-4888-aab8-9308e203b742"/>
+			</rectangle>
+			<subreport>
+				<reportElement x="11" y="24" width="398" height="10" isRemoveLineWhenBlank="true" uuid="e2268d2d-4398-4be5-9637-206a3b82dfe3"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO">
+					<subreportParameterExpression><![CDATA["E"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO_PIANO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_CD_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_riepilogo_piano_detail.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="417" y="24" width="404" height="10" isRemoveLineWhenBlank="true" uuid="56a4e041-759b-4240-9269-c2aa6d81e0f0"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO">
+					<subreportParameterExpression><![CDATA["S"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO_PIANO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_CD_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_riepilogo_piano_detail.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

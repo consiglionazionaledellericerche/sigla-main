@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_sintetica_x_progetto_riepilogo_piano" pageWidth="404" pageHeight="595" orientation="Landscape" columnWidth="404" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="2.049040366095212"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(2017)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["020.003.000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PG_PROGLIV2" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Integer.valueOf(18577)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_ESERCIZIO_PIANO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT x.tipo,
+       x.piano_key,
+       x.cd_unita_piano, x.cd_voce_piano,
+       (Select ds_voce_piano
+        from VOCE_PIANO_ECONOMICO_PRG
+        WHERE CD_UNITA_ORGANIZZATIVA = x.cd_unita_piano
+        AND   CD_VOCE_PIANO = x.cd_voce_piano) ds_voce_piano,
+       x.ESERCIZIO_RES,
+       x.stanziamento_piano_etr,
+       x.stanziamento_piano_spe,
+       x.stanziamento_acc,
+       x.variazioni_acc,
+       x.stanziamento,
+       x.variazioni,
+       x.impacc,
+       x.pagris,
+       x.nummov
+FROM(
+SELECT a.tipo,
+       a.cd_unita_piano||a.cd_voce_piano piano_key,
+       a.cd_unita_piano, a.cd_voce_piano, a.ESERCIZIO_RES,
+       sum(a.im_entrata) stanziamento_piano_etr,
+       sum(a.im_spesa) stanziamento_piano_spe,
+       sum(a.stanziamento_acc) stanziamento_acc,
+       sum(a.variazioni_acc) variazioni_acc,
+       sum(a.stanziamento) stanziamento,
+       sum(a.variazioni) variazioni,
+       sum(a.impacc) impacc,
+       sum(a.pagris) pagris,
+       sum(a.nummov) nummov
+from (SELECT $P{P_ESERCIZIO_PIANO} ESERCIZIO_RES, ti_gestione tipo, cd_unita_piano, cd_voce_piano,
+             0 im_entrata, 0 im_spesa,
+             nvl(STANZIAMENTO_ACC, 0) stanziamento_acc, nvl(VARIAZIONI_ACC, 0) variazioni_acc,
+             nvl(STANZIAMENTO_DEC, 0) stanziamento, nvl(VARIAZIONI_DEC, 0) variazioni,
+             nvl(TOT_IMPACC, 0) impacc, nvl(TOT_MANREV, 0) pagris, nvl(TOT_NUMMOV, 0) nummov
+      FROM TMP_STAMPA_SITUAZIONE_PROGETTI
+      where esercizio = $P{P_ESERCIZIO}
+      and   ti_gestione = $P{P_TIPO}
+      and   CD_CENTRO_RESPONSABILITA = $P{P_CENTRO_RESPONSABILITA}
+      and   PG_PROGETTO = $P{P_PG_PROGLIV2}
+      AND   TIPO_RECORD = 'PRINC'
+      UNION ALL
+      SELECT ESERCIZIO_PIANO ESERCIZIO_RES, 'E' tipo, cd_unita_organizzativa, cd_voce_piano,
+             nvl(im_entrata, 0), 0 im_spesa,
+             0 stanziamento_acc, 0 variazioni_acc,
+             0 stanziamento, 0 variazioni,
+             0 impacc, 0 pagris, 0 nummov
+      FROM PROGETTO_PIANO_ECONOMICO
+      WHERE $P{P_TIPO} = 'E'
+      AND   ESERCIZIO_PIANO = $P{P_ESERCIZIO_PIANO}
+      AND   PG_PROGETTO = $P{P_PG_PROGLIV2}
+      UNION ALL
+      SELECT ESERCIZIO_PIANO ESERCIZIO_RES, 'S' tipo, cd_unita_organizzativa, cd_voce_piano,
+             0 im_entrata, nvl(im_spesa, 0),
+             0 stanziamento_acc, 0 variazioni_acc,
+             0 stanziamento, 0 variazioni,
+             0 impacc, 0 pagris, 0 nummov
+      FROM PROGETTO_PIANO_ECONOMICO
+      WHERE $P{P_TIPO} = 'S'
+      AND   ESERCIZIO_PIANO = $P{P_ESERCIZIO_PIANO}
+      AND   PG_PROGETTO = $P{P_PG_PROGLIV2}) a
+GROUP BY a.tipo, a.cd_unita_piano||a.cd_voce_piano,
+         a.cd_unita_piano, a.cd_voce_piano, a.ESERCIZIO_RES) x
+order by x.cd_unita_piano, x.cd_voce_piano, x.ESERCIZIO_RES]]>
+	</queryString>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="PIANO_KEY" class="java.lang.String"/>
+	<field name="CD_UNITA_PIANO" class="java.lang.String"/>
+	<field name="CD_VOCE_PIANO" class="java.lang.String"/>
+	<field name="DS_VOCE_PIANO" class="java.lang.String"/>
+	<field name="ESERCIZIO_RES" class="java.math.BigDecimal"/>
+	<field name="STANZIAMENTO_PIANO_ETR" class="java.math.BigDecimal"/>
+	<field name="STANZIAMENTO_PIANO_SPE" class="java.math.BigDecimal"/>
+	<field name="STANZIAMENTO_ACC" class="java.math.BigDecimal"/>
+	<field name="VARIAZIONI_ACC" class="java.math.BigDecimal"/>
+	<field name="STANZIAMENTO" class="java.math.BigDecimal"/>
+	<field name="VARIAZIONI" class="java.math.BigDecimal"/>
+	<field name="IMPACC" class="java.math.BigDecimal"/>
+	<field name="PAGRIS" class="java.math.BigDecimal"/>
+	<field name="NUMMOV" class="java.math.BigDecimal"/>
+	<variable name="TOT_STANZIAMENTO_PIANO" class="java.math.BigDecimal">
+		<variableExpression><![CDATA["S".equals($F{TIPO})?
+$F{STANZIAMENTO_PIANO_SPE}:
+$F{STANZIAMENTO_PIANO_ETR}]]></variableExpression>
+	</variable>
+	<variable name="TOT_ASSESTATO_ACC" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{STANZIAMENTO_ACC}.add($F{VARIAZIONI_ACC})]]></variableExpression>
+	</variable>
+	<variable name="TOT_ASSESTATO" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{STANZIAMENTO}.add($F{VARIAZIONI})]]></variableExpression>
+	</variable>
+	<variable name="TOT_DISPONIBILITA_RESIDUA" class="java.math.BigDecimal">
+		<variableExpression><![CDATA["S".equals($F{TIPO})?
+$F{STANZIAMENTO_PIANO_SPE}.subtract($F{STANZIAMENTO_ACC}.add($F{VARIAZIONI_ACC})).subtract($F{STANZIAMENTO}.add($F{VARIAZIONI})):
+$F{STANZIAMENTO_PIANO_ETR}.subtract($F{STANZIAMENTO_ACC}.add($F{VARIAZIONI_ACC})).subtract($F{STANZIAMENTO}.add($F{VARIAZIONI}))]]></variableExpression>
+	</variable>
+	<variable name="TOT_VARIAZIONE_PROGETTO_SPE" class="java.math.BigDecimal">
+		<variableExpression><![CDATA["S".equals($F{TIPO})?$F{VARIAZIONI}:BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOT_VARIAZIONE_ACC_PROGETTO_SPE" class="java.math.BigDecimal">
+		<variableExpression><![CDATA["S".equals($F{TIPO})?$F{VARIAZIONI_ACC}:BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOT_ACCERTATO_PROGETTO" class="java.math.BigDecimal">
+		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{IMPACC}:BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOT_IMPEGNATO_PROGETTO" class="java.math.BigDecimal">
+		<variableExpression><![CDATA["S".equals($F{TIPO})?$F{IMPACC}:BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOT_RISCOSSO_PROGETTO" class="java.math.BigDecimal">
+		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{PAGRIS}:BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOT_PAGATO_PROGETTO" class="java.math.BigDecimal">
+		<variableExpression><![CDATA["S".equals($F{TIPO})?$F{PAGRIS}:BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<group name="VOCEPIANO">
+		<groupExpression><![CDATA[$F{PIANO_KEY}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="19">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB6" x="0" y="1" width="400" height="15" uuid="059646ff-c942-4956-a131-87261a0a5849"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DETTAGLI "+("E".equals($P{P_TIPO})?"ENTRATE":"SPESE")]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35">
+			<staticText>
+				<reportElement key="staticText-45" style="VERB8" x="3" y="3" width="141" height="31" uuid="0ca2d6d1-77c1-406e-854a-73e70e92be69">
+					<printWhenExpression><![CDATA["S".equals($F{TIPO})]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Voce Piano Economico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-45" style="VERB8" x="3" y="3" width="205" height="31" uuid="7203cbb5-506e-4a34-8910-3decf7479119">
+					<printWhenExpression><![CDATA["E".equals($F{TIPO})]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Voce Piano Economico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-45" style="VERB8" x="144" y="3" width="64" height="31" uuid="24427a39-6311-47c4-8708-b353accabd28">
+					<printWhenExpression><![CDATA["S".equals($F{TIPO})]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Disponibilità Iniziale]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="208" y="3" width="64" height="31" uuid="6e45bd2c-952e-421a-b267-a424bd8cc72c"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["S".equals($F{TIPO})?"Assestato Spese Accentrate":"Disponibilità Iniziale"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-36" style="VERB8" x="272" y="3" width="64" height="31" uuid="648cf15a-74b5-4255-bf4c-8718a1f45a49"/>
+				<box topPadding="4">
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["S".equals($F{TIPO})?"Assestato Spese Decentrate":"Assestato"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-37" style="VERB8" x="336" y="3" width="64" height="31" uuid="9464524f-b2d2-4102-8add-2a82930949c6"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Disponibilità Residua]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="15">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-5" style="VERB8" x="3" y="0" width="141" height="15" uuid="5128a434-8228-4e7b-911a-f269f6b72fd3"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CD_VOCE_PIANO}+" - "+$F{DS_VOCE_PIANO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-44" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="144" y="0" width="64" height="15" uuid="af69c42f-dc7d-41c8-bf26-0cafd25d4bcc">
+					<printWhenExpression><![CDATA["S".equals($F{TIPO})]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["S".equals($F{TIPO})?$F{STANZIAMENTO_PIANO_SPE}:$F{STANZIAMENTO_PIANO_ETR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-45" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="208" y="0" width="64" height="15" uuid="a26eb09c-70be-4262-a249-32b77bc3e007"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["S".equals($F{TIPO})?
+$F{STANZIAMENTO_ACC}.add($F{VARIAZIONI_ACC}):
+$F{STANZIAMENTO_PIANO_ETR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="272" y="0" width="64" height="15" uuid="e4f8e77b-bb21-43bc-bfdc-537e62d228fd"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{STANZIAMENTO}.add($F{VARIAZIONI})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-46" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="336" y="0" width="64" height="15" uuid="f6df6be7-df0f-4990-ad51-9cae801e06ba"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["S".equals($F{TIPO})?
+$F{STANZIAMENTO_PIANO_SPE}.subtract($F{STANZIAMENTO_ACC}.add($F{VARIAZIONI_ACC})).subtract( $F{STANZIAMENTO}.add($F{VARIAZIONI} )):
+$F{STANZIAMENTO_PIANO_ETR}.subtract($F{STANZIAMENTO_ACC}.add($F{VARIAZIONI_ACC})).subtract( $F{STANZIAMENTO}.add($F{VARIAZIONI} ))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
