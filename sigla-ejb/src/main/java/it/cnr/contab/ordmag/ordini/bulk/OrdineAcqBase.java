@@ -98,6 +98,11 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 // TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
 	private java.lang.String tiAttivita;
 
+	private java.math.BigDecimal imImponibile;
+	private java.math.BigDecimal imIva;
+	private java.math.BigDecimal imIvaD;
+	private java.math.BigDecimal imTotaleOrdine;
+
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
  
@@ -534,5 +539,29 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 	}
 	public void setTiAttivita(java.lang.String tiAttivita) {
 		this.tiAttivita = tiAttivita;
+	}
+	public java.math.BigDecimal getImImponibile() {
+		return imImponibile;
+	}
+	public void setImImponibile(java.math.BigDecimal imImponibile) {
+		this.imImponibile = imImponibile;
+	}
+	public java.math.BigDecimal getImIva() {
+		return imIva;
+	}
+	public void setImIva(java.math.BigDecimal imIva) {
+		this.imIva = imIva;
+	}
+	public java.math.BigDecimal getImIvaD() {
+		return imIvaD;
+	}
+	public void setImIvaD(java.math.BigDecimal imIvaD) {
+		this.imIvaD = imIvaD;
+	}
+	public java.math.BigDecimal getImTotaleOrdine() {
+		return imTotaleOrdine;
+	}
+	public void setImTotaleOrdine(java.math.BigDecimal imTotaleOrdine) {
+		this.imTotaleOrdine = imTotaleOrdine;
 	}
 }

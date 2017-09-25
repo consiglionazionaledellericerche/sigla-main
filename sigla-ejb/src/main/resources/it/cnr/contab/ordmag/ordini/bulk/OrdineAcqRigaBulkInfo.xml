@@ -9,7 +9,7 @@
 		name="cdCds"
 		property="ordineAcq.cdCds"
 		inputType="TEXT"
-		inputSize="30"
+		inputSize="0"
 		maxLength="30"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
