@@ -21,8 +21,6 @@ public class MissioniCMISService extends StoreService {
 	public static final String CMIS_MISSIONE_SIGLA_OGGETTO = "missioni_sigla:oggetto";
 	public static final String CMIS_MISSIONE_DETTAGLIO_SIGLA_RIGA = "missioni_dettaglio_sigla:riga";
 
-
-
 	public List<StorageObject> getFilesOrdineMissione(MissioneBulk missione) throws ComponentException{
 		return Optional.ofNullable(missione.getIdFolderOrdineMissione())
 				.map(s -> getStorageObjectBykey(s))
