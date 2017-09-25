@@ -198,7 +198,7 @@ public void saveRipartizioneFinanziaria(ActionContext context) throws BusinessPr
 	try {
 		Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
 		Utility.createLiquidIvaInterfComponentSession().saveRipartizioneFinanziaria(context.getUserContext(), model);
-		this.setMessage("Salvataggio effettuato.");
+		this.setMessage("Salvataggio effettuato.\nProcedere con il CALCOLA per portare a termine la liquidazione e la conseguente creazione della variazione.");
 	} catch(Exception e) {
 		throw handleException(e);
 	}
