@@ -715,7 +715,7 @@ public boolean isAssociataADocAmm()
 {
 	for ( Iterator i = obbligazione_scadenzarioColl.iterator(); i.hasNext(); )
 	//	if ( ((Obbligazione_scadenzarioBulk) i.next()).getIm_associato_doc_amm().compareTo( new BigDecimal(0)) != 0 )
-		if ( ((Obbligazione_scadenzarioBulk) i.next()).getPg_doc_passivo() != null )	
+		if ( ((Obbligazione_scadenzarioBulk) i.next()).getPg_doc_passivo() != null ||  ((Obbligazione_scadenzarioBulk) i.next()).getIm_associato_doc_amm().compareTo( new BigDecimal(0)) != 0 )	
 			return true;
 	return false;	
 }
