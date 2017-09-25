@@ -257,6 +257,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {
                         throw handleException(e);
+                    } catch (StorageException e) {
+                        if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+                            throw new ApplicationException("File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+                        throw handleException(e);
                     }
                 }
             }

@@ -330,6 +330,10 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					handleException(e);
+				} catch (StorageException e) {
+					if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+						throw new ApplicationException("File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+					throw handleException(e);
 				}
 			}
 		}
