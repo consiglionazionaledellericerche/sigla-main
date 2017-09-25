@@ -46,6 +46,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.doccont00.comp.CheckDisponibilitaContrattoFailed;
+import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
@@ -96,6 +97,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
@@ -252,26 +254,29 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	}
 
 	public void impostaTotaliOrdine(OrdineAcqBulk ordine) {
+		BigDecimal imponibile = BigDecimal.ZERO, iva = BigDecimal.ZERO, ivaD = BigDecimal.ZERO, totale = BigDecimal.ZERO;
 		for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
 			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
 			if (riga != null){
 				for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
 					OggettoBulk consbulk= (OggettoBulk) c.next();
 					OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-					ordine.setImImponibile(Utility.nvl(ordine.getImImponibile()).add(cons.getImImponibile()));
-					ordine.setImIva(Utility.nvl(ordine.getImIva()).add(cons.getImIva()));
-					ordine.setImIvaD(Utility.nvl(ordine.getImIvaD()).add(cons.getImIvaD()));
-					ordine.setImTotaleOrdine(Utility.nvl(ordine.getImTotaleOrdine()).add(cons.getImTotaleConsegna()));
+					imponibile = imponibile.add(cons.getImImponibile());
+					iva = iva.add(cons.getImIva());
+					ivaD = ivaD.add(cons.getImIvaD());
+					totale = totale.add(cons.getImTotaleConsegna());
 				}
 			}
 		}
+		ordine.setImImponibile(imponibile);
+		ordine.setImIva(iva);
+		ordine.setImIvaD(ivaD);
+		ordine.setImTotaleOrdine(totale);
 	}
 	
 	
 	private void validaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException{
-		if (ordine.getRigheOrdineColl() == null || ordine.getRigheOrdineColl().size() == 0){
-			throw new ApplicationException ("Non è possibile salvare un ordine senza dettagli.");
-		}
+		controlloEsistenzaRigheOrdine(ordine);
     	for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
     		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
     		if (riga != null){
@@ -280,6 +285,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
             		OggettoBulk consbulk= (OggettoBulk) c.next();
             		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
             		cons.setObbligazioneScadenzario(riga.getDspObbligazioneScadenzario());
+            		controlliValiditaConsegna(cons);
             	}
     		}
     	}
@@ -288,6 +294,42 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
     	controlloCongruenzaFornitoreContratto(userContext, ordine);
     }
 
+	private void controlloEsistenzaRigheOrdine(OrdineAcqBulk ordine) throws ApplicationException {
+		if (ordine.getRigheOrdineColl() == null || ordine.getRigheOrdineColl().size() == 0){
+			throw new ApplicationException ("Non è possibile salvare un ordine senza dettagli.");
+		} else {
+    		boolean esisteRigaValida = false;
+	    	for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
+	    		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
+	    		if (!riga.isToBeDeleted()){
+	    			esisteRigaValida = true;
+	    		}
+	    	}
+	    	if (!esisteRigaValida){
+				throw new ApplicationException ("Non è possibile salvare un ordine senza dettagli.");
+	    	}
+		}
+			
+			
+			
+	}
+
+	private void controlliValiditaConsegna(OrdineAcqConsegnaBulk consegna)throws it.cnr.jada.comp.ComponentException{
+		if (!consegna.isConsegnaMagazzino()){
+			if (consegna.getCdUopDest() == null){
+				throw new ApplicationException("E' necessario indicare l'unità operativa di destinazione.");
+			}
+		} else {
+			if (consegna.getCdUopDest() != null){
+				throw new ApplicationException("Per una consegna a magazzino non è possibile selezionare l'unità operativa di destinazione.");
+			}
+		}
+		if (consegna.getDtPrevConsegna() != null && consegna.getDtPrevConsegna().before(consegna.getOrdineAcqRiga().getOrdineAcq().getDataOrdine())){
+			throw new ApplicationException("La data di prevista consegna non può essere precedente alla data dell'ordine.");
+		}
+
+	}
+	
 	private void controlloCongruenzaFornitoreContratto(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine)
 			throws ComponentException, ApplicationException {
 		if (ordine.getPgContratto() != null){
@@ -534,7 +576,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     	throw handleException(e);
     }
         
-    impostaTotaliOrdine(ordine);
+//    impostaTotaliOrdine(ordine);
     rebuildObbligazioni(usercontext, ordine);
     return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
 }
@@ -1914,4 +1956,34 @@ public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine) th
 {
 	verificaCoperturaContratto (aUC,ordine, MODIFICA);
 }
+public OrdineAcqBulk cancellaOrdine(
+	    UserContext aUC,
+	    OrdineAcqBulk ordine)
+	    throws ComponentException {
+	    try {
+			for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
+				OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
+				if (riga.getDspObbligazioneScadenzario() != null && riga.getDspObbligazioneScadenzario().getPg_obbligazione() != null){
+					  throw new ApplicationException("Scollegare prima gli impegni collegati all'ordine prima di procedere alla cancellazione.");
+				}
+				if (riga != null){
+					for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
+						OggettoBulk consbulk= (OggettoBulk) c.next();
+						OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
+						if (cons.getObbligazioneScadenzario() != null && cons.getObbligazioneScadenzario().getPg_obbligazione() != null){
+							  throw new ApplicationException("Scollegare prima gli impegni collegati all'ordine prima di procedere alla cancellazione.");
+						}
+					}
+				}
+			}
+	            
+			ordine.setAnnullato(DateServices.getDt_valida(aUC));
+			ordine.setToBeUpdated();
+			makeBulkPersistent( aUC, ordine);
+			return ordine;
+	    } catch (Exception e) {
+	        throw handleException(e);
+	    }
+
+		}
 }
