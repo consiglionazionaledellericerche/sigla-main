@@ -11,6 +11,7 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
@@ -254,9 +255,14 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 			Report report = SpringUtil.getBean("printService",
 					PrintService.class).executeReport(actioncontext.getUserContext(),
 					print);
-			String cmisPath = getCMISPath(archiviaStampaPdgVariazioneBulk);
-			StorageObject storageObject = pdgVariazioniService.
-					storeSimpleDocument(archiviaStampaPdgVariazioneBulk, report.getInputStream(), report.getContentType(), report.getName(), cmisPath);
+			String path = getPath(archiviaStampaPdgVariazioneBulk);
+			StorageObject storageObject = pdgVariazioniService.restoreSimpleDocument(
+					archiviaStampaPdgVariazioneBulk,
+					report.getInputStream(),
+					report.getContentType(),
+					report.getName(),
+					path,
+					Boolean.FALSE);
 			archiviaAllegati(actioncontext, storageObject);
 			archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(PdgVariazioneDocument.construct(storageObject));
 			setModel(actioncontext, archiviaStampaPdgVariazioneBulk);
@@ -268,7 +274,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		
 	}
 
-	private String getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws ApplicationException{
+	private String getPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws ApplicationException{
 		return Arrays.asList(
 				SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione(),
 				Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getEsercizio())
@@ -296,7 +302,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
 		if (pdgVariazioneDocumentNode == null)
 			pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject();
-		String cmisPath = getCMISPath(archiviaStampaPdgVariazioneBulk);
+		String cmisPath = getPath(archiviaStampaPdgVariazioneBulk);
 		for (AllegatoPdGVariazioneDocumentBulk allegato : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
 			if (allegato.isToBeCreated()){
 				try {
@@ -309,7 +315,11 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					handleException(e);
-				}
+				} catch (StorageException e) {
+                    if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+                        throw new ApplicationException("File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+                    throw handleException(e);
+                }
 			}else if (allegato.isToBeUpdated()) {
 				try {
 					if (allegato.getFile() != null)
@@ -320,6 +330,10 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					handleException(e);
+				} catch (StorageException e) {
+					if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+						throw new ApplicationException("File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+					throw handleException(e);
 				}
 			}
 		}
