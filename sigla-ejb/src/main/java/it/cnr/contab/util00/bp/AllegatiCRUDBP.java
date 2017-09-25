@@ -1,6 +1,7 @@
 package it.cnr.contab.util00.bp;
 
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
@@ -239,6 +240,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                     allegato.setCrudStatus(OggettoBulk.NORMAL);
                 } catch (FileNotFoundException e) {
                     throw handleException(e);
+                } catch (StorageException e) {
+                    if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+                        throw new ApplicationException("File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+                    throw handleException(e);
                 }
             }else if (allegato.isToBeUpdated()) {
                 if (isPossibileModifica(allegato)) {
@@ -251,6 +256,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         storeService.updateProperties(allegato, storeService.getStorageObjectBykey(allegato.getStorageKey()));
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {
+                        throw handleException(e);
+                    } catch (StorageException e) {
+                        if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+                            throw new ApplicationException("File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
                         throw handleException(e);
                     }
                 }
