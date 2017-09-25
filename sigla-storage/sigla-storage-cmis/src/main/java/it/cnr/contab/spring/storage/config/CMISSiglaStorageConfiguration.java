@@ -259,7 +259,14 @@ public class CMISSiglaStorageConfiguration {
                                     .ifPresent(name -> {
                                         cmisObject.updateProperties(Collections.singletonMap(StoragePropertyNames.NAME.value(), name), true);
                                     });
-                            return cmisObject.updateProperties(metadataProperties);
+                            try {
+                                return cmisObject.updateProperties(metadataProperties);
+                            } catch (CmisConstraintException |CmisNameConstraintViolationException|CmisContentAlreadyExistsException _ex) {
+                                throw new StorageException(StorageException.Type.CONSTRAINT_VIOLATED, _ex.getMessage(), _ex);
+                            } catch (CmisBaseException _ex) {
+                                throw new StorageException(StorageException.Type.GENERIC, _ex.getMessage(), _ex);
+                            }
+
                         });
             }
 
