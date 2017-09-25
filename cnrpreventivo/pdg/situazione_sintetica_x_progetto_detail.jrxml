@@ -750,7 +750,7 @@ $V{isGaeLastDetail}.equals(Boolean.FALSE)]]></printWhenExpression>
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="9"/>
+						<font size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[("A".equals($P{P_ORDINE})?"Esercizio "+$F{ESERCIZIO_RES}:
 $F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE})]]></textFieldExpression>
