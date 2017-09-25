@@ -70,7 +70,7 @@
 	</parameter>
 	<parameter name="P_PRINT_PIANO_ECO" class="java.lang.Boolean">
 		<parameterDescription><![CDATA[Stampa Piano Economico Progetto (true/false)]]></parameterDescription>
-		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_ORDINE" class="java.lang.String">
 		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
