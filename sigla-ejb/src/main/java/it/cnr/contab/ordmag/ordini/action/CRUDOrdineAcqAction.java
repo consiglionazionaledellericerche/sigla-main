@@ -688,7 +688,6 @@ protected java.util.List recuperoListaCapitoli(ActionContext context, java.util.
 					}
 			}
 			
-			
 			if (titoliCapitoli !=null && !titoliCapitoli.isEmpty())
 				return titoliCapitoli;		
 		}
