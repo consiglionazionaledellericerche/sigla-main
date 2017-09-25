@@ -116,11 +116,6 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public final static String STATO_DEFINITIVO = "DEF";
 	public final static String STATO_INVIATO_ORDINE = "INF";
 	
-	private java.math.BigDecimal imImponibile;
-	private java.math.BigDecimal imIva;
-	private java.math.BigDecimal imIvaD;
-	private java.math.BigDecimal imTotaleOrdine;
-
 	private Boolean isUtenteAbilitatoInserimentoOrdine = true;
 	private Boolean isForFirma = false;
 		
@@ -1068,7 +1063,6 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	@Override
 	public void setAnnullato(Timestamp date) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
@@ -1091,7 +1085,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	@Override
 	public String getCd_cds() {
 		// TODO Auto-generated method stub
-		return null;
+		return getCdCds();
 	}
 	@Override
 	public String getCd_tipo_doc_amm() {
@@ -1101,7 +1095,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	@Override
 	public String getCd_uo() {
 		// TODO Auto-generated method stub
-		return null;
+		return getCdUnitaOperativa();
 	}
 	@Override
 	public Class getChildClass() {
@@ -1255,30 +1249,6 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	public void setImportoTotalePerObbligazione(java.math.BigDecimal importoTotalePerObbligazione) {
 		this.importoTotalePerObbligazione = importoTotalePerObbligazione;
-	}
-	public java.math.BigDecimal getImImponibile() {
-		return imImponibile;
-	}
-	public void setImImponibile(java.math.BigDecimal imImponibile) {
-		this.imImponibile = imImponibile;
-	}
-	public java.math.BigDecimal getImIva() {
-		return imIva;
-	}
-	public void setImIva(java.math.BigDecimal imIva) {
-		this.imIva = imIva;
-	}
-	public java.math.BigDecimal getImIvaD() {
-		return imIvaD;
-	}
-	public void setImIvaD(java.math.BigDecimal imIvaD) {
-		this.imIvaD = imIvaD;
-	}
-	public java.math.BigDecimal getImTotaleOrdine() {
-		return imTotaleOrdine;
-	}
-	public void setImTotaleOrdine(java.math.BigDecimal imTotaleOrdine) {
-		this.imTotaleOrdine = imTotaleOrdine;
 	}
 	public Boolean isOrdineInserito(){
 		return getStato()!= null && getStato().equals(STATO_INSERITO);
