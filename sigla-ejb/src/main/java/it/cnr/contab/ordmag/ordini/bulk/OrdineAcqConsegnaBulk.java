@@ -466,20 +466,4 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	public Boolean isConsegnaMagazzino(){
 		return getTipoConsegna() != null && getTipoConsegna().equals(Bene_servizioBulk.TIPO_CONSEGNA_MAGAZZINO);
 	}
-	@Override
-	public void validate() throws ValidationException {
-		super.validate();
-		if (!isConsegnaMagazzino()){
-			if (getCdUopDest() == null){
-				throw new ValidationException("E' necessario indicare l'unità operativa di destinazione.");
-			}
-		} else {
-			if (getCdUopDest() != null){
-				throw new ValidationException("Per una consegna a magazzino non è possibile selezionare l'unità operativa di destinazione.");
-			}
-		}
-		if (getDtPrevConsegna() != null && getDtPrevConsegna().before(getOrdineAcqRiga().getOrdineAcq().getDataOrdine())){
-			throw new ValidationException("La data di prevista consegna non può essere precedente alla data dell'ordine.");
-		}
-	}
 }
