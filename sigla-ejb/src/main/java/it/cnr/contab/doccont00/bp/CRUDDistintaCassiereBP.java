@@ -1369,7 +1369,7 @@ public class CRUDDistintaCassiereBP extends
 					distinta);
 			commitUserTransaction();
 			try {
-				basicEdit(context, getModel(), true);
+				basicEdit(context, distinta, true);
 			} catch (BusinessProcessException businessprocessexception) {
 				setModel(context, null);
 				setDirty(false);
@@ -1412,7 +1412,7 @@ public class CRUDDistintaCassiereBP extends
 
 	public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk)
 			throws Exception {
-		Map<String, String> subjectDN = documentiContabiliService
+        Map<String, String> subjectDN = documentiContabiliService
 				.getCertSubjectDN(firmaOTPBulk.getUserName(),
 						firmaOTPBulk.getPassword());
 		if (subjectDN == null)
@@ -1431,12 +1431,13 @@ public class CRUDDistintaCassiereBP extends
 					+ utente.getCodiceFiscaleLDAP() + "\"!");
 		}
 		if (!this.isFlusso()) {
-			final Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
+			Distinta_cassiereBulk distintaProvvisoria = (Distinta_cassiereBulk) getModel();
 			// spostato nel salva definitivo anche in questo caso
-			StorageObject distintaStorageObject = Optional.ofNullable(distinta.getPg_distinta_def())
+			StorageObject distintaStorageObject = Optional.ofNullable(distintaProvvisoria.getPg_distinta_def())
 					.map(paDistintaDef -> documentiContabiliService.getStorageObjectByPath(
-							distinta.getStorePath().concat(SiglaStorageService.SUFFIX).concat(distinta.getCMISName())
-					)).orElse(inviaDistinta(context, distinta));
+                            distintaProvvisoria.getStorePath().concat(SiglaStorageService.SUFFIX).concat(distintaProvvisoria.getCMISName())
+					)).orElse(inviaDistinta(context, distintaProvvisoria));
+            Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
 			List<String> nodes = new ArrayList<String>();
 			nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
 			List<V_mandato_reversaleBulk> dettagliRev = ((DistintaCassiereComponentSession) createComponentSession())
@@ -1458,8 +1459,7 @@ public class CRUDDistintaCassiereBP extends
 					.map(v_mandato_reversaleBulk -> documentiContabiliService.getDocumentKey(v_mandato_reversaleBulk, true))
                     .filter(s -> s != null)
 					.forEach(s -> nodes.add(s));
-
-			PdfSignApparence pdfSignApparence = new PdfSignApparence();
+            PdfSignApparence pdfSignApparence = new PdfSignApparence();
 			pdfSignApparence.setNodes(nodes);
 			pdfSignApparence.setUsername(firmaOTPBulk.getUserName());
 			pdfSignApparence.setPassword(firmaOTPBulk.getPassword());
@@ -1487,13 +1487,12 @@ public class CRUDDistintaCassiereBP extends
 						documentiContabiliService.inviaDistintaPEC(nodes,
 								this.isSepa(), null);
 				}
-                Distinta_cassiereBulk distintaFirmata = (Distinta_cassiereBulk) createComponentSession().findByPrimaryKey(context.getUserContext(), distinta);
-                distintaFirmata.setDt_invio_pec(DateServices.getDt_valida(context
+                distinta.setDt_invio_pec(DateServices.getDt_valida(context
 						.getUserContext()));
-                distintaFirmata.setUser(((CNRUserContext) context.getUserContext())
+                distinta.setUser(((CNRUserContext) context.getUserContext())
 						.getUser());
-                distintaFirmata.setToBeUpdated();
-                setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distintaFirmata));
+                distinta.setToBeUpdated();
+                setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
 				commitUserTransaction();
 				setMessage("Invio effettuato correttamente.");
 			} catch (IOException e) {
@@ -1510,7 +1509,7 @@ public class CRUDDistintaCassiereBP extends
 			if (storageFile != null) {
 				// E' previsto solo l'inserimento ma non l'aggiornamento
 				try {
-					StorageObject storageObject = documentiContabiliService.storeSimpleDocument(
+					StorageObject storageObject = documentiContabiliService.restoreSimpleDocument(
 							storageFile, storageFile.getInputStream(), storageFile.getContentType(),
 							storageFile.getFileName(), distinta.getStorePath(), false
 					);
