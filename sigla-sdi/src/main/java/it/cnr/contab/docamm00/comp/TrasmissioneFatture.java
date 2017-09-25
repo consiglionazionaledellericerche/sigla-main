@@ -380,7 +380,8 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 				if (!StringUtils.isEmpty(fattura.getStatoInvioSdi())){
 					if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI)){
 						logger.info("Fatture Elettroniche: Attive: Fattura già elaborata ");
-					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI) || fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)){
+					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI) ||
+							fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)){
 						salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
 						try{
 							component.aggiornaFatturaDecorrenzaTerminiSDI(userContext, fattura, notifica.getDescrizione());
