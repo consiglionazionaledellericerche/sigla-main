@@ -507,8 +507,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                 .map(bulk -> Boolean.valueOf(bulk.getVal01()));
     }
 
-
-
     public void shutdowHook(UserContext userContext) throws ComponentException {
         logger.info("shutdow hook");
         final BulkHome home = getHome(userContext, Configurazione_cnrBulk.class);
@@ -534,6 +532,5 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         } catch (PersistencyException e) {
             throw handleException(e);
         }
-
     }
 }
