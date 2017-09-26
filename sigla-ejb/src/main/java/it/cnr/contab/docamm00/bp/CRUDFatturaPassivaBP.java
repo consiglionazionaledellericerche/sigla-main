@@ -226,9 +226,13 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public OggettoBulk createEmptyModel(it.cnr.jada.action.ActionContext context)
             throws it.cnr.jada.action.BusinessProcessException {
-
         setAnnoDiCompetenza(true);
-        return super.createEmptyModel(context);
+        OggettoBulk emptyModel = super.createEmptyModel(context);
+        Optional.ofNullable(emptyModel)
+                .filter(Fattura_passivaBulk.class::isInstance)
+                .map(Fattura_passivaBulk.class::cast)
+                .ifPresent(fattura_passivaBulk -> fattura_passivaBulk.setFlDaOrdini(isAttivoOrdini()));
+        return emptyModel;
     }
 
     public void delete(ActionContext context)
@@ -472,9 +476,10 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                         it.cnr.jada.action.ActionContext context)
             throws it.cnr.jada.action.BusinessProcessException {
 
-        super.init(config, context);
-
         try {
+            attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(context.getUserContext());
+            super.init(config, context);
+
             int solaris = Fattura_passivaBulk.getDateCalendar(
                     it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())
                     .get(java.util.Calendar.YEAR);
@@ -482,7 +487,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     .getEsercizio(context.getUserContext()).intValue();
             setAnnoSolareInScrivania(solaris == esercizioScrivania);
             setRibaltato(initRibaltato(context));
-            attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(context.getUserContext());
             if (!isAnnoSolareInScrivania()) {
                 String cds = it.cnr.contab.utenze00.bp.CNRUserContext
                         .getCd_cds(context.getUserContext());
@@ -499,16 +503,16 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     setRiportaAvantiIndietro(esercizioScrivaniaAperto
                             && esercizioSuccessivoAperto && isRibaltato());
                 } catch (Throwable t) {
-                    handleException(t);
+                    throw handleException(t);
                 }
             } else
                 setRiportaAvantiIndietro(false);
         } catch (javax.ejb.EJBException e) {
             setAnnoSolareInScrivania(false);
         } catch (ComponentException e) {
-            e.printStackTrace();
+            throw handleException(e);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            throw handleException(e);
         }
 
         resetTabs();
@@ -1485,76 +1489,100 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public void scaricaFatturaHtml(ActionContext actioncontext) throws IOException, ServletException, TransformerException, ApplicationException {
         Fattura_passivaBulk fattura_passivaBulk = (Fattura_passivaBulk) getModel();
-        StringBuffer query = new StringBuffer("select cmis:objectId from sigla_fatture:fatture_passive");
-        query.append(" where sigla_fatture:identificativoSdI = ");
-        query.append(fattura_passivaBulk.getDocumentoEleTestata().getIdentificativoSdi());
-        List<StorageObject> results = SpringUtil.getBean("storeService", StoreService.class).search(query.toString());
-        for (StorageObject storageObject : results) {
-            List<StorageObject> files = SpringUtil.getBean("storeService", StoreService.class).getChildren(storageObject.getKey());
-            for (StorageObject file : files) {
-                if (file.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains("P:sigla_fatture_attachment:trasmissione_fattura")) {
-                    TransformerFactory tFactory = TransformerFactory.newInstance();
-                    Source xslDoc = null;
-                    if (fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("FPA12")) {
-
-                        xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
-                    } else if (fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("SDI11")) {
-                        xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
-                    } else {
-                        throw new ApplicationException("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
-                    }
-
-                    Source xmlDoc = new StreamSource(SpringUtil.getBean("storeService", StoreService.class).getResource(file.getKey()));
-                    HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
-                    OutputStream os = response.getOutputStream();
-                    response.setContentType("text/html");
-                    Transformer trasform = tFactory.newTransformer(xslDoc);
-                    trasform.transform(xmlDoc, new StreamResult(os));
-                    os.flush();
+        DocumentoEleTestataBulk documentoEleTestata = fattura_passivaBulk.getDocumentoEleTestata();
+        StorageObject fatturaFolder = SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(
+                documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef());
+        List<StorageObject> files = SpringUtil.getBean("storeService", StoreService.class).getChildren(fatturaFolder.getKey());
+        for (StorageObject storageObject : files) {
+            if (storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains("P:sigla_fatture_attachment:trasmissione_fattura")){
+                TransformerFactory tFactory = TransformerFactory.newInstance();
+                Source xslDoc = null;
+                if (documentoEleTestata.getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("FPA12")){
+                    xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+                } else if (documentoEleTestata.getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("SDI11")){
+                    xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
+                } else {
+                    throw new ApplicationException("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
                 }
+                Source xmlDoc = new StreamSource(SpringUtil.getBean("storeService", StoreService.class).getResource(storageObject.getKey()));
+                HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
+                OutputStream os = response.getOutputStream();
+                response.setContentType("text/html");
+                Transformer trasform = tFactory.newTransformer(xslDoc);
+                trasform.transform(xmlDoc, new StreamResult(os));
+                os.flush();
             }
         }
+
     }
+
+    private static final String[] TAB_FATTURA_PASSIVA = new String[]{"tabFatturaPassiva", "Testata", "/docamm00/tab_fattura_passiva.jsp"};
+    private static final String[] TAB_FORNITORE = new String[]{"tabFornitore", "Fornitore", "/docamm00/tab_fornitore.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_DETTAGLIO = new String[]{"tabFatturaPassivaDettaglio", "Dettaglio", "/docamm00/tab_fattura_passiva_dettaglio.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_CONSUNTIVO = new String[]{"tabFatturaPassivaConsuntivo", "Consuntivo", "/docamm00/tab_fattura_passiva_consuntivo.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_OBBLIGAZIONI = new String[]{"tabFatturaPassivaObbligazioni", "Impegni", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_STORNI = new String[]{"tabFatturaPassivaObbligazioni", "Storni", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_ORDINI = new String[]{"tabFatturaPassivaObbligazioni", "Ordini", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_ACCERTAMENTI = new String[]{"tabFatturaPassivaAccertamenti", "Accertamenti", "/docamm00/tab_fattura_passiva_accertamenti.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_DOCUMENTI_1210 = new String[]{"tabLetteraPagamentoEstero", "Documento 1210", "/docamm00/tab_lettera_pagam_estero.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_INTRASTAT = new String[]{"tabFatturaPassivaIntrastat", "Intrastat", "/docamm00/tab_fattura_passiva_intrastat.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI = new String[]{"tabEleAllegati", "Allegati Ricevuti", "/docamm00/tab_fatt_ele_allegati.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI = new String[]{"tabAllegati", "Allegati Aggiunti", "/util00/tab_allegati.jsp"};
 
     public String[][] getTabs() {
         TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
         int i = 0;
+        Fattura_passivaBulk fattura = Optional.ofNullable(this.getModel())
+                .filter(Fattura_passivaBulk.class::isInstance)
+                .map(Fattura_passivaBulk.class::cast)
+                .orElse(null);
+        pages.put(i++, TAB_FATTURA_PASSIVA);
+        pages.put(i++, TAB_FORNITORE);
+        pages.put(i++, TAB_FATTURA_PASSIVA_DETTAGLIO);
+        pages.put(i++, TAB_FATTURA_PASSIVA_CONSUNTIVO);
 
-        pages.put(i++, new String[]{"tabFatturaPassiva", "Testata", "/docamm00/tab_fattura_passiva.jsp"});
-        pages.put(i++, new String[]{"tabFornitore", "Fornitore", "/docamm00/tab_fornitore.jsp"});
-        pages.put(i++, new String[]{"tabFatturaPassivaDettaglio", "Dettaglio", "/docamm00/tab_fattura_passiva_dettaglio.jsp"});
-        pages.put(i++, new String[]{"tabFatturaPassivaConsuntivo", "Consuntivo", "/docamm00/tab_fattura_passiva_consuntivo.jsp"});
-
-        if (this.getModel() instanceof Nota_di_creditoBulk) {
+        if (fattura instanceof Nota_di_creditoBulk) {
             Nota_di_creditoBulk ndc = (Nota_di_creditoBulk) this.getModel();
             java.util.Hashtable obbligazioni = ndc.getFattura_passiva_obbligazioniHash();
             java.util.Hashtable accertamenti = ndc.getAccertamentiHash();
             boolean hasObbligazioni = !(obbligazioni == null || obbligazioni.isEmpty());
             boolean hasAccertamenti = !(accertamenti == null || accertamenti.isEmpty());
-            if (hasObbligazioni || !hasAccertamenti)
-                pages.put(i++, new String[]{"tabFatturaPassivaObbligazioni", "Storni", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"});
+            if (hasObbligazioni || !hasAccertamenti) {
+                pages.put(i++, Optional.ofNullable(fattura.getFlDaOrdini())
+                        .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
+                        .map(daOrdini -> TAB_FATTURA_PASSIVA_ORDINI)
+                        .orElse(TAB_FATTURA_PASSIVA_STORNI));
+            }
             if (hasAccertamenti || !hasObbligazioni)
-                pages.put(i++, new String[]{"tabFatturaPassivaAccertamenti", "Accertamenti", "/docamm00/tab_fattura_passiva_accertamenti.jsp"});
-        } else if (this.getModel() instanceof Nota_di_debitoBulk) {
-            pages.put(i++, new String[]{"tabFatturaPassivaObbligazioni", "Impegni", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"});
-        } else if (this.getModel() instanceof Fattura_passiva_IBulk) {
-            pages.put(i++, new String[]{"tabFatturaPassivaObbligazioni", "Impegni", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"});
-            pages.put(i++, new String[]{"tabLetteraPagamentoEstero", "Documento 1210", "/docamm00/tab_lettera_pagam_estero.jsp"});
+                pages.put(i++, TAB_FATTURA_PASSIVA_ACCERTAMENTI);
+        } else if (fattura instanceof Nota_di_debitoBulk) {
+            pages.put(i++, Optional.ofNullable(fattura.getFlDaOrdini())
+                    .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
+                    .map(daOrdini -> TAB_FATTURA_PASSIVA_ORDINI)
+                    .orElse(TAB_FATTURA_PASSIVA_OBBLIGAZIONI));
+        } else if (fattura instanceof Fattura_passiva_IBulk) {
+            pages.put(i++, Optional.ofNullable(fattura.getFlDaOrdini())
+                    .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
+                    .map(daOrdini -> TAB_FATTURA_PASSIVA_ORDINI)
+                    .orElse(TAB_FATTURA_PASSIVA_OBBLIGAZIONI));
+            pages.put(i++, TAB_FATTURA_PASSIVA_DOCUMENTI_1210);
 
-            Fattura_passiva_IBulk fatturaPassiva = (Fattura_passiva_IBulk) this.getModel();
-            if (!(fatturaPassiva.isCommerciale() && fatturaPassiva.getTi_bene_servizio() != null &&
-                    Bene_servizioBulk.BENE.equalsIgnoreCase(fatturaPassiva.getTi_bene_servizio()) &&
-                    fatturaPassiva.getFl_intra_ue() && fatturaPassiva.getFl_merce_extra_ue() != null && fatturaPassiva.getFl_merce_extra_ue())) {
-                pages.put(i++, new String[]{"tabFatturaPassivaIntrastat", "Intrastat", "/docamm00/tab_fattura_passiva_intrastat.jsp"});
+            if (!(fattura.isCommerciale() && fattura.getTi_bene_servizio() != null &&
+                    Bene_servizioBulk.BENE.equalsIgnoreCase(fattura.getTi_bene_servizio()) &&
+                    fattura.getFl_intra_ue() && fattura.getFl_merce_extra_ue() != null && fattura.getFl_merce_extra_ue())) {
+                pages.put(i++, TAB_FATTURA_PASSIVA_INTRASTAT);
             }
         } else {
-            pages.put(i++, new String[]{"tabFatturaPassivaObbligazioni", "Impegni", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"});
-            pages.put(i++, new String[]{"tabLetteraPagamentoEstero", "Documento 1210", "/docamm00/tab_lettera_pagam_estero.jsp"});
-            pages.put(i++, new String[]{"tabFatturaPassivaIntrastat", "Intrastat", "/docamm00/tab_fattura_passiva_intrastat.jsp"});
+            pages.put(i++, Optional.ofNullable(fattura.getFlDaOrdini())
+                    .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
+                    .map(daOrdini -> TAB_FATTURA_PASSIVA_ORDINI)
+                    .orElse(TAB_FATTURA_PASSIVA_OBBLIGAZIONI));
+            pages.put(i++, TAB_FATTURA_PASSIVA_DOCUMENTI_1210);
+            pages.put(i++, TAB_FATTURA_PASSIVA_INTRASTAT);
         }
-        if (((Fattura_passivaBulk) this.getModel()).getDocumentoEleTestata() != null) {
-            pages.put(i++, new String[]{"tabEleAllegati", "Allegati Ricevuti", "/docamm00/tab_fatt_ele_allegati.jsp"});
-            pages.put(i++, new String[]{"tabAllegati", "Allegati Aggiunti", "/util00/tab_allegati.jsp"});
+        if (Optional.ofNullable(fattura.getDocumentoEleTestata()).isPresent()) {
+            pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI);
+            pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI);
         }
 
         String[][] tabs = new String[i][3];
