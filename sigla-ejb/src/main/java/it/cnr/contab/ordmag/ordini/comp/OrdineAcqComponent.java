@@ -317,15 +317,15 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	private void controlliValiditaConsegna(OrdineAcqConsegnaBulk consegna)throws it.cnr.jada.comp.ComponentException{
 		if (!consegna.isConsegnaMagazzino()){
 			if (consegna.getCdUopDest() == null){
-				throw new ApplicationException("E' necessario indicare l'unità operativa di destinazione.");
+				throw new ApplicationException("E' necessario indicare l'unità operativa di destinazione per la riga "+consegna.getRiga()+".");
 			}
 		} else {
 			if (consegna.getCdUopDest() != null){
-				throw new ApplicationException("Per una consegna a magazzino non è possibile selezionare l'unità operativa di destinazione.");
+				throw new ApplicationException("Per una consegna a magazzino non è possibile selezionare l'unità operativa di destinazione per la riga "+consegna.getRiga()+".");
 			}
 		}
 		if (consegna.getDtPrevConsegna() != null && consegna.getDtPrevConsegna().before(consegna.getOrdineAcqRiga().getOrdineAcq().getDataOrdine())){
-			throw new ApplicationException("La data di prevista consegna non può essere precedente alla data dell'ordine.");
+			throw new ApplicationException("La data di prevista consegna non può essere precedente alla data dell'ordine per la riga "+consegna.getRiga()+".");
 		}
 
 	}
