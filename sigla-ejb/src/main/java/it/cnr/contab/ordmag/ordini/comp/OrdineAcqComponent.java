@@ -28,6 +28,7 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
@@ -557,8 +558,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
         			riga.setDspObbligazioneScadenzario(scad);
         		}
         		if (cons.getUnitaOperativaOrd() != null){
-        			UnitaOperativaOrdHome home = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
-        			UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)home.findByPrimaryKey(new UnitaOperativaOrdBulk(cons.getCdUnitaOperativa()));
+        			UnitaOperativaOrdBulk uop = recuperoUopDest(usercontext, cons);
         			cons.setUnitaOperativaOrd(uop);
         		}
         		if (riga.getRigheConsegnaColl().size() == 1){
@@ -579,6 +579,13 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
 //    impostaTotaliOrdine(ordine);
     rebuildObbligazioni(usercontext, ordine);
     return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
+}
+
+private UnitaOperativaOrdBulk recuperoUopDest(UserContext usercontext, OrdineAcqConsegnaBulk cons)
+		throws ComponentException, PersistencyException {
+	UnitaOperativaOrdHome home = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
+	UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)home.findByPrimaryKey(new UnitaOperativaOrdBulk(cons.getCdUnitaOperativa()));
+	return uop;
 }
 
 private Obbligazione_scadenzarioBulk retrieveObbligazioneScadenzario(UserContext usercontext,
@@ -1985,5 +1992,23 @@ public OrdineAcqBulk cancellaOrdine(
 	        throw handleException(e);
 	    }
 
+		}
+public Unita_organizzativaBulk recuperoUoPerImpegno(
+	    UserContext aUC,
+	    OrdineAcqConsegnaBulk consegna)
+	    throws ComponentException {
+	    try {
+	    	if (!consegna.isConsegnaMagazzino()){
+	    		if (consegna.getCdUopDest() != null){
+        			UnitaOperativaOrdBulk uop = recuperoUopDest(aUC, consegna);
+        			return uop.getUnitaOrganizzativa();
+	    		} else {
+					  throw new ApplicationException("E' necessario indicare l'unità operativa per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
+	    		}
+	    	}
+	    } catch (Exception e) {
+	        throw handleException(e);
+	    }
+	    return null;
 		}
 }
