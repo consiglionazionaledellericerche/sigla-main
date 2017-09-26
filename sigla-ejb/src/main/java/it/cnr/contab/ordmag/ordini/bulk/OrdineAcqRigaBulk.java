@@ -11,10 +11,7 @@ import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ejb.EJBException;
-
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
@@ -32,8 +29,6 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAmministrativoRigaBulk, Voidable {

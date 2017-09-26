@@ -633,8 +633,15 @@ protected void controllaSelezionePerContabilizzazione(ActionContext context, jav
 		if (selectedModels != null) {
 			while(selectedModels.hasNext()) {
 				OrdineAcqRigaBulk rigaSelected = (OrdineAcqRigaBulk)selectedModels.next();
-				if (rigaSelected.getDspObbligazioneScadenzario() != null && rigaSelected.getDspObbligazioneScadenzario().getEsercizio_originale() != null)
+				if (rigaSelected.getDspObbligazioneScadenzario() != null && rigaSelected.getDspObbligazioneScadenzario().getEsercizio_originale() != null){
 					throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" è già stato associato ad impegno! Modificare la selezione.");
+				}
+				for (Object consegna : rigaSelected.getRigheConsegnaColl()){
+					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)consegna;
+					if (cons.getCdUopDest() != null){
+						
+					}
+				}
 			}
 		}
 	}
