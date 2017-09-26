@@ -8,6 +8,8 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyError;
 import it.cnr.jada.persistency.PersistencyException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -16,6 +18,7 @@ import java.util.Optional;
 
 public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericComponent implements IConfigurazione_cnrMgr, Cloneable, Serializable {
 
+    private transient final static Logger logger = LoggerFactory.getLogger(Configurazione_cnrComponent.class);
 
     public static final String ASTERISCO = "*";
 
@@ -502,5 +505,35 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                 .filter(Configurazione_cnrBulk.class::isInstance)
                 .map(Configurazione_cnrBulk.class::cast)
                 .map(bulk -> Boolean.valueOf(bulk.getVal01()));
+    }
+
+
+
+    public void shutdowHook(UserContext userContext) throws ComponentException {
+        logger.info("shutdow hook");
+        final BulkHome home = getHome(userContext, Configurazione_cnrBulk.class);
+        try {
+        Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(
+                Configurazione_cnrBulk.PK_EMAIL_PEC,
+                Configurazione_cnrBulk.SK_SDI,
+                ASTERISCO,
+                new Integer(0));
+        Optional.ofNullable(home.findByPrimaryKey(configurazione_cnrBulk))
+                .filter(Configurazione_cnrBulk.class::isInstance)
+                .map(Configurazione_cnrBulk.class::cast)
+                .filter(bulk -> bulk.getVal04().equalsIgnoreCase("Y"))
+                .ifPresent(bulk -> {
+                    bulk.setVal04("N");
+                    bulk.setToBeUpdated();
+                    try {
+                        home.update(bulk, userContext);
+                    } catch (PersistencyException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+
     }
 }
