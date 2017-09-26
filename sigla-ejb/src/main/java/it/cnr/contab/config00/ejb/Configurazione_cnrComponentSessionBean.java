@@ -1,15 +1,23 @@
 package it.cnr.contab.config00.ejb;
 
+import it.cnr.contab.config00.comp.Configurazione_cnrComponent;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.AdminUserContext;
+import it.cnr.jada.comp.ComponentException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJBException;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
+import java.util.UUID;
 
 @Stateless(name = "CNRCONFIG00_EJB_Configurazione_cnrComponentSession")
 public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements Configurazione_cnrComponentSession {
     private it.cnr.contab.config00.comp.Configurazione_cnrComponent componentObj;
+    private transient final static Logger logger = LoggerFactory.getLogger(Configurazione_cnrComponentSessionBean.class);
 
     public static Configurazione_cnrComponentSessionBean newInstance() throws EJBException {
         return new Configurazione_cnrComponentSessionBean();
@@ -23,12 +31,36 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
 
     @Remove
     public void ejbRemove() throws EJBException {
+        try {
+            shutdowHook();
+        } catch (ComponentException e) {
+            logger.error("ERROR while shutdow hook", e);
+        }
         componentObj.release();
     }
 
     @PostConstruct
     public void ejbCreate() {
         componentObj = new it.cnr.contab.config00.comp.Configurazione_cnrComponent();
+    }
+
+    public void shutdowHook() throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException{
+        UserContext param0 = new AdminUserContext(UUID.randomUUID().toString());
+        pre_component_invocation(param0, componentObj);
+        try {
+            componentObj.shutdowHook(param0);
+            component_invocation_succes(param0, componentObj);
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
     }
 
     public it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(it.cnr.jada.UserContext param0, java.lang.Integer param1, java.lang.String param2, java.lang.String param3, java.lang.String param4) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
