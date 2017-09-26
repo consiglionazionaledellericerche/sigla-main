@@ -125,7 +125,10 @@ public class StorageFolderProcedura extends OggettoBulk {
         return Arrays.asList(
                 SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
                 this.getIncaricoProcedura().getCd_unita_organizzativa(),
-                path
+                path,
+				Optional.ofNullable(this.getEsercizio())
+					.map(esercizio -> String.valueOf(esercizio))
+					.orElse("0")
         ).stream().collect(
                 Collectors.joining(SiglaStorageService.SUFFIX)
         );
