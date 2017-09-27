@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="2.049040366095212"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="152"/>
+	<property name="ireport.x" value="26"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -65,6 +65,15 @@
 		<parameterDescription><![CDATA[Stampa Piano Economico Progetto (true/false)]]></parameterDescription>
 		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_GAE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_RESPONSABILE_GAE" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DS_RESPONSABILE_GAE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT nvl(sum(decode(ti_gestione, 'E', NVL(STANZIAMENTO_DEC, 0), 0)),0) stanziamento_etr,
        nvl(sum(decode(ti_gestione, 'E', NVL(VARIAZIONI_DEC, 0), 0)),0) variazioni_etr,
@@ -109,7 +118,10 @@ AND   TIPO_RECORD = 'PRINC']]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["PROSPETTO RIEPILOGATIVO PROGETTO "+$P{P_CD_PROGLIV2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PROSPETTO RIEPILOGATIVO PROGETTO "+$P{P_CD_PROGLIV2}+
+($P{P_GAE}!=null&&!"*".equals($P{P_GAE})?" - GAE: "+$P{P_GAE}:
+ $P{P_RESPONSABILE_GAE}!=null?" - RESPONSABILE: "+$P{P_RESPONSABILE_GAE}+" - "+
+ $P{P_DS_RESPONSABILE_GAE}:"")]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="4" y="21" width="828" height="110" uuid="87d0b5f6-0c29-40f3-bf08-7fd29c13690f"/>
