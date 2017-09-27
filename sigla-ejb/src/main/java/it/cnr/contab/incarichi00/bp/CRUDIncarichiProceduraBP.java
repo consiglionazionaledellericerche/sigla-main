@@ -1496,8 +1496,19 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		}
 	}
 	public boolean isAnnullaDefinitivoButtonHidden() {
-		return !((Incarichi_proceduraBulk) getModel()).isProceduraDefinitiva() || !isUoEnte() ||
-				((Incarichi_proceduraBulk) getModel()).getNr_contratti().compareTo(1)==1;
+		return Optional.ofNullable(getModel())
+				.filter(Incarichi_proceduraBulk.class::isInstance)
+				.map(Incarichi_proceduraBulk.class::cast)
+				.map(incarichi_proceduraBulk -> {
+					return !(
+                        incarichi_proceduraBulk.isProceduraDefinitiva() ||
+                        !isUoEnte() ||
+                        Optional.ofNullable(incarichi_proceduraBulk.getNr_contratti())
+                                .map(numeroContratti -> numeroContratti.compareTo(1) == 1)
+                        .orElse(false)
+					);
+				})
+				.orElse(true);
 	}
 	public boolean isAnnullaDefinitivoButtonEnabled() {
 		return !isAnnullaDefinitivoButtonHidden() &&
