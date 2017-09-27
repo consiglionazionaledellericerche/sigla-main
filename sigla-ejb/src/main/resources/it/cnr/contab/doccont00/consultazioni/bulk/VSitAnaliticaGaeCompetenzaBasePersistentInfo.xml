@@ -108,7 +108,8 @@
 			columnName="ASSESTATO_COMP"
 			propertyName="assestatoComp"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_OBBL_ACC_COMP"
@@ -121,19 +122,22 @@
 			columnName="DA_ASSUMERE"
 			propertyName="daAssumere"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_ASS_DOC_AMM_SPE"
 			propertyName="imAssDocAmmSpe"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_ASS_DOC_AMM_ETR"
 			propertyName="imAssDocAmmEtr"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_MANDATI_REVERSALI_PRO"
@@ -146,7 +150,8 @@
 			columnName="DA_PAGARE_INCASSARE"
 			propertyName="daPagareIncassare"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
+			columnSize="15"
+			columnScale="2"
 			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
