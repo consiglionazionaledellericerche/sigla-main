@@ -257,7 +257,11 @@ public class CMISSiglaStorageConfiguration {
                         .map(cmisObject -> {
                             Optional.ofNullable(metadataProperties.get(StoragePropertyNames.NAME.value()))
                                     .ifPresent(name -> {
-                                        cmisObject.updateProperties(Collections.singletonMap(StoragePropertyNames.NAME.value(), name), true);
+                                        try {
+                                            cmisObject.updateProperties(Collections.singletonMap(StoragePropertyNames.NAME.value(), name), true);
+                                        } catch(CmisConstraintException _ex) {
+                                            logger.error("Cannot rename file with value: {}", name, _ex);
+                                        }
                                     });
                             try {
                                 return cmisObject.updateProperties(metadataProperties);
