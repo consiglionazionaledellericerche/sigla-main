@@ -137,7 +137,7 @@ public class MissioniCMISService extends StoreService {
 		List<String> aspectsToAdd = new ArrayList<String>();
 		aspectsToAdd.add("P:cm:titled");
 		metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspectsToAdd);
-		path = createFolderIfNotPresent(path, folderName, metadataProperties);
-		return path;
+		return createFolderIfNotPresent(getStorageObjectByPath(path, true, true).getPath(),
+				folderName, metadataProperties);
 	}
 }
