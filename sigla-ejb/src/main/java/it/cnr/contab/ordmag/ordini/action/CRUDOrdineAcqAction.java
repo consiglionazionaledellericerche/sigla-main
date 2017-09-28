@@ -13,6 +13,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
@@ -636,12 +637,6 @@ protected void controllaSelezionePerContabilizzazione(ActionContext context, jav
 				if (rigaSelected.getDspObbligazioneScadenzario() != null && rigaSelected.getDspObbligazioneScadenzario().getEsercizio_originale() != null){
 					throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" è già stato associato ad impegno! Modificare la selezione.");
 				}
-				for (Object consegna : rigaSelected.getRigheConsegnaColl()){
-					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)consegna;
-					if (cons.getCdUopDest() != null){
-						
-					}
-				}
 			}
 		}
 	}
@@ -730,14 +725,34 @@ private Forward basicDoRicercaObbligazione(
 		java.util.List listaCapitoli) {
 
 		try {
-			
+			Unita_organizzativaBulk uoImpegno = null;
+			Iterator righeSelezionate = models.iterator();
+			if (righeSelezionate != null) {
+				while(righeSelezionate.hasNext()) {
+					OrdineAcqRigaBulk rigaSelected = (OrdineAcqRigaBulk)selectedModels.next();
+					for (Object consegna : rigaSelected.getRigheConsegnaColl()){
+						OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)consegna;
+						OrdineAcqComponentSession h = (OrdineAcqComponentSession)bp.createComponentSession();
+						Unita_organizzativaBulk uo = h.recuperoUoPerImpegno(context.getUserContext(), cons);
+						if (uoImpegno == null){
+							uoImpegno = uo;
+						} else if (!uoImpegno.equalsByPrimaryKey(uo)){
+							throw new it.cnr.jada.comp.ApplicationException("Selezione non valida. Esistono diverse unità organizzative collegate alle righe selezionate, correggere la selezione.");
+						}
+					}
+					if (uoImpegno == null){
+						throw new it.cnr.jada.comp.ApplicationException("Selezionare righe con un'unità organizzativa.");
+					}
+				}
+			}
+
 			Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
 			filtro.setFornitore(ordine.getFornitore());
 			filtro.setDs_obbligazione("Ordine");
 			filtro.setIm_importo(calcolaTotaleSelezionati(models, false));
 			filtro.setListaVociSelezionabili(listaCapitoli);
 			filtro.setContratto(ordine.getContratto());
-			filtro.setCd_unita_organizzativa(ordine.getUnitaOperativaOrd().getUnitaOrganizzativa().getCd_unita_organizzativa());
+			filtro.setCd_unita_organizzativa(uoImpegno.getCd_unita_organizzativa());
 			if (filtro.getData_scadenziario() == null)
 				filtro.setFl_data_scadenziario(Boolean.FALSE);		
 			if (models == null || models.isEmpty())
