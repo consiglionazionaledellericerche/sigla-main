@@ -82,7 +82,10 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_GESTIONE_ORDINI = "GESTIONE";
     public final static String PK_ORDINI = "ORDINI";
 
-	public Configurazione_cnrBulk() {
+    public final static String SK_ORDINE_AUT_ROTTURA_UO_DESTINAZIONE = "ORDINI_AUT_ROTTURA_UO_DEST";
+    public final static String SK_ORDINE_IMPEGNO_UO_DESTINAZIONE = "IMPEGNO_ORDINI_UO_DEST";
+
+    public Configurazione_cnrBulk() {
 	super();
 }
 
