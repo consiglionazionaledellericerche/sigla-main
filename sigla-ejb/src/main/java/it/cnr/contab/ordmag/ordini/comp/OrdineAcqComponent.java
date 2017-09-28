@@ -14,6 +14,7 @@ import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
@@ -1135,6 +1136,28 @@ private void controlliCambioStato(UserContext usercontext, OrdineAcqBulk ordine)
 public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
 	return modificaConBulk(usercontext, oggettobulk, null);
 }
+
+
+private Boolean isUoImpegnoDaUopDestinazione(UserContext userContext) throws ComponentException {
+
+	
+	String uoDestinazione = null;
+	try {
+		 uoDestinazione = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(userContext, CNRUserContext.getEsercizio(userContext), "*", Configurazione_cnrBulk.PK_ORDINI, Configurazione_cnrBulk.SK_ORDINE_IMPEGNO_UO_DESTINAZIONE);
+		if (uoDestinazione != null && uoDestinazione.equals("Y")){
+			return true;
+		}
+		
+	} catch (javax.ejb.EJBException e) {
+		handleException(e);
+	} catch (java.rmi.RemoteException e) {
+		handleException(e);
+	}
+
+	return false;
+}
+
+
 
 private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 
