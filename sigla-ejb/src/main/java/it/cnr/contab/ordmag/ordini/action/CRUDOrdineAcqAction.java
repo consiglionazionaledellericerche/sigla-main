@@ -724,12 +724,13 @@ private Forward basicDoRicercaObbligazione(
 		java.util.List models,
 		java.util.List listaCapitoli) {
 
+	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
 		try {
 			Unita_organizzativaBulk uoImpegno = null;
 			Iterator righeSelezionate = models.iterator();
 			if (righeSelezionate != null) {
 				while(righeSelezionate.hasNext()) {
-					OrdineAcqRigaBulk rigaSelected = (OrdineAcqRigaBulk)selectedModels.next();
+					OrdineAcqRigaBulk rigaSelected = (OrdineAcqRigaBulk)righeSelezionate.next();
 					for (Object consegna : rigaSelected.getRigheConsegnaColl()){
 						OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)consegna;
 						OrdineAcqComponentSession h = (OrdineAcqComponentSession)bp.createComponentSession();

@@ -1,18 +1,11 @@
 package it.cnr.contab.ordmag.ordini.comp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 import java.util.Vector;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
@@ -32,21 +25,15 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIHome;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
-import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
-import it.cnr.contab.doccont00.comp.CheckDisponibilitaContrattoFailed;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
@@ -76,7 +63,6 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
-import it.cnr.contab.ordmag.ordini.bulk.AllegatoOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome;
@@ -85,23 +71,16 @@ import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineHome;
 import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
-import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
-import it.cnr.contab.reports.bulk.Print_spoolerBulk;
-import it.cnr.contab.reports.bulk.Report;
-import it.cnr.contab.reports.service.PrintService;
-import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.comp.GenerazioneReportException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -109,7 +88,6 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.Query;
-import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -580,7 +558,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
 }
 
-private MagazzinoBulk recuperoMagazzino(UserContext usercontext, OrdineAcqConsegnaBulk cons) {
+private MagazzinoBulk recuperoMagazzino(UserContext usercontext, OrdineAcqConsegnaBulk cons) throws ComponentException, PersistencyException {
 	MagazzinoHome home = (MagazzinoHome)getHome(usercontext, MagazzinoBulk.class);
 	MagazzinoBulk mag = (MagazzinoBulk)home.findByPrimaryKey(new MagazzinoBulk(cons.getCdCdsMag(), cons.getCdMagazzino()));
 	return mag;
@@ -816,27 +794,28 @@ public SQLBuilder selectObbligazioneScadenzarioByClause(UserContext userContext,
 	filtro.setFornitore(consegna.getOrdineAcqRiga().getOrdineAcq().getFornitore());
 	filtro.setIm_importo(consegna.getImTotaleConsegna());
 
-	java.util.List listaCapitoli = recuperoListaCapitoliSelezionabili(userContext, consegna);
-	
-	filtro.setListaVociSelezionabili(listaCapitoli);
-	filtro.setContratto(consegna.getOrdineAcqRiga().getOrdineAcq().getContratto());
-	Unita_organizzativaBulk uo = recuperoUoPerImpegno(aUC, consegna) ;
-	if (uo != null && uo.getCd_unita_organizzativa() != null){
-		filtro.setCd_unita_organizzativa( uo.getCd_unita_organizzativa() );
-	} else {
-		throw new it.cnr.jada.comp.ApplicationException("Non è stato possibile individuare l'unità organizzativa.");
-	}
-	filtro.setFl_importo(Boolean.FALSE);
+	java.util.List listaCapitoli;
+	try {
+		listaCapitoli = recuperoListaCapitoliSelezionabili(userContext, consegna);
+		filtro.setListaVociSelezionabili(listaCapitoli);
+		filtro.setContratto(consegna.getOrdineAcqRiga().getOrdineAcq().getContratto());
+		Unita_organizzativaBulk uo = recuperoUoPerImpegno(userContext, consegna) ;
+		if (uo != null && uo.getCd_unita_organizzativa() != null){
+			filtro.setCd_unita_organizzativa( uo.getCd_unita_organizzativa() );
+		} else {
+			throw new it.cnr.jada.comp.ApplicationException("Non è stato possibile individuare l'unità organizzativa.");
+		}
+		filtro.setFl_importo(Boolean.FALSE);
 
-	SQLBuilder sql = ricercaObbligazioni(context, filtro, obblScadHome);
-	
-	return sql;
+		SQLBuilder sql = ricercaObbligazioni(userContext, filtro, obblScadHome);
+		return sql;
+	} catch (ComponentException | IntrospectionException | RemoteException e) {
+		throw new PersistencyException(e);
+	}
 }
 
 private java.util.List recuperoListaCapitoliSelezionabili(UserContext userContext, OrdineAcqConsegnaBulk consegna)
-		throws it.cnr.contab.ordmag.ordini.comp.ComponentException,
-		it.cnr.contab.ordmag.ordini.comp.PersistencyException, ApplicationException, ApplicationException,
-		ApplicationException {
+		throws ComponentException, PersistencyException, ApplicationException, IntrospectionException, RemoteException {
 	CategoriaGruppoInventComponentSession session = (CategoriaGruppoInventComponentSession)EJBCommonServices.createEJB(
 			"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
 			CategoriaGruppoInventComponentSession.class);
@@ -845,7 +824,7 @@ private java.util.List recuperoListaCapitoliSelezionabili(UserContext userContex
 	if (consegna.getOrdineAcqRiga().getCdBeneServizio() != null){
 		Bene_servizioBulk bene = recuperoBeneServizio(userContext, consegna.getOrdineAcqRiga().getCdBeneServizio());
 		if (bene != null) {
-			java.util.List titoliCapitoliCatGrp = h.findAssVoceFList(context.getUserContext(), bene.getCategoria_gruppo());
+			java.util.List titoliCapitoliCatGrp = session.findAssVoceFList(userContext, bene.getCategoria_gruppo());
 			if (titoliCapitoliCatGrp == null)
 				throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + bene.getCategoria_gruppo().getCd_categoria_gruppo() + "\" non è stato attribuita l'associazione al capitolo di spesa");
 			for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); k.hasNext();) {
@@ -853,10 +832,10 @@ private java.util.List recuperoListaCapitoliSelezionabili(UserContext userContex
 				listaCapitoli.add(assVoce.getElemento_voce());
 			}
 		} else {
-			throw new it.cnr.jada.comp.ApplicationException("Bene/servizio non valido per il dettaglio " + ((rigaSelected.getRiga() == null) ? "" : "\"" + rigaSelected.getRiga() + "\"") + "!");
+			throw new it.cnr.jada.comp.ApplicationException("Bene/servizio non valido per il dettaglio " + ((consegna.getOrdineAcqRiga().getRiga() == null) ? "" : "\"" + consegna.getOrdineAcqRiga().getRiga() + "\"") + "!");
 		}
 	} else {
-		throw new it.cnr.jada.comp.ApplicationException("Valorizzare il bene/servizio per il dettaglio " + ((rigaSelected.getRiga() == null) ? "" : "\"" + rigaSelected.getRiga() + "\"") + "!");
+		throw new it.cnr.jada.comp.ApplicationException("Valorizzare il bene/servizio per il dettaglio " + ((consegna.getOrdineAcqRiga().getRiga() == null) ? "" : "\"" + consegna.getOrdineAcqRiga().getRiga() + "\"") + "!");
 	}
 	return listaCapitoli;
 }
@@ -2084,12 +2063,12 @@ public Unita_organizzativaBulk recuperoUoPerImpegno
 				if (consegna.getCdMagazzino() != null && consegna.getCdCdsMag() != null){
 					MagazzinoBulk magazzino = recuperoMagazzino(aUC, consegna);
 					if (magazzino != null && magazzino.getCdUnitaOperativa() != null){
-						UnitaOperativaOrdBulk uop = recuperoUop(usercontext, magazzino.getUnitaOperativaOrd());
+						UnitaOperativaOrdBulk uop = recuperoUop(aUC, magazzino.getUnitaOperativaOrd());
 						if (uop != null){
 							return uop.getUnitaOrganizzativa();
 						}
 					} else {
-						UnitaOperativaOrdBulk uop = recuperoUop(usercontext, consegna.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd());
+						UnitaOperativaOrdBulk uop = recuperoUop(aUC, consegna.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd());
 						if (uop != null){
 							return uop.getUnitaOrganizzativa();
 						}
