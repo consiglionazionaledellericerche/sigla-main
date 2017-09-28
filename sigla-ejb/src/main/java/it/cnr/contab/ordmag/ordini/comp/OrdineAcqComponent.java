@@ -548,8 +548,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
         			cons.setLuogoConsegnaMag(luogo);
         		}
         		if (cons.getMagazzino() != null){
-        			MagazzinoHome home = (MagazzinoHome)getHome(usercontext, MagazzinoBulk.class);
-        			MagazzinoBulk mag = (MagazzinoBulk)home.findByPrimaryKey(new MagazzinoBulk(cons.getCdCdsMag(), cons.getCdMagazzino()));
+        			MagazzinoBulk mag = recuperoMagazzino(usercontext, cons);
         			cons.setMagazzino(mag);
         		}
         		if (cons.getObbligazioneScadenzario() != null){
@@ -581,11 +580,24 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
 }
 
+private MagazzinoBulk recuperoMagazzino(UserContext usercontext, OrdineAcqConsegnaBulk cons) {
+	MagazzinoHome home = (MagazzinoHome)getHome(usercontext, MagazzinoBulk.class);
+	MagazzinoBulk mag = (MagazzinoBulk)home.findByPrimaryKey(new MagazzinoBulk(cons.getCdCdsMag(), cons.getCdMagazzino()));
+	return mag;
+}
+
 private UnitaOperativaOrdBulk recuperoUopDest(UserContext usercontext, OrdineAcqConsegnaBulk cons)
 		throws ComponentException, PersistencyException {
 	UnitaOperativaOrdHome home = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
 	UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)home.findByPrimaryKey(new UnitaOperativaOrdBulk(cons.getCdUnitaOperativa()));
 	return uop;
+}
+
+private UnitaOperativaOrdBulk recuperoUop(UserContext usercontext, UnitaOperativaOrdBulk uop)
+		throws ComponentException, PersistencyException {
+	UnitaOperativaOrdHome home = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
+	UnitaOperativaOrdBulk uo = (UnitaOperativaOrdBulk)home.findByPrimaryKey(new UnitaOperativaOrdBulk(uop.getCdUnitaOperativa()));
+	return uo;
 }
 
 private Obbligazione_scadenzarioBulk retrieveObbligazioneScadenzario(UserContext usercontext,
@@ -794,6 +806,59 @@ public SQLBuilder selectBeneServizioByClause(UserContext userContext, OrdineAcqR
 	sql.addSQLClause("AND", "FL_VALIDO", SQLBuilder.EQUALS, Bene_servizioBulk.STATO_VALIDO);
 	
 	return sql;
+}
+
+public SQLBuilder selectObbligazioneScadenzarioByClause(UserContext userContext, OrdineAcqConsegnaBulk consegna, 
+		Obbligazione_scadenzarioHome obblScadHome, Obbligazione_scadenzarioBulk obblScad, 
+		CompoundFindClause compoundfindclause) throws PersistencyException{
+
+	Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
+	filtro.setFornitore(consegna.getOrdineAcqRiga().getOrdineAcq().getFornitore());
+	filtro.setIm_importo(consegna.getImTotaleConsegna());
+
+	java.util.List listaCapitoli = recuperoListaCapitoliSelezionabili(userContext, consegna);
+	
+	filtro.setListaVociSelezionabili(listaCapitoli);
+	filtro.setContratto(consegna.getOrdineAcqRiga().getOrdineAcq().getContratto());
+	Unita_organizzativaBulk uo = recuperoUoPerImpegno(aUC, consegna) ;
+	if (uo != null && uo.getCd_unita_organizzativa() != null){
+		filtro.setCd_unita_organizzativa( uo.getCd_unita_organizzativa() );
+	} else {
+		throw new it.cnr.jada.comp.ApplicationException("Non è stato possibile individuare l'unità organizzativa.");
+	}
+	filtro.setFl_importo(Boolean.FALSE);
+
+	SQLBuilder sql = ricercaObbligazioni(context, filtro, obblScadHome);
+	
+	return sql;
+}
+
+private java.util.List recuperoListaCapitoliSelezionabili(UserContext userContext, OrdineAcqConsegnaBulk consegna)
+		throws it.cnr.contab.ordmag.ordini.comp.ComponentException,
+		it.cnr.contab.ordmag.ordini.comp.PersistencyException, ApplicationException, ApplicationException,
+		ApplicationException {
+	CategoriaGruppoInventComponentSession session = (CategoriaGruppoInventComponentSession)EJBCommonServices.createEJB(
+			"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
+			CategoriaGruppoInventComponentSession.class);
+
+	java.util.List listaCapitoli = new ArrayList<>();
+	if (consegna.getOrdineAcqRiga().getCdBeneServizio() != null){
+		Bene_servizioBulk bene = recuperoBeneServizio(userContext, consegna.getOrdineAcqRiga().getCdBeneServizio());
+		if (bene != null) {
+			java.util.List titoliCapitoliCatGrp = h.findAssVoceFList(context.getUserContext(), bene.getCategoria_gruppo());
+			if (titoliCapitoliCatGrp == null)
+				throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + bene.getCategoria_gruppo().getCd_categoria_gruppo() + "\" non è stato attribuita l'associazione al capitolo di spesa");
+			for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); k.hasNext();) {
+				Categoria_gruppo_voceBulk assVoce = (Categoria_gruppo_voceBulk)k.next();
+				listaCapitoli.add(assVoce.getElemento_voce());
+			}
+		} else {
+			throw new it.cnr.jada.comp.ApplicationException("Bene/servizio non valido per il dettaglio " + ((rigaSelected.getRiga() == null) ? "" : "\"" + rigaSelected.getRiga() + "\"") + "!");
+		}
+	} else {
+		throw new it.cnr.jada.comp.ApplicationException("Valorizzare il bene/servizio per il dettaglio " + ((rigaSelected.getRiga() == null) ? "" : "\"" + rigaSelected.getRiga() + "\"") + "!");
+	}
+	return listaCapitoli;
 }
 
 public SQLBuilder selectDspMagazzinoByClause(UserContext userContext, OrdineAcqRigaBulk riga, 
@@ -1239,100 +1304,106 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 		throws ComponentException {
 
 		Obbligazione_scadenzarioHome home = (Obbligazione_scadenzarioHome)getHome(context, Obbligazione_scadenzarioBulk.class);
-		it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-		sql.setDistinctClause(true);
-		sql.addTableToHeader("OBBLIGAZIONE");
-		sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.CD_CDS","OBBLIGAZIONE.CD_CDS");
-		sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO","OBBLIGAZIONE.ESERCIZIO");
-		sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE","OBBLIGAZIONE.ESERCIZIO_ORIGINALE");
-		sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE","OBBLIGAZIONE.PG_OBBLIGAZIONE");
-
-		sql.addTableToHeader("ELEMENTO_VOCE");
-		sql.addSQLJoin("OBBLIGAZIONE.CD_ELEMENTO_VOCE","ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
-		sql.addSQLJoin("OBBLIGAZIONE.TI_APPARTENENZA","ELEMENTO_VOCE.TI_APPARTENENZA");
-		sql.addSQLJoin("OBBLIGAZIONE.TI_GESTIONE","ELEMENTO_VOCE.TI_GESTIONE");
-		sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
-
-		sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
-		sql.addSQLClause("AND","OBBLIGAZIONE.RIPORTATO", sql.EQUALS, "N");
-		sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
-		sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
-		sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-		sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
-		sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-		sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
-		sql.addSQLClause("AND","OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS, filtro.getCd_unita_organizzativa());
-
-		if (filtro.getElemento_voce() != null) {
-			sql.addSQLClause("AND","OBBLIGAZIONE.CD_ELEMENTO_VOCE",sql.STARTSWITH, filtro.getElemento_voce().getCd_elemento_voce());
-			sql.addSQLClause("AND","OBBLIGAZIONE.TI_APPARTENENZA",sql.EQUALS, filtro.getElemento_voce().getTi_appartenenza());
-			sql.addSQLClause("AND","OBBLIGAZIONE.TI_GESTIONE",sql.EQUALS, filtro.getElemento_voce().getTi_gestione());
-			sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO",sql.EQUALS, filtro.getElemento_voce().getEsercizio());
-		}
-		
-		if (filtro.getListaVociSelezionabili() != null && !filtro.getListaVociSelezionabili().isEmpty()) {
-			sql.openParenthesis("AND");
-			for (Elemento_voceBulk voce : filtro.getListaVociSelezionabili()){
-				sql.openParenthesis("OR");
-				sql.addSQLClause("AND","OBBLIGAZIONE.CD_ELEMENTO_VOCE",sql.EQUALS, voce.getCd_elemento_voce());
-				sql.addSQLClause("AND","OBBLIGAZIONE.TI_APPARTENENZA",sql.EQUALS, voce.getTi_appartenenza());
-				sql.addSQLClause("AND","OBBLIGAZIONE.TI_GESTIONE",sql.EQUALS, voce.getTi_gestione());
-				sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO",sql.EQUALS, voce.getEsercizio());
-				sql.closeParenthesis();
-				
-			}
-			sql.closeParenthesis();
-		}
-		
-		if (filtro.getContratto() != null && filtro.getContratto().getPg_contratto() != null) {
-			sql.addSQLClause("AND","OBBLIGAZIONE.PG_CONTRATTO",sql.EQUALS, filtro.getContratto().getPg_contratto());
-			sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO_CONTRATTO",sql.EQUALS, filtro.getContratto().getEsercizio());
-			sql.addSQLClause("AND","OBBLIGAZIONE.STATO_CONTRATTO",sql.EQUALS, filtro.getContratto().getStato());
-		}
-		
-		sql.addSQLClause("AND","OBBLIGAZIONE.FL_PGIRO",sql.EQUALS, "N");
-
-		if (!filtro.getFl_fornitore().booleanValue()) {
-			sql.addTableToHeader("TERZO");
-			sql.addTableToHeader("ANAGRAFICO");
-			sql.addSQLJoin("OBBLIGAZIONE.CD_TERZO", "TERZO.CD_TERZO");
-			sql.addSQLJoin("TERZO.CD_ANAG", "ANAGRAFICO.CD_ANAG");
-			sql.addSQLClause("AND","(OBBLIGAZIONE.CD_TERZO = ? OR ANAGRAFICO.TI_ENTITA = ?)");
-			sql.addParameter(filtro.getFornitore().getCd_terzo(),java.sql.Types.INTEGER,0);
-			sql.addParameter(AnagraficoBulk.DIVERSI,java.sql.Types.VARCHAR,0);
-		} else {
-			sql.addSQLClause("AND","OBBLIGAZIONE.CD_TERZO",sql.EQUALS, filtro.getFornitore().getCd_terzo());
-		}
-		
-		if (filtro.getFl_data_scadenziario().booleanValue() && filtro.getData_scadenziario() != null)
-			sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA",sql.EQUALS, filtro.getData_scadenziario());
-		if (filtro.getFl_importo().booleanValue() && filtro.getIm_importo() != null)
-			sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA",sql.GREATER_EQUALS, filtro.getIm_importo());
-
-		//filtro su Tipo obbligazione
-		if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getTipo_obbligazione() != null) {
-			if (ObbligazioneBulk.TIPO_COMPETENZA.equals(filtro.getTipo_obbligazione()))
-				sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB);
-			else if (ObbligazioneBulk.TIPO_RESIDUO_PROPRIO.equals(filtro.getTipo_obbligazione()))
-				sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB_RES);
-			else if (ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO.equals(filtro.getTipo_obbligazione()))
-				sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA);
-		}
-
-		//filtro su Anno Residuo obbligazione
-		if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getEsercizio_ori_obbligazione() != null)
-			sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO_ORIGINALE",sql.EQUALS, filtro.getEsercizio_ori_obbligazione());
-
-		//filtro su Numero obbligazione
-		if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getNr_obbligazione() != null)
-			sql.addSQLClause("AND","OBBLIGAZIONE.PG_OBBLIGAZIONE",sql.EQUALS, filtro.getNr_obbligazione());
+		it.cnr.jada.persistency.sql.SQLBuilder sql = ricercaObbligazioni(context, filtro, home);
 
 		return iterator(
 			context,
 			sql,
 			Obbligazione_scadenzarioBulk.class,
 			"default");
-	} 
+	}
+
+private it.cnr.jada.persistency.sql.SQLBuilder ricercaObbligazioni(UserContext context,
+		Filtro_ricerca_obbligazioniVBulk filtro, Obbligazione_scadenzarioHome home) {
+	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
+	sql.setDistinctClause(true);
+	sql.addTableToHeader("OBBLIGAZIONE");
+	sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.CD_CDS","OBBLIGAZIONE.CD_CDS");
+	sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO","OBBLIGAZIONE.ESERCIZIO");
+	sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE","OBBLIGAZIONE.ESERCIZIO_ORIGINALE");
+	sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE","OBBLIGAZIONE.PG_OBBLIGAZIONE");
+
+	sql.addTableToHeader("ELEMENTO_VOCE");
+	sql.addSQLJoin("OBBLIGAZIONE.CD_ELEMENTO_VOCE","ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
+	sql.addSQLJoin("OBBLIGAZIONE.TI_APPARTENENZA","ELEMENTO_VOCE.TI_APPARTENENZA");
+	sql.addSQLJoin("OBBLIGAZIONE.TI_GESTIONE","ELEMENTO_VOCE.TI_GESTIONE");
+	sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
+
+	sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+	sql.addSQLClause("AND","OBBLIGAZIONE.RIPORTATO", sql.EQUALS, "N");
+	sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
+	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
+	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
+	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
+	sql.addSQLClause("AND","OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS, filtro.getCd_unita_organizzativa());
+
+	if (filtro.getElemento_voce() != null) {
+		sql.addSQLClause("AND","OBBLIGAZIONE.CD_ELEMENTO_VOCE",sql.STARTSWITH, filtro.getElemento_voce().getCd_elemento_voce());
+		sql.addSQLClause("AND","OBBLIGAZIONE.TI_APPARTENENZA",sql.EQUALS, filtro.getElemento_voce().getTi_appartenenza());
+		sql.addSQLClause("AND","OBBLIGAZIONE.TI_GESTIONE",sql.EQUALS, filtro.getElemento_voce().getTi_gestione());
+		sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO",sql.EQUALS, filtro.getElemento_voce().getEsercizio());
+	}
+	
+	if (filtro.getListaVociSelezionabili() != null && !filtro.getListaVociSelezionabili().isEmpty()) {
+		sql.openParenthesis("AND");
+		for (Elemento_voceBulk voce : filtro.getListaVociSelezionabili()){
+			sql.openParenthesis("OR");
+			sql.addSQLClause("AND","OBBLIGAZIONE.CD_ELEMENTO_VOCE",sql.EQUALS, voce.getCd_elemento_voce());
+			sql.addSQLClause("AND","OBBLIGAZIONE.TI_APPARTENENZA",sql.EQUALS, voce.getTi_appartenenza());
+			sql.addSQLClause("AND","OBBLIGAZIONE.TI_GESTIONE",sql.EQUALS, voce.getTi_gestione());
+			sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO",sql.EQUALS, voce.getEsercizio());
+			sql.closeParenthesis();
+			
+		}
+		sql.closeParenthesis();
+	}
+	
+	if (filtro.getContratto() != null && filtro.getContratto().getPg_contratto() != null) {
+		sql.addSQLClause("AND","OBBLIGAZIONE.PG_CONTRATTO",sql.EQUALS, filtro.getContratto().getPg_contratto());
+		sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO_CONTRATTO",sql.EQUALS, filtro.getContratto().getEsercizio());
+		sql.addSQLClause("AND","OBBLIGAZIONE.STATO_CONTRATTO",sql.EQUALS, filtro.getContratto().getStato());
+	}
+	
+	sql.addSQLClause("AND","OBBLIGAZIONE.FL_PGIRO",sql.EQUALS, "N");
+
+	if (!filtro.getFl_fornitore().booleanValue()) {
+		sql.addTableToHeader("TERZO");
+		sql.addTableToHeader("ANAGRAFICO");
+		sql.addSQLJoin("OBBLIGAZIONE.CD_TERZO", "TERZO.CD_TERZO");
+		sql.addSQLJoin("TERZO.CD_ANAG", "ANAGRAFICO.CD_ANAG");
+		sql.addSQLClause("AND","(OBBLIGAZIONE.CD_TERZO = ? OR ANAGRAFICO.TI_ENTITA = ?)");
+		sql.addParameter(filtro.getFornitore().getCd_terzo(),java.sql.Types.INTEGER,0);
+		sql.addParameter(AnagraficoBulk.DIVERSI,java.sql.Types.VARCHAR,0);
+	} else {
+		sql.addSQLClause("AND","OBBLIGAZIONE.CD_TERZO",sql.EQUALS, filtro.getFornitore().getCd_terzo());
+	}
+	
+	if (filtro.getFl_data_scadenziario().booleanValue() && filtro.getData_scadenziario() != null)
+		sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA",sql.EQUALS, filtro.getData_scadenziario());
+	if (filtro.getFl_importo().booleanValue() && filtro.getIm_importo() != null)
+		sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA",sql.GREATER_EQUALS, filtro.getIm_importo());
+
+	//filtro su Tipo obbligazione
+	if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getTipo_obbligazione() != null) {
+		if (ObbligazioneBulk.TIPO_COMPETENZA.equals(filtro.getTipo_obbligazione()))
+			sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB);
+		else if (ObbligazioneBulk.TIPO_RESIDUO_PROPRIO.equals(filtro.getTipo_obbligazione()))
+			sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB_RES);
+		else if (ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO.equals(filtro.getTipo_obbligazione()))
+			sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS,Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA);
+	}
+
+	//filtro su Anno Residuo obbligazione
+	if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getEsercizio_ori_obbligazione() != null)
+		sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO_ORIGINALE",sql.EQUALS, filtro.getEsercizio_ori_obbligazione());
+
+	//filtro su Numero obbligazione
+	if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getNr_obbligazione() != null)
+		sql.addSQLClause("AND","OBBLIGAZIONE.PG_OBBLIGAZIONE",sql.EQUALS, filtro.getNr_obbligazione());
+	return sql;
+} 
 public OrdineAcqBulk contabilizzaDettagliSelezionati(
 		UserContext context,
 		OrdineAcqBulk ordine,
@@ -1993,22 +2064,44 @@ public OrdineAcqBulk cancellaOrdine(
 	    }
 
 		}
-public Unita_organizzativaBulk recuperoUoPerImpegno(
-	    UserContext aUC,
-	    OrdineAcqConsegnaBulk consegna)
-	    throws ComponentException {
-	    try {
-	    	if (!consegna.isConsegnaMagazzino()){
-	    		if (consegna.getCdUopDest() != null){
-        			UnitaOperativaOrdBulk uop = recuperoUopDest(aUC, consegna);
-        			return uop.getUnitaOrganizzativa();
-	    		} else {
-					  throw new ApplicationException("E' necessario indicare l'unità operativa per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
-	    		}
-	    	}
-	    } catch (Exception e) {
-	        throw handleException(e);
-	    }
-	    return null;
+public Unita_organizzativaBulk recuperoUoPerImpegno
+(
+		UserContext aUC,
+		OrdineAcqConsegnaBulk consegna)
+				throws ComponentException {
+	try {
+		if (!consegna.isToBeDeleted()) {
+			if (!consegna.isConsegnaMagazzino()){
+				if (consegna.getCdUopDest() != null){
+					UnitaOperativaOrdBulk uop = recuperoUopDest(aUC, consegna);
+					if (uop != null){
+						return uop.getUnitaOrganizzativa();
+					}
+				} else {
+					throw new ApplicationException("E' necessario indicare l'unità operativa per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
+				}
+			} else {
+				if (consegna.getCdMagazzino() != null && consegna.getCdCdsMag() != null){
+					MagazzinoBulk magazzino = recuperoMagazzino(aUC, consegna);
+					if (magazzino != null && magazzino.getCdUnitaOperativa() != null){
+						UnitaOperativaOrdBulk uop = recuperoUop(usercontext, magazzino.getUnitaOperativaOrd());
+						if (uop != null){
+							return uop.getUnitaOrganizzativa();
+						}
+					} else {
+						UnitaOperativaOrdBulk uop = recuperoUop(usercontext, consegna.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd());
+						if (uop != null){
+							return uop.getUnitaOrganizzativa();
+						}
+					}
+				} else {
+					throw new ApplicationException("E' necessario indicare il magazzino per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
+				}
+			}
 		}
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+	return null;
+}
 }
