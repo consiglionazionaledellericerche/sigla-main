@@ -132,9 +132,16 @@ public class StorageFolderProcedura extends OggettoBulk {
 	}
 
 	public String getCMISPath(){
-		return SpringUtil.getBean("storeService", StoreService.class)
+        return SpringUtil.getBean("storeService", StoreService.class)
 				.createFolderIfNotPresent(
-						getCMISPrincipalPath(),
+                        Arrays.asList(
+                                getCMISPrincipalPath(),
+                                Optional.ofNullable(this.getEsercizio())
+                                        .map(esercizio -> String.valueOf(esercizio))
+                                        .orElse("0")
+                        ).stream().collect(
+                                Collectors.joining(SiglaStorageService.SUFFIX)
+                        ),
 						"Procedura "+this.getEsercizio().toString()+Utility.lpad(this.getPg_procedura().toString(),10,'0'),
 						null, null, this);
 	}
