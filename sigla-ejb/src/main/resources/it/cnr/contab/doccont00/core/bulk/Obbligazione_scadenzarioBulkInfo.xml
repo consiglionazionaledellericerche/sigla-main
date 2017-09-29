@@ -120,6 +120,25 @@
 		label="cig"
 		inputType="TEXT"
 		/>	
+	<form name="searchtool">
+        <formFieldProperty
+              name="esercizio_originale" 
+              enabledOnSearch="true"/>
+        <formFieldProperty
+              name="pg_obbligazione" 
+              enabledOnSearch="true"/>   
+        <formFieldProperty
+              name="pg_obbligazione_scadenzario" 
+              enabledOnSearch="true"/>   
+        <formFieldProperty
+              name="im_scadenza"/> 
+        <formFieldProperty
+              name="dt_scadenza"/> 
+        <formFieldProperty
+              name="ds_scadenza"
+			  inputSize="40"/> 
+    </form>
+    	
 	<columnFieldProperty
 		name="esercizio"
 		/>
