@@ -27,7 +27,7 @@
 %>
 
 <div class="Group">
-	<table class="Panel" border="0" cellspacing="0" cellpadding="0">
+	<table class="Panel card card-block" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td><% bp.getController().writeFormField(out,"cd_cdr_ro");%></td>
 			<td><% bp.getController().writeFormField(out,"ds_cdr_ro");%></td>
@@ -36,7 +36,7 @@
 </div>
 
 <div class="Group">
-	<table border="0" cellspacing="0" cellpadding="0" width="80%">
+	<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		<td>
 		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) 
 				controller.writeHTMLTable(pageContext,"prg_liv2",true,false,true,"100%","180px");
@@ -47,7 +47,7 @@
 	</table>
 </div>
 
-<div class="Group">
+<div class="Group card">
 	<table border="0" cellspacing="0" cellpadding="2">
 		<tr>
 			<td>
@@ -59,11 +59,12 @@
 			</td>
 		</tr>
 	</table>
-	<table border="0" cellspacing="0" cellpadding="2">
+	<table border="0" cellspacing="0" cellpadding="2" width="100%">
 		<tr>
-			<td colspan=5>
-				<div class="GroupLabel">Stato del PdG</div>
-				<div class="Group">
+			<td colspan="5" width="45%">
+ 		    <div class="card">
+				<div class="GroupLabel card-header">Stato del PdG</div>
+				<div class="Group card-block">
 					<table>
 						<tr>
 							<td><% controller.writeFormLabel(out,"cambia_stato");%></td>
@@ -74,12 +75,13 @@
 				</div>
 			</td>
 			<td>
-				<div class="GroupLabel">Contrattazione</div>
-				<div class="Group" style="width: 360; height: 56">
-					<table>
+ 		    <div class="card">
+				<div class="GroupLabel card-header">Contrattazione</div>
+				<div class="Group card-block">
+					<table width="100%" style="text-align: center;">
 						<tr>
-							<td halign="middle" width="178"><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Contrattazione Entrate", "if (disableDblClick()) submitForm('doContrattazioneEntrate')","width:178; height:46",pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
-							<td halign="middle" width="171"><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Contrattazione Spese", "if (disableDblClick()) submitForm('doContrattazioneSpese')","width:178; height:46",pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
+							<td><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Entrate", "if (disableDblClick()) submitForm('doContrattazioneEntrate')",null,pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
+							<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Spese", "if (disableDblClick()) submitForm('doContrattazioneSpese')",null,pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
 						</tr>
 					</table>
 				</div>
@@ -89,12 +91,13 @@
 			<td colspan=5>
 			</td>
 			<td>
-				<div class="GroupLabel">Gestionale</div>
-				<div class="Group" style="width: 360; height: 56">
-					<table  width="361">
+ 		    <div class="card">
+				<div class="GroupLabel card-header">Gestionale</div>
+				<div class="Group card-block">
+					<table width="100%" style="text-align: center;">
 						<tr>
-							<td halign="middle" width="178"><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Gestionale Entrate", "if (disableDblClick()) submitForm('doGestionaleEntrate')","width:178; height:46",pdg_selezionato&&bp.isGestionaleAccessibile(), bp.getParentRoot().isBootstrap());%></td>
-							<td halign="middle" width="171"><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Gestionale Spese", "if (disableDblClick()) submitForm('doGestionaleSpese')","width:178; height:46",pdg_selezionato&&bp.isGestionaleAccessibile(), bp.getParentRoot().isBootstrap());%></td>
+							<td><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Entrate", "if (disableDblClick()) submitForm('doGestionaleEntrate')",null,pdg_selezionato&&bp.isGestionaleAccessibile(), bp.getParentRoot().isBootstrap());%></td>
+							<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Spese", "if (disableDblClick()) submitForm('doGestionaleSpese')",null,pdg_selezionato&&bp.isGestionaleAccessibile(), bp.getParentRoot().isBootstrap());%></td>
 						</tr>
 					</table>
 				</div>
