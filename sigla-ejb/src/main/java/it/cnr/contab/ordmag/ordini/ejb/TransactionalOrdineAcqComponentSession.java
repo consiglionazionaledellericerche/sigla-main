@@ -207,4 +207,23 @@ public Unita_organizzativaBulk recuperoUoPerImpegno(it.cnr.jada.UserContext user
 	}
 }
 		
+public OrdineAcqBulk contabilizzaConsegneSelezionate(it.cnr.jada.UserContext param0,OrdineAcqBulk param1,java.util.Collection param2,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (OrdineAcqBulk)invoke("contabilizzaConsegneSelezionati",new Object[] {
+			param0,
+			param1,
+			param2,
+			param3 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }
