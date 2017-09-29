@@ -49,7 +49,7 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel(); %>
 			</tr>
 			<tr>
 			  	<td>
-					<% bp.getDettaglioObbligazioneController().writeHTMLTable(pageContext,"righeSet",true,false,true,"100%","200px"); %>
+					<% bp.getDettaglioObbligazioneController().writeHTMLTable(pageContext,"consegneSet",true,false,true,"100%","200px"); %>
 			  	</td>
 			</tr>
    		</table>
