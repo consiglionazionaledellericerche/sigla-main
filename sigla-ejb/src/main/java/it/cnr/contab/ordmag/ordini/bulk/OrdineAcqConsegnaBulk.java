@@ -12,10 +12,12 @@ import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
+	protected BulkList righeRichiestaCollegate= new BulkList();
 	public final static String STATO_INSERITA = "INS";
 	public final static String STATO_EVASA = "EVA";
 	public final static String STATO_ANNULLATA = "ANN";
@@ -464,5 +466,11 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	
 	public Boolean isConsegnaMagazzino(){
 		return getTipoConsegna() != null && getTipoConsegna().equals(Bene_servizioBulk.TIPO_CONSEGNA_MAGAZZINO);
+	}
+	public BulkList getRigheRichiestaCollegate() {
+		return righeRichiestaCollegate;
+	}
+	public void setRigheRichiestaCollegate(BulkList righeRichiestaCollegate) {
+		this.righeRichiestaCollegate = righeRichiestaCollegate;
 	}
 }
