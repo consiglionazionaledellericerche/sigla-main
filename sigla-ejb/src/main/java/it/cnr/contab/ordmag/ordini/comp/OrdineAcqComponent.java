@@ -349,6 +349,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 									}
 								}
 								controlloCongruenzaVoceCategoriaGruppo(userContext, h, riga, obb);
+								controlloCongruenzaUoImpegno(userContext, cons, obb);
 							}
             			} catch (PersistencyException e) {
 							throw new ComponentException(e);
@@ -383,6 +384,17 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 				} catch (IntrospectionException | RemoteException e) {
 					throw new ComponentException(e);
 				}
+			}
+		}
+	}
+
+	private void controlloCongruenzaUoImpegno(it.cnr.jada.UserContext userContext,
+			OrdineAcqConsegnaBulk cons, ObbligazioneBulk obb)
+			throws ComponentException, PersistencyException, ApplicationException {
+		if (obb.getCd_unita_organizzativa() != null){
+			Unita_organizzativaBulk uoOrdine = recuperoUoPerImpegno(userContext, cons);
+			if (uoOrdine != null && !uoOrdine.getCd_unita_organizzativa().equals(obb.getCd_unita_organizzativa())){
+				throw new ApplicationException ("Per la consegna "+cons.getConsegna()+" della riga "+cons.getRiga()+ " la uo dell'obbligazione non è corretta.");
 			}
 		}
 	}
@@ -787,7 +799,7 @@ public SQLBuilder selectBeneServizioByClause(UserContext userContext, OrdineAcqR
 	return sql;
 }
 
-public SQLBuilder selectObbligazioneScadenzarioByClause(UserContext userContext, OrdineAcqConsegnaBulk consegna, 
+public SQLBuilder selectFindObbligazioneScadenzarioByClause(UserContext userContext, OrdineAcqConsegnaBulk consegna, 
 		Obbligazione_scadenzarioHome obblScadHome, Obbligazione_scadenzarioBulk obblScad, 
 		CompoundFindClause compoundfindclause) throws PersistencyException{
 
@@ -2072,32 +2084,33 @@ public Unita_organizzativaBulk recuperoUoPerImpegno
 		OrdineAcqConsegnaBulk consegna)
 				throws ComponentException {
 	try {
-		if (!consegna.isToBeDeleted()) {
-			if (!consegna.isConsegnaMagazzino()){
-				if (consegna.getCdUopDest() != null){
-					UnitaOperativaOrdBulk uop = recuperoUopDest(aUC, consegna);
-					if (uop != null){
-						return uop.getUnitaOrganizzativa();
-					}
-				} else {
-					throw new ApplicationException("E' necessario indicare l'unità operativa per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
-				}
-			} else {
-				if (consegna.getCdMagazzino() != null && consegna.getCdCdsMag() != null){
-					MagazzinoBulk magazzino = recuperoMagazzino(aUC, consegna);
-					if (magazzino != null && magazzino.getCdUnitaOperativa() != null){
-						UnitaOperativaOrdBulk uop = recuperoUop(aUC, magazzino.getUnitaOperativaOrd());
+		if (!isUoImpegnoDaUopDestinazione(aUC)){
+			return recuperoUoOrdinante(aUC, consegna);
+		} else {
+			if (!consegna.isToBeDeleted()) {
+				if (!consegna.isConsegnaMagazzino()){
+					if (consegna.getCdUopDest() != null){
+						UnitaOperativaOrdBulk uop = recuperoUopDest(aUC, consegna);
 						if (uop != null){
 							return uop.getUnitaOrganizzativa();
 						}
 					} else {
-						UnitaOperativaOrdBulk uop = recuperoUop(aUC, consegna.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd());
-						if (uop != null){
-							return uop.getUnitaOrganizzativa();
-						}
+						throw new ApplicationException("E' necessario indicare l'unità operativa per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
 					}
 				} else {
-					throw new ApplicationException("E' necessario indicare il magazzino per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
+					if (consegna.getCdMagazzino() != null && consegna.getCdCdsMag() != null){
+						MagazzinoBulk magazzino = recuperoMagazzino(aUC, consegna);
+						if (magazzino != null && magazzino.getCdUnitaOperativa() != null){
+							UnitaOperativaOrdBulk uop = recuperoUop(aUC, magazzino.getUnitaOperativaOrd());
+							if (uop != null){
+								return uop.getUnitaOrganizzativa();
+							}
+						} else {
+							return recuperoUoOrdinante(aUC, consegna);
+						}
+					} else {
+						throw new ApplicationException("E' necessario indicare il magazzino per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
+					}
 				}
 			}
 		}
@@ -2105,5 +2118,14 @@ public Unita_organizzativaBulk recuperoUoPerImpegno
 		throw handleException(e);
 	}
 	return null;
+}
+
+private Unita_organizzativaBulk recuperoUoOrdinante(UserContext aUC, OrdineAcqConsegnaBulk consegna)
+		throws ComponentException, PersistencyException {
+	UnitaOperativaOrdBulk uop = recuperoUop(aUC, consegna.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd());
+	if (uop != null){
+		return uop.getUnitaOrganizzativa();
+	}
+	throw new ApplicationException("Non è stato possibile recuperare l'unita' organizzativa ordinante");
 }
 }
