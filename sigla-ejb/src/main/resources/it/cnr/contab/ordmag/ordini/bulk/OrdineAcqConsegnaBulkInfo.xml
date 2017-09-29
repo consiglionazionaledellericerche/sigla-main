@@ -201,6 +201,12 @@
 		enabledOnSearch="true"
 		label="Luogo di Consegna" />
 	<fieldProperty
+		name="findObbligazioneScadenzario"
+		property="obbligazioneScadenzario"
+		inputType="searchtool"
+		formName="searchtool"
+		label="Scadenza Impegno" />
+	<fieldProperty
 		name="cdCdsMag"
 		property="magazzino.cdCds"
 		inputType="TEXT"
@@ -385,6 +391,8 @@
 		name="findMagazzino" />
 	<formFieldProperty
 		name="findLuogoConsegnaMag" />
+	<formFieldProperty
+		name="findObbligazioneScadenzario" />
 	<formFieldProperty
 		name="findUnitaOperativaOrdDest" />
 	<formFieldProperty
