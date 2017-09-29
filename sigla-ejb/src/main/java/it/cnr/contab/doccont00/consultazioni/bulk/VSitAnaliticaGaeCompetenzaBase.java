@@ -54,25 +54,25 @@ public class VSitAnaliticaGaeCompetenzaBase extends VSitAnaliticaGaeCompetenzaKe
 	private java.math.BigDecimal variazioniMeno;
  
 //    ASSESTATO_COMP DECIMAL(22,0)
-	private java.lang.Long assestatoComp;
+	private java.math.BigDecimal assestatoComp;
  
 //    IM_OBBL_ACC_COMP DECIMAL(15,2)
 	private java.math.BigDecimal imObblAccComp;
  
 //    DA_ASSUMERE DECIMAL(22,0)
-	private java.lang.Long daAssumere;
+	private java.math.BigDecimal daAssumere;
  
 //    IM_ASS_DOC_AMM_SPE DECIMAL(22,0)
-	private java.lang.Long imAssDocAmmSpe;
+	private java.math.BigDecimal imAssDocAmmSpe;
  
 //    IM_ASS_DOC_AMM_ETR DECIMAL(22,0)
-	private java.lang.Long imAssDocAmmEtr;
+	private java.math.BigDecimal imAssDocAmmEtr;
  
 //    IM_MANDATI_REVERSALI_PRO DECIMAL(15,2)
 	private java.math.BigDecimal imMandatiReversaliPro;
  
 //    DA_PAGARE_INCASSARE DECIMAL(22,0)
-	private java.lang.Long daPagareIncassare;
+	private java.math.BigDecimal daPagareIncassare;
  
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -312,14 +312,14 @@ public class VSitAnaliticaGaeCompetenzaBase extends VSitAnaliticaGaeCompetenzaKe
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [assestatoComp]
 	 **/
-	public java.lang.Long getAssestatoComp() {
+	public java.math.BigDecimal getAssestatoComp() {
 		return assestatoComp;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [assestatoComp]
 	 **/
-	public void setAssestatoComp(java.lang.Long assestatoComp)  {
+	public void setAssestatoComp(java.math.BigDecimal assestatoComp)  {
 		this.assestatoComp=assestatoComp;
 	}
 	/**
@@ -340,42 +340,42 @@ public class VSitAnaliticaGaeCompetenzaBase extends VSitAnaliticaGaeCompetenzaKe
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [daAssumere]
 	 **/
-	public java.lang.Long getDaAssumere() {
+	public java.math.BigDecimal getDaAssumere() {
 		return daAssumere;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [daAssumere]
 	 **/
-	public void setDaAssumere(java.lang.Long daAssumere)  {
+	public void setDaAssumere(java.math.BigDecimal daAssumere)  {
 		this.daAssumere=daAssumere;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imAssDocAmmSpe]
 	 **/
-	public java.lang.Long getImAssDocAmmSpe() {
+	public java.math.BigDecimal getImAssDocAmmSpe() {
 		return imAssDocAmmSpe;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imAssDocAmmSpe]
 	 **/
-	public void setImAssDocAmmSpe(java.lang.Long imAssDocAmmSpe)  {
+	public void setImAssDocAmmSpe(java.math.BigDecimal imAssDocAmmSpe)  {
 		this.imAssDocAmmSpe=imAssDocAmmSpe;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imAssDocAmmEtr]
 	 **/
-	public java.lang.Long getImAssDocAmmEtr() {
+	public java.math.BigDecimal getImAssDocAmmEtr() {
 		return imAssDocAmmEtr;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imAssDocAmmEtr]
 	 **/
-	public void setImAssDocAmmEtr(java.lang.Long imAssDocAmmEtr)  {
+	public void setImAssDocAmmEtr(java.math.BigDecimal imAssDocAmmEtr)  {
 		this.imAssDocAmmEtr=imAssDocAmmEtr;
 	}
 	/**
@@ -396,14 +396,14 @@ public class VSitAnaliticaGaeCompetenzaBase extends VSitAnaliticaGaeCompetenzaKe
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [daPagareIncassare]
 	 **/
-	public java.lang.Long getDaPagareIncassare() {
+	public java.math.BigDecimal getDaPagareIncassare() {
 		return daPagareIncassare;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [daPagareIncassare]
 	 **/
-	public void setDaPagareIncassare(java.lang.Long daPagareIncassare)  {
+	public void setDaPagareIncassare(java.math.BigDecimal daPagareIncassare)  {
 		this.daPagareIncassare=daPagareIncassare;
 	}
 }
