@@ -122,7 +122,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	private OrdineAcqCMISService ordineAcqCMISService;
 
 	public CRUDOrdineAcqBP() {
-		this(OrdineAcqRigaBulk.class);
+		this(OrdineAcqConsegnaBulk.class);
 	}
 	protected void setTab() {
 		setTab("tab","tabOrdineAcq");
@@ -180,7 +180,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 
 		setTab();
 		dettaglioObbligazioneController = new SimpleDetailCRUDController(
-				"DettaglioObbligazioni", OrdineAcqRigaBulk.class,
+				"DettaglioObbligazioni", OrdineAcqConsegnaBulk.class,
 				"ordineObbligazioniHash", obbligazioniController) {
 
 			public java.util.List getDetails() {
