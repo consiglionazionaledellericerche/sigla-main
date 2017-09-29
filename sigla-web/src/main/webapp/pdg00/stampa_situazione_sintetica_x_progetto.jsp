@@ -14,7 +14,7 @@
 <%	BulkBP bp = (BulkBP)BusinessProcess.getBusinessProcess(request);%>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Stampa Situazione Sintetica Progetto</title>
+<title>Stampa Situazione Contabile Progetto</title>
 </head>
 <body class="Form">
 
@@ -59,6 +59,16 @@
 		<% bp.getController().writeFormInput(out,null,"cdGaeForPrint",false,null,null); %>
 		<% bp.getController().writeFormInput(out,null,"dsGaeForPrint",false,null,null); %>
 		<% bp.getController().writeFormInput(out,null,"findGaeForPrint",false,null,null); %>
+	</td>
+  </tr>	  
+  <tr>
+    <td>
+		<% bp.getController().writeFormLabel(out,"findResponsabileGaeForPrint");%>
+	</td>
+	<td colspan="3">	
+		<% bp.getController().writeFormInput(out,null,"cdResponsabileGaeForPrint",false,null,null); %>
+		<% bp.getController().writeFormInput(out,null,"dsResponsabileGaeForPrint",false,null,null); %>
+		<% bp.getController().writeFormInput(out,null,"findResponsabileGaeForPrint",false,null,null); %>
 	</td>
   </tr>	  
 </table>
