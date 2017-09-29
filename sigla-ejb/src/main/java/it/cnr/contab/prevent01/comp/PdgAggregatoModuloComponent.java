@@ -241,6 +241,8 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 				 es.getStato().equals(Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR)))
 				throw new ApplicationException("Non è possibile modificare lo stato del PdGP poichè risulta chiusa la fase previsionale per il CdR "+es.getCd_centro_responsabilita());
 
+			pdg_modulo.setUser(userContext.getUser());
+			
 			// Invoco il metodo modificaStato_x_y()
 			try {
 				it.cnr.jada.util.Introspector.invoke(
@@ -569,7 +571,6 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 				if (pdge.getIm_entrata()!=null)
 					impTotaleEntrate = impTotaleEntrate.add(pdge.getIm_entrata());
 			}
-
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		} catch (ComponentException e) {
