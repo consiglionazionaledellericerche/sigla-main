@@ -23,7 +23,7 @@
 		%>
 	 </div>
 	 <div class="Group">
-     <table class="Panel">	
+     <table class="Panel card">	
 	  <tr>
 	    <td>
 	  	<% bp.getController().writeFormLabel(out,"cd_progetto_padre");%>
@@ -61,14 +61,14 @@
 		
 	 </table>
 	</div>
-        <div class="GroupLabel">
+  <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
 			   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
 		  } else {
 			   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
 		  } 
 		%>
-     <table class="Panel">		  
+     <table class="Panel card">		  
 	  <TR><TD>
 	  	<% bp.getController().writeFormLabel(out,"cd_progetto");%>
 	  	</TD><TD>
