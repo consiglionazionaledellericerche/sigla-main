@@ -41,6 +41,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -179,6 +180,36 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 			if (bene.getVoce_iva() != null){
 				riga.setVoceIva(bene.getVoce_iva());
 			}
+		}
+		return context.findDefaultForward();
+}
+public Forward doBlankSearchFindObbligazioneScadenzario(ActionContext context, OrdineAcqConsegnaBulk cons) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+		ordine.removeFromOrdineObbligazioniHash(cons);
+        cons.setObbligazioneScadenzario(new Obbligazione_scadenzarioBulk());
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
+public Forward doBringBackSearchFindObbligazioneScadenzario(ActionContext context,
+		OrdineAcqConsegnaBulk cons,
+		Obbligazione_scadenzarioBulk obblScad) 
+		throws java.rmi.RemoteException {
+
+		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+		cons.setObbligazioneScadenzario(obblScad);
+		((CRUDBP)context.getBusinessProcess()).setDirty(true);
+		if (obblScad != null){
+			OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+			ordine.addToOrdineObbligazioniHash(obblScad, cons);
+
+			cons.setObbligazioneInseritaSuConsegna(true);
 		}
 		return context.findDefaultForward();
 }
@@ -637,6 +668,15 @@ protected void controllaSelezionePerContabilizzazione(ActionContext context, jav
 				if (rigaSelected.getDspObbligazioneScadenzario() != null && rigaSelected.getDspObbligazioneScadenzario().getEsercizio_originale() != null){
 					throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" è già stato associato ad impegno! Modificare la selezione.");
 				}
+				if (rigaSelected.getRigheConsegnaColl() != null && !rigaSelected.getRigheConsegnaColl().isEmpty()){
+					for (Object bulk : rigaSelected.getRigheConsegnaColl()){
+						OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bulk;
+						if (cons.getObbligazioneScadenzario() != null && cons.getObbligazioneScadenzario().getEsercizio_originale() != null){
+							throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" è già stato associato ad impegno! Modificare la selezione.");
+						}
+					}
+					
+				}
 			}
 		}
 	}
@@ -718,6 +758,29 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(
 		importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 		return importo;
 	}
+protected java.math.BigDecimal calcolaTotaleObbligazioniAssociate(
+		java.util.List selectedModels,
+		boolean escludiIVA)
+		throws it.cnr.jada.comp.ApplicationException {
+
+		java.math.BigDecimal importo = new java.math.BigDecimal(0);
+		boolean escludiIVAInt=false;
+		boolean escludiIVAOld=escludiIVA;
+		if (selectedModels != null) {
+			for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
+				escludiIVA=escludiIVAOld;
+				OrdineAcqConsegnaBulk consSelected = (OrdineAcqConsegnaBulk)i.next();
+					
+				java.math.BigDecimal imTotale = (escludiIVA) ?
+							consSelected.getImImponibile() :
+							consSelected.getImTotaleConsegna();
+				importo = importo.add(imTotale);
+			}
+		}
+
+		importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
+		return importo;
+	}
 private Forward basicDoRicercaObbligazione(
 		ActionContext context, 
 		OrdineAcqBulk ordine,
@@ -774,6 +837,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 		Obbligazione_scadenzarioBulk newObblig) {
 
 	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+	List righeModel = new ArrayList<>();
 	try {
 		TerzoBulk creditore = newObblig.getObbligazione().getCreditore();
 		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
@@ -784,13 +848,19 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
    	SOSPESO PER ESERCIZIO 2015	*/
 			java.util.List dettagliDaContabilizzare = (java.util.List)ordine.getObbligazioniHash().get(newObblig);
 			if (dettagliDaContabilizzare != null && !dettagliDaContabilizzare.isEmpty()) {
-				List titoloCapitoloValidolist = recuperoListaCapitoli(context, dettagliDaContabilizzare.iterator());
+				for (java.util.Iterator i = dettagliDaContabilizzare.iterator(); i.hasNext();) {
+					Object rigaObj = i.next();
+					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)rigaObj;
+					righeModel.add(cons.getOrdineAcqRiga());
+				}
+
+				List titoloCapitoloValidolist = recuperoListaCapitoli(context, righeModel.iterator());
 				Elemento_voceBulk titoloCapitoloObbligazione = newObblig.getObbligazione().getElemento_voce();
 				//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
 				Boolean compatibile=null;
 				if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
 					for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
-						Categoria_gruppo_voceBulk bulk=(Categoria_gruppo_voceBulk)i.next();
+						Elemento_voceBulk bulk=(Elemento_voceBulk)i.next();
 						if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
 							compatibile=new Boolean(true);
 						else
@@ -804,7 +874,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 		if (obbligazione != null) {
 			resyncObbligazione(context, obbligazione, newObblig);
 		} else {
-			basicDoContabilizza(context, newObblig, null);
+			basicDoContabilizzaRiga(context, newObblig, null);
 		}
 	} catch (Throwable t) {
 		it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi defSaldiBulk = bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk();
@@ -819,7 +889,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 	}
 	return context.findDefaultForward();
 }
-private void basicDoContabilizza(
+private void basicDoContabilizzaRiga(
 		ActionContext context,
 		Obbligazione_scadenzarioBulk obbligazione,
 		java.util.List selectedModels)
@@ -829,7 +899,18 @@ private void basicDoContabilizza(
 			CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
 			
 			java.util.Vector dettagliDaContabilizzare = new java.util.Vector();
-			dettagliDaContabilizzare.addAll(selectedModels);
+			List consegneDaContabilizzare = new ArrayList<>();
+			if (selectedModels != null && !selectedModels.isEmpty()) {
+				for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
+					Object rigaObj = i.next();
+					OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)rigaObj;
+					for (Object bulk : riga.getRigheConsegnaColl()){
+						OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bulk;
+						dettagliDaContabilizzare.add(cons);
+					}
+				}
+			}
+
 			ObbligazioniTable obbs = ((OrdineAcqBulk)bp.getModel()).getObbligazioniHash();
 			if (obbs != null) {
 				java.util.List dettagliContabilizzati = (java.util.List)obbs.get(obbligazione);
@@ -887,6 +968,95 @@ private void basicDoContabilizza(
 			try {
 				OrdineAcqComponentSession h = (OrdineAcqComponentSession)bp.createComponentSession();
 				OrdineAcqBulk ordine = h.contabilizzaDettagliSelezionati(
+													context.getUserContext(), 
+													(OrdineAcqBulk)bp.getModel(), 
+													selectedModels, 
+													obbligazione);
+				try {
+					bp.setModel(context,ordine);
+					bp.setDirty(true);
+				} catch (BusinessProcessException e) {
+				}
+			} catch (java.rmi.RemoteException e) {
+				bp.handleException(e);
+			} catch (BusinessProcessException e) {
+				bp.handleException(e);
+			}
+			
+			doCalcolaTotalePerObbligazione(context, obbligazione);
+		}
+	}
+private void basicDoContabilizzaConsegne(
+		ActionContext context,
+		Obbligazione_scadenzarioBulk obbligazione,
+		java.util.List selectedModels)
+		throws it.cnr.jada.comp.ComponentException {
+		
+		java.util.List righeModel = new ArrayList<>();
+		
+		if (obbligazione != null && selectedModels != null) {
+			CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+			
+			java.util.Vector dettagliDaContabilizzare = new java.util.Vector();
+			dettagliDaContabilizzare.addAll(selectedModels);
+			ObbligazioniTable obbs = ((OrdineAcqBulk)bp.getModel()).getObbligazioniHash();
+			if (obbs != null) {
+				java.util.List dettagliContabilizzati = (java.util.List)obbs.get(obbligazione);
+				if (dettagliContabilizzati != null && !dettagliContabilizzati.isEmpty())
+					dettagliDaContabilizzare.addAll(dettagliContabilizzati);
+			}
+//			Elemento_voceBulk titoloCapitoloValido = controllaSelezionePerTitoloCapitolo(context, dettagliDaContabilizzare.iterator());
+			Elemento_voceBulk titoloCapitoloObbligazione = obbligazione.getObbligazione().getElemento_voce();
+
+			// MI - controllo se l'obbligazione ha voce coerente con il tipo di bene
+			if (selectedModels != null && !selectedModels.isEmpty()) {
+				for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
+					Object rigaObj = i.next();
+					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)rigaObj;
+					righeModel.add(cons.getOrdineAcqRiga());
+					if (!titoloCapitoloObbligazione.getFl_inv_beni_patr().equals(cons.getOrdineAcqRiga().getBeneServizio().getFl_gestione_inventario())) {
+						if (cons.getOrdineAcqRiga().getBeneServizio().getFl_gestione_inventario().booleanValue())
+							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non è utilizzabile per beni patrimoniali da inventariare!");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non è utilizzabile per beni/servizi da non inventariare!");
+					}
+				}
+			}
+			try {
+			List titoloCapitoloValidolist;
+			if(dettagliDaContabilizzare!=null && !dettagliDaContabilizzare.isEmpty()){
+				titoloCapitoloValidolist = recuperoListaCapitoli(context, righeModel.iterator());
+				
+			//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
+			Boolean compatibile=null;
+			if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
+				for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
+					Elemento_voceBulk bulk=(Elemento_voceBulk)i.next();
+					if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
+						compatibile=new Boolean(true);
+					else
+						compatibile=new Boolean(false);
+				}
+			   if (compatibile!=null && !compatibile)
+				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+			}
+			} catch (PersistencyException e1) {
+				bp.handleException(e1);
+			} catch (IntrospectionException e1) {
+				bp.handleException(e1);
+			} catch (RemoteException e1) {
+				bp.handleException(e1);
+			} catch (BusinessProcessException e1) {
+				bp.handleException(e1);
+			}
+			//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
+//			if (titoloCapitoloValido != null &&
+//				!(titoloCapitoloObbligazione.getCd_elemento_voce().startsWith(titoloCapitoloValido.getCd_elemento_voce()) ||
+//				titoloCapitoloValido.getCd_elemento_voce().startsWith(titoloCapitoloObbligazione.getCd_elemento_voce())))
+//				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+			try {
+				OrdineAcqComponentSession h = (OrdineAcqComponentSession)bp.createComponentSession();
+				OrdineAcqBulk ordine = h.contabilizzaConsegneSelezionate(
 													context.getUserContext(), 
 													(OrdineAcqBulk)bp.getModel(), 
 													selectedModels, 
@@ -964,7 +1134,7 @@ public Forward doBringBackAddToCRUDMain_Obbligazioni_DettaglioObbligazioni(Actio
 			CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
 			Obbligazione_scadenzarioBulk obbligazione = (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel();		
 			if (obbligazione != null) {
-				basicDoContabilizza(context, obbligazione, selectedModels);
+				basicDoContabilizzaRiga(context, obbligazione, selectedModels);
 				bp.setDirty(true);
 			}
 			doCalcolaTotalePerObbligazione(context, obbligazione);
@@ -1004,7 +1174,7 @@ public Forward doCalcolaTotalePerObbligazione(ActionContext context, Obbligazion
 		if (ordine.getOrdineObbligazioniHash() != null && obbligazione != null) {
 			try {
 				ordine.setImportoTotalePerObbligazione(
-						calcolaTotaleSelezionati(
+						calcolaTotaleObbligazioniAssociate(
 								(java.util.List)ordine.getOrdineObbligazioniHash().get(obbligazione),
 								true));
 			} catch (it.cnr.jada.comp.ApplicationException e) {
@@ -1020,12 +1190,22 @@ public Forward doContabilizza(ActionContext context) {
 	Obbligazione_scadenzarioBulk obblig = (Obbligazione_scadenzarioBulk)caller.getParameter("obbligazioneSelezionata");
 	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
 	java.util.List selectedModels = null;
+	java.util.List selectedModelsCons = new ArrayList<>();
 	try {
 		selectedModels = bp.getRighe().getSelectedModels(context);
 		bp.getRighe().getSelection().clearSelection();
 	} catch (Throwable e) {
 	}
 	
+	if (selectedModels != null){
+		for (Object oggetto : selectedModels){
+			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)oggetto;
+			for (Object oggettoCons : riga.getRigheConsegnaColl()){
+				OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)oggettoCons;
+				selectedModelsCons.add(cons);
+			}
+		}
+	}
 	if (obblig != null) {
 		try {
 			OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
@@ -1056,14 +1236,14 @@ public Forward doContabilizza(ActionContext context) {
 				java.util.Vector clone = (java.util.Vector)models.clone();
 				if (!clone.isEmpty()) {
 					scollegaDettagliDaObbligazione(context, clone);
-					clone.addAll(selectedModels);
-					basicDoContabilizza(context, obblig, clone);
+					clone.addAll(selectedModelsCons);
+					basicDoContabilizzaConsegne(context, obblig, clone);
 				} else {
 					obbHash.remove(obbligazione);
-					basicDoContabilizza(context, obblig, selectedModels);
+					basicDoContabilizzaConsegne(context, obblig, selectedModelsCons);
 				}
 			} else {
-				basicDoContabilizza(context, obblig, selectedModels);
+				basicDoContabilizzaConsegne(context, obblig, selectedModelsCons);
 			}
 		} catch (it.cnr.jada.comp.ComponentException e) {
 			return handleException(context, e);
@@ -1290,14 +1470,15 @@ public Forward doRemoveFromCRUDMain_Obbligazioni(ActionContext context) {
 				ordine.addToDocumentiContabiliCancellati(obbligazione);
 			} else {
 				for (java.util.Iterator it = models.iterator(); it.hasNext();) {
-					OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)it.next();
-					if (riga.isConsegnaEvasa())
+					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)it.next();
+					if (cons.getStato() != null && cons.getStato().equals(OrdineAcqConsegnaBulk.STATO_EVASA)){
 						throw new it.cnr.jada.comp.ApplicationException("Impossibile scollegare l'impegno \"" + 
-														+ obbligazione.getEsercizio_originale().intValue()
-														+ "/" + obbligazione.getPg_obbligazione().longValue() + 
-														"\" perchè il dettaglio collegato \"" + 
-														(riga.getRiga()) + 
-														"\" è già stato evaso.");
+								+ obbligazione.getEsercizio_originale().intValue()
+								+ "/" + obbligazione.getPg_obbligazione().longValue() + 
+								"\" perchè il dettaglio collegato \"" + 
+								cons.getRiga() + "/" + cons.getConsegna() +
+								"\" è già stato evaso.");
+					}
 				}
 				scollegaDettagliDaObbligazione(context, (java.util.List)models.clone());
 			}
@@ -1330,11 +1511,12 @@ public Forward doRemoveFromCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionCon
 			throw new it.cnr.jada.comp.ApplicationException("Selezionare i dettagli che si desidera scollegare!");
 		java.util.List models = selection.select(bp.getDettaglioObbligazioneController().getDetails());
 		for (java.util.Iterator i = models.iterator(); i.hasNext();) {
-			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)i.next();
-			if (riga.isConsegnaEvasa())
+			OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)i.next();
+			if (cons.getStato() != null && cons.getStato().equals(OrdineAcqConsegnaBulk.STATO_EVASA)){
 				throw new it.cnr.jada.comp.ApplicationException("Impossibile scollegare il dettaglio \"" + 
-												(riga.getRiga()) + 
-												"\" perchè esiste una consegna evasa.");
+						cons.getRiga() + "/" + cons.getConsegna() +
+							"\" perchè esiste una consegna evasa.");
+			}
 		}
 		scollegaDettagliDaObbligazione(context, models);
 	} catch (it.cnr.jada.comp.ComponentException e) {
@@ -1459,7 +1641,7 @@ private void resyncObbligazione(
 	else
 		ordine.getOrdineObbligazioniHash().remove(oldObblig);
 
-	basicDoContabilizza(context, newObblig, clone);
+	basicDoContabilizzaConsegne(context, newObblig, clone);
 }
 /**
  * Risincronizza la collezione delle obbligazioni (richiamato dopo la modifica di
@@ -1478,12 +1660,16 @@ private void scollegaDettagliDaObbligazione(ActionContext context, java.util.Lis
 	if (models != null) {
 
 			for (java.util.Iterator i = models.iterator(); i.hasNext();) {
-				OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)i.next();
+				OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)i.next();
 //				if (riga.isConsegnaEvasa())
 //					throw new it.cnr.jada.comp.ApplicationException("Non è possibile scollegare il dettaglio \"" + dettaglio.getDs_riga_fattura() + "\". Questa operazione è permessa solo per dettagli in stato \"" + dettaglio.STATO.get(dettaglio.STATO_CONTABILIZZATO) + "\".");
-				riga.getOrdineAcq().removeFromOrdineObbligazioniHash(riga);
-				riga.setDspObbligazioneScadenzario(null);
-				riga.setToBeUpdated();
+				CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
+				OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
+				ordine.removeFromOrdineObbligazioniHash(cons);
+				cons.getOrdineAcqRiga().setDspObbligazioneScadenzario(null);
+				cons.getOrdineAcqRiga().setToBeUpdated();
+				cons.setObbligazioneScadenzario(null);
+				cons.setToBeUpdated();
 			}
 //		} catch (it.cnr.jada.comp.ApplicationException e) {
 //			try {
