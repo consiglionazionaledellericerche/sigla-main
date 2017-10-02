@@ -26,6 +26,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
@@ -190,8 +191,10 @@ public Forward doBlankSearchFindObbligazioneScadenzario(ActionContext context, O
         //imposta i valori di default per il tariffario
 		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
 		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
-		ordine.removeFromOrdineObbligazioniHash(cons);
-        cons.setObbligazioneScadenzario(new Obbligazione_scadenzarioBulk());
+		if (cons.getObbligazioneScadenzario() != null && cons.getObbligazioneScadenzario().getPg_obbligazione() != null ) {
+			ordine.removeFromOrdineObbligazioniHash(cons);
+	        cons.setObbligazioneScadenzario(new Obbligazione_scadenzarioBulk());
+		}
         return context.findDefaultForward();
 
     } catch (Exception e) {
@@ -1177,7 +1180,7 @@ public Forward doCalcolaTotalePerObbligazione(ActionContext context, Obbligazion
 				ordine.setImportoTotalePerObbligazione(
 						calcolaTotaleObbligazioniAssociate(
 								(java.util.List)ordine.getOrdineObbligazioniHash().get(obbligazione),
-								true));
+								false));
 			} catch (it.cnr.jada.comp.ApplicationException e) {
 				ordine.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 			}
@@ -1380,28 +1383,26 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
  * @exception <code>RemoteException</code>
  *
  */
-//public Forward doOnCheckDisponibilitaContrattoFailed( ActionContext context, int option) {
-//    if (option == it.cnr.jada.util.action.OptionBP.OK_BUTTON){
-//    	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
-//        try 
-//        {
-//            boolean modified = fillModel(context);
-//            OptionRequestParameter userConfirmation = new OptionRequestParameter();
-//            userConfirmation.setCheckDisponibilitaContrattoRequired(Boolean.FALSE);
-//            bp.setUserConfirm(userConfirmation);
-//            if (bp.isBringBack())
-//                doConfermaRiporta(context, it.cnr.jada.util.action.OptionBP.OK_BUTTON);
-//			else if (bp.isCarryingThrough())
-//				doRiportaAvanti(context);
-//            else
-//                doSalva(context);
-//        } 
-//        catch(Throwable e){
-//            return handleException(context,e);
-//        }
-//    }
-//    return context.findDefaultForward();
-//}
+public Forward doOnCheckDisponibilitaContrattoFailed( ActionContext context, int option) {
+    if (option == it.cnr.jada.util.action.OptionBP.OK_BUTTON){
+    	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)context.getBusinessProcess();
+        try 
+        {
+            boolean modified = fillModel(context);
+            OptionRequestParameter userConfirmation = new OptionRequestParameter();
+            userConfirmation.setCheckDisponibilitaContrattoRequired(Boolean.FALSE);
+            bp.setUserConfirm(userConfirmation);
+            if (bp.isBringBack())
+                doConfermaRiporta(context, it.cnr.jada.util.action.OptionBP.OK_BUTTON);
+            else
+                doSalva(context);
+        } 
+        catch(Throwable e){
+            return handleException(context,e);
+        }
+    }
+    return context.findDefaultForward();
+}
 /**
  * richiede l'apertura del pannello dell'obbligazione per la modifica della
  * scadenza selezionata
