@@ -29,6 +29,7 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	 * [ORDINE_ACQ_RIGA Riga Ordine d'Acquisto]
 	 **/
 	private OrdineAcqRigaBulk ordineAcqRiga =  new OrdineAcqRigaBulk();
+	private Boolean obbligazioneInseritaSuConsegna =  false;
 	/**
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
 	 **/
@@ -472,5 +473,11 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	}
 	public void setRigheRichiestaCollegate(BulkList righeRichiestaCollegate) {
 		this.righeRichiestaCollegate = righeRichiestaCollegate;
+	}
+	public Boolean getObbligazioneInseritaSuConsegna() {
+		return obbligazioneInseritaSuConsegna;
+	}
+	public void setObbligazioneInseritaSuConsegna(Boolean obbligazioneInseritaSuConsegna) {
+		this.obbligazioneInseritaSuConsegna = obbligazioneInseritaSuConsegna;
 	}
 }
