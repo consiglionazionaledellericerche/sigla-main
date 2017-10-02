@@ -6,31 +6,31 @@
 		tableName="EVASIONE_ORDINE_RIGA">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="evasioneOrdine.cd_cds" />
+			propertyName="evasioneOrdine.cdCds" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
-			propertyName="evasioneOrdine.cd_magazzino" />
+			propertyName="evasioneOrdine.cdMagazzino" />
 		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="evasioneOrdine.esercizio" />
 		<columnMapping
 			columnName="CD_NUMERATORE_MAG"
-			propertyName="evasioneOrdine.cd_numeratore_mag" />
+			propertyName="evasioneOrdine.cdNumeratoreMag" />
 		<columnMapping
 			columnName="NUMERO"
 			propertyName="evasioneOrdine.numero" />
 		<columnMapping
 			columnName="CD_CDS_ORDINE"
-			propertyName="ordineAcqConsegna.cd_cds" />
+			propertyName="ordineAcqConsegna.cdCds" />
 		<columnMapping
 			columnName="CD_UNITA_OPERATIVA"
-			propertyName="ordineAcqConsegna.cd_unita_operativa" />
+			propertyName="ordineAcqConsegna.cdUnitaOperativa" />
 		<columnMapping
 			columnName="ESERCIZIO_ORDINE"
 			propertyName="ordineAcqConsegna.esercizio" />
 		<columnMapping
 			columnName="CD_NUMERATORE_ORDINE"
-			propertyName="ordineAcqConsegna.cd_numeratore" />
+			propertyName="ordineAcqConsegna.cdNumeratore" />
 		<columnMapping
 			columnName="NUMERO_ORDINE"
 			propertyName="ordineAcqConsegna.numero" />
@@ -41,6 +41,17 @@
 			columnName="CONSEGNA"
 			propertyName="ordineAcqConsegna.consegna" />
 	</defaultColumnMap>
+	<columnMap
+			name="V_EVASIONE_ORDINE"
+			tableName="EVASIONE_ORDINE_RIGA"
+			extends="default" >
+        <columnMapping
+                columnName="EVASIONE_ORDINE.DATA_BOLLA"
+                propertyName="evasioneOrdine.dataBolla" />
+        <columnMapping
+                columnName="EVASIONE_ORDINE.NUMERO_BOLLA"
+                propertyName="evasioneOrdine.numeroBolla" />
+	</columnMap>
 	<persistentProperty
 		name="evasioneOrdine"
 		partOfOid="true" />
