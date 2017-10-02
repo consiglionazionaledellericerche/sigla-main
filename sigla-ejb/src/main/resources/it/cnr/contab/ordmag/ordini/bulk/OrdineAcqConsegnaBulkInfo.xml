@@ -64,7 +64,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="riga" />
+		label="Riga" />
 	<fieldProperty
 		name="consegna"
 		property="consegna"
@@ -201,6 +201,12 @@
 		enabledOnSearch="true"
 		label="Luogo di Consegna" />
 	<fieldProperty
+		name="findObbligazioneScadenzario"
+		property="obbligazioneScadenzario"
+		inputType="searchtool"
+		formName="searchtool"
+		label="Scadenza Impegno" />
+	<fieldProperty
 		name="cdCdsMag"
 		property="magazzino.cdCds"
 		inputType="TEXT"
@@ -312,6 +318,75 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="ordineAcqRiga.beneServizio.cd_bene_servizio"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RObeneservizio"
+		label="Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsBeneServizio"
+		property="ordineAcqRiga.beneServizio.ds_bene_servizio"
+		maxLength="300"
+		inputSize="40"
+		inputType="ROTEXT"
+		label="Descr. Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cdUnitaMisuraMinima"
+		property="ordineAcqRiga.beneServizio.unitaMisura.cdUnitaMisura"
+		maxLength="30"
+		inputSize="3"
+		inputType="ROTEXT"
+		label="Unità Misura Minima"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="ordineAcqRiga.unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Unità di Misura" />
+	<fieldProperty
+		name="coefConv"
+		property="ordineAcqRiga.coefConv"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		inputSize="3"
+		maxLength="12"
+		enabledOnEdit="true"
+		label="Coefficiente di Conversione" />
+	<fieldProperty
+		name="cd_voce_iva"
+		property="ordineAcqRiga.voceIva.cd_voce_iva"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		nullable="false"
+		label="I.V.A."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="notaRiga"
+		property="ordineAcqRiga.notaRiga"
+		inputType="TEXT"
+		cols="40"
+		enabledOnEdit="true"
+		label="Note" />
+	<fieldProperty
+		name="prezzoUnitario"
+		property="ordineAcqRiga.prezzoUnitario"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="true"
+		nullable="false"
+		formatName="it.cnr.contab.util.Importo6CifreFormat"
+		label="Prezzo Unitario" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -332,23 +407,30 @@
 	<columnSet
 		name="consegneSet">
 		<columnFieldProperty
+			name="riga" />
+		<columnFieldProperty
 			name="consegna" />
 		<columnFieldProperty
-			name="quantita"/>
+			name="cdBeneServizio" />
 		<columnFieldProperty
-			name="tipoConsegna" />
+			name="dsBeneServizio" />
 		<columnFieldProperty
-			name="cdMagazzino"/>
+			name="cd_voce_iva" />
 		<columnFieldProperty
-			name="cdluogoConsegna"/>
+			inputSize="40"
+			name="notaRiga" />
 		<columnFieldProperty
 			name="cdUopDest"/>
 		<columnFieldProperty
-			name="dtPrevConsegna" />
+			name="cdUnitaMisuraMinima"/>
 		<columnFieldProperty
-			name="stato" />
+			name="cdUnitaMisura"/>
 		<columnFieldProperty
-			name="statoFatt" />
+			name="coefConv"/>
+		<columnFieldProperty
+			name="quantita"/>
+		<columnFieldProperty
+			name="prezzoUnitario"/>
 		<columnFieldProperty
 			name="imTotaleConsegna" />
 	</columnSet>
@@ -385,6 +467,8 @@
 		name="findMagazzino" />
 	<formFieldProperty
 		name="findLuogoConsegnaMag" />
+	<formFieldProperty
+		name="findObbligazioneScadenzario" />
 	<formFieldProperty
 		name="findUnitaOperativaOrdDest" />
 	<formFieldProperty
