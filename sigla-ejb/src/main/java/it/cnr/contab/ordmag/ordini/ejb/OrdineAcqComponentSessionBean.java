@@ -5,8 +5,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.comp.OrdineAcqComponent;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.jada.UserContext;
@@ -181,6 +183,44 @@ public OrdineAcqBulk cancellaOrdine(it.cnr.jada.UserContext userContext, OrdineA
 		throw uncaughtRuntimeException(userContext,componentObj,e);
 	} catch(Error e) {
 		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+
+public Unita_organizzativaBulk recuperoUoPerImpegno(it.cnr.jada.UserContext userContext, OrdineAcqConsegnaBulk consegna) throws RemoteException,ComponentException, PersistencyException{
+	pre_component_invocation(userContext,componentObj);
+	try {
+		Unita_organizzativaBulk result = ((OrdineAcqComponent)componentObj).recuperoUoPerImpegno(userContext, consegna);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+		
+public OrdineAcqBulk contabilizzaConsegneSelezionate(it.cnr.jada.UserContext param0,OrdineAcqBulk param1,java.util.Collection param2,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		OrdineAcqBulk result = ((OrdineAcqComponent)componentObj).contabilizzaConsegneSelezionate(param0,param1,param2,param3);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
 	}
 }
 }
