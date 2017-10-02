@@ -149,31 +149,13 @@ public class Fattura_passiva_IHome
 
         sqlBuilder.generateJoin("ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
         sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO_FATT", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_FATT_ASSOCIATA_TOTALMENTE);
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_EVASA);
+        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_EVASA);
 
         sqlBuilder.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
         sqlBuilder.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
 
         sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TERZO", SQLBuilder.EQUALS, fatturaPassiva.getCd_terzo());
         sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.TI_ATTIVITA", SQLBuilder.EQUALS, fatturaPassiva.getTi_istituz_commerc());
-        /*
-        sqlBuilder.addTableToHeader("ORDINE_ACQ_RIGA");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.CD_CDS","ORDINE_ACQ_CONSEGNA.CD_CDS");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.CD_UNITA_OPERATIVA","ORDINE_ACQ_CONSEGNA.CD_UNITA_OPERATIVA");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.ESERCIZIO","ORDINE_ACQ_CONSEGNA.ESERCIZIO");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.CD_NUMERATORE","ORDINE_ACQ_CONSEGNA.CD_NUMERATORE");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.NUMERO","ORDINE_ACQ_CONSEGNA.NUMERO");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.RIGA","ORDINE_ACQ_CONSEGNA.RIGA");
-
-        sqlBuilder.addTableToHeader("ORDINE_ACQ");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.CD_CDS","ORDINE_ACQ.CD_CDS");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.CD_UNITA_OPERATIVA","ORDINE_ACQ.CD_UNITA_OPERATIVA");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.ESERCIZIO","ORDINE_ACQ.ESERCIZIO");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.CD_NUMERATORE","ORDINE_ACQ.CD_NUMERATORE");
-        sqlBuilder.addSQLJoin("ORDINE_ACQ_RIGA.NUMERO","ORDINE_ACQ.NUMERO");
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TERZO", SQLBuilder.EQUALS, fatturaPassiva.getCd_terzo());
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.TI_ATTIVITA", SQLBuilder.EQUALS, fatturaPassiva.getTi_istituz_commerc());
-        */
         return sqlBuilder;
     }
 }
