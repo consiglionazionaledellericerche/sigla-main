@@ -6,16 +6,16 @@
 		tableName="EVASIONE_ORDINE">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="numerazioneMag.cd_cds" />
+			propertyName="numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
-			propertyName="numerazioneMag.cd_magazzino" />
+			propertyName="numerazioneMag.magazzino.cdMagazzino" />
 		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="numerazioneMag.esercizio" />
 		<columnMapping
 			columnName="CD_NUMERATORE_MAG"
-			propertyName="numerazioneMag.cd_numeratore_mag" />
+			propertyName="numerazioneMag.cdNumeratoreMag" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="numerazioneMag"
