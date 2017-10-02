@@ -1135,6 +1135,7 @@
 			property="flDaOrdini"
 			inputType="CHECKBOX"
 			enabledOnSearch="true"
+			readonlyProperty="ROFlDaOrdini"
 			label="Da Ordini" />
 	<findFieldProperty name="esercizio"/>
 	<findFieldProperty name="esercizio_fattura_fornitore"/>
