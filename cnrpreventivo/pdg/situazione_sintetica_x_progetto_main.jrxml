@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="2.049040366095212"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="819"/>
+	<property name="ireport.y" value="210"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -22,10 +22,6 @@
 	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="VERBI9" fontName="Times New Roman" fontSize="9" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="VERB9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="VER9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="VER8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -53,1586 +49,378 @@
 	<parameter name="P_PG_PROGLIV2" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[Integer.valueOf(18577)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_CD_PROGLIV1" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_GAE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_RESPONSABILE_GAE" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_DS_PROGLIV1" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_DS_RESPONSABILE_GAE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_CD_PROGLIV2" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_PRINT_GAE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_DS_PROGLIV2" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_PRINT_VOCE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_DETAIL" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_PRINT_ANNO" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_GAE" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_ROTTURA_GAE" class="java.lang.String">
-		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+	<parameter name="P_PRINT_MOVIMENTAZIONE" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ROTTURA_VOCE" class="java.lang.String">
-		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+	<parameter name="P_PRINT_SOLO_GAE_ATTIVE" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Stampa solo GAE movimentate nell'anno]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ROTTURA_ANNO" class="java.lang.String">
-		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+	<parameter name="P_PRINT_PIANO_ECO" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Stampa Piano Economico Progetto (true/false)]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ROTTURA_PIANO_ECO" class="java.lang.String">
-		<defaultValueExpression><![CDATA["N"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_SOLO_GAE_ATTIVE" class="java.lang.String">
-		<parameterDescription><![CDATA[Stampa solo GAE ancora attive nell'anno. Valori possibili: "S" o "N"]]></parameterDescription>
-		<defaultValueExpression><![CDATA["N"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="P_ORDINE" class="java.lang.String">
 		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
 		<defaultValueExpression><![CDATA["A"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_PAGE_BREAK" class="java.lang.String">
-		<defaultValueExpression><![CDATA["N"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="P_NUM_DETTAGLI_ETR" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="P_NUM_DETTAGLI_SPE" class="java.lang.Integer" isForPrompting="false"/>
 	<queryString>
-		<![CDATA[SELECT p.tipo, p.esercizio_res, p.cd_linea_attivita cd_gae,
-       CASE WHEN $P{P_ROTTURA_GAE}='S'
-	  THEN (SELECT nvl(q.ds_linea_attivita,q.denominazione) from linea_attivita q
-	        WHERE q.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-	        AND   q.cd_linea_attivita = p.cd_linea_attivita)
-            ELSE 'DS_GAE_UNICA'
-            END ds_gae,
-       p.cd_elemento_voce,
-       (SELECT b.ds_elemento_voce FROM ELEMENTO_VOCE B
-        WHERE B.TI_GESTIONE = P.TIPO
-        AND B.CD_ELEMENTO_VOCE = P.CD_ELEMENTO_VOCE
-        and ROWNUM<2) ds_elemento_voce,
-       p.stanziamento_acc, p.variazioni_acc,
-       p.stanziamento, p.variazioni,
-       p.impacc, p.pagris, p.nummov
-FROM (SELECT  a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce,
-              sum(a.stanziamento_acc) stanziamento_acc,
-              sum(a.variazioni_acc) variazioni_acc,
-              sum(a.stanziamento) stanziamento,
-              sum(a.variazioni) variazioni,
-              sum(CASE WHEN a.esercizio=$P{P_ESERCIZIO}
-                       THEN a.impacc
-                       ELSE (CASE WHEN a.impacc<a.pagris
-                                  THEN a.impacc
-			   ELSE a.pagris
-                                  END)
-                       END) impacc,
-              sum(a.pagris) pagris,
-              sum(a.contamov) nummov
-      FROM
-        (SELECT  esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN esercizio_res
-	            ELSE 0
-                      END esercizio_res,
-                 'E' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN lda
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-		  THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, esercizio_res, 'E' , cd_elemento_voce),
- 			 cd_elemento_voce)
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
-	       0 stanziamento_acc, 0 variazioni_acc,
-                 CASE WHEN esercizio = esercizio_res
-                      THEN NVL(STANZ_INI,0)
-                      ELSE 0
-                      END stanziamento,
-                 CASE WHEN esercizio = esercizio_res
-                      THEN NVL(VAR_PIU,0)-NVL(VAR_MENO,0)
-                      ELSE 0
-                      END variazioni,
-                 CASE WHEN esercizio = esercizio_res
-                      THEN NVL(ACC_COMP,0)
-                      ELSE NVL(ACC_RES_PRO,0)+
-                           NVL(VAR_PIU_RES_PRO,0)-NVL(VAR_MENO_RES_PRO,0)
-                      END impacc,
-                 CASE WHEN esercizio = esercizio_res
-                      THEN NVL(RISCOSSO_COMP,0)
-                      ELSE NVL(RISCOSSO_RES,0)
-                      END pagris,
-                 CASE WHEN esercizio = esercizio_res
-                      THEN CASE WHEN NVL(STANZ_INI,0)!=0 OR NVL(VAR_PIU,0)!=0 OR
-                           	      NVL(VAR_MENO,0)!=0 OR NVL(ACC_COMP,0)!=0 OR NVL(RISCOSSO_COMP,0)!=0
-			 THEN 1
-                                ELSE 0
-                                END
-                      ELSE CASE WHEN NVL(ACC_RES_PRO,0)!=0 OR NVL(VAR_PIU_RES_PRO,0)!=0 OR
-                                     NVL(VAR_MENO_RES_PRO,0)!=0 OR NVL(RISCOSSO_RES,0)!=0
-			 THEN 1
-                                ELSE 0
-                                END
-                      END contamov
-         FROM V_CONS_DISP_COMP_RES_ENT
-         WHERE $P{P_TIPO} = 'E'
-         AND   cdr = $P{P_CENTRO_RESPONSABILITA}
-         AND   lda in (SELECT cd_linea_attivita
-                       FROM v_linea_attivita_valida
-                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                       AND   pg_progetto=$P{P_PG_PROGLIV2}
-                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-         UNION ALL
-         SELECT  esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN esercizio_res
-	            ELSE 0
-                      END esercizio_res,
-	      'S' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN lda
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, esercizio_res, 'S' , cd_elemento_voce),
- 			cd_elemento_voce)
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
-	      0 stanziamento_acc, 0 variazioni_acc,
-                CASE WHEN esercizio = esercizio_res
-                     THEN NVL(STANZ_INI,0)
-                     ELSE 0
-                     END stanziamento,
-                CASE WHEN esercizio = esercizio_res
-                     THEN NVL(VAR_PIU,0)-NVL(VAR_MENO,0)
-                     ELSE NVL(VAR_PIU_STANZ_RES_IMP,0)-NVL(VAR_MENO_STANZ_RES_IMP,0)
-                     END variazioni,
-                CASE WHEN esercizio = esercizio_res
-                     THEN NVL(OBB_COMP,0)
-                     ELSE NVL(OBB_RES_IMP,0)+NVL(OBB_RES_PRO,0)+
-                          NVL(VAR_PIU_RES_PRO,0)-NVL(VAR_MENO_RES_PRO,0)
-                     END impegnato,
-                CASE WHEN esercizio = esercizio_res
-                     THEN NVL(PAGATO_COMP,0)
-                     ELSE NVL(PAGATO_RES,0)
-                     END pagato,
-                 CASE WHEN esercizio = esercizio_res
-                      THEN CASE WHEN NVL(STANZ_INI,0)!=0 OR
-                                     NVL(VAR_PIU,0)!=0 OR NVL(VAR_MENO,0)!=0 OR
-                                     NVL(OBB_COMP,0)!=0 OR NVL(PAGATO_COMP,0)!=0
-			 THEN 1
-                                ELSE 0
-                                END
-                      ELSE CASE WHEN NVL(VAR_PIU_STANZ_RES_IMP,0)!=0 OR NVL(VAR_MENO_STANZ_RES_IMP,0)!=0 OR
-                                     NVL(OBB_RES_IMP,0)!=0 OR NVL(OBB_RES_PRO,0)!= 0 OR
-                                     NVL(VAR_PIU_RES_PRO,0)!=0 OR NVL(VAR_MENO_RES_PRO,0)!=0 OR
-                                     NVL(PAGATO_RES,0)!=0
-			 THEN 1
-                                ELSE 0
-                                END
-                      END contamov
-         FROM V_CONS_DISP_COMP_RES
-         WHERE $P{P_TIPO} = 'S'
-         AND   cdr = $P{P_CENTRO_RESPONSABILITA}
-         AND   lda in (SELECT cd_linea_attivita
-                       FROM v_linea_attivita_valida
-                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                       AND   pg_progetto=$P{P_PG_PROGLIV2}
-                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-         UNION ALL
-         SELECT  esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN esercizio
-	            ELSE 0
-                      END esercizio_res,
-	      'S' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN cd_linea_attivita
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, esercizio, 'S' , cd_elemento_voce),
- 			cd_elemento_voce)
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
-	       DECODE(cd_cdr_assegnatario_clgs,
-                        NULL, NVL (im_spese_gest_accentrata_int, 0)
-                            + NVL (im_spese_gest_accentrata_est, 0),
-                        0) stanziamento_acc, 0 variazioni_acc,
-                 0 stanziamento, 0 variazioni, 0 impegnato, 0 pagato,
-                 CASE WHEN NVL(im_spese_gest_accentrata_int,0)!=0 OR
-                           NVL(im_spese_gest_accentrata_est,0)!=0
-		 THEN 1
-                      ELSE 0
-                      END contamov
-         FROM pdg_modulo_spese_gest
-         WHERE $P{P_TIPO} = 'S'
-         AND   cd_cdr_assegnatario = $P{P_CENTRO_RESPONSABILITA}
-         AND   cd_linea_attivita in (SELECT cd_linea_attivita
-                                     FROM v_linea_attivita_valida
-                                     WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                                     AND   pg_progetto=$P{P_PG_PROGLIV2}
-                                     AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-         UNION ALL
-         SELECT  pdgvar.esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN pdgvar.esercizio
-	            ELSE 0
-                      END esercizio_res,
-	      'S' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN pdgvarriga.cd_linea_attivita
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, pdgvar.esercizio, 'S' , pdgvarriga.cd_elemento_voce),
- 			pdgvarriga.cd_elemento_voce)
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
-	       0 stanziamento_acc,
-                 DECODE(pdgvarriga.cd_cdr_assegnatario_clgs,
-                        NULL, NVL (pdgvarriga.im_spese_gest_accentrata_int, 0)
-                            + NVL (pdgvarriga.im_spese_gest_accentrata_est, 0),
-                        0) variazioni_acc,
-                 0 stanziamento, 0 variazioni, 0 impegnato, 0 pagato,
-                 CASE WHEN NVL(im_spese_gest_accentrata_int,0)!=0 OR
-                           NVL(im_spese_gest_accentrata_est,0)!=0
-		 THEN 1
-                      ELSE 0
-                      END contamov
-         FROM pdg_variazione pdgvar,
-              pdg_variazione_riga_gest pdgvarriga
-         WHERE $P{P_TIPO} = 'S'
-         AND   pdgvar.esercizio = pdgvarriga.esercizio
-         AND   pdgvar.pg_variazione_pdg = pdgvarriga.pg_variazione_pdg
-         AND   pdgvar.stato IN ('APP', 'APF')
-         AND   pdgvarriga.cd_cdr_assegnatario = $P{P_CENTRO_RESPONSABILITA}
-         AND   pdgvarriga.cd_linea_attivita in (SELECT cd_linea_attivita
-                                     FROM v_linea_attivita_valida
-                                     WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                                     AND   pg_progetto=$P{P_PG_PROGLIV2}
-                                     AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-         UNION ALL
-         SELECT  c.esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN c.esercizio_originale
-	            ELSE 0
-                      END esercizio_res,
-	      'S' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN a.CD_LINEA_ATTIVITA
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, c.esercizio_originale, 'S', c.cd_elemento_voce),
- 		      c.cd_elemento_voce)
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
- 	       0 stanziamento_acc, 0 variazioni_acc,
-                 0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
-                 0 impegnato, 0 pagato, 1 contamov
-         FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c
-         WHERE $P{P_TIPO} = 'S'
-         AND   a.cd_cds = b.cd_cds
-         and   a.esercizio=b.esercizio
-         and   a.esercizio_originale=b.esercizio_originale
-         and   a.pg_obbligazione = b.pg_obbligazione
-         and   a.pg_obbligazione_scadenzario = b.pg_obbligazione_scadenzario
-         and   a.cd_cds = c.cd_cds
-         and   a.esercizio=c.esercizio
-         and   a.esercizio_originale=c.esercizio_originale
-         and   a.pg_obbligazione = c.pg_obbligazione
-         and   c.cd_elemento_voce_next is not null
-         and   nvl(b.im_scadenza,0)!=0
-         and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-         and   a.cd_linea_attivita in (SELECT cd_linea_attivita
-                                       FROM v_linea_attivita_valida
-                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
-                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-         UNION ALL
-         SELECT  c.esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN c.esercizio_originale
-	            ELSE 0
-                      END esercizio_res,
-	      'S' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN a.CD_LINEA_ATTIVITA
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN cd_elemento_voce_next
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
-	       0 stanziamento_acc, 0 variazioni_acc,
-	       0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
-                 0 impegnato, 0 pagato, 1 contamov
-         FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c
-         WHERE $P{P_TIPO} = 'S'
-         AND   a.cd_cds = b.cd_cds
-         and   a.esercizio=b.esercizio
-         and   a.esercizio_originale=b.esercizio_originale
-         and   a.pg_obbligazione = b.pg_obbligazione
-         and   a.pg_obbligazione_scadenzario = b.pg_obbligazione_scadenzario
-         and   a.cd_cds = c.cd_cds
-         and   a.esercizio=c.esercizio
-         and   a.esercizio_originale=c.esercizio_originale
-         and   a.pg_obbligazione = c.pg_obbligazione
-         and   c.cd_elemento_voce_next is not null
-         and   nvl(b.im_scadenza,0)!=0
-         and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-         and   a.cd_linea_attivita in (SELECT cd_linea_attivita
-                                       FROM v_linea_attivita_valida
-                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
-                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-         UNION ALL
-         SELECT  c.esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN c.esercizio_originale
-	            ELSE 0
-                      END esercizio_res,
-	      'E' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN a.CD_LINEA_ATTIVITA
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, c.esercizio_originale, 'E', c.cd_elemento_voce),
- 		      c.cd_elemento_voce)
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
-	       0 stanziamento_acc, 0 variazioni_acc,
-	       0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
-                 0 impegnato, 0 pagato, 1 contamov
-         FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c
-         WHERE $P{P_TIPO} = 'E'
-         AND   a.cd_cds = b.cd_cds
-         and   a.esercizio=b.esercizio
-         and   a.esercizio_originale=b.esercizio_originale
-         and   a.pg_accertamento = b.pg_accertamento
-         and   a.pg_accertamento_scadenzario = b.pg_accertamento_scadenzario
-         and   a.cd_cds = c.cd_cds
-         and   a.esercizio=c.esercizio
-         and   a.esercizio_originale=c.esercizio_originale
-         and   a.pg_accertamento = c.pg_accertamento
-         and   c.cd_elemento_voce_next is not null
-         and   nvl(b.im_scadenza,0)!=0
-         and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-         and   a.cd_linea_attivita in (SELECT cd_linea_attivita
-                                       FROM v_linea_attivita_valida
-                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
-                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-         UNION ALL
-         SELECT  c.esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN c.esercizio_originale
-	            ELSE 0
-                      END esercizio_res,
-	      'E' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN a.CD_LINEA_ATTIVITA
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN cd_elemento_voce_next
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
-	      0 stanziamento_acc, 0 variazioni_acc,
-                 0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
-                 0 impegnato, 0 pagato, 1 contamov
-         FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c
-         WHERE $P{P_TIPO} = 'E'
-         AND   a.cd_cds = b.cd_cds
-         and   a.esercizio=b.esercizio
-         and   a.esercizio_originale=b.esercizio_originale
-         and   a.pg_accertamento = b.pg_accertamento
-         and   a.pg_accertamento_scadenzario = b.pg_accertamento_scadenzario
-         and   a.cd_cds = c.cd_cds
-         and   a.esercizio=c.esercizio
-         and   a.esercizio_originale=c.esercizio_originale
-         and   a.pg_accertamento = c.pg_accertamento
-         and   c.cd_elemento_voce_next is not null
-         and   nvl(b.im_scadenza,0)!=0
-         and   a.cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-         and   a.cd_linea_attivita in (SELECT cd_linea_attivita
-                                       FROM v_linea_attivita_valida
-                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
-                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))
-         UNION ALL
-         SELECT a.esercizio,
-	       CASE WHEN $P{P_ROTTURA_ANNO}='S'
-	            THEN 2005
-	            ELSE 0
-                      END esercizio_res,
-	      'S' tipo,
-  	       CASE WHEN $P{P_ROTTURA_GAE}='S'
-                      THEN a.CD_LINEA_ATTIVITA
-  	            ELSE 'GAE_UNICA'
-                      END cd_linea_attivita,
-                 CASE WHEN $P{P_ROTTURA_VOCE}='S'
-                      THEN NVL(getCurrentCdElementoVoce($P{P_ESERCIZIO}, 2005, 'S' , a.cd_elemento_voce),
- 	          a.cd_elemento_voce)
-                      ELSE 'VOCE_UNICA'
-                      END cd_elemento_voce,
-	      0 stanziamento_acc, 0 variazioni_acc,
-                NVL(a.im_residuo, 0), 0 variazioni, 0 impegnato, 0 pagato, 1 contamov
-         FROM pdg_residuo_det a
-         WHERE $P{P_TIPO} = 'S'
-         AND   a.esercizio = 2005
-         AND   a.stato != 'A'
-         AND   a.cd_cdr_linea = $P{P_CENTRO_RESPONSABILITA}
-         AND   a.cd_linea_attivita in (SELECT cd_linea_attivita
-                                       FROM v_linea_attivita_valida
-                                       WHERE cd_centro_responsabilita = $P{P_CENTRO_RESPONSABILITA}
-                                       AND   pg_progetto=$P{P_PG_PROGLIV2}
-                                       AND   cd_linea_attivita=NVL(decode($P{P_GAE},'*',null,$P{P_GAE}), cd_linea_attivita))) a
-      GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_elemento_voce) P
-WHERE (p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov!=0)
-AND ($P{P_SOLO_GAE_ATTIVE}='N' OR
-     EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
-            WHERE SALDI.ESERCIZIO = $P{P_ESERCIZIO}
-            AND   SALDI.ESERCIZIO_RES = P.ESERCIZIO_RES
-            AND   SALDI.CD_CENTRO_RESPONSABILITA = $P{P_CENTRO_RESPONSABILITA}
-            AND   SALDI.CD_LINEA_ATTIVITA = P.CD_LINEA_ATTIVITA
-            AND   SALDI.TI_GESTIONE = P.TIPO
-            AND   SALDI.CD_ELEMENTO_VOCE = P.CD_ELEMENTO_VOCE))
-ORDER BY p.tipo, p.cd_linea_attivita,
-CASE WHEN $P{P_ORDINE}='V' THEN p.cd_elemento_voce ELSE TO_CHAR(p.esercizio_res) END,
-CASE WHEN $P{P_ORDINE}='V' THEN TO_CHAR(p.esercizio_res) ELSE p.cd_elemento_voce END]]>
+		<![CDATA[SELECT CD_PROGETTO CD_PROGLIV2, DS_PROGETTO DS_PROGLIV2,
+P_CD_PROGETTO CD_PROGLIV1, P_DS_PROGETTO DS_PROGLIV1
+FROM V_PROGETTO_PADRE
+WHERE ESERCIZIO = $P{P_ESERCIZIO}
+AND PG_PROGETTO = $P{P_PG_PROGLIV2}
+AND TIPO_FASE='X']]>
 	</queryString>
-	<field name="TIPO" class="java.lang.String"/>
-	<field name="ESERCIZIO_RES" class="java.math.BigDecimal"/>
-	<field name="CD_GAE" class="java.lang.String"/>
-	<field name="DS_GAE" class="java.lang.String"/>
-	<field name="CD_ELEMENTO_VOCE" class="java.lang.String"/>
-	<field name="DS_ELEMENTO_VOCE" class="java.lang.String"/>
-	<field name="STANZIAMENTO_ACC" class="java.math.BigDecimal"/>
-	<field name="VARIAZIONI_ACC" class="java.math.BigDecimal"/>
-	<field name="STANZIAMENTO" class="java.math.BigDecimal"/>
-	<field name="VARIAZIONI" class="java.math.BigDecimal"/>
-	<field name="IMPACC" class="java.math.BigDecimal"/>
-	<field name="PAGRIS" class="java.math.BigDecimal"/>
-	<field name="NUMMOV" class="java.math.BigDecimal"/>
-	<variable name="P_STAMPA_ACCENTRATE" class="java.lang.String">
-		<variableExpression><![CDATA["S".equals($P{P_ROTTURA_PIANO_ECO}) && "S".equals($P{P_TIPO})?"S":"N"]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_ACC_TIPOVOCE" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOVOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO_ACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_ACC_TIPOVOCE" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOVOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{VARIAZIONI_ACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_TIPOVOCE" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOVOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO}]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_TIPOVOCE" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOVOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{VARIAZIONI}]]></variableExpression>
-	</variable>
-	<variable name="SUM_IMPACC_TIPOVOCE" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOVOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{IMPACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_PAGRIS_TIPOVOCE" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOVOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{PAGRIS}]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_ACC_GAE" class="java.math.BigDecimal" resetType="Group" resetGroup="GAE" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO_ACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_ACC_GAE" class="java.math.BigDecimal" resetType="Group" resetGroup="GAE" calculation="Sum">
-		<variableExpression><![CDATA[$F{VARIAZIONI_ACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_GAE" class="java.math.BigDecimal" resetType="Group" resetGroup="GAE" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO}]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_GAE" class="java.math.BigDecimal" resetType="Group" resetGroup="GAE" calculation="Sum">
-		<variableExpression><![CDATA[$F{VARIAZIONI}]]></variableExpression>
-	</variable>
-	<variable name="SUM_IMPACC_GAE" class="java.math.BigDecimal" resetType="Group" resetGroup="GAE" calculation="Sum">
-		<variableExpression><![CDATA[$F{IMPACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_PAGRIS_GAE" class="java.math.BigDecimal" resetType="Group" resetGroup="GAE" calculation="Sum">
-		<variableExpression><![CDATA[$F{PAGRIS}]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_ACC_ESERCIZIO" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO_VOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO_ACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_ACC_ESERCIZIO" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO_VOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{VARIAZIONI_ACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_ESERCIZIO" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO_VOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO}]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_ESERCIZIO" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO_VOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{VARIAZIONI}]]></variableExpression>
-	</variable>
-	<variable name="SUM_IMPACC_ESERCIZIO" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO_VOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{IMPACC}]]></variableExpression>
-	</variable>
-	<variable name="SUM_PAGRIS_ESERCIZIO" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO_VOCE" calculation="Sum">
-		<variableExpression><![CDATA[$F{PAGRIS}]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_ACC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="PROGETTO_LIV2" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{STANZIAMENTO_ACC}:$F{STANZIAMENTO_ACC}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_ACC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="PROGETTO_LIV2" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{VARIAZIONI_ACC}:$F{VARIAZIONI_ACC}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="PROGETTO_LIV2" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{STANZIAMENTO}:$F{STANZIAMENTO}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="PROGETTO_LIV2" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{VARIAZIONI}:$F{VARIAZIONI}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_IMPACC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="PROGETTO_LIV2" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{IMPACC}:$F{IMPACC}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_PAGRIS_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="PROGETTO_LIV2" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{PAGRIS}:$F{PAGRIS}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_ACC_GEN" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{STANZIAMENTO_ACC}:$F{STANZIAMENTO_ACC}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_ACC_GEN" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{VARIAZIONI_ACC}:$F{VARIAZIONI_ACC}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_STANZIAMENTO_GEN" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{STANZIAMENTO}:$F{STANZIAMENTO}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_VARIAZIONI_GEN" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{VARIAZIONI}:$F{VARIAZIONI}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_IMPACC_GEN" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{IMPACC}:$F{IMPACC}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_PAGRIS_GEN" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA["E".equals($F{TIPO})?$F{PAGRIS}:$F{PAGRIS}.negate()]]></variableExpression>
-	</variable>
-	<variable name="SUM_NUMMOV_GEN" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{NUMMOV}]]></variableExpression>
-	</variable>
-	<variable name="isGaeLastDetail" class="java.lang.Boolean">
-		<variableExpression><![CDATA[Boolean.valueOf("N".equals($P{P_ROTTURA_VOCE}) &&
-"N".equals($P{P_ROTTURA_ANNO}) &&
-"N".equals($P{P_DETAIL}))]]></variableExpression>
-		<initialValueExpression><![CDATA[Boolean.valueOf("N".equals($P{P_ROTTURA_VOCE}) &&  "N".equals($P{P_ROTTURA_ANNO}) &&  "N".equals($P{P_DETAIL}))]]></initialValueExpression>
-	</variable>
-	<group name="PROGETTO_LIV2">
-		<groupExpression><![CDATA[$P{P_CD_PROGLIV2}]]></groupExpression>
-	</group>
-	<group name="TIPOVOCE">
-		<groupExpression><![CDATA[$F{TIPO}]]></groupExpression>
-		<groupFooter>
-			<band height="20">
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="VERB8" x="4" y="0" width="255" height="15" uuid="4e61ab82-cf1e-49d8-b559-2a540024bd9e">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="0" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["TOTALE " + ("E".equals($F{TIPO})?"ENTRATA ":"SPESA ")+" PROGETTO "+$P{P_CD_PROGLIV2}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="VERB8" x="4" y="0" width="447" height="15" uuid="57dc344a-ff8f-4af0-ac69-e3187738c682">
-						<printWhenExpression><![CDATA["N".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="0" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["TOTALE " + ("E".equals($F{TIPO})?"ENTRATA ":"SPESA ")+" PROGETTO "+$P{P_CD_PROGLIV2}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="259" y="0" width="64" height="15" uuid="72a81e88-e748-4322-9cc1-41f62d70f014">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ACC_TIPOVOCE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-63" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="323" y="0" width="64" height="15" uuid="d1f29774-a82a-4095-95de-642fa02febe4">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_VARIAZIONI_ACC_TIPOVOCE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="387" y="0" width="64" height="15" uuid="7dbfc215-1565-45ff-8793-b92a5ae79979">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ACC_TIPOVOCE}.add( $V{SUM_VARIAZIONI_ACC_TIPOVOCE} )]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="451" y="0" width="64" height="15" uuid="1496fd6b-cec5-462f-8f93-ecbd8a6f072f"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_TIPOVOCE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-63" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="515" y="0" width="64" height="15" uuid="8e7944ab-6112-46ca-934c-396a83248b49"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_VARIAZIONI_TIPOVOCE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="579" y="0" width="64" height="15" uuid="0306d48b-1552-4dc7-9d76-489ac7926b8b"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_TIPOVOCE}.add( $V{SUM_VARIAZIONI_TIPOVOCE} )]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-65" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="643" y="0" width="64" height="15" uuid="893ad14f-68f7-46db-99c4-6187adaf03de"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_IMPACC_TIPOVOCE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-66" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="707" y="0" width="64" height="15" uuid="7a8811bd-e8f3-4556-9663-2bf5374cafc6"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PAGRIS_TIPOVOCE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="TIPOVOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-66" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="771" y="0" width="64" height="15" uuid="3319737c-0971-4a14-9e81-dde83211fdbb"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_TIPOVOCE}.add( $V{SUM_VARIAZIONI_TIPOVOCE} ).subtract( $V{SUM_IMPACC_TIPOVOCE} )]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupFooter>
-	</group>
-	<group name="GAE">
-		<groupExpression><![CDATA[$F{CD_GAE}]]></groupExpression>
-		<groupHeader>
-			<band height="15">
-				<printWhenExpression><![CDATA["S".equals( $P{P_ROTTURA_GAE} ) &&
-$V{isGaeLastDetail}.equals( Boolean.FALSE )]]></printWhenExpression>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="VER9" x="4" y="0" width="831" height="15" uuid="6e12759f-83a3-402d-8482-0dc24f37081f"/>
-					<box>
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font isItalic="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA["GAE "+$F{CD_GAE}+" - "+$F{DS_GAE}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="15">
-				<printWhenExpression><![CDATA["S".equals($P{P_ROTTURA_GAE})]]></printWhenExpression>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="VERB8" x="4" y="0" width="255" height="15" uuid="00306d25-26a6-4e04-8e21-198942ea7e19">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE}) &&
-$V{isGaeLastDetail}.equals( Boolean.TRUE )]]></printWhenExpression>
-					</reportElement>
-					<box rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["GAE "+$F{CD_GAE}+" - "+$F{DS_GAE}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="VERB8" x="4" y="0" width="447" height="15" uuid="b7663d49-ff82-471f-8fe4-f2b3a9453a74">
-						<printWhenExpression><![CDATA["N".equals($V{P_STAMPA_ACCENTRATE}) &&
-$V{isGaeLastDetail}.equals( Boolean.TRUE )]]></printWhenExpression>
-					</reportElement>
-					<box rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["GAE "+$F{CD_GAE}+" - "+$F{DS_GAE}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="VERB8" x="4" y="0" width="255" height="15" uuid="d4bc8228-874c-4f96-8422-557e9228b579">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE}) &&
-$V{isGaeLastDetail}.equals(Boolean.FALSE)]]></printWhenExpression>
-					</reportElement>
-					<box rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["TOTALE "+("E".equals($F{TIPO})?"ENTRATA ":"SPESA ")+
-("S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}:"")]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="VERB8" x="4" y="0" width="447" height="15" uuid="b7f2c486-ffc9-415d-962a-0b6e7f231191">
-						<printWhenExpression><![CDATA["N".equals($V{P_STAMPA_ACCENTRATE}) &&
-$V{isGaeLastDetail}.equals(Boolean.FALSE)]]></printWhenExpression>
-					</reportElement>
-					<box rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["TOTALE "+("E".equals($F{TIPO})?"ENTRATA ":"SPESA ")+
-("S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}:"")]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="259" y="0" width="64" height="15" uuid="f16aa675-33a3-4164-9e86-89251622b2b4">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ACC_GAE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-63" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="323" y="0" width="64" height="15" uuid="cfba1a6e-0964-4d66-85dd-4dcf579f5d63">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_VARIAZIONI_ACC_GAE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="387" y="0" width="64" height="15" uuid="cbcbbaa0-34a4-4228-bc4a-b7ddf2e384ed">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ACC_GAE}.add( $V{SUM_VARIAZIONI_ACC_GAE} )]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="451" y="0" width="64" height="15" uuid="aa767194-fce3-4ac0-b3ab-ddd96d382010"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_GAE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-63" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="515" y="0" width="64" height="15" uuid="0f849f9f-4278-411b-9fe1-e435d65aa22d"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_VARIAZIONI_GAE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="579" y="0" width="64" height="15" uuid="87ed9117-6fb8-4766-8bb7-1433c236f9a5"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_GAE}.add( $V{SUM_VARIAZIONI_GAE} )]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-65" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="643" y="0" width="64" height="15" uuid="333d10c1-b232-48bd-889f-4717d8f8743a"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_IMPACC_GAE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-66" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="707" y="0" width="64" height="15" uuid="928bcba9-e61e-4203-9270-370c0103d785"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PAGRIS_GAE}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GAE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-66" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="771" y="0" width="64" height="15" uuid="c6645a51-1361-4b47-97e2-959a3c28e6ba"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_GAE}.add( $V{SUM_VARIAZIONI_GAE} ).subtract( $V{SUM_IMPACC_GAE} )]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupFooter>
-	</group>
-	<group name="ESERCIZIO_VOCE">
-		<groupExpression><![CDATA["A".equals($P{P_ORDINE})?$F{ESERCIZIO_RES}:$F{CD_ELEMENTO_VOCE}]]></groupExpression>
-		<groupHeader>
-			<band height="15">
-				<printWhenExpression><![CDATA["S".equals( $P{P_ROTTURA_ANNO} ) &&
-"S".equals( $P{P_ROTTURA_VOCE} )]]></printWhenExpression>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="VERB8" x="4" y="0" width="831" height="15" uuid="8c445f61-a9a9-4094-afca-8b2985506750"/>
-					<box>
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["A".equals($P{P_ORDINE})?"Esercizio "+$F{ESERCIZIO_RES}:
-$F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="15">
-				<printWhenExpression><![CDATA["S".equals( $P{P_ROTTURA_ANNO} ) &&
-"S".equals( $P{P_ROTTURA_VOCE} )]]></printWhenExpression>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="VERB8" x="4" y="0" width="255" height="15" uuid="d3530e35-e324-4c26-971b-f7879544e239">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="0" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[("S".equals($P{P_ROTTURA_GAE}) && "N".equals($P{P_ROTTURA_VOCE}) && "S".equals($P{P_ROTTURA_ANNO}))?
-"ANNO "+$F{ESERCIZIO_RES}:
-("TOTALE "+("E".equals($F{TIPO})?"ENTRATA ":"SPESA ")+
-("S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}+"/":"")+
-("A".equals($P{P_ORDINE})?$F{ESERCIZIO_RES}:$F{CD_ELEMENTO_VOCE}))]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-36" style="VERB8" x="4" y="0" width="447" height="15" uuid="68ef9ce6-5f87-4484-85c4-bc1dbe3cd476">
-						<printWhenExpression><![CDATA["N".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="0" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[("S".equals($P{P_ROTTURA_GAE}) && "N".equals($P{P_ROTTURA_VOCE}) && "S".equals($P{P_ROTTURA_ANNO}))?
-"ANNO "+$F{ESERCIZIO_RES}:
-("TOTALE "+("E".equals($F{TIPO})?"ENTRATA ":"SPESA ")+
-("S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}+"/":"")+
-("A".equals($P{P_ORDINE})?$F{ESERCIZIO_RES}:$F{CD_ELEMENTO_VOCE}))]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="259" y="0" width="64" height="15" uuid="f8081ba0-efba-4be3-b744-28e64cfabef2">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ACC_ESERCIZIO}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-63" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="323" y="0" width="64" height="15" uuid="d015de80-b8ee-4a97-86e7-ab90221bc324">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_VARIAZIONI_ACC_ESERCIZIO}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="387" y="0" width="64" height="15" uuid="b0e4fde2-2e2f-4de5-a39b-7cc0eeaf798a">
-						<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-					</reportElement>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ACC_ESERCIZIO}.add( $V{SUM_VARIAZIONI_ACC_ESERCIZIO} )]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="451" y="0" width="64" height="15" uuid="3cf6317c-a9a4-4d76-a2ad-050adf306ece"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ESERCIZIO}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-63" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="515" y="0" width="64" height="15" uuid="4cfbb5a2-b49c-43c3-81d5-b133598fbe75"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_VARIAZIONI_ESERCIZIO}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-64" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="579" y="0" width="64" height="15" uuid="a9ee81d3-fb96-4f2e-b4e3-8797291a83f8"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ESERCIZIO}.add( $V{SUM_VARIAZIONI_ESERCIZIO} )]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-65" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="643" y="0" width="64" height="15" uuid="e0d20c80-4167-49a1-8147-4e2ca85d19f7"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_IMPACC_ESERCIZIO}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-66" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="707" y="0" width="64" height="15" uuid="011849cc-816b-43c5-96ab-591c4456374c"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PAGRIS_ESERCIZIO}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Group" evaluationGroup="ESERCIZIO_VOCE" pattern="#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-66" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="771" y="0" width="64" height="15" uuid="9aeb03a0-7bbe-47d1-9e54-880e49b63e21"/>
-					<box topPadding="4" rightPadding="4">
-						<topPen lineWidth="0.0" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_STANZIAMENTO_ESERCIZIO}.add( $V{SUM_VARIAZIONI_ESERCIZIO} ).subtract( $V{SUM_IMPACC_ESERCIZIO} )]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupFooter>
-	</group>
-	<background>
-		<band/>
-	</background>
+	<field name="CD_PROGLIV2" class="java.lang.String"/>
+	<field name="DS_PROGLIV2" class="java.lang.String"/>
+	<field name="CD_PROGLIV1" class="java.lang.String"/>
+	<field name="DS_PROGLIV1" class="java.lang.String"/>
 	<title>
-		<band height="21">
-			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="true">
-				<reportElement key="textField-36" style="VERB6" x="0" y="1" width="842" height="15" uuid="ef90bd89-9cd6-4dd8-9d0f-be33b5e69528"/>
-				<box topPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="8"/>
+		<band height="174">
+			<staticText>
+				<reportElement x="6" y="8" width="830" height="28" uuid="ee77c521-8172-420a-ad28-dae457243906"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["DETTAGLI "+("E".equals($P{P_TIPO})?"ENTRATE":"SPESE")]]></textFieldExpression>
+				<text><![CDATA[Situazione Contabile Progetto]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="6" y="40" width="830" height="20" uuid="6a88edc3-d1d6-4351-a9e5-ad02e17f8d5a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["ESERCIZIO: "+$P{P_ESERCIZIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="62" width="830" height="20" uuid="87712806-4968-49f0-b4c6-138e5dd69c15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["CENTRO RESPONSABILITA': "+$P{P_CENTRO_RESPONSABILITA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="84" width="830" height="20" uuid="7b168d01-248e-49b3-81b5-d14ca31520a2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["AREA PROGETTUALE: "+$F{CD_PROGLIV1}+" - PROGETTO: "+$F{CD_PROGLIV2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="106" width="830" height="20" uuid="f720df77-d4e6-480d-ab89-f1f10e5d4cf7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[("".equals($P{P_GAE}) || "*".equals($P{P_GAE}))?"TUTTE LE GAE"+
+($P{P_RESPONSABILE_GAE}!=null?" DEL RESPONSABILE: "+$P{P_RESPONSABILE_GAE}+" - "+
+ $P{P_DS_RESPONSABILE_GAE}:"")
+:"GAE: "+$P{P_GAE}
+]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="128" width="830" height="20" uuid="26d9f49c-7ed1-4f43-873c-e2665aaaa956"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($P{P_PRINT_ANNO}||$P{P_PRINT_VOCE})?
+"ORDINATA PER "+("V".equals($P{P_ORDINE})?"VOCE/ANNO":"ANNO/VOCE"):""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="150" width="830" height="20" uuid="e411b11a-ffb8-43e5-ad7e-d6a5e45e1e97">
+					<printWhenExpression><![CDATA[$P{P_PRINT_SOLO_GAE_ATTIVE}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["SOLO GAE MOVIMENTATE NELL'ESERCIZIO"]]></textFieldExpression>
 			</textField>
 			<break>
-				<reportElement mode="Opaque" x="0" y="0" width="100" height="1" isRemoveLineWhenBlank="true" uuid="1463e9c8-da3d-456a-8254-a9e8b8dae2cf">
-					<printWhenExpression><![CDATA["S".equals($P{P_PAGE_BREAK})]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="0" y="172" width="100" height="1" uuid="637933de-3cc6-4a99-86db-6274bfbf1998"/>
 			</break>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="39">
-			<staticText>
-				<reportElement key="staticText-54" style="VERB8" x="3" y="3" width="256" height="31" uuid="709515ee-cd1e-448a-bdac-814bfc90073a">
-					<printWhenExpression><![CDATA["S".equals($P{P_ROTTURA_PIANO_ECO}) && "S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
+		<band height="42">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-184" style="VERB8" x="30" y="6" width="547" height="15" uuid="c6033106-cab0-4e3c-b6a4-f0af7b696abc"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Denominazione]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-54" style="VERB8" x="3" y="3" width="448" height="31" uuid="ec382b16-7320-4659-8be7-7533727956e7">
-					<printWhenExpression><![CDATA[!("S".equals($P{P_ROTTURA_PIANO_ECO}) && "S".equals($P{P_TIPO}))]]></printWhenExpression>
-				</reportElement>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SITUAZIONE CONTABILE PROGETTO: "+$F{CD_PROGLIV2}+
+($P{P_GAE}!=null&&!"*".equals($P{P_GAE})?" - GAE: "+$P{P_GAE}:
+ $P{P_RESPONSABILE_GAE}!=null?" - RESPONSABILE: "+$P{P_RESPONSABILE_GAE}+" - "+
+ $P{P_DS_RESPONSABILE_GAE}:"")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-184" style="VERB8" x="54" y="22" width="768" height="15" uuid="3f0ca22e-d402-4bc6-9130-cc0e9bba9170"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NOME_EST}+($P{DESCR_AGG_ENTE}!=null?" - "+$P{DESCR_AGG_ENTE}:"")+
+($P{P_CENTRO_RESPONSABILITA}!=null?" - CDR: "+$P{P_CENTRO_RESPONSABILITA}:"")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="VERB8" x="702" y="6" width="80" height="15" uuid="7bfbeba6-138d-4f9d-b483-5a371be1c6a8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="VERB8" x="782" y="6" width="40" height="15" uuid="1dd73075-101a-4cc1-9b19-22d1d945c6da"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement style="VERB8" x="645" y="6" width="54" height="15" uuid="195477b1-44a6-46a2-9080-5e1555055827"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Denominazione]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement key="staticText-44" style="VERB8" x="259" y="3" width="192" height="10" uuid="f8ac5d55-19a7-4834-91b6-88562c9bc229">
-					<printWhenExpression><![CDATA["S".equals($P{P_ROTTURA_PIANO_ECO}) && "S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
+				<reportElement key="staticText-37" style="VERB8" x="588" y="6" width="57" height="15" uuid="15bfea64-73cf-4a78-a21d-36eacbb7e9d6"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[SPESE ACCENTRATE]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-44" style="VERB8" x="259" y="13" width="64" height="21" uuid="634de830-c31a-4c9f-a1a5-b6a2dfd6075d">
-					<printWhenExpression><![CDATA["S".equals($P{P_ROTTURA_PIANO_ECO}) && "S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Stanziamento]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-45" style="VERB8" x="323" y="13" width="64" height="21" uuid="965f263f-4f98-4497-b36b-4696758e86c8">
-					<printWhenExpression><![CDATA["S".equals($P{P_ROTTURA_PIANO_ECO}) && "S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Variazioni]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-45" style="VERB8" x="387" y="13" width="64" height="21" uuid="8e89bd35-9ec2-48e6-b4e4-21d541d1fe2a">
-					<printWhenExpression><![CDATA["S".equals($P{P_ROTTURA_PIANO_ECO}) && "S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Assestato]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-44" style="VERB8" x="451" y="3" width="384" height="10" uuid="5d535ebb-7d4e-442d-9b1a-102c798b4d12">
-					<printWhenExpression><![CDATA["S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[SPESE DECENTRATE]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-44" style="VERB8" x="451" y="13" width="64" height="21" uuid="19000c09-822e-4edc-b6b1-0e25c2a176ef">
-					<printWhenExpression><![CDATA["S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Stanziamento]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-45" style="VERB8" x="515" y="13" width="64" height="21" uuid="a33bfc45-a127-4c3b-bd86-e97d463a0438">
-					<printWhenExpression><![CDATA["S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Variazioni]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-45" style="VERB8" x="579" y="13" width="64" height="21" uuid="e033069c-dbdb-467b-a834-a4e4e52f1e0a">
-					<printWhenExpression><![CDATA["S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Assestato]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-41" style="VERB8" x="643" y="13" width="64" height="21" uuid="71e229ba-ef85-4855-84a9-46ce05d39d0a">
-					<printWhenExpression><![CDATA["S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Impegnato Accertato]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-37" style="VERB8" x="707" y="13" width="64" height="21" uuid="8e46c422-1c70-41fd-a722-3df3e52c2e7a">
-					<printWhenExpression><![CDATA["S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Pagato / Riscosso]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-37" style="VERB8" x="771" y="13" width="64" height="21" uuid="fef86321-48ba-4ead-9e2c-576fb11f8fd4">
-					<printWhenExpression><![CDATA["S".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Disponibilità ad Impegnare  Accertare]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-44" style="VERB8" x="451" y="3" width="64" height="31" uuid="8a28155e-3d2d-4b41-b452-22cfb7e7cbb1">
-					<printWhenExpression><![CDATA["E".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Stanziamento]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-45" style="VERB8" x="515" y="3" width="64" height="31" uuid="0516060c-ea5f-4a39-8b1b-97356b0c39d9">
-					<printWhenExpression><![CDATA["E".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Variazioni]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-45" style="VERB8" x="579" y="3" width="64" height="31" uuid="970a071e-6e0a-4378-8289-ba46eb7cb08c">
-					<printWhenExpression><![CDATA["E".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Assestato]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-41" style="VERB8" x="643" y="3" width="64" height="31" uuid="6ff7f407-f81e-42a2-8697-12bd274181c3">
-					<printWhenExpression><![CDATA["E".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Impegnato Accertato]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-37" style="VERB8" x="707" y="3" width="64" height="31" uuid="9431f1d2-d105-4315-85de-91fc5e9410d3">
-					<printWhenExpression><![CDATA["E".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Pagato / Riscosso]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-37" style="VERB8" x="771" y="3" width="64" height="31" uuid="9a5fb343-75f3-4d2c-ad63-26b61abcc34b">
-					<printWhenExpression><![CDATA["E".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Disponibilità ad Impegnare  Accertare]]></text>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Data di Stampa:]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="17" splitType="Stretch">
-			<printWhenExpression><![CDATA["S".equals($P{P_ROTTURA_VOCE}) || "S".equals($P{P_ROTTURA_ANNO})]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-7" style="VER8" x="4" y="0" width="447" height="15" uuid="d37020f4-0dfd-4c0c-b1a1-13b0173be403">
-					<printWhenExpression><![CDATA["N".equals($V{P_STAMPA_ACCENTRATE}) &&
-"S".equals( $P{P_ROTTURA_VOCE} ) &&
-("A".equals( $P{P_ORDINE} ) || "N".equals( $P{P_ROTTURA_ANNO} ))]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-7" style="VER8" x="4" y="0" width="255" height="15" uuid="ec1a5494-a5b5-4f0b-8350-8c107b448268">
-					<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE}) &&
-"S".equals( $P{P_ROTTURA_VOCE} ) &&
-("A".equals( $P{P_ORDINE} ) || "N".equals( $P{P_ROTTURA_ANNO} ))]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-8" style="VER8" x="191" y="0" width="68" height="15" uuid="f718cbe4-fe97-410d-8379-105ee986d2f8">
-					<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})&&
-!("S".equals( $P{P_ROTTURA_VOCE} ) &&
-("A".equals( $P{P_ORDINE} ) || "N".equals( $P{P_ROTTURA_ANNO} )))]]></printWhenExpression>
-				</reportElement>
-				<box rightPadding="5">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Anno "+$F{ESERCIZIO_RES}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-8" style="VER8" x="383" y="0" width="68" height="15" uuid="bcfa8719-60bf-4c7e-bd7d-5560f295167e">
-					<printWhenExpression><![CDATA["N".equals($V{P_STAMPA_ACCENTRATE})&&
-!("S".equals( $P{P_ROTTURA_VOCE} ) &&
-("A".equals( $P{P_ORDINE} ) || "N".equals( $P{P_ROTTURA_ANNO} )))]]></printWhenExpression>
-				</reportElement>
-				<box rightPadding="5">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Anno "+$F{ESERCIZIO_RES}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-42" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="259" y="0" width="64" height="15" uuid="4a5f6875-1283-4510-bb75-065bba3cc4b6">
-					<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-				</reportElement>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO_ACC}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-43" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="323" y="0" width="64" height="15" uuid="89965f4d-820d-4efe-afe5-0096fd0fecc0">
-					<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-				</reportElement>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{VARIAZIONI_ACC}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-44" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="387" y="0" width="64" height="15" uuid="cc92838c-920e-43ef-ad8e-4d044493f275">
-					<printWhenExpression><![CDATA["S".equals($V{P_STAMPA_ACCENTRATE})]]></printWhenExpression>
-				</reportElement>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO_ACC}.add( $F{VARIAZIONI_ACC} )]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-42" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="451" y="0" width="64" height="15" uuid="24f88b25-6eaf-4991-99d5-1f7b7429e158"/>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-43" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="515" y="0" width="64" height="15" uuid="eb02c10b-2d10-43af-8a2f-2b45c5c81229"/>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{VARIAZIONI}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-44" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="579" y="0" width="64" height="15" uuid="40dd2897-6240-40ad-b2fc-e0058ea24fae"/>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO}.add( $F{VARIAZIONI} )]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-45" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="643" y="0" width="64" height="15" uuid="a0e02d2c-2285-44ff-aae9-16dba6f87b6e"/>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{IMPACC}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-46" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="707" y="0" width="64" height="15" uuid="4fe96cb4-4adf-447a-9f9e-fa4ccfa1bf25"/>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{PAGRIS}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-46" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="771" y="0" width="64" height="15" uuid="9be5d039-1516-43f1-b172-234766f10d21"/>
-				<box topPadding="4" rightPadding="4">
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO}.add( $F{VARIAZIONI} ).subtract( $F{IMPACC} )]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="2" y="15" width="833" height="1" uuid="c1294a31-178e-4516-adfd-f3e15459a100">
-					<printWhenExpression><![CDATA["S".equals($P{P_DETAIL}) &&
-"S".equals( $P{P_ROTTURA_VOCE} ) &&
-("A".equals( $P{P_ORDINE} ) || "N".equals( $P{P_ROTTURA_ANNO} ))]]></printWhenExpression>
-				</reportElement>
-			</line>
-		</band>
-		<band height="15">
-			<printWhenExpression><![CDATA["S".equals($P{P_DETAIL})]]></printWhenExpression>
+		<band height="14">
 			<subreport>
-				<reportElement x="259" y="2" width="576" height="11" uuid="a01afb15-64de-4916-a621-4bd52bccaf8e">
-					<printWhenExpression><![CDATA["S".equals($P{P_DETAIL})]]></printWhenExpression>
-				</reportElement>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				<reportElement x="2" y="0" width="834" height="10" isRemoveLineWhenBlank="true" uuid="11c889e4-ff85-4dc7-aa17-507a1db35834"/>
+				<subreportParameter name="P_DS_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV2}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO">
-					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_TIPO">
-					<subreportParameterExpression><![CDATA[$F{TIPO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_PG_PROGLIV2">
-					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_CENTRO_RESPONSABILITA">
 					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_VOCE">
-					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_VOCE})?$F{CD_ELEMENTO_VOCE}:null]]></subreportParameterExpression>
+				<subreportParameter name="P_DS_PROGLIV1">
+					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV1}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO_RES">
-					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_ANNO})?$F{ESERCIZIO_RES}:null]]></subreportParameterExpression>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DS_RESPONSABILE_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_DS_RESPONSABILE_GAE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PRINT_PIANO_ECO">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_PIANO_ECO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_RESPONSABILE_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_RESPONSABILE_GAE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV1">
+					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV1}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_GAE">
-					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}:null]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{P_GAE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_riepilogo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="14">
+			<printWhenExpression><![CDATA[$P{P_NUM_DETTAGLI_ETR}>0]]></printWhenExpression>
+			<break>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="1" isRemoveLineWhenBlank="true" uuid="2d9d3028-17d6-4893-92b9-b87029a32f31"/>
+			</break>
+			<subreport>
+				<reportElement x="2" y="2" width="834" height="10" isRemoveLineWhenBlank="true" uuid="2a15b921-aa04-4dc5-84b0-9656266ba147"/>
+				<subreportParameter name="P_DS_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DS_PROGLIV1">
+					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DETAIL">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_MOVIMENTAZIONE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_SOLO_GAE_ATTIVE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_SOLO_GAE_ATTIVE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ORDINE">
+					<subreportParameterExpression><![CDATA[$P{P_ORDINE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_ANNO">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_ANNO}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO">
+					<subreportParameterExpression><![CDATA["E"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_PIANO">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_GAE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV1">
+					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_VOCE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_VOCE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_GAE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_detail.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="15">
-			<printWhenExpression><![CDATA["S".equals($P{P_DETAIL})]]></printWhenExpression>
-			<subreport isUsingCache="false">
-				<reportElement x="259" y="2" width="576" height="11" uuid="e4424c74-6439-4c57-ad2b-52d6ab6bf4a8">
-					<printWhenExpression><![CDATA["S".equals($P{P_DETAIL})]]></printWhenExpression>
-				</reportElement>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+		<band height="14">
+			<printWhenExpression><![CDATA[$P{P_NUM_DETTAGLI_SPE}>0]]></printWhenExpression>
+			<break>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="1" isRemoveLineWhenBlank="true" uuid="4f74d0eb-de96-4e46-8ce8-880b24299625"/>
+			</break>
+			<subreport>
+				<reportElement x="2" y="2" width="834" height="10" isRemoveLineWhenBlank="true" uuid="a422e634-e289-401d-b538-60927b6e7a18"/>
+				<subreportParameter name="P_DS_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV2}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO">
-					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_TIPO">
-					<subreportParameterExpression><![CDATA[$F{TIPO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_PG_PROGLIV2">
-					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_CENTRO_RESPONSABILITA">
 					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_VOCE">
-					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_VOCE})?$F{CD_ELEMENTO_VOCE}:null]]></subreportParameterExpression>
+				<subreportParameter name="P_DS_PROGLIV1">
+					<subreportParameterExpression><![CDATA[$F{DS_PROGLIV1}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO_RES">
-					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_ANNO})?$F{ESERCIZIO_RES}:null]]></subreportParameterExpression>
+				<subreportParameter name="P_DETAIL">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_MOVIMENTAZIONE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_SOLO_GAE_ATTIVE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_SOLO_GAE_ATTIVE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ORDINE">
+					<subreportParameterExpression><![CDATA[$P{P_ORDINE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_ANNO">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_ANNO}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME_EST">
+					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO">
+					<subreportParameterExpression><![CDATA["S"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTENTE">
+					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_PIANO">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_PIANO_ECO}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_GAE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_GAE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ROTTURA_VOCE">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_VOCE}.equals( true )?"S":"N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV1">
+					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV1}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_GAE">
-					<subreportParameterExpression><![CDATA["S".equals($P{P_ROTTURA_GAE})?$F{CD_GAE}:null]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{P_GAE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CD_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{CD_PROGLIV2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_detail2.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_detail.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="7"/>
-	</pageFooter>
 </jasperReport>

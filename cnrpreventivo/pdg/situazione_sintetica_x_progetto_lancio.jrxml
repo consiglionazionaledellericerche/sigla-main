@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_sintetica_x_progetto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Stampa_situazione_progettoScriptlet" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_sintetica_x_progetto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.6105100000000008"/>
@@ -41,13 +41,13 @@
 		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[new Integer(2017)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_UO" class="java.lang.String">
-		<defaultValueExpression><![CDATA[new String("000.001")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PROGETTO" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[1487]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_GAE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[new String("*")]]></defaultValueExpression>
@@ -55,39 +55,49 @@
 	<parameter name="P_RESPONSABILE_GAE" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_DS_RESPONSABILE_GAE" class="java.lang.String">
+	<parameter name="P_DS_RESPONSABILE_GAE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PRINT_GAE" class="java.lang.Boolean">
-		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PRINT_VOCE" class="java.lang.Boolean">
-		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PRINT_ANNO" class="java.lang.Boolean">
-		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PRINT_MOVIMENTAZIONE" class="java.lang.Boolean">
-		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PRINT_SOLO_GAE_ATTIVE" class="java.lang.Boolean">
 		<parameterDescription><![CDATA[Stampa solo GAE movimentate nell'anno]]></parameterDescription>
-		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PRINT_PIANO_ECO" class="java.lang.Boolean">
 		<parameterDescription><![CDATA[Stampa Piano Economico Progetto (true/false)]]></parameterDescription>
-		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_ORDINE" class="java.lang.String">
 		<parameterDescription><![CDATA["V": Voce - "A": Anno]]></parameterDescription>
 		<defaultValueExpression><![CDATA["A"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT 1 from dual]]>
+		<![CDATA[SELECT SUM(DECODE(TI_GESTIONE,'E',TOT_NUMMOV,0)) NUM_DETTAGLI_ETR,
+       SUM(DECODE(TI_GESTIONE,'S',TOT_NUMMOV,0)) NUM_DETTAGLI_SPE,
+       CD_CENTRO_RESPONSABILITA, PG_PROGETTO PG_PROGLIV2
+FROM TMP_STAMPA_SITUAZIONE_PROGETTI
+WHERE ESERCIZIO = $P{P_ESERCIZIO}
+AND   TIPO_RECORD = 'PRINC'
+GROUP BY CD_CENTRO_RESPONSABILITA, PG_PROGETTO
+ORDER BY CD_CENTRO_RESPONSABILITA]]>
 	</queryString>
-	<field name="1" class="java.lang.Integer"/>
+	<field name="NUM_DETTAGLI_ETR" class="java.lang.Integer"/>
+	<field name="NUM_DETTAGLI_SPE" class="java.lang.Integer"/>
+	<field name="CD_CENTRO_RESPONSABILITA" class="java.lang.String"/>
+	<field name="PG_PROGLIV2" class="java.lang.Integer"/>
 	<detail>
-		<band height="14">
+		<band height="16">
 			<subreport>
 				<reportElement x="2" y="0" width="834" height="10" isRemoveLineWhenBlank="true" uuid="2a15b921-aa04-4dc5-84b0-9656266ba147"/>
 				<subreportParameter name="P_UO">
@@ -96,8 +106,14 @@
 				<subreportParameter name="P_PRINT_ANNO">
 					<subreportParameterExpression><![CDATA[$P{P_PRINT_ANNO}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="P_NUM_DETTAGLI_ETR">
+					<subreportParameterExpression><![CDATA[$F{NUM_DETTAGLI_ETR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="PATH_LOGO_FORNITORE">
 					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_PROGETTO">
 					<subreportParameterExpression><![CDATA[$P{P_PROGETTO}]]></subreportParameterExpression>
@@ -126,6 +142,9 @@
 				<subreportParameter name="NOME_EST">
 					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="P_PG_PROGLIV2">
+					<subreportParameterExpression><![CDATA[$F{PG_PROGLIV2}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="PATH_LOGO1">
 					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -144,11 +163,14 @@
 				<subreportParameter name="P_RESPONSABILE_GAE">
 					<subreportParameterExpression><![CDATA[$P{P_RESPONSABILE_GAE}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="P_NUM_DETTAGLI_SPE">
+					<subreportParameterExpression><![CDATA[$F{NUM_DETTAGLI_SPE}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="P_GAE">
 					<subreportParameterExpression><![CDATA[$P{P_GAE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_lancio.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "situazione_sintetica_x_progetto_main.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

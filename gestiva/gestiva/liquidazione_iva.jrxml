@@ -17,26 +17,28 @@
 	<style name="TNR12ITALIC" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 	<style name="TNR12BI" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="false" pdfFontName="Times-BoldItalic"/>
 	<parameter name="idReport" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(10)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="aPagIniziale" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="aPagIniziale" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="cd_cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["054"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["031"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cd_unita_organizzativa" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["054.001"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["031.001"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("2006")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("2017")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ti_liquidazione" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["P"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dataInizio" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("2006/02/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("2017/07/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dataFine" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("2006/02/28")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("2017/07/31")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
@@ -149,7 +151,9 @@ WHERE CD_UNITA_ORGANIZZATIVA = $P{cd_unita_organizzativa}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[($P{ti_liquidazione}.equals("S") ? "LIQUIDAZIONE PERIODICA ISTITUZIONALE SAN MARINO SENZA IVA" :
  $P{ti_liquidazione}.equals("X")? "LIQUIDAZIONE PERIODICA ISTITUZIONALE SERVIZI NON RESIDENTI" :
- $P{ti_liquidazione}.equals("I")? "LIQUIDAZIONE PERIODICA ISTITUZIONALE INTRA UE" : "LIQUIDAZIONE PERIODICA COMMERCIALE")]]></textFieldExpression>
+ $P{ti_liquidazione}.equals("I")? "LIQUIDAZIONE PERIODICA ISTITUZIONALE INTRA UE" :
+ $P{ti_liquidazione}.equals("P")? "LIQUIDAZIONE PERIODICA ISTITUZIONALE SPLIT PAYMENT" :
+ "LIQUIDAZIONE PERIODICA COMMERCIALE")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
 				<reportElement key="textField" style="TNR12BOLD" x="20" y="74" width="126" height="18" uuid="cffce965-2a4c-4397-846f-8ba5d4c29149">

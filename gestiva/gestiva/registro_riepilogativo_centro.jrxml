@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registro_riepilogativo_centro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
-	<property name="ireport.scriptlethandling" value="0"/>              
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registro_riepilogativo_centro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="0f63b6df-202f-410c-b4e9-0a2b5a9dfc26">
+	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="498"/>
+	<property name="ireport.y" value="285"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -15,15 +15,15 @@
 	<style name="TNR8BOLD" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNR12BOLD" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNR10BOLD" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
-	<parameter name="idReport" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(426419)]]></defaultValueExpression>
+	<parameter name="idReport" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(1239936)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT distinct ID_REPORT, GRUPPO, TIPOLOGIA_RIGA, SEQUENZA, CD_CDS, CD_UO, DS_UO, STATO_REGISTRO, CD_IVA,
-                DESCRIZIONE_RIGA, IMPONIBILE, IVA, IVA_INDETRAIBILE,
+                DESCRIZIONE_RIGA, IMPONIBILE, IVA, IVA_INDETRAIBILE, IMPONIBILE_SPLIT_PAYMENT, IVA_SPLIT_PAYMENT,
                 IVA_ESIGIBILE, TOTALE, PROGRESSIVO_UO, ESERCIZIO_RIF,
                 RAGIONE_SOCIALE_ENTE, PARTITA_IVA_ENTE, ACQUISTI_VENDITE,
                 DECODE(TIPOLOGIA_RIGA,'I',(Select Decode(TOTALE,0,'N','Y')
@@ -52,6 +52,8 @@ ORDER BY ACQUISTI_VENDITE ASC,
 	<field name="IMPONIBILE" class="java.math.BigDecimal"/>
 	<field name="IVA" class="java.math.BigDecimal"/>
 	<field name="IVA_INDETRAIBILE" class="java.math.BigDecimal"/>
+	<field name="IMPONIBILE_SPLIT_PAYMENT" class="java.math.BigDecimal"/>
+	<field name="IVA_SPLIT_PAYMENT" class="java.math.BigDecimal"/>
 	<field name="IVA_ESIGIBILE" class="java.math.BigDecimal"/>
 	<field name="TOTALE" class="java.math.BigDecimal"/>
 	<field name="PROGRESSIVO_UO" class="java.lang.String"/>
@@ -76,14 +78,14 @@ ORDER BY ACQUISTI_VENDITE ASC,
 			<band height="58" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-4" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="1" width="777" height="56" isRemoveLineWhenBlank="true">
+					<reportElement key="subreport-4" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="1" width="777" height="56" isRemoveLineWhenBlank="true" uuid="0127f44f-d160-4e74-ba71-61d92c286ee3">
 						<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 					</reportElement>
 					<subreportParameter name="idReport">
 						<subreportParameterExpression><![CDATA[$P{idReport}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "registro_riepilogativo_centro_subreport2.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "registro_riepilogativo_centro_subreport2.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -98,7 +100,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<printWhenExpression><![CDATA[new Boolean($F{TIPOLOGIA_RIGA}.equals("I") &&
             $F{STAMPA_INTESTAZIONE}.equals("Y"))]]></printWhenExpression>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="3" y="2" width="68" height="16" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="3" y="2" width="68" height="16" isRemoveLineWhenBlank="true" uuid="8b7a64d6-3326-4998-aee3-916dd4712133"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -106,10 +108,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{PROGRESSIVO_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PROGRESSIVO_UO}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="72" y="2" width="63" height="16" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="72" y="2" width="63" height="16" isRemoveLineWhenBlank="true" uuid="ccd60ccc-c28f-433c-b8af-b9ae985e36b0"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -117,10 +119,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_UO}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="139" y="2" width="518" height="16" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="139" y="2" width="518" height="16" isRemoveLineWhenBlank="true" uuid="92c1d441-5ddb-4669-ac56-676724a01a88"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -128,10 +130,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_UO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_UO}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="659" y="2" width="119" height="16" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="659" y="2" width="119" height="16" isRemoveLineWhenBlank="true" uuid="6dad86ed-3bc1-4f81-8eb1-aee048d75734"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -139,7 +141,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{STATO_REGISTRO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{STATO_REGISTRO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -153,32 +155,30 @@ ORDER BY ACQUISTI_VENDITE ASC,
 			<band height="15" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{TIPOLOGIA_RIGA}.equals("D") && $V{INTERO_ANNO}.compareTo(new Boolean(false))==0)]]></printWhenExpression>
 				<rectangle>
-					<reportElement key="rectangle-2" x="3" y="0" width="776" height="15"/>
+					<reportElement key="rectangle-2" x="3" y="0" width="776" height="15" uuid="2bd4ba33-2c7d-49ff-b5f3-a4951f206ef9"/>
 				</rectangle>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR9" x="69" y="2" width="50" height="12"/>
+					<reportElement key="textField" style="TNR9" x="69" y="2" width="50" height="12" uuid="a921713b-6f71-487c-b41e-ec68a94ea99e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_IVA}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9" x="126" y="2" width="270" height="12"/>
+					<reportElement key="textField" style="TNR9" x="126" y="2" width="270" height="12" uuid="1503f672-7ff0-42b7-8e3e-5c230283e921"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIZIONE_RIGA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DESCRIZIONE_RIGA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR8BOLD" x="401" y="2" width="75" height="12"/>
+					<reportElement key="textField" style="TNR8BOLD" x="401" y="2" width="75" height="12" uuid="62e03e56-bd30-4ef1-b4da-5cfbecea1d1e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -186,10 +186,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR8BOLD" x="481" y="2" width="75" height="12"/>
+					<reportElement key="textField" style="TNR8BOLD" x="481" y="2" width="75" height="12" uuid="27d28c4b-11ee-41c6-98e4-a6dc1034d17e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -197,10 +197,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR8BOLD" x="700" y="2" width="75" height="12"/>
+					<reportElement key="textField" style="TNR8BOLD" x="700" y="2" width="75" height="12" uuid="ff384b9e-a6b3-4244-813f-637b8dda793f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -208,54 +208,56 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TOTALE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-7" x="63" y="1" width="1" height="14"/>
+					<reportElement key="line-7" x="63" y="1" width="1" height="14" uuid="a04a7d91-b513-4e5e-a136-9c1458d6bdac"/>
 				</line>
 				<line>
-					<reportElement key="line-8" x="123" y="1" width="1" height="14"/>
+					<reportElement key="line-8" x="123" y="1" width="1" height="14" uuid="ace63841-b0c2-4261-b1c1-3540f003ddc0"/>
 				</line>
 				<line>
-					<reportElement key="line-9" x="399" y="1" width="1" height="14"/>
+					<reportElement key="line-9" x="399" y="1" width="1" height="14" uuid="36ae6bf6-b4b0-4611-9b04-85c82e1cee8a"/>
 				</line>
 				<line>
-					<reportElement key="line-10" x="478" y="1" width="1" height="14"/>
+					<reportElement key="line-10" x="478" y="1" width="1" height="14" uuid="31a1814e-b644-4f42-b142-8bd2c947690d"/>
 				</line>
 				<line>
-					<reportElement key="line-11" x="557" y="1" width="1" height="14"/>
+					<reportElement key="line-11" x="557" y="1" width="1" height="14" uuid="eff8e9c7-5c49-40d0-bff0-50949345c085"/>
 				</line>
 				<line>
-					<reportElement key="line-12" x="697" y="1" width="1" height="14"/>
+					<reportElement key="line-12" x="697" y="1" width="1" height="14" uuid="fdd5f3b8-4c49-4eef-9f6d-8a51e813dca7"/>
 				</line>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR8BOLD" x="561" y="2" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField" style="TNR8BOLD" x="561" y="2" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="bb256140-79b2-4d64-873c-a095bf753ea3"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 						<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-26" style="TNR8BOLD" x="631" y="2" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-26" style="TNR8BOLD" x="631" y="2" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="09238c54-734e-4f05-a1e8-1c0a5c2a8f88"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 						<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-25" x="626" y="1" width="1" height="14"/>
+					<reportElement key="line-25" x="626" y="1" width="1" height="14" uuid="056c9d9f-addc-42f2-b12f-dd5f15578b6f"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -269,35 +271,33 @@ ORDER BY ACQUISTI_VENDITE ASC,
 			<band height="20" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{TIPOLOGIA_RIGA}.equals("P") && $V{INTERO_ANNO}.compareTo(new Boolean(false))==0)]]></printWhenExpression>
 				<rectangle>
-					<reportElement key="rectangle-4" mode="Opaque" x="3" y="0" width="776" height="6"/>
+					<reportElement key="rectangle-4" mode="Opaque" x="3" y="0" width="776" height="5" uuid="2773721e-e539-4535-8a3e-488858dde227"/>
 				</rectangle>
 				<rectangle>
-					<reportElement key="rectangle-3" x="3" y="5" width="776" height="15"/>
+					<reportElement key="rectangle-3" x="3" y="5" width="776" height="15" uuid="a75e91b8-4a1d-48f5-a9f3-40a69206378d"/>
 				</rectangle>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-1" style="TNR9BOLD" x="69" y="7" width="50" height="12"/>
+					<reportElement key="textField-1" style="TNR9BOLD" x="69" y="7" width="50" height="12" uuid="d371901b-4e8c-4673-b32f-1abfc93ceb8e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_IVA}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-2" style="TNR9BOLD" x="126" y="7" width="270" height="12"/>
+					<reportElement key="textField-2" style="TNR9BOLD" x="126" y="7" width="270" height="12" uuid="474568b0-6efa-446b-a773-4681302d9f66"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIZIONE_RIGA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DESCRIZIONE_RIGA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-3" style="TNR8BOLD" x="401" y="7" width="75" height="12"/>
+					<reportElement key="textField-3" style="TNR8BOLD" x="401" y="7" width="75" height="12" uuid="02574ed5-cd73-4a7b-a3a7-8863b6c4bd27"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -305,10 +305,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-4" style="TNR8BOLD" x="481" y="7" width="75" height="12"/>
+					<reportElement key="textField-4" style="TNR8BOLD" x="481" y="7" width="75" height="12" uuid="6fbed3e8-59b8-47ea-b576-71a76c491639"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -316,10 +316,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="TNR8BOLD" x="700" y="7" width="75" height="12"/>
+					<reportElement key="textField-5" style="TNR8BOLD" x="700" y="7" width="75" height="12" uuid="217fa524-bbc5-4de8-8537-37845c928be2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -327,54 +327,56 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TOTALE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-13" x="63" y="6" width="1" height="14"/>
+					<reportElement key="line-13" x="63" y="6" width="1" height="14" uuid="14294fc3-a3a4-45b5-ac5d-c35b0d5e41de"/>
 				</line>
 				<line>
-					<reportElement key="line-14" x="123" y="6" width="1" height="14"/>
+					<reportElement key="line-14" x="123" y="6" width="1" height="14" uuid="74d6342e-6e43-4d40-8b36-7b6bc660328f"/>
 				</line>
 				<line>
-					<reportElement key="line-15" x="399" y="6" width="1" height="14"/>
+					<reportElement key="line-15" x="399" y="6" width="1" height="14" uuid="9acd4aa8-dd7e-419c-82b4-95b6093d031d"/>
 				</line>
 				<line>
-					<reportElement key="line-16" x="478" y="6" width="1" height="14"/>
+					<reportElement key="line-16" x="478" y="6" width="1" height="14" uuid="e03e3d26-15c2-49b2-a50b-5c834a06ff4a"/>
 				</line>
 				<line>
-					<reportElement key="line-17" x="557" y="6" width="1" height="14"/>
+					<reportElement key="line-17" x="557" y="6" width="1" height="14" uuid="1eb82992-cf0f-4489-b255-8eee38a0d6de"/>
 				</line>
 				<line>
-					<reportElement key="line-18" x="697" y="6" width="1" height="14"/>
+					<reportElement key="line-18" x="697" y="6" width="1" height="14" uuid="9ee7fa01-5eab-4b98-9f9c-e3df85f37fbd"/>
 				</line>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-22" style="TNR8BOLD" x="561" y="7" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-22" style="TNR8BOLD" x="561" y="7" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="0c131819-71d2-43c0-a4e9-78da258260fa"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 						<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-25" style="TNR8BOLD" x="631" y="7" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-25" style="TNR8BOLD" x="631" y="7" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="4832b653-f6de-4c59-87be-11820b6a8f33"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 						<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-26" x="626" y="6" width="1" height="14"/>
+					<reportElement key="line-26" x="626" y="6" width="1" height="14" uuid="720853ad-e3bd-4eca-b287-7146fe333f52"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -389,35 +391,33 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{TIPOLOGIA_RIGA}.equals("T")
 && !$F{TOTALE}.equals(new BigDecimal(0)))]]></printWhenExpression>
 				<rectangle>
-					<reportElement key="rectangle-5" mode="Opaque" x="3" y="0" width="776" height="6"/>
+					<reportElement key="rectangle-5" mode="Opaque" x="3" y="0" width="776" height="6" uuid="591c67c1-0f54-4960-bf27-7076d866e5fb"/>
 				</rectangle>
 				<rectangle>
-					<reportElement key="rectangle-6" x="3" y="5" width="776" height="15"/>
+					<reportElement key="rectangle-6" x="3" y="5" width="776" height="15" uuid="d631b43a-3d1a-4cd4-bdc9-67123959db0f"/>
 				</rectangle>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-6" style="TNR9BOLD" x="69" y="7" width="50" height="12"/>
+					<reportElement key="textField-6" style="TNR9BOLD" x="69" y="7" width="50" height="12" uuid="0bae5597-c48d-4974-ab1d-63ba40edd56d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_IVA}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-7" style="TNR9BOLD" x="126" y="7" width="270" height="12"/>
+					<reportElement key="textField-7" style="TNR9BOLD" x="126" y="7" width="270" height="12" uuid="8c8c8093-1758-456c-9cc1-0878b50ac4bd"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIZIONE_RIGA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DESCRIZIONE_RIGA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-8" style="TNR8BOLD" x="401" y="7" width="75" height="12"/>
+					<reportElement key="textField-8" style="TNR8BOLD" x="401" y="7" width="75" height="12" uuid="dc833156-1fa6-4c48-b052-c09d34020edd"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -425,10 +425,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-9" style="TNR8BOLD" x="481" y="7" width="75" height="12"/>
+					<reportElement key="textField-9" style="TNR8BOLD" x="481" y="7" width="75" height="12" uuid="f5b53b92-9eb3-484b-930f-ea3156505933"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -436,10 +436,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-10" style="TNR8BOLD" x="700" y="7" width="75" height="12"/>
+					<reportElement key="textField-10" style="TNR8BOLD" x="700" y="7" width="75" height="12" uuid="11d29483-7df7-4f6c-a3f6-c38e917ec25e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -447,54 +447,160 @@ ORDER BY ACQUISTI_VENDITE ASC,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TOTALE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-19" x="63" y="6" width="1" height="14"/>
+					<reportElement key="line-19" x="63" y="6" width="1" height="14" uuid="c0328218-5372-4526-abae-5c9f9855b218"/>
 				</line>
 				<line>
-					<reportElement key="line-20" x="123" y="5" width="1" height="14"/>
+					<reportElement key="line-20" x="123" y="5" width="1" height="14" uuid="03985618-989b-4314-943b-36a7756ced95"/>
 				</line>
 				<line>
-					<reportElement key="line-21" x="399" y="6" width="1" height="14"/>
+					<reportElement key="line-21" x="399" y="6" width="1" height="14" uuid="47e9db3d-dd51-42ad-9c0a-850fda0093a5"/>
 				</line>
 				<line>
-					<reportElement key="line-22" x="478" y="6" width="1" height="14"/>
+					<reportElement key="line-22" x="478" y="6" width="1" height="14" uuid="4d8f6436-67bf-490e-af13-9a6512a932a2"/>
 				</line>
 				<line>
-					<reportElement key="line-23" x="557" y="6" width="1" height="14"/>
+					<reportElement key="line-23" x="557" y="6" width="1" height="14" uuid="5347e41f-c02f-43f0-8b4a-8262d3a7cf04"/>
 				</line>
 				<line>
-					<reportElement key="line-24" x="697" y="6" width="1" height="14"/>
+					<reportElement key="line-24" x="697" y="6" width="1" height="14" uuid="472e5adb-9734-45e5-abd8-48e510376f2c"/>
 				</line>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-23" style="TNR8BOLD" x="561" y="7" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-23" style="TNR8BOLD" x="561" y="7" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="c2330447-2906-41fb-b8eb-4b945301b875"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 						<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-24" style="TNR8BOLD" x="631" y="7" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-24" style="TNR8BOLD" x="631" y="7" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="f32dc0b1-389f-48b9-8b4f-24617288d222"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
 						<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-27" x="626" y="6" width="1" height="14"/>
+					<reportElement key="line-27" x="626" y="6" width="1" height="14" uuid="94ff203f-aada-456b-a76a-1a794ca8987c"/>
+				</line>
+			</band>
+			<band height="15">
+				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{TIPOLOGIA_RIGA}.equals("T") &&
+    !$F{TOTALE}.equals(new BigDecimal(0)) &&
+    !$F{IVA_SPLIT_PAYMENT}.equals(new BigDecimal(0)) &&
+    !"1".equals("1"))]]></printWhenExpression>
+				<rectangle>
+					<reportElement key="rectangle-6" x="3" y="0" width="776" height="15" uuid="034e7488-1239-49f0-96f8-ae49d466732b"/>
+				</rectangle>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-7" style="TNR8BOLD" x="126" y="1" width="270" height="12" uuid="4827b4fe-2d3f-45ee-8cd9-1c5991e17216"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["DI CUI SPLIT PAYMENT"]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-8" style="TNR8BOLD" x="401" y="1" width="75" height="12" uuid="cba828ce-a58c-4bcd-b5e6-cc63d4a08c57"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE_SPLIT_PAYMENT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-9" style="TNR8BOLD" x="481" y="1" width="75" height="12" uuid="865401f3-03ef-4313-8732-cd10fcfce1b1"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{IVA_SPLIT_PAYMENT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-10" style="TNR8BOLD" x="700" y="1" width="75" height="12" uuid="6c736cfe-753d-43d6-ad9f-131003956e2e"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{IMPONIBILE_SPLIT_PAYMENT}.add($F{IVA_SPLIT_PAYMENT})]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement key="line-19" x="63" y="0" width="1" height="14" uuid="1258c525-404b-42f1-a244-6636651ab7d7"/>
+				</line>
+				<line>
+					<reportElement key="line-20" x="123" y="0" width="1" height="14" uuid="e8e615ca-c8e7-41ab-a1b2-fe58269b0f7b"/>
+				</line>
+				<line>
+					<reportElement key="line-21" x="399" y="0" width="1" height="14" uuid="c7e917f1-0132-46c2-bfe1-dc1970ce524b"/>
+				</line>
+				<line>
+					<reportElement key="line-22" x="478" y="0" width="1" height="14" uuid="814ae2d6-bc4f-4a0a-931a-bfdea6bc8512"/>
+				</line>
+				<line>
+					<reportElement key="line-23" x="557" y="0" width="1" height="14" uuid="b4f5a483-21e4-403f-a212-b92d7c878f6f"/>
+				</line>
+				<line>
+					<reportElement key="line-24" x="697" y="0" width="1" height="14" uuid="9bb11082-274f-4d43-9829-2d569b49aa7c"/>
+				</line>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-23" style="TNR8BOLD" x="561" y="1" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="1f2fa84b-c5d1-4f67-acc6-aacb5a020a16"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+						<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-24" style="TNR8BOLD" x="631" y="1" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="31a3561a-18c5-44ed-b20a-6d4b00a7785d"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+						<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[BigDecimal.ZERO]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement key="line-27" x="626" y="0" width="1" height="14" uuid="b8b1691a-96ea-4690-918d-d38ef3edaa7d"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -511,7 +617,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 	<pageHeader>
 		<band height="173" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-1" style="TNR9BOLD" x="72" y="126" width="66" height="15"/>
+				<reportElement key="staticText-1" style="TNR9BOLD" x="72" y="126" width="66" height="15" uuid="bb27fab7-3615-4a70-9ef4-c46d22ef174b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -522,7 +628,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<text><![CDATA[CODICE UO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-2" style="TNR9BOLD" x="141" y="126" width="538" height="15"/>
+				<reportElement key="staticText-2" style="TNR9BOLD" x="141" y="126" width="538" height="15" uuid="8c284695-92cf-43f3-967c-c44683209938"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -533,7 +639,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<text><![CDATA[DESCRIZIONE UO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-3" style="TNR9BOLD" x="683" y="126" width="93" height="15"/>
+				<reportElement key="staticText-3" style="TNR9BOLD" x="683" y="126" width="93" height="15" uuid="e30af872-8c9d-4758-b38b-326c795eab50"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -544,28 +650,28 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<text><![CDATA[STATO REGISTRO]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement key="rectangle-1" x="3" y="142" width="776" height="23"/>
+				<reportElement key="rectangle-1" x="3" y="142" width="776" height="23" uuid="ba391483-81f2-44cd-a749-876ba4ed765e"/>
 			</rectangle>
 			<line>
-				<reportElement key="line-1" x="63" y="142" width="1" height="22"/>
+				<reportElement key="line-1" x="63" y="142" width="1" height="22" uuid="9f68225a-c016-4b08-94ba-d733de7bb489"/>
 			</line>
 			<line>
-				<reportElement key="line-2" x="123" y="142" width="1" height="22"/>
+				<reportElement key="line-2" x="123" y="142" width="1" height="22" uuid="1f7c471e-448e-4911-aedb-f4ce8be002dd"/>
 			</line>
 			<line>
-				<reportElement key="line-3" x="399" y="142" width="1" height="22"/>
+				<reportElement key="line-3" x="399" y="142" width="1" height="22" uuid="0004fdd0-169f-4b0a-aa94-32200ec48fbc"/>
 			</line>
 			<line>
-				<reportElement key="line-4" x="478" y="142" width="1" height="22"/>
+				<reportElement key="line-4" x="478" y="142" width="1" height="22" uuid="21e54db2-2260-46ad-8dd3-de008fb2e33f"/>
 			</line>
 			<line>
-				<reportElement key="line-5" x="557" y="142" width="1" height="22"/>
+				<reportElement key="line-5" x="557" y="142" width="1" height="22" uuid="784f381c-a618-41d9-93a2-96980b5d9bb0"/>
 			</line>
 			<line>
-				<reportElement key="line-6" x="697" y="142" width="1" height="22"/>
+				<reportElement key="line-6" x="697" y="142" width="1" height="22" uuid="16407fa6-9f78-492b-acf0-53c1cf0a84e0"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-4" style="TNR9BOLD" x="64" y="144" width="59" height="12"/>
+				<reportElement key="staticText-4" style="TNR9BOLD" x="64" y="144" width="59" height="12" uuid="41c63e1e-7ac9-4728-9fd0-cafabf24b15b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -576,7 +682,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<text><![CDATA[CODICE IVA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-5" style="TNR9BOLD" x="126" y="144" width="270" height="12"/>
+				<reportElement key="staticText-5" style="TNR9BOLD" x="126" y="144" width="270" height="12" uuid="555a78ec-f30a-45f5-9b36-dfd0d31016df"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -587,7 +693,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<text><![CDATA[DESCRIZIONE	]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-6" style="TNR9BOLD" x="401" y="144" width="75" height="12"/>
+				<reportElement key="staticText-6" style="TNR9BOLD" x="401" y="144" width="75" height="12" uuid="614fc371-0cc6-4efa-acff-48a488746d0b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -598,7 +704,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<text><![CDATA[IMPONIBILE	]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-7" style="TNR9BOLD" x="481" y="144" width="75" height="12"/>
+				<reportElement key="staticText-7" style="TNR9BOLD" x="481" y="144" width="75" height="12" uuid="c1490aa5-d331-4def-b954-c18334c5a11f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -609,7 +715,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<text><![CDATA[IVA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-8" style="TNR9BOLD" x="700" y="144" width="75" height="12"/>
+				<reportElement key="staticText-8" style="TNR9BOLD" x="700" y="144" width="75" height="12" uuid="4d47356e-557e-4785-892e-c45a420a633d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -620,15 +726,15 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<text><![CDATA[TOTALE]]></text>
 			</staticText>
 			<subreport isUsingCache="true">
-				<reportElement key="subreport-2" x="3" y="7" width="775" height="99"/>
+				<reportElement key="subreport-2" x="3" y="7" width="775" height="99" uuid="c1eb1b00-5a76-4511-b257-cc0749760fef"/>
 				<subreportParameter name="idReport">
 					<subreportParameterExpression><![CDATA[$P{idReport}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "registro_riepilogativo_centro_subreport0.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "registro_riepilogativo_centro_subreport0.jasper"]]></subreportExpression>
 			</subreport>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-21" style="TNR10BOLD" x="725" y="12" width="50" height="16"/>
+				<reportElement key="textField-21" style="TNR10BOLD" x="725" y="12" width="50" height="16" uuid="26c8e72f-e537-4ace-96c5-131f760177e8"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -638,56 +744,58 @@ ORDER BY ACQUISTI_VENDITE ASC,
 				<textElement textAlignment="Left" markup="styled">
 					<font size="10" pdfFontName="Times-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["/Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["/Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<subreport isUsingCache="true">
-				<reportElement key="subreport-3" x="4" y="107" width="773" height="14">
+				<reportElement key="subreport-3" x="4" y="107" width="773" height="14" uuid="c885ee89-bf6f-4b29-8ae5-83acf13273f2">
 					<printWhenExpression><![CDATA[new Boolean(!$F{GRUPPO}.equals("C"))]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="idReport">
 					<subreportParameterExpression><![CDATA[$P{idReport}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "registro_riepilogativo_centro_subreport1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "registro_riepilogativo_centro_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR9BOLD" x="560" y="144" width="60" height="21" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField" style="TNR9BOLD" x="560" y="144" width="60" height="21" forecolor="#000000" backcolor="#FFFFFF" uuid="9d54e8d6-fb95-4754-8005-264affce861f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
 					<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{ACQUISTI_VENDITE}.equals("A") ? "DI CUI INDETR." : null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ACQUISTI_VENDITE}.equals("A") ? "DI CUI INDETR." : null]]></textFieldExpression>
 			</textField>
 			<subreport isUsingCache="true">
-				<reportElement key="subreport-5" x="4" y="110" width="775" height="12">
+				<reportElement key="subreport-5" x="4" y="110" width="775" height="12" uuid="c9d51565-e5ce-4bbf-b075-d47745ec3a02">
 					<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C"))]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="idReport">
 					<subreportParameterExpression><![CDATA[$P{idReport}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "registro_riepilogativo_centro_subreport3.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "registro_riepilogativo_centro_subreport3.jasper"]]></subreportExpression>
 			</subreport>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField-27" style="TNR9BOLD" x="630" y="144" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-27" style="TNR9BOLD" x="630" y="144" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="b4686a98-31ae-4b97-b9a3-33763383851a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
 					<font isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["DI CUI ESIG."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["DI CUI ESIG."]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-28" x="624" y="142" width="1" height="22"/>
+				<reportElement key="line-28" x="624" y="142" width="1" height="22" uuid="5237316e-378a-4b31-a5ef-408faa0114c2"/>
 			</line>
 		</band>
 	</pageHeader>
