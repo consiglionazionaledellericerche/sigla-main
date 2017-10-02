@@ -143,7 +143,7 @@
             maxLength="12"
             enabledOnEdit="false"
             nullable="false"
-            label="quantitaEvasa"/>
+            label="Quantità evasa"/>
     <fieldProperty
             name="stato"
             property="stato"
@@ -241,5 +241,19 @@
         <columnFieldProperty name="dataBolla" property="evasioneOrdine.dataBolla" formatName="date_short"
                              label="Data Bolla"/>
         <columnFieldProperty name="numeroBolla" property="evasioneOrdine.numeroBolla" label="Numero Bolla"/>
+        <columnFieldProperty name="quantitaEvasa"/>
+        <columnFieldProperty name="cdBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.cdBeneServizio"
+                             label="Codice Bene"/>
+        <columnFieldProperty name="dsBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"
+                             label="Descrizione Bene"/>
+        <columnFieldProperty name="cdVoceIva" property="ordineAcqConsegna.ordineAcqRiga.cdVoceIva" label="Codice IVA"/>
+        <columnFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
+                             label="Imponibile in divisa"/>
+        <columnFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
+                             label="Importo in divisa"/>
+        <columnFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
+                             label="Totale riga"/>
+        <columnFieldProperty name="prezzoUnitario" property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
+                             label="Prezzo Unitario"/>
     </columnSet>
 </bulkInfo>

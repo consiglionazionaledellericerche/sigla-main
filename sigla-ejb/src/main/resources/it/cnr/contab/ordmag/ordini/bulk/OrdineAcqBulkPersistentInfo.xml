@@ -11,14 +11,15 @@
 			columnName="CD_UNITA_OPERATIVA"
 			propertyName="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
-			columnName="CD_UNITA_OPERATIVA"
-			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
-		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="numerazioneOrd.esercizio" />
 		<columnMapping
 			columnName="CD_NUMERATORE"
 			propertyName="numerazioneOrd.cdNumeratore" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
+
 		<columnMapping
 			columnName="CD_DIVISA"
 			propertyName="divisa.cd_divisa" />
