@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="199"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -951,7 +951,7 @@ precedente
 				<textFieldExpression><![CDATA[$V{DettNetto}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField" style="NORMAL" x="85" y="0" width="50" height="13" uuid="76da67c7-e8ee-4056-8b8a-05b1e9fcb862"/>
+				<reportElement key="textField" style="BOLD" mode="Transparent" x="85" y="0" width="50" height="13" uuid="76da67c7-e8ee-4056-8b8a-05b1e9fcb862"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

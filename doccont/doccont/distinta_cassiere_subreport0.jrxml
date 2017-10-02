@@ -951,7 +951,7 @@ precedente
 				<textFieldExpression><![CDATA[$V{DettNetto}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField" style="NORMAL" x="85" y="0" width="50" height="13" uuid="480af406-ce16-4df4-82c4-bf7a178aa5df"/>
+				<reportElement key="textField" style="BOLD" x="85" y="0" width="50" height="13" uuid="480af406-ce16-4df4-82c4-bf7a178aa5df"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
