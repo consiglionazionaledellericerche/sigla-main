@@ -317,7 +317,8 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
                 Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getEsercizio())
                         .map(esercizio -> String.valueOf(esercizio))
                         .orElse("0"),
-                archiviaStampaPdgVariazioneBulk.getCd_cds()+" - "+archiviaStampaPdgVariazioneBulk.getDs_cds(),
+				SpringUtil.getBean("storeService", StoreService.class).
+						sanitizeFolderName(archiviaStampaPdgVariazioneBulk.getCd_cds()+" - "+archiviaStampaPdgVariazioneBulk.getDs_cds()),
                 "CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
                         " Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
         ).stream().collect(
