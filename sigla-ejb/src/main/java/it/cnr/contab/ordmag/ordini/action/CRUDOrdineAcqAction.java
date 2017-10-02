@@ -41,7 +41,6 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -153,6 +152,7 @@ public Forward doBlankSearchFindBeneServizio(ActionContext context, OrdineAcqRig
         riga.setUnitaMisura(null);
         riga.setCoefConv(null);
         riga.setDspTipoConsegna(null);
+        riga.setTipoConsegnaDefault(null);
         riga.setVoceIva(null);
         return context.findDefaultForward();
 
@@ -176,6 +176,7 @@ public Forward doBringBackSearchFindBeneServizio(ActionContext context,
 			}
 			if (bene.getTipoGestione() != null){
 				riga.setDspTipoConsegna(bene.getTipoGestione());
+		        riga.setTipoConsegnaDefault(bene.getTipoGestione());
 			}
 			if (bene.getVoce_iva() != null){
 				riga.setVoceIva(bene.getVoce_iva());

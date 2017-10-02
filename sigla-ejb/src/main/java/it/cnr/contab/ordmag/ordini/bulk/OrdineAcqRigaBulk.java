@@ -35,6 +35,8 @@ public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAm
 	protected BulkList righeConsegnaColl= new BulkList();
 	private java.lang.String dspTipoConsegna;
 
+	private java.lang.String tipoConsegnaDefault;
+
 	private java.sql.Timestamp dspDtPrevConsegna;
 
 	private java.math.BigDecimal dspQuantita;
@@ -501,5 +503,11 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	@Override
 	public void setIm_diponibile_nc(BigDecimal im_diponibile_nc) {
 		
+	}
+	public java.lang.String getTipoConsegnaDefault() {
+		return tipoConsegnaDefault;
+	}
+	public void setTipoConsegnaDefault(java.lang.String tipoConsegnaDefault) {
+		this.tipoConsegnaDefault = tipoConsegnaDefault;
 	}
 }
