@@ -330,5 +330,14 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsFatturaGaeSplitAction" />
   </businessProcess>
-
+ <action 
+      path="/ElaboraFileSpesometroAction" actionClass="it.cnr.contab.docamm00.actions.ElaboraFileSpesometroAction">
+  </action>
+   <businessProcess
+      name="ElaboraFileSpesometroBP" className="it.cnr.contab.docamm00.bp.ElaboraFileSpesometroBP">
+    	<forward name="default" path="/docamm00/elabora_file_spesometro.jsp"/>
+    	<init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.VSpesometroNewBulk"/>
+	<init-param name="componentSessionName" value="CNRDOCAMM00_EJB_ElaboraFileIntraComponentSession" />
+	<init-param name="defaultAction" value="ElaboraFileSpesometroAction" />
+  </businessProcess>
 </action-mappings>
