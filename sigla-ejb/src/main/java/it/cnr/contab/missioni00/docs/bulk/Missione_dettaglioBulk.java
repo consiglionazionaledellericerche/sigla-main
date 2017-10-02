@@ -5,7 +5,6 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_diariaBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;

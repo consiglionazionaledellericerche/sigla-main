@@ -1,11 +1,8 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.jada.bulk.*;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
 
 public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements Persistent {
 
@@ -22,15 +19,15 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 	private java.lang.String cd_uo_origine;
 
 	// DS_DOCUMENTO_CONT VARCHAR(300)
-	@CMISPolicy(name="P:cm:titled", property=@CMISProperty(name="cm:description"))
-	@CMISProperty(name="doccont:descDoc")	
+	@StoragePolicy(name="P:cm:titled", property=@StorageProperty(name="cm:description"))
+	@StorageProperty(name="doccont:descDoc")
 	private java.lang.String ds_documento_cont;
 
 	// DT_ANNULLAMENTO TIMESTAMP
 	private java.sql.Timestamp dt_annullamento;
 
 	// DT_EMISSIONE TIMESTAMP
-	@CMISProperty(name="doccont:datDoc")				
+	@StorageProperty(name="doccont:datDoc")				
 	private java.sql.Timestamp dt_emissione;
 
 	// DT_PAGAMENTO_INCASSO TIMESTAMP
@@ -40,7 +37,7 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 	private java.sql.Timestamp dt_trasmissione;
 
 	// IM_DOCUMENTO_CONT DECIMAL(15,2)
-	@CMISProperty(name="doccont:importo")					
+	@StorageProperty(name="doccont:importo")					
 	private java.math.BigDecimal im_documento_cont;
 
 	// IM_PAGATO_INCASSATO DECIMAL(15,2)
@@ -50,7 +47,7 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 	private java.lang.String stato;
 
 	// STATO_TRASMISSIONE CHAR(1)
-	@CMISProperty(name="doccont:stato_trasmissione")
+	@StorageProperty(name="doccont:stato_trasmissione")
 	private java.lang.String stato_trasmissione;
 
 	// TI_DOCUMENTO_CONT CHAR(1)

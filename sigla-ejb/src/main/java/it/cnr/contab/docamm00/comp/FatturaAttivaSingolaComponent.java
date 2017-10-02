@@ -27,8 +27,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +46,6 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaHome;
-import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -66,8 +61,6 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
-import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
 import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
@@ -2606,57 +2599,6 @@ private void controlloCodiceIpaValorizzato(TerzoBulk terzo)
 				"Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
 				"pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice Univoco Ufficio IPA " +
 				"relativo al terzo per il quale si sta tentando di emettere fattura.");
-	}
-}
-
-public void gestioneAllegatiPerFatturazioneElettronica(UserContext userContext,
-		Fattura_attivaBulk fattura) throws ComponentException {
-	if (fattura.isDocumentoFatturazioneElettronica()){
-		DocumentiCollegatiDocAmmService cmisService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
-		File file = lanciaStampaFatturaElettronica(userContext, fattura);
-		archiviaFileCMIS(userContext, cmisService, fattura, file);
-	}
-}
-
-private Document archiviaFileCMIS(UserContext userContext, SiglaCMISService cmisService, Fattura_attivaBulk fattura, File file) throws ComponentException{
-	List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
-	List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
-	try {
-		CMISFile cmisFile = new CMISFileFatturaAttiva(file, fattura, 
-				"application/pdf","FAPP" + fattura.constructCMISNomeFile() + ".pdf");		
-		if (cmisFile!=null) {
-			//E' previsto solo l'inserimento ma non l'aggiornamento
-			CMISPath path = cmisFile.getCMISParentPath(cmisService);
-			try{
-				Document node = cmisService.restoreSimpleDocument(cmisFile, 
-						cmisFile.getInputStream(),
-						cmisFile.getContentType(),
-						cmisFile.getFileName(), 
-						path);
-				cmisService.addAspect(node, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
-				cmisFile.setDocument(node);
-				cmisFileCreate.add(cmisFile);
-				return node;
-			} catch (Exception e) {
-				if (e.getCause() instanceof CmisConstraintException)
-					throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
-				throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getMessage() + ")");
-			}
-		}
-		return null;
-	} catch (Exception e){
-		//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-		for (CMISFile cmisFile : cmisFileCreate)
-			cmisService.deleteNode(cmisFile.getDocument());
-		for (CMISFile cmisFile : cmisFileAnnullati) {
-			String cmisFileName = cmisFile.getFileName();
-			String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
-			String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
-			cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
-			cmisService.updateProperties(cmisFile, cmisFile.getDocument());
-			cmisService.removeAspect(cmisFile.getDocument());
-		}
-		throw new ApplicationException(e.getMessage());
 	}
 }
 

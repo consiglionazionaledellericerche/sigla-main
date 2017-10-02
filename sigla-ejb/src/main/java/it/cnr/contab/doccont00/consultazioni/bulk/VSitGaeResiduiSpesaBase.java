@@ -4,6 +4,9 @@
  */
 package it.cnr.contab.doccont00.consultazioni.bulk;
 import it.cnr.jada.persistency.Keyed;
+
+import java.math.BigDecimal;
+
 public class VSitGaeResiduiSpesaBase extends VSitGaeResiduiSpesaKey implements Keyed {
 //    CDS VARCHAR(4000)
 	private java.lang.String cds;
@@ -45,52 +48,52 @@ public class VSitGaeResiduiSpesaBase extends VSitGaeResiduiSpesaKey implements K
 	private java.lang.String dsElementoVoce;
  
 //    STANZ_RES_INI DECIMAL(22,0)
-	private java.lang.Long stanzResIni;
+	private BigDecimal stanzResIni;
  
 //    VAR_STANZ_RES_PIU DECIMAL(22,0)
-	private java.lang.Long varStanzResPiu;
+	private BigDecimal varStanzResPiu;
  
 //    VAR_STANZ_RES_MENO_STO DECIMAL(22,0)
-	private java.lang.Long varStanzResMenoSto;
+	private BigDecimal varStanzResMenoSto;
  
 //    VAR_STANZ_RES_MENO_ECO DECIMAL(22,0)
-	private java.lang.Long varStanzResMenoEco;
+	private BigDecimal varStanzResMenoEco;
  
 //    RES_PRO_INI DECIMAL(22,0)
-	private java.lang.Long resProIni;
+	private BigDecimal resProIni;
  
 //    VAR_RES_PRO_PIU DECIMAL(22,0)
-	private java.lang.Long varResProPiu;
+	private BigDecimal varResProPiu;
  
 //    VAR_RES_PRO_MENO DECIMAL(22,0)
-	private java.lang.Long varResProMeno;
+	private BigDecimal varResProMeno;
  
 //    LIQUIDATO_PRO DECIMAL(22,0)
-	private java.lang.Long liquidatoPro;
+	private BigDecimal liquidatoPro;
  
 //    PAGATO_PRO DECIMAL(22,0)
-	private java.lang.Long pagatoPro;
+	private BigDecimal pagatoPro;
  
 //    RES_IMP_RIBALTATI DECIMAL(22,0)
-	private java.lang.Long resImpRibaltati;
+	private BigDecimal resImpRibaltati;
  
 //    RES_IMP_RIB_LIQ DECIMAL(22,0)
-	private java.lang.Long resImpRibLiq;
+	private BigDecimal resImpRibLiq;
  
 //    RES_IMP_RIB_PAG DECIMAL(22,0)
-	private java.lang.Long resImpRibPag;
+	private BigDecimal resImpRibPag;
  
 //    RES_IMP_EM_ESE DECIMAL(22,0)
-	private java.lang.Long resImpEmEse;
+	private BigDecimal resImpEmEse;
  
 //    RES_IMP_EM_ESE_LIQ DECIMAL(22,0)
-	private java.lang.Long resImpEmEseLiq;
+	private BigDecimal resImpEmEseLiq;
  
 //    RES_IMP_EM_ESE_PAG DECIMAL(22,0)
-	private java.lang.Long resImpEmEsePag;
+	private BigDecimal resImpEmEsePag;
  
 //    RES_IMP_ATTUALI DECIMAL(22,0)
-	private java.lang.Long resImpAttuali;
+	private BigDecimal resImpAttuali;
  
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -288,224 +291,224 @@ public class VSitGaeResiduiSpesaBase extends VSitGaeResiduiSpesaKey implements K
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [stanzResIni]
 	 **/
-	public java.lang.Long getStanzResIni() {
+	public BigDecimal getStanzResIni() {
 		return stanzResIni;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [stanzResIni]
 	 **/
-	public void setStanzResIni(java.lang.Long stanzResIni)  {
+	public void setStanzResIni(BigDecimal stanzResIni)  {
 		this.stanzResIni=stanzResIni;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [varStanzResPiu]
 	 **/
-	public java.lang.Long getVarStanzResPiu() {
+	public BigDecimal getVarStanzResPiu() {
 		return varStanzResPiu;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [varStanzResPiu]
 	 **/
-	public void setVarStanzResPiu(java.lang.Long varStanzResPiu)  {
+	public void setVarStanzResPiu(BigDecimal varStanzResPiu)  {
 		this.varStanzResPiu=varStanzResPiu;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [varStanzResMenoSto]
 	 **/
-	public java.lang.Long getVarStanzResMenoSto() {
+	public BigDecimal getVarStanzResMenoSto() {
 		return varStanzResMenoSto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [varStanzResMenoSto]
 	 **/
-	public void setVarStanzResMenoSto(java.lang.Long varStanzResMenoSto)  {
+	public void setVarStanzResMenoSto(BigDecimal varStanzResMenoSto)  {
 		this.varStanzResMenoSto=varStanzResMenoSto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [varStanzResMenoEco]
 	 **/
-	public java.lang.Long getVarStanzResMenoEco() {
+	public BigDecimal getVarStanzResMenoEco() {
 		return varStanzResMenoEco;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [varStanzResMenoEco]
 	 **/
-	public void setVarStanzResMenoEco(java.lang.Long varStanzResMenoEco)  {
+	public void setVarStanzResMenoEco(BigDecimal varStanzResMenoEco)  {
 		this.varStanzResMenoEco=varStanzResMenoEco;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [resProIni]
 	 **/
-	public java.lang.Long getResProIni() {
+	public BigDecimal getResProIni() {
 		return resProIni;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [resProIni]
 	 **/
-	public void setResProIni(java.lang.Long resProIni)  {
+	public void setResProIni(BigDecimal resProIni)  {
 		this.resProIni=resProIni;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [varResProPiu]
 	 **/
-	public java.lang.Long getVarResProPiu() {
+	public BigDecimal getVarResProPiu() {
 		return varResProPiu;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [varResProPiu]
 	 **/
-	public void setVarResProPiu(java.lang.Long varResProPiu)  {
+	public void setVarResProPiu(BigDecimal varResProPiu)  {
 		this.varResProPiu=varResProPiu;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [varResProMeno]
 	 **/
-	public java.lang.Long getVarResProMeno() {
+	public BigDecimal getVarResProMeno() {
 		return varResProMeno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [varResProMeno]
 	 **/
-	public void setVarResProMeno(java.lang.Long varResProMeno)  {
+	public void setVarResProMeno(BigDecimal varResProMeno)  {
 		this.varResProMeno=varResProMeno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [liquidatoPro]
 	 **/
-	public java.lang.Long getLiquidatoPro() {
+	public BigDecimal getLiquidatoPro() {
 		return liquidatoPro;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [liquidatoPro]
 	 **/
-	public void setLiquidatoPro(java.lang.Long liquidatoPro)  {
+	public void setLiquidatoPro(BigDecimal liquidatoPro)  {
 		this.liquidatoPro=liquidatoPro;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [pagatoPro]
 	 **/
-	public java.lang.Long getPagatoPro() {
+	public BigDecimal getPagatoPro() {
 		return pagatoPro;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [pagatoPro]
 	 **/
-	public void setPagatoPro(java.lang.Long pagatoPro)  {
+	public void setPagatoPro(BigDecimal pagatoPro)  {
 		this.pagatoPro=pagatoPro;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [resImpRibaltati]
 	 **/
-	public java.lang.Long getResImpRibaltati() {
+	public BigDecimal getResImpRibaltati() {
 		return resImpRibaltati;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [resImpRibaltati]
 	 **/
-	public void setResImpRibaltati(java.lang.Long resImpRibaltati)  {
+	public void setResImpRibaltati(BigDecimal resImpRibaltati)  {
 		this.resImpRibaltati=resImpRibaltati;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [resImpRibLiq]
 	 **/
-	public java.lang.Long getResImpRibLiq() {
+	public BigDecimal getResImpRibLiq() {
 		return resImpRibLiq;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [resImpRibLiq]
 	 **/
-	public void setResImpRibLiq(java.lang.Long resImpRibLiq)  {
+	public void setResImpRibLiq(BigDecimal resImpRibLiq)  {
 		this.resImpRibLiq=resImpRibLiq;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [resImpRibPag]
 	 **/
-	public java.lang.Long getResImpRibPag() {
+	public BigDecimal getResImpRibPag() {
 		return resImpRibPag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [resImpRibPag]
 	 **/
-	public void setResImpRibPag(java.lang.Long resImpRibPag)  {
+	public void setResImpRibPag(BigDecimal resImpRibPag)  {
 		this.resImpRibPag=resImpRibPag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [resImpEmEse]
 	 **/
-	public java.lang.Long getResImpEmEse() {
+	public BigDecimal getResImpEmEse() {
 		return resImpEmEse;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [resImpEmEse]
 	 **/
-	public void setResImpEmEse(java.lang.Long resImpEmEse)  {
+	public void setResImpEmEse(BigDecimal resImpEmEse)  {
 		this.resImpEmEse=resImpEmEse;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [resImpEmEseLiq]
 	 **/
-	public java.lang.Long getResImpEmEseLiq() {
+	public BigDecimal getResImpEmEseLiq() {
 		return resImpEmEseLiq;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [resImpEmEseLiq]
 	 **/
-	public void setResImpEmEseLiq(java.lang.Long resImpEmEseLiq)  {
+	public void setResImpEmEseLiq(BigDecimal resImpEmEseLiq)  {
 		this.resImpEmEseLiq=resImpEmEseLiq;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [resImpEmEsePag]
 	 **/
-	public java.lang.Long getResImpEmEsePag() {
+	public BigDecimal getResImpEmEsePag() {
 		return resImpEmEsePag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [resImpEmEsePag]
 	 **/
-	public void setResImpEmEsePag(java.lang.Long resImpEmEsePag)  {
+	public void setResImpEmEsePag(BigDecimal resImpEmEsePag)  {
 		this.resImpEmEsePag=resImpEmEsePag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [resImpAttuali]
 	 **/
-	public java.lang.Long getResImpAttuali() {
+	public BigDecimal getResImpAttuali() {
 		return resImpAttuali;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [resImpAttuali]
 	 **/
-	public void setResImpAttuali(java.lang.Long resImpAttuali)  {
+	public void setResImpAttuali(BigDecimal resImpAttuali)  {
 		this.resImpAttuali=resImpAttuali;
 	}
 }
