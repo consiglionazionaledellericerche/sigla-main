@@ -94,7 +94,8 @@ public class RichiesteCMISService extends StoreService {
 		aspectsToAdd.add("P:sigla_commons_aspect:utente_applicativo_sigla");
         metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspectsToAdd);
 
-		return createFolderIfNotPresent(path, folderName, metadataProperties);
+        return createFolderIfNotPresent(getStorageObjectByPath(path, true, true).getPath(),
+                folderName, metadataProperties);
 	}
 
 	public String createFolderDettaglioIfNotPresent(String path, RichiestaUopRigaBulk dettaglio) throws ApplicationException{
@@ -103,7 +104,8 @@ public class RichiesteCMISService extends StoreService {
 		metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), F_ORDINI_RICHIESTE_DETTAGLIO_MAIN);
 		metadataProperties.put(StoragePropertyNames.NAME.value(), folderName);
 		metadataProperties.put(RichiesteCMISService.CMIS_RICHIESTA_ORDINI_DETTAGLIO_RIGA, dettaglio.getRiga());
-        return createFolderIfNotPresent(path, folderName, metadataProperties);
+        return createFolderIfNotPresent(getStorageObjectByPath(path, true, true).getPath(),
+                folderName, metadataProperties);
 	}
 	
 	public void recuperoAllegatiDettaglioRichiesta(RichiestaUopBulk allegatoParentBulk, StorageObject storageObject)
