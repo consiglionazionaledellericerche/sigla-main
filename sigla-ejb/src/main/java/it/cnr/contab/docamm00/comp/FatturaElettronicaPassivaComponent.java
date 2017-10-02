@@ -362,6 +362,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		SQLBuilder sqlVoceIva = voceIvaHome.selectByClause(compoundfindclause);
 		sqlVoceIva.addClause(FindClause.AND, "percentuale", SQLBuilder.EQUALS, documentoEleIvaBulk.getAliquotaIva());
 		sqlVoceIva.addSQLClause(FindClause.AND, "NATURA_OPER_NON_IMP_SDI", SQLBuilder.EQUALS, documentoEleIvaBulk.getNatura());
+		sqlVoceIva.addSQLClause("AND", "ti_applicazione", SQLBuilder.NOT_EQUALS, Voce_ivaBulk.VENDITE);
 		return sqlVoceIva;
 	}
 

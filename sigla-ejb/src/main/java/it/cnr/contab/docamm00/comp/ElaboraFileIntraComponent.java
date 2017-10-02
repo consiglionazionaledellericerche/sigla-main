@@ -2,6 +2,7 @@ package it.cnr.contab.docamm00.comp;
 
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistBulk;
 import it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistHome;
 import it.cnr.contab.docamm00.docs.bulk.VIntra12Bulk;
@@ -10,6 +11,8 @@ import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatHome;
 import it.cnr.contab.docamm00.docs.bulk.VSpesometroBulk;
 import it.cnr.contab.docamm00.docs.bulk.VSpesometroHome;
+import it.cnr.contab.docamm00.docs.bulk.VSpesometroNewBulk;
+import it.cnr.contab.docamm00.docs.bulk.VSpesometroNewHome;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaAttivaIntraSBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaAttivaIntraSHome;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaPassivaIntraSBulk;
@@ -31,14 +34,23 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v2.*;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJBException;
+import javax.xml.bind.JAXBElement;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * Insert the type's description here.
@@ -53,26 +65,42 @@ import javax.ejb.EJBException;
 public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 
 	public List EstraiLista(UserContext uc, OggettoBulk bulk) throws ComponentException {
-
-		VIntrastatHome home = (VIntrastatHome)getHome(uc,VIntrastatBulk.class);
-		SQLBuilder sql = home.createSQLBuilder();
-//		sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc));
-//		sql.addClause("AND", "mese",sql.LESS_EQUALS,((VIntrastatBulk)bulk).getMese());
-		sql.openParenthesis("AND");
-		sql.openParenthesis("AND");
-		sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc));
-		sql.addClause("AND", "mese",sql.LESS_EQUALS,((VIntrastatBulk)bulk).getMese());
-		sql.closeParenthesis();
-		sql.addClause("OR", "esercizio", sql.LESS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc));
-		sql.closeParenthesis();
-		
-		sql.addOrderBy("TIPO desc,cd_cds,cd_unita_organizzativa,esercizio,pg_fattura,pg_riga_intra,ti_bene_servizio,cd_nomenclatura_combinata,cd_natura_transazione,cd_cpa");
-		try {
-			return home.fetchAll(sql);
-		} catch (PersistencyException e) {
-			handleException(e);
+		SQLBuilder sql=null;
+		if(bulk instanceof VIntrastatBulk){
+			VIntrastatHome home = (VIntrastatHome)getHome(uc,VIntrastatBulk.class);
+			sql = home.createSQLBuilder();
+	//		sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc));
+	//		sql.addClause("AND", "mese",sql.LESS_EQUALS,((VIntrastatBulk)bulk).getMese());
+			sql.openParenthesis("AND");
+			sql.openParenthesis("AND");
+			sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc));
+			sql.addClause("AND", "mese",sql.LESS_EQUALS,((VIntrastatBulk)bulk).getMese());
+			sql.closeParenthesis();
+			sql.addClause("OR", "esercizio", sql.LESS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc));
+			sql.closeParenthesis();
+			
+			sql.addOrderBy("TIPO desc,cd_cds,cd_unita_organizzativa,esercizio,pg_fattura,pg_riga_intra,ti_bene_servizio,cd_nomenclatura_combinata,cd_natura_transazione,cd_cpa");
+			try {
+				return home.fetchAll(sql);
+			} catch (PersistencyException e) {
+				handleException(e);
+			}
+		}else if(bulk instanceof VSpesometroNewBulk){
+			VSpesometroNewHome home = (VSpesometroNewHome)getHome(uc,VSpesometroNewBulk.class);
+			VSpesometroNewBulk dett=((VSpesometroNewBulk) bulk);
+			try {
+				
+				sql = home.createSQLBuilder();
+				sql.addSQLBetweenClause("AND","V_SPESOMETRO_NEW.DATA",dett.getDa_data(),dett.getA_data());
+				sql.addSQLClause("AND","TIPO",sql.EQUALS,dett.getTipo());
+				//sql.addSQLClause("AND","PROG_FATTURA",sql.GREATER_EQUALS,"500"); 
+				sql.addOrderBy("TIPO,esercizio,data,prog_fattura,percentuale,natura");
+				return home.fetchAll(sql);
+			} catch (PersistencyException e) {
+				handleException(e);
+			}
 		}
-	return null;
+		return null;
 	}
 	
 	public List SezioneUnoAcquisti(UserContext uc, OggettoBulk bulk) throws ComponentException {
@@ -548,4 +576,255 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 					
 	return null;
 	}
+
+	public JAXBElement<DatiFatturaType> creaDatiFatturaType(UserContext context,
+			VSpesometroNewBulk det) throws ComponentException {
+	try {
+
+				ObjectFactory factory = new ObjectFactory();
+				TerzoBulk terzoCnr = ((TerzoHome)getHome( context, TerzoBulk.class)).findTerzoEnte();
+				DatiFatturaType fatturaType = factory.createDatiFatturaType();
+				fatturaType.setVersione( VersioneType.DAT_20);
+				
+				CessionarioCommittenteDTEType cessionario=factory.createCessionarioCommittenteDTEType();
+				DatiFatturaBodyDTEType fatturaBody=factory.createDatiFatturaBodyDTEType();
+				DatiGeneraliType datiGenerali =factory.createDatiGeneraliType();
+				DatiGeneraliType datiGeneraliOld =factory.createDatiGeneraliType();
+				DatiRiepilogoType datiRiepilogo = factory.createDatiRiepilogoType();
+				TipoDocumentoType tipoDoc;
+				DatiIVAType datiIva=factory.createDatiIVAType();
+				DTEType emesse = factory.createDTEType();
+				
+				DTRType ricevute= factory.createDTRType();
+				CedentePrestatoreDTRType fornitore = factory.createCedentePrestatoreDTRType();
+				DatiFatturaBodyDTRType fatturaPBody=factory.createDatiFatturaBodyDTRType();
+				DatiGeneraliDTRType datiGeneraliP =factory.createDatiGeneraliDTRType();
+				DatiGeneraliDTRType datiGeneraliPOld =factory.createDatiGeneraliDTRType();
+				DatiRiepilogoType datiRiepilogoP = factory.createDatiRiepilogoType();
+				DatiIVAType datiIvaP=factory.createDatiIVAType();
+				List fatture_test= EstraiLista(context,det);
+				if (fatture_test!=null && fatture_test.size()!=0){
+					
+					for (Iterator i=fatture_test.iterator();i.hasNext();){
+						VSpesometroNewBulk test=(VSpesometroNewBulk)i.next();
+						//TerzoBulk terzoUo = ((TerzoBulk)findByPrimaryKey(context, new TerzoBulk(test.getTerzo_uo().intValue())));
+						if (test.getTipo().compareTo("ATTIVA")==0){
+								if (datiGeneraliOld.getNumero() == null || datiGeneraliOld.getNumero().compareTo(test.getProg_fattura().toString())!=0 
+										|| !datiGeneraliOld.getData().equals(convertDateToXmlGregorian(test.getData()))){
+									cessionario= new CessionarioCommittenteDTEType();
+									fatturaBody=new DatiFatturaBodyDTEType();
+									datiGenerali= new DatiGeneraliType(); 
+									datiRiepilogo=new DatiRiepilogoType();
+								} else{
+									datiRiepilogo=new DatiRiepilogoType();
+								}
+								datiIva = new DatiIVAType();
+							    CedentePrestatoreDTEType cedente = factory.createCedentePrestatoreDTEType();
+								IdentificativiFiscaliITType idFiscale=factory.createIdentificativiFiscaliITType();
+								IdFiscaleITType p_iva= factory.createIdFiscaleITType();
+								p_iva.setIdCodice(terzoCnr.getAnagrafico().getPartita_iva());
+								p_iva.setIdPaese(NazioneITType.IT);
+								idFiscale.setIdFiscaleIVA(p_iva);
+								idFiscale.setCodiceFiscale(terzoCnr.getAnagrafico().getCodice_fiscale());
+								AltriDatiIdentificativiNoSedeType altrDatiId=factory.createAltriDatiIdentificativiNoSedeType();
+								altrDatiId.setDenominazione(substring80(terzoCnr.getAnagrafico().getRagione_sociale()));
+								cedente.setAltriDatiIdentificativi(altrDatiId);
+								cedente.setIdentificativiFiscali(idFiscale);
+								emesse.setCedentePrestatoreDTE(cedente);
+							
+								IdentificativiFiscaliNoIVAType idFiscale_cli=factory.createIdentificativiFiscaliNoIVAType();
+								IdFiscaleType p_iva_cli= factory.createIdFiscaleType();
+								if(test.getCod_naz()!=null)
+									p_iva_cli.setIdPaese(new String(test.getCod_naz()));
+							
+								if(test.getPartita_iva()!=null){
+									p_iva_cli.setIdCodice(test.getPartita_iva());
+									if(test.getCod_naz()!=null)
+										p_iva_cli.setIdPaese(new String(test.getCod_naz()));
+									idFiscale_cli.setIdFiscaleIVA(p_iva_cli);
+								} 
+								else 	if(test.getCod_naz()!=null && 	test.getCod_naz().compareTo(NazioneITType.IT.value())!=0){
+											idFiscale_cli.setCodiceFiscale(null);
+											if(test.getPartita_iva()==null){
+												p_iva_cli.setIdCodice(substring28(test.getCognome()==null ? test.getRagione_sociale():test.getCognome()));
+												idFiscale_cli.setIdFiscaleIVA(p_iva_cli); 
+											}
+									}
+									else 
+											idFiscale_cli.setCodiceFiscale(test.getCodice_fiscale());
+							
+								cessionario.setIdentificativiFiscali(idFiscale_cli);
+								
+								AltriDatiIdentificativiNoCAPType altrDatiId_cli=factory.createAltriDatiIdentificativiNoCAPType();
+								if(test.getRagione_sociale()!=null)
+									altrDatiId_cli.setDenominazione(substring80(test.getRagione_sociale()));
+								else{
+									altrDatiId_cli.setCognome(substring60(test.getCognome()));
+									altrDatiId_cli.setNome(substring60(test.getNome()));
+								}
+								IndirizzoNoCAPType ind_cli = factory.createIndirizzoNoCAPType();
+								ind_cli.setNazione(test.getStato_residenza());
+								ind_cli.setComune(substring60(test.getComune_sede()));
+								ind_cli.setIndirizzo(substring60(test.getIndirizzo_sede()));
+								ind_cli.setNumeroCivico(test.getNumero_civico_sede());
+								ind_cli.setProvincia(test.getProvincia());
+								altrDatiId_cli.setSede(ind_cli);
+								datiGenerali.setData(convertDateToXmlGregorian(test.getData()));
+								datiGenerali.setNumero(test.getProg_fattura().toString());
+								
+								tipoDoc=TipoDocumentoType.valueOf(test.getTi_fattura());
+								datiGenerali.setTipoDocumento(tipoDoc);
+								datiGeneraliOld=datiGenerali;
+								datiRiepilogo.setImponibileImporto(test.getImponibile_fa().setScale(2));
+								if(test.getNatura()!=null){
+								   datiRiepilogo.setNatura(NaturaType.fromValue(test.getNatura()));
+								   datiRiepilogo.setDetraibile(null); //??
+								}else
+								   datiRiepilogo.setDetraibile(test.getPerc_detra().setScale(2));
+								datiIva.setAliquota(test.getPercentuale().setScale(2));
+								datiIva.setImposta(test.getIva_fa().setScale(2));
+								datiRiepilogo.setDatiIVA(datiIva);
+								datiRiepilogo.setEsigibilitaIVA(EsigibilitaIVAType.valueOf(test.getSplit()));
+								datiRiepilogo.setDeducibile(null);//??
+								
+								fatturaBody.getDatiRiepilogo().add(datiRiepilogo);
+								fatturaBody.setDatiGenerali(datiGenerali);
+								if (!cessionario.getDatiFatturaBodyDTE().contains(fatturaBody)){
+								    cessionario.getDatiFatturaBodyDTE().add(fatturaBody);
+								    cessionario.setAltriDatiIdentificativi(altrDatiId_cli);
+								    emesse.getCessionarioCommittenteDTE().add(cessionario);			
+								}
+						}//attiva
+						else{
+							if (datiGeneraliPOld.getNumero() == null || datiGeneraliPOld.getNumero().compareTo(test.getNr_fattura_fornitore())!=0 
+									|| !datiGeneraliPOld.getData().equals(convertDateToXmlGregorian(test.getDt_fattura_fornitore()))){
+								fornitore= new CedentePrestatoreDTRType();
+								fatturaPBody=new DatiFatturaBodyDTRType();
+								datiGeneraliP= new DatiGeneraliDTRType(); 
+								datiRiepilogoP=new DatiRiepilogoType();
+							} else{
+								datiRiepilogoP=new DatiRiepilogoType();
+							}
+							datiIvaP = new DatiIVAType();
+							
+							IdentificativiFiscaliType idFiscale_forn=factory.createIdentificativiFiscaliType();
+							IdFiscaleType p_iva_forn= factory.createIdFiscaleType();
+							if(test.getCod_naz()!=null)
+								p_iva_forn.setIdPaese(new String(test.getCod_naz()));
+						
+							if(test.getPartita_iva()!=null){
+								p_iva_forn.setIdCodice(test.getPartita_iva());
+								if(test.getCod_naz()!=null)
+									p_iva_forn.setIdPaese(new String(test.getCod_naz()));
+								idFiscale_forn.setIdFiscaleIVA(p_iva_forn);
+							} 
+							else 	if(test.getCod_naz()!=null && 	test.getCod_naz().compareTo(NazioneITType.IT.value())!=0){
+								idFiscale_forn.setCodiceFiscale(null);
+										if(test.getPartita_iva()==null){
+											p_iva_forn.setIdCodice(substring28(test.getCognome()==null ? test.getRagione_sociale():test.getCognome()));
+											idFiscale_forn.setIdFiscaleIVA(p_iva_forn); 
+										}
+								}
+								else 
+									idFiscale_forn.setCodiceFiscale(test.getCodice_fiscale());
+						
+							fornitore.setIdentificativiFiscali(idFiscale_forn);
+							
+							AltriDatiIdentificativiNoCAPType altrDatiIdforn=factory.createAltriDatiIdentificativiNoCAPType();
+							if(test.getRagione_sociale()!=null)
+								altrDatiIdforn.setDenominazione(substring80(test.getRagione_sociale()));
+							else
+							{
+								altrDatiIdforn.setCognome(substring60(test.getCognome()));
+								altrDatiIdforn.setNome(substring60(test.getNome()));
+							}
+							IndirizzoNoCAPType ind_forn = factory.createIndirizzoNoCAPType();
+							ind_forn.setNazione(test.getStato_residenza());
+							ind_forn.setComune(substring60(test.getComune_sede()));
+							ind_forn.setIndirizzo(substring60(test.getIndirizzo_sede()));
+							ind_forn.setNumeroCivico(test.getNumero_civico_sede());
+							ind_forn.setProvincia(test.getProvincia());
+							altrDatiIdforn.setSede(ind_forn);
+							datiGeneraliP.setData(convertDateToXmlGregorian(test.getDt_fattura_fornitore()));
+							datiGeneraliP.setNumero(test.getNr_fattura_fornitore());
+							datiGeneraliP.setDataRegistrazione(convertDateToXmlGregorian(test.getData()));
+							tipoDoc=TipoDocumentoType.valueOf(test.getTi_fattura());
+							datiGeneraliP.setTipoDocumento(tipoDoc);
+							datiGeneraliPOld=datiGeneraliP;
+							datiRiepilogoP.setImponibileImporto(test.getImponibile_fa().setScale(2));
+							if(test.getNatura()!=null){
+							   datiRiepilogoP.setNatura(NaturaType.fromValue(test.getNatura()));
+							   datiRiepilogoP.setDetraibile(null); //??
+							}else
+							   datiRiepilogoP.setDetraibile(test.getPerc_detra().setScale(2));
+							datiIvaP.setAliquota(test.getPercentuale().setScale(2));
+							datiIvaP.setImposta(test.getIva_fa().setScale(2));
+							datiRiepilogoP.setDatiIVA(datiIvaP);
+							datiRiepilogoP.setEsigibilitaIVA(EsigibilitaIVAType.valueOf(test.getSplit()));
+							datiRiepilogoP.setDeducibile(null);//??
+							
+							fatturaPBody.getDatiRiepilogo().add(datiRiepilogoP);
+							fatturaPBody.setDatiGenerali(datiGeneraliP);
+							if (!fornitore.getDatiFatturaBodyDTR().contains(fatturaPBody)){
+								fornitore.getDatiFatturaBodyDTR().add(fatturaPBody);
+								fornitore.setAltriDatiIdentificativi(altrDatiIdforn);
+							    ricevute.getCedentePrestatoreDTR().add(fornitore);			
+							}		
+							
+						    CessionarioCommittenteDTRType committente = factory.createCessionarioCommittenteDTRType();
+							IdentificativiFiscaliITType idFiscale=factory.createIdentificativiFiscaliITType();
+							IdFiscaleITType p_iva= factory.createIdFiscaleITType();
+							p_iva.setIdCodice(terzoCnr.getAnagrafico().getPartita_iva());
+							p_iva.setIdPaese(NazioneITType.IT);
+							idFiscale.setIdFiscaleIVA(p_iva);
+							idFiscale.setCodiceFiscale(terzoCnr.getAnagrafico().getCodice_fiscale());
+							AltriDatiIdentificativiNoSedeType altrDatiId=factory.createAltriDatiIdentificativiNoSedeType();
+							altrDatiId.setDenominazione(substring80(terzoCnr.getAnagrafico().getRagione_sociale()));
+							committente.setAltriDatiIdentificativi(altrDatiId);
+							committente.setIdentificativiFiscali(idFiscale);
+							ricevute.setCessionarioCommittenteDTR(committente);
+						
+						}//passiva
+						
+					} //for
+					
+				}//end if fatture_test.size()!=0
+				if (det.getTipo().compareTo("ATTIVA")==0)
+						fatturaType.setDTE(emesse);
+					else
+						fatturaType.setDTR(ricevute);
+				return factory.createDatiFattura(fatturaType);
+			} catch(Exception e) {
+				throw handleException(e);
+			}
+		
+	}
+	public XMLGregorianCalendar convertDateToXmlGregorian(Date d) throws DatatypeConfigurationException{
+		
+		if (d==null)
+			return null;		
+				
+		return DatatypeFactory.newInstance().newXMLGregorianCalendar(new SimpleDateFormat("yyyy-MM-dd").format(d));
+						
+	}	
+	private String substring80(String rit) {
+		if (rit==null) 
+				return null;
+			else 	
+				return rit.length() > 80 ? rit.substring(0,80) : rit;
+	}
+
+	private String substring60(String rit) {
+		if (rit==null) 
+			return null;
+		else 	
+			return rit.length() > 60 ? rit.substring(0,60) : rit;
+	}
+	private String substring28(String rit) {
+		if (rit==null) 
+			return null;
+		else 	
+			return rit.length() > 28 ? rit.substring(0,28) : rit;
+	}
 }
+	

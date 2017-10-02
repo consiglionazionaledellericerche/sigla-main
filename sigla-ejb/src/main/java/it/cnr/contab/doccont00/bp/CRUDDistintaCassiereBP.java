@@ -853,6 +853,16 @@ public class CRUDDistintaCassiereBP extends
 						&& docContabile.getModalitaPagamento().compareTo("CCP") == 0) {
 					infoben.setTipoPagamento("ACCREDITO CONTO CORRENTE POSTALE");
 					obb_conto = true;
+				} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
+						&& docContabile.getModalitaPagamento() != null
+						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0) {
+					throw new ApplicationException(
+							"Impossibile generare il flusso, Modalita di pagamento non valida per il terzo "
+									+ docContabile.getCdTerzo()
+									+ " cds "
+									+ docContabile.getCdCds()
+									+ " mandato "
+									+ docContabile.getPgDocumento());
 				}
 				// 19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo
 				// pagamento
@@ -1108,7 +1118,7 @@ public class CRUDDistintaCassiereBP extends
 												.substring(
 														0,
 														doc.getCdSospeso()
-																.indexOf(".")))
+																.indexOf(".")).replace(" ", ""))
 										.longValue());
 							} catch (NumberFormatException e) {
 								throw new ApplicationException(

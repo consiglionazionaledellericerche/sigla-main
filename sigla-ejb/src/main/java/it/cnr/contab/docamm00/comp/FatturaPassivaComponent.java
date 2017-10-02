@@ -6060,7 +6060,26 @@ public void validaFattura(UserContext aUC,Fattura_passivaBulk fatturaPassiva) th
 		if(fatturaPassiva.getCompenso()==null)
 			throw new it.cnr.jada.comp.ApplicationException("Prima di salvare la fattura occorre generare il compenso!");
 	}
-		
+	if (fatturaPassiva instanceof Fattura_passiva_IBulk ){
+			Rif_modalita_pagamentoBulk mod =null;
+	        BancaBulk banca=null;
+	        TerzoBulk terzo=null;
+		  for(Iterator i=fatturaPassiva.getFattura_passiva_dettColl().iterator();i.hasNext();)
+		    {
+			  Fattura_passiva_rigaBulk riga=(Fattura_passiva_rigaBulk)i.next();
+			  if(riga.getCessionario()==null){
+				  if(mod!=null && mod.getCd_modalita_pag().compareTo(riga.getModalita_pagamento().getCd_modalita_pag())==0 &&
+						  terzo.getCd_terzo()==riga.getFornitore().getCd_terzo() && 
+						  banca.getPg_banca()!=riga.getBanca().getPg_banca()){
+					  throw new it.cnr.jada.comp.ApplicationException("Attenzione sono state indicate delle coordinate bancarie diverse sulle righe!");
+				  }else{
+				  	mod =riga.getModalita_pagamento();
+				  	banca=riga.getBanca();
+				  	terzo=riga.getFornitore();
+				  }
+			  }
+		    }
+	}
 	controllaQuadraturaIntrastat(aUC, fatturaPassiva);
 	controllaQuadraturaObbligazioni(aUC, fatturaPassiva);
 	
@@ -6176,7 +6195,7 @@ private void controllaQuadraturaInventario(UserContext auc, Fattura_passivaBulk 
 //^^@@
 
 public void validaRiga (UserContext aUC,Fattura_passiva_rigaBulk riga) throws ComponentException {
-
+ 
 	if (riga.getFattura_passiva().isPromiscua() && riga.getTi_istituz_commerc() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Inserire un tipo per la riga.");
 	if (riga.getBene_servizio() == null || riga.getBene_servizio().getCrudStatus() == OggettoBulk.UNDEFINED)
