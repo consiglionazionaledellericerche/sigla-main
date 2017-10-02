@@ -2,6 +2,7 @@
 package it.cnr.contab.doccont00.consultazioni.comp;
 
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResBP;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_entBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBulk;
@@ -27,14 +28,22 @@ public class ConsGAEResComponent extends CRUDComponent {
 		private static String TIPO_SPE = "SPE"; 
 		
 		public RemoteIterator findConsultazioneResEtr(UserContext userContext, String pathDestinazione, String livelloDestinazione, CompoundFindClause baseClause, CompoundFindClause findClause) throws it.cnr.jada.comp.ComponentException {
-			return findConsultazioneDettaglio(userContext, pathDestinazione, livelloDestinazione, baseClause, findClause, TIPO_ETR);
-		}
+            try {
+                return findConsultazioneDettaglio(userContext, pathDestinazione, livelloDestinazione, baseClause, findClause, TIPO_ETR);
+            } catch (IntrospectionException|PersistencyException e) {
+               throw handleException(e);
+            }
+        }
 
 		public RemoteIterator findConsultazioneResSpe(UserContext userContext, String pathDestinazione, String livelloDestinazione, CompoundFindClause baseClause, CompoundFindClause findClause) throws it.cnr.jada.comp.ComponentException {
-			return findConsultazioneDettaglio(userContext, pathDestinazione, livelloDestinazione, baseClause, findClause, TIPO_SPE);
+            try {
+		        return findConsultazioneDettaglio(userContext, pathDestinazione, livelloDestinazione, baseClause, findClause, TIPO_SPE);
+            } catch (IntrospectionException|PersistencyException e) {
+                throw handleException(e);
+            }
 		}
 
-		private RemoteIterator findConsultazioneDettaglio(UserContext userContext, String pathDestinazione, String livelloDestinazione, CompoundFindClause baseClause, CompoundFindClause findClause, String tipoCons) throws it.cnr.jada.comp.ComponentException {
+		private RemoteIterator findConsultazioneDettaglio(UserContext userContext, String pathDestinazione, String livelloDestinazione, CompoundFindClause baseClause, CompoundFindClause findClause, String tipoCons) throws it.cnr.jada.comp.ComponentException, IntrospectionException, PersistencyException {
 			CdrBulk cdrUtente = cdrFromUserContext(userContext);
 			if (pathDestinazione.indexOf("ETRGAE")>=0){ 
 				BulkHome home = getHome(userContext, V_cons_gae_residui_entBulk.class, pathDestinazione);
@@ -64,7 +73,7 @@ public class ConsGAEResComponent extends CRUDComponent {
 		 * @param pathDestinazione il path completo della mappa di consultazione che ha effettuato la richiesta 
 		 * @param livelloDestinazione il livello della mappa di consultazione che ha effettuato la richiesta 
 		 */
-	private void addBaseColumns(UserContext userContext,SQLBuilder sql, SQLBuilder sqlEsterna, String tabAlias, String pathDestinazione, String livelloDestinazione, String tipoCons) throws it.cnr.jada.comp.ComponentException {
+	private void addBaseColumns(UserContext userContext,SQLBuilder sql, SQLBuilder sqlEsterna, String tabAlias, String pathDestinazione, String livelloDestinazione, String tipoCons) throws it.cnr.jada.comp.ComponentException, IntrospectionException, PersistencyException {
 		sql.resetColumns();
 		sqlEsterna.resetColumns();
 			if (pathDestinazione.indexOf(ConsGAEResBP.LIVELLO_ETRGAE)>=0||pathDestinazione.indexOf(ConsGAEResBP.LIVELLO_SPEGAE)>=0) {
@@ -115,25 +124,22 @@ public class ConsGAEResComponent extends CRUDComponent {
 				addColumnREV(sql,tabAlias,livelloDestinazione.equals(ConsGAEResBP.LIVELLO_REV),true);
 				addColumnREV(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsGAEResBP.LIVELLO_REV),false);
 			}
-		
-			if(!isUtenteEnte(userContext)){ 
-			CdrBulk cdrUtente = cdrFromUserContext(userContext);
-			 if ( !cdrUtente.isCdrILiv() ){
-				/*sql.addTableToHeader("V_CDR_VALIDO_LIV1");
-				sql.addSQLJoin(tabAlias.concat(".ESERCIZIO"),"V_CDR_VALIDO_LIV1.ESERCIZIO");
-				sql.addSQLJoin(tabAlias.concat(".CD_CENTRO_RESPONSABILITA"),"V_CDR_VALIDO_LIV1.CD_CENTRO_RESPONSABILITA");
-				sql.addSQLClause("AND", "V_CDR_VALIDO_LIV1.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
-				sql.addSQLClause("AND", "V_CDR_VALIDO_LIV1.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));*/
-				
-				sql.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA",sql.EQUALS,CNRUserContext.getCd_cdr(userContext));
-				sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-			 }
-				else {
+			if(!isUtenteEnte(userContext)){
+				CdrBulk cdrUtente = cdrFromUserContext(userContext);
+			 	if ( !cdrUtente.isCdrILiv() ){
+					sql.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA",sql.EQUALS,CNRUserContext.getCd_cdr(userContext));
 					sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-//					bisogna ottimizzare la view
+			 	} else {
+					sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 			 		sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
-//					sql.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, CNRUserContext.getCd_cdr(userContext));
-					
+			 		sql.openParenthesis("AND");
+                    sql.addSQLClause("OR", "CD_CENTRO_RESPONSABILITA",sql.EQUALS,CNRUserContext.getCd_cdr(userContext));
+					CdrHome cdrHome = (CdrHome) getHome(userContext, CdrBulk.class);
+					for (java.util.Iterator j = cdrHome.findCdrAfferenti(cdrUtente).iterator(); j.hasNext();) {
+						CdrBulk cdrAfferenti = (CdrBulk) j.next();
+						sql.addSQLClause("OR","CD_CENTRO_RESPONSABILITA", sql.EQUALS, cdrAfferenti.getCd_centro_responsabilita());
+					}
+					sql.closeParenthesis();
 				}
 			}
 	}			

@@ -3,10 +3,8 @@
  * Date 03/04/2008
  */
 package it.cnr.contab.incarichi00.bulk;
-import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.jada.persistency.KeyedPersistent;
 
-import java.io.InputStream;
 public class Incarichi_procedura_archivioKey extends Incarichi_archivioBulk implements KeyedPersistent {
 	private java.lang.Integer esercizio;
 	private java.lang.Long pg_procedura;
