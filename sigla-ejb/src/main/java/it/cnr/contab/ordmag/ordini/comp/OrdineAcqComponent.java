@@ -509,6 +509,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     		if (riga.getBeneServizio() != null){
     			Bene_servizioBulk bene = recuperoBeneServizio(usercontext, riga.getCdBeneServizio());
     			riga.setBeneServizio(bene);
+    			riga.setTipoConsegnaDefault(bene.getTipoGestione());
     		}
     		if (riga.getUnitaMisura() != null){
     			UnitaMisuraHome home = (UnitaMisuraHome)getHome(usercontext, UnitaMisuraBulk.class);
