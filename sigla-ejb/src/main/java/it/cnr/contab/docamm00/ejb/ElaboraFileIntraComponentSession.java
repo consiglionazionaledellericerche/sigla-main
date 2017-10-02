@@ -1,13 +1,17 @@
 package it.cnr.contab.docamm00.ejb;
 
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
+import it.cnr.contab.docamm00.docs.bulk.VSpesometroNewBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v2.DatiFatturaType;
 
 import java.util.List;
 
 import javax.ejb.Remote;
+import javax.xml.bind.JAXBElement;
 
 @Remote
 public interface ElaboraFileIntraComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
@@ -25,4 +29,7 @@ public interface ElaboraFileIntraComponentSession extends it.cnr.jada.ejb.CRUDCo
 	void confermaElaborazione(UserContext userContext, VIntrastatBulk bulk)throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 	java.util.Date recuperoMaxDtPagamentoLiq(UserContext uc, OggettoBulk bulk) throws ComponentException ,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 	List EstraiBlacklist(UserContext userContext, OggettoBulk model, OggettoBulk terzo)throws ComponentException ,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
+	JAXBElement<DatiFatturaType> creaDatiFatturaType(UserContext context,VSpesometroNewBulk dett)throws ComponentException ,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
+	
+	
 }
