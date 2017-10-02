@@ -264,7 +264,9 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
             	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
             		OggettoBulk consbulk= (OggettoBulk) c.next();
             		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-            		cons.setObbligazioneScadenzario(riga.getDspObbligazioneScadenzario());
+            		if (cons.getObbligazioneScadenzario() == null || cons.getObbligazioneScadenzario().getPg_obbligazione() == null){
+                		cons.setObbligazioneScadenzario(riga.getDspObbligazioneScadenzario());
+            		}
             		controlliValiditaConsegna(cons);
             	}
     		}
@@ -531,6 +533,8 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     	    sqlConsegna.addClause("AND", "riga", sql.EQUALS, riga.getRiga());
     		sqlConsegna.addOrderBy("consegna");
         	riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(homeConsegna.fetchAll(sqlConsegna)));
+        	Obbligazione_scadenzarioBulk scadenzaComune = null;
+        	Boolean esisteScadenzaComune = false;
         	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
         		OggettoBulk consbulk= (OggettoBulk) c.next();
         		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
@@ -546,7 +550,14 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
         		if (cons.getObbligazioneScadenzario() != null){
         			Obbligazione_scadenzarioBulk scad = retrieveObbligazioneScadenzario(usercontext, cons);
         			cons.setObbligazioneScadenzario(scad);
-        			riga.setDspObbligazioneScadenzario(scad);
+        			if (scadenzaComune == null || scadenzaComune.equalsByPrimaryKey(scad)){
+            			esisteScadenzaComune = true;
+        				scadenzaComune = scad;
+        			} else {
+            			esisteScadenzaComune = false;
+        			}
+        		} else {
+        			esisteScadenzaComune = false;
         		}
         		if (cons.getUnitaOperativaOrd() != null){
         			UnitaOperativaOrdBulk uop = recuperoUopDest(usercontext, cons);
@@ -560,6 +571,9 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
         			riga.setDspTipoConsegna(cons.getTipoConsegna());
         			riga.setDspUopDest(cons.getUnitaOperativaOrd());
         		}
+        	}
+        	if (esisteScadenzaComune){
+            	riga.setDspObbligazioneScadenzario(scadenzaComune);
         	}
     	}
 
@@ -1738,18 +1752,20 @@ private void rebuildObbligazioni(UserContext aUC, OrdineAcqBulk ordine) throws C
 
 		for (Iterator i = righe.iterator(); i.hasNext(); ) {
 			OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)i.next();
-			Obbligazione_scadenzarioBulk scadenza = riga.getDspObbligazioneScadenzario();
-			
-			if (riga.getDspObbligazioneScadenzario() != null) {
-				if (ordine.getOrdineObbligazioniHash() == null ||
-					ordine.getOrdineObbligazioniHash().getKey(scadenza) == null) {
-					scadenza = caricaScadenzaObbligazionePer(aUC, scadenza);
-				}
-				for (Object bulk : riga.getRigheConsegnaColl()){
-					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bulk;
-					ordine.addToOrdineObbligazioniHash(scadenza, cons);
-				}
-			}
+        	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
+        		OggettoBulk consbulk= (OggettoBulk) c.next();
+        		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
+
+        		Obbligazione_scadenzarioBulk scadenza = cons.getObbligazioneScadenzario();
+
+        		if (cons.getObbligazioneScadenzario() != null) {
+        			if (ordine.getOrdineObbligazioniHash() == null ||
+        					ordine.getOrdineObbligazioniHash().getKey(scadenza) == null) {
+        				scadenza = caricaScadenzaObbligazionePer(aUC, scadenza);
+        			}
+        			ordine.addToOrdineObbligazioniHash(scadenza, cons);
+        		}
+        	}
 		}
 	}
 	try {
@@ -1890,6 +1906,22 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,OrdineAcqBulk ordine
 			if (obbligazioniHash != null) {
 				for (java.util.Enumeration e = obbligazioniHash.keys(); e.hasMoreElements();) {
 					Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)e.nextElement();
+					
+					try {
+						scadenza = (Obbligazione_scadenzarioBulk)getTempHome(aUC, Obbligazione_scadenzarioBulk.class).findByPrimaryKey(
+								new Obbligazione_scadenzarioBulk(
+										scadenza.getCd_cds(),
+										scadenza.getEsercizio(),
+										scadenza.getEsercizio_originale(),
+										scadenza.getPg_obbligazione(),
+										scadenza.getPg_obbligazione_scadenzario()
+						                ));
+					} catch (PersistencyException e1) {
+						throw new ComponentException(e1);
+					}
+
+					
+					
 					java.math.BigDecimal totale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					java.math.BigDecimal delta = null;
 					totale = calcolaTotaleObbligazione(aUC, scadenza, ordine);

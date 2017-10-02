@@ -115,7 +115,15 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	private final ObbligazioniCRUDController obbligazioniController = new ObbligazioniCRUDController(
 			"Obbligazioni",
 			it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk.class,
-			"ordineObbligazioniHash", this);
+			"ordineObbligazioniHash", this) {
+
+				@Override
+				public boolean isGrowable() {
+					return false;
+				}
+		
+		
+	};
 
 	public final it.cnr.jada.util.action.SimpleDetailCRUDController getConsegne() {
 		return consegne;
@@ -153,11 +161,13 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 				return lista;
 			}
 
+			@Override
 			public boolean isGrowable() {
-
-				return super.isGrowable()
-						&& !((it.cnr.jada.util.action.CRUDBP) getParentController()
-								.getParentController()).isSearching();
+				return false;
+				
+//				return super.isGrowable()
+//						&& !((it.cnr.jada.util.action.CRUDBP) getParentController()
+//								.getParentController()).isSearching();
 			}
 
 			public boolean isShrinkable() {
@@ -199,12 +209,15 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 				return lista;
 			}
 
+			@Override
 			public boolean isGrowable() {
-
-				return super.isGrowable()
-						&& !((it.cnr.jada.util.action.CRUDBP) getParentController()
-								.getParentController()).isSearching();
+				return false;
+				
+//				return super.isGrowable()
+//						&& !((it.cnr.jada.util.action.CRUDBP) getParentController()
+//								.getParentController()).isSearching();
 			}
+
 
 			public boolean isShrinkable() {
 
