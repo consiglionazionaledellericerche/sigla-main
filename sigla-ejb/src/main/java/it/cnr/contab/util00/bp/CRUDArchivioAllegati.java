@@ -1,6 +1,6 @@
 package it.cnr.contab.util00.bp;
 
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -13,11 +13,11 @@ public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends Simple
 	private boolean shrinkable = true;
 	private boolean growable = true;
 	private boolean readonlyOnEdit = false;
-	
+
 	public CRUDArchivioAllegati(Class<T> class1, FormController formcontroller) {
 		super("ArchivioAllegati", class1, "archivioAllegati", formcontroller);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
 		T allegato = (T)oggettobulk;
@@ -29,17 +29,17 @@ public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends Simple
 			allegato.setToBeUpdated();
 			getParentController().setDirty(true);
 		}
-		oggettobulk.validate();		
+		oggettobulk.validate();
 		super.validate(actioncontext, oggettobulk);
 	}
-	
+
 	@Override
-	public boolean isShrinkable() {		
+	public boolean isShrinkable() {
 		if (getModel()!= null && getModel().getCrudStatus() == OggettoBulk.TO_BE_CREATED)
 			return true;
 		return !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() && super.isShrinkable() && shrinkable;
 	}
-	
+
 	@Override
 	public boolean isGrowable() {
 		return !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() && super.isGrowable() && growable;
@@ -62,5 +62,5 @@ public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends Simple
 	public void setReadonlyOnEdit(boolean readonlyOnEdit) {
 		this.readonlyOnEdit = readonlyOnEdit;
 	}
-	
+
 }

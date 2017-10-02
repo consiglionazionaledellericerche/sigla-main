@@ -1,7 +1,7 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.Keyed;
 
 public class MissioneBase extends MissioneKey implements Keyed {
@@ -33,15 +33,15 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.lang.String cd_uo_anticipo;
 
 	// CODICE_FISCALE VARCHAR(20)
-	@CMISPolicy(name="P:emp:cf", property=@CMISProperty(name="emp:codice"))
+	@StoragePolicy(name="P:emp:cf", property=@StorageProperty(name="emp:codice"))
 	private java.lang.String codice_fiscale;
 
 	// COGNOME VARCHAR(50)
 	private java.lang.String cognome;
 
 	// DS_MISSIONE VARCHAR(300) NOT NULL
-	@CMISPolicy(name="P:cm:titled", property=@CMISProperty(name="cm:description"))
-	@CMISProperty(name="emppay:descDoc")
+	@StoragePolicy(name="P:cm:titled", property=@StorageProperty(name="cm:description"))
+	@StorageProperty(name="emppay:descDoc")
 	private java.lang.String ds_missione;
 
 	// DT_CANCELLAZIONE TIMESTAMP
@@ -54,7 +54,7 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.sql.Timestamp dt_fine_missione;
 
 	// DT_INIZIO_MISSIONE TIMESTAMP NOT NULL
-	@CMISProperty(name="emppay:datDoc",converterBeanName="cmis.converter.timestampToCalendarConverter")
+	@StorageProperty(name="emppay:datDoc",converterBeanName="cmis.converter.timestampToCalendarConverter")
 	private java.sql.Timestamp dt_inizio_missione;
 
 	// DT_PAGAMENTO_FONDO_ECO TIMESTAMP
@@ -97,7 +97,7 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.math.BigDecimal im_lordo_percepiente;
 
 	// IM_NETTO_PECEPIENTE DECIMAL(15,2) NOT NULL
-	@CMISProperty(name="emppay:impNetto")
+	@StorageProperty(name="emppay:impNetto")
 	private java.math.BigDecimal im_netto_pecepiente;
 
 	// IM_QUOTA_ESENTE DECIMAL(15,2) NOT NULL

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>it.cnr</groupId>
 		<artifactId>sigla</artifactId>
-		<version>4.0.77-SNAPSHOT</version>
+		<version>4.1.9-SNAPSHOT</version>
 	</parent>
 	<build>
 		<pluginManagement>
@@ -98,13 +98,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.xml.soap</groupId>
-			<artifactId>saaj-api</artifactId>
-			<version>1.3</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>javax.jws</groupId>
 			<artifactId>jsr181-api</artifactId>
 			<version>1.0-MR1</version>
@@ -142,6 +135,12 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.5.4</version>
 			<scope>provided</scope>
-		</dependency>			
+		</dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 </project>

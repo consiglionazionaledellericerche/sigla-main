@@ -1,7 +1,7 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.*;
 
 public class CompensoBase extends CompensoKey implements Keyed {
@@ -87,7 +87,7 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.lang.String cd_voce_iva;
 
 	// CODICE_FISCALE VARCHAR(20)
-	@CMISPolicy(name="P:emp:cf", property=@CMISProperty(name="emp:codice"))
+	@StoragePolicy(name="P:emp:cf", property=@StorageProperty(name="emp:codice"))
 	private java.lang.String codice_fiscale;
 
 	// COGNOME VARCHAR(50)
@@ -124,8 +124,8 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.math.BigDecimal detrazioni_personali_netto;
 
 	// DS_COMPENSO VARCHAR(300) NOT NULL
-	@CMISPolicy(name="P:cm:titled", property=@CMISProperty(name="cm:description"))
-	@CMISProperty(name="emppay:descDoc")
+	@StoragePolicy(name="P:cm:titled", property=@StorageProperty(name="cm:description"))
+	@StorageProperty(name="emppay:descDoc")
 	private java.lang.String ds_compenso;
 
 	// DT_A_COMPETENZA_COGE TIMESTAMP NOT NULL
@@ -150,7 +150,7 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.sql.Timestamp dt_pagamento_mandato;
 
 	// DT_REGISTRAZIONE TIMESTAMP NOT NULL
-	@CMISProperty(name="emppay:datDoc",converterBeanName="cmis.converter.timestampToCalendarConverter")
+	@StorageProperty(name="emppay:datDoc",converterBeanName="cmis.converter.timestampToCalendarConverter")
 	private java.sql.Timestamp dt_registrazione;
 
 	// DT_TRASMISSIONE_MANDATO TIMESTAMP
@@ -232,7 +232,7 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.math.BigDecimal im_lordo_percipiente;
 
 	// IM_NETTO_PERCIPIENTE DECIMAL(15,2) NOT NULL
-	@CMISProperty(name="emppay:impNetto")
+	@StorageProperty(name="emppay:impNetto")
 	private java.math.BigDecimal im_netto_percipiente;
 
 	// IM_NO_FISCALE DECIMAL(15,2) NOT NULL

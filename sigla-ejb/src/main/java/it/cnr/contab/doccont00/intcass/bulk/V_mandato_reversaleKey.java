@@ -1,26 +1,25 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.doccont00.core.bulk.MandatoKey;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
 
 public class V_mandato_reversaleKey extends OggettoBulk implements KeyedPersistent {
 	// CD_CDS VARCHAR(30)
-	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:codice"))
+	@StoragePolicy(name="P:strorg:cds", property=@StorageProperty(name="strorgcds:codice"))
 	private java.lang.String cd_cds;
 
 	// CD_TIPO_DOCUMENTO_CONT VARCHAR(10)
-	@CMISProperty(name="doccont:tipo")			
+	@StorageProperty(name="doccont:tipo")
 	private java.lang.String cd_tipo_documento_cont;
 
 	// ESERCIZIO DECIMAL(4,0)
-	@CMISProperty(name="doccont:esercizioDoc")		
+	@StorageProperty(name="doccont:esercizioDoc")
 	private java.lang.Integer esercizio;
 
 	// PG_DOCUMENTO_CONT DECIMAL(10,0)
-	@CMISProperty(name="doccont:numDoc")		
+	@StorageProperty(name="doccont:numDoc")
 	private java.lang.Long pg_documento_cont;
 
 	public V_mandato_reversaleKey() {
@@ -96,25 +95,25 @@ public class V_mandato_reversaleKey extends OggettoBulk implements KeyedPersiste
 	public void setPg_documento_cont(java.lang.Long newPg_documento_cont) {
 		pg_documento_cont = newPg_documento_cont;
 	}
-	
+
 	public boolean equalsByPrimaryKey(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof V_mandato_reversaleKey)) return false;
 		V_mandato_reversaleKey k = (V_mandato_reversaleKey)o;
 		if(!compareKey(getCd_cds(),k.getCd_cds())) return false;
 		if(!compareKey(getEsercizio(),k.getEsercizio())) return false;
-		if(!compareKey(getCd_tipo_documento_cont(),k.getCd_tipo_documento_cont())) return false;		
+		if(!compareKey(getCd_tipo_documento_cont(),k.getCd_tipo_documento_cont())) return false;
 		if(!compareKey(getPg_documento_cont(),k.getPg_documento_cont())) return false;
 		return true;
 	}
-	
+
 	public int primaryKeyHashCode() {
 		return
-			calculateKeyHashCode(getCd_cds())+
-			calculateKeyHashCode(getEsercizio())+
-			calculateKeyHashCode(getCd_tipo_documento_cont())+			
-			calculateKeyHashCode(getPg_documento_cont());
-	}	
+				calculateKeyHashCode(getCd_cds())+
+						calculateKeyHashCode(getEsercizio())+
+						calculateKeyHashCode(getCd_tipo_documento_cont())+
+						calculateKeyHashCode(getPg_documento_cont());
+	}
 	@Override
 	public boolean equals(Object obj) {
 		return equalsByPrimaryKey(obj);

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.ProgettoGestUoBase"
+	keyClassName="it.cnr.contab.progettiric00.core.bulk.ProgettoGestUoKey"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.ProgettoGestUoHome" >
+	<defaultColumnMap
+		tableName="PROGETTO_GEST_UO" >
+		<columnMapping
+			columnName="DT_FINE"
+			propertyName="dt_fine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_DIVISA"
+			propertyName="importo_divisa"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />
+		<columnMapping
+			columnName="DT_PROROGA"
+			propertyName="dt_proroga"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_INIZIO"
+			propertyName="dt_inizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cd_divisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="2000" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_RESPONSABILE_TERZO"
+			propertyName="cd_responsabile_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_PROGETTO"
+			propertyName="importo_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_PROGETTO"
+			propertyName="cd_tipo_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />	
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="1"/>	
+		<columnMapping
+			columnName="DURATA_PROGETTO"
+			propertyName="durata_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />		
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />							
+		<columnMapping
+			columnName="PG_PROGETTO_PADRE"
+			propertyName="pg_progetto_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />							
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_PROGETTO_PADRE"
+			propertyName="esercizio_progetto_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true"/>
+		<columnMapping
+			columnName="TIPO_FASE_PROGETTO_PADRE"
+			propertyName="tipo_fase_progetto_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true"/>
+		<columnMapping
+			columnName="FL_UTILIZZABILE"
+			propertyName="fl_utilizzabile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CONDIVISO"
+			propertyName="condiviso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_fine" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="importo_divisa" />
+	<persistentProperty
+		name="dt_proroga" />
+	<persistentProperty
+		name="dt_inizio" />
+	<persistentProperty
+		name="cd_divisa" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="cd_responsabile_terzo" />
+	<persistentProperty
+		name="cd_tipo_progetto" />
+	<persistentProperty
+		name="importo_progetto" />
+	<persistentProperty
+		name="cd_progetto" />		
+	<persistentProperty
+		name="stato" />		
+	<persistentProperty
+		name="durata_progetto" />				
+	<persistentProperty
+		name="livello" />						
+	<persistentProperty
+		name="pg_progetto_padre" />								
+	<persistentProperty
+		name="esercizio_progetto_padre" />								
+	<persistentProperty
+		name="tipo_fase_progetto_padre" />								
+	<persistentProperty
+		name="cd_dipartimento" />										
+	<persistentProperty
+		name="fl_utilizzabile" />										
+	<persistentProperty
+		name="condiviso" />										
+</SQLPersistentInfo>

@@ -1,29 +1,18 @@
 package it.cnr.contab.missioni00.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.client.api.ItemIterable;
-import org.apache.chemistry.opencmis.client.api.QueryResult;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
-import org.springframework.util.StringUtils;
-
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 
-public class MissioniCMISService extends SiglaCMISService {
-	
+import java.util.*;
+
+public class MissioniCMISService extends StoreService {
+
 	public static final String ASPECT_MISSIONE_SIGLA_DETTAGLIO = "P:missioni_sigla_attachment:scontrini";
 	public static final String ASPECT_ALLEGATI_MISSIONE_SIGLA = "P:missioni_sigla_attachment:allegati";
 	public static final String ASPECT_CMIS_MISSIONE_SIGLA = "P:missioni_sigla:missione_sigla";
@@ -32,107 +21,63 @@ public class MissioniCMISService extends SiglaCMISService {
 	public static final String CMIS_MISSIONE_SIGLA_OGGETTO = "missioni_sigla:oggetto";
 	public static final String CMIS_MISSIONE_DETTAGLIO_SIGLA_RIGA = "missioni_dettaglio_sigla:riga";
 
-	
-	
-	public ItemIterable<CmisObject> getFilesOrdineMissione(MissioneBulk missione) throws ComponentException{
-		if (!StringUtils.isEmpty(missione.getIdFolderOrdineMissione())){
-			Folder folderOrdine = null;
-			try{
-				folderOrdine = (Folder) getNodeByNodeRef(missione.getIdFolderOrdineMissione());
-				
-			} catch (CmisObjectNotFoundException ex){
-				return null;
-			}
-			if (folderOrdine != null){
-		        ItemIterable<CmisObject> children = folderOrdine.getChildren();
-		        ItemIterable<QueryResult> results = getDocuments(missione.getIdFolderOrdineMissione(), null);
-				for (QueryResult nodeFile : results) {
-					String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
-				}
-		        return children;
-			}
-		}
-		return null;
-	}
-	
-	public CMISPath getCMISPathFromFolderRimborso(MissioneBulk missione) throws ComponentException{
-		Folder folderRimborso = (Folder) getNodeByNodeRef(missione.getIdFolderRimborsoMissione());
-		return getCMISPathFromFolder(folderRimborso);
+	public List<StorageObject> getFilesOrdineMissione(MissioneBulk missione) throws ComponentException{
+		return Optional.ofNullable(missione.getIdFolderOrdineMissione())
+				.map(s -> getStorageObjectBykey(s))
+				.map(storageObject -> getChildren(storageObject.getKey()))
+				.orElse(null);
 	}
 
-	public CMISPath getCMISPathFromFolderDettaglio(Missione_dettaglioBulk dettaglio) throws ComponentException{
-		Folder folderRimborso = (Folder) getNodeByNodeRef(dettaglio.getIdFolderDettagliGemis());
-		return getCMISPathFromFolder(folderRimborso);
+	public String getCMISPathFromFolderRimborso(MissioneBulk missione) {
+		return Optional.ofNullable(getStorageObjectBykey(missione.getIdFolderRimborsoMissione()))
+				.map(StorageObject::getPath)
+				.orElse(null);
 	}
 
-	private CMISPath getCMISPathFromFolder(Folder folderRimborso) {
-		if (folderRimborso != null){
-			return CMISPath.construct(folderRimborso.getPath());
-		}
-		return null;
+	public String getCMISPathFromFolderDettaglio(Missione_dettaglioBulk dettaglio) {
+		return Optional.ofNullable(getStorageObjectBykey(dettaglio.getIdFolderDettagliGemis()))
+				.map(StorageObject::getPath)
+				.orElse(null);
 	}
 
-	public ItemIterable<CmisObject> getFilesRimborsoMissione(MissioneBulk missione) throws ComponentException{
-		if (!StringUtils.isEmpty(missione.getIdFolderRimborsoMissione())){
-			Folder folderRimborso = null;
-			try{
-				folderRimborso = (Folder) getNodeByNodeRef(missione.getIdFolderRimborsoMissione());
-				
-			} catch (CmisObjectNotFoundException ex){
-				return null;
-			}
-			if (folderRimborso != null){
-		        ItemIterable<CmisObject> children = folderRimborso.getChildren();
-		        return children;
-			}
-		}
-		return null;
+	private String getCMISPathFromFolder(StorageObject folderRimborso) {
+		return Optional.ofNullable(folderRimborso)
+				.map(StorageObject::getPath )
+				.orElse(null);
 	}
 
-	public ItemIterable<CmisObject> getFilesMissioneSigla(MissioneBulk missione) throws ComponentException{
-			Folder folderMissione;
-			try {
-				folderMissione = recuperoFolderMissioneSigla(missione);
-			} catch (DetailedException e) {
-				throw new ComponentException(e);
-			}
-			
-			if (folderMissione != null){
-		        ItemIterable<CmisObject> children = folderMissione.getChildren();
-		        return children;
-			}
-		return null;
+	public List<StorageObject> getFilesRimborsoMissione(MissioneBulk missione) {
+		return Optional.ofNullable(missione.getIdFolderRimborsoMissione())
+				.map(key -> getStorageObjectBykey(key))
+				.map(storageObject -> getChildren(storageObject.getKey()))
+				.orElse(null);
 	}
 
-	private ItemIterable<QueryResult> getDocuments(String folder, String tipoAllegato)
-			throws ApplicationException {
-		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
-		query.append(" where IN_FOLDER(doc, '").append(folder).append("')");
-		ItemIterable<QueryResult> results = search(query);
-		for (QueryResult nodeFile : results) {
-			String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
-		}
-		return results;
+	public List<StorageObject> getFilesMissioneSigla(MissioneBulk missione) throws ApplicationException {
+		return Optional.ofNullable(recuperoFolderMissioneSigla(missione))
+				.map(storageObject -> getChildren(storageObject.getKey()))
+				.orElse(null);
 	}
 
-	public Document recuperoFlows(String idFlusso)throws DetailedException{
-		StringBuffer query = new StringBuffer("SELECT alfcmis:nodeRef,cmis:name from wfcnr:parametriFlusso ");
+	private List<StorageObject> getDocuments(String folder, String tipoAllegato) {
+		return getChildren(folder);
+	}
+
+	public StorageObject recuperoFlows(String idFlusso) throws DetailedException{
+		StringBuffer query = new StringBuffer("SELECT alfcmis:nodeRef, cmis:name, cmis:objectId from wfcnr:parametriFlusso ");
 		query.append(" where wfcnr:wfInstanceId = '").append(idFlusso).append("'");
 		query.append(" and wfcnr:tipologiaDocSpecifica = 'Riepilogo Flusso'");
-		ItemIterable<QueryResult> resultsFolder = search(query);
-		if (resultsFolder.getTotalNumItems() == 0)
+		List<StorageObject> resultsFolder = search(query.toString());
+		if (resultsFolder.size() == 0)
 			return null;
-		else if (resultsFolder.getTotalNumItems() > 1){
+		else if (resultsFolder.size() > 1){
 			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' Riepiloghi Flusso.  ID Flusso:"+ idFlusso);
 		} else {
-			for (QueryResult queryResult : resultsFolder) {
-				return (Document) getNodeByNodeRef((String) queryResult.getPropertyValueByQueryName(MissioniCMISService.ALFCMIS_NODEREF));
-			}
+			return getStorageObjectBykey(resultsFolder.get(0).getKey());
 		}
-		return null;
 	}
 
-	public Folder recuperoFolderMissioneSigla(MissioneBulk missione)throws DetailedException{
+	public StorageObject recuperoFolderMissioneSigla(MissioneBulk missione) throws ApplicationException {
 		int posizionePunto = missione.getCd_unita_organizzativa().indexOf(".");
 		StringBuffer query = new StringBuffer("select mis.cmis:objectId from missioni_sigla:main mis join strorg:uo uo on mis.cmis:objectId = uo.cmis:objectId ");
 		query.append(" join strorg:cds cds on mis.cmis:objectId = cds.cmis:objectId ");
@@ -140,51 +85,26 @@ public class MissioniCMISService extends SiglaCMISService {
 		query.append(" and mis.missioni_sigla:numero = ").append(missione.getPg_missione());
 		query.append(" and uo.strorguo:codice like '").append(missione.getCd_unita_organizzativa().substring(0, posizionePunto)+"%").append("'");
 		query.append(" and cds.strorgcds:codice = '").append(missione.getCd_cds()).append("'");
-		ItemIterable<QueryResult> resultsFolder = search(query);
-		if (resultsFolder.getTotalNumItems() == 0)
+		List<StorageObject> resultsFolder = search(query.toString());
+		if (resultsFolder.size() == 0)
 			return null;
-		else if (resultsFolder.getTotalNumItems() > 1){
+		else if (resultsFolder.size() > 1){
 			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' Missioni.  Anno:"+ missione.getEsercizio()+ " cds:" +missione.getCd_cds() +" uo:"+missione.getCd_unita_organizzativa()+
 					" numero:"+missione.getPg_missione());
 		} else {
-			for (QueryResult queryResult : resultsFolder) {
-				return (Folder) getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
-			}
+			return getStorageObjectBykey(resultsFolder.get(0).getKey());
 		}
-		return null;
 	}
-	
-//	public Folder recuperoFolderMissioneDettaglio(Missione_dettaglioBulk dettaglio)throws DetailedException{
-//		int posizionePunto = dettaglio.getCd_unita_organizzativa().indexOf(".");
-//		StringBuffer query = new StringBuffer("select mis.cmis:objectId from missioni_dettaglio_sigla:main mis join strorg:uo uo on mis.cmis:objectId = uo.cmis:objectId ");
-//		query.append(" join strorg:cds cds on mis.cmis:objectId = cds.cmis:objectId ");
-//		query.append(" where mis.missioni_sigla:anno = ").append(missione.getEsercizio());
-//		query.append(" and mis.missioni_sigla:numero = ").append(missione.getPg_missione());
-//		query.append(" and uo.strorguo:codice like '").append(missione.getCd_unita_organizzativa().substring(0, posizionePunto)+"%").append("'");
-//		query.append(" and cds.strorgcds:codice = '").append(missione.getCd_cds()).append("'");
-//		ItemIterable<QueryResult> resultsFolder = search(query);
-//		if (resultsFolder.getTotalNumItems() == 0)
-//			return null;
-//		else if (resultsFolder.getTotalNumItems() > 1){
-//			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' Missioni.  Anno:"+ missione.getEsercizio()+ " cds:" +missione.getCd_cds() +" uo:"+missione.getCd_unita_organizzativa()+
-//					" numero:"+missione.getPg_missione());
-//		} else {
-//			for (QueryResult queryResult : resultsFolder) {
-//				return (Folder) getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
-//			}
-//		}
-//		return null;
-//	}
-//	
-	public CMISPath createFolderMissioneSiglaIfNotPresent(CMISPath cmisPath, MissioneBulk missione) throws ApplicationException{
+
+	public String createFolderMissioneSiglaIfNotPresent(String  path, MissioneBulk missione) throws ApplicationException{
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		String name = missione.constructCMISNomeFile();
 		String folderName = name;
 		folderName = sanitizeFolderName(folderName);
-		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "F:missioni_sigla:main");
-		metadataProperties.put(MissioniCMISService.PROPERTY_DESCRIPTION, folderName);
-		metadataProperties.put(PropertyIds.NAME, folderName);
-		metadataProperties.put(MissioniCMISService.PROPERTY_TITLE, folderName);
+		metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "F:missioni_sigla:main");
+		metadataProperties.put(StoragePropertyNames.DESCRIPTION.value(), folderName);
+		metadataProperties.put(StoragePropertyNames.NAME.value(), folderName);
+		metadataProperties.put(StoragePropertyNames.TITLE.value(), folderName);
 		metadataProperties.put(MissioniCMISService.CMIS_MISSIONE_SIGLA_NUMERO, missione.getPg_missione());
 		metadataProperties.put(MissioniCMISService.CMIS_MISSIONE_SIGLA_ANNO, missione.getEsercizio());
 		metadataProperties.put(MissioniCMISService.CMIS_MISSIONE_SIGLA_OGGETTO, missione.getDs_missione());
@@ -198,23 +118,26 @@ public class MissioniCMISService extends SiglaCMISService {
 		aspectsToAdd.add("P:strorg:uo");
 		aspectsToAdd.add("P:sigla_commons_aspect:utente_applicativo_sigla");
 		aspectsToAdd.add(MissioniCMISService.ASPECT_CMIS_MISSIONE_SIGLA);
-		cmisPath = createFolderIfNotPresent(cmisPath, metadataProperties, aspectsToAdd, folderName);
-		return cmisPath;
+		metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspectsToAdd);
+		return createFolderIfNotPresent(getStorageObjectByPath(path, true, true).getPath(),
+				folderName, metadataProperties);
 	}
-	public CMISPath createFolderDettaglioIfNotPresent(CMISPath cmisPath, Missione_dettaglioBulk dettaglio) throws ApplicationException{
+
+	public String createFolderDettaglioIfNotPresent(String path, Missione_dettaglioBulk dettaglio) throws ApplicationException{
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		String name = dettaglio.constructCMISNomeFile();
 		String folderName = name;
 		folderName = sanitizeFolderName(folderName);
-		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "F:missioni_dettaglio_sigla:main");
-		metadataProperties.put(MissioniCMISService.PROPERTY_DESCRIPTION, folderName);
-		metadataProperties.put(PropertyIds.NAME, folderName);
-		metadataProperties.put(MissioniCMISService.PROPERTY_TITLE, folderName);
+		metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "F:missioni_dettaglio_sigla:main");
+		metadataProperties.put(StoragePropertyNames.DESCRIPTION.value(), folderName);
+		metadataProperties.put(StoragePropertyNames.NAME.value(), folderName);
+		metadataProperties.put(StoragePropertyNames.TITLE.value(), folderName);
 		metadataProperties.put(MissioniCMISService.CMIS_MISSIONE_DETTAGLIO_SIGLA_RIGA, dettaglio.getPg_riga());
 
 		List<String> aspectsToAdd = new ArrayList<String>();
 		aspectsToAdd.add("P:cm:titled");
-		cmisPath = createFolderIfNotPresent(cmisPath, metadataProperties, aspectsToAdd, folderName);
-		return cmisPath;
+		metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspectsToAdd);
+		return createFolderIfNotPresent(getStorageObjectByPath(path, true, true).getPath(),
+				folderName, metadataProperties);
 	}
 }

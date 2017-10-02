@@ -3,17 +3,17 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
 public class ContrattoKey extends OggettoBulk implements KeyedPersistent {
-	@CMISPolicy(name="P:sigla_contratti_aspect:appalti", property=@CMISProperty(name="sigla_contratti_aspect_appalti:esercizio"))
+	@StoragePolicy(name="P:sigla_contratti_aspect:appalti", property=@StorageProperty(name="sigla_contratti_aspect_appalti:esercizio"))
 	private java.lang.Integer esercizio;
-	@CMISPolicy(name="P:sigla_contratti_aspect:appalti", property=@CMISProperty(name="sigla_contratti_aspect_appalti:stato"))
+	@StoragePolicy(name="P:sigla_contratti_aspect:appalti", property=@StorageProperty(name="sigla_contratti_aspect_appalti:stato"))
     private java.lang.String stato;	
-	@CMISPolicy(name="P:sigla_contratti_aspect:appalti", 
-			property=@CMISProperty(name="sigla_contratti_aspect_appalti:progressivo", converterBeanName="cmis.converter.longToIntegerConverter"))
+	@StoragePolicy(name="P:sigla_contratti_aspect:appalti", 
+			property=@StorageProperty(name="sigla_contratti_aspect_appalti:progressivo", converterBeanName="cmis.converter.longToIntegerConverter"))
 	private java.lang.Long pg_contratto;
 	public ContrattoKey() {
 		super();

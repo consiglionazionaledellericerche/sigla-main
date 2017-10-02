@@ -4,14 +4,13 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
-import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProcedura;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProceduraBando;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFileProcedura;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFileProceduraBando;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
-
-import org.apache.chemistry.opencmis.client.api.Document;
 
 public class Incarichi_procedura_archivioBulk extends Incarichi_procedura_archivioKey{
 	private Incarichi_proceduraBulk incarichi_procedura;
@@ -58,26 +57,26 @@ public class Incarichi_procedura_archivioBulk extends Incarichi_procedura_archiv
 			return Incarichi_proceduraBulk.FASE_INVIO_CORTE_CONTI;
 		return getIncarichi_procedura().getFaseProcesso();
 	}
-	public CMISFile getCMISFile() throws IOException{
-		CMISFileProcedura cmisFile = null;
+	public StorageFile getCMISFile() throws IOException{
+		StorageFileProcedura cmisFile = null;
 		if (this.isBando()) {
 			if (this.getFile()==null)
-				cmisFile = new CMISFileProceduraBando(this);
+				cmisFile = new StorageFileProceduraBando(this);
 			else 
-				cmisFile = new CMISFileProceduraBando(this.getFile(), this.getNome_file(), this);
+				cmisFile = new StorageFileProceduraBando(this.getFile(), this.getNome_file(), this);
 		} else {
 			if (this.getFile()==null)
-				cmisFile = new CMISFileProcedura(this);
+				cmisFile = new StorageFileProcedura(this);
 			else 
-				cmisFile = new CMISFileProcedura(this.getFile(), this.getNome_file(), this);
+				cmisFile = new StorageFileProcedura(this.getFile(), this.getNome_file(), this);
 		}
 		return cmisFile;
 	}
-	public CMISFile getCMISFile(Document node) {
+	public StorageFile getCMISFile(StorageObject storageObject) {
 		if (this.isBando())
-			return new CMISFileProceduraBando(node, this);
+			return new StorageFileProceduraBando(storageObject, this);
 		else
-			return new CMISFileProcedura(node, this);
+			return new StorageFileProcedura(storageObject, this);
 	}
 
 	public String constructCMISNomeFile() {
