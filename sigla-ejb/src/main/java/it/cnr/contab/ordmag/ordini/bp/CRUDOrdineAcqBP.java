@@ -104,6 +104,8 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 
 		@Override
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)oggettobulk;
+			consegna.setTipoConsegna(consegna.getOrdineAcqRiga().getTipoConsegnaDefault());
 			int index = super.addDetail(oggettobulk);
 			return index;
 		}
