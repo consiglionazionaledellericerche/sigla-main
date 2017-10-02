@@ -713,11 +713,12 @@ public boolean isAddNuoveLattEnabled()
  */
 public boolean isAssociataADocAmm() 
 {
-	for ( Iterator i = obbligazione_scadenzarioColl.iterator(); i.hasNext(); )
-	//	if ( ((Obbligazione_scadenzarioBulk) i.next()).getIm_associato_doc_amm().compareTo( new BigDecimal(0)) != 0 )
-		if ( ((Obbligazione_scadenzarioBulk) i.next()).getPg_doc_passivo() != null ||  ((Obbligazione_scadenzarioBulk) i.next()).getIm_associato_doc_amm().compareTo( new BigDecimal(0)) != 0 )	
+	for ( Iterator<Obbligazione_scadenzarioBulk> i = obbligazione_scadenzarioColl.iterator(); i.hasNext(); ) {
+		Obbligazione_scadenzarioBulk bulk = i.next();
+		if ( bulk.getPg_doc_passivo() != null ||  bulk.getIm_associato_doc_amm().compareTo( new BigDecimal(0)) != 0 )	
 			return true;
-	return false;	
+	}
+	return false;
 }
 /**
  * Verifica se è stato eseguito il controllo sulla disponibilità di cassa.
