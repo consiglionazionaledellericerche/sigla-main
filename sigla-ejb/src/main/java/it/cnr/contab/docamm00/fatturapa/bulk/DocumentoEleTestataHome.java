@@ -26,9 +26,10 @@ import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.chemistry.opencmis.client.api.Folder;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
+import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +38,8 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
@@ -191,19 +189,19 @@ public class DocumentoEleTestataHome extends BulkHome {
 	}
 
 	public void storeEsitoDocument(DocumentoEleTestataBulk documentoEleTestata,  ByteArrayInputStream byteArrayInputStream, String aspect) throws ApplicationException {
-		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
+		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
-		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-		metadataProperties.put(PropertyIds.NAME, documentoEleTestata.getNomeFile("EC"));
-		metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+		metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
+		metadataProperties.put(StoragePropertyNames.NAME.value(), documentoEleTestata.getNomeFile("EC"));
+		metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
 				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", aspect));
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 		try {
-			cmisService.storeSimpleDocument(byteArrayInputStream, "text/xml", 
-					CMISPath.construct(((Folder)cmisService.getNodeByNodeRef(
-							documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef())).getPath()), 
+			storeService.storeSimpleDocument(byteArrayInputStream, "text/xml",
+					storeService.getStorageObjectBykey(documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef()).getPath(),
 					metadataProperties);
-		} catch(CmisContentAlreadyExistsException _ex) {
+		} catch(StorageException _ex) {
+			logger.error("storeEsitoDocument", _ex);
 		}
 	}
 
@@ -233,8 +231,8 @@ public class DocumentoEleTestataHome extends BulkHome {
             	}
             	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
             			documentoEleTestataBulk.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO)?
-            					CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
-            						CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
+								StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
+								StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
             	fatturaService.notificaEsito(authentication.getUserName(), authentication.getPassword(), 
             			documentoEleTestataBulk, notificaEsitoCommittente);
     		} catch(ApplicationException _ex) {
@@ -258,8 +256,8 @@ public class DocumentoEleTestataHome extends BulkHome {
         	client.getMarshaller().marshal(notificaEsito, new StreamResult(outputStreamNotificaEsito));
         	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
         			documentoEleTestataBulk.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO)?
-        					CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
-        						CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());        		
+							StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
+							StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
     	}
 	}	
 

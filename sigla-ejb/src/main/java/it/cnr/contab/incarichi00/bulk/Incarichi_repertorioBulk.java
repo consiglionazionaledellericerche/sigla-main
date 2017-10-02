@@ -12,10 +12,10 @@ import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderAssegniRicerca;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderBorseStudio;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderContrattiModel;
-import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderIncarico;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFolderAssegniRicerca;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFolderBorseStudio;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFolderContrattiModel;
+import it.cnr.contab.incarichi00.bulk.storage.StorageFolderIncarico;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
@@ -679,13 +679,13 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		return dett;
 	}
 
-	public CMISFolderContrattiModel getCMISFolder() {		
+	public StorageFolderContrattiModel getCMISFolder() {
 		if (Optional.ofNullable(getIncarichi_procedura()).map(Incarichi_proceduraBulk::isProceduraForBorseStudio).orElse(false)) 
-			return new CMISFolderBorseStudio(this);
+			return new StorageFolderBorseStudio(this);
 		else if (Optional.ofNullable(getIncarichi_procedura()).map(Incarichi_proceduraBulk::isProceduraForAssegniRicerca).orElse(false)) 
-			return new CMISFolderAssegniRicerca(this);
+			return new StorageFolderAssegniRicerca(this);
 		else
-			return Optional.ofNullable(getIncarichi_procedura()).map(map -> new CMISFolderIncarico(this)).orElse(null) ;
+			return Optional.ofNullable(getIncarichi_procedura()).map(map -> new StorageFolderIncarico(this)).orElse(null) ;
 	}
 
 }

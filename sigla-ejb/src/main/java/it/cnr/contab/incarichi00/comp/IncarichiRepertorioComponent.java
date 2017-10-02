@@ -2,12 +2,7 @@ package it.cnr.contab.incarichi00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
-import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
-import it.cnr.contab.compensi00.docs.bulk.MinicarrieraHome;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
+import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.config00.file.bulk.Gruppo_fileBulk;
 import it.cnr.contab.config00.file.bulk.Gruppo_fileHome;
 import it.cnr.contab.config00.file.bulk.Tipo_fileBulk;
@@ -16,23 +11,12 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
-import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
-import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
-import it.cnr.contab.incarichi00.cmis.CMISContrattiAspect;
+import it.cnr.contab.incarichi00.bulk.*;
+import it.cnr.contab.incarichi00.storage.StorageContrattiAspect;
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -61,8 +45,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
 
 public class IncarichiRepertorioComponent extends CRUDComponent {
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
@@ -198,7 +180,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 	  * Post: Viene restituita la lista dei Tipi di rapporto associati al Terzo
 	  *
 	  * @param	userContext	lo UserContext che ha generato la richiesta
-	  * @param	compenso l'OggettoBulk da completare
+	  * @param	incarico l'OggettoBulk da completare
 	  * @return	La lista dei Tipi di rapporto associati al terzo
 	  *
 	**/
@@ -263,7 +245,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 	  *			- tipo di rapporto
 	  *
 	  * @param	userContext	lo UserContext che ha generato la richiesta
-	  * @param	compenso l'OggettoBulk da completare
+	  * @param	incarico l'OggettoBulk da completare
 	  * @return l'OggettoBulk completo
 	  *
 	**/
@@ -291,8 +273,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 	  *		  relativi al terzo selezionato
 	  *
 	  * @param	userContext	lo UserContext che ha generato la richiesta
-	  * @param	compenso l'OggettoBulk da completare
-	  * @param	contraente terzo cui è stato assegnato l'incarico
+	  * @param	terzo l'OggettoBulk da completare
 	  * @return l'OggettoBulk completo
 	  *
 	  * Metodo privato chiamato:
@@ -342,7 +323,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 	  *			- tipo trattamento
 	  *
 	  * @param	userContext	lo UserContext che ha generato la richiesta
-	  * @param	compenso l'OggettoBulk da completare
+	  * @param	incarico l'OggettoBulk da completare
 	  *
 	  * Metodi privati chiamati:
 	  *		completaTerzo(UserContext userContext, Incarichi_repertorioBulk incarico);
@@ -990,18 +971,18 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		}
 	}
 	public void salvaDefinitivoCMIS(UserContext userContext, Incarichi_repertorioBulk incarico_repertorio) throws ComponentException{
-		List<CmisObject> nodeAddAspect = new ArrayList<CmisObject>();
-		List<CmisObject> nodeAddConsumer = new ArrayList<CmisObject>();
+		List<StorageObject> nodeAddAspect = new ArrayList<StorageObject>();
+		List<StorageObject> nodeAddConsumer = new ArrayList<StorageObject>();
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		try{
-			CmisObject nodeIncarico = contrattiService.getNodeByPath(incarico_repertorio.getCMISFolder().getCMISPath(contrattiService));
-			if (nodeIncarico!=null && !contrattiService.hasAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-				contrattiService.addAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			StorageObject nodeIncarico = contrattiService.getStorageObjectByPath(incarico_repertorio.getCMISFolder().getCMISPath());
+			if (nodeIncarico!=null && !contrattiService.hasAspect(nodeIncarico, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				contrattiService.addAspect(nodeIncarico, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				contrattiService.addConsumerToEveryone(nodeIncarico);
 				nodeAddAspect.add(nodeIncarico);
 				nodeAddConsumer.add(nodeIncarico);
-	
-				CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_repertorio.getIncarichi_procedura().getCMISFolder().getCMISPath(contrattiService));
+
+				StorageObject nodeProcedura = contrattiService.getStorageObjectByPath(incarico_repertorio.getIncarichi_procedura().getCMISFolder().getCMISPath());
 				if (nodeProcedura!=null)
 					contrattiService.addConsumerToEveryone(nodeProcedura);
 			}
@@ -1014,10 +995,10 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
-					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
-					if (nodeAllegato!=null && !contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()) &&
-						!contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-						contrattiService.addAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+					StorageObject nodeAllegato = contrattiService.getStorageObjectBykey(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && !contrattiService.hasAspect(nodeAllegato, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()) &&
+						!contrattiService.hasAspect(nodeAllegato, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+						contrattiService.addAspect(nodeAllegato, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 						nodeAddAspect.add(nodeAllegato);
 					}
 				}
@@ -1026,21 +1007,21 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		catch( Exception e )
 		{
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-			for (CmisObject node : nodeAddAspect)
-				contrattiService.removeAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-			for (CmisObject node : nodeAddConsumer)
+			for (StorageObject node : nodeAddAspect)
+				contrattiService.removeAspect(node, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			for (StorageObject node : nodeAddConsumer)
 				contrattiService.removeConsumerToEveryone(node);
 			throw new ApplicationException(e.getMessage());
 		}		
 	}
 	public void annullaDefinitivoCMIS(UserContext userContext, Incarichi_repertorioBulk incarico_repertorio) throws ComponentException{
-		List<CmisObject> nodeRemoveAspect = new ArrayList<CmisObject>();
-		List<CmisObject> nodeRemoveConsumer = new ArrayList<CmisObject>();
+		List<StorageObject> nodeRemoveAspect = new ArrayList<StorageObject>();
+		List<StorageObject> nodeRemoveConsumer = new ArrayList<StorageObject>();
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		try{
-			CmisObject nodeIncarico = contrattiService.getNodeByPath(incarico_repertorio.getCMISFolder().getCMISPath(contrattiService));
-			if (nodeIncarico!=null && contrattiService.hasAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-				contrattiService.removeAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			StorageObject nodeIncarico = contrattiService.getStorageObjectByPath(incarico_repertorio.getCMISFolder().getCMISPath());
+			if (nodeIncarico!=null && contrattiService.hasAspect(nodeIncarico, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				contrattiService.removeAspect(nodeIncarico, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				contrattiService.removeConsumerToEveryone(nodeIncarico);
 				nodeRemoveAspect.add(nodeIncarico);
 				nodeRemoveConsumer.add(nodeIncarico);
@@ -1054,9 +1035,9 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
-					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
-					if (nodeAllegato!=null && contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-						contrattiService.removeAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+					StorageObject nodeAllegato = contrattiService.getStorageObjectBykey(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && contrattiService.hasAspect(nodeAllegato, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+						contrattiService.removeAspect(nodeAllegato, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 						nodeRemoveAspect.add(nodeIncarico);
 					}
 				}
@@ -1065,9 +1046,9 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		catch( Exception e )
 		{
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-			for (CmisObject node : nodeRemoveAspect)
-				contrattiService.addAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-			for (CmisObject node : nodeRemoveConsumer)
+			for (StorageObject node : nodeRemoveAspect)
+				contrattiService.addAspect(node, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			for (StorageObject node : nodeRemoveConsumer)
 				contrattiService.addConsumerToEveryone(node);
 			throw new ApplicationException(e.getMessage());
 		}		

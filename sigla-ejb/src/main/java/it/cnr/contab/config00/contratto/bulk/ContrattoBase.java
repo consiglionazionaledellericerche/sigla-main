@@ -3,7 +3,7 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
-import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.Keyed;
 public class ContrattoBase extends ContrattoKey implements Keyed {
 //    ESERCIZIO_PADRE DECIMAL(4,0)
@@ -55,26 +55,26 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	private java.lang.String cd_protocollo;
  
 //    DT_STIPULA TIMESTAMP(7)
-	@CMISProperty(name="sigla_contratti:data_stipula")
+	@StorageProperty(name="sigla_contratti:data_stipula")
 	private java.sql.Timestamp dt_stipula;
  
 //    DT_INIZIO_VALIDITA TIMESTAMP(7)
-	@CMISProperty(name="sigla_contratti:data_inizio")
+	@StorageProperty(name="sigla_contratti:data_inizio")
 	private java.sql.Timestamp dt_inizio_validita;
  
 //    DT_FINE_VALIDITA TIMESTAMP(7)
-	@CMISProperty(name="sigla_contratti:data_fine")
+	@StorageProperty(name="sigla_contratti:data_fine")
 	private java.sql.Timestamp dt_fine_validita;
 
 //	  DT_PROROGA TIMESTAMP(7)
     private java.sql.Timestamp dt_proroga;
  
 //    IM_CONTRATTO_ATTIVO DECIMAL(15,2)
-	@CMISProperty(name="sigla_contratti:importo_attivo_appalto")
+	@StorageProperty(name="sigla_contratti:importo_attivo_appalto")
 	private java.math.BigDecimal im_contratto_attivo;
 
 //	  IM_CONTRATTO_PASSIVO DECIMAL(15,2)
-	@CMISProperty(name="sigla_contratti:importo_passivo_appalto")    
+	@StorageProperty(name="sigla_contratti:importo_passivo_appalto")
 	private java.math.BigDecimal im_contratto_passivo;
  
 //	CD_TIPO_ATTO VARCHAR(5)
@@ -336,7 +336,7 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 
 	/**
 	 * 
-	 * @param cd_unita_organizzativa
+	 * @param string
 	 */
 	public void setCd_unita_organizzativa(java.lang.String string) {
 		cd_unita_organizzativa = string;

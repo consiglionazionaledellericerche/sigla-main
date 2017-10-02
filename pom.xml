@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr</groupId>
-	<version>4.0.77-SNAPSHOT</version>
+	<version>4.1.9-SNAPSHOT</version>
 	<artifactId>sigla</artifactId>
 	<name>sigla</name>
 	<packaging>pom</packaging>
@@ -13,6 +13,7 @@
   	</parent>
 	<modules>
 		<module>sigla-ws-client</module>
+		<module>sigla-storage</module>
 		<module>sigla-ejb</module>
 		<module>sigla-sdi</module>
 		<module>sigla-ws</module>
@@ -20,11 +21,10 @@
 		<module>SIGLA</module>
 	</modules>
 	<properties>
-    <sonar.skip>true</sonar.skip>
+    	<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
-		<opencmis.version>1.0.0</opencmis.version>
 		<spring.version>4.3.3.RELEASE</spring.version>
-		<jada.version>5.0.4</jada.version>
+		<jada.version>5.0.7</jada.version>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>

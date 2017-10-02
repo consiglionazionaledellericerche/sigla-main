@@ -14,21 +14,21 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
-import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-@CMISType(name="F:sigla_contratti:appalti")
+@StorageType(name="F:sigla_contratti:appalti")
 @JsonInclude(value=Include.NON_NULL)
 public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamente{
 	
@@ -203,7 +203,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		return ti_natura_contabileKeys;
 	}		
 	
-	@CMISProperty(name="sigla_contratti:natura_contabile")
+	@StorageProperty(name="sigla_contratti:natura_contabile")
 	public String getDescrizioneNaturaContabile(){
 		return (String) Optional.ofNullable(getNatura_contabile()).map(x -> ti_natura_contabileKeys.get(x)).orElse(null);
 	}
@@ -716,7 +716,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		AllegatoContrattoDocumentBulk dett = (AllegatoContrattoDocumentBulk)getArchivioAllegati().remove(index);
 		return dett;
 	}
-	@CMISProperty(name="cmis:name")
+	@StorageProperty(name="cmis:name")
 	public String getCMISFolderName(){
 		return Arrays.asList(
 				"Contratto ", 
@@ -734,57 +734,57 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		return false;
 	}
 	
-	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:codice"))
+	@StoragePolicy(name="P:strorg:cds", property=@StorageProperty(name="strorgcds:codice"))
 	public String getCd_cds(){
 		return Optional.ofNullable(Optional.ofNullable(getUnita_organizzativa()).
 				map(Unita_organizzativaBulk::getUnita_padre).orElse(new CdsBulk())).map(CdsBulk::getCd_unita_organizzativa).orElse("");
 	}
 
-	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:descrizione"))
+	@StoragePolicy(name="P:strorg:cds", property=@StorageProperty(name="strorgcds:descrizione"))
 	public String getDs_cds(){
 		return Optional.ofNullable(Optional.ofNullable(getUnita_organizzativa()).
 			map(Unita_organizzativaBulk::getUnita_padre).orElse(new CdsBulk())).map(CdsBulk::getDs_unita_organizzativa).orElse("");
 	}
 	
-	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:codice"))
+	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorguo:codice"))
 	public String getCd_unita_organizzativa(){
 		return Optional.ofNullable(getUnita_organizzativa()).map(Unita_organizzativaBulk::getCd_unita_organizzativa).orElse(null);
 	}
 
-	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:descrizione"))
+	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorguo:descrizione"))
 	public String getDs_unita_organizzativa(){
 		return Optional.ofNullable(getUnita_organizzativa()).map(Unita_organizzativaBulk::getDs_unita_organizzativa).orElse("");
 	}
 	
-	@CMISProperty(name="sigla_contratti:fig_giu_esterna_codice")
+	@StorageProperty(name="sigla_contratti:fig_giu_esterna_codice")
 	public Integer getFig_giu_esterna_codice(){
 		if (getFigura_giuridica_esterna() == null)
 			return null;
 		return getFigura_giuridica_esterna().getCd_terzo();
 	}
 
-	@CMISProperty(name="sigla_contratti:fig_giu_esterna_denominazione")
+	@StorageProperty(name="sigla_contratti:fig_giu_esterna_denominazione")
 	public String getFig_giu_esterna_denominazione(){
 		if (getFigura_giuridica_esterna() == null)
 			return null;
 		return getFigura_giuridica_esterna().getDenominazione_sede();
 	}
 
-	@CMISProperty(name="sigla_contratti:fig_giu_esterna_codfis")
+	@StorageProperty(name="sigla_contratti:fig_giu_esterna_codfis")
 	public String getFig_giu_esterna_codfis(){
 		if (getFigura_giuridica_esterna() == null)
 			return null;
 		return getFigura_giuridica_esterna().getAnagrafico().getCodice_fiscale();
 	}
 
-	@CMISProperty(name="sigla_contratti:fig_giu_esterna_pariva")
+	@StorageProperty(name="sigla_contratti:fig_giu_esterna_pariva")
 	public String getFig_giu_esterna_pariva(){
 		if (getFigura_giuridica_esterna() == null)
 			return null;
 		return getFigura_giuridica_esterna().getAnagrafico().getPartita_iva();
 	}
 
-	@CMISProperty(name="sigla_contratti:tipo_norma")
+	@StorageProperty(name="sigla_contratti:tipo_norma")
 	public String getTipo_norma(){
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 		Tipo_norma_perlaBulk perla = getTipoNormaPerla();
@@ -796,35 +796,35 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		return null;
 	}
 
-	@CMISProperty(name="sigla_contratti:responsabile_codice")
+	@StorageProperty(name="sigla_contratti:responsabile_codice")
 	public Integer getCodiceResponsabile(){
 		if (getDirettore() == null)
 			return null;
 		return getDirettore().getCd_terzo();
 	}
 
-	@CMISProperty(name="sigla_contratti:responsabile_denominazione")
+	@StorageProperty(name="sigla_contratti:responsabile_denominazione")
 	public String getDenominazioneResponsabile(){
 		if (getDirettore() == null)
 			return null;
 		return getDirettore().getDenominazione_sede();
 	}
 
-	@CMISProperty(name="sigla_contratti:responsabile_procedimento_codice")
+	@StorageProperty(name="sigla_contratti:responsabile_procedimento_codice")
 	public Integer getCodiceResponsabileProcedimento(){
 		if (getResponsabile() == null)
 			return null;
 		return getResponsabile().getCd_terzo();
 	}
 
-	@CMISProperty(name="sigla_contratti:responsabile_procedimento_denominazione")
+	@StorageProperty(name="sigla_contratti:responsabile_procedimento_denominazione")
 	public String getDenominazioneResponsabileProcedimento(){
 		if (getResponsabile() == null)
 			return null;
 		return getResponsabile().getDenominazione_sede();
 	}
 	
-	@CMISProperty(name="sigla_contratti:mod_individuazione_beneficiario")
+	@StorageProperty(name="sigla_contratti:mod_individuazione_beneficiario")
 	public String getModIndividuazioneBeneficiario(){
 		if (getProcedura_amministrativa() == null)
 			return null;
