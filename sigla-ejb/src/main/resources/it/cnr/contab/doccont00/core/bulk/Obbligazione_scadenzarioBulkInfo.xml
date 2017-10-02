@@ -123,20 +123,25 @@
 	<form name="searchtool">
         <formFieldProperty
               name="esercizio_originale" 
-              enabledOnSearch="true"/>
+              enabledOnSearch="true"
+			  inputSize="5"/>
         <formFieldProperty
               name="pg_obbligazione" 
-              enabledOnSearch="true"/>   
+              enabledOnSearch="true"
+			  inputSize="10"/>   
         <formFieldProperty
               name="pg_obbligazione_scadenzario" 
-              enabledOnSearch="true"/>   
+              enabledOnSearch="true"
+			  inputSize="4"/>   
         <formFieldProperty
-              name="im_scadenza"/> 
+              name="im_scadenza"
+			  inputSize="15"/> 
         <formFieldProperty
-              name="dt_scadenza"/> 
+              name="dt_scadenza"
+			  inputSize="10"/> 
         <formFieldProperty
               name="ds_scadenza"
-			  inputSize="40"/> 
+			  inputSize="80"/> 
     </form>
     	
 	<columnFieldProperty
