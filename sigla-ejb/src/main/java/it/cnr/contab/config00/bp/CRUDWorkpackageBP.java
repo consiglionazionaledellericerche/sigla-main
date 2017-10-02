@@ -142,7 +142,8 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
 		setFlTiGestioneES(parEnte.getFl_gae_es().booleanValue());
 		setFlPrgPianoeco(parEnte.getFl_prg_pianoeco().booleanValue());
-		aggiornaGECO(actioncontext.getUserContext());
+		if (parEnte.getFl_informix())
+			aggiornaGECO(actioncontext.getUserContext());
 		super.initialize(actioncontext);
 	} catch (ComponentException e) {
 		throw new BusinessProcessException(e);
