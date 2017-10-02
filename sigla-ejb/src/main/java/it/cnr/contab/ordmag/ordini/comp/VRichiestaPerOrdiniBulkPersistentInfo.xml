@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<SQLPersistentInfo
-	persistentClassName="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk"
-	homeClassName="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniHome">
-	<defaultColumnMap
-		tableName="V_RICHIESTA_PER_ORDINI">
-	</defaultColumnMap>
-</SQLPersistentInfo>
