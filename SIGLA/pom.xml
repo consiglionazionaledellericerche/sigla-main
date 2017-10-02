@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.cnr</groupId>
         <artifactId>sigla</artifactId>
-        <version>4.0.77-SNAPSHOT</version>
+        <version>4.1.9-SNAPSHOT</version>
     </parent>
     <properties>
         <wildfly.deployment.filename>SIGLA.ear</wildfly.deployment.filename>
@@ -85,6 +85,12 @@
                 <version>${wildfly.plugin.version}</version>
                 <configuration>
                     <jbossHome>${project.build.directory}/wildfly-${wildfly.version}</jbossHome>
+                    <server-args>
+                        <server-arg>-Dspring.profiles.active=CMIS</server-arg>
+                    </server-args>
+                    <java-opts>
+                        <java-opt>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</java-opt>
+                    </java-opts>
                 </configuration>
             </plugin>
             <plugin>
@@ -256,47 +262,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.chemistry.opencmis</groupId>
-            <artifactId>chemistry-opencmis-client-impl</artifactId>
-            <version>${opencmis.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-rt-transports-http</artifactId>
-                </exclusion>
-
-                <exclusion>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-rt-ws-policy</artifactId>
-                </exclusion>
-
-                <exclusion>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-rt-frontend-jaxws</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>stax-ex</artifactId>
-                    <groupId>org.jvnet.staxex</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>activation</artifactId>
-                    <groupId>javax.activation</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-codec</artifactId>
-                    <groupId>commons-codec</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>saaj-impl</artifactId>
-                    <groupId>com.sun.xml.messaging.saaj</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
@@ -426,6 +391,16 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20160810</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sigla-storage-cmis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sigla-storage-azure</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

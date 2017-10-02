@@ -5,8 +5,10 @@ import java.sql.*;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
+import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_siopeBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
@@ -14,7 +16,7 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
-public class Elemento_voceHome extends BulkHome {
+public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome {
 	private static java.util.Hashtable ti_appartenenzaKeys;
 	private static java.util.Hashtable ti_gestioneKeys;
 	private static java.util.Hashtable ti_elemento_voceKeys;
@@ -40,354 +42,360 @@ public class Elemento_voceHome extends BulkHome {
 	private static java.util.Hashtable lunghezzeChiavi;
 	private static java.util.Hashtable tipiPadre;	
 
-protected Elemento_voceHome(Class clazz,java.sql.Connection connection) {
-	super(clazz,connection);
-}
-protected Elemento_voceHome(Class clazz,java.sql.Connection connection,PersistentCache persistentCache) {
-	super(clazz,connection,persistentCache);
-}
-/**
- * <!-- @TODO: da completare -->
- * Costruisce un Elemento_voceHome
- *
- * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
- */
-public Elemento_voceHome(java.sql.Connection conn) {
-	super(Elemento_voceBulk.class,conn);
-}
-/**
- * <!-- @TODO: da completare -->
- * Costruisce un Elemento_voceHome
- *
- * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
- * @param persistentCache	La PersistentCache in cui vengono cachati gli oggetti persistenti caricati da questo Home
- */
-public Elemento_voceHome(java.sql.Connection conn,PersistentCache persistentCache) {
-	super(Elemento_voceBulk.class,conn,persistentCache);
-}
-/**
- * Genera un nuovo codice per Elemento_voceBulk calcolando il progressivo successivo al massimo esistente
- * per l'Elemento_voceBulk
- * @param evBulk elemento voce per cui e' necessario creare il codice
- * @return String codice creato
- */
+	protected Elemento_voceHome(Class clazz,java.sql.Connection connection) {
+		super(clazz,connection);
+	}
+	protected Elemento_voceHome(Class clazz,java.sql.Connection connection,PersistentCache persistentCache) {
+		super(clazz,connection,persistentCache);
+	}
+	/**
+	 * <!-- @TODO: da completare -->
+	 * Costruisce un Elemento_voceHome
+	 *
+	 * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
+	 */
+	public Elemento_voceHome(java.sql.Connection conn) {
+		super(Elemento_voceBulk.class,conn);
+	}
+	/**
+	 * <!-- @TODO: da completare -->
+	 * Costruisce un Elemento_voceHome
+	 *
+	 * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
+	 * @param persistentCache	La PersistentCache in cui vengono cachati gli oggetti persistenti caricati da questo Home
+	 */
+	public Elemento_voceHome(java.sql.Connection conn,PersistentCache persistentCache) {
+		super(Elemento_voceBulk.class,conn,persistentCache);
+	}
+	/**
+	 * Genera un nuovo codice per Elemento_voceBulk calcolando il progressivo successivo al massimo esistente
+	 * per l'Elemento_voceBulk
+	 * @param evBulk elemento voce per cui e' necessario creare il codice
+	 * @return String codice creato
+	 */
 
-public String creaNuovoCodice( Elemento_voceBulk evBulk ) throws ApplicationException, PersistencyException
-{	
-	String codice;
-
-	try
+	public String creaNuovoCodice( Elemento_voceBulk evBulk ) throws ApplicationException, PersistencyException
 	{
-		LoggableStatement ps = new LoggableStatement(getConnection(),
-			"SELECT CD_PROPRIO_ELEMENTO FROM " + 
-			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 
-			"ELEMENTO_VOCE " +
-			"WHERE ESERCIZIO = ? AND " +
-			"TI_APPARTENENZA = ? AND " +						
-			"TI_GESTIONE = ? AND " +
-			"TI_ELEMENTO_VOCE = ? AND " +						
-			"CD_ELEMENTO_PADRE = ? AND " +
-			"CD_PROPRIO_ELEMENTO = ( SELECT MAX(CD_PROPRIO_ELEMENTO) " +			
-			"FROM "+
-			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 			
-			"ELEMENTO_VOCE WHERE " +
-			"ESERCIZIO = ? AND " +
-			"TI_APPARTENENZA = ? AND " +						
-			"TI_GESTIONE = ? AND " +
-			"TI_ELEMENTO_VOCE = ? AND " +						
-			"CD_ELEMENTO_PADRE = ?) " + 
-			"FOR UPDATE NOWAIT",true ,this.getClass());
-		ps.setObject( 1, evBulk.getEsercizio() );
-		ps.setString( 2, evBulk.getTi_appartenenza() );
-		ps.setString( 3, evBulk.getTi_gestione() );
-		ps.setString( 4, evBulk.getTi_elemento_voce() );
-		ps.setString( 5, evBulk.getElemento_padre().getCd_elemento_voce() );
-		ps.setObject( 6, evBulk.getEsercizio() );
-		ps.setString( 7, evBulk.getTi_appartenenza() );
-		ps.setString( 8, evBulk.getTi_gestione() );
-		ps.setString( 9, evBulk.getTi_elemento_voce() );		
-		ps.setString(10, evBulk.getElemento_padre().getCd_elemento_voce() );						
-		
-		ResultSet rs = ps.executeQuery();
-		if ( rs.next() )
+		String codice;
+
+		try
 		{
-			codice = rs.getString( 1 );
-			if ( codice != null )
+			LoggableStatement ps = new LoggableStatement(getConnection(),
+				"SELECT CD_PROPRIO_ELEMENTO FROM " +
+				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+				"ELEMENTO_VOCE " +
+				"WHERE ESERCIZIO = ? AND " +
+				"TI_APPARTENENZA = ? AND " +
+				"TI_GESTIONE = ? AND " +
+				"TI_ELEMENTO_VOCE = ? AND " +
+				"CD_ELEMENTO_PADRE = ? AND " +
+				"CD_PROPRIO_ELEMENTO = ( SELECT MAX(CD_PROPRIO_ELEMENTO) " +
+				"FROM "+
+				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+				"ELEMENTO_VOCE WHERE " +
+				"ESERCIZIO = ? AND " +
+				"TI_APPARTENENZA = ? AND " +
+				"TI_GESTIONE = ? AND " +
+				"TI_ELEMENTO_VOCE = ? AND " +
+				"CD_ELEMENTO_PADRE = ?) " +
+				"FOR UPDATE NOWAIT",true ,this.getClass());
+			ps.setObject( 1, evBulk.getEsercizio() );
+			ps.setString( 2, evBulk.getTi_appartenenza() );
+			ps.setString( 3, evBulk.getTi_gestione() );
+			ps.setString( 4, evBulk.getTi_elemento_voce() );
+			ps.setString( 5, evBulk.getElemento_padre().getCd_elemento_voce() );
+			ps.setObject( 6, evBulk.getEsercizio() );
+			ps.setString( 7, evBulk.getTi_appartenenza() );
+			ps.setString( 8, evBulk.getTi_gestione() );
+			ps.setString( 9, evBulk.getTi_elemento_voce() );
+			ps.setString(10, evBulk.getElemento_padre().getCd_elemento_voce() );
+
+			ResultSet rs = ps.executeQuery();
+			if ( rs.next() )
 			{
-				long cdLong = Long.parseLong( codice ) + 1;
-				codice = String.valueOf( cdLong );
+				codice = rs.getString( 1 );
+				if ( codice != null )
+				{
+					long cdLong = Long.parseLong( codice ) + 1;
+					codice = String.valueOf( cdLong );
+				}
+				else
+					codice = String.valueOf( 1 );
 			}
 			else
 				codice = String.valueOf( 1 );
+			try{ps.close();}catch( java.sql.SQLException e ){};
+	//		return getLunghezza_chiaviHome().create().formatCdrKey( codice, esercizio, livello );
+			return codice;
 		}
-		else
-			codice = String.valueOf( 1 );		
-		try{ps.close();}catch( java.sql.SQLException e ){};
-//		return getLunghezza_chiaviHome().create().formatCdrKey( codice, esercizio, livello );
-		return codice;
+		catch (java.lang.NumberFormatException e)
+		{
+				throw new ApplicationException( "Esistono codice non numerici nel database. " );
+		}
+		catch ( SQLException e )
+		{
+				throw new PersistencyException( e );
+		}
+
 	}
-	catch (java.lang.NumberFormatException e)
+	/**
+	 * Formatta le chiavi (cd_elemento_voce) dell'Elemento_voceBulk in base all'appartenenza, alla gestione e al
+	 * tipo di elemento voce a cui la chiave si riferisce
+	 */
+
+	public String formatKey( String key, String appartenenza, String gestione, String tipoVoce ) throws ApplicationException
 	{
-			throw new ApplicationException( "Esistono codice non numerici nel database. " );			
+		if ( key == null || key.equals("") )
+			return key;
+		int len = getLunghezzaChiave( appartenenza, gestione, tipoVoce );
+		if ( key.length() > len )
+			throw new ApplicationException( "Il codice non può essere più lungo di " + len + " caratteri" );
+		return leftPadding(key, len);
+
 	}
-	catch ( SQLException e )
+	/**
+	 * Restitusce la lunghezza della chiave di un Elemento_voceBulk in base all'appartenenza, alla gestione e al
+	 * tipo di elemento voce
+	 */
+
+
+	public int getLunghezzaChiave( String appartenenza, String gestione, String tipo )
 	{
-			throw new PersistencyException( e );
+		return ((Integer)((Hashtable)((Hashtable) getLunghezzeChiavi().get( appartenenza )).get( gestione)).get( tipo )).intValue();
 	}
-	
-}
-/**
- * Formatta le chiavi (cd_elemento_voce) dell'Elemento_voceBulk in base all'appartenenza, alla gestione e al 
- * tipo di elemento voce a cui la chiave si riferisce
- */
-
-public String formatKey( String key, String appartenenza, String gestione, String tipoVoce ) throws ApplicationException
-{
-	if ( key == null || key.equals("") )
-		return key;
-	int len = getLunghezzaChiave( appartenenza, gestione, tipoVoce );
-	if ( key.length() > len )
-		throw new ApplicationException( "Il codice non può essere più lungo di " + len + " caratteri" );	
-	return leftPadding(key, len);
-		
-}
-/**
- * Restitusce la lunghezza della chiave di un Elemento_voceBulk in base all'appartenenza, alla gestione e al 
- * tipo di elemento voce
- */
+	/**
+	 * Restitusce la hashtable contenente la lunghezza di tutte le chiavi raggruppate
+	 * in base all'appartenenza, alla gestione e al tipo di elemento voce
+	 */
 
 
-public int getLunghezzaChiave( String appartenenza, String gestione, String tipo )
-{
-	return ((Integer)((Hashtable)((Hashtable) getLunghezzeChiavi().get( appartenenza )).get( gestione)).get( tipo )).intValue();
-}
-/**
- * Restitusce la hashtable contenente la lunghezza di tutte le chiavi raggruppate 
- * in base all'appartenenza, alla gestione e al tipo di elemento voce
- */
-
-
-public java.util.Hashtable getLunghezzeChiavi()
-{
-	if ( lunghezzeChiavi == null )
+	public java.util.Hashtable getLunghezzeChiavi()
 	{
-			
-		java.util.Hashtable lungCnrEntrate  = new java.util.Hashtable();
-		lungCnrEntrate.put( TIPO_CATEGORIA, new Integer( 2 ));
-		lungCnrEntrate.put( TIPO_CAPITOLO, new Integer( 12 ));						
-				
-		java.util.Hashtable lungCnrSpese    = new java.util.Hashtable();
-		lungCnrSpese.put( TIPO_CAPITOLO, new Integer( 3 )); 
-		
-		java.util.Hashtable lungCdsEntrate  = new java.util.Hashtable();
-		lungCdsEntrate.put( TIPO_CAPITOLO, new Integer( 3 ));
-			
-		java.util.Hashtable lungCdsSpese    = new java.util.Hashtable();
-		lungCdsSpese.put( TIPO_CAPITOLO, new Integer( 15 ));
+		if ( lunghezzeChiavi == null )
+		{
+
+			java.util.Hashtable lungCnrEntrate  = new java.util.Hashtable();
+			lungCnrEntrate.put( TIPO_CATEGORIA, new Integer( 2 ));
+			lungCnrEntrate.put( TIPO_CAPITOLO, new Integer( 12 ));
+
+			java.util.Hashtable lungCnrSpese    = new java.util.Hashtable();
+			lungCnrSpese.put( TIPO_CAPITOLO, new Integer( 3 ));
+
+			java.util.Hashtable lungCdsEntrate  = new java.util.Hashtable();
+			lungCdsEntrate.put( TIPO_CAPITOLO, new Integer( 3 ));
+
+			java.util.Hashtable lungCdsSpese    = new java.util.Hashtable();
+			lungCdsSpese.put( TIPO_CAPITOLO, new Integer( 15 ));
 
 
-		lunghezzeChiavi = new java.util.Hashtable();
-		java.util.Hashtable tmp = new java.util.Hashtable();
-		tmp.put( GESTIONE_ENTRATE, lungCnrEntrate );
-		tmp.put( GESTIONE_SPESE, lungCnrSpese);
-		lunghezzeChiavi.put( APPARTENENZA_CNR, tmp );
-		
-		tmp = new java.util.Hashtable();
-		tmp.put( GESTIONE_ENTRATE, lungCdsEntrate );
-		tmp.put( GESTIONE_SPESE, lungCdsSpese);
-		lunghezzeChiavi.put( APPARTENENZA_CDS, tmp );
-	}	
-	return lunghezzeChiavi;
-}
-/**
- * Restituisce il valore della proprietà 'tipiPadre'
- *
- * @return Il valore della proprietà 'tipiPadre'
- */
-public static java.util.Hashtable getTipiPadre()
-{
-	if ( tipiPadre == null )
-	{
-		tipiPadre = new java.util.Hashtable();
-						
-		java.util.Hashtable tipiCnrEntrate  = new java.util.Hashtable();
-		tipiCnrEntrate.put( TIPO_CATEGORIA, TIPO_TITOLO);
-		tipiCnrEntrate.put( TIPO_CAPITOLO, TIPO_CATEGORIA);						
-				
-		java.util.Hashtable tipiCnrSpese    = new java.util.Hashtable();
-		tipiCnrSpese.put( TIPO_CAPITOLO, TIPO_CATEGORIA);
-		
-		java.util.Hashtable tipiCdsEntrate  = new java.util.Hashtable();
-		tipiCdsEntrate.put( TIPO_CAPITOLO, TIPO_TITOLO);
-			
-		java.util.Hashtable tipiCdsSpese    = new java.util.Hashtable();
-		tipiCdsSpese.put( TIPO_CAPITOLO, TIPO_TITOLO);
+			lunghezzeChiavi = new java.util.Hashtable();
+			java.util.Hashtable tmp = new java.util.Hashtable();
+			tmp.put( GESTIONE_ENTRATE, lungCnrEntrate );
+			tmp.put( GESTIONE_SPESE, lungCnrSpese);
+			lunghezzeChiavi.put( APPARTENENZA_CNR, tmp );
 
-
-		tipiPadre = new java.util.Hashtable();
-		java.util.Hashtable tmp = new java.util.Hashtable();
-		tmp.put( GESTIONE_ENTRATE, tipiCnrEntrate );
-		tmp.put( GESTIONE_SPESE, tipiCnrSpese);
-		tipiPadre.put( APPARTENENZA_CNR, tmp );
-		
-		tmp = new java.util.Hashtable();
-		tmp.put( GESTIONE_ENTRATE, tipiCdsEntrate );
-		tmp.put( GESTIONE_SPESE, tipiCdsSpese);
-		tipiPadre.put( APPARTENENZA_CDS, tmp );
-	
-	}	
-	return tipiPadre;
-}
-/**
- * Ritorna il tipo della voce padre dati appartenenza/gestione e tipo della voce figlio
- * 
- * @param appartenenza Cnr/Cds
- * @param gestione E/S
- * @param tipo Tipo di voce
- * @return Tipo della voce padre
- */
-public static String getTipoPadre( String appartenenza, String gestione, String tipo )
-{
-	return (String)((Hashtable)((Hashtable) getTipiPadre().get( appartenenza )).get( gestione)).get( tipo );
-}
-/**
- * Aggiunge caratteri '0' all'inizio della stringa fino a raggiungerne la lunghezza richiesta
- */
-
-public String leftPadding( String key, int keyLen )
-{
-	int valueLen = key.length();
-
-	String newKey = new String();
-
-	for ( int i = 0; i < (keyLen - valueLen); i++ )
-		newKey = newKey.concat("0");
-	newKey = newKey.concat( key );
-	return newKey;
-}
-/**
- * Carica in una hashtable l'elenco di tipologie di appartenenza
- * @return it.cnr.jada.util.OrderedHashtable
- */
-
-public java.util.Hashtable loadTi_appartenenzaKeys( Elemento_voceBulk bulk ) 
-{
-	if ( ti_appartenenzaKeys == null )
-	{
-		ti_appartenenzaKeys = new java.util.Hashtable();
-		ti_appartenenzaKeys.put( APPARTENENZA_CNR, "C - CNR" );
-		ti_appartenenzaKeys.put( APPARTENENZA_CDS, "D - CDS" );		
+			tmp = new java.util.Hashtable();
+			tmp.put( GESTIONE_ENTRATE, lungCdsEntrate );
+			tmp.put( GESTIONE_SPESE, lungCdsSpese);
+			lunghezzeChiavi.put( APPARTENENZA_CDS, tmp );
+		}
+		return lunghezzeChiavi;
 	}
-	return ti_appartenenzaKeys;
-}
-/**
- * Carica in una hashtable l'elenco di tipologie di elemento voce
- * @return it.cnr.jada.util.OrderedHashtable
- */
-
-public java.util.Hashtable loadTi_elemento_voceKeys( Elemento_voceBulk bulk ) {
-	if ( ti_elemento_voceKeys == null )
+	/**
+	 * Restituisce il valore della proprietà 'tipiPadre'
+	 *
+	 * @return Il valore della proprietà 'tipiPadre'
+	 */
+	public static java.util.Hashtable getTipiPadre()
 	{
-		ti_elemento_voceKeys = new java.util.Hashtable();
-//		ti_elemento_voceKeys.put("T", "Titolo" );
-//		ti_elemento_voceKeys.put("P", "Parte" );
-		ti_elemento_voceKeys.put( TIPO_CAPITOLO, "Capitolo" );
-		ti_elemento_voceKeys.put( TIPO_CATEGORIA, "Categoria" );
+		if ( tipiPadre == null )
+		{
+			tipiPadre = new java.util.Hashtable();
+
+			java.util.Hashtable tipiCnrEntrate  = new java.util.Hashtable();
+			tipiCnrEntrate.put( TIPO_CATEGORIA, TIPO_TITOLO);
+			tipiCnrEntrate.put( TIPO_CAPITOLO, TIPO_CATEGORIA);
+
+			java.util.Hashtable tipiCnrSpese    = new java.util.Hashtable();
+			tipiCnrSpese.put( TIPO_CAPITOLO, TIPO_CATEGORIA);
+
+			java.util.Hashtable tipiCdsEntrate  = new java.util.Hashtable();
+			tipiCdsEntrate.put( TIPO_CAPITOLO, TIPO_TITOLO);
+
+			java.util.Hashtable tipiCdsSpese    = new java.util.Hashtable();
+			tipiCdsSpese.put( TIPO_CAPITOLO, TIPO_TITOLO);
+
+
+			tipiPadre = new java.util.Hashtable();
+			java.util.Hashtable tmp = new java.util.Hashtable();
+			tmp.put( GESTIONE_ENTRATE, tipiCnrEntrate );
+			tmp.put( GESTIONE_SPESE, tipiCnrSpese);
+			tipiPadre.put( APPARTENENZA_CNR, tmp );
+
+			tmp = new java.util.Hashtable();
+			tmp.put( GESTIONE_ENTRATE, tipiCdsEntrate );
+			tmp.put( GESTIONE_SPESE, tipiCdsSpese);
+			tipiPadre.put( APPARTENENZA_CDS, tmp );
+
+		}
+		return tipiPadre;
 	}
-	return ti_elemento_voceKeys;
-}
-/**
- * Carica in una hashtable l'elenco di tipologie di Gestione
- * @return it.cnr.jada.util.OrderedHashtable
- */
-
-public java.util.Hashtable loadTi_gestioneKeys( Elemento_voceBulk bulk ) {
-	if ( ti_gestioneKeys == null )
+	/**
+	 * Ritorna il tipo della voce padre dati appartenenza/gestione e tipo della voce figlio
+	 *
+	 * @param appartenenza Cnr/Cds
+	 * @param gestione E/S
+	 * @param tipo Tipo di voce
+	 * @return Tipo della voce padre
+	 */
+	public static String getTipoPadre( String appartenenza, String gestione, String tipo )
 	{
-		ti_gestioneKeys = new java.util.Hashtable();
-		ti_gestioneKeys.put(GESTIONE_SPESE, "S - Spese");
-		ti_gestioneKeys.put(GESTIONE_ENTRATE, "E - Entrate");
-	}	
-	return ti_gestioneKeys;
-}
-/**
- * Reset chiavi
- * 
- *
- */
-public static void resetKeys() 
-{
-	ti_gestioneKeys = null;
-	ti_appartenenzaKeys	= null;
-	ti_elemento_voceKeys = null;
-	tipiPadre = null;
-	lunghezzeChiavi = null;
-}
-/**
- * Restituisce il SQLBuilder per selezionare i Titoli di Spesa del Cds
- * @param bulk bulk ricevente
- * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
- * @param clause clause che arrivano dalle properties (form collegata al search tool) 
- * @return it.cnr.jada.persistency.sql.SQLBuilder
- */
+		return (String)((Hashtable)((Hashtable) getTipiPadre().get( appartenenza )).get( gestione)).get( tipo );
+	}
+	/**
+	 * Aggiunge caratteri '0' all'inizio della stringa fino a raggiungerne la lunghezza richiesta
+	 */
+
+	public String leftPadding( String key, int keyLen )
+	{
+		int valueLen = key.length();
+
+		String newKey = new String();
+
+		for ( int i = 0; i < (keyLen - valueLen); i++ )
+			newKey = newKey.concat("0");
+		newKey = newKey.concat( key );
+		return newKey;
+	}
+	/**
+	 * Carica in una hashtable l'elenco di tipologie di appartenenza
+	 * @return it.cnr.jada.util.OrderedHashtable
+	 */
+
+	public java.util.Hashtable loadTi_appartenenzaKeys( Elemento_voceBulk bulk )
+	{
+		if ( ti_appartenenzaKeys == null )
+		{
+			ti_appartenenzaKeys = new java.util.Hashtable();
+			ti_appartenenzaKeys.put( APPARTENENZA_CNR, "C - CNR" );
+			ti_appartenenzaKeys.put( APPARTENENZA_CDS, "D - CDS" );
+		}
+		return ti_appartenenzaKeys;
+	}
+	/**
+	 * Carica in una hashtable l'elenco di tipologie di elemento voce
+	 * @return it.cnr.jada.util.OrderedHashtable
+	 */
+
+	public java.util.Hashtable loadTi_elemento_voceKeys( Elemento_voceBulk bulk ) {
+		if ( ti_elemento_voceKeys == null )
+		{
+			ti_elemento_voceKeys = new java.util.Hashtable();
+	//		ti_elemento_voceKeys.put("T", "Titolo" );
+	//		ti_elemento_voceKeys.put("P", "Parte" );
+			ti_elemento_voceKeys.put( TIPO_CAPITOLO, "Capitolo" );
+			ti_elemento_voceKeys.put( TIPO_CATEGORIA, "Categoria" );
+		}
+		return ti_elemento_voceKeys;
+	}
+	/**
+	 * Carica in una hashtable l'elenco di tipologie di Gestione
+	 * @return it.cnr.jada.util.OrderedHashtable
+	 */
+
+	public java.util.Hashtable loadTi_gestioneKeys( Elemento_voceBulk bulk ) {
+		if ( ti_gestioneKeys == null )
+		{
+			ti_gestioneKeys = new java.util.Hashtable();
+			ti_gestioneKeys.put(GESTIONE_SPESE, "S - Spese");
+			ti_gestioneKeys.put(GESTIONE_ENTRATE, "E - Entrate");
+		}
+		return ti_gestioneKeys;
+	}
+	/**
+	 * Reset chiavi
+	 *
+	 *
+	 */
+	public static void resetKeys()
+	{
+		ti_gestioneKeys = null;
+		ti_appartenenzaKeys	= null;
+		ti_elemento_voceKeys = null;
+		tipiPadre = null;
+		lunghezzeChiavi = null;
+	}
+	/**
+	 * Restituisce il SQLBuilder per selezionare i Titoli di Spesa del Cds
+	 * @param bulk bulk ricevente
+	 * @param home home del bulk su cui si cerca
+	 * @param bulkClause è l'istanza di bulk che ha indotto le clauses
+	 * @param clause clause che arrivano dalle properties (form collegata al search tool)
+	 * @return it.cnr.jada.persistency.sql.SQLBuilder
+	 */
 
 
 
-public SQLBuilder selectCdsSpesaTitoliByClause( Elemento_voceBulk bulk,it.cnr.jada.bulk.BulkHome home,OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
-	SQLBuilder sql = home.selectByClause(clause);
-	sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, APPARTENENZA_CDS );
-	sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, GESTIONE_SPESE );
-	sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, TIPO_TITOLO);
-	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
-	return sql;
-}
-/**
- * Restituisce il SQLBuilder per selezionare i Titoli di Spesa del Cnr
- * @param bulk bulk ricevente
- * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
- * @param clause clause che arrivano dalle properties (form collegata al search tool) 
- * @return it.cnr.jada.persistency.sql.SQLBuilder
- */
+	public SQLBuilder selectCdsSpesaTitoliByClause( Elemento_voceBulk bulk,it.cnr.jada.bulk.BulkHome home,OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
+		SQLBuilder sql = home.selectByClause(clause);
+		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, APPARTENENZA_CDS );
+		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, GESTIONE_SPESE );
+		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, TIPO_TITOLO);
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
+		return sql;
+	}
+	/**
+	 * Restituisce il SQLBuilder per selezionare i Titoli di Spesa del Cnr
+	 * @param bulk bulk ricevente
+	 * @param home home del bulk su cui si cerca
+	 * @param bulkClause è l'istanza di bulk che ha indotto le clauses
+	 * @param clause clause che arrivano dalle properties (form collegata al search tool)
+	 * @return it.cnr.jada.persistency.sql.SQLBuilder
+	 */
 
-public SQLBuilder selectCnrSpesaTitoliByClause( Elemento_voceBulk bulk,it.cnr.jada.bulk.BulkHome home,OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
-	SQLBuilder sql = home.selectByClause(clause);
-	sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, APPARTENENZA_CNR );
-	sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, GESTIONE_SPESE );
-	sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, TIPO_TITOLO);
-	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
-	return sql;
-}
-
-/**
- * Recupera tutti i dati nella tabella CODICI_SIOPE relativi alla voce in uso.
- *
- * @param elemento_voce L'elemento voce in uso.
- *
- * @return java.util.Collection Collezione di oggetti <code>Codici_siopeBulk</code>
- */
-public java.util.Collection findCodiciCollegatiSIOPE(UserContext userContext, Elemento_voceBulk elemento_voce, Tipologie_istatBulk tipologia) throws PersistencyException {
-	PersistentHome codici_siopeHome = getHomeCache().getHome(Codici_siopeBulk.class);
-	SQLBuilder sql = codici_siopeHome.createSQLBuilder();
-	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, elemento_voce.getEsercizio());
-	sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, elemento_voce.getTi_gestione());
-
-	if (tipologia != null) {
-		sql.addTableToHeader("ASS_TIPOLOGIA_ISTAT_SIOPE");
-		sql.addSQLJoin("CODICI_SIOPE.ESERCIZIO", "ASS_TIPOLOGIA_ISTAT_SIOPE.ESERCIZIO_SIOPE");
-		sql.addSQLJoin("CODICI_SIOPE.TI_GESTIONE", "ASS_TIPOLOGIA_ISTAT_SIOPE.TI_GESTIONE_SIOPE");
-		sql.addSQLJoin("CODICI_SIOPE.CD_SIOPE", "ASS_TIPOLOGIA_ISTAT_SIOPE.CD_SIOPE");
-		sql.addSQLClause("AND", "ASS_TIPOLOGIA_ISTAT_SIOPE.PG_TIPOLOGIA", SQLBuilder.EQUALS, tipologia.getPg_tipologia());
+	public SQLBuilder selectCnrSpesaTitoliByClause( Elemento_voceBulk bulk,it.cnr.jada.bulk.BulkHome home,OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
+		SQLBuilder sql = home.selectByClause(clause);
+		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, APPARTENENZA_CNR );
+		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, GESTIONE_SPESE );
+		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, TIPO_TITOLO);
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
+		return sql;
 	}
 
-	sql.addTableToHeader("ASS_EV_SIOPE");
-	sql.addSQLJoin("CODICI_SIOPE.ESERCIZIO", "ASS_EV_SIOPE.ESERCIZIO_SIOPE");
-	sql.addSQLJoin("CODICI_SIOPE.TI_GESTIONE", "ASS_EV_SIOPE.TI_GESTIONE_SIOPE");
-	sql.addSQLJoin("CODICI_SIOPE.CD_SIOPE", "ASS_EV_SIOPE.CD_SIOPE");
-	sql.addSQLClause("AND", "ASS_EV_SIOPE.TI_APPARTENENZA", SQLBuilder.EQUALS, elemento_voce.getTi_appartenenza());
-	sql.addSQLClause("AND", "ASS_EV_SIOPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, elemento_voce.getCd_elemento_voce());
+	/**
+	 * Recupera tutti i dati nella tabella CODICI_SIOPE relativi alla voce in uso.
+	 *
+	 * @param elemento_voce L'elemento voce in uso.
+	 *
+	 * @return java.util.Collection Collezione di oggetti <code>Codici_siopeBulk</code>
+	 */
+	public java.util.Collection findCodiciCollegatiSIOPE(UserContext userContext, Elemento_voceBulk elemento_voce, Tipologie_istatBulk tipologia) throws PersistencyException {
+		PersistentHome codici_siopeHome = getHomeCache().getHome(Codici_siopeBulk.class);
+		SQLBuilder sql = codici_siopeHome.createSQLBuilder();
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, elemento_voce.getEsercizio());
+		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, elemento_voce.getTi_gestione());
 
-	return codici_siopeHome.fetchAll(sql);
-}
+		if (tipologia != null) {
+			sql.addTableToHeader("ASS_TIPOLOGIA_ISTAT_SIOPE");
+			sql.addSQLJoin("CODICI_SIOPE.ESERCIZIO", "ASS_TIPOLOGIA_ISTAT_SIOPE.ESERCIZIO_SIOPE");
+			sql.addSQLJoin("CODICI_SIOPE.TI_GESTIONE", "ASS_TIPOLOGIA_ISTAT_SIOPE.TI_GESTIONE_SIOPE");
+			sql.addSQLJoin("CODICI_SIOPE.CD_SIOPE", "ASS_TIPOLOGIA_ISTAT_SIOPE.CD_SIOPE");
+			sql.addSQLClause("AND", "ASS_TIPOLOGIA_ISTAT_SIOPE.PG_TIPOLOGIA", SQLBuilder.EQUALS, tipologia.getPg_tipologia());
+		}
+
+		sql.addTableToHeader("ASS_EV_SIOPE");
+		sql.addSQLJoin("CODICI_SIOPE.ESERCIZIO", "ASS_EV_SIOPE.ESERCIZIO_SIOPE");
+		sql.addSQLJoin("CODICI_SIOPE.TI_GESTIONE", "ASS_EV_SIOPE.TI_GESTIONE_SIOPE");
+		sql.addSQLJoin("CODICI_SIOPE.CD_SIOPE", "ASS_EV_SIOPE.CD_SIOPE");
+		sql.addSQLClause("AND", "ASS_EV_SIOPE.TI_APPARTENENZA", SQLBuilder.EQUALS, elemento_voce.getTi_appartenenza());
+		sql.addSQLClause("AND", "ASS_EV_SIOPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, elemento_voce.getCd_elemento_voce());
+
+		return codici_siopeHome.fetchAll(sql);
+	}
+
+	@Override
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+		return sql;
+	}
 }

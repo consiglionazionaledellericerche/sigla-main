@@ -25,8 +25,8 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
-import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkCollections;
 import it.cnr.jada.bulk.BulkList;
@@ -54,7 +54,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(value=Include.NON_NULL)
 public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements IDocumentoAmministrativoBulk, Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi,
-AllegatoParentBulk {
+		AllegatoParentBulk {
 	public final static String BENEDUREVOLE        = "B";
 	public final static String CONTRATTO           = "C";
 	public final static String LIBERA              = "L";
@@ -2122,7 +2122,7 @@ AllegatoParentBulk {
 	}
 	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
 		archivioAllegati.add(allegato);
-		return archivioAllegati.size()-1;		
+		return archivioAllegati.size()-1;
 	}
 	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
 		return archivioAllegati;

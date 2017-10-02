@@ -12,10 +12,7 @@ import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
@@ -27,9 +24,6 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.*;
 
 /**
@@ -902,7 +896,6 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 			Parametri_cnrBulk parCnrNewAnno = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())+1); 
 			setEnableVoceNext(parCnrNewAnno!=null);
 		}
-		cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
 	}
     catch(Throwable throwable)
     {

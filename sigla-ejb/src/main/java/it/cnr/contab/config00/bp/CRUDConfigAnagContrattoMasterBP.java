@@ -2,6 +2,7 @@ package it.cnr.contab.config00.bp;
 
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -10,8 +11,6 @@ import it.cnr.jada.util.jsp.Button;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.Folder;
 
 public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	private static final long serialVersionUID = 1L;
@@ -27,32 +26,9 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	@Override
 	public boolean isPublishCRUDButtonHidden() {
 		return true;
-		/*if (isSearching() || isInserting())
-			return true;
-		if (getModel()!=null){
-			ContrattoBulk contratto = (ContrattoBulk) getModel();
-			if (contratto.isProvvisorio())
-				return false;
-			if (contratto.isCessato())
-				return true; 
-			if ((contratto.isPassivo() || contratto.isAttivo_e_Passivo()) &&
-					contratto.isDefinitivo() && super.flagPubblicaContratto.booleanValue() &&
-					(!contratto.getDt_stipula().before(super.dataStipulaParametri)) &&
-					!contratto.getFl_pubblica_contratto()
-				&& (contratto.getTipo_contratto() != null && 
-				    contratto.getTipo_contratto().getFl_pubblica_contratto() != null  &&
-				   contratto.getTipo_contratto().getFl_pubblica_contratto().booleanValue())) 
-				return false;	 
-			else
-				return true;
-		}
-		return false;*/
 	}
 
 	public boolean isUpublishCRUDButtonHidden() {
-		/*if (isSearching() || isInserting())
-			return true;
-		return !isPublishCRUDButtonHidden();*/
 		return true;
 	}
 
@@ -96,13 +72,13 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	public void unpublishContratto(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
 		ContrattoBulk contratto = (ContrattoBulk) getModel();
 		try {
-			Folder node = contrattoService.getFolderContratto((ContrattoBulk)getModel());
+			StorageObject storageObject = contrattoService.getFolderContratto((ContrattoBulk)getModel());
 			contratto.setFl_pubblica_contratto(Boolean.FALSE);
 			contratto.setToBeUpdated();
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			comp.modificaConBulk(context.getUserContext(), contratto);
-			if (node != null){
-				contrattoService.removeConsumer(node,"GROUP_CONTRATTI");
+			if (storageObject != null){
+				contrattoService.removeConsumer(storageObject,"GROUP_CONTRATTI");
 			}
 			edit(context,contratto);
 		}catch(it.cnr.jada.comp.ComponentException ex){
