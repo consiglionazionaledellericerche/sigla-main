@@ -885,18 +885,38 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		}
 	}
 
+	public void removeFromOrdineObbligazioniHash(OrdineAcqConsegnaBulk cons){
+		Vector consAssociate = (Vector)ordineObbligazioniHash.get(cons.getObbligazioneScadenzario());
+		if (consAssociate != null) {
+			consAssociate.remove(cons);
+			ordineObbligazioniHash.remove(cons.getObbligazioneScadenzario());
+			if (consAssociate.isEmpty()) {
+				addToDocumentiContabiliCancellati(cons.getObbligazioneScadenzario());
+			} else {
+				ordineObbligazioniHash.put(cons.getObbligazioneScadenzario(), consAssociate);
+			}
+		} else 
+			addToDocumentiContabiliCancellati(cons.getObbligazioneScadenzario());
+	}
+	
 	public void removeFromOrdineObbligazioniHash(OrdineAcqRigaBulk riga) {
-
-			Vector righeAssociate = (Vector)ordineObbligazioniHash.get(riga.getDspObbligazioneScadenzario());
-			if (righeAssociate != null) {
-				righeAssociate.remove(riga);
-				if (righeAssociate.isEmpty()) {
-					ordineObbligazioniHash.remove(riga.getDspObbligazioneScadenzario());
+		for (Object bulk : riga.getRigheConsegnaColl()){
+			OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bulk;
+			if (cons.getObbligazioneScadenzario().equalsByPrimaryKey(riga.getDspObbligazioneScadenzario())){
+				Vector righeAssociate = (Vector)ordineObbligazioniHash.get(riga.getDspObbligazioneScadenzario());
+				if (righeAssociate != null) {
+					righeAssociate.remove(cons);
+					if (righeAssociate.isEmpty()) {
+						ordineObbligazioniHash.remove(riga.getDspObbligazioneScadenzario());
+						addToDocumentiContabiliCancellati(riga.getDspObbligazioneScadenzario());
+					}
+				} else 
 					addToDocumentiContabiliCancellati(riga.getDspObbligazioneScadenzario());
-				}
-			} else 
-				addToDocumentiContabiliCancellati(riga.getDspObbligazioneScadenzario());
+			} else {
+				throw new it.cnr.jada.DetailedRuntimeException("L'impegno sulla riga di consegna è diverso dall'impegno sulla riga d'ordine.");
+			}
 		}
+	}
 
 	public int addToRigheOrdineColl( OrdineAcqRigaBulk nuovoRigo ) 
 	{
@@ -1204,7 +1224,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 
 	public void addToOrdineObbligazioniHash(
 			Obbligazione_scadenzarioBulk obbligazione,
-			OrdineAcqRigaBulk riga) {
+			OrdineAcqConsegnaBulk cons) {
 
 			if (ordineObbligazioniHash == null)
 				ordineObbligazioniHash = new ObbligazioniTable();
@@ -1214,8 +1234,8 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 				//fattura_passiva_obbligazioniHash.put(obbligazione, righeAssociate);
 				addToOrdineAss_totaliMap(obbligazione, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			}
-			if (riga != null && !righeAssociate.contains(riga)) {
-				righeAssociate.add(riga);
+			if (cons != null && !righeAssociate.contains(cons)) {
+				righeAssociate.add(cons);
 				//Sono costretto alla rimozione della scadenza per evitare disallineamenti sul pg_ver_rec.
 				//e quindi errori del tipo RisorsaNonPiuValida in fase di salvataggio
 				if (ordineObbligazioniHash.containsKey(obbligazione))
