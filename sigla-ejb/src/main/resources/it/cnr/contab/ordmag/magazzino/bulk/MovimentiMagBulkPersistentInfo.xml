@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk"
+	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome">
+	<defaultColumnMap
+		tableName="MOVIMENTI_MAG">
+		<columnMapping
+			columnName="CD_CDS_TIPO_MOVIMENTO"
+			propertyName="tipoMovimentoMag.cd_cds" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO"
+			propertyName="tipoMovimentoMag.cd_tipo_movimento" />
+		<columnMapping
+			columnName="CD_CDS_ORDINE"
+			propertyName="ordineAcqConsegna.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA_ORDINE"
+			propertyName="ordineAcqConsegna.cd_unita_operativa" />
+		<columnMapping
+			columnName="ESERCIZIO_ORDINE"
+			propertyName="ordineAcqConsegna.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_ORDINE"
+			propertyName="ordineAcqConsegna.cd_numeratore" />
+		<columnMapping
+			columnName="NUMERO_ORDINE"
+			propertyName="ordineAcqConsegna.numero" />
+		<columnMapping
+			columnName="RIGA_ORDINE"
+			propertyName="ordineAcqConsegna.riga" />
+		<columnMapping
+			columnName="CONSEGNA"
+			propertyName="ordineAcqConsegna.consegna" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA"
+			propertyName="unitaMisura.cd_unita_misura" />
+		<columnMapping
+			columnName="CD_UOP"
+			propertyName="unitaOperativaOrd.cd_unita_operativa" />
+		<columnMapping
+			columnName="CD_CDS_LOTTO"
+			propertyName="lottoMag.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_LOTTO"
+			propertyName="lottoMag.cd_magazzino" />
+		<columnMapping
+			columnName="ESERCIZIO_LOTTO"
+			propertyName="lottoMag.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_LOTTO"
+			propertyName="lottoMag.cd_numeratore_mag" />
+		<columnMapping
+			columnName="PG_LOTTO"
+			propertyName="lottoMag.pg_lotto" />
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="magazzino.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="magazzino.cd_magazzino" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="beneServizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_CDS_TIPO_MOVIMENTO_RIF"
+			propertyName="tipoMovimentoMag.cd_cds" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_RIF"
+			propertyName="tipoMovimentoMag.cd_tipo_movimento" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="voceIva.cd_voce_iva" />
+		<columnMapping
+			columnName="CD_CDS_BOLLA_SCA"
+			propertyName="bollaScaricoMag.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_BOLLA_SCA"
+			propertyName="bollaScaricoMag.cd_magazzino" />
+		<columnMapping
+			columnName="ESERCIZIO_BOLLA_SCA"
+			propertyName="bollaScaricoMag.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_BOLLA_SCA"
+			propertyName="bollaScaricoMag.cd_numeratore_mag" />
+		<columnMapping
+			columnName="PG_BOLLA_SCA"
+			propertyName="bollaScaricoMag.pg_bolla_sca" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipoMovimentoMag" />
+	<persistentProperty
+		name="ordineAcqConsegna" />
+	<persistentProperty
+		name="terzo" />
+	<persistentProperty
+		name="unitaMisura" />
+	<persistentProperty
+		name="unitaOperativaOrd" />
+	<persistentProperty
+		name="lottoMag" />
+	<persistentProperty
+		name="magazzino" />
+	<persistentProperty
+		name="beneServizio" />
+	<persistentProperty
+		name="voceIva" />
+	<persistentProperty
+		name="bollaScaricoMag" />
+	<persistentProperty
+		name="divisa" />
+</SQLPersistentInfo>
