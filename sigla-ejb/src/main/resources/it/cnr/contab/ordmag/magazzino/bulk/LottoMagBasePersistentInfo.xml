@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.richieste.LottoMagBase"
+	keyClassName="it.cnr.contab.ordmag.richieste.LottoMagKey"
+	homeClassName="it.cnr.contab.ordmag.richieste.LottoMagHome">
+	<defaultColumnMap
+		tableName="LOTTO_MAG">
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="cdBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="cdCdsMag"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_MAG"
+			propertyName="cdMagazzinoMag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dtScadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="GIACENZA"
+			propertyName="giacenza"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA_VALORE"
+			propertyName="quantitaValore"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="LOTTO_FORNITORE"
+			propertyName="lottoFornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_CARICO"
+			propertyName="dtCarico"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="VALORE_UNITARIO"
+			propertyName="valoreUnitario"
+			sqlTypeName="DECIMAL"
+			columnSize="21"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="COSTO_UNITARIO"
+			propertyName="costoUnitario"
+			sqlTypeName="DECIMAL"
+			columnSize="21"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA_CARICO"
+			propertyName="quantitaCarico"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA_INIZIO_ANNO"
+			propertyName="quantitaInizioAnno"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORDINE"
+			propertyName="cdCdsOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="cdUnitaOperativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORDINE"
+			propertyName="esercizioOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NUMERATORE_ORDINE"
+			propertyName="cdNumeratoreOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_ORDINE"
+			propertyName="numeroOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="RIGA_ORDINE"
+			propertyName="rigaOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CONSEGNA"
+			propertyName="consegna"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cdDivisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CAMBIO"
+			propertyName="cambio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdBeneServizio" />
+	<persistentProperty
+		name="cdCdsMag" />
+	<persistentProperty
+		name="cdMagazzinoMag" />
+	<persistentProperty
+		name="dtScadenza" />
+	<persistentProperty
+		name="giacenza" />
+	<persistentProperty
+		name="quantitaValore" />
+	<persistentProperty
+		name="lottoFornitore" />
+	<persistentProperty
+		name="dtCarico" />
+	<persistentProperty
+		name="valoreUnitario" />
+	<persistentProperty
+		name="costoUnitario" />
+	<persistentProperty
+		name="quantitaCarico" />
+	<persistentProperty
+		name="quantitaInizioAnno" />
+	<persistentProperty
+		name="cdCdsOrdine" />
+	<persistentProperty
+		name="cdUnitaOperativa" />
+	<persistentProperty
+		name="esercizioOrdine" />
+	<persistentProperty
+		name="cdNumeratoreOrdine" />
+	<persistentProperty
+		name="numeroOrdine" />
+	<persistentProperty
+		name="rigaOrdine" />
+	<persistentProperty
+		name="consegna" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="cdDivisa" />
+	<persistentProperty
+		name="cambio" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>
