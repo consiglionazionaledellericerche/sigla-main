@@ -696,6 +696,8 @@
 	<formFieldProperty
 		name="findNumerazioneOrd" />
 	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
 		name="tiAttivita" />

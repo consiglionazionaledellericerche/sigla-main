@@ -62,11 +62,11 @@ public class OrdineAcqHome extends BulkHome {
 	public SQLBuilder selectNumerazioneOrdByClause(UserContext userContext, OrdineAcqBulk ordine, 
 			NumerazioneOrdHome numerazioneHome, NumerazioneOrdBulk numerazioneBulk, 
 			CompoundFindClause compoundfindclause) throws PersistencyException{
-		if (ordine == null || ordine.getCdUnitaOperativa() == null){
+		if (ordine == null || ordine.getCdUopOrdine() == null){
 			throw new PersistencyException("Selezionare prima l'unità operativa");
 		}
 		SQLBuilder sql = numerazioneHome.selectByClause(userContext, compoundfindclause);
-		sql.addSQLClause("AND", "NUMERAZIONE_ORD.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, ordine.getCdUnitaOperativa());
+		sql.addSQLClause("AND", "NUMERAZIONE_ORD.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, ordine.getCdUopOrdine());
 		sql.addSQLClause("AND", "NUMERAZIONE_ORD.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
 		return sql;
 	}
