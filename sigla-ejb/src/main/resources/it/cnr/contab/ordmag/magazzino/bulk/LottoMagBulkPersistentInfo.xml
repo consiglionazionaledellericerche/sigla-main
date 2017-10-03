@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.richieste.LottoMagBulk"
+	homeClassName="it.cnr.contab.ordmag.richieste.LottoMagHome">
+	<defaultColumnMap
+		tableName="LOTTO_MAG">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="numerazioneMag.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="numerazioneMag.cd_magazzino" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="numerazioneMag.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_MAG"
+			propertyName="numerazioneMag.cd_numeratore_mag" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="beneServizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="magazzino.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_MAG"
+			propertyName="magazzino.cd_magazzino" />
+		<columnMapping
+			columnName="CD_CDS_ORDINE"
+			propertyName="ordineAcqConsegna.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="ordineAcqConsegna.cd_unita_operativa" />
+		<columnMapping
+			columnName="ESERCIZIO_ORDINE"
+			propertyName="ordineAcqConsegna.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_ORDINE"
+			propertyName="ordineAcqConsegna.cd_numeratore" />
+		<columnMapping
+			columnName="NUMERO_ORDINE"
+			propertyName="ordineAcqConsegna.numero" />
+		<columnMapping
+			columnName="RIGA_ORDINE"
+			propertyName="ordineAcqConsegna.riga" />
+		<columnMapping
+			columnName="CONSEGNA"
+			propertyName="ordineAcqConsegna.consegna" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="numerazioneMag"
+		partOfOid="true" />
+	<persistentProperty
+		name="beneServizio" />
+	<persistentProperty
+		name="magazzino" />
+	<persistentProperty
+		name="ordineAcqConsegna" />
+	<persistentProperty
+		name="terzo" />
+	<persistentProperty
+		name="divisa" />
+</SQLPersistentInfo>
