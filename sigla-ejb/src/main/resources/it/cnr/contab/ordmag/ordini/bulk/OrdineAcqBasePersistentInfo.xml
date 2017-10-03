@@ -222,6 +222,12 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
+			columnName="CD_UOP_ORDINE"
+			propertyName="cdUopOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"/>
+		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
 			sqlTypeName="TIMESTAMP"
@@ -328,6 +334,8 @@
 		name="imIvaD" />
 	<persistentProperty
 		name="imTotaleOrdine" />
+	<persistentProperty
+		name="cdUopOrdine" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty
