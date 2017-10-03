@@ -27,6 +27,7 @@ import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -34,6 +35,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -41,6 +43,9 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
@@ -499,7 +504,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             } catch (BusinessProcessException e1) {
                 bp.handleException(e1);
             }
-		/*	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato
+        /*	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato
 		    SOSPESO PER ESERCIZIO 2015
 		//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
 		if (titoloCapitoloValido != null &&
@@ -860,6 +865,24 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             context.addHookForward("bringback", this, "doContabilizza");
             HookForward hook = (HookForward) context.findForward("bringback");
             return context.addBusinessProcess(robp);
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
+
+    /**
+     * Prepara e apre la ricerca per l'evasione dell'ordine
+     */
+    private Forward basicDoRicercaEvasioneOrdine(ActionContext context, Fattura_passivaBulk fatturaPassiva, java.util.List models) {
+        try {
+            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
+            controllaQuadraturaConti(context, fatturaPassiva);
+            ConsultazioniBP nbp = (ConsultazioniBP)context.createBusinessProcess("ContabilizzaOrdineBP", new Object[]{"MRSWTh"});
+            nbp.setMultiSelection(true);
+            nbp.setIterator(context,bp.find(context, new CompoundFindClause(), new EvasioneOrdineRigaBulk(), bp.getModel(), "contabilizzaRiga"));
+            context.addHookForward("bringback", this, "doContabilizzaOrdine");
+            HookForward hook = (HookForward) context.findForward("bringback");
+            return context.addBusinessProcess(nbp);
         } catch (Throwable e) {
             return handleException(context, e);
         }
@@ -3936,7 +3959,6 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             fillModel(context);
             java.util.List models = bp.getDettaglio().getSelectedModels(context);
-            Forward forward = context.findDefaultForward();
             if (models == null || models.isEmpty())
                 bp.setErrorMessage("Per procedere, selezionare i dettagli da contabilizzare!");
             else {
@@ -3952,9 +3974,12 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 } catch (ApplicationException e) {
                     throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
                 }
-                forward = basicDoRicercaObbligazione(context, fatturaPassiva, models);
+                return Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
+                        .filter(isDaOrdini -> isDaOrdini.equals(Boolean.TRUE))
+                        .map(isDaOrdini -> basicDoRicercaEvasioneOrdine(context, fatturaPassiva, models))
+                        .orElseGet(() -> basicDoRicercaObbligazione(context, fatturaPassiva, models));
             }
-            return forward;
+            return context.findDefaultForward();
         } catch (Throwable e) {
             return handleException(context, e);
         }
