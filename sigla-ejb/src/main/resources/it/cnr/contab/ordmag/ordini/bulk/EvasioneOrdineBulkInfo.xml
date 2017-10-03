@@ -8,7 +8,7 @@
 	<fieldProperty
 		name="findNumerazioneMag"
 		property="numerazioneMag"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="NumerazioneMag" />
