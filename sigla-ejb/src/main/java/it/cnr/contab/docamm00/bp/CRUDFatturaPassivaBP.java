@@ -1513,7 +1513,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 os.flush();
             }
         }
-
     }
 
     private static final String[] TAB_FATTURA_PASSIVA = new String[]{"tabFatturaPassiva", "Testata", "/docamm00/tab_fattura_passiva.jsp"};
