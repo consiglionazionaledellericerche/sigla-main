@@ -160,7 +160,6 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		super(cdCds, cdUnitaOperativa, esercizio, cdNumeratore, numero);
 		setUnitaOrganizzativa( new Unita_organizzativaBulk(cdCds) );
 		setNumerazioneOrd( new NumerazioneOrdBulk(cdUnitaOperativa,esercizio,cdNumeratore) );
-		setUnitaOperativaOrd( new UnitaOperativaOrdBulk(cdUnitaOperativa) );
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -463,12 +462,22 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	 * Restituisce il valore di: [cdUnitaOperativa]
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
+		NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
+		if (numerazioneOrd == null)
+			return null;
+		return getNumerazioneOrd().getCdUnitaOperativa();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [cdUnitaOperativa]
+	 **/
+	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
+		this.getNumerazioneOrd().setCdUnitaOperativa(cdUnitaOperativa);
+	}
+	public java.lang.String getCdUopOrdine() {
 		UnitaOperativaOrdBulk uop = this.getUnitaOperativaOrd();
 		if (uop == null){
-			NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
-			if (numerazioneOrd == null)
-				return null;
-			return getNumerazioneOrd().getCdUnitaOperativa();
+			return null;
 		}
 		return this.getUnitaOperativaOrd().getCdUnitaOperativa();
 	}
@@ -476,9 +485,8 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativa]
 	 **/
-	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
+	public void setCdUopOrdine(java.lang.String cdUnitaOperativa)  {
 		this.getUnitaOperativaOrd().setCdUnitaOperativa(cdUnitaOperativa);
-		this.getNumerazioneOrd().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
