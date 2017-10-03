@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk"
+	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagHome">
+	<defaultColumnMap
+		tableName="BOLLA_SCARICO_MAG">
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="magazzino.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_MAG"
+			propertyName="magazzino.cd_magazzino" />
+		<columnMapping
+			columnName="CD_UOP_DEST"
+			propertyName="unitaOperativaOrd.cd_unita_operativa" />
+		<columnMapping
+			columnName="CD_CDS_MAG_DEST"
+			propertyName="magazzino.cd_cds" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_DEST"
+			propertyName="magazzino.cd_magazzino" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="magazzino" />
+	<persistentProperty
+		name="unitaOperativaOrd" />
+</SQLPersistentInfo>
