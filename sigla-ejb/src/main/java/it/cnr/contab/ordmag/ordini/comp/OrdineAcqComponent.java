@@ -998,7 +998,7 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 		}
 		OrdineAcqHome home = (OrdineAcqHome) getHomeCache(usercontext).getHome(OrdineAcqBulk.class);
 		ordine.setCdCds( ((CNRUserContext) usercontext).getCd_cds());
-		if (ordine.getCdUnitaOperativa() == null){
+		if (ordine.getCdUopOrdine() == null){
 			UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
 			SQLBuilder sql = home.selectUnitaOperativaOrdByClause(usercontext, ordine, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
 			List listUop=uopHome.fetchAll(sql);
@@ -1057,7 +1057,7 @@ private Boolean isAbilitatoTuttiMagazzini(UserContext userContext, OrdineAcqBulk
 }
 private void assegnaNumeratoreOrd(UserContext usercontext, OrdineAcqBulk ordine, OrdineAcqHome home)
 		throws PersistencyException, ComponentException {
-	if (ordine.getCdNumeratore() == null && ordine.getCdUnitaOperativa() != null){
+	if (ordine.getCdNumeratore() == null && ordine.getCdUopOrdine() != null){
 //			AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(usercontext, AbilUtenteUopOperBulk.class);
 //			AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(usercontext.getUser(), richiesta.getCdUnitaOperativa(), TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
 //			abil = (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(usercontext, abil);

@@ -11,7 +11,7 @@
 			columnName="CD_UNITA_OPERATIVA"
 			propertyName="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
-			columnName="CD_UNITA_OPERATIVA"
+			columnName="CD_UOP_ORDINE"
 			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
 			columnName="ESERCIZIO"
