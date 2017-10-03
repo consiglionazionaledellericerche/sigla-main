@@ -424,6 +424,20 @@ public Forward doBlankSearchFindLuogoConsegnaMag(ActionContext context, OrdineAc
         return handleException(context, e);
     }
 }
+public Forward doBlankSearchFindUnitaOperativaOrd(ActionContext context, OrdineAcqBulk ordine) throws java.rmi.RemoteException {
+
+    try {
+        //imposta i valori di default per il tariffario
+    	ordine.setUnitaOperativaOrd(new UnitaOperativaOrdBulk());
+    	ordine.setNumerazioneOrd(new NumerazioneOrdBulk());
+		ordine.setTiAttivita(null);
+		ordine.setPercProrata(null);
+        return context.findDefaultForward();
+
+    } catch (Exception e) {
+        return handleException(context, e);
+    }
+}
 public Forward doBringBackSearchFindUnitaOperativaOrd(ActionContext context,
 		OrdineAcqBulk ordine,
 		UnitaOperativaOrdBulk uop) 
