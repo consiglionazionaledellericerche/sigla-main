@@ -94,5 +94,75 @@
 			<description>Dichiarazione Rapporti con altre PA</description>
 			<parent>sigla_contratti_attachment:document</parent>
 		</type>
+		<type name="sigla_contratti_attachment:nomina_rup">
+			<title>Nomina RUP</title>
+			<description>Nomina RUP</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:relazione_tecnica">
+			<title>Relazione Tecnica</title>
+			<description>Relazione Tecnica</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:lettera_di_invito">
+			<title>Lettera di invito epurata di ogni riferimento agli invitati</title>
+			<description>Lettera di invito epurata di ogni riferimento agli invitati</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:elenco_ammessi_e_esclusi">
+			<title>Elenco degli ammessi e degli esclusi all esito delle valutazioni delle autodichiarazioni</title>
+			<description>Elenco degli ammessi e degli esclusi all esito delle valutazioni delle autodichiarazioni</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:provvedimento_nomina_commissione">
+			<title>Provvedimento di nomina della Commissione con i relativi curricula dei componenti epurato dei dati personali sensibili</title>
+			<description>Provvedimento di nomina della Commissione con i relativi curricula dei componenti epurato dei dati personali sensibili</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:giustificazioni_anomalie">
+			<title>Giustificazioni richieste da ente e fornite dagli operatori economici relativamente ad eventuali anomalie</title>
+			<description>Giustificazioni richieste da ente e fornite dagli operatori economici relativamente ad eventuali anomalie</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:elenco_verbali_sedute_di_gara">
+			<title>Elenco dei verbali delle sedute di gara</title>
+			<description>Elenco dei verbali delle sedute di gara</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:provvedimento_di_revoca">
+			<title>Provvedimento di Revoca</title>
+			<description>Provvedimento di Revoca</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:provvedimento_di_aggiudicazione">
+			<title>Provvedimento di Aggiudicazione</title>
+			<description>Provvedimento di Aggiudicazione</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:ordine">
+			<title>Ordine</title>
+			<description>Ordine</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:avviso_post_informazione">
+			<title>Avviso di Post Informazione</title>
+			<description>Avviso di Post Informazione</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:testo_contratti_superiori_euro_1000000">
+			<title>Testo Integrale dei Contratti di beni e servizi di importo superiore a €1.000.000</title>
+			<description>Testo Integrale dei Contratti di beni e servizi di importo superiore a €1.000.000</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:modifiche_varianti_art_106)">
+			<title>Modifiche e/o Varianti (art. 106)</title>
+			<description>Modifiche e/o Varianti (art. 106)</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:file_rdo">
+			<title>File RDO</title>
+			<description>File RDO</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
 	</types>
 </model>
