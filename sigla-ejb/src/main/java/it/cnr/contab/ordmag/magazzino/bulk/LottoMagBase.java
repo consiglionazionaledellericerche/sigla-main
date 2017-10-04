@@ -2,7 +2,7 @@
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 03/10/2017
  */
-package it.cnr.contab.ordmag.magazzino;
+package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.jada.persistency.Keyed;
 public class LottoMagBase extends LottoMagKey implements Keyed {
 //    CD_BENE_SERVIZIO VARCHAR(15) NOT NULL
@@ -66,7 +66,7 @@ public class LottoMagBase extends LottoMagKey implements Keyed {
 	private java.lang.String stato;
  
 //    CD_TERZO DECIMAL(10,0)
-	private java.lang.Long cdTerzo;
+	private java.lang.Integer cdTerzo;
  
 //    CD_DIVISA VARCHAR(10) NOT NULL
 	private java.lang.String cdDivisa;
@@ -371,14 +371,14 @@ public class LottoMagBase extends LottoMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTerzo]
 	 **/
-	public java.lang.Long getCdTerzo() {
+	public java.lang.Integer getCdTerzo() {
 		return cdTerzo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTerzo]
 	 **/
-	public void setCdTerzo(java.lang.Long cdTerzo)  {
+	public void setCdTerzo(java.lang.Integer cdTerzo)  {
 		this.cdTerzo=cdTerzo;
 	}
 	/**
