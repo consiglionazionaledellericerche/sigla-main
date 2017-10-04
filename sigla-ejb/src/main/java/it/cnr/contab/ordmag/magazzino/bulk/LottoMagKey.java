@@ -2,7 +2,7 @@
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 03/10/2017
  */
-package it.cnr.contab.ordmag.magazzino;
+package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
 public class LottoMagKey extends OggettoBulk implements KeyedPersistent {

@@ -45,7 +45,7 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	private java.lang.Integer consegna;
  
 //    CD_TERZO DECIMAL(10,0)
-	private java.lang.Long cdTerzo;
+	private java.lang.Integer cdTerzo;
  
 //    CD_UNITA_MISURA VARCHAR(3)
 	private java.lang.String cdUnitaMisura;
@@ -114,7 +114,7 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	private java.lang.String cdMagazzinoBollaSca;
  
 //    ESERCIZIO_BOLLA_SCA DECIMAL(22,0)
-	private java.lang.Long esercizioBollaSca;
+	private java.lang.Integer esercizioBollaSca;
  
 //    CD_NUMERATORE_BOLLA_SCA VARCHAR(3)
 	private java.lang.String cdNumeratoreBollaSca;
@@ -357,14 +357,14 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTerzo]
 	 **/
-	public java.lang.Long getCdTerzo() {
+	public java.lang.Integer getCdTerzo() {
 		return cdTerzo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTerzo]
 	 **/
-	public void setCdTerzo(java.lang.Long cdTerzo)  {
+	public void setCdTerzo(java.lang.Integer cdTerzo)  {
 		this.cdTerzo=cdTerzo;
 	}
 	/**
@@ -679,14 +679,14 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [esercizioBollaSca]
 	 **/
-	public java.lang.Long getEsercizioBollaSca() {
+	public java.lang.Integer getEsercizioBollaSca() {
 		return esercizioBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [esercizioBollaSca]
 	 **/
-	public void setEsercizioBollaSca(java.lang.Long esercizioBollaSca)  {
+	public void setEsercizioBollaSca(java.lang.Integer esercizioBollaSca)  {
 		this.esercizioBollaSca=esercizioBollaSca;
 	}
 	/**

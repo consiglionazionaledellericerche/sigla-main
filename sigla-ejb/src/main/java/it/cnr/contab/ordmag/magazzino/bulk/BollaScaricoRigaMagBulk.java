@@ -3,14 +3,10 @@
  * Date 03/10/2017
  */
 package it.cnr.contab.ordmag.magazzino.bulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.contab.ordmag.magazzino.bulk.*;
-import it.cnr.contab.ordmag.anag00.*;
-import it.cnr.contab.ordmag.richieste.bulk.*;
-import it.cnr.contab.ordmag.richieste.*;
-import it.cnr.contab.ordmag.ordini.*;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
 public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	/**
 	 * [BOLLA_SCARICO_MAG Archivio per la testata delle Bolle di Scarico]
@@ -167,14 +163,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
 		if (bollaScaricoMag == null)
 			return null;
-		return getBollaScaricoMag().getCd_cds();
+		return getBollaScaricoMag().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCds]
 	 **/
 	public void setCdCds(java.lang.String cdCds)  {
-		this.getBollaScaricoMag().setCd_cds(cdCds);
+		this.getBollaScaricoMag().setCdCds(cdCds);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -184,14 +180,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
 		if (bollaScaricoMag == null)
 			return null;
-		return getBollaScaricoMag().getCd_magazzino();
+		return getBollaScaricoMag().getCdMagazzino();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzino]
 	 **/
 	public void setCdMagazzino(java.lang.String cdMagazzino)  {
-		this.getBollaScaricoMag().setCd_magazzino(cdMagazzino);
+		this.getBollaScaricoMag().setCdMagazzino(cdMagazzino);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -218,14 +214,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
 		if (bollaScaricoMag == null)
 			return null;
-		return getBollaScaricoMag().getCd_numeratore_mag();
+		return getBollaScaricoMag().getCdNumeratoreMag();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreMag]
 	 **/
 	public void setCdNumeratoreMag(java.lang.String cdNumeratoreMag)  {
-		this.getBollaScaricoMag().setCd_numeratore_mag(cdNumeratoreMag);
+		this.getBollaScaricoMag().setCdNumeratoreMag(cdNumeratoreMag);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -235,14 +231,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
 		if (bollaScaricoMag == null)
 			return null;
-		return getBollaScaricoMag().getPg_bolla_sca();
+		return getBollaScaricoMag().getPgBollaSca();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [pgBollaSca]
 	 **/
 	public void setPgBollaSca(java.lang.Integer pgBollaSca)  {
-		this.getBollaScaricoMag().setPg_bolla_sca(pgBollaSca);
+		this.getBollaScaricoMag().setPgBollaSca(pgBollaSca);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -269,14 +265,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		UnitaMisuraBulk unitaMisura = this.getUnitaMisura();
 		if (unitaMisura == null)
 			return null;
-		return getUnitaMisura().getCd_unita_misura();
+		return getUnitaMisura().getCdUnitaMisura();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaMisura]
 	 **/
 	public void setCdUnitaMisura(java.lang.String cdUnitaMisura)  {
-		this.getUnitaMisura().setCd_unita_misura(cdUnitaMisura);
+		this.getUnitaMisura().setCdUnitaMisura(cdUnitaMisura);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -286,14 +282,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		RichiestaUopRigaBulk richiestaUopRiga = this.getRichiestaUopRiga();
 		if (richiestaUopRiga == null)
 			return null;
-		return getRichiestaUopRiga().getCd_cds();
+		return getRichiestaUopRiga().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRich]
 	 **/
 	public void setCdCdsRich(java.lang.String cdCdsRich)  {
-		this.getRichiestaUopRiga().setCd_cds(cdCdsRich);
+		this.getRichiestaUopRiga().setCdCds(cdCdsRich);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -303,14 +299,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		RichiestaUopRigaBulk richiestaUopRiga = this.getRichiestaUopRiga();
 		if (richiestaUopRiga == null)
 			return null;
-		return getRichiestaUopRiga().getCd_unita_operativa();
+		return getRichiestaUopRiga().getCdUnitaOperativa();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativaRich]
 	 **/
 	public void setCdUnitaOperativaRich(java.lang.String cdUnitaOperativaRich)  {
-		this.getRichiestaUopRiga().setCd_unita_operativa(cdUnitaOperativaRich);
+		this.getRichiestaUopRiga().setCdUnitaOperativa(cdUnitaOperativaRich);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -337,14 +333,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		RichiestaUopRigaBulk richiestaUopRiga = this.getRichiestaUopRiga();
 		if (richiestaUopRiga == null)
 			return null;
-		return getRichiestaUopRiga().getCd_numeratore();
+		return getRichiestaUopRiga().getCdNumeratore();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreRich]
 	 **/
 	public void setCdNumeratoreRich(java.lang.String cdNumeratoreRich)  {
-		this.getRichiestaUopRiga().setCd_numeratore(cdNumeratoreRich);
+		this.getRichiestaUopRiga().setCdNumeratore(cdNumeratoreRich);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -388,14 +384,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		LottoMagBulk lottoMag = this.getLottoMag();
 		if (lottoMag == null)
 			return null;
-		return getLottoMag().getCd_cds();
+		return getLottoMag().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsLotto]
 	 **/
 	public void setCdCdsLotto(java.lang.String cdCdsLotto)  {
-		this.getLottoMag().setCd_cds(cdCdsLotto);
+		this.getLottoMag().setCdCds(cdCdsLotto);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -405,14 +401,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		LottoMagBulk lottoMag = this.getLottoMag();
 		if (lottoMag == null)
 			return null;
-		return getLottoMag().getCd_magazzino();
+		return getLottoMag().getCdMagazzino();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzinoLotto]
 	 **/
 	public void setCdMagazzinoLotto(java.lang.String cdMagazzinoLotto)  {
-		this.getLottoMag().setCd_magazzino(cdMagazzinoLotto);
+		this.getLottoMag().setCdMagazzino(cdMagazzinoLotto);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -439,14 +435,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		LottoMagBulk lottoMag = this.getLottoMag();
 		if (lottoMag == null)
 			return null;
-		return getLottoMag().getCd_numeratore_mag();
+		return getLottoMag().getCdNumeratoreMag();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreLotto]
 	 **/
 	public void setCdNumeratoreLotto(java.lang.String cdNumeratoreLotto)  {
-		this.getLottoMag().setCd_numeratore_mag(cdNumeratoreLotto);
+		this.getLottoMag().setCdNumeratoreMag(cdNumeratoreLotto);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -456,14 +452,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		LottoMagBulk lottoMag = this.getLottoMag();
 		if (lottoMag == null)
 			return null;
-		return getLottoMag().getPg_lotto();
+		return getLottoMag().getPgLotto();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [pgLotto]
 	 **/
 	public void setPgLotto(java.lang.Integer pgLotto)  {
-		this.getLottoMag().setPg_lotto(pgLotto);
+		this.getLottoMag().setPgLotto(pgLotto);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -473,14 +469,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		MovimentiMagBulk movimentiMag = this.getMovimentiMag();
 		if (movimentiMag == null)
 			return null;
-		return getMovimentiMag().getPg_movimento();
+		return getMovimentiMag().getPgMovimento();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [pgMovimento]
 	 **/
 	public void setPgMovimento(java.lang.Long pgMovimento)  {
-		this.getMovimentiMag().setPg_movimento(pgMovimento);
+		this.getMovimentiMag().setPgMovimento(pgMovimento);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -490,14 +486,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
 		if (ordineAcqConsegna == null)
 			return null;
-		return getOrdineAcqConsegna().getCd_cds();
+		return getOrdineAcqConsegna().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsOrdine]
 	 **/
 	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
-		this.getOrdineAcqConsegna().setCd_cds(cdCdsOrdine);
+		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -507,14 +503,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
 		if (ordineAcqConsegna == null)
 			return null;
-		return getOrdineAcqConsegna().getCd_unita_operativa();
+		return getOrdineAcqConsegna().getCdUnitaOperativa();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativa]
 	 **/
 	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
-		this.getOrdineAcqConsegna().setCd_unita_operativa(cdUnitaOperativa);
+		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -541,14 +537,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
 		if (ordineAcqConsegna == null)
 			return null;
-		return getOrdineAcqConsegna().getCd_numeratore();
+		return getOrdineAcqConsegna().getCdNumeratore();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreOrdine]
 	 **/
 	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
-		this.getOrdineAcqConsegna().setCd_numeratore(cdNumeratoreOrdine);
+		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
