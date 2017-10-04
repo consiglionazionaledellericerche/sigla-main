@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="sigla_contratti_attachment:sigla_contratti_attachmentModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+	<description>Sigla Dynamic Model</description>
+	<author>raffaele.pagano</author>
+	<version>1.0</version>
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/attachment/cmis"
+			prefix="sigla_contratti_attachment" />
+	</namespaces>
+	<types>
+		<type name="sigla_contratti_attachment:document">
+			<title>Allegati ai Contratti di Sigla</title>
+			<description>Allegati ai Contratti di Sigla (Incarichi/Borse di Studio/Assegni di Ricerca)</description>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="sigla_contratti_attachment:original_name">
+					<title>Nome Originale del File</title>
+					<description>Nome Originale del File</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		<type name="sigla_contratti_attachment:bando">
+			<title>Bando di Selezione</title>
+			<description>Bando di Selezione</description>
+			<parent>sigla_contratti_attachment:document</parent>
+			<properties>
+				<property name="sigla_contratti_attachment:data_inizio">
+					<title>Data di inizio pubblicazione</title>
+					<description>Data di inizio pubblicazione</description>
+					<type>d:datetime</type>
+				</property>
+				<property name="sigla_contratti_attachment:data_fine">
+					<title>Data di fine pubblicazione</title>
+					<description>Data di fine pubblicazione</description>
+					<type>d:datetime</type>
+				</property>
+			</properties>
+		</type>
+		<type name="sigla_contratti_attachment:decisione_a_contrattare">
+			<title>Decisione a Contrattare</title>
+			<description>Decisione a Contrattare</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:contratto">
+			<title>Contratto</title>
+			<description>Contratto</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:variazione_contratto">
+			<title>Variazione Contratto</title>
+			<description>Variazione Contratto</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:curriculum_vincitore">
+			<title>Curriculum Vincitore</title>
+			<description>Curriculum Vincitore</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:decreto_nomina">
+			<title>Decreto di Nomina</title>
+			<description>Decreto di Nomina</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:atto_esito_controllo">
+			<title>Atto Esito Controllo</title>
+			<description>Atto Esito Controllo</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:progetto">
+			<title>Progetto</title>
+			<description>Progetto</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:allegato_generico">
+			<title>Allegato Generico</title>
+			<description>Allegato Generico</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+		<type name="sigla_contratti_attachment:capitolato">
+			<title>Capitolato</title>
+			<description>Capitolato</description>
+			<parent>sigla_contratti_attachment:contratto</parent>
+		</type>
+		<type name="sigla_contratti_attachment:dichiarazione_altri_rapporti">
+			<title>Dichiarazione Rapporti con altre PA</title>
+			<description>Dichiarazione Rapporti con altre PA</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
+	</types>
+</model>
