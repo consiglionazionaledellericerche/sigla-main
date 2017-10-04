@@ -2,12 +2,13 @@
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 03/10/2017
  */
-package it.cnr.contab.ordmag.magazzino;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.contab.ordmag.anag00.*;
-import it.cnr.contab.ordmag.ordini.*;
+package it.cnr.contab.ordmag.magazzino.bulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 public class LottoMagBulk extends LottoMagBase {
 	/**
 	 * [NUMERAZIONE_MAG Definisce i contatori per la numerazione dei magazzini.]
@@ -155,14 +156,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
 		if (numerazioneMag == null)
 			return null;
-		return getNumerazioneMag().getCd_cds();
+		return getNumerazioneMag().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCds]
 	 **/
 	public void setCdCds(java.lang.String cdCds)  {
-		this.getNumerazioneMag().setCd_cds(cdCds);
+		this.getNumerazioneMag().setCdCds(cdCds);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -172,14 +173,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
 		if (numerazioneMag == null)
 			return null;
-		return getNumerazioneMag().getCd_magazzino();
+		return getNumerazioneMag().getCdMagazzino();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzino]
 	 **/
 	public void setCdMagazzino(java.lang.String cdMagazzino)  {
-		this.getNumerazioneMag().setCd_magazzino(cdMagazzino);
+		this.getNumerazioneMag().setCdMagazzino(cdMagazzino);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -206,14 +207,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
 		if (numerazioneMag == null)
 			return null;
-		return getNumerazioneMag().getCd_numeratore_mag();
+		return getNumerazioneMag().getCdNumeratoreMag();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreMag]
 	 **/
 	public void setCdNumeratoreMag(java.lang.String cdNumeratoreMag)  {
-		this.getNumerazioneMag().setCd_numeratore_mag(cdNumeratoreMag);
+		this.getNumerazioneMag().setCdNumeratoreMag(cdNumeratoreMag);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -240,14 +241,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 		MagazzinoBulk magazzino = this.getMagazzino();
 		if (magazzino == null)
 			return null;
-		return getMagazzino().getCd_cds();
+		return getMagazzino().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsMag]
 	 **/
 	public void setCdCdsMag(java.lang.String cdCdsMag)  {
-		this.getMagazzino().setCd_cds(cdCdsMag);
+		this.getMagazzino().setCdCds(cdCdsMag);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -257,14 +258,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 		MagazzinoBulk magazzino = this.getMagazzino();
 		if (magazzino == null)
 			return null;
-		return getMagazzino().getCd_magazzino();
+		return getMagazzino().getCdMagazzino();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzinoMag]
 	 **/
 	public void setCdMagazzinoMag(java.lang.String cdMagazzinoMag)  {
-		this.getMagazzino().setCd_magazzino(cdMagazzinoMag);
+		this.getMagazzino().setCdMagazzino(cdMagazzinoMag);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -274,14 +275,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
 		if (ordineAcqConsegna == null)
 			return null;
-		return getOrdineAcqConsegna().getCd_cds();
+		return getOrdineAcqConsegna().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsOrdine]
 	 **/
 	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
-		this.getOrdineAcqConsegna().setCd_cds(cdCdsOrdine);
+		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -291,14 +292,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
 		if (ordineAcqConsegna == null)
 			return null;
-		return getOrdineAcqConsegna().getCd_unita_operativa();
+		return getOrdineAcqConsegna().getCdUnitaOperativa();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativa]
 	 **/
 	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
-		this.getOrdineAcqConsegna().setCd_unita_operativa(cdUnitaOperativa);
+		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -325,14 +326,14 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
 		if (ordineAcqConsegna == null)
 			return null;
-		return getOrdineAcqConsegna().getCd_numeratore();
+		return getOrdineAcqConsegna().getCdNumeratore();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreOrdine]
 	 **/
 	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
-		this.getOrdineAcqConsegna().setCd_numeratore(cdNumeratoreOrdine);
+		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -389,7 +390,7 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTerzo]
 	 **/
-	public java.lang.Long getCdTerzo() {
+	public java.lang.Integer getCdTerzo() {
 		TerzoBulk terzo = this.getTerzo();
 		if (terzo == null)
 			return null;
@@ -399,7 +400,7 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTerzo]
 	 **/
-	public void setCdTerzo(java.lang.Long cdTerzo)  {
+	public void setCdTerzo(java.lang.Integer cdTerzo)  {
 		this.getTerzo().setCd_terzo(cdTerzo);
 	}
 	/**

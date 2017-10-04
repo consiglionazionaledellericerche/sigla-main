@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.ordmag.richieste.LottoMagKey">
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.LottoMagKey">
 	<defaultColumnMap
 		tableName="LOTTO_MAG">
 		<columnMapping

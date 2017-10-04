@@ -12,6 +12,7 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
 	 **/
 	private MagazzinoBulk magazzino =  new MagazzinoBulk();
+	private MagazzinoBulk magazzinoDest =  new MagazzinoBulk();
 	/**
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
 	 **/
@@ -66,14 +67,14 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 		MagazzinoBulk magazzino = this.getMagazzino();
 		if (magazzino == null)
 			return null;
-		return getMagazzino().getCd_cds();
+		return getMagazzino().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsMag]
 	 **/
 	public void setCdCdsMag(java.lang.String cdCdsMag)  {
-		this.getMagazzino().setCd_cds(cdCdsMag);
+		this.getMagazzino().setCdCds(cdCdsMag);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -83,31 +84,31 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 		MagazzinoBulk magazzino = this.getMagazzino();
 		if (magazzino == null)
 			return null;
-		return getMagazzino().getCd_magazzino();
+		return getMagazzino().getCdMagazzino();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzinoMag]
 	 **/
 	public void setCdMagazzinoMag(java.lang.String cdMagazzinoMag)  {
-		this.getMagazzino().setCd_magazzino(cdMagazzinoMag);
+		this.getMagazzino().setCdMagazzino(cdMagazzinoMag);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsMagDest]
 	 **/
 	public java.lang.String getCdCdsMagDest() {
-		MagazzinoBulk magazzino = this.getMagazzino();
+		MagazzinoBulk magazzino = this.getMagazzinoDest();
 		if (magazzino == null)
 			return null;
-		return getMagazzino().getCd_cds();
+		return getMagazzinoDest().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsMagDest]
 	 **/
 	public void setCdCdsMagDest(java.lang.String cdCdsMagDest)  {
-		this.getMagazzino().setCd_cds(cdCdsMagDest);
+		this.getMagazzinoDest().setCdCds(cdCdsMagDest);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -117,14 +118,14 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 		MagazzinoBulk magazzino = this.getMagazzino();
 		if (magazzino == null)
 			return null;
-		return getMagazzino().getCd_magazzino();
+		return getMagazzinoDest().getCdMagazzino();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzinoDest]
 	 **/
 	public void setCdMagazzinoDest(java.lang.String cdMagazzinoDest)  {
-		this.getMagazzino().setCd_magazzino(cdMagazzinoDest);
+		this.getMagazzinoDest().setCdMagazzino(cdMagazzinoDest);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -134,13 +135,19 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 		UnitaOperativaOrdBulk unitaOperativaOrd = this.getUnitaOperativaOrd();
 		if (unitaOperativaOrd == null)
 			return null;
-		return getUnitaOperativaOrd().getCd_unita_operativa();
+		return getUnitaOperativaOrd().getCdUnitaOperativa();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUopDest]
 	 **/
 	public void setCdUopDest(java.lang.String cdUopDest)  {
-		this.getUnitaOperativaOrd().setCd_unita_operativa(cdUopDest);
+		this.getUnitaOperativaOrd().setCdUnitaOperativa(cdUopDest);
+	}
+	public MagazzinoBulk getMagazzinoDest() {
+		return magazzinoDest;
+	}
+	public void setMagazzinoDest(MagazzinoBulk magazzinoDest) {
+		this.magazzinoDest = magazzinoDest;
 	}
 }

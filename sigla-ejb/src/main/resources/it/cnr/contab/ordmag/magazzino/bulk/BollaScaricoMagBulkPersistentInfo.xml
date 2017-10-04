@@ -5,23 +5,40 @@
 	<defaultColumnMap
 		tableName="BOLLA_SCARICO_MAG">
 		<columnMapping
+			columnName="CD_CDS"
+			propertyName="numerazioneMag.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="numerazioneMag.magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="numerazioneMag.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_MAG"
+			propertyName="numerazioneMag.cdNumeratoreMag" />
+		<columnMapping
 			columnName="CD_CDS_MAG"
-			propertyName="magazzino.cd_cds" />
+			propertyName="magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO_MAG"
-			propertyName="magazzino.cd_magazzino" />
+			propertyName="magazzino.cdMagazzino" />
 		<columnMapping
 			columnName="CD_UOP_DEST"
-			propertyName="unitaOperativaOrd.cd_unita_operativa" />
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
 			columnName="CD_CDS_MAG_DEST"
-			propertyName="magazzino.cd_cds" />
+			propertyName="magazzinoDest.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO_DEST"
-			propertyName="magazzino.cd_magazzino" />
+			propertyName="magazzinoDest.cdMagazzino" />
 	</defaultColumnMap>
 	<persistentProperty
+		name="numerazioneMag"
+		partOfOid="true" />
+	<persistentProperty
 		name="magazzino" />
+	<persistentProperty
+		name="magazzinoDest" />
 	<persistentProperty
 		name="unitaOperativaOrd" />
 </SQLPersistentInfo>
