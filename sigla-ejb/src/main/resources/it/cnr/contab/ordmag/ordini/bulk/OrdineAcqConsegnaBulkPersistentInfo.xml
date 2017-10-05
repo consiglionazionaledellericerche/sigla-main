@@ -53,6 +53,41 @@
 			columnName="PG_OBBLIGAZIONE_SCAD"
 			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
 	</defaultColumnMap>
+    <columnMap
+            name="DATI_ORDINI_COMPLETI"
+            tableName="ORDINE_ACQ_CONSEGNA"
+            extends="default">
+        <columnMapping
+                columnName="ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO"
+                propertyName="ordineAcqRiga.cdBeneServizio"
+                sqlTypeName="VARCHAR"
+                columnSize="15"/>
+        <columnMapping
+                columnName="ORDINE_ACQ_RIGA.DS_BENE_SERVIZIO"
+                propertyName="ordineAcqRiga.dsBeneServizio"
+                sqlTypeName="VARCHAR"
+                columnSize="300"/>
+        <columnMapping
+                columnName="ORDINE_ACQ.DATA_ORDINE"
+                propertyName="ordineAcqRiga.ordineAcq.dataOrdine"
+                sqlTypeName="timestamp"
+                columnSize="7"/>
+        <columnMapping
+                columnName="ORDINE_ACQ.CD_TERZO"
+                propertyName="ordineAcqRiga.ordineAcq.cdTerzo"
+                sqlTypeName="DECIMAL"
+                columnSize="8"/>
+        <columnMapping
+                columnName="ORDINE_ACQ.RAGIONE_SOCIALE"
+                propertyName="ordineAcqRiga.ordineAcq.ragioneSociale"
+                sqlTypeName="VARCHAR"
+                columnSize="50"/>
+        <columnMapping
+                columnName="ORDINE_ACQ_RIGA.NOTA_RIGA"
+                propertyName="ordineAcq.notaRiga"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+    </columnMap>
 	<persistentProperty
 		name="ordineAcqRiga"
 		partOfOid="true" />
