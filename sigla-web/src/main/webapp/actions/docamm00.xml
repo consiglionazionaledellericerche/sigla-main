@@ -349,15 +349,14 @@
         <init-param name="defaultAction" value="ConsFatturaGaeSplitAction"/>
     </businessProcess>
 
-    <action path="/ContabilizzaOrdineAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+    <action path="/ContabilizzaOrdineAction" actionClass="it.cnr.contab.docamm00.actions.ContabilizzaOrdineAction">
     </action>
     <businessProcess name="ContabilizzaOrdineBP"
-                     className="it.cnr.jada.util.action.ConsultazioniBP">
+                     className="it.cnr.contab.docamm00.bp.ContabilizzaOrdineBP">
         <forward name="default" path="/consultazioni/form_lista.jsp"/>
         <init-param name="bulkClassName"
                     value="it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
         <init-param name="defaultAction" value="ContabilizzaOrdineAction"/>
-        <init-param name="searchResultColumnSet" value="fattura_passiva"/>
     </businessProcess>
 </action-mappings>
