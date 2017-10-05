@@ -1,9 +1,12 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
+
+import java.util.Optional;
 
 
 /**
@@ -135,27 +138,5 @@ public class Fattura_passiva_IHome
         } catch (java.sql.SQLException e) {
             throw it.cnr.jada.persistency.sql.SQLExceptionHandler.getInstance().handleSQLException(e, spesa);
         }
-    }
-
-    public SQLBuilder selectContabilizzaRigaByClause(Fattura_passiva_IBulk fatturaPassiva, EvasioneOrdineRigaHome home,
-                                                     EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws PersistencyException {
-        home.setColumnMap("V_EVASIONE_ORDINE");
-        SQLBuilder sqlBuilder = home.createSQLBuilder();
-        sqlBuilder.setAutoJoins(true);
-
-        sqlBuilder.generateJoin("evasioneOrdine", "EVASIONE_ORDINE");
-        sqlBuilder.addSQLClause(FindClause.AND, "EVASIONE_ORDINE.STATO", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_INSERITA);
-        sqlBuilder.addSQLClause(FindClause.AND, "EVASIONE_ORDINE.DATA_BOLLA", SQLBuilder.LESS_EQUALS, fatturaPassiva.getDt_fattura_fornitore());
-
-        sqlBuilder.generateJoin("ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO_FATT", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_FATT_ASSOCIATA_TOTALMENTE);
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_EVASA);
-
-        sqlBuilder.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
-        sqlBuilder.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
-
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TERZO", SQLBuilder.EQUALS, fatturaPassiva.getCd_terzo());
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.TI_ATTIVITA", SQLBuilder.EQUALS, fatturaPassiva.getTi_istituz_commerc());
-        return sqlBuilder;
     }
 }
