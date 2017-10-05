@@ -22,7 +22,7 @@
 		<columnMapping
 			columnName="CD_BENE_SERVIZIO"
 			propertyName="beneServizio.cd_bene_servizio" />
-		<columnMapping
+<!-- 		<columnMapping
 			columnName="CD_UNITA_MISURA"
 			propertyName="unitaMisura.cdUnitaMisura" />
 		<columnMapping
@@ -81,12 +81,12 @@
 			propertyName="ordineAcqConsegna.ordineAcqRiga.riga" />
 		<columnMapping
 			columnName="CONSEGNA"
-			propertyName="ordineAcqConsegna.consegna" />
+			propertyName="ordineAcqConsegna.consegna" /> -->
 	</defaultColumnMap>
 	<persistentProperty
 		name="bollaScaricoMag"
 		partOfOid="true" />
-	<persistentProperty
+ <!--  	<persistentProperty
 		name="beneServizio" />
 	<persistentProperty
 		name="unitaMisura" />
@@ -97,5 +97,5 @@
 	<persistentProperty
 		name="movimentiMag" />
 	<persistentProperty
-		name="ordineAcqConsegna" />
+		name="ordineAcqConsegna" />-->
 </SQLPersistentInfo>
