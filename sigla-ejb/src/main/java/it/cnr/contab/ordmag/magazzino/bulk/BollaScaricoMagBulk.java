@@ -13,6 +13,7 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	 **/
 	private MagazzinoBulk magazzino =  new MagazzinoBulk();
 	private MagazzinoBulk magazzinoDest =  new MagazzinoBulk();
+	private NumerazioneMagBulk numerazioneMag =  new NumerazioneMagBulk();
 	/**
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
 	 **/
@@ -30,6 +31,7 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	 **/
 	public BollaScaricoMagBulk(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgBollaSca) {
 		super(cdCds, cdMagazzino, esercizio, cdNumeratoreMag, pgBollaSca);
+		setNumerazioneMag( new NumerazioneMagBulk(cdCds,cdMagazzino,esercizio,cdNumeratoreMag) );
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -149,5 +151,75 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	}
 	public void setMagazzinoDest(MagazzinoBulk magazzinoDest) {
 		this.magazzinoDest = magazzinoDest;
+	}
+	public NumerazioneMagBulk getNumerazioneMag() {
+		return numerazioneMag;
+	}
+	public void setNumerazioneMag(NumerazioneMagBulk numerazioneMag) {
+		this.numerazioneMag = numerazioneMag;
+	}
+	public java.lang.String getCdCds() {
+		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
+		if (numerazioneMag == null)
+			return null;
+		return getNumerazioneMag().getCdCds();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [cdCds]
+	 **/
+	public void setCdCds(java.lang.String cdCds)  {
+		this.getNumerazioneMag().setCdCds(cdCds);
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [cdMagazzino]
+	 **/
+	public java.lang.String getCdMagazzino() {
+		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
+		if (numerazioneMag == null)
+			return null;
+		return getNumerazioneMag().getCdMagazzino();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [cdMagazzino]
+	 **/
+	public void setCdMagazzino(java.lang.String cdMagazzino)  {
+		this.getNumerazioneMag().setCdMagazzino(cdMagazzino);
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [esercizio]
+	 **/
+	public java.lang.Integer getEsercizio() {
+		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
+		if (numerazioneMag == null)
+			return null;
+		return getNumerazioneMag().getEsercizio();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [esercizio]
+	 **/
+	public void setEsercizio(java.lang.Integer esercizio)  {
+		this.getNumerazioneMag().setEsercizio(esercizio);
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [cdNumeratoreMag]
+	 **/
+	public java.lang.String getCdNumeratoreMag() {
+		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
+		if (numerazioneMag == null)
+			return null;
+		return getNumerazioneMag().getCdNumeratoreMag();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [cdNumeratoreMag]
+	 **/
+	public void setCdNumeratoreMag(java.lang.String cdNumeratoreMag)  {
+		this.getNumerazioneMag().setCdNumeratoreMag(cdNumeratoreMag);
 	}
 }
