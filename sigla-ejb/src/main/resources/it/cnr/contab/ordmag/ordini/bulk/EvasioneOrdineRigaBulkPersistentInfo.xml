@@ -48,34 +48,52 @@
             extends="default">
         <columnMapping
                 columnName="EVASIONE_ORDINE.NUMERO_BOLLA"
-                propertyName="evasioneOrdine.numeroBolla"/>
+                propertyName="evasioneOrdine.numeroBolla"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
         <columnMapping
                 columnName="EVASIONE_ORDINE.DATA_BOLLA"
-                propertyName="evasioneOrdine.dataBolla"/>
+                propertyName="evasioneOrdine.dataBolla"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
         <columnMapping
                 columnName="QUANTITA_EVASA"
                 propertyName="quantitaEvasa"/>
         <columnMapping
                 columnName="ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.cdBeneServizio"/>
+                propertyName="ordineAcqConsegna.ordineAcqRiga.cdBeneServizio"
+                sqlTypeName="VARCHAR"
+                columnSize="15"/>
         <columnMapping
                 columnName="ORDINE_ACQ_RIGA.DS_BENE_SERVIZIO"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"/>
+                propertyName="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"
+                sqlTypeName="VARCHAR"
+                columnSize="300"/>
         <columnMapping
                 columnName="ORDINE_ACQ_RIGA.CD_VOCE_IVA"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.cdVoceIva"/>
+                propertyName="ordineAcqConsegna.ordineAcqRiga.cdVoceIva"
+                sqlTypeName="VARCHAR"
+                columnSize="10"/>
         <columnMapping
                 columnName="ORDINE_ACQ_RIGA.IM_IMPONIBILE_DIVISA"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"/>
+                propertyName="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
+                sqlTypeName="DECIMAL"
+                columnSize="15"/>
         <columnMapping
                 columnName="ORDINE_ACQ_RIGA.IM_IVA_DIVISA"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"/>
+                propertyName="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
+                sqlTypeName="DECIMAL"
+                columnSize="15"/>
         <columnMapping
                 columnName="ORDINE_ACQ_RIGA.IM_TOTALE_RIGA"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"/>
+                propertyName="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
+                sqlTypeName="DECIMAL"
+                columnSize="15"/>
         <columnMapping
                 columnName="ORDINE_ACQ_RIGA.PREZZO_UNITARIO"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"/>
+                propertyName="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
+                sqlTypeName="DECIMAL"
+                columnSize="15"/>
 
     </columnMap>
     <persistentProperty
