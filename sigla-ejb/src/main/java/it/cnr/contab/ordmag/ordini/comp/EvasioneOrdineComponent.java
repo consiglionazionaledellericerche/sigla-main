@@ -130,7 +130,7 @@ public class EvasioneOrdineComponent
     	}
 
     private it.cnr.jada.persistency.sql.SQLBuilder ricercaOrdini(UserContext context,
-    		EvasioneOrdineBulk filtro, OrdineAcqConsegnaHome home) {
+    		EvasioneOrdineBulk filtro, OrdineAcqConsegnaHome home) throws ApplicationException {
     	
     	if (filtro.getDataConsegna() == null){
     		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare la data di consegna.");    	
