@@ -12,6 +12,9 @@
       path="/CRUDFirmaOrdineAcqAction" actionClass="it.cnr.contab.ordmag.ordini.action.CRUDFirmaOrdineAcqAction">
   </action>
   <action 
+      path="/CRUDEvasioneOrdineAction" actionClass="it.cnr.contab.ordmag.ordini.action.CRUDEvasioneOrdineAction">
+  </action>
+  <action 
       path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.richieste.action.ListaRichiestePerOrdiniAction">
   </action>
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
@@ -144,5 +147,11 @@
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk"/>
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
     <init-param name="defaultAction" value="CRUDFirmaOrdineAcqAction"/>
+  </businessProcess>
+  <businessProcess name="CRUDEvasioneOrdineBP" className="it.cnr.contab.ordmag.ordini.bp.CRUDEvasioneOrdineBP">
+    <forward name="default" path="/ordmag/ordini/evasione_ordini.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk"/>
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_EvasioneOrdineComponentSession"/>
+    <init-param name="defaultAction" value="CRUDEvasioneOrdineAction"/>
   </businessProcess>
 </action-mappings>
