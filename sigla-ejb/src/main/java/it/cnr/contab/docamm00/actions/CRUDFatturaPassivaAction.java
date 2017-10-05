@@ -31,10 +31,8 @@ import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
+import it.cnr.jada.DetailedRuntimeException;
+import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -46,8 +44,11 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.Config;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.util.jsp.Button;
 
 import javax.ejb.EJBException;
 import java.rmi.RemoteException;
@@ -873,21 +874,61 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     /**
      * Prepara e apre la ricerca per l'evasione dell'ordine
      */
-    private Forward basicDoRicercaEvasioneOrdine(ActionContext context, Fattura_passivaBulk fatturaPassiva, java.util.List models) {
-        try {
-            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
-            controllaQuadraturaConti(context, fatturaPassiva);
-            ConsultazioniBP nbp = (ConsultazioniBP)context.createBusinessProcess("ContabilizzaOrdineBP", new Object[]{"MRSWTh"});
-            nbp.setMultiSelection(true);
-            nbp.setIterator(context,bp.find(context, new CompoundFindClause(), new EvasioneOrdineRigaBulk(), bp.getModel(), "contabilizzaRiga"));
-            context.addHookForward("bringback", this, "doContabilizzaOrdine");
-            HookForward hook = (HookForward) context.findForward("bringback");
-            return context.addBusinessProcess(nbp);
-        } catch (Throwable e) {
-            return handleException(context, e);
-        }
+    private Forward basicDoRicercaEvasioneOrdine(ActionContext context, Fattura_passivaBulk fatturaPassiva, List<Fattura_passiva_rigaBulk> models) {
+        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
+        return Optional.ofNullable(models)
+                .filter(list -> list.size() == 1)
+                .map((List<Fattura_passiva_rigaBulk> list) -> {
+                    try {
+                        final RemoteIterator contabilizzaRigaIterator = bp.find(context, new CompoundFindClause(),
+                                new EvasioneOrdineRigaBulk(), models.get(0), "contabilizzaRiga");
+                        return Optional.ofNullable(contabilizzaRigaIterator)
+                                .map(remoteIterator -> {
+                                    try {
+                                        return remoteIterator.countElements();
+                                    } catch (RemoteException e) {
+                                        throw new DetailedRuntimeException(e);
+                                    }
+                                })
+                                .filter(elements -> elements != 0)
+                                .map(integer -> {
+                                    try {
+                                        ContabilizzaOrdineBP nbp = (ContabilizzaOrdineBP) context.createBusinessProcess("ContabilizzaOrdineBP", new Object[]{"MRSWTh"});
+                                        nbp.setFattura_passiva_rigaBulk(models.get(0));
+                                        nbp.setMultiSelection(true);
+                                        nbp.setIterator(context, contabilizzaRigaIterator);
+                                        context.addHookForward("seleziona", this, "doContabilizzaOrdine");
+                                        return (Forward)context.addBusinessProcess(nbp);
+                                    } catch (BusinessProcessException | RemoteException e) {
+                                        throw new DetailedRuntimeException(e);
+                                    }
+                                }).orElseGet(() -> {
+                                    bp.setMessage("Non ci sono dati per i criteri impostati!");
+                                    try {
+                                        contabilizzaRigaIterator.close();
+                                    } catch (RemoteException e) {
+                                        throw new DetailedRuntimeException(e);
+                                    }
+                                    return context.findDefaultForward();
+                                });
+                    } catch (Throwable e) {
+                        return handleException(context, e);
+                    }
+                }).orElseGet(() -> {
+                    bp.setMessage("Per procedere, bisogna selezionare un unico dettaglio da contabilizzare!");
+                    return context.findDefaultForward();
+                });
     }
-
+    /**
+     * Contabilizza i dettagli selezionati previo controllo della selezione
+     *
+     * @param context L'ActionContext della richiesta
+     * @return Il Forward alla pagina di risposta
+     */
+    public Forward doContabilizzaOrdine(ActionContext context) {
+        HookForward caller = (HookForward) context.getCaller();
+        return context.findDefaultForward();
+    }
     /**
      * Riporta il documento amministrativo selezionato dall'utente (caso delle cancellazioni
      * di note di debito e credito)
@@ -1168,9 +1209,13 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         try {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             bp.getDettaglio().add(context);
-            Fattura_passiva_rigaBulk model = (Fattura_passiva_rigaBulk) bp.getDettaglio().getModel();
-            if (model != null)
-                model.setBene_servizio(new Bene_servizioBulk());
+            Optional.ofNullable(bp.getDettaglio().getModel())
+                    .filter(Fattura_passiva_rigaBulk.class::isInstance)
+                    .map(Fattura_passiva_rigaBulk.class::cast)
+                    .ifPresent(fattura_passiva_rigaBulk -> {
+                        fattura_passiva_rigaBulk.setBene_servizio(new Bene_servizioBulk());
+                        fattura_passiva_rigaBulk.setVoce_iva(new Voce_ivaBulk());
+                    });
             return context.findDefaultForward();
         } catch (Throwable e) {
             return handleException(context, e);
@@ -3958,28 +4003,34 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         try {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             fillModel(context);
-            java.util.List models = bp.getDettaglio().getSelectedModels(context);
-            if (models == null || models.isEmpty())
-                bp.setErrorMessage("Per procedere, selezionare i dettagli da contabilizzare!");
-            else {
-                Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk) bp.getModel();
-                if (fatturaPassiva.isGestione_doc_ele() && fatturaPassiva.isGenerataDaCompenso())
-                    throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verrà fatta direttamente nel compenso!");
-                if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
-                    throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario impostare un fornitore!");
 
-                controllaSelezionePerContabilizzazione(context, models.iterator());
-                try {
-                    controllaSelezionePerTitoloCapitoloLista(context, models.iterator());
-                } catch (ApplicationException e) {
-                    throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-                }
-                return Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
-                        .filter(isDaOrdini -> isDaOrdini.equals(Boolean.TRUE))
-                        .map(isDaOrdini -> basicDoRicercaEvasioneOrdine(context, fatturaPassiva, models))
-                        .orElseGet(() -> basicDoRicercaObbligazione(context, fatturaPassiva, models));
+            Optional<List> models = Optional.ofNullable(bp.getDettaglio().getSelectedModels(context))
+                    .map(list -> {
+                        list.add(bp.getDettaglio().getDetails().get(bp.getDettaglio().getSelection().getFocus()));
+                        return list;
+                    })
+                    .filter(list -> !list.isEmpty());
+            if (!models.isPresent()) {
+                bp.setErrorMessage("Per procedere, selezionare i dettagli da contabilizzare!");
+                return context.findDefaultForward();
             }
-            return context.findDefaultForward();
+
+            Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk) bp.getModel();
+            if (fatturaPassiva.isGestione_doc_ele() && fatturaPassiva.isGenerataDaCompenso())
+                throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verrà fatta direttamente nel compenso!");
+            if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
+                throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario impostare un fornitore!");
+
+            controllaSelezionePerContabilizzazione(context, models.get().iterator());
+            try {
+                controllaSelezionePerTitoloCapitoloLista(context, models.get().iterator());
+            } catch (ApplicationException e) {
+                throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+            }
+            return (Forward)Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
+                    .filter(isDaOrdini -> isDaOrdini.equals(Boolean.TRUE))
+                    .map(isDaOrdini -> basicDoRicercaEvasioneOrdine(context, fatturaPassiva, models.get()))
+                    .orElseGet(() -> basicDoRicercaObbligazione(context, fatturaPassiva, models.get()));
         } catch (Throwable e) {
             return handleException(context, e);
         }
