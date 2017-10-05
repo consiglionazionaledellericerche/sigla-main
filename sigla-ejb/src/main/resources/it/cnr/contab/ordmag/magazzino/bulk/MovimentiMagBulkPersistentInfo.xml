@@ -4,7 +4,7 @@
 	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome">
 	<defaultColumnMap
 		tableName="MOVIMENTI_MAG">
-		<columnMapping
+<!--  		<columnMapping
 			columnName="CD_CDS_TIPO_MOVIMENTO"
 			propertyName="tipoMovimentoMag.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
@@ -90,9 +90,9 @@
 			propertyName="bollaScaricoMag.pgBollaSca" />
 		<columnMapping
 			columnName="CD_DIVISA"
-			propertyName="divisa.cd_divisa" />
+			propertyName="divisa.cd_divisa" />-->
 	</defaultColumnMap>
-	<persistentProperty
+<!--  	<persistentProperty
 		name="tipoMovimentoMag" />
 	<persistentProperty
 		name="tipoMovimentoMagRif" />
@@ -115,5 +115,5 @@
 	<persistentProperty
 		name="bollaScaricoMag" />
 	<persistentProperty
-		name="divisa" />
+		name="divisa" />-->
 </SQLPersistentInfo>

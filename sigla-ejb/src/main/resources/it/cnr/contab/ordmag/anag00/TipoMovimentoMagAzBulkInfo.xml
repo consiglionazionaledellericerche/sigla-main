@@ -3,8 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
 	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
-	shortDescription="Archivio di codifica del "comportamento" delle  varie tipologie di movimento"
-	longDescription="Archivio di codifica del "comportamento" delle  varie tipologie di movimento">
+	shortDescription="Archivio di codifica del comportamento delle  varie tipologie di movimento"
+	longDescription="Archivio di codifica del comportamento delle  varie tipologie di movimento">
 	<fieldProperty
 		name="cdCds"
 		property="cdCds"
