@@ -37,6 +37,7 @@ import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
@@ -2728,8 +2729,23 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
      */
 //^^@@
     public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk bulk) throws ComponentException {
-
-        return creaConBulk(userContext, bulk, null);
+        return Optional.ofNullable(bulk)
+                .filter(Fattura_passivaBulk.class::isInstance)
+                .map(Fattura_passivaBulk.class::cast)
+                .map(fattura_passivaBulk -> {
+                    try {
+                        return creaConBulk(userContext, fattura_passivaBulk, null);
+                    } catch (ComponentException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                })
+                .orElseGet(() -> {
+                    try {
+                        return super.creaConBulk(userContext, bulk);
+                    } catch (ComponentException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                });
     }
 //^^@@
 

@@ -107,7 +107,7 @@
  	  </tr>
     </table>
    </div>
-    <div class="Group">
+    <div class="Group card card-outline-info">
   	<table>
 	  <tr>
 	  	<td>
@@ -168,7 +168,7 @@
       </tr>   
     </table>
    </div>
-   <div class="Group">
+   <div class="Group card card-outline-info">
   	<table>
 	  <tr>
      	<td>
@@ -220,7 +220,7 @@
     </table>
    </div>
    	<% if (riga != null && riga.getModalita_pagamento() != null && riga.getCessionario() != null) { %>
-		<div class="Group card">   
+		<div class="Group card card-outline-info">
 			<table>	
 				<tr>
 					<td>
