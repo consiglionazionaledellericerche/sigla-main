@@ -35,7 +35,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
- * Business Process che gestisce le attività di CRUD per l'entita' Accertamento Residuo.
+ * Business Process che gestisce le attivit di CRUD per l'entita' Accertamento Residuo.
  */
 public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 
@@ -190,24 +190,19 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 	}	
 	public void setStatusAndEditableMap(){
 		if (getModel()!=null && ((AccertamentoBulk)getModel()).isAccertamentoResiduo()) {
+			setStatusAndEditableMap(VIEW);
 			if (getTab( "tab" )!=null) {
 				if (getTab( "tab" ).equalsIgnoreCase("tabScadenziario")) {
 					if ( isScadenzaModificabile() && !((AccertamentoBulk)getModel()).isDocRiportato())
 						setStatusAndEditableMap(EDIT);
-					else
-						setStatusAndEditableMap(VIEW);
 				} else if (getTab( "tab" ).equalsIgnoreCase("tabAllegati")) {
 					if (!isROStato())
 						setStatusAndEditableMap(EDIT);
-					else {
-						if (isStatoModificabile) {
-							setStatusAndEditableMap(VIEW);							
-						} else {
-							setStatusAndEditableMap(EDIT);
-							getArchivioAllegati().setShrinkable(false);
-							getArchivioAllegati().setGrowable(true);		
-							getArchivioAllegati().setReadonlyOnEdit(true);
-						}
+					else if (!isStatoModificabile) {
+						setStatusAndEditableMap(EDIT);
+						getArchivioAllegati().setShrinkable(false);
+						getArchivioAllegati().setGrowable(true);		
+						getArchivioAllegati().setReadonlyOnEdit(true);
 					}
 				}
 			}
@@ -326,10 +321,10 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 				&& ((AccertamentoBulk)getModel()).isAccertamentoResiduo() && isScadenzaAzzerabile());
 	}
 	/**
-	 * La scadenza è azzerabile per creazione di movimento di variazione (accertamento_modifica) se:
-	 * - se usato in doc amm. e questo è di tipo generico attivo
-	 * - l'esercizio del doc amm è inferiore a quello dell'accertamento
-	 * - il doc. amm. non è stato inserito in reversale
+	 * La scadenza  azzerabile per creazione di movimento di variazione (accertamento_modifica) se:
+	 * - se usato in doc amm. e questo  di tipo generico attivo
+	 * - l'esercizio del doc amm  inferiore a quello dell'accertamento
+	 * - il doc. amm. non  stato inserito in reversale
 	 * @return
 	 */
 	public boolean isScadenzaAzzerabile() {
@@ -345,7 +340,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 		return true;
 	}
 	/**
-	 * La scadenza è modificabile per creazione di movimento di variazione (accertamento_modifica) se:
+	 * La scadenza  modificabile per creazione di movimento di variazione (accertamento_modifica) se:
 	 * - se non usato in doc amm.
 	 * @return
 	 */
