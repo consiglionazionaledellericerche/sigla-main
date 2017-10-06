@@ -587,7 +587,12 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.filter(DocumentoEleAllegatiBulk.class::isInstance)
 				.map(DocumentoEleAllegatiBulk.class::cast)
 				.map(DocumentoEleAllegatiBulk::getCmisNodeRef)
-				.anyMatch(s -> s.equals(storageObject.getKey()))){
+                .filter(cmisNodeRef -> Optional.ofNullable(cmisNodeRef).isPresent())
+				.anyMatch(cmisNodeRef -> cmisNodeRef.equals(
+						Optional.ofNullable(storageObject)
+								.map(StorageObject::getKey)
+								.orElse("")
+				))){
 			return true;
 		}
 		if (storageObject.<String>getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value())
