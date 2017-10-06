@@ -16,7 +16,7 @@
 	boolean roForSplit = fatturaPassiva!=null && !fatturaPassiva.isToBeCreated() && 
 			             fatturaPassiva.getFl_split_payment()!=null && fatturaPassiva.getFl_split_payment();
 %>
-   <div class="Group card card-outline-info">
+   <div class="Group card">
 	<table>
 	  <% if (fatturaPassiva.isCongelata() && !bp.isSearching()) { %>	
 	      <tr>
@@ -133,7 +133,7 @@
     </table>
    </div>
 
-    <div class="Group card card-outline-info">
+    <div class="Group card">
   	<table>
 		<tr>
 			<% if (!bp.isSearching()) { %>
@@ -325,7 +325,7 @@
      </table>
     </div>
 
-     <div class="Group card card-outline-info">
+     <div class="Group card">
      <table>
       <tr>      	
       	<% bp.getController().writeFormField(out,"nr_fattura_fornitore");%>     	
@@ -389,7 +389,7 @@
     </table>
    </div>
 
-    <div class="Group card card-outline-info">
+    <div class="Group card">
     <table>
        <tr>
 			<td>
