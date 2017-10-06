@@ -96,25 +96,17 @@
 				      		<%  bp.getController().writeFormInput(out,null,"stato_pagamento_fondo_ecoForSearch",roOnAutoGen|| isInSpesaMode,null,""); %>
 				      	</td>
 				      </tr>
-	<% 			}
-	    } else { %>
+	      <% } %>
+	<%} else { %>
 	      <tr>      	 
 	      	<% bp.getController().writeFormField(out,"stato_cofi"); %>
 	      	<% bp.getController().writeFormField(out,"ti_associato_manrev"); %>
 	      </tr>
 	      <tr>  
-	      		<% bp.getController().writeFormField(out,"fl_fattura_compenso"); %>
+	      	<% bp.getController().writeFormField(out,"fl_fattura_compenso"); %>
 	      	<td  colspan="2">
       			<% bp.getController().writeFormLabel(out,"fl_liquidazione_differita");%>
       			<% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita",roOnAutoGen,null,"onClick=\"submitForm('doOnLiquidazioneDifferitaChange')\"");%>
-      		</td>
-      		<td colspan="2">
-      			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
-      			<% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
-      		</td>
-      		<td colspan="2">  
-      			<% bp.getController().writeFormLabel(out,"causale");%>
-      			<% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
       		</td>
 	      </tr>
 	      <tr>      	
@@ -126,10 +118,23 @@
 	      	</td>
 	      	<% if (bp instanceof CRUDFatturaPassivaIBP && ((Fattura_passiva_IBulk)bp.getModel()).isByFondoEconomale()) {
 		      		bp.getController().writeFormField(out,"dt_pagamento_fondo_eco");
-		       } %>
+		    } %>
+	      </tr>
+	      <tr>
+            <td>
+                <% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
+            </td>
+            <td>
+                <% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
+            </td>
+            <td>
+                <% bp.getController().writeFormLabel(out,"causale");%>
+             </td>
+             <td>
+                <% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
+            </td>
 	      </tr>
 	<% } %>
-      
     </table>
    </div>
 
