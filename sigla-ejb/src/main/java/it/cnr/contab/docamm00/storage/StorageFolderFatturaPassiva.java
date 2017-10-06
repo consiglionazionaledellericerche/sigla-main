@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @StorageType(name="F:sigla_fatture:fatture_passive")
 public class StorageFolderFatturaPassiva extends OggettoBulk {
@@ -283,48 +284,23 @@ public class StorageFolderFatturaPassiva extends OggettoBulk {
 			return null;
 		return this.getFattura_passivaBulk().getProgressivo();
 	}
-	
-	public Boolean isProgressivoTrasmissioneZero(){
-		if (getProgressivoSdi() == null){
-			return false;
-		}
-		return getProgressivoSdi().equals(new Long ("0"));
-	}
-
-	public Boolean isProgressivoTrasmissioneDiversoDaZero(){
-		if (getProgressivoSdi() == null){
-			return false;
-		}
-		return !getProgressivoSdi().equals(new Long ("0"));
-	}
 
 	public void updateMetadataPropertiesCMIS() throws ApplicationException{
-		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
-		StringBuffer query = new StringBuffer("select fat.cmis:objectId, fat.sigla_fatture:progressivo_sdi from sigla_fatture:fatture_passive fat ");
-		query.append(" where fat.sigla_fatture:identificativoSdI = ").append(identificativoSdI);
-		List<StorageObject> resultsFolder = storeService.search(query.toString());
-		if (resultsFolder.size() == 0)
-			throw new ApplicationException("Non esiste sul documentale una fattura con identificativo SDI "+identificativoSdI);
-		else {
-            StorageObject trasmissioneFolder = null;
-			for (StorageObject storageObject : resultsFolder) {
-                trasmissioneFolder = storeService.getStorageObjectBykey(storageObject.getKey());
-				BigInteger prog = trasmissioneFolder.<BigInteger>getPropertyValue("sigla_fatture:progressivo_sdi");
-				if (prog == null || prog.equals(new BigInteger("0"))){
-					if (isProgressivoTrasmissioneZero()){
-						storeService.updateMetadataFromBulk(trasmissioneFolder, this);
-						break;
-					}
-				}
-			}
-			if (isProgressivoTrasmissioneDiversoDaZero() && trasmissioneFolder != null){
-                String objectKey = storeService.createFolderIfNotPresent(trasmissioneFolder.getPath(),
-                        identificativoSdI + " - "+getProgressivoSdi(), null, null, this);
-				if (objectKey != null){
-                    storeService.setInheritedPermission(storeService.getStorageObjectBykey(objectKey), Boolean.FALSE);
-				}
-			}
-		}
+        StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
+        StorageObject trasmissioneFolder = storeService.getStorageObjectBykey(documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef());
+        Optional.ofNullable(trasmissioneFolder)
+                .ifPresent(storageObject -> {
+                    if (!Optional.ofNullable(storageObject.<BigInteger>getPropertyValue("sigla_fatture:progressivo_sdi"))
+                            .filter(progressivo -> !progressivo.equals(BigInteger.ZERO))
+                            .isPresent()) {
+                        storeService.updateMetadataFromBulk(trasmissioneFolder, this);
+                        Optional.ofNullable(storeService.createFolderIfNotPresent(trasmissioneFolder.getPath(),
+                                identificativoSdI + " - "+getProgressivoSdi(), null, null, this))
+                                .ifPresent(objectKey -> {
+                                    storeService.setInheritedPermission(storeService.getStorageObjectByPath(objectKey), Boolean.FALSE);
+                                });
+                    }
+                });
 	}
 
 	public Fattura_passivaBulk getFattura_passivaBulk() {
