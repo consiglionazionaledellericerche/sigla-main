@@ -27,7 +27,7 @@
 	}
 	%>
 	<% if (Fattura_passivaBulk.FATTURA_DI_BENI.equals(fatturaPassiva.getTi_bene_servizio())) { %>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>
 			  	<td colspan="2">
@@ -41,7 +41,7 @@
 			</tr>
 		</table>
 	</div>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>      			
 				<td>
@@ -155,7 +155,7 @@
 		</table>
 	</div>
 	<% } else { %>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>
 			  	<td colspan="2">
@@ -169,7 +169,7 @@
 			</tr>
 		</table>
 	</div>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>      			
 				<td>
