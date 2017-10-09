@@ -176,7 +176,7 @@
 		name="imImponibileDivisa"
 		property="imImponibileDivisa"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imImponibileDivisa" />
@@ -184,7 +184,7 @@
 		name="imIvaDivisa"
 		property="imIvaDivisa"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imIvaDivisa" />
@@ -192,7 +192,7 @@
 		name="imImponibile"
 		property="imImponibile"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imImponibile" />
@@ -200,7 +200,7 @@
 		name="imIva"
 		property="imIva"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imIva" />
@@ -208,7 +208,7 @@
 		name="imIvaD"
 		property="imIvaD"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imIvaD" />
@@ -216,7 +216,7 @@
 		name="imIvaNd"
 		property="imIvaNd"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imIvaNd" />
@@ -224,7 +224,7 @@
 		name="imTotaleConsegna"
 		property="imTotaleConsegna"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imTotaleConsegna" />

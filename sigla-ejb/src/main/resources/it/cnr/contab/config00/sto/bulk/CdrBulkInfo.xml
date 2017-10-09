@@ -88,7 +88,6 @@
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="30"
-		readonly="false"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
