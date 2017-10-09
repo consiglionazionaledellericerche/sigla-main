@@ -16,6 +16,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.*;
@@ -161,6 +162,7 @@ public abstract class Fattura_passivaBulk
     private BulkList riferimenti_bancari = new BulkList();
     private Collection fattura_passiva_consuntivoColl = new Vector();
     private ObbligazioniTable fattura_passiva_obbligazioniHash = null;
+    private FatturaRigaOrdiniTable fatturaRigaOrdiniHash = null;
     private Map fattura_passiva_ass_totaliMap = null;
     private CarichiInventarioTable carichiInventarioHash = null;
     private AssociazioniInventarioTable associazioniInventarioHash = null;
@@ -451,6 +453,18 @@ public abstract class Fattura_passivaBulk
         if (getDocumentiContabiliCancellati() != null &&
                 BulkCollections.containsByPrimaryKey(getDocumentiContabiliCancellati(), obbligazione))
             removeFromDocumentiContabiliCancellati(obbligazione);
+    }
+
+    public void addToFatturaRigaOrdiniHash(
+            Fattura_passiva_rigaBulk rigaFattura,
+            FatturaOrdineBulk fatturaOrdineBulk) {
+
+        fatturaRigaOrdiniHash = Optional.ofNullable(fatturaRigaOrdiniHash)
+                                    .orElseGet(() -> new FatturaRigaOrdiniTable());
+        List<FatturaOrdineBulk> fatturaOrdineBulks = Optional.ofNullable(fatturaRigaOrdiniHash.get(rigaFattura))
+                .orElseGet(() -> new ArrayList<FatturaOrdineBulk>());
+        fatturaOrdineBulks.add(fatturaOrdineBulk);
+        fatturaRigaOrdiniHash.put(rigaFattura, fatturaOrdineBulks);
     }
 
     public int addToRiferimenti_bancari(Fattura_passiva_rigaBulk os) {
@@ -1111,6 +1125,14 @@ public abstract class Fattura_passivaBulk
      */
     public void setFattura_passiva_obbligazioniHash(ObbligazioniTable newFattura_passiva_obbligazioniHash) {
         fattura_passiva_obbligazioniHash = newFattura_passiva_obbligazioniHash;
+    }
+
+    public FatturaRigaOrdiniTable getFatturaRigaOrdiniHash() {
+        return fatturaRigaOrdiniHash;
+    }
+
+    public void setFatturaRigaOrdiniHash(FatturaRigaOrdiniTable fatturaRigaOrdiniHash) {
+        this.fatturaRigaOrdiniHash = fatturaRigaOrdiniHash;
     }
 
     /**
@@ -2768,6 +2790,9 @@ public abstract class Fattura_passivaBulk
         addToDettagliCancellati(element);
         if (element != null && element.getObbligazione_scadenziario() != null)
             removeFromFattura_passiva_obbligazioniHash(element);
+
+        Optional.ofNullable(element)
+                .ifPresent(fattura_passiva_rigaBulk -> removeFromFatturaRigaOrdiniHash(fattura_passiva_rigaBulk));
         return (Fattura_passiva_rigaBulk) fattura_passiva_dettColl.remove(indiceDiLinea);
     }
 
@@ -2788,6 +2813,12 @@ public abstract class Fattura_passivaBulk
             }
         } else
             addToDocumentiContabiliCancellati(rigaFattura.getObbligazione_scadenziario());
+    }
+
+    public void removeFromFatturaRigaOrdiniHash(
+            Fattura_passiva_rigaBulk rigaFattura) {
+        Optional.ofNullable(fatturaRigaOrdiniHash)
+                .ifPresent(fatturaRigaOrdiniTable -> fatturaRigaOrdiniTable.remove(rigaFattura));
     }
 
     /**

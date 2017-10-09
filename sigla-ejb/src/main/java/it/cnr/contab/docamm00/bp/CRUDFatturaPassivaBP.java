@@ -75,6 +75,11 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk.class,
             "fattura_passiva_obbligazioniHash", this);
     private final SimpleDetailCRUDController dettaglioObbligazioneController;
+
+    private final OrdiniCRUDController fattureRigaOrdiniController = new OrdiniCRUDController(
+            "Ordini", FatturaOrdineBulk.class,
+            "fatturaRigaOrdiniHash", this);
+
     private final FatturaPassivaRigaIntrastatCRUDController dettaglioIntrastatController = new FatturaPassivaRigaIntrastatCRUDController(
             "Intrastat", Fattura_passiva_intraBulk.class,
             "fattura_passiva_intrastatColl", this);
@@ -343,6 +348,10 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
      */
     public final SimpleDetailCRUDController getConsuntivoController() {
         return consuntivoController;
+    }
+
+    public SimpleDetailCRUDController getFattureRigaOrdiniController() {
+        return fattureRigaOrdiniController;
     }
 
     /**
@@ -1523,7 +1532,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private static final String[] TAB_FATTURA_PASSIVA_CONSUNTIVO = new String[]{"tabFatturaPassivaConsuntivo", "Consuntivo", "/docamm00/tab_fattura_passiva_consuntivo.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_OBBLIGAZIONI = new String[]{"tabFatturaPassivaObbligazioni", "Impegni", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_STORNI = new String[]{"tabFatturaPassivaObbligazioni", "Storni", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"};
-    private static final String[] TAB_FATTURA_PASSIVA_ORDINI = new String[]{"tabFatturaPassivaObbligazioni", "Ordini", "/docamm00/tab_fattura_passiva_obbligazioni.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_ORDINI = new String[]{"tabFatturaPassivaObbligazioni", "Ordini", "/docamm00/tab_fattura_passiva_ordini.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_ACCERTAMENTI = new String[]{"tabFatturaPassivaAccertamenti", "Accertamenti", "/docamm00/tab_fattura_passiva_accertamenti.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_DOCUMENTI_1210 = new String[]{"tabLetteraPagamentoEstero", "Documento 1210", "/docamm00/tab_lettera_pagam_estero.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_INTRASTAT = new String[]{"tabFatturaPassivaIntrastat", "Intrastat", "/docamm00/tab_fattura_passiva_intrastat.jsp"};
@@ -1673,5 +1682,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         fatturaOrdineBulk.setImTotaleConsegna(evasioneOrdineRigaBulk.getOrdineAcqConsegna().getImTotaleConsegna());
         fatturaOrdineBulk.setStatoAss("TOT");
         fatturaOrdineBulk.setToBeCreated();
+        fattura_passiva_rigaBulk.getFattura_passiva().addToFatturaRigaOrdiniHash(
+                fattura_passiva_rigaBulk,
+                fatturaOrdineBulk
+        );
     }
 }
