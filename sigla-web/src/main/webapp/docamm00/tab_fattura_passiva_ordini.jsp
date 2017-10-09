@@ -11,9 +11,19 @@
 
 <%	CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)BusinessProcess.getBusinessProcess(request);
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel();
-    bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",true,false,true,"100%","200px");
 %>
-<div class="Group card">
+<fieldset class="card">
+    <legend class="GroupLabel card-header text-primary">Righe di fattura</legend>
+    <table width="100%">
+        <tr>
+            <td>
+                <% bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",true,false,true,"100%","200px"); %>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+<fieldset class="card">
+    <legend class="GroupLabel card-header text-primary">Righe di consegna</legend>
     <table width="100%">
         <tr>
             <td>
@@ -21,4 +31,4 @@
             </td>
         </tr>
     </table>
-</div>
+</fieldset>
