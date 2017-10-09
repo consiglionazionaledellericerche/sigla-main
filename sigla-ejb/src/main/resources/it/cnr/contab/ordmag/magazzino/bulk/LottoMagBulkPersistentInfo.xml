@@ -16,7 +16,7 @@
 		<columnMapping
 			columnName="CD_NUMERATORE_MAG"
 			propertyName="numerazioneMag.cdNumeratoreMag" />
-<!--  		<columnMapping
+  		<columnMapping
 			columnName="CD_BENE_SERVIZIO"
 			propertyName="beneServizio.cd_bene_servizio" />
 		<columnMapping
@@ -51,12 +51,12 @@
 			propertyName="terzo.cd_terzo" />
 		<columnMapping
 			columnName="CD_DIVISA"
-			propertyName="divisa.cd_divisa" />-->
+			propertyName="divisa.cd_divisa" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="numerazioneMag"
 		partOfOid="true" />
-<!--  	<persistentProperty
+ 	<persistentProperty
 		name="beneServizio" />
 	<persistentProperty
 		name="magazzino" />
@@ -65,5 +65,5 @@
 	<persistentProperty
 		name="terzo" />
 	<persistentProperty
-		name="divisa" />-->
+		name="divisa" />
 </SQLPersistentInfo>
