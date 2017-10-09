@@ -58,6 +58,9 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	 * Table name: ORDINE_ACQ_CONSEGNA
 	 **/
 
+	private BigDecimal quantitaEvasa;
+	private Boolean sdoppiaRiga;
+	
 	public final static Dictionary TIPO_CONSEGNA;
 	static{
 		TIPO_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
@@ -479,5 +482,39 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	}
 	public void setObbligazioneInseritaSuConsegna(Boolean obbligazioneInseritaSuConsegna) {
 		this.obbligazioneInseritaSuConsegna = obbligazioneInseritaSuConsegna;
+	}
+	public BigDecimal getQuantitaEvasa() {
+		return quantitaEvasa;
+	}
+	public void setQuantitaEvasa(BigDecimal quantitaEvasa) {
+		this.quantitaEvasa = quantitaEvasa;
+	}
+	public Boolean getSdoppiaRiga() {
+		return sdoppiaRiga;
+	}
+	public void setSdoppiaRiga(Boolean sdoppiaRiga) {
+		this.sdoppiaRiga = sdoppiaRiga;
+	}
+	public Boolean isQuantitaEvasaDiversaOrdine() {
+		if (getQuantitaEvasa() != null && getQuantita() != null){
+			if (getQuantitaEvasa().compareTo(getQuantita()) == 0){
+				return false;
+			} else {
+				return true;
+			}
+		}
+		return false;
+	}
+	public Boolean isQuantitaEvasaMinoreOrdine() {
+		if (isQuantitaEvasaDiversaOrdine() && getQuantitaEvasa().compareTo(getQuantita()) < 0){
+			return true;
+		}
+		return false;
+	}
+	public Boolean isQuantitaEvasaMaggioreOrdine() {
+		if (isQuantitaEvasaDiversaOrdine() && getQuantitaEvasa().compareTo(getQuantita()) > 0){
+			return true;
+		}
+		return false;
 	}
 }

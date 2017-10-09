@@ -3,9 +3,13 @@
  * Date 21/09/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
-import it.cnr.contab.ordmag.anag00.*;
-
+import java.util.List;
 import java.util.Optional;
+
+import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
 
 public class EvasioneOrdineBulk extends EvasioneOrdineBase {
 	/**
@@ -16,6 +20,11 @@ public class EvasioneOrdineBulk extends EvasioneOrdineBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: EVASIONE_ORDINE
 	 **/
+
+	private UnitaOperativaOrdBulk unitaOperativaAbilitata = new UnitaOperativaOrdBulk();
+	
+	protected BulkList righeConsegnaDaEvadereColl= new BulkList();
+
 	public EvasioneOrdineBulk() {
 		super();
 	}
@@ -104,5 +113,37 @@ public class EvasioneOrdineBulk extends EvasioneOrdineBase {
 	 **/
 	public void setCdNumeratoreMag(java.lang.String cdNumeratoreMag)  {
 		this.getNumerazioneMag().setCdNumeratoreMag(cdNumeratoreMag);
+	}
+	public BulkList getRigheConsegnaDaEvadereColl() {
+		return righeConsegnaDaEvadereColl;
+	}
+	public void setRigheConsegnaDaEvadereColl(BulkList righeConsegnaDaEvadereColl) {
+		this.righeConsegnaDaEvadereColl = righeConsegnaDaEvadereColl;
+	}
+	public OrdineAcqConsegnaBulk removeFromConsegnaDaEvadereColl(int index) 
+	{
+		OrdineAcqConsegnaBulk element = (OrdineAcqConsegnaBulk)righeConsegnaDaEvadereColl.get(index);
+		return (OrdineAcqConsegnaBulk)righeConsegnaDaEvadereColl.remove(index);
+	}
+	public int addToRigheOrdineColl( OrdineAcqConsegnaBulk nuovoRigo ) 
+	{
+		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
+		righeConsegnaDaEvadereColl.add(nuovoRigo);
+		return righeConsegnaDaEvadereColl.size()-1;
+	}
+	public BulkCollection[] getBulkLists() {
+
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				righeConsegnaDaEvadereColl
+		};
+	}
+	public List getChildren() {
+		return getRigheConsegnaDaEvadereColl();
+	}
+	public UnitaOperativaOrdBulk getUnitaOperativaAbilitata() {
+		return unitaOperativaAbilitata;
+	}
+	public void setUnitaOperativaAbilitata(UnitaOperativaOrdBulk unitaOperativaAbilitata) {
+		this.unitaOperativaAbilitata = unitaOperativaAbilitata;
 	}
 }
