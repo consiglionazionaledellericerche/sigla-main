@@ -74,6 +74,9 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 //  STATO_FATT VARCHAR(3) NOT NULL
 	private java.lang.String statoFatt;
 
+//  VECCHIA_CONSEGNA DECIMAL(4,0)
+	private java.lang.Integer vecchiaConsegna;
+
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
  
@@ -374,5 +377,11 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 	}
 	public void setImIvaNd(java.math.BigDecimal imIvaNd) {
 		this.imIvaNd = imIvaNd;
+	}
+	public java.lang.Integer getVecchiaConsegna() {
+		return vecchiaConsegna;
+	}
+	public void setVecchiaConsegna(java.lang.Integer vecchiaConsegna) {
+		this.vecchiaConsegna = vecchiaConsegna;
 	}
 }
