@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -110,23 +111,31 @@ public class EvasioneOrdineComponent
 	
     public  EvasioneOrdineComponent()
     {
-
-        /*Default constructor*/
-
-
     }
     
-    public RemoteIterator cercaOrdini(UserContext context, EvasioneOrdineBulk filtro)
+    public EvasioneOrdineBulk cercaOrdini(UserContext context, EvasioneOrdineBulk filtro)
     		throws ComponentException {
 
     		OrdineAcqConsegnaHome home = (OrdineAcqConsegnaHome)getHome(context, OrdineAcqConsegnaBulk.class);
     		it.cnr.jada.persistency.sql.SQLBuilder sql = ricercaOrdini(context, filtro, home);
 
-    		return iterator(
-    			context,
-    			sql,
-    			OrdineAcqConsegnaBulk.class,
-    			"default");
+    		try {
+				Collection ordini = home.fetchAll(sql);
+				it.cnr.jada.bulk.BulkHome homeRiga= getHome(context, OrdineAcqRigaBulk.class);
+				it.cnr.jada.bulk.BulkHome homeBene= getHome(context, Bene_servizioBulk.class);
+				for (Iterator j = ordini.iterator(); j.hasNext();) {
+					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk) j.next();
+					OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)homeRiga.findByPrimaryKey(cons.getOrdineAcqRiga());
+					Bene_servizioBulk bene = (Bene_servizioBulk)homeBene.findByPrimaryKey(riga.getBeneServizio());
+					riga.setBeneServizio(bene);
+					cons.setOrdineAcqRiga(riga);
+					
+					filtro.addToRigheOrdineColl(cons);
+				}
+				return filtro;
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
     	}
 
     private it.cnr.jada.persistency.sql.SQLBuilder ricercaOrdini(UserContext context,
@@ -152,7 +161,7 @@ public class EvasioneOrdineComponent
         sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO_FATT", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_FATT_NON_ASSOCIATA);
         sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_INSERITA);
 
-        sql.generateJoin("evasioneOrdine", "ORDINE_ACQ_RIGA");
+        sql.generateJoin("ordineAcqRiga", "ORDINE_ACQ_RIGA");
     	
         sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
         sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_DEFINITIVO);
@@ -163,10 +172,58 @@ public class EvasioneOrdineComponent
                     sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.CD_MAGAZZINO", SQLBuilder.EQUALS, cdMagazzino);
                 })
         );
-        sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.DT_ORDINE", SQLBuilder.LESS_EQUALS, filtro.getDataConsegna());
+        sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.DATA_ORDINE", SQLBuilder.LESS_EQUALS, filtro.getDataConsegna());
         
     	return sql;
     } 
+
+    public void evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException{
+    	if (evasioneOrdine.getRigheConsegnaDaEvadereColl() != null && !evasioneOrdine.getRigheConsegnaDaEvadereColl().isEmpty()){
+    		List<OrdineAcqBulk> listaOrdiniConConsegneEvase = new ArrayList<OrdineAcqBulk>();
+    		for (Iterator i = evasioneOrdine.getRigheConsegnaDaEvadereColl().iterator(); i.hasNext();) {
+    			OrdineAcqConsegnaBulk consegna = ((OrdineAcqConsegnaBulk)i.next());
+    			if (consegna.getQuantitaEvasa() == null){
+    				throw new ApplicationException("Indicare la quantità da evadere");
+    			}
+    			if (consegna.isQuantitaEvasaMinoreOrdine() && consegna.getSdoppiaRiga() == null){
+    				throw new ApplicationException("Indicare se sdoppiare la riga o evaderla forzatamente");
+    			}
+    			OrdineAcqBulk ordineConsegna = new OrdineAcqBulk(consegna.getCdCds(),consegna.getCdUnitaOperativa(),consegna.getEsercizio(),
+    					consegna.getCdNumeratore(),consegna.getNumero());
+    			OrdineAcqBulk ordine = null;
+    			Boolean ordineEsistente = false;
+    			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
+    				ordine = ((OrdineAcqBulk)i.next());
+    				if (ordine.equalsByPrimaryKey(ordineConsegna)){
+    					break;
+    				}
+    			}
+    			if (!ordineEsistente){
+    				ordine = (OrdineAcqBulk)getTempHome(userContext, OrdineAcqBulk.class).findByPrimaryKey(ordineConsegna);
+    				if (ordine != null){
+    					inizializzaBulkPerModifica(userContext, ordine);
+    					listaOrdiniConConsegneEvase.add(ordine);
+    				}
+    			}
+
+    			evasioneOrdine.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+    			evasioneOrdine.setToBeCreated();
+    			EvasioneOrdineRigaBulk evasioneOrdineRiga = new EvasioneOrdineRigaBulk();
+    			evasioneOrdineRiga.setEvasioneOrdine(evasioneOrdine);
+    			evasioneOrdineRiga.setOrdineAcqConsegna(consegna);
+    			evasioneOrdineRiga.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+    			evasioneOrdineRiga.setQuantitaEvasa(consegna.getQuantitaEvasa());
+    			evasioneOrdineRiga.setToBeCreated();
+
+    			if (consegna.getSdoppiaRiga()){
+    				
+    				consegna.setQuantita(consegna.getQuantitaEvasa());
+    				OrdineAcqConsegnaBulk consegnaNew = (OrdineAcqConsegnaBulk)consegna.clone();
+    				consegnaNew.setVecchiaConsegna(consegna.getConsegna());
+    			}
+    		}
+    	}
+    }
 
 //    private void assegnaProgressivo(UserContext userContext,OrdineAcqBulk ordine) throws ComponentException {
 //
