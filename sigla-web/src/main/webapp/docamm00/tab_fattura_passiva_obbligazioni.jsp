@@ -11,7 +11,7 @@
 
 <%	CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)BusinessProcess.getBusinessProcess(request);
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel(); %>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>
 			  	<td colspan="3">
@@ -43,7 +43,7 @@
 	   		</tr>
 		</table>
 	</div>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
    		<table width="100%">
 			<tr>
 			  	<td>
