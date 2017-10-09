@@ -6196,46 +6196,26 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (riga.isPagata() && riga.isToBeUpdated())
             throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si può modificare un dettaglio già pagato.");
 
-        //Il controllo ï¿½ stato eliminato a seguito della richiesta 423
-        //if (riga.getFattura_passiva().isStampataSuRegistroIVA() &&
-        //riga.getCrudStatus() != OggettoBulk.NORMAL &&
-        //!(riga instanceof Fattura_passiva_rigaIBulk)) { /* aggiunto per richiesta 423 */
+        if (!isDaOrdini) {
+            if (riga.getVoce_iva() == null)
+                throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA per il dettaglio.");
+            if (riga.isVoceIVAOnlyIntraUE() &&
+                    (riga.getVoce_iva().getFl_intra() != null &&
+                            !riga.getVoce_iva().getFl_intra().booleanValue()))
+                throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA per il dettaglio - " + riga.getDs_riga_fattura());
 
-        //Fattura_passiva_rigaBulk original = null;
-        //try {
-        //original = (Fattura_passiva_rigaBulk)getHome(aUC, riga).findByPrimaryKey(riga);
-        //} catch (it.cnr.jada.persistency.PersistencyException e) {
-        //throw handleException(riga, e);
-        //}
-        //if (original != null) {
-        //if (original.getIm_imponibile().compareTo(riga.getIm_imponibile()) != 0 ||
-        //original.getIm_iva().compareTo(riga.getIm_iva()) != 0 ||
-        //(original.getIm_diponibile_nc() != null && original.getIm_diponibile_nc().compareTo(riga.getIm_totale_divisa()) != 0) ||
-        //original.getCd_voce_iva().compareTo(riga.getCd_voce_iva()) != 0)
-
-        //throw new it.cnr.jada.comp.ApplicationException("Attenzione: questa modifica non ï¿½ permessa quando lo stato IVA ï¿½ B o C.");
-        //}
-        //}
-
-        if (riga.getVoce_iva() == null)
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA per il dettaglio.");
-        if (riga.isVoceIVAOnlyIntraUE() &&
-                (riga.getVoce_iva().getFl_intra() != null &&
-                        !riga.getVoce_iva().getFl_intra().booleanValue()))
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA per il dettaglio - " + riga.getDs_riga_fattura());
-
-        if (riga.getFattura_passiva() != null && riga.getFattura_passiva().isCommerciale() &&
-                riga.getFattura_passiva().getFornitore() != null && riga.getFattura_passiva().getFornitore().getAnagrafico() != null &&
-                riga.getFattura_passiva().getFornitore().getAnagrafico().getPartita_iva() != null &&
-                riga.getFattura_passiva().getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA) == 0 &&
-                riga.getVoce_iva() != null && riga.getVoce_iva().getNaturaOperNonImpSdi() != null &&
-                riga.getVoce_iva().getNaturaOperNonImpSdi().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0)
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA che genera autofattura per il dettaglio - " + riga.getDs_riga_fattura());
-        if (riga.getFattura_passiva() != null && riga.getFattura_passiva().isIstituzionale() &&
-                riga.getVoce_iva() != null && riga.getVoce_iva().getNaturaOperNonImpSdi() != null &&
-                riga.getVoce_iva().getNaturaOperNonImpSdi().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0)
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: voce IVA non valida per il dettaglio - " + riga.getDs_riga_fattura());
-
+            if (riga.getFattura_passiva() != null && riga.getFattura_passiva().isCommerciale() &&
+                    riga.getFattura_passiva().getFornitore() != null && riga.getFattura_passiva().getFornitore().getAnagrafico() != null &&
+                    riga.getFattura_passiva().getFornitore().getAnagrafico().getPartita_iva() != null &&
+                    riga.getFattura_passiva().getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA) == 0 &&
+                    riga.getVoce_iva() != null && riga.getVoce_iva().getNaturaOperNonImpSdi() != null &&
+                    riga.getVoce_iva().getNaturaOperNonImpSdi().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0)
+                throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA che genera autofattura per il dettaglio - " + riga.getDs_riga_fattura());
+            if (riga.getFattura_passiva() != null && riga.getFattura_passiva().isIstituzionale() &&
+                    riga.getVoce_iva() != null && riga.getVoce_iva().getNaturaOperNonImpSdi() != null &&
+                    riga.getVoce_iva().getNaturaOperNonImpSdi().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0)
+                throw new it.cnr.jada.comp.ApplicationException("Attenzione: voce IVA non valida per il dettaglio - " + riga.getDs_riga_fattura());
+        }
 
     }
 
