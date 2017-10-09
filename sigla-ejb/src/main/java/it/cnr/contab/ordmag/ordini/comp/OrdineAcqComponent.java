@@ -1028,7 +1028,7 @@ private Boolean isPresenteUnaUop(List listUop) throws ComponentException {
 			}
 		}
 	}
-	return true;
+	return false;
 }
 
 private void impostaDatiDivisaCambioDefault(UserContext usercontext, OrdineAcqBulk ordine) throws ComponentException {
