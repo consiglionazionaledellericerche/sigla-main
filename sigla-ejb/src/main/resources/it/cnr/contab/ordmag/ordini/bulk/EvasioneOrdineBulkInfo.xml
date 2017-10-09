@@ -8,10 +8,28 @@
 	<fieldProperty
 		name="findNumerazioneMag"
 		property="numerazioneMag"
-		inputType="SEARCHTOOL"
+		inputType="searchtool"
+		formName="searchtool_mag"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaAbilitata"
+		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="NumerazioneMag" />
+		label="Unità Operativa" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="unitaOperativaAbilitata.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Unità Operativa" />
 	<fieldProperty
 		name="cdCds"
 		property="numerazioneMag.cdCds"
@@ -67,26 +85,29 @@
 		property="dataBolla"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
 		nullable="false"
-		label="dataBolla" />
+		label="Data Bolla" />
 	<fieldProperty
 		name="numeroBolla"
 		property="numeroBolla"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
 		nullable="false"
-		label="numeroBolla" />
+		label="Numero Bolla" />
 	<fieldProperty
 		name="dataConsegna"
 		property="dataConsegna"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
 		nullable="false"
-		label="dataConsegna" />
+		label="Data Consegna" />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -109,6 +130,8 @@
 		<formFieldProperty
 			name="numero" />
 	</form>
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
 	<formFieldProperty
 		name="findNumerazioneMag" />
 	<formFieldProperty
