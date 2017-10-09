@@ -4084,22 +4084,26 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 bp.setErrorMessage("Per procedere, selezionare i dettagli da contabilizzare!");
                 return context.findDefaultForward();
             }
+            final Boolean isDaOrdini = Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
+                    .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
+                    .orElse(false);
 
             if (fatturaPassiva.isGestione_doc_ele() && fatturaPassiva.isGenerataDaCompenso())
                 throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verrà fatta direttamente nel compenso!");
             if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
                 throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario impostare un fornitore!");
-
-            controllaSelezionePerContabilizzazione(context, models.get().iterator());
-            try {
-                controllaSelezionePerTitoloCapitoloLista(context, models.get().iterator());
-            } catch (ApplicationException e) {
-                throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+            if (!isDaOrdini) {
+                controllaSelezionePerContabilizzazione(context, models.get().iterator());
+                try {
+                    controllaSelezionePerTitoloCapitoloLista(context, models.get().iterator());
+                } catch (ApplicationException e) {
+                    throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+                }
             }
-            return (Forward)Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
-                    .filter(isDaOrdini -> isDaOrdini.equals(Boolean.TRUE))
-                    .map(isDaOrdini -> basicDoRicercaEvasioneOrdine(context, fatturaPassiva, models.get()))
-                    .orElseGet(() -> basicDoRicercaObbligazione(context, fatturaPassiva, models.get()));
+            if (isDaOrdini)
+                return basicDoRicercaEvasioneOrdine(context, fatturaPassiva, models.get());
+            else
+                return basicDoRicercaObbligazione(context, fatturaPassiva, models.get());
         } catch (Throwable e) {
             return handleException(context, e);
         }
