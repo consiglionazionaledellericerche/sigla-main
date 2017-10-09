@@ -35,6 +35,17 @@
 		nullable="false"
 		label="Codice Magazzino" />
 	<fieldProperty
+		name="dsMagazzino"
+		property="magazzino.dsMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Descrizione Magazzino" />
+	<fieldProperty
 		name="esercizio"
 		property="esercizio"
 		inputType="TEXT"
@@ -75,6 +86,13 @@
 		<formFieldProperty
 			name="cdNumeratoreMag" />
 	</form>
+	<form
+		name="searchtool_mag">
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="dsMagazzino" />
+	</form>
 	<formFieldProperty
 		name="findMagazzino" />
 	<formFieldProperty
@@ -98,9 +116,7 @@
 	<findFieldProperty
 		name="dtCancellazione" />
 	<columnFieldProperty
-		name="cdNumeratoreMag" />
+		name="cdMagazzino" />
 	<columnFieldProperty
-		name="corrente" />
-	<columnFieldProperty
-		name="dtCancellazione" />
+		name="dsMagazzino" />
 </bulkInfo>

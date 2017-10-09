@@ -1,12 +1,13 @@
 package it.cnr.contab.ordmag.ordini.ejb;
 import java.rmi.RemoteException;
+import java.util.Collection;
 
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 
 public class TransactionalEvasioneOrdineComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements EvasioneOrdineComponentSession {
-public it.cnr.jada.util.RemoteIterator cercaOrdini(it.cnr.jada.UserContext param0,EvasioneOrdineBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public EvasioneOrdineBulk cercaOrdini(it.cnr.jada.UserContext param0,EvasioneOrdineBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
-		return (it.cnr.jada.util.RemoteIterator)invoke("cercaOrdini",new Object[] {
+		return (EvasioneOrdineBulk)invoke("cercaOrdini",new Object[] {
 			param0,
 			param1 });
 	} catch(java.rmi.RemoteException e) {

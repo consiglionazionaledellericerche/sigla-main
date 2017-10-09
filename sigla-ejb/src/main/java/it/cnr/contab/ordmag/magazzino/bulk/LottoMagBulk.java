@@ -14,7 +14,6 @@ public class LottoMagBulk extends LottoMagBase {
 	 * [NUMERAZIONE_MAG Definisce i contatori per la numerazione dei magazzini.]
 	 **/
 	private NumerazioneMagBulk numerazioneMag =  new NumerazioneMagBulk();
-	/*
 	private Bene_servizioBulk beneServizio =  new Bene_servizioBulk();
 	private MagazzinoBulk magazzino =  new MagazzinoBulk();
 	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
@@ -23,7 +22,6 @@ public class LottoMagBulk extends LottoMagBase {
 	public LottoMagBulk() {
 		super();
 	}
-	 */
 	public LottoMagBulk(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgLotto) {
 		super(cdCds, cdMagazzino, esercizio, cdNumeratoreMag, pgLotto);
 		setNumerazioneMag( new NumerazioneMagBulk(cdCds,cdMagazzino,esercizio,cdNumeratoreMag) );
@@ -42,8 +40,7 @@ public class LottoMagBulk extends LottoMagBase {
 	public void setNumerazioneMag(NumerazioneMagBulk numerazioneMag)  {
 		this.numerazioneMag=numerazioneMag;
 	}
-/*
-public Bene_servizioBulk getBeneServizio() {
+	public Bene_servizioBulk getBeneServizio() {
 		return beneServizio;
 	}
 	public void setBeneServizio(Bene_servizioBulk beneServizio)  {
@@ -72,7 +69,6 @@ public Bene_servizioBulk getBeneServizio() {
 	}	public void setDivisa(DivisaBulk divisa)  {
 		this.divisa=divisa;
 	}
-	*/
 	public java.lang.String getCdCds() {
 		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
 		if (numerazioneMag == null)
@@ -137,7 +133,6 @@ public Bene_servizioBulk getBeneServizio() {
 	public void setCdNumeratoreMag(java.lang.String cdNumeratoreMag)  {
 		this.getNumerazioneMag().setCdNumeratoreMag(cdNumeratoreMag);
 	}
-	/*
 	public java.lang.String getCdBeneServizio() {
 		Bene_servizioBulk beneServizio = this.getBeneServizio();
 		if (beneServizio == null)
@@ -246,5 +241,5 @@ public Bene_servizioBulk getBeneServizio() {
 	public void setCdDivisa(java.lang.String cdDivisa)  {
 		this.getDivisa().setCd_divisa(cdDivisa);
 	}
-	 */
+	
 }
