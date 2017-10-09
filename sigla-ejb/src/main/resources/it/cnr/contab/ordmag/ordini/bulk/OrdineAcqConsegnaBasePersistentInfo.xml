@@ -153,6 +153,12 @@
 			columnSize="3"
 			nullable="false" />
 		<columnMapping
+			columnName="VECCHIA_CONSEGNA"
+			propertyName="vecchiaConsegna"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
 			sqlTypeName="TIMESTAMP"
@@ -235,6 +241,8 @@
 		name="imIvaNd" />
 	<persistentProperty
 		name="arrAliIva" />
+	<persistentProperty
+		name="vecchiaConsegna" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty
