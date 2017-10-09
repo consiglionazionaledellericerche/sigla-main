@@ -11,9 +11,10 @@ import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 public class MovimentiMagBulk extends MovimentiMagBase {
-/*	private TipoMovimentoMagBulk tipoMovimentoMag =  new TipoMovimentoMagBulk();
+	private TipoMovimentoMagBulk tipoMovimentoMag =  new TipoMovimentoMagBulk();
 	private TipoMovimentoMagBulk tipoMovimentoMagRif =  new TipoMovimentoMagBulk();
 	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
 	private TerzoBulk terzo =  new TerzoBulk();
@@ -133,69 +134,69 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setCdTipoMovimentoRif(java.lang.String cdTipoMovimentoRif)  {
 		this.getTipoMovimentoMagRif().setCdTipoMovimento(cdTipoMovimentoRif);
 	}
-	public java.lang.String getCdCdsOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdCds();
-	}
-	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
-		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
-	}
-	public java.lang.String getCdUnitaOperativaOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdUnitaOperativa();
-	}
-	public void setCdUnitaOperativaOrdine(java.lang.String cdUnitaOperativaOrdine)  {
-		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativaOrdine);
-	}
-	public java.lang.Integer getEsercizioOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getEsercizio();
-	}
-	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
-		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
-	}
-	public java.lang.String getCdNumeratoreOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdNumeratore();
-	}
-	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
-		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
-	}
-	public java.lang.Integer getNumeroOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getNumero();
-	}
-	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
-		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
-	}
-	public java.lang.Integer getRigaOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getRiga();
-	}
-	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
-		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
-	}
-	public java.lang.Integer getConsegna() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getConsegna();
-	}
-	public void setConsegna(java.lang.Integer consegna)  {
-		this.getOrdineAcqConsegna().setConsegna(consegna);
-	}
+//	public java.lang.String getCdCdsOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getCdCds();
+//	}
+//	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
+//		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
+//	}
+//	public java.lang.String getCdUnitaOperativaOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getCdUnitaOperativa();
+//	}
+//	public void setCdUnitaOperativaOrdine(java.lang.String cdUnitaOperativaOrdine)  {
+//		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativaOrdine);
+//	}
+//	public java.lang.Integer getEsercizioOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getEsercizio();
+//	}
+//	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
+//		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
+//	}
+//	public java.lang.String getCdNumeratoreOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getCdNumeratore();
+//	}
+//	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
+//		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
+//	}
+//	public java.lang.Integer getNumeroOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getNumero();
+//	}
+//	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
+//		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
+//	}
+//	public java.lang.Integer getRigaOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getRiga();
+//	}
+//	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
+//		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
+//	}
+//	public java.lang.Integer getConsegna() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getConsegna();
+//	}
+//	public void setConsegna(java.lang.Integer consegna)  {
+//		this.getOrdineAcqConsegna().setConsegna(consegna);
+//	}
 	public Integer getCdTerzo() {
 		TerzoBulk terzo = this.getTerzo();
 		if (terzo == null)
@@ -363,5 +364,68 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	}
 	public void setTipoMovimentoMagRif(TipoMovimentoMagBulk tipoMovimentoMagRif) {
 		this.tipoMovimentoMagRif = tipoMovimentoMagRif;
-	}*/
+	}
+	public java.lang.String getCdCdsOrdine() {
+		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+		if (ordineAcqConsegna == null)
+			return null;
+		return getOrdineAcqConsegna().getCdCds();
+	}
+	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
+		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
+	}
+	public java.lang.String getCdUnitaOperativa() {
+		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+		if (ordineAcqConsegna == null)
+			return null;
+		return getOrdineAcqConsegna().getCdUnitaOperativa();
+	}
+	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
+		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
+	}
+	public java.lang.Integer getEsercizioOrdine() {
+		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+		if (ordineAcqConsegna == null)
+			return null;
+		return getOrdineAcqConsegna().getEsercizio();
+	}
+	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
+		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
+	}
+	public java.lang.String getCdNumeratoreOrdine() {
+		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+		if (ordineAcqConsegna == null)
+			return null;
+		return getOrdineAcqConsegna().getCdNumeratore();
+	}
+	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
+		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
+	}
+	public java.lang.Integer getNumeroOrdine() {
+		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+		if (ordineAcqConsegna == null)
+			return null;
+		return getOrdineAcqConsegna().getNumero();
+	}
+	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
+		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
+	}
+	public java.lang.Integer getRigaOrdine() {
+		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+		if (ordineAcqConsegna == null)
+			return null;
+		return getOrdineAcqConsegna().getRiga();
+	}
+	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
+		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
+	}
+	public java.lang.Integer getConsegna() {
+		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+		if (ordineAcqConsegna == null)
+			return null;
+		return getOrdineAcqConsegna().getConsegna();
+	}
+	public void setConsegna(java.lang.Integer consegna)  {
+		this.getOrdineAcqConsegna().setConsegna(consegna);
+	}
 }
