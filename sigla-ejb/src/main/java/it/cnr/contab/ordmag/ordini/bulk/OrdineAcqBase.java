@@ -92,6 +92,9 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 //    CD_CUP VARCHAR(15)
 	private java.lang.String cdCup;
  
+//  CD_CUP VARCHAR(15)
+	private java.lang.String cdUopOrdine;
+
 //  SCONTO1 DECIMAL(5,2)
 	private java.math.BigDecimal percProrata;
 
@@ -563,5 +566,11 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 	}
 	public void setImTotaleOrdine(java.math.BigDecimal imTotaleOrdine) {
 		this.imTotaleOrdine = imTotaleOrdine;
+	}
+	public java.lang.String getCdUopOrdine() {
+		return cdUopOrdine;
+	}
+	public void setCdUopOrdine(java.lang.String cdUopOrdine) {
+		this.cdUopOrdine = cdUopOrdine;
 	}
 }
