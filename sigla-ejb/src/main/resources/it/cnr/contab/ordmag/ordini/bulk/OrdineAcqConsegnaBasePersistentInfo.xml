@@ -70,19 +70,19 @@
 			propertyName="cdCdsMag"
 			sqlTypeName="VARCHAR"
 			columnSize="30"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="CD_CDS_LUOGO"
 			propertyName="cdCdsLuogo"
 			sqlTypeName="VARCHAR"
 			columnSize="30"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
 			propertyName="cdMagazzino"
 			sqlTypeName="VARCHAR"
 			columnSize="10"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="IM_IVA_D"
 			propertyName="imIvaD"
@@ -102,7 +102,7 @@
 			propertyName="cdLuogoConsegna"
 			sqlTypeName="VARCHAR"
 			columnSize="10"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="CD_UOP_DEST"
 			propertyName="cdUopDest"

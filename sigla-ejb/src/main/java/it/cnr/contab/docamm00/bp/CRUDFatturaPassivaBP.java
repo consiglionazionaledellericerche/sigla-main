@@ -20,6 +20,7 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.StoreService;
@@ -1670,18 +1671,29 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     }
 
     public void associaOrdineRigaFattura(ActionContext context, EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, Fattura_passiva_rigaBulk fattura_passiva_rigaBulk) throws BusinessProcessException {
+        OrdineAcqConsegnaBulk ordineAcqConsegna = evasioneOrdineRigaBulk.getOrdineAcqConsegna();
+
         FatturaOrdineBulk fatturaOrdineBulk = new FatturaOrdineBulk();
-        fatturaOrdineBulk.setOrdineAcqConsegna(evasioneOrdineRigaBulk.getOrdineAcqConsegna());
+        fatturaOrdineBulk.setOrdineAcqConsegna(ordineAcqConsegna);
         fatturaOrdineBulk.setFatturaPassivaRiga(fattura_passiva_rigaBulk);
-        fatturaOrdineBulk.setImImponibile(evasioneOrdineRigaBulk.getOrdineAcqConsegna().getImImponibile());
-        fatturaOrdineBulk.setImImponibileDivisa(evasioneOrdineRigaBulk.getOrdineAcqConsegna().getImImponibileDivisa());
-        fatturaOrdineBulk.setImIva(evasioneOrdineRigaBulk.getOrdineAcqConsegna().getImIva());
-        fatturaOrdineBulk.setImIvaDivisa(evasioneOrdineRigaBulk.getOrdineAcqConsegna().getImIvaDivisa());
-        fatturaOrdineBulk.setImIvaD(evasioneOrdineRigaBulk.getOrdineAcqConsegna().getImIvaD());
-        fatturaOrdineBulk.setImIvaNd(evasioneOrdineRigaBulk.getOrdineAcqConsegna().getImIvaNd());
-        fatturaOrdineBulk.setImTotaleConsegna(evasioneOrdineRigaBulk.getOrdineAcqConsegna().getImTotaleConsegna());
+        fatturaOrdineBulk.setImImponibile(ordineAcqConsegna.getImImponibile());
+        fatturaOrdineBulk.setImImponibileDivisa(ordineAcqConsegna.getImImponibileDivisa());
+        fatturaOrdineBulk.setImIva(ordineAcqConsegna.getImIva());
+        fatturaOrdineBulk.setImIvaDivisa(ordineAcqConsegna.getImIvaDivisa());
+        fatturaOrdineBulk.setImIvaD(ordineAcqConsegna.getImIvaD());
+        fatturaOrdineBulk.setImIvaNd(ordineAcqConsegna.getImIvaNd());
+        fatturaOrdineBulk.setImTotaleConsegna(ordineAcqConsegna.getImTotaleConsegna());
         fatturaOrdineBulk.setStatoAss("TOT");
         fatturaOrdineBulk.setToBeCreated();
+
+        ordineAcqConsegna.setStatoFatt(OrdineAcqConsegnaBulk.STATO_FATT_ASSOCIATA_TOTALMENTE);
+        ordineAcqConsegna.setToBeUpdated();
+        try {
+            createComponentSession().modificaConBulk(context.getUserContext(), ordineAcqConsegna);
+        } catch (ComponentException|RemoteException e) {
+            throw handleException(e);
+        }
+        fattura_passiva_rigaBulk.setStato_cofi(Fattura_passivaBulk.STATO_CONTABILIZZATO);
         fattura_passiva_rigaBulk.getFattura_passiva().addToFatturaRigaOrdiniHash(
                 fattura_passiva_rigaBulk,
                 fatturaOrdineBulk
