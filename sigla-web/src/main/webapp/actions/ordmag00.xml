@@ -149,7 +149,7 @@
     <init-param name="defaultAction" value="CRUDFirmaOrdineAcqAction"/>
   </businessProcess>
   <businessProcess name="CRUDEvasioneOrdineBP" className="it.cnr.contab.ordmag.ordini.bp.CRUDEvasioneOrdineBP">
-    <forward name="default" path="/ordmag/ordini/evasione_ordini.jsp"/>
+    <forward name="default" path="/ordmag/ordini/evasione_ordini/evasione_ordini.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk"/>
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_EvasioneOrdineComponentSession"/>
     <init-param name="defaultAction" value="CRUDEvasioneOrdineAction"/>

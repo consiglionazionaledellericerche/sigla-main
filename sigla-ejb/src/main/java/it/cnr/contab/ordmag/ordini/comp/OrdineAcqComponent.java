@@ -1028,6 +1028,9 @@ private Boolean isPresenteUnaUop(List listUop) throws ComponentException {
 			}
 		}
 	}
+	if (key != null){
+		return true;
+	}
 	return false;
 }
 
