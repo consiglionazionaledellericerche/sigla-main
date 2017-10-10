@@ -53,10 +53,14 @@ import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagBulk;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagHome;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagHome;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoHome;
+import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
+import it.cnr.contab.ordmag.anag00.NumerazioneMagHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdHome;
 import it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk;
@@ -67,6 +71,7 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineHome;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaHome;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
@@ -172,7 +177,65 @@ public class EvasioneOrdineComponent
                     sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.CD_MAGAZZINO", SQLBuilder.EQUALS, cdMagazzino);
                 })
         );
+        Optional.ofNullable(filtro.getFind_data_ordine())
+        .ifPresent(find_data_ordine -> {
+                    sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.DATA_ORDINE", SQLBuilder.EQUALS, find_data_ordine);
+                }
+        );
+        Optional.ofNullable(filtro.getFind_cd_numeratore_ordine())
+        .ifPresent(find_cd_numeratore_ordine -> {
+                    sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_NUMERATORE", SQLBuilder.EQUALS, find_cd_numeratore_ordine);
+                }
+        );
+        Optional.ofNullable(filtro.getFind_esercizio_ordine())
+        .ifPresent(find_esercizio_ordine -> {
+                    sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.ESERCIZIO", SQLBuilder.EQUALS, find_esercizio_ordine);
+                }
+        );
+        Optional.ofNullable(filtro.getFind_numero_ordine())
+        .ifPresent(find_numero_ordine -> {
+                    sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.NUMERO", SQLBuilder.EQUALS, find_numero_ordine);
+                }
+        );
+        Optional.ofNullable(filtro.getFind_riga_ordine())
+        .ifPresent(find_riga_ordine -> {
+                    sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_RIGA.RIGA", SQLBuilder.EQUALS, find_riga_ordine);
+                }
+        );
+        Optional.ofNullable(filtro.getFind_consegna_ordine())
+        .ifPresent(find_consegna_ordine -> {
+                    sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.CONSEGNA", SQLBuilder.EQUALS, find_consegna_ordine);
+                }
+        );
+        Optional.ofNullable(filtro.getFind_cd_uop_ordine())
+        .ifPresent(find_cd_uop_ordine -> {
+                    sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_UOP_ORDINE", SQLBuilder.EQUALS, find_cd_uop_ordine);
+                }
+        );
         sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.DATA_ORDINE", SQLBuilder.LESS_EQUALS, filtro.getDataConsegna());
+
+        if (filtro.getFind_cd_precedente() != null || filtro.getFind_cd_terzo() != null || filtro.getFind_ragione_sociale() != null ){
+            sql.generateJoin(OrdineAcqBulk.class, TerzoBulk.class, "fornitore", "TERZO");
+        	
+            Optional.ofNullable(filtro.getFind_cd_terzo())
+            .ifPresent(find_cd_terzo -> {
+                        sql.addSQLClause(FindClause.AND, "TERZO.CD_TERZO", SQLBuilder.EQUALS, find_cd_terzo);
+                    }
+            );
+
+            Optional.ofNullable(filtro.getFind_cd_precedente())
+            .ifPresent(find_cd_precedente -> {
+                        sql.addSQLClause(FindClause.AND, "TERZO.CD_PRECEDENTE", SQLBuilder.EQUALS, find_cd_precedente);
+                    }
+            );
+            Optional.ofNullable(filtro.getFind_ragione_sociale())
+            .ifPresent(find_ragione_sociale -> {
+            			sql.generateJoin(TerzoBulk.class, AnagraficoBulk.class, "anagrafico", "ANAGRAFICO");
+                        sql.addSQLClause(FindClause.AND, "ANAGRAFICO.RAGIONE_SOCIALE", SQLBuilder.EQUALS, find_ragione_sociale);
+                    }
+            );
+        }
+
         
     	return sql;
     } 
@@ -559,13 +622,13 @@ public class EvasioneOrdineComponent
 //
 //}
 //
-//@Override
-//public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk)
-//		throws ComponentException {
-//	OggettoBulk oggetto = super.inizializzaBulkPerInserimento(usercontext, oggettobulk);
-//	return inizializzaOrdine(usercontext, oggetto, true);
-//}
-//
+@Override
+public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk)
+		throws ComponentException {
+	OggettoBulk oggetto = super.inizializzaBulkPerInserimento(usercontext, oggettobulk);
+	return inizializzaEvasioneOrdine(usercontext, oggetto);
+}
+
 //@Override
 //public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBulk oggettobulk)
 //		throws ComponentException {
@@ -898,73 +961,56 @@ public class EvasioneOrdineComponent
 //	return sql;
 //}
 //
-//private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk oggettobulk, Boolean daInserimento)
-//		throws ComponentException {
-//	OrdineAcqBulk ordine = (OrdineAcqBulk)oggettobulk;
-//	try {
-//		if (daInserimento){
-//			impostaDatiDivisaCambioDefault(usercontext, ordine);
-//		}
-//		OrdineAcqHome home = (OrdineAcqHome) getHomeCache(usercontext).getHome(OrdineAcqBulk.class);
-//		ordine.setCdCds( ((CNRUserContext) usercontext).getCd_cds());
-//		if (ordine.getCdUopOrdine() == null){
-//			UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
-//			SQLBuilder sql = home.selectUnitaOperativaOrdByClause(usercontext, ordine, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
-//			List listUop=uopHome.fetchAll(sql);
-//			if (listUop != null && (listUop.size() == 1 || isPresenteUnaUop(listUop))){
-//				ordine.setUnitaOperativaOrd((UnitaOperativaOrdBulk)listUop.get(0));
-//				
-//				ordine.setIsAbilitatoTuttiMagazzini(isAbilitatoTuttiMagazzini(usercontext, ordine));
-//			}
-//		}
-//		assegnaNumeratoreOrd(usercontext, ordine, home);
-//	} catch (PersistencyException e){
-//		throw new ComponentException(e);
-//	}
-//	return ordine;
-//}
-//
-//private Boolean isPresenteUnaUop(List listUop) throws ComponentException {
-//	UnitaOperativaOrdKey key = null;
-//	for (Object oggettoBulk : listUop){
-//		UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)oggettoBulk;
-//		if (key ==null){
-//			key = (UnitaOperativaOrdKey)uop.getKey();
-//		} else {
-//			if (!key.equals((UnitaOperativaOrdKey)uop.getKey())){
-//				return false;
-//			}
-//		}
-//	}
-//	return true;
-//}
-//
+private OggettoBulk inizializzaEvasioneOrdine(UserContext usercontext, OggettoBulk oggettobulk)
+		throws ComponentException {
+	EvasioneOrdineBulk bulk = (EvasioneOrdineBulk)oggettobulk;
+	try {
+		EvasioneOrdineHome home = (EvasioneOrdineHome) getHomeCache(usercontext).getHome(EvasioneOrdineBulk.class);
+		bulk.setCdCds( ((CNRUserContext) usercontext).getCd_cds());
+		UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
+		SQLBuilder sql = home.selectUnitaOperativaOrdByClause(usercontext, bulk, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
+		List listUop=uopHome.fetchAll(sql);
+		if (listUop != null && (listUop.size() == 1 || isPresenteUnaUop(listUop))){
+			bulk.setUnitaOperativaAbilitata((UnitaOperativaOrdBulk)listUop.get(0));
+		}
+		assegnaNumeratoreMag(usercontext, bulk, home);
+	} catch (PersistencyException e){
+		throw new ComponentException(e);
+	}
+	return bulk;
+}
+
+private Boolean isPresenteUnaUop(List listUop) throws ComponentException {
+	UnitaOperativaOrdKey key = null;
+	for (Object oggettoBulk : listUop){
+		UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)oggettoBulk;
+		if (key ==null){
+			key = (UnitaOperativaOrdKey)uop.getKey();
+		} else {
+			if (!key.equals((UnitaOperativaOrdKey)uop.getKey())){
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 //private void impostaDatiDivisaCambioDefault(UserContext usercontext, OrdineAcqBulk ordine) throws ComponentException {
 //	ordine.setDivisa(getEuro(usercontext));
 //	ordine.setCambio(BigDecimal.ONE);
 //}
 //
-//private Boolean isAbilitatoTuttiMagazzini(UserContext userContext, OrdineAcqBulk ordine) throws ComponentException {
-//	
-//	AbilUtenteUopOperBulk abil = recuperoAbilUtenteUo(userContext, ordine, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
-//	if (abil != null && abil.getTuttiMagazzini().equals("S")){
-//		return true;
-//	}
-//	return false;
-//}
-//private void assegnaNumeratoreOrd(UserContext usercontext, OrdineAcqBulk ordine, OrdineAcqHome home)
-//		throws PersistencyException, ComponentException {
-//	if (ordine.getCdNumeratore() == null && ordine.getCdUopOrdine() != null){
-//			NumerazioneOrdHome numerazioneHome = (NumerazioneOrdHome)getHome(usercontext, NumerazioneOrdBulk.class);
-//			SQLBuilder sql = home.selectNumerazioneOrdByClause(usercontext, ordine, numerazioneHome, new NumerazioneOrdBulk(), new CompoundFindClause());
-//			List listNum=numerazioneHome.fetchAll(sql);
-//			if (listNum != null && listNum.size() == 1){
-//				ordine.setNumerazioneOrd((NumerazioneOrdBulk)listNum.get(0));
-//				ordine.setPercProrata(((NumerazioneOrdBulk)listNum.get(0)).getPercProrata());
-//				ordine.setTiAttivita(((NumerazioneOrdBulk)listNum.get(0)).getTi_istituz_commerc());
-//			}
-//	}
-//}
+private void assegnaNumeratoreMag(UserContext usercontext, EvasioneOrdineBulk bulk, EvasioneOrdineHome home)
+		throws PersistencyException, ComponentException {
+	if (bulk.getCdNumeratoreMag() == null && bulk.getCdUnitaOperativa() != null){
+			NumerazioneMagHome numerazioneHome = (NumerazioneMagHome)getHome(usercontext, NumerazioneMagBulk.class);
+			SQLBuilder sql = home.selectNumerazioneMagByClause(usercontext, bulk, numerazioneHome, new NumerazioneMagBulk(), new CompoundFindClause());
+			List listNum=numerazioneHome.fetchAll(sql);
+			if (listNum != null && listNum.size() == 1){
+				bulk.setNumerazioneMag((NumerazioneMagBulk)listNum.get(0));
+			}
+	}
+}
 //public Boolean isUtenteAbilitatoOrdine(UserContext usercontext, OrdineAcqBulk ordine) throws ComponentException, PersistencyException{
 //	return isUtenteAbilitato(usercontext, ordine, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
 //}
@@ -984,18 +1030,6 @@ public class EvasioneOrdineComponent
 //	return true;
 //}
 //
-//private AbilUtenteUopOperBulk recuperoAbilUtenteUo(UserContext userContext, OrdineAcqBulk ordine, String tipoOperazione) throws ComponentException {
-//	if (ordine.getCdUnitaOperativa() != null){
-//		AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(userContext, AbilUtenteUopOperBulk.class);
-//		AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(userContext.getUser(), ordine.getCdUnitaOperativa(), tipoOperazione);
-//		try {
-//			return (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(userContext, abil);
-//		} catch (PersistencyException e) {
-//			throw new ComponentException(e);
-//		}
-//	}
-//	return null;
-//}
 //public void completaOrdine(UserContext userContext, OrdineAcqBulk ordine) throws PersistencyException, ComponentException{
 //	OrdineAcqHome home = (OrdineAcqHome) getHomeCache(userContext).getHome(OrdineAcqBulk.class);
 //	assegnaNumeratoreOrd(userContext, ordine, home);
