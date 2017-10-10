@@ -189,21 +189,21 @@
 	<fieldProperty
 		name="findMagazzino"
 		property="magazzino"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool_esteso"
 		enabledOnSearch="true"
 		label="Magazzino" />
 	<fieldProperty
 		name="findLuogoConsegnaMag"
 		property="luogoConsegnaMag"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Luogo di Consegna" />
 	<fieldProperty
 		name="findObbligazioneScadenzario"
 		property="obbligazioneScadenzario"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool"
 		label="Scadenza Impegno" />
 	<fieldProperty
@@ -249,7 +249,7 @@
 	<fieldProperty
 		name="findUnitaOperativaOrdDest"
 		property="unitaOperativaOrd"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Unità Operativa" />

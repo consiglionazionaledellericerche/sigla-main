@@ -2,8 +2,12 @@ package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
 
+import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +63,7 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
      * Restituisce true se è possibile aggiungere nuovi elementi
      */
     public boolean isShrinkable() {
-        return false;
+        return	super.isShrinkable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching();
     }
 
 }
