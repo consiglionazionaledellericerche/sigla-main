@@ -1,24 +1,13 @@
 package it.cnr.contab.ordmag.ordini.bp;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.Iterator;
 
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
-import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk;
-import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.EvasioneOrdineComponentSession;
-import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
@@ -32,7 +21,7 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 	private boolean isDeleting = false;
 	public boolean isInputReadonly() 
 	{
-			return super.isInputReadonly();
+			return false;
 	}
 
 	private final SimpleDetailCRUDController consegne = new SimpleDetailCRUDController("ConsegneDaEvadere",OrdineAcqConsegnaBulk.class,"righeConsegnaDaEvadereColl",this){
@@ -55,8 +44,8 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		this(EvasioneOrdineBulk.class);
 	}
 	protected void setTab() {
-		setTab("tab","tabOrdineAcq");
-		setTab("tabOrdineAcqDettaglio","tabOrdineDettaglio");
+		setTab("tab","tabEvasioneConsegne");
+//		setTab("tabOrdineAcqDettaglio","tabOrdineDettaglio");
 	}
 
 	public CRUDEvasioneOrdineBP(Class dettObbligazioniControllerClass) {
@@ -142,5 +131,10 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		{
 			throw handleException(e);
 		}
+	}
+
+	@Override
+	public boolean isNewButtonHidden() {
+		return true;
 	}
 }
