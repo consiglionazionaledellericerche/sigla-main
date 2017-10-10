@@ -21,7 +21,7 @@ public class AbilUtenteUopOperMagHome extends BulkHome {
 	public java.util.Collection findMagazziniAbilitati(UserContext userContext, String tipoOperazione, 
 			UnitaOperativaOrdBulk unitaOperativaBulk) throws IntrospectionException, PersistencyException {	
 		SQLBuilder sql = createSQLBuilder();
-		sql.addSQLClause("AND","TIPO_OPERAZIONE",sql.EQUALS,tipoOperazione);
+		sql.addSQLClause("AND","CD_TIPO_OPERAZIONE",sql.EQUALS,tipoOperazione);
 		sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,userContext.getUser());
 		sql.addSQLClause("AND","CD_UNITA_OPERATIVA",sql.EQUALS,unitaOperativaBulk.getCdUnitaOperativa());
 		return fetchAll(sql);

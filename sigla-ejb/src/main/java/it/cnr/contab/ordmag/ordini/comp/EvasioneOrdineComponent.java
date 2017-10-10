@@ -968,7 +968,7 @@ private OggettoBulk inizializzaEvasioneOrdine(UserContext usercontext, OggettoBu
 		EvasioneOrdineHome home = (EvasioneOrdineHome) getHomeCache(usercontext).getHome(EvasioneOrdineBulk.class);
 		bulk.setCdCds( ((CNRUserContext) usercontext).getCd_cds());
 		UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
-		SQLBuilder sql = home.selectUnitaOperativaOrdByClause(usercontext, bulk, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
+		SQLBuilder sql = home.selectUnitaOperativaAbilitataByClause(usercontext, bulk, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
 		List listUop=uopHome.fetchAll(sql);
 		if (listUop != null && (listUop.size() == 1 || isPresenteUnaUop(listUop))){
 			bulk.setUnitaOperativaAbilitata((UnitaOperativaOrdBulk)listUop.get(0));
@@ -992,7 +992,10 @@ private Boolean isPresenteUnaUop(List listUop) throws ComponentException {
 			}
 		}
 	}
-	return true;
+	if (key != null){
+		return true;
+	}
+	return false;
 }
 
 //private void impostaDatiDivisaCambioDefault(UserContext usercontext, OrdineAcqBulk ordine) throws ComponentException {
@@ -1007,7 +1010,10 @@ private void assegnaNumeratoreMag(UserContext usercontext, EvasioneOrdineBulk bu
 			SQLBuilder sql = home.selectNumerazioneMagByClause(usercontext, bulk, numerazioneHome, new NumerazioneMagBulk(), new CompoundFindClause());
 			List listNum=numerazioneHome.fetchAll(sql);
 			if (listNum != null && listNum.size() == 1){
-				bulk.setNumerazioneMag((NumerazioneMagBulk)listNum.get(0));
+				NumerazioneMagBulk num = (NumerazioneMagBulk)listNum.get(0);
+				MagazzinoBulk mag  = ((MagazzinoBulk)((MagazzinoHome)getHomeCache(usercontext).getHome(MagazzinoBulk.class)).findByPrimaryKey(usercontext, num.getMagazzino()));
+				num.setMagazzino(mag);
+				bulk.setNumerazioneMag(num);
 			}
 	}
 }
