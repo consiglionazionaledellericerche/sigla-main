@@ -29,6 +29,7 @@ import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -3958,6 +3959,37 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         }
     }
 
+
+    public Forward doRemoveFromCRUDMain_Ordini(ActionContext context) throws ApplicationException {
+        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
+        Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+        Selection selection = bp.getFattureRigaOrdiniController().getSelection();
+        Optional.ofNullable(selection)
+                .filter(selection1 -> !selection1.isEmpty())
+                .orElseThrow(() -> new ApplicationException("Selezionare le consegne che si desidera eliminare!"));
+
+
+        final List<FatturaOrdineBulk> details = bp.getFattureRigaOrdiniController().getDetails();
+        final Iterator<Integer> iterator = selection.iterator();
+        iterator.forEachRemaining(index -> {
+            try {
+                final FatturaOrdineBulk fatturaOrdineBulk = details.get(index);
+                OrdineAcqConsegnaBulk ordineAcqConsegna = (OrdineAcqConsegnaBulk) bp.createComponentSession()
+                        .findByPrimaryKey(context.getUserContext(), fatturaOrdineBulk.getOrdineAcqConsegna());
+                ordineAcqConsegna.setStatoFatt(OrdineAcqConsegnaBulk.STATO_FATT_NON_ASSOCIATA);
+                ordineAcqConsegna.setToBeUpdated();
+                bp.createComponentSession().modificaConBulk(
+                        context.getUserContext(),
+                        ordineAcqConsegna);
+                final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFatturaRigaOrdiniHash().getKey(fatturaOrdineBulk);
+                fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
+                fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).remove(fatturaOrdineBulk);
+            } catch (ComponentException |RemoteException|BusinessProcessException e) {
+                throw new DetailedRuntimeException(e);
+            }
+        });
+        return context.findDefaultForward();
+    }
     /**
      * <!-- @TODO: da completare -->
      * Gestisce una richiesta di cancellazione dal controller "obbligazioni"

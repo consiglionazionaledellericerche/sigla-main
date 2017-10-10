@@ -69,18 +69,13 @@ public class FatturaRigaOrdiniTable extends Hashtable<Fattura_passiva_rigaBulk, 
                 }).orElse(null);
     }
 
-    public synchronized Fattura_passiva_rigaBulk getKey(Fattura_passiva_rigaBulk key) {
-
-        return Optional.ofNullable(key)
-                .filter(Fattura_passiva_rigaBulk.class::isInstance)
-                .map(Fattura_passiva_rigaBulk.class::cast)
+    public synchronized Fattura_passiva_rigaBulk getKey(FatturaOrdineBulk value) {
+        return Optional.ofNullable(value)
                 .map(o -> {
-                    final Stream<Fattura_passiva_rigaBulk> stream = Collections.list(keys()).stream()
-                            .filter(Fattura_passiva_rigaBulk.class::isInstance)
-                            .map(Fattura_passiva_rigaBulk.class::cast);
-                    return stream.filter(fattura_passiva_rigaBulk -> fattura_passiva_rigaBulk.equalsByPrimaryKey(o))
-                            .findAny()
-                            .orElse(null);
+                    return entrySet().stream()
+                            .filter(fattura_passiva_rigaBulkListEntry -> fattura_passiva_rigaBulkListEntry.getValue().contains(value))
+                            .map(fattura_passiva_rigaBulkListEntry -> fattura_passiva_rigaBulkListEntry.getKey())
+                            .findFirst().orElse(null);
                 }).orElse(null);
     }
 }

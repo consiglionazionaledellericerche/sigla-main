@@ -58,7 +58,7 @@
 	<fieldProperty
 		name="findOrdineAcqConsegna"
 		property="ordineAcqConsegna"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="OrdineAcqConsegna" />
@@ -340,54 +340,69 @@
 		name="imTotaleConsegna" />
 	<findFieldProperty
 		name="statoAss" />
+
 	<columnFieldProperty
-		name="cdCds" />
-	<columnFieldProperty
-		name="cdUnitaOrganizzativa" />
-	<columnFieldProperty
-		name="esercizio" />
-	<columnFieldProperty
-		name="pgFatturaPassiva" />
-	<columnFieldProperty
-		name="progressivoRiga" />
-	<columnFieldProperty
-		name="cdCdsOrdine" />
-	<columnFieldProperty
-		name="cdUnitaOperativa" />
-	<columnFieldProperty
-		name="esercizioOrdine" />
-	<columnFieldProperty
-		name="cdNumeratore" />
-	<columnFieldProperty
-		name="numero" />
-	<columnFieldProperty
-		name="riga" />
-	<columnFieldProperty
-		name="consegna" />
-	<columnFieldProperty
-		name="cdVoceIvaRett" />
-	<columnFieldProperty
-		name="prezzoUnitarioRett" />
-	<columnFieldProperty
-		name="sconto1Rett" />
-	<columnFieldProperty
-		name="sconto2Rett" />
-	<columnFieldProperty
-		name="sconto3Rett" />
-	<columnFieldProperty
-		name="imImponibileDivisa" />
-	<columnFieldProperty
-		name="imIvaDivisa" />
-	<columnFieldProperty
-		name="imImponibile" />
-	<columnFieldProperty
-		name="imIva" />
-	<columnFieldProperty
-		name="imIvaD" />
-	<columnFieldProperty
-		name="imIvaNd" />
-	<columnFieldProperty
-		name="imTotaleConsegna" />
-	<columnFieldProperty
-		name="statoAss" />
+        name="dtPrevConsegna"
+        property="ordineAcqConsegna.dtPrevConsegna"
+        formatName="date_short"
+        headerLabel="Consegna"
+        label="Data" />
+    <columnFieldProperty
+        name="cdNumeratore"
+        property="ordineAcqConsegna.ordineAcqRiga.cdNumeratore"
+        headerLabel="Consegna"
+        label="Numeratore" />
+    <columnFieldProperty
+        name="numero"
+        property="ordineAcqConsegna.ordineAcqRiga.numero"
+        headerLabel="Consegna"
+        label="Numero" />
+    <columnFieldProperty
+        name="riga"
+        property="ordineAcqConsegna.ordineAcqRiga.riga"
+        headerLabel="Consegna"
+        label="Riga" />
+    <columnFieldProperty
+        name="notaRiga"
+        property="ordineAcqConsegna.ordineAcqRiga.notaRiga"
+        headerLabel="Ordine"
+        label="Note" />
+    <columnFieldProperty
+        name="cd_voce_iva"
+        property="ordineAcqConsegna.ordineAcqRiga.voceIva.cd_voce_iva"
+        headerLabel="Ordine"
+        label="Codice IVA" />
+    <columnFieldProperty
+        name="percentuale"
+        property="ordineAcqConsegna.ordineAcqRiga.voceIva.percentuale"
+        formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+        headerLabel="Ordine"
+        label="Aliquota IVA" />
+    <columnFieldProperty
+        name="prezzoUnitario"
+        property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
+        headerLabel="Ordine"
+        formatName="it.cnr.contab.util.Importo6CifreFormat"
+        label="Prezzo Unitario" />
+    <columnFieldProperty
+        name="sconto1"
+        property="ordineAcqConsegna.ordineAcqRiga.sconto1"
+        headerLabel="Ordine"
+        formatName="it.cnr.contab.util.PercentFormat"
+        label="% Sconto 1" />
+    <columnFieldProperty
+        name="sconto2"
+        property="ordineAcqConsegna.ordineAcqRiga.sconto2"
+        headerLabel="Ordine"
+        formatName="it.cnr.contab.util.PercentFormat"
+        label="% Sconto 2" />
+    <columnFieldProperty
+        name="sconto3"
+        property="ordineAcqConsegna.ordineAcqRiga.sconto3"
+        headerLabel="Ordine"
+        formatName="it.cnr.contab.util.PercentFormat"
+        label="% Sconto 3" />
+
+
+
 </bulkInfo>
