@@ -85,8 +85,6 @@
 		property="dataBolla"
 		inputType="TEXT"
 		formatName="date_short"
-		enabledOnEdit="true"
-		enabledOnInsert="true"
 		nullable="false"
 		label="Data Bolla" />
 	<fieldProperty
