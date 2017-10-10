@@ -28,7 +28,7 @@ public class EvasioneOrdineHome extends BulkHome {
 	public EvasioneOrdineHome(Connection conn, PersistentCache persistentCache) {
 		super(EvasioneOrdineBulk.class, conn, persistentCache);
 	}
-	public SQLBuilder selectUnitaOperativaOrdByClause(UserContext userContext, EvasioneOrdineBulk bulk, 
+	public SQLBuilder selectUnitaOperativaAbilitataByClause(UserContext userContext, EvasioneOrdineBulk bulk, 
 			UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk, 
 			CompoundFindClause compoundfindclause) throws PersistencyException{
 		SQLBuilder sql = unitaOperativaHome.selectByClause(userContext, compoundfindclause);
@@ -41,9 +41,6 @@ public class EvasioneOrdineHome extends BulkHome {
 	public SQLBuilder selectNumerazioneMagByClause(UserContext userContext, EvasioneOrdineBulk bulk, 
 			NumerazioneMagHome numerazioneHome, NumerazioneMagBulk numerazioneBulk, 
 			CompoundFindClause compoundfindclause) throws PersistencyException{
-		if (bulk == null || bulk.getCdCds() == null){
-			throw new PersistencyException("CDS non valorizzato");
-		}
 		AbilUtenteUopOperMagBulk abilMag = null;
 		if (bulk.getCdUnitaOperativa() != null){
 			AbilUtenteUopOperMagHome abilHome = (AbilUtenteUopOperMagHome)getHomeCache().getHome(AbilUtenteUopOperMagBulk.class);
@@ -54,12 +51,9 @@ public class EvasioneOrdineHome extends BulkHome {
 				throw new PersistencyException(e);
 			}
 			if (lista == null || lista.size() == 0){
-				throw new PersistencyException("Non esistono magazzini abilitati per la unità operativa scelta");
 			} else if (lista.size() == 1){
 				abilMag = (AbilUtenteUopOperMagBulk)lista.iterator().next();
 			}
-		} else {
-			throw new PersistencyException("Valorizzare prima la unità operativa");
 		}
 		
 		SQLBuilder sql = numerazioneHome.selectByClause(userContext, compoundfindclause);
