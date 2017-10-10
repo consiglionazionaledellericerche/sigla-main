@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
-import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
