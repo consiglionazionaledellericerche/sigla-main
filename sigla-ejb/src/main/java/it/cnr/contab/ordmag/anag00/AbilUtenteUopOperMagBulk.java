@@ -5,21 +5,6 @@
 package it.cnr.contab.ordmag.anag00;
 
 public class AbilUtenteUopOperMagBulk extends AbilUtenteUopOperMagBase {
-	/**
-	 * [UTENTE Contiene gli utenti dell'applicazione.]
-	 **/
-//	private UtenteBulk utente =  new UtenteBulk();
-//	/**
-//	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
-//	 **/
-//	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
-//	/**
-//	 * [TIPO_OPERAZIONE_ORD Rappresenta l'anagrafica dei tipi operazione degli ordini.]
-//	 **/
-//	private TipoOperazioneOrdBulk tipoOperazioneOrd =  new TipoOperazioneOrdBulk();
-//	/**
-//	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
-//	 **/
 	private MagazzinoBulk magazzino =  new MagazzinoBulk();
 	private AbilUtenteUopOperBulk abilUtenteUopOperBulk =  new AbilUtenteUopOperBulk();
 	/**
@@ -38,48 +23,6 @@ public class AbilUtenteUopOperMagBulk extends AbilUtenteUopOperMagBase {
 		setAbilUtenteUopOperBulk( new AbilUtenteUopOperBulk(cdUtente, cdUnitaOperativa, cdTipoOperazione) );
 		setMagazzino( new MagazzinoBulk(cdCds, cdMagazzino) );
 	}
-//	/**
-//	 * Created by BulkGenerator 2.0 [07/12/2009]
-//	 * Restituisce il valore di: [Contiene gli utenti dell'applicazione.]
-//	 **/
-//	public UtenteBulk getUtente() {
-//		return utente;
-//	}
-//	/**
-//	 * Created by BulkGenerator 2.0 [07/12/2009]
-//	 * Setta il valore di: [Contiene gli utenti dell'applicazione.]
-//	 **/
-//	public void setUtente(UtenteBulk utente)  {
-//		this.utente=utente;
-//	}
-//	/**
-//	 * Created by BulkGenerator 2.0 [07/12/2009]
-//	 * Restituisce il valore di: [Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
-//	 **/
-//	public UnitaOperativaOrdBulk getUnitaOperativaOrd() {
-//		return unitaOperativaOrd;
-//	}
-//	/**
-//	 * Created by BulkGenerator 2.0 [07/12/2009]
-//	 * Setta il valore di: [Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
-//	 **/
-//	public void setUnitaOperativaOrd(UnitaOperativaOrdBulk unitaOperativaOrd)  {
-//		this.unitaOperativaOrd=unitaOperativaOrd;
-//	}
-//	/**
-//	 * Created by BulkGenerator 2.0 [07/12/2009]
-//	 * Restituisce il valore di: [Rappresenta l'anagrafica dei tipi operazione degli ordini.]
-//	 **/
-//	public TipoOperazioneOrdBulk getTipoOperazioneOrd() {
-//		return tipoOperazioneOrd;
-//	}
-//	/**
-//	 * Created by BulkGenerator 2.0 [07/12/2009]
-//	 * Setta il valore di: [Rappresenta l'anagrafica dei tipi operazione degli ordini.]
-//	 **/
-//	public void setTipoOperazioneOrd(TipoOperazioneOrdBulk tipoOperazioneOrd)  {
-//		this.tipoOperazioneOrd=tipoOperazioneOrd;
-//	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
