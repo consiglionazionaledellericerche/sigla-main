@@ -16,6 +16,7 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.EvasioneOrdineComponentSession;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.SimpleCRUDBP;
@@ -129,7 +130,7 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		EvasioneOrdineBulk bulk = (EvasioneOrdineBulk) getModel();	
 		try 
 		{
-			
+			bulk.setRigheConsegnaDaEvadereColl(new BulkList<>());
 			EvasioneOrdineComponentSession comp = (EvasioneOrdineComponentSession)createComponentSession();
 			bulk.setDataBolla(new Timestamp(System.currentTimeMillis()));
 			bulk.setDataConsegna(new Timestamp(System.currentTimeMillis()));
