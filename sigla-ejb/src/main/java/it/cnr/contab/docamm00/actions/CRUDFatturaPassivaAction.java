@@ -4073,7 +4073,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk) bp.getModel();
             Optional<List> models = Optional.ofNullable(bp.getDettaglio().getSelectedModels(context))
                     .map(list -> {
-                        if (Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
+                        if (list.isEmpty() && Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
                                 .filter(isDaOrdini -> isDaOrdini.equals(Boolean.TRUE)).isPresent()) {
                             list.add(bp.getDettaglio().getDetails().get(bp.getDettaglio().getSelection().getFocus()));
                         }
