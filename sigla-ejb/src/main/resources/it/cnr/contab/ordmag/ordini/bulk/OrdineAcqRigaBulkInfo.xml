@@ -85,7 +85,7 @@
 	<fieldProperty
 		name="findUnitaMisura"
 		property="unitaMisura"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Unità di Misura" />
