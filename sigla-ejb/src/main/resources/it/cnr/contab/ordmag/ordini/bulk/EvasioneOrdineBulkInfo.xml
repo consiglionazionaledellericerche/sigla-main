@@ -120,7 +120,7 @@
 		property="find_cd_terzo"
 		inputSize="5"
 		inputType="TEXT"
-		label="Codice Beneficiario" />
+		label="Codice Fornitore" />
 	<fieldProperty
 		name="find_ragione_sociale"
 		property="find_ragione_sociale"

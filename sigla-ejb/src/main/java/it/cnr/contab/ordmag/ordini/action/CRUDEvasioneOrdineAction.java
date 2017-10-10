@@ -1,60 +1,9 @@
 package it.cnr.contab.ordmag.ordini.action;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.persistence.PersistenceException;
-
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
-import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
-import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
-import it.cnr.contab.doccont00.bp.CRUDMandatoBP;
-import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
-import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
-import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
-import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
-import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
-import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
-import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bp.CRUDEvasioneOrdineBP;
-import it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
-import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.IntrospectionException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.action.BulkBP;
-import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.jada.util.action.FormField;
 
 public class CRUDEvasioneOrdineAction extends it.cnr.jada.util.action.CRUDAction {
 
