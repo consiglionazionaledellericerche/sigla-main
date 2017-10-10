@@ -4700,8 +4700,23 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      */
 //^^@@
     public OggettoBulk modificaConBulk(UserContext aUC, OggettoBulk bulk) throws ComponentException {
-
-        return modificaConBulk(aUC, bulk, null);
+        return Optional.ofNullable(bulk)
+                .filter(Fattura_passivaBulk.class::isInstance)
+                .map(Fattura_passivaBulk.class::cast)
+                .map(fattura_passivaBulk -> {
+                    try {
+                        return modificaConBulk(aUC, fattura_passivaBulk, null);
+                    } catch (ComponentException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                })
+                .orElseGet(() -> {
+                    try {
+                        return super.modificaConBulk(aUC, bulk);
+                    } catch (ComponentException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                });
     }
 //^^@@
 
