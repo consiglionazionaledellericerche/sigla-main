@@ -967,20 +967,20 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     .map(Fattura_passiva_rigaBulk.class::cast);
             if (fattura_passiva_rigaBulk.isPresent()) {
                 selectedElements.get().forEach(evasioneOrdineRigaBulk -> {
-                    fattura_passiva_rigaBulk.get().setBene_servizio(
-                            evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio()
+                    fattura_passiva_rigaBulk.get().setBene_servizio(Optional.ofNullable(fattura_passiva_rigaBulk.get().getBene_servizio())
+                            .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio())
                     );
-                    fattura_passiva_rigaBulk.get().setVoce_iva(
-                            evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getVoce_iva()
+                    fattura_passiva_rigaBulk.get().setVoce_iva(Optional.ofNullable(fattura_passiva_rigaBulk.get().getVoce_iva())
+                                    .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getVoce_iva())
                     );
-                    fattura_passiva_rigaBulk.get().setDs_riga_fattura(
-                            evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio().getDs_bene_servizio()
+                    fattura_passiva_rigaBulk.get().setDs_riga_fattura(Optional.ofNullable(fattura_passiva_rigaBulk.get().getDs_riga_fattura())
+                            .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio().getDs_bene_servizio())
                     );
-                    fattura_passiva_rigaBulk.get().setPrezzo_unitario(
-                            evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getPrezzoUnitario()
+                    fattura_passiva_rigaBulk.get().setPrezzo_unitario(Optional.ofNullable(fattura_passiva_rigaBulk.get().getPrezzo_unitario())
+                            .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getPrezzoUnitario())
                     );
-                    fattura_passiva_rigaBulk.get().setQuantita(
-                            evasioneOrdineRigaBulk.getQuantitaEvasa()
+                    fattura_passiva_rigaBulk.get().setQuantita(Optional.ofNullable(fattura_passiva_rigaBulk.get().getQuantita())
+                            .orElseGet(() -> evasioneOrdineRigaBulk.getQuantitaEvasa())
                     );
                     doCalcolaTotaliDiRiga(context);
                     try {
@@ -4073,7 +4073,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk) bp.getModel();
             Optional<List> models = Optional.ofNullable(bp.getDettaglio().getSelectedModels(context))
                     .map(list -> {
-                        if (Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
+                        if (list.isEmpty() && Optional.ofNullable(fatturaPassiva.getFlDaOrdini())
                                 .filter(isDaOrdini -> isDaOrdini.equals(Boolean.TRUE)).isPresent()) {
                             list.add(bp.getDettaglio().getDetails().get(bp.getDettaglio().getSelection().getFocus()));
                         }
