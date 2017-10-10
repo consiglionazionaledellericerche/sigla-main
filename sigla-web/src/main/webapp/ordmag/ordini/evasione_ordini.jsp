@@ -39,6 +39,36 @@
 			<% bp.getController().writeFormField(out, "dataConsegna");%>
 			</table>
 		<tr>
+	<div class="Group">		
+	<table border="0" cellspacing="0" cellpadding="2">
+		<tr>
+			<td><% bp.getController().writeFormLabel( out, "find_cd_terzo"); %></td>
+			<td><% bp.getController().writeFormInput( out, "find_cd_terzo"); %></td>
+			<td><% bp.getController().writeFormLabel( out, "find_cd_precedente"); %></td>
+			<td><% bp.getController().writeFormInput( out, "find_cd_precedente"); %></td>			
+		</tr>
+		<tr>
+			<td><% bp.getController().writeFormLabel( out, "find_ragione_sociale"); %></td>
+			<td colspan=3><% bp.getController().writeFormInput( out, "find_ragione_sociale"); %></td>			
+		</tr>
+		<tr>
+			<td><% bp.getController().writeFormLabel( out, "find_esercizio_ordine"); %></td>
+			<td><% bp.getController().writeFormInput( out, "find_esercizio_ordine"); %></td>
+			<td><% bp.getController().writeFormLabel( out, "find_data_ordine"); %></td>
+			<td><% bp.getController().writeFormInput( out, "find_data_ordine"); %></td>
+			<td><% bp.getController().writeFormLabel( out, "find_cd_numeratore_ordine"); %></td>
+			<td><% bp.getController().writeFormInput( out, "find_cd_numeratore_ordine"); %></td>
+		</tr>
+		<tr>
+			<td><% bp.getController().writeFormLabel( out, "find_numero_ordine"); %></td>
+			<td><% bp.getController().writeFormInput( out, "find_numero_ordine"); %></td>
+			<td><% bp.getController().writeFormLabel( out, "find_riga_ordine"); %></td>
+			<td><% bp.getController().writeFormInput( out, "find_riga_ordine"); %></td>
+			<td><% bp.getController().writeFormLabel( out, "find_consegna_ordine"); %></td>
+			<td><% bp.getController().writeFormInput( out, "find_consegna_ordine"); %></td>
+		</tr>
+	</table>
+	</div>	
 			<td colspan=2 align="center">
 				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaConsegneDaEvadere')",null, bp.getParentRoot().isBootstrap()); %>
 			</td>
