@@ -935,7 +935,6 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      */
     public Forward doContabilizzaOrdine(ActionContext context) {
         HookForward caller = (HookForward) context.getCaller();
-        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
         final Supplier<Stream<EvasioneOrdineRigaBulk>> selectedElements = () ->
                 Optional.ofNullable(caller.getParameter("selectedElements"))
                 .filter(List.class::isInstance)
@@ -946,11 +945,17 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                                 .filter(EvasioneOrdineRigaBulk.class::isInstance)
                                 .map(EvasioneOrdineRigaBulk.class::cast)
                 ).orElse(Stream.empty());
+        Optional<CRUDFatturaPassivaBP> crudFatturaPassivaBP = Optional.ofNullable(context.getBusinessProcess())
+                .filter(CRUDFatturaPassivaBP.class::isInstance)
+                .map(CRUDFatturaPassivaBP.class::cast);
+        if (!crudFatturaPassivaBP.isPresent())
+            return context.findDefaultForward();
+
         final Map<String, List<EvasioneOrdineRigaBulk>> collectBeneServizio = selectedElements.get().collect(
                 Collectors.groupingBy(o -> o.getOrdineAcqConsegna().getOrdineAcqRiga().getCdBeneServizio())
         );
         if (collectBeneServizio.size() > 1) {
-            bp.setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno beni diversi ["
+            crudFatturaPassivaBP.get().setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno beni diversi ["
                     .concat(collectBeneServizio.keySet().stream().collect(Collectors.joining(","))).concat("]"));
             return context.findDefaultForward();
         }
@@ -958,12 +963,13 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 Collectors.groupingBy(o -> o.getOrdineAcqConsegna().getOrdineAcqRiga().getCdVoceIva())
         );
         if (collectCodiciIva.size() > 1) {
-            bp.setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno codici iva diversi ["
+            crudFatturaPassivaBP.get().setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno codici iva diversi ["
                     .concat(collectCodiciIva.keySet().stream().collect(Collectors.joining(","))).concat("]"));
             return context.findDefaultForward();
         }
         try {
-            Optional<Fattura_passiva_rigaBulk> fattura_passiva_rigaBulk = Optional.ofNullable(bp.getDettaglio().getDetails().get(bp.getDettaglio().getSelection().getFocus()))
+            Optional<Fattura_passiva_rigaBulk> fattura_passiva_rigaBulk =
+                    Optional.ofNullable(crudFatturaPassivaBP.get().getDettaglio().getDetails().get(crudFatturaPassivaBP.get().getDettaglio().getSelection().getFocus()))
                     .filter(Fattura_passiva_rigaBulk.class::isInstance)
                     .map(Fattura_passiva_rigaBulk.class::cast);
             if (fattura_passiva_rigaBulk.isPresent()) {
@@ -985,7 +991,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     );
                     doCalcolaTotaliDiRiga(context);
                     try {
-                        bp.associaOrdineRigaFattura(context, evasioneOrdineRigaBulk, fattura_passiva_rigaBulk.get());
+                        crudFatturaPassivaBP.get().associaOrdineRigaFattura(context, evasioneOrdineRigaBulk, fattura_passiva_rigaBulk.get());
                     } catch (BusinessProcessException e) {
                         throw new DetailedRuntimeException(e);
                     }
