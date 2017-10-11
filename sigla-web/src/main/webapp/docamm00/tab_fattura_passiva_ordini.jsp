@@ -31,4 +31,12 @@
             </td>
         </tr>
     </table>
+    <fieldset class="card">
+        <legend class="GroupLabel card-header text-primary">Rettifiche</legend>
+        <table>
+            <tr>
+                <td><% bp.getFattureRigaOrdiniController().writeForm(out); %></td>
+            </tr>
+        </table>
+    </fieldset>
 </fieldset>
