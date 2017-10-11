@@ -368,58 +368,62 @@
             name="cd_voce_iva"
             property="ordineAcqConsegna.ordineAcqRiga.voceIva.cd_voce_iva"
             headerLabel="Ordine"
-            label="Codice IVA"/>
+            label="Cod. IVA"/>
     <columnFieldProperty
             name="percentuale"
             property="ordineAcqConsegna.ordineAcqRiga.voceIva.percentuale"
             formatName="it.cnr.contab.util.ConstrainedPercentFormat"
             headerLabel="Ordine"
-            label="Aliquota IVA"/>
+            label="% IVA"/>
     <columnFieldProperty
             name="prezzoUnitario"
             property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
             headerLabel="Ordine"
             formatName="it.cnr.contab.util.Importo6CifreFormat"
-            label="Prezzo Unitario"/>
+            label="P. Unitario"/>
     <columnFieldProperty
             name="sconto1"
             property="ordineAcqConsegna.ordineAcqRiga.sconto1"
             headerLabel="Ordine"
             formatName="it.cnr.contab.util.PercentFormat"
-            label="% Sconto 1"/>
+            label="% Sc 1"/>
     <columnFieldProperty
             name="sconto2"
             property="ordineAcqConsegna.ordineAcqRiga.sconto2"
             headerLabel="Ordine"
             formatName="it.cnr.contab.util.PercentFormat"
-            label="% Sconto 2"/>
+            label="% Sc 2"/>
     <columnFieldProperty
             name="sconto3"
             property="ordineAcqConsegna.ordineAcqRiga.sconto3"
             headerLabel="Ordine"
             formatName="it.cnr.contab.util.PercentFormat"
-            label="% Sconto 3"/>
+            label="% Sc 3"/>
     <columnFieldProperty
             name="codiceIva"
             property="voceIva.cd_voce_iva"
             headerLabel="Rettifiche"
-            label="Codice IVA"/>
+            label="Cod. IVA"/>
     <columnFieldProperty
             name="prezzoUnitarioRett"
             property="prezzoUnitarioRett"
-            headerLabel="Rettifiche"/>
+            headerLabel="Rettifiche"
+            label="P. unitario"/>
     <columnFieldProperty
             name="sconto1Rett"
             property="sconto1Rett"
-            headerLabel="Rettifiche"/>
+            headerLabel="Rettifiche"
+            label="% Sc 1"/>
     <columnFieldProperty
             name="sconto2Rett"
             property="sconto2Rett"
-            headerLabel="Rettifiche"/>
+            headerLabel="Rettifiche"
+            label="% Sc 2"/>
     <columnFieldProperty
             name="sconto3Rett"
             property="sconto3Rett"
-            headerLabel="Rettifiche"/>
-    
+            headerLabel="Rettifiche"
+            label="% Sc 1"/>
+
 
 </bulkInfo>
