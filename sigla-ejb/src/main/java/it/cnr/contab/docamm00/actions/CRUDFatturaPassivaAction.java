@@ -3977,6 +3977,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
         final List<FatturaOrdineBulk> details = bp.getFattureRigaOrdiniController().getDetails();
         final Iterator<Integer> iterator = selection.iterator();
+        List<FatturaOrdineBulk> bulksToRemove = new ArrayList<FatturaOrdineBulk>();
         iterator.forEachRemaining(index -> {
             try {
                 final FatturaOrdineBulk fatturaOrdineBulk = details.get(index);
@@ -3987,13 +3988,18 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 bp.createComponentSession().modificaConBulk(
                         context.getUserContext(),
                         ordineAcqConsegna);
-                final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFatturaRigaOrdiniHash().getKey(fatturaOrdineBulk);
-                fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
-                fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).remove(fatturaOrdineBulk);
+                bulksToRemove.add(fatturaOrdineBulk);
             } catch (ComponentException |RemoteException|BusinessProcessException e) {
                 throw new DetailedRuntimeException(e);
             }
         });
+        bulksToRemove.stream()
+                .forEach(fatturaOrdineBulk -> {
+                    final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFatturaRigaOrdiniHash().getKey(fatturaOrdineBulk);
+                    fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
+                    fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).remove(fatturaOrdineBulk);
+                });
+        bp.getFattureRigaOrdiniController().getSelection().clear();
         return context.findDefaultForward();
     }
     /**
