@@ -276,22 +276,22 @@
         <formFieldProperty
                 name="consegna"/>
     </form>
-    <form
-            name="ivaPrezzo">
-        <formFieldProperty
-                name="voceIva"/>
-        <formFieldProperty
-                name="prezzoUnitarioRett"/>
-    </form>
-    <form
-            name="scontoRett">
-        <formFieldProperty
-                name="sconto1Rett"/>
-        <formFieldProperty
-                name="sconto2Rett"/>
-        <formFieldProperty
-                name="sconto3Rett"/>
-    </form>
+
+    <formFieldProperty
+            name="voceIva"/>
+    <formFieldProperty
+            name="prezzoUnitarioRett"
+            command="doDefault"/>
+    <formFieldProperty
+            name="sconto1Rett"
+            command="doDefault"/>
+    <formFieldProperty
+            name="sconto2Rett"
+            command="doDefault"/>
+    <formFieldProperty
+            name="sconto3Rett"
+            command="doDefault"/>
+
     <findFieldProperty
             name="cdCds"/>
     <findFieldProperty
