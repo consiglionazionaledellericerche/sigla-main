@@ -215,7 +215,7 @@
             formatName="it.cnr.contab.util.EuroFormat"
             enabledOnEdit="false"
             nullable="false"
-            label="imIva"/>
+            label="Iva"/>
     <fieldProperty
             name="imIvaD"
             property="imIvaD"
@@ -276,17 +276,22 @@
         <formFieldProperty
                 name="consegna"/>
     </form>
-    <formFieldProperty
-            name="voceIva"/>
-    <formFieldProperty
-            name="prezzoUnitarioRett"/>
-    <formFieldProperty
-            name="sconto1Rett"/>
-    <formFieldProperty
-            name="sconto2Rett"/>
-    <formFieldProperty
-            name="sconto3Rett"/>
-
+    <form
+            name="ivaPrezzo">
+        <formFieldProperty
+                name="voceIva"/>
+        <formFieldProperty
+                name="prezzoUnitarioRett"/>
+    </form>
+    <form
+            name="scontoRett">
+        <formFieldProperty
+                name="sconto1Rett"/>
+        <formFieldProperty
+                name="sconto2Rett"/>
+        <formFieldProperty
+                name="sconto3Rett"/>
+    </form>
     <findFieldProperty
             name="cdCds"/>
     <findFieldProperty
@@ -424,6 +429,13 @@
             property="sconto3Rett"
             headerLabel="Rettifiche"
             label="% Sc 1"/>
-
+    <columnFieldProperty
+            name="imImponibile"/>
+    <columnFieldProperty
+            name="imIva"/>
+    <columnFieldProperty
+            name="impegno"
+            property="impegnoDisplay"
+            label="Impegno"/>
 
 </bulkInfo>
