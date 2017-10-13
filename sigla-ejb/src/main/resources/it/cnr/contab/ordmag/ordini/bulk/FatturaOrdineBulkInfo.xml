@@ -1,393 +1,437 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://contab.cnr.it/schema/SIGLA"
-	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
-	shortDescription="Collegamento riga fattura passiva con riga di consegna Ordine"
-	longDescription="Collegamento riga fattura passiva con riga di consegna Ordine">
-	<fieldProperty
-		name="cdCds"
-		property="cdCds"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="cdCds" />
-	<fieldProperty
-		name="cdUnitaOrganizzativa"
-		property="cdUnitaOrganizzativa"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="cdUnitaOrganizzativa" />
-	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="esercizio" />
-	<fieldProperty
-		name="pgFatturaPassiva"
-		property="pgFatturaPassiva"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="pgFatturaPassiva" />
-	<fieldProperty
-		name="progressivoRiga"
-		property="progressivoRiga"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="progressivoRiga" />
-	<fieldProperty
-		name="findOrdineAcqConsegna"
-		property="ordineAcqConsegna"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="OrdineAcqConsegna" />
-	<fieldProperty
-		name="cdCdsOrdine"
-		property="ordineAcqConsegna.cdCds"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="cdCdsOrdine" />
-	<fieldProperty
-		name="cdUnitaOperativa"
-		property="ordineAcqConsegna.cdUnitaOperativa"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="cdUnitaOperativa" />
-	<fieldProperty
-		name="esercizioOrdine"
-		property="ordineAcqConsegna.esercizio"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="esercizioOrdine" />
-	<fieldProperty
-		name="cdNumeratore"
-		property="ordineAcqConsegna.cdNumeratore"
-		inputType="TEXT"
-		inputSize="3"
-		maxLength="3"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="cdNumeratore" />
-	<fieldProperty
-		name="numero"
-		property="ordineAcqConsegna.numero"
-		inputType="TEXT"
-		inputSize="6"
-		maxLength="6"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="numero" />
-	<fieldProperty
-		name="riga"
-		property="ordineAcqConsegna.riga"
-		inputType="TEXT"
-		inputSize="6"
-		maxLength="6"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="riga" />
-	<fieldProperty
-		name="consegna"
-		property="ordineAcqConsegna.consegna"
-		inputType="TEXT"
-		inputSize="6"
-		maxLength="6"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="consegna" />
-	<fieldProperty
-		name="cdVoceIvaRett"
-		property="cdVoceIvaRett"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="cdVoceIvaRett" />
-	<fieldProperty
-		name="prezzoUnitarioRett"
-		property="prezzoUnitarioRett"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		enabledOnEdit="false"
-		label="prezzoUnitarioRett" />
-	<fieldProperty
-		name="sconto1Rett"
-		property="sconto1Rett"
-		inputType="TEXT"
-		inputSize="5"
-		maxLength="5"
-		enabledOnEdit="false"
-		label="sconto1Rett" />
-	<fieldProperty
-		name="sconto2Rett"
-		property="sconto2Rett"
-		inputType="TEXT"
-		inputSize="5"
-		maxLength="5"
-		enabledOnEdit="false"
-		label="sconto2Rett" />
-	<fieldProperty
-		name="sconto3Rett"
-		property="sconto3Rett"
-		inputType="TEXT"
-		inputSize="5"
-		maxLength="5"
-		enabledOnEdit="false"
-		label="sconto3Rett" />
-	<fieldProperty
-		name="imImponibileDivisa"
-		property="imImponibileDivisa"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnEdit="false"
-		nullable="false"
-		label="imImponibileDivisa" />
-	<fieldProperty
-		name="imIvaDivisa"
-		property="imIvaDivisa"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnEdit="false"
-		nullable="false"
-		label="imIvaDivisa" />
-	<fieldProperty
-		name="imImponibile"
-		property="imImponibile"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnEdit="false"
-		nullable="false"
-		label="imImponibile" />
-	<fieldProperty
-		name="imIva"
-		property="imIva"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnEdit="false"
-		nullable="false"
-		label="imIva" />
-	<fieldProperty
-		name="imIvaD"
-		property="imIvaD"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnEdit="false"
-		nullable="false"
-		label="imIvaD" />
-	<fieldProperty
-		name="imIvaNd"
-		property="imIvaNd"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnEdit="false"
-		nullable="false"
-		label="imIvaNd" />
-	<fieldProperty
-		name="imTotaleConsegna"
-		property="imTotaleConsegna"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnEdit="false"
-		nullable="false"
-		label="imTotaleConsegna" />
-	<fieldProperty
-		name="statoAss"
-		property="statoAss"
-		inputType="TEXT"
-		inputSize="3"
-		maxLength="3"
-		enabledOnEdit="false"
-		nullable="false"
-		label="statoAss" />
-	<form
-		name="searchtool">
-		<formFieldProperty
-			name="cdCds" />
-		<formFieldProperty
-			name="cdUnitaOrganizzativa" />
-		<formFieldProperty
-			name="esercizio" />
-		<formFieldProperty
-			name="pgFatturaPassiva" />
-		<formFieldProperty
-			name="progressivoRiga" />
-		<formFieldProperty
-			name="cdCdsOrdine" />
-		<formFieldProperty
-			name="cdUnitaOperativa" />
-		<formFieldProperty
-			name="esercizioOrdine" />
-		<formFieldProperty
-			name="cdNumeratore" />
-		<formFieldProperty
-			name="numero" />
-		<formFieldProperty
-			name="riga" />
-		<formFieldProperty
-			name="consegna" />
-	</form>
-	<formFieldProperty
-		name="findOrdineAcqConsegna" />
-	<formFieldProperty
-		name="prezzoUnitarioRett" />
-	<formFieldProperty
-		name="sconto1Rett" />
-	<formFieldProperty
-		name="sconto2Rett" />
-	<formFieldProperty
-		name="sconto3Rett" />
-	<formFieldProperty
-		name="imImponibileDivisa" />
-	<formFieldProperty
-		name="imIvaDivisa" />
-	<formFieldProperty
-		name="imImponibile" />
-	<formFieldProperty
-		name="imIva" />
-	<formFieldProperty
-		name="imIvaD" />
-	<formFieldProperty
-		name="imIvaNd" />
-	<formFieldProperty
-		name="imTotaleConsegna" />
-	<formFieldProperty
-		name="statoAss" />
-	<findFieldProperty
-		name="cdCds" />
-	<findFieldProperty
-		name="cdUnitaOrganizzativa" />
-	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
-		name="pgFatturaPassiva" />
-	<findFieldProperty
-		name="progressivoRiga" />
-	<findFieldProperty
-		name="cdCdsOrdine" />
-	<findFieldProperty
-		name="cdUnitaOperativa" />
-	<findFieldProperty
-		name="esercizioOrdine" />
-	<findFieldProperty
-		name="cdNumeratore" />
-	<findFieldProperty
-		name="numero" />
-	<findFieldProperty
-		name="riga" />
-	<findFieldProperty
-		name="consegna" />
-	<findFieldProperty
-		name="cdVoceIvaRett" />
-	<findFieldProperty
-		name="prezzoUnitarioRett" />
-	<findFieldProperty
-		name="sconto1Rett" />
-	<findFieldProperty
-		name="sconto2Rett" />
-	<findFieldProperty
-		name="sconto3Rett" />
-	<findFieldProperty
-		name="imImponibileDivisa" />
-	<findFieldProperty
-		name="imIvaDivisa" />
-	<findFieldProperty
-		name="imImponibile" />
-	<findFieldProperty
-		name="imIva" />
-	<findFieldProperty
-		name="imIvaD" />
-	<findFieldProperty
-		name="imIvaNd" />
-	<findFieldProperty
-		name="imTotaleConsegna" />
-	<findFieldProperty
-		name="statoAss" />
-	<columnFieldProperty
-		name="cdCds" />
-	<columnFieldProperty
-		name="cdUnitaOrganizzativa" />
-	<columnFieldProperty
-		name="esercizio" />
-	<columnFieldProperty
-		name="pgFatturaPassiva" />
-	<columnFieldProperty
-		name="progressivoRiga" />
-	<columnFieldProperty
-		name="cdCdsOrdine" />
-	<columnFieldProperty
-		name="cdUnitaOperativa" />
-	<columnFieldProperty
-		name="esercizioOrdine" />
-	<columnFieldProperty
-		name="cdNumeratore" />
-	<columnFieldProperty
-		name="numero" />
-	<columnFieldProperty
-		name="riga" />
-	<columnFieldProperty
-		name="consegna" />
-	<columnFieldProperty
-		name="cdVoceIvaRett" />
-	<columnFieldProperty
-		name="prezzoUnitarioRett" />
-	<columnFieldProperty
-		name="sconto1Rett" />
-	<columnFieldProperty
-		name="sconto2Rett" />
-	<columnFieldProperty
-		name="sconto3Rett" />
-	<columnFieldProperty
-		name="imImponibileDivisa" />
-	<columnFieldProperty
-		name="imIvaDivisa" />
-	<columnFieldProperty
-		name="imImponibile" />
-	<columnFieldProperty
-		name="imIva" />
-	<columnFieldProperty
-		name="imIvaD" />
-	<columnFieldProperty
-		name="imIvaNd" />
-	<columnFieldProperty
-		name="imTotaleConsegna" />
-	<columnFieldProperty
-		name="statoAss" />
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+        shortDescription="Collegamento riga fattura passiva con riga di consegna Ordine"
+        longDescription="Collegamento riga fattura passiva con riga di consegna Ordine">
+    <fieldProperty
+            name="cdCds"
+            property="cdCds"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="cdCds"/>
+    <fieldProperty
+            name="cdUnitaOrganizzativa"
+            property="cdUnitaOrganizzativa"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="cdUnitaOrganizzativa"/>
+    <fieldProperty
+            name="esercizio"
+            property="esercizio"
+            inputType="TEXT"
+            inputSize="4"
+            maxLength="4"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="esercizio"/>
+    <fieldProperty
+            name="pgFatturaPassiva"
+            property="pgFatturaPassiva"
+            inputType="TEXT"
+            inputSize="10"
+            maxLength="10"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="pgFatturaPassiva"/>
+    <fieldProperty
+            name="progressivoRiga"
+            property="progressivoRiga"
+            inputType="TEXT"
+            inputSize="10"
+            maxLength="10"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="progressivoRiga"/>
+    <fieldProperty
+            name="findOrdineAcqConsegna"
+            property="ordineAcqConsegna"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            enabledOnSearch="true"
+            label="OrdineAcqConsegna"/>
+    <fieldProperty
+            name="cdCdsOrdine"
+            property="ordineAcqConsegna.cdCds"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="cdCdsOrdine"/>
+    <fieldProperty
+            name="cdUnitaOperativa"
+            property="ordineAcqConsegna.cdUnitaOperativa"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="cdUnitaOperativa"/>
+    <fieldProperty
+            name="esercizioOrdine"
+            property="ordineAcqConsegna.esercizio"
+            inputType="TEXT"
+            inputSize="4"
+            maxLength="4"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="esercizioOrdine"/>
+    <fieldProperty
+            name="cdNumeratore"
+            property="ordineAcqConsegna.cdNumeratore"
+            inputType="TEXT"
+            inputSize="3"
+            maxLength="3"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="cdNumeratore"/>
+    <fieldProperty
+            name="numero"
+            property="ordineAcqConsegna.numero"
+            inputType="TEXT"
+            inputSize="6"
+            maxLength="6"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="numero"/>
+    <fieldProperty
+            name="riga"
+            property="ordineAcqConsegna.riga"
+            inputType="TEXT"
+            inputSize="6"
+            maxLength="6"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="riga"/>
+    <fieldProperty
+            name="consegna"
+            property="ordineAcqConsegna.consegna"
+            inputType="TEXT"
+            inputSize="6"
+            maxLength="6"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="consegna"/>
+    <fieldProperty
+            name="cdVoceIvaRett"
+            property="cdVoceIvaRett"
+            inputType="TEXT"
+            inputSize="10"
+            maxLength="10"
+            enabledOnEdit="false"
+            label="cdVoceIvaRett"/>
+
+    <fieldProperty
+            name="voceIva"
+            property="voceIva"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            label="Codice IVA"/>
+    <fieldProperty
+            name="prezzoUnitarioRett"
+            property="prezzoUnitarioRett"
+            inputType="TEXT"
+            inputSize="20"
+            maxLength="20"
+            enabledOnEdit="true"
+            formatName="it.cnr.contab.util.Importo6CifreFormat"
+            label="Prezzo unitario"/>
+
+    <fieldProperty
+            name="sconto1Rett"
+            property="sconto1Rett"
+            inputType="TEXT"
+            inputSize="5"
+            maxLength="5"
+            enabledOnEdit="true"
+            formatName="it.cnr.contab.util.PercentFormat"
+            label="% Sconto 1"/>
+    <fieldProperty
+            name="sconto2Rett"
+            property="sconto2Rett"
+            inputType="TEXT"
+            inputSize="5"
+            maxLength="5"
+            enabledOnEdit="true"
+            formatName="it.cnr.contab.util.PercentFormat"
+            label="% Sconto 2"/>
+    <fieldProperty
+            name="sconto3Rett"
+            property="sconto3Rett"
+            inputType="TEXT"
+            inputSize="5"
+            maxLength="5"
+            enabledOnEdit="true"
+            formatName="it.cnr.contab.util.PercentFormat"
+            label="% Sconto 3"/>
+    <fieldProperty
+            name="imImponibileDivisa"
+            property="imImponibileDivisa"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            enabledOnEdit="false"
+            nullable="false"
+            label="imImponibileDivisa"/>
+    <fieldProperty
+            name="imIvaDivisa"
+            property="imIvaDivisa"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            enabledOnEdit="false"
+            nullable="false"
+            label="imIvaDivisa"/>
+    <fieldProperty
+            name="imImponibile"
+            property="imImponibile"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            enabledOnEdit="false"
+            nullable="false"
+            label="Imponibile"/>
+    <fieldProperty
+            name="imIva"
+            property="imIva"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            enabledOnEdit="false"
+            nullable="false"
+            label="Iva"/>
+    <fieldProperty
+            name="imIvaD"
+            property="imIvaD"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            enabledOnEdit="false"
+            nullable="false"
+            label="imIvaD"/>
+    <fieldProperty
+            name="imIvaNd"
+            property="imIvaNd"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            enabledOnEdit="false"
+            nullable="false"
+            label="imIvaNd"/>
+    <fieldProperty
+            name="imTotaleConsegna"
+            property="imTotaleConsegna"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            enabledOnEdit="false"
+            nullable="false"
+            label="imTotaleConsegna"/>
+    <fieldProperty
+            name="statoAss"
+            property="statoAss"
+            inputType="TEXT"
+            inputSize="3"
+            maxLength="3"
+            enabledOnEdit="false"
+            nullable="false"
+            label="statoAss"/>
+    <form
+            name="searchtool">
+        <formFieldProperty
+                name="cdCds"/>
+        <formFieldProperty
+                name="cdUnitaOrganizzativa"/>
+        <formFieldProperty
+                name="esercizio"/>
+        <formFieldProperty
+                name="pgFatturaPassiva"/>
+        <formFieldProperty
+                name="progressivoRiga"/>
+        <formFieldProperty
+                name="cdCdsOrdine"/>
+        <formFieldProperty
+                name="cdUnitaOperativa"/>
+        <formFieldProperty
+                name="esercizioOrdine"/>
+        <formFieldProperty
+                name="cdNumeratore"/>
+        <formFieldProperty
+                name="numero"/>
+        <formFieldProperty
+                name="riga"/>
+        <formFieldProperty
+                name="consegna"/>
+    </form>
+
+    <formFieldProperty
+            name="voceIva"/>
+    <formFieldProperty
+            name="prezzoUnitarioRett"/>
+    <formFieldProperty
+            name="sconto1Rett"/>
+    <formFieldProperty
+            name="sconto2Rett"/>
+    <formFieldProperty
+            name="sconto3Rett"/>
+
+    <findFieldProperty
+            name="cdCds"/>
+    <findFieldProperty
+            name="cdUnitaOrganizzativa"/>
+    <findFieldProperty
+            name="esercizio"/>
+    <findFieldProperty
+            name="pgFatturaPassiva"/>
+    <findFieldProperty
+            name="progressivoRiga"/>
+    <findFieldProperty
+            name="cdCdsOrdine"/>
+    <findFieldProperty
+            name="cdUnitaOperativa"/>
+    <findFieldProperty
+            name="esercizioOrdine"/>
+    <findFieldProperty
+            name="cdNumeratore"/>
+    <findFieldProperty
+            name="numero"/>
+    <findFieldProperty
+            name="riga"/>
+    <findFieldProperty
+            name="consegna"/>
+    <findFieldProperty
+            name="cdVoceIvaRett"/>
+    <findFieldProperty
+            name="prezzoUnitarioRett"/>
+    <findFieldProperty
+            name="sconto1Rett"/>
+    <findFieldProperty
+            name="sconto2Rett"/>
+    <findFieldProperty
+            name="sconto3Rett"/>
+    <findFieldProperty
+            name="imImponibileDivisa"/>
+    <findFieldProperty
+            name="imIvaDivisa"/>
+    <findFieldProperty
+            name="imImponibile"/>
+    <findFieldProperty
+            name="imIva"/>
+    <findFieldProperty
+            name="imIvaD"/>
+    <findFieldProperty
+            name="imIvaNd"/>
+    <findFieldProperty
+            name="imTotaleConsegna"/>
+    <findFieldProperty
+            name="statoAss"/>
+
+    <columnFieldProperty
+            name="dtPrevConsegna"
+            property="ordineAcqConsegna.dtPrevConsegna"
+            formatName="date_short"
+            headerLabel="Consegna"
+            label="Data"/>
+    <columnFieldProperty
+            name="cdNumeratore"
+            property="ordineAcqConsegna.ordineAcqRiga.cdNumeratore"
+            headerLabel="Consegna"
+            label="Numeratore"/>
+    <columnFieldProperty
+            name="numero"
+            property="ordineAcqConsegna.ordineAcqRiga.numero"
+            headerLabel="Consegna"
+            label="Numero"/>
+    <columnFieldProperty
+            name="riga"
+            property="ordineAcqConsegna.ordineAcqRiga.riga"
+            headerLabel="Consegna"
+            label="Riga"/>
+    <columnFieldProperty
+            name="notaRiga"
+            property="ordineAcqConsegna.ordineAcqRiga.notaRiga"
+            headerLabel="Ordine"
+            label="Note"/>
+    <columnFieldProperty
+            name="cd_voce_iva"
+            property="ordineAcqConsegna.ordineAcqRiga.voceIva.cd_voce_iva"
+            headerLabel="Ordine"
+            label="Cod. IVA"/>
+    <columnFieldProperty
+            name="percentuale"
+            property="ordineAcqConsegna.ordineAcqRiga.voceIva.percentuale"
+            formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+            headerLabel="Ordine"
+            label="% IVA"/>
+    <columnFieldProperty
+            name="prezzoUnitario"
+            property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
+            headerLabel="Ordine"
+            formatName="it.cnr.contab.util.Importo6CifreFormat"
+            label="P. Unitario"/>
+    <columnFieldProperty
+            name="sconto1"
+            property="ordineAcqConsegna.ordineAcqRiga.sconto1"
+            headerLabel="Ordine"
+            formatName="it.cnr.contab.util.PercentFormat"
+            label="% Sc 1"/>
+    <columnFieldProperty
+            name="sconto2"
+            property="ordineAcqConsegna.ordineAcqRiga.sconto2"
+            headerLabel="Ordine"
+            formatName="it.cnr.contab.util.PercentFormat"
+            label="% Sc 2"/>
+    <columnFieldProperty
+            name="sconto3"
+            property="ordineAcqConsegna.ordineAcqRiga.sconto3"
+            headerLabel="Ordine"
+            formatName="it.cnr.contab.util.PercentFormat"
+            label="% Sc 3"/>
+    <columnFieldProperty
+            name="codiceIva"
+            property="voceIva.cd_voce_iva"
+            headerLabel="Rettifiche"
+            label="Cod. IVA"/>
+    <columnFieldProperty
+            name="prezzoUnitarioRett"
+            property="prezzoUnitarioRett"
+            headerLabel="Rettifiche"
+            label="P. unitario"/>
+    <columnFieldProperty
+            name="sconto1Rett"
+            property="sconto1Rett"
+            headerLabel="Rettifiche"
+            label="% Sc 1"/>
+    <columnFieldProperty
+            name="sconto2Rett"
+            property="sconto2Rett"
+            headerLabel="Rettifiche"
+            label="% Sc 2"/>
+    <columnFieldProperty
+            name="sconto3Rett"
+            property="sconto3Rett"
+            headerLabel="Rettifiche"
+            label="% Sc 1"/>
+    <columnFieldProperty
+            name="imImponibile"/>
+    <columnFieldProperty
+            name="imIva"/>
+    <columnFieldProperty
+            name="impegno"
+            property="impegnoDisplay"
+            label="Impegno"/>
+
 </bulkInfo>

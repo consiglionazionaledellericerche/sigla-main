@@ -1689,6 +1689,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         ordineAcqConsegna.setStatoFatt(OrdineAcqConsegnaBulk.STATO_FATT_ASSOCIATA_TOTALMENTE);
         ordineAcqConsegna.setToBeUpdated();
         try {
+            if (createComponentSession().isLockedBulk(context.getUserContext(), ordineAcqConsegna))
+                throw new ApplicationException("Le righe di consegna selezionate sono utilizzate al momento da un'altro utente!");
             createComponentSession().modificaConBulk(context.getUserContext(), ordineAcqConsegna);
         } catch (ComponentException|RemoteException e) {
             throw handleException(e);
