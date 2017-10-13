@@ -280,17 +280,13 @@
     <formFieldProperty
             name="voceIva"/>
     <formFieldProperty
-            name="prezzoUnitarioRett"
-            command="doDefault"/>
+            name="prezzoUnitarioRett"/>
     <formFieldProperty
-            name="sconto1Rett"
-            command="doDefault"/>
+            name="sconto1Rett"/>
     <formFieldProperty
-            name="sconto2Rett"
-            command="doDefault"/>
+            name="sconto2Rett"/>
     <formFieldProperty
-            name="sconto3Rett"
-            command="doDefault"/>
+            name="sconto3Rett"/>
 
     <findFieldProperty
             name="cdCds"/>
