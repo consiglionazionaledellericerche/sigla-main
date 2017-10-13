@@ -288,4 +288,17 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
 	public void setCdVoceIvaRett(java.lang.String cdVoceIvaRett)  {
 		this.getVoceIva().setCd_voce_iva(cdVoceIvaRett);
 	}
+
+	public String getImpegnoDisplay() {
+		return Optional.ofNullable(ordineAcqConsegna)
+				.map(OrdineAcqConsegnaBulk::getObbligazioneScadenzario)
+				.map(obbligazione_scadenzarioBulk -> {
+					return String.valueOf(obbligazione_scadenzarioBulk.getEsercizio())
+							.concat("/")
+							.concat(obbligazione_scadenzarioBulk.getCd_cds())
+							.concat("/")
+							.concat(String.valueOf(obbligazione_scadenzarioBulk.getPg_obbligazione()));
+				})
+				.orElse(null);
+	}
 }
