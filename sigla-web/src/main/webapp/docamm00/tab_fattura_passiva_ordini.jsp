@@ -35,7 +35,12 @@
         <legend class="GroupLabel card-header text-primary">Rettifiche</legend>
         <table>
             <tr>
-                <td><% bp.getFattureRigaOrdiniController().writeForm(out); %></td>
+                <td><% bp.getFattureRigaOrdiniController().writeForm(out, "ivaPrezzo"); %></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><% bp.getFattureRigaOrdiniController().writeForm(out, "scontoRett"); %></td>
             </tr>
         </table>
     </fieldset>
