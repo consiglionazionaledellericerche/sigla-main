@@ -7,6 +7,10 @@ package it.cnr.contab.ordmag.anag00;
 import it.cnr.jada.bulk.OggettoBulk;
 
 public class NumerazioneMagBulk extends NumerazioneMagBase {
+	public final static String NUMERAZIONE_LOTTO = "LOT";
+	public final static String NUMERAZIONE_EVASIONE_ORDINE = "RIS";
+	public final static String NUMERAZIONE_BOLLA_SCARICO = "INS";
+
 	/**
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
 	 **/
