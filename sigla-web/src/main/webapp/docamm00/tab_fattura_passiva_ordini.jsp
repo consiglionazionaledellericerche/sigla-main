@@ -35,12 +35,15 @@
         <legend class="GroupLabel card-header text-primary">Rettifiche</legend>
         <table>
             <tr>
-                <td><% bp.getFattureRigaOrdiniController().writeForm(out, "ivaPrezzo"); %></td>
+                <% bp.getFattureRigaOrdiniController().writeFormField(out, "voceIva"); %>
+                <% bp.getFattureRigaOrdiniController().writeFormField(out, "prezzoUnitarioRett"); %>
             </tr>
         </table>
         <table>
             <tr>
-                <td><% bp.getFattureRigaOrdiniController().writeForm(out, "scontoRett"); %></td>
+                <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto1Rett"); %>
+                <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto2Rett"); %>
+                <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto3Rett"); %>
             </tr>
         </table>
     </fieldset>
