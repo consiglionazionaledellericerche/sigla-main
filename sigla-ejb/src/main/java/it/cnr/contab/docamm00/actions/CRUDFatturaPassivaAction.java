@@ -29,6 +29,7 @@ import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -934,7 +935,6 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      */
     public Forward doContabilizzaOrdine(ActionContext context) {
         HookForward caller = (HookForward) context.getCaller();
-        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
         final Supplier<Stream<EvasioneOrdineRigaBulk>> selectedElements = () ->
                 Optional.ofNullable(caller.getParameter("selectedElements"))
                 .filter(List.class::isInstance)
@@ -945,11 +945,17 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                                 .filter(EvasioneOrdineRigaBulk.class::isInstance)
                                 .map(EvasioneOrdineRigaBulk.class::cast)
                 ).orElse(Stream.empty());
+        Optional<CRUDFatturaPassivaBP> crudFatturaPassivaBP = Optional.ofNullable(context.getBusinessProcess())
+                .filter(CRUDFatturaPassivaBP.class::isInstance)
+                .map(CRUDFatturaPassivaBP.class::cast);
+        if (!crudFatturaPassivaBP.isPresent())
+            return context.findDefaultForward();
+
         final Map<String, List<EvasioneOrdineRigaBulk>> collectBeneServizio = selectedElements.get().collect(
                 Collectors.groupingBy(o -> o.getOrdineAcqConsegna().getOrdineAcqRiga().getCdBeneServizio())
         );
         if (collectBeneServizio.size() > 1) {
-            bp.setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno beni diversi ["
+            crudFatturaPassivaBP.get().setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno beni diversi ["
                     .concat(collectBeneServizio.keySet().stream().collect(Collectors.joining(","))).concat("]"));
             return context.findDefaultForward();
         }
@@ -957,12 +963,13 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 Collectors.groupingBy(o -> o.getOrdineAcqConsegna().getOrdineAcqRiga().getCdVoceIva())
         );
         if (collectCodiciIva.size() > 1) {
-            bp.setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno codici iva diversi ["
+            crudFatturaPassivaBP.get().setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno codici iva diversi ["
                     .concat(collectCodiciIva.keySet().stream().collect(Collectors.joining(","))).concat("]"));
             return context.findDefaultForward();
         }
         try {
-            Optional<Fattura_passiva_rigaBulk> fattura_passiva_rigaBulk = Optional.ofNullable(bp.getDettaglio().getDetails().get(bp.getDettaglio().getSelection().getFocus()))
+            Optional<Fattura_passiva_rigaBulk> fattura_passiva_rigaBulk =
+                    Optional.ofNullable(crudFatturaPassivaBP.get().getDettaglio().getDetails().get(crudFatturaPassivaBP.get().getDettaglio().getSelection().getFocus()))
                     .filter(Fattura_passiva_rigaBulk.class::isInstance)
                     .map(Fattura_passiva_rigaBulk.class::cast);
             if (fattura_passiva_rigaBulk.isPresent()) {
@@ -984,7 +991,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     );
                     doCalcolaTotaliDiRiga(context);
                     try {
-                        bp.associaOrdineRigaFattura(context, evasioneOrdineRigaBulk, fattura_passiva_rigaBulk.get());
+                        crudFatturaPassivaBP.get().associaOrdineRigaFattura(context, evasioneOrdineRigaBulk, fattura_passiva_rigaBulk.get());
                     } catch (BusinessProcessException e) {
                         throw new DetailedRuntimeException(e);
                     }
@@ -3958,6 +3965,43 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         }
     }
 
+
+    public Forward doRemoveFromCRUDMain_Ordini(ActionContext context) throws ApplicationException {
+        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
+        Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+        Selection selection = bp.getFattureRigaOrdiniController().getSelection();
+        Optional.ofNullable(selection)
+                .filter(selection1 -> !selection1.isEmpty())
+                .orElseThrow(() -> new ApplicationException("Selezionare le consegne che si desidera eliminare!"));
+
+
+        final List<FatturaOrdineBulk> details = bp.getFattureRigaOrdiniController().getDetails();
+        final Iterator<Integer> iterator = selection.iterator();
+        List<FatturaOrdineBulk> bulksToRemove = new ArrayList<FatturaOrdineBulk>();
+        iterator.forEachRemaining(index -> {
+            try {
+                final FatturaOrdineBulk fatturaOrdineBulk = details.get(index);
+                OrdineAcqConsegnaBulk ordineAcqConsegna = (OrdineAcqConsegnaBulk) bp.createComponentSession()
+                        .findByPrimaryKey(context.getUserContext(), fatturaOrdineBulk.getOrdineAcqConsegna());
+                ordineAcqConsegna.setStatoFatt(OrdineAcqConsegnaBulk.STATO_FATT_NON_ASSOCIATA);
+                ordineAcqConsegna.setToBeUpdated();
+                bp.createComponentSession().modificaConBulk(
+                        context.getUserContext(),
+                        ordineAcqConsegna);
+                bulksToRemove.add(fatturaOrdineBulk);
+            } catch (ComponentException |RemoteException|BusinessProcessException e) {
+                throw new DetailedRuntimeException(e);
+            }
+        });
+        bulksToRemove.stream()
+                .forEach(fatturaOrdineBulk -> {
+                    final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFatturaRigaOrdiniHash().getKey(fatturaOrdineBulk);
+                    fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
+                    fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).remove(fatturaOrdineBulk);
+                });
+        bp.getFattureRigaOrdiniController().getSelection().clear();
+        return context.findDefaultForward();
+    }
     /**
      * <!-- @TODO: da completare -->
      * Gestisce una richiesta di cancellazione dal controller "obbligazioni"
