@@ -198,7 +198,7 @@
 		<formFieldProperty
 			name="ds_voce_iva"
 			inputType="TEXT"
-			inputSize="20" />
+			inputSize="30" />
 	</form>
 
 		
