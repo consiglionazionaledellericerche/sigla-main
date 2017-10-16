@@ -1,4 +1,4 @@
-package it.cnr.contab.ordmag.ordini.comp;
+package it.cnr.contab.ordmag.magazzino.comp;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -64,6 +64,9 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome;
@@ -93,7 +96,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
-public class OrdineAcqComponent
+public class MovimentiMagComponent
 	extends it.cnr.jada.comp.CRUDComponent
 	implements ICRUDMgr,Cloneable,Serializable {
 
@@ -103,7 +106,7 @@ public class OrdineAcqComponent
 	private final static int MODIFICA    = 2;
 	private final static int CANCELLAZIONE    = 3;		
 	
-    public  OrdineAcqComponent()
+    public  MovimentiMagComponent()
     {
 
         /*Default constructor*/
@@ -2140,13 +2143,11 @@ public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine) th
 {
 	verificaCoperturaContratto (aUC,ordine, MODIFICA);
 }
-public OrdineAcqBulk cancellaOrdine(
-	    UserContext aUC,
-	    OrdineAcqBulk ordine)
+public MovimentiMagBulk caricaOrdine(it.cnr.jada.UserContext userContext, EvasioneOrdineBulk evasioneOrdine)
 	    throws ComponentException {
 	    try {
-			for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
-				OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
+			for (java.util.Iterator i= evasioneOrdine.getListaRigheConsegnaEvase().iterator(); i.hasNext();) {
+				EvasioneOrdineRigaBulk riga = (EvasioneOrdineRigaBulk) i.next();
 				if (riga.getDspObbligazioneScadenzario() != null && riga.getDspObbligazioneScadenzario().getPg_obbligazione() != null){
 					  throw new ApplicationException("Scollegare prima gli impegni collegati all'ordine prima di procedere alla cancellazione.");
 				}
