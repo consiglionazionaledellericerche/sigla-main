@@ -79,6 +79,8 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			OggettoBulk oggettobulk) throws ComponentException {
 		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) super.inizializzaBulkPerModifica(usercontext, oggettobulk);
 		try {
+			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(usercontext, "AMMFATTURDOCSFATPASA");
+			documentoEleTestata.setAbilitato(hasAccesso);
 			documentoEleTestata.setAttivoSplitPayment(Utility.createFatturaPassivaComponentSession().isAttivoSplitPayment(usercontext, documentoEleTestata.getDataDocumento()));
 			documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
 					getHome(usercontext, DocumentoEleLineaBulk.class).find(new DocumentoEleLineaBulk(documentoEleTestata))));
