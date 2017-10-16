@@ -1822,7 +1822,12 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 
 		// carica i capitoli di spesa del CDS
 		accertamento = listaCapitoliPerCdsVoce( aUC, accertamento );
-		accertamento.refreshCapitoliDiEntrataCdsSelezionatiColl();
+		boolean isNuovoPdg = ((Parametri_cnrHome)getHome(aUC,Parametri_cnrBulk.class)).isNuovoPdg(aUC);
+		if (!isNuovoPdg)		
+			accertamento.refreshCapitoliDiEntrataCdsSelezionatiColl();
+		else
+			accertamento.refreshNewCapitoliDiEntrataCdsSelezionatiColl();
+
 
 		// MITODO - verificare se serve
 		// Inizializzazione delle lista di tutte le linee di attivita eleggibili e di quella selezionata 
