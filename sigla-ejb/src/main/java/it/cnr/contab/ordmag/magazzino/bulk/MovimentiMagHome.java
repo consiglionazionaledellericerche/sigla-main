@@ -4,7 +4,10 @@
  */
 package it.cnr.contab.ordmag.magazzino.bulk;
 import java.sql.Connection;
+
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 public class MovimentiMagHome extends BulkHome {
 	public MovimentiMagHome(Connection conn) {
@@ -12,5 +15,10 @@ public class MovimentiMagHome extends BulkHome {
 	}
 	public MovimentiMagHome(Connection conn, PersistentCache persistentCache) {
 		super(MovimentiMagBulk.class, conn, persistentCache);
+	}
+	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
+		MovimentiMagBulk movimento = (MovimentiMagBulk)bulk;
+		if (movimento.getPgMovimento() == null)
+			movimento.setPgMovimento(new Long(this.fetchNextSequenceValue(userContext,"CNRSEQ00_MOVIMENTI_MAG").longValue()));
 	}
 }

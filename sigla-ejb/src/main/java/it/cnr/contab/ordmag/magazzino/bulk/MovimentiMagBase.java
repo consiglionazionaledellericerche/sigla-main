@@ -149,9 +149,6 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 //    CAMBIO DECIMAL(15,4) NOT NULL
 	private java.math.BigDecimal cambio;
  
-//    DT_CAMBIO TIMESTAMP(7)
-	private java.sql.Timestamp dtCambio;
- 
 //    PREZZO_UNITARIO DECIMAL(21,6)
 	private java.math.BigDecimal prezzoUnitario;
  
@@ -842,20 +839,6 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 **/
 	public void setCambio(java.math.BigDecimal cambio)  {
 		this.cambio=cambio;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [dtCambio]
-	 **/
-	public java.sql.Timestamp getDtCambio() {
-		return dtCambio;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [dtCambio]
-	 **/
-	public void setDtCambio(java.sql.Timestamp dtCambio)  {
-		this.dtCambio=dtCambio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

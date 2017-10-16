@@ -517,4 +517,7 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 		}
 		return false;
 	}
+	public String getConsegnaOrdineString() {
+		return getEsercizio()+"/"+getCdNumeratore()+"/"+getNumero()+"/"+getRiga()+"/"+getConsegna();
+	}
 }
