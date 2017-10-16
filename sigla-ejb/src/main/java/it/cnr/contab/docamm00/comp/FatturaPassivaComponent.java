@@ -1968,6 +1968,7 @@ public RemoteIterator cercaFatturaPerNdC(UserContext context, Nota_di_creditoBul
 	sql.addClause("AND", "cd_cds", sql.EQUALS, notaDiCredito.getCd_cds_origine());
 	sql.addClause("AND", "esercizio", sql.LESS_EQUALS, notaDiCredito.getEsercizio());
 	sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, notaDiCredito.getCd_uo_origine());
+	// RP 05/10/2017 Da commentare per gestire NC su compensi
 	sql.addClause("AND", "fl_fattura_compenso", sql.EQUALS, Boolean.FALSE);
 	sql.addClause("AND", "fl_congelata", sql.EQUALS, Boolean.FALSE);
 	sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passiva_IBulk.STATO_ANNULLATO);
@@ -6068,7 +6069,7 @@ public void validaFattura(UserContext aUC,Fattura_passivaBulk fatturaPassiva) th
 			  if(riga.getCessionario()==null){
 				  if(mod!=null && mod.getCd_modalita_pag().compareTo(riga.getModalita_pagamento().getCd_modalita_pag())==0 &&
 						  terzo.getCd_terzo()==riga.getFornitore().getCd_terzo() && 
-						  banca.getPg_banca()!=riga.getBanca().getPg_banca()){
+						  banca.getPg_banca().intValue()!=riga.getBanca().getPg_banca().intValue()){
 					  throw new it.cnr.jada.comp.ApplicationException("Attenzione sono state indicate delle coordinate bancarie diverse sulle righe!");
 				  }else{
 				  	mod =riga.getModalita_pagamento();

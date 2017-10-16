@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Definition of new Model -->
+<model name="sigla_commons_aspect:sigla_commons_aspectModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>SIGLA extension Content Model - Dati Comuni</description>
+	<author>Gianfranco Gasparro</author>
+	<version>1.1</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/sigla/commons_aspect/" prefix="sigla_commons_aspect" />
+	</namespaces>
+	<aspects>
+		<aspect name="sigla_commons_aspect:utente_applicativo_sigla">
+			<title>Utente Applicativo</title>
+			<properties>
+				<property name="sigla_commons_aspect:utente_applicativo">
+					<title>Utente Applicativo</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_commons_aspect:terzi">
+			<title>Terzi</title>
+			<properties>
+				<property name="sigla_commons_aspect:terzi_cd_terzo">
+					<title>Codice Terzo</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_commons_aspect:terzi_pf">
+			<title>Persona Fisica</title>
+			<parent>sigla_commons_aspect:terzi</parent>
+			<properties>
+				<property name="sigla_commons_aspect:terzi_pf_cognome">
+					<title>Cognome</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_commons_aspect:terzi_pf_nome">
+					<title>Nome</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_commons_aspect:terzi_pf_codfis">
+					<title>Codice fiscale</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_commons_aspect:terzi_pg">
+			<title>Persona Giuridica</title>
+			<parent>sigla_commons_aspect:terzi</parent>
+			<properties>
+				<property name="sigla_commons_aspect:terzi_pg_denominazione">
+					<title>Ragione Sociale</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_commons_aspect:terzi_pg_pariva">
+					<title>Partita Iva</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_commons_aspect:cds_origine">
+			<title>CDS di origine</title>
+			<properties>
+				<property name="sigla_commons_aspect:cds_origine_codice">
+					<title>Codice CDS</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_commons_aspect:cds_origine_descrizione">
+					<title>Descrizione CDS</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_commons_aspect:uo_origine">
+			<title>UO di origine</title>
+			<properties>
+				<property name="sigla_commons_aspect:uo_origine_codice">
+					<title>Codice UO</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_commons_aspect:uo_origine_descrizione">
+					<title>Descrizione UO</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+	</aspects>
+</model>

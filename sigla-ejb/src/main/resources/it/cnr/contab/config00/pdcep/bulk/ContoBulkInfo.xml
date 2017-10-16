@@ -195,7 +195,7 @@
 		name="cd_classificazione"
 		property="v_classificazione_voci_ep.cd_classificazione"
 		maxLength="34"
-		inputSize="34"
+		inputSize="40"
 		inputType="TEXT"
 		enabledOnEdit="false"
 		enabledOnInsert="false"				
@@ -338,6 +338,11 @@
 		name="ti_sezione"
 		inputType="SELECT"
 		/>
-
+	<findFieldProperty
+		name="id_classificazione"
+		/>
+	<findFieldProperty
+		name="id_classificazione"
+		/>	
 
 </bulkInfo>
