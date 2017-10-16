@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="sigla_contratti:sigla_contrattiModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>SIGLA extension Content Model - Contratti</description>
+	<author>Raffaele Pagano</author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<import uri="http://www.cnr.it/model/sigla/contratti/aspect/cmis" prefix="sigla_contratti_aspect" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/cmis" prefix="sigla_contratti" />
+	</namespaces>
+
+	<types>
+		<type name="sigla_contratti:procedura">
+			<title>Procedura Conferimento</title>
+			<description>Procedura Conferimento</description>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="sigla_contratti:oggetto">
+					<title>Oggetto del Contratto</title>
+					<description>Oggetto del Contratto</description>
+					<type>d:text</type>
+					<mandatory enforced="true">true</mandatory>
+				</property>
+				<property name="sigla_contratti:procedura_amministrativa">
+					<title>Procedura Amministrativa</title>
+					<description>Procedura Amministrativa</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>sigla_contratti_aspect:procedura</aspect>
+				<aspect>sigla_contratti_aspect:tipo_norma</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="sigla_contratti:model">
+			<title>Contratti in generale</title>
+			<description>Contratti in generale</description>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="sigla_contratti:data_stipula">
+					<title>Data Stipula Incarico</title>
+					<description>Data Stipula Incarico</description>
+					<type>d:datetime</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:data_inizio">
+					<title>Data Inizio Incarico</title>
+					<description>Data Inizio Incarico</description>
+					<type>d:datetime</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:data_fine">
+					<title>Data Fine Incarico</title>
+					<description>Data Fine Incarico</description>
+					<type>d:datetime</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:nr_provvedimento_nomina">
+					<title>Numero Provvedimento Nomina</title>
+					<description>Numero Provvedimento Nomina</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:dt_provvedimento_nomina">
+					<title>Data Provvedimento Nomina</title>
+					<description>Data Provvedimento Nomina</description>
+					<type>d:datetime</type>
+					<mandatory>true</mandatory>
+				</property>
+			</properties>
+		</type>
+		<type name="sigla_contratti:incarichi">
+			<title>Incarichi di Collaborazione</title>
+			<description>Incarichi di Collaborazione</description>
+			<parent>sigla_contratti:model</parent>
+			<properties>
+				<property name="sigla_contratti:importo_contratto">
+					<title>Importo del Contratto</title>
+					<description>Importo del Contratto</description>
+					<type>d:double</type>
+					<mandatory enforced="true">true</mandatory>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>sigla_contratti_aspect:procedura</aspect>
+				<aspect>sigla_contratti_aspect:incarichi</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="sigla_contratti:borse_studio">
+			<title>Borse di Studio</title>
+			<description>Borse di Studio</description>
+			<parent>sigla_contratti:incarichi</parent>
+			<mandatory-aspects>
+				<aspect>sigla_contratti_aspect:procedura</aspect>
+				<aspect>sigla_contratti_aspect:borse_studio</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="sigla_contratti:assegni_ricerca">
+			<title>Assegni di Ricerca</title>
+			<description>Assegni di Ricerca</description>
+			<parent>sigla_contratti:incarichi</parent>
+			<mandatory-aspects>
+				<aspect>sigla_contratti_aspect:procedura</aspect>
+				<aspect>sigla_contratti_aspect:assegni_ricerca</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="sigla_contratti:appalti">
+			<title>Contratti di Appalto</title>
+			<description>Contratti di Appalto</description>
+			<parent>sigla_contratti:model</parent>
+			<properties>				
+				<property name="sigla_contratti:importo_attivo_appalto">
+					<title>Importo Attivo dell'appalto</title>
+					<description>Importo del'appalto</description>
+					<type>d:double</type>
+				</property>
+				<property name="sigla_contratti:importo_passivo_appalto">
+					<title>Importo Passivo dell'appalto</title>
+					<description>Importo del'appalto</description>
+					<type>d:double</type>
+				</property>
+				<property name="sigla_contratti:natura_contabile">
+					<title>Natura contabile dell'appalto</title>
+					<description>Natura contabile del'appalto</description>
+					<type>d:text</type>
+					<mandatory enforced="true">true</mandatory>
+				</property>
+				<property name="sigla_contratti:fig_giu_esterna_codice">
+					<title>Codice Terzo Figura giuridica Esterna</title>
+					<description>Codice Terzo Figura giuridica Esterna</description>
+					<type>d:int</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:fig_giu_esterna_denominazione">
+					<title>Denominazione Terzo Figura giuridica Esterna</title>
+					<description>Denominazione Terzo Figura giuridica Esterna</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:fig_giu_esterna_codfis">
+					<title>Codice Fiscale Terzo Figura giuridica Esterna</title>
+					<description>Codice Fiscale Terzo Figura giuridica Esterna</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:fig_giu_esterna_pariva">
+					<title>Partita iva Terzo Figura giuridica Esterna</title>
+					<description>Partita iva Terzo Figura giuridica Esterna</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:tipo_norma">
+					<title>Tipo Norma</title>
+					<description>Tipo Norma</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:responsabile_codice">
+					<title>Codice Terzo Responsabile</title>
+					<description>Codice Terzo Responsabile</description>
+					<type>d:int</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:responsabile_denominazione">
+					<title>Denominazione Terzo Responsabile</title>
+					<description>Denominazione Terzo Responsabile</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+
+				<property name="sigla_contratti:responsabile_procedimento_codice">
+					<title>Codice Terzo Responsabile Procedimento</title>
+					<description>Codice Terzo Responsabile Procedimento</description>
+					<type>d:int</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:responsabile_procedimento_denominazione">
+					<title>Denominazione Terzo Responsabile Procedimento</title>
+					<description>Denominazione Terzo Responsabile Procedimento</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="sigla_contratti:mod_individuazione_beneficiario">
+					<title>Modo individuazione Beneficiario</title>
+					<description>Modo individuazione Beneficiario</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>sigla_contratti_aspect:appalti</aspect>
+			</mandatory-aspects>
+		</type>
+	</types>
+
+</model>
