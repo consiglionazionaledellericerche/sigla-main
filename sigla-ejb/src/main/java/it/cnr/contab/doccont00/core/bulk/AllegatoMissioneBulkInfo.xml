@@ -4,6 +4,16 @@
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
+		name="aspectName"
+		property="aspectName"
+		inputType="SELECT"
+		keysProperty="aspectNamesKeys"
+		inputSize="40"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Tipologia" />
+	<fieldProperty
 		name="nome"
 		property="nome"
 		inputType="TEXT"
@@ -21,6 +31,7 @@
 		maxLength="2000"
 		cols="80"
 		rows="3"
+		readonlyProperty="allegatoEsistente"
 		caseSensitiveSearch="false"
 		label="Descrizione" />
 	<fieldProperty
@@ -40,6 +51,7 @@
 		inputSize="40"
 		maxLength="400"
 		caseSensitiveSearch="false"
+		readonlyProperty="allegatoEsistente"
 		nullable="false"
 		label="File" />
 	<fieldProperty
@@ -51,12 +63,13 @@
 		enabledOnView="true"
 		readonlyProperty="nodeNotPresent"
 		img="img/import24.gif"
-		iconClass="fa fa-fw fa-2x fa-download text-primary"		
-		href="javascript:doScaricaFile()"
+		href="javascript:doScaricaAllegato()"
 		label="Apri File" />
 		
 	<formFieldProperty
 		name="nome" />
+	<formFieldProperty
+		name="aspectName" />
 	<formFieldProperty
 		name="descrizione" />
 	<formFieldProperty
@@ -66,8 +79,11 @@
 	<formFieldProperty
 		name="attivaFile" />
 		
+		
 	<columnFieldProperty
 		name="nome" />
+	<columnFieldProperty
+		name="aspectName" />
 	<columnFieldProperty
 		name="descrizione" />
 	<columnFieldProperty
@@ -80,36 +96,27 @@
 	<findFieldProperty
 		name="titolo" />
 
-	<form name="readonly">
+	<columnSet
+		name="allegatiMissione" >
+		<columnFieldProperty
+			name="aspectName" />
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+	</columnSet>
+	<form
+		name="allegatiMissione" >
+		<formFieldProperty
+			name="aspectName" />
 		<formFieldProperty
 			name="nome" />
 		<formFieldProperty
-			name="descrizione" 
-			enabledOnEdit="false" />
+			name="descrizione" />
 		<formFieldProperty
-			name="titolo"  
-			enabledOnEdit="false" />
+			name="file" />
 		<formFieldProperty
 			name="attivaFile" />
 	</form>
 
-	<columnSet
-		name="readonly" >
-		<columnFieldProperty
-			name="nome" />
-		<columnFieldProperty
-			name="descrizione" />
-		<columnFieldProperty
-			name="titolo" />
-	</columnSet>
-
-	<columnSet
-		name="archivioAllegati" >
-		<columnFieldProperty
-			name="nome" />
-		<columnFieldProperty
-			name="descrizione" />
-		<columnFieldProperty
-			name="titolo" />
-	</columnSet>
 </bulkInfo>
