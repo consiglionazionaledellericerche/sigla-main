@@ -170,4 +170,13 @@ public void setV_classificazione_voci_ep(
 		V_classificazione_voci_epBulk v_classificazione_voci_ep) {
 	this.v_classificazione_voci_ep = v_classificazione_voci_ep;
 }
+public java.lang.Integer getId_classificazione() {
+	if (getV_classificazione_voci_ep() == null)
+		return null;
+	return getV_classificazione_voci_ep().getId_classificazione();
+}
+
+public void setId_classificazione(java.lang.Integer v_id_classificazione) {
+	getV_classificazione_voci_ep().setId_classificazione(v_id_classificazione);
+}
 }
