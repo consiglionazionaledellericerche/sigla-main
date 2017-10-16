@@ -162,7 +162,7 @@
             property="sconto1Rett"
             inputType="TEXT"
             inputSize="5"
-            maxLength="5"
+            maxLength="10"
             enabledOnEdit="true"
             formatName="it.cnr.contab.util.PercentFormat"
             label="% Sconto 1"/>
@@ -171,7 +171,7 @@
             property="sconto2Rett"
             inputType="TEXT"
             inputSize="5"
-            maxLength="5"
+            maxLength="10"
             enabledOnEdit="true"
             formatName="it.cnr.contab.util.PercentFormat"
             label="% Sconto 2"/>
@@ -180,7 +180,7 @@
             property="sconto3Rett"
             inputType="TEXT"
             inputSize="5"
-            maxLength="5"
+            maxLength="10"
             enabledOnEdit="true"
             formatName="it.cnr.contab.util.PercentFormat"
             label="% Sconto 3"/>
@@ -280,13 +280,17 @@
     <formFieldProperty
             name="voceIva"/>
     <formFieldProperty
-            name="prezzoUnitarioRett"/>
+            name="prezzoUnitarioRett"
+            command="doDefault"/>
     <formFieldProperty
-            name="sconto1Rett"/>
+            name="sconto1Rett"
+            command="doDefault"/>
     <formFieldProperty
-            name="sconto2Rett"/>
+            name="sconto2Rett"
+            command="doDefault"/>
     <formFieldProperty
-            name="sconto3Rett"/>
+            name="sconto3Rett"
+            command="doDefault"/>
 
     <findFieldProperty
             name="cdCds"/>
@@ -424,7 +428,7 @@
             name="sconto3Rett"
             property="sconto3Rett"
             headerLabel="Rettifiche"
-            label="% Sc 1"/>
+            label="% Sc 3"/>
     <columnFieldProperty
             name="imImponibile"/>
     <columnFieldProperty
