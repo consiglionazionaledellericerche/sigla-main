@@ -12,6 +12,8 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
@@ -40,7 +42,7 @@ import java.util.Vector;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
-public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDocumentoContabileBulk {
+public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDocumentoContabileBulk, AllegatoParentBulk {
 	private static final long serialVersionUID = 1L;
 
 	private it.cnr.jada.util.OrderedHashtable anniResidui = new it.cnr.jada.util.OrderedHashtable();
@@ -64,6 +66,8 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 	private Collection lineeAttivitaSelezionateColl = Collections.EMPTY_LIST;
 	private BulkList nuoveLineeAttivitaColl = new BulkList();
 	private boolean enableVoceNext = false;
+
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
 	public final static String STATO_OBB_PROVVISORIO 	= "P";
 	public final static String STATO_OBB_DEFINITIVO 	= "D";
@@ -1936,5 +1940,22 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	}
 	public void setEnableVoceNext(boolean enableVoceNext) {
 		this.enableVoceNext = enableVoceNext;
+	}
+	@Override
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	@Override
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	@Override
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	@Override
+	public void setArchivioAllegati(BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
 	}
 }

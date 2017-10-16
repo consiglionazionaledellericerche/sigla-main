@@ -1,8 +1,6 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.bulk.OggettoBulk;
 
 public class AccertamentoOrdBulk extends AccertamentoBulk {
 public AccertamentoOrdBulk() 

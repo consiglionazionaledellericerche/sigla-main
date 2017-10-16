@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false" 
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false" 
+		label="Esercizio Residuo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="30"
+		nullable="false" 
+		label="C.d.R." />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false" 
+		label="GAE" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="ROTEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false" 
+		label="Definisce l'appartenenza (CNR o CdS) delle voci del piano dei conti finanziario." />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="ROTEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false" 
+		label="Definisce la sezione (entrata o spesa) delle voci del piano dei conti finanziario" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false" 
+		label="Voce di bilancio" />
+	<fieldProperty
+		name="im_vincolo"
+		property="im_vincolo"
+		label="Importo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="fl_attivo"
+		property="fl_attivo"
+		label="Attivo"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="lineaAttivita.centro_responsabilita.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="45"
+		label="Descrizione C.d.R." />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="lineaAttivita.ds_linea_attivita"
+		inputType="ROTEXT"
+		inputSize="45"
+		label="Descrizione GAE" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elementoVoce.ds_elemento_voce"
+		inputType="ROTEXT"
+		inputSize="45"
+		label="Descrizione Voce" />
+	<fieldProperty
+		name="find_cdr_assegnatario"
+		property="lineaAttivita.centro_responsabilita"
+		inputType="SEARCHTOOL" 
+		formName="searchtool" 
+		enabledOnSearch="true"
+        enabledOnEdit="true"
+		nullable="false"
+		label="Cdr"/>
+	<fieldProperty
+		name="find_linea_attivita"
+		property="lineaAttivita"
+		inputType="SEARCHTOOL"
+		formName="searchtool_denominazione"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		label="G.a.e." />
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elementoVoce"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Voce di Bilancio" />
+	<fieldProperty
+		name="findAssestato"
+		property="assestatoRisorseCopertura"
+		label="Disponibilità Voci Bilancio"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		columnSet="modalitaConsultazione001"
+		freeSearchSet="modalitaConsultazione001"/>
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_res" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="pg_vincolo" />
+	<formFieldProperty
+		name="im_vincolo" />
+	<formFieldProperty
+		name="fl_attivo" />
+	<formFieldProperty
+		name="ds_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="find_cdr_assegnatario" />
+	<formFieldProperty
+		name="find_linea_attivita" />
+	<formFieldProperty
+		name="find_elemento_voce" />
+	<formFieldProperty
+		name="findAssestato" />
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_res" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="pg_vincolo" />
+	<findFieldProperty
+		name="im_vincolo" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizio_res" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="pg_vincolo" />
+	<columnFieldProperty
+		name="im_vincolo" />
+
+	<columnSet
+	        name="pdgAccertamentoVincolo">
+		<columnFieldProperty
+			name="esercizio_res" />
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="cd_linea_attivita" />
+		<columnFieldProperty
+			name="cd_elemento_voce" />
+		<columnFieldProperty
+			name="im_vincolo" />
+		<columnFieldProperty
+			name="fl_attivo" />
+	</columnSet>     		
+</bulkInfo>

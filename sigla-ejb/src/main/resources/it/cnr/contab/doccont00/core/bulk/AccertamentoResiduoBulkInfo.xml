@@ -148,6 +148,7 @@
 		caseSensitiveSearch="false" 
 		enabledOnView="true"
 		enabledOnSearch="true"
+		command="doOnChangeStato"
 		keysProperty="stato_AccertamentoResiduoKeys"
 		inputType="SELECT" />
 	
@@ -162,15 +163,50 @@
 		keysProperty="stato_AccertamentoResiduoKeys"
 		inputType="SELECT" />
 			
+	<fieldProperty
+		name="im_quota_inesigibile"
+		property="im_quota_inesigibile"
+		label="Quota inesigibile"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+
+	<fieldProperty
+		name="im_quota_inesigibile_ro"
+		property="im_quota_inesigibile"
+		label="Quota inesigibile"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+
+	<fieldProperty
+		name="im_quota_inesigibile_ripartita"
+		property="im_quota_inesigibile_ripartita"
+		label="Quota Ripartita"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+
+	<fieldProperty
+		name="im_quota_inesigibile_da_ripartire"
+		property="im_quota_inesigibile_da_ripartire"
+		label="Quota da Ripartire"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+
+
 	<formFieldProperty
 		name="im_accertamento"
 		enabledOnView="true"
-		nullable="false"
-		/>	
+		nullable="false" />	
 	<formFieldProperty
 		name="im_accertamento_ro"
-		nullable="false"
-		/>	
+		nullable="false" />	
 	<formFieldProperty
 		name="esercizio_competenza"
 		/>
@@ -211,6 +247,18 @@
 		name="statoAccertamento"/>		
 	<formFieldProperty
 		name="statoAccertamento_ro"/>		
+
+	<formFieldProperty
+		name="im_quota_inesigibile"	
+		enabledOnView="true"
+		nullable="false" />	
+	<formFieldProperty
+		name="im_quota_inesigibile_ro" />	
+
+	<formFieldProperty
+		name="im_quota_inesigibile_ripartita" />
+	<formFieldProperty
+		name="im_quota_inesigibile_da_ripartire" />
 		
 	<columnFieldProperty
 		name="esercizio_ori_ori_riporto"
