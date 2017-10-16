@@ -274,8 +274,12 @@ public class EvasioneOrdineComponent
     			if (!ordineEsistente){
     				ordine = (OrdineAcqBulk)getTempHome(userContext, OrdineAcqBulk.class).findByPrimaryKey(ordineConsegna);
     				if (ordine != null){
-    					ordineComponent.inizializzaBulkPerModifica(userContext, ordine);
-    					listaOrdiniConConsegneEvase.add(ordine);
+						try {
+							ordineComponent.inizializzaBulkPerModifica(userContext, ordine);
+						} catch (RemoteException e) {
+							throw handleException(e);
+						}
+						listaOrdiniConConsegneEvase.add(ordine);
     				}
     			}
 
