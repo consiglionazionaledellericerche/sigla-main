@@ -6,6 +6,11 @@ package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 public class TipoMovimentoMagAzBulk extends TipoMovimentoMagAzBase {
+	public final static String AZIONE_AZZERA = "0";
+	public final static String AZIONE_SOSTITUISCE = "S";
+	public final static String AZIONE_SOTTRAE = "-";
+	public final static String AZIONE_SOMMA = "+";
+	
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
 	 **/
