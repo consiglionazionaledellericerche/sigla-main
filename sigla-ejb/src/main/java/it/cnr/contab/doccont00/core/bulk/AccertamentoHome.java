@@ -526,15 +526,29 @@ public java.util.List findLineeAttivita( List cdrList, List capitoliList, Accert
 
 			try
 			{	
-				Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+				PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+				Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(accertamento.getEsercizio()));
+				if (!parCNR.getFl_nuovo_pdg()){		
+				     Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
 
-				ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
-				ps.setString( 2, Pdg_modulo_entrate_gestBulk.CAT_DIRETTA );
-				ps.setObject( 3, capitolo.getEsercizio() );
-				ps.setObject( 4, accertamento.getEsercizio_originale()==null?capitolo.getEsercizio():accertamento.getEsercizio_originale());
-				ps.setString( 5, Elemento_voceHome.GESTIONE_ENTRATE );
-				ps.setString( 6, capitolo.getCd_titolo_capitolo() );
+					ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
+					ps.setString( 2, Pdg_modulo_entrate_gestBulk.CAT_DIRETTA );
+					ps.setObject( 3, capitolo.getEsercizio() );
+					ps.setObject( 4, accertamento.getEsercizio_originale()==null?capitolo.getEsercizio():accertamento.getEsercizio_originale());
+					ps.setString( 5, Elemento_voceHome.GESTIONE_ENTRATE );
+					ps.setString( 6, capitolo.getCd_titolo_capitolo() );
+				}
+				else{		
+					V_voce_f_partita_giroBulk capitolo = (V_voce_f_partita_giroBulk) capitoliList.iterator().next();
 
+					ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
+					ps.setString( 2, Pdg_modulo_entrate_gestBulk.CAT_DIRETTA );
+					ps.setObject( 3, capitolo.getEsercizio() );
+					ps.setObject( 4, accertamento.getEsercizio_originale()==null?capitolo.getEsercizio():accertamento.getEsercizio_originale());
+					ps.setString( 5, Elemento_voceHome.GESTIONE_ENTRATE );
+					ps.setString( 6, capitolo.getCd_elemento_voce() );
+			}
+			
 				Iterator i = cdrList.iterator();
 				ps.setString( 7, ((CdrBulk)i.next()).getCd_centro_responsabilita() );
 				int j = 7; 
@@ -1040,14 +1054,15 @@ public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento 
 		
 	if ( size == 0 )
 		return Collections.EMPTY_LIST;
-			
-	Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
-
 	PersistentHome cdrHome = getHomeCache().getHome(CdrBulk.class);
- 
 	SQLBuilder sql = cdrHome.createSQLBuilder();
-	sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, accertamento.getCd_uo_origine());//capitolo.getCd_unita_organizzativa());
-
+	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(accertamento.getEsercizio()));
+	if (!parCNR.getFl_nuovo_pdg()){		
+		Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+		sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, capitolo.getCd_unita_organizzativa());
+	}else 
+		sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, accertamento.getCd_uo_origine());
 	return cdrHome.fetchAll(sql);
 }
 /**
@@ -1179,15 +1194,29 @@ public java.util.List findLineeAttivitaSAC( List capitoliList, AccertamentoBulk 
 			ps =new LoggableStatement(conn,statement,true,this.getClass());
 			try
 			{	
-				Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+				
+				PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+				Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(accertamento.getEsercizio()));
+				if (!parCNR.getFl_nuovo_pdg()){		
+				     Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
 
-				ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
-				ps.setString( 2, Pdg_modulo_entrate_gestBulk.CAT_DIRETTA );
-				ps.setObject( 3, capitolo.getEsercizio() );
-				ps.setObject( 4, accertamento.getEsercizio_originale()==null?capitolo.getEsercizio():accertamento.getEsercizio_originale());
-				ps.setString( 5, Elemento_voceHome.GESTIONE_ENTRATE );
-				ps.setString( 6, capitolo.getCd_titolo_capitolo() );
-
+					ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
+					ps.setString( 2, Pdg_modulo_entrate_gestBulk.CAT_DIRETTA );
+					ps.setObject( 3, capitolo.getEsercizio() );
+					ps.setObject( 4, accertamento.getEsercizio_originale()==null?capitolo.getEsercizio():accertamento.getEsercizio_originale());
+					ps.setString( 5, Elemento_voceHome.GESTIONE_ENTRATE );
+					ps.setString( 6, capitolo.getCd_titolo_capitolo() );
+				}
+				else{		
+					V_voce_f_partita_giroBulk capitolo = (V_voce_f_partita_giroBulk) capitoliList.iterator().next();
+					ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
+					ps.setString( 2, Pdg_modulo_entrate_gestBulk.CAT_DIRETTA );
+					ps.setObject( 3, capitolo.getEsercizio() );
+					ps.setObject( 4, accertamento.getEsercizio_originale()==null?capitolo.getEsercizio():accertamento.getEsercizio_originale());
+					ps.setString( 5, Elemento_voceHome.GESTIONE_ENTRATE );
+					ps.setString( 6, capitolo.getCd_elemento_voce() );
+			}
+			
 				/*
 				int j = 5;
 				Iterator i = capitoliList.iterator();
@@ -1327,12 +1356,25 @@ public AccertamentoBulk refreshNuoveLineeAttivitaColl( AccertamentoBulk accertam
 
 public java.util.List findCapitoliDiEntrataCds( AccertamentoBulk accertamento ) throws IntrospectionException,PersistencyException 
 {
-	PersistentHome evHome = getHomeCache().getHome(Voce_fBulk.class);
-	SQLBuilder sql = evHome.createSQLBuilder();
-	sql.addClause("AND","esercizio",sql.EQUALS, accertamento.getEsercizio());
-	sql.addClause("AND","ti_appartenenza",sql.EQUALS, accertamento.getTi_appartenenza());
-	sql.addClause("AND","ti_gestione",sql.EQUALS,accertamento.getTi_gestione());
-	sql.addClause("AND","cd_voce",sql.EQUALS,accertamento.getCd_voce());
-	return evHome.fetchAll(sql);	
+	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(accertamento.getEsercizio()));
+	if (!parCNR.getFl_nuovo_pdg()){
+		PersistentHome evHome = getHomeCache().getHome(Voce_fBulk.class);
+		SQLBuilder sql = evHome.createSQLBuilder();
+		sql.addClause("AND","esercizio",sql.EQUALS, accertamento.getEsercizio());
+		sql.addClause("AND","ti_appartenenza",sql.EQUALS, accertamento.getTi_appartenenza());
+		sql.addClause("AND","ti_gestione",sql.EQUALS,accertamento.getTi_gestione());
+		sql.addClause("AND","cd_voce",sql.EQUALS,accertamento.getCd_voce());
+		return evHome.fetchAll(sql);	
+	}else{
+		PersistentHome evHome = getHomeCache().getHome(V_voce_f_partita_giroBulk.class);
+		SQLBuilder sql = evHome.createSQLBuilder();
+		sql.addClause("AND","esercizio",sql.EQUALS, accertamento.getEsercizio());
+		sql.addClause("AND","ti_appartenenza",sql.EQUALS, accertamento.getTi_appartenenza());
+		sql.addClause("AND","ti_gestione",sql.EQUALS,accertamento.getTi_gestione());
+		sql.addClause("AND","cd_elemento_voce",sql.EQUALS,accertamento.getCd_voce());
+		return evHome.fetchAll(sql);	
+
+	}
 }
 }
