@@ -135,6 +135,7 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 			sql.addColumn("NVL(SUM(OBB_RES_PRO),0)","OBB_RES_PRO");
 			sql.addColumn("NVL(SUM(VAR_PIU_RES_PRO),0)","VAR_PIU_RES_PRO");
 			sql.addColumn("NVL(SUM(VAR_MENO_RES_PRO),0)","VAR_MENO_RES_PRO");
+			sql.addColumn("NVL(SUM(VINCOLI_RES),0)","VINCOLI_RES");
 			sql.addColumn("NVL(SUM(DISP_RES),0)","DISP_RES");
 			sql.addColumn("NVL(SUM(PAGATO_RES),0)","PAGATO_RES");
 			sql.addColumn("NVL(SUM(OBB_COMP),0)-NVL(SUM(PAGATO_COMP),0)", "RIMASTI_DA_PAGARE_COMP");
@@ -487,6 +488,7 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 					sql.addColumn("NVL(SUM(OBB_RES_PRO),0)","OBB_RES_PRO");
 					sql.addColumn("NVL(SUM(VAR_PIU_RES_PRO),0)","VAR_PIU_RES_PRO");
 					sql.addColumn("NVL(SUM(VAR_MENO_RES_PRO),0)","VAR_MENO_RES_PRO");
+					sql.addColumn("NVL(SUM(VINCOLI_RES),0)","VINCOLI_RES");
 					sql.addColumn("NVL(SUM(DISP_RES),0)","DISP_RES");
 					sql.addColumn("NVL(SUM(PAGATO_RES),0)","PAGATO_RES");
 					sql.addColumn("NVL(SUM(OBB_COMP),0)-NVL(SUM(PAGATO_COMP),0)", "RIMASTI_DA_PAGARE_COMP");
@@ -566,6 +568,7 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 				sql.addColumn("NVL(SUM(OBB_RES_PRO),0)","OBB_RES_PRO");
 				sql.addColumn("NVL(SUM(VAR_PIU_RES_PRO),0)","VAR_PIU_RES_PRO");
 				sql.addColumn("NVL(SUM(VAR_MENO_RES_PRO),0)","VAR_MENO_RES_PRO");
+				sql.addColumn("NVL(SUM(VINCOLI_RES),0)","VINCOLI_RES");
 				sql.addColumn("NVL(SUM(DISP_RES),0)","DISP_RES");
 				sql.addColumn("NVL(SUM(PAGATO_RES),0)","PAGATO_RES");
 				sql.addColumn("NVL(SUM(OBB_COMP),0)-NVL(SUM(PAGATO_COMP),0)", "RIMASTI_DA_PAGARE_COMP");
