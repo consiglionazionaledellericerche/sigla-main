@@ -14,6 +14,9 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 public class MovimentiMagBulk extends MovimentiMagBase {
+	public final static String STATO_INSERITO = "INS";
+	public final static String STATO_ANNULLATO = "ANN";
+	
 	private TipoMovimentoMagBulk tipoMovimentoMag =  new TipoMovimentoMagBulk();
 	private TipoMovimentoMagBulk tipoMovimentoMagRif =  new TipoMovimentoMagBulk();
 	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
