@@ -4,6 +4,9 @@
  */
 package it.cnr.contab.ordmag.ordini.bulk;
 import it.cnr.jada.persistency.Keyed;
+
+import java.math.BigDecimal;
+
 public class FatturaOrdineBase extends FatturaOrdineKey implements Keyed {
 //    CD_VOCE_IVA_RETT VARCHAR(10)
 	private java.lang.String cdVoceIvaRett;
@@ -43,7 +46,10 @@ public class FatturaOrdineBase extends FatturaOrdineKey implements Keyed {
  
 //    STATO_ASS VARCHAR(3) NOT NULL
 	private java.lang.String statoAss;
- 
+
+//    QUANTITA_EVASA DECIMAL(12,5) NOT NULL
+	private java.lang.Integer quantitaEvasa;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: FATTURA_ORDINE
@@ -236,4 +242,12 @@ public class FatturaOrdineBase extends FatturaOrdineKey implements Keyed {
 	public void setStatoAss(java.lang.String statoAss)  {
 		this.statoAss=statoAss;
 	}
+
+    public java.lang.Integer getQuantitaEvasa() {
+        return quantitaEvasa;
+    }
+
+    public void setQuantitaEvasa(java.lang.Integer quantitaEvasa) {
+        this.quantitaEvasa = quantitaEvasa;
+    }
 }

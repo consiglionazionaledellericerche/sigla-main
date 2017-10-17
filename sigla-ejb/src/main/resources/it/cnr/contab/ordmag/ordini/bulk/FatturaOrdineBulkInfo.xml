@@ -239,7 +239,7 @@
             formatName="it.cnr.contab.util.EuroFormat"
             enabledOnEdit="false"
             nullable="false"
-            label="imTotaleConsegna"/>
+            label="Totale"/>
     <fieldProperty
             name="statoAss"
             property="statoAss"
@@ -281,16 +281,16 @@
             name="voceIva"/>
     <formFieldProperty
             name="prezzoUnitarioRett"
-            command="doDefault"/>
+            command="doRettificaConsegna"/>
     <formFieldProperty
             name="sconto1Rett"
-            command="doDefault"/>
+            command="doRettificaConsegna"/>
     <formFieldProperty
             name="sconto2Rett"
-            command="doDefault"/>
+            command="doRettificaConsegna"/>
     <formFieldProperty
             name="sconto3Rett"
-            command="doDefault"/>
+            command="doRettificaConsegna"/>
 
     <findFieldProperty
             name="cdCds"/>
@@ -370,6 +370,11 @@
             headerLabel="Ordine"
             label="Note"/>
     <columnFieldProperty
+            name="impegno"
+            property="impegnoDisplay"
+            headerLabel="Ordine"
+            label="Impegno"/>
+    <columnFieldProperty
             name="cd_voce_iva"
             property="ordineAcqConsegna.ordineAcqRiga.voceIva.cd_voce_iva"
             headerLabel="Ordine"
@@ -405,6 +410,11 @@
             formatName="it.cnr.contab.util.PercentFormat"
             label="% Sc 3"/>
     <columnFieldProperty
+            name="quantitaEvasa"
+            property="quantitaEvasa"
+            headerLabel="Ordine"
+            label="Quantità evasa"/>
+    <columnFieldProperty
             name="codiceIva"
             property="voceIva.cd_voce_iva"
             headerLabel="Rettifiche"
@@ -434,8 +444,6 @@
     <columnFieldProperty
             name="imIva"/>
     <columnFieldProperty
-            name="impegno"
-            property="impegnoDisplay"
-            label="Impegno"/>
+            name="imTotaleConsegna"/>
 
 </bulkInfo>
