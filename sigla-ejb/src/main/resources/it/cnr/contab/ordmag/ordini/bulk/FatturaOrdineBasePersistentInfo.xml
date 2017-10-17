@@ -95,6 +95,12 @@
 			columnSize="3"
 			nullable="false" />
 		<columnMapping
+			columnName="QUANTITA_EVASA"
+			propertyName="quantitaEvasa"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			nullable="false" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -151,6 +157,8 @@
 		name="imTotaleConsegna" />
 	<persistentProperty
 		name="statoAss" />
+    <persistentProperty
+        name="quantitaEvasa" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

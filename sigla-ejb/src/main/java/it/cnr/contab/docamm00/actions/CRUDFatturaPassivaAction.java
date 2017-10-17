@@ -4,6 +4,7 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.client.docamm.VoceIva;
 import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -5492,5 +5493,45 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         } catch (Throwable t) {
             return handleException(context, t);
         }
+    }
+
+    public Forward doRettificaConsegna(ActionContext context) {
+        try {
+            fillModel(context);
+            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+            Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+            final List<FatturaOrdineBulk> details = bp.getFattureRigaOrdiniController().getDetails();
+            details.stream().forEach(fatturaOrdineBulk -> {
+                try {
+                    fatturaOrdineBulk.validate(fatturaOrdineBulk);
+                } catch (ValidationException e) {
+                   throw new DetailedRuntimeException(e);
+                }
+            });
+            return context.findDefaultForward();
+        } catch (Throwable t) {
+            return handleException(context, t);
+        }
+    }
+
+    public Forward doBringBackSearchVoceIva(ActionContext context,
+                                              FatturaOrdineBulk fatturaOrdineBulk,
+                                              Voce_ivaBulk voceIva) {
+        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+        Optional.ofNullable(voceIva)
+                .ifPresent(voce_ivaBulk -> {
+                    fatturaOrdineBulk.setVoceIva(voce_ivaBulk);
+                    bp.setDirty(true);
+                });
+
+        return doRettificaConsegna(context);
+    }
+
+    public Forward doBlankSearchVoceIva(ActionContext context,
+                                            FatturaOrdineBulk fatturaOrdineBulk) {
+        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+        fatturaOrdineBulk.setVoceIva(null);
+        bp.setDirty(true);
+        return doRettificaConsegna(context);
     }
 }
