@@ -6,7 +6,10 @@ package it.cnr.contab.ordmag.ordini.bulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public class FatturaOrdineBulk extends FatturaOrdineBase {
@@ -300,5 +303,25 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
 							.concat(String.valueOf(obbligazione_scadenzarioBulk.getPg_obbligazione()));
 				})
 				.orElse(null);
+	}
+
+	public String getCssClassNotaRiga() {
+		return "table-cell-ellipsis";
+	}
+
+    @Override
+	public void validate(OggettoBulk oggettobulk) throws ValidationException {
+		final BigDecimal prezzoUnitario = Optional.ofNullable(getPrezzoUnitarioRett())
+				.orElseGet(() -> getOrdineAcqConsegna().getOrdineAcqRiga().getPrezzoUnitario());
+        final BigDecimal percentualeIva = Optional.ofNullable(getVoceIva())
+                .filter(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getPercentuale()).isPresent())
+                .map(voce_ivaBulk -> voce_ivaBulk.getPercentuale())
+                .orElseGet(() -> getOrdineAcqConsegna().getOrdineAcqRiga().getVoce_iva().getPercentuale());
+        setImImponibile(
+                prezzoUnitario.multiply(BigDecimal.valueOf(getQuantitaEvasa()))
+        );
+        setImIva(getImImponibile().multiply(percentualeIva).divide(BigDecimal.TEN.multiply(BigDecimal.TEN)));
+        setImTotaleConsegna(getImImponibile().add(getImIva()));
+        super.validate(oggettobulk);
 	}
 }
