@@ -27,7 +27,7 @@
     <table width="100%">
         <tr>
             <td>
-                <% bp.getFattureRigaOrdiniController().writeHTMLTable(pageContext,"default",true,false,true,"100%","300px"); %>
+                <% bp.getFattureRigaOrdiniController().writeHTMLTable(pageContext,"default",true,false,true,"100%","100%"); %>
             </td>
         </tr>
     </table>
