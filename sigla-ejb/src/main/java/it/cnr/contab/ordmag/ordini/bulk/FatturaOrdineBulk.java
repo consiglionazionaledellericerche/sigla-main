@@ -309,8 +309,8 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
 		return "table-cell-ellipsis";
 	}
 
-    @Override
-	public void validate(OggettoBulk oggettobulk) throws ValidationException {
+
+	public void calcolaRettifiche() {
 		final BigDecimal prezzoUnitario = Optional.ofNullable(getPrezzoUnitarioRett())
 				.orElseGet(() -> getOrdineAcqConsegna().getOrdineAcqRiga().getPrezzoUnitario());
         final BigDecimal percentualeIva = Optional.ofNullable(getVoceIva())
@@ -322,6 +322,5 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
         );
         setImIva(getImImponibile().multiply(percentualeIva).divide(BigDecimal.TEN.multiply(BigDecimal.TEN)));
         setImTotaleConsegna(getImImponibile().add(getImIva()));
-        super.validate(oggettobulk);
 	}
 }
