@@ -318,7 +318,7 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
                 .map(voce_ivaBulk -> voce_ivaBulk.getPercentuale())
                 .orElseGet(() -> getOrdineAcqConsegna().getOrdineAcqRiga().getVoce_iva().getPercentuale());
         setImImponibile(
-                prezzoUnitario.multiply(BigDecimal.valueOf(getQuantitaEvasa()))
+                prezzoUnitario.multiply(getOrdineAcqConsegna().getQuantita())
         );
         setImIva(getImImponibile().multiply(percentualeIva).divide(BigDecimal.TEN.multiply(BigDecimal.TEN)));
         setImTotaleConsegna(getImImponibile().add(getImIva()));

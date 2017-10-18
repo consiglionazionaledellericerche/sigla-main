@@ -1683,7 +1683,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         fatturaOrdineBulk.setImIvaD(ordineAcqConsegna.getImIvaD());
         fatturaOrdineBulk.setImIvaNd(ordineAcqConsegna.getImIvaNd());
         fatturaOrdineBulk.setImTotaleConsegna(ordineAcqConsegna.getImTotaleConsegna());
-        fatturaOrdineBulk.setQuantitaEvasa(evasioneOrdineRigaBulk.getQuantitaEvasa().intValue());
         fatturaOrdineBulk.setStatoAss("TOT");
         fatturaOrdineBulk.setToBeCreated();
 
