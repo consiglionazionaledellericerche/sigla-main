@@ -1,6 +1,17 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import java.math.*;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -16,12 +27,18 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.persistency.Persister;
 
 public class AccertamentoBulk extends AccertamentoBase implements IDocumentoContabileBulk, AllegatoParentBulk {
 	private static final long serialVersionUID = 1L;
@@ -36,6 +53,9 @@ public class AccertamentoBulk extends AccertamentoBase implements IDocumentoCont
 	private it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = new it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk();
 	
 	private BulkList accertamento_scadenzarioColl = new BulkList();
+	private BulkList<Pdg_vincoloBulk> pdgVincoliColl = new BulkList();
+	private BulkList<Accertamento_vincolo_perenteBulk> accertamentoVincoliPerentiColl = new BulkList();
+	
 	//private Vector linee_attivitaColl = new Vector();
 	private List cdrColl = new Vector();				// Cdr dell'unita' organizzativa dell'accertamento
 
@@ -102,6 +122,7 @@ public int addToAccertamento_scadenzarioColl( Accertamento_scadenzarioBulk scade
 	
 	return accertamento_scadenzarioColl.size()-1;
 }
+
 /**
  * <!-- @TODO: da completare -->
  * 
@@ -166,7 +187,7 @@ public BulkCollection[] getBulkLists() {
 	// Metti solo le liste di oggetti che devono essere resi persistenti
 	
 	 return new it.cnr.jada.bulk.BulkCollection[] { 
-			accertamento_scadenzarioColl, archivioAllegati };
+			accertamento_scadenzarioColl, archivioAllegati, pdgVincoliColl, accertamentoVincoliPerentiColl };
 }
 /**
  * Insert the method's description here.
@@ -1214,6 +1235,7 @@ public void setCd_cds(java.lang.String cd_cds) {
 		return getArchivioAllegati().remove(index);
 	}
 	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		((AllegatoAccertamentoBulk)allegato).setEsercizioDiAppartenenza(this.getEsercizio());
 		archivioAllegati.add(allegato);
 		return archivioAllegati.size()-1;		
 	}
@@ -1295,5 +1317,54 @@ public void setCd_cds(java.lang.String cd_cds) {
 	}
 	public void setEnableVoceNext(boolean enableVoceNext) {
 		this.enableVoceNext = enableVoceNext;
+	}
+
+	public BulkList<Pdg_vincoloBulk> getPdgVincoliColl() {
+		return pdgVincoliColl;
+	}
+	
+	public void setPdgVincoliColl(BulkList<Pdg_vincoloBulk> pdgVincoliColl) {
+		this.pdgVincoliColl = pdgVincoliColl;
+	}
+	
+	public int addToPdgVincoliColl( Pdg_vincoloBulk vincolo ) 
+	{
+		pdgVincoliColl.add(vincolo);
+		vincolo.setAccertamento(this);
+		vincolo.setIm_vincolo( new java.math.BigDecimal(0));
+		vincolo.setFl_attivo( Boolean.TRUE );
+		vincolo.setUser(this.getUser());
+		return pdgVincoliColl.size()-1;
+	}
+	public Pdg_vincoloBulk removeFromPdgVincoliColl(int index) 
+	{
+		return (Pdg_vincoloBulk)pdgVincoliColl.remove(index);
+	}
+	
+	public BulkList<Accertamento_vincolo_perenteBulk> getAccertamentoVincoliPerentiColl() {
+		return accertamentoVincoliPerentiColl;
+	}
+	
+	public void setAccertamentoVincoliPerentiColl(
+			BulkList<Accertamento_vincolo_perenteBulk> accertamentoVincoliPerentiColl) {
+		this.accertamentoVincoliPerentiColl = accertamentoVincoliPerentiColl;
+	}
+	
+	public int addToAccertamentoVincoliPerentiColl( Accertamento_vincolo_perenteBulk vincoloPerente ) 
+	{
+		accertamentoVincoliPerentiColl.add(vincoloPerente);
+		vincoloPerente.setAccertamento(this);
+		vincoloPerente.setIm_vincolo( new java.math.BigDecimal(0));
+		vincoloPerente.setUser(this.getUser());
+		return accertamentoVincoliPerentiColl.size()-1;
+	}
+
+	public Accertamento_vincolo_perenteBulk removeFromAccertamentoVincoliPerentiColl(int index) 
+	{
+		return (Accertamento_vincolo_perenteBulk)accertamentoVincoliPerentiColl.remove(index);
+	}
+
+	public BigDecimal getImportoNonIncassato() {
+		return this.getAccertamento_scadenzarioColl().stream().map(e->e.getImportoNonIncassato()).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
 	}
 }

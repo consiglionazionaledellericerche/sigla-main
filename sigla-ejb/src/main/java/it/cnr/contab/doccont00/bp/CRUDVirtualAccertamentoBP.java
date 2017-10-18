@@ -1,13 +1,19 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
+import it.cnr.contab.doccont00.core.bulk.AllegatoAccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
@@ -19,25 +25,17 @@ import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
-import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.jsp.Button;
 
-import java.rmi.RemoteException;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 public abstract class CRUDVirtualAccertamentoBP 
-	extends AllegatiCRUDBP<AllegatoGenericoBulk, AccertamentoBulk>
+	extends AllegatiCRUDBP<AllegatoAccertamentoBulk, AccertamentoBulk>
 	implements IDocumentoContabileBP {
 		
 	private boolean deleting = false;
@@ -479,8 +477,8 @@ public static AccertamentoAbstractComponentSession setSafePoint (
 	}
 
 	@Override
-	protected Class<AllegatoGenericoBulk> getAllegatoClass() {
-		return AllegatoGenericoBulk.class;
+	protected Class<AllegatoAccertamentoBulk> getAllegatoClass() {
+		return AllegatoAccertamentoBulk.class;
 	}
 	
 	public String [][] getTabs() {
