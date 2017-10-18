@@ -418,7 +418,7 @@ public CdrBulk findCdrSAC(Integer esercizio) throws PersistencyException, Applic
  * @throws PersistencyException	
  * @throws ApplicationException	
 **/
-public java.util.List findCdrAfferenti(CdrBulk cdr) throws PersistencyException, IntrospectionException
+public java.util.List findCdrAfferenti(CdrBulk cdr) throws PersistencyException
 {
 	BulkHome cdrHome = (BulkHome)getHomeCache().getHome(CdrBulk.class);
 	SQLBuilder sql = cdrHome.createSQLBuilder();

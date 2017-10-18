@@ -1,22 +1,37 @@
 package it.cnr.contab.doccont00.bp;
 
 
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.bp.*;
+import java.rmi.RemoteException;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Vector;
 
-import java.util.*;
-
-import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
-import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.pdcfin.bulk.*;
+import it.cnr.contab.config00.pdcfin.bulk.Ass_ev_evBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.docamm00.bp.CRUDDocumentoGenericoAttivoBP;
+import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaIBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoAttivaBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiDebitoAttivaBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteBulk;
+import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.V_pdg_obbligazione_speBulk;
+import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
+import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.MessageToUser;
@@ -24,7 +39,8 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Accertamento
@@ -33,6 +49,9 @@ import it.cnr.jada.util.action.*;
 public class CRUDAccertamentoBP extends CRUDVirtualAccertamentoBP {
 	private final CRUDScadenzeController scadenzario = new CRUDScadenzeController("Scadenzario",Accertamento_scadenzarioBulk.class,"accertamento_scadenzarioColl",this);
 	private final SimpleDetailCRUDController scadenzarioDettaglio = new SimpleDetailCRUDController("ScadenzarioDettaglio",Accertamento_scad_voceBulk.class,"accertamento_scad_voceColl",scadenzario);
+
+	private final SimpleDetailCRUDController pdgVincoli= new SimpleDetailCRUDController("Vincoli",Pdg_vincoloBulk.class,"pdgVincoliColl",this);
+	private final SimpleDetailCRUDController pdgVincoliPerenti= new SimpleDetailCRUDController("VincoliPerenti",Accertamento_vincolo_perenteBulk.class,"accertamentoVincoliPerentiColl",this);
 
 	private final SimpleDetailCRUDController centriDiResponsabilita = new SimpleDetailCRUDController("CentriDiResponsabilita",CdrBulk.class,"cdrColl",this);
 	private final SimpleDetailCRUDController lineeDiAttivita = new SimpleDetailCRUDController("LineeDiAttivita",V_pdg_obbligazione_speBulk.class,"lineeAttivitaColl",this);
@@ -47,6 +66,7 @@ public CRUDAccertamentoBP() {
 	super();
 	setTab("tab","tabAccertamento");			// Mette il fuoco sul primo TabAccertamento di Tab
 	setTab("tabScadenzario","tabScadenza");
+	setTab("tabVincoli","tabVincoliRisorseCopertura");
 }
 public CRUDAccertamentoBP(String function) 
 {
@@ -54,6 +74,7 @@ public CRUDAccertamentoBP(String function)
 
     setTab("tab", "tabAccertamento");				// Mette il fuoco sul primo TabAccertamento di Tab
 	setTab("tabScadenzario","tabScadenza");    
+	setTab("tabVincoli","tabVincoliRisorseCopertura");
 }
 /**
  * <!-- @TODO: da completare -->
@@ -363,9 +384,14 @@ public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk
 		it.cnr.jada.ejb.CRUDComponentSession compSession = (getUserTransaction() == null) ?
 																			createComponentSession() :
 																			getVirtualComponentSession(context, false);
-		return compSession.inizializzaBulkPerModifica(
+		bulk = compSession.inizializzaBulkPerModifica(
 								context.getUserContext(),
 								bulk.initializeForEdit(this,context));
+		
+		if (bulk instanceof AccertamentoResiduoBulk)
+			((AccertamentoResiduoBulk)bulk).setIm_quota_inesigibile(((AccertamentoResiduoBulk)bulk).getIm_quota_inesigibile_ripartita());
+
+		return bulk;
 	} catch(Throwable e) {
 		throw new it.cnr.jada.action.BusinessProcessException(e);
 	}
@@ -932,5 +958,11 @@ private void setEnableVoceNext(boolean enableVoceNext) {
 public boolean isElementoVoceNewVisible() {
 	return this.isEnableVoceNext() && getModel()!=null && 
 			((AccertamentoBulk)getModel()).isEnableVoceNext();
+}
+public SimpleDetailCRUDController getPdgVincoli() {
+	return pdgVincoli;
+}
+public SimpleDetailCRUDController getPdgVincoliPerenti() {
+	return pdgVincoliPerenti;
 }
 }
