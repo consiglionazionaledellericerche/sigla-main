@@ -365,6 +365,11 @@
             headerLabel="Consegna"
             label="Riga"/>
     <columnFieldProperty
+            name="quantita"
+            property="ordineAcqConsegna.quantita"
+            headerLabel="Consegna"
+            label="Quantità"/>
+    <columnFieldProperty
             name="notaRiga"
             property="ordineAcqConsegna.ordineAcqRiga.notaRiga"
             headerLabel="Ordine"
@@ -409,11 +414,6 @@
             headerLabel="Ordine"
             formatName="it.cnr.contab.util.PercentFormat"
             label="% Sc 3"/>
-    <columnFieldProperty
-            name="quantitaEvasa"
-            property="quantitaEvasa"
-            headerLabel="Ordine"
-            label="Quantità evasa"/>
     <columnFieldProperty
             name="codiceIva"
             property="voceIva.cd_voce_iva"
