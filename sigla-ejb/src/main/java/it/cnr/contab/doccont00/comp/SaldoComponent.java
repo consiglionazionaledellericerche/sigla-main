@@ -21,6 +21,8 @@ import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
@@ -672,6 +674,14 @@ public String checkDispObbligazioniAccertamenti(UserContext userContext, String 
 			 messaggio = "L'importo relativo al CDR "+cd_cdr+" G.A.E. "+cd_linea_attivita+" Voce "+voce.getCd_voce()+ aCapo +
                          "supera la disponibilità di " + new it.cnr.contab.util.EuroFormat().format(diff.abs());
 		   }
+		   //aggiungo i vincoli
+		   Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
+		   List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldo);
+		   BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+		   if (diff.subtract(impVincolo).compareTo(BigDecimal.ZERO)==-1)
+			   messaggio = "L'importo relativo al CDR "+cd_cdr+" G.A.E. "+cd_linea_attivita+" Voce "+voce.getCd_voce()+ aCapo +
+			   "supera la disponibilità di " + new it.cnr.contab.util.EuroFormat().format(diff.subtract(impVincolo).abs())+" in conseguenza della presenza "
+			   		+ "di vincoli di spesa per un importo di " + new it.cnr.contab.util.EuroFormat().format(impVincolo.abs());
 		}
 		return messaggio;
 	}
@@ -994,19 +1004,30 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 					}
 					if (saldoNew != null){				
 							saldoNew.setIm_stanz_res_improprio(saldoNew.getIm_stanz_res_improprio().subtract(importo));
-							if (saldoNew.getDispAdImpResiduoImproprio().compareTo(Utility.ZERO) < 0){
+
+							//calcolo i vincoli
+							Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
+							List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldoNew);
+							BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+							BigDecimal diff = saldoNew.getDispAdImpResiduoImproprio().subtract(impVincolo);
+
+							if (diff.compareTo(Utility.ZERO) < 0){
 								if (voce.getTi_gestione().equalsIgnoreCase(Voce_f_saldi_cdr_lineaBulk.TIPO_GESTIONE_SPESA)){
 								    if (!((elemento_voce.getFl_partita_giro() != null && 
 								           elemento_voce.getFl_partita_giro().booleanValue()) ||
 								     (elemento_voce.getFl_limite_ass_obblig()!= null && !elemento_voce.getFl_limite_ass_obblig().booleanValue() &&
 									  workpackage.getFl_limite_ass_obblig()!= null && !workpackage.getFl_limite_ass_obblig().booleanValue()))){
-									throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
-		                                                           "Nell'esercizio "+esercizio.getEsercizio()+
-		                                                           " e per il CdR "+cd_cdr+", "+
-		                                                           " Voce "+voce.getCd_voce()+
-		                                                           " e GAE "+cd_linea_attivita+" lo stanziamento Residuo Improprio "+
-		                                                           " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldoNew.getDispAdImpResiduoImproprio().abs())+")");
-								      }		                                                           
+										StringBuilder messaggio = new StringBuilder("Impossibile effettuare l'operazione !\n"+
+											        "Nell'esercizio "+esercizio.getEsercizio()+
+											        " e per il CdR "+cd_cdr+", "+
+											        " Voce "+voce.getCd_voce()+
+											        " e GAE "+cd_linea_attivita+" lo stanziamento Residuo Improprio "+
+											        " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(diff.abs())+")");
+										if (impVincolo.compareTo(BigDecimal.ZERO)>0)
+											messaggio.append(" in conseguenza della presenza di vincoli di spesa per un importo di " + 
+													new it.cnr.contab.util.EuroFormat().format(impVincolo.abs()));
+										throw new ApplicationException(messaggio.toString());
+								    }
 								}	                                                           
 							}						  
 							saldoNew.setToBeUpdated();
@@ -1096,12 +1117,12 @@ public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, Strin
 		Voce_f_saldi_cdr_lineaBulk comp = find( userContext, cd_cdr, cd_linea_attivita, voce);
 		if (comp != null) {
 			List residui = ((Voce_f_saldi_cdr_lineaHome)getHome( userContext,Voce_f_saldi_cdr_lineaBulk.class )).cercaDettagliResidui( comp );
-	
+
 			for (Iterator i = residui.iterator(); i.hasNext();) {
 				Voce_f_saldi_cdr_lineaBulk residuo = (Voce_f_saldi_cdr_lineaBulk)i.next();
 				saldoResiduo = saldoResiduo.add(residuo.getDispAdImpResiduoImproprio());
 			}
-		}	
+		}
 		return saldoResiduo;
 	}
 	catch 	(Exception e )
@@ -1118,15 +1139,28 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userC
 		if (saldo == null){
 			  throw new ApplicationException("Saldo non trovato per la Voce/CdR/GAE: "+ voce.getCd_voce()+"/"+cd_cdr+"/"+cd_linea_attivita);
 		}
-		importo = importo.setScale(2, importo.ROUND_HALF_UP);
-		if ((saldo.getAssestatoResiduoImproprio().subtract(saldo.getIm_obbl_res_imp())).subtract(importo).compareTo(Utility.ZERO)<0)
-			  throw new ApplicationException(
-				"Impossibile effettuare l'operazione !\n"+
-		        "Nell'esercizio "+saldo.getEsercizio()+
-		        " e per il CdR "+saldo.getCd_centro_responsabilita()+", "+
-		        " Voce "+voce.getCd_voce()+
-		        " e GAE "+saldo.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
-		        " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format((saldo.getAssestatoResiduoImproprio().subtract(saldo.getIm_obbl_res_imp())).subtract(importo).abs())+")");
+
+		//calcolo i vincoli
+		Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
+		List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldo);
+		BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+		importo = importo.setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal diff = saldo.getAssestatoResiduoImproprio().subtract(saldo.getIm_obbl_res_imp()).subtract(importo).subtract(impVincolo);
+
+		if (diff.compareTo(Utility.ZERO)<0) {
+			StringBuilder messaggio = new StringBuilder("Impossibile effettuare l'operazione !\n"+
+			        "Nell'esercizio "+saldo.getEsercizio()+
+			        " e per il CdR "+saldo.getCd_centro_responsabilita()+", "+
+			        " Voce "+voce.getCd_voce()+
+			        " e GAE "+saldo.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
+			        " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(diff.abs())+")");
+			if (impVincolo.compareTo(BigDecimal.ZERO)>0)
+				messaggio.append(" in conseguenza della presenza di vincoli di spesa per un importo di " + 
+						new it.cnr.contab.util.EuroFormat().format(impVincolo.abs()));
+			throw new ApplicationException(messaggio.toString());
+		}
+
 		if (importo.compareTo(Utility.ZERO)>0)
 			saldo.setVar_piu_obbl_res_pro( saldo.getVar_piu_obbl_res_pro().add( importo.abs()) );
 		else

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false" 
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione"
+		property="pg_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false" 
+		label="Nr.Variazione" />
+	<fieldProperty
+		name="ds_variazione"
+		property="variazioneResidua.ds_variazione"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false" 
+		label="Descrizione Variazione" />
+	<fieldProperty
+		name="im_vincolo"
+		property="im_vincolo"
+		label="Importo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="findVariazioneResidua"
+		property="variazioneResidua"
+		inputType="SEARCHTOOL" 
+		formName="searchtool" 
+		enabledOnSearch="true"
+        enabledOnEdit="true"
+		nullable="false"
+		label="Variazione Residua"/>
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione" />
+	<formFieldProperty
+		name="ds_variazione" />
+	<formFieldProperty
+		name="im_vincolo" />
+	<formFieldProperty
+		name="findVariazioneResidua" />
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione" />
+	<findFieldProperty
+		name="im_vincolo" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione" />
+	<columnFieldProperty
+		name="ds_variazione" />
+	<columnFieldProperty
+		name="im_vincolo" />     		
+</bulkInfo>
