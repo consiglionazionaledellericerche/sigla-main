@@ -12,6 +12,7 @@ import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.pdg00.bulk.*;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -1376,5 +1377,46 @@ public java.util.List findCapitoliDiEntrataCds( AccertamentoBulk accertamento ) 
 		return evHome.fetchAll(sql);	
 
 	}
+}
+public java.util.List findPdgVincoloList( AccertamentoBulk accertamento ) throws IntrospectionException,PersistencyException 
+{
+	PersistentHome asHome = getHomeCache().getHome(Pdg_vincoloBulk.class);
+	SQLBuilder sql = asHome.createSQLBuilder();
+	sql.addClause(FindClause.AND,"cd_cds_accertamento",SQLBuilder.EQUALS, accertamento.getCd_cds());
+	sql.addClause(FindClause.AND,"esercizio_accertamento",SQLBuilder.EQUALS, accertamento.getEsercizio());
+	sql.addClause(FindClause.AND,"esercizio_ori_accertamento",SQLBuilder.EQUALS, accertamento.getEsercizio_originale());
+	sql.addClause(FindClause.AND,"pg_accertamento",SQLBuilder.EQUALS, accertamento.getPg_accertamento());
+	sql.addOrderBy("pg_vincolo");
+	
+	return asHome.fetchAll(sql);
+}
+public java.util.List findAccertamentoVincoloPerenteList( AccertamentoBulk accertamento ) throws IntrospectionException,PersistencyException 
+{
+	PersistentHome asHome = getHomeCache().getHome(Accertamento_vincolo_perenteBulk.class);
+	SQLBuilder sql = asHome.createSQLBuilder();
+	sql.addClause(FindClause.AND,"cd_cds_accertamento",SQLBuilder.EQUALS, accertamento.getCd_cds());
+	sql.addClause(FindClause.AND,"esercizio_accertamento",SQLBuilder.EQUALS, accertamento.getEsercizio());
+	sql.addClause(FindClause.AND,"esercizio_ori_accertamento",SQLBuilder.EQUALS, accertamento.getEsercizio_originale());
+	sql.addClause(FindClause.AND,"pg_accertamento",SQLBuilder.EQUALS, accertamento.getPg_accertamento());
+	
+	return asHome.fetchAll(sql);
+}
+/**
+ * Ritorna tutti gli accertamenti uguali al bulk indipendentemente dall'esercizio
+ * comprensivo di quello indicato nel bulk
+ *
+ * @param accertamento	
+ * @return AccertamentoBulk
+ * @throws PersistencyException	
+ * @throws IntrospectionException	
+ */
+public SQLBuilder selectAllEqualsAccertamentiByClause( AccertamentoBulk bulk, AccertamentoHome home,OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException
+{	
+	SQLBuilder sql = this.createSQLBuilder();
+	sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, bulk.getCd_cds() );
+	sql.addClause(FindClause.AND, "esercizio_originale", SQLBuilder.EQUALS, bulk.getEsercizio_originale() );
+	sql.addClause(FindClause.AND, "pg_accertamento", SQLBuilder.EQUALS, bulk.getPg_accertamento() );
+	sql.addClause( clause );
+	return sql;
 }
 }
