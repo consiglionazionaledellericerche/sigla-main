@@ -434,4 +434,9 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 		return Optional.ofNullable(getIm_scadenza()).map(map -> map).orElse(BigDecimal.ZERO).
 				subtract(Optional.ofNullable(getIm_associato_doc_amm()).map(map -> map).orElse(BigDecimal.ZERO));
 	}
+
+	public java.math.BigDecimal getImportoNonIncassato() {
+		return Optional.ofNullable(getIm_scadenza()).map(map -> map).orElse(BigDecimal.ZERO).
+				subtract(Optional.ofNullable(getIm_associato_doc_contabile()).map(map -> map).orElse(BigDecimal.ZERO));
+	}
 }
