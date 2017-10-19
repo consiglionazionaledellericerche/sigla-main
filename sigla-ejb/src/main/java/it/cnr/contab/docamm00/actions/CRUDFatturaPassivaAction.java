@@ -4,6 +4,7 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.client.docamm.VoceIva;
 import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -3996,8 +3997,10 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         bulksToRemove.stream()
                 .forEach(fatturaOrdineBulk -> {
                     final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFatturaRigaOrdiniHash().getKey(fatturaOrdineBulk);
-                    fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
                     fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).remove(fatturaOrdineBulk);
+                    if (fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).isEmpty()) {
+                        fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
+                    }
                 });
         bp.getFattureRigaOrdiniController().getSelection().clear();
         return context.findDefaultForward();
@@ -5492,5 +5495,47 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         } catch (Throwable t) {
             return handleException(context, t);
         }
+    }
+
+    public Forward doRettificaConsegna(ActionContext context) {
+        try {
+            fillModel(context);
+            CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
+                    .filter(CRUDFatturaPassivaBP.class::isInstance)
+                    .map(CRUDFatturaPassivaBP.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+            final List<FatturaOrdineBulk> details = bp.getFattureRigaOrdiniController().getDetails();
+            details.stream().forEach(fatturaOrdineBulk -> fatturaOrdineBulk.calcolaRettifiche());
+            return context.findDefaultForward();
+        } catch (Throwable t) {
+            return handleException(context, t);
+        }
+    }
+
+    public Forward doBringBackSearchVoceIva(ActionContext context,
+                                              FatturaOrdineBulk fatturaOrdineBulk,
+                                              Voce_ivaBulk voceIva) {
+        CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
+                .filter(CRUDFatturaPassivaBP.class::isInstance)
+                .map(CRUDFatturaPassivaBP.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+        Optional.ofNullable(voceIva)
+                .ifPresent(voce_ivaBulk -> {
+                    fatturaOrdineBulk.setVoceIva(voce_ivaBulk);
+                    bp.setDirty(true);
+                });
+        return doRettificaConsegna(context);
+    }
+
+    public Forward doBlankSearchVoceIva(ActionContext context,
+                                            FatturaOrdineBulk fatturaOrdineBulk) {
+        CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
+                .filter(CRUDFatturaPassivaBP.class::isInstance)
+                .map(CRUDFatturaPassivaBP.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+        fatturaOrdineBulk.setVoceIva(new Voce_ivaBulk());
+        fatturaOrdineBulk.calcolaRettifiche();
+        bp.setDirty(true);
+        return context.findDefaultForward();
     }
 }
