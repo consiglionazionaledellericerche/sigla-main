@@ -1,11 +1,14 @@
-<%@page import="it.cnr.contab.ordmag.ordini.bp.CRUDEvasioneOrdineBP"%>
+<%@page import="it.cnr.contab.ordmag.ordini.bp.CRUDEvasioneOrdineBP,
+it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,
 			it.cnr.jada.action.*,
 			java.util.*,
 			it.cnr.jada.util.action.*"
 %>
- <% CRUDEvasioneOrdineBP bp= (CRUDEvasioneOrdineBP)BusinessProcess.getBusinessProcess(request); %>
+ <% CRUDEvasioneOrdineBP bp= (CRUDEvasioneOrdineBP)BusinessProcess.getBusinessProcess(request); 
+ 	OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)bp.getConsegne().getModel();
+ %>
 	<table border="0" cellspacing="2" cellpadding="4">
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "find_esercizio_ordine"); %></td>
@@ -43,6 +46,19 @@
 			      <% bp.getConsegne().writeHTMLTable(pageContext,"consegneSet",false,false,false,"100%","300px", true); %>
 			</td>
 		</tr>
+		<table>
+			<tr>
+				<%
+					bp.getConsegne().writeFormField(out, "quantitaEvasa");
+				    if (consegna.isQuantitaEvasaMinoreOrdine()) {
+				    	bp.getConsegne().writeFormField(out, "sdoppiaRiga");
+				    }
+				    if (consegna.isQuantitaEvasaMaggioreOrdine()) {
+				    	bp.getConsegne().writeFormField(out, "autorizzaQuantitaEvasaMaggioreOrdinata");
+				    }
+				 	%>
+			</tr>
+		</table>
 		<table>
 			<tr>
 				<%
