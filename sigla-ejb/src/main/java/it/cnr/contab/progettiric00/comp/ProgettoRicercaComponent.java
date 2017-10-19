@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioHome;
@@ -80,8 +82,14 @@ public ProgettoRicercaComponent() {
 				sq_progetto = getSequence(uc);
 				((ProgettoBulk)bulk).setPg_progetto(sq_progetto);
 				((Progetto_uoBulk) ((ProgettoBulk)bulk).getDettagli().get(0)).setPg_progetto(new Integer(sq_progetto.intValue()));
-				for(int i = 0; ((ProgettoBulk)bulk).getDettagliPianoEconomico().size() > i; i++) {
-				  ((Progetto_piano_economicoBulk) ((ProgettoBulk)bulk).getDettagliPianoEconomico().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
+				for(int i = 0; ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale().size() > i; i++) {
+				  ((Progetto_piano_economicoBulk) ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
+				}	
+				for(int i = 0; ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente().size() > i; i++) {
+				  ((Progetto_piano_economicoBulk) ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
+				}	
+				for(int i = 0; ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni().size() > i; i++) {
+				  ((Progetto_piano_economicoBulk) ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
 				}	
 				for(int i = 0; ((ProgettoBulk)bulk).getDettagliFinanziatori().size() > i; i++) {
 				  ((Progetto_finanziatoreBulk) ((ProgettoBulk)bulk).getDettagliFinanziatori().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
@@ -125,7 +133,9 @@ public ProgettoRicercaComponent() {
 						getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
 					}
 					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagli());
-					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomico());
+					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
+					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
+					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
 					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
 					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
 					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPostIt());
@@ -163,11 +173,25 @@ public ProgettoRicercaComponent() {
 				  dettagliCopy.stream().forEach(e->{
 					  ((ProgettoBulk)bulk).removeFromDettagli(((ProgettoBulk)bulk).getDettagli().indexOf(e));
 				  });
-				  List dettagliPianoEconomicoCopy = new BulkList<>();
-				  dettagliPianoEconomicoCopy.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomico());
-				  dettagliPianoEconomicoCopy.stream().forEach(e->{
-					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomico(((ProgettoBulk)bulk).getDettagliPianoEconomico().indexOf(e));
+
+				  List dettagliPianoEconomicoTotaleCopy = new BulkList<>();
+				  dettagliPianoEconomicoTotaleCopy.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
+				  dettagliPianoEconomicoTotaleCopy.stream().forEach(e->{
+					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomicoTotale(((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale().indexOf(e));
 				  });
+				  
+				  List dettagliPianoEconomicoAnnoCorrenteCopy = new BulkList<>();
+				  dettagliPianoEconomicoAnnoCorrenteCopy.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
+				  dettagliPianoEconomicoAnnoCorrenteCopy.stream().forEach(e->{
+					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomicoAnnoCorrente(((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente().indexOf(e));
+				  });
+
+				  List dettagliPianoEconomicoAltriAnniCopy = new BulkList<>();
+				  dettagliPianoEconomicoAltriAnniCopy.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
+				  dettagliPianoEconomicoAltriAnniCopy.stream().forEach(e->{
+					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomicoAltriAnni(((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni().indexOf(e));
+				  });
+
 				  for(int i = 0; ((ProgettoBulk)bulk).getDettagliFinanziatori().size() > i; i++) {
 					  ((Progetto_finanziatoreBulk) ((ProgettoBulk)bulk).getDettagliFinanziatori().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
 				  }
@@ -187,7 +211,9 @@ public ProgettoRicercaComponent() {
 					  getHome(aUC, ProgettoBulk.class, "PROGETTO_SIP").delete(progettoGest, aUC);
 
 				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagli());
-				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomico());
+				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
+				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
+				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());				  
 				  
 				  if (((ProgettoBulk)bulk).getOtherField()!=null)
 					getHome(aUC, Progetto_other_fieldBulk.class).delete(((ProgettoBulk)bulk).getOtherField(), aUC);
@@ -225,7 +251,12 @@ public ProgettoRicercaComponent() {
 						testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));                	
 						testata.setDettagliPostIt(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPostIt(testata)));
 						testata.setSpeseEsercizio(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpese(userContext,testata)));
-						testata.setDettagliPianoEconomico(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,testata)));
+						
+						List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,testata));
+						testata.setDettagliPianoEconomicoTotale(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
+						testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
+						testata.setDettagliPianoEconomicoAltriAnni(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
+
 						testata.setOtherField(testataHome.findProgettoOtherField(userContext, testata));
                         
 						// controllo per evitare che il progetto padre sia modificabile nel caso
@@ -314,8 +345,9 @@ public ProgettoRicercaComponent() {
 				if ((ProgettoBulk)bulk.getProgettopadre() == null)
 				  ((ProgettoBulk)bulk).setLivello(new Integer(1));
 
-				if (!((ProgettoBulk)bulk).getDettagliPianoEconomico().isEmpty()) {
-					Integer minYear = 1000, maxYear = 3000;
+				if (!((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente().isEmpty() ||
+					!((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni().isEmpty()) {
+					Integer minYear = 0, maxYear = 9999;
 					if (((ProgettoBulk)bulk).getDt_inizio()!=null) {
 						GregorianCalendar calini = new GregorianCalendar();
 						calini.setTime(((ProgettoBulk)bulk).getDt_inizio());
@@ -326,8 +358,11 @@ public ProgettoRicercaComponent() {
 						calfin.setTime(DateUtils.max(((ProgettoBulk)bulk).getDt_fine(), ((ProgettoBulk)bulk).getDt_proroga()));
 						maxYear = calfin.get(Calendar.YEAR);
 					}
-	
-					for (Iterator iterator = ((ProgettoBulk)bulk).getDettagliPianoEconomico().iterator(); iterator.hasNext();) {
+					
+					BulkList<Progetto_piano_economicoBulk> allPiano = new BulkList<>();
+					allPiano.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
+					allPiano.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
+					for (Iterator iterator = allPiano.iterator(); iterator.hasNext();) {
 						Progetto_piano_economicoBulk pianoeco = (Progetto_piano_economicoBulk) iterator.next();
 						if (pianoeco.getEsercizio_piano()!=null && !pianoeco.getEsercizio_piano().equals(0))
 							if (pianoeco.getEsercizio_piano().compareTo(minYear)<0 || pianoeco.getEsercizio_piano().compareTo(maxYear)>0)
@@ -488,7 +523,9 @@ public ProgettoRicercaComponent() {
 				}
 
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagli());
-				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomico());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPostIt());

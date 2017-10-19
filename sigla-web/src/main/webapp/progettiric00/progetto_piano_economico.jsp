@@ -9,37 +9,13 @@
 
 <%
 	TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
-	ProgettoBulk bulk = (ProgettoBulk)bp.getModel();
-	SimpleDetailCRUDController controller = ( (TestataProgettiRicercaBP)bp ).getCrudPianoEconomico();
-	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
+
+	JSPUtils.tabbed(
+				pageContext,
+				"tabProgettoPianoEconomico",
+				bp.getTabsPianoEconomico(),
+				bp.getTab("tabProgettoPianoEconomico"),
+				"center",
+				"100%",
+				null);	
 %>
-
-<%	controller.writeHTMLTable(pageContext,"piano_economico",true,false,true,"100%","200px"); %>
-
-	<table class="Panel">
-  	  <TR><TD>
-	  	<% controller.writeFormLabel(out,"esercizio_piano");%>
-	  	</TD><TD colspan="3">
-	  	<% controller.writeFormInput(out,null,"esercizio_piano",isKeyEditable,null,null);%>
-	  </TD></TR>
-  	  <TR><TD>
-	  	<% controller.writeFormLabel(out,"voce_piano");%>
-	  	</TD><TD colspan="3">
-	  	<% controller.writeFormInput(out,null,"voce_piano",isKeyEditable,null,null);%>
-	  </TD></TR>
-  	  <TR><TD>
-	  	<% controller.writeFormLabel(out,"im_entrata");%>
-	  	</TD><TD colspan="3">
-	  	<% controller.writeFormInput(out,"im_entrata");%>
-	  </TD></TR>
-  	  <TR><TD>
-	  	<% controller.writeFormLabel(out,"im_spesa");%>
-	  	</TD><TD colspan="3">
-	  	<% controller.writeFormInput(out,"im_spesa");%>
-	  </TD></TR>
-  	  <TR><TD>
-	  	<% controller.writeFormLabel(out,"fl_ctrl_disp");%>
-	  	</TD><TD colspan="3">
-	  	<% controller.writeFormInput(out,"fl_ctrl_disp");%>
-	  </TD></TR>
-	</table>
