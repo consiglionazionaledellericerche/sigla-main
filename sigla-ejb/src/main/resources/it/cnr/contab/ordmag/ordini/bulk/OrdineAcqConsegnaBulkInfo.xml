@@ -121,6 +121,17 @@
 		nullable="false"
 		label="Tipo Consegna" />
 	<fieldProperty
+		name="sdoppiaRiga"
+		property="sdoppiaRiga"
+		inputType="SELECT"
+		keysProperty="operazioneEvasioneKeys"
+		inputSize="20"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="true"
+		label="Operazione Possibile" />
+	<fieldProperty
 		name="dtPrevConsegna"
 		property="dtPrevConsegna"
 		inputType="TEXT"
@@ -138,6 +149,15 @@
 		enabledOnEdit="true"
 		nullable="false"
 		label="Quantità" />
+	<fieldProperty
+		name="quantitaEvasa"
+		property="quantitaEvasa"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Quantità evasa" />
 	<fieldProperty
 		name="imImponibileDivisa"
 		property="imImponibileDivisa"
@@ -446,11 +466,15 @@
 		name="tipoConsegna"   
 		command="doOnTipoConsegnaChange" />
 	<formFieldProperty
+		name="sdoppiaRiga"/>
+	<formFieldProperty
 		name="dtPrevConsegna"    
 		command="doOnDtPrevConsegnaChange"/>
 	<formFieldProperty
 		name="quantita"   
 		command="doOnQuantitaChange"/>
+	<formFieldProperty
+		name="quantitaEvasa"/>
 	<formFieldProperty
 		name="imImponibileDivisa" />
 	<formFieldProperty
