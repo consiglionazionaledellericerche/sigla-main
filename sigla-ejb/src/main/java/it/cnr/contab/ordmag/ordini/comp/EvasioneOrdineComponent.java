@@ -251,9 +251,9 @@ public class EvasioneOrdineComponent
     public void evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException{
     	OrdineAcqComponentSession ordineComponent = (OrdineAcqComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_OrdineAcqComponentSession", OrdineAcqComponentSession.class);
 		List<EvasioneOrdineRigaBulk> listaRigheEvase = new ArrayList<>();
-    	if (evasioneOrdine.getRigheConsegnaDaEvadereColl() != null && !evasioneOrdine.getRigheConsegnaDaEvadereColl().isEmpty()){
+    	if (evasioneOrdine.getRigheConsegnaSelezionate() != null && !evasioneOrdine.getRigheConsegnaSelezionate().isEmpty()){
     		List<OrdineAcqBulk> listaOrdiniConConsegneEvase = new ArrayList<OrdineAcqBulk>();
-    		for (Iterator i = evasioneOrdine.getRigheConsegnaDaEvadereColl().iterator(); i.hasNext();) {
+    		for (Iterator i = evasioneOrdine.getRigheConsegnaSelezionate().iterator(); i.hasNext();) {
     			OrdineAcqConsegnaBulk consegna = ((OrdineAcqConsegnaBulk)i.next());
     			if (consegna.getQuantitaEvasa() == null){
     				throw new ApplicationException("Indicare la quantità da evadere per la consegna "+consegna.getConsegnaOrdineString());
@@ -266,7 +266,7 @@ public class EvasioneOrdineComponent
     			OrdineAcqBulk ordine = null;
     			Boolean ordineEsistente = false;
     			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
-    				ordine = ((OrdineAcqBulk)i.next());
+    				ordine = ((OrdineAcqBulk)k.next());
     				if (ordine.equalsByPrimaryKey(ordineConsegna)){
     					break;
     				}
@@ -275,7 +275,7 @@ public class EvasioneOrdineComponent
     				ordine = (OrdineAcqBulk)getTempHome(userContext, OrdineAcqBulk.class).findByPrimaryKey(ordineConsegna);
     				if (ordine != null){
 						try {
-							ordineComponent.inizializzaBulkPerModifica(userContext, ordine);
+							ordine = (OrdineAcqBulk)ordineComponent.inizializzaBulkPerModifica(userContext, ordine);
 						} catch (RemoteException e) {
 							throw handleException(e);
 						}
@@ -343,6 +343,7 @@ public class EvasioneOrdineComponent
     			lotto.setDivisa(movimentoMag.getDivisa());
     			lotto.setCambio(movimentoMag.getCambio());
     			lotto.setDtCarico(tipoMovimentoAz.getAggDataUltimoCarico().equals("S") ? movimentoMag.getDtRiferimento() : null);
+    			lotto.setQuantitaCarico(tipoMovimentoAz.getAggDataUltimoCarico().equals("S") ? movimentoMag.getQuantita() : null);
     			
     			switch (tipoMovimentoAz.getModAggQtaMagazzino()) {
 	    			case TipoMovimentoMagAzBulk.AZIONE_AZZERA:  lotto.setGiacenza(BigDecimal.ZERO);
@@ -407,9 +408,35 @@ public class EvasioneOrdineComponent
                 movimentoMag.setLottoMag(lotto);
                 movimentoMag.setToBeCreated();
                 super.creaConBulk(userContext, movimentoMag);
+    			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
+    				OrdineAcqBulk ordineAcq = ((OrdineAcqBulk)k.next());
+        			for (Object bulkRiga :ordineAcq.getRigheOrdineColl()) {
+        				OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bulkRiga;
+        				if (riga.equalsByPrimaryKey(consegna.getOrdineAcqRiga())){
+                			for (Object bulkCons : riga.getRigheConsegnaColl()) {
+                				OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bulkCons;
+                				if (cons.equalsByPrimaryKey(consegna)){
+                					if (cons.getStato().equals(OrdineAcqConsegnaBulk.STATO_EVASA)){
+                	    				throw new ApplicationException("La consegna "+consegna.getConsegnaOrdineString()+" è stata già evasa");
+                					}
+                	                cons.setStato(OrdineAcqConsegnaBulk.STATO_EVASA);
+                	                cons.setToBeUpdated();
+                				}
+            				}
+        				}
+        			}
+    			}
     		}
+			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
+				OrdineAcqBulk ordine = ((OrdineAcqBulk)k.next());
+				try {
+					ordineComponent.modificaConBulk(userContext, ordine);
+				} catch (RemoteException e) {
+					throw handleException(e);
+				}
+				
+			}
     		evasioneOrdine.setListaRigheConsegnaEvase(listaRigheEvase);
-    		assegnaProgressivo(userContext, evasioneOrdine);
     		evasioneOrdine = (EvasioneOrdineBulk)creaConBulk(userContext, evasioneOrdine);
 
 //    		return evasioneOrdine;
