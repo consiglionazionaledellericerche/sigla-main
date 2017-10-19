@@ -162,7 +162,7 @@
             property="sconto1Rett"
             inputType="TEXT"
             inputSize="5"
-            maxLength="5"
+            maxLength="10"
             enabledOnEdit="true"
             formatName="it.cnr.contab.util.PercentFormat"
             label="% Sconto 1"/>
@@ -171,7 +171,7 @@
             property="sconto2Rett"
             inputType="TEXT"
             inputSize="5"
-            maxLength="5"
+            maxLength="10"
             enabledOnEdit="true"
             formatName="it.cnr.contab.util.PercentFormat"
             label="% Sconto 2"/>
@@ -180,7 +180,7 @@
             property="sconto3Rett"
             inputType="TEXT"
             inputSize="5"
-            maxLength="5"
+            maxLength="10"
             enabledOnEdit="true"
             formatName="it.cnr.contab.util.PercentFormat"
             label="% Sconto 3"/>
@@ -239,7 +239,7 @@
             formatName="it.cnr.contab.util.EuroFormat"
             enabledOnEdit="false"
             nullable="false"
-            label="imTotaleConsegna"/>
+            label="Totale"/>
     <fieldProperty
             name="statoAss"
             property="statoAss"
@@ -280,13 +280,17 @@
     <formFieldProperty
             name="voceIva"/>
     <formFieldProperty
-            name="prezzoUnitarioRett"/>
+            name="prezzoUnitarioRett"
+            command="doRettificaConsegna"/>
     <formFieldProperty
-            name="sconto1Rett"/>
+            name="sconto1Rett"
+            command="doRettificaConsegna"/>
     <formFieldProperty
-            name="sconto2Rett"/>
+            name="sconto2Rett"
+            command="doRettificaConsegna"/>
     <formFieldProperty
-            name="sconto3Rett"/>
+            name="sconto3Rett"
+            command="doRettificaConsegna"/>
 
     <findFieldProperty
             name="cdCds"/>
@@ -361,10 +365,20 @@
             headerLabel="Consegna"
             label="Riga"/>
     <columnFieldProperty
+            name="quantita"
+            property="ordineAcqConsegna.quantita"
+            headerLabel="Consegna"
+            label="Quantità"/>
+    <columnFieldProperty
             name="notaRiga"
             property="ordineAcqConsegna.ordineAcqRiga.notaRiga"
             headerLabel="Ordine"
             label="Note"/>
+    <columnFieldProperty
+            name="impegno"
+            property="impegnoDisplay"
+            headerLabel="Ordine"
+            label="Impegno"/>
     <columnFieldProperty
             name="cd_voce_iva"
             property="ordineAcqConsegna.ordineAcqRiga.voceIva.cd_voce_iva"
@@ -424,14 +438,12 @@
             name="sconto3Rett"
             property="sconto3Rett"
             headerLabel="Rettifiche"
-            label="% Sc 1"/>
+            label="% Sc 3"/>
     <columnFieldProperty
             name="imImponibile"/>
     <columnFieldProperty
             name="imIva"/>
     <columnFieldProperty
-            name="impegno"
-            property="impegnoDisplay"
-            label="Impegno"/>
+            name="imTotaleConsegna"/>
 
 </bulkInfo>
