@@ -1,12 +1,12 @@
 package it.cnr.contab.ordmag.ordini.ejb;
-import java.util.Collection;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.comp.EvasioneOrdineComponent;
-import it.cnr.contab.ordmag.ordini.comp.OrdineAcqComponent;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRORDMAG00_EJB_EvasioneOrdineComponentSession")
 public class EvasioneOrdineComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements EvasioneOrdineComponentSession {
 @PostConstruct
@@ -34,4 +34,23 @@ public EvasioneOrdineBulk cercaOrdini(it.cnr.jada.UserContext param0,EvasioneOrd
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+
+public void evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException,javax.ejb.EJBException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		((EvasioneOrdineComponent)componentObj).evadiOrdine(userContext,evasioneOrdine);
+		component_invocation_succes(userContext,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+
 }
