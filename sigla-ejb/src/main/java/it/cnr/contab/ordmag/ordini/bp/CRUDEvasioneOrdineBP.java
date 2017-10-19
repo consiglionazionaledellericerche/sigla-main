@@ -133,6 +133,25 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		}
 	}
 
+	public void evadiConsegne(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		EvasioneOrdineBulk bulk = (EvasioneOrdineBulk) getModel();	
+		try 
+		{
+			EvasioneOrdineComponentSession comp = (EvasioneOrdineComponentSession)createComponentSession();
+			bulk.setDataBolla(new Timestamp(System.currentTimeMillis()));
+			bulk.setDataConsegna(new Timestamp(System.currentTimeMillis()));
+			comp.evadiOrdine(context.getUserContext(), bulk);
+
+		    commitUserTransaction();
+		    setModel(context, null);
+		    setDirty(false);
+		} catch(Exception e) 
+		{
+			throw handleException(e);
+		}
+	}
+
 	@Override
 	public boolean isNewButtonHidden() {
 		return true;
