@@ -1,6 +1,8 @@
 package it.cnr.contab.progettiric00.bp;
 
 import java.rmi.RemoteException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.servlet.http.HttpSession;
 
@@ -43,26 +45,27 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	private SimpleDetailCRUDController crudDettagliFinanziatori = new SimpleDetailCRUDController( "DettagliFinanziatori", Progetto_finanziatoreBulk.class, "dettagliFinanziatori", this);
 	private SimpleDetailCRUDController crudDettagliPartner_esterni = new SimpleDetailCRUDController( "DettagliPartner_esterni", Progetto_partner_esternoBulk.class, "dettagliPartner_esterni", this);
 	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
-	private SimpleDetailCRUDController crudPianoEconomico = new SimpleDetailCRUDController( "PianoEconomico", Progetto_piano_economicoBulk.class, "dettagliPianoEconomico", this){
-		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException
-		{
-			if (!detail.isToBeCreated()) {
-				try {
-					((ProgettoRicercaComponentSession)createComponentSession()).validaCancellazionePianoEconomicoAssociato(
-						context.getUserContext(),
-						(ProgettoBulk)getParentModel(),
-						detail);
-				} catch (ComponentException e) {
-					throw new ValidationException(e.getMessage());
-				} catch (RemoteException e) {
-					throw new ValidationException(e.getMessage());
-				} catch (BusinessProcessException e) {
-					throw new ValidationException(e.getMessage());
-				}
-			}
-		}
+	private SimpleDetailCRUDController crudPianoEconomicoTotale = new ProgettoPianoEconomicoCRUDController( "PianoEconomicoTotale", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoTotale", this){
+		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+			((Progetto_piano_economicoBulk)oggettobulk).setEsercizio_piano(Integer.valueOf(0));
+			return super.addDetail(oggettobulk);
+		};
 	};
 
+	private SimpleDetailCRUDController crudPianoEconomicoAnnoCorrente = new ProgettoPianoEconomicoCRUDController( "PianoEconomicoAnnoCorrente", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAnnoCorrente", this){
+		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+			((Progetto_piano_economicoBulk)oggettobulk).setEsercizio_piano(((ProgettoBulk)this.getParentModel()).getEsercizio());
+			return super.addDetail(oggettobulk);
+		};
+	};
+
+	private SimpleDetailCRUDController crudPianoEconomicoAltriAnni = new ProgettoPianoEconomicoCRUDController( "PianoEconomicoAltriAnni", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAltriAnni", this) {
+		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+			super.validate(actioncontext, oggettobulk);
+			if (((Progetto_piano_economicoBulk)oggettobulk).getEsercizio_piano().equals(((ProgettoBulk)this.getParentModel()).getEsercizio()))
+				throw new ValidationException("Operazione non possibile! Per caricare un dato relativo all'anno corrente utilizzare la sezione apposita.");
+		};
+	};
 
 	/**
 	 * TestataProgettiRicercaBP constructor comment.
@@ -421,6 +424,46 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    } 
 	}
 
+	public String[][] getTabsPianoEconomico() {
+		ProgettoBulk progetto = (ProgettoBulk)this.getModel();
+
+		boolean existAnnoCorrente = false;
+		Integer annoInizio = 0, annoFine = 9999;
+
+		if (progetto.getDt_inizio()!=null) {
+			GregorianCalendar calIni = new GregorianCalendar();
+			calIni.setTime(progetto.getDt_inizio());
+			annoInizio = calIni.get(Calendar.YEAR);
+		}
+		if (progetto.getDt_fine()!=null) {
+			GregorianCalendar calFin = new GregorianCalendar();
+			calFin.setTime(progetto.getDt_fine());
+			annoFine = calFin.get(Calendar.YEAR);
+		}
+		if (progetto.getDt_proroga()!=null) {
+			GregorianCalendar calPrg = new GregorianCalendar();
+			calPrg.setTime(progetto.getDt_proroga());
+			if (annoFine<calPrg.get(Calendar.YEAR))
+				annoFine = calPrg.get(Calendar.YEAR);
+		}
+		if (annoInizio > progetto.getEsercizio() || annoFine < progetto.getEsercizio()) {
+			//non sono nell'anno ma verifico se per caso non l'ho erronemanete caricato
+			if (progetto.getDettagliPianoEconomicoAnnoCorrente().size()>0)
+				existAnnoCorrente = true;
+		} else 
+			existAnnoCorrente = true;
+
+		if (existAnnoCorrente)
+	    	return new String[][] {
+				{ "tabProgettoPianoEconomicoTotale","Totali","/progettiric00/progetto_piano_economico_totale.jsp" },
+				{ "tabProgettoPianoEconomicoAnnoCorrente","Limiti Anno "+progetto.getEsercizio(),"/progettiric00/progetto_piano_economico_anno_corrente.jsp" },
+				{ "tabProgettoPianoEconomicoAltriAnni","Limiti Altri Anni","/progettiric00/progetto_piano_economico_altri_anni.jsp" }};
+    	else
+	    	return new String[][] {
+				{ "tabProgettoPianoEconomicoTotale","Totali","/progettiric00/progetto_piano_economico_totale.jsp" },
+				{ "tabProgettoPianoEconomicoAltriAnni","Limiti Annui","/progettiric00/progetto_piano_economico_altri_anni.jsp" }};
+	}
+
 	@Override
 	public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk)
 			throws BusinessProcessException {
@@ -438,7 +481,15 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		return ProgettoBulk.LABEL_COMMESSA;
 	}
 	
-	public SimpleDetailCRUDController getCrudPianoEconomico() {
-		return crudPianoEconomico;
+	public SimpleDetailCRUDController getCrudPianoEconomicoTotale() {
+		return crudPianoEconomicoTotale;
+	}
+	
+	public SimpleDetailCRUDController getCrudPianoEconomicoAnnoCorrente() {
+		return crudPianoEconomicoAnnoCorrente;
+	}
+	
+	public SimpleDetailCRUDController getCrudPianoEconomicoAltriAnni() {
+		return crudPianoEconomicoAltriAnni;
 	}
 }
