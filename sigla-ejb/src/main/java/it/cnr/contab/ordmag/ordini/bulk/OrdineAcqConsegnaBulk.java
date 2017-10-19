@@ -21,6 +21,7 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	public final static String STATO_INSERITA = "INS";
 	public final static String STATO_EVASA = "EVA";
 	public final static String STATO_ANNULLATA = "ANN";
+    private java.lang.Boolean autorizzaQuantitaEvasaMaggioreOrdinata;
 
 	public final static String STATO_FATT_NON_ASSOCIATA = "INS";
 	public final static String STATO_FATT_ASSOCIATA_PARZIALMENTE = "ASP";
@@ -61,6 +62,12 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	private BigDecimal quantitaEvasa;
 	private Boolean sdoppiaRiga;
 	
+	public final static Dictionary OPERAZIONE_EVASIONE_CONSEGNA;
+	static{
+		OPERAZIONE_EVASIONE_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
+		OPERAZIONE_EVASIONE_CONSEGNA.put("C","Crea nuova Consegna");
+		OPERAZIONE_EVASIONE_CONSEGNA.put("E","Evadi Forzatamente");
+	}
 	public final static Dictionary TIPO_CONSEGNA;
 	static{
 		TIPO_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
@@ -434,6 +441,10 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	public Dictionary getTipoConsegnaKeys() {
 		return TIPO_CONSEGNA;
 	}
+	public Dictionary getOperazioneEvasioneKeys() {
+		return OPERAZIONE_EVASIONE_CONSEGNA;
+	}
+	
 	public Dictionary getStatoKeys() {
 		return STATO;
 	}
