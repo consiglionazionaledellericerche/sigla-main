@@ -17,7 +17,7 @@
     <table width="100%">
         <tr>
             <td>
-                <% bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",false,false,false,"100%","200px"); %>
+                <% bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",false,false,false,"100%","300px"); %>
             </td>
         </tr>
     </table>
@@ -27,19 +27,19 @@
     <table width="100%">
         <tr>
             <td>
-                <% bp.getFattureRigaOrdiniController().writeHTMLTable(pageContext,"default",true,false,true,"100%","200px"); %>
+                <% bp.getFattureRigaOrdiniController().writeHTMLTable(pageContext,"default",true,false,true,"100%","100%"); %>
             </td>
         </tr>
     </table>
     <fieldset class="card">
         <legend class="GroupLabel card-header text-primary">Rettifiche</legend>
-        <table>
+        <table cellpadding="5px">
             <tr>
                 <% bp.getFattureRigaOrdiniController().writeFormField(out, "voceIva"); %>
                 <% bp.getFattureRigaOrdiniController().writeFormField(out, "prezzoUnitarioRett"); %>
             </tr>
         </table>
-        <table>
+        <table cellpadding="5px">
             <tr>
                 <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto1Rett"); %>
                 <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto2Rett"); %>
