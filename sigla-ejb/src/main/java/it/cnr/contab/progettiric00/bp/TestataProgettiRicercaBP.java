@@ -127,6 +127,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		}		
 	protected void resetTabs(it.cnr.jada.action.ActionContext context) {
 		setTab("tab","tabTestata");
+		setTab("tabProgettoPianoEconomico","tabProgettoPianoEconomicoTotale");
 	}
 	/**
 	 * E' stata generata la richiesta di cercare il Progetto che sarà nodo padre del Progetto
