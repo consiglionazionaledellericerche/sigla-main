@@ -6,7 +6,7 @@
 		tableName="LOTTO_MAG">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="numerazioneMag.unitaOrganizzativa.cd_unita_organizzativa" />
+			propertyName="numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
 			propertyName="numerazioneMag.magazzino.cdMagazzino" />
