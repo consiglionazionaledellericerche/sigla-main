@@ -50,10 +50,10 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 			<tr>
 				<%
 					bp.getConsegne().writeFormField(out, "quantitaEvasa");
-				    if (consegna.isQuantitaEvasaMinoreOrdine()) {
+				    if (consegna != null && consegna.isQuantitaEvasaMinoreOrdine()) {
 				    	bp.getConsegne().writeFormField(out, "sdoppiaRiga");
 				    }
-				    if (consegna.isQuantitaEvasaMaggioreOrdine()) {
+				    if (consegna != null && consegna.isQuantitaEvasaMaggioreOrdine()) {
 				    	bp.getConsegne().writeFormField(out, "autorizzaQuantitaEvasaMaggioreOrdinata");
 				    }
 				 	%>
