@@ -136,10 +136,18 @@ public class EvasioneOrdineComponent
 				Collection ordini = home.fetchAll(sql);
 				it.cnr.jada.bulk.BulkHome homeRiga= getHome(context, OrdineAcqRigaBulk.class);
 				it.cnr.jada.bulk.BulkHome homeBene= getHome(context, Bene_servizioBulk.class);
+				it.cnr.jada.bulk.BulkHome homeObbligazioneScad= getHome(context, Obbligazione_scadenzarioBulk.class);
+				it.cnr.jada.bulk.BulkHome homeObbligazione= getHome(context, ObbligazioneBulk.class);
 				for (Iterator j = ordini.iterator(); j.hasNext();) {
 					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk) j.next();
 					OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)homeRiga.findByPrimaryKey(cons.getOrdineAcqRiga());
 					Bene_servizioBulk bene = (Bene_servizioBulk)homeBene.findByPrimaryKey(riga.getBeneServizio());
+					if (cons.getObbligazioneScadenzario() != null){
+						Obbligazione_scadenzarioBulk obblScad = (Obbligazione_scadenzarioBulk)homeObbligazioneScad.findByPrimaryKey(cons.getObbligazioneScadenzario());
+						ObbligazioneBulk obbl = (ObbligazioneBulk)homeObbligazione.findByPrimaryKey(obblScad.getObbligazione());
+						obblScad.setObbligazione(obbl);
+						cons.setObbligazioneScadenzario(obblScad);
+					}
 					riga.setBeneServizio(bene);
 					cons.setOrdineAcqRiga(riga);
 					
@@ -258,7 +266,7 @@ public class EvasioneOrdineComponent
     			if (consegna.getQuantita() == null){
     				throw new ApplicationException("Indicare la quantità da evadere per la consegna "+consegna.getConsegnaOrdineString());
     			}
-    			if (consegna.isQuantitaEvasaMinoreOrdine() && consegna.getSdoppiaRiga() == null){
+    			if (consegna.isQuantitaEvasaMinoreOrdine() && consegna.getOperazioneQuantitaEvasaMinore() == null){
     				throw new ApplicationException("Per la consegna "+consegna.getConsegnaOrdineString()+" è necessario indicare se sdoppiare la riga o evaderla forzatamente");
     			}
     			OrdineAcqBulk ordineConsegna = new OrdineAcqBulk(consegna.getCdCds(),consegna.getCdUnitaOperativa(),consegna.getEsercizio(),
@@ -290,6 +298,7 @@ public class EvasioneOrdineComponent
     			evasioneOrdineRiga.setOrdineAcqConsegna(consegna);
     			evasioneOrdineRiga.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
     			evasioneOrdineRiga.setQuantitaEvasa(consegna.getQuantita());
+    			evasioneOrdineRiga.setRiga(new Long (listaRigheEvase.size() + 1));
     			evasioneOrdineRiga.setToBeCreated();
     			listaRigheEvase.add(evasioneOrdineRiga);
 // TODO Da verificare...è possibile fare le evasioni ordini senza cambiare le consegne? Cioè sarebbe possibile fare i riscontri ordine senza
@@ -423,7 +432,8 @@ public class EvasioneOrdineComponent
         			for (Object bulkRiga :ordineAcq.getRigheOrdineColl()) {
         				OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bulkRiga;
         				if (riga.equalsByPrimaryKey(consegna.getOrdineAcqRiga())){
-                			for (Object bulkCons : riga.getRigheConsegnaColl()) {
+        					BulkList listaConsegneRiga = new BulkList<>(riga.getRigheConsegnaColl());
+                			for (Object bulkCons : listaConsegneRiga) {
                 				OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bulkCons;
                 				if (cons.equalsByPrimaryKey(consegna)){
                 					if (cons.getStato().equals(OrdineAcqConsegnaBulk.STATO_EVASA)){
@@ -431,6 +441,17 @@ public class EvasioneOrdineComponent
                 					}
                 					consegna.setStato(OrdineAcqConsegnaBulk.STATO_EVASA);
                 					consegna.setToBeUpdated();
+                					riga.getRigheConsegnaColl().removeByPrimaryKey(cons);
+                					riga.getRigheConsegnaColl().add(consegna);
+                	    			if (consegna.isQuantitaEvasaMinoreOrdine() && consegna.isOperazioneCreaNuovaConsegna()){
+                	    				OrdineAcqConsegnaBulk newConsegna = (OrdineAcqConsegnaBulk)consegna.clone();
+                	    				newConsegna = (OrdineAcqConsegnaBulk)newConsegna.inizializza();
+                	    				newConsegna.setVecchiaConsegna(consegna.getConsegna());
+                	    				newConsegna.setQuantita(consegna.getQuantitaOriginaria().subtract(consegna.getQuantita()));
+                	    				newConsegna.setCrudStatus(INSERIMENTO);
+                	    				riga.addToRigheConsegnaColl(newConsegna);
+                	    				ordine.addToOrdineObbligazioniHash(newConsegna.getObbligazioneScadenzario(), newConsegna);
+                	    			}
                 				}
             				}
         				}
@@ -446,7 +467,7 @@ public class EvasioneOrdineComponent
 				}
 				
 			}
-    		evasioneOrdine.setListaRigheConsegnaEvase(listaRigheEvase);
+    		evasioneOrdine.setListaRigheConsegnaEvase(new BulkList<>(listaRigheEvase));
     		evasioneOrdine = (EvasioneOrdineBulk)creaConBulk(userContext, evasioneOrdine);
 
 //    		return evasioneOrdine;

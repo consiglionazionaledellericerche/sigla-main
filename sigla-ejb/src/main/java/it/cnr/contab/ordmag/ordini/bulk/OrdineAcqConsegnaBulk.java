@@ -31,6 +31,7 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	 **/
 	private OrdineAcqRigaBulk ordineAcqRiga =  new OrdineAcqRigaBulk();
 	private Boolean obbligazioneInseritaSuConsegna =  false;
+	private String descObbligazioneScadenzario;
 	/**
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
 	 **/
@@ -60,15 +61,17 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	 **/
 
 	private BigDecimal quantitaOriginaria;
-	private String sdoppiaRiga;
+	private String operazioneQuantitaEvasaMinore;
 	private String lottoFornitore;
 	private java.sql.Timestamp dtScadenza;
 	
+	private final static String OPERAZIONE_EVADI_FORZATA = "E";
+	private final static String OPERAZIONE_CREA_NUOVA_CONSEGNA = "C";
 	public final static Dictionary OPERAZIONE_EVASIONE_CONSEGNA;
 	static{
 		OPERAZIONE_EVASIONE_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
-		OPERAZIONE_EVASIONE_CONSEGNA.put("C","Crea nuova Consegna");
-		OPERAZIONE_EVASIONE_CONSEGNA.put("E","Evadi Forzatamente");
+		OPERAZIONE_EVASIONE_CONSEGNA.put(OPERAZIONE_CREA_NUOVA_CONSEGNA,"Crea nuova Consegna");
+		OPERAZIONE_EVASIONE_CONSEGNA.put(OPERAZIONE_EVADI_FORZATA,"Evadi Forzatamente");
 	}
 	public final static Dictionary TIPO_CONSEGNA;
 	static{
@@ -462,6 +465,11 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	}
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
 	{
+		inizializza();
+		return this;
+	}
+	public OggettoBulk inizializza() 
+	{
 		setStato(STATO_INSERITA);
 		setStatoFatt(STATO_FATT_NON_ASSOCIATA);
 		setImImponibile(BigDecimal.ZERO);
@@ -502,11 +510,11 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	public void setQuantitaOriginaria(BigDecimal quantitaOriginaria) {
 		this.quantitaOriginaria = quantitaOriginaria;
 	}
-	public String getSdoppiaRiga() {
-		return sdoppiaRiga;
+	public String getOperazioneQuantitaEvasaMinore() {
+		return operazioneQuantitaEvasaMinore;
 	}
-	public void setSdoppiaRiga(String sdoppiaRiga) {
-		this.sdoppiaRiga = sdoppiaRiga;
+	public void setOperazioneQuantitaEvasaMinore(String operazioneQuantitaEvasaMinore) {
+		this.operazioneQuantitaEvasaMinore = operazioneQuantitaEvasaMinore;
 	}
 	public Boolean isQuantitaEvasaDiversaOrdine() {
 		if (getQuantitaOriginaria() != null && getQuantita() != null){
@@ -515,6 +523,24 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 			} else {
 				return true;
 			}
+		}
+		return false;
+	}
+	public Boolean isOperazioneCreaNuovaConsegna() {
+		if (getOperazioneQuantitaEvasaMinore() == null){
+			return false;
+		}
+		if (getOperazioneQuantitaEvasaMinore().equals(OPERAZIONE_CREA_NUOVA_CONSEGNA)){
+			return true;
+		}
+		return false;
+	}
+	public Boolean isOperazioneEvasaForzata() {
+		if (getOperazioneQuantitaEvasaMinore() == null){
+			return false;
+		}
+		if (getOperazioneQuantitaEvasaMinore().equals(OPERAZIONE_EVADI_FORZATA)){
+			return true;
 		}
 		return false;
 	}
@@ -544,5 +570,14 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	}
 	public void setDtScadenza(java.sql.Timestamp dtScadenza) {
 		this.dtScadenza = dtScadenza;
+	}
+	public String getDescObbligazioneScadenzario() {
+		if (getObbligazioneScadenzario() == null || getObbligazioneScadenzario().getEsercizio() == null){
+			return null;
+		}
+		return getObbligazioneScadenzario().getEsercizio_originale()+"-"+getObbligazioneScadenzario().getPg_obbligazione()+"-"+getObbligazioneScadenzario().getPg_obbligazione_scadenzario()+"-"+getObbligazioneScadenzario().getDs_scadenza();
+	}
+	public void setDescObbligazioneScadenzario(String descObbligazioneScadenzario) {
+		this.descObbligazioneScadenzario = descObbligazioneScadenzario;
 	}
 }

@@ -267,7 +267,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
             		if (cons.getObbligazioneScadenzario() == null || cons.getObbligazioneScadenzario().getPg_obbligazione() == null){
                 		cons.setObbligazioneScadenzario(riga.getDspObbligazioneScadenzario());
             		}
-            		controlliValiditaConsegna(cons);
+            		controlliValiditaConsegna(userContext, cons);
             	}
     		}
     	}
@@ -293,7 +293,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		}
 	}
 
-	private void controlliValiditaConsegna(OrdineAcqConsegnaBulk consegna)throws it.cnr.jada.comp.ComponentException{
+	private void controlliValiditaConsegna(UserContext userContext, OrdineAcqConsegnaBulk consegna)throws it.cnr.jada.comp.ComponentException{
 		if (!consegna.isConsegnaMagazzino()){
 			if (consegna.getCdUopDest() == null){
 				throw new ApplicationException("E' necessario indicare l'unità operativa di destinazione per la riga "+consegna.getRiga()+".");
@@ -303,6 +303,16 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 				throw new ApplicationException("Per una consegna a magazzino non è possibile selezionare l'unità operativa di destinazione per la riga "+consegna.getRiga()+".");
 			}
 		}
+    	if (consegna.getOrdineAcqRiga().getOrdineAcq().getDataOrdine() == null){
+        	OrdineAcqHome home = (OrdineAcqHome)getHome(userContext, OrdineAcqBulk.class);
+        	try {
+				OrdineAcqBulk ordine = (OrdineAcqBulk)home.findByPrimaryKey(consegna.getOrdineAcqRiga().getOrdineAcq());
+				consegna.getOrdineAcqRiga().setOrdineAcq(ordine);
+        	} catch (PersistencyException e) {
+				throw new ApplicationException(e);
+			}
+    		
+    	}
 		if (consegna.getDtPrevConsegna() != null && consegna.getDtPrevConsegna().before(consegna.getOrdineAcqRiga().getOrdineAcq().getDataOrdine())){
 			throw new ApplicationException("La data di prevista consegna non può essere precedente alla data dell'ordine per la riga "+consegna.getRiga()+".");
 		}
@@ -1652,6 +1662,15 @@ private void aggiornaObbligazioni(
 				ordine.setOrdineObbligazioniHash(newObbligazioniHash);
 				for (java.util.Enumeration e = ((ObbligazioniTable)newObbligazioniHash.clone()).keys(); e.hasMoreElements();) {
 					Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)e.nextElement();
+					it.cnr.jada.bulk.BulkHome homeObbligazione= getHome(userContext, ObbligazioneBulk.class);
+					ObbligazioneBulk obbl;
+					try {
+						obbl = (ObbligazioneBulk)homeObbligazione.findByPrimaryKey(scadenza.getObbligazione());
+					} catch (PersistencyException e1) {
+						// TODO Auto-generated catch block
+						throw new ApplicationException(e1);
+					}
+					scadenza.setObbligazione(obbl);
 					java.math.BigDecimal im_ass = null;
 					im_ass = calcolaTotaleObbligazione(userContext, scadenza, ordine);
 					scadenza.setFlAssociataOrdine(true);

@@ -34,7 +34,7 @@ public class EvasioneOrdineBulk extends EvasioneOrdineBase {
 	private String find_riga_ordine; 
 	private String find_consegna_ordine; 
 	private String find_cd_uop_ordine;
-	protected List<EvasioneOrdineRigaBulk> listaRigheConsegnaEvase= new ArrayList<>();
+	protected BulkList listaRigheConsegnaEvase= new BulkList();
 	protected BulkList righeConsegnaSelezionate= new BulkList();
 	protected BulkList righeConsegnaDaEvadereColl= new BulkList();
 
@@ -147,7 +147,7 @@ public class EvasioneOrdineBulk extends EvasioneOrdineBase {
 	public BulkCollection[] getBulkLists() {
 
 		return new it.cnr.jada.bulk.BulkCollection[] { 
-				righeConsegnaDaEvadereColl
+				listaRigheConsegnaEvase
 		};
 	}
 	public List getChildren() {
@@ -232,10 +232,10 @@ public class EvasioneOrdineBulk extends EvasioneOrdineBase {
 	public void setFind_cd_uop_ordine(String find_cd_uop_ordine) {
 		this.find_cd_uop_ordine = find_cd_uop_ordine;
 	}
-	public List<EvasioneOrdineRigaBulk> getListaRigheConsegnaEvase() {
+	public BulkList getListaRigheConsegnaEvase() {
 		return listaRigheConsegnaEvase;
 	}
-	public void setListaRigheConsegnaEvase(List<EvasioneOrdineRigaBulk> listaRigheConsegnaEvase) {
+	public void setListaRigheConsegnaEvase(BulkList listaRigheConsegnaEvase) {
 		this.listaRigheConsegnaEvase = listaRigheConsegnaEvase;
 	}
 	public BulkList getRigheConsegnaSelezionate() {
