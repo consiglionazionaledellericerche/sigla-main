@@ -1,8 +1,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashtable;
+import it.cnr.jada.bulk.BulkList;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -14,16 +13,16 @@ import java.util.*;
  *
  * @author: Marco Spasiano
  */
-public class FatturaRigaOrdiniTable extends Hashtable<Fattura_passiva_rigaBulk, List<FatturaOrdineBulk>> {
+public class FatturaRigaOrdiniTable extends Hashtable<Fattura_passiva_rigaBulk, BulkList<FatturaOrdineBulk>> {
     /**
-     * ObbligazioniTable constructor comment.
+     * FatturaRigaOrdiniTable constructor comment.
      */
     public FatturaRigaOrdiniTable() {
         super();
     }
 
     /**
-     * ObbligazioniTable constructor comment.
+     * FatturaRigaOrdiniTable constructor comment.
      *
      * @param initialCapacity int
      */
@@ -32,7 +31,7 @@ public class FatturaRigaOrdiniTable extends Hashtable<Fattura_passiva_rigaBulk, 
     }
 
     /**
-     * ObbligazioniTable constructor comment.
+     * FatturaRigaOrdiniTable constructor comment.
      *
      * @param initialCapacity int
      * @param loadFactor      float
@@ -42,7 +41,7 @@ public class FatturaRigaOrdiniTable extends Hashtable<Fattura_passiva_rigaBulk, 
     }
 
     /**
-     * ObbligazioniTable constructor comment.
+     * FatturaRigaOrdiniTable constructor comment.
      *
      * @param t java.util.Map
      */
@@ -50,7 +49,7 @@ public class FatturaRigaOrdiniTable extends Hashtable<Fattura_passiva_rigaBulk, 
         super(t);
     }
 
-    public synchronized List<FatturaOrdineBulk> get(Object key) {
+    public synchronized BulkList<FatturaOrdineBulk> get(Object key) {
 
         return Optional.ofNullable(key)
                 .filter(Fattura_passiva_rigaBulk.class::isInstance)

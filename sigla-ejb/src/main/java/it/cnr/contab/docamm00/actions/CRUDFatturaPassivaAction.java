@@ -3997,7 +3997,8 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         bulksToRemove.stream()
                 .forEach(fatturaOrdineBulk -> {
                     final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFatturaRigaOrdiniHash().getKey(fatturaOrdineBulk);
-                    fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).remove(fatturaOrdineBulk);
+                    fatturaOrdineBulk.setToBeDeleted();
+                    bp.getFattureRigaOrdiniController().getDetails().remove(fatturaOrdineBulk);
                     if (fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).isEmpty()) {
                         fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
                     }

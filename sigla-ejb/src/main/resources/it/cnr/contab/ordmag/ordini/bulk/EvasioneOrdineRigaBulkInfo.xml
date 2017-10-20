@@ -254,6 +254,7 @@
         <columnFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
                              label="Totale riga" formatName="it.cnr.contab.util.EuroFormat"/>
         <columnFieldProperty name="prezzoUnitario" property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
+                             formatName="it.cnr.contab.util.Importo6CifreFormat"
                              label="Prezzo Unitario"/>
     </columnSet>
     <freeSearchSet name="fattura_passiva">
@@ -273,6 +274,7 @@
         <findFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
                              label="Totale riga" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
         <findFieldProperty name="prezzoUnitario" property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
+                           formatName="it.cnr.contab.util.Importo6CifreFormat"
                              label="Prezzo Unitario" inputType="TEXT"/>
     </freeSearchSet>
 </bulkInfo>
