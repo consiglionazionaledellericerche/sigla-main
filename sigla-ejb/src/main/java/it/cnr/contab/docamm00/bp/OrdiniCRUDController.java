@@ -6,6 +6,7 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.util.EuroFormat;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkInfo;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.jsp.TableCustomizer;
@@ -37,7 +38,7 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
         super(name, modelClass, listPropertyName, parent);
     }
 
-    public java.util.List<FatturaOrdineBulk> getDetails() {
+    public BulkList<FatturaOrdineBulk> getDetails() {
         final Optional<Fattura_passiva_rigaBulk> fattura_passiva_rigaBulk = Optional.ofNullable(getParentController())
                 .filter(CRUDFatturaPassivaBP.class::isInstance)
                 .map(CRUDFatturaPassivaBP.class::cast)
@@ -53,9 +54,9 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
                     .map(Fattura_passivaBulk.class::cast)
                     .map(fattura_passivaBulk -> fattura_passivaBulk.getFatturaRigaOrdiniHash())
                     .map(fatturaRigaOrdiniTable -> fatturaRigaOrdiniTable.get(fattura_passiva_rigaBulk.get()))
-                    .orElseGet(() -> Collections.emptyList());
+                    .orElseGet(() -> new BulkList(Collections.emptyList()));
         }
-        return Collections.emptyList();
+        return new BulkList(Collections.emptyList());
     }
 
     /**
@@ -120,22 +121,24 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
             final BigDecimal differenzaIva = fattura_passiva_rigaBulk.get()
                     .getIm_iva().subtract(totaleIva);
 
-            jspWriter.println("<tfoot class=\"bg-danger\">");
-            jspWriter.println("<tr>");
-            jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" colspan=\"" + numberOfColspan +"\" align=\"right\">");
-            jspWriter.println("<span>Differenze:</span>");
-            jspWriter.println("</td>");
-            jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
-            jspWriter.print(euroFormat.format(differenzaImponibile));
-            jspWriter.println("</td>");
-            jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
-            jspWriter.print(euroFormat.format(differenzaIva));
-            jspWriter.println("</td>");
-            jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
-            jspWriter.print(euroFormat.format(differenzaImponibile.add(differenzaIva)));
-            jspWriter.println("</td>");
-            jspWriter.println("</tr>");
-            jspWriter.println("</tfoot>");
+            if (differenzaImponibile.compareTo(BigDecimal.ZERO) != 0 || differenzaIva.compareTo(BigDecimal.ZERO) != 0 ) {
+                jspWriter.println("<tfoot class=\"bg-danger\">");
+                jspWriter.println("<tr>");
+                jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" colspan=\"" + numberOfColspan +"\" align=\"right\">");
+                jspWriter.println("<span>Differenze:</span>");
+                jspWriter.println("</td>");
+                jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
+                jspWriter.print(euroFormat.format(differenzaImponibile));
+                jspWriter.println("</td>");
+                jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
+                jspWriter.print(euroFormat.format(differenzaIva));
+                jspWriter.println("</td>");
+                jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
+                jspWriter.print(euroFormat.format(differenzaImponibile.add(differenzaIva)));
+                jspWriter.println("</td>");
+                jspWriter.println("</tr>");
+                jspWriter.println("</tfoot>");
+            }
 
             jspWriter.println("<tfoot class=\"bg-info\">");
             jspWriter.println("<tr>");
