@@ -6,7 +6,7 @@
 		tableName="BOLLA_SCARICO_RIGA_MAG">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="bollaScaricoMag.numerazioneMag.unitaOrganizzativa.cd_unita_organizzativa" />
+			propertyName="bollaScaricoMag.numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO"
 			propertyName="bollaScaricoMag.numerazioneMag.magazzino.cdMagazzino" />
@@ -45,7 +45,7 @@
 			propertyName="richiestaUopRiga.riga" />
 		<columnMapping
 			columnName="CD_CDS_LOTTO"
-			propertyName="lottoMag.numerazioneMag.unitaOrganizzativa.cd_unita_organizzativa" />
+			propertyName="lottoMag.numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO_LOTTO"
 			propertyName="lottoMag.numerazioneMag.magazzino.cdMagazzino" />
