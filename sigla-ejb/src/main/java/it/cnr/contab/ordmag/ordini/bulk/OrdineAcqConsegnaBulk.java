@@ -59,8 +59,10 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	 * Table name: ORDINE_ACQ_CONSEGNA
 	 **/
 
-	private BigDecimal quantitaEvasa;
-	private Boolean sdoppiaRiga;
+	private BigDecimal quantitaOriginaria;
+	private String sdoppiaRiga;
+	private String lottoFornitore;
+	private java.sql.Timestamp dtScadenza;
 	
 	public final static Dictionary OPERAZIONE_EVASIONE_CONSEGNA;
 	static{
@@ -494,21 +496,21 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 	public void setObbligazioneInseritaSuConsegna(Boolean obbligazioneInseritaSuConsegna) {
 		this.obbligazioneInseritaSuConsegna = obbligazioneInseritaSuConsegna;
 	}
-	public BigDecimal getQuantitaEvasa() {
-		return quantitaEvasa;
+	public BigDecimal getQuantitaOriginaria() {
+		return quantitaOriginaria;
 	}
-	public void setQuantitaEvasa(BigDecimal quantitaEvasa) {
-		this.quantitaEvasa = quantitaEvasa;
+	public void setQuantitaOriginaria(BigDecimal quantitaOriginaria) {
+		this.quantitaOriginaria = quantitaOriginaria;
 	}
-	public Boolean getSdoppiaRiga() {
+	public String getSdoppiaRiga() {
 		return sdoppiaRiga;
 	}
-	public void setSdoppiaRiga(Boolean sdoppiaRiga) {
+	public void setSdoppiaRiga(String sdoppiaRiga) {
 		this.sdoppiaRiga = sdoppiaRiga;
 	}
 	public Boolean isQuantitaEvasaDiversaOrdine() {
-		if (getQuantitaEvasa() != null && getQuantita() != null){
-			if (getQuantitaEvasa().compareTo(getQuantita()) == 0){
+		if (getQuantitaOriginaria() != null && getQuantita() != null){
+			if (getQuantitaOriginaria().compareTo(getQuantita()) == 0){
 				return false;
 			} else {
 				return true;
@@ -517,18 +519,30 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 		return false;
 	}
 	public Boolean isQuantitaEvasaMinoreOrdine() {
-		if (isQuantitaEvasaDiversaOrdine() && getQuantitaEvasa().compareTo(getQuantita()) < 0){
+		if (isQuantitaEvasaDiversaOrdine() && getQuantitaOriginaria().compareTo(getQuantita()) > 0){
 			return true;
 		}
 		return false;
 	}
 	public Boolean isQuantitaEvasaMaggioreOrdine() {
-		if (isQuantitaEvasaDiversaOrdine() && getQuantitaEvasa().compareTo(getQuantita()) > 0){
+		if (isQuantitaEvasaDiversaOrdine() && getQuantitaOriginaria().compareTo(getQuantita()) < 0){
 			return true;
 		}
 		return false;
 	}
 	public String getConsegnaOrdineString() {
 		return getEsercizio()+"/"+getCdNumeratore()+"/"+getNumero()+"/"+getRiga()+"/"+getConsegna();
+	}
+	public String getLottoFornitore() {
+		return lottoFornitore;
+	}
+	public void setLottoFornitore(String lottoFornitore) {
+		this.lottoFornitore = lottoFornitore;
+	}
+	public java.sql.Timestamp getDtScadenza() {
+		return dtScadenza;
+	}
+	public void setDtScadenza(java.sql.Timestamp dtScadenza) {
+		this.dtScadenza = dtScadenza;
 	}
 }

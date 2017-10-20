@@ -255,7 +255,7 @@ public class EvasioneOrdineComponent
     		List<OrdineAcqBulk> listaOrdiniConConsegneEvase = new ArrayList<OrdineAcqBulk>();
     		for (Iterator i = evasioneOrdine.getRigheConsegnaSelezionate().iterator(); i.hasNext();) {
     			OrdineAcqConsegnaBulk consegna = ((OrdineAcqConsegnaBulk)i.next());
-    			if (consegna.getQuantitaEvasa() == null){
+    			if (consegna.getQuantita() == null){
     				throw new ApplicationException("Indicare la quantità da evadere per la consegna "+consegna.getConsegnaOrdineString());
     			}
     			if (consegna.isQuantitaEvasaMinoreOrdine() && consegna.getSdoppiaRiga() == null){
@@ -289,7 +289,7 @@ public class EvasioneOrdineComponent
     			evasioneOrdineRiga.setEvasioneOrdine(evasioneOrdine);
     			evasioneOrdineRiga.setOrdineAcqConsegna(consegna);
     			evasioneOrdineRiga.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
-    			evasioneOrdineRiga.setQuantitaEvasa(consegna.getQuantitaEvasa());
+    			evasioneOrdineRiga.setQuantitaEvasa(consegna.getQuantita());
     			evasioneOrdineRiga.setToBeCreated();
     			listaRigheEvase.add(evasioneOrdineRiga);
 // TODO Da verificare...è possibile fare le evasioni ordini senza cambiare le consegne? Cioè sarebbe possibile fare i riscontri ordine senza
@@ -304,6 +304,13 @@ public class EvasioneOrdineComponent
 //    				consegnaNew.setQuantita(nuovaQuantita);
 //    			}
     			MovimentiMagBulk movimentoMag = new MovimentiMagBulk();
+    			
+    			Bene_servizioBulk bene = recuperoBeneServizio(userContext, consegna.getOrdineAcqRiga().getCdBeneServizio());
+    			
+    			if (bene.getFlScadenza() != null && bene.getFlScadenza() && consegna.getDtScadenza() == null){
+    				throw new ApplicationException("Indicare la data di scadenza per la consegna "+consegna.getConsegnaOrdineString());
+    			}
+    			
     			movimentoMag.setBeneServizio(consegna.getOrdineAcqRiga().getBeneServizio());
     			movimentoMag.setDataBolla(evasioneOrdine.getDataBolla());
     			movimentoMag.setDivisa(ordine.getDivisa());
@@ -312,11 +319,14 @@ public class EvasioneOrdineComponent
     			movimentoMag.setDtRiferimento(evasioneOrdine.getDataConsegna());
     			movimentoMag.setMagazzino(evasioneOrdine.getNumerazioneMag().getMagazzino());
     			movimentoMag.setOrdineAcqConsegna(consegna);
+    			movimentoMag.setUnitaOperativaOrd(consegna.getUnitaOperativaOrd());
     			movimentoMag.setPrezzoUnitario(consegna.getOrdineAcqRiga().getPrezzoUnitario());
     			movimentoMag.setQuantita(evasioneOrdineRiga.getQuantitaEvasa());
     			movimentoMag.setSconto1(consegna.getOrdineAcqRiga().getSconto1());
     			movimentoMag.setSconto2(consegna.getOrdineAcqRiga().getSconto2());
     			movimentoMag.setSconto3(consegna.getOrdineAcqRiga().getSconto3());
+    			movimentoMag.setLottoFornitore(consegna.getLottoFornitore());
+    			movimentoMag.setDtScadenza(consegna.getDtScadenza());
     			movimentoMag.setStato(MovimentiMagBulk.STATO_INSERITO);
     			movimentoMag.setTerzo(ordine.getFornitore());
     			TipoMovimentoMagBulk tipoMovimento = null;
@@ -419,8 +429,8 @@ public class EvasioneOrdineComponent
                 					if (cons.getStato().equals(OrdineAcqConsegnaBulk.STATO_EVASA)){
                 	    				throw new ApplicationException("La consegna "+consegna.getConsegnaOrdineString()+" è stata già evasa");
                 					}
-                	                cons.setStato(OrdineAcqConsegnaBulk.STATO_EVASA);
-                	                cons.setToBeUpdated();
+                					consegna.setStato(OrdineAcqConsegnaBulk.STATO_EVASA);
+                					consegna.setToBeUpdated();
                 				}
             				}
         				}
@@ -443,6 +453,12 @@ public class EvasioneOrdineComponent
     	}
     }
 
+    private Bene_servizioBulk recuperoBeneServizio(it.cnr.jada.UserContext userContext, String cdBeneServizio)
+    		throws ComponentException, PersistencyException {
+    	Bene_servizioHome home = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+    	Bene_servizioBulk bene = (Bene_servizioBulk)home.findByPrimaryKey(new Bene_servizioBulk(cdBeneServizio));
+    	return bene;
+    }
     private void assegnaProgressivo(UserContext userContext,EvasioneOrdineBulk evasioneOrdine) throws ComponentException {
 
 	try {
