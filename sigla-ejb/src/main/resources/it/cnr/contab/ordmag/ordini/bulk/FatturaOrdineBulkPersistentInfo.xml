@@ -1,55 +1,60 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk"
-	homeClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineHome">
-	<defaultColumnMap
-		tableName="FATTURA_ORDINE">
-		<columnMapping
-			columnName="CD_CDS"
-			propertyName="fatturaPassivaRiga.cd_cds" />
-		<columnMapping
-			columnName="CD_UNITA_ORGANIZZATIVA"
-			propertyName="fatturaPassivaRiga.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="fatturaPassivaRiga.esercizio" />
-		<columnMapping
-			columnName="PG_FATTURA_PASSIVA"
-			propertyName="fatturaPassivaRiga.pg_fattura_passiva" />
-		<columnMapping
-			columnName="PROGRESSIVO_RIGA"
-			propertyName="fatturaPassivaRiga.progressivo_riga" />
-		<columnMapping
-			columnName="CD_CDS_ORDINE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.unitaOrganizzativa.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="CD_UNITA_OPERATIVA"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
-		<columnMapping
-			columnName="ESERCIZIO_ORDINE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.esercizio" />
-		<columnMapping
-			columnName="CD_NUMERATORE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.cdNumeratore" />
-		<columnMapping
-			columnName="NUMERO"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numero" />
-		<columnMapping
-			columnName="RIGA"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.riga" />
-		<columnMapping
-			columnName="CONSEGNA"
-			propertyName="ordineAcqConsegna.consegna" />
-		<columnMapping
-			columnName="CD_VOCE_IVA_RETT"
-			propertyName="voceIva.cd_voce_iva" />
-	</defaultColumnMap>
-	<persistentProperty
-		name="fatturaPassivaRiga"
-		partOfOid="true" />
-	<persistentProperty
-		name="ordineAcqConsegna"
-		partOfOid="true" />
-	<persistentProperty
-		name="voceIva" />
+        persistentClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk"
+        homeClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineHome">
+    <fetchPolicy
+            name="default">
+        <exclude
+                pattern="fatturaPassivaRiga"/>
+    </fetchPolicy>
+    <defaultColumnMap
+            tableName="FATTURA_ORDINE">
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="fatturaPassivaRiga.cd_cds"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="fatturaPassivaRiga.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="fatturaPassivaRiga.esercizio"/>
+        <columnMapping
+                columnName="PG_FATTURA_PASSIVA"
+                propertyName="fatturaPassivaRiga.pg_fattura_passiva"/>
+        <columnMapping
+                columnName="PROGRESSIVO_RIGA"
+                propertyName="fatturaPassivaRiga.progressivo_riga"/>
+        <columnMapping
+                columnName="CD_CDS_ORDINE"
+                propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.unitaOrganizzativa.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="CD_UNITA_OPERATIVA"
+                propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa"/>
+        <columnMapping
+                columnName="ESERCIZIO_ORDINE"
+                propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.esercizio"/>
+        <columnMapping
+                columnName="CD_NUMERATORE"
+                propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.cdNumeratore"/>
+        <columnMapping
+                columnName="NUMERO"
+                propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numero"/>
+        <columnMapping
+                columnName="RIGA"
+                propertyName="ordineAcqConsegna.ordineAcqRiga.riga"/>
+        <columnMapping
+                columnName="CONSEGNA"
+                propertyName="ordineAcqConsegna.consegna"/>
+        <columnMapping
+                columnName="CD_VOCE_IVA_RETT"
+                propertyName="voceIva.cd_voce_iva"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="fatturaPassivaRiga"
+            partOfOid="true"/>
+    <persistentProperty
+            name="ordineAcqConsegna"
+            partOfOid="true"/>
+    <persistentProperty
+            name="voceIva"/>
 </SQLPersistentInfo>

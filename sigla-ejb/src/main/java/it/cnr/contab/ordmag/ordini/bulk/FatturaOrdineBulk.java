@@ -10,17 +10,19 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Optional;
 
 public class FatturaOrdineBulk extends FatturaOrdineBase {
 	/**
 	 * [FATTURA_PASSIVA_RIGA Rappresenta le righe di dettaglio della fattura. Ogni fattura ha sempre almeno una riga di dettaglio]
 	 **/
-	private Fattura_passiva_rigaBulk fatturaPassivaRiga =  new Fattura_passiva_rigaIBulk();
+	private Fattura_passiva_rigaBulk fatturaPassivaRiga;
 	/**
 	 * [ORDINE_ACQ_CONSEGNA Consegna Ordine d'Acquisto]
 	 **/
-	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
+	private OrdineAcqConsegnaBulk ordineAcqConsegna = new OrdineAcqConsegnaBulk();
 	/**
 	 * [VOCE_IVA La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entità si riferisce alla normativa vigente sull'iva.]
 	 **/
@@ -318,9 +320,10 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
                 .map(voce_ivaBulk -> voce_ivaBulk.getPercentuale())
                 .orElseGet(() -> getOrdineAcqConsegna().getOrdineAcqRiga().getVoce_iva().getPercentuale());
         setImImponibile(
-                prezzoUnitario.multiply(getOrdineAcqConsegna().getQuantita())
+                prezzoUnitario.multiply(getOrdineAcqConsegna().getQuantita()).setScale(2, RoundingMode.HALF_UP)
         );
-        setImIva(getImImponibile().multiply(percentualeIva).divide(BigDecimal.TEN.multiply(BigDecimal.TEN)));
+        setImIva(getImImponibile().multiply(percentualeIva)
+				.divide(BigDecimal.TEN.multiply(BigDecimal.TEN)).setScale(2, RoundingMode.HALF_UP));
         setImTotaleConsegna(getImImponibile().add(getImIva()));
 	}
 }

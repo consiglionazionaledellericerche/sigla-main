@@ -17,7 +17,7 @@
     <table width="100%">
         <tr>
             <td>
-                <% bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",false,false,false,"100%","300px"); %>
+                <% bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",false,false,false,"100%","200px"); %>
             </td>
         </tr>
     </table>

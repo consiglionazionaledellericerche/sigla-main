@@ -61,6 +61,8 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         implements IFatturaPassivaMgr, Cloneable, Serializable {
@@ -3422,6 +3424,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, fatturaPassiva.getCd_unita_organizzativa());
         return home.fetchAll(sql);
     }
+
 //^^@@
 
     /**
@@ -4317,8 +4320,23 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         fattura_passiva.resetDefferredSaldi();
 
         try {
-            BulkList dettagli = new BulkList(findDettagli(aUC, fattura_passiva));
+            BulkList<Fattura_passiva_rigaBulk> dettagli = new BulkList(findDettagli(aUC, fattura_passiva));
             fattura_passiva.setFattura_passiva_dettColl(dettagli);
+            fattura_passiva.setFatturaRigaOrdiniHash(new FatturaRigaOrdiniTable(
+                    dettagli.stream().collect(Collectors.toMap(fattura_passiva_rigaBulk -> fattura_passiva_rigaBulk,
+                        fattura_passiva_rigaBulk -> {
+                            try {
+                                    BulkList bulkList = new BulkList(
+                                        findFatturaOrdini(aUC, fattura_passiva_rigaBulk)
+                                                .stream()
+                                                .peek(fatturaOrdineBulk -> fatturaOrdineBulk.setFatturaPassivaRiga(fattura_passiva_rigaBulk))
+                                                .collect(Collectors.toList()));
+                                    fattura_passiva_rigaBulk.setFatturaOrdineColl(bulkList);
+                                    return bulkList;
+                            } catch (ComponentException | PersistencyException | IntrospectionException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                        }))));
 
             completeWithCondizioneConsegna(aUC, fattura_passiva);
             completeWithModalitaTrasporto(aUC, fattura_passiva);
@@ -7706,7 +7724,15 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         return true;
     }
 
-
+    /**
+     * Metodo richiamato dal framework per cercare le righe di consegna
+     * @param userContext
+     * @param fatturaPassivaRiga
+     * @param evasioneOrdineRigaBulk
+     * @param findclause
+     * @return
+     * @throws ComponentException
+     */
     public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Fattura_passiva_rigaIBulk fatturaPassivaRiga,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
         EvasioneOrdineRigaHome home = Optional.ofNullable(getHome(userContext, EvasioneOrdineRigaBulk.class, "V_EVASIONE_ORDINE"))
@@ -7745,5 +7771,27 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
         sqlBuilder.addClause(findclause);
         return sqlBuilder;
+    }
+
+    /**
+     * Recupera le righe di ordine associate alla fattura
+     * @param userContext
+     * @param fattura_passiva_rigaBulk
+     * @return List<FatturaOrdineBulk>
+     * @throws ComponentException
+     * @throws it.cnr.jada.persistency.PersistencyException
+     * @throws it.cnr.jada.persistency.IntrospectionException
+     */
+    public List<FatturaOrdineBulk> findFatturaOrdini(UserContext userContext, Fattura_passiva_rigaBulk fattura_passiva_rigaBulk)
+            throws ComponentException, it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException {
+        if (!Optional.ofNullable(fattura_passiva_rigaBulk).isPresent())
+            return Collections.emptyList();
+        final FatturaOrdineHome fatturaOrdineHome = Optional.ofNullable(getHome(userContext, FatturaOrdineBulk.class, null, "default"))
+                .filter(FatturaOrdineHome.class::isInstance)
+                .map(FatturaOrdineHome.class::cast)
+                .orElseThrow(() -> new ComponentException("Home di FatturaOrdineBulk non trovata!"));
+        SQLBuilder sqlBuilder = fatturaOrdineHome.createSQLBuilder();
+        sqlBuilder.addClause(FindClause.AND, "fatturaPassivaRiga", SQLBuilder.EQUALS, fattura_passiva_rigaBulk);
+        return fatturaOrdineHome.fetchAll(sqlBuilder);
     }
 }
