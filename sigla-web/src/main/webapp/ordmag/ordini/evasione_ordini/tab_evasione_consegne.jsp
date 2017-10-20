@@ -47,17 +47,17 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 			</td>
 		</tr>
 
-      <div class="Group card">
+      <div>
 	      <table>
 		  <tr>
 	         <td><% bp.getConsegne().writeFormLabel(out,"quantita");%></td>
 	         <td><% bp.getConsegne().writeFormInput(out,"quantita");%></td>
-				    if (bp.isConsegnaEvasaMinoreQuantitaOrdinata()) {
-				    	bp.getConsegne().writeFormField(out, "sdoppiaRiga");
+				 <%    if (bp.isConsegnaEvasaMinoreQuantitaOrdinata()) {
+				    	bp.getConsegne().writeFormField(out, "operazioneQuantitaEvasaMinore");
 				    }
 				    if (bp.isConsegnaEvasaMaggioreQuantitaOrdinata()) {
 				    	bp.getConsegne().writeFormField(out, "autorizzaQuantitaEvasaMaggioreOrdinata");
-				    }
+				    }%>
 	         <td><% bp.getConsegne().writeFormLabel(out,"lottoFornitore");%></td>
 	         <td><% bp.getConsegne().writeFormInput(out,"lottoFornitore");%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"dtScadenza");%></td>
@@ -65,92 +65,35 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 	      </tr>  	      
 		  <tr>
 	         <td><% bp.getConsegne().writeFormLabel(out,"quantitaOriginaria");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"quantitaOriginaria",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","quantitaOriginaria",true, null, null);%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"tipoConsegna");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"tipoConsegna",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","tipoConsegna",true, null, null);%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"dtPrevConsegna");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"dtPrevConsegna",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","dtPrevConsegna",true, null, null);%></td>
 	      </tr>  	
 		  <tr>         
 	         <td><% bp.getConsegne().writeFormLabel(out,"findMagazzino");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"findMagazzino",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","findMagazzino",true, null, null);%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"findLuogoConsegnaMag");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"findLuogoConsegnaMag",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","findLuogoConsegnaMag",true, null, null);%></td>
 	      </tr>            
 		  <tr>         
 	         <td><% bp.getConsegne().writeFormLabel(out,"findUnitaOperativaOrdDest");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"findUnitaOperativaOrdDest",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","findUnitaOperativaOrdDest",true, null, null);%></td>
 	      </tr>
 		  <tr>         
 	         <td><% bp.getConsegne().writeFormLabel(out,"imImponibile");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"imImponibile",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","imImponibile",true, null, null);%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"imIva");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"imIva",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","imIva",true, null, null);%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"imIvaD");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"imIvaD",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","imIvaD",true, null, null);%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"imTotaleConsegna");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"imTotaleConsegna",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","imTotaleConsegna",true, null, null);%></td>
 	      </tr>
 		  <tr>         
-	         <td><% bp.getConsegne().writeFormLabel(out,"findObbligazioneScadenzario");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"findObbligazioneScadenzario", true,null,null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"descObbligazioneScadenzario");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","descObbligazioneScadenzario", true,null,null);%></td>
 	      </tr>
 	      </table>
       </div>
-<!--  
-		<table>
-			<tr>
-				<%
-					bp.getConsegne().writeFormField(out, "quantitaEvasa");
-				    if (consegna != null && consegna.isQuantitaEvasaMinoreOrdine()) {
-				    	bp.getConsegne().writeFormField(out, "sdoppiaRiga");
-				    }
-				    if (consegna != null && consegna.isQuantitaEvasaMaggioreOrdine()) {
-				    	bp.getConsegne().writeFormField(out, "autorizzaQuantitaEvasaMaggioreOrdinata");
-				    }
-				 	%>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<%
-					bp.getConsegne().writeFormField(out, "quantita");
-					bp.getConsegne().writeFormField(out, "tipoConsegna");
-					bp.getConsegne().writeFormField(out, "dtPrevConsegna");
-				%>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<%
-					bp.getConsegne().writeFormField(out, "findMagazzino");
-					bp.getConsegne().writeFormField(out, "findLuogoConsegnaMag");
-				%>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<%
-						bp.getConsegne().writeFormField(out, "findUnitaOperativaOrdDest");
-				%>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<%
-					bp.getConsegne().writeFormField(out, "imImponibile");
-					bp.getConsegne().writeFormField(out, "imIva");
-					bp.getConsegne().writeFormField(out, "imIvaD");
-					bp.getConsegne().writeFormField(out, "imTotaleConsegna");
-				%>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<%
-					bp.getConsegne().writeFormField(out, "findObbligazioneScadenzario");
-				%>
-			</tr>
-		</table>
-
--->
