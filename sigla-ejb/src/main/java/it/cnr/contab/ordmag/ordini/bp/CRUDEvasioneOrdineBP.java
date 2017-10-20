@@ -121,8 +121,6 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		{
 			bulk.setRigheConsegnaDaEvadereColl(new BulkList<>());
 			EvasioneOrdineComponentSession comp = (EvasioneOrdineComponentSession)createComponentSession();
-			bulk.setDataBolla(new Timestamp(System.currentTimeMillis()));
-			bulk.setDataConsegna(new Timestamp(System.currentTimeMillis()));
 			bulk = comp.cercaOrdini(context.getUserContext(), bulk);
 
 			setModel( context, bulk );
@@ -139,8 +137,6 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		try 
 		{
 			EvasioneOrdineComponentSession comp = (EvasioneOrdineComponentSession)createComponentSession();
-			bulk.setDataBolla(new Timestamp(System.currentTimeMillis()));
-			bulk.setDataConsegna(new Timestamp(System.currentTimeMillis()));
 			comp.evadiOrdine(context.getUserContext(), bulk);
 
 		    commitUserTransaction();
@@ -155,5 +151,19 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 	@Override
 	public boolean isNewButtonHidden() {
 		return true;
+	}
+	
+	public Boolean isConsegnaEvasaMaggioreQuantitaOrdinata(){
+		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)getConsegne().getModel();	
+		if (consegna != null)
+			return consegna.isQuantitaEvasaMaggioreOrdine();
+		return false;
+	}
+	
+	public Boolean isConsegnaEvasaMinoreQuantitaOrdinata(){
+		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)getConsegne().getModel();	
+		if (consegna != null)
+			return consegna.isQuantitaEvasaMinoreOrdine();
+		return false;
 	}
 }
