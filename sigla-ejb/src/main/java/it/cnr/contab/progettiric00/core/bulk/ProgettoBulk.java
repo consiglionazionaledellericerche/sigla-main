@@ -114,7 +114,9 @@ public class ProgettoBulk extends ProgettoBase {
 	private BulkList dettagliFinanziatori = new BulkList();
 	private BulkList dettagliPartner_esterni = new BulkList();
 	private BulkList dettagliPostIt = new BulkList();
-	private BulkList dettagliPianoEconomico = new BulkList();
+	private BulkList dettagliPianoEconomicoTotale = new BulkList();
+	private BulkList dettagliPianoEconomicoAnnoCorrente = new BulkList();
+	private BulkList dettagliPianoEconomicoAltriAnni = new BulkList();
 	private BulkList speseEsercizio = new BulkList();
 	private Commessa_spesaBulk spese;
 	private Parametri_cdsBulk parametriCds;
@@ -166,15 +168,29 @@ public class ProgettoBulk extends ProgettoBase {
 		return dettagliPostIt.size()-1;
 	}
 
-	public int addToDettagliPianoEconomico(Progetto_piano_economicoBulk dett) {
+	public int addToDettagliPianoEconomicoTotale(Progetto_piano_economicoBulk dett) {
 		dett.setProgetto( this );
 		dett.setPg_progetto( getPg_progetto() );
-		dettagliPianoEconomico.add(dett);
-		return dettagliPianoEconomico.size()-1;
+		dettagliPianoEconomicoTotale.add(dett);
+		return dettagliPianoEconomicoTotale.size()-1;
+	}
+
+	public int addToDettagliPianoEconomicoAnnoCorrente(Progetto_piano_economicoBulk dett) {
+		dett.setProgetto( this );
+		dett.setPg_progetto( getPg_progetto() );
+		dettagliPianoEconomicoAnnoCorrente.add(dett);
+		return dettagliPianoEconomicoAnnoCorrente.size()-1;
+	}
+
+	public int addToDettagliPianoEconomicoAltriAnni(Progetto_piano_economicoBulk dett) {
+		dett.setProgetto( this );
+		dett.setPg_progetto( getPg_progetto() );
+		dettagliPianoEconomicoAltriAnni.add(dett);
+		return dettagliPianoEconomicoAltriAnni.size()-1;
 	}
 
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPostIt,dettagliPianoEconomico};
+		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPostIt,dettagliPianoEconomicoTotale,dettagliPianoEconomicoAnnoCorrente,dettagliPianoEconomicoAltriAnni};
 	}
 
 public java.lang.String getCd_divisa() {
@@ -216,8 +232,14 @@ public it.cnr.jada.bulk.BulkList getDettagliFinanziatori() {
 public it.cnr.jada.bulk.BulkList getDettagliPostIt() {
 	return dettagliPostIt;
 }
-public BulkList getDettagliPianoEconomico() {
-	return dettagliPianoEconomico;
+public BulkList getDettagliPianoEconomicoTotale() {
+	return dettagliPianoEconomicoTotale;
+}
+public BulkList getDettagliPianoEconomicoAnnoCorrente() {
+	return dettagliPianoEconomicoAnnoCorrente;
+}
+public BulkList getDettagliPianoEconomicoAltriAnni() {
+	return dettagliPianoEconomicoAltriAnni;
 }
 /**
  * Restituisce il valore della propriet� 'rOprogetto'
@@ -314,8 +336,16 @@ public PostItBulk removeFromDettagliPostIt(int index) {
 	PostItBulk dett = (PostItBulk)dettagliPostIt.remove(index);
 	return dett;
 }
-public Progetto_piano_economicoBulk removeFromDettagliPianoEconomico(int index) {
-	Progetto_piano_economicoBulk dett = (Progetto_piano_economicoBulk)dettagliPianoEconomico.remove(index);
+public Progetto_piano_economicoBulk removeFromDettagliPianoEconomicoTotale(int index) {
+	Progetto_piano_economicoBulk dett = (Progetto_piano_economicoBulk)dettagliPianoEconomicoTotale.remove(index);
+	return dett;
+}
+public Progetto_piano_economicoBulk removeFromDettagliPianoEconomicoAnnoCorrente(int index) {
+	Progetto_piano_economicoBulk dett = (Progetto_piano_economicoBulk)dettagliPianoEconomicoAnnoCorrente.remove(index);
+	return dett;
+}
+public Progetto_piano_economicoBulk removeFromDettagliPianoEconomicoAltriAnni(int index) {
+	Progetto_piano_economicoBulk dett = (Progetto_piano_economicoBulk)dettagliPianoEconomicoAltriAnni.remove(index);
 	return dett;
 }
 
@@ -346,8 +376,14 @@ public void setDettagliFinanziatori(it.cnr.jada.bulk.BulkList newDettagliFinanzi
 public void setDettagliPostIt(it.cnr.jada.bulk.BulkList newDettagliPostIt) {
 	dettagliPostIt = newDettagliPostIt;
 }
-public void setDettagliPianoEconomico(BulkList dettagliPianoEconomico) {
-	this.dettagliPianoEconomico = dettagliPianoEconomico;
+public void setDettagliPianoEconomicoTotale(BulkList dettagliPianoEconomicoTotale) {
+	this.dettagliPianoEconomicoTotale = dettagliPianoEconomicoTotale;
+}
+public void setDettagliPianoEconomicoAnnoCorrente(BulkList dettagliPianoEconomicoAnnoCorrente) {
+	this.dettagliPianoEconomicoAnnoCorrente = dettagliPianoEconomicoAnnoCorrente;
+}
+public void setDettagliPianoEconomicoAltriAnni(BulkList dettagliPianoEconomicoAltriAnni) {
+	this.dettagliPianoEconomicoAltriAnni = dettagliPianoEconomicoAltriAnni;
 }
 /**
  * Insert the method's description here.
@@ -967,6 +1003,8 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	
 	public boolean isROFlPianoEconomico() {
 		return Boolean.TRUE.equals(getFl_piano_economico()) &&
-				!getDettagliPianoEconomico().isEmpty();
+				!getDettagliPianoEconomicoTotale().isEmpty() &&
+				!getDettagliPianoEconomicoAnnoCorrente().isEmpty() &&
+				!getDettagliPianoEconomicoAltriAnni().isEmpty();
 	}
 }
