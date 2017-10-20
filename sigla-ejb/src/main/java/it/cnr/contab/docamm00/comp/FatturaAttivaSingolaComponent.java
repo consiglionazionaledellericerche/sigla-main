@@ -2381,7 +2381,10 @@ public void controllaQuadraturaAccertamenti(UserContext aUC,Fattura_attivaBulk f
 					StringBuffer sb = new StringBuffer();
 					sb.append("Attenzione: La scadenza ");
 					sb.append(scadenza.getDs_scadenza());
-					sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
+					sb.
+
+
+							append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
 					sb.append(" è stata coperta solo per ");
 					sb.append(totale.doubleValue() + " EUR!");
 					throw new it.cnr.jada.comp.ApplicationException(sb.toString());
