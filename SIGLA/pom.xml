@@ -185,7 +185,7 @@
         <dependency>
             <groupId>it.cnr.commons</groupId>
             <artifactId>firmadigitale</artifactId>
-            <version>1.6</version>
+            <version>1.11</version>
             <exclusions>
                 <exclusion>
                     <artifactId>log4j</artifactId>
