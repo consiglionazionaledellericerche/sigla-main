@@ -26,7 +26,7 @@ public class LottoMagHome extends BulkHome {
 			NumerazioneMagBulk numerazione = new NumerazioneMagBulk();
 			LottoMagBulk lotto = (LottoMagBulk)bulk;
 			numerazione.setCdCds(CNRUserContext.getCd_cds(userContext));
-			numerazione.setCdMagazzino(lotto.getCdMagazzino());
+			numerazione.setCdMagazzino(lotto.getMagazzino().getCdMagazzino());
 			numerazione.setEsercizio(lotto.getEsercizio());
 			numerazione.setCdNumeratoreMag(NumerazioneMagBulk.NUMERAZIONE_LOTTO);
 			lotto.setNumerazioneMag(numerazione);

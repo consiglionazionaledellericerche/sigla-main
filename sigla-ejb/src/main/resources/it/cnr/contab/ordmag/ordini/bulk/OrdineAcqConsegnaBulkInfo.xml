@@ -121,6 +121,17 @@
 		nullable="false"
 		label="Tipo Consegna" />
 	<fieldProperty
+		name="sdoppiaRiga"
+		property="sdoppiaRiga"
+		inputType="SELECT"
+		keysProperty="operazioneEvasioneKeys"
+		inputSize="20"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="true"
+		label="Operazione Possibile" />
+	<fieldProperty
 		name="dtPrevConsegna"
 		property="dtPrevConsegna"
 		inputType="TEXT"
@@ -130,6 +141,22 @@
 		nullable="false"
 		label="Data Prev. Consegna" />
 	<fieldProperty
+		name="dtScadenza"
+		property="dtScadenza"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnEdit="true"
+		label="Data Scadenza" />
+	<fieldProperty
+		name="lottoFornitore"
+		property="lottoFornitore"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="true"
+		label="lottoFornitore" />
+	<fieldProperty
 		name="quantita"
 		property="quantita"
 		inputType="TEXT"
@@ -138,6 +165,15 @@
 		enabledOnEdit="true"
 		nullable="false"
 		label="Quantità" />
+	<fieldProperty
+		name="quantitaOriginaria"
+		property="quantitaOriginaria"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Quantità Originaria" />
 	<fieldProperty
 		name="imImponibileDivisa"
 		property="imImponibileDivisa"
@@ -446,11 +482,19 @@
 		name="tipoConsegna"   
 		command="doOnTipoConsegnaChange" />
 	<formFieldProperty
+		name="dtScadenza"/>
+	<formFieldProperty
+		name="lottoFornitore"/>
+	<formFieldProperty
+		name="sdoppiaRiga"/>
+	<formFieldProperty
 		name="dtPrevConsegna"    
 		command="doOnDtPrevConsegnaChange"/>
 	<formFieldProperty
 		name="quantita"   
 		command="doOnQuantitaChange"/>
+	<formFieldProperty
+		name="quantitaOriginaria"/>
 	<formFieldProperty
 		name="imImponibileDivisa" />
 	<formFieldProperty

@@ -291,9 +291,6 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 				throw new ApplicationException ("Non è possibile salvare un ordine senza dettagli.");
 	    	}
 		}
-			
-			
-			
 	}
 
 	private void controlliValiditaConsegna(OrdineAcqConsegnaBulk consegna)throws it.cnr.jada.comp.ComponentException{
@@ -1294,27 +1291,7 @@ public SQLBuilder selectProcedureAmministrativeByClause (UserContext userContext
 	return sql;
 }	
 public ImportoOrdine calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametri) throws ApplicationException{
-	BigDecimal prezzo = Utility.nvl(parametri.getPrezzoRet(), parametri.getPrezzo());
-	BigDecimal cambio = Utility.nvl(parametri.getCambioRet(), parametri.getCambio());
-	if (parametri.getDivisa() == null || parametri.getDivisaRisultato() == null || 
-			parametri.getDivisa().getCd_divisa() == null || parametri.getDivisaRisultato().getCd_divisa() == null){
-		throw new it.cnr.jada.comp.ApplicationException("E' necessario indicare le divise.");
-	}
-	if (!parametri.getDivisa().getCd_divisa().equals(parametri.getDivisaRisultato().getCd_divisa())){
-		if (parametri.getDivisaRisultato().getFl_calcola_con_diviso().booleanValue())
-			prezzo = Utility.divide(prezzo, cambio);
-		else
-			prezzo= prezzo.multiply(cambio).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
-
-	}
-	BigDecimal sconto1 = Utility.nvl(Utility.nvl(parametri.getSconto1Ret(), parametri.getSconto1()));
-	BigDecimal sconto2 = Utility.nvl(Utility.nvl(parametri.getSconto2Ret(), parametri.getSconto2()));
-	BigDecimal sconto3 = Utility.nvl(Utility.nvl(parametri.getSconto3Ret(), parametri.getSconto3()));
-	BigDecimal prezzoScontato = prezzo.
-									multiply(BigDecimal.ONE.subtract(sconto1.divide(Utility.CENTO))).
-									multiply(BigDecimal.ONE.subtract(sconto2.divide(Utility.CENTO))).
-									multiply(BigDecimal.ONE.subtract(sconto3.divide(Utility.CENTO)));
-	BigDecimal imponibile = prezzoScontato.multiply(parametri.getQtaOrd());
+	BigDecimal imponibile = calcoloImponibile(parametri);
 	Voce_ivaBulk voceIva = null;
 	if (parametri.getVoceIvaRet() != null && parametri.getVoceIvaRet().getPercentuale() != null){
 		voceIva = parametri.getVoceIvaRet();
@@ -1340,6 +1317,64 @@ public ImportoOrdine calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametr
 	importoOrdine.setImportoIvaDetraibile(Utility.round2Decimali(ivaDetraibile));
 	importoOrdine.setArrAliIva(BigDecimal.ZERO);
 	return importoOrdine;
+}
+
+public ImportoOrdine calcoloImportoOrdinePerMagazzino(ParametriCalcoloImportoOrdine parametri) throws ApplicationException{
+	BigDecimal imponibile = calcoloImponibile(parametri);
+	BigDecimal imponibileUnitario = imponibile.divide(parametri.getQtaOrd());
+	BigDecimal arrotondamento = parametri.getArrAliIva().divide(parametri.getQtaOrd());
+	BigDecimal arrAliIva = arrotondamento;
+			
+	Voce_ivaBulk voceIva = null;
+	if (parametri.getVoceIvaRet() != null && parametri.getVoceIvaRet().getPercentuale() != null){
+		voceIva = parametri.getVoceIvaRet();
+	} else {
+		voceIva = parametri.getVoceIva();
+	}
+	BigDecimal importoIva = Utility.round2Decimali((Utility.divide(imponibile, Utility.CENTO)).multiply(voceIva.getPercentuale())); 
+	BigDecimal ivaNonDetraibile = Utility.round2Decimali(importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita()))));
+	BigDecimal ivaPerCalcoloProrata = importoIva.subtract(ivaNonDetraibile);
+	BigDecimal ivaDetraibile = Utility.round2Decimali(ivaPerCalcoloProrata.multiply(Utility.nvl(parametri.getPercProrata())));
+	ivaNonDetraibile = ivaNonDetraibile.add((ivaPerCalcoloProrata.subtract(ivaDetraibile)));
+	
+	if (ivaDetraibile.compareTo(BigDecimal.ZERO) == 0 || ivaNonDetraibile.compareTo(BigDecimal.ZERO) > 0){
+		ivaNonDetraibile = ivaNonDetraibile.add(Utility.nvl(parametri.getArrAliIva()));
+	}else {
+		ivaDetraibile = ivaDetraibile.add(Utility.nvl(parametri.getArrAliIva()));
+	}
+	importoIva = importoIva.add(ivaDetraibile);
+	ImportoOrdine importoOrdine = new ImportoOrdine();
+	importoOrdine.setImponibile(Utility.round2Decimali(imponibile));
+	importoOrdine.setImportoIva(Utility.round2Decimali(importoIva));
+	importoOrdine.setImportoIvaInd(Utility.round2Decimali(ivaNonDetraibile));
+	importoOrdine.setImportoIvaDetraibile(Utility.round2Decimali(ivaDetraibile));
+	importoOrdine.setArrAliIva(BigDecimal.ZERO);
+	return importoOrdine;
+}
+
+private BigDecimal calcoloImponibile(ParametriCalcoloImportoOrdine parametri) throws ApplicationException {
+	BigDecimal prezzo = Utility.nvl(parametri.getPrezzoRet(), parametri.getPrezzo());
+	BigDecimal cambio = Utility.nvl(parametri.getCambioRet(), parametri.getCambio());
+	if (parametri.getDivisa() == null || parametri.getDivisaRisultato() == null || 
+			parametri.getDivisa().getCd_divisa() == null || parametri.getDivisaRisultato().getCd_divisa() == null){
+		throw new it.cnr.jada.comp.ApplicationException("E' necessario indicare le divise.");
+	}
+	if (!parametri.getDivisa().getCd_divisa().equals(parametri.getDivisaRisultato().getCd_divisa())){
+		if (parametri.getDivisaRisultato().getFl_calcola_con_diviso().booleanValue())
+			prezzo = Utility.divide(prezzo, cambio);
+		else
+			prezzo= prezzo.multiply(cambio).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+
+	}
+	BigDecimal sconto1 = Utility.nvl(Utility.nvl(parametri.getSconto1Ret(), parametri.getSconto1()));
+	BigDecimal sconto2 = Utility.nvl(Utility.nvl(parametri.getSconto2Ret(), parametri.getSconto2()));
+	BigDecimal sconto3 = Utility.nvl(Utility.nvl(parametri.getSconto3Ret(), parametri.getSconto3()));
+	BigDecimal prezzoScontato = prezzo.
+									multiply(BigDecimal.ONE.subtract(sconto1.divide(Utility.CENTO))).
+									multiply(BigDecimal.ONE.subtract(sconto2.divide(Utility.CENTO))).
+									multiply(BigDecimal.ONE.subtract(sconto3.divide(Utility.CENTO)));
+	BigDecimal imponibile = prezzoScontato.multiply(parametri.getQtaOrd());
+	return imponibile;
 }
 public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbligazioniVBulk filtro)
 		throws ComponentException {

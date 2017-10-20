@@ -21,7 +21,7 @@
 			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
 			columnName="CD_CDS_LOTTO"
-			propertyName="lottoMag.numerazioneMag.unitaOrganizzativa.cd_unita_organizzativa" />
+			propertyName="lottoMag.numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO_LOTTO"
 			propertyName="lottoMag.numerazioneMag.magazzino.cdMagazzino" />
@@ -54,7 +54,7 @@
 			propertyName="voceIva.cd_voce_iva" />
 		<columnMapping
 			columnName="CD_CDS_BOLLA_SCA"
-			propertyName="bollaScaricoMag.numerazioneMag.unitaOrganizzativa.cd_unita_organizzativa" />
+			propertyName="bollaScaricoMag.numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="CD_MAGAZZINO_BOLLA_SCA"
 			propertyName="bollaScaricoMag.numerazioneMag.magazzino.cdMagazzino" />
