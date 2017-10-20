@@ -377,13 +377,13 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
 		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
 	}
-	public java.lang.String getCdUnitaOperativa() {
+	public java.lang.String getCdUnitaOperativaOrdine() {
 		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
 		if (ordineAcqConsegna == null)
 			return null;
 		return getOrdineAcqConsegna().getCdUnitaOperativa();
 	}
-	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
+	public void setCdUnitaOperativaOrdine(java.lang.String cdUnitaOperativa)  {
 		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	public java.lang.Integer getEsercizioOrdine() {
