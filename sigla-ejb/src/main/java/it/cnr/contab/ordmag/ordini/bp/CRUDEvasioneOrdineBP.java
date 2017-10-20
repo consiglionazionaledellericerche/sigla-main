@@ -121,8 +121,6 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		{
 			bulk.setRigheConsegnaDaEvadereColl(new BulkList<>());
 			EvasioneOrdineComponentSession comp = (EvasioneOrdineComponentSession)createComponentSession();
-			bulk.setDataBolla(new Timestamp(System.currentTimeMillis()));
-			bulk.setDataConsegna(new Timestamp(System.currentTimeMillis()));
 			bulk = comp.cercaOrdini(context.getUserContext(), bulk);
 
 			setModel( context, bulk );
@@ -133,8 +131,39 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		}
 	}
 
+	public void evadiConsegne(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		EvasioneOrdineBulk bulk = (EvasioneOrdineBulk) getModel();	
+		try 
+		{
+			EvasioneOrdineComponentSession comp = (EvasioneOrdineComponentSession)createComponentSession();
+			comp.evadiOrdine(context.getUserContext(), bulk);
+
+		    commitUserTransaction();
+		    setModel(context, null);
+		    setDirty(false);
+		} catch(Exception e) 
+		{
+			throw handleException(e);
+		}
+	}
+
 	@Override
 	public boolean isNewButtonHidden() {
 		return true;
+	}
+	
+	public Boolean isConsegnaEvasaMaggioreQuantitaOrdinata(){
+		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)getConsegne().getModel();	
+		if (consegna != null)
+			return consegna.isQuantitaEvasaMaggioreOrdine();
+		return false;
+	}
+	
+	public Boolean isConsegnaEvasaMinoreQuantitaOrdinata(){
+		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)getConsegne().getModel();	
+		if (consegna != null)
+			return consegna.isQuantitaEvasaMinoreOrdine();
+		return false;
 	}
 }
