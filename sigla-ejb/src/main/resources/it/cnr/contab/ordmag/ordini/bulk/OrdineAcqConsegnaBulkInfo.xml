@@ -121,8 +121,8 @@
 		nullable="false"
 		label="Tipo Consegna" />
 	<fieldProperty
-		name="sdoppiaRiga"
-		property="sdoppiaRiga"
+		name="operazioneQuantitaEvasaMinore"
+		property="operazioneQuantitaEvasaMinore"
 		inputType="SELECT"
 		keysProperty="operazioneEvasioneKeys"
 		inputSize="20"
@@ -155,7 +155,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="true"
-		label="lottoFornitore" />
+		label="Lotto Fornitore" />
 	<fieldProperty
 		name="quantita"
 		property="quantita"
@@ -241,6 +241,14 @@
 		property="obbligazioneScadenzario"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
+		label="Scadenza Impegno" />
+	<fieldProperty
+		name="descObbligazioneScadenzario"
+		property="descObbligazioneScadenzario"
+		inputType="TEXT"
+		inputSize="60"
+		maxLength="500"
+		enabledOnEdit="false"
 		label="Scadenza Impegno" />
 	<fieldProperty
 		name="cdCdsMag"
@@ -486,7 +494,7 @@
 	<formFieldProperty
 		name="lottoFornitore"/>
 	<formFieldProperty
-		name="sdoppiaRiga"/>
+		name="operazioneQuantitaEvasaMinore"/>
 	<formFieldProperty
 		name="dtPrevConsegna"    
 		command="doOnDtPrevConsegnaChange"/>
@@ -513,6 +521,8 @@
 		name="findLuogoConsegnaMag" />
 	<formFieldProperty
 		name="findObbligazioneScadenzario" />
+	<formFieldProperty
+		name="descObbligazioneScadenzario" />
 	<formFieldProperty
 		name="findUnitaOperativaOrdDest" />
 	<formFieldProperty
