@@ -31,7 +31,7 @@
             </td>
         </tr>
     </table>
-    <fieldset class="card">
+    <fieldset class="card fieldset">
         <legend class="GroupLabel card-header text-primary">Rettifiche</legend>
         <table cellpadding="5px">
             <tr>
