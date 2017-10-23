@@ -6,6 +6,18 @@
 	<defaultColumnMap
 		tableName="MOVIMENTI_MAG">
 		<columnMapping
+			columnName="PG_MOVIMENTO_RIF"
+			propertyName="pgMovimentoRif"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			nullable="true"/>
+		<columnMapping
+			columnName="PG_MOVIMENTO_ANN"
+			propertyName="pgMovimentoAnn"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			nullable="true"/>
+		<columnMapping
 			columnName="DT_MOVIMENTO"
 			propertyName="dtMovimento"
 			sqlTypeName="TIMESTAMP"
@@ -175,18 +187,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="15"
 			nullable="false" />
-		<columnMapping
-			columnName="CD_CDS_TIPO_MOVIMENTO_RIF"
-			propertyName="cdCdsTipoMovimentoRif"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_TIPO_MOVIMENTO_RIF"
-			propertyName="cdTipoMovimentoRif"
-			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="true" />
 		<columnMapping
 			columnName="CD_VOCE_IVA"
 			propertyName="cdVoceIva"
@@ -413,10 +413,6 @@
 	<persistentProperty
 		name="cdBeneServizio" />
 	<persistentProperty
-		name="cdCdsTipoMovimentoRif" />
-	<persistentProperty
-		name="cdTipoMovimentoRif" />
-	<persistentProperty
 		name="cdVoceIva" />
 	<persistentProperty
 		name="sconto1" />
@@ -468,4 +464,8 @@
 		name="utuv" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+		name="pgMovimentoRif"/>
+	<persistentProperty
+		name="pgMovimentoAnn"/>
 </SQLPersistentInfo>
