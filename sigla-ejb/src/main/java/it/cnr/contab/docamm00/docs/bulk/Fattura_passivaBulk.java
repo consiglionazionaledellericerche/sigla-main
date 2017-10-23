@@ -176,11 +176,11 @@ public abstract class Fattura_passivaBulk
 	 * procedura provvede a non rieffettuare la ricontabilizzazione in COAN e COGE.
 	 *
 	 */
-    private boolean isDetailDoubled = false; //serve per sapere se ï¿½ stata sdoppiata una riga di dettaglio
-    private boolean isDocumentoModificabile = true; //serve per sapere se il documento ï¿½ modificabile o meno
+    private boolean isDetailDoubled = false; //serve per sapere se ? stata sdoppiata una riga di dettaglio
+    private boolean isDocumentoModificabile = true; //serve per sapere se il documento ? modificabile o meno
     private java.math.BigDecimal im_totale_fattura_calcolato = new java.math.BigDecimal(0);
     /* Le seguenti due collection servono per caricare i Tipi di Sezionale in modo selettivo:
-	 * in sezionaliIstituzionali andrï¿½ il Sezionale, (o i Sezionali), che sarï¿½ visualizzato
+	 * in sezionaliIstituzionali andr? il Sezionale, (o i Sezionali), che sar? visualizzato
 	 * in caso di fattura di tipo Istituzionale;
 	 * in sezionaliCommerciali andranno tutti i Sezionali che saranno presentati in
 	 * caso di fattura di tipo Istituzionale.
@@ -1176,7 +1176,7 @@ public abstract class Fattura_passivaBulk
      */
     public java.math.BigDecimal getIm_importo_totale_fattura_fornitore_euro() {
 
-        //Questo get ï¿½ rimasto per compatibilitï¿½
+        //Questo get ? rimasto per compatibilit?
         return getIm_totale_quadratura();
     }
 
@@ -1188,7 +1188,7 @@ public abstract class Fattura_passivaBulk
      */
     public void setIm_importo_totale_fattura_fornitore_euro(java.math.BigDecimal newIm_importo_totale_fattura_fornitore_euro) {
 
-        //Questo get ï¿½ rimasto per compatibilitï¿½
+        //Questo get ? rimasto per compatibilit?
         setIm_totale_quadratura(newIm_importo_totale_fattura_fornitore_euro);
     }
 
@@ -1934,12 +1934,12 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Indica se la competenza COGE ï¿½ stata indicata nell'anno precedente. Regola valida SOLO nel caso di
+     * Indica se la competenza COGE ? stata indicata nell'anno precedente. Regola valida SOLO nel caso di
      * ESERCIZIO == ESERCIZIO_INIZIO
      */
     public boolean hasCompetenzaCOGEInAnnoPrecedente() {
 
-        //Modificato a seguito della richiesta nï¿½ 737 del 21/01/2004
+        //Modificato a seguito della richiesta n? 737 del 21/01/2004
         //Originale:
         //if (ISTITUZIONALE.equals(getTi_istituz_commerc()))
         //return getDateCalendar(getDt_a_competenza_coge()).get(Calendar.YEAR) == getEsercizio().intValue()-1;
@@ -2180,7 +2180,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2221,7 +2221,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2246,7 +2246,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2312,7 +2312,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2347,7 +2347,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2438,7 +2438,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2448,7 +2448,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2458,7 +2458,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2468,7 +2468,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2478,7 +2478,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2878,7 +2878,7 @@ public abstract class Fattura_passivaBulk
     }
 
     /**
-     * Restituisce <code>true</code> se il sezionale ï¿½ di tipo Istituzionale
+     * Restituisce <code>true</code> se il sezionale ? di tipo Istituzionale
      *
      * @return boolean
      */
@@ -2896,7 +2896,7 @@ public abstract class Fattura_passivaBulk
         if (getDt_a_competenza_coge() == null)
             throw new ValidationException("Inserire la data di \"competenza a\" per la testata documento.");
         if (getStato_cofi().compareTo(STATO_INIZIALE) == 0 && getDt_scadenza() == null)
-            throw new ValidationException("La data di scadenza non puï¿½ essere nulla!");
+            throw new ValidationException("La data di scadenza non può essere nulla!");
 
         Calendar competenzaDa = getDateCalendar(getDt_da_competenza_coge());
         Calendar competenzaA = getDateCalendar(getDt_a_competenza_coge());
@@ -2909,7 +2909,7 @@ public abstract class Fattura_passivaBulk
         try {
             if (annoCompetenzaDa != getEsercizio().intValue())
                 throw new ValidationException("La data di inizio competenza deve appartenere all'esercizio di scrivania!");
-            //Modificato a seguito della richiesta nï¿½ 738 del 24/03/2004
+            //Modificato a seguito della richiesta n? 738 del 24/03/2004
             //Originale:
             //if (!ISTITUZIONALE.equals(getTi_istituz_commerc())) {
             //if (annoCompetenzaA > getEsercizio().intValue())
@@ -2920,7 +2920,7 @@ public abstract class Fattura_passivaBulk
                 throw new ValidationException("La data di fine competenza deve appartenere all'esercizio di scrivania o al successivo!");
 
         } catch (ValidationException e) {
-            //Modificato a seguito della richiesta nï¿½ 737 del 21/01/2004
+            //Modificato a seguito della richiesta n? 737 del 21/01/2004
             //Originale:
             //if (ISTITUZIONALE.equals(getTi_istituz_commerc())) {
             //int annoPrecedente = getEsercizio().intValue()-1;
@@ -2945,13 +2945,13 @@ public abstract class Fattura_passivaBulk
                 if (this.getStato_cofi() != null && this.getStato_cofi().equals(STATO_INIZIALE))
                     if (getDt_registrazione().after(getDt_termine_creazione_docamm())) {
                         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                        throw new ValidationException("Non ï¿½ possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
+                        throw new ValidationException("Non è possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
                     }
             } else
                 throw e;
             if (!eseguito && (annoCompetenzaA == getEsercizio() - 1)) {
                 eseguito = new Boolean(true);
-                throw new ValidationException("Attenzione: per le date competenza indicate non ï¿½ possibile inventariare i beni!");
+                throw new ValidationException("Attenzione: per le date competenza indicate non è possibile inventariare i beni!");
             }
 
         }
@@ -2998,7 +2998,7 @@ public abstract class Fattura_passivaBulk
         java.util.Calendar dataRegistrazione = getDateCalendar(getDt_registrazione());
 
         try {
-            // Quando sarï¿½ a regime la parte della stampa registri IVA limInf dovrï¿½ essere
+            // Quando sar? a regime la parte della stampa registri IVA limInf dovr? essere
             // impostato a data successiva alla data ultima stampa IVA (se esiste, altrimenti come adesso)
             int compare = getEsercizio().compareTo(new Integer(dataRegistrazione.get(Calendar.YEAR)));
             if (compare == 0) {
@@ -3018,7 +3018,7 @@ public abstract class Fattura_passivaBulk
         }
 
         if (getFl_split_payment() != null && getFl_split_payment() && !isGestioneSplitPayment())
-            throw new ValidationException("Non ï¿½ possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(this.getDataInizioSplitPayment()) + "!");
+            throw new ValidationException("Non è possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(this.getDataInizioSplitPayment()) + "!");
 
         if (getDt_fattura_fornitore() != null) {
 
@@ -3026,19 +3026,19 @@ public abstract class Fattura_passivaBulk
 
             if (dataRegistrazione.before(dataEmissioneFattura) &&
                     !dataRegistrazione.equals(dataEmissioneFattura))
-                throw new ValidationException("La data di registrazione  non puï¿½ essere precedente alla data di emissione del documento del fornitore!");
+                throw new ValidationException("La data di registrazione  non può essere precedente alla data di emissione del documento del fornitore!");
             if (getDt_scadenza() != null) {
                 java.util.Calendar dataScadenzaFattura = getDateCalendar(getDt_scadenza());
 
                 if (dataEmissioneFattura.after(dataScadenzaFattura) &&
                         !dataEmissioneFattura.equals(dataScadenzaFattura))
-                    throw new ValidationException("La data di scadenza non puï¿½ essere precedente alla data di emissione del documento del fornitore!");
+                    throw new ValidationException("La data di scadenza non può essere precedente alla data di emissione del documento del fornitore!");
             }
             if (getData_protocollo() != null && getData_protocollo().before(getDt_fattura_fornitore()))
-                throw new ValidationException("La data di protocollo non puï¿½ essere precedente alla data di emissione del documento del fornitore!");
+                throw new ValidationException("La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");
             if (getData_protocollo() != null && getData_protocollo().after(getDt_registrazione()))
                 throw new ValidationException(
-                        "La data protocollo di entrata non puï¿½ essere superiore alla data registrazione");
+                        "La data protocollo di entrata non può essere superiore alla data registrazione");
         }
     }
 
