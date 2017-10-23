@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Vector;
 
@@ -52,6 +53,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
+import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagBulk;
@@ -74,6 +76,8 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoRigaMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
@@ -102,6 +106,7 @@ import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -311,6 +316,48 @@ public class EvasioneOrdineComponent
 					throw new ComponentException(e);
 				}
 
+    			if (!listaMovimentiScarico.isEmpty()){
+        			List<BollaScaricoMagBulk> listaBolleScarico = new ArrayList<>();
+        			for (MovimentiMagBulk movimento : listaMovimentiScarico){
+        				BollaScaricoMagBulk bollaScarico = null;
+            			for (BollaScaricoMagBulk bolla : listaBolleScarico){
+            				if (bolla.getUnitaOperativaOrd().equalsByPrimaryKey(movimento.getUnitaOperativaOrd())){
+            					bollaScarico = bolla;
+            				}
+            			}
+            			if (bollaScarico == null){
+            				bollaScarico = new BollaScaricoMagBulk();
+            				bollaScarico.setDtBollaSca(movimento.getDtRiferimento());
+            				bollaScarico.setMagazzino(movimento.getMagazzino());
+            				bollaScarico.setStato(OrdineAcqBulk.STATO_INSERITO);
+            				bollaScarico.setUnitaOperativaOrd(movimento.getUnitaOperativaOrd());
+            				bollaScarico.setToBeCreated();
+            			}
+        				
+        				BollaScaricoRigaMagBulk riga = new BollaScaricoRigaMagBulk();
+        				riga.setCoeffConv(movimento.getCoeffConv());
+        				riga.setBeneServizio(movimento.getBeneServizio());
+        				riga.setUnitaMisura(movimento.getUnitaMisura());
+        				riga.setQuantita(movimento.getQuantita());
+        				riga.setOrdineAcqConsegna(movimento.getOrdineAcqConsegna());
+        				riga.setMovimentiMag(movimento);
+        				riga.setLottoMag(movimento.getLottoMag());
+        				riga.setToBeCreated();
+	        			bollaScarico.addToRighe(riga);
+        				listaBolleScarico.add(bollaScarico);
+        			}
+        			for (BollaScaricoMagBulk bolla : listaBolleScarico){
+        				bolla = (BollaScaricoMagBulk)super.creaConBulk(userContext, bolla);
+            			for (MovimentiMagBulk movimento : listaMovimentiScarico){
+            				if (movimento.getUnitaOperativaOrd().equalsByPrimaryKey(bolla.getUnitaOperativaOrd())){
+            					movimento.setBollaScaricoMag(bolla);
+            					movimento.setToBeUpdated();
+            					super.modificaConBulk(userContext, movimento);
+            				}
+            			}
+        			}
+    			}
+    			
     			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
     				OrdineAcqBulk ordineAcq = ((OrdineAcqBulk)k.next());
         			for (Object bulkRiga :ordineAcq.getRigheOrdineColl()) {
@@ -344,11 +391,11 @@ public class EvasioneOrdineComponent
     		}
 			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
 				OrdineAcqBulk ordine = ((OrdineAcqBulk)k.next());
-				try {
-					ordineComponent.modificaConBulk(userContext, ordine);
-				} catch (RemoteException e) {
-					throw handleException(e);
-				}
+//				try {
+//					ordineComponent.modificaConBulk(userContext, ordine);
+//				} catch (RemoteException e) {
+//					throw handleException(e);
+//				}
 				
 			}
     		evasioneOrdine.setListaRigheConsegnaEvase(new BulkList<>(listaRigheEvase));
