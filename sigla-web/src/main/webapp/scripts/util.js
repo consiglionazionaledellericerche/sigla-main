@@ -466,7 +466,7 @@ function modalInputFocused(input) {
 			  element != confirmButton && 
 			  element != cancelButton && 
 			 !element.disabled &&
-			  element.className != "fieldset" 
+			  element.className.indexOf("fieldset") == -1
 			 //r.p. 28/11/2007 firefox non disabilitava i bottoni e le tab
 			 //&& element.type != "submit"
 			 ) {
