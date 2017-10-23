@@ -6,11 +6,13 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Vector;
 
 import javax.ejb.EJBException;
@@ -4729,11 +4731,29 @@ public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResidu
 				List<Accertamento_vincolo_perenteBulk> listVincoli = home.cercaDettagliVincolati(vincolo.getVariazioneResidua());
 				BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).get();
 			    
-				Var_stanz_resBulk variazione = (Var_stanz_resBulk)session2.inizializzaBulkPerModifica(aUC, vincolo.getVariazioneResidua());
+				//EFFETTUO LA SOMMA DEGLI IMPORTI MOVIMENTATI SOLO DALLE UO DI CUI DEVO RITIRARE LA SOMMA
+				Var_stanz_resHome varHome = (Var_stanz_resHome)getHome(aUC, Var_stanz_resBulk.class);
+				Collection<Var_stanz_res_rigaBulk> righeVar = varHome.findVariazioniRiga(vincolo.getVariazioneResidua());
+
+				BigDecimal totVariazioneCDS = BigDecimal.ZERO;
+
+				V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(aUC, V_struttura_organizzativaBulk.class);
+				for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(aUC)), CNRUserContext.getEsercizio( aUC )).iterator(); j.hasNext();) {
+					Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
+					for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( aUC )).iterator(); x.hasNext();) {
+						CdrBulk cdrAfferente = (CdrBulk) x.next();
+						totVariazioneCDS = totVariazioneCDS.add(
+							righeVar.stream().filter(e->e.getCd_cdr().equals(cdrAfferente.getCd_centro_responsabilita()))
+															 .map(Var_stanz_res_rigaBulk::getIm_variazione)
+															 .reduce(BigDecimal::add).orElse(BigDecimal.ZERO));
+					}
+				}
+
 				//recupero 
-				BigDecimal diff = variazione.getTotale_righe_variazione().abs().subtract(impVincolo);
-				if (diff.compareTo(BigDecimal.ZERO)==-1)
-					throw new ApplicationException("La variazione residua "+variazione.getEsercizio()+"/"+variazione.getPg_variazione()+
+				BigDecimal diff = totVariazioneCDS.abs().subtract(impVincolo);
+				if (diff.compareTo(BigDecimal.ZERO)<0)
+					throw new ApplicationException("La variazione residua "+vincolo.getVariazioneResidua().getEsercizio()+"/"+
+					vincolo.getVariazioneResidua().getPg_variazione()+
 				   " non può essere associata all'accertamento residuo per un importo superiore a "
 				   + new it.cnr.contab.util.EuroFormat().format(diff.add(vincolo.getIm_vincolo()))+". Modificare il valore.");
 			}
@@ -4749,6 +4769,7 @@ public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Acce
 
 	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
 	sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Var_stanz_resBulk.STATO_APPROVATA );
+	sql.addClause(FindClause.AND, "tipologia", SQLBuilder.EQUALS, Var_stanz_resBulk.TIPOLOGIA_STO );
 	
 	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
 	sql.openParenthesis(FindClause.AND);

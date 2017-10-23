@@ -192,6 +192,8 @@
 		name="pg_obbligazione_ori_riporto"
 		columnStyle="padding-left:5px"
 		/>
+	<columnFieldProperty
+		name="statoResiduoObbligazione"/>		
 
 	<findFieldProperty
 		name="stato_obbligazione"
@@ -211,4 +213,6 @@
 	<findFieldProperty
 		name="pg_obbligazione"
 		/>
+	<columnFieldProperty
+		name="statoResiduoObbligazione"/>		
 </bulkInfo>
