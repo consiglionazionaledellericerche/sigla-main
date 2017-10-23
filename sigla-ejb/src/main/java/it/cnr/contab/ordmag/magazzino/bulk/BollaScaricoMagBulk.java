@@ -4,15 +4,24 @@
  */
 package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import it.cnr.contab.ordmag.anag00.*;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	/**
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
 	 **/
 	private MagazzinoBulk magazzino =  new MagazzinoBulk();
 	private MagazzinoBulk magazzinoDest =  new MagazzinoBulk();
+	private BulkList righe =  new BulkList<>();
 	private NumerazioneMagBulk numerazioneMag =  new NumerazioneMagBulk();
 	/**
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
@@ -221,5 +230,32 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	 **/
 	public void setCdNumeratoreMag(java.lang.String cdNumeratoreMag)  {
 		this.getNumerazioneMag().setCdNumeratoreMag(cdNumeratoreMag);
+	}
+	public BulkList getRighe() {
+		return righe;
+	}
+	public void setRighe(BulkList righe) {
+		this.righe = righe;
+	}
+	public BollaScaricoRigaMagBulk removeFromRighe(int index) 
+	{
+		BollaScaricoRigaMagBulk element = (BollaScaricoRigaMagBulk)righe.get(index);
+		return (BollaScaricoRigaMagBulk)righe.remove(index);
+	}
+	public int addToRighe( BollaScaricoRigaMagBulk nuovoRigo ) 
+	{
+		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
+		righe.add(nuovoRigo);
+		int max = 0;
+		for (Iterator i = righe.iterator(); i.hasNext();) {
+			int prog = ((BollaScaricoRigaMagBulk)i.next()).getConsegna();
+			if (prog > max) max = prog;
+		}
+		nuovoRigo.setRigbollaScaN(new Integer(max+1));
+
+		return righe.size()-1;
+	}
+	public List getChildren() {
+		return getRighe();
 	}
 }
