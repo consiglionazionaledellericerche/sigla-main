@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
-import it.cnr.contab.anagraf00.bp.CRUDTerzoBP;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -14,6 +12,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
 import it.cnr.contab.doccont00.bp.CRUDAccertamentoBP;
 import it.cnr.contab.doccont00.bp.CRUDAccertamentoModificaBP;
+import it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoAmministraBP;
 import it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoBP;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
@@ -1216,16 +1215,27 @@ public Forward doBlankSearchFindAssestato(ActionContext context, Pdg_vincoloBulk
 }
 public Forward doOnChangeStato(ActionContext context) {
 	try {
-		fillModel(context);
 		CRUDAccertamentoBP bp = (CRUDAccertamentoBP) context.getBusinessProcess();
 		AccertamentoResiduoBulk accertamento = (AccertamentoResiduoBulk) bp.getModel();
+		String oldStato = accertamento.getStato();
+
+		fillModel(context);
+		
 		if (accertamento.isInesigibile() || accertamento.isParzialmenteInesigibile()) {
 			if (accertamento.getIm_quota_inesigibile()==null)
 				accertamento.setIm_quota_inesigibile(BigDecimal.ZERO);
 			if (accertamento.isInesigibile())
 				accertamento.setIm_quota_inesigibile(accertamento.getImportoNonIncassato());
-		} else 
+		} else if (accertamento.getPdgVincoliColl().size()>0 || accertamento.getAccertamentoVincoliPerentiColl().size()>0)
+			if (bp instanceof CRUDAccertamentoResiduoAmministraBP)
+				bp.setMessage("Attenzione! Esistono vincoli associati all'accertamento non coerenti con il suo nuovo stato che saranno azzerati all'atto del salvataggio.");
+			else {
+				accertamento.setStato(oldStato);
+				bp.setMessage("Operazione non possibile! Esistono vincoli associati all'accertamento. Eliminare i vincoli e rieffettuare l'operazione.");
+			}
+		else 
 			accertamento.setIm_quota_inesigibile(null);
+		
 		return context.findDefaultForward();
 	} catch (java.lang.ClassCastException ex) {
 		return context.findDefaultForward();
