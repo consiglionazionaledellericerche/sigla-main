@@ -12,7 +12,7 @@
 <%	CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)BusinessProcess.getBusinessProcess(request);
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel();
 %>
-<fieldset class="card">
+<fieldset class="card fieldset">
     <legend class="GroupLabel card-header text-primary">Righe di fattura</legend>
     <table width="100%">
         <tr>
@@ -22,7 +22,7 @@
         </tr>
     </table>
 </fieldset>
-<fieldset class="card">
+<fieldset class="card fieldset">
     <legend class="GroupLabel card-header text-primary">Righe di consegna</legend>
     <table width="100%">
         <tr>
