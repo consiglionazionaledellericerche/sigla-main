@@ -305,7 +305,11 @@ public class EvasioneOrdineComponent
     			evasioneOrdineRiga.setToBeCreated();
     			listaRigheEvase.add(evasioneOrdineRiga);
 
-    			listaMovimentiScarico = movimentiMagComponent.caricoDaOrdine(userContext, evasioneOrdine, consegna, ordine, evasioneOrdineRiga, listaMovimentiScarico);
+    			try {
+					listaMovimentiScarico = movimentiMagComponent.caricoDaOrdine(userContext, evasioneOrdine, consegna, ordine, evasioneOrdineRiga, listaMovimentiScarico);
+				} catch (RemoteException e) {
+					throw new ComponentException(e);
+				}
 
     			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
     				OrdineAcqBulk ordineAcq = ((OrdineAcqBulk)k.next());
