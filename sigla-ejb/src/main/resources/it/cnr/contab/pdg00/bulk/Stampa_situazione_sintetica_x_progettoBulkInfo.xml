@@ -134,6 +134,12 @@
 		nullable="false"
 		label="Solo GAE movimentate nell'esercizio" />
 	<fieldProperty
+		name="printPianoEconomico"
+		property="printPianoEconomico"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Piano Economico" />
+	<fieldProperty
 		name="ti_ordine_stampa"
 		property="ti_ordine_stampa"
 		maxLength="1"
@@ -170,6 +176,7 @@
 	<formFieldProperty name="printAnno" />
 	<formFieldProperty name="printMovimentazione" />
 	<formFieldProperty name="printSoloGaeAttive" />
+	<formFieldProperty name="printPianoEconomico" />
 	<formFieldProperty name="ti_ordine_stampa" />
 
 	<printForm
@@ -237,6 +244,12 @@
 			parameterType="STRING"
 			paramNameJR="P_ORDINE"
 			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="printPianoEconomico"
+			parameterPosition="10"
+			parameterType="STRING"
+			paramNameJR="P_PRINT_PIANO_ECO"
+			paramTypeJR="java.lang.Boolean" />
 
 	</printForm>	
 </bulkInfo>
