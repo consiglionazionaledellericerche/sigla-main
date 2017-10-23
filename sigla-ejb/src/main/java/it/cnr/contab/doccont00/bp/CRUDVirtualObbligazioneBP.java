@@ -10,8 +10,7 @@ import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AllegatoAccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.AllegatoObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -25,7 +24,6 @@ import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
-import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
@@ -36,7 +34,7 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.jsp.Button;
 
 public abstract class CRUDVirtualObbligazioneBP 
-	extends AllegatiCRUDBP<AllegatoGenericoBulk, ObbligazioneBulk>
+	extends AllegatiCRUDBP<AllegatoObbligazioneBulk, ObbligazioneBulk>
 	implements IDocumentoContabileBP {
 		
 	private boolean deleting = false;
@@ -497,7 +495,7 @@ public static ObbligazioneAbstractComponentSession setSafePoint (
 	}
 
 	@Override
-	protected Class<AllegatoGenericoBulk> getAllegatoClass() {
-		return AllegatoGenericoBulk.class;
+	protected Class<AllegatoObbligazioneBulk> getAllegatoClass() {
+		return AllegatoObbligazioneBulk.class;
 	}
 }
