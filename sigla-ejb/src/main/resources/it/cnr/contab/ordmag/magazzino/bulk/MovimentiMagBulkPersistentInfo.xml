@@ -44,12 +44,6 @@
 			columnName="CD_BENE_SERVIZIO"
 			propertyName="beneServizio.cd_bene_servizio" />
 		<columnMapping
-			columnName="CD_CDS_TIPO_MOVIMENTO_RIF"
-			propertyName="tipoMovimentoMagRif.unitaOrganizzativa.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="CD_TIPO_MOVIMENTO_RIF"
-			propertyName="tipoMovimentoMagRif.cdTipoMovimento" />
-		<columnMapping
 			columnName="CD_VOCE_IVA"
 			propertyName="voceIva.cd_voce_iva" />
 		<columnMapping
@@ -96,8 +90,6 @@
 		name="ordineAcqConsegna" />
   	<persistentProperty
 		name="tipoMovimentoMag" />
-	<persistentProperty
-		name="tipoMovimentoMagRif" />
 	<persistentProperty
 		name="terzo" />
 	<persistentProperty
