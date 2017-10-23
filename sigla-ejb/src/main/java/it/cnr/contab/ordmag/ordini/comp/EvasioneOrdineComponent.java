@@ -76,6 +76,7 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineHome;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
@@ -258,7 +259,9 @@ public class EvasioneOrdineComponent
 
     public void evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException{
     	OrdineAcqComponentSession ordineComponent = (OrdineAcqComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_OrdineAcqComponentSession", OrdineAcqComponentSession.class);
-		List<EvasioneOrdineRigaBulk> listaRigheEvase = new ArrayList<>();
+    	MovimentiMagComponentSession movimentiMagComponent = (MovimentiMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_MovimentiMagComponentSession", MovimentiMagComponentSession.class);
+    	List<MovimentiMagBulk> listaMovimentiScarico = new ArrayList<>();
+    	List<EvasioneOrdineRigaBulk> listaRigheEvase = new ArrayList<>();
     	if (evasioneOrdine.getRigheConsegnaSelezionate() != null && !evasioneOrdine.getRigheConsegnaSelezionate().isEmpty()){
     		List<OrdineAcqBulk> listaOrdiniConConsegneEvase = new ArrayList<OrdineAcqBulk>();
     		for (Iterator i = evasioneOrdine.getRigheConsegnaSelezionate().iterator(); i.hasNext();) {
@@ -301,132 +304,13 @@ public class EvasioneOrdineComponent
     			evasioneOrdineRiga.setRiga(new Long (listaRigheEvase.size() + 1));
     			evasioneOrdineRiga.setToBeCreated();
     			listaRigheEvase.add(evasioneOrdineRiga);
-// TODO Da verificare...è possibile fare le evasioni ordini senza cambiare le consegne? Cioè sarebbe possibile fare i riscontri ordine senza
-// modificare i dati dell'ordine...magari scrivendo solo le consegne arrivate? Valutare quanto è difficile
-    			
-//    			consegna.setToBeUpdated();
-//    			if (consegna.getSdoppiaRiga()){
-//    				BigDecimal nuovaQuantita = consegna.getQuantita().subtract(consegna.getQuantitaEvasa());
-//    				consegna.setQuantita(consegna.getQuantitaEvasa());
-//    				OrdineAcqConsegnaBulk consegnaNew = (OrdineAcqConsegnaBulk)consegna.clone();
-//    				consegnaNew.setVecchiaConsegna(consegna.getConsegna());
-//    				consegnaNew.setQuantita(nuovaQuantita);
-//    			}
-    			MovimentiMagBulk movimentoMag = new MovimentiMagBulk();
-    			
-    			Bene_servizioBulk bene = recuperoBeneServizio(userContext, consegna.getOrdineAcqRiga().getCdBeneServizio());
-    			
-    			if (bene.getFlScadenza() != null && bene.getFlScadenza() && consegna.getDtScadenza() == null){
-    				throw new ApplicationException("Indicare la data di scadenza per la consegna "+consegna.getConsegnaOrdineString());
-    			}
-    			
-    			movimentoMag.setBeneServizio(consegna.getOrdineAcqRiga().getBeneServizio());
-    			movimentoMag.setDataBolla(evasioneOrdine.getDataBolla());
-    			movimentoMag.setDivisa(ordine.getDivisa());
-    			movimentoMag.setCambio(ordine.getCambio());
-    			movimentoMag.setDtMovimento(new Timestamp(System.currentTimeMillis()));
-    			movimentoMag.setDtRiferimento(evasioneOrdine.getDataConsegna());
-    			movimentoMag.setMagazzino(evasioneOrdine.getNumerazioneMag().getMagazzino());
-    			movimentoMag.setOrdineAcqConsegna(consegna);
-    			movimentoMag.setUnitaOperativaOrd(consegna.getUnitaOperativaOrd());
-    			movimentoMag.setPrezzoUnitario(consegna.getOrdineAcqRiga().getPrezzoUnitario());
-    			movimentoMag.setQuantita(evasioneOrdineRiga.getQuantitaEvasa());
-    			movimentoMag.setSconto1(consegna.getOrdineAcqRiga().getSconto1());
-    			movimentoMag.setSconto2(consegna.getOrdineAcqRiga().getSconto2());
-    			movimentoMag.setSconto3(consegna.getOrdineAcqRiga().getSconto3());
-    			movimentoMag.setLottoFornitore(consegna.getLottoFornitore());
-    			movimentoMag.setDtScadenza(consegna.getDtScadenza());
-    			movimentoMag.setStato(MovimentiMagBulk.STATO_INSERITO);
-    			movimentoMag.setTerzo(ordine.getFornitore());
-    			TipoMovimentoMagBulk tipoMovimento = null;
-    			switch (consegna.getTipoConsegna()) {
-	    			case "MAG":  tipoMovimento = evasioneOrdine.getNumerazioneMag().getMagazzino().getTipoMovimentoMagCarMag();
-	    			break;
-	    			case "TRA":  tipoMovimento = evasioneOrdine.getNumerazioneMag().getMagazzino().getTipoMovimentoMagCarTra();
-	    			break;
-	    			case "FMA":  tipoMovimento = evasioneOrdine.getNumerazioneMag().getMagazzino().getTipoMovimentoMagCarFma();
-	    			break;
-    			}
 
-    			movimentoMag.setTipoMovimentoMag(tipoMovimento);
-    			
-    			
-    			TipoMovimentoMagAzBulk tipoMovimentoAz = new TipoMovimentoMagAzBulk(tipoMovimento.getCdCds(), tipoMovimento.getCdTipoMovimento());
-    			
-    			TipoMovimentoMagAzHome home = (TipoMovimentoMagAzHome)getHome(userContext, TipoMovimentoMagAzBulk.class);
-    			tipoMovimentoAz = (TipoMovimentoMagAzBulk)home.findByPrimaryKey(tipoMovimentoAz);
-    			
-    			LottoMagBulk lotto = new LottoMagBulk();
-    			lotto.setToBeCreated();
-    			lotto.setBeneServizio(movimentoMag.getBeneServizio());
-    			lotto.setDivisa(movimentoMag.getDivisa());
-    			lotto.setCambio(movimentoMag.getCambio());
-    			lotto.setDtCarico(tipoMovimentoAz.getAggDataUltimoCarico().equals("S") ? movimentoMag.getDtRiferimento() : null);
-    			lotto.setQuantitaCarico(tipoMovimentoAz.getAggDataUltimoCarico().equals("S") ? movimentoMag.getQuantita() : null);
-    			
-    			switch (tipoMovimentoAz.getModAggQtaMagazzino()) {
-	    			case TipoMovimentoMagAzBulk.AZIONE_AZZERA:  lotto.setGiacenza(BigDecimal.ZERO);
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOMMA:  lotto.setGiacenza(Utility.nvl(lotto.getGiacenza()).add(movimentoMag.getQuantita()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOSTITUISCE:  lotto.setGiacenza(Utility.nvl(lotto.getGiacenza()).add(movimentoMag.getQuantita()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOTTRAE:  lotto.setGiacenza(movimentoMag.getQuantita());
-	    			break;
-    			}
-    			switch (tipoMovimentoAz.getModAggQtaValMagazzino()) {
-	    			case TipoMovimentoMagAzBulk.AZIONE_AZZERA:  lotto.setQuantitaValore(BigDecimal.ZERO);
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOMMA:  lotto.setQuantitaValore(Utility.nvl(lotto.getQuantitaValore()).add(movimentoMag.getQuantita()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOSTITUISCE:  lotto.setQuantitaValore(Utility.nvl(lotto.getQuantitaValore()).add(movimentoMag.getQuantita()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOTTRAE:  lotto.setQuantitaValore(movimentoMag.getQuantita());
-	    			break;
-    			}
-    			switch (tipoMovimentoAz.getModAggValoreLotto()) {
-	    			case TipoMovimentoMagAzBulk.AZIONE_AZZERA:  lotto.setValoreUnitario(BigDecimal.ZERO);
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOMMA:  lotto.setValoreUnitario(Utility.nvl(lotto.getValoreUnitario()).add(movimentoMag.getPrezzoUnitario()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOSTITUISCE:  lotto.setValoreUnitario(Utility.nvl(lotto.getValoreUnitario()).add(movimentoMag.getPrezzoUnitario()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOTTRAE:  lotto.setValoreUnitario(movimentoMag.getPrezzoUnitario());
-	    			break;
-    			}
-    			switch (tipoMovimentoAz.getModAggValoreLotto()) {
-	    			case TipoMovimentoMagAzBulk.AZIONE_AZZERA:  lotto.setCostoUnitario(BigDecimal.ZERO);
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOMMA:  lotto.setCostoUnitario(Utility.nvl(lotto.getCostoUnitario()).add(movimentoMag.getPrezzoUnitario()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOSTITUISCE:  lotto.setCostoUnitario(Utility.nvl(lotto.getCostoUnitario()).add(movimentoMag.getPrezzoUnitario()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOTTRAE:  lotto.setCostoUnitario(movimentoMag.getPrezzoUnitario());
-	    			break;
-    			}
-    			switch (tipoMovimentoAz.getModAggQtaInizioAnno()) {
-	    			case TipoMovimentoMagAzBulk.AZIONE_AZZERA:  lotto.setQuantitaInizioAnno(BigDecimal.ZERO);
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOMMA:  lotto.setQuantitaInizioAnno(Utility.nvl(lotto.getQuantitaInizioAnno()).add(movimentoMag.getQuantita()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOSTITUISCE:  lotto.setQuantitaInizioAnno(Utility.nvl(lotto.getQuantitaInizioAnno()).add(movimentoMag.getQuantita()));
-	    			break;
-	    			case TipoMovimentoMagAzBulk.AZIONE_SOTTRAE:  lotto.setQuantitaValore(movimentoMag.getQuantita());
-	    			break;
-    			}
-    			lotto.setLottoFornitore(tipoMovimentoAz.getRiportaLottoFornitore().equals("S") ? movimentoMag.getLottoFornitore() : null);
-    			lotto.setDtScadenza(movimentoMag.getDtScadenza());
-    			lotto.setEsercizio(CNRUserContext.getEsercizio(userContext));
-    			lotto.setMagazzino(movimentoMag.getMagazzino());
-    			lotto.setOrdineAcqConsegna(movimentoMag.getOrdineAcqConsegna()	);
-    			lotto.setDivisa(movimentoMag.getDivisa());
-    			lotto.setTerzo(movimentoMag.getTerzo());
-    			lotto.setStato(MovimentiMagBulk.STATO_INSERITO);
-                lotto = (LottoMagBulk)super.creaConBulk(userContext, lotto);
-                
-                movimentoMag.setLottoMag(lotto);
-                movimentoMag.setToBeCreated();
-                super.creaConBulk(userContext, movimentoMag);
+    			try {
+					listaMovimentiScarico = movimentiMagComponent.caricoDaOrdine(userContext, evasioneOrdine, consegna, ordine, evasioneOrdineRiga, listaMovimentiScarico);
+				} catch (RemoteException e) {
+					throw new ComponentException(e);
+				}
+
     			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
     				OrdineAcqBulk ordineAcq = ((OrdineAcqBulk)k.next());
         			for (Object bulkRiga :ordineAcq.getRigheOrdineColl()) {
@@ -1997,12 +1881,6 @@ private void assegnaNumeratoreMag(UserContext usercontext, EvasioneOrdineBulk bu
 //	}
 //}
 //
-//private Bene_servizioBulk recuperoBeneServizio(it.cnr.jada.UserContext userContext, String cdBeneServizio)
-//		throws ComponentException, PersistencyException {
-//	Bene_servizioHome home = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
-//	Bene_servizioBulk bene = (Bene_servizioBulk)home.findByPrimaryKey(new Bene_servizioBulk(cdBeneServizio));
-//	return bene;
-//}
 //public SQLBuilder selectContrattoByClause(UserContext userContext, OrdineAcqBulk ordine, ContrattoBulk contratto, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 //{
 //	Parametri_cdsHome paramHome = (Parametri_cdsHome)getHome(userContext, Parametri_cdsBulk.class);

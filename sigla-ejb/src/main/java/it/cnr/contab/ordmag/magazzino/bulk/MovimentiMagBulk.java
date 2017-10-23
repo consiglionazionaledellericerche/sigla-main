@@ -18,7 +18,6 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public final static String STATO_ANNULLATO = "ANN";
 	
 	private TipoMovimentoMagBulk tipoMovimentoMag =  new TipoMovimentoMagBulk();
-	private TipoMovimentoMagBulk tipoMovimentoMagRif =  new TipoMovimentoMagBulk();
 	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
 	private TerzoBulk terzo =  new TerzoBulk();
 	private UnitaMisuraBulk unitaMisura =  new UnitaMisuraBulk();
@@ -118,24 +117,6 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	}
 	public void setCdTipoMovimento(java.lang.String cdTipoMovimento)  {
 		this.getTipoMovimentoMag().setCdTipoMovimento(cdTipoMovimento);
-	}
-	public java.lang.String getCdCdsTipoMovimentoRif() {
-		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagRif();
-		if (tipoMovimentoMag == null)
-			return null;
-		return getTipoMovimentoMagRif().getCdCds();
-	}
-	public void setCdCdsTipoMovimentoRif(java.lang.String cdCdsTipoMovimentoRif)  {
-		this.getTipoMovimentoMagRif().setCdCds(cdCdsTipoMovimentoRif);
-	}
-	public java.lang.String getCdTipoMovimentoRif() {
-		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagRif();
-		if (tipoMovimentoMag == null)
-			return null;
-		return getTipoMovimentoMagRif().getCdTipoMovimento();
-	}
-	public void setCdTipoMovimentoRif(java.lang.String cdTipoMovimentoRif)  {
-		this.getTipoMovimentoMagRif().setCdTipoMovimento(cdTipoMovimentoRif);
 	}
 //	public java.lang.String getCdCdsOrdine() {
 //		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
@@ -361,12 +342,6 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	}
 	public void setCdDivisa(java.lang.String cdDivisa)  {
 		this.getDivisa().setCd_divisa(cdDivisa);
-	}
-	public TipoMovimentoMagBulk getTipoMovimentoMagRif() {
-		return tipoMovimentoMagRif;
-	}
-	public void setTipoMovimentoMagRif(TipoMovimentoMagBulk tipoMovimentoMagRif) {
-		this.tipoMovimentoMagRif = tipoMovimentoMagRif;
 	}
 	public java.lang.String getCdCdsOrdine() {
 		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();

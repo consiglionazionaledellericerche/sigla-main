@@ -1,5 +1,6 @@
 package it.cnr.contab.ordmag.magazzino.ejb;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -7,6 +8,11 @@ import javax.ejb.Stateless;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.comp.MovimentiMagComponent;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRORDMAG00_EJB_MovimentiMagComponentSession")
@@ -18,10 +24,13 @@ public class MovimentiMagComponentSessionBean extends it.cnr.jada.ejb.CRUDCompon
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
 	return new MovimentiMagComponentSessionBean();
 }
-public MovimentiMagBulk caricaOrdine(it.cnr.jada.UserContext userContext, EvasioneOrdineBulk evasioneOrdine) throws RemoteException,ComponentException, PersistencyException{
+public List<MovimentiMagBulk> caricoDaOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine,
+		OrdineAcqConsegnaBulk consegna, OrdineAcqBulk ordine, EvasioneOrdineRigaBulk evasioneOrdineRiga, 
+		List<MovimentiMagBulk> listaMovimentiScarico)throws ComponentException, PersistencyException, RemoteException, ApplicationException{
 	pre_component_invocation(userContext,componentObj);
 	try {
-		MovimentiMagBulk result = ((MovimentiMagComponent)componentObj).caricaOrdine(userContext, evasioneOrdine);
+		List<MovimentiMagBulk> result = ((MovimentiMagComponent)componentObj).caricoDaOrdine(userContext, evasioneOrdine,
+				consegna, ordine, evasioneOrdineRiga, listaMovimentiScarico);
 		component_invocation_succes(userContext,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
