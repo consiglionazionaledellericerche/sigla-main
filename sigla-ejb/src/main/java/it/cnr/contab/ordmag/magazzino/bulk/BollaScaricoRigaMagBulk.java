@@ -12,14 +12,12 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	 * [BOLLA_SCARICO_MAG Archivio per la testata delle Bolle di Scarico]
 	 **/
 	private BollaScaricoMagBulk bollaScaricoMag =  new BollaScaricoMagBulk();
-/*
 	private Bene_servizioBulk beneServizio =  new Bene_servizioBulk();
 	private UnitaMisuraBulk unitaMisura =  new UnitaMisuraBulk();
 	private RichiestaUopRigaBulk richiestaUopRiga =  new RichiestaUopRigaBulk();
 	private LottoMagBulk lottoMag =  new LottoMagBulk();
 	private MovimentiMagBulk movimentiMag =  new MovimentiMagBulk();
 	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
-	 */
 	public BollaScaricoRigaMagBulk() {
 		super();
 	}
@@ -45,7 +43,6 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	public void setBollaScaricoMag(BollaScaricoMagBulk bollaScaricoMag)  {
 		this.bollaScaricoMag=bollaScaricoMag;
 	}
-/*
 	public Bene_servizioBulk getBeneServizio() {
 		return beneServizio;
 	}
@@ -82,7 +79,6 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	public void setOrdineAcqConsegna(OrdineAcqConsegnaBulk ordineAcqConsegna)  {
 		this.ordineAcqConsegna=ordineAcqConsegna;
 	}
-	 */
 	public java.lang.String getCdCds() {
 		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
 		if (bollaScaricoMag == null)
@@ -164,7 +160,6 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	public void setPgBollaSca(java.lang.Integer pgBollaSca)  {
 		this.getBollaScaricoMag().setPgBollaSca(pgBollaSca);
 	}
-/*
 	public java.lang.String getCdBeneServizio() {
 		Bene_servizioBulk beneServizio = this.getBeneServizio();
 		if (beneServizio == null)
@@ -354,5 +349,4 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	public void setConsegna(java.lang.Integer consegna)  {
 		this.getOrdineAcqConsegna().setConsegna(consegna);
 	}
-	 */
 }
