@@ -5,6 +5,8 @@
 package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.jada.persistency.Keyed;
 public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
+	private java.lang.Long pgMovimentoRif;
+	private java.lang.Long pgMovimentoAnn;
 //    DT_MOVIMENTO TIMESTAMP(7) NOT NULL
 	private java.sql.Timestamp dtMovimento;
  
@@ -881,5 +883,17 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 **/
 	public void setDtCancellazione(java.sql.Timestamp dtCancellazione)  {
 		this.dtCancellazione=dtCancellazione;
+	}
+	public java.lang.Long getPgMovimentoRif() {
+		return pgMovimentoRif;
+	}
+	public void setPgMovimentoRif(java.lang.Long pgMovimentoRif) {
+		this.pgMovimentoRif = pgMovimentoRif;
+	}
+	public java.lang.Long getPgMovimentoAnn() {
+		return pgMovimentoAnn;
+	}
+	public void setPgMovimentoAnn(java.lang.Long pgMovimentoAnn) {
+		this.pgMovimentoAnn = pgMovimentoAnn;
 	}
 }
