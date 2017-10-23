@@ -16,9 +16,12 @@ public class MovimentiMagHome extends BulkHome {
 	public MovimentiMagHome(Connection conn, PersistentCache persistentCache) {
 		super(MovimentiMagBulk.class, conn, persistentCache);
 	}
+	public Long recuperoProgressivoMovimento(it.cnr.jada.UserContext userContext) throws PersistencyException,it.cnr.jada.comp.ComponentException {
+		return new Long(this.fetchNextSequenceValue(userContext,"CNRSEQ00_MOVIMENTI_MAG").longValue());
+	}
 	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
 		MovimentiMagBulk movimento = (MovimentiMagBulk)bulk;
 		if (movimento.getPgMovimento() == null)
-			movimento.setPgMovimento(new Long(this.fetchNextSequenceValue(userContext,"CNRSEQ00_MOVIMENTI_MAG").longValue()));
+			movimento.setPgMovimento(recuperoProgressivoMovimento(userContext));
 	}
 }
