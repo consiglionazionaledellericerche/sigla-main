@@ -98,7 +98,7 @@ public class MovimentiMagComponent
 		lotto.setDtCarico(tipoMovimentoAz.getAggDataUltimoCarico().equals("S") ? movimentoMag.getDtRiferimento() : null);
 		lotto.setQuantitaCarico(tipoMovimentoAz.getAggDataUltimoCarico().equals("S") ? movimentoMag.getQuantita() : null);
 		
-		if (consegna.isConsegnaMagazzino()){
+		if (!consegna.isConsegnaMagazzino()){
 			lotto.setGiacenza(BigDecimal.ZERO);
 			lotto.setQuantitaValore(BigDecimal.ZERO);
 		} else {
@@ -165,15 +165,20 @@ public class MovimentiMagComponent
 		
 		movimentoMag.setLottoMag(lotto);
 		movimentoMag.setToBeCreated();
-		MovimentiMagBulk movimentoMagScarico = (MovimentiMagBulk)movimentoMag.clone();
-		movimentoMagScarico.setTipoMovimentoMag(tipoMovimento.getTipoMovimentoMagAlt());
-		movimentoMag.setPgMovimento(homeMag.recuperoProgressivoMovimento(userContext));
-		movimentoMagScarico.setPgMovimento(homeMag.recuperoProgressivoMovimento(userContext));
-		
+		MovimentiMagBulk movimentoMagScarico = null;
 		if (!consegna.isConsegnaMagazzino()){
-			
+			movimentoMagScarico = (MovimentiMagBulk)movimentoMag.clone();
+			movimentoMagScarico.setTipoMovimentoMag(tipoMovimentoAz.getTipoMovimentoMagRif());
+			movimentoMag.setPgMovimento(homeMag.recuperoProgressivoMovimento(userContext));
+			movimentoMagScarico.setPgMovimento(homeMag.recuperoProgressivoMovimento(userContext));
+			movimentoMagScarico.setPgMovimentoRif(movimentoMag.getPgMovimento());
+			movimentoMag.setPgMovimentoRif(movimentoMagScarico.getPgMovimento());
 		}
-		MovimentiMagBulk movimentoMagCarico = (MovimentiMagBulk)super.creaConBulk(userContext, movimentoMag);
+		super.creaConBulk(userContext, movimentoMag);
+		if (movimentoMagScarico != null){
+			movimentoMagScarico = (MovimentiMagBulk)super.creaConBulk(userContext, movimentoMagScarico);
+			listaMovimentiScarico.add(movimentoMagScarico);
+		}
 		return listaMovimentiScarico;
 	}
 
