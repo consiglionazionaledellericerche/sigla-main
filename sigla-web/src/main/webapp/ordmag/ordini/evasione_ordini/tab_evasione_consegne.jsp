@@ -72,15 +72,23 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 	         <td><% bp.getConsegne().writeFormInput(out,"default","dtPrevConsegna",true, null, null);%></td>
 	      </tr>  	
 		  <tr>         
-	         <td><% bp.getConsegne().writeFormLabel(out,"findMagazzino");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"default","findMagazzino",true, null, null);%></td>
-	         <td><% bp.getConsegne().writeFormLabel(out,"findLuogoConsegnaMag");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"default","findLuogoConsegnaMag",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"cdBeneServizio");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","cdBeneServizio",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"dsBeneServizio");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","dsBeneServizio",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"voceIvaCompleto");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","voceIvaCompleto",true, null, null);%></td>
 	      </tr>            
 		  <tr>         
-	         <td><% bp.getConsegne().writeFormLabel(out,"findUnitaOperativaOrdDest");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"default","findUnitaOperativaOrdDest",true, null, null);%></td>
-	      </tr>
+	         <td><% bp.getConsegne().writeFormLabel(out,"notaRigaEstesa");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","notaRigaEstesa",true, null, null);%></td>
+	      </tr>            
+		  <tr>         
+	         <td><% bp.getConsegne().writeFormLabel(out,"uopDestCompleta");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","uopDestCompleta",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"descObbligazioneScadenzario");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","descObbligazioneScadenzario", true,null,null);%></td>
+	      </tr>            
 		  <tr>         
 	         <td><% bp.getConsegne().writeFormLabel(out,"imImponibile");%></td>
 	         <td><% bp.getConsegne().writeFormInput(out,"default","imImponibile",true, null, null);%></td>
@@ -90,10 +98,6 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 	         <td><% bp.getConsegne().writeFormInput(out,"default","imIvaD",true, null, null);%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"imTotaleConsegna");%></td>
 	         <td><% bp.getConsegne().writeFormInput(out,"default","imTotaleConsegna",true, null, null);%></td>
-	      </tr>
-		  <tr>         
-	         <td><% bp.getConsegne().writeFormLabel(out,"descObbligazioneScadenzario");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"default","descObbligazioneScadenzario", true,null,null);%></td>
 	      </tr>
 	      </table>
       </div>

@@ -415,10 +415,34 @@
 		label="I.V.A."
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="voceIvaCompleta"
+		property="voceIvaCompleta"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		nullable="false"
+		label="I.V.A."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="uopDestCompleta"
+		property="uopDestCompleta"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		nullable="false"
+		label="Unità Operativa Destinazione"/>
+	<fieldProperty
 		name="notaRiga"
 		property="ordineAcqRiga.notaRiga"
 		inputType="TEXT"
 		cols="40"
+		enabledOnEdit="true"
+		label="Note" />
+	<fieldProperty
+		name="notaRigaEstesa"
+		property="ordineAcqRiga.notaRiga"
+		inputType="TEXT"
+		cols="400"
 		enabledOnEdit="true"
 		label="Note" />
 	<fieldProperty
@@ -523,6 +547,12 @@
 		name="findObbligazioneScadenzario" />
 	<formFieldProperty
 		name="descObbligazioneScadenzario" />
+	<formFieldProperty
+		name="voceIvaCompleta" />
+	<formFieldProperty
+		name="uopDestCompleta" />
+	<formFieldProperty
+		name="notaRigaEstesa"/>
 	<formFieldProperty
 		name="findUnitaOperativaOrdDest" />
 	<formFieldProperty
