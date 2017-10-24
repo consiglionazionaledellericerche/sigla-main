@@ -15,6 +15,9 @@
       path="/CRUDEvasioneOrdineAction" actionClass="it.cnr.contab.ordmag.ordini.action.CRUDEvasioneOrdineAction">
   </action>
   <action 
+      path="/ListaBolleScaricoGenerateAction" actionClass="it.cnr.contab.ordmag.magazzino.action.ListaBolleScaricoGenerateAction">
+  </action>
+  <action 
       path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.richieste.action.ListaRichiestePerOrdiniAction">
   </action>
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
@@ -154,4 +157,13 @@
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_EvasioneOrdineComponentSession"/>
     <init-param name="defaultAction" value="CRUDEvasioneOrdineAction"/>
   </businessProcess>
+	<businessProcess name="BolleScaricoGenerate"
+		className="it.cnr.contab.ordmag.magazzino.bp.ListaBolleScaricoGenerateBP">
+		<forward name="default"
+			path="/ordmag/magazzini/lista_bolle_scarico_generate.jsp" />
+		<init-param name="defaultAction"
+			value="ListaBolleScaricoGenerateAction" />
+		<init-param name="componentSessionName"
+			value="JADAEJB_CRUDComponentSession" />
+	</businessProcess>
 </action-mappings>

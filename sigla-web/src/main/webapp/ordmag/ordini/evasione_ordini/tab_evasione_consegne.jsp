@@ -10,6 +10,7 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
  	OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)bp.getConsegne().getModel();
  %>
 	<table border="0" cellspacing="2" cellpadding="4">
+		<b><font size=3>Criteri di Ricerca Consegne</font></b>
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "find_esercizio_ordine"); %></td>
 			<td><% bp.getController().writeFormInput( out, "find_esercizio_ordine"); %></td>
@@ -74,14 +75,10 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 		  <tr>         
 	         <td><% bp.getConsegne().writeFormLabel(out,"cdBeneServizio");%></td>
 	         <td><% bp.getConsegne().writeFormInput(out,"default","cdBeneServizio",true, null, null);%></td>
-	         <td><% bp.getConsegne().writeFormLabel(out,"dsBeneServizio");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"default","dsBeneServizio",true, null, null);%></td>
-	         <td><% bp.getConsegne().writeFormLabel(out,"voceIvaCompleto");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"default","voceIvaCompleto",true, null, null);%></td>
-	      </tr>            
-		  <tr>         
-	         <td><% bp.getConsegne().writeFormLabel(out,"notaRigaEstesa");%></td>
-	         <td><% bp.getConsegne().writeFormInput(out,"default","notaRigaEstesa",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"dsBeneServizioEsteso");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","dsBeneServizioEsteso",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"voceIvaCompleta");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","voceIvaCompleta",true, null, null);%></td>
 	      </tr>            
 		  <tr>         
 	         <td><% bp.getConsegne().writeFormLabel(out,"uopDestCompleta");%></td>
@@ -99,5 +96,11 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 	         <td><% bp.getConsegne().writeFormLabel(out,"imTotaleConsegna");%></td>
 	         <td><% bp.getConsegne().writeFormInput(out,"default","imTotaleConsegna",true, null, null);%></td>
 	      </tr>
+	      </table>
+	      <table>
+			  <tr>         
+		         <td><% bp.getConsegne().writeFormLabel(out,"notaRigaEstesa");%></td>
+	    	     <td><% bp.getConsegne().writeFormInput(out,"default","notaRigaEstesa",true, null, null);%></td>
+	      	  </tr>            
 	      </table>
       </div>
