@@ -3,6 +3,7 @@ package it.cnr.contab.ordmag.magazzino.comp;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
@@ -10,6 +11,8 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzBulk;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzHome;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoRigaMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome;
@@ -189,4 +192,50 @@ public class MovimentiMagComponent
     	return bene;
     }
 
+    public List<BollaScaricoMagBulk> generaBollaScarico(UserContext userContext, List<MovimentiMagBulk> listaMovimentiScarico)
+    				throws ComponentException, PersistencyException, ApplicationException {
+    	if (!listaMovimentiScarico.isEmpty()){
+    		List<BollaScaricoMagBulk> listaBolleScarico = new ArrayList<>();
+    		for (MovimentiMagBulk movimento : listaMovimentiScarico){
+    			BollaScaricoMagBulk bollaScarico = null;
+    			for (BollaScaricoMagBulk bolla : listaBolleScarico){
+    				if (bolla.getUnitaOperativaOrd().equalsByPrimaryKey(movimento.getUnitaOperativaOrd())){
+    					bollaScarico = bolla;
+    				}
+    			}
+    			if (bollaScarico == null){
+    				bollaScarico = new BollaScaricoMagBulk();
+    				bollaScarico.setDtBollaSca(movimento.getDtRiferimento());
+    				bollaScarico.setMagazzino(movimento.getMagazzino());
+    				bollaScarico.setStato(OrdineAcqBulk.STATO_INSERITO);
+    				bollaScarico.setUnitaOperativaOrd(movimento.getUnitaOperativaOrd());
+    				bollaScarico.setToBeCreated();
+    			}
+
+    			BollaScaricoRigaMagBulk riga = new BollaScaricoRigaMagBulk();
+    			riga.setCoeffConv(movimento.getCoeffConv());
+    			riga.setBeneServizio(movimento.getBeneServizio());
+    			riga.setUnitaMisura(movimento.getUnitaMisura());
+    			riga.setQuantita(movimento.getQuantita());
+    			riga.setOrdineAcqConsegna(movimento.getOrdineAcqConsegna());
+    			riga.setMovimentiMag(movimento);
+    			riga.setLottoMag(movimento.getLottoMag());
+    			riga.setToBeCreated();
+    			bollaScarico.addToRighe(riga);
+    			listaBolleScarico.add(bollaScarico);
+    		}
+    		for (BollaScaricoMagBulk bolla : listaBolleScarico){
+    			bolla = (BollaScaricoMagBulk)super.creaConBulk(userContext, bolla);
+    			for (MovimentiMagBulk movimento : listaMovimentiScarico){
+    				if (movimento.getUnitaOperativaOrd().equalsByPrimaryKey(bolla.getUnitaOperativaOrd())){
+    					movimento.setBollaScaricoMag(bolla);
+    					movimento.setToBeUpdated();
+    					super.modificaConBulk(userContext, movimento);
+    				}
+    			}
+    		}
+    		return listaBolleScarico;
+    	}
+    	return null;
+    }
 }
