@@ -1,7 +1,12 @@
 package it.cnr.contab.ordmag.ordini.bp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import it.cnr.contab.docamm00.bp.DocumentiAmministrativiFatturazioneElettronicaBP;
+import it.cnr.contab.docamm00.bp.DocumentiAmministrativiProtocollabiliBP;
+import it.cnr.contab.docamm00.bp.DocumentiAmministrativiRistampabiliBP;
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.EvasioneOrdineComponentSession;
@@ -131,17 +136,22 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		}
 	}
 
-	public void evadiConsegne(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	public String getColumnSetForBollaScarico() {
+		return "bollaScaricoforPrint";
+	}
+
+	public List<BollaScaricoMagBulk> evadiConsegne(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
 	{
 		EvasioneOrdineBulk bulk = (EvasioneOrdineBulk) getModel();	
 		try 
 		{
 			EvasioneOrdineComponentSession comp = (EvasioneOrdineComponentSession)createComponentSession();
-			comp.evadiOrdine(context.getUserContext(), bulk);
+			List<BollaScaricoMagBulk> listaBolleScarico = comp.evadiOrdine(context.getUserContext(), bulk);
 
 		    commitUserTransaction();
 		    setModel(context, null);
 		    setDirty(false);
+		    return listaBolleScarico;
 		} catch(Exception e) 
 		{
 			throw handleException(e);
