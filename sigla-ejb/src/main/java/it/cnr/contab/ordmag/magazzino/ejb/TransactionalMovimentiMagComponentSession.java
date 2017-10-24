@@ -2,6 +2,7 @@ package it.cnr.contab.ordmag.magazzino.ejb;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
@@ -21,6 +22,23 @@ public List<MovimentiMagBulk> caricoDaOrdine(UserContext userContext, EvasioneOr
 				userContext,
 				evasioneOrdine,consegna, ordine, evasioneOrdineRiga, 
 				listaMovimentiScarico});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public List<BollaScaricoMagBulk> generaBollaScarico(UserContext userContext, List<MovimentiMagBulk> listaMovimentiScarico)
+		throws ComponentException, PersistencyException, RemoteException, ApplicationException{
+	try {
+		return (List<BollaScaricoMagBulk>)invoke("generaBollaScarico",new Object[] {
+				userContext, listaMovimentiScarico});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {

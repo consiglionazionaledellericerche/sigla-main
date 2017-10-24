@@ -32,6 +32,8 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	private OrdineAcqRigaBulk ordineAcqRiga =  new OrdineAcqRigaBulk();
 	private Boolean obbligazioneInseritaSuConsegna =  false;
 	private String descObbligazioneScadenzario;
+	private String voceIvaCompleta;
+	private String uopDestCompleta;
 	/**
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
 	 **/
@@ -576,6 +578,18 @@ Gestione speciale è data per gli impegni CNR che operano a consumo sulla disponi
 			return null;
 		}
 		return getObbligazioneScadenzario().getEsercizio_originale()+"-"+getObbligazioneScadenzario().getPg_obbligazione()+"-"+getObbligazioneScadenzario().getPg_obbligazione_scadenzario()+"-"+getObbligazioneScadenzario().getDs_scadenza();
+	}
+	public String getVoceIvaCompleta() {
+		if (getOrdineAcqRiga() == null || getOrdineAcqRiga().getVoceIva() == null|| getOrdineAcqRiga().getVoceIva().getDs_voce_iva() == null){
+			return null;
+		}
+		return getOrdineAcqRiga().getVoceIva().getCd_voce_iva()+"-"+getOrdineAcqRiga().getVoceIva().getDs_voce_iva();
+	}
+	public String getUopDestCompleta() {
+		if (getUnitaOperativaOrd() == null || getUnitaOperativaOrd().getDsUnitaOperativa() == null){
+			return null;
+		}
+		return getUnitaOperativaOrd().getCdUnitaOperativa()+"-"+getUnitaOperativaOrd().getDsUnitaOperativa();
 	}
 	public void setDescObbligazioneScadenzario(String descObbligazioneScadenzario) {
 		this.descObbligazioneScadenzario = descObbligazioneScadenzario;

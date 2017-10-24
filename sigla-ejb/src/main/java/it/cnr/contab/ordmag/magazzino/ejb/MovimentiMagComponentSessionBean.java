@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.comp.MovimentiMagComponent;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
@@ -31,6 +32,26 @@ public List<MovimentiMagBulk> caricoDaOrdine(UserContext userContext, EvasioneOr
 	try {
 		List<MovimentiMagBulk> result = ((MovimentiMagComponent)componentObj).caricoDaOrdine(userContext, evasioneOrdine,
 				consegna, ordine, evasioneOrdineRiga, listaMovimentiScarico);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+
+public List<BollaScaricoMagBulk> generaBollaScarico(UserContext userContext, List<MovimentiMagBulk> listaMovimentiScarico)
+		throws ComponentException, PersistencyException, RemoteException, ApplicationException{
+	pre_component_invocation(userContext,componentObj);
+	try {
+		List<BollaScaricoMagBulk> result = ((MovimentiMagComponent)componentObj).generaBollaScarico(userContext, listaMovimentiScarico);
 		component_invocation_succes(userContext,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
