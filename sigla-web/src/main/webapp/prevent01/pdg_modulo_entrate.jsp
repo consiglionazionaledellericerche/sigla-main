@@ -75,22 +75,16 @@
 		</tr>	
 	<% } %>	
 	</table>
-<table>
-	  <tr>
-	  	<td colspan = "4">
 	<% bp.getCrudDettagliEntrate().writeHTMLTable(
 			pageContext,
 			bp.getParametriCnr().getFl_nuovo_pdg()?"without_area":"default",	
 			true,
 			false,
 			true,
-			"900px",
-			"150px");
+			"100%",
+			"200px");
 	%>
-		</td>
-	  </tr>
-</table>
-<!--	  
+<!--
 	<table>					
 		<tr>
 		<td>
