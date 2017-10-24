@@ -385,7 +385,11 @@ public class EvasioneOrdineComponent
     		evasioneOrdine = (EvasioneOrdineBulk)creaConBulk(userContext, evasioneOrdine);
     		
     		if (!listaMovimentiScarico.isEmpty()){
-        		movimentiMagComponent.generaBollaScarico(userContext, listaMovimentiScarico);
+        		try {
+					movimentiMagComponent.generaBollaScarico(userContext, listaMovimentiScarico);
+				} catch (RemoteException e) {
+					throw handleException(e);
+				}
     		}
 			
 //    		return evasioneOrdine;
