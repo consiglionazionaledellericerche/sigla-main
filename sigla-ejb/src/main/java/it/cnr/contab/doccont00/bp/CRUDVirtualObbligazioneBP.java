@@ -2,10 +2,15 @@ package it.cnr.contab.doccont00.bp;
 
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
+import it.cnr.contab.doccont00.core.bulk.AllegatoObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -13,8 +18,12 @@ import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
@@ -25,7 +34,7 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.jsp.Button;
 
 public abstract class CRUDVirtualObbligazioneBP 
-	extends it.cnr.jada.util.action.SimpleCRUDBP 
+	extends AllegatiCRUDBP<AllegatoObbligazioneBulk, ObbligazioneBulk>
 	implements IDocumentoContabileBP {
 		
 	private boolean deleting = false;
@@ -467,5 +476,26 @@ public static ObbligazioneAbstractComponentSession setSafePoint (
 	}
 	public void setRibaltato(boolean b) {
 		ribaltato = b;
+	}
+
+	protected String getStorePath(ObbligazioneBulk allegatoParentBulk, boolean create) throws BusinessProcessException {
+		return Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+				Optional.ofNullable(allegatoParentBulk.getUnita_organizzativa())
+						.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+						.orElse(""),
+				"Obbligazioni",
+				Optional.ofNullable(allegatoParentBulk.getEsercizio())
+						.map(esercizio -> String.valueOf(esercizio))
+						.orElse("0"),
+				String.valueOf(allegatoParentBulk.getPg_obbligazione())
+		).stream().collect(
+				Collectors.joining(SiglaStorageService.SUFFIX)
+		);
+	}
+
+	@Override
+	protected Class<AllegatoObbligazioneBulk> getAllegatoClass() {
+		return AllegatoObbligazioneBulk.class;
 	}
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizioDiAppartenenza"
+		property="esercizioDiAppartenenza"
+		label="Inserito nel"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4" />
+		
+	<formFieldProperty
+		name="esercizioDiAppartenenza" />
+		
+	<columnSet
+		name="readonly" >
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="titolo" />
+		<columnFieldProperty
+			name="esercizioDiAppartenenza" />
+	</columnSet>
+	
+	<columnSet
+		name="archivioAllegati" >
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="titolo" />
+		<columnFieldProperty
+			name="esercizioDiAppartenenza" />
+	</columnSet>
+
+	<form name="archivioAllegati">
+		<formFieldProperty
+			name="nome" />
+		<formFieldProperty
+			name="descrizione" />
+		<formFieldProperty
+			name="titolo" />
+		<formFieldProperty
+			name="file" />
+		<formFieldProperty
+			name="attivaFile" />	
+	</form>
+</bulkInfo>

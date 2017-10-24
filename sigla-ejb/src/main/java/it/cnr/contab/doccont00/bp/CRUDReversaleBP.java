@@ -529,7 +529,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 								.filter(statoTrasmissione -> statoTrasmissione.equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO))
 								.isPresent()) || (
 										isUoEnte() && Optional.ofNullable(reversaleBulk.getCd_uo_origine())
-												.filter(uoOrigine -> uoOrigine.equals(getUoSrivania().getCd_unita_organizzativa()))
+												.filter(uoOrigine -> !uoOrigine.equals(getUoSrivania().getCd_unita_organizzativa()))
 												.isPresent() && reversaleBulk.isSiopeDaCompletare()
 							);
 				}).orElse(false);

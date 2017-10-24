@@ -1,15 +1,18 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase implements IScadenzaDocumentoContabileBulk
 {
@@ -433,5 +436,10 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	public java.math.BigDecimal getImportoDisponibile() {
 		return Optional.ofNullable(getIm_scadenza()).map(map -> map).orElse(BigDecimal.ZERO).
 				subtract(Optional.ofNullable(getIm_associato_doc_amm()).map(map -> map).orElse(BigDecimal.ZERO));
+	}
+
+	public java.math.BigDecimal getImportoNonIncassato() {
+		return Optional.ofNullable(getIm_scadenza()).map(map -> map).orElse(BigDecimal.ZERO).
+				subtract(Optional.ofNullable(getIm_associato_doc_contabile()).map(map -> map).orElse(BigDecimal.ZERO));
 	}
 }
