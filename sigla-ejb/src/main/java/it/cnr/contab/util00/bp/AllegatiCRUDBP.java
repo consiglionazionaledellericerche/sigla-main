@@ -1,5 +1,6 @@
 package it.cnr.contab.util00.bp;
 
+import it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageObject;
@@ -11,6 +12,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleCRUDBP;
@@ -42,17 +44,15 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             return isChildGrowable(super.isGrowable());
         };
 
+        public boolean isShrinkable() {
+        	return isPossibileCancellazione((AllegatoGenericoBulk)getModel()) && super.isShrinkable();
+        };
+        
         public OggettoBulk removeDetail(int i) {
-            if (!getModel().isNew()){
-                List list = getDetails();
-                AllegatoGenericoBulk all =(AllegatoGenericoBulk)list.get(i);
-                if (isPossibileCancellazione(all)) {
-                    return super.removeDetail(i);
-                } else {
-                    return null;
-                }
-            }
-            return super.removeDetail(i);
+            AllegatoGenericoBulk all =(AllegatoGenericoBulk)getDetails().get(i);
+            if (all.isNew() || isPossibileCancellazione(all))
+               return super.removeDetail(i);
+            return null;
         }
     };
 
@@ -222,7 +222,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     }
 
     public String getAllegatiFormName() {
-        return "default";
+    	if (this.getCrudArchivioAllegati().getModel()!=null && !this.getCrudArchivioAllegati().getModel().isNew())
+    		if (!isPossibileModifica((AllegatoGenericoBulk)this.getCrudArchivioAllegati().getModel()))
+    			return "readonly";
+    	return "default";
     }
 
     @SuppressWarnings("unchecked")

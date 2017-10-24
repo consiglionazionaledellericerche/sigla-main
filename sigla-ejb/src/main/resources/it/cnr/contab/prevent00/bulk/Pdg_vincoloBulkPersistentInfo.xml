@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.Pdg_vincoloHome">
+	<defaultColumnMap
+		tableName="PDG_VINCOLO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elementoVoce.esercizio" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elementoVoce.ti_appartenenza" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elementoVoce.ti_gestione" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elementoVoce.cd_elemento_voce" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="lineaAttivita.centro_responsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="lineaAttivita.cd_linea_attivita" />
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="accertamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="accertamento.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="accertamento.esercizio_originale" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="accertamento.pg_accertamento" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="elementoVoce" 
+		partOfOid="true" />	
+	<persistentProperty
+		name="lineaAttivita"
+		partOfOid="true" />		
+	<persistentProperty
+		name="accertamento" />
+</SQLPersistentInfo>
