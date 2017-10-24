@@ -2,12 +2,12 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import java.util.Dictionary;
 
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import 	it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk.Stato;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
 /**
@@ -19,6 +19,31 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 	Voce_fBulk voce = new Voce_fBulk();
 	private Obbligazione_modificaBulk obbligazione_modifica = new Obbligazione_modificaBulk();	
 	private boolean saldiDaAggiornare = false;
+	private String statoResiduo;
+
+	public final static Dictionary stato_ObbligazioneResiduaKeys = new OrderedHashtable();;
+	public enum StatoResiduo {
+		PAGATO("Pagato","PAG"),
+		LIQUIDABILE("Liquidabile","LIQ"),
+		NON_LIQUIDABILE("Non Liquidabile","NLI");
+		private final String label, value;
+		private StatoResiduo(String label, String value) {
+			this.value = value;
+			this.label = label;
+		}
+		public String value() {
+			return value;
+		}
+		public String label() {
+			return label;
+		}		
+	}
+	static
+	{
+		for (StatoResiduo statoResiduo : StatoResiduo.values()) {
+			stato_ObbligazioneResiduaKeys.put(statoResiduo.value, statoResiduo.label);			
+		}
+	}	
 	
 	public final static int LUNGHEZZA_NUMERO_IMPEGNO = 6;
 
@@ -121,4 +146,24 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 	public void setSaldiDaAggiornare(boolean saldiDaAggiornare) {
 		this.saldiDaAggiornare = saldiDaAggiornare;
 	}
+
+	public String getStatoResiduo() {
+		return statoResiduo;
+	}
+	public void setStatoResiduo(String statoResiduo) {
+		this.statoResiduo = statoResiduo;
+	}
+	@SuppressWarnings("rawtypes")
+	public Dictionary getStato_ObbligazioneResiduaKeys() {
+		return stato_ObbligazioneResiduaKeys;
+	}
+	
+	public boolean isLiquidabile() {
+		return StatoResiduo.LIQUIDABILE.value.equals(getStatoResiduo());
+	}
+
+	public boolean isNonLiquidabile() {
+		return StatoResiduo.NON_LIQUIDABILE.value.equals(getStatoResiduo());
+	}
+	
 }
