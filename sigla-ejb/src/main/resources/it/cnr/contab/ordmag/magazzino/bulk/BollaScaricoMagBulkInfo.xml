@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdMagazzino" />
+		label="Magazzino" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -34,7 +34,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="cdNumeratoreMag"
 		property="cdNumeratoreMag"
@@ -44,7 +44,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNumeratoreMag" />
+		label="Numeratore" />
 	<fieldProperty
 		name="pgBollaSca"
 		property="pgBollaSca"
@@ -54,7 +54,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="pgBollaSca" />
+		label="Numero" />
 	<fieldProperty
 		name="dtBollaSca"
 		property="dtBollaSca"
@@ -62,7 +62,7 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dtBollaSca" />
+		label="Data" />
 	<fieldProperty
 		name="findMagazzino"
 		property="magazzino"
@@ -89,6 +89,15 @@
 		nullable="false"
 		label="cdMagazzinoMag" />
 	<fieldProperty
+		name="dsMagazzino"
+		property="magazzino.dsMagazzino"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
 		name="findUnitaOperativaOrd"
 		property="unitaOperativaOrd"
 		inputType="searchtool"
@@ -102,7 +111,15 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdUopDest" />
+		label="Codice Uop" />
+	<fieldProperty
+		name="dsUopDest"
+		property="unitaOperativaOrd.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Descrizione" />
 	<fieldProperty
 		name="cdCdsMagDest"
 		property="magazzino.cdCds"
@@ -118,7 +135,15 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdMagazzinoDest" />
+		label="Magazzino Destinatario" />
+	<fieldProperty
+		name="dsMagazzinoDest"
+		property="magazzino.dsMagazzino"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="Descrizione" />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -134,6 +159,29 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<columnSet
+		name="bollaScaricoforPrint">
+		<columnFieldProperty
+			name="cdMagazzino" />
+		<columnFieldProperty
+			name="dsMagazzino" />
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cdNumeratoreMag" />
+		<columnFieldProperty
+			name="pgBollaSca" />
+		<columnFieldProperty
+			name="dtBollaSca" />
+		<columnFieldProperty
+			name="cdUopDest" />
+		<columnFieldProperty
+			name="dsUopDest" />
+		<columnFieldProperty
+			name="cdMagazzinoDest" />
+		<columnFieldProperty
+			name="dsMagazzinoDest" />
+	</columnSet>
 	<form
 		name="searchtool">
 		<formFieldProperty

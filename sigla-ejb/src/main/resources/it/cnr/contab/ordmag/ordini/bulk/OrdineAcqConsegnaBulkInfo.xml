@@ -34,7 +34,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="cdNumeratore"
 		property="ordineAcqRiga.cdNumeratore"
@@ -44,7 +44,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNumeratore" />
+		label="Numeratore" />
 	<fieldProperty
 		name="numero"
 		property="ordineAcqRiga.numero"
@@ -54,7 +54,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="numero" />
+		label="Numero" />
 	<fieldProperty
 		name="riga"
 		property="ordineAcqRiga.riga"
@@ -369,7 +369,6 @@
 		inputSize="20"
 		inputType="TEXT"
 		nullable="false"
-		readonlyProperty="RObeneservizio"
 		label="Bene/Servizio"
 		caseSensitiveSearch="false" />
 	<fieldProperty
@@ -377,6 +376,14 @@
 		property="ordineAcqRiga.beneServizio.ds_bene_servizio"
 		maxLength="300"
 		inputSize="40"
+		inputType="ROTEXT"
+		label="Descr. Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsBeneServizioEsteso"
+		property="ordineAcqRiga.beneServizio.ds_bene_servizio"
+		maxLength="300"
+		inputSize="60"
 		inputType="ROTEXT"
 		label="Descr. Bene/Servizio"
 		caseSensitiveSearch="false" />
@@ -426,8 +433,8 @@
 	<fieldProperty
 		name="uopDestCompleta"
 		property="uopDestCompleta"
-		maxLength="100"
-		inputSize="100"
+		maxLength="70"
+		inputSize="70"
 		inputType="TEXT"
 		nullable="false"
 		label="Unità Operativa Destinazione"/>
@@ -442,7 +449,8 @@
 		name="notaRigaEstesa"
 		property="ordineAcqRiga.notaRiga"
 		inputType="TEXT"
-		cols="400"
+		maxLength="2000"
+		inputSize="250"
 		enabledOnEdit="true"
 		label="Note" />
 	<fieldProperty
@@ -474,6 +482,12 @@
 	</form>
 	<columnSet
 		name="consegneSet">
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cdNumeratore" />
+		<columnFieldProperty
+			name="numero" />
 		<columnFieldProperty
 			name="riga" />
 		<columnFieldProperty
@@ -557,6 +571,10 @@
 		name="findUnitaOperativaOrdDest" />
 	<formFieldProperty
 		name="dtCancellazione" />
+	<formFieldProperty name="cdBeneServizio" />
+	<formFieldProperty name="dsBeneServizioEsteso"/>
+	<formFieldProperty name="dsBeneServizio" />
+	<formFieldProperty name="voceIvaCompleto" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty

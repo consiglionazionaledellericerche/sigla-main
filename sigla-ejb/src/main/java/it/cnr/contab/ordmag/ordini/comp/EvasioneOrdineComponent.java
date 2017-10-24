@@ -145,6 +145,7 @@ public class EvasioneOrdineComponent
 				it.cnr.jada.bulk.BulkHome homeUop= getHome(context, UnitaOperativaOrdBulk.class);
 				it.cnr.jada.bulk.BulkHome homeRiga= getHome(context, OrdineAcqRigaBulk.class);
 				it.cnr.jada.bulk.BulkHome homeIva= getHome(context, Voce_ivaBulk.class);
+				
 				it.cnr.jada.bulk.BulkHome homeBene= getHome(context, Bene_servizioBulk.class);
 				it.cnr.jada.bulk.BulkHome homeUm= getHome(context, UnitaMisuraBulk.class);
 				it.cnr.jada.bulk.BulkHome homeObbligazioneScad= getHome(context, Obbligazione_scadenzarioBulk.class);
@@ -164,7 +165,7 @@ public class EvasioneOrdineComponent
 						cons.setMagazzino(mag);
 					}
 					if (cons.getUnitaOperativaOrd() != null){
-						UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)homeMag.findByPrimaryKey(cons.getUnitaOperativaOrd());
+						UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)homeUop.findByPrimaryKey(cons.getUnitaOperativaOrd());
 						cons.setUnitaOperativaOrd(uop);
 					}
 					if (cons.getLuogoConsegnaMag() != null){
@@ -176,7 +177,7 @@ public class EvasioneOrdineComponent
 						riga.setUnitaMisura(um);
 					}
 					if (riga.getVoceIva() != null){
-						Voce_ivaBulk iva = (Voce_ivaBulk)homeUm.findByPrimaryKey(riga.getVoceIva());
+						Voce_ivaBulk iva = (Voce_ivaBulk)homeIva.findByPrimaryKey(riga.getVoceIva());
 						riga.setVoceIva(iva);
 					}
 					riga.setBeneServizio(bene);
@@ -193,14 +194,14 @@ public class EvasioneOrdineComponent
     private it.cnr.jada.persistency.sql.SQLBuilder ricercaOrdini(UserContext context,
     		EvasioneOrdineBulk filtro, OrdineAcqConsegnaHome home) throws ApplicationException {
     	
-    	if (filtro.getDataConsegna() == null){
-    		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare la data di consegna.");    	
-    	}
     	if (filtro.getDataBolla() == null){
     		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare la data della bolla.");    	
     	}
-    	if (filtro.getCdMagazzino() == null){
-    		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare il magazzino.");    	
+    	if (filtro.getNumeroBolla() == null){
+    		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare il numero della bolla.");    	
+    	}
+    	if (filtro.getDataConsegna() == null){
+    		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare la data di consegna.");    	
     	}
     	if (filtro.getCdMagazzino() == null){
     		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare il magazzino.");    	
@@ -287,7 +288,8 @@ public class EvasioneOrdineComponent
     	return sql;
     } 
 
-    public void evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException{
+    public List<BollaScaricoMagBulk> evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException{
+    	List<BollaScaricoMagBulk> listaBolleScarico = new ArrayList<>();
     	OrdineAcqComponentSession ordineComponent = (OrdineAcqComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_OrdineAcqComponentSession", OrdineAcqComponentSession.class);
     	MovimentiMagComponentSession movimentiMagComponent = (MovimentiMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_MovimentiMagComponentSession", MovimentiMagComponentSession.class);
     	List<MovimentiMagBulk> listaMovimentiScarico = new ArrayList<>();
@@ -386,14 +388,14 @@ public class EvasioneOrdineComponent
     		
     		if (!listaMovimentiScarico.isEmpty()){
         		try {
-					movimentiMagComponent.generaBollaScarico(userContext, listaMovimentiScarico);
+        			listaBolleScarico = movimentiMagComponent.generaBollaScarico(userContext, listaMovimentiScarico);
 				} catch (RemoteException e) {
 					throw handleException(e);
 				}
     		}
 			
-//    		return evasioneOrdine;
     	}
+		return listaBolleScarico;
     }
 
     private Bene_servizioBulk recuperoBeneServizio(it.cnr.jada.UserContext userContext, String cdBeneServizio)

@@ -1,7 +1,10 @@
 package it.cnr.contab.ordmag.ordini.ejb;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.comp.EvasioneOrdineComponent;
 import it.cnr.jada.UserContext;
@@ -35,11 +38,12 @@ public EvasioneOrdineBulk cercaOrdini(it.cnr.jada.UserContext param0,EvasioneOrd
 	}
 }
 
-public void evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException,javax.ejb.EJBException {
+public List<BollaScaricoMagBulk> evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException,javax.ejb.EJBException {
 	pre_component_invocation(userContext,componentObj);
 	try {
-		((EvasioneOrdineComponent)componentObj).evadiOrdine(userContext,evasioneOrdine);
+		List<BollaScaricoMagBulk> result = ((EvasioneOrdineComponent)componentObj).evadiOrdine(userContext,evasioneOrdine);
 		component_invocation_succes(userContext,componentObj);
+		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(userContext,componentObj);
 		throw e;
