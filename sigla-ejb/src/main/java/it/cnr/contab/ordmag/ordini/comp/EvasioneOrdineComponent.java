@@ -140,8 +140,13 @@ public class EvasioneOrdineComponent
 
     		try {
 				Collection ordini = home.fetchAll(sql);
+				it.cnr.jada.bulk.BulkHome homeMag= getHome(context, MagazzinoBulk.class);
+				it.cnr.jada.bulk.BulkHome homeLuogo= getHome(context, LuogoConsegnaMagBulk.class);
+				it.cnr.jada.bulk.BulkHome homeUop= getHome(context, UnitaOperativaOrdBulk.class);
 				it.cnr.jada.bulk.BulkHome homeRiga= getHome(context, OrdineAcqRigaBulk.class);
+				it.cnr.jada.bulk.BulkHome homeIva= getHome(context, Voce_ivaBulk.class);
 				it.cnr.jada.bulk.BulkHome homeBene= getHome(context, Bene_servizioBulk.class);
+				it.cnr.jada.bulk.BulkHome homeUm= getHome(context, UnitaMisuraBulk.class);
 				it.cnr.jada.bulk.BulkHome homeObbligazioneScad= getHome(context, Obbligazione_scadenzarioBulk.class);
 				it.cnr.jada.bulk.BulkHome homeObbligazione= getHome(context, ObbligazioneBulk.class);
 				for (Iterator j = ordini.iterator(); j.hasNext();) {
@@ -153,6 +158,26 @@ public class EvasioneOrdineComponent
 						ObbligazioneBulk obbl = (ObbligazioneBulk)homeObbligazione.findByPrimaryKey(obblScad.getObbligazione());
 						obblScad.setObbligazione(obbl);
 						cons.setObbligazioneScadenzario(obblScad);
+					}
+					if (cons.getMagazzino() != null){
+						MagazzinoBulk mag = (MagazzinoBulk)homeMag.findByPrimaryKey(cons.getMagazzino());
+						cons.setMagazzino(mag);
+					}
+					if (cons.getUnitaOperativaOrd() != null){
+						UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)homeMag.findByPrimaryKey(cons.getUnitaOperativaOrd());
+						cons.setUnitaOperativaOrd(uop);
+					}
+					if (cons.getLuogoConsegnaMag() != null){
+						LuogoConsegnaMagBulk luogo = (LuogoConsegnaMagBulk)homeLuogo.findByPrimaryKey(cons.getLuogoConsegnaMag());
+						cons.setLuogoConsegnaMag(luogo);
+					}
+					if (riga.getUnitaMisura() != null){
+						UnitaMisuraBulk um = (UnitaMisuraBulk)homeUm.findByPrimaryKey(riga.getUnitaMisura());
+						riga.setUnitaMisura(um);
+					}
+					if (riga.getVoceIva() != null){
+						Voce_ivaBulk iva = (Voce_ivaBulk)homeUm.findByPrimaryKey(riga.getVoceIva());
+						riga.setVoceIva(iva);
 					}
 					riga.setBeneServizio(bene);
 					cons.setOrdineAcqRiga(riga);
@@ -316,48 +341,6 @@ public class EvasioneOrdineComponent
 					throw new ComponentException(e);
 				}
 
-    			if (!listaMovimentiScarico.isEmpty()){
-        			List<BollaScaricoMagBulk> listaBolleScarico = new ArrayList<>();
-        			for (MovimentiMagBulk movimento : listaMovimentiScarico){
-        				BollaScaricoMagBulk bollaScarico = null;
-            			for (BollaScaricoMagBulk bolla : listaBolleScarico){
-            				if (bolla.getUnitaOperativaOrd().equalsByPrimaryKey(movimento.getUnitaOperativaOrd())){
-            					bollaScarico = bolla;
-            				}
-            			}
-            			if (bollaScarico == null){
-            				bollaScarico = new BollaScaricoMagBulk();
-            				bollaScarico.setDtBollaSca(movimento.getDtRiferimento());
-            				bollaScarico.setMagazzino(movimento.getMagazzino());
-            				bollaScarico.setStato(OrdineAcqBulk.STATO_INSERITO);
-            				bollaScarico.setUnitaOperativaOrd(movimento.getUnitaOperativaOrd());
-            				bollaScarico.setToBeCreated();
-            			}
-        				
-        				BollaScaricoRigaMagBulk riga = new BollaScaricoRigaMagBulk();
-        				riga.setCoeffConv(movimento.getCoeffConv());
-        				riga.setBeneServizio(movimento.getBeneServizio());
-        				riga.setUnitaMisura(movimento.getUnitaMisura());
-        				riga.setQuantita(movimento.getQuantita());
-        				riga.setOrdineAcqConsegna(movimento.getOrdineAcqConsegna());
-        				riga.setMovimentiMag(movimento);
-        				riga.setLottoMag(movimento.getLottoMag());
-        				riga.setToBeCreated();
-	        			bollaScarico.addToRighe(riga);
-        				listaBolleScarico.add(bollaScarico);
-        			}
-        			for (BollaScaricoMagBulk bolla : listaBolleScarico){
-        				bolla = (BollaScaricoMagBulk)super.creaConBulk(userContext, bolla);
-            			for (MovimentiMagBulk movimento : listaMovimentiScarico){
-            				if (movimento.getUnitaOperativaOrd().equalsByPrimaryKey(bolla.getUnitaOperativaOrd())){
-            					movimento.setBollaScaricoMag(bolla);
-            					movimento.setToBeUpdated();
-            					super.modificaConBulk(userContext, movimento);
-            				}
-            			}
-        			}
-    			}
-    			
     			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
     				OrdineAcqBulk ordineAcq = ((OrdineAcqBulk)k.next());
         			for (Object bulkRiga :ordineAcq.getRigheOrdineColl()) {
@@ -391,16 +374,20 @@ public class EvasioneOrdineComponent
     		}
 			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
 				OrdineAcqBulk ordine = ((OrdineAcqBulk)k.next());
-//				try {
-//					ordineComponent.modificaConBulk(userContext, ordine);
-//				} catch (RemoteException e) {
-//					throw handleException(e);
-//				}
+				try {
+					ordineComponent.modificaConBulk(userContext, ordine);
+				} catch (RemoteException e) {
+					throw handleException(e);
+				}
 				
 			}
     		evasioneOrdine.setListaRigheConsegnaEvase(new BulkList<>(listaRigheEvase));
     		evasioneOrdine = (EvasioneOrdineBulk)creaConBulk(userContext, evasioneOrdine);
-
+    		
+    		if (!listaMovimentiScarico.isEmpty()){
+        		movimentiMagComponent.generaBollaScarico(userContext, listaMovimentiScarico);
+    		}
+			
 //    		return evasioneOrdine;
     	}
     }
