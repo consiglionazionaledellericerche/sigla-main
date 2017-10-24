@@ -1,6 +1,8 @@
 package it.cnr.contab.ordmag.ordini.ejb;
 import java.rmi.RemoteException;
+import java.util.List;
 
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -24,9 +26,9 @@ public EvasioneOrdineBulk cercaOrdini(it.cnr.jada.UserContext param0,EvasioneOrd
 		}
 	}
 }
-public void evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws RemoteException,ComponentException, PersistencyException{
+public List<BollaScaricoMagBulk> evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws RemoteException,ComponentException, PersistencyException{
 	try {
-		invoke("evadiOrdine",new Object[] {
+		return (List<BollaScaricoMagBulk>)invoke("evadiOrdine",new Object[] {
 				userContext,
 				evasioneOrdine });
 	} catch(java.rmi.RemoteException e) {
