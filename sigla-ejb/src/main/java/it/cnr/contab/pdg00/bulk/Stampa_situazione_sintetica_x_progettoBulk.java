@@ -46,6 +46,8 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 
 	private Boolean printSoloGaeAttive;
 
+	private Boolean printPianoEconomico;
+
 	private String ti_ordine_stampa;
 	
 	public final static String TI_ORDINE_GAE_VOCE_ANNO = "V";
@@ -216,5 +218,13 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 	
 	public void setPrintSoloGaeAttive(Boolean printSoloGaeAttive) {
 		this.printSoloGaeAttive = printSoloGaeAttive;
+	}
+	
+	public Boolean getPrintPianoEconomico() {
+		return printPianoEconomico;
+	}
+	
+	public void setPrintPianoEconomico(Boolean printPianoEconomico) {
+		this.printPianoEconomico = printPianoEconomico;
 	}
 }

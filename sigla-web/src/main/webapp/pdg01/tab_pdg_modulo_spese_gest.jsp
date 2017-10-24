@@ -12,22 +12,16 @@
 	CRUDPdgModuloSpeseGestBP bp = (CRUDPdgModuloSpeseGestBP)BusinessProcess.getBusinessProcess(request);
 	boolean isDettaglioGestionaleEnable = !bp.isDettaglioGestionaleEnable((Pdg_modulo_spese_gestBulk)bp.getCrudDettagliGestionali().getModel());
 	boolean isDettagliGestionaliEnable = !bp.isDettagliGestionaliEnable((Pdg_modulo_speseBulk)bp.getModel());
-%>
-<table>
-	  <tr>
-	  	<td colspan = "4">
-		  <% bp.getCrudDettagliGestionali().writeHTMLTable(
+    bp.getCrudDettagliGestionali().writeHTMLTable(
 				pageContext,
-				"insertGestionale",	
+				"insertGestionale",
 				!isDettagliGestionaliEnable,
 				true,
 				!isDettagliGestionaliEnable&&!isDettaglioGestionaleEnable,
-				"900px",
-				"150px",
-				true); %>
-		</td>
-	  </tr>
-</table>
+				"100%",
+				"200px",
+				true);
+%>
 <table>
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_cdr_assegnatario");%></td>
