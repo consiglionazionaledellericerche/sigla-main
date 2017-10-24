@@ -34,6 +34,8 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
 import it.cnr.contab.prevent00.bulk.V_assestato_residuoBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resBulk;
@@ -562,15 +564,31 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			else if (varRiga.getIm_variazione().compareTo(Utility.ZERO) > 0)
 				saldi.setVar_piu_stanz_res_imp(saldi.getVar_piu_stanz_res_imp().add(varRiga.getIm_variazione().abs()));
 		}
-		if (saldi.getDispAdImpResiduoImproprio().compareTo(Utility.ZERO) < 0){
-			throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
-										   "Nell'esercizio residuo "+ varRiga.getEsercizio_res()+
-										   " e per il CdR "+varRiga.getCd_cdr()+", "+
-										   " Voce "+(varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce())+
-										   " e GAE "+varRiga.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
-										   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldi.getDispAdImpResiduoImproprio().abs())+")");					
-		}
-		saldi.setToBeUpdated();
+
+		//calcolo i vincoli
+		try{
+			Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
+			List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldi);
+			BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			BigDecimal diff = saldi.getDispAdImpResiduoImproprio().subtract(impVincolo);
+	
+			if (diff.compareTo(Utility.ZERO) < 0){
+				StringBuilder messaggio = new StringBuilder("Impossibile effettuare l'operazione !\n"+
+											   "Nell'esercizio residuo "+ varRiga.getEsercizio_res()+
+											   " e per il CdR "+varRiga.getCd_cdr()+", "+
+											   " Voce "+(varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce())+
+											   " e GAE "+varRiga.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
+											   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(diff.abs())+")");
+				if (impVincolo.compareTo(BigDecimal.ZERO)>0)
+					messaggio.append(" in conseguenza della presenza di vincoli di spesa per un importo di " + 
+							new it.cnr.contab.util.EuroFormat().format(impVincolo.abs()));
+				throw new ApplicationException(messaggio.toString());
+			}
+			saldi.setToBeUpdated();
+		} catch (Exception e )
+		{
+			throw handleException(  e );
+		}	
 		Utility.createSaldoComponentSession().aggiornaSaldiAnniSuccessivi(userContext,
 				                                                          saldi.getCd_centro_responsabilita(),
 				                                                          saldi.getCd_linea_attivita(),
@@ -674,42 +692,38 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		}
 	}
 	protected Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
-		try{
-			SQLBuilder sql = (SQLBuilder)super.select(userContext,clauses,bulk);
-			sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-			Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+		SQLBuilder sql = (SQLBuilder)super.select(userContext,clauses,bulk);
+		sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 
-			UtenteBulk utente = (UtenteBulk) getHome( userContext, UtenteBulk.class).findByPrimaryKey(new UtenteKey(it.cnr.contab.utenze00.bp.CNRUserContext.getUser(userContext)));
+		UtenteBulk utente = (UtenteBulk) getHome( userContext, UtenteBulk.class).findByPrimaryKey(new UtenteKey(it.cnr.contab.utenze00.bp.CNRUserContext.getUser(userContext)));
 	
-			CdrHome cdrHome = (CdrHome)getHome(userContext,CdrBulk.class);
-			CdrBulk cdrUtente = (CdrBulk)cdrHome.findByPrimaryKey(new CdrKey(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext))); 
+		CdrHome cdrHome = (CdrHome)getHome(userContext,CdrBulk.class);
+		CdrBulk cdrUtente = (CdrBulk)cdrHome.findByPrimaryKey(new CdrKey(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext))); 
 
-			if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-				sql.openParenthesis("AND");
-					sql.addSQLClause("OR", "VAR_STANZ_RES.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrUtente.getCd_centro_responsabilita());
-					for (java.util.Iterator j=cdrHome.findCdrAfferenti(cdrUtente).iterator();j.hasNext();){			
-						CdrBulk cdrAfferenti = (CdrBulk)j.next();
-						sql.addSQLClause("OR", "VAR_STANZ_RES.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrAfferenti.getCd_centro_responsabilita());
-					}
+		if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+			sql.openParenthesis("AND");
+				sql.addSQLClause("OR", "VAR_STANZ_RES.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrUtente.getCd_centro_responsabilita());
+				for (java.util.Iterator j=cdrHome.findCdrAfferenti(cdrUtente).iterator();j.hasNext();){			
+					CdrBulk cdrAfferenti = (CdrBulk)j.next();
+					sql.addSQLClause("OR", "VAR_STANZ_RES.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrAfferenti.getCd_centro_responsabilita());
+				}
 
-					SQLBuilder sqlAssUo = getHome(userContext,Ass_var_stanz_res_cdrBulk.class).createSQLBuilder();
-					sqlAssUo.addSQLJoin("VAR_STANZ_RES.ESERCIZIO","ASS_VAR_STANZ_RES_CDR.ESERCIZIO");
-					sqlAssUo.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE","ASS_VAR_STANZ_RES_CDR.PG_VARIAZIONE");
+				SQLBuilder sqlAssUo = getHome(userContext,Ass_var_stanz_res_cdrBulk.class).createSQLBuilder();
+				sqlAssUo.addSQLJoin("VAR_STANZ_RES.ESERCIZIO","ASS_VAR_STANZ_RES_CDR.ESERCIZIO");
+				sqlAssUo.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE","ASS_VAR_STANZ_RES_CDR.PG_VARIAZIONE");
 
-					sqlAssUo.openParenthesis("AND");
-					sqlAssUo.addSQLClause("OR", "ASS_VAR_STANZ_RES_CDR.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrUtente.getCd_centro_responsabilita());
-					for (java.util.Iterator j=cdrHome.findCdrAfferenti(cdrUtente).iterator();j.hasNext();){			
-						CdrBulk cdrAfferenti = (CdrBulk)j.next();
-						sqlAssUo.addSQLClause("OR", "ASS_VAR_STANZ_RES_CDR.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrAfferenti.getCd_centro_responsabilita());
-					}
-					sqlAssUo.closeParenthesis();
-					sql.addSQLExistsClause("OR",sqlAssUo);
-				sql.closeParenthesis();
-			}		  		 
-			return sql;
-		} catch (IntrospectionException e) {
-			throw new ComponentException(e);
-		}
+				sqlAssUo.openParenthesis("AND");
+				sqlAssUo.addSQLClause("OR", "ASS_VAR_STANZ_RES_CDR.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrUtente.getCd_centro_responsabilita());
+				for (java.util.Iterator j=cdrHome.findCdrAfferenti(cdrUtente).iterator();j.hasNext();){			
+					CdrBulk cdrAfferenti = (CdrBulk)j.next();
+					sqlAssUo.addSQLClause("OR", "ASS_VAR_STANZ_RES_CDR.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrAfferenti.getCd_centro_responsabilita());
+				}
+				sqlAssUo.closeParenthesis();
+				sql.addSQLExistsClause("OR",sqlAssUo);
+			sql.closeParenthesis();
+		}		  		 
+		return sql;
 	}	
 	/**
 	 * 

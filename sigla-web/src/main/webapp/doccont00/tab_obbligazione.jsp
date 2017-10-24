@@ -47,6 +47,15 @@
 	<td colspan=2>
 		<% bp.getController().writeFormInput( out, "pg_obbligazione_ori_riporto"); %></td>
 	</tr>
+
+	<%  if( bp instanceof CRUDObbligazioneResBP  && ((CRUDObbligazioneResBP)bp).isStatoResiduoVisibile()) { %>
+		<tr>
+			<td><% bp.getController().writeFormLabel( out, ((CRUDObbligazioneResBP)bp).isROStato() ?"statoResiduoObbligazione_ro":"statoResiduoObbligazione"); %></td>
+			<td colspan=2>
+			<% bp.getController().writeFormInput( out, "default", ((CRUDObbligazioneResBP)bp).isROStato() ?"statoResiduoObbligazione_ro":"statoResiduoObbligazione",bp.isRoCampiResiduoProprio(),null,null); %>
+			</td>
+		</tr>		  		
+	<%  } %>
 	
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "ds_obbligazione"); %></td>

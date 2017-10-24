@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteKey">
+	<defaultColumnMap
+		tableName="ACCERTAMENTO_VINCOLO_PERENTE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE"
+			propertyName="pg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="cd_cds_accertamento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_variazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_accertamento" 
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_accertamento" 
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" 
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_accertamento" 
+		partOfOid="true" />
+
+</SQLPersistentInfo>
