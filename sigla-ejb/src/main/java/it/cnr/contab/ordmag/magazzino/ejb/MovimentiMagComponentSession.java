@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
@@ -19,4 +20,6 @@ public interface MovimentiMagComponentSession extends it.cnr.jada.ejb.CRUDCompon
 	List<MovimentiMagBulk> caricoDaOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine,
 			OrdineAcqConsegnaBulk consegna, OrdineAcqBulk ordine, EvasioneOrdineRigaBulk evasioneOrdineRiga, 
 			List<MovimentiMagBulk> listaMovimentiScarico)throws ComponentException, PersistencyException, RemoteException, ApplicationException;
+    List<BollaScaricoMagBulk> generaBollaScarico(UserContext userContext, List<MovimentiMagBulk> listaMovimentiScarico)
+			throws ComponentException, PersistencyException, RemoteException, ApplicationException;
 	}
