@@ -1,3 +1,4 @@
+<%@page import="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk"%>
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,
 	it.cnr.jada.action.*,
@@ -66,7 +67,14 @@
 	</tr>
 	<%  if( bp instanceof CRUDAccertamentoResiduoBP  && ((CRUDAccertamentoResiduoBP)bp).isStatoVisibile()) { %>
 		<tr>
-			<% bp.getController().writeFormField( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() ?"statoAccertamento_ro":"statoAccertamento"); %>
+			<td><% bp.getController().writeFormLabel( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() ?"statoAccertamento_ro":"statoAccertamento"); %></td>
+			<td colspan=2>
+			<% bp.getController().writeFormInput( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() ?"statoAccertamento_ro":"statoAccertamento"); %>
+			<% if (((AccertamentoResiduoBulk)accertamento).isParzialmenteInesigibile() || ((AccertamentoResiduoBulk)accertamento).isInesigibile()) {%>
+				<% bp.getController().writeFormLabel( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() || ((AccertamentoResiduoBulk)accertamento).isInesigibile()?"im_quota_inesigibile_ro":"im_quota_inesigibile"); %>
+				<% bp.getController().writeFormInput( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() || ((AccertamentoResiduoBulk)accertamento).isInesigibile()?"im_quota_inesigibile_ro":"im_quota_inesigibile"); %>
+			<% } %>
+			</td>
 		</tr>		  		
 	<%  } %>
 	<tr>
