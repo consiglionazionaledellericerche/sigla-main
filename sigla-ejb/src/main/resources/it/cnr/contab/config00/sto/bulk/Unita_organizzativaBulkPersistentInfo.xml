@@ -54,6 +54,7 @@
 		<include pattern="responsabile.anagrafico" />
 		<include pattern="responsabile_amm" />
 		<include pattern="responsabile_amm.anagrafico" />
+		<include pattern="unita_padre" />
 	</fetchPolicy>
 
 </SQLPersistentInfo>

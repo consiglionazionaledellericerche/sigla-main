@@ -65,19 +65,19 @@ public class PDCEconPatrComponent  extends it.cnr.jada.comp.CRUDComponent implem
 public it.cnr.jada.util.RemoteIterator cerca(UserContext userContext,it.cnr.jada.persistency.sql.CompoundFindClause clausole,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 	try
 	{
-		Voce_epBulk voceBulk = (Voce_epBulk) bulk ;
-
-			
-		if (voceBulk.getTi_voce_ep().equals("P"))
-			voceBulk.setCd_proprio_voce_ep( getLunghezza_chiavi().formatCapocontoKey( userContext,voceBulk.getCd_proprio_voce_ep(), voceBulk.getEsercizio() ));
-		else
-		{
-			ContoBulk conto = (ContoBulk) voceBulk;	
-			conto.setCd_proprio_voce_ep( getLunghezza_chiavi().formatContoKey( userContext,conto.getCd_proprio_voce_ep(), conto.getEsercizio() ));
-			if ( conto.getVoce_ep_padre() != null && conto.getVoce_ep_padre().getCd_voce_ep() != null )
-				conto.getVoce_ep_padre().setCd_voce_ep( conto.getVoce_ep_padre().getCd_voce_ep().toUpperCase());
-				
-		}					
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+		if (!parCnr.getFl_nuovo_pdg().booleanValue()){
+			Voce_epBulk voceBulk = (Voce_epBulk) bulk ;
+		 			if (voceBulk.getTi_voce_ep().equals("P"))
+						voceBulk.setCd_proprio_voce_ep( getLunghezza_chiavi().formatCapocontoKey( userContext,voceBulk.getCd_proprio_voce_ep(), voceBulk.getEsercizio() ));
+					else
+					{
+						ContoBulk conto = (ContoBulk) voceBulk;
+						conto.setCd_proprio_voce_ep( getLunghezza_chiavi().formatContoKey( userContext,conto.getCd_proprio_voce_ep(), conto.getEsercizio() ));
+						if ( conto.getVoce_ep_padre() != null && conto.getVoce_ep_padre().getCd_voce_ep() != null )
+							conto.getVoce_ep_padre().setCd_voce_ep( conto.getVoce_ep_padre().getCd_voce_ep().toUpperCase());
+					}
+		} 
 		return super.cerca(userContext,clausole,bulk);
 	} catch (Exception e)
 		{
@@ -297,6 +297,8 @@ public OggettoBulk creaConBulk (UserContext userContext,OggettoBulk bulk) throws
 					((CapocontoHome)getHomeCache(userContext).getHome( CapocontoBulk.class )).lock( contoBulk.getVoce_ep_padre() );
 				}
 				else{
+					if (contoBulk.getRiepiloga_a() == null)
+						throw new ApplicationException("Il campo Riepiloga a è obbligatorio.");
 					contoBulk.setCd_voce_ep(contoBulk.getCd_proprio_voce_ep());
 					contoBulk.setLivello(new Integer(1));
 					contoBulk.setFl_mastrino(new Boolean ( true ));

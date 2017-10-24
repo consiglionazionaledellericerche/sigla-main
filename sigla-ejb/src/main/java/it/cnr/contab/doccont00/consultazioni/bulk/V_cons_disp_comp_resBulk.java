@@ -117,6 +117,9 @@ public class V_cons_disp_comp_resBulk extends OggettoBulk  implements Persistent
 //    VAR_MENO_RES_PRO DECIMAL(15,2)
 	private java.math.BigDecimal var_meno_res_pro;
  
+//  VINCOLI_RES DECIMAL(15,2)
+	private java.math.BigDecimal vincoli_res;
+
 //    DISP_RES DECIMAL(15,2)
 	private java.math.BigDecimal disp_res;
  
@@ -329,6 +332,12 @@ public class V_cons_disp_comp_resBulk extends OggettoBulk  implements Persistent
 	}
 	public void setVar_meno_res_pro(java.math.BigDecimal var_meno_res_pro)  {
 		this.var_meno_res_pro=var_meno_res_pro;
+	}
+	public java.math.BigDecimal getVincoli_res() {
+		return vincoli_res;
+	}
+	public void setVincoli_res(java.math.BigDecimal vincoli_res) {
+		this.vincoli_res = vincoli_res;
 	}
 	public java.math.BigDecimal getDisp_res () {
 		return disp_res;

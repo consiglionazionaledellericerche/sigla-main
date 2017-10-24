@@ -642,6 +642,25 @@ public class RicercaDocContComponentSessionBean extends it.cnr.jada.ejb.RicercaC
 		}
 	}
 
+	public boolean isRiobbligazioneChiusa(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			boolean result = ((RicercaDocContComponent)componentObj).isRiobbligazioneChiusa(param0);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+
 	public boolean isGaeCollegateProgetti(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
