@@ -5,15 +5,20 @@
 package it.cnr.contab.ordmag.magazzino.bulk;
 import java.sql.Connection;
 import java.util.Calendar;
+import java.util.List;
 
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 public class BollaScaricoMagHome extends BulkHome {
 	public BollaScaricoMagHome(Connection conn) {
 		super(BollaScaricoMagBulk.class, conn);
@@ -38,4 +43,26 @@ public class BollaScaricoMagHome extends BulkHome {
 		}catch(Throwable e) {
 			throw new PersistencyException(e);
 		}
-	}}
+	}
+
+	public SQLBuilder selectBolleGenerate(List<BollaScaricoMagBulk> bolle) {
+
+		SQLBuilder sql = createSQLBuilder();
+
+		BollaScaricoMagBulk bollaScaricoMagBulk = bolle.get(0);
+
+		sql.addSQLClause("AND", "BOLLA_SCARICO_MAG.ESERCIZIO", SQLBuilder.EQUALS, bollaScaricoMagBulk.getEsercizio());
+		sql.addSQLClause("AND", "BOLLA_SCARICO_MAG.CD_CDS", SQLBuilder.EQUALS, bollaScaricoMagBulk.getCdCds());
+		sql.addSQLClause("AND", "BOLLA_SCARICO_MAG.CD_NUMERATORE_MAG", SQLBuilder.EQUALS, bollaScaricoMagBulk.getCdNumeratoreMag());
+		sql.addSQLClause("AND", "BOLLA_SCARICO_MAG.CD_MAGAZZINO", SQLBuilder.EQUALS, bollaScaricoMagBulk.getCdMagazzino());
+
+		sql.openParenthesis("AND");
+		for (BollaScaricoMagBulk bolla : bolle){
+			sql.addSQLClause("OR", "PG_BOLLA_SCA", SQLBuilder.EQUALS, bolla.getPgBollaSca());
+		}
+		sql.closeParenthesis();
+
+		return sql;
+	}
+
+}
