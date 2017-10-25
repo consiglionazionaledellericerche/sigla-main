@@ -2,12 +2,14 @@ package it.cnr.contab.ordmag.magazzino.comp;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzBulk;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzHome;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
@@ -20,9 +22,14 @@ import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
+import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
+import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
@@ -66,7 +73,12 @@ public class MovimentiMagComponent
 		movimentoMag.setMagazzino(evasioneOrdine.getNumerazioneMag().getMagazzino());
 		movimentoMag.setOrdineAcqConsegna(consegna);
 		movimentoMag.setUnitaOperativaOrd(consegna.getUnitaOperativaOrd());
-		movimentoMag.setPrezzoUnitario(consegna.getOrdineAcqRiga().getPrezzoUnitario());
+		
+		try {
+			movimentoMag.setPrezzoUnitario(recuperoPrezzoUnitario(userContext, consegna));
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
 		movimentoMag.setQuantita(evasioneOrdineRiga.getQuantitaEvasa());
 		movimentoMag.setSconto1(consegna.getOrdineAcqRiga().getSconto1());
 		movimentoMag.setSconto2(consegna.getOrdineAcqRiga().getSconto2());
@@ -238,4 +250,53 @@ public class MovimentiMagComponent
     	}
     	return null;
     }
+    private BigDecimal recuperoPrezzoUnitario(UserContext userContext, OrdineAcqConsegnaBulk cons) throws RemoteException, ComponentException{
+    	OrdineAcqComponentSession ordineComponent = (OrdineAcqComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_OrdineAcqComponentSession", OrdineAcqComponentSession.class);
+        ParametriCalcoloImportoOrdine parametri = new ParametriCalcoloImportoOrdine();
+    	OrdineAcqRigaBulk riga = cons.getOrdineAcqRiga();
+        OrdineAcqBulk ordine = riga.getOrdineAcq();
+    	parametri.setCambio(ordine.getCambio());
+    	parametri.setDivisa(ordine.getDivisa());
+    	parametri.setDivisaRisultato(getEuro(userContext));
+    	parametri.setPercProrata(ordine.getPercProrata());
+    	parametri.setCoefacq(riga.getCoefConv());
+    	parametri.setPrezzo(riga.getPrezzoUnitario());
+    	parametri.setSconto1(riga.getSconto1());
+    	parametri.setSconto2(riga.getSconto2());
+    	parametri.setSconto3(riga.getSconto3());
+    	parametri.setVoceIva(riga.getVoceIva());
+    	parametri.setQtaOrd(cons.getQuantita());
+    	parametri.setArrAliIva(cons.getArrAliIva());
+    	ImportoOrdine importo = ordineComponent.calcoloImportoOrdinePerMagazzino(userContext,parametri);
+    	return importo.getImponibile().add(Utility.nvl(importo.getImportoIvaInd()).add(Utility.nvl(importo.getArrAliIva())));
+    }
+    
+    private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
+
+    	String cd_euro = null;
+    	try {
+    		cd_euro = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(userContext, new Integer(0), "*", "CD_DIVISA", "EURO");
+    		if (cd_euro == null)
+    			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
+    	} catch (javax.ejb.EJBException e) {
+    		handleException(e);
+    	} catch (java.rmi.RemoteException e) {
+    		handleException(e);
+    	}
+
+    	DivisaBulk valuta = null;
+    	
+    	try {
+    		java.util.List divise = getHome(userContext, DivisaBulk.class).find(new it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk(cd_euro));
+    		if (divise == null || divise.isEmpty())
+    			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
+    		valuta = (DivisaBulk)divise.get(0);
+    		if (valuta == null)
+    			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
+    	} catch (it.cnr.jada.persistency.PersistencyException e) {
+    		handleException(e);
+    	}
+    	return valuta;
+    }
+
 }

@@ -142,6 +142,10 @@ public final class Utility {
 		return round(importo,2);
 	}
 
+	public static BigDecimal round6Decimali(BigDecimal importo) {
+		return round(importo,6);
+	}
+
 	public static BigDecimal roundIntero(BigDecimal importo) {
 		return round(importo,0);
 	}

@@ -4,6 +4,7 @@
  */
 package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
@@ -257,5 +258,11 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	}
 	public List getChildren() {
 		return getRighe();
+	}
+	public BulkCollection[] getBulkLists() {
+
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				righe
+		};
 	}
 }
