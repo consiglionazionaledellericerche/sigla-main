@@ -10,8 +10,11 @@ import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.comp.OrdineAcqComponent;
+import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
+import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRORDMAG00_EJB_OrdineAcqComponentSession")
@@ -221,6 +224,36 @@ public OrdineAcqBulk contabilizzaConsegneSelezionate(it.cnr.jada.UserContext par
 		throw uncaughtRuntimeException(param0,componentObj,e);
 	} catch(Error e) {
 		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public ImportoOrdine calcoloImportoOrdine(UserContext userContext, ParametriCalcoloImportoOrdine parametri) throws RemoteException,ComponentException{
+	pre_component_invocation(userContext,componentObj);
+	try {
+		ImportoOrdine result = ((OrdineAcqComponent)componentObj).calcoloImportoOrdine(parametri);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+public ImportoOrdine calcoloImportoOrdinePerMagazzino(UserContext userContext, ParametriCalcoloImportoOrdine parametri) throws RemoteException,ComponentException{
+	pre_component_invocation(userContext,componentObj);
+	try {
+		ImportoOrdine result = ((OrdineAcqComponent)componentObj).calcoloImportoOrdinePerMagazzino(parametri);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
 	}
 }
 }
