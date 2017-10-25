@@ -1331,7 +1331,7 @@ public ImportoOrdine calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametr
 
 public ImportoOrdine calcoloImportoOrdinePerMagazzino(ParametriCalcoloImportoOrdine parametri) throws ApplicationException{
 	BigDecimal imponibile = calcoloImponibile(parametri);
-	BigDecimal imponibileUnitario = imponibile.divide(parametri.getQtaOrd());
+	imponibile = imponibile.divide(parametri.getQtaOrd());
 	BigDecimal arrotondamento = parametri.getArrAliIva().divide(parametri.getQtaOrd());
 	BigDecimal arrAliIva = arrotondamento;
 			
@@ -1341,10 +1341,14 @@ public ImportoOrdine calcoloImportoOrdinePerMagazzino(ParametriCalcoloImportoOrd
 	} else {
 		voceIva = parametri.getVoceIva();
 	}
-	BigDecimal importoIva = Utility.round2Decimali((Utility.divide(imponibile, Utility.CENTO)).multiply(voceIva.getPercentuale())); 
-	BigDecimal ivaNonDetraibile = Utility.round2Decimali(importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita()))));
+
+	BigDecimal importoIva = (Utility.divide(imponibile, Utility.CENTO)).multiply(voceIva.getPercentuale()); 
+	BigDecimal ivaNonDetraibile = importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita())));
+
 	BigDecimal ivaPerCalcoloProrata = importoIva.subtract(ivaNonDetraibile);
-	BigDecimal ivaDetraibile = Utility.round2Decimali(ivaPerCalcoloProrata.multiply(Utility.nvl(parametri.getPercProrata())));
+	
+	BigDecimal ivaDetraibile = ivaPerCalcoloProrata.multiply(Utility.nvl(parametri.getPercProrata()));
+	
 	ivaNonDetraibile = ivaNonDetraibile.add((ivaPerCalcoloProrata.subtract(ivaDetraibile)));
 	
 	if (ivaDetraibile.compareTo(BigDecimal.ZERO) == 0 || ivaNonDetraibile.compareTo(BigDecimal.ZERO) > 0){
@@ -1354,11 +1358,11 @@ public ImportoOrdine calcoloImportoOrdinePerMagazzino(ParametriCalcoloImportoOrd
 	}
 	importoIva = importoIva.add(ivaDetraibile);
 	ImportoOrdine importoOrdine = new ImportoOrdine();
-	importoOrdine.setImponibile(Utility.round2Decimali(imponibile));
-	importoOrdine.setImportoIva(Utility.round2Decimali(importoIva));
-	importoOrdine.setImportoIvaInd(Utility.round2Decimali(ivaNonDetraibile));
-	importoOrdine.setImportoIvaDetraibile(Utility.round2Decimali(ivaDetraibile));
-	importoOrdine.setArrAliIva(BigDecimal.ZERO);
+	importoOrdine.setImponibile(Utility.round6Decimali(imponibile));
+	importoOrdine.setImportoIva(Utility.round6Decimali(importoIva));
+	importoOrdine.setImportoIvaInd(Utility.round6Decimali(ivaNonDetraibile));
+	importoOrdine.setImportoIvaDetraibile(Utility.round6Decimali(ivaDetraibile));
+	importoOrdine.setArrAliIva(arrAliIva);
 	return importoOrdine;
 }
 
