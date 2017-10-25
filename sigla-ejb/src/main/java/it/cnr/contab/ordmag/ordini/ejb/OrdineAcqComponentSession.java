@@ -1,5 +1,6 @@
 package it.cnr.contab.ordmag.ordini.ejb;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.List;
 
@@ -7,11 +8,13 @@ import javax.ejb.EJBException;
 import javax.ejb.Remote;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -29,4 +32,6 @@ public interface OrdineAcqComponentSession extends it.cnr.jada.ejb.CRUDComponent
 	public OrdineAcqBulk cancellaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws RemoteException,ComponentException, PersistencyException;
 	public Unita_organizzativaBulk recuperoUoPerImpegno(it.cnr.jada.UserContext userContext, OrdineAcqConsegnaBulk consegna) throws RemoteException,ComponentException, PersistencyException;
 	OrdineAcqBulk contabilizzaConsegneSelezionate(it.cnr.jada.UserContext param0,OrdineAcqBulk param1,java.util.Collection param2,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+	public ImportoOrdine calcoloImportoOrdine(UserContext userContext,ParametriCalcoloImportoOrdine parametri) throws RemoteException,ComponentException;
+	public ImportoOrdine calcoloImportoOrdinePerMagazzino(UserContext userContext,ParametriCalcoloImportoOrdine parametri) throws RemoteException,ComponentException;
 }
