@@ -31,6 +31,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
@@ -77,6 +78,7 @@ import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagHome;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoRigaMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
@@ -146,6 +148,7 @@ public class EvasioneOrdineComponent
 				it.cnr.jada.bulk.BulkHome homeRiga= getHome(context, OrdineAcqRigaBulk.class);
 				it.cnr.jada.bulk.BulkHome homeIva= getHome(context, Voce_ivaBulk.class);
 				
+				it.cnr.jada.bulk.BulkHome homeOrdine= getHome(context, OrdineAcqBulk.class);
 				it.cnr.jada.bulk.BulkHome homeBene= getHome(context, Bene_servizioBulk.class);
 				it.cnr.jada.bulk.BulkHome homeUm= getHome(context, UnitaMisuraBulk.class);
 				it.cnr.jada.bulk.BulkHome homeObbligazioneScad= getHome(context, Obbligazione_scadenzarioBulk.class);
@@ -153,6 +156,8 @@ public class EvasioneOrdineComponent
 				for (Iterator j = ordini.iterator(); j.hasNext();) {
 					OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk) j.next();
 					OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)homeRiga.findByPrimaryKey(cons.getOrdineAcqRiga());
+					OrdineAcqBulk ordine = (OrdineAcqBulk)homeOrdine.findByPrimaryKey(riga.getOrdineAcq());
+					riga.setOrdineAcq(ordine);
 					Bene_servizioBulk bene = (Bene_servizioBulk)homeBene.findByPrimaryKey(riga.getBeneServizio());
 					if (cons.getObbligazioneScadenzario() != null){
 						Obbligazione_scadenzarioBulk obblScad = (Obbligazione_scadenzarioBulk)homeObbligazioneScad.findByPrimaryKey(cons.getObbligazioneScadenzario());
@@ -288,6 +293,14 @@ public class EvasioneOrdineComponent
     	return sql;
     } 
 
+    public RemoteIterator preparaQueryBolleScaricoDaVisualizzare(UserContext userContext, List<BollaScaricoMagBulk> bolle)throws ComponentException{
+
+		BollaScaricoMagHome homeBolla= (BollaScaricoMagHome)getHome(userContext, BollaScaricoMagBulk.class);
+		return iterator(userContext,
+				homeBolla.selectBolleGenerate(bolle),
+				BollaScaricoMagBulk.class,
+				"dafault");
+    }
     public List<BollaScaricoMagBulk> evadiOrdine(UserContext userContext, EvasioneOrdineBulk evasioneOrdine)throws ComponentException, PersistencyException{
     	List<BollaScaricoMagBulk> listaBolleScarico = new ArrayList<>();
     	OrdineAcqComponentSession ordineComponent = (OrdineAcqComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_OrdineAcqComponentSession", OrdineAcqComponentSession.class);

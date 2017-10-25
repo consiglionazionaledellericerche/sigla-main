@@ -1,11 +1,12 @@
 package it.cnr.contab.ordmag.ordini.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 
-public class ParametriCalcoloImportoOrdine implements Cloneable{
+public class ParametriCalcoloImportoOrdine implements Cloneable, Serializable{
 	private static final long serialVersionUID = 672612150974377581L;
 	
 	BigDecimal percProrata;

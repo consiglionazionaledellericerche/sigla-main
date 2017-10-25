@@ -1332,7 +1332,7 @@ public ImportoOrdine calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametr
 public ImportoOrdine calcoloImportoOrdinePerMagazzino(ParametriCalcoloImportoOrdine parametri) throws ApplicationException{
 	BigDecimal imponibile = calcoloImponibile(parametri);
 	imponibile = imponibile.divide(parametri.getQtaOrd());
-	BigDecimal arrotondamento = parametri.getArrAliIva().divide(parametri.getQtaOrd());
+	BigDecimal arrotondamento = Utility.nvl(parametri.getArrAliIva()).divide(parametri.getQtaOrd());
 	BigDecimal arrAliIva = arrotondamento;
 			
 	Voce_ivaBulk voceIva = null;
