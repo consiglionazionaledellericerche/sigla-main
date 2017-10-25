@@ -1,10 +1,11 @@
 package it.cnr.contab.ordmag.ordini.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import it.cnr.contab.util.Utility;
 
-public class ImportoOrdine {
+public class ImportoOrdine implements Serializable {
     BigDecimal imponibile;
 	BigDecimal importoIva;
 	BigDecimal importoIvaDetraibile;

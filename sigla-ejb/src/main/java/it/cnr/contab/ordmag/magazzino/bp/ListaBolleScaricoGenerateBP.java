@@ -1,8 +1,15 @@
 package it.cnr.contab.ordmag.magazzino.bp;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.service.ContrattoService;
+import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -12,13 +19,13 @@ import it.cnr.jada.util.jsp.Button;
 public class ListaBolleScaricoGenerateBP extends SelezionatoreListaBP {
 	private transient final static Logger logger = LoggerFactory.getLogger(ListaBolleScaricoGenerateBP.class);
 	private static final long serialVersionUID = 1L;
+	private List<BollaScaricoMagBulk> bolle;
 
 	@Override
 	protected void init(Config config, ActionContext context)
 			throws BusinessProcessException {
 		super.init(config, context);
 	}
-
 
 	public ListaBolleScaricoGenerateBP() {
 		this("");
@@ -33,7 +40,21 @@ public class ListaBolleScaricoGenerateBP extends SelezionatoreListaBP {
 	}
 
 	public ListaBolleScaricoGenerateBP(String function) {
-		super(function+"Tr");
+		super(function);
+	}
+	
+	public ListaBolleScaricoGenerateBP(String function, List<BollaScaricoMagBulk> bolle) {
+		super(function);
+	}
+
+
+	public List<BollaScaricoMagBulk> getBolle() {
+		return bolle;
+	}
+
+
+	public void setBolle(List<BollaScaricoMagBulk> bolle) {
+		this.bolle = bolle;
 	}
 	
 }
