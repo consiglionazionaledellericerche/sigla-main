@@ -226,6 +226,7 @@ public class MovimentiMagComponent
 
     			BollaScaricoRigaMagBulk riga = new BollaScaricoRigaMagBulk();
     			riga.setCoeffConv(movimento.getCoeffConv());
+    			riga.setBollaScaricoMag(bollaScarico);
     			riga.setBeneServizio(movimento.getBeneServizio());
     			riga.setUnitaMisura(movimento.getUnitaMisura());
     			riga.setQuantita(movimento.getQuantita());
