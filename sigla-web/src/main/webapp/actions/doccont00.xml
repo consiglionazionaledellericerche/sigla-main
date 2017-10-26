@@ -376,7 +376,7 @@
 			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoResiduoComponentSession"/>		
 			<init-param name="defaultAction" value="CRUDAccertamentoAction" />
 	</businessProcess>
- <businessProcess
+	<businessProcess
 		name="CRUDAccertamentoResiduoAmministraBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoAmministraBP">
 		<forward name="default" path="/doccont00/main_accertamento.jsp"/>
 			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk" />
@@ -400,6 +400,13 @@
 	</businessProcess>
     <businessProcess
       name="CRUDObbligazioneResBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP">
+    <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk" />
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneResComponentSession" />
+		<init-param name="defaultAction" value="CRUDObbligazioneAction" />
+    </businessProcess>
+	<businessProcess
+		name="CRUDObbligazioneResAmministraBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneResAmministraBP">
     <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk" />
 		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneResComponentSession" />
