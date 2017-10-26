@@ -349,7 +349,9 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 				mandato.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_PAGATO) &&
 				mandato.getStato_trasmissione() != null && 
 				mandato.getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO))
-			return contabiliService.getNodeRefContabile(mandato) == null;
+			return Optional.ofNullable(contabiliService.getNodeRefContabile(mandato))
+						.map(contabili -> contabili.isEmpty())
+						.orElse(Boolean.TRUE);
 		return hidden;
 	}
 
