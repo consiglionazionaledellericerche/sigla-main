@@ -3,6 +3,7 @@ package it.cnr.contab.doccont00.core.bulk;
 import java.util.Dictionary;
 
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk.Stato;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -22,12 +23,9 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 
 	public final static Dictionary stato_ObbligazioneResiduaKeys = new OrderedHashtable();;
 	public enum StatoResiduo {
-		CERTO("Certo","CER"),
-		DILAZIONATO("Dilazionato","DIL"),
-		INCERTO("Incerto","INC"),
-		DUBBIO("Dubbio","DUB"),
-		INESIGIBILE("Inesigibile","INE"),
-		PARZIALMENTE_INESIGIBILE("Parzialmente Inesigibile","PIN");
+		PAGATO("Pagato","PAG"),
+		LIQUIDABILE("Liquidabile","LIQ"),
+		NON_LIQUIDABILE("Non Liquidabile","NLI");
 		private final String label, value;
 		private StatoResiduo(String label, String value) {
 			this.value = value;
@@ -159,4 +157,13 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 	public Dictionary getStato_ObbligazioneResiduaKeys() {
 		return stato_ObbligazioneResiduaKeys;
 	}
+	
+	public boolean isLiquidabile() {
+		return StatoResiduo.LIQUIDABILE.value.equals(getStatoResiduo());
+	}
+
+	public boolean isNonLiquidabile() {
+		return StatoResiduo.NON_LIQUIDABILE.value.equals(getStatoResiduo());
+	}
+	
 }

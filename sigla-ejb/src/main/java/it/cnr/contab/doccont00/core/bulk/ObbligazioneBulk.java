@@ -528,7 +528,7 @@ public BulkList getNuoveLineeAttivitaColl() {
 /**
  * @return it.cnr.jada.bulk.BulkCollection
  */
-public it.cnr.jada.bulk.BulkList getObbligazione_scadenzarioColl() {
+public it.cnr.jada.bulk.BulkList<Obbligazione_scadenzarioBulk> getObbligazione_scadenzarioColl() {
 	return obbligazione_scadenzarioColl;
 }
 public java.lang.Long getPg_doc_contabile() {
@@ -1943,6 +1943,7 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	}
 	@Override
 	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		((AllegatoObbligazioneBulk)allegato).setEsercizioDiAppartenenza(this.getEsercizio());
 		archivioAllegati.add(allegato);
 		return archivioAllegati.size()-1;		
 	}
@@ -1957,5 +1958,8 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	@Override
 	public void setArchivioAllegati(BulkList<AllegatoGenericoBulk> archivioAllegati) {
 		this.archivioAllegati = archivioAllegati;
+	}
+	public BigDecimal getImportoNonPagato() {
+		return this.getObbligazione_scadenzarioColl().stream().map(e->e.getImportoNonPagato()).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
 	}
 }

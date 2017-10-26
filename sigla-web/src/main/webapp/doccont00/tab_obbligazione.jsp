@@ -50,9 +50,9 @@
 
 	<%  if( bp instanceof CRUDObbligazioneResBP  && ((CRUDObbligazioneResBP)bp).isStatoResiduoVisibile()) { %>
 		<tr>
-			<td><% bp.getController().writeFormLabel( out, ((CRUDObbligazioneResBP)bp).isStatoModificabile() ?"statoResiduoObbligazione":"statoResiduoObbligazione_ro"); %></td>
+			<td><% bp.getController().writeFormLabel( out, ((CRUDObbligazioneResBP)bp).isROStato() ?"statoResiduoObbligazione_ro":"statoResiduoObbligazione"); %></td>
 			<td colspan=2>
-			<% bp.getController().writeFormInput( out, ((CRUDObbligazioneResBP)bp).isStatoModificabile() ?"statoResiduoObbligazione":"statoResiduoObbligazione_ro"); %>
+			<% bp.getController().writeFormInput( out, "default", ((CRUDObbligazioneResBP)bp).isROStato() ?"statoResiduoObbligazione_ro":"statoResiduoObbligazione",bp.isRoCampiResiduoProprio(),null,null); %>
 			</td>
 		</tr>		  		
 	<%  } %>
