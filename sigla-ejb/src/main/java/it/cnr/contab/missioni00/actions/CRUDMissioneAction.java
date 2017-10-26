@@ -29,12 +29,7 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.ActionPerformingError;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
-import it.cnr.jada.action.MessageToUser;
+import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.ValidationException;
@@ -2934,7 +2929,7 @@ public Forward doRiportaIndietro(ActionContext context) throws java.rmi.RemoteEx
  
 public Forward doRiportaSelezione(ActionContext context, OggettoBulk bulk)  throws java.rmi.RemoteException
 {
-	CRUDMissioneBP bp = (CRUDMissioneBP)context.getBusinessProcess();
+	BusinessProcess bp = context.getBusinessProcess();
 		
 	if (bp instanceof IDocumentoAmministrativoSpesaBP && ((IDocumentoAmministrativoSpesaBP)bp).isSpesaBP())
 	{
