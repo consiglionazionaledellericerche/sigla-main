@@ -220,6 +220,19 @@
 		inputType="CHECKBOX" 
 		label="In possesso del Kit di Firma Digitale"/>					
 
+	<fieldProperty
+		name="fl_riaccertamento"
+		property="fl_riaccertamento"
+		label="Riaccertamento obbligatorio per ribaltamento" 
+		inputType="CHECKBOX" 
+		/>		
+	<fieldProperty
+		name="fl_riobbligazione"
+		property="fl_riobbligazione"
+		label="Riobbligazione obbligatoria per ribaltamento" 
+		inputType="CHECKBOX" 
+		/>		
+
 	<formFieldProperty name="esercizio" />
 	<formFieldProperty name="centro_spesa" />
 	<formFieldProperty name="dipartimento" />
@@ -248,6 +261,9 @@
 	<formFieldProperty name="cd_linea_pgiro_s" /> 
 	<formFieldProperty name="fl_blocco_iban" />
 	<formFieldProperty name="fl_kit_firma_digitale" />
+
+	<formFieldProperty name="fl_riaccertamento" />		
+	<formFieldProperty name="fl_riobbligazione" />		
 		
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -281,6 +297,8 @@
 	<columnFieldProperty name="cd_linea_pgiro_s" />   
 	<columnFieldProperty name="fl_blocco_iban" />
 	<columnFieldProperty name="fl_kit_firma_digitale" />
+	<columnFieldProperty name="fl_riaccertamento" />		
+	<columnFieldProperty name="fl_riobbligazione" />		
 	
 	<findFieldProperty name="cd_unita_organizzativa" />
 	<findFieldProperty name="cd_dipartimento" />
