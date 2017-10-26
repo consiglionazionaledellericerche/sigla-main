@@ -29,6 +29,7 @@ public class RiportoEsSuccessivoBP extends it.cnr.jada.util.action.BulkBP implem
 	private boolean confRibaltato;
 	private Unita_organizzativaBulk uoSrivania;
 	private boolean isRiaccertamentoChiuso = true;
+	private boolean isRiobbligazioneChiusa= true;
 	private boolean isGaeCollegateProgetti = true;
 	
 public RiportoEsSuccessivoBP() {
@@ -445,12 +446,15 @@ public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws i
 				throw new ApplicationException("Impossibile procedere al ribaltamento. La somma degli impegni, per alcuni GAE/Voce, è superiore alla disponibilità ad impegnare.");
 			}
 			setRiaccertamentoChiuso(sessione.isRiaccertamentoChiuso(context.getUserContext()));
+			setRiobbligazioneChiusa(sessione.isRiobbligazioneChiusa(context.getUserContext()));
 			setGaeCollegateProgetti(sessione.isGaeCollegateProgetti(context.getUserContext()));
 			
-			if (!isRiaccertamentoChiuso() && !isGaeCollegateProgetti()) 
-				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono anomalie da verificare.");
 			if (!isRiaccertamentoChiuso())
 				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono accertamenti residui da ribaltare privi dello stato.");
+			if (!isRiobbligazioneChiusa())
+				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono obbligazioni residue da ribaltare privi dello stato.");
+			if (!isRiaccertamentoChiuso() && !isGaeCollegateProgetti()) 
+				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono anomalie da verificare.");
 			if (!isGaeCollegateProgetti())
 				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono GAE su impegni e/o accertamenti da ribaltare prive dell''indicazione del progetto nell''anno del ribaltamento.");
 		} catch(Exception e) {
@@ -463,6 +467,14 @@ public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws i
 	}
 	public boolean isRiaccertamentoChiuso() {
 		return isRiaccertamentoChiuso;
+	}
+	
+	public void setRiobbligazioneChiusa(boolean isRiobbligazioneChiusa) {
+		this.isRiobbligazioneChiusa = isRiobbligazioneChiusa;
+	}
+	
+	public boolean isRiobbligazioneChiusa() {
+		return isRiobbligazioneChiusa;
 	}
 	
 	private void setGaeCollegateProgetti(boolean isGaeCollegateProgetti) {
