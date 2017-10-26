@@ -11,6 +11,9 @@ package it.cnr.contab.inventario00.bp;
 import it.cnr.contab.inventario00.docs.bulk.*;
 import it.cnr.jada.bulk.*;
 
+import javax.servlet.jsp.JspWriter;
+import java.io.IOException;
+
 public class RigheInvDaFatturaCRUDController 
 	extends it.cnr.jada.util.action.RemoteDetailCRUDController implements it.cnr.jada.util.jsp.TableCustomizer{
 
@@ -64,4 +67,14 @@ public boolean isRowEnabled(java.lang.Object row) {
 public boolean isRowReadonly(java.lang.Object row) {
 	return false;
 }
+
+	@Override
+	public String getTableClass() {
+		return null;
+	}
+
+	@Override
+	public void writeTfoot(JspWriter jspWriter) throws IOException {
+
+	}
 }
