@@ -231,7 +231,7 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		if (getModel()!=null && ((ObbligazioneBulk)getModel()).isObbligazioneResiduo()) {
 			setStatusAndEditableMap(VIEW);
 			if (getTab( "tab" )!=null) {
-				if (getTab( "tab" ).equalsIgnoreCase("tabScadenziario") || getTab( "tab" ).equalsIgnoreCase("tabObbligazione")) {
+				if (getTab( "tab" ).equalsIgnoreCase("tabScadenzario") || getTab( "tab" ).equalsIgnoreCase("tabObbligazione")) {
 					if ( isScadenzaModificabile() && !((ObbligazioneBulk)getModel()).isDocRiportato())
 						setStatusAndEditableMap(EDIT);
 				} else if (getTab( "tab" ).equalsIgnoreCase("tabAllegati")) {
