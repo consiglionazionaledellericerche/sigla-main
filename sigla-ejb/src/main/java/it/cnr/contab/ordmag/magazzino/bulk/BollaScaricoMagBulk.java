@@ -24,6 +24,8 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	private MagazzinoBulk magazzinoDest =  new MagazzinoBulk();
 	private BulkList righe =  new BulkList<>();
 	private NumerazioneMagBulk numerazioneMag =  new NumerazioneMagBulk();
+	private String stampaBollaScarico;
+
 	/**
 	 * [UNITA_OPERATIVA_ORD Rappresenta le unità operative utilizzate in gestione ordine e magazzino.]
 	 **/
@@ -264,5 +266,11 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 		return new it.cnr.jada.bulk.BulkCollection[] { 
 				righe
 		};
+	}
+	public String getStampaBollaScarico() {
+		return stampaBollaScarico;
+	}
+	public void setStampaBollaScarico(String stampaBollaScarico) {
+		this.stampaBollaScarico = stampaBollaScarico;
 	}
 }
