@@ -6036,7 +6036,7 @@ public TerzoBulk getTerzoUnivoco(UserContext userContext,Documento_genericoBulk 
 		for(Iterator i=terziCol.iterator();i.hasNext();){
 			Documento_generico_rigaBulk riga=(Documento_generico_rigaBulk)i.next();
 			if (riga.getCd_terzo().compareTo(cd_terzo)!=0)
-				cd_terzo=null;
+				return null;
 		}
 			 if(cd_terzo!=null){
 				 it.cnr.jada.bulk.BulkHome homet= getHome(userContext, TerzoBulk.class);
