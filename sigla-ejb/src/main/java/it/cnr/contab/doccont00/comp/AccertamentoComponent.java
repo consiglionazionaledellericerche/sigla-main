@@ -4670,7 +4670,7 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 	sql.addClause(FindClause.AND, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
 	sql.addClause(FindClause.AND, "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
 	sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
-	sql.addClause(FindClause.AND, "importo_disponibile", SQLBuilder.GREATER, BigDecimal.ZERO);
+	sql.addSQLClause(FindClause.AND, "IMPORTO_DISPONIBILE+IMPORTO_VINCOLI", SQLBuilder.GREATER, BigDecimal.ZERO);
 	
 	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
 	sql.openParenthesis(FindClause.AND);
@@ -4765,6 +4765,7 @@ public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Acce
 	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
 	sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Var_stanz_resBulk.STATO_APPROVATA );
 	sql.addClause(FindClause.AND, "tipologia", SQLBuilder.EQUALS, Var_stanz_resBulk.TIPOLOGIA_STO );
+	sql.addClause(FindClause.AND, "fl_perenzione", SQLBuilder.EQUALS, Boolean.TRUE );
 	
 	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
 	sql.openParenthesis(FindClause.AND);

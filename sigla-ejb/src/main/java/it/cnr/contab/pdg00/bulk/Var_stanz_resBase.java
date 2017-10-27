@@ -44,6 +44,9 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 //    TIPOLOGIA_FIN VARCHAR(3)
 	private java.lang.String tipologia_fin;
  
+	// FL_PERENZIONE CHAR(1) NOT NULL
+	private java.lang.Boolean fl_perenzione;
+
 	public Var_stanz_resBase() {
 		super();
 	}
@@ -127,5 +130,11 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 	}
 	public void setTipologia_fin(java.lang.String tipologia_fin)  {
 		this.tipologia_fin=tipologia_fin;
+	}
+	public java.lang.Boolean getFl_perenzione() {
+		return fl_perenzione;
+	}
+	public void setFl_perenzione(java.lang.Boolean fl_perenzione) {
+		this.fl_perenzione = fl_perenzione;
 	}
 }
