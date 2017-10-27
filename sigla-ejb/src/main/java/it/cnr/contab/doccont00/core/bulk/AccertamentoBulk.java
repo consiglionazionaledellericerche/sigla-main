@@ -24,6 +24,7 @@ import java.util.*;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -1132,30 +1133,8 @@ public void refreshCapitoliDiEntrataCdsSelezionatiColl()
 		Accertamento_scad_voceBulk osv = (Accertamento_scad_voceBulk) s.next();
 		for ( Iterator c = capitoliDiEntrataCdsColl.iterator(); c.hasNext(); )
 		{
-			it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) c.next();
+			IVoceBilancioBulk voce = ( IVoceBilancioBulk) c.next();
 			if ( osv.getCd_voce().equals( voce.getCd_voce() ))
-				capitoli.put ( osv.getCd_voce(), voce );
-		}
-	}
-
-	capitoliDiEntrataCdsSelezionatiColl = new Vector();
-	for ( Enumeration e = capitoli.keys(); e.hasMoreElements(); )
-		capitoliDiEntrataCdsSelezionatiColl.add( capitoli.get( e.nextElement() ));
-		
-}
-public void refreshNewCapitoliDiEntrataCdsSelezionatiColl() 
-{
-	Hashtable capitoli = new Hashtable(); // hashtable per evitare i doppi
-	
-	//l'imputazione finanziaria e' sempre di testata: seleziono i dettagli di una qualsiasi scadenza per
-	// individuare l'elenco dei capitoli di entrata selezionati per l'intero accertamento
-	for ( Iterator s = ((Accertamento_scadenzarioBulk) accertamento_scadenzarioColl.iterator().next()).getAccertamento_scad_voceColl().iterator(); s.hasNext(); )
-	{
-		Accertamento_scad_voceBulk osv = (Accertamento_scad_voceBulk) s.next();
-		for ( Iterator c = capitoliDiEntrataCdsColl.iterator(); c.hasNext(); )
-		{
-			V_voce_f_partita_giroBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk) c.next();
-			if ( osv.getCd_voce().equals( voce.getCd_elemento_voce() ))
 				capitoli.put ( osv.getCd_voce(), voce );
 		}
 	}
