@@ -83,6 +83,13 @@
 			sqlTypeName="VARCHAR"
 			columnSize="3"/>
 		<columnMapping
+			columnName="FL_PERENZIONE"
+			propertyName="fl_perenzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -139,6 +146,8 @@
 		name="tipologia" />
 	<persistentProperty
 		name="tipologia_fin" />
+	<persistentProperty
+		name="fl_perenzione" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

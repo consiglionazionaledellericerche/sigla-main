@@ -180,6 +180,13 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		label="Disponibilità" />
+	<fieldProperty
+		name="importo_vincoli"
+		property="importo_vincoli"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Vincoli" />
 
 	<formFieldProperty
 		name="imp_da_assegnare" />
