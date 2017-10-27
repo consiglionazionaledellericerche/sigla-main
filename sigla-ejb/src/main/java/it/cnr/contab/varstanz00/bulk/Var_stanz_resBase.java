@@ -44,6 +44,9 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 //	ESERCIZIO_RES NUMBER(4) NOT NULL
  	private Integer esercizio_residuo;
  	
+	// FL_PERENZIONE CHAR(1) NOT NULL
+	private java.lang.Boolean fl_perenzione;
+
 	public Var_stanz_resBase() {
 		super();
 	}
@@ -143,5 +146,10 @@ public Integer getEsercizio_residuo() {
 public void setEsercizio_residuo(Integer integer) {
 	esercizio_residuo = integer;
 }
-
+public java.lang.Boolean getFl_perenzione() {
+	return fl_perenzione;
+}
+public void setFl_perenzione(java.lang.Boolean fl_perenzione) {
+	this.fl_perenzione = fl_perenzione;
+}
 }
