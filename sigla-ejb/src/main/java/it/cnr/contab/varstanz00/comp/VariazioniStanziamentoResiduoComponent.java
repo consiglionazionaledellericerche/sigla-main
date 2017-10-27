@@ -204,9 +204,15 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			                                                                  varRiga.getElemento_voce().getTi_gestione(), 
 			                                                                  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
 			saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(usercontext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldi);
-			if (saldi != null)
-			  totale = saldi.getDispAdImpResiduoImproprio();
-		} catch (PersistencyException e) {
+			if (saldi != null) {
+				//calcolo i vincoli
+				Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(usercontext, Pdg_vincoloBulk.class);
+				List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldi);
+				BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+	
+				totale = saldi.getDispAdImpResiduoImproprio().subtract(impVincolo);
+			}			
+		} catch (Exception e) {
 			throw new ComponentException(e);
 		}
 		return totale; 
