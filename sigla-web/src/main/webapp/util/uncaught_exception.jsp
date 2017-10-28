@@ -21,6 +21,9 @@
 		e.printStackTrace(new java.io.PrintWriter(sw));
     if (e != null && e instanceof javax.servlet.ServletException && ((javax.servlet.ServletException)e).getRootCause() != null)
         ((javax.servlet.ServletException)e).getRootCause().printStackTrace(new java.io.PrintWriter(sw));
+    if (e != null && e.getCause() != null)
+        e.getCause().printStackTrace(new java.io.PrintWriter(sw));
+
 	String stackTrace = sw.toString();
 	CNRUserInfo userInfo = (CNRUserInfo)HttpActionContext.getUserInfo(request);
 	bp.insertError(new HttpActionContext(this,request,response), userInfo.getUserid(),userInfo.getEsercizio(), (userInfo.getUnita_organizzativa() != null) ? userInfo.getUnita_organizzativa().getCd_unita_organizzativa() : null,stackTrace);
