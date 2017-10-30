@@ -10,7 +10,7 @@
         inputType="SELECT"
 		label="Database"	
 		enabledOnSearch="true"
-		caseSensitiveSearch="false"		
+		caseSensitiveSearch="false"	
 		nullable="true" />
 	<fieldProperty
 		name="descrizione"
@@ -75,6 +75,28 @@
 		maxLength="1"
 		label="Autenticazione su server LDAP" />
 	<fieldProperty
+		name="fl_informix"
+		property="fl_informix"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Collegamento Informix" />
+	<fieldProperty
+		name="fl_gae_es"
+		property="fl_gae_es"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		label="Gestione GAE E/S" />
+	<fieldProperty
+		name="fl_prg_pianoeco"
+		property="fl_prg_pianoeco"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		label="Gestione Piano Economico Progetto" />
+	<fieldProperty
 		name="ldap_password"
 		property="ldap_password"
 		maxLength="100"
@@ -138,6 +160,12 @@
 		name="dt_ldap_migrazione" />						
 	<formFieldProperty
 		name="ldap_link_cambio_password" />						
+	<formFieldProperty
+		name="fl_informix" />
+	<formFieldProperty
+		name="fl_gae_es" />
+	<formFieldProperty
+		name="fl_prg_pianoeco" />
 	
 	<columnFieldProperty
 		name="descrizione" />

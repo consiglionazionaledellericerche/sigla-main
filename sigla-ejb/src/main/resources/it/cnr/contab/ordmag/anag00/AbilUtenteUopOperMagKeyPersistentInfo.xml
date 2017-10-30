@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagKey">
+	<defaultColumnMap
+		tableName="ABIL_UTENTE_UOP_OPER_MAG">
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="cdUtente"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="cdUnitaOperativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TIPO_OPERAZIONE"
+			propertyName="cdTipoOperazione"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="cdMagazzino"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdUtente"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdUnitaOperativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdTipoOperazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdCds"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdMagazzino"
+		partOfOid="true" />
+</SQLPersistentInfo>

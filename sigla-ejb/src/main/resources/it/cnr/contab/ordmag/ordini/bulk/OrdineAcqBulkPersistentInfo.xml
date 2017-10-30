@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk"
+	homeClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome">
+	<defaultColumnMap
+		tableName="ORDINE_ACQ">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="CD_UOP_ORDINE"
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="numerazioneOrd.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE"
+			propertyName="numerazioneOrd.cdNumeratore" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalitaPagamento.rif_modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="fornitore.cd_terzo" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="terminiPagamento.cd_termini_pag" />
+		<columnMapping
+			columnName="CD_CDS_NOTA_PREC"
+			propertyName="notaPrecodificata.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_NOTA_PRECODIFICATA"
+			propertyName="notaPrecodificata.cdNotaPrecodificata" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="contratto.esercizio" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="contratto.stato" />
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="contratto.pg_contratto" />
+		<columnMapping
+			columnName="RESPONSABILE_PROC"
+			propertyName="responsabileProcPers.cd_terzo" />
+		<columnMapping
+			columnName="FIRMATARIO"
+			propertyName="firmatarioPers.cd_terzo" />
+		<columnMapping
+			columnName="DIRETTORE"
+			propertyName="direttorePers.cd_terzo" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="terzoCdr.cd_terzo" />
+		<columnMapping
+			columnName="CD_TIPO_ORDINE"
+			propertyName="tipoOrdine.cdTipoOrdine" />
+		<columnMapping
+			columnName="CD_PROC_AMM"
+			propertyName="procedureAmministrative.cd_proc_amm"
+			sqlTypeName="VARCHAR"
+			nullable="true"
+			columnSize="5" />			
+		<columnMapping
+			columnName="CD_CIG"
+			propertyName="cig.cdCig" />
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cup.cdCup" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="notaPrecodificata"/>
+	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="numerazioneOrd"
+		partOfOid="true" />
+	<persistentProperty
+		name="unitaOperativaOrd" />
+	<persistentProperty
+		name="divisa" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="terminiPagamento" />
+	<persistentProperty
+		name="modalitaPagamento" />
+	<persistentProperty
+		name="contratto" />
+	<persistentProperty
+		name="fornitore" />
+	<persistentProperty
+		name="firmatarioPers" />
+	<persistentProperty
+		name="direttorePers" />
+	<persistentProperty
+		name="terzoCdr" />
+	<persistentProperty
+		name="responsabileProcPers" />
+	<persistentProperty
+		name="tipoOrdine" />
+	<persistentProperty
+		name="procedureAmministrative" />
+	<persistentProperty
+		name="cig" />
+	<persistentProperty
+		name="cup" />
+</SQLPersistentInfo>

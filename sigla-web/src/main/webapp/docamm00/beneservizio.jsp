@@ -57,6 +57,33 @@ function escludi(index){
 				</td>
 			</tr>
 			<tr>
+				<td><% bp.getController().writeFormLabel( out, "tipoServizio"); %></td>
+				<td>
+					<% bp.getController().writeFormInput( out,
+										((bp.isSearching())? 
+											"tipoServizioForSearch" :
+											"tipoServizio")); %>
+				</td>
+			</tr>
+			<tr>
+				<td><% bp.getController().writeFormLabel( out, "tipoManutenzione"); %></td>
+				<td>
+					<% bp.getController().writeFormInput( out,
+										((bp.isSearching())? 
+											"tipoManutenzioneForSearch" :
+											"tipoManutenzione")); %>
+				</td>
+			</tr>
+			<tr>
+				<td><% bp.getController().writeFormLabel( out, "tipoGestione"); %></td>
+				<td>
+					<% bp.getController().writeFormInput( out,
+										((bp.isSearching())? 
+											"tipoGestioneForSearch" :
+											"tipoGestione")); %>
+				</td>
+			</tr>
+			<tr>
 				<td><% bp.getController().writeFormLabel( out, "cd_categoria_gruppo"); %></td>
 				<td>
 					<% bp.getController().writeFormInput(out,"cd_categoria_gruppo");%>
@@ -78,9 +105,20 @@ function escludi(index){
 				<% bp.getController().writeFormLabel( out, "fl_gestione_magazzino"); %></td>
 			</tr>	
 			<tr>
-				<td><% bp.getController().writeFormLabel( out, "unita_misura"); %></td>
-				<td><% bp.getController().writeFormInput( out, "unita_misura"); %></td>
+				<%
+					bp.getController().writeFormField(out, "unitaMisura");
+				%>
 			</tr>	
+			<tr>
+				<%
+					bp.getController().writeFormField(out, "tipoArticolo");
+				%>
+			</tr>	
+			<tr>
+				<%
+					bp.getController().writeFormField(out, "gruppoMerceologico");
+				%>
+			</tr>
 			<tr>
 				<td><% bp.getController().writeFormInput( out, "fl_obb_intrastat_acq"); %>
 					<% bp.getController().writeFormLabel( out, "fl_obb_intrastat_acq"); %></td>
@@ -88,12 +126,40 @@ function escludi(index){
 					<% bp.getController().writeFormLabel( out, "fl_obb_intrastat_ven"); %></td>
 			</tr>	
 			<tr>
-				<td><% bp.getController().writeFormInput( out, "fl_valido"); %>
-					<% bp.getController().writeFormLabel( out, "fl_valido"); %></td>
 				<td><% bp.getController().writeFormInput( out, "fl_autofattura"); %>
 					<% bp.getController().writeFormLabel( out, "fl_autofattura"); %></td>	
 				<td><% bp.getController().writeFormInput( out, "fl_bollo"); %>
 					<% bp.getController().writeFormLabel( out, "fl_bollo"); %></td>	
+			</tr>
+			<tr>
+				<td><% bp.getController().writeFormInput( out, "flScadenza"); %>
+					<% bp.getController().writeFormLabel( out, "flScadenza"); %></td>
+				<td><% bp.getController().writeFormInput( out, "scontiApplicInvent"); %>
+					<% bp.getController().writeFormLabel( out, "scontiApplicInvent"); %></td>
+			</tr>	
+			<tr>
+				<td>
+					<%
+						bp.getController().writeFormLabel(out, "fl_valido");
+					%>
+				</td>
+				<td colspan="4">
+					<%
+						bp.getController().writeFormInput(out, "fl_valido");
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%
+						bp.getController().writeFormLabel(out, "note");
+					%>
+				</td>
+				<td colspan="4">
+					<%
+						bp.getController().writeFormInput(out, "note");
+					%>
+				</td>
 			</tr>
 		</table> 
 	</div>

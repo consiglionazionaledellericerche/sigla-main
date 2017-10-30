@@ -34,7 +34,13 @@
 			fetchOnly="false" />			
 		<columnMapping
 			columnName="CD_DIPARTIMENTO"
-			propertyName="dipartimento.cd_dipartimento" />			
+			propertyName="dipartimento.cd_dipartimento" />
+		<columnMapping
+			columnName="CD_PROGRAMMA"
+			propertyName="pdgProgramma.cd_programma"/>	
+		<columnMapping
+			columnName="CD_MISSIONE"
+			propertyName="pdgMissione.cd_missione"/>
 	</defaultColumnMap>
 	<columnMap
 		name="V_PROGETTO_PADRE"
@@ -121,7 +127,11 @@
 		name="progettopadre" />		
 	<persistentProperty
 		name="dipartimento" />		
-
+	<persistentProperty
+		name="pdgProgramma" />	
+	<persistentProperty
+		name="pdgMissione" />
+		
 	<fetchPolicy
 		name="it.cnr.contab.progettiric00.comp.ProgettoRicercaModuloComponent.findProgettoPadre">
 		<exclude pattern="*"/>

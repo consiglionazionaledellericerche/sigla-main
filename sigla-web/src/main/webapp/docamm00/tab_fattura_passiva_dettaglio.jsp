@@ -20,7 +20,7 @@
 		bp.getDettaglio().writeHTMLTable(pageContext,"righeNdCSet",true,false,true,"100%","200px");
 	else 
 		bp.getDettaglio().writeHTMLTable(pageContext,"righeNdDSet",true,false,true,"100%","200px"); %>
-   <div class="Group">
+   <div class="Group card">
 
    <table>	  	
       <tr>
@@ -107,7 +107,7 @@
  	  </tr>
     </table>
    </div>
-    <div class="Group">
+    <div class="Group card">
   	<table>
 	  <tr>
 	  	<td>
@@ -168,7 +168,7 @@
       </tr>   
     </table>
    </div>
-   <div class="Group">
+   <div class="Group card">
   	<table>
 	  <tr>
      	<td>
@@ -220,7 +220,7 @@
     </table>
    </div>
    	<% if (riga != null && riga.getModalita_pagamento() != null && riga.getCessionario() != null) { %>
-		<div class="Group card">   
+		<div class="Group card">
 			<table>	
 				<tr>
 					<td>

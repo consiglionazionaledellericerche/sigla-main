@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+        shortDescription="Righe evasione ordine"
+        longDescription="Righe evasione ordine">
+    <fieldProperty
+            name="cdCds"
+            property="cdCds"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="cdCds"/>
+    <fieldProperty
+            name="cdMagazzino"
+            property="cdMagazzino"
+            inputType="TEXT"
+            inputSize="10"
+            maxLength="10"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="cdMagazzino"/>
+    <fieldProperty
+            name="esercizio"
+            property="esercizio"
+            inputType="TEXT"
+            inputSize="4"
+            maxLength="4"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="esercizio"/>
+    <fieldProperty
+            name="cdNumeratoreMag"
+            property="cdNumeratoreMag"
+            inputType="TEXT"
+            inputSize="10"
+            maxLength="10"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="cdNumeratoreMag"/>
+    <fieldProperty
+            name="numero"
+            property="numero"
+            inputType="TEXT"
+            inputSize="10"
+            maxLength="10"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="numero"/>
+    <fieldProperty
+            name="riga"
+            property="riga"
+            inputType="TEXT"
+            inputSize="10"
+            maxLength="10"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="riga"/>
+    <fieldProperty
+            name="findOrdineAcqConsegna"
+            property="ordineAcqConsegna"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            enabledOnSearch="true"
+            label="OrdineAcqConsegna"/>
+    <fieldProperty
+            name="cdCdsOrdine"
+            property="ordineAcqConsegna.cdCds"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            enabledOnEdit="false"
+            nullable="false"
+            label="cdCdsOrdine"/>
+    <fieldProperty
+            name="cdUnitaOperativa"
+            property="ordineAcqConsegna.cdUnitaOperativa"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            enabledOnEdit="false"
+            nullable="false"
+            label="cdUnitaOperativa"/>
+    <fieldProperty
+            name="esercizioOrdine"
+            property="ordineAcqConsegna.esercizio"
+            inputType="TEXT"
+            inputSize="4"
+            maxLength="4"
+            enabledOnEdit="false"
+            nullable="false"
+            label="esercizioOrdine"/>
+    <fieldProperty
+            name="cdNumeratoreOrdine"
+            property="ordineAcqConsegna.cdNumeratore"
+            inputType="TEXT"
+            inputSize="3"
+            maxLength="3"
+            enabledOnEdit="false"
+            nullable="false"
+            label="cdNumeratoreOrdine"/>
+    <fieldProperty
+            name="numeroOrdine"
+            property="ordineAcqConsegna.numero"
+            inputType="TEXT"
+            inputSize="6"
+            maxLength="6"
+            enabledOnEdit="false"
+            nullable="false"
+            label="numeroOrdine"/>
+    <fieldProperty
+            name="rigaOrdine"
+            property="ordineAcqConsegna.riga"
+            inputType="TEXT"
+            inputSize="6"
+            maxLength="6"
+            enabledOnEdit="false"
+            nullable="false"
+            label="rigaOrdine"/>
+    <fieldProperty
+            name="consegna"
+            property="ordineAcqConsegna.consegna"
+            inputType="TEXT"
+            inputSize="6"
+            maxLength="6"
+            enabledOnEdit="false"
+            nullable="false"
+            label="consegna"/>
+    <fieldProperty
+            name="quantitaEvasa"
+            property="quantitaEvasa"
+            inputType="TEXT"
+            inputSize="12"
+            maxLength="12"
+            enabledOnEdit="false"
+            nullable="false"
+            label="Quantità evasa"/>
+    <fieldProperty
+            name="stato"
+            property="stato"
+            inputType="TEXT"
+            inputSize="3"
+            maxLength="3"
+            enabledOnEdit="false"
+            nullable="false"
+            label="stato"/>
+    <form
+            name="searchtool">
+        <formFieldProperty
+                name="cdCds"/>
+        <formFieldProperty
+                name="cdMagazzino"/>
+        <formFieldProperty
+                name="esercizio"/>
+        <formFieldProperty
+                name="cdNumeratoreMag"/>
+        <formFieldProperty
+                name="numero"/>
+        <formFieldProperty
+                name="riga"/>
+    </form>
+    <formFieldProperty
+            name="riga"/>
+    <formFieldProperty
+            name="findOrdineAcqConsegna"/>
+    <formFieldProperty
+            name="quantitaEvasa"/>
+    <formFieldProperty
+            name="stato"/>
+    <findFieldProperty
+            name="cdCds"/>
+    <findFieldProperty
+            name="cdMagazzino"/>
+    <findFieldProperty
+            name="esercizio"/>
+    <findFieldProperty
+            name="cdNumeratoreMag"/>
+    <findFieldProperty
+            name="numero"/>
+    <findFieldProperty
+            name="riga"/>
+    <findFieldProperty
+            name="cdCdsOrdine"/>
+    <findFieldProperty
+            name="cdUnitaOperativa"/>
+    <findFieldProperty
+            name="esercizioOrdine"/>
+    <findFieldProperty
+            name="cdNumeratoreOrdine"/>
+    <findFieldProperty
+            name="numeroOrdine"/>
+    <findFieldProperty
+            name="rigaOrdine"/>
+    <findFieldProperty
+            name="consegna"/>
+    <findFieldProperty
+            name="quantitaEvasa"/>
+    <findFieldProperty
+            name="stato"/>
+    <columnFieldProperty
+            name="cdCds"/>
+    <columnFieldProperty
+            name="cdMagazzino"/>
+    <columnFieldProperty
+            name="esercizio"/>
+    <columnFieldProperty
+            name="cdNumeratoreMag"/>
+    <columnFieldProperty
+            name="numero"/>
+    <columnFieldProperty
+            name="riga"/>
+    <columnFieldProperty
+            name="cdCdsOrdine"/>
+    <columnFieldProperty
+            name="cdUnitaOperativa"/>
+    <columnFieldProperty
+            name="esercizioOrdine"/>
+    <columnFieldProperty
+            name="cdNumeratoreOrdine"/>
+    <columnFieldProperty
+            name="numeroOrdine"/>
+    <columnFieldProperty
+            name="rigaOrdine"/>
+    <columnFieldProperty
+            name="consegna"/>
+    <columnFieldProperty
+            name="quantitaEvasa"/>
+    <columnFieldProperty
+            name="stato"/>
+
+    <columnSet name="fattura_passiva">
+        <columnFieldProperty name="dataBolla" property="evasioneOrdine.dataBolla" formatName="date_short"
+                             label="Data Bolla"/>
+        <columnFieldProperty name="numeroBolla" property="evasioneOrdine.numeroBolla" label="Numero Bolla"/>
+        <columnFieldProperty name="quantitaEvasa"/>
+        <columnFieldProperty name="cdBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.cdBeneServizio"
+                             label="Codice Bene"/>
+        <columnFieldProperty name="dsBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"
+                             label="Descrizione Bene"/>
+        <columnFieldProperty name="cdVoceIva" property="ordineAcqConsegna.ordineAcqRiga.cdVoceIva" label="Codice IVA"/>
+        <columnFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
+                             label="Imponibile in divisa" formatName="it.cnr.contab.util.EuroFormat"/>
+        <columnFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
+                             label="Importo in divisa" formatName="it.cnr.contab.util.EuroFormat"/>
+        <columnFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
+                             label="Totale riga" formatName="it.cnr.contab.util.EuroFormat"/>
+        <columnFieldProperty name="prezzoUnitario" property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
+                             formatName="it.cnr.contab.util.Importo6CifreFormat"
+                             label="Prezzo Unitario"/>
+    </columnSet>
+    <freeSearchSet name="fattura_passiva">
+        <findFieldProperty name="dataBolla" property="evasioneOrdine.dataBolla" formatName="date_short"
+                             label="Data Bolla" inputType="TEXT"/>
+        <findFieldProperty name="numeroBolla" property="evasioneOrdine.numeroBolla" label="Numero Bolla" inputType="TEXT"/>
+        <findFieldProperty name="quantitaEvasa"/>
+        <findFieldProperty name="cdBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.cdBeneServizio"
+                             label="Codice Bene" inputType="TEXT"/>
+        <findFieldProperty name="dsBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"
+                             label="Descrizione Bene" inputType="TEXT"/>
+        <findFieldProperty name="cdVoceIva" property="ordineAcqConsegna.ordineAcqRiga.cdVoceIva" label="Codice IVA" inputType="TEXT"/>
+        <findFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
+                             label="Imponibile in divisa" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
+        <findFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
+                             label="Importo in divisa" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
+        <findFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
+                             label="Totale riga" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
+        <findFieldProperty name="prezzoUnitario" property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
+                           formatName="it.cnr.contab.util.Importo6CifreFormat"
+                             label="Prezzo Unitario" inputType="TEXT"/>
+    </freeSearchSet>
+</bulkInfo>

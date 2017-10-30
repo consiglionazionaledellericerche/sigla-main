@@ -71,6 +71,13 @@
 		readonlyPropertyOnEdit="RODenominazione"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="denominazioneForSimpleSearchtool"
+		property="denominazione"
+		maxLength="300"
+		inputType="TEXT"
+		label="Denominazione"
+		enabledOnSearch="false"/>
+	<fieldProperty
 		name="cd_cdr_linea"
 		property="cd_centro_responsabilita"
 		maxLength="30"
@@ -173,6 +180,15 @@
 		label="Gestione"
 		inputType="RADIOGROUP"
 		keysProperty="ti_gestioneKeys"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="ti_gestioneES"
+		property="ti_gestione"
+		label="Gestione"
+		inputType="RADIOGROUP"
+		keysProperty="ti_gestioneESKeys"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		layout="HORIZONTAL" />
@@ -306,6 +322,13 @@
 		inputType="ROTEXT"
 		enabledOnEdit="true"		
 		caseSensitiveSearch="false"/>	
+
+	<fieldProperty
+		name="voce_piano_economico2016"
+		property="vocePianoEconomico2016"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />		
 	/*********************************************************/
 	
     <fieldProperty
@@ -405,12 +428,24 @@
 		name="searchtool" >
 		<formFieldProperty
 			name="cd_linea_attivita"
-			inputType="TEXT" />
+			inputType="TEXT"/>
 		<formFieldProperty
 			name="denominazione"
 			inputType="TEXT"
 			inputSize="20" />
 	</form>
+	<form
+		name="simple_searchtool" >
+		<formFieldProperty
+			name="cd_linea_attivita"
+			inputType="TEXT" 
+			inputSize="12"/>
+		<formFieldProperty
+			name="denominazioneForSimpleSearchtool"
+			inputType="TEXT"
+			inputSize="60" />
+	</form>
+
 
 	<form
 		name="searchtool_x_var_stanz_res" >
@@ -477,6 +512,9 @@
 		name="ti_gestione"
 		command="doCambiaGestione" />
 	<formFieldProperty
+		name="ti_gestioneES"
+		command="doCambiaGestione" />
+	<formFieldProperty
 		name="find_nodo_padre" />
 	<formFieldProperty
 		name="find_nodo_progettopadre" />
@@ -524,7 +562,9 @@
 		name="cd_progetto2016"/>
 	<formFieldProperty
 		name="ds_progetto2016"/>
-							
+	<formFieldProperty
+		name="voce_piano_economico2016" />
+
 	<columnFieldProperty
 		name="cd_linea_attivita"
 		label="Cod." />

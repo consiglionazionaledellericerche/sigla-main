@@ -67,7 +67,7 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="TEXT"
-		label="Codice progetto"
+		label="Codice"
 		readonlyProperty="ROprogetto"
 		caseSensitiveSearch="false"
 		enabledOnSearch="true"
@@ -241,6 +241,8 @@
 		maxLength="2000"
 		inputSize="2000"
 		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
 		label="Note"
 		enabledOnSearch="true"
 		caseSensitiveSearch="false" />
@@ -297,6 +299,16 @@
 		enabledOnFreeSearch="true"
 		layout="HORIZONTAL" />
 	<fieldProperty
+		name="livello_padre2016"
+		property="progettopadre.livello"
+		keysProperty="livello_progetto2016Keys"
+		label="Livello"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
 		name="dt_inizio_padre"
 		property="progettopadre.dt_inizio"
 		inputType="ROTEXT"
@@ -320,6 +332,15 @@
 		enabledOnSearch="true"
 		label="Dipartimento"
 		nullable="false" />
+	<fieldProperty
+		name="programma_padre"
+		property="progettopadre.pdgProgramma"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyProperty="ROprogettopadre"
+		enabledOnSearch="true"
+		label="Programma"
+		nullable="true" />
 
 	/***************************************************************
 	 **  Search tool utilizzato per la ricerca del dipartimento   **
@@ -359,10 +380,9 @@
 		property="dipartimento.ds_dipartimento"
 		maxLength="300"
 		inputSize="30"
-		inputType="TEXT"
+		inputType="ROTEXT"
 		nullable="false"
-		readonlyProperty="RODipartimento"
-		label="Dipartimento"
+		label="Descrizione Dipartimento"
 		caseSensitiveSearch="false" />
 
 	<fieldProperty
@@ -543,6 +563,112 @@
 		name="esercizio"
 		property="esercizio"
 		label="Esercizio"/>
+	<fieldProperty
+		name="find_programma"
+		property="pdgProgramma"
+		label="Programma"
+		inputType="SEARCHTOOL"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_programma"
+		property="pdgProgramma.cd_programma"
+		label="Programma"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		nullable="false"
+		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="ds_programma"
+		property="pdgProgramma.ds_programma"
+		label="Descrizione Programma"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="desctool_programma"
+		property="pdgProgramma.cd_programma"
+		descProperty="pdgProgramma.ds_programma"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="30"
+		maxLength="40"
+		nullable="false"
+		label="Programma" />
+	<fieldProperty
+		name="find_missione"
+		property="pdgMissione"
+		label="Missione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_missione"
+		property="pdgMissione.cd_missione"
+		label="Missione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="ds_missione"
+		property="pdgMissione.ds_missione"
+		label="Descrizione Missione"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="desctool_missione"
+		property="pdgMissione.cd_missione"
+		descProperty="pdgMissione.ds_missione"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="30"
+		maxLength="40"
+		nullable="false"
+		label="Missione" />				
+	<fieldProperty
+		name="fl_previsione"
+		property="fl_previsione"
+		label="Previsione"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="fl_gestione"
+		property="fl_gestione"
+		label="Gestione"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="tipoFaseToSearch"
+		property="tipoFaseToSearch"
+		keysProperty="tipo_faseSearchKeys"
+		label="Fase"
+		inputType="RADIOGROUP"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="fase"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="fl_piano_economico"
+		property="fl_piano_economico"
+		inputType="CHECKBOX"
+		readonlyProperty="ROFlPianoEconomico"
+		label="Attiva Piano Economico" 
+		command="doDefault"/>
+		
 
 	<form
 		name="searchtool" >
@@ -614,11 +740,15 @@
 	<formFieldProperty
 		name="livello_padre" />
 	<formFieldProperty
+		name="livello_padre2016" />
+	<formFieldProperty
 		name="dt_inizio_padre" />
 	<formFieldProperty
 		name="stato_padre" />
 	<formFieldProperty
 		name="dipartimento_padre" />
+	<formFieldProperty
+		name="programma_padre" />
 	<formFieldProperty
 		name="cd_dipartimento" />
 	<formFieldProperty
@@ -660,6 +790,34 @@
 		name="totaleRisorsePresunte" />
 	<formFieldProperty
 		name="tipo_fase" />
+
+	<formFieldProperty
+		name="find_programma"/>
+	<formFieldProperty
+		name="cd_programma"/>
+	<formFieldProperty
+		name="ds_programma"/>
+	<formFieldProperty
+		name="desctool_programma" />	
+
+	<formFieldProperty
+		name="find_missione"/>
+	<formFieldProperty
+		name="cd_missione"/>
+	<formFieldProperty
+		name="ds_missione"/>
+	<formFieldProperty
+		name="desctool_missione" />	
+
+	<formFieldProperty
+		name="fl_previsione" />
+	<formFieldProperty
+		name="fl_gestione" />
+	<formFieldProperty
+		name="tipoFaseToSearch" />
+
+	<formFieldProperty
+		name="fl_piano_economico" />
 
 	<columnFieldProperty
 		name="livello" />
@@ -791,6 +949,44 @@
 			name="note" />
 	</columnSet>
 	
+	<columnSet name="nuovoPdgLiv1">
+		<columnFieldProperty
+			name="livello2016" />
+		<columnFieldProperty
+			name="cd_progetto" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="ds_unita_organizzativa" />
+		<columnFieldProperty
+			name="importo_progetto" />
+		<columnFieldProperty
+			name="importo_divisa" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="cd_divisa" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="cd_responsabile_denominazione"
+			property="responsabile.denominazione_sede" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
+	</columnSet>
+
 	<columnSet	name="restService">
 		<columnFieldProperty name="cd_progetto"/>
 		<columnFieldProperty name="pg_progetto"/>
@@ -1222,6 +1418,21 @@
 		    inputSize="100" />
 	</form>
 	
-	
-
+	<columnSet name="filtro_ricerca_aree_short">
+		<columnFieldProperty
+			name="cd_progetto"
+			label="Area Progettuale" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_dipartimento" />
+		<columnFieldProperty
+			name="ds_dipartimento" />
+		<columnFieldProperty
+			name="cd_programma" />
+		<columnFieldProperty
+			name="ds_programma" />
+		<columnFieldProperty
+			name="note" />
+	</columnSet>
 </bulkInfo>

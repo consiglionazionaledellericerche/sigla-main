@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="ordini_acq_attachment:ordini_acq_attachmentModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+	<description>Sigla Dynamic Model</description>
+	<author>gianfranco.gasparro</author>
+	<version>1.0</version>
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/ordini/acq/attachment/cmis" prefix="ordini_acq_attachment" />
+	</namespaces>
+	<types>
+		<type name="ordini_acq_attachment:document">
+			<title>Allegati all'Ordine di Acquisto</title>
+			<description>Allegati all'Ordine di Acquisto</description>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="ordini_acq_attachment:original_name">
+					<title>Nome Originale del File</title>
+					<description>Nome Originale del File</description>
+					<type>d:text</type>
+				</property>
+				<property name="ordini_acq_attachment:id_sigla">
+					<title>Id Collegato</title>
+					<description>Id Collegato</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+	</types>
+	<aspects>
+		<aspect name="ordini_acq_attachment:stampa">
+			<title>Stampa Ordine di Acquisto</title>
+			<description>Stampa Ordine di Acquisto</description>
+		</aspect>
+		<aspect name="ordini_acq_attachment:allegato_generico">
+			<title>Allegato Generico Ordine di Acquisto</title>
+			<description>Allegato Generico Ordine di Acquisto</description>
+		</aspect>
+		<aspect name="ordini_acq_attachment:bando">
+			<title>Bando</title>
+			<description>Bando</description>
+		</aspect>
+		<aspect name="ordini_acq_attachment:decisione_a_contrattare">
+			<title>Decisione a Contrattare</title>
+			<description>Decisione a Contrattare</description>
+		</aspect>
+		<aspect name="ordini_acq_attachment:decreto_nomina">
+			<title>Decreto di nomina</title>
+			<description>Decreto di nomina</description>
+		</aspect>
+		<aspect name="ordini_acq_attachment:atto_esito_controllo">
+			<title>Atto esito Controllo</title>
+			<description>Atto esito Controllo</description>
+		</aspect>
+		<aspect name="ordini_acq_attachment:capitolato">
+			<title>Capitolato</title>
+			<description>Capitolato</description>
+		</aspect>
+		<aspect name="ordini_acq_attachment:dichiarazione_altri_rapporti">
+			<title>Dichiarazione di altri rapporti</title>
+			<description>Dichiarazione di altri rapporti</description>
+		</aspect>
+	</aspects>
+</model>

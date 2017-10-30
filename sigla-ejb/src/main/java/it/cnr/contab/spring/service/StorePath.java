@@ -22,6 +22,10 @@ public class StorePath {
     private String pathNonConcorrentiFormazioneReddito;
     @Value("${store.path.missioni}")
     private String pathMissioni;
+    @Value("${store.path.richieste.ordini}")
+    private String pathRichiesteOrdini;
+    @Value("${store.path.ordini}")
+    private String pathOrdini;
 
     public String getPathComunicazioniDal() {
         return pathComunicazioniDal;
@@ -77,5 +81,21 @@ public class StorePath {
 
     public void setPathMissioni(String pathMissioni) {
         this.pathMissioni = pathMissioni;
+    }
+
+    public String getPathRichiesteOrdini() {
+        return pathRichiesteOrdini;
+    }
+
+    public void setPathRichiesteOrdini(String pathRichiesteOrdini) {
+        this.pathRichiesteOrdini = pathRichiesteOrdini;
+    }
+
+    public String getPathOrdini() {
+        return pathOrdini;
+    }
+
+    public void setPathOrdini(String pathOrdini) {
+        this.pathOrdini = pathOrdini;
     }
 }
