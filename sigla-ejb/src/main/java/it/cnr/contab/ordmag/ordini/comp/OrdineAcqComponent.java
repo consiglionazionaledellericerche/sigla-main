@@ -2044,17 +2044,15 @@ private void creaRigaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk o
 		rigaOrdine.setUnitaMisura(rigaRichiesta.getUnitaMisura());
 		rigaOrdine.setCoefConv(rigaRichiesta.getCoefConv());
 		rigaOrdine.setNotaRiga(rigaRichiesta.getNotaRiga());
-		rigaOrdine.setDspTipoConsegna(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO);
-		rigaOrdine.setDspUopDest(rigaRichiesta.getRichiestaUop().getUnitaOperativaOrd());
-		OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
-		consegna.inizializzaConsegnaNuovaRiga();
-		consegna.setTipoConsegna(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO);
-		consegna.setUnitaOperativaOrd(rigaRichiesta.getRichiestaUop().getUnitaOperativaOrd());
-		consegna.setQuantita(rigaRichiesta.getQuantitaAutorizzata());
-		consegna.setDtPrevConsegna(rigaOrdine.getDspDtPrevConsegna());
-		rigaOrdine.addToRigheConsegnaColl(consegna);
-		ordine.addToRigheOrdineColl(rigaOrdine);
 	}
+	OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
+	consegna.inizializzaConsegnaNuovaRiga();
+	consegna.setTipoConsegna(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO);
+	consegna.setUnitaOperativaOrd(rigaRichiesta.getRichiestaUop().getUnitaOperativaOrd());
+	consegna.setQuantita(rigaRichiesta.getQuantitaAutorizzata());
+	consegna.setDtPrevConsegna(rigaOrdine.getDspDtPrevConsegna());
+	rigaOrdine.addToRigheConsegnaColl(consegna);
+	ordine.addToRigheOrdineColl(rigaOrdine);
 }
 
 private Bene_servizioBulk recuperoBeneServizio(it.cnr.jada.UserContext userContext, String cdBeneServizio)
