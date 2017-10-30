@@ -1,9 +1,13 @@
 package it.cnr.contab.doccont00.comp;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
@@ -21,16 +25,28 @@ import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.prevent00.bulk.*;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoHome;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
+
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
 
@@ -672,6 +688,14 @@ public String checkDispObbligazioniAccertamenti(UserContext userContext, String 
 			 messaggio = "L'importo relativo al CDR "+cd_cdr+" G.A.E. "+cd_linea_attivita+" Voce "+voce.getCd_voce()+ aCapo +
                          "supera la disponibilità di " + new it.cnr.contab.util.EuroFormat().format(diff.abs());
 		   }
+		   //aggiungo i vincoli
+		   Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
+		   List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldo);
+		   BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+		   if (diff.subtract(impVincolo).compareTo(BigDecimal.ZERO)==-1)
+			   messaggio = "L'importo relativo al CDR "+cd_cdr+" G.A.E. "+cd_linea_attivita+" Voce "+voce.getCd_voce()+ aCapo +
+			   "supera la disponibilità di " + new it.cnr.contab.util.EuroFormat().format(diff.subtract(impVincolo).abs())+" in conseguenza della presenza "
+			   		+ "di vincoli di spesa per un importo di " + new it.cnr.contab.util.EuroFormat().format(impVincolo.abs());
 		}
 		return messaggio;
 	}
@@ -994,19 +1018,30 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 					}
 					if (saldoNew != null){				
 							saldoNew.setIm_stanz_res_improprio(saldoNew.getIm_stanz_res_improprio().subtract(importo));
-							if (saldoNew.getDispAdImpResiduoImproprio().compareTo(Utility.ZERO) < 0){
+
+							//calcolo i vincoli
+							Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
+							List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldoNew);
+							BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+							BigDecimal diff = saldoNew.getDispAdImpResiduoImproprio().subtract(impVincolo);
+
+							if (diff.compareTo(Utility.ZERO) < 0){
 								if (voce.getTi_gestione().equalsIgnoreCase(Voce_f_saldi_cdr_lineaBulk.TIPO_GESTIONE_SPESA)){
 								    if (!((elemento_voce.getFl_partita_giro() != null && 
 								           elemento_voce.getFl_partita_giro().booleanValue()) ||
 								     (elemento_voce.getFl_limite_ass_obblig()!= null && !elemento_voce.getFl_limite_ass_obblig().booleanValue() &&
 									  workpackage.getFl_limite_ass_obblig()!= null && !workpackage.getFl_limite_ass_obblig().booleanValue()))){
-									throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
-		                                                           "Nell'esercizio "+esercizio.getEsercizio()+
-		                                                           " e per il CdR "+cd_cdr+", "+
-		                                                           " Voce "+voce.getCd_voce()+
-		                                                           " e GAE "+cd_linea_attivita+" lo stanziamento Residuo Improprio "+
-		                                                           " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldoNew.getDispAdImpResiduoImproprio().abs())+")");
-								      }		                                                           
+										StringBuilder messaggio = new StringBuilder("Impossibile effettuare l'operazione !\n"+
+											        "Nell'esercizio "+esercizio.getEsercizio()+
+											        " e per il CdR "+cd_cdr+", "+
+											        " Voce "+voce.getCd_voce()+
+											        " e GAE "+cd_linea_attivita+" lo stanziamento Residuo Improprio "+
+											        " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(diff.abs())+")");
+										if (impVincolo.compareTo(BigDecimal.ZERO)>0)
+											messaggio.append(" in conseguenza della presenza di vincoli di spesa per un importo di " + 
+													new it.cnr.contab.util.EuroFormat().format(impVincolo.abs()));
+										throw new ApplicationException(messaggio.toString());
+								    }
 								}	                                                           
 							}						  
 							saldoNew.setToBeUpdated();
@@ -1096,12 +1131,12 @@ public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, Strin
 		Voce_f_saldi_cdr_lineaBulk comp = find( userContext, cd_cdr, cd_linea_attivita, voce);
 		if (comp != null) {
 			List residui = ((Voce_f_saldi_cdr_lineaHome)getHome( userContext,Voce_f_saldi_cdr_lineaBulk.class )).cercaDettagliResidui( comp );
-	
+
 			for (Iterator i = residui.iterator(); i.hasNext();) {
 				Voce_f_saldi_cdr_lineaBulk residuo = (Voce_f_saldi_cdr_lineaBulk)i.next();
 				saldoResiduo = saldoResiduo.add(residuo.getDispAdImpResiduoImproprio());
 			}
-		}	
+		}
 		return saldoResiduo;
 	}
 	catch 	(Exception e )
@@ -1118,15 +1153,28 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userC
 		if (saldo == null){
 			  throw new ApplicationException("Saldo non trovato per la Voce/CdR/GAE: "+ voce.getCd_voce()+"/"+cd_cdr+"/"+cd_linea_attivita);
 		}
-		importo = importo.setScale(2, importo.ROUND_HALF_UP);
-		if ((saldo.getAssestatoResiduoImproprio().subtract(saldo.getIm_obbl_res_imp())).subtract(importo).compareTo(Utility.ZERO)<0)
-			  throw new ApplicationException(
-				"Impossibile effettuare l'operazione !\n"+
-		        "Nell'esercizio "+saldo.getEsercizio()+
-		        " e per il CdR "+saldo.getCd_centro_responsabilita()+", "+
-		        " Voce "+voce.getCd_voce()+
-		        " e GAE "+saldo.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
-		        " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format((saldo.getAssestatoResiduoImproprio().subtract(saldo.getIm_obbl_res_imp())).subtract(importo).abs())+")");
+
+		//calcolo i vincoli
+		Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
+		List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldo);
+		BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+		importo = importo.setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal diff = saldo.getAssestatoResiduoImproprio().subtract(saldo.getIm_obbl_res_imp()).subtract(importo).subtract(impVincolo);
+
+		if (diff.compareTo(Utility.ZERO)<0) {
+			StringBuilder messaggio = new StringBuilder("Impossibile effettuare l'operazione !\n"+
+			        "Nell'esercizio "+saldo.getEsercizio()+
+			        " e per il CdR "+saldo.getCd_centro_responsabilita()+", "+
+			        " Voce "+voce.getCd_voce()+
+			        " e GAE "+saldo.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
+			        " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(diff.abs())+")");
+			if (impVincolo.compareTo(BigDecimal.ZERO)>0)
+				messaggio.append(" in conseguenza della presenza di vincoli di spesa per un importo di " + 
+						new it.cnr.contab.util.EuroFormat().format(impVincolo.abs()));
+			throw new ApplicationException(messaggio.toString());
+		}
+
 		if (importo.compareTo(Utility.ZERO)>0)
 			saldo.setVar_piu_obbl_res_pro( saldo.getVar_piu_obbl_res_pro().add( importo.abs()) );
 		else
@@ -1176,4 +1224,136 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 	}	
 
 }
+    public void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_modulo_costiBulk moduloCosti) throws ComponentException
+    {
+        try {
+            List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(moduloCosti.getPg_progetto());
+
+            List<Pdg_modulo_speseBulk> speseListDB = (List<Pdg_modulo_speseBulk>)((Pdg_modulo_costiHome)getHome(userContext,Pdg_modulo_costiBulk.class)).findPdgModuloSpeseDettagli(userContext, moduloCosti);
+            List<Pdg_modulo_speseBulk> speseList = (List<Pdg_modulo_speseBulk>)moduloCosti.getDettagliSpese();
+
+            pianoEconomicoList.stream()
+                    .filter(e->e.getFl_ctrl_disp() && (e.getEsercizio_piano().equals(0) || e.getEsercizio_piano().equals(moduloCosti.getEsercizio())))
+                    .forEach(e->{
+                        try {
+                            Progetto_piano_economicoBulk bulk = null;
+
+                            Progetto_piano_economicoBulk bulkToFind = new Progetto_piano_economicoBulk();
+                            bulkToFind.setVoce_piano_economico(e.getVoce_piano_economico());
+                            bulkToFind.setPg_progetto(e.getPg_progetto());
+                            bulkToFind.setEsercizio_piano(e.getEsercizio_piano());
+                            try {
+                                bulk = (Progetto_piano_economicoBulk) getHome( userContext,Progetto_piano_economicoBulk.class ).findAndLock(bulkToFind);
+                            } catch (ObjectNotFoundException ex) {
+                            }
+
+                            if (bulk!=null && bulk.getFl_ctrl_disp()) {
+                                V_saldi_piano_econom_progettoBulk saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
+                                        cercaSaldoPianoEconomico(bulk, "S");
+
+                                BigDecimal dispResidua = saldo.getDisp_residua();
+
+                                dispResidua = dispResidua.add(
+                                        speseListDB.stream()
+                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
+                                                .map(Pdg_modulo_speseBulk::getTot_competenza_anno_in_corso)
+                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
+
+                                dispResidua = dispResidua.subtract(
+                                        speseList.stream()
+                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
+                                                .map(Pdg_modulo_speseBulk::getTot_competenza_anno_in_corso)
+                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
+
+                                if (dispResidua.compareTo(BigDecimal.ZERO)<0)
+                                    throw new ApplicationException(
+                                            "Impossibile effettuare l'operazione !\n"+
+                                                    "Il piano economico "+e.getCd_voce_piano()+
+                                                    " associato al progetto "+(e.getEsercizio_piano().equals(0)?"":"per l'esercizio "+e.getEsercizio_piano())+
+                                                    " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(dispResidua.abs())+")");
+                            }
+                        }
+                        catch (Exception ex )
+                        {
+                            throw new RuntimeException(  ex );
+                        }
+                    });
+        }
+        catch 	(Exception e )
+        {
+            if (e instanceof RuntimeException)
+                throw handleException(  e.getCause() );
+            throw handleException(  e );
+        }
+    }
+    public String getMessaggioSfondamentoPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException{
+        return getMessaggioSfondamentoPianoEconomico(userContext, pdgVariazione, false);
+    }
+    public void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException
+    {
+        String message = getMessaggioSfondamentoPianoEconomico(userContext, pdgVariazione, true);
+        if (message!=null && message.length()>0)
+            throw new ApplicationException(
+                    "Impossibile effettuare l'operazione !\n"+message);
+    }
+    private String getMessaggioSfondamentoPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione, boolean locked) throws ComponentException{
+        String messaggio = "";
+        try {
+            Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
+
+            for (java.util.Iterator dett = detHome.findDettagliVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
+                Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
+
+                WorkpackageBulk linea_attivita = (WorkpackageBulk)((it.cnr.contab.config00.ejb.Linea_attivitaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB(
+                        "CNRCONFIG00_EJB_Linea_attivitaComponentSession", it.cnr.contab.config00.ejb.Linea_attivitaComponentSession.class)
+                ).inizializzaBulkPerModifica(userContext, rigaVar.getLinea_attivita());
+
+                List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(linea_attivita.getProgetto2016().getPg_progetto());
+                for (Progetto_piano_economicoBulk e : pianoEconomicoList) {
+                    if (e.getFl_ctrl_disp() && e.getCd_voce_piano().equals(linea_attivita.getVocePianoEconomico2016().getCd_voce_piano()) &&
+                            (e.getEsercizio_piano().equals(0) || e.getEsercizio_piano().equals(rigaVar.getEsercizio()))) {
+                        try {
+                            if (locked) {
+                                Progetto_piano_economicoBulk bulkToFind = new Progetto_piano_economicoBulk();
+                                bulkToFind.setVoce_piano_economico(e.getVoce_piano_economico());
+                                bulkToFind.setPg_progetto(e.getPg_progetto());
+                                bulkToFind.setEsercizio_piano(e.getEsercizio_piano());
+                                try {
+                                    bulkToFind = (Progetto_piano_economicoBulk) getHome( userContext,Progetto_piano_economicoBulk.class ).findAndLock(bulkToFind);
+                                } catch (ObjectNotFoundException ex) {
+                                }
+                            }
+
+                            V_saldi_piano_econom_progettoBulk saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
+                                    cercaSaldoPianoEconomico(e, "S");
+
+                            BigDecimal dispResidua = saldo.getDisp_residua().subtract(rigaVar.getIm_variazione());
+                            if (dispResidua.compareTo(BigDecimal.ZERO)<0) {
+                                if (messaggio!=null && messaggio.length()>0)
+                                    messaggio = messaggio+ "\n";
+                                messaggio = messaggio +
+                                        "La disponibilità del piano economico "+e.getCd_voce_piano()+
+                                        " associato al progetto"+(e.getEsercizio_piano().equals(0)?"":" per l'esercizio "+e.getEsercizio_piano())+
+                                        " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() +
+                                        " non è sufficiente a coprire la variazione che risulta di " +
+                                        new it.cnr.contab.util.EuroFormat().format(rigaVar.getIm_variazione()) + ".\n";
+                            }
+                        }
+                        catch (Exception ex )
+                        {
+                            throw new RuntimeException(  ex );
+                        }
+                    }
+                }
+            }
+        }catch (PersistencyException e) {
+            throw new ComponentException(e);
+        }catch (RemoteException e) {
+            throw new ComponentException(e);
+        } catch (EJBException e) {
+            throw new ComponentException(e);
+        }
+        return messaggio;
+    }
+
 }
