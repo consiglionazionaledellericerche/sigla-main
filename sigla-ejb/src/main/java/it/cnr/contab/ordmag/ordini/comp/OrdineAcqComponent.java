@@ -2022,12 +2022,13 @@ public OrdineAcqBulk creaOrdineDaRichieste(it.cnr.jada.UserContext userContext, 
 }
 private void creaRigaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine, RichiestaUopRigaBulk rigaRichiesta) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 	boolean trovataRiga = false;
+	OrdineAcqRigaBulk rigaOrdine = null;
 	for (Object riga : ordine.getRigheOrdineColl()){
-		OrdineAcqRigaBulk rigaOrdine = (OrdineAcqRigaBulk)riga;
+		rigaOrdine = (OrdineAcqRigaBulk)riga;
 //		if (rigaOrdine.get)
 	}
 	if (!trovataRiga){
-		OrdineAcqRigaBulk rigaOrdine = new OrdineAcqRigaBulk();
+		rigaOrdine = new OrdineAcqRigaBulk();
 		rigaOrdine = (OrdineAcqRigaBulk)rigaOrdine.inizializzaPerInserimento(userContext);
 		rigaOrdine.setBeneServizio(rigaRichiesta.getBeneServizio());
 		rigaOrdine.setDsBeneServizio(rigaRichiesta.getDsBeneServizio());
