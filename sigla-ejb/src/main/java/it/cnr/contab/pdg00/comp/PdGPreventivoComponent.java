@@ -4322,7 +4322,7 @@ public SQLBuilder selectCdrForPrintByClause (UserContext userContext,
   *    PreCondition:
   *      Viene richiesto l'elenco dei centri di responsabilità compatibili con il livello di responsabilità dell'utente
   *    PostCondition:
-  *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
+  *      Viene restituito una query sui cdr con le clausole specificate e una clausolOrdineAcqComponentOrdineAcqComponenta sull'esercizio uguale a quello del pdg specificato
  */
 //^^@@
 public SQLBuilder selectCdrForPrintByClause (UserContext userContext, 
